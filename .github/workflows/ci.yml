@@ -22,6 +22,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Validate GitHub Actions workflows
+        if: matrix.os == 'ubuntu-latest'
+        uses: devops-actions/actionlint@v0.1.10
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
