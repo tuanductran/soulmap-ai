@@ -1,0 +1,7 @@
+{
+  "typeCheckingMode": "standard",
+  "pythonVersion": "3.11",
+  "include": ["modules", "tests"],
+  "exclude": [".venv", ".pytest_cache", ".ruff_cache", "dist", "**/node_modules", "**/__pycache__", "**/.*"],
+  "reportMissingTypeStubs": false
+}

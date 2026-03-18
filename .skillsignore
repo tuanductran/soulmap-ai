@@ -1,0 +1,14 @@
+# Glob patterns (relative to `skills/`) to exclude from the AGENTS bundle.
+# One pattern per line. Lines starting with `#` are comments.
+#
+# Examples:
+# archive/**
+# drafts/**
+# **/*.bak.md
+#
+# Default: build everything under `skills/`.
+#
+# Notes:
+# - `skills/AGENTS.md` is skipped automatically by the bundler as the output file.
+# - `AGENTS.sources.jsonl` is generated next to the bundle for traceability and is not
+#   included in the zip.

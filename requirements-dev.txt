@@ -1,0 +1,25 @@
+# Developer tooling (Python + Markdown)
+#
+# Install:
+#   source .venv/bin/activate
+#   python -m pip install -r requirements-dev.txt
+
+# Python lint/format/imports
+ruff
+isort
+
+# Markdown formatting (works well for docs in `skills/`)
+mdformat
+mdformat-gfm
+
+# Git hooks runner (optional but recommended)
+pre-commit
+
+# Tests
+pytest
+
+# Standard type checking
+pyright
+
+# Conventional Commits helper (optional but recommended)
+commitizen
