@@ -21,13 +21,13 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Validate GitHub Actions workflows
         if: matrix.os == 'ubuntu-latest'
-        uses: devops-actions/actionlint@v0.1.10
+        uses: raven-actions/actionlint@v2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: "pip"
@@ -54,8 +54,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: "pip"
@@ -75,7 +75,7 @@ jobs:
           test -f skills/AGENTS.md
           test -f skills/AGENTS.sources.jsonl
       - name: Upload skill artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: soulmap-ai-zip
           path: dist/soulmap-ai.zip
