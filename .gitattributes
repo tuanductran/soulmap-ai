@@ -1,0 +1,8 @@
+# Enforce LF line endings cross-platform (prevents mdformat/ruff diffs on Windows).
+* text=auto
+
+*.md text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf

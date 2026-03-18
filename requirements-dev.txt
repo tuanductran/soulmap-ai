@@ -9,8 +9,8 @@ ruff
 isort
 
 # Markdown formatting (works well for docs in `skills/`)
-mdformat
-mdformat-gfm
+mdformat==1.0.0
+mdformat-gfm==1.0.0
 
 # Git hooks runner (optional but recommended)
 pre-commit
