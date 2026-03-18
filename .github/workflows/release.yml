@@ -55,7 +55,7 @@ jobs:
       - name: Resolve release version
         id: version
         run: |
-          echo "version=$(python -m commitizen version)" >> "$GITHUB_OUTPUT"
+          echo "version=$(python -m commitizen version --project)" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release + upload zip
         uses: softprops/action-gh-release@v2
