@@ -22,6 +22,7 @@ done < <(
     \( -path "${ROOT_DIR}/.ruff_cache" -o -path "${ROOT_DIR}/.ruff_cache/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.pytest_cache" -o -path "${ROOT_DIR}/.pytest_cache/*" \) -prune -o \
     \( -path "${ROOT_DIR}/dist" -o -path "${ROOT_DIR}/dist/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/node_modules" -o -path "${ROOT_DIR}/node_modules/*" \) -prune -o \
     -type f -name "*.md" \
     ! -path "${ROOT_DIR}/skills/AGENTS.md" \
     -print0

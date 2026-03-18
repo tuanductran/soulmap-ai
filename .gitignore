@@ -162,3 +162,6 @@ skills/AGENTS.sources.jsonl
 
 # Local editor / workspace noise
 .vscode/
+
+# Node tooling (some GitHub Actions may vendor/extract JS deps locally)
+node_modules/

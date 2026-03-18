@@ -92,6 +92,7 @@ def _iter_markdown_files(root: Path) -> list[Path]:
                 ".git",
                 ".venv",
                 "dist",
+                "node_modules",
                 ".pre-commit-cache",
                 ".ruff_cache",
                 ".pytest_cache",
