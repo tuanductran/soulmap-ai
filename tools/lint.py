@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 from tools._markdown import iter_markdown_files
@@ -17,7 +18,14 @@ def _pyright_available(repo_root: Path) -> bool:
 
 
 def main(argv: list[str] | None = None) -> int:
-    _ = argv
+    parser = argparse.ArgumentParser(prog="python -m tools.lint")
+    parser.add_argument(
+        "--skip-tests",
+        action="store_true",
+        help="Skip running pytest (useful when tests run in a separate CI step).",
+    )
+    args = parser.parse_args(argv)
+
     repo_root = REPO_ROOT
     python = python_executable(repo_root)
 
@@ -54,7 +62,8 @@ def main(argv: list[str] | None = None) -> int:
             cwd=repo_root,
         )
 
-    python_module("pytest", "-q", cwd=repo_root)
+    if not args.skip_tests:
+        python_module("pytest", "-q", cwd=repo_root)
     return 0
 
 

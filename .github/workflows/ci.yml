@@ -35,7 +35,10 @@ jobs:
           python -m pip install -r requirements-dev.txt
       - name: Lint
         run: |
-          python -m tools.lint
+          python -m tools.lint --skip-tests
+      - name: Tests
+        run: |
+          python -m pytest -q
       - name: Build (cross-platform smoke)
         run: |
           python -m tools.build_skill_zip
