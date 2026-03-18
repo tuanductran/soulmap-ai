@@ -5,11 +5,6 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
-
-- No changes yet.
-
-## 0.1.0 - 2026-03-19
 
 ### Added
 
@@ -25,3 +20,16 @@ stability and breaking changes in behavior.
 - Pre-commit hooks for Python + Markdown formatting and case-conflict detection.
 - Conventional Commits support via Commitizen (`[tool.commitizen]` + commit-msg hook).
 - Docs for developers, testers, API usage, and upload guidance under `docs/`.
+
+## v0.2.0 (2026-03-18)
+
+### Feat
+
+- initial release
+
+### Fix
+
+- **ci**: ignore generated markdown trees
+- ignore node_modules in markdown checks
+- normalize packaged skill paths
+- validate workflows and guard CLI input
