@@ -5,7 +5,6 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-
 ### Added
 
 - Initial SoulMap AI knowledge base under `skills/` and bundled output

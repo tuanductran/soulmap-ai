@@ -44,6 +44,16 @@ jobs:
         run: |
           python -m commitizen bump --yes
 
+      - name: Format changelog (mdformat)
+        run: |
+          python -m mdformat CHANGELOG.md
+          git add CHANGELOG.md
+          if ! git diff --cached --quiet; then
+            git commit --amend --no-edit
+          fi
+          version="$(python -m commitizen version --project)"
+          git tag -f "v${version}"
+
       - name: Build distribution artifact
         run: |
           python -m tools.build_skill_zip
