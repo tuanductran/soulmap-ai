@@ -45,10 +45,11 @@ bash scripts/build-skill-zip.sh
 - `skills/AGENTS.sources.jsonl`: provenance log for the bundle (generated).
 - `dist/soulmap-ai.zip`: distribution artifact (generated).
 
-If you change Markdown under `skills/`, regenerate and commit both:
+If you change Markdown under `skills/`, regenerate the bundle:
 
 - `skills/AGENTS.md`
-- `skills/AGENTS.sources.jsonl`
+
+Note: `skills/AGENTS.sources.jsonl` is generated and ignored by git in this repo.
 
 ## Pre-commit hooks (recommended)
 
@@ -77,3 +78,15 @@ The `commit-msg` hook enforces Conventional Commits via Commitizen.
 
 - Canonical version lives in `pyproject.toml` under `[project].version`.
 - Add entries under `CHANGELOG.md` in "Unreleased".
+
+### Automated releases (recommended)
+
+This repo includes a GitHub Actions workflow named `Release` that automates:
+
+- Lint + tests
+- Version bump (Commitizen)
+- Changelog update (Commitizen)
+- Building `dist/soulmap-ai.zip`
+- Creating a GitHub Release and uploading the zip
+
+Trigger it from GitHub: `Actions` -> `Release` -> `Run workflow`.

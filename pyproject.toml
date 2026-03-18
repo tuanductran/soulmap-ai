@@ -37,4 +37,4 @@ addopts = "-q"
 name = "cz_conventional_commits"
 version_provider = "pep621"
 tag_format = "v$version"
-update_changelog_on_bump = false
+update_changelog_on_bump = true

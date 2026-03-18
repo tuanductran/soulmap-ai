@@ -15,6 +15,7 @@ repos:
     rev: 0.7.22
     hooks:
       - id: mdformat
+        exclude: ^skills/AGENTS\.md$
         additional_dependencies: [mdformat-gfm]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
