@@ -186,7 +186,7 @@ def package_skills_to_markdown(
         content = filepath.read_text(encoding="utf-8").rstrip() + "\n"
         if log_path is not None:
             _write_source_log_line(log_path, rel, content)
-        print(f"  - Appended '{rel}'")
+        print(f"  - Appended '{rel.as_posix()}'")
         sources.append((rel, content))
 
     demoted_chunks: list[str] = []
