@@ -38,6 +38,10 @@ def python_executable(repo_root: Path) -> str:
                 )
             return str(candidate)
 
+    # Avoid noisy warnings in CI where a local `.venv` is typically not used.
+    if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("CI") == "true":
+        return sys.executable
+
     if not _VENV_NOTICE_PRINTED:
         _VENV_NOTICE_PRINTED = True
         print(
