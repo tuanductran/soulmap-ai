@@ -19,8 +19,13 @@ while IFS= read -r -d '' file; do
 done < <(
   find "${ROOT_DIR}" \
     \( -path "${ROOT_DIR}/.venv" -o -path "${ROOT_DIR}/.venv/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/.pre-commit-cache" -o -path "${ROOT_DIR}/.pre-commit-cache/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.ruff_cache" -o -path "${ROOT_DIR}/.ruff_cache/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.pytest_cache" -o -path "${ROOT_DIR}/.pytest_cache/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/.cache" -o -path "${ROOT_DIR}/.cache/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/.npm" -o -path "${ROOT_DIR}/.npm/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/.yarn" -o -path "${ROOT_DIR}/.yarn/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/.pnpm-store" -o -path "${ROOT_DIR}/.pnpm-store/*" \) -prune -o \
     \( -path "${ROOT_DIR}/dist" -o -path "${ROOT_DIR}/dist/*" \) -prune -o \
     \( -path "${ROOT_DIR}/node_modules" -o -path "${ROOT_DIR}/node_modules/*" \) -prune -o \
     -type f -name "*.md" \

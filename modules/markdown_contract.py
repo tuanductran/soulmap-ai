@@ -11,6 +11,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 
+from tools._markdown import iter_markdown_files
+
 _FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 # Flags headings like `##Title` (missing required whitespace after the heading marker).
@@ -84,27 +86,7 @@ class Issue:
 
 
 def _iter_markdown_files(root: Path) -> list[Path]:
-    def is_excluded(path: Path) -> bool:
-        parts = path.parts
-        if any(
-            part
-            in {
-                ".git",
-                ".venv",
-                "dist",
-                "node_modules",
-                ".pre-commit-cache",
-                ".ruff_cache",
-                ".pytest_cache",
-            }
-            for part in parts
-        ):
-            return True
-        if path.name == "AGENTS.md" and path.parent.name == "skills":
-            return True
-        return False
-
-    return [p for p in sorted(root.rglob("*.md")) if not is_excluded(p)]
+    return iter_markdown_files(root)
 
 
 def _extract_anchors(lines: list[str]) -> set[str]:

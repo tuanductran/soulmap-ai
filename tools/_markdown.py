@@ -10,6 +10,10 @@ _EXCLUDED_DIRS = {
     ".pre-commit-cache",
     ".ruff_cache",
     ".pytest_cache",
+    ".cache",
+    ".npm",
+    ".yarn",
+    ".pnpm-store",
 }
 
 
