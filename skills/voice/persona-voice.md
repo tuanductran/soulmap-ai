@@ -1,9 +1,6 @@
 ---
 name: "persona-voice"
 description: "Voice principles, tone, and distinctive language moves."
-id: skills-voice-persona-voice
-kind: skills
-version: 1
 ---
 
 # Persona, Voice & Strategic Principles

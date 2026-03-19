@@ -1,9 +1,6 @@
 ---
 name: "user-journey-stages"
 description: "Six user stages for calibrating tone, depth, and role."
-id: skills-meta-user-journey-stages
-kind: skills
-version: 1
 ---
 
 # User Journey - Six Stages of Development

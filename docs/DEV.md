@@ -5,6 +5,9 @@
 This repository is content-first (Markdown knowledge base) with a small Python
 orchestrator (`modules/`) and developer tooling (`tools/`, `scripts/`).
 
+Use [`repo-contract.md`](repo-contract.md) as the structural source of truth when
+working across multiple layers of the repo.
+
 ## Setup
 
 ### macOS/Linux (bash)
@@ -12,6 +15,19 @@ orchestrator (`modules/`) and developer tooling (`tools/`, `scripts/`).
 ```bash
 bash scripts/bootstrap_venv.sh
 source .venv/bin/activate
+```
+
+Or install directly from `pyproject.toml`:
+
+```bash
+python -m pip install .
+python -m pip install ".[dev]"
+```
+
+For contributor workflows, editable install is also supported:
+
+```bash
+python -m pip install -e ".[dev]"
 ```
 
 ### Windows (PowerShell)
@@ -30,6 +46,7 @@ python -m tools.format
 python -m tools.lint
 python -m tools.eval_conversations
 python -m tools.build_skill_zip
+python tests/test_safety_evals.py
 ```
 
 Bash scripts (macOS/Linux):
@@ -77,9 +94,6 @@ The `commit-msg` hook enforces Conventional Commits via Commitizen.
    ---
    name: "file-stem"
    description: "One short sentence describing the full file."
-   id: skills-<area>-<file-stem>
-   kind: skills
-   version: 1
    ---
    ```
 
@@ -87,9 +101,9 @@ The `commit-msg` hook enforces Conventional Commits via Commitizen.
    filename stem in kebab-case. Example: `skills/brand/brand-doctrine.md` must use
    `name: "brand-doctrine"`.
 
-5. Do not run auto-formatters that rewrite YAML front matter across `skills/` and
-   `templates/`. Use `python -m tools.format` or `bash scripts/format.sh` which avoid
-   reformatting those folders to prevent structural damage.
+5. Use the repo tooling for Markdown changes. `python -m tools.format` and
+   `bash scripts/format.sh` now preserve front matter while applying `pymarkdown`
+   consistently across docs, `skills/`, and `templates/`.
 
 ## Release and versioning
 
@@ -106,6 +120,12 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Building `dist/soulmap-ai.zip`
 - Creating a GitHub Release and uploading the zip
 
+Before triggering a release, review:
+
+- [`templates/launch-readiness-checklist.md`](../templates/launch-readiness-checklist.md)
+- [`repo-contract.md`](repo-contract.md)
+- [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
+
 Trigger it from GitHub: `Actions` -> `Release` -> `Run workflow`.
 
 ## Prompt and safety regressions
@@ -114,4 +134,5 @@ Use the eval suite for behavior regressions before shipping framework or prompt 
 
 ```bash
 python -m tools.eval_conversations
+python tests/test_safety_evals.py
 ```

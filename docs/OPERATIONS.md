@@ -48,13 +48,40 @@ Before shipping prompt, framework, detector, or policy updates:
 ```bash
 source .venv/bin/activate
 python -m tools.eval_conversations
+python tests/test_safety_evals.py
 python -m tools.build_skill_zip
 python -m pytest -q
 ```
+
+Review these before approving release behavior:
+
+- [`repo-contract.md`](repo-contract.md)
+- [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
+- [`../templates/launch-readiness-checklist.md`](../templates/launch-readiness-checklist.md)
+
+If Markdown structure or packaging rules changed, also run:
+
+```bash
+python -m tools.format
+python -m tools.lint
+```
+
+## Experimental modules
+
+The repo currently contains two integration-oriented modules that should not be enabled
+silently in production:
+
+- `modules/biometric_ingest.py`: only use with explicit user consent and a documented
+  health-data retention policy.
+- `modules/memory_ledger.py`: only use when the product asks for explicit permission to
+  retain a user-confirmed insight.
+
+Treat both as opt-in features that require product-level privacy review.
 
 ## Ownership map
 
 - `modules/framework_selector.py`: orchestration and final framework choice
 - `modules/response_safety_gate.py`: independent safety and scope enforcement
 - `modules/response_contract.py`: response-level contract checks
-- `evals/`: golden cases and regression suites
+- `tests/test_safety_evals.py`: safety regression suite
+- `tests/safety_test_cases.json`: red-team cases used by the safety eval script

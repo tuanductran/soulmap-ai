@@ -1,2 +1,10 @@
+# Exclude macOS Finder metadata from packaged knowledge files.
 skills/.DS_Store
+skills/**/.DS_Store
+skills/**/Icon?
+skills/**/._*
+
 templates/.DS_Store
+templates/**/.DS_Store
+templates/**/Icon?
+templates/**/._*

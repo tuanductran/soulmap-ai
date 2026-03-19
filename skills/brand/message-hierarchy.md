@@ -1,9 +1,6 @@
 ---
 name: "message-hierarchy"
 description: "Canonical messaging hierarchy for public surfaces."
-id: skills-brand-message-hierarchy
-kind: skills
-version: 1
 ---
 
 # Message Hierarchy

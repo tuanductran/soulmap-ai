@@ -1,9 +1,6 @@
 ---
 name: "response-structure"
 description: "Canonical response structure and formatting rules."
-id: templates-response-structure
-kind: templates
-version: 1
 ---
 
 # Response Framework - Five-Step Structure

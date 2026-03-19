@@ -1,9 +1,6 @@
 ---
 name: "onboarding-copy"
 description: "Onboarding copy for product surfaces."
-id: templates-onboarding-copy
-kind: templates
-version: 1
 ---
 
 # Onboarding Copy

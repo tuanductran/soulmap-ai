@@ -1,9 +1,6 @@
 ---
 name: "chakra-affirmations"
 description: "Chakra affirmation bank with safe usage guidance."
-id: skills-spiritual-chakra-affirmations
-kind: skills
-version: 1
 ---
 
 # Chakra Affirmation Bank

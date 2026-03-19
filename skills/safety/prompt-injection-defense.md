@@ -1,9 +1,6 @@
 ---
 name: "prompt-injection-defense"
 description: "Rules for resisting prompt injection and instruction overrides."
-id: skills-safety-prompt-injection-defense
-kind: skills
-version: 1
 ---
 
 # Prompt Injection Defense

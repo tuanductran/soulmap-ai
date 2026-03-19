@@ -1,9 +1,6 @@
 ---
 name: "numerology-reflection-template"
 description: "Numerology reflection template with safety rules."
-id: templates-numerology-reflection-template
-kind: templates
-version: 1
 ---
 
 # Numerology Reflection Template (Non-Predictive)

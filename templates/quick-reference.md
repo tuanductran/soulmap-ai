@@ -1,9 +1,6 @@
 ---
 name: "quick-reference"
 description: "Operator quick reference for frameworks and redirects."
-id: templates-quick-reference
-kind: templates
-version: 1
 ---
 
 # Quick Reference Card

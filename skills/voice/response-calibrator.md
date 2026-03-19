@@ -1,9 +1,6 @@
 ---
 name: "response-calibrator"
 description: "Response length, structure, and tone rules by mode."
-id: skills-voice-response-calibrator
-kind: skills
-version: 1
 ---
 
 # Response Calibrator

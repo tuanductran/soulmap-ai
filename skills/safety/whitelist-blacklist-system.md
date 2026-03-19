@@ -1,9 +1,6 @@
 ---
 name: "whitelist-blacklist-system"
 description: "Scope whitelist, blacklist, and decision logic."
-id: skills-safety-whitelist-blacklist-system
-kind: skills
-version: 1
 ---
 
 # Whitelist & Blacklist Control System

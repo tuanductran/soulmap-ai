@@ -1,9 +1,6 @@
 ---
 name: "ethics-safety"
 description: "Ethics, privacy, transparency, and spiritual grandiosity handling."
-id: skills-safety-ethics-safety
-kind: skills
-version: 1
 ---
 
 # Ethics & Safety

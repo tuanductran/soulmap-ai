@@ -1,9 +1,6 @@
 ---
 name: "shadow-patterns"
 description: "Explore recurring frustrations with possibility language and projection checks."
-id: skills-frameworks-shadow-patterns
-kind: skills
-version: 1
 ---
 
 # Shadow Pattern Revealer

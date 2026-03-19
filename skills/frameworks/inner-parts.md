@@ -1,9 +1,6 @@
 ---
 name: "inner-parts"
 description: "Name inner conflict as parts and surface each part's intention."
-id: skills-frameworks-inner-parts
-kind: skills
-version: 1
 ---
 
 # Inner Parts Reflection Companion

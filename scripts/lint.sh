@@ -31,25 +31,32 @@ MD_FILES=()
 while IFS= read -r -d '' file; do
   MD_FILES+=("${file}")
 done < <(
-  find "${ROOT_DIR}" \
-    \( -path "${ROOT_DIR}/skills" -o -path "${ROOT_DIR}/skills/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/templates" -o -path "${ROOT_DIR}/templates/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.venv" -o -path "${ROOT_DIR}/.venv/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.pre-commit-cache" -o -path "${ROOT_DIR}/.pre-commit-cache/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.ruff_cache" -o -path "${ROOT_DIR}/.ruff_cache/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.pytest_cache" -o -path "${ROOT_DIR}/.pytest_cache/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.cache" -o -path "${ROOT_DIR}/.cache/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.npm" -o -path "${ROOT_DIR}/.npm/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.yarn" -o -path "${ROOT_DIR}/.yarn/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/.pnpm-store" -o -path "${ROOT_DIR}/.pnpm-store/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/dist" -o -path "${ROOT_DIR}/dist/*" \) -prune -o \
-    \( -path "${ROOT_DIR}/node_modules" -o -path "${ROOT_DIR}/node_modules/*" \) -prune -o \
+  (
+    cd "${ROOT_DIR}"
+    find . \
+    \( -path "./skills" -o -path "./skills/*" \) -prune -o \
+    \( -path "./templates" -o -path "./templates/*" \) -prune -o \
+    \( -path "./.venv" -o -path "./.venv/*" \) -prune -o \
+    \( -path "./.pre-commit-cache" -o -path "./.pre-commit-cache/*" \) -prune -o \
+    \( -path "./.ruff_cache" -o -path "./.ruff_cache/*" \) -prune -o \
+    \( -path "./.pytest_cache" -o -path "./.pytest_cache/*" \) -prune -o \
+    \( -path "./.cache" -o -path "./.cache/*" \) -prune -o \
+    \( -path "./.npm" -o -path "./.npm/*" \) -prune -o \
+    \( -path "./.yarn" -o -path "./.yarn/*" \) -prune -o \
+    \( -path "./.pnpm-store" -o -path "./.pnpm-store/*" \) -prune -o \
+    \( -path "./dist" -o -path "./dist/*" \) -prune -o \
+    \( -path "./node_modules" -o -path "./node_modules/*" \) -prune -o \
+    \( -path "./.claude-plugin" -o -path "./.claude-plugin/*" \) -prune -o \
     -type f -name "*.md" \
     -print0
+  )
 )
 
 if ((${#MD_FILES[@]})); then
-  python -m mdformat --check "${MD_FILES[@]}"
+  (
+    cd "${ROOT_DIR}"
+    python -m pymarkdown --config "${ROOT_DIR}/.pymarkdown.json" scan "${MD_FILES[@]}"
+  )
 fi
 
 python -m pytest -q

@@ -1,9 +1,6 @@
 ---
 name: "content-pillars"
 description: "Content pillars, format rules, and quality filter."
-id: skills-brand-content-pillars
-kind: skills
-version: 1
 ---
 
 # Content Strategy - Three Pillars

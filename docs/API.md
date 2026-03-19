@@ -70,6 +70,11 @@ Entrypoint:
 python -m modules.response_safety_gate
 ```
 
+Purpose:
+
+- Enforce crisis, dependency, and scope redirects independently of the selector.
+- Provide a second-pass safety decision before an output is returned to users.
+
 ## Response contract grader
 
 Entrypoint:
@@ -77,6 +82,77 @@ Entrypoint:
 ```bash
 python -m modules.response_contract
 ```
+
+Purpose:
+
+- Score a draft response against structure and style constraints.
+- Catch violations before they become user-facing regressions.
+
+## Resource sanitizer
+
+Entrypoint:
+
+```bash
+python -m modules.resource_sanitizer
+```
+
+Input:
+
+```json
+{
+  "response_text": "string"
+}
+```
+
+Use this contract when validating conversational outputs against banned vocabulary and
+one-question structure rules from `AGENTS.md`.
+
+## Experimental integration modules
+
+These modules are available for local experimentation and wrapper products, but they are
+not part of the default CLI flow.
+
+### Biometric ingest
+
+Entrypoint:
+
+```bash
+python -m modules.biometric_ingest
+```
+
+Input:
+
+```json
+{
+  "biometrics": {
+    "hrv": 25,
+    "sleep_score": 48
+  }
+}
+```
+
+Use only when the product has explicit user consent for health-context ingestion.
+
+### Memory ledger
+
+Entrypoint:
+
+```bash
+python -m modules.memory_ledger
+```
+
+Input:
+
+```json
+{
+  "user_response": "save this",
+  "last_insight": "I keep trying to earn what I most want to receive.",
+  "session_id": "abc123"
+}
+```
+
+Use only for explicit, user-confirmed insight capture. This repo does not assume silent
+cross-session memory.
 
 ## Distribution zip build
 

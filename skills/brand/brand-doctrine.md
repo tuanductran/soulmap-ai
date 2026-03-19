@@ -1,9 +1,6 @@
 ---
 name: "brand-doctrine"
 description: "Brand doctrine, transparency, and canonical foundation sources."
-id: skills-brand-brand-doctrine
-kind: skills
-version: 1
 ---
 
 # Brand Doctrine, Transparency Principle & Foundation Sources

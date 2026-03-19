@@ -5,6 +5,7 @@
 - The selector returns exactly one `primary_framework` and a coherent instruction
   string.
 - Safety ordering holds (crisis and dependency take priority).
+- Local `.claude/` workflow docs and skills match the current repo structure.
 - Markdown links and anchors across the repo are not broken.
 - Distribution zip builds and contains the expected files.
 
@@ -17,10 +18,17 @@ python -m tools.lint
 This runs:
 
 - Python checks: compileall, ruff, isort, pytest, optional pyright.
+- Local workflow contract checks, including `tests/test_claude_contract.py`.
 - Markdown checks: contract checker (links/anchors/fences/headings/metadata) +
-  `mdformat --check` (excluding `skills/` and `templates/` to preserve YAML front
-  matter).
+  `pymarkdown` across repo docs, `skills/`, and `templates/` while preserving YAML
+  front matter.
 - Build smoke: the zip build can be run separately (see below).
+
+Use these docs as review references when verifying release readiness:
+
+- [`repo-contract.md`](repo-contract.md)
+- [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
+- [`../templates/launch-readiness-checklist.md`](../templates/launch-readiness-checklist.md)
 
 ## Build artifacts
 

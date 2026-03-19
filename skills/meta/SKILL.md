@@ -19,6 +19,7 @@ journey the user appears to be in.
 - You need one closing question that matches the active framework
 - You are checking whether a user is in sanctuary, mirror, or later-stage work
 - You are calibrating tone to the user's developmental stage
+- You are retrieving external resources (YouTube) for a user based on their active framework
 
 ## Workflow
 
@@ -26,11 +27,13 @@ journey the user appears to be in.
 2. Use `user-journey-stages.md` to identify the user's likely stage and capacity.
 3. Use `deep-inquiry-bank.md` only after the primary framework is already chosen.
 4. Return one question only, and only if the active mode allows a question.
+5. Use `resource-recommendations.md` if the user is receptive to external resources, making sure never to advise, only to reflect.
 
 ## Files in this skill
 
 - `deep-inquiry-bank.md`
 - `user-journey-stages.md`
+- `resource-recommendations.md`
 
 ## Expected outcome
 

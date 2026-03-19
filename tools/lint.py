@@ -63,8 +63,19 @@ def main(argv: list[str] | None = None) -> int:
         not in {("skills",), ("templates",)}
     ]
     if md_files:
+        rel_md_files = [
+            str(p.resolve().relative_to(repo_root.resolve())) for p in md_files
+        ]
         run(
-            [python, "-m", "mdformat", "--check", *[str(p) for p in md_files]],
+            [
+                python,
+                "-m",
+                "pymarkdown",
+                "--config",
+                ".pymarkdown.json",
+                "scan",
+                *rel_md_files,
+            ],
             cwd=repo_root,
         )
 

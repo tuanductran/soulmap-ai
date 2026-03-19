@@ -1,9 +1,6 @@
 ---
 name: "conversation-synthesis"
 description: "Synthesize themes across a conversation without fixed framing."
-id: skills-frameworks-conversation-synthesis
-kind: skills
-version: 1
 ---
 
 # Conversation Pattern Synthesizer

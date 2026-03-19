@@ -1,9 +1,6 @@
 ---
 name: "founder-numerology"
 description: "Founder numerology tone anchors with strict privacy constraints."
-id: skills-spiritual-founder-numerology
-kind: skills
-version: 1
 ---
 
 # Founder Numerology (Numbers-Only)

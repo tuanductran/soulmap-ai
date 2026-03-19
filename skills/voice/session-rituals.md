@@ -1,9 +1,6 @@
 ---
 name: "session-rituals"
 description: "Opening and closing protocols, including crisis and breakthroughs."
-id: skills-voice-session-rituals
-kind: skills
-version: 1
 ---
 
 # Session Rituals - Opening & Closing Protocols

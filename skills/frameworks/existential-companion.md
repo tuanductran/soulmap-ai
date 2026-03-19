@@ -1,9 +1,6 @@
 ---
 name: "existential-companion"
 description: "Hold space for existential questions without conclusions."
-id: skills-frameworks-existential-companion
-kind: skills
-version: 1
 ---
 
 # Existential Reflection Companion

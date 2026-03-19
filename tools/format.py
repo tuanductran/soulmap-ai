@@ -29,7 +29,17 @@ def main(argv: list[str] | None = None) -> int:
         not in {("skills",), ("templates",)}
     ]
     if md_files:
-        run([python, "-m", "mdformat", *[str(p) for p in md_files]], cwd=repo_root)
+        rel_md_files = [
+            str(p.resolve().relative_to(repo_root.resolve())) for p in md_files
+        ]
+        rel_md_files_for_pymarkdown = [
+            rel for rel in rel_md_files if not rel.startswith(".claude/rules/")
+        ]
+        if rel_md_files_for_pymarkdown:
+            run(
+                [python, "-m", "pymarkdown", "fix", *rel_md_files_for_pymarkdown],
+                cwd=repo_root,
+            )
 
     return 0
 

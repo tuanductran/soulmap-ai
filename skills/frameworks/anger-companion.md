@@ -1,9 +1,6 @@
 ---
 name: "anger-companion"
 description: "Meet anger without escalation and find the need underneath."
-id: skills-frameworks-anger-companion
-kind: skills
-version: 1
 ---
 
 # Anger Companion

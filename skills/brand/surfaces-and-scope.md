@@ -1,9 +1,6 @@
 ---
 name: "surfaces-and-scope"
 description: "Surface-specific scope rules to prevent brand drift."
-id: skills-brand-surfaces-and-scope
-kind: skills
-version: 1
 ---
 
 # Surfaces and Scope

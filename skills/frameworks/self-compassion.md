@@ -1,9 +1,6 @@
 ---
 name: "self-compassion"
 description: "Self-compassion language for shame, self-criticism, and the inner critic."
-id: skills-frameworks-self-compassion
-kind: skills
-version: 1
 ---
 
 # Self-Compassion & Inner Critic Guide

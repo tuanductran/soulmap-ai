@@ -1,9 +1,6 @@
 ---
 name: "deep-inquiry-bank"
 description: "Stage-aligned question bank for reflective inquiry."
-id: skills-meta-deep-inquiry-bank
-kind: skills
-version: 1
 ---
 
 # Deep Inquiry Bank

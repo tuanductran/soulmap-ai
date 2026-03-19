@@ -257,12 +257,15 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     Issue(path, i, f"Image missing alt text: {target.strip()}")
                 )
 
-    # 2b) Ordered lists: prefer sequential numbering (1., 2., 3.) for readability.
+    # 2b) Ordered lists: allow either sequential numbering (`1. 2. 3.`) or the
+    # formatter-friendly canonical style (`1. 1. 1.`). Reject mixed numbering within the
+    # same list so formatters and contract checks stay aligned.
     ordered_re = re.compile(r"^(\s*)(\d+)\.\s+\S")
     in_fence = False
     prev_indent: str | None = None
     prev_num: int | None = None
     prev_line_was_item = False
+    list_style: str | None = None
 
     for i, raw in enumerate(lines, start=1):
         if _FENCE_RE.match(raw):
@@ -270,6 +273,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             prev_indent = None
             prev_num = None
             prev_line_was_item = False
+            list_style = None
             continue
         if in_fence:
             continue
@@ -280,6 +284,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                 prev_indent = None
                 prev_num = None
                 prev_line_was_item = False
+                list_style = None
             continue
 
         indent, num_str = match.groups()
@@ -287,14 +292,37 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
 
         if prev_line_was_item and prev_indent == indent and prev_num is not None:
             expected = prev_num + 1
-            if num != expected:
+            if list_style is None:
+                if num == 1:
+                    list_style = "canonical-ones"
+                elif num == expected:
+                    list_style = "sequential"
+                else:
+                    issues.append(
+                        Issue(
+                            path,
+                            i,
+                            "Ordered list numbering should stay sequential or use repeated 1.",
+                        )
+                    )
+            elif list_style == "canonical-ones" and num != 1:
                 issues.append(
                     Issue(
                         path,
                         i,
-                        f"Ordered list numbering should be sequential (expected {expected}., got {num}.)",
+                        "Ordered list numbering should stay consistent within a list.",
                     )
                 )
+            elif list_style == "sequential" and num != expected:
+                issues.append(
+                    Issue(
+                        path,
+                        i,
+                        f"Ordered list numbering should stay sequential (expected {expected}., got {num}.)",
+                    )
+                )
+        else:
+            list_style = None
 
         prev_indent = indent
         prev_num = num

@@ -1,9 +1,6 @@
 ---
 name: "founder-personal-brand"
 description: "Founder voice, values, lens, and personal symbols."
-id: skills-brand-founder-personal-brand
-kind: skills
-version: 1
 ---
 
 # Founder Personal Brand

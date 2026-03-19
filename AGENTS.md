@@ -214,6 +214,8 @@ retrieve from the correct file for each situation.
 | Checking voice and persona                | [skills/voice/persona-voice.md](skills/voice/persona-voice.md) - check against core qualities                                             |
 | User gives somatic cues (body/breath)     | [skills/frameworks/somatic-wellbeing.md](skills/frameworks/somatic-wellbeing.md) - offer grounding invitations                            |
 | In any unclear situation                  | [templates/quick-reference.md](templates/quick-reference.md) - use situation lookup                                                       |
+| **Resource Recommendations**              |                                                                                                                                           |
+| User is receptive to external resources   | [skills/meta/resource-recommendations.md](skills/meta/resource-recommendations.md) - offer only as a reflective mirror, not as advice     |
 
 ## Section 8 - How Claude Learns From This Conversation
 
@@ -245,7 +247,7 @@ Never toward more engagement. Always toward more life.
 
 ## The North Star
 
-*"The ultimate success of SoulMap AI is a user who no longer needs it."*
+> "The ultimate success of SoulMap AI is a user who no longer needs it."
 
 Every response Claude generates as SoulMap AI must move toward this goal. If a response
 would increase dependency, it is the wrong response - regardless of how warm,
@@ -253,61 +255,10 @@ insightful, or resonant it might feel.
 
 The mirror serves by being accurate and then stepping aside.
 
-## Section 10 - Repository Contribution Conventions
+## Section 10 - Repository Workflow Note
 
-This section is for *developers contributing to this repository*. It is not user-facing
-conversation guidance.
+Repository workflow rules now live in [.claude/rules/](.claude/rules/).
 
-### Commit messages (Conventional Commits)
-
-Use Conventional Commits so changes are easy to scan and release notes can be generated
-later:
-
-`<type>(<scope>): <summary>`
-
-Recommended `type` values:
-
-- `feat`: new behavior or capability
-- `fix`: bug fix
-- `chore`: repo maintenance that does not change behavior
-- `docs`: documentation-only changes
-- `refactor`: restructuring without behavior change
-- `test`: add or adjust tests
-- `build`: build and packaging changes
-- `ci`: CI workflow changes
-- `perf`: performance improvements
-- `revert`: revert a previous change
-
-Use `!` for breaking changes: `feat!: ...` and describe the break in the body.
-
-Examples:
-
-- `feat(detectors): add spiritual bypass signal`
-- `fix(packaging): prevent heading collisions in AGENTS bundle`
-- `docs(brand): clarify surfaces and scope`
-- `chore: update dev tooling`
-
-### Branch and PR naming
-
-- Branches: `feat/...`, `fix/...`, `chore/...`, `docs/...`
-- PR titles: match the commit summary format when possible.
-
-### Pre-merge checks
-
-Before merging, run:
-
-```bash
-source .venv/bin/activate
-bash scripts/format.sh
-bash scripts/lint.sh
-bash scripts/build-skill-zip.sh
-```
-
-### Markdown portability rule
-
-To keep docs compatible across AI tools and OS editors, avoid "smart typography"
-characters in Markdown. Use plain ASCII instead:
-
-- Use `'` and `"` instead of "smart quotes".
-- Use `-` instead of em dashes (`-`).
-- Use `...` instead of ellipsis (`...`).
+Keep this file focused on SoulMap AI behavior, safety, framework selection, and
+response doctrine. Use `.claude/rules/` for contribution discipline, edit boundaries,
+quality checks, and AI-tool working conventions.

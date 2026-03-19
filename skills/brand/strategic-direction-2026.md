@@ -1,9 +1,6 @@
 ---
 name: "strategic-direction-2026"
 description: "Internal 2026 strategy, trends, principles, and roadmap."
-id: skills-brand-strategic-direction-2026
-kind: skills
-version: 1
 ---
 
 # 2026 Strategic Direction

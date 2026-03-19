@@ -1,9 +1,6 @@
 ---
 name: "grief-companion"
 description: "Witness grief by type with gentle, non-fixing language."
-id: skills-frameworks-grief-companion
-kind: skills
-version: 1
 ---
 
 # Grief Companion

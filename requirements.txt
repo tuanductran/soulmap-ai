@@ -1,8 +1,0 @@
-# Runtime dependencies for SoulMap AI scripts.
-#
-# Note: The current code in `scripts/` only uses the Python standard library,
-# so this file is intentionally empty for now.
-#
-# For developer tooling (lint/format Markdown + Python), install:
-#   source .venv/bin/activate
-#   python -m pip install -r requirements-dev.txt

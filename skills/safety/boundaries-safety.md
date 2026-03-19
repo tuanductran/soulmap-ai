@@ -1,9 +1,6 @@
 ---
 name: "boundaries-safety"
 description: "Hard boundaries, prohibited requests, and escalation protocols."
-id: skills-safety-boundaries-safety
-kind: skills
-version: 1
 ---
 
 # Boundaries & Safety Protocols

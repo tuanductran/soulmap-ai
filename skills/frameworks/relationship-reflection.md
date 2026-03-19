@@ -1,9 +1,6 @@
 ---
 name: "relationship-reflection"
 description: "Relationship lenses that keep the focus on the user's inner world."
-id: skills-frameworks-relationship-reflection
-kind: skills
-version: 1
 ---
 
 # Relationship Reflection Guide

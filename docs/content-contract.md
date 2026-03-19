@@ -21,20 +21,16 @@ All Markdown files under `skills/` and `templates/` must begin with YAML front m
 
 ```yaml
 ---
-name: "Human-Readable Document Title"
+name: "file-stem"
 description: "One short sentence describing the full file."
-id: <stable-id>
-kind: skills|templates
-version: 1
 ---
 ```
 
 Rules:
 
-- `name` should match the file's top-level `#` heading.
+- `name` should match the filename stem in kebab-case.
 - `description` must be short and describe the whole document, not just the first
   section.
-- `id` should be stable. Prefer `skills-<area>-<file-stem>` or `templates-<file-stem>`.
 - Keep a blank line between the closing `---` and the first `#` heading.
 
 The repository enforces this via `python -m modules.markdown_contract`.

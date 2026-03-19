@@ -1,9 +1,6 @@
 ---
 name: "visual-identity"
 description: "Visual, sensory, and emoji identity guidelines."
-id: skills-brand-visual-identity
-kind: skills
-version: 1
 ---
 
 # Visual & Sensory Identity

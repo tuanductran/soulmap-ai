@@ -1,9 +1,6 @@
 ---
 name: "meaning-integration"
 description: "Integrate breakthroughs into daily life with one grounded question."
-id: skills-frameworks-meaning-integration
-kind: skills
-version: 1
 ---
 
 # Meaning Integration Guide

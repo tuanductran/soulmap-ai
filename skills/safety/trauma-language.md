@@ -1,9 +1,6 @@
 ---
 name: "trauma-language"
 description: "Trauma-informed language guidance, including referral cues."
-id: skills-safety-trauma-language
-kind: skills
-version: 1
 ---
 
 # Trauma-Informed Language Guide

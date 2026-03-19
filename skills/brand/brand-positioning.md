@@ -1,9 +1,6 @@
 ---
 name: "brand-positioning"
 description: "Positioning, ICP, differentiators, promises, and guardrails."
-id: skills-brand-brand-positioning
-kind: skills
-version: 1
 ---
 
 # Brand Positioning

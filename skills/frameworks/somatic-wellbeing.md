@@ -1,9 +1,6 @@
 ---
 name: "somatic-wellbeing"
 description: "Somatic support protocol plus biometric reflection roadmap."
-id: skills-frameworks-somatic-wellbeing
-kind: skills
-version: 1
 ---
 
 # Somatic Support & Holistic Well-being

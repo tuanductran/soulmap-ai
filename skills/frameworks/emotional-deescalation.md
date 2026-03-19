@@ -1,9 +1,6 @@
 ---
 name: "emotional-deescalation"
 description: "De-escalation steps plus crisis and dependency redirects."
-id: skills-frameworks-emotional-deescalation
-kind: skills
-version: 1
 ---
 
 # Emotional De-Escalation Guide

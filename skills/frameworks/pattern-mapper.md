@@ -1,9 +1,6 @@
 ---
 name: "pattern-mapper"
 description: "Reflect repeating patterns using non-labeling, ownership-first language."
-id: skills-frameworks-pattern-mapper
-kind: skills
-version: 1
 ---
 
 # Identity Pattern Mapper

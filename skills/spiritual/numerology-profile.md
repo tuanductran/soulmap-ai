@@ -1,9 +1,6 @@
 ---
 name: "numerology-profile"
 description: "SoulMap numerological signature and archetypal identity notes."
-id: skills-spiritual-numerology-profile
-kind: skills
-version: 1
 ---
 
 # Numerological Signature 3-8-11-3-9-1

@@ -1,9 +1,6 @@
 ---
 name: "healing-metaphors"
 description: "Metaphor library for explaining healing and inner work."
-id: skills-spiritual-healing-metaphors
-kind: skills
-version: 1
 ---
 
 # Healing Metaphors Library

@@ -1,9 +1,6 @@
 ---
 name: "life-direction"
 description: "Values-based lenses for practical life direction clarity."
-id: skills-frameworks-life-direction
-kind: skills
-version: 1
 ---
 
 # Life Direction Clarifier

@@ -1,20 +1,26 @@
 # Documentation
 
-This folder contains human-facing documentation for SoulMap AI.
+Use this folder as the entry point for repo documentation.
 
-## Who this is for
+## Audience Routes
 
-- Developers: setup, tooling, contribution, release flow.
-- Testers: what to verify and how to run checks.
-- Users: what SoulMap AI is and how to use the bundled knowledge base.
-- Integrators: the local CLI "API" contracts (JSON in/out) for the selector and
-  detectors.
+- Contributors: [`DEV.md`](DEV.md)
+- Testers: [`TESTER.md`](TESTER.md)
+- Operators: [`OPERATIONS.md`](OPERATIONS.md) and [`UPLOAD.md`](UPLOAD.md)
+- Reviewers: [`repo-contract.md`](repo-contract.md) and
+  [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
 
-## Start here
+## Reference Docs
 
-- Developer guide: [`DEV.md`](DEV.md)
-- Tester guide: [`TESTER.md`](TESTER.md)
-- User guide: [`USER.md`](USER.md)
-- API docs: [`API.md`](API.md)
-- Operations guide: [`OPERATIONS.md`](OPERATIONS.md)
-- Upload guide: [`UPLOAD.md`](UPLOAD.md)
+- [`DEV.md`](DEV.md): setup, tooling, and contributor workflow
+- [`TESTER.md`](TESTER.md): verification flow and QA checks
+- [`USER.md`](USER.md): what SoulMap AI is and how to use it
+- [`API.md`](API.md): local CLI contracts for selector and detectors
+- [`OPERATIONS.md`](OPERATIONS.md): privacy, safety, and incident guidance
+- [`UPLOAD.md`](UPLOAD.md): how to package and upload the knowledge base
+- [`repo-contract.md`](repo-contract.md): repository structure, ownership, and release
+  boundaries
+- [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md): evidence map for
+  safety claims
+- [`content-contract.md`](content-contract.md): Markdown structure rules
+- [`maintenance-boundary.md`](maintenance-boundary.md): scope and maintenance guardrails

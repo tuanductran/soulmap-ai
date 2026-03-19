@@ -1,9 +1,6 @@
 ---
 name: "numerology-chakra-policy"
 description: "Brand-safe policy for numerology and chakra language."
-id: skills-spiritual-numerology-chakra-policy
-kind: skills
-version: 1
 ---
 
 # Numerology + Chakra Policy (Brand-Safe Use)

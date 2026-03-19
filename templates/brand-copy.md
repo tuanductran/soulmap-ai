@@ -1,9 +1,6 @@
 ---
 name: "brand-copy"
 description: "Reusable brand copy blocks for public surfaces."
-id: templates-brand-copy
-kind: templates
-version: 1
 ---
 
 # Brand Copy Blocks (Reusable)

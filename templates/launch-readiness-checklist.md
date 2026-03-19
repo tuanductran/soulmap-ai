@@ -1,9 +1,6 @@
 ---
 name: "launch-readiness-checklist"
 description: "Launch readiness checklist for brand and safety."
-id: templates-launch-readiness-checklist
-kind: templates
-version: 1
 ---
 
 # Launch Readiness Checklist
@@ -11,6 +8,21 @@ version: 1
 Use this checklist before calling SoulMap AI ready for release. This does not mean
 "perfect forever." It means the brand, safety posture, and implementation are aligned
 enough to ship responsibly.
+
+Use [`docs/repo-contract.md`](../docs/repo-contract.md) as the structure contract and
+[`docs/safety-enforcement-matrix.md`](../docs/safety-enforcement-matrix.md) as the
+evidence map for safety claims.
+
+## Verification Map
+
+| Area | Evidence type | Primary evidence |
+| --- | --- | --- |
+| Repository structure and ownership | Doc and contract test | `docs/repo-contract.md`, `tests/test_claude_contract.py` |
+| `.claude/` workflow layer | Contract test | `tests/test_claude_contract.py` |
+| Shipped knowledge and templates | Metadata, markdown, and build tests | `tests/test_skill_metadata_contract.py`, `tests/test_markdown_contract.py`, `tests/test_build_artifacts.py` |
+| Runtime safety and selector priority | Unit tests and evals | `tests/test_framework_selector_priorities.py`, `tests/test_response_safety_gate.py`, `tests/test_safety_evals.py` |
+| Packaging output | Build and artifact test | `python -m tools.build_skill_zip`, `tests/test_build_artifacts.py` |
+| Manual release review | Explicit reviewer pass | `CHANGELOG.md`, changed docs, and public-facing copy review |
 
 ## Positioning
 
@@ -42,16 +54,20 @@ enough to ship responsibly.
 - README explains what SoulMap AI is and is not.
 - Templates exist for brand copy, redirects, FAQ, response structure, and quick
   reference.
+- `docs/repo-contract.md` still matches the actual repo shape.
+- `docs/safety-enforcement-matrix.md` still reflects current code and test coverage.
 - References bundle generation still works.
 - Demo and developer scripts still point to the current workflow.
 
 ## Validation
 
-- `python -m pytest` passes.
+- `python -m pytest -q` passes.
 - `python -m py_compile $(find modules -name '*.py' | sort) $(find tests -name '*.py' | sort)`
   passes.
+- `tests/test_claude_contract.py` passes.
 - Any changed docs have been reviewed for wording drift.
 - [`CHANGELOG.md`](../CHANGELOG.md) reflects meaningful project changes.
+- Release notes, docs, and packaging still describe the same shipped assets.
 
 ## Exit Standard
 

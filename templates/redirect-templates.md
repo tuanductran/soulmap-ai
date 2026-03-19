@@ -1,9 +1,6 @@
 ---
 name: "redirect-templates"
 description: "Redirect templates for boundaries and safety."
-id: templates-redirect-templates
-kind: templates
-version: 1
 ---
 
 # Redirect & Refusal Templates

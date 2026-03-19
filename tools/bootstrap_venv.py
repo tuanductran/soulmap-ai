@@ -28,13 +28,7 @@ def main(argv: list[str] | None = None) -> int:
 
     py = _venv_python(venv_dir)
     _run([str(py), "-m", "pip", "install", "--upgrade", "pip"], cwd=repo_root)
-
-    req_runtime = repo_root / "requirements.txt"
-    req_dev = repo_root / "requirements-dev.txt"
-    if req_runtime.is_file():
-        _run([str(py), "-m", "pip", "install", "-r", str(req_runtime)], cwd=repo_root)
-    if req_dev.is_file():
-        _run([str(py), "-m", "pip", "install", "-r", str(req_dev)], cwd=repo_root)
+    _run([str(py), "-m", "pip", "install", "-e", ".[dev]"], cwd=repo_root)
 
     if os.name == "nt":
         print("OK: venv ready. Activate with:")

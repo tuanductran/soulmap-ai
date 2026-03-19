@@ -1,9 +1,6 @@
 ---
 name: "consciousness-framework"
 description: "Consciousness and emotional mechanics framework for conversation."
-id: skills-brand-consciousness-framework
-kind: skills
-version: 1
 ---
 
 # Emotional Mechanics & Consciousness Framework
