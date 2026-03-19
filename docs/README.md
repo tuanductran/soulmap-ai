@@ -16,4 +16,5 @@ This folder contains human-facing documentation for SoulMap AI.
 - Tester guide: [`TESTER.md`](TESTER.md)
 - User guide: [`USER.md`](USER.md)
 - API docs: [`API.md`](API.md)
+- Operations guide: [`OPERATIONS.md`](OPERATIONS.md)
 - Upload guide: [`UPLOAD.md`](UPLOAD.md)

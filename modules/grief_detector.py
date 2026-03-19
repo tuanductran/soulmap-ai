@@ -146,7 +146,7 @@ def detect_grief(
         }
 
     type_guidance = {
-        "acute": "Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief_companion.md.",
+        "acute": "Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md.",
         "anticipatory": "Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after.",
         "ambiguous": "VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness.",
         "complicated": "Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.'",
@@ -160,7 +160,7 @@ def detect_grief(
         "recommendation": (
             f"Activate grief_companion.md. Type: {grief_type}. "
             f"{type_guidance.get(grief_type or '', '')} "
-            "Retrieve grief questions from deep_inquiry_bank.md — 'Grief Questions' section."
+            "Retrieve grief questions from deep-inquiry-bank.md — 'Grief Questions' section."
         ),
     }
 

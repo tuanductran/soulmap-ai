@@ -5,7 +5,6 @@ from pathlib import Path
 import zipfile
 
 from tools._repo import REPO_ROOT
-from tools._run import python_module
 
 
 def _load_distignore(repo_root: Path) -> list[str]:
@@ -27,10 +26,14 @@ def _is_ignored(rel: str, patterns: list[str]) -> bool:
 
 def _iter_zip_inputs(repo_root: Path) -> list[Path]:
     paths: list[Path] = []
-    for name in ["SKILL.md", "CLAUDE.md", "README.md", "LICENSE"]:
+    for name in ["LICENSE"]:
         candidate = repo_root / name
         if candidate.is_file():
             paths.append(candidate)
+
+    claude_plugin = repo_root / ".claude-plugin" / "marketplace.json"
+    if claude_plugin.is_file():
+        paths.append(claude_plugin)
 
     for folder in ["skills", "templates"]:
         base = repo_root / folder
@@ -43,9 +46,6 @@ def _iter_zip_inputs(repo_root: Path) -> list[Path]:
 def main(argv: list[str] | None = None) -> int:
     _ = argv
     repo_root = REPO_ROOT
-
-    # Keep generated bundle fresh and fail if generation fails.
-    python_module("modules.package_skills", cwd=repo_root)
 
     out_dir = repo_root / "dist"
     out_dir.mkdir(parents=True, exist_ok=True)

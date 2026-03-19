@@ -47,7 +47,6 @@ jobs:
       - name: Build (cross-platform smoke)
         run: |
           python -m tools.build_skill_zip
-          python -m modules.package_skills
           python -m modules.markdown_contract --root .
 
   build:
@@ -72,8 +71,6 @@ jobs:
       - name: Verify build outputs
         run: |
           test -f dist/soulmap-ai.zip
-          test -f skills/AGENTS.md
-          test -f skills/AGENTS.sources.jsonl
       - name: Upload skill artifact
         uses: actions/upload-artifact@v6
         with:

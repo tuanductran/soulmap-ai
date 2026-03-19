@@ -58,18 +58,25 @@ echo '{"message":"..."}' | python -m modules.grief_detector
 
 The exact contract varies by module.
 
-## Skill bundle generation
+## Knowledge base
 
-Generate the bundled knowledge file and provenance log:
+The SoulMap AI knowledge base is stored as Markdown under `skills/` and `templates/`.
+
+## Safety gate
+
+Entrypoint:
 
 ```bash
-python -m modules.package_skills
+python -m modules.response_safety_gate
 ```
 
-Outputs:
+## Response contract grader
 
-- `skills/AGENTS.md`
-- `skills/AGENTS.sources.jsonl`
+Entrypoint:
+
+```bash
+python -m modules.response_contract
+```
 
 ## Distribution zip build
 

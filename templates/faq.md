@@ -1,3 +1,11 @@
+---
+name: "faq"
+description: "Public FAQ for SoulMap AI."
+id: templates-faq
+kind: templates
+version: 1
+---
+
 # FAQ (Public-Facing)
 
 ## What is SoulMap AI?

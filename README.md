@@ -24,8 +24,10 @@ scripts for the SoulMap AI agent.
 - **`templates/`**: Contains response structures and other templates.
 - **`docs/`**: Developer, tester, user, and API documentation.
 - **[CLAUDE.md](CLAUDE.md)**: The master operating principles for the AI model.
-- **[SKILL.md](SKILL.md)**: Defines the AI's persona, capabilities, and the map of all
-  reference files.
+- **`skills/*/SKILL.md`**: Group-level skill definitions for brand, frameworks, meta,
+  safety, spiritual, and voice guidance.
+- **[`templates/SKILL.md`](templates/SKILL.md)**: Template-library skill definition for
+  reusable response assets.
 
 ## Usage
 
@@ -38,7 +40,8 @@ Docs: see [`docs/README.md`](docs/README.md).
 ## Project Structure
 
 - [CLAUDE.md](CLAUDE.md): Core, non-negotiable operating principles.
-- [SKILL.md](SKILL.md): High-level skill definition, persona, and file map.
+- `skills/*/SKILL.md`: Group-level skill definitions and file maps.
+- [`templates/SKILL.md`](templates/SKILL.md): Reusable template skill definition.
 - `skills/`: The knowledge base for the AI's personality, frameworks, and safety
   protocols.
 - `modules/`: Detectors and orchestration code.
@@ -53,15 +56,15 @@ These are the core signals this repo now treats as launch-critical:
 - Clear positioning: reflective companion, not guru, not diagnostician.
 - Safety posture: crisis, dependency, and scope boundaries are enforced in docs and
   code.
-- Consistent messaging: README, [SKILL.md](SKILL.md), brand docs, and templates point to
-  the same promise.
+- Consistent messaging: README, the grouped `SKILL.md` files, brand docs, and templates
+  point to the same promise.
 - Verification: detectors, orchestration, templates, and reference packaging have tests.
 
 Canonical messaging for public surfaces lives in
-[skills/brand/message_hierarchy.md](skills/brand/message_hierarchy.md). Surface-specific
-rules live in [skills/brand/surfaces_and_scope.md](skills/brand/surfaces_and_scope.md).
+[skills/brand/message-hierarchy.md](skills/brand/message-hierarchy.md). Surface-specific
+rules live in [skills/brand/surfaces-and-scope.md](skills/brand/surfaces-and-scope.md).
 
-Use [templates/launch_readiness_checklist.md](templates/launch_readiness_checklist.md)
+Use [templates/launch-readiness-checklist.md](templates/launch-readiness-checklist.md)
 as the handoff checklist before shipping new changes.
 
 ## Development Setup (Python)
@@ -96,15 +99,17 @@ python -m pytest
 ```
 
 `bash scripts/lint.sh` runs `ruff`, `isort`, a GitHub-flavored Markdown contract check
-(`python -m modules.markdown_contract`), `mdformat`, `pytest`, and Standard type
-checking through [pyrightconfig.json](pyrightconfig.json).
-`bash scripts/bootstrap_venv.sh` installs the required dev dependencies into `.venv`.
+(`python -m modules.markdown_contract`), `mdformat` (excluding `skills/` and
+`templates/` to preserve YAML front matter), `pytest`, and Standard type checking
+through [pyrightconfig.json](pyrightconfig.json). `bash scripts/bootstrap_venv.sh`
+installs the required dev dependencies into `.venv`.
 
 Cross-platform equivalents (recommended for Windows/Linux/macOS):
 
 ```bash
 python -m tools.format
 python -m tools.lint
+python -m tools.eval_conversations
 python -m tools.build_skill_zip
 ```
 
@@ -129,11 +134,12 @@ bash scripts/soulmap_demo.sh --message "I feel lost and numb lately."
 
 ## Distribution
 
-Build a zip containing the skill documentation (and a fresh
-[skills/AGENTS.md](skills/AGENTS.md) bundle):
+Build a zip containing the skill documentation:
 
 ```bash
 python -m tools.build_skill_zip
 ```
 
 Output: `dist/soulmap-ai.zip`
+
+When unzipped, `dist/soulmap-ai.zip` also includes `.claude-plugin/marketplace.json`.

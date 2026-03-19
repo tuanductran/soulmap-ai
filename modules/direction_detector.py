@@ -223,12 +223,12 @@ def detect_direction_need(
 
     recommendation = (
         f"Life direction uncertainty detected (type: {primary_type}). "
-        "Activate Life Direction Clarifier from skills/frameworks/life_direction.md. "
+        "Activate Life Direction Clarifier from skills/frameworks/life-direction.md. "
         "Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. "
         f"Start with: {suggested_lens}. "
         "Use one lens at a time. Follow the user's energy. "
         "End with one reflective question about what kind of life feels honest to them. "
-        "Retrieve question from skills/meta/deep_inquiry_bank.md — 'Direction-Specific Questions' section."
+        "Retrieve question from skills/meta/deep-inquiry-bank.md — 'Direction-Specific Questions' section."
     )
 
     return {

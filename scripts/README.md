@@ -70,17 +70,6 @@ source .venv/bin/activate
 bash scripts/soulmap_demo.sh --message "I feel lost and numb lately."
 ```
 
-## Build the Skills Bundle
-
-Generate [`skills/AGENTS.md`](../skills/AGENTS.md) from all Markdown under `skills/`:
-
-```bash
-source .venv/bin/activate
-python -m modules.package_skills
-```
-
-Exclude patterns (relative to `skills/`) can be added to `.skillsignore`.
-
 ## Build a Distribution Zip
 
 Create `dist/soulmap-ai.zip` containing the skill docs:

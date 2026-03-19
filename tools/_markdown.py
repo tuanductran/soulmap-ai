@@ -23,8 +23,5 @@ def iter_markdown_files(repo_root: Path) -> list[Path]:
         parts = set(path.parts)
         if parts & _EXCLUDED_DIRS:
             continue
-        # Generated bundle.
-        if path.name == "AGENTS.md" and path.parent.name == "skills":
-            continue
         md_files.append(path)
     return sorted(md_files)

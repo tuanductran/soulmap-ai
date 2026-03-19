@@ -13,18 +13,16 @@ fi
 
 mkdir -p "${OUT_DIR}"
 
-# Keep generated bundle fresh inside the zip and fail if generation fails.
-python -m modules.package_skills >/dev/null
-
 rm -f "${OUT_ZIP}"
 cd "${ROOT_DIR}"
 
 ZIP_INPUTS=(
-  "SKILL.md"
-  "CLAUDE.md"
-  "README.md"
   "LICENSE"
 )
+
+if [[ -f ".claude-plugin/marketplace.json" ]]; then
+  ZIP_INPUTS+=(".claude-plugin/marketplace.json")
+fi
 
 while IFS= read -r -d '' file; do
   ZIP_INPUTS+=("${file#./}")

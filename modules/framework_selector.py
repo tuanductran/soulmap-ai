@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import time
+from typing import cast
 
 from modules.anger_detector import detect_anger
 from modules.cli_payload import (
@@ -23,6 +24,7 @@ from modules.grief_detector import detect_grief
 from modules.inner_conflict_detector import detect_inner_conflict
 from modules.insight_detector import detect_insight
 from modules.pattern_detector import detect_patterns
+from modules.response_safety_gate import apply_safety_gate
 from modules.shadow_pattern_detector import detect_shadow_patterns
 from modules.somatic_detector import detect_somatic
 from modules.spiritual_bypass_detector import detect_bypass
@@ -93,6 +95,27 @@ def _maybe_attach_debug(out: dict, debug_events: list[dict] | None) -> dict:
     return out
 
 
+def _apply_safety_gate(
+    message: str,
+    history: list[dict[str, str]],
+    memory: dict[str, object],
+    selection: dict[str, object],
+    debug_events: list[dict] | None = None,
+) -> dict[str, object]:
+    result = apply_safety_gate(message, history, memory, selection)
+    if debug_events is not None:
+        debug_events.append(
+            {
+                "module": "response_safety_gate",
+                "execution": "in_process",
+                "status": result.get("status"),
+                "reason": result.get("reason"),
+            }
+        )
+    gated_selection = result.get("selection", selection)
+    return cast(dict[str, object], gated_selection)
+
+
 async def select_framework_async(
     message: str,
     history: list[dict[str, str]],
@@ -116,19 +139,20 @@ async def select_framework_async(
     )
     crisis_tier = crisis.get("tier", 0)
     if crisis_tier == 1:
+        selection = {
+            "primary_framework": "CRISIS",
+            "secondary_layer": None,
+            "mode": "CRISIS",
+            "context": crisis,
+            "instruction": (
+                "IMMEDIATE CRISIS RESPONSE. Use CRISIS_RESPONSE[lang] from "
+                "skills/frameworks/emotional-deescalation.md. No other "
+                "framework. No question."
+            ),
+            "blocked": ["ALL"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "CRISIS",
-                "secondary_layer": None,
-                "mode": "CRISIS",
-                "context": crisis,
-                "instruction": (
-                    "IMMEDIATE CRISIS RESPONSE. Use CRISIS_RESPONSE[lang] from "
-                    "skills/frameworks/emotional_deescalation.md. No other "
-                    "framework. No question."
-                ),
-                "blocked": ["ALL"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -150,19 +174,20 @@ async def select_framework_async(
     intensity_level = intensity.get("level", "NORMAL")
 
     if dep.get("level") == "HIGH_DEPENDENCY":
+        selection = {
+            "primary_framework": "DEPENDENCY",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": dep,
+            "instruction": (
+                "Dependency redirect. Use DEP_REDIRECT from "
+                "skills/frameworks/emotional-deescalation.md. Warm, direct, "
+                "one question pointing toward real-world support."
+            ),
+            "blocked": ["ALL_FRAMEWORKS"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "DEPENDENCY",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": dep,
-                "instruction": (
-                    "Dependency redirect. Use DEP_REDIRECT from "
-                    "skills/frameworks/emotional_deescalation.md. Warm, direct, "
-                    "one question pointing toward real-world support."
-                ),
-                "blocked": ["ALL_FRAMEWORKS"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -196,27 +221,28 @@ async def select_framework_async(
         anger_active = res["anger"].get("anger_detected", False)
         bypass_active = res["bypass"].get("bypass_detected", False)
 
+        selection = {
+            "primary_framework": "DE_ESCALATION",
+            "secondary_layer": (
+                "anger"
+                if anger_active
+                else (
+                    "bypass"
+                    if bypass_active
+                    else ("somatic" if somatic_active else None)
+                )
+            ),
+            "mode": "SANCTUARY",
+            "context": {"intensity": intensity, "crisis": crisis},
+            "instruction": (
+                "SANCTUARY MODE. Activate emotional_deescalation.md 3-step "
+                "protocol: acknowledge → ground → normalize. NO 5-step framework. "
+                "NO inquiry question. 2-4 sentences maximum. Wait for user."
+            ),
+            "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "DE_ESCALATION",
-                "secondary_layer": (
-                    "anger"
-                    if anger_active
-                    else (
-                        "bypass"
-                        if bypass_active
-                        else ("somatic" if somatic_active else None)
-                    )
-                ),
-                "mode": "SANCTUARY",
-                "context": {"intensity": intensity, "crisis": crisis},
-                "instruction": (
-                    "SANCTUARY MODE. Activate emotional_deescalation.md 3-step "
-                    "protocol: acknowledge → ground → normalize. NO 5-step framework. "
-                    "NO inquiry question. 2-4 sentences maximum. Wait for user."
-                ),
-                "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -254,19 +280,20 @@ async def select_framework_async(
         elif conflict.get("conflict_detected"):
             secondary = "inner_parts"
 
+        selection = {
+            "primary_framework": "DE_ESCALATION",
+            "secondary_layer": secondary,
+            "mode": "MIRROR",
+            "context": intensity,
+            "instruction": (
+                "MODERATE intensity. Slow the conversation. Acknowledge first. "
+                "Hold framework lightly. If secondary_layer is set, move into it "
+                "gently after grounding. End with a softer question."
+            ),
+            "blocked": ["direction", "existential", "synthesis"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "DE_ESCALATION",
-                "secondary_layer": secondary,
-                "mode": "MIRROR",
-                "context": intensity,
-                "instruction": (
-                    "MODERATE intensity. Slow the conversation. Acknowledge first. "
-                    "Hold framework lightly. If secondary_layer is set, move into it "
-                    "gently after grounding. End with a softer question."
-                ),
-                "blocked": ["direction", "existential", "synthesis"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -369,18 +396,19 @@ async def select_framework_async(
         secondary = (
             "meaning_integration" if res["insight"].get("insight_detected") else None
         )
+        selection = {
+            "primary_framework": "GRIEF",
+            "secondary_layer": secondary,
+            "mode": "SANCTUARY",
+            "context": res["grief"],
+            "instruction": (
+                "Activate grief_companion.md. Presence first — witness the loss "
+                "before any reflection. End with one grief-specific question."
+            ),
+            "blocked": ["direction", "shadow", "existential", "synthesis"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "GRIEF",
-                "secondary_layer": secondary,
-                "mode": "SANCTUARY",
-                "context": res["grief"],
-                "instruction": (
-                    "Activate grief_companion.md. Presence first — witness the loss "
-                    "before any reflection. End with one grief-specific question."
-                ),
-                "blocked": ["direction", "shadow", "existential", "synthesis"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -388,125 +416,132 @@ async def select_framework_async(
         secondary = (
             "meaning_integration" if res["insight"].get("insight_detected") else None
         )
+        selection = {
+            "primary_framework": "EXISTENTIAL",
+            "secondary_layer": secondary,
+            "mode": "MIRROR",
+            "context": res["existential"],
+            "instruction": (
+                "Activate existential_companion.md. Territory: "
+                f"{res['existential'].get('territory', 'general')}. Hold space. "
+                "Do not resolve. End with one question that goes deeper."
+            ),
+            "blocked": ["direction", "shadow"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "EXISTENTIAL",
-                "secondary_layer": secondary,
-                "mode": "MIRROR",
-                "context": res["existential"],
-                "instruction": (
-                    "Activate existential_companion.md. Territory: "
-                    f"{res['existential'].get('territory', 'general')}. Hold space. "
-                    "Do not resolve. End with one question that goes deeper."
-                ),
-                "blocked": ["direction", "shadow"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if res["conflict"].get("conflict_detected") and not res["insight"].get(
         "insight_detected"
     ):
+        selection = {
+            "primary_framework": "INNER_PARTS",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["conflict"],
+            "instruction": (
+                "Activate inner_parts.md. Name 1-2 parts with hidden intention. "
+                "Do not take sides. End with one parts-specific question."
+            ),
+            "blocked": ["direction", "shadow"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "INNER_PARTS",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": res["conflict"],
-                "instruction": (
-                    "Activate inner_parts.md. Name 1-2 parts with hidden intention. "
-                    "Do not take sides. End with one parts-specific question."
-                ),
-                "blocked": ["direction", "shadow"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if res["direction"].get("direction_detected"):
+        selection = {
+            "primary_framework": "DIRECTION",
+            "secondary_layer": (
+                "meaning_integration"
+                if res["insight"].get("insight_detected")
+                else None
+            ),
+            "mode": "MIRROR",
+            "context": res["direction"],
+            "instruction": (
+                "Activate life_direction.md. Presentation: "
+                f"{res['direction'].get('presentation', 'lost')}. Explore values "
+                "NOT options. End with direction-specific question."
+            ),
+            "blocked": ["shadow"],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "DIRECTION",
-                "secondary_layer": (
-                    "meaning_integration"
-                    if res["insight"].get("insight_detected")
-                    else None
-                ),
-                "mode": "MIRROR",
-                "context": res["direction"],
-                "instruction": (
-                    "Activate life_direction.md. Presentation: "
-                    f"{res['direction'].get('presentation', 'lost')}. Explore values "
-                    "NOT options. End with direction-specific question."
-                ),
-                "blocked": ["shadow"],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if res["shadow"].get("shadow_detected"):
+        selection = {
+            "primary_framework": "SHADOW",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["shadow"],
+            "instruction": (
+                "Activate shadow_patterns.md. Frame as possibility ONLY. Return "
+                "ownership. End with shadow-specific question."
+            ),
+            "blocked": [],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "SHADOW",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": res["shadow"],
-                "instruction": (
-                    "Activate shadow_patterns.md. Frame as possibility ONLY. Return "
-                    "ownership. End with shadow-specific question."
-                ),
-                "blocked": [],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if res["insight"].get("insight_detected"):
+        selection = {
+            "primary_framework": "MEANING_INTEGRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["insight"],
+            "instruction": (
+                "Activate meaning_integration.md. Hold the insight first. Do NOT "
+                "prescribe change. End with conscious-noticing question."
+            ),
+            "blocked": [],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "MEANING_INTEGRATION",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": res["insight"],
-                "instruction": (
-                    "Activate meaning_integration.md. Hold the insight first. Do NOT "
-                    "prescribe change. End with conscious-noticing question."
-                ),
-                "blocked": [],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if res["synthesis"].get("synthesis_triggered") and res["synthesis"].get(
         "synthesis_ready"
     ):
+        selection = {
+            "primary_framework": "SYNTHESIS",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["synthesis"],
+            "instruction": (
+                "Activate conversation_synthesis.md. Name 2-3 themes max. Return "
+                "ownership. End with synthesis question."
+            ),
+            "blocked": [],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "SYNTHESIS",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": res["synthesis"],
-                "instruction": (
-                    "Activate conversation_synthesis.md. Name 2-3 themes max. Return "
-                    "ownership. End with synthesis question."
-                ),
-                "blocked": [],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
     if pattern and pattern.get("primary_pattern") and not pattern.get("wait_for_more"):
+        selection = {
+            "primary_framework": "PATTERN",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": pattern,
+            "instruction": (
+                "Activate pattern_mapper.md. Pattern: "
+                f"{pattern.get('primary_pattern')}. Reflect hidden intention. End "
+                "with pattern-specific question."
+            ),
+            "blocked": [],
+        }
         return _maybe_attach_debug(
-            {
-                "primary_framework": "PATTERN",
-                "secondary_layer": None,
-                "mode": "MIRROR",
-                "context": pattern,
-                "instruction": (
-                    "Activate pattern_mapper.md. Pattern: "
-                    f"{pattern.get('primary_pattern')}. Reflect hidden intention. End "
-                    "with pattern-specific question."
-                ),
-                "blocked": [],
-            },
+            _apply_safety_gate(message, history, memory, selection, debug_events),
             debug_events,
         )
 
@@ -515,30 +550,36 @@ async def select_framework_async(
     anger_active = res["anger"].get("anger_detected", False)
     bypass_active = res["bypass"].get("bypass_detected", False)
 
+    selection = {
+        "primary_framework": "MIRROR",
+        "secondary_layer": (
+            "anger"
+            if anger_active
+            else (
+                "bypass" if bypass_active else ("somatic" if somatic_active else None)
+            )
+        ),
+        "mode": mode,
+        "context": {"stage": current_stage},
+        "instruction": (
+            "MIRROR mode: 5-step arc. End with one question from deep-inquiry-bank.md."
+            if mode == "MIRROR"
+            else "PEER mode: dialogue, light structure. End with one question."
+        ),
+        "blocked": [],
+    }
     return _maybe_attach_debug(
-        {
-            "primary_framework": "MIRROR",
-            "secondary_layer": (
-                "anger"
-                if anger_active
-                else (
-                    "bypass"
-                    if bypass_active
-                    else ("somatic" if somatic_active else None)
-                )
-            ),
-            "mode": mode,
-            "context": {"stage": current_stage},
-            "instruction": (
-                "MIRROR mode: 5-step arc. End with one question from "
-                "deep_inquiry_bank.md."
-                if mode == "MIRROR"
-                else "PEER mode: dialogue, light structure. End with one question."
-            ),
-            "blocked": [],
-        },
+        _apply_safety_gate(message, history, memory, selection, debug_events),
         debug_events,
     )
+
+
+def select_framework(
+    message: str,
+    history: list[dict[str, str]],
+    memory: dict[str, object] | None = None,
+) -> dict:
+    return asyncio.run(select_framework_async(message, history, memory))
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ Cross-platform (recommended):
 ```bash
 python -m tools.format
 python -m tools.lint
+python -m tools.eval_conversations
 python -m tools.build_skill_zip
 ```
 
@@ -41,15 +42,16 @@ bash scripts/build-skill-zip.sh
 
 ## What gets generated
 
-- `skills/AGENTS.md`: bundled knowledge base Markdown (generated).
-- `skills/AGENTS.sources.jsonl`: provenance log for the bundle (generated).
 - `dist/soulmap-ai.zip`: distribution artifact (generated).
 
-If you change Markdown under `skills/`, regenerate the bundle:
+## Claude plugin packaging
 
-- `skills/AGENTS.md`
+This repo also ships Claude plugin marketplace metadata:
 
-Note: `skills/AGENTS.sources.jsonl` is generated and ignored by git in this repo.
+- `.claude-plugin/marketplace.json`
+
+`python -m tools.build_skill_zip` packages `.claude-plugin/marketplace.json` inside
+`dist/soulmap-ai.zip`.
 
 ## Pre-commit hooks (recommended)
 
@@ -66,13 +68,28 @@ The `commit-msg` hook enforces Conventional Commits via Commitizen.
 
 1. Add a new `*.md` under `skills/` (pick the best category folder).
 
-2. Keep headings and links GitHub-friendly (the repo runs a Markdown contract check).
+2. Use kebab-case filenames (no `_`) and keep headings/links GitHub-friendly (the repo
+   runs a Markdown contract check).
 
-3. Regenerate the bundle:
+3. Start the file with YAML front matter metadata:
 
-   ```bash
-   python -m modules.package_skills
+   ```yaml
+   ---
+   name: "file-stem"
+   description: "One short sentence describing the full file."
+   id: skills-<area>-<file-stem>
+   kind: skills
+   version: 1
+   ---
    ```
+
+4. For files under `skills/` and `templates/`, set frontmatter `name` to the exact
+   filename stem in kebab-case. Example: `skills/brand/brand-doctrine.md` must use
+   `name: "brand-doctrine"`.
+
+5. Do not run auto-formatters that rewrite YAML front matter across `skills/` and
+   `templates/`. Use `python -m tools.format` or `bash scripts/format.sh` which avoid
+   reformatting those folders to prevent structural damage.
 
 ## Release and versioning
 
@@ -90,3 +107,11 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Creating a GitHub Release and uploading the zip
 
 Trigger it from GitHub: `Actions` -> `Release` -> `Run workflow`.
+
+## Prompt and safety regressions
+
+Use the eval suite for behavior regressions before shipping framework or prompt changes:
+
+```bash
+python -m tools.eval_conversations
+```

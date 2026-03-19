@@ -476,11 +476,11 @@ def synthesize(
     recommendation = (
         f"Synthesis ready. {len(top_3)} recurring theme(s) identified. "
         f"{'Longitudinal data available. ' if is_longitudinal else ''}"
-        "Activate Conversation Pattern Synthesizer from skills/frameworks/conversation_synthesis.md. "
+        "Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. "
         "Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' "
         "Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. "
         "End with ownership return + one reflective question from "
-        "skills/meta/deep_inquiry_bank.md — 'Synthesis Questions' section. "
+        "skills/meta/deep-inquiry-bank.md — 'Synthesis Questions' section. "
         f"Themes detected: {', '.join(f'{d}:{t}' for d, t, _ in top_3)}."
     )
 

@@ -17,6 +17,9 @@ _FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 # Flags headings like `##Title` (missing required whitespace after the heading marker).
 _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
+# Disallow headings like `## 1) Foo` or `## 1. Foo` to keep anchors stable and avoid
+# tool-specific numbering conventions in the knowledge base.
+_NUMBERED_HEADING_PREFIX_RE = re.compile(r"^\(?\d+\)?\s*[.)]\s+")
 _MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
@@ -30,6 +33,39 @@ _BANNED_UNICODE = {
     "\u2026": "U+2026 HORIZONTAL ELLIPSIS (use three dots ...)",
     "\u00a0": "U+00A0 NO-BREAK SPACE (use regular space)",
 }
+
+
+def _parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
+    """Parse a minimal YAML front matter block.
+
+    We intentionally avoid external YAML deps. This is a strict subset:
+    - Must start at BOF with '---'
+    - Must end with the next line that is exactly '---'
+    - Only supports simple 'key: value' pairs (value may be quoted)
+    """
+
+    if not lines or lines[0].strip() != "---":
+        return None
+
+    try:
+        end_idx = lines[1:].index("---") + 1
+    except ValueError:
+        return None
+
+    data: dict[str, str] = {}
+    for raw in lines[1:end_idx]:
+        if not raw.strip():
+            continue
+        if raw.lstrip().startswith("#"):
+            continue
+        if ":" not in raw:
+            continue
+        key, value = raw.split(":", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key:
+            data[key] = value
+    return data
 
 
 def _strip_inline_markup(text: str) -> str:
@@ -120,6 +156,29 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
 
+    rel = path.resolve().relative_to(repo_root.resolve())
+
+    # - File naming: prefer kebab-case for Markdown files (no underscores).
+    if "_" in path.name:
+        issues.append(
+            Issue(path, 1, "Markdown filename should not contain '_' (use '-')")
+        )
+
+    # - Metadata: important docs should start with YAML front matter metadata.
+    #   - `SKILL.md`, `skills/**.md`, and `templates/**.md`.
+    if rel.as_posix() == "SKILL.md" or (
+        rel.parts and rel.parts[0] in {"skills", "templates"}
+    ):
+        meta = _parse_yaml_front_matter(lines[:50])
+        if not meta or not meta.get("name") or not meta.get("description"):
+            issues.append(
+                Issue(
+                    path,
+                    1,
+                    "Missing YAML front matter metadata (--- name: ... description: ... ---)",
+                )
+            )
+
     # 0) Portability: disallow typography characters that can confuse tools or break diffs.
     for i, raw in enumerate(lines, start=1):
         for ch, desc in _BANNED_UNICODE.items():
@@ -130,6 +189,21 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     for i, raw in enumerate(lines, start=1):
         if _BAD_ATX_HEADING_RE.match(raw):
             issues.append(Issue(path, i, "ATX heading missing a space after '#'"))
+
+    # 1a) Heading numbering: disallow numeric prefixes like `1)` / `1.` in headings.
+    for i, raw in enumerate(lines, start=1):
+        match = _ATX_HEADING_RE.match(raw)
+        if not match:
+            continue
+        _hashes, title = match.groups()
+        if _NUMBERED_HEADING_PREFIX_RE.match(title.strip()):
+            issues.append(
+                Issue(
+                    path,
+                    i,
+                    "Heading should not start with numeric prefix like '1)' or '1.'",
+                )
+            )
 
     # 1b) Heading spacing: require a blank line before/after headings (outside fences).
     in_fence = False

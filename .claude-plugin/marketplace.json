@@ -1,0 +1,62 @@
+{
+  "name": "soulmap-ai",
+  "description": "Reflective companion skills, safety guardrails, voice systems, and reusable templates for SoulMap AI.",
+  "plugins": [
+    {
+      "name": "SoulMap Brand System",
+      "source": "./",
+      "description": "Brand doctrine, positioning, message hierarchy, strategic direction, and surface-specific rules that define SoulMap AI's identity and boundaries.",
+      "skills": [
+        "./skills/brand"
+      ]
+    },
+    {
+      "name": "SoulMap Core Frameworks",
+      "source": "./",
+      "description": "Reflective frameworks for emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow patterns, anger, self-compassion, and relationship inquiry.",
+      "skills": [
+        "./skills/frameworks"
+      ]
+    },
+    {
+      "name": "SoulMap Safety Guardrails",
+      "source": "./",
+      "description": "Safety, ethics, trauma language, whitelist-blacklist scope control, prompt injection defense, and dependency boundary rules.",
+      "skills": [
+        "./skills/safety"
+      ]
+    },
+    {
+      "name": "SoulMap Meta Guidance",
+      "source": "./",
+      "description": "Deep inquiry prompts, user journey stages, and meta-level guidance for selecting the right reflective posture.",
+      "skills": [
+        "./skills/meta"
+      ]
+    },
+    {
+      "name": "SoulMap Spiritual Layer",
+      "source": "./",
+      "description": "Spiritual policies, symbolic numerology guidance, healing metaphors, and chakra-related support content used within SoulMap's guardrails.",
+      "skills": [
+        "./skills/spiritual"
+      ]
+    },
+    {
+      "name": "SoulMap Voice System",
+      "source": "./",
+      "description": "Persona, response calibration, and session ritual guidance for keeping SoulMap's tone consistent across interactions.",
+      "skills": [
+        "./skills/voice"
+      ]
+    },
+    {
+      "name": "SoulMap Templates Library",
+      "source": "./",
+      "description": "Reusable templates for response structure, redirects, onboarding, launch readiness, FAQ, and reflective scenarios.",
+      "skills": [
+        "./templates"
+      ]
+    }
+  ]
+}

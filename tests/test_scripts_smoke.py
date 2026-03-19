@@ -68,6 +68,26 @@ def test_detectors_return_json() -> None:
             "pattern_detector",
             {"messages": [{"role": "user", "content": "I keep doing this."}]},
         ),
+        (
+            "response_safety_gate",
+            {
+                "message": "I feel lost and alone.",
+                "history": [{"role": "user", "content": "I feel lost and alone."}],
+                "memory": {},
+                "selection": {"primary_framework": "MIRROR", "mode": "MIRROR"},
+            },
+        ),
+        (
+            "response_contract",
+            {
+                "response": (
+                    "That feeling sounds real. Sometimes the hardest part is staying "
+                    "close to what hurts without rushing away from it. What feels most "
+                    "alive in you right now?"
+                ),
+                "selection": {"primary_framework": "MIRROR", "mode": "MIRROR"},
+            },
+        ),
         ("scope_classifier", {"message": "Tell me the latest stock price of TSLA."}),
         (
             "shadow_pattern_detector",
@@ -188,6 +208,8 @@ def test_object_based_cli_modules_reject_non_object_payloads() -> None:
         "grief_detector",
         "inner_conflict_detector",
         "insight_detector",
+        "response_contract",
+        "response_safety_gate",
         "scope_classifier",
         "shadow_pattern_detector",
         "somatic_detector",

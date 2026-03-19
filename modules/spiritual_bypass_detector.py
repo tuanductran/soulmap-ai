@@ -147,7 +147,7 @@ def detect_bypass(
     guidance_map = {
         "dismissing_pain": (
             "Bypass type: using spiritual framework to dismiss pain before it's been felt. "
-            "Use 'ground the mystical' pattern from skills/voice/persona_voice.md: "
+            "Use 'ground the mystical' pattern from skills/voice/persona-voice.md: "
             "'If this is [acceptance/surrender/lesson] — it still needs a body to live in. "
             "What is actually happening for you emotionally right now, underneath the framework?'"
         ),

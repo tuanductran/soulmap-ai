@@ -323,7 +323,7 @@ def classify_message(message: str) -> dict:
                     "category": category,
                     "action": "DECLINE_AND_REDIRECT",
                     "explanation": f"Prohibited request type detected: '{category}'. "
-                    "Decline clearly using appropriate template in redirect_templates.md. "
+                    "Decline clearly using appropriate template in redirect-templates.md. "
                     "Apply escalation protocol if user persists.",
                     "matched_keyword": kw,
                 }

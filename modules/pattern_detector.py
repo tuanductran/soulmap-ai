@@ -257,9 +257,9 @@ def detect_patterns(conversation_messages: list) -> dict:
     else:
         recommendation = (
             f"Primary pattern: {detected[0]['name']}. "
-            f"Use the reflection language from skills/frameworks/pattern_mapper.md. "
+            f"Use the reflection language from skills/frameworks/pattern-mapper.md. "
             f"SoulMap role: {detected[0]['soulmap_role']} "
-            f"Follow with a pattern-specific inquiry question from skills/meta/deep_inquiry_bank.md."
+            f"Follow with a pattern-specific inquiry question from skills/meta/deep-inquiry-bank.md."
         )
 
     return {

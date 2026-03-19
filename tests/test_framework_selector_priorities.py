@@ -69,6 +69,22 @@ def test_framework_selector_prioritizes_dependency_before_direction() -> None:
     assert data["blocked"] == ["ALL_FRAMEWORKS"]
 
 
+def test_framework_selector_exposes_safety_gate_debug_event_when_enabled() -> None:
+    payload = {
+        "message": "You understand me better than anyone and I trust you more than anyone.",
+        "history": [
+            {
+                "role": "user",
+                "content": "You understand me better than anyone and I trust you more than anyone.",
+            }
+        ],
+        "memory": {},
+    }
+    data = run_framework_selector(payload, debug=True)
+    assert "debug" in data
+    assert any(event.get("module") == "response_safety_gate" for event in data["debug"])
+
+
 def test_framework_selector_prioritizes_grief_before_direction() -> None:
     payload = {
         "message": "My father died yesterday and now I feel lost.",

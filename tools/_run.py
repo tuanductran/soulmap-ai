@@ -4,8 +4,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-
-_VENV_NOTICE_PRINTED = False
+from typing import Any, cast
 
 
 def python_executable(repo_root: Path) -> str:
@@ -15,8 +14,9 @@ def python_executable(repo_root: Path) -> str:
     This avoids confusing "missing dependency" errors when users run `python -m tools.*`
     without activating the virtual environment first.
     """
-    global _VENV_NOTICE_PRINTED
-
+    # Store "printed already" state on the function object, but keep type checkers happy.
+    func_any = cast(Any, python_executable)
+    notice_printed = bool(getattr(func_any, "_venv_notice_printed", False))
     if os.environ.get("VIRTUAL_ENV"):
         return sys.executable
 
@@ -27,8 +27,8 @@ def python_executable(repo_root: Path) -> str:
     ]
     for candidate in candidates:
         if candidate.exists():
-            if not _VENV_NOTICE_PRINTED and str(candidate) != sys.executable:
-                _VENV_NOTICE_PRINTED = True
+            if not notice_printed and str(candidate) != sys.executable:
+                func_any._venv_notice_printed = True
                 print(
                     f"info: detected local .venv, using {candidate}. "
                     "Activate it to match: "
@@ -42,8 +42,8 @@ def python_executable(repo_root: Path) -> str:
     if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("CI") == "true":
         return sys.executable
 
-    if not _VENV_NOTICE_PRINTED:
-        _VENV_NOTICE_PRINTED = True
+    if not notice_printed:
+        func_any._venv_notice_printed = True
         print(
             "warning: no local `.venv` detected and no active virtual environment. "
             "If you hit missing-tool errors, run `bash scripts/bootstrap_venv.sh` "

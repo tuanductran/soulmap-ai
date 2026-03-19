@@ -244,10 +244,10 @@ def detect_insight(
 
     recommendation = (
         f"Insight moment detected (strength: {strength}, type: {insight_type}). "
-        "Activate Meaning Integration Guide from skills/frameworks/meaning_integration.md. "
+        "Activate Meaning Integration Guide from skills/frameworks/meaning-integration.md. "
         + integration_map.get(insight_type, integration_map["hold_first"])
         + " End with one conscious-noticing question from "
-        "skills/meta/deep_inquiry_bank.md — 'Integration-Specific Questions' section. "
+        "skills/meta/deep-inquiry-bank.md — 'Integration-Specific Questions' section. "
         "Do NOT prescribe change. Focus on awareness. Do not use the word 'should'."
     )
 

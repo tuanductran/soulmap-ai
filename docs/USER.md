@@ -11,13 +11,10 @@ clearly. It is built to avoid prediction, diagnosis, and dependency.
 - A local framework selector that chooses an appropriate response mode based on message
   content.
 
-## Using `skills/AGENTS.md`
+## Using the knowledge base
 
-`skills/AGENTS.md` is a single-file bundle of the SoulMap AI knowledge base. It is
-intended to be pasted into an AI tool's "instructions" or "system prompt" field.
-
-The file begins with a Table of contents so you can quickly navigate and audit the
-policies and frameworks.
+The knowledge base lives under `skills/` and `templates/`. Most AI tools can ingest
+multiple files directly, or you can upload the packaged archive from `dist/`.
 
 ## Quick demo (local)
 
@@ -26,4 +23,4 @@ python -m modules.soulmap_demo --message "I feel lost and numb lately."
 ```
 
 If you do not want to run code locally, you can still read the knowledge base directly
-in `skills/AGENTS.md`.
+under `skills/` and `templates/`.

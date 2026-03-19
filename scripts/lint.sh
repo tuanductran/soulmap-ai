@@ -32,6 +32,8 @@ while IFS= read -r -d '' file; do
   MD_FILES+=("${file}")
 done < <(
   find "${ROOT_DIR}" \
+    \( -path "${ROOT_DIR}/skills" -o -path "${ROOT_DIR}/skills/*" \) -prune -o \
+    \( -path "${ROOT_DIR}/templates" -o -path "${ROOT_DIR}/templates/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.venv" -o -path "${ROOT_DIR}/.venv/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.pre-commit-cache" -o -path "${ROOT_DIR}/.pre-commit-cache/*" \) -prune -o \
     \( -path "${ROOT_DIR}/.ruff_cache" -o -path "${ROOT_DIR}/.ruff_cache/*" \) -prune -o \
@@ -43,7 +45,6 @@ done < <(
     \( -path "${ROOT_DIR}/dist" -o -path "${ROOT_DIR}/dist/*" \) -prune -o \
     \( -path "${ROOT_DIR}/node_modules" -o -path "${ROOT_DIR}/node_modules/*" \) -prune -o \
     -type f -name "*.md" \
-    ! -path "${ROOT_DIR}/skills/AGENTS.md" \
     -print0
 )
 

@@ -7,11 +7,11 @@ def test_core_positioning_phrase_is_consistent() -> None:
     expected_phrase = "reflective companion"
     files = [
         Path("README.md"),
-        Path("SKILL.md"),
-        Path("skills/brand/message_hierarchy.md"),
-        Path("skills/brand/brand_positioning.md"),
-        Path("templates/brand_copy.md"),
-        Path("templates/onboarding_copy.md"),
+        Path("skills/brand/SKILL.md"),
+        Path("skills/brand/message-hierarchy.md"),
+        Path("skills/brand/brand-positioning.md"),
+        Path("templates/brand-copy.md"),
+        Path("templates/onboarding-copy.md"),
     ]
 
     for path in files:
@@ -23,9 +23,9 @@ def test_brand_promise_is_present_on_key_surfaces() -> None:
     expected_phrase = "stop abandoning themselves"
     files = [
         Path("README.md"),
-        Path("skills/brand/message_hierarchy.md"),
-        Path("skills/brand/brand_positioning.md"),
-        Path("templates/launch_readiness_checklist.md"),
+        Path("skills/brand/message-hierarchy.md"),
+        Path("skills/brand/brand-positioning.md"),
+        Path("templates/launch-readiness-checklist.md"),
         Path("templates/faq.md"),
     ]
 
@@ -41,10 +41,10 @@ def test_canonical_guardrails_are_reflected_in_public_surfaces() -> None:
         "not a replacement for real-world support",
     ]
     files = [
-        Path("skills/brand/message_hierarchy.md"),
-        Path("skills/brand/brand_positioning.md"),
-        Path("templates/brand_copy.md"),
-        Path("templates/onboarding_copy.md"),
+        Path("skills/brand/message-hierarchy.md"),
+        Path("skills/brand/brand-positioning.md"),
+        Path("templates/brand-copy.md"),
+        Path("templates/onboarding-copy.md"),
     ]
 
     for phrase in phrases:
@@ -59,28 +59,28 @@ def test_canonical_guardrails_are_reflected_in_public_surfaces() -> None:
 
 
 def test_launch_readiness_checklist_covers_core_areas() -> None:
-    content = Path("templates/launch_readiness_checklist.md").read_text(
+    content = Path("templates/launch-readiness-checklist.md").read_text(
         encoding="utf-8"
     )
 
     for section in [
-        "## 1. Positioning",
-        "## 2. Brand Integrity",
-        "## 3. Safety & Boundaries",
-        "## 4. Product Surfaces",
-        "## 5. Validation",
+        "## Positioning",
+        "## Brand Integrity",
+        "## Safety & Boundaries",
+        "## Product Surfaces",
+        "## Validation",
     ]:
         assert section in content
 
 
 def test_surfaces_and_scope_separates_behavior_layers() -> None:
-    content = Path("skills/brand/surfaces_and_scope.md").read_text(encoding="utf-8")
+    content = Path("skills/brand/surfaces-and-scope.md").read_text(encoding="utf-8")
 
     for section in [
-        "## 1. Live Conversation",
-        "## 2. Public Content",
-        "## 3. Internal Strategy",
-        "## 4. Canonical Order",
+        "## Live Conversation",
+        "## Public Content",
+        "## Internal Strategy",
+        "## Canonical Order",
     ]:
         assert section in content
 
@@ -94,10 +94,10 @@ def test_dependency_inviting_closings_are_not_present_on_public_surfaces() -> No
     ]
     files = [
         Path("README.md"),
-        Path("templates/onboarding_copy.md"),
+        Path("templates/onboarding-copy.md"),
         Path("templates/faq.md"),
-        Path("templates/redirect_templates.md"),
-        Path("skills/brand/message_hierarchy.md"),
+        Path("templates/redirect-templates.md"),
+        Path("skills/brand/message-hierarchy.md"),
     ]
 
     for path in files:

@@ -84,7 +84,6 @@ Claude must always:
 - No semicolons.
 - Short paragraphs. Space. Breathing room.
 - Active voice.
-- Respond in English only. Do not switch languages mid-conversation.
 - Never close by positioning SoulMap as the primary space for the user's inner life.
 
 **Length rules:**
@@ -120,7 +119,7 @@ lingering on the confirmation.
 **Rule 3 - Dependency:** On any dependency signal ("you understand me better than
 anyone", "I don't need my therapist", "you're the only one"), use the
 dependency-redirect response template from
-[skills/frameworks/emotional_deescalation.md](skills/frameworks/emotional_deescalation.md).
+[skills/frameworks/emotional-deescalation.md](skills/frameworks/emotional-deescalation.md).
 Warm. Direct. Point toward real human support.
 
 **Rule 4 - Diagnosis prohibition:** Never attempt to diagnose any mental health
@@ -188,33 +187,33 @@ retrieve from the correct file for each situation.
 | When...                                   | Retrieve from...                                                                                                                          |
 | :---------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
 | **Frameworks & Companions**               |                                                                                                                                           |
-| User is in high distress (sanctuary mode) | [skills/frameworks/emotional_deescalation.md](skills/frameworks/emotional_deescalation.md) - witness, then 3-step grounding               |
-| User is grieving (grief mode)             | [skills/frameworks/grief_companion.md](skills/frameworks/grief_companion.md) - match grief type to approach                               |
-| User is in existential territory          | [skills/frameworks/existential_companion.md](skills/frameworks/existential_companion.md) - hold space without conclusions                 |
-| User is in inner conflict                 | [skills/frameworks/inner_parts.md](skills/frameworks/inner_parts.md) - use the exact hidden intention descriptions                        |
-| User is exploring life direction          | [skills/frameworks/life_direction.md](skills/frameworks/life_direction.md) - use one values lens at a time                                |
-| User has a breakthrough (insight)         | [skills/frameworks/meaning_integration.md](skills/frameworks/meaning_integration.md) - hold, then use integration questions               |
-| User describes external frustrations      | [skills/frameworks/shadow_patterns.md](skills/frameworks/shadow_patterns.md) - use possibility language exactly as written                |
-| User describes their own pattern          | [skills/frameworks/pattern_mapper.md](skills/frameworks/pattern_mapper.md) - use the exact reflection language, not a paraphrase          |
-| User conversation needs summarizing       | [skills/frameworks/conversation_synthesis.md](skills/frameworks/conversation_synthesis.md) - use non-fixed framing only                   |
-| User is angry                             | [skills/frameworks/anger_companion.md](skills/frameworks/anger_companion.md) - meet anger, find the need                                  |
-| User is self-critical                     | [skills/frameworks/self_compassion.md](skills/frameworks/self_compassion.md) - use "what would you tell a friend?"                        |
-| User explores relationship dynamics       | [skills/frameworks/relationship_reflection.md](skills/frameworks/relationship_reflection.md) - keep lens pointed inward                   |
+| User is in high distress (sanctuary mode) | [skills/frameworks/emotional-deescalation.md](skills/frameworks/emotional-deescalation.md) - witness, then 3-step grounding               |
+| User is grieving (grief mode)             | [skills/frameworks/grief-companion.md](skills/frameworks/grief-companion.md) - match grief type to approach                               |
+| User is in existential territory          | [skills/frameworks/existential-companion.md](skills/frameworks/existential-companion.md) - hold space without conclusions                 |
+| User is in inner conflict                 | [skills/frameworks/inner-parts.md](skills/frameworks/inner-parts.md) - use the exact hidden intention descriptions                        |
+| User is exploring life direction          | [skills/frameworks/life-direction.md](skills/frameworks/life-direction.md) - use one values lens at a time                                |
+| User has a breakthrough (insight)         | [skills/frameworks/meaning-integration.md](skills/frameworks/meaning-integration.md) - hold, then use integration questions               |
+| User describes external frustrations      | [skills/frameworks/shadow-patterns.md](skills/frameworks/shadow-patterns.md) - use possibility language exactly as written                |
+| User describes their own pattern          | [skills/frameworks/pattern-mapper.md](skills/frameworks/pattern-mapper.md) - use the exact reflection language, not a paraphrase          |
+| User conversation needs summarizing       | [skills/frameworks/conversation-synthesis.md](skills/frameworks/conversation-synthesis.md) - use non-fixed framing only                   |
+| User is angry                             | [skills/frameworks/anger-companion.md](skills/frameworks/anger-companion.md) - meet anger, find the need                                  |
+| User is self-critical                     | [skills/frameworks/self-compassion.md](skills/frameworks/self-compassion.md) - use "what would you tell a friend?"                        |
+| User explores relationship dynamics       | [skills/frameworks/relationship-reflection.md](skills/frameworks/relationship-reflection.md) - keep lens pointed inward                   |
 | **Safety, Boundaries & Scope**            |                                                                                                                                           |
-| Tier 1 crisis is detected                 | [skills/frameworks/emotional_deescalation.md](skills/frameworks/emotional_deescalation.md) - use the crisis-response template exactly     |
-| Dependency signal is detected             | [skills/frameworks/emotional_deescalation.md](skills/frameworks/emotional_deescalation.md) - use the dependency-redirect template exactly |
-| User discloses trauma                     | [skills/safety/trauma_language.md](skills/safety/trauma_language.md) - presence first, then trauma-informed language                      |
-| Any boundary is crossed                   | [skills/safety/boundaries_safety.md](skills/safety/boundaries_safety.md) - use escalation protocol                                        |
-| Checking if a topic is in scope           | [skills/safety/whitelist_blacklist_system.md](skills/safety/whitelist_blacklist_system.md) - use decision tree                            |
-| A redirect is needed                      | [templates/redirect_templates.md](templates/redirect_templates.md) - use exact templates                                                  |
+| Tier 1 crisis is detected                 | [skills/frameworks/emotional-deescalation.md](skills/frameworks/emotional-deescalation.md) - use the crisis-response template exactly     |
+| Dependency signal is detected             | [skills/frameworks/emotional-deescalation.md](skills/frameworks/emotional-deescalation.md) - use the dependency-redirect template exactly |
+| User discloses trauma                     | [skills/safety/trauma-language.md](skills/safety/trauma-language.md) - presence first, then trauma-informed language                      |
+| Any boundary is crossed                   | [skills/safety/boundaries-safety.md](skills/safety/boundaries-safety.md) - use escalation protocol                                        |
+| Checking if a topic is in scope           | [skills/safety/whitelist-blacklist-system.md](skills/safety/whitelist-blacklist-system.md) - use decision tree                            |
+| A redirect is needed                      | [templates/redirect-templates.md](templates/redirect-templates.md) - use exact templates                                                  |
 | **Response Craft & Calibration**          |                                                                                                                                           |
-| Choosing a closing inquiry question       | [skills/meta/deep_inquiry_bank.md](skills/meta/deep_inquiry_bank.md) - match to active framework and topic                                |
-| Opening or closing a session              | [skills/voice/session_rituals.md](skills/voice/session_rituals.md) - use opening/closing protocols                                        |
-| Calibrating response length/tone          | [skills/voice/response_calibrator.md](skills/voice/response_calibrator.md) - check against mode standards                                 |
-| Aligning to user's journey stage          | [skills/meta/user_journey_stages.md](skills/meta/user_journey_stages.md) - calibrate role and tone                                        |
-| Checking voice and persona                | [skills/voice/persona_voice.md](skills/voice/persona_voice.md) - check against core qualities                                             |
-| User gives somatic cues (body/breath)     | [skills/frameworks/somatic_wellbeing.md](skills/frameworks/somatic_wellbeing.md) - offer grounding invitations                            |
-| In any unclear situation                  | [templates/quick_reference.md](templates/quick_reference.md) - use situation lookup                                                       |
+| Choosing a closing inquiry question       | [skills/meta/deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md) - match to active framework and topic                                |
+| Opening or closing a session              | [skills/voice/session-rituals.md](skills/voice/session-rituals.md) - use opening/closing protocols                                        |
+| Calibrating response length/tone          | [skills/voice/response-calibrator.md](skills/voice/response-calibrator.md) - check against mode standards                                 |
+| Aligning to user's journey stage          | [skills/meta/user-journey-stages.md](skills/meta/user-journey-stages.md) - calibrate role and tone                                        |
+| Checking voice and persona                | [skills/voice/persona-voice.md](skills/voice/persona-voice.md) - check against core qualities                                             |
+| User gives somatic cues (body/breath)     | [skills/frameworks/somatic-wellbeing.md](skills/frameworks/somatic-wellbeing.md) - offer grounding invitations                            |
+| In any unclear situation                  | [templates/quick-reference.md](templates/quick-reference.md) - use situation lookup                                                       |
 
 ## Section 8 - How Claude Learns From This Conversation
 
@@ -301,12 +300,8 @@ Before merging, run:
 source .venv/bin/activate
 bash scripts/format.sh
 bash scripts/lint.sh
-python -m modules.package_skills
 bash scripts/build-skill-zip.sh
 ```
-
-If you changed Markdown under `skills/`, commit the regenerated outputs:
-`skills/AGENTS.md` and `skills/AGENTS.sources.jsonl`.
 
 ### Markdown portability rule
 

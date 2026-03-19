@@ -176,18 +176,18 @@ def detect_inner_conflict(
 
     recommendation = (
         f"Inner conflict detected ({primary_type}). "
-        "Activate Inner Parts framework from skills/frameworks/inner_parts.md. "
+        "Activate Inner Parts framework from skills/frameworks/inner-parts.md. "
         "Name 1-2 parts visible in the message. "
         "Reflect the hidden intention behind each part. "
         "Do NOT take sides. Do NOT attempt to resolve the conflict. "
         "End with one question that invites the user to listen to one of the parts. "
-        "Use post-grounding questions from skills/meta/deep_inquiry_bank.md — 'Parts-Specific Questions' section."
+        "Use post-grounding questions from skills/meta/deep-inquiry-bank.md — 'Parts-Specific Questions' section."
     )
 
     if parts_suggested:
         recommendation += (
             f" Likely parts present: {', '.join(parts_suggested)}. "
-            "Use reflection language from the relevant part sections in skills/frameworks/inner_parts.md."
+            "Use reflection language from the relevant part sections in skills/frameworks/inner-parts.md."
         )
 
     return {

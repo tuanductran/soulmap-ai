@@ -5,7 +5,6 @@
 - The selector returns exactly one `primary_framework` and a coherent instruction
   string.
 - Safety ordering holds (crisis and dependency take priority).
-- The bundled knowledge base (`skills/AGENTS.md`) builds cleanly and stays navigable.
 - Markdown links and anchors across the repo are not broken.
 - Distribution zip builds and contains the expected files.
 
@@ -18,8 +17,9 @@ python -m tools.lint
 This runs:
 
 - Python checks: compileall, ruff, isort, pytest, optional pyright.
-- Markdown checks: contract checker (links/anchors/fences/headings) + mdformat
-  `--check`.
+- Markdown checks: contract checker (links/anchors/fences/headings/metadata) +
+  `mdformat --check` (excluding `skills/` and `templates/` to preserve YAML front
+  matter).
 - Build smoke: the zip build can be run separately (see below).
 
 ## Build artifacts
@@ -30,8 +30,7 @@ python -m tools.build_skill_zip
 
 Verify:
 
-- `skills/AGENTS.md` exists and begins with `# AGENTS.md` and has a Table of contents.
-- `dist/soulmap-ai.zip` exists and includes `skills/AGENTS.md`.
+- `dist/soulmap-ai.zip` exists and includes files under `skills/` and `templates/`.
 
 ## Manual spot checks (optional)
 

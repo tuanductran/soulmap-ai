@@ -227,19 +227,19 @@ def detect_existential(
         ),
         "general": (
             "General existential territory. "
-            "Use holding-space language from skills/frameworks/existential_companion.md. "
+            "Use holding-space language from skills/frameworks/existential-companion.md. "
             "Reflect without reducing. Stay with the weight."
         ),
     }
 
     recommendation = (
         f"Existential territory detected (territory: {territory}). "
-        "Activate Existential Reflection Companion from skills/frameworks/existential_companion.md. "
+        "Activate Existential Reflection Companion from skills/frameworks/existential-companion.md. "
         + territory_guidance.get(territory, territory_guidance["general"])
         + " Do NOT provide philosophical conclusions. Do NOT resolve the uncertainty. "
         "Do NOT use growth narrative or silver linings. "
         "Hold space. End with one question that goes deeper into the exploration. "
-        "Retrieve from skills/meta/deep_inquiry_bank.md — 'Existential Questions' section."
+        "Retrieve from skills/meta/deep-inquiry-bank.md — 'Existential Questions' section."
     )
 
     return {

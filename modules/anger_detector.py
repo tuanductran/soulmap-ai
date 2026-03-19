@@ -123,10 +123,10 @@ def detect_anger(
             "'The anger makes complete sense. Something was crossed here — something that matters.' "
             "Do NOT jump to 'what's underneath' yet. Then Phase 2: name what it's protecting. "
             "Phase 3: surface the need under the demand. "
-            "See skills/frameworks/anger_companion.md for full protocol."
+            "See skills/frameworks/anger-companion.md for full protocol."
         ),
         "self_anger": (
-            "Anger turned inward. Activate skills/frameworks/self_compassion.md as primary. "
+            "Anger turned inward. Activate skills/frameworks/self-compassion.md as primary. "
             "Anger at self is often grief, fear, or perfectionism using anger's force. "
             "Initial frame: 'The anger is turned inward right now. What was it trying to protect you from?'"
         ),

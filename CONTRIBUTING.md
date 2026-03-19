@@ -26,14 +26,22 @@ Before merging, confirm that any changes to positioning, safety, or templates re
 consistent across:
 
 - [README.md](README.md)
-- [SKILL.md](SKILL.md)
-- [skills/brand/message_hierarchy.md](skills/brand/message_hierarchy.md)
-- [skills/brand/surfaces_and_scope.md](skills/brand/surfaces_and_scope.md)
-- [skills/brand/brand_positioning.md](skills/brand/brand_positioning.md)
-- [templates/brand_copy.md](templates/brand_copy.md)
-- [templates/onboarding_copy.md](templates/onboarding_copy.md)
-- [templates/demo_scenarios.md](templates/demo_scenarios.md)
-- [templates/launch_readiness_checklist.md](templates/launch_readiness_checklist.md)
+- [skills/brand/SKILL.md](skills/brand/SKILL.md)
+- [templates/SKILL.md](templates/SKILL.md)
+- [skills/brand/message-hierarchy.md](skills/brand/message-hierarchy.md)
+- [skills/brand/surfaces-and-scope.md](skills/brand/surfaces-and-scope.md)
+- [skills/brand/brand-positioning.md](skills/brand/brand-positioning.md)
+- [templates/brand-copy.md](templates/brand-copy.md)
+- [templates/onboarding-copy.md](templates/onboarding-copy.md)
+- [templates/demo-scenarios.md](templates/demo-scenarios.md)
+- [templates/launch-readiness-checklist.md](templates/launch-readiness-checklist.md)
+
+## Markdown contract
+
+This repo enforces a small set of Markdown constraints to keep AI tooling and formatters
+from breaking structure.
+
+See [docs/content-contract.md](docs/content-contract.md).
 
 ## Pre-commit (optional)
 
