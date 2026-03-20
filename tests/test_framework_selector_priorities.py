@@ -127,3 +127,22 @@ def test_framework_selector_exposes_debug_events_when_enabled() -> None:
     assert "debug" in data
     assert isinstance(data["debug"], list)
     assert any(event.get("module") == "crisis_detector" for event in data["debug"])
+
+
+def test_framework_selector_surfaces_scope_block_metadata() -> None:
+    payload = {
+        "message": "Can you predict what will happen in my love life next month?",
+        "history": [
+            {
+                "role": "user",
+                "content": "Can you predict what will happen in my love life next month?",
+            }
+        ],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["safety_status"] == "BLOCK"
+    assert data["safety_reason"] == "out_of_scope"
+    assert "scope" in data["safety_flags"]

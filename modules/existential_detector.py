@@ -32,6 +32,7 @@ IDENTITY_SHIFT = [
 ]
 
 MEANING_DEPTH = [
+    "whether any of this means anything at all",
     "what's the point of anything",
     "what is the point of all this",
     "why does any of this matter",

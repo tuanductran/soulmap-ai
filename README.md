@@ -5,7 +5,7 @@ themselves. It is built as a mirror, not a guide.
 
 ## What this repo contains
 
-- `AGENTS.md`: the main behavioral and safety contract
+- `AGENTS.md`: the baseline SoulMap doctrine and package contract
 - `skills/` and `templates/`: the knowledge base
 - `modules/`: detectors, selector logic, and response safeguards
 - `tools/` and `scripts/`: formatting, linting, eval, and packaging workflows
@@ -48,6 +48,10 @@ Structural source of truth: [`docs/repo-contract.md`](docs/repo-contract.md)
 
 ## For AI tools
 
-- use [`AGENTS.md`](AGENTS.md) for SoulMap behavior and safety
-- use [`.claude/rules/`](.claude/rules/) for repository workflow rules
+- use [`AGENTS.md`](AGENTS.md) for the baseline SoulMap doctrine, safety rules, and
+  shipped package guidance
+- use [`.claude/rules/`](.claude/rules/) for repository workflow rules when those files
+  are present in the current checkout
+- use [`.codex/`](.codex/) as an optional Codex-specific local workflow layer when those
+  files are present in the current checkout
 - check root [`.claude/skills/`](.claude/skills/) for cross-repo skills

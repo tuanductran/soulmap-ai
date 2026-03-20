@@ -23,3 +23,18 @@ def test_eval_conversations_passes_default_suites() -> None:
     assert result.returncode == 0, result.stderr
     data = json.loads(result.stdout)
     assert data["ok"] is True
+
+
+def test_eval_responses_passes_default_suite() -> None:
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.eval_responses"],
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+        cwd=ROOT,
+    )
+
+    assert result.returncode == 0, result.stderr
+    data = json.loads(result.stdout)
+    assert data["ok"] is True

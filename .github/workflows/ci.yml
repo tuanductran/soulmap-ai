@@ -45,6 +45,9 @@ jobs:
       - name: Safety evals
         run: |
           python tests/test_safety_evals.py
+      - name: Advanced response evals
+        run: |
+          python -m tools.eval_responses
       - name: Build (cross-platform smoke)
         run: |
           python -m tools.build_skill

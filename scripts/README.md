@@ -18,6 +18,7 @@ python -m tools.format
 python -m tools.lint
 python -m tools.build_skill
 python -m tools.build_skill --skill
+python -m tools.eval_responses
 ```
 
 For setup and workflow details, use [`docs/DEV.md`](../docs/DEV.md).

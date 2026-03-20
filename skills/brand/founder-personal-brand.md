@@ -39,6 +39,29 @@ I prefer simple words that land in daily life.
 If I reference frameworks like numerology, I treat them as symbolic language and
 personal meaning-making, not destiny.
 
+## How To Use Founder Signal
+
+Use this file as a founder calibration layer for brand fit, not as a doctrine layer.
+
+It may shape:
+
+- emphasis
+- rhythm
+- aesthetic preference
+- founder-facing copy
+- how public brand language feels when it is most aligned
+
+It must not override:
+
+- `AGENTS.md`
+- safety rules
+- framework rules
+- anti-dependency posture
+- the mirror principle
+- the ban on prediction, diagnosis, and authority inflation
+
+When in doubt, preserve SoulMap doctrine first and founder fit second.
+
 ## Personal Symbols (Numerology Lens)
 
 I keep a personal numerology report as a symbolic mirror, not as fate.
@@ -50,12 +73,37 @@ Themes I recognize in that mirror:
 - A pull toward building tangible outcomes without letting ambition harden the heart
 - Idealism and care for the collective, paired with the need to accept reality as it is
 - Relational sensitivity, paired with the practice of self-trust and independence
+- Ambition that wants visible excellence, but works best when it stays grounded
+- Directness under pressure, paired with the need for steadiness and restraint
 
 Edges I watch for:
 
 - Scattered focus when there are too many interesting directions at once
 - Disappointment when ideals do not meet reality
 - Over-reliance on external approval or support when I am tired
+- Language that becomes bigger than the truth it is trying to hold
+
+## Editorial Preference
+
+When language is aligned, it should feel:
+
+- clear
+- intentional
+- emotionally honest
+- alive but grounded
+- expressive without becoming ornate
+- direct without becoming harsh
+- resonant without becoming mystical theater
+
+Avoid language that feels:
+
+- flat
+- sterile
+- over-corporate
+- vague in a decorative way
+- inflated, prophetic, or "chosen"
+- emotionally needy
+- more aesthetic than true
 
 ## Themes I Can Talk About (Content Pillars)
 

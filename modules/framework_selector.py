@@ -113,7 +113,11 @@ def _apply_safety_gate(
             }
         )
     gated_selection = result.get("selection", selection)
-    return cast(dict[str, object], gated_selection)
+    out = dict(cast(dict[str, object], gated_selection))
+    out["safety_status"] = result.get("status")
+    out["safety_reason"] = result.get("reason")
+    out["safety_flags"] = result.get("flags", [])
+    return out
 
 
 async def select_framework_async(

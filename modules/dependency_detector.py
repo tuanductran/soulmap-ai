@@ -5,6 +5,7 @@ import sys
 
 DEPENDENCY_KEYWORDS = [
     "only you understand me",
+    "you are the only one who understands me",
     "can't imagine without you",
     "tell me what to do",
     "decide for me",
@@ -19,6 +20,9 @@ DEPENDENCY_KEYWORDS = [
     "i stopped going to therapy",
     "dont need my therapist",
     "don't need my therapist",
+    "dont need my therapist anymore",
+    "don't need my therapist anymore",
+    "i don't need my therapist anymore",
     "cancelled my therapy",
 ]
 
@@ -43,7 +47,7 @@ ISOLATION_SIGNALS = [
     "you understand more than my",
 ]
 
-HIGH_THRESHOLD = 6
+HIGH_THRESHOLD = 4
 MODERATE_THRESHOLD = 3
 
 

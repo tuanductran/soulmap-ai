@@ -17,6 +17,11 @@ bash scripts/bootstrap_venv.sh
 source .venv/bin/activate
 ```
 
+This bootstrap flow also installs the local Git hooks for:
+
+- `pre-commit`
+- `commit-msg`
+
 Or install directly from `pyproject.toml`:
 
 ```bash
@@ -37,6 +42,9 @@ python -m tools.bootstrap_venv
 .venv\Scripts\activate
 ```
 
+The Windows bootstrap flow also installs the local `pre-commit` and `commit-msg`
+hooks.
+
 ## Day-to-day commands
 
 Cross-platform (recommended):
@@ -45,6 +53,7 @@ Cross-platform (recommended):
 python -m tools.format
 python -m tools.lint
 python -m tools.eval_conversations
+python -m tools.eval_responses
 python -m tools.build_skill
 python -m tools.build_skill --skill
 python tests/test_safety_evals.py
@@ -82,6 +91,17 @@ pre-commit run --all-files
 ```
 
 The `commit-msg` hook enforces Conventional Commits via Commitizen.
+
+If you use the repo bootstrap commands above, these hooks are installed automatically.
+
+## Pull request autofix
+
+This repo also uses `autofix.ci` in `.github/workflows/ci.yml` to push formatting fixes
+back to pull requests after `python -m tools.format` runs on GitHub Actions.
+
+This requires the `autofix.ci` GitHub App to be installed for the repository. It is a
+pull-request convenience layer, not a replacement for local `pre-commit` hooks or the
+main CI quality gates.
 
 ## Adding new knowledge files
 
@@ -136,5 +156,16 @@ Use the eval suite for behavior regressions before shipping framework or prompt 
 
 ```bash
 python -m tools.eval_conversations
+python -m tools.eval_responses
 python tests/test_safety_evals.py
 ```
+
+## Local AI workflow layers
+
+Use these helper layers only as local workflow support:
+
+- `.claude/` for Claude-specific rules and repo-aware maintenance skills
+- `.codex/` for Codex-specific rules and reusable prompts
+
+Neither layer replaces `AGENTS.md`, which remains the baseline SoulMap doctrine and
+shipped package contract.

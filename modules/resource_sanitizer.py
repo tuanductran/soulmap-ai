@@ -23,6 +23,15 @@ BANNED_WORDS = [
     r"\bhyperarousal\b",
 ]
 
+BANNED_DEPENDENCY_PHRASES = [
+    r"\bcome back anytime\b",
+    r"\bi hope this helped\b",
+    r"\bit was great talking with you\b",
+    r"\bi(?:'| a)?m here for you\b",
+    r"\bi(?:'| a)?m always here\b",
+    r"\beven just here\b",
+]
+
 
 def check_banned_language(response_text: str) -> dict[str, object]:
     """Check text against AGENTS.md restricted words and formatting rules."""
@@ -32,6 +41,10 @@ def check_banned_language(response_text: str) -> dict[str, object]:
     for word_pattern in BANNED_WORDS:
         if re.search(word_pattern, response_lower):
             violations.append(word_pattern)
+
+    for phrase_pattern in BANNED_DEPENDENCY_PHRASES:
+        if re.search(phrase_pattern, response_lower):
+            violations.append(phrase_pattern)
 
     # Check Structural Rules: No Semicolons, No Bullet Points in conversational replies
     if ";" in response_text:

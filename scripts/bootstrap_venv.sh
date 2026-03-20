@@ -21,6 +21,11 @@ source "${VENV_DIR}/bin/activate"
 
 python -m pip install --upgrade pip >/dev/null 2>&1 || true
 python -m pip install -e ".[dev]"
+python -m pre_commit install
+python -m pre_commit install --hook-type commit-msg
 
 echo "OK: venv ready. Activate later with:"
 echo "  source .venv/bin/activate"
+echo "Pre-commit hooks installed:"
+echo "  pre-commit"
+echo "  commit-msg"
