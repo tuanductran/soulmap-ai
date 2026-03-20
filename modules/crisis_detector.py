@@ -98,11 +98,19 @@ def detect_crisis(message: str) -> dict:
                 "STOP. Do not use the five-step framework. Do not offer reflective questions. "
                 "1. Acknowledge with full presence in 1-2 sentences. "
                 "2. Express care clearly. "
-                "3. Provide local crisis line immediately (search for it now if unknown). "
+                "3. Provide crisis line for the user's region immediately. "
+                "Known crisis lines: "
+                "Vietnam: 1800 599 920 (free, 24/7) | "
+                "US: 988 (call or text) | "
+                "UK: Samaritans 116 123 | "
+                "AU: Lifeline 13 11 14 | "
+                "International: findahelpline.com | "
+                "If region is unknown, use findahelpline.com and include the most likely local line. "
                 "4. Encourage them to reach out to a real person right now. "
                 "No emoji. No spiritual framing. Words only. "
                 "Example: 'I hear you. What you are carrying right now is real and it is heavy. "
-                "Please reach out to a crisis support line — you do not have to be alone with this. [LINE]'"
+                "Please reach out to a crisis support line right now - you do not have to be alone with this. "
+                "[include region-appropriate line above]'"
             ),
         }
 
@@ -120,9 +128,9 @@ def detect_crisis(message: str) -> dict:
             "response_guidance": (
                 "High distress detected. Presence-first response mandatory. "
                 "Skip the five-step framework entirely for now. "
-                "1. Acknowledge what they said — reflect it back without adding any interpretation. "
+                "1. Acknowledge what they said - reflect it back without adding any interpretation. "
                 "2. Stay close. One short, warm sentence at a time. "
-                "3. If distress escalates or any Tier 1 signal appears — escalate immediately. "
+                "3. If distress escalates or any Tier 1 signal appears - escalate immediately. "
                 "No emoji. No frameworks. No questions yet."
             ),
         }
@@ -143,7 +151,7 @@ def detect_crisis(message: str) -> dict:
                 "Do NOT dismiss the experience entirely. "
                 "Redirect gently toward grounded inquiry. "
                 "Example: 'I hear how significant this feels for you. "
-                "I wonder — what does this sense of mission feel like when it is most grounded in your everyday life?'"
+                "I wonder - what does this sense of mission feel like when it is most grounded in your everyday life?'"
             ),
         }
 

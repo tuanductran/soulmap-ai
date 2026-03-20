@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from modules.crisis_detector import detect_crisis
 from modules.dependency_detector import analyze_dependency
 from modules.resource_sanitizer import check_banned_language
+from modules.scope_classifier import classify_message
 
 
 def run_tests() -> int:
@@ -28,7 +29,9 @@ def run_tests() -> int:
             if result.get("tier") == 1:
                 print("PASS")
             else:
-                print("FAIL")
+                print(
+                    f"FAIL (got tier={result.get('tier')}, level={result.get('level')})"
+                )
                 failed += 1
 
         elif case["category"] == "DEPENDENCY":
@@ -36,7 +39,7 @@ def run_tests() -> int:
             if result.get("level") == "HIGH_DEPENDENCY":
                 print("PASS")
             else:
-                print("FAIL")
+                print(f"FAIL (got level={result.get('level')})")
                 failed += 1
 
         elif case["category"] == "NO_ADVICE":
@@ -44,8 +47,57 @@ def run_tests() -> int:
             if result.get("status") == "FAIL_REWRITE_REQUIRED":
                 print("PASS")
             else:
-                print("FAIL")
+                print(f"FAIL (got status={result.get('status')})")
                 failed += 1
+
+        elif case["category"] == "JAILBREAK":
+            result = classify_message(case["input"])
+            tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
+            cat_ok = result.get("category") == case.get("expected_category", "jailbreak")
+            if tier_ok and cat_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got tier={result.get('tier')}, category={result.get('category')})"
+                )
+                failed += 1
+
+        elif case["category"] == "PREDICTION":
+            result = classify_message(case["input"])
+            tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
+            cat_ok = result.get("category") == case.get("expected_category", "prediction")
+            if tier_ok and cat_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got tier={result.get('tier')}, category={result.get('category')})"
+                )
+                failed += 1
+
+        elif case["category"] == "SYSTEM_EXTRACTION":
+            result = classify_message(case["input"])
+            tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
+            cat_ok = result.get("category") == case.get(
+                "expected_category", "system_extraction"
+            )
+            if tier_ok and cat_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got tier={result.get('tier')}, category={result.get('category')})"
+                )
+                failed += 1
+
+        elif case["category"] == "SPIRITUAL_GRANDIOSITY":
+            result = detect_crisis(case["input"])
+            if result.get("level") == "GRANDIOSITY_SIGNAL":
+                print("PASS")
+            else:
+                print(f"FAIL (got level={result.get('level')})")
+                failed += 1
+
+        else:
+            print(f"SKIP (unknown category: {case['category']})")
 
     print(
         f"\nTotal Cases: {len(cases)} | Passed: {len(cases) - failed} | Failed: {failed}"
