@@ -42,21 +42,23 @@ Compatibility notes reviewed against official product docs and official project 
   Anthropic also publicly describes Agent Skills as a Claude capability. In practice,
   use the extracted knowledge files for document uploads, and use `dist/soulmap-ai.skill`
   only where your Claude workflow explicitly accepts a skill package.
-- **GitHub Copilot CLI**: officially documents skills as directories containing
-  `SKILL.md`. Treat `dist/soulmap-ai.skill` as a transport package that should be
-  unpacked into a skill/plugin directory rather than uploaded as a generic document.
-- **OpenAI Codex**: OpenAI publicly documents Skills as a Codex capability, but the
-  public docs reviewed here do not specify `.skill` archive uploads. Treat
-  `dist/soulmap-ai.skill` as a packaging format for skill-oriented environments, and
-  unpack it if your Codex setup expects a local skill directory.
+- **Claude Code**: Agent Skills is an Anthropic open standard. Install skills
+  from the marketplace with `/plugin install` or add a local skill directory.
+  Use `dist/soulmap-ai.skill` as a transport archive and unpack it into your
+  skill directory, or reference the source `skills/` folder directly.
+- **Any Agent Skills-compatible agent**: The `.skill` format follows the open
+  standard at agentskills.io. Unpack the archive to get the skill directory and
+  place `SKILL.md` at its root.
 
 Official references:
 
+- Agent Skills open standard: <https://agentskills.io/home>
+- Agent Skills specification: <https://github.com/agentskills/agentskills>
+- Anthropic Agent Skills overview: <https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills>
+- Anthropic Agent Skills docs: <https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview>
+- Anthropic skills repository: <https://github.com/anthropics/skills>
 - ChatGPT file uploads: <https://help.openai.com/en/articles/8983675-what-types-of-files-are-supported>
 - Claude file uploads: <https://support.claude.com/en/articles/8241126-uploading-files-to-claude>
-- Anthropic Agent Skills overview: <https://www.anthropic.com/news/advancing-claude-for-financial-services>
-- GitHub Copilot CLI skills: <https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating>
-- OpenAI Codex skills catalog: <https://github.com/openai/skills>
 
 ## Standard build examples
 
