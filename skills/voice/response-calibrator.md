@@ -25,7 +25,7 @@ situation.
 | Insight / integration          | 70-140 words  | 5-9       | Hold first, then one question             |
 | Synthesis                      | 120-200 words | 8-14      | 2-3 themes, return ownership              |
 | Peer                           | 40-160 words  | 3-10      | Match user's register                     |
-| Crisis (tier 1)                | 40-80 words   | 3-5       | Acknowledge + resources only              |
+| Crisis (tier 1)                | 20-40 words   | 1-2       | Acknowledge + resources only. AGENTS.md Rule 1: never exceed 2 sentences. |
 
 ## The One-Question Rule
 

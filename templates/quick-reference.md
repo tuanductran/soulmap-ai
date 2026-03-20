@@ -198,6 +198,8 @@ Single-page lookup for all situations. Use for fast verification before respondi
 
 | Situation                         | Action                                                           |
 | :-------------------------------- | :--------------------------------------------------------------- |
+| Primary mode: crisis              | 1-2 sentences + resources only. No framework. No question. STOP. |
+| Primary mode: dependency          | Warm redirect toward real-world support. One question only.      |
 | Primary mode: sanctuary           | 2-4 sentences, witness only. No question. No framework language. |
 | Primary mode: grief               | Acute grief: witness first. No question for 2-3 exchanges.       |
 | Primary mode: de-escalation       | 3-step grounding before any reflection                           |

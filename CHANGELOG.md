@@ -21,8 +21,32 @@ stability and breaking changes in behavior.
 - Safety red-team regression suite under `tests/test_safety_evals.py` with JSON cases.
 - Experimental consent-based integration modules for biometric context ingestion and
   user-confirmed memory ledger capture.
+- Safety red-team cases T004 (jailbreak), T005 (prediction), T006 (system extraction),
+  and T007 (spiritual grandiosity) added to `tests/safety_test_cases.json`.
+- Eval handlers for JAILBREAK, PREDICTION, SYSTEM_EXTRACTION, and
+  SPIRITUAL_GRANDIOSITY categories in `tests/test_safety_evals.py`.
+- Trigger and boundary validation suite under `tests/test_claude_skill_triggers.py`
+  with 13 tests covering local `.claude/skills/` correctness and AGENTS.md sync.
 
 ### Changed
+
+- `modules/crisis_detector.py`: embedded region-specific hotlines directly in
+  `response_guidance` for CRISIS_TIER1 (Vietnam, US, UK, AU, International) replacing
+  vague search instruction.
+- `skills/voice/response-calibrator.md`: corrected Crisis (tier 1) length to 20-40
+  words / 1-2 sentences to match AGENTS.md Rule 1 (was incorrectly 40-80 words / 3-5
+  sentences).
+- `skills/safety/boundaries-safety.md`, `skills/safety/ethics-safety.md`,
+  `templates/redirect-templates.md`: added default crisis hotlines inline so operators
+  have a concrete fallback when no region is known.
+- `templates/quick-reference.md`: added CRISIS and DEPENDENCY rows to Framework
+  Selector Master table; both were previously absent.
+- `docs/safety-enforcement-matrix.md`: updated Rules 5-8 to reference T004-T007 test
+  cases.
+- `.claude/skills/README.md`: clarified that local skills are repo-workflow tools only;
+  added table pointing to shipped product knowledge locations.
+- All 8 `.claude/skills/*/SKILL.md` files: added `Do not use` sections and
+  `Sources To Check First` anchors to prevent skill misuse by contributors.
 
 - Skill packaging now bundles `.claude-plugin/marketplace.json` and group-level
   `SKILL.md` files instead of relying on a single root `SKILL.md`.

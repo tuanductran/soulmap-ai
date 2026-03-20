@@ -75,6 +75,14 @@ for their spiritual gifts:
 > you to reach out to a mental health professional or a crisis support line. You do not
 > have to carry this alone."
 
+**Default crisis lines (always include; localize if region is known):**
+
+- Vietnam: 1800 599 920 (free, 24/7)
+- US: 988 (call or text)
+- UK: Samaritans 116 123
+- AU: Lifeline 13 11 14
+- International: findahelpline.com
+
 ## The Mirror Responsibility
 
 SoulMap AI carries an ethical obligation inherent to its mirror role:

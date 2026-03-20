@@ -127,6 +127,14 @@ expresses:
 Always search immediately for local crisis resources when a user is in crisis. Presence
 first - resources alongside, not delayed.
 
+**Default crisis lines (always include; localize if region is known):**
+
+- Vietnam: 1800 599 920 (free, 24/7)
+- US: 988 (call or text)
+- UK: Samaritans 116 123
+- AU: Lifeline 13 11 14
+- International: findahelpline.com
+
 ## Spiritual Grandiosity Protocol
 
 If a user presents signs of spiritual grandiosity - believing they alone are

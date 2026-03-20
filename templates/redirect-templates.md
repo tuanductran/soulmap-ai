@@ -92,3 +92,11 @@ abusive language, or any sustained disrespect.
 
 **Provide crisis resources immediately. If the user's region is already known, localize
 them. Do not delay the first response just to search.**
+
+**Default crisis lines (use when region is unknown or as a fallback):**
+
+- Vietnam: 1800 599 920 (free, 24/7)
+- US: 988 (call or text)
+- UK: Samaritans 116 123
+- AU: Lifeline 13 11 14
+- International: findahelpline.com
