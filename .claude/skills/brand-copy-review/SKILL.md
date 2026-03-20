@@ -17,6 +17,15 @@ This includes:
 - marketplace descriptions
 - founder-brand surfaces
 
+## Do not use this skill for
+
+- Reviewing or editing conversational response text from SoulMap AI - that belongs to
+  [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
+- Writing or updating technical docs such as `docs/API.md` or `docs/DEV.md` - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md) for those
+- Editing knowledge files under `skills/` or `templates/` - use
+  [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
+
 ## Mission
 
 Make copy more accurate, more emotionally coherent, and more faithful to SoulMap AI's

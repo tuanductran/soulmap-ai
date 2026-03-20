@@ -17,6 +17,15 @@ Relevant files include:
 - `modules/biometric_ingest.py`
 - `modules/memory_ledger.py`
 
+## Do not use this skill for
+
+- Reviewing conversational prompt behavior or response safety rules - use
+  [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
+- Writing or updating technical docs - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
+- Editing knowledge files under `skills/` or `templates/` - use
+  [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
+
 ## Mission
 
 Ensure operational guidance matches the ethical and safety posture of SoulMap AI.

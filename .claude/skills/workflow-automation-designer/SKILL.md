@@ -16,6 +16,27 @@ Examples:
 - packaging workflow
 - QA handoff workflow
 
+## Sources To Check First
+
+Before designing any workflow, inspect the relevant existing tooling and contracts:
+
+- `.claude/rules/repo-workflow.md` - current working discipline and quality checks
+- `.github/workflows/` - existing CI workflows
+- `tools/` - cross-platform Python tooling scripts
+- `scripts/` - bash helper scripts
+- `docs/DEV.md` - developer setup and day-to-day commands
+- `docs/OPERATIONS.md` - operational checklists and release guidance
+- `templates/launch-readiness-checklist.md` - release gate template
+
+## Do not use this skill for
+
+- Release readiness checks - use
+  [`release-readiness-review`](../release-readiness-review/SKILL.md)
+- Identifying gaps in the project - use
+  [`research-and-gap-analysis`](../research-and-gap-analysis/SKILL.md)
+- Writing documentation - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
+
 ## Mission
 
 Convert repeated repo work into clear, reproducible steps.

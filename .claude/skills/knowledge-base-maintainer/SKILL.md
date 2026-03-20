@@ -11,6 +11,15 @@ Use this skill when creating or editing Markdown knowledge files under:
 - `templates/`
 - `docs/`
 
+## Do not use this skill for
+
+- Writing or updating technical docs (`docs/API.md`, `docs/DEV.md`, etc.) - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md) for those
+- Reviewing public-facing brand copy - use
+  [`brand-copy-review`](../brand-copy-review/SKILL.md)
+- Reviewing prompt engineering or response safety - use
+  [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
+
 ## Mission
 
 Keep the content layer of the repo healthy.

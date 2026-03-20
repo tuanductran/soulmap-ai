@@ -8,6 +8,14 @@ description: Analyze the SoulMap AI repository to identify missing pieces, incon
 Use this skill when you want a structured analysis of what is missing, incomplete, or
 out of sync in the repository.
 
+## Do not use this skill for
+
+- Pre-release shipping checks - use
+  [`release-readiness-review`](../release-readiness-review/SKILL.md) for those
+- Fixing gaps you find - use the appropriate skill for the specific task
+- Writing or updating docs - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
+
 ## Mission
 
 Find the highest-value gaps in the project and describe them clearly.
@@ -44,6 +52,19 @@ Examples:
 - packaging
 - evals
 - release guidance
+
+## Sources To Check First
+
+Always start with these before forming any opinion about what is missing:
+
+- `AGENTS.md` - primary behavioral and safety contract
+- `docs/repo-contract.md` - structural source of truth for all repo surfaces
+- `docs/safety-enforcement-matrix.md` - evidence map for safety claims
+- `docs/maintenance-boundary.md` - scope-control document
+- `skills/` and `templates/` - shipped knowledge base
+- `modules/` - implementation; compare against docs and tests
+- `tests/` - check for coverage gaps against the riskiest behaviors
+- `CHANGELOG.md` - what has changed recently
 
 ## Workflow
 

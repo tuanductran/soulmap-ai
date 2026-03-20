@@ -9,6 +9,16 @@ Use this skill before shipping notable changes to the repository.
 
 This skill is for launch and release hygiene, not feature ideation.
 
+## Do not use this skill for
+
+- Day-to-day code review or module-level changes - use
+  [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
+  or [`operations-and-safety-review`](../operations-and-safety-review/SKILL.md)
+- Identifying long-term gaps or improvement ideas - use
+  [`research-and-gap-analysis`](../research-and-gap-analysis/SKILL.md)
+- Writing or updating docs - use
+  [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
+
 ## Mission
 
 Check whether the repo tells a consistent, shippable story across:

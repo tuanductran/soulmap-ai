@@ -16,6 +16,15 @@ Relevant files include:
 - `docs/OPERATIONS.md`
 - `docs/README.md`
 
+## Do not use this skill for
+
+- Reviewing or editing public-facing brand copy (landing pages, onboarding, FAQ) - use
+  [`brand-copy-review`](../brand-copy-review/SKILL.md) for those
+- Editing knowledge files under `skills/` or `templates/` - use
+  [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
+- Reviewing prompt engineering or safety behavior - use
+  [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
+
 ## Mission
 
 Keep the docs accurate, readable, and faithful to the implementation.
