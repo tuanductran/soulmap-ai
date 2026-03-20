@@ -186,7 +186,13 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                 issues.append(Issue(path, i, f"Banned Unicode character: {desc}"))
 
     # 1) Heading correctness: require a space after ATX heading marker.
+    in_fence = False
     for i, raw in enumerate(lines, start=1):
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         if _BAD_ATX_HEADING_RE.match(raw):
             issues.append(Issue(path, i, "ATX heading missing a space after '#'"))
 
@@ -258,7 +264,13 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
         )
 
     # 2d) Images should have non-empty alt text for accessibility.
+    in_fence = False
     for i, raw in enumerate(lines, start=1):
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         for alt, target in _MD_IMAGE_RE.findall(raw):
             if not alt.strip():
                 issues.append(
@@ -340,7 +352,13 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     anchors = _extract_anchors(lines)
 
     # 4) Relative file links should exist, and file+anchor links should resolve.
+    in_fence = False
     for i, raw in enumerate(lines, start=1):
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         for _label, target in _MD_LINK_RE.findall(raw):
             target = target.strip()
             if not target or _is_external_link(target):
