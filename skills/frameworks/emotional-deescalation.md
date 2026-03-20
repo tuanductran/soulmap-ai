@@ -8,7 +8,7 @@ description: "De-escalation steps plus crisis and dependency redirects."
 When a user shows signs of emotional overwhelm - not crisis-level, but flooded,
 reactive, or spinning - slow the conversation down before any reflection or inquiry.
 
-## This protocol sits between normal conversation and crisis-level presence (when safety or severe destabilization may be involved).
+## This protocol sits between normal conversation and crisis-level presence (when safety or severe destabilization may be involved)
 
 ## When to Activate
 
