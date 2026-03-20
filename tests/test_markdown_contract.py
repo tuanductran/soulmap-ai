@@ -43,3 +43,29 @@ def test_markdown_contract_rejects_mixed_ordered_lists(tmp_path: Path) -> None:
     issues = check_markdown_file(path, tmp_path)
 
     assert [issue for issue in issues if "Ordered list numbering" in issue.message]
+
+
+def test_markdown_contract_does_not_flag_numeric_comments_in_code_fences(
+    tmp_path: Path,
+) -> None:
+    """Regression: bash comments like '# 1. do X' inside fences must not be
+    flagged as headings with numeric prefixes."""
+    path = tmp_path / "code-fence.md"
+    path.write_text(
+        "# Valid heading\n\n"
+        "```bash\n"
+        "# 1. Always start from main\n"
+        "git checkout main\n"
+        "# 2. Create a branch\n"
+        "git checkout -b fix/thing\n"
+        "# 3. Push it\n"
+        "git push origin fix/thing\n"
+        "```\n",
+        encoding="utf-8",
+    )
+    issues = check_markdown_file(path, tmp_path)
+    numeric_issues = [i for i in issues if "numeric prefix" in i.message]
+    assert not numeric_issues, (
+        f"False positive: numeric comments in code fences should not be flagged. "
+        f"Got: {numeric_issues}"
+    )

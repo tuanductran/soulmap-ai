@@ -191,7 +191,15 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             issues.append(Issue(path, i, "ATX heading missing a space after '#'"))
 
     # 1a) Heading numbering: disallow numeric prefixes like `1)` / `1.` in headings.
+    #     Guard against false positives inside fenced code blocks (e.g. bash comments
+    #     like `# 1. do something` would otherwise be flagged as headings).
+    in_fence = False
     for i, raw in enumerate(lines, start=1):
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         match = _ATX_HEADING_RE.match(raw)
         if not match:
             continue
