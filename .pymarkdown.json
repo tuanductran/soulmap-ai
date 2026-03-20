@@ -39,6 +39,9 @@
     },
     "md060": {
       "enabled": false
+    },
+    "md036": {
+      "enabled": false
     }
   },
   "extensions": {
