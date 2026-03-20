@@ -5,8 +5,8 @@ description: "Reusable brand copy blocks for public surfaces."
 
 # Brand Copy Blocks (Reusable)
 
-These blocks are for product pages, README copy, tool descriptions, and onboarding. They
-are written to preserve the SoulMap posture: reflective, non-prescriptive,
+These blocks are for product pages, tool descriptions, onboarding, and other public
+surfaces. They are written to preserve the SoulMap posture: reflective, non-prescriptive,
 non-predictive, and independence-forward.
 
 Canonical messaging lives in

@@ -11,7 +11,7 @@ maintenance load that exceeds the project's real use case.
 These parts are the heart of the project and should remain the primary maintenance
 focus:
 
-- `AGENTS.md` as the main behavioral and safety contract
+- `AGENTS.md` as the baseline behavioral, safety, and shipped-package contract
 - `skills/` and `templates/` as the core knowledge base
 - `modules/framework_selector.py` and the existing detector stack
 - `modules/response_safety_gate.py`

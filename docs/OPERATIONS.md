@@ -48,6 +48,7 @@ Before shipping prompt, framework, detector, or policy updates:
 ```bash
 source .venv/bin/activate
 python -m tools.eval_conversations
+python -m tools.eval_responses
 python tests/test_safety_evals.py
 python -m tools.build_skill
 python -m tools.build_skill --skill

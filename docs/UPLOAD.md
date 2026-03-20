@@ -19,6 +19,9 @@ This build intentionally excludes `.claude-plugin/`.
 Use this when you want a clean knowledge archive for manual extraction, project
 knowledge, or document-based AI workflows.
 
+`AGENTS.md` is intended to stand on its own in this extracted package. Do not assume
+repo-local workflow files are present unless they are explicitly bundled too.
+
 ### `dist/soulmap-ai.skill`
 
 Skill-oriented archive containing the same core knowledge files as the zip build,

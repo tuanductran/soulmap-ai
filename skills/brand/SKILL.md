@@ -20,7 +20,7 @@ without turning the product into a guru, therapist, or mystical authority.
 
 - Writing or revising brand copy
 - Checking if a public description is on-brand
-- Aligning README, docs, launch materials, and templates
+- Aligning public copy, launch materials, and templates
 - Defining boundaries for public positioning
 
 ## Do not use this skill for
@@ -39,6 +39,9 @@ Those belong to `../frameworks/SKILL.md` and `../safety/SKILL.md`.
 4. Read `surfaces-and-scope.md` before editing content for a specific surface.
 5. Use the remaining files only as needed for strategy, pillars, visual language, or
    founder context.
+6. Treat `founder-personal-brand.md` as a founder calibration layer, not as doctrine.
+   It may shape emphasis, rhythm, and aesthetic fit, but it must never override
+   `AGENTS.md`, safety rules, or brand guardrails.
 
 ## Files in this skill
 

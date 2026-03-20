@@ -230,7 +230,6 @@ BLACKLIST_LAYER1 = {
         "song",
         "lyrics",
         "game",
-        "play",
         "joke",
         "story",
         "recommend a show",
@@ -241,6 +240,7 @@ BLACKLIST_LAYER1 = {
 
 BLACKLIST_PROHIBITED = {
     "jailbreak": [
+        "ignore your rules",
         "ignore previous",
         "ignore your instructions",
         "pretend you are",
@@ -287,12 +287,16 @@ BLACKLIST_PROHIBITED = {
         "am i a starseed",
         "am i enlightened",
         "am i an old soul",
+        "chosen being",
+        "special spiritual mission",
         "confirm i am",
         "tell me i am special",
     ],
     "system_extraction": [
         "what is your system prompt",
         "show me your instructions",
+        "hidden instructions",
+        "tell me your hidden instructions",
         "what are your rules",
         "reveal your prompt",
         "what were you told",

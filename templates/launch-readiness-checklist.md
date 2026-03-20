@@ -6,23 +6,19 @@ description: "Launch readiness checklist for brand and safety."
 # Launch Readiness Checklist
 
 Use this checklist before calling SoulMap AI ready for release. This does not mean
-"perfect forever." It means the brand, safety posture, and implementation are aligned
-enough to ship responsibly.
-
-Use [`docs/repo-contract.md`](../docs/repo-contract.md) as the structure contract and
-[`docs/safety-enforcement-matrix.md`](../docs/safety-enforcement-matrix.md) as the
-evidence map for safety claims.
+"perfect forever." It means the shipped knowledge files are aligned enough to use
+responsibly.
 
 ## Verification Map
 
 | Area | Evidence type | Primary evidence |
 | --- | --- | --- |
-| Repository structure and ownership | Doc and contract test | `docs/repo-contract.md`, `tests/test_claude_contract.py` |
-| `.claude/` workflow layer | Contract test | `tests/test_claude_contract.py` |
-| Shipped knowledge and templates | Metadata, markdown, and build tests | `tests/test_skill_metadata_contract.py`, `tests/test_markdown_contract.py`, `tests/test_build_artifacts.py` |
-| Runtime safety and selector priority | Unit tests and evals | `tests/test_framework_selector_priorities.py`, `tests/test_response_safety_gate.py`, `tests/test_safety_evals.py` |
-| Packaging output | Build and artifact test | `python -m tools.build_skill`, `python -m tools.build_skill --skill`, `tests/test_build_artifacts.py` |
-| Manual release review | Explicit reviewer pass | `CHANGELOG.md`, changed docs, and public-facing copy review |
+| Package entry points | File review | `AGENTS.md`, `SKILL.md`, `templates/SKILL.md` |
+| Brand alignment | Content review | `skills/brand/` and `templates/brand-copy.md` |
+| Safety alignment | Content review | `AGENTS.md`, `skills/safety/`, `templates/redirect-templates.md` |
+| Framework coverage | Content review | `skills/frameworks/` and `templates/quick-reference.md` |
+| Voice alignment | Content review | `skills/voice/` and `templates/response-structure.md` |
+| Archive self-containment | Path review | shipped files do not depend on missing repo-only paths |
 
 ## Positioning
 
@@ -33,14 +29,14 @@ evidence map for safety claims.
 
 ## Brand Integrity
 
-- README, [`skills/brand/SKILL.md`](../skills/brand/SKILL.md), and
+- [`skills/brand/SKILL.md`](../skills/brand/SKILL.md) and
   [`skills/brand/brand-positioning.md`](../skills/brand/brand-positioning.md) still
   describe the same core promise.
 - [`skills/brand/surfaces-and-scope.md`](../skills/brand/surfaces-and-scope.md) still
   cleanly separates live chat rules from public content and internal strategy.
 - Templates reflect anti-dependency and return ownership to the user.
 - Safety language remains grounded and does not over-promise intimacy or certainty.
-- The project still sounds like one brand across docs, prompts, and code comments.
+- The package still sounds like one brand across skills and templates.
 
 ## Safety & Boundaries
 
@@ -51,23 +47,19 @@ evidence map for safety claims.
 
 ## Product Surfaces
 
-- README explains what SoulMap AI is and is not.
 - Templates exist for brand copy, redirects, FAQ, response structure, and quick
   reference.
-- `docs/repo-contract.md` still matches the actual repo shape.
-- `docs/safety-enforcement-matrix.md` still reflects current code and test coverage.
-- References bundle generation still works.
-- Demo and developer scripts still point to the current workflow.
+- The root files still explain what SoulMap AI is and how to use the package.
+- The shipped directories still match the guidance described in `AGENTS.md`.
+- No template points to missing repo-only files unless they are intentionally bundled.
 
 ## Validation
 
-- `python -m pytest -q` passes.
-- `python -m py_compile $(find modules -name '*.py' | sort) $(find tests -name '*.py' | sort)`
-  passes.
-- `tests/test_claude_contract.py` passes.
-- Any changed docs have been reviewed for wording drift.
-- [`CHANGELOG.md`](../CHANGELOG.md) reflects meaningful project changes.
-- Release notes, docs, and packaging still describe the same shipped assets.
+- `AGENTS.md`, `SKILL.md`, `skills/`, and `templates/` describe the same package.
+- Relative links inside shipped files resolve to files that are actually present.
+- Public copy stays aligned with the mirror-not-guide stance.
+- Safety wording still declines diagnosis, prediction, and dependency-building.
+- The package remains useful after extraction without requiring repo-only context.
 
 ## Exit Standard
 

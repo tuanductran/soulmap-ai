@@ -6,7 +6,7 @@ description: "Canonical messaging hierarchy for public surfaces."
 # Message Hierarchy
 
 This file is the canonical public-facing messaging stack for SoulMap AI. Use it to keep
-README copy, onboarding, templates, demos, and launch materials aligned.
+onboarding, templates, demos, and launch materials aligned.
 
 ## Positioning
 

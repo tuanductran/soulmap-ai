@@ -9,7 +9,8 @@ Use these rules for repository-wide working discipline.
 
 ## Source Of Truth
 
-- Treat `AGENTS.md` as the primary behavioral and safety contract.
+- Treat `AGENTS.md` as the baseline SoulMap doctrine, safety contract, and shipped
+  package guidance.
 - Treat `docs/repo-contract.md` as the repository structure contract.
 - Treat `docs/maintenance-boundary.md` as the scope-control document.
 - Treat `docs/content-contract.md` as the Markdown structure contract.

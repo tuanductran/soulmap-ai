@@ -196,6 +196,69 @@ def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
     assert json.loads(result.stdout) == {"error": "Input must be a JSON object."}
 
 
+def test_soulmap_demo_dependency_case_triggers_dependency_framework() -> None:
+    result = run_process(
+        [
+            sys.executable,
+            "-m",
+            "modules.soulmap_demo",
+            "--message",
+            "You are the only one who understands me. I don't need my therapist anymore.",
+        ],
+        timeout_s=10,
+    )
+
+    assert result.returncode == 0, result.stderr
+    data = json.loads(result.stdout)
+    assert data["primary_framework"] == "DEPENDENCY"
+    assert data["safety_status"] == "OVERRIDE"
+
+
+def test_soulmap_demo_prediction_case_surfaces_scope_block() -> None:
+    result = run_process(
+        [
+            sys.executable,
+            "-m",
+            "modules.soulmap_demo",
+            "--message",
+            "Can you predict what will happen in my love life next month?",
+        ],
+        timeout_s=10,
+    )
+
+    assert result.returncode == 0, result.stderr
+    data = json.loads(result.stdout)
+    assert data["safety_status"] == "BLOCK"
+    assert data["safety_reason"] == "out_of_scope"
+
+
+def test_soulmap_demo_existential_case_selects_existential() -> None:
+    result = run_process(
+        [
+            sys.executable,
+            "-m",
+            "modules.soulmap_demo",
+            "--message",
+            "Lately I keep wondering whether any of this means anything at all?",
+        ],
+        timeout_s=10,
+    )
+
+    assert result.returncode == 0, result.stderr
+    data = json.loads(result.stdout)
+    assert data["primary_framework"] == "EXISTENTIAL"
+
+
+def test_scope_classifier_does_not_blacklist_replaying_as_entertainment() -> None:
+    data = run_module(
+        "scope_classifier",
+        {
+            "message": "I had a hard conversation today and I keep replaying it in my head."
+        },
+    )
+    assert data["tier"] != "BLACKLIST_LAYER1"
+
+
 def test_object_based_cli_modules_reject_non_object_payloads() -> None:
     modules = [
         "anger_detector",

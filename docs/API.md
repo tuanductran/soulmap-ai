@@ -28,6 +28,9 @@ Output: a JSON object to stdout:
   "primary_framework": "CRISIS|DEPENDENCY|DE_ESCALATION|EXISTENTIAL|GRIEF|DIRECTION|INNER_PARTS|SHADOW|INSIGHT|SYNTHESIS|PATTERN|MIRROR",
   "secondary_layer": "anger|bypass|somatic|null",
   "mode": "CRISIS|SANCTUARY|MIRROR|PEER",
+  "safety_status": "PASS|BLOCK|OVERRIDE",
+  "safety_reason": "string",
+  "safety_flags": ["string"],
   "context": {},
   "instruction": "string",
   "blocked": ["string"]
@@ -38,6 +41,8 @@ Notes:
 
 - `primary_framework` is always exactly one value.
 - `secondary_layer` is optional and is only an annotation.
+- `safety_status`, `safety_reason`, and `safety_flags` expose the result of the
+  independent safety gate after framework selection.
 - `instruction` points to which knowledge file to use and the constraints to follow.
 - If `SOULMAP_DEBUG=1` (or `true/yes/on`), the selector may include a `debug` array with
   per-detector timing metadata.

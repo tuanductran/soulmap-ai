@@ -18,10 +18,10 @@ def map_biometrics_to_somatic_prompt(
     sleep = biometrics.get("sleep_score")
 
     signals = []
-    if isinstance(hrv, (int, float)) and hrv < 30:
+    if isinstance(hrv, int | float) and hrv < 30:
         signals.append("Heart rate variability suggests high physiological load.")
 
-    if isinstance(sleep, (int, float)) and sleep < 50:
+    if isinstance(sleep, int | float) and sleep < 50:
         signals.append("Sleep architecture indicates insufficient rest/recovery.")
 
     if not signals:

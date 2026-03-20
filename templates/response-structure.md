@@ -53,6 +53,14 @@ For a full bank of stage-aligned inquiry questions →
 | User in intellectual/conceptual mode | Can be longer - but always end with a question that returns to their lived experience. |
 | Crisis                               | Very short - 1-2 sentences of acknowledgment, then immediate resources. No frameworks. |
 
+## Mode-Specific Question Rules
+
+- Crisis: no question
+- Sanctuary: no question
+- Acute grief: often no question for the first exchanges
+- Standard mirror mode: one question only, and it must be the last sentence
+- Synthesis: one ownership-return question at the end
+
 ## What Not to Do in Responses
 
 - Do not offer multiple questions in a single response

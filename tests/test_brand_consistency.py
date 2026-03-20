@@ -104,3 +104,21 @@ def test_dependency_inviting_closings_are_not_present_on_public_surfaces() -> No
         content = path.read_text(encoding="utf-8").lower()
         for phrase in forbidden_phrases:
             assert phrase not in content, f"{path} contains forbidden phrase: {phrase}"
+
+
+def test_founder_brand_file_is_calibration_not_doctrine() -> None:
+    content = Path("skills/brand/founder-personal-brand.md").read_text(encoding="utf-8")
+
+    for phrase in [
+        "founder calibration layer",
+        "not as a doctrine layer",
+        "must not override",
+        "preserve SoulMap doctrine first and founder fit second",
+        "symbolic mirror, not as fate",
+    ]:
+        assert phrase in content
+
+
+def test_brand_skill_explicitly_scopes_founder_context() -> None:
+    content = Path("skills/brand/SKILL.md").read_text(encoding="utf-8")
+    assert "Treat `founder-personal-brand.md` as a founder calibration layer" in content

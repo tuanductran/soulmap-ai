@@ -13,9 +13,10 @@ Use it to answer four questions for every major repo surface:
 
 | Surface | Purpose | Scope | Allowed content | Validation |
 | --- | --- | --- | --- | --- |
-| `AGENTS.md` | Product doctrine, safety law, response behavior, and framework priority | Shipped source text for behavior | SoulMap role, safety rules, framework hierarchy, response doctrine | Indirectly verified by `modules/`, tests, evals, and docs alignment |
+| `AGENTS.md` | Baseline SoulMap doctrine, safety law, response behavior, framework priority, and shipped package guidance | Shipped source text for behavior and package use | SoulMap role, safety rules, framework hierarchy, response doctrine, package structure, and optional-local-file guidance | Indirectly verified by `modules/`, tests, evals, and docs alignment |
 | `.claude/rules/` | Local workflow rules for contributors and AI tools operating in this repo | Local-only | Repo workflow rules, markdown/tooling rules, git/release rules | `.claude` contract tests and stale-reference checks |
 | `.claude/skills/` | Local review and maintenance skills for repo work | Local-only | Repo-aware `SKILL.md` files and local skill index | `.claude` contract tests and stale-reference checks |
+| `.codex/` | Optional Codex-specific local workflow helpers | Local-only | Codex README, local rules, and reusable prompts that stay subordinate to `AGENTS.md` | Codex contract tests and stale-reference checks |
 | `skills/` | Shipped knowledge base content | Shipped | Frameworks, brand doctrine, safety knowledge, voice and meta references | Metadata tests, markdown contract tests, build artifact tests |
 | `templates/` | Shipped reusable templates | Shipped | Redirects, quick reference, launch checklist, response structure, brand and FAQ templates | Metadata tests, markdown contract tests, template coverage tests, build artifact tests |
 | `modules/` | Executable enforcement, selection, guards, and repo contracts | Shipped runtime logic | Detectors, selectors, contracts, safety gates, packaging helpers | Unit tests, evals, compile/lint checks |
@@ -25,8 +26,9 @@ Use it to answer four questions for every major repo surface:
 
 ## Ownership Boundaries
 
-- Doctrine lives in `AGENTS.md`.
+- Baseline doctrine and shipped package guidance live in `AGENTS.md`.
 - Local AI workflow truth lives in `.claude/`.
+- Optional Codex-specific local workflow helpers live in `.codex/`.
 - Shipped knowledge truth lives in `skills/` and `templates/`.
 - Implementation truth lives in `modules/`.
 - Explanatory and operational truth lives in `docs/`.
@@ -42,6 +44,8 @@ Use it to answer four questions for every major repo surface:
   explicit manual-review note.
 - `.claude/` is a first-class local layer. It is not part of the shipped archive, but
   it must still be documented and structurally validated.
+- `.codex/` is an optional local layer. It is not part of the shipped archive, and it
+  must remain supplemental to `AGENTS.md` rather than becoming a second doctrine source.
 
 ## Release-Readiness Contract
 
@@ -51,6 +55,8 @@ The repo is release-ready only when all of the following are true:
 - major `AGENTS.md` safety rules map to code, tests, evals, or explicit guidance-only
   notes
 - `.claude/` docs and skills are intentional, current, and contract-checked
+- `.codex/` helpers, if present, are intentional, current, and clearly subordinate to
+  `AGENTS.md`
 - packaging output matches what docs claim ships
 - no stale references remain in `README.md`, `docs/`, `.claude/`, tests, or build notes
 
