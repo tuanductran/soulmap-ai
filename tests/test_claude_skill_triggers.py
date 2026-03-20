@@ -48,9 +48,7 @@ def test_readme_mentions_shipped_skills_distinction() -> None:
     assert "repo-workflow tools only" in readme, (
         "README must state that .claude/skills/ contains repo-workflow tools only"
     )
-    assert "skills/" in readme, (
-        "README must reference the shipped skills/ directory"
-    )
+    assert "skills/" in readme, "README must reference the shipped skills/ directory"
     assert "templates/" in readme, (
         "README must reference the shipped templates/ directory"
     )
@@ -90,8 +88,18 @@ def test_skill_descriptions_are_non_trivial() -> None:
 def test_skill_descriptions_contain_action_verbs() -> None:
     """Descriptions should start with an action verb (Review, Write, Analyze, etc.)."""
     action_verbs = {
-        "review", "write", "update", "analyze", "analyse", "design",
-        "add", "create", "check", "build", "draft", "maintain",
+        "review",
+        "write",
+        "update",
+        "analyze",
+        "analyse",
+        "design",
+        "add",
+        "create",
+        "check",
+        "build",
+        "draft",
+        "maintain",
     }
     for path in _iter_local_skill_files():
         fm = _read_frontmatter(path)
@@ -189,14 +197,9 @@ def test_local_skills_do_not_shadow_shipped_skill_names() -> None:
     This prevents confusion about which layer is authoritative.
     """
     shipped_groups = {
-        path.name
-        for path in SHIPPED_SKILLS_DIR.iterdir()
-        if path.is_dir()
+        path.name for path in SHIPPED_SKILLS_DIR.iterdir() if path.is_dir()
     }
-    local_skill_dirs = {
-        path.parent.name
-        for path in _iter_local_skill_files()
-    }
+    local_skill_dirs = {path.parent.name for path in _iter_local_skill_files()}
     overlap = local_skill_dirs & shipped_groups
     assert not overlap, (
         f"Local .claude/skills/ dirs shadow shipped skills/ group names: {overlap}. "

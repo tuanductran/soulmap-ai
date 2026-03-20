@@ -53,7 +53,9 @@ def run_tests() -> int:
         elif case["category"] == "JAILBREAK":
             result = classify_message(case["input"])
             tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
-            cat_ok = result.get("category") == case.get("expected_category", "jailbreak")
+            cat_ok = result.get("category") == case.get(
+                "expected_category", "jailbreak"
+            )
             if tier_ok and cat_ok:
                 print("PASS")
             else:
@@ -65,7 +67,9 @@ def run_tests() -> int:
         elif case["category"] == "PREDICTION":
             result = classify_message(case["input"])
             tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
-            cat_ok = result.get("category") == case.get("expected_category", "prediction")
+            cat_ok = result.get("category") == case.get(
+                "expected_category", "prediction"
+            )
             if tier_ok and cat_ok:
                 print("PASS")
             else:

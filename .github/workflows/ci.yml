@@ -42,6 +42,9 @@ jobs:
       - name: Tests
         run: |
           python -m pytest -q
+      - name: Safety evals
+        run: |
+          python tests/test_safety_evals.py
       - name: Build (cross-platform smoke)
         run: |
           python -m tools.build_skill_zip
