@@ -17,7 +17,8 @@ focus:
 - `modules/response_safety_gate.py`
 - `modules/response_contract.py`
 - `modules/resource_sanitizer.py`
-- the current packaging flow for `dist/soulmap-ai.zip`
+- the current packaging flow for `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`
+  including the `.claude-plugin/` boundary between them
 - the current test and markdown contract suite
 
 If a change weakens clarity, safety, or consistency in these areas, treat it as a high

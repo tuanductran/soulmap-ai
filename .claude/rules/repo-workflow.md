@@ -42,7 +42,8 @@ python3 -m pytest -q
 If packaging or release behavior changed, also run:
 
 ```bash
-python3 -m tools.build_skill_zip
+python3 -m tools.build_skill
+python3 -m tools.build_skill --skill
 ```
 
 ## AI Tool Guardrails

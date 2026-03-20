@@ -45,7 +45,8 @@ Cross-platform (recommended):
 python -m tools.format
 python -m tools.lint
 python -m tools.eval_conversations
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 python tests/test_safety_evals.py
 ```
 
@@ -54,12 +55,13 @@ Bash scripts (macOS/Linux):
 ```bash
 bash scripts/format.sh
 bash scripts/lint.sh
-bash scripts/build-skill-zip.sh
+bash scripts/build-skill.sh
 ```
 
 ## What gets generated
 
-- `dist/soulmap-ai.zip`: distribution artifact (generated).
+- `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`.
+- `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved.
 
 ## Claude plugin packaging
 
@@ -67,8 +69,8 @@ This repo also ships Claude plugin marketplace metadata:
 
 - `.claude-plugin/marketplace.json`
 
-`python -m tools.build_skill_zip` packages `.claude-plugin/marketplace.json` inside
-`dist/soulmap-ai.zip`.
+`python -m tools.build_skill --skill` preserves `.claude-plugin/` inside
+`dist/soulmap-ai.skill`.
 
 ## Pre-commit hooks (recommended)
 
@@ -117,8 +119,8 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Lint + tests
 - Version bump (Commitizen)
 - Changelog update (Commitizen)
-- Building `dist/soulmap-ai.zip`
-- Creating a GitHub Release and uploading the zip
+- Building `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`
+- Creating a GitHub Release and uploading both artifacts
 
 Before triggering a release, review:
 

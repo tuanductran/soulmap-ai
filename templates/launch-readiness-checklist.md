@@ -21,7 +21,7 @@ evidence map for safety claims.
 | `.claude/` workflow layer | Contract test | `tests/test_claude_contract.py` |
 | Shipped knowledge and templates | Metadata, markdown, and build tests | `tests/test_skill_metadata_contract.py`, `tests/test_markdown_contract.py`, `tests/test_build_artifacts.py` |
 | Runtime safety and selector priority | Unit tests and evals | `tests/test_framework_selector_priorities.py`, `tests/test_response_safety_gate.py`, `tests/test_safety_evals.py` |
-| Packaging output | Build and artifact test | `python -m tools.build_skill_zip`, `tests/test_build_artifacts.py` |
+| Packaging output | Build and artifact test | `python -m tools.build_skill`, `python -m tools.build_skill --skill`, `tests/test_build_artifacts.py` |
 | Manual release review | Explicit reviewer pass | `CHANGELOG.md`, changed docs, and public-facing copy review |
 
 ## Positioning

@@ -31,10 +31,14 @@ python -m pytest -q
 ## Build
 
 ```bash
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
-Output: `dist/soulmap-ai.zip`
+Outputs:
+
+- `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`
+- `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved
 
 ## Docs
 

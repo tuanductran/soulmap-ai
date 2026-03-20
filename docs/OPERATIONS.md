@@ -49,7 +49,8 @@ Before shipping prompt, framework, detector, or policy updates:
 source .venv/bin/activate
 python -m tools.eval_conversations
 python tests/test_safety_evals.py
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 python -m pytest -q
 ```
 

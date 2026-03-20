@@ -54,7 +54,8 @@ jobs:
 
       - name: Build distribution artifact
         run: |
-          python -m tools.build_skill_zip
+          python -m tools.build_skill
+          python -m tools.build_skill --skill
 
       - name: Push bump commit + tag
         run: |
@@ -65,9 +66,11 @@ jobs:
         run: |
           echo "version=$(python -m commitizen version --project)" >> "$GITHUB_OUTPUT"
 
-      - name: Create GitHub Release + upload zip
+      - name: Create GitHub Release + upload artifacts
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}
-          files: dist/soulmap-ai.zip
+          files: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill

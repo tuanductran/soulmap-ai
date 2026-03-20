@@ -33,12 +33,14 @@ Use these docs as review references when verifying release readiness:
 ## Build artifacts
 
 ```bash
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 Verify:
 
-- `dist/soulmap-ai.zip` exists and includes files under `skills/` and `templates/`.
+- `dist/soulmap-ai.zip` exists and excludes `.claude-plugin/`.
+- `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/marketplace.json`.
 
 ## Manual spot checks (optional)
 

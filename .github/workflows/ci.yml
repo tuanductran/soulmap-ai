@@ -47,7 +47,8 @@ jobs:
           python tests/test_safety_evals.py
       - name: Build (cross-platform smoke)
         run: |
-          python -m tools.build_skill_zip
+          python -m tools.build_skill
+          python -m tools.build_skill --skill
           python -m modules.markdown_contract --root .
 
   build:
@@ -66,13 +67,17 @@ jobs:
           python -m pip install ".[dev]"
       - name: Build skill bundle
         run: |
-          python -m tools.build_skill_zip
+          python -m tools.build_skill
+          python -m tools.build_skill --skill
       - name: Verify build outputs
         run: |
           test -f dist/soulmap-ai.zip
+          test -f dist/soulmap-ai.skill
       - name: Upload skill artifact
         uses: actions/upload-artifact@v6
         with:
-          name: soulmap-ai-zip
-          path: dist/soulmap-ai.zip
+          name: soulmap-ai-artifacts
+          path: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
           if-no-files-found: error

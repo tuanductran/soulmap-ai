@@ -154,14 +154,16 @@ Input:
 Use only for explicit, user-confirmed insight capture. This repo does not assume silent
 cross-session memory.
 
-## Distribution zip build
+## Distribution builds
 
 Cross-platform:
 
 ```bash
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 Output:
 
 - `dist/soulmap-ai.zip`
+- `dist/soulmap-ai.skill`

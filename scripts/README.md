@@ -16,7 +16,8 @@ Cross-platform equivalents live under `tools/`:
 ```bash
 python -m tools.format
 python -m tools.lint
-python -m tools.build_skill_zip
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 For setup and workflow details, use [`docs/DEV.md`](../docs/DEV.md).

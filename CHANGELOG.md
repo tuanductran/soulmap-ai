@@ -7,18 +7,13 @@ stability and breaking changes in behavior.
 
 ## Unreleased
 
-### Added
+### Fixed
 
-- `build_skill_zip` now supports three output modes via CLI flags:
-  - `--zip` (default): build `dist/soulmap-ai.zip` as before
-  - `--skill`: build `dist/soulmap-ai.skill` - an Agent Skills-compliant
-    archive (zip with `.skill` extension) compatible with Claude.ai,
-    GitHub Copilot, OpenAI Codex, and any Agent Skills-compatible tool.
-    Includes a root-level `SKILL.md` manifest required by the spec.
-    Also bundles `AGENTS.md` for the full behavioral contract.
-  - `--all`: build both artifacts in one command
-  Backward compatible - no flag still builds the zip only.
-
+- `build_skill` now exposes only two build types:
+  - default: build `dist/soulmap-ai.zip`
+  - `--skill`: build `dist/soulmap-ai.skill`
+- `dist/soulmap-ai.zip` now excludes `.claude-plugin/`.
+- `dist/soulmap-ai.skill` now preserves `.claude-plugin/` as part of the package.
 
 ### Added
 
@@ -78,7 +73,7 @@ stability and breaking changes in behavior.
 - Framework selection + detectors in `modules/` (crisis, dependency, grief, intensity,
   existential, direction, inner-conflict, insight, shadow patterns, anger, somatic).
 - Packaging and verification tooling:
-  - `python -m tools.build_skill_zip`
+  - `python -m tools.build_skill`
   - `python -m modules.markdown_contract --root .`
 - Cross-platform CI (Windows/macOS/Linux) running lint + build smoke checks.
 - Pre-commit hooks for Python + Markdown formatting and case-conflict detection.

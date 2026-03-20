@@ -20,7 +20,8 @@ Use it to answer four questions for every major repo surface:
 | `templates/` | Shipped reusable templates | Shipped | Redirects, quick reference, launch checklist, response structure, brand and FAQ templates | Metadata tests, markdown contract tests, template coverage tests, build artifact tests |
 | `modules/` | Executable enforcement, selection, guards, and repo contracts | Shipped runtime logic | Detectors, selectors, contracts, safety gates, packaging helpers | Unit tests, evals, compile/lint checks |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, stale-reference checks, review against repo structure |
-| `dist/soulmap-ai.zip` | Release artifact for upload and distribution | Generated release artifact | Packaged `skills/`, `templates/`, and supported metadata files | Build artifact tests and zip-content checks |
+| `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, `templates/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` | Build artifact tests and zip-content checks |
+| `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | Build artifact tests and zip-content checks |
 
 ## Ownership Boundaries
 
@@ -29,7 +30,8 @@ Use it to answer four questions for every major repo surface:
 - Shipped knowledge truth lives in `skills/` and `templates/`.
 - Implementation truth lives in `modules/`.
 - Explanatory and operational truth lives in `docs/`.
-- Release artifact truth lives in `dist/soulmap-ai.zip` and the tests that verify it.
+- Release artifact truth lives in `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`, and
+  the tests that verify them.
 
 ## Drift Rules
 
