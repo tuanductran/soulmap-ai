@@ -1,17 +1,36 @@
 # Uploading SoulMap to AI Tools
 
-This doc explains how to use SoulMap AI by uploading either:
+## Build commands
 
-- The distribution archive: `dist/soulmap-ai.zip` (if your tool can read zip files)
-- The source folders: `skills/` and `templates/` (upload as multiple files)
+```bash
+python -m tools.build_skill_zip           # zip only (default)
+python -m tools.build_skill_zip --zip     # zip only (explicit)
+python -m tools.build_skill_zip --skill   # .skill only
+python -m tools.build_skill_zip --all     # both zip and .skill
+```
 
-## Which file should I upload?
+## Output formats
 
-### Recommended: `dist/soulmap-ai.zip`
+### `dist/soulmap-ai.zip`
 
-Upload `dist/soulmap-ai.zip` only if the AI tool can open or extract zip archives. If it
-cannot, unzip locally and upload the `skills/` and `templates/` folders as separate
-files.
+Standard zip archive containing `skills/`, `templates/`, `AGENTS.md`,
+`LICENSE`, and `.claude-plugin/marketplace.json`.
+
+Use for Claude plugin marketplace or when extracting files manually.
+
+### `dist/soulmap-ai.skill`
+
+Agent Skills-compliant archive (zip with `.skill` extension).
+
+Upload directly to AI tools via their skill/plugin settings:
+
+- **Claude.ai** - Settings > Features > Upload Custom Skill
+- **GitHub Copilot** - VS Code skill settings
+- **OpenAI Codex** - `.codex/skills/` or API upload
+
+The `.skill` file includes a root-level `SKILL.md` entry-point manifest
+so the AI tool can discover and activate the skill by name and description,
+and load the right knowledge files on demand.
 
 ## Common questions
 

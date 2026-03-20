@@ -9,6 +9,19 @@ stability and breaking changes in behavior.
 
 ### Added
 
+- `build_skill_zip` now supports three output modes via CLI flags:
+  - `--zip` (default): build `dist/soulmap-ai.zip` as before
+  - `--skill`: build `dist/soulmap-ai.skill` - an Agent Skills-compliant
+    archive (zip with `.skill` extension) compatible with Claude.ai,
+    GitHub Copilot, OpenAI Codex, and any Agent Skills-compatible tool.
+    Includes a root-level `SKILL.md` manifest required by the spec.
+    Also bundles `AGENTS.md` for the full behavioral contract.
+  - `--all`: build both artifacts in one command
+  Backward compatible - no flag still builds the zip only.
+
+
+### Added
+
 - Group-level `SKILL.md` files under `skills/*/` and `templates/` for better AI tool
   compatibility.
 - Claude plugin marketplace metadata under `.claude-plugin/marketplace.json`.
