@@ -117,6 +117,7 @@ python -m tools.build_skill
 
 # To build the .skill package for Claude
 python -m tools.build_skill --skill
+```
 
 `tests/test_build_artifacts.py::test_new_skill_files_appear_in_built_archive` will fail
 if the new file is missing from the rebuilt archive.

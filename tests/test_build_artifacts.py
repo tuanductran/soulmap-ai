@@ -247,9 +247,9 @@ def test_new_skill_files_appear_in_built_archive() -> None:
         text=True,
         timeout=30,
         check=False,
-    source_md = chain(
-        (ROOT / "skills").rglob("*.md"), (ROOT / "templates").rglob("*.md")
+        cwd=ROOT,
     )
+    assert result.returncode == 0, result.stderr
 
     archive_path = ROOT / "dist" / "soulmap-ai.zip"
     with zipfile.ZipFile(archive_path) as archive:
