@@ -192,7 +192,11 @@ def test_dist_skills_bundles_are_not_stale() -> None:
     """
     result = subprocess.run(
         [sys.executable, "-m", "tools.build_skill"],
-        capture_output=True, text=True, timeout=30, check=False, cwd=ROOT,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+        cwd=ROOT,
     )
     assert result.returncode == 0, result.stderr
 
@@ -219,7 +223,11 @@ def test_new_skill_files_appear_in_built_archive() -> None:
     """
     result = subprocess.run(
         [sys.executable, "-m", "tools.build_skill"],
-        capture_output=True, text=True, timeout=30, check=False, cwd=ROOT,
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+        cwd=ROOT,
     )
     assert result.returncode == 0, result.stderr
 
