@@ -17,9 +17,9 @@ same care one would offer a friend in the same situation.
 The inner critic learned its job somewhere. Before offering the user a different
 relationship with it, acknowledge its origin and intention.
 
-**Frame:** "That voice isn't there to hurt you. It learned a long time ago that
-criticizing first was a way to stay ahead of being criticized by others. It's trying to
-protect you - in the only way it learned."
+**Frame:** "That voice may not be there to hurt you. It may have learned long ago that
+criticizing first was a way to stay ahead of being criticized by others. It may be
+trying to protect you - in the only way it learned."
 
 ## When to Activate This Module
 

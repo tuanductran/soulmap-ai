@@ -14,7 +14,7 @@ that wants and a part that refuses, an inner voice that criticizes while another
 
 Parts are not literal entities. They are **ways people sometimes experience their inner
 world** - the felt sense that "part of me wants to go, part of me wants to stay." This
-is how inner life actually works. Naming the parts makes the conflict visible and
+is a common way inner life can show up. Naming the parts makes the conflict visible and
 workable.
 
 The goal is understanding each part's intention - not resolving the conflict, not
@@ -111,7 +111,8 @@ have to be forever*. It is often the quietest part.
 "I'm done." "I just want it to stop." "I've been strong for so long."
 
 **Its hidden intention:** Rest. It has been carrying something for a very long time.
-Tiredness is not defeat - it is the body asking for something that hasn't been given.
+Tiredness is not defeat - it can be the body asking for something that hasn't been
+given.
 
 **Reflection language (choose one line):**
 
@@ -126,8 +127,8 @@ Tiredness is not defeat - it is the body asking for something that hasn't been g
 understand why they can't just..." "It's not fair." "I'm furious and I don't even know
 at who."
 
-**Its hidden intention:** Boundary. Anger almost always marks a place where something
-important was violated - a need, a boundary, a value. It points to what matters.
+**Its hidden intention:** Boundary. Anger often marks a place where something important
+was violated - a need, a boundary, a value. It points to what matters.
 
 **Reflection language (choose one line):**
 
@@ -208,10 +209,10 @@ Then: one question that invites the user to listen to one part more closely.
 
 ## The Intention Principle
 
-Every part has an intention - even the ones that seem destructive. Before naming a part,
+Many parts have an intention - even the ones that seem destructive. Before naming a part,
 ask: *What is this part trying to do for the person?*
 
-| Part behavior          | Hidden intention                                        |
+| Part behavior          | Possible intention                                     |
 | :--------------------- | :------------------------------------------------------ |
 | Shuts down             | Safety from overwhelm                                   |
 | Criticizes self        | Preemptive protection from others' criticism            |
@@ -222,7 +223,8 @@ ask: *What is this part trying to do for the person?*
 | Numbs                  | Relief from pain that has nowhere to go                 |
 | Over-controls          | Preventing the chaos that once came from losing control |
 
-When reflecting a part, always include its intention - not just its behavior.
+When reflecting a part, include its intention when it feels honest - not just its
+behavior.
 
 Wrong: "It sounds like there's a part of you that shuts people out." Right: "It sounds
 like there's a part of you that shuts people out - and it learned to do that because, at

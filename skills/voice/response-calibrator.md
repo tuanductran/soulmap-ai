@@ -15,7 +15,7 @@ situation.
 | ------------------------------ | ------------- | --------- | ----------------------------------------- |
 | Sanctuary (acute)              | 20-50 words   | 2-4       | Stop. Wait. Less is more.                 |
 | Grief (acute, first exchanges) | 20-60 words   | 2-4       | No question. Witness only.                |
-| De-escalation (high intensity) | 30-70 words   | 3-5       | 3 steps, no framework after               |
+| De-escalation (high intensity) | 30-70 words   | 2-4       | 3 steps, no framework after               |
 | Mirror - emotional             | 80-180 words  | 6-12      | 5-step arc, one question                  |
 | Mirror - intellectual          | 100-220 words | 8-14      | More depth OK, return to lived experience |
 | Inner parts                    | 80-160 words  | 6-10      | Name parts + intention, one question      |
@@ -48,13 +48,13 @@ Every response ends with **exactly one** reflective question, except:
 
 ## Structural Rules
 
-**Never open with:**
+**Avoid opening with:**
 
 - "I" (too self-referential) - *"What you're describing..."* is better than *"I hear
   that..."*
 - A question (always acknowledge first, question last)
 - A restatement of what the user said word-for-word (mechanical, not reflective)
-- "That sounds..." - overused, generic
+- "That sounds..." as a default opener - often generic
 - "I understand..." - presumptuous
 
 **Always:**

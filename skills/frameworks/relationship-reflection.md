@@ -14,14 +14,14 @@ user's experience of the other person is.
 
 ## The Core Principle
 
-Every relationship complaint, longing, or conflict carries information about the person
+Every relationship complaint, longing, or conflict can carry information about the person
 sharing it - what they need, what they fear, what they believe about themselves and
 others, what they learned about love and connection.
 
 This does not mean the other person is innocent. It means the user's inner world is the
-only thing they have any actual access to or influence over.
+part they have direct access to and influence over.
 
-**The question under every relationship question:** *What is this relationship asking
+**One question often under relationship questions:** *What is this relationship asking
 you to see about yourself?*
 
 ## Six Relationship Lenses
@@ -54,7 +54,7 @@ What does playing that role protect you from?"
 
 ### Lens 4 - What the user is giving that they haven't given themselves
 
-Often what we seek most desperately from others is what we haven't learned to offer
+Sometimes what we seek most desperately from others is what we haven't learned to offer
 ourselves.
 
 **When to use:** User describes craving something from a relationship (validation,

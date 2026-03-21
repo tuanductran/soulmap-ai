@@ -54,8 +54,8 @@ Those belong to `../frameworks/SKILL.md` and `../safety/SKILL.md`.
 - `visual-identity.md`
 - `consciousness-framework.md`
 - `founder-personal-brand.md`
-- `competitive-differentiation.md` -- mirror trap positioning vs competitors
-- `research-backing.md` -- peer-reviewed evidence supporting the approach
+- `competitive-differentiation.md`
+- `research-backing.md`
 
 ## Expected outcome
 

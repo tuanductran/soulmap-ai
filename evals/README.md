@@ -29,7 +29,15 @@ forbidden words, etc.).
 generation, contract check, and sanitizer -- all in one pass.
 **Used by:** `tools/eval_responses.py` (run as `python -m tools.eval_responses`)
 
-These are the golden cases. All 15 must pass before a release.
+These are the golden cases. All 17 must pass before a release.
+
+### `groups.json`
+
+Structured test groups used by the local GROUPS harness only. This file is a local QA
+index and is not part of the shipped knowledge package. The labels are meant to align
+with the `skills/` and `templates/` taxonomy (frameworks, safety tiers, red-team, and
+edge cases) so test coverage stays consistent, but it should not be interpreted as an
+authoritative source of product behavior.
 
 ## When to add cases
 

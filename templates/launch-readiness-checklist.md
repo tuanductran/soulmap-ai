@@ -27,7 +27,7 @@ responsibly.
 | Archive self-containment | Path review | shipped files do not depend on missing repo-only paths |
 | Build freshness | Test run | `python -m pytest tests/test_build_artifacts.py` |
 | Safety evals | Test run | `python tests/test_safety_evals.py` -- 7/7 pass |
-| Golden eval cases | Test run | `python -m tools.eval_responses` -- 15/15 pass |
+| Golden eval cases | Test run | `python -m tools.eval_responses` -- 17/17 pass |
 
 ## Positioning
 

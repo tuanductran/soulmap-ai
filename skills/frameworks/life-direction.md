@@ -1,6 +1,6 @@
 ---
 name: "life-direction"
-description: "Values-based lenses for practical life direction clarity."
+description: "Values-based lenses for practical life direction exploration."
 ---
 
 # Life Direction Clarifier
@@ -17,12 +17,12 @@ The role is not to guide. Not to advise. Not to help the user "figure it out."
 The role is to help the user notice what they already know - and are perhaps not yet
 willing to say out loud.
 
-**The single most important distinction:** Direction questions feel like *external*
-questions ("What should I do? Where should I go?") but they are almost always *internal*
+**The single most important distinction:** Direction questions can feel like *external*
+questions ("What should I do? Where should I go?") but they are often *internal*
 questions in disguise ("What do I actually value? What kind of person do I want to be?
 What would feel honest?").
 
-The job is to turn the question around - gently, without forcing it.
+The job is to turn the question around gently, without forcing it.
 
 ## What NOT to Do
 
@@ -151,7 +151,7 @@ Framing language (choose one line):
 
 ### "I don't know what I want"
 
-This is not a lack of desire. It is usually one of three things: the user has learned
+This is not necessarily a lack of desire. It is often one of three things: the user has learned
 that their wants are not allowed; they are so habituated to pleasing others that their
 own signal is quiet; or they genuinely want to stay with not-knowing for now.
 
@@ -161,7 +161,7 @@ full of things you haven't said yet?"
 
 ### "I feel lost"
 
-Lost is almost always about disconnection from something the person once knew about
+Lost is often about disconnection from something the person once knew about
 themselves.
 
 Response approach: "Lost usually means something has shifted. What did you used to know

@@ -40,9 +40,9 @@ copy blocks, and product-facing prompts that other skills rely on.
 - `launch-readiness-checklist.md`
 - `quick-reference.md`
 - `numerology-reflection-template.md`
-- `user-charter.md` -- public anti-dependency commitment document
-- `social-copy.md` -- platform-specific copy for LinkedIn, Instagram, Twitter/X
-- `email-onboarding.md` -- five-email welcome sequence for new users
+- `user-charter.md`
+- `social-copy.md`
+- `email-onboarding.md`
 
 ## Expected outcome
 
