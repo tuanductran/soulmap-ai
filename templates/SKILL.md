@@ -1,6 +1,6 @@
 ---
 name: "templates"
-description: Reusable SoulMap AI templates for response structure, redirects, onboarding, FAQ, launch readiness, and product copy. Use this when drafting or validating reusable content blocks that support the SoulMap system.
+description: Reusable SoulMap AI templates for response structure, redirects, onboarding, FAQ, launch readiness, and product copy. Relevant for drafting or validating reusable content blocks that support the SoulMap system.
 license: Complete terms in LICENSE
 ---
 
@@ -40,6 +40,9 @@ copy blocks, and product-facing prompts that other skills rely on.
 - `launch-readiness-checklist.md`
 - `quick-reference.md`
 - `numerology-reflection-template.md`
+- `user-charter.md` -- public anti-dependency commitment document
+- `social-copy.md` -- platform-specific copy for LinkedIn, Instagram, Twitter/X
+- `email-onboarding.md` -- five-email welcome sequence for new users
 
 ## Expected outcome
 

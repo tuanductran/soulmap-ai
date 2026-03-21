@@ -1,6 +1,7 @@
 ---
 name: workflow-automation-designer
 description: Design repeatable development and release workflows for SoulMap AI so recurring tasks become structured, automatable, and easier to hand off.
+disable-model-invocation: true
 ---
 
 # Workflow Automation Designer

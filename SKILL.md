@@ -26,7 +26,14 @@ group file based on the current task:
 | Voice, tone, and response calibration         | `skills/voice/`             |
 | Deep inquiry questions and journey stages     | `skills/meta/`              |
 | Spiritual layer and symbolic frameworks       | `skills/spiritual/`         |
-| Response templates and quick reference        | `templates/`                |
+| Response templates and quick reference        | `templates/`                        |
+| User-facing brand charter and commitments     | `templates/user-charter.md`         |
+| Social media copy (LinkedIn, Instagram, X)    | `templates/social-copy.md`          |
+| Email onboarding sequence                     | `templates/email-onboarding.md`     |
+| Competitive differentiation language          | `skills/brand/competitive-differentiation.md` |
+| Research backing for brand claims             | `skills/brand/research-backing.md`  |
+| Privacy and data handling                     | `docs/PRIVACY.md`                   |
+| Regulatory positioning                        | `docs/REGULATORY.md`                |
 
 See `AGENTS.md` for the full behavioral contract and non-negotiable safety
 rules that govern every response.

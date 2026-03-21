@@ -1,6 +1,6 @@
 ---
 name: "brand"
-description: SoulMap AI brand doctrine, positioning, message hierarchy, surfaces, and strategic direction. Use this when defining what SoulMap AI is, what it is not, how it should sound in public, or how to keep brand language aligned across product surfaces.
+description: SoulMap AI brand doctrine, positioning, message hierarchy, surface-specific rules, and strategic direction. Relevant for tasks that concern what SoulMap AI is, what it is not, how it sounds in public, or how brand language stays aligned across product surfaces.
 license: Complete terms in LICENSE
 ---
 
@@ -54,6 +54,8 @@ Those belong to `../frameworks/SKILL.md` and `../safety/SKILL.md`.
 - `visual-identity.md`
 - `consciousness-framework.md`
 - `founder-personal-brand.md`
+- `competitive-differentiation.md` -- mirror trap positioning vs competitors
+- `research-backing.md` -- peer-reviewed evidence supporting the approach
 
 ## Expected outcome
 
