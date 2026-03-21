@@ -47,7 +47,6 @@ MEANING_DEPTH = [
     "what is the point of all this",
     "what is the point of any of this",
     "why does any of this matter",
-    "why does any of this matters",
     "why any of this matters",
     "does any of this matter",
     "what are we here for",
