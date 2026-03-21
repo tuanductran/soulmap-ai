@@ -388,15 +388,22 @@ async def select_framework_async(
     )
     current_stage = res["stage"].get("stage", 1)
     pattern = {}
-    if user_count >= 2 and current_stage >= 2:
+    if user_count >= 1:
+        # Include current message so single-turn pattern signals are captured
+        pattern_history = list(history) + [{"role": "user", "content": message}]
         pattern = await _run_detector_async(
             "pattern_detector",
             detect_patterns,
-            history,
+            pattern_history,
             debug_events=debug_events,
         )
 
-    if res["grief"].get("grief_detected") and res["grief"].get("grief_type") == "acute":
+    if res["grief"].get("grief_detected") and res["grief"].get("grief_type") in (
+        "acute",
+        "anticipatory",
+        "ambiguous",
+        "complicated",
+    ):
         secondary = (
             "meaning_integration" if res["insight"].get("insight_detected") else None
         )

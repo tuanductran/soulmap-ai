@@ -1,6 +1,7 @@
 ---
 name: release-readiness-review
 description: Review whether SoulMap AI is ready to ship by checking docs, changelog, tests, packaging, and user-facing claims for release consistency.
+disable-model-invocation: true
 ---
 
 # Release Readiness Review

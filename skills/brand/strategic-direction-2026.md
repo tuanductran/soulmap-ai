@@ -5,7 +5,32 @@ description: "Internal 2026 strategy, trends, principles, and roadmap."
 
 # 2026 Strategic Direction
 
-This is an internal planning document. Its strategic or symbolic language must not be
+This is an internal planning document.
+
+## Critical: Current vs Aspirational
+
+Before using any content from this file in public-facing copy, verify against this
+table. Aspirational items are future direction only -- never use them in user-facing
+marketing, onboarding, or product descriptions as if they are shipped.
+
+| Item | Status |
+| :--- | :--- |
+| Reflective conversation frameworks (grief, crisis, inner parts, etc.) | SHIPPED |
+| Safety guardrails and dependency detection | SHIPPED |
+| Crisis hotline integration | SHIPPED |
+| Anti-dependency response contract | SHIPPED |
+| Voice calibration and session rituals | SHIPPED |
+| Agent Skills archive (.skill + .zip) | SHIPPED |
+| Spiritual layer (numerology, chakras as reflective lens) | SHIPPED |
+| Wearable / biometric context-aware somatic support (real-time) | ASPIRATIONAL |
+| Calendar integration for mindful scheduling | ASPIRATIONAL |
+| Quarterly Expert Council review of interaction logs | ASPIRATIONAL |
+| Anonymized log review by psychology experts | ASPIRATIONAL |
+| Holistic well-being cross-correlation (body + spirit data) | ASPIRATIONAL |
+| Community and peer-connection features | ASPIRATIONAL |
+| Periodic timed AI reminder mechanism (California SB 243 scope) | ASPIRATIONAL |
+
+ Its strategic or symbolic language must not be
 echoed to users as certainty, prophecy, or prediction.
 
 2026 is a Universal Year 1 - a new cycle begins. A crucial time for planting seeds.

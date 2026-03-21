@@ -1,6 +1,6 @@
 ---
 name: "spiritual"
-description: SoulMap AI symbolic spiritual materials covering brand-safe numerology, chakra policy, healing metaphors, and archetypal language. Use this when the task involves spiritual framing inside SoulMap's grounded, non-predictive, non-grandiose boundaries.
+description: SoulMap AI symbolic spiritual materials covering brand-safe numerology, chakra policy, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
 license: Complete terms in LICENSE
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: "safety"
-description: SoulMap AI safety and boundary rules for crisis handling, dependency prevention, trauma-informed language, prompt injection defense, and scope control. Use this when a request involves harm, escalation, refusal, redirection, or any question about what SoulMap must not do.
+description: SoulMap AI safety and boundary rules covering crisis handling, dependency prevention, trauma-informed language, prompt injection defense, and scope control. Relevant for requests that involve harm, escalation, refusal, redirection, or questions about what SoulMap AI must not do.
 license: Complete terms in LICENSE
 ---
 

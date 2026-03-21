@@ -183,3 +183,87 @@ def test_default_builds_zip_only_when_no_flag() -> None:
     assert "OK (zip):" in result.stdout
     assert "OK (skill):" not in result.stdout
     assert (ROOT / "dist" / "soulmap-ai.zip").exists()
+
+
+def test_dist_skills_bundles_are_not_stale() -> None:
+    """The built zip must contain all source .md files from skills/ and templates/.
+
+    dist/skills/ is a gitignored local-only directory and is not present in CI.
+    This test verifies the same staleness contract by inspecting the zip archive
+    contents directly, which is portable across all CI environments.
+    """
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.build_skill"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+        cwd=ROOT,
+    )
+    assert result.returncode == 0, result.stderr
+
+    archive_path = ROOT / "dist" / "soulmap-ai.zip"
+    assert archive_path.is_file(), "dist/soulmap-ai.zip was not created"
+
+    with zipfile.ZipFile(archive_path) as archive:
+        archive_names = set(archive.namelist())
+        # Verify every entry in the zip that came from skills/ or templates/ is non-empty
+        for name in archive_names:
+            if (
+                name.startswith("skills/") or name.startswith("templates/")
+            ) and name.endswith(".md"):
+                data = archive.read(name)
+                assert len(data) > 100, (
+                    f"Archive entry {name} looks like an empty stub ({len(data)} bytes). "
+                    "Re-run `python -m tools.build_skill` to regenerate."
+                )
+
+    # At least the known skill groups must be present in the archive
+    expected_groups = [
+        "skills/brand/",
+        "skills/frameworks/",
+        "skills/safety/",
+        "skills/voice/",
+        "skills/meta/",
+        "skills/spiritual/",
+    ]
+    for group in expected_groups:
+        group_files = [n for n in archive_names if n.startswith(group)]
+        assert group_files, (
+            f"No files found in archive under {group} -- "
+            "build_skill.py may be missing this skill group"
+        )
+
+
+def test_new_skill_files_appear_in_built_archive() -> None:
+    """Every .md in skills/ and templates/ must be present in the rebuilt zip.
+
+    Catches when a new file is added to skills/ but build_skill.py include
+    list is not updated.
+    """
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.build_skill"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+        cwd=ROOT,
+    )
+    assert result.returncode == 0, result.stderr
+
+    archive_path = ROOT / "dist" / "soulmap-ai.zip"
+    with zipfile.ZipFile(archive_path) as archive:
+        archive_names = set(archive.namelist())
+
+    source_md = list((ROOT / "skills").rglob("*.md")) + list(
+        (ROOT / "templates").rglob("*.md")
+    )
+    missing = [
+        md_file.relative_to(ROOT).as_posix()
+        for md_file in source_md
+        if md_file.relative_to(ROOT).as_posix() not in archive_names
+    ]
+    assert not missing, (
+        "Source files missing from built zip -- rebuild or update tools/build_skill.py:\n"
+        + "\n".join(f"  - {m}" for m in missing)
+    )

@@ -1,11 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":semanticCommits"],
-  "enabledManagers": ["pre-commit"],
+  "enabledManagers": ["pre-commit", "github-actions"],
   "timezone": "Asia/Ho_Chi_Minh",
   "schedule": ["before 10am on monday"],
   "labels": ["dependencies"],
   "semanticCommitType": "chore",
   "semanticCommitScope": "deps",
-  "prConcurrentLimit": 10
+  "prConcurrentLimit": 10,
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "automerge": false,
+      "labels": ["dependencies", "github-actions"]
+    }
+  ]
 }

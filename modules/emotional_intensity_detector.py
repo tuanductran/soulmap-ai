@@ -33,6 +33,8 @@ COGNITIVE_FLOODING = [
     "can't think straight",
     "my head is spinning",
     "head is spinning",
+    "everything is spinning",
+    "the room is spinning",
     "i don't even know where to start",
     "don't know where to start",
     "i'm all over the place",
@@ -41,11 +43,17 @@ COGNITIVE_FLOODING = [
     "my thoughts are everywhere",
     "thoughts are everywhere",
     "can't make sense of anything",
+    "nothing makes sense",
+    "nothing makes sense anymore",
+    "i do not know what to do",
+    "don't know what to do",
+    "i cannot figure out",
     "everything is happening at once",
     "too much at once",
     "overwhelmed by everything",
     "i don't know what i'm feeling",
     "don't know what i feel",
+    "cannot think clearly",
 ]
 
 EMOTIONAL_FLOODING = [
@@ -62,11 +70,18 @@ EMOTIONAL_FLOODING = [
     "complete mess",
     "total mess right now",
     "i can't stop crying",
+    "i cannot stop crying",
+    "cannot stop crying",
     "been crying all day",
     "won't stop crying",
     "i'm spiraling",
     "spiraling right now",
     "going in circles",
+    "i don't know how to stop",
+    "cannot stop this feeling",
+    "help me",
+    "i need help",
+    "i just need help",
 ]
 
 PACING_SIGNALS = [

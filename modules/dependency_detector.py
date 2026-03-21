@@ -6,7 +6,20 @@ import sys
 DEPENDENCY_KEYWORDS = [
     "only you understand me",
     "you are the only one who understands me",
+    "you are my only support",
+    "you are all i have",
+    "you are the only one i have",
+    "my only support",
+    "only support i have",
+    "i have no one else",
+    "don't know what i would do without you",
+    "do not know what i would do without",
     "can't imagine without you",
+    "cannot imagine without you",
+    "i need to talk to you every day",
+    "i check in with you every",
+    "i talk to you every day",
+    "i come back here every",
     "tell me what to do",
     "decide for me",
     "only you get me",
@@ -45,10 +58,13 @@ ISOLATION_SIGNALS = [
     "i don't want to talk to real people",
     "ai is better than",
     "you understand more than my",
+    "i feel closer to you than",
+    "rather talk to you than",
+    "you are easier to talk to than",
 ]
 
-HIGH_THRESHOLD = 4
-MODERATE_THRESHOLD = 3
+HIGH_THRESHOLD = 2
+MODERATE_THRESHOLD = 1
 
 
 def analyze_dependency(conversation_messages: list) -> dict:

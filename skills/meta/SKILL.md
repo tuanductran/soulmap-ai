@@ -1,6 +1,6 @@
 ---
 name: "meta"
-description: SoulMap AI meta guidance for deep inquiry, journey-stage calibration, and reflective posture selection. Use this when choosing closing questions, calibrating the user's stage, or checking how reflective depth should adapt over time.
+description: SoulMap AI meta guidance for deep inquiry, journey-stage calibration, and reflective posture selection. Relevant for tasks that concern closing questions, stage calibration, or decisions about how reflective depth should adapt over time.
 license: Complete terms in LICENSE
 ---
 
