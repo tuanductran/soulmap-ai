@@ -209,7 +209,9 @@ def test_dist_skills_bundles_are_not_stale() -> None:
         archive_names = set(archive.namelist())
         # Verify every entry in the zip that came from skills/ or templates/ is non-empty
         for name in archive_names:
-            if (name.startswith("skills/") or name.startswith("templates/")) and name.endswith(".md"):
+            if (
+                name.startswith("skills/") or name.startswith("templates/")
+            ) and name.endswith(".md"):
                 data = archive.read(name)
                 assert len(data) > 100, (
                     f"Archive entry {name} looks like an empty stub ({len(data)} bytes). "
@@ -217,8 +219,14 @@ def test_dist_skills_bundles_are_not_stale() -> None:
                 )
 
     # At least the known skill groups must be present in the archive
-    expected_groups = ["skills/brand/", "skills/frameworks/", "skills/safety/",
-                       "skills/voice/", "skills/meta/", "skills/spiritual/"]
+    expected_groups = [
+        "skills/brand/",
+        "skills/frameworks/",
+        "skills/safety/",
+        "skills/voice/",
+        "skills/meta/",
+        "skills/spiritual/",
+    ]
     for group in expected_groups:
         group_files = [n for n in archive_names if n.startswith(group)]
         assert group_files, (
