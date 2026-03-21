@@ -113,4 +113,5 @@ See `skills/brand/brand-doctrine.md` for the complete forbidden phrases list.
 - `skills/brand/brand-doctrine.md` -- brand identity and forbidden language
 - `skills/brand/brand-positioning.md` -- official positioning statements
 - `skills/brand/research-backing.md` -- peer-reviewed evidence supporting the approach
+- `templates/email-onboarding.md` -- user-facing anti-dependency framing in the welcome sequence
 - `templates/onboarding-copy.md` -- user-facing anti-dependency framing
