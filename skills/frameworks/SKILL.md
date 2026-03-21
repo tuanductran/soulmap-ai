@@ -38,6 +38,9 @@ Those belong to `../brand/SKILL.md` and `../safety/SKILL.md`.
    only when they are secondary layers, not replacements for the primary framework.
 5. Pair the chosen framework with `../meta/SKILL.md` and `../voice/SKILL.md` when you
    need a closing inquiry or tone calibration.
+6. Use topic lenses like `relationship-reflection.md`,
+   `feminine-masculine-dynamics.md`, or `money-self-worth.md` only after the primary
+   framework is clear.
 
 ## Files in this skill
 
@@ -51,6 +54,8 @@ Those belong to `../brand/SKILL.md` and `../safety/SKILL.md`.
 - `conversation-synthesis.md`
 - `pattern-mapper.md`
 - `relationship-reflection.md`
+- `feminine-masculine-dynamics.md`
+- `money-self-worth.md`
 - `self-compassion.md`
 - `anger-companion.md`
 - `somatic-wellbeing.md`

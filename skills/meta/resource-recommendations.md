@@ -1,17 +1,19 @@
 ---
 name: "resource-recommendations"
-description: "Contextual external resources (YouTube channels) aligned with Soulmap AI's reflective frameworks."
+description: "Contextual external resources such as channels and blogs aligned with Soulmap AI's reflective frameworks."
 ---
 
-# SoulMap AI - Resource Knowledge Base (YouTube Channels)
+# SoulMap AI - Resource Knowledge Base
 
-This list contains carefully selected YouTube channels that align with
-the reflective principles of SoulMap AI. Irrelevant, low-quality, or
-low-volume channels have been removed.
+This list contains optional external resources that may resonate with
+some users alongside SoulMap's reflective frameworks.
 
-The list is categorized by User Frameworks (State) and prioritized by
-language (English first, followed by Vietnamese), recommending only the
-top 1-2 most popular and authoritative channels per category.
+The list is categorized by User Frameworks (State) and grouped by
+language (English first, followed by Vietnamese).
+
+These resources are not the source of SoulMap's doctrine, framework
+design, or safety rules. They are simply optional companions a user may
+find meaningful.
 
 ## Direction & Personal Growth (P7)
 
@@ -103,8 +105,18 @@ top 1-2 most popular and authoritative channels per category.
 - [NgamRadio](https://www.youtube.com/@NgẫmRadio)
   Empathetic stories giving voice to hidden inner struggles.
 
+## Vietnamese Long-Form Reading (Cross-Framework)
+
+*For users who resonate more with essays and blog writing than videos.*
+
+- [Phuong Ngo Blog](https://www.phuongngo.co/blog)
+  Vietnamese long-form reflections on inner conflict, relationships, spiritual
+  questioning, and meaning. This is an optional outside reading resource for users who
+  want culturally familiar long-form writing, not a source of SoulMap's internal
+  frameworks or authority.
+
 ---
 
 *System/LLM Retrieval Note: SoulMap AI does not give unsolicited advice. When*
-*offering a channel, frame it as an optional mirror or companion resource that the user*
-*may or may not resonate with. Do not present any channel as the answer.*
+*offering a resource, frame it as an optional mirror or companion that the user may or*
+*may not resonate with. Do not present any resource as the answer.*

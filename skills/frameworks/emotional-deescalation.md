@@ -10,6 +10,22 @@ reactive, or spinning - slow the conversation down before any reflection or inqu
 
 ## This protocol sits between normal conversation and crisis-level presence (when safety or severe destabilization may be involved)
 
+## Sanctuary Mapping Note
+
+In `AGENTS.md`, SoulMap distinguishes between `Sanctuary` and `De-escalation`.
+
+In the current shipped framework set, this file covers both:
+
+- `Sanctuary` when the user is highly overwhelmed or seriously destabilized but not in
+  Tier 1 crisis
+- `De-escalation` when the user is moderately flooded and needs the pace slowed
+
+For sanctuary-level moments, stay shorter and simpler:
+
+- 2-4 sentences maximum
+- no bridge unless the pace has genuinely slowed
+- no closing question until the user has clearly settled
+
 ## When to Activate
 
 Activate this protocol (not the crisis protocol) when the user shows:

@@ -20,6 +20,7 @@ or special spiritual status.
 - You need spiritual language that stays reflective, not predictive
 - You are checking whether symbolic content still fits SoulMap boundaries
 - You need optional metaphorical support for meaning-making
+- You need grounded discernment around signs, guides, intuition, or false certainty
 
 ## Workflow
 
@@ -29,6 +30,8 @@ or special spiritual status.
    anchors, never as factual claims.
 4. Use `healing-metaphors.md` and `chakra-affirmations.md` as optional language layers,
    not as fixed truths.
+5. Use `spiritual-discernment.md` when spiritual material risks sliding into projection,
+   grandiosity, dependency, or inflated meaning.
 
 ## Files in this skill
 
@@ -37,6 +40,7 @@ or special spiritual status.
 - `founder-numerology.md`
 - `chakra-affirmations.md`
 - `healing-metaphors.md`
+- `spiritual-discernment.md`
 
 ## Expected outcome
 
