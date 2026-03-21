@@ -5,83 +5,44 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
+## v0.2.0 (2026-03-21)
 
-### Fixed
+### Feat
 
-- `build_skill` now exposes only two build types:
-  - default: build `dist/soulmap-ai.zip`
-  - `--skill`: build `dist/soulmap-ai.skill`
-- `dist/soulmap-ai.zip` now excludes `.claude-plugin/`.
-- `dist/soulmap-ai.skill` now preserves `.claude-plugin/` as part of the package.
+- **skills**: add grounded gap coverage for reflection and discernment
+- **build**: add --zip, --skill, --all flags to build_skill_zip
+- **claude**: add Claude Code hooks for workflow automation
 
-### Added
+### Fix
 
-- Group-level `SKILL.md` files under `skills/*/` and `templates/` for better AI tool
-  compatibility.
-- New reflective knowledge files for spiritual discernment, money/self-worth, and
-  feminine/masculine symbolic dynamics under `skills/`.
-- Claude plugin marketplace metadata under `.claude-plugin/marketplace.json`.
-- Independent response safety gate for crisis, dependency, and out-of-scope redirects.
-- Response contract grader plus golden eval suites under `evals/`.
-- Operations guide for data handling, human review, and incident response.
-- Resource recommendation knowledge file under
-  `skills/meta/resource-recommendations.md`.
-- Resource sanitizer module to catch banned vocabulary and question-structure drift.
-- Safety red-team regression suite under `tests/test_safety_evals.py` with JSON cases.
-- Experimental consent-based integration modules for biometric context ingestion and
-  user-confirmed memory ledger capture.
-- Safety red-team cases T004 (jailbreak), T005 (prediction), T006 (system extraction),
-  and T007 (spiritual grandiosity) added to `tests/safety_test_cases.json`.
-- Eval handlers for JAILBREAK, PREDICTION, SYSTEM_EXTRACTION, and
-  SPIRITUAL_GRANDIOSITY categories in `tests/test_safety_evals.py`.
-- Trigger and boundary validation suite under `tests/test_claude_skill_triggers.py`
-  with 13 tests covering local `.claude/skills/` correctness and AGENTS.md sync.
-
-### Changed
-
-- `skills/frameworks/emotional-deescalation.md`: clarified that the current framework
-  file covers both sanctuary-level containment and standard de-escalation, with shorter
-  limits for sanctuary moments.
-- `skills/frameworks/relationship-reflection.md`: added a harm exception so mutuality
-  language does not soften abuse, coercion, violence, or intimidation.
-- `skills/frameworks/shadow-patterns.md`: added gentler guidance for self-worth wounds,
-  healing-language avoidance, and boundary-vs-trigger discernment.
-- `skills/frameworks/relationship-reflection.md`: added a lens for self-erasure and
-  enmeshment inside relationships.
-- `skills/meta/resource-recommendations.md`: clarified that external resources are
-  optional companions and not the source of SoulMap doctrine or framework authority.
-- `skills/frameworks/SKILL.md`, `skills/spiritual/SKILL.md`, `skills/meta/SKILL.md`:
-  updated cross-references so new skill coverage remains subordinate to the existing
-  SoulMap framework hierarchy.
-- `modules/crisis_detector.py`: embedded region-specific hotlines directly in
-  `response_guidance` for CRISIS_TIER1 (Vietnam, US, UK, AU, International) replacing
-  vague search instruction.
-- `skills/voice/response-calibrator.md`: corrected Crisis (tier 1) length to 20-40
-  words / 1-2 sentences to match AGENTS.md Rule 1 (was incorrectly 40-80 words / 3-5
-  sentences).
-- `skills/safety/boundaries-safety.md`, `skills/safety/ethics-safety.md`,
-  `templates/redirect-templates.md`: added default crisis hotlines inline so operators
-  have a concrete fallback when no region is known.
-- `templates/quick-reference.md`: added CRISIS and DEPENDENCY rows to Framework
-  Selector Master table; both were previously absent.
-- `docs/safety-enforcement-matrix.md`: updated Rules 5-8 to reference T004-T007 test
-  cases.
-- `.claude/skills/README.md`: clarified that local skills are repo-workflow tools only;
-  added table pointing to shipped product knowledge locations.
-- All 8 `.claude/skills/*/SKILL.md` files: added `Do not use` sections and
-  `Sources To Check First` anchors to prevent skill misuse by contributors.
-
-- Skill packaging now bundles `.claude-plugin/marketplace.json` and group-level
-  `SKILL.md` files instead of relying on a single root `SKILL.md`.
-- Frontmatter `name` values under `skills/` and `templates/` now match filename stems.
-- Formatting and lint scripts now validate Markdown front matter and repo-wide structure
-  with `pymarkdown` and the repo Markdown contract checks.
-- Public docs now describe the safety stack, red-team workflow, and the opt-in status of
-  experimental integration modules.
-- Python dependency management now uses `pyproject.toml` as the single source of truth.
-  Bootstrap scripts, CI workflows, and contributor setup now install with
-  `pip install ".[dev]"` instead of `requirements*.txt`.
+- **tests**: replace dist/skills/ check with zip-contents check in CI
+- **detectors**: expand keyword coverage and routing -- Battery 1: 8/20 -> 20/20
+- **brand**: consultant audit v2 -- 14 issues resolved across 25 files
+- **frameworks**: clarify sanctuary mapping and harm exceptions
+- **ci**: move autofix job to dedicated autofix.yml workflow
+- **repo**: harden workflow, docs, and response quality checks
+- **docs**: correct Agent Skills references in UPLOAD.md
+- **markdown**: resolve all GitHub Markdown compliance issues
+- **markdown_contract**: add fence guards to sections 1, 2d, and 4
+- **markdown_contract**: skip numeric-prefix check inside fenced code blocks
+- **ci**: resolve 4 workflow issues from SQA audit
+- **ci**: add explicit 'Safety evals' step so T001-T007 run in CI
+- test_safety_evals.py used __main__ guard; pytest silently skipped it
+- all 7 red-team cases now validated on every push/PR
+- **deps**: add mdformat==0.7.21 to dev deps
+- release.yml calls 'python -m mdformat CHANGELOG.md'
+- missing dep caused every release job to fail at changelog step
+- **codeql**: bump checkout@v4->v6, setup-python@v5->v6
+- aligns with versions used in ci.yml and release.yml
+- **codeql**: add concurrency block to prevent duplicate runs
+- was the only workflow without concurrency guard
+- **qa**: resolve 4 issues from QA audit
+- **voice**: correct crisis response word/sentence count to match AGENTS.md Rule 1
+  fix(safety): embed crisis hotlines in boundaries-safety, ethics-safety, redirect-templates
+  fix(templates): add CRISIS and DEPENDENCY rows to Framework Selector Master table
+  docs(changelog): document all changes from recent sessions
+- **.claude**: clarify local vs shipped skill boundaries
+- **crisis**: embed region hotlines in response_guidance
 
 ## v0.1.0 (2026-03-18)
 
