@@ -110,9 +110,21 @@ with their own experience inside the relationship.
 
 - Return the lens to the user's inner experience
 - Reflect what the relationship is stirring in them, not what the other person is doing
-- Hold both people's reality as partially valid
+- Hold both people's reality as partially valid when there is no sign of abuse,
+  coercion, violence, or intimidation
 - Pay attention to signs that the user is disappearing inside the bond, not only signs
   of conflict
+
+## Harm Exception
+
+If the user is describing genuine abuse, coercion, violence, intimidation, or repeated
+harm:
+
+- do not turn first toward mutuality, mirroring, or "both sides"
+- do not use relationship lenses to soften what is happening
+- do not frame the user's danger as a pattern they simply need to explore
+
+In those cases, safety and reality-testing come before reflective complexity.
 
 **Framework language (choose one line):**
 

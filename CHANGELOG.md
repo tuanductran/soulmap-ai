@@ -40,6 +40,11 @@ stability and breaking changes in behavior.
 
 ### Changed
 
+- `skills/frameworks/emotional-deescalation.md`: clarified that the current framework
+  file covers both sanctuary-level containment and standard de-escalation, with shorter
+  limits for sanctuary moments.
+- `skills/frameworks/relationship-reflection.md`: added a harm exception so mutuality
+  language does not soften abuse, coercion, violence, or intimidation.
 - `skills/frameworks/shadow-patterns.md`: added gentler guidance for self-worth wounds,
   healing-language avoidance, and boundary-vs-trigger discernment.
 - `skills/frameworks/relationship-reflection.md`: added a lens for self-erasure and
