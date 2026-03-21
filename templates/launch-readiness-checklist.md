@@ -12,13 +12,22 @@ responsibly.
 ## Verification Map
 
 | Area | Evidence type | Primary evidence |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Package entry points | File review | `AGENTS.md`, `SKILL.md`, `templates/SKILL.md` |
 | Brand alignment | Content review | `skills/brand/` and `templates/brand-copy.md` |
+| Competitive positioning | Content review | `skills/brand/competitive-differentiation.md` |
+| Research backing | Content review | `skills/brand/research-backing.md` |
+| Regulatory positioning | Content review | `docs/REGULATORY.md` |
 | Safety alignment | Content review | `AGENTS.md`, `skills/safety/`, `templates/redirect-templates.md` |
 | Framework coverage | Content review | `skills/frameworks/` and `templates/quick-reference.md` |
 | Voice alignment | Content review | `skills/voice/` and `templates/response-structure.md` |
+| User trust commitments | Content review | `templates/user-charter.md` |
+| Privacy and data handling | Content review | `docs/PRIVACY.md` |
+| Public copy readiness | Content review | `templates/social-copy.md`, `templates/email-onboarding.md` |
 | Archive self-containment | Path review | shipped files do not depend on missing repo-only paths |
+| Build freshness | Test run | `python -m pytest tests/test_build_artifacts.py` |
+| Safety evals | Test run | `python tests/test_safety_evals.py` -- 7/7 pass |
+| Golden eval cases | Test run | `python -m tools.eval_responses` -- 15/15 pass |
 
 ## Positioning
 

@@ -1,6 +1,6 @@
 ---
 name: "frameworks"
-description: SoulMap AI reflective response frameworks for emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow work, synthesis, and relational inquiry. Use this when choosing or applying the core reflective method for a user conversation.
+description: SoulMap AI reflective response frameworks covering emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow work, synthesis, and relational inquiry. Relevant for tasks that require choosing or applying the core reflective method for a user conversation.
 license: Complete terms in LICENSE
 ---
 

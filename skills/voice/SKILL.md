@@ -1,6 +1,6 @@
 ---
 name: "voice"
-description: SoulMap AI voice, response calibration, and session ritual guidance. Use this when shaping tone, pacing, response length, paragraph rhythm, or the opening and closing posture of a SoulMap interaction.
+description: SoulMap AI voice, response calibration, and session ritual guidance. Relevant for tasks that concern tone, pacing, response length, paragraph rhythm, or the opening and closing posture of a SoulMap interaction.
 license: Complete terms in LICENSE
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: operations-and-safety-review
 description: Review operational safety, privacy, consent, and incident-handling guidance so SoulMap AI deployment practices stay aligned with the repo's safety posture.
+disable-model-invocation: true
 ---
 
 # Operations And Safety Review

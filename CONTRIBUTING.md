@@ -61,3 +61,60 @@ pre-commit run --all-files
   - Patch: wording fixes, non-breaking detector tweaks.
   - Minor: new frameworks, new detectors, or expanded policies.
   - Major: behavioral breaking changes in safety rules or response structure.
+
+## Adding or Editing SKILL.md Files
+
+When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.claude/skills/`,
+follow these rules. They are enforced by `tests/test_skill_metadata_contract.py`.
+
+### Frontmatter requirements
+
+```yaml
+---
+name: "hyphenated-short-name"
+description: Third-person summary. Relevant for [task types].
+license: Complete terms in LICENSE
+---
+```
+
+**name:** Lowercase, hyphen-separated, 64 characters max. No underscores.
+
+**description:** Third-person only. Never open with "Use this when" or "Use when" --
+these are imperative instructions, not descriptions. The description is injected into the
+system prompt as metadata; mixing imperative language degrades routing reliability.
+
+```yaml
+# Correct
+description: SoulMap AI safety rules covering crisis handling and dependency prevention.
+  Relevant for requests involving harm, escalation, or refusal behavior.
+
+# Wrong
+description: SoulMap AI safety rules. Use this when a request involves harm.
+```
+
+**license:** Always `Complete terms in LICENSE`. Do not omit.
+
+### Invocation controls for side-effect skills
+
+If a skill triggers real-world side effects (publishing, releasing, deploying), add
+`disable-model-invocation: true` after the description line:
+
+```yaml
+---
+name: release-readiness-review
+description: ...
+disable-model-invocation: true
+---
+```
+
+### Build contract
+
+After adding any `.md` to `skills/` or `templates/`, run:
+
+```bash
+python -m tools.build_skill
+python -m tools.build_skill --skill
+```
+
+`tests/test_build_artifacts.py::test_new_skill_files_appear_in_built_archive` will fail
+if the new file is missing from the rebuilt archive.

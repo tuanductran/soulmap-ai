@@ -183,3 +183,59 @@ def test_default_builds_zip_only_when_no_flag() -> None:
     assert "OK (zip):" in result.stdout
     assert "OK (skill):" not in result.stdout
     assert (ROOT / "dist" / "soulmap-ai.zip").exists()
+
+
+def test_dist_skills_bundles_are_not_stale() -> None:
+    """dist/skills/*.md bundles must be non-empty stubs after a fresh build.
+
+    Catches the case where skills/ is updated but dist/ is never rebuilt.
+    """
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.build_skill"],
+        capture_output=True, text=True, timeout=30, check=False, cwd=ROOT,
+    )
+    assert result.returncode == 0, result.stderr
+
+    dist_skills_dir = ROOT / "dist" / "skills"
+    bundle_files = sorted(dist_skills_dir.glob("*.md"))
+    assert bundle_files, "dist/skills/ is empty -- run `python -m tools.build_skill`"
+
+    for bundle in bundle_files:
+        content = bundle.read_text(encoding="utf-8")
+        assert len(content) > 500, (
+            f"dist/skills/{bundle.name} looks like an empty stub ({len(content)} chars)."
+            " Run `python -m tools.build_skill` to regenerate."
+        )
+        assert bundle.name.startswith("soulmap-"), (
+            f"dist/skills/{bundle.name} does not follow soulmap-<group>.md naming contract"
+        )
+
+
+def test_new_skill_files_appear_in_built_archive() -> None:
+    """Every .md in skills/ and templates/ must be present in the rebuilt zip.
+
+    Catches when a new file is added to skills/ but build_skill.py include
+    list is not updated.
+    """
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.build_skill"],
+        capture_output=True, text=True, timeout=30, check=False, cwd=ROOT,
+    )
+    assert result.returncode == 0, result.stderr
+
+    archive_path = ROOT / "dist" / "soulmap-ai.zip"
+    with zipfile.ZipFile(archive_path) as archive:
+        archive_names = set(archive.namelist())
+
+    source_md = list((ROOT / "skills").rglob("*.md")) + list(
+        (ROOT / "templates").rglob("*.md")
+    )
+    missing = [
+        md_file.relative_to(ROOT).as_posix()
+        for md_file in source_md
+        if md_file.relative_to(ROOT).as_posix() not in archive_names
+    ]
+    assert not missing, (
+        "Source files missing from built zip -- rebuild or update tools/build_skill.py:\n"
+        + "\n".join(f"  - {m}" for m in missing)
+    )
