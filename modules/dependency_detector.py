@@ -64,7 +64,7 @@ ISOLATION_SIGNALS = [
 ]
 
 HIGH_THRESHOLD = 2
-MODERATE_THRESHOLD = 2
+MODERATE_THRESHOLD = 1
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
