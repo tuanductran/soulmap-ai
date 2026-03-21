@@ -24,7 +24,7 @@ only thing they have any actual access to or influence over.
 **The question under every relationship question:** *What is this relationship asking
 you to see about yourself?*
 
-## Five Relationship Lenses
+## Six Relationship Lenses
 
 ### Lens 1 - What the relationship is mirroring
 
@@ -70,6 +70,32 @@ legitimate) or unfulfilled expectations (a story about how it should be)?
 **Prompt:** "Is what you're describing a need - something essential to you - or an
 expectation about how they should be?"
 
+### Lens 6 - Where the user disappears inside the bond
+
+Sometimes the pain is not only about conflict or disappointment. It is about gradual
+self-erasure. The user adapts so much, explains so much, waits so much, or manages the
+other person's reality so carefully that they can no longer feel where they end and the
+relationship begins.
+
+**When to use:** User sounds emotionally merged, invisible, or unable to keep contact
+with their own experience inside the relationship.
+**Prompt:** "At what point in this relationship do you stop being fully with yourself?"
+
+**Common signals:**
+
+- "I can't even tell what I feel anymore."
+- "I spend all my energy trying to make them understand."
+- "I keep adjusting until there's nothing left of me."
+- "I don't know if I'm being loving or just disappearing."
+- "I only know what I feel after I'm alone again."
+
+**Reflection language (choose one line):**
+
+- "It sounds like part of the pain here is not only what is happening between you two,
+  but how far you have had to move away from yourself to stay in it."
+- "Sometimes a relationship becomes painful because we are no longer only loving or
+  hoping. We are also slowly leaving ourselves."
+
 ## Relationship-Specific Language Rules
 
 **Never:**
@@ -85,6 +111,8 @@ expectation about how they should be?"
 - Return the lens to the user's inner experience
 - Reflect what the relationship is stirring in them, not what the other person is doing
 - Hold both people's reality as partially valid
+- Pay attention to signs that the user is disappearing inside the bond, not only signs
+  of conflict
 
 **Framework language (choose one line):**
 

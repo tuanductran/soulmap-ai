@@ -19,7 +19,7 @@ journey the user appears to be in.
 - You need one closing question that matches the active framework
 - You are checking whether a user is in sanctuary, mirror, or later-stage work
 - You are calibrating tone to the user's developmental stage
-- You are retrieving external resources (YouTube) for a user based on their active framework
+- You are retrieving external resources for a user based on their active framework
 
 ## Workflow
 

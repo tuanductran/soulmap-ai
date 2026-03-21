@@ -19,6 +19,8 @@ stability and breaking changes in behavior.
 
 - Group-level `SKILL.md` files under `skills/*/` and `templates/` for better AI tool
   compatibility.
+- New reflective knowledge files for spiritual discernment, money/self-worth, and
+  feminine/masculine symbolic dynamics under `skills/`.
 - Claude plugin marketplace metadata under `.claude-plugin/marketplace.json`.
 - Independent response safety gate for crisis, dependency, and out-of-scope redirects.
 - Response contract grader plus golden eval suites under `evals/`.
@@ -38,6 +40,15 @@ stability and breaking changes in behavior.
 
 ### Changed
 
+- `skills/frameworks/shadow-patterns.md`: added gentler guidance for self-worth wounds,
+  healing-language avoidance, and boundary-vs-trigger discernment.
+- `skills/frameworks/relationship-reflection.md`: added a lens for self-erasure and
+  enmeshment inside relationships.
+- `skills/meta/resource-recommendations.md`: clarified that external resources are
+  optional companions and not the source of SoulMap doctrine or framework authority.
+- `skills/frameworks/SKILL.md`, `skills/spiritual/SKILL.md`, `skills/meta/SKILL.md`:
+  updated cross-references so new skill coverage remains subordinate to the existing
+  SoulMap framework hierarchy.
 - `modules/crisis_detector.py`: embedded region-specific hotlines directly in
   `response_guidance` for CRISIS_TIER1 (Vietnam, US, UK, AU, International) replacing
   vague search instruction.
