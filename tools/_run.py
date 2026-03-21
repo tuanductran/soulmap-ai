@@ -126,6 +126,9 @@ def repo_tooling_lock(
     try:
         lock_path.unlink()
     except FileNotFoundError:
-        pass
-    except OSError:
-        pass
+        return
+    except OSError as exc:
+        print(
+            f"warning: failed to remove repo tooling lock {lock_path.name}: {exc}",
+            file=sys.stderr,
+        )

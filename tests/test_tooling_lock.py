@@ -41,3 +41,24 @@ def test_repo_tooling_lock_serializes_parallel_processes(tmp_path: Path) -> None
 
     assert first_acquired <= first_released <= second_acquired <= second_released
     assert not (tmp_path / ".format-lint.lock").exists()
+
+
+def test_repo_tooling_lock_warns_when_cleanup_fails(
+    tmp_path: Path, monkeypatch, capsys
+) -> None:
+    lock_path = tmp_path / ".format-lint.lock"
+    original_unlink = Path.unlink
+
+    def fake_unlink(self: Path, *args, **kwargs) -> None:
+        if self == lock_path:
+            raise PermissionError("busy")
+        original_unlink(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "unlink", fake_unlink)
+
+    with repo_tooling_lock(tmp_path):
+        assert lock_path.exists()
+
+    captured = capsys.readouterr()
+    assert "failed to remove repo tooling lock .format-lint.lock" in captured.err
+    assert lock_path.exists()
