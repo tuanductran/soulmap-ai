@@ -33,11 +33,27 @@ These are the golden cases. All 17 must pass before a release.
 
 ### `groups.json`
 
-Structured test groups used by the local GROUPS harness only. This file is a local QA
-index and is not part of the shipped knowledge package. The labels are meant to align
-with the `skills/` and `templates/` taxonomy (frameworks, safety tiers, red-team, and
-edge cases) so test coverage stays consistent, but it should not be interpreted as an
-authoritative source of product behavior.
+Structured QA taxonomy for grouped routing examples, safety slices, and edge-case
+coverage. This file is a local eval dataset and is not part of the shipped knowledge
+package.
+
+**Used by:** `tools/eval_groups.py` directly, and `tools/eval_conversations.py` as an
+additional regression suite.
+
+Some items include explicit expectation fields such as `expect_primary_framework`,
+`expect_secondary_layer`, `expect_mode`, `expect_scope_tier`, or
+`expect_safety_status`. Those items are treated as executable assertions.
+
+Every group should declare `sources` pointing at the relevant `skills/` or
+`templates/` files. The grouped harness validates those source paths so policy docs and
+eval routing do not drift apart quietly.
+
+Groups may also declare `source_markers` for higher-confidence slices. These markers are
+checked against the referenced files to confirm that a relevant heading or anchor phrase
+is still present, not just that the file exists.
+
+Items without expectations still act as grouped exploratory coverage and reporting
+seeds.
 
 ## When to add cases
 

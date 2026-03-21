@@ -43,8 +43,12 @@ Do NOT activate for:
 
 - Any self-harm or suicide-risk signals → use the immediate crisis response (resources
   first, no reflection)
+- Direct crisis language such as "I do not want to keep living" or "I do not want to be
+  here anymore" → treat as Tier 1 crisis even if the user does not say "suicide"
 - Any "I'm not safe", active abuse, or complete breakdown signals → use presence-only
   crisis support (witnessing first, minimal language, no reflection)
+- Anticipatory grief language like "watching them decline" or "saying goodbye every day"
+  → route to grief support, not crisis, unless there is direct self-harm intent
 - Normal sadness, grief, or reflective emotional sharing → use a standard sanctuary-mode
   or mirror-mode response
 

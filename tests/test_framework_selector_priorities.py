@@ -27,11 +27,13 @@ def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
 
 def test_framework_selector_prioritizes_crisis() -> None:
     payload = {
-        "message": "I want to hurt myself and I feel lost in my life.",
+        "message": "I do not want to keep living. I have been thinking about it a lot.",
         "history": [
             {
                 "role": "user",
-                "content": "I want to hurt myself and I feel lost in my life.",
+                "content": (
+                    "I do not want to keep living. I have been thinking about it a lot."
+                ),
             }
         ],
         "memory": {},
@@ -47,14 +49,14 @@ def test_framework_selector_prioritizes_crisis() -> None:
 def test_framework_selector_prioritizes_dependency_before_direction() -> None:
     payload = {
         "message": (
-            "You're the only one. Only you understand me. "
+            "You're the only one who truly understands me. "
             "I trust you more than anyone. Tell me what to do with my life."
         ),
         "history": [
             {
                 "role": "user",
                 "content": (
-                    "You're the only one. Only you understand me. "
+                    "You're the only one who truly understands me. "
                     "I trust you more than anyone. Tell me what to do with my life."
                 ),
             }
@@ -90,6 +92,26 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
         "message": "My father died yesterday and now I feel lost.",
         "history": [
             {"role": "user", "content": "My father died yesterday and now I feel lost."}
+        ],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "GRIEF"
+    assert data["mode"] == "SANCTUARY"
+
+
+def test_framework_selector_treats_goodbye_grief_phrase_as_grief_not_crisis() -> None:
+    payload = {
+        "message": "Watching my mother weaken each day feels like saying goodbye every day.",
+        "history": [
+            {
+                "role": "user",
+                "content": (
+                    "Watching my mother weaken each day feels like saying goodbye every day."
+                ),
+            }
         ],
         "memory": {},
     }

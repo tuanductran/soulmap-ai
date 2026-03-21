@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 from typing import Any, cast
+
+if os.name == "nt":
+    import msvcrt
+else:
+    import fcntl
 
 
 def python_executable(repo_root: Path) -> str:
@@ -75,3 +82,50 @@ def run(
 def python_module(module: str, *extra_args: str, cwd: Path, check: bool = True) -> None:
     python = python_executable(cwd)
     run([python, "-m", module, *extra_args], cwd=cwd, check=check)
+
+
+@contextmanager
+def repo_tooling_lock(
+    repo_root: Path,
+    *,
+    name: str = "format-lint",
+    poll_interval_s: float = 0.1,
+) -> Any:
+    """Serialize repo-wide tooling that mutates or checks the same files."""
+    lock_path = repo_root / f".{name}.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with lock_path.open("a+", encoding="utf-8") as lock_file:
+        start = time.monotonic()
+        notified = False
+
+        while True:
+            try:
+                if os.name == "nt":
+                    msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
+                else:
+                    fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except OSError:
+                if not notified and time.monotonic() - start >= 0.5:
+                    notified = True
+                    print(
+                        f"info: waiting for repo tooling lock {lock_path.name}",
+                        file=sys.stderr,
+                    )
+                time.sleep(poll_interval_s)
+
+        try:
+            yield
+        finally:
+            if os.name == "nt":
+                lock_file.seek(0)
+                msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+    try:
+        lock_path.unlink()
+    except FileNotFoundError:
+        pass
+    except OSError:
+        pass

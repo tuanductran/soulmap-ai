@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -120,7 +124,7 @@ def detect_anger(
     guidance_map = {
         "active": (
             "Active anger present. Phase 1 first: meet the anger before exploring it. "
-            "'The anger makes complete sense. Something was crossed here — something that matters.' "
+            "'The anger makes complete sense. Something was crossed here  -  something that matters.' "
             "Do NOT jump to 'what's underneath' yet. Then Phase 2: name what it's protecting. "
             "Phase 3: surface the need under the demand. "
             "See skills/frameworks/anger-companion.md for full protocol."
@@ -133,7 +137,7 @@ def detect_anger(
         "residual": (
             "Residual/chronic anger. The anger has been held for some time. "
             "Acknowledge the weight of carrying it: 'That's a long time to carry something this heavy.' "
-            "Then explore what the anger is still protecting — what hasn't been resolved."
+            "Then explore what the anger is still protecting  -  what hasn't been resolved."
         ),
     }
 
@@ -142,22 +146,20 @@ def detect_anger(
         "anger_type": anger_type,
         "score": score,
         "signals": signals,
-        "note": "Anger companion — meet the anger before exploring it.",
+        "note": "Anger companion  -  meet the anger before exploring it.",
         "recommendation": guidance_map.get(anger_type or "", ""),
     }
 
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        result = detect_anger(
-            require_str_field(data, "message"),
-            require_list_field(data, "history"),
-        )
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
+        result = detect_anger(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

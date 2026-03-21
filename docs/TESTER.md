@@ -24,6 +24,10 @@ This runs:
   front matter.
 - Build smoke: the zip build can be run separately (see below).
 
+`python -m tools.format` and `python -m tools.lint` also coordinate through a shared
+repo lock, so starting them in parallel should wait cleanly instead of producing a false
+red formatting failure.
+
 Use these docs as review references when verifying release readiness:
 
 - [`repo-contract.md`](repo-contract.md)
@@ -76,6 +80,20 @@ This checks a fuller pipeline:
 
 Use it when you want a stronger check than selector JSON alone.
 
+Run the grouped routing harness when you want taxonomy-level drift detection across
+framework slices:
+
+```bash
+python -m tools.eval_groups
+```
+
+This is especially useful after editing detector keywords, `evals/groups.json`, or
+framework examples in `skills/` and `templates/`.
+
+The grouped harness also verifies that the `skills/` and `templates/` source files
+referenced by each group still exist and, for groups using `source_markers`, still
+contain the expected policy anchor text.
+
 ## CI workflow checks
 
 Inspect `.github/workflows/ci.yml` and confirm it still covers the repo's critical
@@ -106,8 +124,8 @@ Use these when automated checks are green but you want to probe human-risk defec
 
 - Risk: public copy becomes flat, inflated, over-corporate, or more mystical than
   SoulMap should be
-- Files: `skills/brand/`, `templates/brand-copy.md`, `templates/onboarding-copy.md`,
-  `templates/faq.md`
+- Files: `skills/brand/`, `templates/brand-copy.md`, `templates/marketplace-copy.md`,
+  `templates/onboarding-copy.md`, `templates/faq.md`
 - Probe:
   - compare one-liners, bios, and public descriptions against `message-hierarchy.md`
   - look for wording that feels sterile, preachy, prophetic, or emotionally false

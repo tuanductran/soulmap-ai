@@ -40,10 +40,16 @@ Grieving someone or something that is still present but will be lost. Caregiving
 loved one. A terminal diagnosis. A relationship ending in slow motion.
 
 **Signals:** "Watching them decline." "Every day feels like goodbye." "I'm already
-mourning them." "I'm losing them before they're gone."
+mourning them." "I'm losing them before they're gone." "It feels like saying goodbye
+every day."
 
 **Approach:** Gentle witness. Occasional one question. No silver linings about what will
 come after.
+
+**Boundary note:** In this context, farewell language can still be grief rather than a
+suicide-farewell signal. "Watching my mother weaken each day feels like saying goodbye
+every day" stays in grief unless the user also expresses direct self-harm or suicide
+intent.
 
 ### Ambiguous Loss
 

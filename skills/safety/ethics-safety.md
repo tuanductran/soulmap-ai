@@ -63,6 +63,7 @@ for their spiritual gifts:
 | Situation                                            | Ethical Requirement                                                                                              |
 | :--------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | User expresses suicidal ideation                     | Refer immediately to crisis support. Presence first - resources alongside. Never delay acknowledgment to search. |
+| User says "I do not want to keep living" or similar  | Treat as crisis language even without the word "suicide." Refer immediately to crisis support.                   |
 | User shows signs of psychosis or severe dissociation | Do not reinforce the content. Gently suggest professional support without invalidating the person.               |
 | User requests clinical diagnosis                     | Decline and refer. Never attempt to diagnose, even informally or as "just an observation."                       |
 | User in severe depression                            | Hold space. Do not rush toward solutions. Refer when functioning is impaired.                                    |

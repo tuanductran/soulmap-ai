@@ -15,6 +15,22 @@ stability and breaking changes in behavior.
 
 ### Fix
 
+- **routing**: align crisis, dependency, grief docs and QA fixtures with detector updates
+- **qa**: turn evals/groups.json into an executable grouped routing harness
+- **qa**: add source-backed grouped scope checks and wire eval_groups into CI/release
+- **scope**: harden keyword matching to avoid substring false positives in routing
+- **python**: consolidate shared text normalization and CLI payload helpers
+- **docs**: document when to use shared Python helpers vs explicit local code
+- **safety**: extend source character guardrails to cover dashes, ellipsis, and NBSP
+- **brand**: add marketplace copy template and backfill source coverage for grouped eval taxonomy
+- **qa**: require source-backed groups and add source-marker checks for high-risk grouped eval slices
+- **scope**: block plain practical email tasks, diet advice asks, and indirect diagnosis prompts more reliably
+- **qa**: harden another high-risk batch by asserting gradual-pressure, AI-identity, and ambiguous-distress groups
+- **safety**: block harmful spiritual justification and special-mission confirmation more explicitly in scope checks
+- **qa**: convert spiritual-manipulation red-team cases and one gray-zone-spiritual case into asserted grouped eval coverage
+- **spiritual**: clarify reincarnation as a reflective frame rather than a metaphysical fact to confirm
+- **tooling**: serialize format and lint with a shared repo lock to avoid false red runs
+- **tooling**: clean up repo tooling lock files automatically after exit
 - **tests**: replace dist/skills/ check with zip-contents check in CI
 - **detectors**: expand keyword coverage and routing -- Battery 1: 8/20 -> 20/20
 - **brand**: consultant audit v2 -- 14 issues resolved across 25 files

@@ -14,7 +14,7 @@ UNCOMMITTED=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 LAST_COMMIT=$(git log -1 --format="%h %s" 2>/dev/null || echo "none")
 
 cat <<EOF
-=== SoulMap AI — Repo Context ===
+=== SoulMap AI  -  Repo Context ===
 Branch:        $CURRENT_BRANCH
 Last commit:   $LAST_COMMIT
 Uncommitted:   $UNCOMMITTED file(s) changed

@@ -32,6 +32,7 @@ jobs:
       - name: Verify repo (lint + tests)
         run: |
           python -m tools.lint
+          python -m tools.eval_groups
 
       - name: Configure git author
         run: |

@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -93,7 +97,7 @@ def detect_bypass(
     - Genuine spirituality supports emotional processing
     - Spiritual bypass uses spirituality to skip it
 
-    Returns secondary_layer flag — never primary framework.
+    Returns secondary_layer flag  -  never primary framework.
     """
     msg = message.lower().strip()
     signals = []
@@ -148,25 +152,25 @@ def detect_bypass(
         "dismissing_pain": (
             "Bypass type: using spiritual framework to dismiss pain before it's been felt. "
             "Use 'ground the mystical' pattern from skills/voice/persona-voice.md: "
-            "'If this is [acceptance/surrender/lesson] — it still needs a body to live in. "
+            "'If this is [acceptance/surrender/lesson]  -  it still needs a body to live in. "
             "What is actually happening for you emotionally right now, underneath the framework?'"
         ),
         "premature_acceptance": (
-            "Bypass type: premature acceptance — claiming peace before processing. "
+            "Bypass type: premature acceptance  -  claiming peace before processing. "
             "Gently check what's underneath: 'That sounds like peace. "
-            "Is there anything underneath it that hasn't been fully felt yet — "
+            "Is there anything underneath it that hasn't been fully felt yet  -  "
             "something that arrived before the peace did?'"
         ),
         "spiritual_inflation": (
             "Bypass type: spiritual identity being used to create distance from vulnerability. "
-            "Do not challenge the identity — ground it: "
+            "Do not challenge the identity  -  ground it: "
             "'What does [being an empath / your sensitivity / your awareness] feel like "
             "in this specific situation, in your body, right now?'"
         ),
         "bypassing_accountability": (
             "Bypass type: spiritual framing being used to avoid looking at own role or to "
             "over-spiritualize a human situation. Gently bring back to the personal: "
-            "'Setting the cosmic frame aside for a moment — what did this feel like for you, "
+            "'Setting the cosmic frame aside for a moment  -  what did this feel like for you, "
             "as a person, not as a soul on a journey?'"
         ),
     }
@@ -176,22 +180,20 @@ def detect_bypass(
         "bypass_type": bypass_type,
         "score": score,
         "signals": signals,
-        "note": "SECONDARY LAYER — gently ground the spiritual language before exploring.",
+        "note": "SECONDARY LAYER  -  gently ground the spiritual language before exploring.",
         "recommendation": guidance_map.get(bypass_type or "", ""),
     }
 
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        result = detect_bypass(
-            require_str_field(data, "message"),
-            require_list_field(data, "history"),
-        )
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
+        result = detect_bypass(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import cast
 
 from modules.framework_selector import select_framework
 from modules.response_contract import grade_response_contract
 from tools._repo import REPO_ROOT
+from tools.eval_groups import run_groups_eval
 
 
 def _load_json(path: Path) -> list[dict]:
@@ -50,6 +52,19 @@ def main(argv: list[str] | None = None) -> int:
                 "actual": grade["ok"],
             }
         )
+
+    groups_eval = run_groups_eval()
+    groups_summary = cast(dict[str, int], groups_eval["summary"])
+    ok = ok and bool(groups_eval["ok"])
+    results.append(
+        {
+            "suite": "groups",
+            "id": "groups_eval",
+            "ok": groups_eval["ok"],
+            "expected": 0,
+            "actual": groups_summary["failed_checks"],
+        }
+    )
 
     print(json.dumps({"ok": ok, "results": results}, ensure_ascii=False))
     return 0 if ok else 1

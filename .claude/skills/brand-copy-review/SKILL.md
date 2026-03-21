@@ -38,6 +38,7 @@ The copy must stay aligned with:
 - `skills/brand/message-hierarchy.md`
 - `skills/brand/surfaces-and-scope.md`
 - `templates/brand-copy.md`
+- `templates/marketplace-copy.md`
 - `templates/onboarding-copy.md`
 - `templates/faq.md`
 - `AGENTS.md`

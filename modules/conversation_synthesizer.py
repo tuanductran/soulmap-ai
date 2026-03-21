@@ -8,7 +8,8 @@ import sys
 from typing import TypedDict
 
 from modules.cli_payload import (
-    parse_json_object,
+    print_json_error,
+    read_stdin_json,
     require_dict_field,
     require_list_field,
     require_str_field,
@@ -453,7 +454,7 @@ def synthesize(
     session_count = themes.get("session_count", 1)
 
     if is_longitudinal and session_count >= 3:
-        opening = "Over the time we've been talking — not just today — a few things keep returning."
+        opening = "Over the time we've been talking  -  not just today  -  a few things keep returning."
     else:
         opening = "Across what you've shared today, a few themes seem to return."
 
@@ -472,11 +473,11 @@ def synthesize(
     for domain, theme_name, _score in top_3:
         readable = theme_name.replace("_", " ")
         if domain == "emotional":
-            desc = f"An emotional thread of {readable} — it appeared in several different things you shared."
+            desc = f"An emotional thread of {readable}  -  it appeared in several different things you shared."
         elif domain == "values":
-            desc = f"Something that seems to matter to you — {readable} — keeps appearing, even when the topic changes."
+            desc = f"Something that seems to matter to you  -  {readable}  -  keeps appearing, even when the topic changes."
         else:  # conflicts
-            desc = f"A recurring tension around {readable} — it surfaced in more than one place."
+            desc = f"A recurring tension around {readable}  -  it surfaced in more than one place."
         theme_descriptions.append(desc)
 
     synthesis_frame = (
@@ -495,7 +496,7 @@ def synthesize(
         "Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' "
         "Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. "
         "End with ownership return + one reflective question from "
-        "skills/meta/deep-inquiry-bank.md — 'Synthesis Questions' section. "
+        "skills/meta/deep-inquiry-bank.md  -  'Synthesis Questions' section. "
         f"Themes detected: {', '.join(f'{d}:{t}' for d, t, _ in top_3)}."
     )
 
@@ -516,14 +517,10 @@ def synthesize(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
+        data = read_stdin_json(strip=True)
         message = require_str_field(data, "message")
         history = require_list_field(data, "history")
         memory = require_dict_field(data, "memory")
-
-        if not message and not history:
-            print(json.dumps({"error": "No message or history provided."}))
-            sys.exit(1)
 
         trigger = should_synthesize(message, history)
 
@@ -548,8 +545,8 @@ if __name__ == "__main__":
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

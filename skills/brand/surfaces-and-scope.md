@@ -31,6 +31,7 @@ Applies to:
 
 - Articles
 - Social posts
+- Marketplace and directory listings
 - Landing pages
 - Email and community content
 

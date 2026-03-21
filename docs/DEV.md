@@ -52,6 +52,7 @@ Cross-platform (recommended):
 ```bash
 python -m tools.format
 python -m tools.lint
+python -m tools.eval_groups
 python -m tools.eval_conversations
 python -m tools.eval_responses
 python -m tools.build_skill
@@ -157,8 +158,35 @@ Use the eval suite for behavior regressions before shipping framework or prompt 
 ```bash
 python -m tools.eval_conversations
 python -m tools.eval_responses
+python -m tools.eval_groups
 python tests/test_safety_evals.py
 ```
+
+`python -m tools.eval_groups` is the lightest taxonomy-level guardrail here. It checks
+grouped routing expectations from `evals/groups.json` and validates the referenced
+`skills/` / `templates/` policy sources at the same time. For higher-risk slices,
+`groups.json` can also define `source_markers` so evals fail if the cited files no
+longer contain the expected policy anchor.
+
+## Shared Python helpers
+
+When editing detector CLIs or lightweight module entrypoints, prefer the shared helpers
+before adding more local boilerplate:
+
+- [`../modules/cli_payload.py`](../modules/cli_payload.py) for stdin JSON parsing, JSON
+  error output, and common payload extraction helpers such as `message/history`,
+  `message/history/memory`, and `message/history/memory/selection`
+- [`../modules/text_normalization.py`](../modules/text_normalization.py) for repeated
+  message normalization such as smart-quote cleanup and whitespace collapsing
+
+Do not force every module through the same helper if its payload contract is genuinely
+different. In those cases, explicit local code is preferred over a misleading abstraction.
+
+## Format And Lint Ordering
+
+`python -m tools.format` and `python -m tools.lint` now share a repo lock. If they are
+started at the same time, one waits instead of failing because files are being rewritten
+mid-check. The lock file is cleaned up automatically when the tool exits.
 
 ## Local AI workflow layers
 

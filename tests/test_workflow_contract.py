@@ -9,7 +9,7 @@ def test_autofix_workflow_has_correct_name() -> None:
     content = Path(".github/workflows/autofix.yml").read_text(encoding="utf-8")
 
     assert "name: autofix.ci" in content, (
-        "autofix.yml must have 'name: autofix.ci' — this is a hard requirement "
+        "autofix.yml must have 'name: autofix.ci'  -  this is a hard requirement "
         "from the autofix-ci/action. Any other name causes a security error."
     )
     assert "autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8" in content
@@ -20,7 +20,7 @@ def test_autofix_workflow_has_correct_name() -> None:
 def test_ci_workflow_covers_critical_quality_gates() -> None:
     content = Path(".github/workflows/ci.yml").read_text(encoding="utf-8")
 
-    # autofix must NOT be inside ci.yml — it belongs in autofix.yml
+    # autofix must NOT be inside ci.yml  -  it belongs in autofix.yml
     assert "autofix-ci/action" not in content, (
         "autofix-ci/action must not be in ci.yml. "
         "It requires its own workflow named 'autofix.ci'."

@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -181,7 +185,7 @@ def detect_inner_conflict(
         "Reflect the hidden intention behind each part. "
         "Do NOT take sides. Do NOT attempt to resolve the conflict. "
         "End with one question that invites the user to listen to one of the parts. "
-        "Use post-grounding questions from skills/meta/deep-inquiry-bank.md — 'Parts-Specific Questions' section."
+        "Use post-grounding questions from skills/meta/deep-inquiry-bank.md  -  'Parts-Specific Questions' section."
     )
 
     if parts_suggested:
@@ -313,20 +317,15 @@ def _suggest_parts(msg: str) -> list[str]:
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_inner_conflict(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
