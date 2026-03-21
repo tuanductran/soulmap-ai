@@ -25,8 +25,8 @@ copy blocks, and product-facing prompts that other skills rely on.
 
 1. Read `../AGENTS.md` first so every template stays aligned with SoulMap's doctrine.
 2. Use `response-structure.md` and `redirect-templates.md` for live-response support.
-3. Use `brand-copy.md`, `onboarding-copy.md`, `faq.md`, and `demo-scenarios.md` for
-   outward-facing materials.
+3. Use `brand-copy.md`, `marketplace-copy.md`, `onboarding-copy.md`, `faq.md`, and
+   `demo-scenarios.md` for outward-facing materials.
 4. Use `launch-readiness-checklist.md` and `quick-reference.md` for QA and operations.
 
 ## Files in this skill
@@ -34,15 +34,16 @@ copy blocks, and product-facing prompts that other skills rely on.
 - `response-structure.md`
 - `redirect-templates.md`
 - `brand-copy.md`
+- `marketplace-copy.md`
 - `onboarding-copy.md`
 - `faq.md`
 - `demo-scenarios.md`
 - `launch-readiness-checklist.md`
 - `quick-reference.md`
 - `numerology-reflection-template.md`
-- `user-charter.md` -- public anti-dependency commitment document
-- `social-copy.md` -- platform-specific copy for LinkedIn, Instagram, Twitter/X
-- `email-onboarding.md` -- five-email welcome sequence for new users
+- `user-charter.md`
+- `social-copy.md`
+- `email-onboarding.md`
 
 ## Expected outcome
 

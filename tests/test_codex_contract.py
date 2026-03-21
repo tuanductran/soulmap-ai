@@ -21,3 +21,7 @@ def test_repo_docs_acknowledge_codex_as_optional_local_layer() -> None:
     assert ".codex/" in readme
     assert ".codex/" in contract
     assert "subordinate to `AGENTS.md`" in contract
+
+
+def test_codex_source_character_rule_exists() -> None:
+    assert Path(".codex/rules/source-character-safety.md").is_file()

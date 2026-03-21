@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # PostToolUse hook: run markdown_contract after editing skills/ or templates/ .md files.
 # Catches broken links, missing frontmatter, banned unicode early.
-# Exit 0 always (non-blocking) — errors are reported to Claude as feedback.
+# Exit 0 always (non-blocking)  -  errors are reported to Claude as feedback.
 
 set -euo pipefail
 

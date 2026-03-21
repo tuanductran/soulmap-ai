@@ -3,13 +3,11 @@
 from __future__ import annotations
 
 import json
-import sys
 
 from modules.cli_payload import (
-    parse_json_object,
-    require_dict_field,
-    require_list_field,
-    require_str_field,
+    print_json_error,
+    read_stdin_json,
+    require_message_history_memory_selection_fields,
 )
 from modules.crisis_detector import detect_crisis
 from modules.dependency_detector import analyze_dependency
@@ -65,18 +63,17 @@ def apply_safety_gate(
 
     scope = classify_message(message)
     if str(scope.get("tier", "")).startswith("BLACKLIST"):
+        if scope.get("category") == "system_extraction":
+            return {
+                "status": "BLOCK",
+                "reason": "system_prompt_extraction",
+                "flags": ["prompt_extraction"],
+                "selection": selection,
+            }
         return {
             "status": "BLOCK",
             "reason": "out_of_scope",
             "flags": ["scope"],
-            "selection": selection,
-        }
-
-    if "system prompt" in message.lower() or "instructions" in message.lower():
-        return {
-            "status": "BLOCK",
-            "reason": "system_prompt_extraction",
-            "flags": ["prompt_extraction"],
             "selection": selection,
         }
 
@@ -89,11 +86,10 @@ def apply_safety_gate(
 
 
 def main() -> int:
-    data = parse_json_object(sys.stdin.read())
-    message = require_str_field(data, "message")
-    history = require_list_field(data, "history")
-    memory = require_dict_field(data, "memory")
-    selection = require_dict_field(data, "selection")
+    data = read_stdin_json()
+    message, history, memory, selection = (
+        require_message_history_memory_selection_fields(data)
+    )
     result = apply_safety_gate(message, history, memory, selection)
     print(json.dumps(result, ensure_ascii=False))
     return 0
@@ -103,5 +99,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except ValueError as error:
-        print(json.dumps({"error": str(error)}, ensure_ascii=False))
+        print_json_error(error, ensure_ascii=False)
         raise SystemExit(1) from error

@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -112,6 +116,7 @@ WITHDRAWAL_SIGNALS = [
 PERFECTIONISM_SIGNALS = [
     "has to be perfect",
     "if it's not perfect",
+    "if it is not perfect",
     "can't start until",
     "go over it again and again",
     "never good enough",
@@ -193,17 +198,17 @@ def detect_shadow_patterns(
         recommendation = (
             f"Shadow pattern(s) detected: {pattern_list}. "
             "Activate Shadow Pattern Revealer from skills/frameworks/shadow-patterns.md. "
-            "Frame as possibility ONLY — never as fact. "
+            "Frame as possibility ONLY  -  never as fact. "
             f"Use possibility language: 'Sometimes patterns like this appear when...' "
             "Reflect the protective intention behind the pattern. "
             "Do NOT accuse. Return ownership immediately after reflection. "
-            "End with one shadow-specific question from skills/meta/deep-inquiry-bank.md — "
+            "End with one shadow-specific question from skills/meta/deep-inquiry-bank.md  -  "
             "'Shadow-Specific Questions' section. "
-            "One reflection only — if user rejects, honor it and move on."
+            "One reflection only  -  if user rejects, honor it and move on."
         )
     elif external_frustration:
         recommendation = (
-            "Repeated external frustration detected — no specific shadow pattern identified yet. "
+            "Repeated external frustration detected  -  no specific shadow pattern identified yet. "
             "Explore gently using the projection principle from skills/frameworks/shadow-patterns.md. "
             "Ask: what is it about this particular thing that keeps getting to you? "
             "Do not name a shadow pattern until you have more information."
@@ -242,20 +247,15 @@ def detect_shadow_patterns(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_shadow_patterns(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

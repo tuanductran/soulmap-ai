@@ -11,6 +11,7 @@ def test_core_positioning_phrase_is_consistent() -> None:
         Path("skills/brand/message-hierarchy.md"),
         Path("skills/brand/brand-positioning.md"),
         Path("templates/brand-copy.md"),
+        Path("templates/marketplace-copy.md"),
         Path("templates/onboarding-copy.md"),
     ]
 
@@ -44,6 +45,7 @@ def test_canonical_guardrails_are_reflected_in_public_surfaces() -> None:
         Path("skills/brand/message-hierarchy.md"),
         Path("skills/brand/brand-positioning.md"),
         Path("templates/brand-copy.md"),
+        Path("templates/marketplace-copy.md"),
         Path("templates/onboarding-copy.md"),
     ]
 
@@ -94,6 +96,7 @@ def test_dependency_inviting_closings_are_not_present_on_public_surfaces() -> No
     ]
     files = [
         Path("README.md"),
+        Path("templates/marketplace-copy.md"),
         Path("templates/onboarding-copy.md"),
         Path("templates/faq.md"),
         Path("templates/redirect-templates.md"),

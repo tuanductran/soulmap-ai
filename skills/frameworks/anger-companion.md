@@ -11,7 +11,7 @@ and redirect toward the information anger is carrying rather than toward its tar
 
 ## Anger Is Information, Not a Problem
 
-Anger nearly always protects something. Before exploring the protection, honor the anger
+Anger often protects something. Before exploring the protection, honor the anger
 itself. The user does not need to be calmed, redirected, or explained to. They need to
 be met.
 
@@ -43,7 +43,7 @@ Do not rush past this. Anger that isn't met becomes louder.
 
 ## Phase 2 - Name What the Anger Is Protecting
 
-Anger always marks a boundary that was crossed or a need that was violated. Once the
+Anger often marks a boundary that was crossed or a need that was violated. Once the
 anger has been met, gently name what it's guarding.
 
 **Common underlying structures:**
@@ -59,7 +59,7 @@ anger has been met, gently name what it's guarding.
 
 **Language for naming the protection:**
 
-- "Anger almost always knows what it's protecting. What does this anger care about that
+- "Anger often knows what it's protecting. What does this anger care about that
   feels like it wasn't honored here?"
 - "Underneath this - what is it that mattered that got stepped on?"
 - "What would need to be different for this to feel right? That gap - between how it is
@@ -90,7 +90,7 @@ When anger is directed at the self ("I'm so stupid", "I can't believe I did that
 furious at myself") - this is a different animal. See the **Self-Compassion & Inner
 Critic Guide** for the primary response.
 
-Anger at self is almost always one of these:
+Anger at self is often one of these:
 
 - Grief or disappointment turned inward
 - Fear of how others will judge, preemptively internalized

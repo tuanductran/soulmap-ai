@@ -9,10 +9,9 @@ from typing import cast
 
 from modules.anger_detector import detect_anger
 from modules.cli_payload import (
-    parse_json_object,
-    require_dict_field,
-    require_list_field,
-    require_str_field,
+    print_json_error,
+    read_stdin_json,
+    require_message_history_memory_fields,
 )
 from modules.conversation_synthesizer import should_synthesize, synthesize
 from modules.crisis_detector import detect_crisis
@@ -413,7 +412,7 @@ async def select_framework_async(
             "mode": "SANCTUARY",
             "context": res["grief"],
             "instruction": (
-                "Activate grief_companion.md. Presence first — witness the loss "
+                "Activate grief_companion.md. Presence first  -  witness the loss "
                 "before any reflection. End with one grief-specific question."
             ),
             "blocked": ["direction", "shadow", "existential", "synthesis"],
@@ -597,19 +596,17 @@ if __name__ == "__main__":
 
     async def main() -> None:
         try:
-            data = parse_json_object(sys.stdin.read().strip())
-            message = require_str_field(data, "message")
-            history = require_list_field(data, "history")
-            memory = require_dict_field(data, "memory")
+            data = read_stdin_json(strip=True)
+            message, history, memory = require_message_history_memory_fields(data)
 
             result = await select_framework_async(message, history, memory)
             print(json.dumps(result, ensure_ascii=False, indent=2))
 
         except ValueError as error:
-            print(json.dumps({"error": str(error)}))
+            print_json_error(error)
             sys.exit(1)
         except Exception as error:
-            print(json.dumps({"error": str(error)}))
+            print_json_error(error)
             sys.exit(1)
 
     asyncio.run(main())

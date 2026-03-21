@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -64,6 +68,11 @@ ANTICIPATORY_GRIEF = [
     "every day feels like goodbye",
     "every day is another goodbye",
     "every day is a goodbye",
+    "saying goodbye every day",
+    "feels like saying goodbye every day",
+    "losing her a little more every day",
+    "losing him a little more every day",
+    "losing them a little more every day",
     "already mourning them",
     "losing them before they're gone",
     "terminal diagnosis",
@@ -94,6 +103,7 @@ AMBIGUOUS_LOSS = [
     "lost my sense of self",
     "lost who i was",
     "don't know if i'm allowed to grieve",
+    "the relationship ended but no one understands why it hurts this much",
 ]
 
 COMPLICATED_GRIEF = [
@@ -185,22 +195,20 @@ def detect_grief(
         "recommendation": (
             f"Activate grief_companion.md. Type: {grief_type}. "
             f"{type_guidance.get(grief_type or '', '')} "
-            "Retrieve grief questions from deep-inquiry-bank.md — 'Grief Questions' section."
+            "Retrieve grief questions from deep-inquiry-bank.md  -  'Grief Questions' section."
         ),
     }
 
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        result = detect_grief(
-            require_str_field(data, "message"),
-            require_list_field(data, "history"),
-        )
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
+        result = detect_grief(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

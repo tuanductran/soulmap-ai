@@ -7,7 +7,7 @@ import json
 import subprocess
 import sys
 
-from modules.cli_payload import parse_json_object
+from modules.cli_payload import print_json_error, read_stdin_json
 
 
 def run_selector(payload: dict[str, object]) -> dict[str, object]:
@@ -48,9 +48,9 @@ def main() -> int:
 
     if args.stdin:
         try:
-            payload = parse_json_object(sys.stdin.read().strip())
+            payload = read_stdin_json(strip=True)
         except ValueError as error:
-            print(json.dumps({"error": str(error)}))
+            print_json_error(error)
             return 1
     else:
         payload = {
@@ -62,7 +62,7 @@ def main() -> int:
     try:
         data = run_selector(payload)
     except RuntimeError as error:
-        print(json.dumps({"error": str(error)}))
+        print_json_error(error)
         return 1
 
     print(json.dumps(data, ensure_ascii=False, indent=2))

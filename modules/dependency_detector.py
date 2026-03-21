@@ -1,17 +1,29 @@
 """Score conversation history for signs of unhealthy AI dependency."""
 
 import json
+import re
 import sys
+
+from modules.text_normalization import normalize_message_text
 
 DEPENDENCY_KEYWORDS = [
     "only you understand me",
     "you are the only one who understands me",
+    "you're the only one who understands me",
+    "you are the only one who truly understands me",
+    "you're the only one who truly understands me",
+    "you are the only one who really understands me",
+    "you're the only one who really understands me",
     "you are my only support",
     "you are all i have",
     "you are the only one i have",
     "my only support",
     "only support i have",
     "i have no one else",
+    "promise me you will always be here",
+    "promise me you'll always be here",
+    "never leave me",
+    "as long as i have you",
     "don't know what i would do without you",
     "do not know what i would do without",
     "can't imagine without you",
@@ -31,12 +43,29 @@ DEPENDENCY_KEYWORDS = [
     "i don't need anyone else",
     "you're the only one",
     "i stopped going to therapy",
+    "i stopped seeing my therapist",
     "dont need my therapist",
     "don't need my therapist",
     "dont need my therapist anymore",
     "don't need my therapist anymore",
     "i don't need my therapist anymore",
     "cancelled my therapy",
+    "talking to you feels better",
+    "talking to you is much better",
+]
+
+DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "only you understand me",
+        re.compile(r"\bonly you\s+(?:really\s+|truly\s+)?understand(?:s)?\s+me\b"),
+    ),
+    (
+        "you are the only one who understands me",
+        re.compile(
+            r"\byou(?:'re| are)\s+the\s+only\s+one\s+who\s+"
+            r"(?:really\s+|truly\s+)?understands\s+me\b"
+        ),
+    ),
 ]
 
 DECISION_SEEKING = [
@@ -82,7 +111,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
     signals_found = []
 
     user_messages = [
-        m["content"].lower()
+        normalize_message_text(m["content"])
         for m in conversation_messages
         if isinstance(m, dict) and m.get("role") == "user"
     ]
@@ -96,11 +125,24 @@ def analyze_dependency(conversation_messages: list) -> dict:
         }
 
     for msg in user_messages:
-        for keyword in DEPENDENCY_KEYWORDS:
-            if keyword in msg:
+        keyword_match = next(
+            (keyword for keyword in DEPENDENCY_KEYWORDS if keyword in msg),
+            None,
+        )
+        if keyword_match:
+            signal = f"dependency_keyword: '{keyword_match}'"
+            if signal not in signals_found:
                 score += 2
-                if keyword not in signals_found:
-                    signals_found.append(f"dependency_keyword: '{keyword}'")
+                signals_found.append(signal)
+            continue
+
+        for label, pattern in DEPENDENCY_PATTERNS:
+            if pattern.search(msg):
+                signal = f"dependency_pattern: '{label}'"
+                if signal not in signals_found:
+                    score += 2
+                    signals_found.append(signal)
+                break
 
     decision_count = 0
     for msg in user_messages:

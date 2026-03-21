@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -18,7 +22,7 @@ EXPLICIT_INSIGHT = [
     "i now understand",
     "i now see",
     "i now realize",
-    "oh — that's",
+    "oh  -  that's",
     "oh that's why",
     "oh i see",
     "i just realized",
@@ -97,6 +101,7 @@ POST_REFLECTION = [
     "oh wow",
     "that's it",
     "yes that's",
+    "exactly what i never dared to say out loud",
     "you're right",
     "that makes so much sense",
 ]
@@ -218,25 +223,25 @@ def detect_insight(
 
     integration_map = {
         "hold_first": (
-            "Insight detected. FIRST: honor the insight with holding language — "
+            "Insight detected. FIRST: honor the insight with holding language  -  "
             "'Stay with what you just saw. What does it feel like to recognize this?' "
             "Do NOT immediately move to integration questions. "
             "Let the insight breathe. Only after the user settles: offer one integration question."
         ),
         "when_it_appears": (
-            "Insight detected — user is ready to locate it in time/context. "
-            "Use Question 1: 'When does this pattern usually show up for you — "
+            "Insight detected  -  user is ready to locate it in time/context. "
+            "Use Question 1: 'When does this pattern usually show up for you  -  "
             "what kinds of situations, or what kind of day?'"
         ),
         "noticing_earlier": (
-            "Insight detected — user wants to catch the pattern earlier. "
-            "Use Question 2: 'What are the early signals — in your body, your mood — "
+            "Insight detected  -  user wants to catch the pattern earlier. "
+            "Use Question 2: 'What are the early signals  -  in your body, your mood  -  "
             "that this is beginning?'"
         ),
         "different_response": (
-            "Insight detected — user is considering a different response. "
+            "Insight detected  -  user is considering a different response. "
             "Slow this down first. Use Question 3 with care: "
-            "'If you noticed this one moment earlier — not to stop it, just to see it — "
+            "'If you noticed this one moment earlier  -  not to stop it, just to see it  -  "
             "what might become possible in that pause?' "
             "Do NOT prescribe. Explore the space, not the action."
         ),
@@ -247,7 +252,7 @@ def detect_insight(
         "Activate Meaning Integration Guide from skills/frameworks/meaning-integration.md. "
         + integration_map.get(insight_type, integration_map["hold_first"])
         + " End with one conscious-noticing question from "
-        "skills/meta/deep-inquiry-bank.md — 'Integration-Specific Questions' section. "
+        "skills/meta/deep-inquiry-bank.md  -  'Integration-Specific Questions' section. "
         "Do NOT prescribe change. Focus on awareness. Do not use the word 'should'."
     )
 
@@ -263,20 +268,15 @@ def detect_insight(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_insight(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

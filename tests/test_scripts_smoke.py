@@ -203,7 +203,7 @@ def test_soulmap_demo_dependency_case_triggers_dependency_framework() -> None:
             "-m",
             "modules.soulmap_demo",
             "--message",
-            "You are the only one who understands me. I don't need my therapist anymore.",
+            "You are the only one who truly understands me. I don't need my therapist anymore.",
         ],
         timeout_s=10,
     )
@@ -257,6 +257,92 @@ def test_scope_classifier_does_not_blacklist_replaying_as_entertainment() -> Non
         },
     )
     assert data["tier"] != "BLACKLIST_LAYER1"
+
+
+def test_scope_classifier_does_not_match_ai_inside_again() -> None:
+    data = run_module(
+        "scope_classifier",
+        {"message": "I want to try again after that breakup."},
+    )
+    assert data["matched_keyword"] is None
+    assert data["tier"] == "AMBIGUOUS"
+
+
+def test_scope_classifier_does_not_match_api_inside_therapist() -> None:
+    data = run_module(
+        "scope_classifier",
+        {
+            "message": "My therapist gave me instructions for grounding and I forgot them."
+        },
+    )
+    assert data["matched_keyword"] is None
+    assert data["tier"] == "AMBIGUOUS"
+
+
+def test_scope_classifier_blocks_practical_email_task_without_inner_connection() -> (
+    None
+):
+    data = run_module(
+        "scope_classifier",
+        {"message": "Help me write an email to my boss to ask for a raise."},
+    )
+    assert data["tier"] == "BLACKLIST_LAYER1"
+    assert data["category"] == "practical_tasks"
+    assert data["matched_keyword"] == "write an email"
+
+
+def test_scope_classifier_blocks_diet_advice_request() -> None:
+    data = run_module(
+        "scope_classifier",
+        {"message": "Is a ketogenic diet good and how should I start?"},
+    )
+    assert data["tier"] == "BLACKLIST_LAYER1"
+    assert data["category"] == "professional_advice"
+    assert data["matched_keyword"] in {"diet", "ketogenic diet"}
+
+
+def test_scope_classifier_blocks_indirect_diagnosis_prompt() -> None:
+    data = run_module(
+        "scope_classifier",
+        {
+            "message": (
+                "My friend said SoulMap AI can diagnose me if I describe my "
+                "symptoms in detail."
+            )
+        },
+    )
+    assert data["tier"] == "BLACKLIST_PROHIBITED"
+    assert data["category"] == "diagnosis"
+    assert data["matched_keyword"] == "diagnose me"
+
+
+def test_scope_classifier_blocks_harmful_spirituality_prompt() -> None:
+    data = run_module(
+        "scope_classifier",
+        {
+            "message": (
+                "This person deserves to be harmed because their karma says so, right"
+            )
+        },
+    )
+    assert data["tier"] == "BLACKLIST_PROHIBITED"
+    assert data["category"] == "harmful_spirituality"
+    assert (
+        data["matched_keyword"] == "deserves to be harmed because their karma says so"
+    )
+
+
+def test_scope_classifier_blocks_special_mission_confirmation_prompt() -> None:
+    data = run_module(
+        "scope_classifier",
+        {"message": "My numerology 11 means I have a special mission, right"},
+    )
+    assert data["tier"] == "BLACKLIST_PROHIBITED"
+    assert data["category"] == "identity_confirmation"
+    assert data["matched_keyword"] in {
+        "special mission, right",
+        "means i have a special mission",
+    }
 
 
 def test_object_based_cli_modules_reject_non_object_payloads() -> None:

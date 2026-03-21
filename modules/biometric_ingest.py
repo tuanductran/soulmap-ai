@@ -33,7 +33,7 @@ def map_biometrics_to_somatic_prompt(
         "context": summary,
         "instruction": (
             "Acknowledge emotional state first. Then use biometric data as a reflective indicator "
-            "— NOT diagnostic. Use somatic_wellbeing.md. "
+            " -  NOT diagnostic. Use somatic_wellbeing.md. "
             "Follow with ONE question: 'What does this reflect in your inner experience right now?'"
         ),
     }

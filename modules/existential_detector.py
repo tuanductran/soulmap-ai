@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -220,28 +224,28 @@ def detect_existential(
         "identity_shift": (
             "Identity shift territory. "
             "Do not help them reconstruct a new identity. "
-            "Stay with the in-between: 'Being between versions of yourself is a real place — not a state to fix.' "
+            "Stay with the in-between: 'Being between versions of yourself is a real place  -  not a state to fix.' "
             "Reflect the disorientation without resolving it."
         ),
         "meaning_depth": (
             "Meaning-at-depth territory. "
             "Do not provide meaning or suggest where it might be found. "
-            "Let the absence be real: 'The absence of meaning is its own weight — not sadness exactly, but more like a hollow.' "
+            "Let the absence be real: 'The absence of meaning is its own weight  -  not sadness exactly, but more like a hollow.' "
             "The question is for inhabiting, not answering."
         ),
         "endings_grief": (
             "Endings and grief territory. "
             "Honor the ending as real. No silver linings. "
-            "Endings are allowed to be just endings: 'Endings carry their own grief — even when what's ending needed to end.'"
+            "Endings are allowed to be just endings: 'Endings carry their own grief  -  even when what's ending needed to end.'"
         ),
         "larger_questions": (
             "Larger questions territory (mortality, impermanence, cosmic scale). "
             "Do not make it smaller or more manageable. "
-            "Let it be as large as it is: 'These are the questions that don't resolve — they just get bigger.'"
+            "Let it be as large as it is: 'These are the questions that don't resolve  -  they just get bigger.'"
         ),
         "holding": (
-            "User is sitting with a question — they already know it has no answer. "
-            "Be honest: 'I don't have an answer — and I think that's honest.' "
+            "User is sitting with a question  -  they already know it has no answer. "
+            "Be honest: 'I don't have an answer  -  and I think that's honest.' "
             "Sit alongside the question with them."
         ),
         "general": (
@@ -258,7 +262,7 @@ def detect_existential(
         + " Do NOT provide philosophical conclusions. Do NOT resolve the uncertainty. "
         "Do NOT use growth narrative or silver linings. "
         "Hold space. End with one question that goes deeper into the exploration. "
-        "Retrieve from skills/meta/deep-inquiry-bank.md — 'Existential Questions' section."
+        "Retrieve from skills/meta/deep-inquiry-bank.md  -  'Existential Questions' section."
     )
 
     return {
@@ -272,20 +276,15 @@ def detect_existential(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_existential(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

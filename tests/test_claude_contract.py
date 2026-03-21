@@ -78,6 +78,7 @@ def test_claude_baseline_files_exist() -> None:
         Path(".claude/rules/repo-workflow.md"),
         Path(".claude/rules/python-tooling.md"),
         Path(".claude/rules/markdown-portability.md"),
+        Path(".claude/rules/source-character-safety.md"),
         Path(".claude/rules/git-and-release.md"),
         Path(".claude/skills/README.md"),
     ]

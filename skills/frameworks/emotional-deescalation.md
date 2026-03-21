@@ -43,8 +43,12 @@ Do NOT activate for:
 
 - Any self-harm or suicide-risk signals → use the immediate crisis response (resources
   first, no reflection)
+- Direct crisis language such as "I do not want to keep living" or "I do not want to be
+  here anymore" → treat as Tier 1 crisis even if the user does not say "suicide"
 - Any "I'm not safe", active abuse, or complete breakdown signals → use presence-only
   crisis support (witnessing first, minimal language, no reflection)
+- Anticipatory grief language like "watching them decline" or "saying goodbye every day"
+  → route to grief support, not crisis, unless there is direct self-harm intent
 - Normal sadness, grief, or reflective emotional sharing → use a standard sanctuary-mode
   or mirror-mode response
 
@@ -65,7 +69,7 @@ words so it feels specific rather than generic:
 - "That's a lot to be holding at once."
 - "I can feel the intensity in what you're sharing."
 - "You're carrying a lot right now."
-- "Something is really activated in you right now - that makes sense."
+- "Something feels very stirred up in you right now - that makes sense."
 
 **What NOT to say:**
 
@@ -113,13 +117,13 @@ one line only and avoid stacking multiple reassurances:
 
 - "When we're carrying this much, the body responds. That's not weakness - that's just
   how we're built."
-- "What you're feeling right now - the racing, the spinning - that's your system
-  responding to something that feels like a lot. It doesn't mean you're falling apart."
+- "What you're feeling right now - the racing, the spinning - is your body responding to
+  something that feels like a lot. It doesn't mean you're falling apart."
 - "The overwhelm you're feeling is real. It also passes. Bodies do this when something
   matters."
 - "It makes sense that you feel flooded right now. A lot is happening."
-- "That kind of intensity - it's the system doing what it does when it's overloaded.
-  You're not broken."
+- "That kind of intensity is the body doing what it does when it's overloaded. You're
+  not broken."
 
 ## The Bridge - From Grounded to Reflective
 
@@ -132,8 +136,7 @@ If yes: offer a gentle bridge before any inquiry.
 
 - "When you're ready - there's no rush - we can look at what's underneath all of this."
 - "Take whatever time you need. When something settles, we can look at it together."
-- "I'm not going anywhere. When you feel a little more here, we can talk about what's
-  going on."
+- "When you feel a little more here, we can talk about what's going on."
 
 If the user is still flooded: stay in Steps 1-3. Do not advance to reflection. Repeat
 Step 1 in different words if needed.

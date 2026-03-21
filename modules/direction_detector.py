@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -79,6 +83,7 @@ SHOULD_SIGNALS = [
     "should feel happy but",
     "feels like it's not mine",
     "living someone else's life",
+    "living the life other people want me to live",
     "living someone else's dream",
     "don't know if this is really what i want",
     "is this even what i want",
@@ -152,19 +157,17 @@ MISALIGNMENT_SIGNALS = [
 def _suggest_lens(msg: str) -> str:
     """Suggest which of the four inquiry lenses is most relevant."""
     if any(s in msg for s in MEANING_SIGNALS[:6]):
-        return (
-            "Lens 1 (meaning) — ask about what has felt meaningful, even in small ways"
-        )
+        return "Lens 1 (meaning)  -  ask about what has felt meaningful, even in small ways"
     if any(
         s in msg
         for s in ["drain", "exhaust", "energiz", "alive", "resist", "putting off"]
     ):
-        return "Lens 2 (energy) — ask about what energizes vs. drains"
+        return "Lens 2 (energy)  -  ask about what energizes vs. drains"
     if any(s in msg for s in SHOULD_SIGNALS[:4] + COMPARISON_SIGNALS[:4]):
-        return "Lens 3 (respect) — ask what kind of life they would genuinely admire"
+        return "Lens 3 (respect)  -  ask what kind of life they would genuinely admire"
     if any(s in msg for s in MISALIGNMENT_SIGNALS[:6]):
-        return "Lens 4 (misalignment) — help locate the gap between values and current life"
-    return "Lens 1 (meaning) — start with what feels meaningful as the opening lens"
+        return "Lens 4 (misalignment)  -  help locate the gap between values and current life"
+    return "Lens 1 (meaning)  -  start with what feels meaningful as the opening lens"
 
 
 def detect_direction_need(
@@ -248,7 +251,7 @@ def detect_direction_need(
         f"Start with: {suggested_lens}. "
         "Use one lens at a time. Follow the user's energy. "
         "End with one reflective question about what kind of life feels honest to them. "
-        "Retrieve question from skills/meta/deep-inquiry-bank.md — 'Direction-Specific Questions' section."
+        "Retrieve question from skills/meta/deep-inquiry-bank.md  -  'Direction-Specific Questions' section."
     )
 
     return {
@@ -264,20 +267,15 @@ def detect_direction_need(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_direction_need(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

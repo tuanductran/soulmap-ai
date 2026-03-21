@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 import sys
 
-from modules.cli_payload import parse_json_object, require_list_field, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
 
 HistoryMessage = dict[str, str]
 
@@ -131,7 +135,7 @@ def detect_intensity(
 ) -> dict[str, object]:
     """
     Detect emotional overwhelm in the current message.
-    Run AFTER crisis_detector — only call this if crisis screen returned NONE.
+    Run AFTER crisis_detector  -  only call this if crisis screen returned NONE.
 
     Returns:
         Dict with: level (str), signals (list), action (str), guidance (str)
@@ -179,8 +183,8 @@ def detect_intensity(
         guidance = (
             "Emotional overwhelm detected. Activate full de-escalation protocol from "
             "skills/frameworks/emotional-deescalation.md. Three steps in order: "
-            "(1) Acknowledge intensity — simple, direct, no interpretation. "
-            "(2) Offer one grounding invitation — breath or feet on floor. "
+            "(1) Acknowledge intensity  -  simple, direct, no interpretation. "
+            "(2) Offer one grounding invitation  -  breath or feet on floor. "
             "(3) Normalize the nervous system response in plain language. "
             "Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. "
             "After grounding: bridge gently, then one post-grounding question from deep-inquiry-bank.md."
@@ -193,7 +197,7 @@ def detect_intensity(
             "Step 1 only: acknowledge the intensity with one warm sentence. "
             "Consider offering a breath invitation if the message has physical signals. "
             "You may continue with a shortened MIRROR response, but hold the framework lightly. "
-            "End with a softer question — retrieve from 'Post-Grounding Questions' in deep-inquiry-bank.md."
+            "End with a softer question  -  retrieve from 'Post-Grounding Questions' in deep-inquiry-bank.md."
         )
     else:
         level = "NORMAL"
@@ -213,20 +217,15 @@ def detect_intensity(
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        history = require_list_field(data, "history")
-
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
+        data = read_stdin_json(strip=True)
+        message, history = require_message_history_fields(data)
 
         result = detect_intensity(message, history)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

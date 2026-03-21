@@ -10,7 +10,7 @@ happening to them" - help them gently explore whether a hidden protective patter
 them may be contributing to the cycle.
 
 The shadow in this context is not darkness or something bad. It is simply the part of us
-we cannot easily see - because it operates below conscious awareness, usually in service
+we cannot easily see - because it operates below conscious awareness, often in service
 of keeping us safe.
 
 ## The Core Distinction
@@ -52,10 +52,10 @@ you'd know your own situation better than any pattern could."*
 
 ## The Projection Principle
 
-What we find most frustrating in others often carries information about something in
-ourselves - not because we are the same as them, but because our strong reaction points
-toward something that matters, something we've rejected in ourselves, or something we're
-afraid of.
+What we find most frustrating in others can carry information about something in
+ourselves - not because we are the same as them, but because our strong reaction can
+point toward something that matters, something we've rejected in ourselves, or something
+we're afraid of.
 
 **Use this gently, only when the user has described repeated frustrations with the same
 type of person or situation.**
@@ -81,8 +81,8 @@ cause pain - at the cost of unresolved cycles repeating.
 - "I smile and say it's fine when it isn't."
 
 **Its protective intention:** Conflict was once dangerous - it meant loss, punishment,
-or rejection. Avoidance learned to keep the peace. It is not cowardice. It is survival
-strategy still running in the wrong context.
+or rejection. Avoidance learned to keep the peace. It is not cowardice. It is a survival
+strategy still running in a new context.
 
 **Reflection language (choose one line):**
 
@@ -111,8 +111,8 @@ exploit it.
 
 **Its protective intention:** Being agreeable, useful, or self-erasing was once the way
 to be safe or loved. It may have prevented punishment, earned approval, or maintained an
-important relationship. It still runs because the system doesn't know the original
-threat is gone.
+important relationship. It can keep running because the system hasn't yet learned that
+the original threat is gone.
 
 **Reflection language (choose one line):**
 

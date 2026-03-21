@@ -4,13 +4,16 @@ from __future__ import annotations
 
 import json
 import sys
+from typing import cast
+
+from modules.cli_payload import print_json_error, read_stdin_json_value
 
 ConversationMessage = dict[str, str]
 
 STAGE_SIGNALS = {
     1: {
         "name": "Arrival & Awakening",
-        "soulmap_role": "Sanctuary and witness — presence over wisdom",
+        "soulmap_role": "Sanctuary and witness  -  presence over wisdom",
         "keywords": [
             "i don't know",
             "i'm lost",
@@ -205,22 +208,17 @@ def detect_stage(conversation_messages: list[ConversationMessage]) -> dict[str, 
 
 if __name__ == "__main__":
     try:
-        raw = sys.stdin.read().strip()
-        if not raw:
-            print(json.dumps({"error": "No input provided."}))
-            sys.exit(1)
-
-        data = json.loads(raw)
+        data = read_stdin_json_value(strip=True)
         if isinstance(data, list):
-            messages = data
+            messages = cast(list[ConversationMessage], data)
         else:
-            messages = data.get("messages", [])
+            messages = cast(list[ConversationMessage], data.get("messages", []))
         result = detect_stage(messages)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
-    except json.JSONDecodeError as e:
-        print(json.dumps({"error": f"JSON parse error: {str(e)}"}))
+    except ValueError as e:
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

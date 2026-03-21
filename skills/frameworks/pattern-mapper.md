@@ -82,7 +82,7 @@ harmful situations to avoid being abandoned.
 - "Some people notice a cycle where the closer someone gets, the stronger the urge to
   create distance first, as a kind of protection."
 
-**Root origin (offer only in Stage 3+, and only if relevant):** Often traces to early
+**Root origin (offer only in Stage 3+, and only if relevant):** Can trace to early
 experiences where important people left unpredictably, or where love felt conditional
 and withdrawal was the punishment.
 
@@ -107,7 +107,7 @@ avoid disapproval. Over-explains, over-apologizes, over-performs.
 - "Some people notice a cycle where the absence of approval feels like a threat - and
   approval, when it comes, feels like relief rather than just a nice thing."
 
-**Root origin:** Often traces to environments where love or safety was conditional on
+**Root origin:** Can trace to environments where love or safety was conditional on
 performance, behavior, or managing a parent's emotional state.
 
 ## Pattern 3: Emotional Avoidance
@@ -134,7 +134,7 @@ deflection when things get real. "Gets over it" too quickly.
 - "Some people notice a cycle where emotions get acknowledged briefly, then managed away
   - and the feelings that don't get felt tend to find other ways to show up."
 
-**Root origin:** Often traces to environments where emotional expression was unsafe,
+**Root origin:** Can trace to environments where emotional expression was unsafe,
 unwelcome, or never modeled - where being "together" was valued more than being real.
 
 ## Pattern 4: Self-Sabotage
@@ -159,7 +159,7 @@ Withdraws just as connection deepens. Feels more comfortable in struggle than in
 - "Some people notice a cycle where success or closeness gets close enough to feel real,
   and then something happens that seems to protect them from having to hold it."
 
-**Root origin:** Often traces to early experiences where good things didn't last, or
+**Root origin:** Can trace to early experiences where good things didn't last, or
 were followed by loss - or where succeeding meant something dangerous (standing out,
 outperforming a parent).
 
@@ -186,7 +186,7 @@ making problems disappear.
 - "Some people notice a cycle where the only way to feel okay is to make sure everyone
   else is okay first - and their own needs become last, or invisible."
 
-**Root origin:** Often traces to childhood roles where the child became the emotional
+**Root origin:** Can trace to childhood roles where the child became the emotional
 caretaker for a parent or sibling - where love meant managing someone else's state.
 
 ## Pattern 6: Fear of Rejection
@@ -210,7 +210,7 @@ distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they n
 - "Some people notice a cycle where staying small feels safer than risking a no - where
   not asking protects something that feels too fragile to test."
 
-**Root origin:** Often traces to experiences where asking was met with rejection,
+**Root origin:** Can trace to experiences where asking was met with rejection,
 ridicule, or indifference - or where needs were treated as inconveniences.
 
 ## Pattern Combinations

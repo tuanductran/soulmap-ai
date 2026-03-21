@@ -48,6 +48,9 @@ jobs:
       - name: Advanced response evals
         run: |
           python -m tools.eval_responses
+      - name: Grouped routing evals
+        run: |
+          python -m tools.eval_groups
       - name: Build (cross-platform smoke)
         run: |
           python -m tools.build_skill

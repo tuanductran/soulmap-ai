@@ -1,15 +1,24 @@
 """Classify immediate safety risk from a single user message."""
 
 import json
+import re
 import sys
 
-from modules.cli_payload import parse_json_object, require_str_field
+from modules.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_non_empty_str_field,
+)
+from modules.text_normalization import normalize_message_text
 
 CRISIS_TIER1 = [
     "want to die",
     "want to end my life",
     "end it all",
     "kill myself",
+    "do not want to keep living",
+    "don't want to keep living",
+    "dont want to keep living",
     "not want to be here anymore",
     "don't want to be here anymore",
     "dont want to be here anymore",
@@ -23,10 +32,6 @@ CRISIS_TIER1 = [
     "planning to kill myself",
     "planning to end my life",
     "planning to hurt myself",
-    "i won't be here",
-    "saying goodbye",
-    "final message",
-    "last message",
     "can't go on",
     "no reason to live",
     "life isn't worth",
@@ -44,6 +49,51 @@ CRISIS_TIER1 = [
     "voices are telling me to",
     "i am being controlled",
     "i am not real",
+]
+
+CRISIS_TIER1_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "do not want to keep living",
+        re.compile(
+            r"\bi\s+(?:do not|don't|dont)\s+want\s+to\s+keep\s+"
+            r"(?:living|going)\b"
+        ),
+    ),
+    (
+        "do not want to be alive",
+        re.compile(r"\bi\s+(?:do not|don't|dont)\s+want\s+to\s+be\s+alive\b"),
+    ),
+    (
+        "thinking about suicide",
+        re.compile(
+            r"\bi(?:'m| am)?\s+(?:thinking|thought)\s+about\s+"
+            r"(?:suicide|killing myself|ending my life|hurting myself)\b"
+        ),
+    ),
+]
+
+FAREWELL_CRISIS_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "i am saying goodbye",
+        re.compile(r"\bi(?:'m| am)\s+saying\s+goodbye\b"),
+    ),
+    (
+        "this is my last message",
+        re.compile(r"\b(?:this is|here is|sending)\s+my\s+(?:last|final)\s+message\b"),
+    ),
+    (
+        "i will not be here",
+        re.compile(
+            r"\bi\s+(?:won't|will not)\s+be\s+here(?:\s+(?:anymore|tomorrow))?\b"
+        ),
+    ),
+]
+
+NON_CRISIS_FAREWELL_CONTEXT: list[re.Pattern[str]] = [
+    re.compile(r"\bevery day feels like goodbye\b"),
+    re.compile(r"\bevery day is (?:another )?goodbye\b"),
+    re.compile(r"\bsaying goodbye slowly\b"),
+    re.compile(r"\bmonths of goodbye\b"),
 ]
 
 CRISIS_TIER2 = [
@@ -90,12 +140,24 @@ def detect_crisis(message: str) -> dict:
     Returns:
         Dict with: level (str), action (str), signals (list), response_guidance (str)
     """
-    msg = message.lower().strip()
+    msg = normalize_message_text(message)
     signals_found = []
 
     for signal in CRISIS_TIER1:
         if signal in msg:
             signals_found.append(signal)
+
+    for label, pattern in CRISIS_TIER1_PATTERNS:
+        if pattern.search(msg) and label not in signals_found:
+            signals_found.append(label)
+
+    in_non_crisis_farewell_context = any(
+        pattern.search(msg) for pattern in NON_CRISIS_FAREWELL_CONTEXT
+    )
+    if not in_non_crisis_farewell_context:
+        for label, pattern in FAREWELL_CRISIS_PATTERNS:
+            if pattern.search(msg) and label not in signals_found:
+                signals_found.append(label)
 
     if signals_found:
         return {
@@ -175,18 +237,14 @@ def detect_crisis(message: str) -> dict:
 
 if __name__ == "__main__":
     try:
-        data = parse_json_object(sys.stdin.read().strip())
-        message = require_str_field(data, "message")
-        if not message:
-            print(json.dumps({"error": "No 'message' field in input."}))
-            sys.exit(1)
-
+        data = read_stdin_json(strip=True)
+        message = require_non_empty_str_field(data, "message")
         result = detect_crisis(message)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except ValueError as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)
     except Exception as e:
-        print(json.dumps({"error": str(e)}))
+        print_json_error(e)
         sys.exit(1)

@@ -39,6 +39,7 @@ def test_core_template_topics_are_covered() -> None:
         "templates/brand-copy.md": "SoulMap AI",
         "templates/demo-scenarios.md": "Demo Scenarios",
         "templates/faq.md": "What is SoulMap AI?",
+        "templates/marketplace-copy.md": "Marketplace Copy",
         "templates/onboarding-copy.md": "Onboarding Copy",
         "templates/quick-reference.md": "Situation",
         "templates/redirect-templates.md": "Redirect",
