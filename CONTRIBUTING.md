@@ -109,12 +109,14 @@ disable-model-invocation: true
 
 ### Build contract
 
-After adding any `.md` to `skills/` or `templates/`, run:
+After adding any `.md` to `skills/` or `templates/`, run the appropriate command(s) to rebuild the distribution artifacts:
 
 ```bash
+# To build the standard .zip archive
 python -m tools.build_skill
+
+# To build the .skill package for Claude
 python -m tools.build_skill --skill
-```
 
 `tests/test_build_artifacts.py::test_new_skill_files_appear_in_built_archive` will fail
 if the new file is missing from the rebuilt archive.
