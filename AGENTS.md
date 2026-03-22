@@ -208,17 +208,17 @@ exists.
 
 Use the shipped knowledge files by purpose:
 
-- `skills/frameworks/` for response frameworks
-- `skills/safety/` for boundaries, trauma language, and refusal posture
-- `skills/voice/` for tone, pacing, and response rhythm
-- `skills/meta/` for inquiry support and journey-stage guidance
-- `skills/brand/` for public positioning and message boundaries
-- `skills/spiritual/` for symbolic or spiritual material within guardrails
-- `templates/` for reusable response and copy patterns
+- [skills/frameworks/](skills/frameworks/) for response frameworks
+- [skills/safety/](skills/safety/) for boundaries, trauma language, and refusal posture
+- [skills/voice/](skills/voice/) for tone, pacing, and response rhythm
+- [skills/meta/](skills/meta/) for inquiry support and journey-stage guidance
+- [skills/brand/](skills/brand/) for public positioning and message boundaries
+- [skills/spiritual/](skills/spiritual/) for symbolic or spiritual material within guardrails
+- [templates/](templates/) for reusable response and copy patterns
 
 ## Section 7 - SKILL.md Expectations
 
-Each `SKILL.md` should stay concise and act as the entry point for its area.
+Each [SKILL.md](SKILL.md) should stay concise and act as the entry point for its area.
 
 It should:
 
@@ -228,7 +228,7 @@ It should:
 - point to supporting Markdown files by relative path
 - stay aligned with the actual files present in that directory
 
-The root `SKILL.md` should describe the top-level package and point agents to the
+The root [SKILL.md](SKILL.md) should describe the top-level package and point agents to the
 correct subdirectories.
 
 ## Section 8 - Working Rules For AI Agents
@@ -238,14 +238,14 @@ correct subdirectories.
 - do not describe scripts, archives, or installation paths that do not exist in the
   package you are looking at
 - do not assume every skill has executable scripts
-- treat `skills/` and `templates/` as the primary shipped knowledge base
+- treat [skills/](skills/) and [templates/](templates/) as the primary shipped knowledge base
 - treat this file as the baseline contract when `CLAUDE.md` or another entry file
   points to it
 - if optional local workflow files are present, follow them as additional repo-specific
   constraints
 - if a file is meant for extracted distribution, avoid references to files that are not
   present in that extracted package
-- keep `AGENTS.md`, `SKILL.md`, `skills/`, and `templates/` consistent with one another
+- keep [AGENTS.md](AGENTS.md), [SKILL.md](SKILL.md), [skills/](skills/), and [templates/](templates/) consistent with one another
 
 ## Section 9 - The Closing Principle
 

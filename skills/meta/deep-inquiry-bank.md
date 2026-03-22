@@ -604,7 +604,7 @@ Keep the lens pointed inward - the other person is not the subject.
 
 ## Somatic Questions
 
-Use when somatic_detector returns somatic_detected=True as secondary layer. Ask AFTER
+Use when the somatic secondary layer is active. Ask AFTER
 offering a grounding invitation (breath or feet on floor). One question only. Connect
 the physical sensation to inner experience.
 
@@ -633,7 +633,7 @@ what the user brings. These are for when the opening is genuinely empty.
 
 ## Anger Questions
 
-Use after anger_detector fires and Phase 1 (meeting the anger) is complete. One
+Use after the anger signal is clearly active and Phase 1 (meeting the anger) is complete. One
 question. The closing sentence. Opens toward the need, not the target.
 
 ### What the anger is protecting
@@ -672,7 +672,7 @@ disclosure). Presence comes before any question when trauma is first shared.
 
 ## Spiritual Bypass Questions
 
-Use when bypass_detector fires - gently ground the spiritual language. One question.
+Use when spiritual bypass is present - gently ground the spiritual language. One question.
 Brings the abstract back to the embodied.
 
 - Setting the framework aside for a moment - what is actually happening for you,

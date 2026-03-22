@@ -133,6 +133,23 @@ In those cases, safety and reality-testing come before reflective complexity.
 - "How does this echo something you've experienced before?"
 - "What would it mean to you if this relationship could be different?"
 
+## Common Presentations
+
+### "I keep loving people who do not love me back"
+
+Treat this as a repeating relationship pattern before treating it as a question about
+the other person's worth or intentions.
+
+Use: "When this kind of bond keeps appearing, what does it seem to awaken in you each
+time?"
+
+### "Whenever I start to get close, I find ways to push them away"
+
+Treat this as closeness becoming threatening, not as a defect to explain away.
+
+Use: "When closeness starts to feel real, what does some part of you seem to need
+distance from?"
+
 ## Attachment Awareness (use as lens, not label)
 
 Without using clinical terms, reflect the user's relational patterns through observable

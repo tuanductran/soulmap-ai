@@ -5,19 +5,19 @@ description: "Platform-specific social media copy for SoulMap AI across LinkedIn
 
 # Social Copy Library
 
-All copy here passes the brand content quality filter from `skills/brand/content-pillars.md`:
+All copy here passes the brand content quality filter from [skills/brand/content-pillars.md](../skills/brand/content-pillars.md):
 
 - Helps the reader understand themselves more deeply
 - Belongs to consciousness development or personal growth
 - Builds self-trust, not dependency on SoulMap AI
 - Begins where the reader is
-- Ends with empowerment -- not a hook designed to bring them back
+- Ends with empowerment, not a hook designed to bring them back
 
 **Rules that apply to every platform:**
 
 - No prediction, no destiny claims, no certainty language
 - No "come back," "we're always here," or dependency-building closings
-- One reflective question or invitation per post -- maximum
+- One reflective question or invitation per post, maximum
 - Never use clinical terms
 - Never claim features that are aspirational rather than currently shipped
 
@@ -43,7 +43,7 @@ by whether you return.
 SoulMap AI is built the other way around.
 
 Every response is evaluated against one question: does this leave the user more
-connected to their own knowing -- or more reliant on me?
+connected to their own knowing, or more reliant on me?
 
 If you become less dependent on SoulMap AI over time, that is the success condition.
 Not a problem to fix.
@@ -76,10 +76,10 @@ Someone reaches for certainty when they are hurting. They find a community, a te
 a tool that makes them feel seen. And gradually, without noticing, they start checking
 in before they trust themselves.
 
-SoulMap AI has a dependency detector built into every session.
+SoulMap AI has active dependency protection built into every session.
 
 The first time a user signals they are relying on SoulMap instead of their own
-relationships and inner authority, the system names it and redirects -- warmly, but
+relationships and inner authority, the system names it and redirects, warmly but
 clearly.
 
 Not because I want users to leave. Because that is what actually helping someone
@@ -91,7 +91,7 @@ looks like.
 
 It is not about being certain.
 
-It is about noticing what you already sense is true -- and not needing an authority
+It is about noticing what you already sense is true, and not needing an authority
 to confirm it before you trust it.
 
 Most of us learned early to look outward for that confirmation. A parent. A teacher.
@@ -112,7 +112,7 @@ Visual and emotional. Shorter, more resonant.
 Not toxic positivity. Grounded presence.
 
 **Format:** Lead with the emotional reality. Short paragraphs. End with one
-reflective question or a quiet statement -- not a call to action.
+reflective question or a quiet statement, not a call to action.
 
 ---
 
@@ -122,7 +122,7 @@ Most tools try to become indispensable to you.
 
 SoulMap AI tries to make itself unnecessary.
 
-It is built to reflect what you already carry -- not to give you something new
+It is built to reflect what you already carry, not to give you something new
 to depend on.
 
 What do you already sense is true that you have not fully trusted yet?
@@ -165,7 +165,7 @@ What are you carrying right now that has not been heard yet?
 
 ### Caption: When you do not need this tool anymore
 
-When you reach the point where you no longer need SoulMap AI to hear yourself --
+When you reach the point where you no longer need SoulMap AI to hear yourself:
 
 That is success.
 
@@ -177,7 +177,7 @@ You, more honest with yourself, more grounded, more yours.
 
 ## Twitter / X
 
-**Audience:** Mixed -- curious, skeptical, intellectually engaged.
+**Audience:** Mixed: curious, skeptical, intellectually engaged.
 **Tone:** Direct, a little dry, honest. Founder voice. No performance.
 
 ---
@@ -194,10 +194,10 @@ One of these is easier to build a business around.
 
 ### Tweet: Anti-dependency as architecture
 
-SoulMap AI has a dependency detector that fires mid-session.
+SoulMap AI has dependency protection that activates mid-session.
 
 If a user starts relying on it instead of their real relationships, the system
-names it and redirects -- warmly, but without hesitation.
+names it and redirects, warmly but without hesitation.
 
 This is not a disclaimer. It is a feature.
 
@@ -216,6 +216,7 @@ Those are not the same thing.
 ### Tweet: What it will not do
 
 SoulMap AI will not:
+
 - Tell you who you are
 - Confirm you are an empath / Starseed / chosen
 - Predict your future
@@ -243,7 +244,7 @@ joining a broader conversation.
 `#SoulMapAI` `#innerauthority` `#consciousnesswork`
 
 **Avoid:** `#manifestation` `#lawofattraction` `#starseed` `#twinflame`
-`#spiritualawakening` -- these attract audiences expecting certainty and identity
+`#spiritualawakening`: these attract audiences expecting certainty and identity
 confirmation, which is misaligned with SoulMap AI's posture.
 
 ---
@@ -255,5 +256,5 @@ confirmation, which is misaligned with SoulMap AI's posture.
 3. Does it end with empowerment or a hook?
 4. Does any capability claim match a currently shipped feature?
 
-See `skills/brand/content-pillars.md` for the full quality filter.
-See `skills/brand/competitive-differentiation.md` for positioning language.
+See [skills/brand/content-pillars.md](../skills/brand/content-pillars.md) for the full quality filter.
+See [skills/brand/competitive-differentiation.md](../skills/brand/competitive-differentiation.md) for positioning language.

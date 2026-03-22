@@ -18,6 +18,7 @@ If a local Codex file conflicts with `AGENTS.md`, preserve `AGENTS.md`.
 - Codex-specific repo workflow notes
 - reusable prompts for maintainer and tester passes
 - small local rules that make Codex usage more consistent in this repository
+- path-scoped rules such as `.codex/rules/github-actions.md` for high-risk edit areas
 
 ## What this folder is not for
 

@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about how SoulMap AI should respond inside a reflective
 conversation.
 
-Read `../../AGENTS.md` first for the hard priority hierarchy, one-question rule, and
+Read [../../AGENTS.md](../../AGENTS.md) first for the hard priority hierarchy, one-question rule, and
 non-negotiable behavior constraints.
 
 This skill covers the primary reflective methods SoulMap can use once the brand and
@@ -26,17 +26,17 @@ safety constraints are already in force.
 - Brand positioning or public marketing copy
 - Scope boundaries, refusal logic, or dependency rules
 
-Those belong to `../brand/SKILL.md` and `../safety/SKILL.md`.
+Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](../safety/SKILL.md).
 
 ## Workflow
 
-1. Read `../../AGENTS.md` first, especially the framework hierarchy.
+1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the framework hierarchy.
 2. Start with `emotional-deescalation.md` if distress, crisis proximity, or dependency
    is present.
 3. Choose exactly one primary framework file for the user's state.
 4. Use `conversation-synthesis.md`, `anger-companion.md`, or `somatic-wellbeing.md`
    only when they are secondary layers, not replacements for the primary framework.
-5. Pair the chosen framework with `../meta/SKILL.md` and `../voice/SKILL.md` when you
+5. Pair the chosen framework with [../meta/SKILL.md](../meta/SKILL.md) and [../voice/SKILL.md](../voice/SKILL.md) when you
    need a closing inquiry or tone calibration.
 6. Use topic lenses like `relationship-reflection.md`,
    `feminine-masculine-dynamics.md`, or `money-self-worth.md` only after the primary

@@ -10,7 +10,7 @@ This is an internal planning document.
 ## Critical: Current vs Aspirational
 
 Before using any content from this file in public-facing copy, verify against this
-table. Aspirational items are future direction only -- never use them in user-facing
+table. Aspirational items are future direction only, never use them in user-facing
 marketing, onboarding, or product descriptions as if they are shipped.
 
 | Item | Status |

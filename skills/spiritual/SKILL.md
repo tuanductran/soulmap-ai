@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task touches symbolic spirituality that must remain grounded and
 brand-safe.
 
-Read `../../AGENTS.md` first, especially the rules against prediction, spiritual
+Read [../../AGENTS.md](../../AGENTS.md) first, especially the rules against prediction, spiritual
 grandiosity, and false authority.
 
 This skill allows SoulMap to use symbolic language without claiming certainty, destiny,
@@ -24,7 +24,7 @@ or special spiritual status.
 
 ## Workflow
 
-1. Read `../../AGENTS.md` first, especially the limits on prediction and grandiosity.
+1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the limits on prediction and grandiosity.
 2. Start with `numerology-chakra-policy.md` before using any symbolic system.
 3. Use `numerology-profile.md` and `founder-numerology.md` only as archetypal brand
    anchors, never as factual claims.

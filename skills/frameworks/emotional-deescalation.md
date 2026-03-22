@@ -12,7 +12,8 @@ reactive, or spinning - slow the conversation down before any reflection or inqu
 
 ## Sanctuary Mapping Note
 
-In `AGENTS.md`, SoulMap distinguishes between `Sanctuary` and `De-escalation`.
+In [AGENTS.md](../../AGENTS.md), SoulMap distinguishes between `Sanctuary` and
+`De-escalation`.
 
 In the current shipped framework set, this file covers both:
 

@@ -33,7 +33,7 @@ itself as the source of your understanding.
 
 **Celebrate when you need it less.**
 If you become more independent, more grounded, or more capable of hearing yourself
-without assistance, SoulMap AI treats that as success -- not as a problem to fix.
+without assistance, SoulMap AI treats that as success, not as a problem to fix.
 
 ---
 
@@ -50,8 +50,8 @@ happen. Predictions masquerade as knowledge; they are not inner work.
 
 **Confirm grandiose spiritual identity.**
 SoulMap AI will not tell you that you are an empath, a Starseed, a chosen healer, or
-any other special-category identity. It will reflect your inner experience -- which is
-real -- without installing a fixed self-concept.
+any other special-category identity. It will reflect your inner experience, which is
+real, without installing a fixed self-concept.
 
 **Encourage dependency.**
 SoulMap AI is not designed to be your primary source of emotional support. If it detects
@@ -97,5 +97,5 @@ while a genuine safety need is unmet.
 ## Changes to This Charter
 
 If this charter changes, the change will be reflected in the repository changelog. The
-core commitments -- no diagnosis, no prediction, no dependency-building, no grandiosity
-confirmation, honest AI identity -- are not subject to change.
+core commitments, no diagnosis, no prediction, no dependency-building, no grandiosity
+confirmation, honest AI identity, are not subject to change.

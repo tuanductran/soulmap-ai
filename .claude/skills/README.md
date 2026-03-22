@@ -16,6 +16,7 @@ contract.
 ## Core review skills
 
 - `ai-prompt-engineering-safety-review`
+- `github-actions-maintainer`
 - `operations-and-safety-review`
 - `release-readiness-review`
 
