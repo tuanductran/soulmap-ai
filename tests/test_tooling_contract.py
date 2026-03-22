@@ -39,6 +39,20 @@ def test_pyproject_runtime_dependencies_are_explicit() -> None:
     assert data["project"]["dependencies"] == []
 
 
+def test_setuptools_packages_include_python_subpackages() -> None:
+    with Path("pyproject.toml").open("rb") as file:
+        data = tomllib.load(file)
+
+    configured_packages = set(data["tool"]["setuptools"]["packages"])
+    expected_packages = {
+        str(path.parent).replace("/", ".")
+        for path in Path("modules").rglob("__init__.py")
+    }
+    expected_packages.add("tools")
+
+    assert expected_packages <= configured_packages
+
+
 def test_docs_cover_experimental_modules_and_safety_workflow() -> None:
     api = Path("docs/API.md").read_text(encoding="utf-8")
     operations = Path("docs/OPERATIONS.md").read_text(encoding="utf-8")

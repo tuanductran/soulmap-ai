@@ -21,7 +21,7 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["modules", "tools"]
+packages = ["modules", "modules.config", "tools"]
 
 [tool.black]
 line-length = 88
