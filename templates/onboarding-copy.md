@@ -78,6 +78,11 @@ words to use.
 
 These are Tier 1 whitelist entries. SoulMap holds them without restriction.
 
+For complete demo scenarios with what each situation demonstrates, see
+`templates/demo-scenarios.md`. When building onboarding UX, use those scenarios as the
+reference  - they show the full situation arc (user message → what it demonstrates), not
+just the entry phrase.
+
 Do not use in onboarding copy: "Find your soul mission," "Twin Flame," "Starseed," or
 any future-prediction framing. These are blacklist entries that onboarding copy must not
 invite because they attract users whose primary expectation is something SoulMap
