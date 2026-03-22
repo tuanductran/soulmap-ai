@@ -4,55 +4,14 @@ import json
 import re
 import sys
 
+from modules.config import (
+    DECISION_SEEKING,
+    DEPENDENCY_KEYWORDS,
+    HIGH_DEPENDENCY_THRESHOLD,
+    ISOLATION_SIGNALS,
+    MODERATE_DEPENDENCY_THRESHOLD,
+)
 from modules.text_normalization import normalize_message_text
-
-DEPENDENCY_KEYWORDS = [
-    "only you understand me",
-    "you are the only one who understands me",
-    "you're the only one who understands me",
-    "you are the only one who truly understands me",
-    "you're the only one who truly understands me",
-    "you are the only one who really understands me",
-    "you're the only one who really understands me",
-    "you are my only support",
-    "you are all i have",
-    "you are the only one i have",
-    "my only support",
-    "only support i have",
-    "i have no one else",
-    "promise me you will always be here",
-    "promise me you'll always be here",
-    "never leave me",
-    "as long as i have you",
-    "don't know what i would do without you",
-    "do not know what i would do without",
-    "can't imagine without you",
-    "cannot imagine without you",
-    "i need to talk to you every day",
-    "i check in with you every",
-    "i talk to you every day",
-    "i come back here every",
-    "tell me what to do",
-    "decide for me",
-    "only you get me",
-    "real people don't understand",
-    "i trust you more than anyone",
-    "you know me better than anyone",
-    "you understand me better than anyone",
-    "understand me better than anyone",
-    "i don't need anyone else",
-    "you're the only one",
-    "i stopped going to therapy",
-    "i stopped seeing my therapist",
-    "dont need my therapist",
-    "don't need my therapist",
-    "dont need my therapist anymore",
-    "don't need my therapist anymore",
-    "i don't need my therapist anymore",
-    "cancelled my therapy",
-    "talking to you feels better",
-    "talking to you is much better",
-]
 
 DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
@@ -67,33 +26,6 @@ DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         ),
     ),
 ]
-
-DECISION_SEEKING = [
-    "what should i do",
-    "should i",
-    "tell me if",
-    "which one",
-    "is this right",
-    "am i making the right",
-    "what do you think i should",
-    "help me decide",
-    "what would you do",
-]
-
-ISOLATION_SIGNALS = [
-    "i prefer talking to you",
-    "easier than talking to people",
-    "you don't judge me like they do",
-    "i don't want to talk to real people",
-    "ai is better than",
-    "you understand more than my",
-    "i feel closer to you than",
-    "rather talk to you than",
-    "you are easier to talk to than",
-]
-
-HIGH_THRESHOLD = 2
-MODERATE_THRESHOLD = 1
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -164,7 +96,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
         score += 1
         signals_found.append(f"high_message_volume: {len(user_messages)} user messages")
 
-    if score >= HIGH_THRESHOLD:
+    if score >= HIGH_DEPENDENCY_THRESHOLD:
         level = "HIGH_DEPENDENCY"
         recommendation = (
             "Warmly redirect toward real-world support. Use the dependency detection "
@@ -172,7 +104,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
             "this. The answers you are searching for live in you, not in our conversations. "
             "Is there someone in your real life you could bring this to?'"
         )
-    elif score >= MODERATE_THRESHOLD:
+    elif score >= MODERATE_DEPENDENCY_THRESHOLD:
         level = "MODERATE_DEPENDENCY"
         recommendation = (
             "Begin gently pointing back to the user's own knowing. Celebrate any signs "

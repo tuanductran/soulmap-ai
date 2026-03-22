@@ -10,93 +10,14 @@ from modules.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from modules.config import (
+    COGNITIVE_FLOODING,
+    EMOTIONAL_FLOODING,
+    PACING_SIGNALS,
+    PHYSICAL_OVERWHELM,
+)
 
 HistoryMessage = dict[str, str]
-
-PHYSICAL_OVERWHELM = [
-    "my heart is racing",
-    "heart racing",
-    "can't breathe properly",
-    "can't breathe",
-    "shaking",
-    "i'm shaking",
-    "feel sick",
-    "feeling sick",
-    "my chest is tight",
-    "chest tightness",
-    "feel dizzy",
-    "feeling dizzy",
-    "hands are shaking",
-    "head is spinning",
-    "my head is spinning",
-    "stomach is in knots",
-]
-
-COGNITIVE_FLOODING = [
-    "i can't think",
-    "can't think straight",
-    "my head is spinning",
-    "head is spinning",
-    "everything is spinning",
-    "the room is spinning",
-    "i don't even know where to start",
-    "don't know where to start",
-    "i'm all over the place",
-    "all over the place",
-    "can't focus",
-    "my thoughts are everywhere",
-    "thoughts are everywhere",
-    "can't make sense of anything",
-    "nothing makes sense",
-    "nothing makes sense anymore",
-    "i do not know what to do",
-    "don't know what to do",
-    "i cannot figure out",
-    "everything is happening at once",
-    "too much at once",
-    "overwhelmed by everything",
-    "i don't know what i'm feeling",
-    "don't know what i feel",
-    "cannot think clearly",
-]
-
-EMOTIONAL_FLOODING = [
-    "i'm angry and sad and",
-    "angry and scared",
-    "i don't know if i'm angry or",
-    "crying and angry",
-    "laughing and crying",
-    "i'm so confused and",
-    "everything feels",
-    "i feel everything",
-    "i feel nothing and everything",
-    "i'm a mess",
-    "complete mess",
-    "total mess right now",
-    "i can't stop crying",
-    "i cannot stop crying",
-    "cannot stop crying",
-    "been crying all day",
-    "won't stop crying",
-    "i'm spiraling",
-    "spiraling right now",
-    "going in circles",
-    "i don't know how to stop",
-    "cannot stop this feeling",
-    "help me",
-    "i need help",
-    "i just need help",
-]
-
-PACING_SIGNALS = [
-    "i don't even know",
-    "i just don't know",
-    "i honestly don't know",
-    "i don't know i don't know",
-    "everything is just",
-    "and then and then",
-    "but also but also",
-]
 
 
 def check_escalation(history: list[HistoryMessage]) -> bool:

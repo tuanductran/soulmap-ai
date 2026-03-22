@@ -20,6 +20,7 @@ stability and breaking changes in behavior.
 - **qa**: add source-backed grouped scope checks and wire eval_groups into CI/release
 - **scope**: harden keyword matching to avoid substring false positives in routing
 - **python**: consolidate shared text normalization and CLI payload helpers
+- **python**: centralize static detector phrase lists in modules/config/ for easier maintenance
 - **docs**: document when to use shared Python helpers vs explicit local code
 - **safety**: extend source character guardrails to cover dashes, ellipsis, and NBSP
 - **brand**: add marketplace copy template and backfill source coverage for grouped eval taxonomy

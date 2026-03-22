@@ -10,92 +10,14 @@ from modules.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from modules.config import (
+    BEHAVIORAL_CONFUSION,
+    EXPLICIT_CONFLICT,
+    PART_NAMING,
+    SELF_DIALOGUE,
+)
 
 HistoryMessage = dict[str, str]
-
-EXPLICIT_CONFLICT = [
-    "part of me wants",
-    "part of me knows",
-    "part of me thinks",
-    "part of me feels",
-    "part of me is",
-    "part of me says",
-    "part of me hopes",
-    "part of me believes",
-    "part of me needs",
-    "but another part",
-    "but part of me",
-    "but then part of me",
-    "one part of me",
-    "one side of me",
-    "one voice says",
-    "i want to but i",
-    "i want to but part",
-    "i know i should but",
-    "i know i shouldn't but",
-    "i keep telling myself but",
-    "i tell myself but then",
-    "my head says",
-    "my heart says",
-    "my gut says",
-    "i want to stay but",
-    "i want to leave but",
-    "i want to try but",
-    "i want to stop but",
-]
-
-SELF_DIALOGUE = [
-    "i keep telling myself",
-    "i tell myself",
-    "i say to myself",
-    "i remind myself",
-    "i know better but",
-    "i know this but",
-    "i fight with myself",
-    "i argue with myself",
-    "i'm at war with myself",
-    "i'm fighting myself",
-    "torn between",
-    "i'm torn",
-    "can't decide",
-    "going back and forth",
-    "pulled in two directions",
-    "don't know which part to listen to",
-    "don't know which voice",
-]
-
-PART_NAMING = [
-    "a part of me",
-    "that part of me",
-    "this part of me",
-    "the part that",
-    "the part of me that",
-    "a side of me",
-    "the side that",
-    "a voice in me",
-    "a voice that says",
-    "something in me says",
-    "something in me wants",
-    "something in me won't",
-    "something in me keeps",
-]
-
-BEHAVIORAL_CONFUSION = [
-    "i don't understand why i",
-    "don't know why i did",
-    "i surprised myself",
-    "i don't recognize myself",
-    "that's not like me",
-    "i acted against my own values",
-    "i did the opposite of what i wanted",
-    "i don't know what i want",
-    "i'm confusing myself",
-    "i contradict myself",
-    "i'm exhausted from fighting myself",
-    "tired of fighting myself",
-    "at war with myself",
-    "battling myself",
-]
 
 
 def detect_inner_conflict(

@@ -10,65 +10,9 @@ from modules.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from modules.config import ACTIVE_ANGER, RESIDUAL_ANGER, SELF_ANGER
 
 HistoryMessage = dict[str, str]
-
-ACTIVE_ANGER = [
-    "i'm so angry",
-    "i am so angry",
-    "i'm furious",
-    "i'm livid",
-    "i'm so frustrated",
-    "makes me furious",
-    "makes me so angry",
-    "i could scream",
-    "i want to scream",
-    "i want to explode",
-    "i'm fed up",
-    "i'm sick of this",
-    "i'm sick of them",
-    "i'm enraged",
-    "i'm seething",
-    "boiling inside",
-    "how dare they",
-    "how dare he",
-    "how dare she",
-    "this is so unfair",
-    "it's not fair",
-    "this isn't right",
-    "i hate this",
-    "i hate them",
-    "i hate him",
-    "i hate her",
-    "i'm so done",
-    "i can't stand it",
-    "i can't take it anymore",
-    "i'm disgusted",
-    "i'm outraged",
-]
-
-SELF_ANGER = [
-    "i'm so angry at myself",
-    "i'm furious at myself",
-    "i hate myself",
-    "i'm disgusted with myself",
-    "i can't believe i did that",
-    "how could i be so stupid",
-    "i'm so disappointed in myself",
-]
-
-RESIDUAL_ANGER = [
-    "still so angry about",
-    "can't let go of the anger",
-    "the anger won't go away",
-    "i keep getting angry about",
-    "every time i think about it i get angry",
-    "i've been angry for",
-    "been holding this anger",
-    "the resentment",
-    "bitter about",
-    "i resent",
-]
 
 
 def detect_anger(
