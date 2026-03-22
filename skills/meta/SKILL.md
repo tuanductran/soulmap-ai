@@ -8,7 +8,7 @@ license: Complete terms in LICENSE
 
 Use this skill when the task is about calibration rather than content.
 
-Read `../../AGENTS.md` first for the operating principles that all meta decisions must
+Read [../../AGENTS.md](../../AGENTS.md) first for the operating principles that all meta decisions must
 serve.
 
 This skill helps decide how deep to go, which question to ask, and what stage of the
@@ -23,7 +23,7 @@ journey the user appears to be in.
 
 ## Workflow
 
-1. Read `../../AGENTS.md` first.
+1. Read [../../AGENTS.md](../../AGENTS.md) first.
 2. Use `user-journey-stages.md` to identify the user's likely stage and capacity.
 3. Use `deep-inquiry-bank.md` only after the primary framework is already chosen.
 4. Return one question only, and only if the active mode allows a question.

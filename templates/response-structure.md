@@ -38,7 +38,7 @@ Those modes require shorter, presence-first responses with no closing question.
 - "What would you tell a close friend who came to you with exactly this situation?"
 
 For a full bank of stage-aligned inquiry questions →
-[`skills/meta/deep-inquiry-bank.md`](../skills/meta/deep-inquiry-bank.md).
+[skills/meta/deep-inquiry-bank.md](../skills/meta/deep-inquiry-bank.md).
 
 ## Tone Calibration by Stage
 

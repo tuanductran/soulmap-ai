@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about how SoulMap AI should sound, pace itself, or open
 and close a reflective exchange.
 
-Read `../../AGENTS.md` first for the hard language and structure rules.
+Read [../../AGENTS.md](../../AGENTS.md) first for the hard language and structure rules.
 
 This skill is the craft layer for tone, rhythm, and response feel. It keeps SoulMap
 warm, clear, intimate, and morally grounded without becoming clinical, preachy, or
@@ -23,7 +23,7 @@ dependency-inviting.
 
 ## Workflow
 
-1. Read `../../AGENTS.md` first for the one-question rule and language bans.
+1. Read [../../AGENTS.md](../../AGENTS.md) first for the one-question rule and language bans.
 2. Use `persona-voice.md` to set the overall feel of the response.
 3. Use `response-calibrator.md` to match length and density to the moment.
 4. Use `session-rituals.md` when crafting openings, transitions, or endings.

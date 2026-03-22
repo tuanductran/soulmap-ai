@@ -29,12 +29,15 @@ stability and breaking changes in behavior.
 - **qa**: harden another high-risk batch by asserting gradual-pressure, AI-identity, and ambiguous-distress groups
 - **safety**: block harmful spiritual justification and special-mission confirmation more explicitly in scope checks
 - **qa**: convert spiritual-manipulation red-team cases and one gray-zone-spiritual case into asserted grouped eval coverage
+- **qa**: lock another stable grouped-eval batch for emotions, spiritual experience, extraction, diagnosis, prediction, and identity-confirmation slices
+- **docs**: deepen shipped knowledge coverage for identity, relationship, symbolic polarity, spiritual gray zones, and practical-task boundaries
+- **qa**: sync grouped-eval sources with shipped docs and lock another major stable batch across identity, inner-work, relationship, polarity, entertainment, and roleplay slices
 - **spiritual**: clarify reincarnation as a reflective frame rather than a metaphysical fact to confirm
 - **tooling**: serialize format and lint with a shared repo lock to avoid false red runs
 - **tooling**: clean up repo tooling lock files automatically after exit
 - **tests**: replace dist/skills/ check with zip-contents check in CI
-- **detectors**: expand keyword coverage and routing -- Battery 1: 8/20 -> 20/20
-- **brand**: consultant audit v2 -- 14 issues resolved across 25 files
+- **detectors**: expand keyword coverage and routing, Battery 1: 8/20 -> 20/20
+- **brand**: consultant audit v2, 14 issues resolved across 25 files
 - **frameworks**: clarify sanctuary mapping and harm exceptions
 - **ci**: move autofix job to dedicated autofix.yml workflow
 - **repo**: harden workflow, docs, and response quality checks

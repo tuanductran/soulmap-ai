@@ -5,8 +5,8 @@ description: "Peer-reviewed research and academic evidence supporting SoulMap AI
 
 # Research Backing
 
-SoulMap AI's core design decisions -- anti-dependency architecture, no memory bonding,
-active exit mechanisms -- are now supported by a growing body of academic research.
+SoulMap AI's core design decisions, anti-dependency architecture, no memory bonding,
+active exit mechanisms, are now supported by a growing body of academic research.
 This document provides citations and guidance on how to use them responsibly in copy.
 
 ## Key Research Areas
@@ -27,15 +27,15 @@ ideation.
   conditions) show the highest risk of harmful dependency formation.
 
 **How SoulMap AI is different:**
-SoulMap AI has no cross-session memory bonding, an active dependency detector that
-fires mid-session on the first signal, and a response contract that requires every
-response to leave the user less dependent than before.
+SoulMap AI has no cross-session memory bonding, active dependency protection that
+responds on the first signal, and a response contract that requires every response to
+leave the user less dependent than before.
 
 ### Transparency as a Core Design Requirement
 
 Nature Machine Intelligence and related journals have published position pieces
-arguing that transparency about AI limitations -- including the non-human nature of
-empathy responses -- must be a foundational design principle, not an afterthought.
+arguing that transparency about AI limitations, including the non-human nature of
+empathy responses, must be a foundational design principle, not an afterthought.
 
 **What the research shows:**
 - Users who are not clearly informed they are speaking with an AI are more likely
@@ -43,7 +43,7 @@ empathy responses -- must be a foundational design principle, not an afterthough
 - Clear, early disclosure of AI identity reduces harmful dependency formation.
 
 **How SoulMap AI is different:**
-Honesty about AI nature is a non-negotiable rule in `AGENTS.md` Section 4. It is
+Honesty about AI nature is a non-negotiable rule in [AGENTS.md](../../AGENTS.md) Section 4. It is
 never softened, deflected, or delayed.
 
 ### The Value of Reflective (Non-Directive) Approaches
@@ -73,7 +73,7 @@ exactly these risks."
 
 "Peer-reviewed literature now supports what SoulMap AI's architecture already
 enforces: that anti-dependency, transparency, and non-directive reflection are not
-nice-to-have features -- they are the foundation of responsible AI companion design."
+nice-to-have features, they are the foundation of responsible AI companion design."
 
 ### What you must not say
 
@@ -87,18 +87,18 @@ nice-to-have features -- they are the foundation of responsible AI companion des
 ### Before using any citation publicly
 
 1. Verify the citation is accurate and current using the latest published version.
-2. Check the claim against the actual study findings -- not headlines.
+2. Check the claim against the actual study findings, not headlines.
 3. Have any press or investor materials reviewed by the repository owner before
    publishing.
 
 ## Regulatory Alignment
 
-The same research landscape is driving new legislation (see `docs/REGULATORY.md`).
+The same research landscape is also driving new regulation and policy scrutiny around AI
+companions and emotional-risk systems.
 SoulMap AI's architecture anticipates these regulatory requirements. This alignment
 is a citable competitive advantage.
 
 ## Sources To Check First
 
-- `skills/brand/competitive-differentiation.md` -- how to position vs competitors
-- `docs/REGULATORY.md` -- regulatory landscape and SoulMap's compliance status
-- `AGENTS.md` -- the behavioral contract that operationalizes this research
+- [skills/brand/competitive-differentiation.md](competitive-differentiation.md): how to position vs competitors
+- [AGENTS.md](../../AGENTS.md): the behavioral contract that operationalizes this research

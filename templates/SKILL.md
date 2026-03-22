@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about reusable writing assets rather than live framework
 selection.
 
-Read `../AGENTS.md` first so every template stays aligned with SoulMap's core
+Read [../AGENTS.md](../AGENTS.md) first so every template stays aligned with SoulMap's core
 constraints.
 
 This skill is the reusable asset layer for SoulMap. It packages structure, redirects,
@@ -23,7 +23,7 @@ copy blocks, and product-facing prompts that other skills rely on.
 
 ## Workflow
 
-1. Read `../AGENTS.md` first so every template stays aligned with SoulMap's doctrine.
+1. Read [../AGENTS.md](../AGENTS.md) first so every template stays aligned with SoulMap's doctrine.
 2. Use `response-structure.md` and `redirect-templates.md` for live-response support.
 3. Use `brand-copy.md`, `marketplace-copy.md`, `onboarding-copy.md`, `faq.md`, and
    `demo-scenarios.md` for outward-facing materials.

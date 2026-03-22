@@ -110,6 +110,20 @@ This belongs partly here and partly in relationship work.
 Use: "It may help to ask whether what you are calling love is sometimes becoming
 self-erasure."
 
+### "When I become soft I feel like I disappear"
+
+This is a softness vs. self-abandonment presentation.
+
+Use: "When you soften, does it feel like deeper contact with yourself, or like you are
+leaving yourself to keep the bond?"
+
+### "People say I need to connect with feminine energy"
+
+Do not reinforce the phrase as if it were self-evident truth.
+
+Use: "When you say feminine energy, what lived quality are you actually pointing to:
+rest, openness, softness, receiving, beauty, not over-managing?"
+
 ## Safety Rules
 
 - No essentialist gender doctrine

@@ -10,7 +10,7 @@ surfaces. They are written to preserve the SoulMap posture: reflective, non-pres
 non-predictive, and independence-forward.
 
 Canonical messaging lives in
-[`skills/brand/message-hierarchy.md`](../skills/brand/message-hierarchy.md).
+[skills/brand/message-hierarchy.md](../skills/brand/message-hierarchy.md).
 
 ## One-liners (pick one)
 

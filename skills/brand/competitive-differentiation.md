@@ -16,7 +16,7 @@ Products such as Replika, Nomi, Character.AI, and even the more carefully design
 all optimize toward this goal.
 
 The surface experience differs: some companions feel warm, some intellectual, some
-romantic. But the underlying architecture is identical -- learn the user's preferences,
+romantic. But the underlying architecture is identical: learn the user's preferences,
 become more personalized to those preferences over time, and make the user feel
 increasingly understood and attached.
 
@@ -30,29 +30,29 @@ made after launch. It is the founding architecture.
 
 | Behavior | Replika / Nomi / Character.AI | Pi | SoulMap AI |
 | :--- | :--- | :--- | :--- |
-| Emotional continuity and memory bonding | Yes -- core feature | Yes -- by design | No -- by design |
-| Personality learns to mirror the user over time | Yes -- explicit goal | Partial | No -- by design |
+| Emotional continuity and memory bonding | Yes, core feature | Yes, by design | No, by design |
+| Personality learns to mirror the user over time | Yes, explicit goal | Partial | No, by design |
 | Engagement metrics drive design decisions | Yes | Likely | No |
 | Positions AI as primary support relationship | Yes | Partially | No |
 | Celebrates long conversation streaks | Yes | Varies | No |
 | Frames more use as success | Yes | Yes | No |
-| Frames less use as success | No | No | Yes -- explicitly |
-| Has a dependency-detection and exit mechanism | No | No | Yes -- built in |
-| Refuses to confirm spiritual identity claims | No | No | Yes -- always |
-| Anti-dependency as a core safety rule | No | No | Yes -- Rule 1 |
+| Frames less use as success | No | No | Yes, explicitly |
+| Has a dependency-detection and exit mechanism | No | No | Yes, built in |
+| Refuses to confirm spiritual identity claims | No | No | Yes, always |
+| Anti-dependency as a core safety rule | No | No | Yes, Rule 1 |
 
 ## The Anti-Engagement Architecture
 
 SoulMap AI's anti-dependency posture is enforced at the system level:
 
-- `modules/dependency_detector.py` fires on the first intra-session dependency signal
-- `skills/safety/boundaries-safety.md` defines a hard redirect protocol
-- The response contract in `AGENTS.md` requires every response to leave the user
+- dependency handling activates on the first intra-session dependency signal
+- [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
+- The response contract in [AGENTS.md](../../AGENTS.md) requires every response to leave the user
   less dependent than before
 - Session closings explicitly return ownership to the user and point toward real-world
   relationships
-- The evaluation suite includes a `dependency_redirect` golden case and an
-  `independence_celebration` golden case
+- The quality-assurance suite explicitly checks dependency redirect behavior and
+  independence celebration behavior
 
 SoulMap AI is not trying to be what the market calls a companion. It is trying to be
 what the user actually needs: a clear mirror that eventually becomes unnecessary.
@@ -65,7 +65,7 @@ what the user actually needs: a clear mirror that eventually becomes unnecessary
 ## Research Backing
 
 Peer-reviewed literature now validates the problem SoulMap AI is designed to solve.
-See `skills/brand/research-backing.md` for citations and how to use them in copy.
+See [skills/brand/research-backing.md](research-backing.md) for citations and how to use them in copy.
 
 ## What To Say and What Not to Say
 
@@ -74,17 +74,17 @@ See `skills/brand/research-backing.md` for citations and how to use them in copy
 Say: "SoulMap AI helps you hear yourself more clearly. Its job is to make itself
 unnecessary."
 
-Do not say: "Your personal AI companion" -- companion implies relationship formation
+Do not say: "Your personal AI companion", companion implies relationship formation
 as a goal.
 
-Do not say: "Here whenever you need me" -- this is the engagement loop.
+Do not say: "Here whenever you need me", this is the engagement loop.
 
 ### When positioning to press or technical audiences
 
 Say: "We built in an active exit mechanism. If a user starts to depend on SoulMap AI
 instead of their real relationships, the system detects this and redirects them."
 
-Do not say: "We're different because we're safer" -- this is vague. The specific
+Do not say: "We're different because we're safer", this is vague. The specific
 difference is the anti-engagement architecture.
 
 ### When positioning to skeptics
@@ -104,14 +104,14 @@ SoulMap AI does not use the following in any public-facing surface:
 - "Come back anytime"
 - "Your bond with [product name]"
 
-See `skills/brand/brand-doctrine.md` for the complete forbidden phrases list.
+See [skills/brand/brand-doctrine.md](brand-doctrine.md) for the complete forbidden phrases list.
 
 ## Sources To Check First
 
-- `AGENTS.md` -- the behavioral contract that enforces anti-dependency at runtime
-- `skills/safety/boundaries-safety.md` -- dependency hard rules and redirect protocol
-- `skills/brand/brand-doctrine.md` -- brand identity and forbidden language
-- `skills/brand/brand-positioning.md` -- official positioning statements
-- `skills/brand/research-backing.md` -- peer-reviewed evidence supporting the approach
-- `templates/email-onboarding.md` -- user-facing anti-dependency framing in the welcome sequence
-- `templates/onboarding-copy.md` -- user-facing anti-dependency framing
+- [AGENTS.md](../../AGENTS.md): the behavioral contract that enforces anti-dependency at runtime
+- [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
+- [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity and forbidden language
+- [skills/brand/brand-positioning.md](brand-positioning.md): official positioning statements
+- [skills/brand/research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
+- [templates/email-onboarding.md](../../templates/email-onboarding.md): user-facing anti-dependency framing in the welcome sequence
+- [templates/onboarding-copy.md](../../templates/onboarding-copy.md): user-facing anti-dependency framing
