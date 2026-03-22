@@ -10,73 +10,7 @@ from modules.cli_payload import (
     read_stdin_json,
     require_non_empty_str_field,
 )
-
-BIOMETRIC = [
-    "heart rate",
-    "hrv",
-    "heart rate variability",
-    "resting heart rate",
-    "sleep data",
-    "sleep score",
-    "sleep tracker",
-    "didn't sleep well",
-    "wearable",
-    "apple watch",
-    "fitbit",
-    "garmin",
-    "whoop",
-    "stress score",
-    "body battery",
-    "recovery score",
-    "blood oxygen",
-]
-
-BODY_SENSATION = [
-    "tight chest",
-    "chest tightness",
-    "chest is tight",
-    "knot in my stomach",
-    "stomach in knots",
-    "lump in my throat",
-    "heart is racing",
-    "heart racing",
-    "heart races",
-    "heart pounding",
-    "shallow breathing",
-    "can't catch my breath",
-    "tension in my shoulders",
-    "jaw is tight",
-    "feel it in my body",
-    "body is tense",
-    "feel nauseous",
-    "pit in my stomach",
-    "shaking",
-    "trembling",
-    "feel frozen",
-    "feel numb",
-    "weight on my chest",
-    "my chest tightens",
-    "chest tightens",
-    "can't breathe properly",
-    "holding my breath",
-    "feel heavy",
-    "disconnected from my body",
-    "feel it physically",
-]
-
-SOMATIC_INVITATION = [
-    "can't stop thinking",
-    "mind won't stop",
-    "spinning thoughts",
-    "in my head",
-    "overthinking",
-    "disconnected",
-    "not present",
-    "spaced out",
-    "zoned out",
-    "feel unreal",
-    "everything feels foggy",
-]
+from modules.config import BIOMETRIC, BODY_SENSATION, SOMATIC_INVITATION
 
 
 def detect_somatic(message: str) -> dict[str, object]:

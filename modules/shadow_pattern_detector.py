@@ -10,126 +10,16 @@ from modules.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from modules.config import (
+    AVOIDANCE_SIGNALS,
+    EXTERNAL_REPEAT_SIGNALS,
+    OVERTHINKING_SIGNALS,
+    PEOPLE_PLEASING_SIGNALS,
+    PERFECTIONISM_SIGNALS,
+    WITHDRAWAL_SIGNALS,
+)
 
 HistoryMessage = dict[str, str]
-
-EXTERNAL_REPEAT_SIGNALS = [
-    "people always",
-    "they always",
-    "everyone always",
-    "he always",
-    "she always",
-    "people never",
-    "they never",
-    "no one ever",
-    "nobody ever",
-    "always happens to me",
-    "keeps happening",
-    "happens every time",
-    "why does this keep",
-    "why do people always",
-    "same thing every time",
-    "every relationship ends",
-    "every job ends",
-    "every time i try",
-    "why do i always end up",
-    "always end up with someone who",
-    "i attract",
-    "i seem to attract",
-]
-
-AVOIDANCE_SIGNALS = [
-    "i don't say anything",
-    "i dont say anything",
-    "i let it go",
-    "i just avoid it",
-    "i don't bring it up",
-    "i smile and say fine",
-    "i say it's fine when it isn't",
-    "i keep hoping it will resolve",
-    "i don't want to deal with",
-    "i go around it",
-    "i change the subject",
-    "i never confront",
-    "builds up and explodes",
-    "built up for so long",
-]
-
-PEOPLE_PLEASING_SIGNALS = [
-    "can't say no",
-    "cant say no",
-    "always say yes",
-    "go along with things",
-    "people take advantage",
-    "take advantage of me",
-    "always give more than i get",
-    "give more than i get",
-    "i do so much and no one notices",
-    "do so much and no one",
-    "i put everyone else first",
-    "put everyone else first",
-    "hard to say no",
-    "feel guilty saying no",
-    "end up resenting",
-    "i agree and then regret",
-    "i sacrifice for everyone",
-    "why do i always end up with people who take",
-    "seem to say no",
-    "cannot say no",
-]
-
-OVERTHINKING_SIGNALS = [
-    "replay conversations",
-    "go over it in my head",
-    "can't stop thinking",
-    "analyse everything",
-    "think from every angle",
-    "can't turn my brain off",
-    "lie awake thinking",
-    "overthink everything",
-    "overthink things",
-    "rehearse what i'm going to say",
-    "over-analyse",
-    "i think too much",
-    "can't stop replaying",
-    "my brain won't stop",
-    "thinking in circles",
-]
-
-WITHDRAWAL_SIGNALS = [
-    "go quiet",
-    "shut down",
-    "go cold",
-    "disappear",
-    "pull away",
-    "go silent",
-    "don't respond",
-    "withdraw",
-    "close off",
-    "i just stop talking",
-    "i leave conversations",
-    "i go numb",
-    "push people away when",
-    "i isolate when",
-]
-
-PERFECTIONISM_SIGNALS = [
-    "has to be perfect",
-    "if it's not perfect",
-    "if it is not perfect",
-    "can't start until",
-    "go over it again and again",
-    "never good enough",
-    "nothing is ever good enough",
-    "people never meet my standards",
-    "i'm the only one who does it right",
-    "can't submit it",
-    "not ready yet",
-    "hard on myself",
-    "impossible standards",
-    "it has to be right",
-    "i can't stop fixing",
-]
 
 
 def detect_shadow_patterns(
