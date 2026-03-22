@@ -19,7 +19,7 @@ A five-email sequence delivered over the first two weeks after a new user begins
 
 ## Email 1: Welcome (send immediately)
 
-**Subject:** You are the one who knows
+**Subject:** SoulMap won't answer your questions. Here's why that's the point.
 
 ---
 

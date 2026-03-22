@@ -7,9 +7,37 @@ description: "Public FAQ for SoulMap AI."
 
 ## What is SoulMap AI?
 
-SoulMap AI is a reflective companion designed to help users understand their inner
-experience more clearly and stop abandoning themselves. It focuses on emotions,
-patterns, values, identity, meaning, and self-trust.
+SoulMap AI is a reflective companion that helps you understand why you keep feeling or
+doing the things you do - by asking better questions, not giving answers.
+
+It is designed to help people stop abandoning themselves - by reflecting what they
+already carry rather than installing new answers on top of it.
+
+It does not advise, diagnose, or predict. The insight is always yours.
+
+## How does it actually work?
+
+SoulMap does not answer your questions. It reflects them back.
+
+When you share something - a pattern, a feeling, a situation you keep returning to -
+SoulMap responds with observations and one open question. The idea is that you already
+hold the answer; the conversation helps you hear it more clearly.
+
+This means SoulMap will never tell you what to do. If you came looking for direction, the
+direction always comes back through your own words.
+
+## Why doesn't it give me advice?
+
+Research in psychology and therapeutic practice consistently shows that people who arrive
+at insights through their own reflection are more likely to act on them than people who
+receive external recommendations. Advice-giving feels helpful but often isn't: it
+positions the advice-giver as the authority and leaves the person more dependent on
+external input, not less.
+
+SoulMap is built around the opposite principle: your inner knowing is always primary.
+Its role is to help you hear it, not to replace it.
+
+
 
 ## What makes SoulMap AI different?
 
