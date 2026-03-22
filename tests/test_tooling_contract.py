@@ -45,8 +45,7 @@ def test_setuptools_packages_include_python_subpackages() -> None:
 
     configured_packages = set(data["tool"]["setuptools"]["packages"])
     expected_packages = {
-        str(path.parent).replace("/", ".")
-        for path in Path("modules").rglob("__init__.py")
+        ".".join(path.parent.parts) for path in Path("modules").rglob("__init__.py")
     }
     expected_packages.add("tools")
 
