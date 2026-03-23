@@ -60,6 +60,11 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
 - `anger-companion.md`
 - `somatic-wellbeing.md`
 - `integration-celebration.md`
+- `ancestral-patterns.md`
+- `fear-of-visibility.md`
+- `creative-drought.md`
+- `empath-boundary.md`
+- `perfectionism-paralysis.md`
 
 ## Expected outcome
 

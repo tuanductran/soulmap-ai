@@ -77,7 +77,12 @@ cleared.
 | P5 | Existential | Identity shift, meaning void, endings, larger questions |
 | P6 | Inner Parts | Explicit inner conflict, part-naming, behavioral confusion |
 | P7 | Direction | Lostness, meaning void, should-vs-want, misalignment |
+| P7b | Creative Drought | Disconnection from creative source, blank page, lost voice |
+| P7c | Perfectionism Paralysis | Not-starting, not-finishing, not-releasing pattern |
 | P8 | Shadow | External repeat frustrations, protection patterns |
+| P8b | Ancestral Patterns | Intergenerational recognition, inherited wound, family pattern |
+| P8c | Fear of Visibility | Fear of being seen, heard, or known publicly |
+| P8d | Empath Boundary | Absorbing others' emotions, boundary dissolution, energetic overwhelm |
 | P9 | Meaning Integration | Explicit insight, post-reflection validation, breakthrough |
 | P9b | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | P10 | Synthesis | Explicit synthesis request or 10+ messages with themes |
