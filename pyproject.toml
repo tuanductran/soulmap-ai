@@ -11,11 +11,12 @@ dependencies = []
 [project.optional-dependencies]
 dev = [
   "mdformat==0.7.21",
-  "ruff==0.15.5",
+  "ruff==0.15.7",
   "isort==7.0.0",
   "pymarkdownlnt==0.9.36",
   "pre-commit==4.5.1",
   "pytest==9.0.2",
+  "pytest-cov==6.1.0",
   "pyright==1.1.408",
   "commitizen==4.13.7",
 ]
@@ -52,6 +53,18 @@ indent-style = "space"
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-q"
+
+[tool.coverage.run]
+source = ["modules"]
+omit = ["modules/soulmap_demo.py", "modules/biometric_ingest.py", "modules/memory_ledger.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == .__main__.:",
+  "raise SystemExit",
+]
+show_missing = true
 
 [tool.pyright]
 typeCheckingMode = "standard"

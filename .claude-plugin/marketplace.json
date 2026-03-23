@@ -13,7 +13,7 @@
     {
       "name": "SoulMap Core Frameworks",
       "source": "./",
-      "description": "Reflective frameworks for emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow patterns, anger, self-compassion, and relationship inquiry.",
+      "description": "Reflective frameworks for emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow patterns, anger, self-compassion, relationship inquiry, and positive-state integration and celebration. Each framework file includes a Paired template block pointing to its required output structure, inquiry questions, redirect, and closing ritual.",
       "skills": [
         "./skills/frameworks"
       ]
@@ -29,7 +29,7 @@
     {
       "name": "SoulMap Meta Guidance",
       "source": "./",
-      "description": "Deep inquiry prompts, user journey stages, and meta-level guidance for selecting the right reflective posture.",
+      "description": "Deep inquiry prompts, user journey stages, orchestration rules, execution pipeline, and meta-level guidance for selecting the right reflective posture. Includes session-continuity protocol for memory-enabled environments and prior-session reference handling.",
       "skills": [
         "./skills/meta"
       ]

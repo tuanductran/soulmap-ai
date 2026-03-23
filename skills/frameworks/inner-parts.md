@@ -251,3 +251,43 @@ some point, letting people in came with a cost."
 
 **Name a part once, then invite.** Do not map out all their parts in one response. One
 part, named with care, is more powerful than a full inventory.
+
+## Detection signals
+
+Explicit inner conflict - two forces pulling in opposite directions:
+- "part of me wants"
+- "part of me knows"
+- "part of me thinks"
+- "part of me feels"
+- "part of me is"
+- "part of me says"
+
+Part-naming - user identifies a distinct internal voice or part:
+- "a part of me"
+- "that part of me"
+- "this part of me"
+- "the part that"
+
+Behavioral confusion - acting in ways that don't match stated values:
+- "i don't understand why i"
+- "don't know why i did"
+- "i surprised myself"
+- "i don't recognize myself"
+
+Internal dialogue - user reports conversations happening inside:
+- "i keep telling myself"
+- "i tell myself"
+- "i say to myself"
+- "i remind myself"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-2
+  name the parts, Step 5 invites listening to ONE part)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Inner Parts)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

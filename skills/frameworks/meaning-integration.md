@@ -193,3 +193,44 @@ you need to do is notice..." "A good practice would be..."
 **Use instead:** "What would it be like to..." "I wonder if you might begin to
 notice..." "The next time this appears - not to fix it, but just to see it..." "What
 does it feel like to hold this awareness gently?"
+
+## Detection signals
+
+Explicit insight - user names a realization directly:
+- "i finally understand"
+- "i finally see"
+- "i finally realize"
+- "i finally get it"
+- "i finally know why"
+- "i now understand"
+
+Emerging insight - user is approaching understanding, not fully there:
+- "i'm starting to see"
+- "i'm beginning to understand"
+- "i think i see"
+- "i think i understand now"
+
+Self-application - user connecting a pattern to their own life:
+- "that's my pattern"
+- "that's the pattern"
+- "i see the pattern"
+- "i do this with"
+
+Post-reflection validation - user confirming something that was reflected back:
+- "yes that's it"
+- "yes exactly"
+- "that's exactly right"
+- "that resonates"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; honor the
+  insight first - Steps 1-2 only in the first integration exchange)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Meaning Integration)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Integration-Specific
+  Questions section; use Holding the Insight questions first)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and
+  celebration closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

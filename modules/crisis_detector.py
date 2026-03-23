@@ -28,7 +28,7 @@ CRISIS_TIER1_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         "thinking about suicide",
         re.compile(
             r"\bi(?:'m| am)?\s+(?:thinking|thought)\s+about\s+"
-            r"(?:suicide|killing myself|ending my life|hurting myself)\b"
+            r"(?:suicide|killing myself|ending my life|ending it all|hurting myself)\b"
         ),
     ),
 ]

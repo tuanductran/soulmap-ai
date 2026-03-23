@@ -25,6 +25,10 @@ responsibly.
 | Privacy and data handling | Content review | Privacy and data-handling commitments remain current in the full repository |
 | Public copy readiness | Content review | [templates/social-copy.md](social-copy.md), [templates/email-onboarding.md](email-onboarding.md) |
 | Archive self-containment | Path review | shipped files do not depend on missing repo-only paths |
+| Orchestration layer | Content review | [skills/meta/orchestration.md](../skills/meta/orchestration.md) priority hierarchy matches Python modules |
+| Epistemic guardrails | Content review | [skills/meta/epistemic-guardrails.md](../skills/meta/epistemic-guardrails.md) covers all spiritual content categories |
+| Stage classifier alignment | Content review | [skills/meta/stage-classifier.md](../skills/meta/stage-classifier.md) keywords are superset of `modules/stage_detector.py` |
+| Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes all 12 frameworks and 7 pipeline steps |
 | Build freshness | Verification run | Build artifact checks are green in the full repository |
 | Safety evals | Verification run | Safety evaluation suite is green in the full repository |
 | Golden eval cases | Verification run | Response-generation evaluation suite is green in the full repository |

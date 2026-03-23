@@ -211,3 +211,43 @@ This is not career coaching. Not life coaching. Not ikigai. Not "find your passi
 
 It is a companion helping the user hear their own signal more clearly - and notice where
 they may have been living from someone else's map.
+
+## Detection signals
+
+Lostness - no sense of where to go or who to be:
+- "i feel lost"
+- "i'm lost"
+- "feel so lost"
+- "feeling lost"
+- "feel completely lost"
+- "completely lost"
+
+Should vs. want - living from obligation rather than choice:
+- "should want this but i don't"
+- "supposed to want"
+- "supposed to be happy"
+- "have everything i wanted but"
+
+Misalignment - outer life no longer matching inner truth:
+- "feels off"
+- "something feels wrong"
+- "something feels missing"
+- "not aligned"
+
+Comparison and falling behind - measuring life against others' timelines:
+- "everyone else seems to know"
+- "everyone else has it figured out"
+- "everyone else knows what they're doing"
+- "everyone else has direction"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; explore ONE
+  values lens per response, not all four at once)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Direction)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Direction-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

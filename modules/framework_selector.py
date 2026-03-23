@@ -7,27 +7,33 @@ import sys
 import time
 from typing import cast
 
+from modules.ancestral_detector import detect_ancestral
 from modules.anger_detector import detect_anger
+from modules.celebration_detector import detect_celebration
 from modules.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_memory_fields,
 )
 from modules.conversation_synthesizer import should_synthesize, synthesize
+from modules.creative_drought_detector import detect_creative_drought
 from modules.crisis_detector import detect_crisis
 from modules.dependency_detector import analyze_dependency
 from modules.direction_detector import detect_direction_need
 from modules.emotional_intensity_detector import detect_intensity
+from modules.empath_detector import detect_empath_overwhelm
 from modules.existential_detector import detect_existential
 from modules.grief_detector import detect_grief
 from modules.inner_conflict_detector import detect_inner_conflict
 from modules.insight_detector import detect_insight
 from modules.pattern_detector import detect_patterns
+from modules.perfectionism_paralysis_detector import detect_perfectionism_paralysis
 from modules.response_safety_gate import apply_safety_gate
 from modules.shadow_pattern_detector import detect_shadow_patterns
 from modules.somatic_detector import detect_somatic
 from modules.spiritual_bypass_detector import detect_bypass
 from modules.stage_detector import detect_stage
+from modules.visibility_fear_detector import detect_visibility_fear
 
 
 def _analyze_synthesis(
@@ -377,6 +383,48 @@ async def select_framework_async(
             memory,
             debug_events=debug_events,
         ),
+        "celebration": _run_detector_async(
+            "celebration_detector",
+            detect_celebration,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "ancestral": _run_detector_async(
+            "ancestral_detector",
+            detect_ancestral,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "visibility_fear": _run_detector_async(
+            "visibility_fear_detector",
+            detect_visibility_fear,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "creative_drought": _run_detector_async(
+            "creative_drought_detector",
+            detect_creative_drought,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "empath": _run_detector_async(
+            "empath_detector",
+            detect_empath_overwhelm,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "perfectionism": _run_detector_async(
+            "perfectionism_paralysis_detector",
+            detect_perfectionism_paralysis,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
     }
 
     results = await asyncio.gather(*tasks.values())
@@ -484,6 +532,34 @@ async def select_framework_async(
             debug_events,
         )
 
+    if res["creative_drought"].get("creative_drought_detected"):
+        selection = {
+            "primary_framework": "CREATIVE_DROUGHT",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["creative_drought"],
+            "instruction": res["creative_drought"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["perfectionism"].get("perfectionism_paralysis_detected"):
+        selection = {
+            "primary_framework": "PERFECTIONISM_PARALYSIS",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["perfectionism"],
+            "instruction": res["perfectionism"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
     if res["shadow"].get("shadow_detected"):
         selection = {
             "primary_framework": "SHADOW",
@@ -494,6 +570,65 @@ async def select_framework_async(
                 "Activate shadow_patterns.md. Frame as possibility ONLY. Return "
                 "ownership. End with shadow-specific question."
             ),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["ancestral"].get("ancestral_detected"):
+        selection = {
+            "primary_framework": "ANCESTRAL_PATTERNS",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["ancestral"],
+            "instruction": res["ancestral"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["visibility_fear"].get("visibility_fear_detected"):
+        selection = {
+            "primary_framework": "FEAR_OF_VISIBILITY",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["visibility_fear"],
+            "instruction": res["visibility_fear"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["empath"].get("empath_detected"):
+        selection = {
+            "primary_framework": "EMPATH_BOUNDARY",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["empath"],
+            "instruction": res["empath"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["celebration"].get("celebration_detected") and not res["insight"].get(
+        "insight_detected"
+    ):
+        celebration_ctx = res["celebration"]
+        selection = {
+            "primary_framework": "INTEGRATION_CELEBRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": celebration_ctx,
+            "instruction": celebration_ctx.get("recommendation", ""),
             "blocked": [],
         }
         return _maybe_attach_debug(
