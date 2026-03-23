@@ -24,6 +24,7 @@ Branch workflow rules (.claude/rules/git-and-release.md):
 - One branch per logical change: feat/..., fix/..., ci/..., docs/..., test/..., chore/...
 - Run python -m pytest -q before pushing any modules/ change
 - Run python -m modules.markdown_contract --root . before pushing skills/ or templates/ changes
+- Run python -m tools.lint before pushing or tagging a release after editing CHANGELOG.md, root Markdown, or docs
 - Push branch -> open PR -> merge -> delete branch
 
 Pre-push checklist:

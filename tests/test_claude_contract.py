@@ -162,3 +162,26 @@ def test_readme_and_repo_workflow_reflect_actual_claude_structure() -> None:
         workflow
     )
     assert "nearest `.claude/skills/` directory" not in workflow
+
+
+def test_claude_release_guardrails_cover_manual_release_markdown() -> None:
+    release_rules = (CLAUDE_DIR / "rules" / "git-and-release.md").read_text(
+        encoding="utf-8"
+    )
+    session_start = (CLAUDE_DIR / "hooks" / "session-start.sh").read_text(
+        encoding="utf-8"
+    )
+    markdown_hook = (CLAUDE_DIR / "hooks" / "post-edit-markdown.sh").read_text(
+        encoding="utf-8"
+    )
+
+    assert "CHANGELOG.md" in release_rules
+    assert "python -m tools.lint" in release_rules
+    assert "manual release" in release_rules
+
+    assert "CHANGELOG.md" in session_start
+    assert "python -m tools.lint" in session_start
+
+    assert "skills/ or templates/" not in markdown_hook
+    assert "CHANGELOG.md" in markdown_hook
+    assert 'if [[ "$FILE_PATH" != *.md ]]; then' in markdown_hook

@@ -18,6 +18,7 @@ BANNED_CHARS = {
 }
 
 TARGET_GLOBS = [
+    "CHANGELOG.md",
     "modules/**/*.py",
     "tools/**/*.py",
     "tests/**/*.py",

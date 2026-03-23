@@ -70,6 +70,8 @@ git push origin fix/crisis-hotlines
 - Delete the branch after the PR is merged
 - If a change touches `modules/`, run `python -m pytest -q` before pushing
 - If a change touches `skills/` or `templates/`, run `python -m modules.markdown_contract --root .` before pushing
+- If a change touches `CHANGELOG.md`, root Markdown, or `docs/*.md`, run `python -m tools.lint` before pushing or tagging a release
+- Before any manual release or tag push, run `python -m tools.format`, `python -m tools.lint`, and `python -m pytest -q`
 
 ### Branch naming examples
 

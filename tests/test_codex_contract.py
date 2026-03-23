@@ -25,3 +25,24 @@ def test_repo_docs_acknowledge_codex_as_optional_local_layer() -> None:
 
 def test_codex_source_character_rule_exists() -> None:
     assert Path(".codex/rules/source-character-safety.md").is_file()
+
+
+def test_codex_release_guidance_matches_manual_release_guardrails() -> None:
+    readme = Path(".codex/README.md").read_text(encoding="utf-8")
+    workflow = Path(".codex/rules/repo-workflow.md").read_text(encoding="utf-8")
+    github_actions = Path(".codex/rules/github-actions.md").read_text(encoding="utf-8")
+    tester_release = Path(".codex/prompts/tester-release.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert "manual release checks aligned with `.claude/`" in readme
+
+    assert "CHANGELOG.md" in workflow
+    assert "python3 -m tools.lint" in workflow
+    assert "manual release or tag push" in workflow
+
+    assert "python3 -m tools.lint" in github_actions
+    assert "release behavior" in github_actions
+
+    assert "CHANGELOG.md" in tester_release
+    assert "python3 -m tools.lint" in tester_release

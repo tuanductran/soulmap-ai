@@ -36,3 +36,5 @@ For reliable repo-level behavior:
 - keep `AGENTS.md` as the baseline entry point
 - treat this folder as a convenience layer for Codex-aware workflows
 - keep doctrine, safety, and shipped package truth outside this folder
+- keep manual release checks aligned with `.claude/` so `CHANGELOG.md` and other
+  release-facing Markdown files go through the same lint gates

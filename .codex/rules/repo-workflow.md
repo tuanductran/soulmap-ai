@@ -26,6 +26,17 @@ python3 -m tools.lint
 python3 -m pytest -q
 ```
 
+If a change touches `CHANGELOG.md`, root Markdown, or `docs/*.md`, do not skip
+`python3 -m tools.lint` before pushing or tagging a release.
+
+Before any manual release or tag push, run:
+
+```bash
+python3 -m tools.format
+python3 -m tools.lint
+python3 -m pytest -q
+```
+
 If packaging or release behavior changed, also run:
 
 ```bash

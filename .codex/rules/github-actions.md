@@ -25,6 +25,9 @@ python3 -m tools.lint
 python3 -m pytest -q
 ```
 
+If the workflow affects release behavior, changelog handling, or manual tagging, make
+sure the release path still runs `python3 -m tools.lint` before artifacts are pushed.
+
 When the workflow touches CI, release, packaging, or markdown validation, also run the
 same commands the workflow relies on, such as:
 
