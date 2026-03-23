@@ -31,11 +31,7 @@ This skill helps you author frameworks that are:
 
 ## Framework File Location
 
-New frameworks live here:
-
-```
-skills/frameworks/{framework-name}.md
-```
+New frameworks live here: `skills/frameworks/{framework-name}.md`
 
 Examples:
 - `skills/frameworks/mirror.md` - reflective mode
