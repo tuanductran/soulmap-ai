@@ -12,7 +12,7 @@ dependencies = []
 dev = [
   "mdformat==1.0.0",
   "ruff==0.15.7",
-  "isort==7.0.0",
+  "isort==8.0.1",
   "pymarkdownlnt==0.9.36",
   "pre-commit==4.5.1",
   "pytest==9.0.2",
