@@ -20,6 +20,12 @@ contract.
 - `operations-and-safety-review`
 - `release-readiness-review`
 
+## Product development skills
+
+- `detector-engineer` - write Python detectors for framework selection signals
+- `eval-suite-maintainer` - maintain evaluation test groups and assertions
+- `framework-author` - author new framework skill files
+
 ## Docs and content skills
 
 - `brand-copy-review`
