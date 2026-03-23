@@ -25,7 +25,7 @@ Output: a JSON object to stdout:
 
 ```json
 {
-  "primary_framework": "CRISIS|DEPENDENCY|DE_ESCALATION|EXISTENTIAL|GRIEF|DIRECTION|INNER_PARTS|SHADOW|INSIGHT|SYNTHESIS|PATTERN|MIRROR",
+  "primary_framework": "CRISIS|DEPENDENCY|DE_ESCALATION|EXISTENTIAL|GRIEF|DIRECTION|INNER_PARTS|SHADOW|MEANING_INTEGRATION|SYNTHESIS|PATTERN|MIRROR",
   "secondary_layer": "anger|bypass|somatic|null",
   "mode": "CRISIS|SANCTUARY|MIRROR|PEER",
   "safety_status": "PASS|BLOCK|OVERRIDE",
@@ -39,7 +39,9 @@ Output: a JSON object to stdout:
 
 Notes:
 
-- `primary_framework` is always exactly one value.
+- `primary_framework` is always exactly one value. `MEANING_INTEGRATION` is the correct
+  identifier for insight and integration moments (previously labelled `INSIGHT` in older
+  documentation - the Python module uses `MEANING_INTEGRATION` exclusively).
 - `secondary_layer` is optional and is only an annotation.
 - `safety_status`, `safety_reason`, and `safety_flags` expose the result of the
   independent safety gate after framework selection.
@@ -52,6 +54,23 @@ Error output:
 ```json
 {"error": "string"}
 ```
+
+## Framework name reference
+
+| `primary_framework` value | Maps to | Priority |
+| :--- | :--- | :--- |
+| `CRISIS` | `skills/frameworks/emotional-deescalation.md` | P0 |
+| `DEPENDENCY` | `skills/frameworks/emotional-deescalation.md` | P1 |
+| `DE_ESCALATION` | `skills/frameworks/emotional-deescalation.md` | P2/P4 |
+| `GRIEF` | `skills/frameworks/grief-companion.md` | P3 |
+| `EXISTENTIAL` | `skills/frameworks/existential-companion.md` | P5 |
+| `INNER_PARTS` | `skills/frameworks/inner-parts.md` | P6 |
+| `DIRECTION` | `skills/frameworks/life-direction.md` | P7 |
+| `SHADOW` | `skills/frameworks/shadow-patterns.md` | P8 |
+| `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration.md` | P9 |
+| `SYNTHESIS` | `skills/frameworks/conversation-synthesis.md` | P10 |
+| `PATTERN` | `skills/frameworks/pattern-mapper.md` | P11 |
+| `MIRROR` | `templates/response-structure.md` | P12 |
 
 ## Individual detectors
 

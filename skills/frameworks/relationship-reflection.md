@@ -171,3 +171,23 @@ where the person who matters most is also the one you feel least safe with."
 Never use the words "anxious attachment", "avoidant attachment", or "disorganized
 attachment" - these are clinical labels that can feel like a diagnosis and stop the
 exploration.
+
+## Detection signals
+
+No dedicated phrase-matching detector. Routes via default Mirror when no
+higher-priority framework fires. The AI model applies this framework through
+language understanding when reading the skill package.
+
+Signals from other detectors that may indicate relationship content: inner conflict
+language, repeat external frustrations, lostness connected to a specific person.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+  avoid attachment labels - Steps 2-3 hold the pattern with care)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Relationship Questions
+  section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

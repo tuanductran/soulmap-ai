@@ -684,3 +684,152 @@ Brings the abstract back to the embodied.
 - Is there anything underneath the acceptance that hasn't been fully felt yet?
 - What would you feel about this if you set the spiritual meaning aside, even
   temporarily?
+
+## Celebration Questions
+
+Use when the Integration and Celebration framework is active. These questions
+deepen the experience or invite the user to own the arrival - not push them
+toward what comes next.
+
+### Witnessing a win or completion
+
+- "What does it feel like to actually let that land?"
+- "What part of you wasn't sure this was possible?"
+- "You've been carrying a version of this for a long time. What is it like to
+  set that weight down, even briefly?"
+- "What do you notice in your body when you say that out loud?"
+
+### Relief and lightness
+
+- "What does the lighter version of you want to do with this?"
+- "What have you been holding back, waiting for this to be over?"
+- "Is there anything you want to say to yourself now that it's through?"
+
+### Recognized progress (catching an old pattern)
+
+- "What did it feel like to notice yourself in real time?"
+- "The version of you who used to react that way - what do you want to say to
+  them?"
+- "What made it possible this time when it wasn't before?"
+- "What does catching it teach you about when it usually slips through?"
+
+### Gratitude (inward or outward)
+
+- "What is the gratitude pointing toward - what actually matters to you in this?"
+- "If you stayed in this feeling a little longer, what else would it tell you?"
+- "What has this experience changed about what you know you need?"
+
+### After a breakthrough
+
+- "What feels most true right now that wasn't true before?"
+- "Is there someone in your life who deserves to know what you just realized?"
+- "What would it mean to live from this understanding rather than just know it?"
+
+## Ancestral Questions
+
+### Tracing the pattern backward
+
+- "Where do you think this pattern was first learned - and by whom?"
+- "If your mother/father received what they needed, what might they have given you?"
+- "What do you imagine your grandmother/grandfather was carrying that never got named?"
+- "What is the earliest version of this wound you can trace in your family?"
+
+### Witnessing the recognition
+
+- "What does it feel like to see this pattern and know it did not begin with you?"
+- "What changes about how you see yourself, knowing this came from somewhere before you?"
+- "Is there grief in recognizing this - for yourself, or for the one who passed it?"
+
+### What becomes possible
+
+- "What would it mean to be the one in whom this pattern finally gets named?"
+- "If you could not pass this on, what would you need to do differently - not for them, but for yourself?"
+- "What do you want to say to the younger version of you who first received this?"
+
+---
+
+## Visibility Questions
+
+### What the fear protects
+
+- "What is the fear keeping safe?"
+- "What happened the last time you were fully seen - or tried to be?"
+- "What did you learn, early on, about what happens when you take up space?"
+
+### What being seen would mean
+
+- "What is the version of visible that feels different from the version that feels dangerous?"
+- "If no one could respond - no one could judge or praise - what would you say?"
+- "What part of you is most afraid of being recognized?"
+
+### The cost of staying invisible
+
+- "What has staying small cost you?"
+- "Is there something you've been waiting to say for a long time?"
+- "What would it mean to still be okay even if someone saw all of it?"
+
+---
+
+## Creative Drought Questions
+
+### The quality of the silence
+
+- "What does the creative silence feel like - empty, pressured, waiting, something else?"
+- "Is this the first time the source has gone quiet, or has it happened before?"
+- "What changed in the period before the drought began?"
+
+### What the drought may be saying
+
+- "If the silence is trying to tell you something, what might it be?"
+- "Is there something the old work wasn't making space for?"
+- "What are you afraid the drought means about you?"
+
+### The relationship with the source
+
+- "When you imagine the creative source returning, what does it look like?"
+- "What is your earliest memory of making something that felt truly yours?"
+- "What would it feel like to create with no audience at all - not even yourself as judge?"
+
+---
+
+## Empath Questions
+
+### Locating the boundary
+
+- "Which feelings in this situation feel like yours, and which ones might have arrived from somewhere else?"
+- "Where in your body do you feel the boundary between yourself and others dissolve?"
+- "When did you last feel clearly inside your own experience?"
+
+### The weight being carried
+
+- "Whose emotion is the heaviest one you're carrying right now?"
+- "If you could set one thing down that isn't yours, what would it be?"
+- "What does it cost you to stay this attuned to everyone around you?"
+
+### The gift and its cost
+
+- "What does the depth of feeling you carry make possible - in relationships, in your work, in how you move through the world?"
+- "What would you lose if you were less sensitive?"
+- "What would you gain?"
+
+---
+
+## Perfectionism Questions
+
+### What the perfectionism protects
+
+- "What would happen if it were released imperfect and it wasn't received well?"
+- "What is 'good enough' protecting you from having to confront?"
+- "When was the first time you felt that what you made wasn't enough?"
+
+### The threshold
+
+- "What specifically happens when you arrive at the point of sharing it?"
+- "What does 'ready' actually look like to you - have you ever felt it?"
+- "If you knew no one would see it, could you finish it?"
+
+### The fear behind the standard
+
+- "Is the standard protecting you from failure, or protecting you from something else?"
+- "What would it mean about you if the thing you made was imperfect and public?"
+- "Who taught you that imperfect things were not safe to show?"

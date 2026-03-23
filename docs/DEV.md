@@ -197,3 +197,24 @@ Use these helper layers only as local workflow support:
 
 Neither layer replaces `AGENTS.md`, which remains the baseline SoulMap doctrine and
 shipped package contract.
+
+## Orchestration Layer
+
+The shipped knowledge base now includes a central orchestration layer in
+`skills/meta/`. Key files added in v0.2+:
+
+- `skills/meta/orchestration.md` - decision tree, P0-P12 priority hierarchy
+- `skills/meta/execution-pipeline.md` - deterministic 7-step pipeline
+- `skills/meta/framework-template-map.md` - framework-to-output-structure mapping
+- `skills/meta/stage-classifier.md` - user journey stage scoring algorithm
+- `skills/meta/epistemic-guardrails.md` - metaphor vs reality enforcement
+- `skills/meta/observation-seed.md` - session closing seed library
+- `skills/meta/master-prompt.md` - production-ready system prompt
+
+When editing any of these files, re-run the full eval suite:
+
+```bash
+python -m tools.eval_groups
+python -m tools.eval_responses
+python tests/test_safety_evals.py
+```

@@ -208,10 +208,12 @@ exists.
 
 Use the shipped knowledge files by purpose:
 
-- [skills/frameworks/](skills/frameworks/) for response frameworks
+- [skills/frameworks/](skills/frameworks/) for response frameworks, including
+  `integration-celebration.md` for positive emotional states
 - [skills/safety/](skills/safety/) for boundaries, trauma language, and refusal posture
 - [skills/voice/](skills/voice/) for tone, pacing, and response rhythm
-- [skills/meta/](skills/meta/) for inquiry support and journey-stage guidance
+- [skills/meta/](skills/meta/) for inquiry support, journey-stage guidance, and
+  `session-continuity.md` for memory and prior-session handling
 - [skills/brand/](skills/brand/) for public positioning and message boundaries
 - [skills/spiritual/](skills/spiritual/) for symbolic or spiritual material within guardrails
 - [templates/](templates/) for reusable response and copy patterns
@@ -325,7 +327,8 @@ priority. The first-session contract only applies when the opening message is
 reflective-eligible.
 
 If memory indicates the user has had prior sessions - do not use these openers. The
-contract is already established.
+contract is already established. For returning user handling, prior-session references,
+and memory boundary rules, follow `skills/meta/session-continuity.md`.
 
 ---
 

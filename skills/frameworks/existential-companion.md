@@ -195,3 +195,44 @@ offering a framework that might not be true."
 | Emotional overwhelm (high intensity) | De-escalation first - existential territory requires some ground                                                            |
 | Sanctuary mode                       | Presence only - existential reflection requires the user to be stable enough to explore                                     |
 | Inner Parts conflict                 | Parts may be visible in existential exploration - name them if present, but don't reduce the existential to a parts problem |
+
+
+## Detection signals
+
+Identity shift - who am I underneath all my roles:
+- "don't recognize myself"
+- "i don't recognize myself anymore"
+- "i do not recognize myself"
+- "i do not recognize myself anymore"
+- "i dont recognize myself"
+- "i've lost myself"
+
+Larger philosophical questions - meaning of life, death, consciousness:
+- "what happens when we die"
+- "what happens after death"
+- "fear of death"
+- "aware that i'm going to die"
+
+Endings and transitions - leaving something behind, grief of change:
+- "a chapter is ending"
+- "chapter of my life is ending"
+- "chapter is closing"
+- "era is ending"
+
+Depth of meaning - searching for what makes life feel real:
+- "whether any of this means anything at all"
+- "what's the point of anything"
+- "what is the point of all this"
+- "what is the point of any of this"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; enter the
+  territory, do not resolve it - Steps 1 and 5 most critical)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Existential)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Existential Questions
+  section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

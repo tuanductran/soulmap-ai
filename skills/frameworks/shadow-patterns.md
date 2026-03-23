@@ -333,3 +333,42 @@ It is not victim-blaming. It is not "you attracted this."
 It is a gentle invitation to look at what might be within their influence - not because
 the other person is innocent, but because the user's own patterns are the only thing
 they can actually work with.
+
+## Detection signals
+
+External repeat frustrations - same type of person or situation keeps appearing:
+- "people always"
+- "they always"
+- "everyone always"
+- "he always"
+- "she always"
+- "people never"
+
+Spiritual bypass - using spiritual language to avoid accountability:
+- "it was their karma not mine"
+- "they were my teacher"
+- "i called this into my life"
+- "i manifested this situation"
+
+Spiritual dismissal - using acceptance language to bypass real pain:
+- "everything happens for a reason"
+- "it was meant to be"
+- "the universe has a plan"
+- "this is my karma"
+
+Spiritual grandiosity - framing self as uniquely chosen or elevated:
+- "as a lightworker"
+- "as an empath i feel"
+- "i'm highly sensitive so"
+- "my vibration is too high for"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; name the
+  pattern as possibility only, never as fact - Steps 2-4 critical)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Shadow)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

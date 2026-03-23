@@ -81,3 +81,22 @@ you?"
 
 **Instead:** Acknowledge the harshness. Name the critic's intention. Offer the friend
 question. One inquiry question.
+
+## Detection signals
+
+No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
+this framework through language understanding when reading the skill package.
+
+Signals from other detectors that may co-activate: self-directed anger, perfectionism,
+people-pleasing signals picked up by the pattern detector.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; acknowledge the
+  inner critic's intention before offering the friend question)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Self-Compassion
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

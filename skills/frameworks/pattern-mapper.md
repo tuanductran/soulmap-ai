@@ -228,3 +228,43 @@ underlying thread. Does that land at all?"*
 | Emotional Avoidance + Self-Sabotage    | "The emotion I won't feel gets expressed through behavior that undoes what I built"                                                              |
 | Approval Seeking + Fear of Rejection   | "I need your yes and I'm terrified of your no" - constant performance anxiety                                                                    |
 | Over-Responsibility + Abandonment Loop | "I give everything so you won't leave" - exhaustion as a holding strategy                                                                        |
+
+## Detection signals
+
+External repeat frustrations - same dynamic appearing across multiple stories:
+- "people always"
+- "they always"
+- "everyone always"
+- "he always"
+
+Avoidance signals - pulling back from what matters:
+- "i don't say anything"
+- "i dont say anything"
+- "i let it go"
+- "i just avoid it"
+
+People-pleasing signals - prioritizing others' comfort over own truth:
+- "can't say no"
+- "cant say no"
+- "always say yes"
+- "go along with things"
+
+Overthinking signals - using analysis to avoid feeling:
+- "replay conversations"
+- "go over it in my head"
+- "can't stop thinking"
+- "analyse everything"
+
+Pattern requires 2+ user messages with matching signals before activating.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; non-labeling
+  language mandatory - Steps 2-3 carry the pattern reflection)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Pattern)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Pattern-Specific
+  Inquiry Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

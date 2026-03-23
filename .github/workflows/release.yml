@@ -33,6 +33,8 @@ jobs:
         run: |
           python -m tools.lint
           python -m tools.eval_groups
+          python tests/test_safety_evals.py
+          python -m tools.eval_responses
 
       - name: Configure git author
         run: |
