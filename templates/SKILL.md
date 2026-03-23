@@ -33,6 +33,8 @@ copy blocks, and product-facing prompts that other skills rely on.
 
 - `response-structure.md`
 - `redirect-templates.md`
+- `celebration-response.md`
+- `returning-user-onboarding.md`
 - `brand-copy.md`
 - `marketplace-copy.md`
 - `onboarding-copy.md`

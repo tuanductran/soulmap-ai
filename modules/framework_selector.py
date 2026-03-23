@@ -8,6 +8,7 @@ import time
 from typing import cast
 
 from modules.anger_detector import detect_anger
+from modules.celebration_detector import detect_celebration
 from modules.cli_payload import (
     print_json_error,
     read_stdin_json,
@@ -377,6 +378,13 @@ async def select_framework_async(
             memory,
             debug_events=debug_events,
         ),
+        "celebration": _run_detector_async(
+            "celebration_detector",
+            detect_celebration,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
     }
 
     results = await asyncio.gather(*tasks.values())
@@ -494,6 +502,23 @@ async def select_framework_async(
                 "Activate shadow_patterns.md. Frame as possibility ONLY. Return "
                 "ownership. End with shadow-specific question."
             ),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["celebration"].get("celebration_detected") and not res["insight"].get(
+        "insight_detected"
+    ):
+        celebration_ctx = res["celebration"]
+        selection = {
+            "primary_framework": "INTEGRATION_CELEBRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": celebration_ctx,
+            "instruction": celebration_ctx.get("recommendation", ""),
             "blocked": [],
         }
         return _maybe_attach_debug(
