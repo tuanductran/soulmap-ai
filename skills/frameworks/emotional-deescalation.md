@@ -173,6 +173,35 @@ reflection.
 
 If the user needs more than this, refer to a qualified professional.
 
+## Detection signals
+
+Emotional flooding - overwhelmed to the point of collapse:
+- "i'm angry and sad and"
+- "angry and scared"
+- "i don't know if i'm angry or"
+- "crying and angry"
+- "laughing and crying"
+- "i'm so confused and"
+
+Cognitive flooding - mind spinning, unable to think clearly:
+- "i can't think"
+- "can't think straight"
+- "my head is spinning"
+- "head is spinning"
+
+Crisis tier 1 - explicit self-harm or suicidal signals (routes to P0 immediately):
+- "want to die"
+- "want to end my life"
+- "end it all"
+- "ending it all"
+- "kill myself"
+
+Crisis tier 2 - acute distress without explicit harm intent (routes to P2 Sanctuary):
+- "i can't take it anymore"
+- "i'm falling apart"
+- "completely broken"
+- "i have nothing left"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Sanctuary mode for HIGH

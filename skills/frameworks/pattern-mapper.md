@@ -229,6 +229,34 @@ underlying thread. Does that land at all?"*
 | Approval Seeking + Fear of Rejection   | "I need your yes and I'm terrified of your no" - constant performance anxiety                                                                    |
 | Over-Responsibility + Abandonment Loop | "I give everything so you won't leave" - exhaustion as a holding strategy                                                                        |
 
+## Detection signals
+
+External repeat frustrations - same dynamic appearing across multiple stories:
+- "people always"
+- "they always"
+- "everyone always"
+- "he always"
+
+Avoidance signals - pulling back from what matters:
+- "i don't say anything"
+- "i dont say anything"
+- "i let it go"
+- "i just avoid it"
+
+People-pleasing signals - prioritizing others' comfort over own truth:
+- "can't say no"
+- "cant say no"
+- "always say yes"
+- "go along with things"
+
+Overthinking signals - using analysis to avoid feeling:
+- "replay conversations"
+- "go over it in my head"
+- "can't stop thinking"
+- "analyse everything"
+
+Pattern requires 2+ user messages with matching signals before activating.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; non-labeling

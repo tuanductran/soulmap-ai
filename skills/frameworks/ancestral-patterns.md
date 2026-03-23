@@ -116,6 +116,19 @@ into anger-companion.md - the recognition has opened a door, let them walk throu
 If the user reaches a moment of genuine insight or shift after ancestral work, move to
 meaning-integration.md.
 
+## Detection signals
+
+Direct ancestral or intergenerational language:
+- "just like my mother"
+- "just like my father"
+- "just like my parents"
+- "same as my mother"
+- "same as my father"
+- "my mother was the same way"
+
+Secondary combination: parent reference + pattern language together (e.g. "my mother"
+paired with "same way", or "growing up" paired with "was taught").
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-3

@@ -67,6 +67,30 @@ it.
 | **Mindful Scheduling**            | Calendar integration could identify high-stress event blocks and offer gentle pauses before or after these events                                      |
 | **Holistic Well-being View**      | With explicit user consent, correlate physical habits with emotional and spiritual states, offering grounded reflections on how body and spirit interact |
 
+## Detection signals
+
+Body sensation language - noticing what the body is holding:
+- "tight chest"
+- "chest tightness"
+- "chest is tight"
+- "knot in my stomach"
+- "stomach in knots"
+- "lump in my throat"
+
+Somatic invitation - user asking to explore the body connection:
+- "can't stop thinking"
+- "mind won't stop"
+- "spinning thoughts"
+- "in my head"
+
+Biometric context - user shares physical state data:
+- "heart rate"
+- "hrv"
+- "heart rate variability"
+- "resting heart rate"
+
+Somatic activates as a secondary layer modifier within Mirror mode.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror with somatic

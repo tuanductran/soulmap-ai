@@ -121,6 +121,19 @@ If the user has a realization about what they are protecting by absorbing others
 (an avoidance of their own pain, a role they were given in childhood), move to
 shadow-patterns.md or ancestral-patterns.md.
 
+## Detection signals
+
+Direct empath boundary language - absorbing others' emotions, not knowing what is yours:
+- "i absorb everyone's emotions"
+- "i feel what others feel"
+- "i don't know which feelings are mine"
+- "i can't tell if this is my emotion"
+- "i walk into a room and feel the energy"
+- "i feel drained after being with people"
+
+Secondary combination: depletion language ("drained", "exhausted", "depleted") paired
+with people context ("being around people", "after being with", "family gatherings").
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 1 is

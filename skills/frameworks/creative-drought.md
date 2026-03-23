@@ -126,6 +126,19 @@ existential-companion.md.
 If the user has a realization about what the drought has been protecting them from,
 move to meaning-integration.md.
 
+## Detection signals
+
+Direct creative drought language - source gone quiet, nothing coming out:
+- "i don't know what to create anymore"
+- "i used to know what to say"
+- "the ideas have stopped coming"
+- "nothing comes out"
+- "i sit down to work and there's nothing"
+- "i stare at the blank page"
+
+Secondary combination: creative identity language ("my writing", "as a creator",
+"creative") paired with absence language ("nothing", "dried up", "stopped").
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 4 is

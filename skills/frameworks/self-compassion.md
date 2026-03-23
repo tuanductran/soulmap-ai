@@ -82,6 +82,14 @@ you?"
 **Instead:** Acknowledge the harshness. Name the critic's intention. Offer the friend
 question. One inquiry question.
 
+## Detection signals
+
+No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
+this framework through language understanding when reading the skill package.
+
+Signals from other detectors that may co-activate: self-directed anger, perfectionism,
+people-pleasing signals picked up by the pattern detector.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; acknowledge the

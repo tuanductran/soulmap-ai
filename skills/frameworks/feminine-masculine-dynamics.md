@@ -143,6 +143,12 @@ It is noticing:
 - where they are receptive or self-abandoning
 - where a symbolic frame helps them see themselves more honestly
 
+## Detection signals
+
+No dedicated phrase-matching detector. Operates as a secondary lens modifier within
+Mirror mode, not a primary framework. The AI model applies this framework when
+feminine or masculine energy language appears in the user's message.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;

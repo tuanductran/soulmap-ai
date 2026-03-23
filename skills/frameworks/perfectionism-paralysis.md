@@ -128,6 +128,24 @@ enough in my family"), move to ancestral-patterns.md.
 If the user has a breakthrough about what they are protecting, move to
 meaning-integration.md.
 
+## Detection signals
+
+Paralysis-specific signals - not starting, not finishing, not releasing:
+- "i can't start until i know it's right"
+- "i can't share until it's perfect"
+- "i keep reworking the same thing"
+- "i can never finish anything"
+- "i almost sent it but"
+- "i keep deleting and starting over"
+
+General perfectionism signals - secondary scoring:
+- "has to be perfect"
+- "if it's not perfect"
+- "if it is not perfect"
+- "can't start until"
+
+History bonus: repeated not-ready signals across prior turns adds extra weight.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 2 names

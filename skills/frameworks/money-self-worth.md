@@ -140,6 +140,14 @@ Return the user to one living question:
 - what part of them money activates
 - what kind of worth they are trying to secure through it
 
+## Detection signals
+
+No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
+this framework through language understanding when reading the skill package.
+
+Signals from other detectors that may co-activate: lostness, misalignment, and
+people-pleasing signals picked up by direction and pattern detectors.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;

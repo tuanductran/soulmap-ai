@@ -123,6 +123,37 @@ exchanges in this framework are appropriate.
 If synthesis is requested after a celebration exchange - move to
 `conversation-synthesis.md`.
 
+## Detection signals
+
+Win or completion - something was achieved or finished:
+- "i finally did it"
+- "i did it"
+- "i finally said it"
+- "i said it"
+- "i got the job"
+- "we made it"
+
+Relief after difficulty - the hard part is over:
+- "i can breathe again"
+- "feel lighter"
+- "feeling lighter"
+- "i feel lighter"
+
+Gratitude - inward or outward appreciation:
+- "i'm so grateful"
+- "i am so grateful"
+- "so grateful"
+- "i feel grateful"
+
+Recognized progress - catching an old pattern and responding differently:
+- "i noticed i didn't react"
+- "i noticed i did not react"
+- "i caught myself this time"
+- "i caught myself"
+
+Score threshold: 2. Mixed pain signals ("I did it but I feel empty") reduce the score
+and may prevent this framework from activating.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror, light register -

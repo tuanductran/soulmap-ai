@@ -137,6 +137,34 @@ from Grief Companion toward mirror-mode reflection or meaning integration.
 
 Never force this transition. Let the user lead it.
 
+## Detection signals
+
+Acute grief - loss just happened or recently named:
+- "they died"
+- "he died"
+- "she died"
+- "my mother died"
+- "my father died"
+- "my partner died"
+
+Anticipatory grief - watching someone decline before the loss:
+- "watching them decline"
+- "watching my father decline"
+- "watching my mother decline"
+- "watching my partner decline"
+
+Ambiguous loss - grief without social permission or a clear cause:
+- "no one understands why i'm upset"
+- "not allowed to be this sad"
+- "it's not like they died"
+- "no one sees this as a real loss"
+
+Complicated grief - grief stuck, unresolved, or contested:
+- "feel guilty that i feel relieved"
+- "relieved they're gone"
+- "loved them and they hurt me"
+- "grieving someone who hurt me"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Sanctuary - witness only

@@ -121,6 +121,19 @@ but "what does the fear know that you haven't fully heard yet."
 | Fear of visibility + grief about past attempt | Grief first |
 | Fear of visibility as primary, no other dominant signal | This framework |
 
+## Detection signals
+
+Direct visibility fear - shrinking, hiding, going invisible before being seen:
+- "afraid to post"
+- "afraid to share"
+- "afraid to put myself out there"
+- "what if people judge me"
+- "what if people see who i really am"
+- "i can't let people see"
+
+Secondary combination: shrinking language ("hold back", "go quiet", "invisible") paired
+with public or sharing context ("post", "share", "put out there").
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 3 focuses

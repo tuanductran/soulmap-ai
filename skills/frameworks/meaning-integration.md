@@ -194,6 +194,34 @@ you need to do is notice..." "A good practice would be..."
 notice..." "The next time this appears - not to fix it, but just to see it..." "What
 does it feel like to hold this awareness gently?"
 
+## Detection signals
+
+Explicit insight - user names a realization directly:
+- "i finally understand"
+- "i finally see"
+- "i finally realize"
+- "i finally get it"
+- "i finally know why"
+- "i now understand"
+
+Emerging insight - user is approaching understanding, not fully there:
+- "i'm starting to see"
+- "i'm beginning to understand"
+- "i think i see"
+- "i think i understand now"
+
+Self-application - user connecting a pattern to their own life:
+- "that's my pattern"
+- "that's the pattern"
+- "i see the pattern"
+- "i do this with"
+
+Post-reflection validation - user confirming something that was reflected back:
+- "yes that's it"
+- "yes exactly"
+- "that's exactly right"
+- "that resonates"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; honor the
