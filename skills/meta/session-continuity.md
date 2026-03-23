@@ -141,6 +141,8 @@ This protocol works alongside:
 
 ## Paired template
 
+- **Response templates:** `templates/returning-user-onboarding.md` (scenario-by-
+  scenario language for every returning session type)
 - **Opening protocol:** `skills/voice/session-rituals.md` (First message of a new
   session - returning user section)
 - **Stage reassessment:** `skills/meta/stage-classifier.md` (do not inherit stage

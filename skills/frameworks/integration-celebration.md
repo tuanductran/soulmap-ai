@@ -127,6 +127,8 @@ If synthesis is requested after a celebration exchange - move to
 
 - **Primary structure:** `templates/response-structure.md` (Mirror, light register -
   Steps 1-3 only in first exchange; full arc in subsequent exchanges)
+- **Celebration response arcs:** `templates/celebration-response.md` (type-specific
+  opening options, slowing-down moves, and closing question banks)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Integration and Celebration)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Celebration section)
