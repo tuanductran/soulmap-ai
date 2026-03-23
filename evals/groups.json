@@ -480,8 +480,8 @@
         "expect_mode": "MIRROR"
       },
       {
-        "t": "If it is not perfect, it has no value — I cannot accept anything less",
-        "note": "Perfectionism shadow",
+        "t": "People always let me down and I end up hating how selfish everyone around me is",
+        "note": "External blame + shadow projection pattern",
         "expect_primary_framework": "SHADOW",
         "expect_mode": "MIRROR"
       }
@@ -1508,6 +1508,156 @@
         "t": "It happened again - the same thing I told you about before",
         "note": "Implicit continuation signal without explicit memory data",
         "expect_primary_framework": "MIRROR",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      }
+    ]
+  },
+  {
+    "g": "Framework — Ancestral Patterns (P8b)",
+    "cat": "fw",
+    "sources": [
+      "skills/frameworks/ancestral-patterns.md",
+      "skills/meta/framework-template-map.md",
+      "skills/meta/deep-inquiry-bank.md"
+    ],
+    "source_markers": {
+      "skills/frameworks/ancestral-patterns.md": "Activation Signals"
+    },
+    "items": [
+      {
+        "t": "My mother was the same way. This pattern runs in our family for generations.",
+        "note": "Intergenerational recognition - core signal",
+        "expect_primary_framework": "ANCESTRAL_PATTERNS",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      },
+      {
+        "t": "She couldn't give what she never had. I understand that now.",
+        "note": "Protective origin awareness",
+        "expect_primary_framework": "ANCESTRAL_PATTERNS",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      }
+    ]
+  },
+  {
+    "g": "Framework — Fear of Visibility (P8c)",
+    "cat": "fw",
+    "sources": [
+      "skills/frameworks/fear-of-visibility.md",
+      "skills/meta/framework-template-map.md",
+      "skills/meta/deep-inquiry-bank.md"
+    ],
+    "source_markers": {
+      "skills/frameworks/fear-of-visibility.md": "Activation Signals"
+    },
+    "items": [
+      {
+        "t": "I'm afraid to put myself out there. I keep myself small and don't take up space.",
+        "note": "Fear of visibility - explicit signal",
+        "expect_primary_framework": "FEAR_OF_VISIBILITY",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      },
+      {
+        "t": "I go invisible whenever people look at me. I hold back what I really think.",
+        "note": "Shrinking + public expression",
+        "expect_primary_framework": "FEAR_OF_VISIBILITY",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      }
+    ]
+  },
+  {
+    "g": "Framework — Creative Drought (P7b)",
+    "cat": "fw",
+    "sources": [
+      "skills/frameworks/creative-drought.md",
+      "skills/meta/framework-template-map.md",
+      "skills/meta/deep-inquiry-bank.md"
+    ],
+    "source_markers": {
+      "skills/frameworks/creative-drought.md": "Activation Signals"
+    },
+    "items": [
+      {
+        "t": "I used to be able to write. Now I stare at the blank page and nothing comes out.",
+        "note": "Creative drought - explicit signal",
+        "expect_primary_framework": "CREATIVE_DROUGHT",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      },
+      {
+        "t": "I've lost my voice. Everything I make feels fake and nothing feels authentic anymore.",
+        "note": "Lost creative voice",
+        "expect_primary_framework": "CREATIVE_DROUGHT",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      }
+    ]
+  },
+  {
+    "g": "Framework — Empath Boundary (P8d)",
+    "cat": "fw",
+    "sources": [
+      "skills/frameworks/empath-boundary.md",
+      "skills/meta/framework-template-map.md",
+      "skills/meta/deep-inquiry-bank.md"
+    ],
+    "source_markers": {
+      "skills/frameworks/empath-boundary.md": "Activation Signals"
+    },
+    "items": [
+      {
+        "t": "I absorb everyone's emotions. I don't know which feelings are mine anymore.",
+        "note": "Empath boundary dissolution - primary signal",
+        "expect_primary_framework": "EMPATH_BOUNDARY",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      },
+      {
+        "t": "I feel drained after being with people. I need so much alone time to recover.",
+        "note": "Energetic drain after social contact",
+        "expect_primary_framework": "EMPATH_BOUNDARY",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      }
+    ]
+  },
+  {
+    "g": "Framework — Perfectionism Paralysis (P7c)",
+    "cat": "fw",
+    "sources": [
+      "skills/frameworks/perfectionism-paralysis.md",
+      "skills/meta/framework-template-map.md",
+      "skills/meta/deep-inquiry-bank.md"
+    ],
+    "source_markers": {
+      "skills/frameworks/perfectionism-paralysis.md": "Activation Signals"
+    },
+    "items": [
+      {
+        "t": "I can't share until it's perfect. It's never ready.",
+        "note": "Perfectionism paralysis - not-releasing pattern",
+        "expect_primary_framework": "PERFECTIONISM_PARALYSIS",
+        "expect_mode": "MIRROR",
+        "expect_safety_status": "PASS",
+        "expect_safety_reason": "no_override"
+      },
+      {
+        "t": "I keep reworking the same thing and I can never finish anything.",
+        "note": "Endless revision - not-finishing pattern",
+        "expect_primary_framework": "PERFECTIONISM_PARALYSIS",
         "expect_mode": "MIRROR",
         "expect_safety_status": "PASS",
         "expect_safety_reason": "no_override"
