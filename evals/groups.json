@@ -5,7 +5,8 @@
     "sources": [
       "skills/frameworks/self-compassion.md",
       "skills/meta/deep-inquiry-bank.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/stage-classifier.md"
     ],
     "source_markers": {
       "templates/quick-reference.md": "\"I feel like I am wearing a mask\", identity wobble"
@@ -145,7 +146,8 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/frameworks/meaning-integration.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
       "skills/spiritual/spiritual-discernment.md": "Spiritual language may be meaningful without becoming factual certainty."
@@ -280,7 +282,9 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/redirect-templates.md"
+      "templates/redirect-templates.md",
+      "skills/meta/orchestration.md",
+      "skills/meta/framework-template-map.md"
     ],
     "source_markers": {
       "skills/frameworks/emotional-deescalation.md": "Tier 1 crisis",
@@ -308,7 +312,9 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/redirect-templates.md"
+      "templates/redirect-templates.md",
+      "skills/meta/orchestration.md",
+      "skills/meta/framework-template-map.md"
     ],
     "source_markers": {
       "skills/safety/boundaries-safety.md": "## Dependency Detection",
@@ -334,7 +340,9 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/orchestration.md",
+      "skills/meta/framework-template-map.md"
     ],
     "items": [
       {
@@ -356,7 +364,9 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/grief-companion.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/orchestration.md",
+      "skills/meta/framework-template-map.md"
     ],
     "items": [
       {
@@ -384,7 +394,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/existential-companion.md",
-      "templates/response-structure.md"
+      "templates/response-structure.md",
+      "skills/meta/orchestration.md"
     ],
     "items": [
       {
@@ -406,7 +417,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/inner-parts.md",
-      "templates/response-structure.md"
+      "templates/response-structure.md",
+      "skills/meta/orchestration.md"
     ],
     "items": [
       {
@@ -428,7 +440,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/life-direction.md",
-      "templates/response-structure.md"
+      "templates/response-structure.md",
+      "skills/meta/orchestration.md"
     ],
     "items": [
       {
@@ -456,7 +469,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/shadow-patterns.md",
-      "templates/response-structure.md"
+      "templates/response-structure.md",
+      "skills/meta/orchestration.md"
     ],
     "items": [
       {
@@ -479,7 +493,8 @@
     "sources": [
       "skills/frameworks/pattern-mapper.md",
       "skills/meta/deep-inquiry-bank.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/orchestration.md"
     ],
     "items": [
       {
@@ -497,7 +512,8 @@
     "cat": "fw",
     "sources": [
       "templates/response-structure.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/observation-seed.md"
     ],
     "items": [
       {
@@ -520,7 +536,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/anger-companion.md",
-      "templates/response-structure.md"
+      "templates/response-structure.md",
+      "skills/meta/observation-seed.md"
     ],
     "items": [
       {
@@ -574,7 +591,9 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/meaning-integration.md",
-      "templates/redirect-templates.md"
+      "templates/redirect-templates.md",
+      "skills/meta/orchestration.md",
+      "skills/meta/framework-template-map.md"
     ],
     "items": [
       {
@@ -940,7 +959,8 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/safety/ethics-safety.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
       "skills/spiritual/spiritual-discernment.md": "whether the user has a special mission, gift, or status"
@@ -1055,7 +1075,8 @@
     "sources": [
       "templates/redirect-templates.md",
       "skills/safety/prompt-injection-defense.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/execution-pipeline.md"
     ],
     "items": [
       {
@@ -1090,7 +1111,8 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/safety/ethics-safety.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
       "skills/spiritual/spiritual-discernment.md": [
@@ -1177,7 +1199,8 @@
     "sources": [
       "templates/redirect-templates.md",
       "skills/safety/boundaries-safety.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/execution-pipeline.md"
     ],
     "items": [
       {
@@ -1287,7 +1310,8 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "templates/quick-reference.md",
-      "skills/safety/whitelist-blacklist-system.md"
+      "skills/safety/whitelist-blacklist-system.md",
+      "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
       "skills/spiritual/spiritual-discernment.md": "whether the user has a special mission, gift, or status",
@@ -1357,7 +1381,8 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/quick-reference.md"
+      "templates/quick-reference.md",
+      "skills/meta/stage-classifier.md"
     ],
     "source_markers": {
       "templates/quick-reference.md": "Ambiguous distress without direct self-harm wording"

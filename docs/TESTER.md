@@ -46,6 +46,25 @@ Verify:
 - `dist/soulmap-ai.zip` exists and excludes `.claude-plugin/`.
 - `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/marketplace.json`.
 
+## Orchestration layer checks
+
+The orchestration layer (`skills/meta/`) coordinates all framework selection and
+pipeline execution. When testing changes to this layer:
+
+```bash
+python -m tools.eval_groups
+python -m tools.eval_responses
+python tests/test_safety_evals.py
+```
+
+Key files to verify after any change to `skills/meta/`:
+
+- `orchestration.md` - priority hierarchy P0-P12 must match `modules/framework_selector.py`
+- `framework-template-map.md` - framework names must use plain language (no Python constants)
+- `stage-classifier.md` - stage keywords must be superset of `modules/stage_detector.py`
+- `epistemic-guardrails.md` - all spiritual content must pass Check 1-5 in Step 7 of pipeline
+- `whitelist-blacklist-system.md` - must mirror `modules/scope_classifier.py` keyword lists
+
 ## Manual spot checks (optional)
 
 Run the local selector demo:
