@@ -5,6 +5,33 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.3.0 (2026-03-23)
+
+### Feat
+
+- 5 new frameworks from content gap analysis
+- complete remaining 11% gaps to production readiness
+- skill-template linking + 2 gap fills
+- **meta**: add central orchestration layer and execution pipeline
+- **prompt**: add first-session contract, shift markers, observation seeds, synthesis on demand
+
+### Fix
+
+- sync isort rev in .pre-commit-config.yaml to 8.0.1
+- comprehensive anti-drift patch for master-prompt.md
+- replace Python constant names with plain language in Detection signals
+- add language specifier to fenced code block in SKILL.md
+- **safety**: sync Markdown blacklist/whitelist with Python implementation
+- **crisis**: patch 4 morphological gaps in crisis detection
+- **product**: close 4 runtime gaps — opener logic, tagline tiers, demo link, frustration redirect
+- **tests**: normalize package paths across platforms
+- **packaging**: include modules.config in published package
+- **tooling**: handle repo lock cleanup errors
+
+### Refactor
+
+- **detectors**: split static configs by domain
+
 ## v0.2.0 (2026-03-21)
 
 ### Feat
