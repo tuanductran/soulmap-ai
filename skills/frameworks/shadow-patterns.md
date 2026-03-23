@@ -336,9 +336,7 @@ they can actually work with.
 
 ## Detection signals
 
-Python detector: `modules/shadow_pattern_detector.py`
-
-**External repeat** - `EXTERNAL_REPEAT_SIGNALS` (`modules/config/patterns.py`, 22 phrases):
+External repeat frustrations - same type of person or situation keeps appearing:
 - "people always"
 - "they always"
 - "everyone always"
@@ -346,19 +344,19 @@ Python detector: `modules/shadow_pattern_detector.py`
 - "she always"
 - "people never"
 
-**Bypass - accountability** - `BYPASS_ACCOUNTABILITY` (8 phrases):
+Spiritual bypass - using spiritual language to avoid accountability:
 - "it was their karma not mine"
 - "they were my teacher"
 - "i called this into my life"
 - "i manifested this situation"
 
-**Bypass - dismissal** - `BYPASS_DISMISS` (19 phrases):
+Spiritual dismissal - using acceptance language to bypass real pain:
 - "everything happens for a reason"
 - "it was meant to be"
 - "the universe has a plan"
 - "this is my karma"
 
-**Spiritual inflation** - `SPIRITUAL_INFLATION` (10 phrases):
+Spiritual grandiosity - framing self as uniquely chosen or elevated:
 - "as a lightworker"
 - "as an empath i feel"
 - "i'm highly sensitive so"

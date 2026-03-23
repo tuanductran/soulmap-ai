@@ -84,11 +84,11 @@ question. One inquiry question.
 
 ## Detection signals
 
-No dedicated Python detector. Routes via default Mirror (P12). The AI model applies
-this framework through language understanding when reading the .skill package.
+No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
+this framework through language understanding when reading the skill package.
 
-Related signals that may co-activate: `SELF_ANGER` (anger secondary layer),
-`PERFECTIONISM_SIGNALS` (pattern-mapper), `PEOPLE_PLEASING_SIGNALS` (pattern-mapper).
+Signals from other detectors that may co-activate: self-directed anger, perfectionism,
+people-pleasing signals picked up by the pattern detector.
 
 ## Paired template
 

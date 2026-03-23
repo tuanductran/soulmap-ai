@@ -133,9 +133,7 @@ section. One question. The last sentence. Never interrogating - always opening.
 
 ## Detection signals
 
-Python detector: `modules/anger_detector.py`
-
-**Active anger** - `ACTIVE_ANGER` (`modules/config/affect.py`, 31 phrases):
+Active anger - direct expressions of current fury or outrage:
 - "i'm so angry"
 - "i am so angry"
 - "i'm furious"
@@ -143,13 +141,13 @@ Python detector: `modules/anger_detector.py`
 - "i'm so frustrated"
 - "makes me furious"
 
-**Self-directed anger** - `SELF_ANGER` (7 phrases):
+Self-directed anger - anger turned inward:
 - "i'm so angry at myself"
 - "i'm furious at myself"
 - "i hate myself"
 - "i'm disgusted with myself"
 
-**Residual anger** - `RESIDUAL_ANGER` (10 phrases):
+Residual anger - lingering resentment that won't release:
 - "still so angry about"
 - "can't let go of the anger"
 - "the anger won't go away"

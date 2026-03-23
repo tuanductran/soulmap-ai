@@ -123,9 +123,7 @@ but "what does the fear know that you haven't fully heard yet."
 
 ## Detection signals
 
-Python detector: `modules/visibility_fear_detector.py`
-
-**Primary signals** - `VISIBILITY_FEAR_SIGNALS` (`modules/config/patterns.py`, 28 phrases):
+Direct visibility fear - shrinking, hiding, going invisible before being seen:
 - "afraid to post"
 - "afraid to share"
 - "afraid to put myself out there"
@@ -133,8 +131,8 @@ Python detector: `modules/visibility_fear_detector.py`
 - "what if people see who i really am"
 - "i can't let people see"
 
-**Secondary scoring**: shrinking language + public/sharing context together scores 2.
-Examples: "hold back" + "share", "go quiet" + "post", "invisible" + "put out there".
+Secondary combination: shrinking language ("hold back", "go quiet", "invisible") paired
+with public or sharing context ("post", "share", "put out there").
 
 ## Paired template
 

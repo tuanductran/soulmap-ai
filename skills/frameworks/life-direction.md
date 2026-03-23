@@ -214,9 +214,7 @@ they may have been living from someone else's map.
 
 ## Detection signals
 
-Python detector: `modules/direction_detector.py`
-
-**Lostness** - `LOSTNESS_SIGNALS` (`modules/config/meaning.py`, 31 phrases):
+Lostness - no sense of where to go or who to be:
 - "i feel lost"
 - "i'm lost"
 - "feel so lost"
@@ -224,19 +222,19 @@ Python detector: `modules/direction_detector.py`
 - "feel completely lost"
 - "completely lost"
 
-**Should-vs-want** - `SHOULD_SIGNALS` (27 phrases):
+Should vs. want - living from obligation rather than choice:
 - "should want this but i don't"
 - "supposed to want"
 - "supposed to be happy"
 - "have everything i wanted but"
 
-**Misalignment** - `MISALIGNMENT_SIGNALS` (15 phrases):
+Misalignment - outer life no longer matching inner truth:
 - "feels off"
 - "something feels wrong"
 - "something feels missing"
 - "not aligned"
 
-**Comparison** - `COMPARISON_SIGNALS` (11 phrases):
+Comparison and falling behind - measuring life against others' timelines:
 - "everyone else seems to know"
 - "everyone else has it figured out"
 - "everyone else knows what they're doing"

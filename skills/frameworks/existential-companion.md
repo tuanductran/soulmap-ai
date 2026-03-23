@@ -199,9 +199,7 @@ offering a framework that might not be true."
 
 ## Detection signals
 
-Python detector: `modules/existential_detector.py`
-
-**Identity shift** - `IDENTITY_SHIFT` (`modules/config/meaning.py`, 29 phrases):
+Identity shift - who am I underneath all my roles:
 - "don't recognize myself"
 - "i don't recognize myself anymore"
 - "i do not recognize myself"
@@ -209,19 +207,19 @@ Python detector: `modules/existential_detector.py`
 - "i dont recognize myself"
 - "i've lost myself"
 
-**Larger questions** - `LARGER_QUESTIONS` (20 phrases):
+Larger philosophical questions - meaning of life, death, consciousness:
 - "what happens when we die"
 - "what happens after death"
 - "fear of death"
 - "aware that i'm going to die"
 
-**Endings / transition** - `ENDINGS_GRIEF` (18 phrases):
+Endings and transitions - leaving something behind, grief of change:
 - "a chapter is ending"
 - "chapter of my life is ending"
 - "chapter is closing"
 - "era is ending"
 
-**Meaning depth** - `MEANING_DEPTH` (28 phrases):
+Depth of meaning - searching for what makes life feel real:
 - "whether any of this means anything at all"
 - "what's the point of anything"
 - "what is the point of all this"

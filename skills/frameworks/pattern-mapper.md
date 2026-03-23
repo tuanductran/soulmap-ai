@@ -231,33 +231,31 @@ underlying thread. Does that land at all?"*
 
 ## Detection signals
 
-Python detector: `modules/pattern_detector.py`
-
-**External repeat** - `EXTERNAL_REPEAT_SIGNALS` (`modules/config/patterns.py`, 22 phrases):
+External repeat frustrations - same dynamic appearing across multiple stories:
 - "people always"
 - "they always"
 - "everyone always"
 - "he always"
 
-**Avoidance** - `AVOIDANCE_SIGNALS` (14 phrases):
+Avoidance signals - pulling back from what matters:
 - "i don't say anything"
 - "i dont say anything"
 - "i let it go"
 - "i just avoid it"
 
-**People pleasing** - `PEOPLE_PLEASING_SIGNALS` (20 phrases):
+People-pleasing signals - prioritizing others' comfort over own truth:
 - "can't say no"
 - "cant say no"
 - "always say yes"
 - "go along with things"
 
-**Overthinking** - `OVERTHINKING_SIGNALS` (15 phrases):
+Overthinking signals - using analysis to avoid feeling:
 - "replay conversations"
 - "go over it in my head"
 - "can't stop thinking"
 - "analyse everything"
 
-Pattern requires 2+ user messages with matching signals before activating (`wait_for_more` logic).
+Pattern requires 2+ user messages with matching signals before activating.
 
 ## Paired template
 

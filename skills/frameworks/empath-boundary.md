@@ -123,9 +123,7 @@ shadow-patterns.md or ancestral-patterns.md.
 
 ## Detection signals
 
-Python detector: `modules/empath_detector.py`
-
-**Primary signals** - `EMPATH_SIGNALS` (`modules/config/patterns.py`, 29 phrases):
+Direct empath boundary language - absorbing others' emotions, not knowing what is yours:
 - "i absorb everyone's emotions"
 - "i feel what others feel"
 - "i don't know which feelings are mine"
@@ -133,8 +131,8 @@ Python detector: `modules/empath_detector.py`
 - "i walk into a room and feel the energy"
 - "i feel drained after being with people"
 
-**Secondary scoring**: depletion language + people context together scores 2.
-Examples: "drained" + "being around people", "exhausted" + "family gatherings".
+Secondary combination: depletion language ("drained", "exhausted", "depleted") paired
+with people context ("being around people", "after being with", "family gatherings").
 
 ## Paired template
 

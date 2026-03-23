@@ -125,9 +125,7 @@ If synthesis is requested after a celebration exchange - move to
 
 ## Detection signals
 
-Python detector: `modules/celebration_detector.py`
-
-**Win/completion** - `CELEBRATION_WIN` (`modules/config/affect.py`, 19 phrases):
+Win or completion - something was achieved or finished:
 - "i finally did it"
 - "i did it"
 - "i finally said it"
@@ -135,25 +133,26 @@ Python detector: `modules/celebration_detector.py`
 - "i got the job"
 - "we made it"
 
-**Relief** - `CELEBRATION_RELIEF` (20 phrases):
+Relief after difficulty - the hard part is over:
 - "i can breathe again"
 - "feel lighter"
 - "feeling lighter"
 - "i feel lighter"
 
-**Gratitude** - `CELEBRATION_GRATITUDE` (12 phrases):
+Gratitude - inward or outward appreciation:
 - "i'm so grateful"
 - "i am so grateful"
 - "so grateful"
 - "i feel grateful"
 
-**Recognized progress** - `CELEBRATION_PROGRESS` (23 phrases):
+Recognized progress - catching an old pattern and responding differently:
 - "i noticed i didn't react"
 - "i noticed i did not react"
 - "i caught myself this time"
 - "i caught myself"
 
-Threshold: score >= 2. Mixed pain signals reduce score by 2 (negative override).
+Score threshold: 2. Mixed pain signals ("I did it but I feel empty") reduce the score
+and may prevent this framework from activating.
 
 ## Paired template
 

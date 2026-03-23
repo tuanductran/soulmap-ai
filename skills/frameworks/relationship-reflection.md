@@ -174,12 +174,12 @@ exploration.
 
 ## Detection signals
 
-No dedicated Python detector. Routes via default Mirror (P12) when no higher-priority
-framework fires. The AI model applies this framework through language understanding
-when reading the .skill package.
+No dedicated phrase-matching detector. Routes via default Mirror when no
+higher-priority framework fires. The AI model applies this framework through
+language understanding when reading the skill package.
 
-Related signals that may co-activate: `EXPLICIT_CONFLICT` (inner-parts detector),
-`LOSTNESS_SIGNALS` (direction detector), `EXTERNAL_REPEAT_SIGNALS` (shadow/pattern).
+Signals from other detectors that may indicate relationship content: inner conflict
+language, repeat external frustrations, lostness connected to a specific person.
 
 ## Paired template
 

@@ -130,9 +130,7 @@ meaning-integration.md.
 
 ## Detection signals
 
-Python detector: `modules/perfectionism_paralysis_detector.py`
-
-**Paralysis signals** - `PERFECTIONISM_PARALYSIS_SIGNALS` (`modules/config/patterns.py`, 26 phrases):
+Paralysis-specific signals - not starting, not finishing, not releasing:
 - "i can't start until i know it's right"
 - "i can't share until it's perfect"
 - "i keep reworking the same thing"
@@ -140,13 +138,13 @@ Python detector: `modules/perfectionism_paralysis_detector.py`
 - "i almost sent it but"
 - "i keep deleting and starting over"
 
-**General perfectionism** - `PERFECTIONISM_SIGNALS` (15 phrases) - secondary:
+General perfectionism signals - secondary scoring:
 - "has to be perfect"
 - "if it's not perfect"
 - "if it is not perfect"
 - "can't start until"
 
-History bonus: repeated not-ready signals across prior turns adds +1 to score.
+History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Paired template
 

@@ -145,11 +145,9 @@ It is noticing:
 
 ## Detection signals
 
-No dedicated Python detector. Operates as a secondary lens modifier within Mirror
-mode, not a primary framework. The AI model applies this framework when
-feminine/masculine energy language appears in the user's message.
-
-No static phrase list in Python config.
+No dedicated phrase-matching detector. Operates as a secondary lens modifier within
+Mirror mode, not a primary framework. The AI model applies this framework when
+feminine or masculine energy language appears in the user's message.
 
 ## Paired template
 

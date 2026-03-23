@@ -142,11 +142,11 @@ Return the user to one living question:
 
 ## Detection signals
 
-No dedicated Python detector. Routes via default Mirror (P12). The AI model applies
-this framework through language understanding when reading the .skill package.
+No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
+this framework through language understanding when reading the skill package.
 
-Related signals that may co-activate: `LOSTNESS_SIGNALS` (direction detector),
-`MISALIGNMENT_SIGNALS` (direction), `PEOPLE_PLEASING_SIGNALS` (pattern-mapper).
+Signals from other detectors that may co-activate: lostness, misalignment, and
+people-pleasing signals picked up by direction and pattern detectors.
 
 ## Paired template
 

@@ -139,9 +139,7 @@ Never force this transition. Let the user lead it.
 
 ## Detection signals
 
-Python detector: `modules/grief_detector.py`
-
-**Acute grief** - `ACUTE_GRIEF` (`modules/config/affect.py`, 44 phrases):
+Acute grief - loss just happened or recently named:
 - "they died"
 - "he died"
 - "she died"
@@ -149,19 +147,19 @@ Python detector: `modules/grief_detector.py`
 - "my father died"
 - "my partner died"
 
-**Anticipatory grief** - `ANTICIPATORY_GRIEF` (25 phrases):
+Anticipatory grief - watching someone decline before the loss:
 - "watching them decline"
 - "watching my father decline"
 - "watching my mother decline"
 - "watching my partner decline"
 
-**Ambiguous loss** - `AMBIGUOUS_LOSS` (15 phrases):
+Ambiguous loss - grief without social permission or a clear cause:
 - "no one understands why i'm upset"
 - "not allowed to be this sad"
 - "it's not like they died"
 - "no one sees this as a real loss"
 
-**Complicated grief** - `COMPLICATED_GRIEF` (12 phrases):
+Complicated grief - grief stuck, unresolved, or contested:
 - "feel guilty that i feel relieved"
 - "relieved they're gone"
 - "loved them and they hurt me"

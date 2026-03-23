@@ -175,9 +175,7 @@ If the user needs more than this, refer to a qualified professional.
 
 ## Detection signals
 
-Python detector: `modules/emotional_intensity_detector.py`, `modules/crisis_detector.py`
-
-**Emotional flooding** - `EMOTIONAL_FLOODING` (`modules/config/affect.py`, 25 phrases):
+Emotional flooding - overwhelmed to the point of collapse:
 - "i'm angry and sad and"
 - "angry and scared"
 - "i don't know if i'm angry or"
@@ -185,20 +183,20 @@ Python detector: `modules/emotional_intensity_detector.py`, `modules/crisis_dete
 - "laughing and crying"
 - "i'm so confused and"
 
-**Cognitive flooding** - `COGNITIVE_FLOODING` (25 phrases):
+Cognitive flooding - mind spinning, unable to think clearly:
 - "i can't think"
 - "can't think straight"
 - "my head is spinning"
 - "head is spinning"
 
-**Crisis tier 1** - `CRISIS_TIER1` (`modules/config/safety.py`, 46 phrases) - routes to P0:
+Crisis tier 1 - explicit self-harm or suicidal signals (routes to P0 immediately):
 - "want to die"
 - "want to end my life"
 - "end it all"
 - "ending it all"
 - "kill myself"
 
-**Crisis tier 2** - `CRISIS_TIER2` (22 phrases) - routes to P2 Sanctuary:
+Crisis tier 2 - acute distress without explicit harm intent (routes to P2 Sanctuary):
 - "i can't take it anymore"
 - "i'm falling apart"
 - "completely broken"

@@ -69,9 +69,7 @@ it.
 
 ## Detection signals
 
-Python detector: `modules/somatic_detector.py`
-
-**Body sensation** - `BODY_SENSATION` (`modules/config/affect.py`, 30 phrases):
+Body sensation language - noticing what the body is holding:
 - "tight chest"
 - "chest tightness"
 - "chest is tight"
@@ -79,13 +77,13 @@ Python detector: `modules/somatic_detector.py`
 - "stomach in knots"
 - "lump in my throat"
 
-**Somatic invitation** - `SOMATIC_INVITATION` (11 phrases):
+Somatic invitation - user asking to explore the body connection:
 - "can't stop thinking"
 - "mind won't stop"
 - "spinning thoughts"
 - "in my head"
 
-**Biometric** - `BIOMETRIC` (17 phrases):
+Biometric context - user shares physical state data:
 - "heart rate"
 - "hrv"
 - "heart rate variability"

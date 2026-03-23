@@ -118,9 +118,7 @@ meaning-integration.md.
 
 ## Detection signals
 
-Python detector: `modules/ancestral_detector.py`
-
-**Primary signals** - `ANCESTRAL_SIGNALS` (`modules/config/patterns.py`, 38 phrases):
+Direct ancestral or intergenerational language:
 - "just like my mother"
 - "just like my father"
 - "just like my parents"
@@ -128,8 +126,8 @@ Python detector: `modules/ancestral_detector.py`
 - "same as my father"
 - "my mother was the same way"
 
-**Secondary scoring**: parent reference + pattern language together scores 2 (threshold).
-Examples: "my mother" + "same pattern", "growing up" + "was taught".
+Secondary combination: parent reference + pattern language together (e.g. "my mother"
+paired with "same way", or "growing up" paired with "was taught").
 
 ## Paired template
 

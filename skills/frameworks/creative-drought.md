@@ -128,9 +128,7 @@ move to meaning-integration.md.
 
 ## Detection signals
 
-Python detector: `modules/creative_drought_detector.py`
-
-**Primary signals** - `CREATIVE_DROUGHT_SIGNALS` (`modules/config/patterns.py`, 29 phrases):
+Direct creative drought language - source gone quiet, nothing coming out:
 - "i don't know what to create anymore"
 - "i used to know what to say"
 - "the ideas have stopped coming"
@@ -138,8 +136,8 @@ Python detector: `modules/creative_drought_detector.py`
 - "i sit down to work and there's nothing"
 - "i stare at the blank page"
 
-**Secondary scoring**: creative identity + absence language together scores 2.
-Examples: "my writing" + "nothing", "as a creator" + "dried up".
+Secondary combination: creative identity language ("my writing", "as a creator",
+"creative") paired with absence language ("nothing", "dried up", "stopped").
 
 ## Paired template
 

@@ -216,14 +216,13 @@ mirror.
 
 ## Detection signals
 
-Python detector: `modules/conversation_synthesizer.py` (`should_synthesize` function)
-
 Synthesis activates on two structural conditions, not phrase matching:
 
-- User explicitly requests synthesis: "summarize", "what patterns do you see", "pull it together", "what have you noticed"
-- 10+ user messages in session with recurring themes detected across turns
+- User explicitly requests synthesis: "summarize", "what patterns do you see",
+  "pull it together", "what have you noticed across everything I've shared"
+- 10 or more user messages in session with recurring themes detected across turns
 
-No static phrase list. Routing logic in `conversation_synthesizer.py:should_synthesize()`.
+No static phrase list. Activates from session structure and explicit user request.
 
 ## Paired template
 
