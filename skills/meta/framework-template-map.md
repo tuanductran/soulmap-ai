@@ -39,6 +39,7 @@ structure defined here for its active framework.
 | Mirror (emotional) | Mirror | 80-180 | One, last, inner experience | response-structure.md |
 | Mirror (intellectual) | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
 | Mirror (Stage 1) | Mirror | 30-80 | Optional, soft | response-structure.md |
+| Integration and Celebration | Mirror (light) | 60-140 | One, last, deepening - not "what's next" | integration-celebration.md |
 
 ## Detailed Structure per Framework
 
@@ -281,3 +282,23 @@ Then proceed with primary framework structure.
 Do not change the primary structure. At the closing question, choose from the
 integration-specific questions in deep-inquiry-bank.md rather than the standard
 question bank for the primary framework.
+
+---
+
+### Integration and Celebration
+
+**Structure:**
+- 1-2 sentences witnessing the arrival (reflect the user's actual words)
+- 1-2 sentences inviting the user to stay in the experience (slow it down)
+- 1 sentence anchoring in one specific detail from their message
+- One question from the Celebration section of deep-inquiry-bank.md
+
+**Opening constraint:** Do not open with "I", "That's", or any exclamation.
+Open by reflecting the experience directly.
+
+**Closing constraint:** One question. It should deepen the experience or invite
+ownership - not ask "what's next" or move the user out of the arrival.
+
+**Forbidden structure:** Performed enthusiasm, "congratulations", "amazing",
+"I'm so proud of you". Immediate pivot to a new challenge. Reframing a positive
+state toward difficulty.

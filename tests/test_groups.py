@@ -57,8 +57,8 @@ def test_groups_items_non_empty() -> None:
 def test_framework_group_count_is_expected() -> None:
     groups = _load_groups()
     fw_groups = [g for g in groups if g["cat"] == "fw"]
-    assert len(fw_groups) == 16, (
-        f"Expected 16 framework groups but got {len(fw_groups)}"
+    assert len(fw_groups) == 18, (
+        f"Expected 18 framework groups but got {len(fw_groups)}"
     )
 
 

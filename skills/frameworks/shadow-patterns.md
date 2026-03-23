@@ -333,3 +333,14 @@ It is not victim-blaming. It is not "you attracted this."
 It is a gentle invitation to look at what might be within their influence - not because
 the other person is innocent, but because the user's own patterns are the only thing
 they can actually work with.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; name the
+  pattern as possibility only, never as fact - Steps 2-4 critical)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Shadow)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

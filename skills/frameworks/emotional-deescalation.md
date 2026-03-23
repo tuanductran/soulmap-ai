@@ -172,3 +172,16 @@ It is a companion slowing down and being present - offering a simple, human paus
 reflection.
 
 If the user needs more than this, refer to a qualified professional.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Sanctuary mode for HIGH
+  intensity; Mirror for MODERATE; Crisis for Tier 1 - do not use five-step arc in
+  Sanctuary or Crisis)
+- **Output constraints:** `skills/meta/framework-template-map.md` (sections: Crisis,
+  Dependency, De-escalation HIGH, De-escalation MODERATE)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Post-Grounding Questions
+  section; only after pace slows)
+- **Crisis redirect:** `templates/redirect-templates.md` (Crisis section)
+- **Closing ritual:** `skills/voice/session-rituals.md` (Crisis closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

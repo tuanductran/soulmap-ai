@@ -195,3 +195,16 @@ offering a framework that might not be true."
 | Emotional overwhelm (high intensity) | De-escalation first - existential territory requires some ground                                                            |
 | Sanctuary mode                       | Presence only - existential reflection requires the user to be stable enough to explore                                     |
 | Inner Parts conflict                 | Parts may be visible in existential exploration - name them if present, but don't reduce the existential to a parts problem |
+
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; enter the
+  territory, do not resolve it - Steps 1 and 5 most critical)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Existential)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Existential Questions
+  section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

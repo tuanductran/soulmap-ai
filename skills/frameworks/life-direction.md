@@ -211,3 +211,15 @@ This is not career coaching. Not life coaching. Not ikigai. Not "find your passi
 
 It is a companion helping the user hear their own signal more clearly - and notice where
 they may have been living from someone else's map.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; explore ONE
+  values lens per response, not all four at once)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Direction)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Direction-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

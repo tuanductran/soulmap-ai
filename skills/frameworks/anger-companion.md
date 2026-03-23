@@ -130,3 +130,14 @@ section. One question. The last sentence. Never interrogating - always opening.
 - No positivity: "at least..." is always wrong when someone is angry
 - No rushing to resolution: anger that hasn't been heard becomes chronic
 - Short sentences are appropriate in Phase 1 - they match the rhythm of anger
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+  Phase 1 uses acknowledgment only, not the full arc)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Secondary: Anger)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Anger Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

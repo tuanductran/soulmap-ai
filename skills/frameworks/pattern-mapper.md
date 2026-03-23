@@ -228,3 +228,15 @@ underlying thread. Does that land at all?"*
 | Emotional Avoidance + Self-Sabotage    | "The emotion I won't feel gets expressed through behavior that undoes what I built"                                                              |
 | Approval Seeking + Fear of Rejection   | "I need your yes and I'm terrified of your no" - constant performance anxiety                                                                    |
 | Over-Responsibility + Abandonment Loop | "I give everything so you won't leave" - exhaustion as a holding strategy                                                                        |
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; non-labeling
+  language mandatory - Steps 2-3 carry the pattern reflection)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Pattern)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Pattern-Specific
+  Inquiry Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

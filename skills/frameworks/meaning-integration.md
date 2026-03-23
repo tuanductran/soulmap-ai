@@ -193,3 +193,16 @@ you need to do is notice..." "A good practice would be..."
 **Use instead:** "What would it be like to..." "I wonder if you might begin to
 notice..." "The next time this appears - not to fix it, but just to see it..." "What
 does it feel like to hold this awareness gently?"
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; honor the
+  insight first - Steps 1-2 only in the first integration exchange)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Meaning Integration)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Integration-Specific
+  Questions section; use Holding the Insight questions first)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and
+  celebration closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

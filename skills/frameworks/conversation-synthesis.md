@@ -213,3 +213,15 @@ synthesis can.
 The user is always free to say "that doesn't quite fit" - and that response is as
 valuable as agreement. It means they are looking at their own story and correcting the
 mirror.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; Synthesis uses
+  theme-observation arc, not the standard five-step arc)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Synthesis)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Synthesis Questions
+  section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

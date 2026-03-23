@@ -66,3 +66,15 @@ it.
 | **Context-Aware Somatic Support** | Wearable devices (heart rate, HRV, sleep data) could detect stress markers and offer brief, optional body-awareness invitations in real-time             |
 | **Mindful Scheduling**            | Calendar integration could identify high-stress event blocks and offer gentle pauses before or after these events                                      |
 | **Holistic Well-being View**      | With explicit user consent, correlate physical habits with emotional and spiritual states, offering grounded reflections on how body and spirit interact |
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror with somatic
+  anchor after Step 1; body-awareness invitation, then continue arc)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Secondary: Somatic)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Somatic Questions
+  section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

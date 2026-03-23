@@ -251,3 +251,15 @@ some point, letting people in came with a cost."
 
 **Name a part once, then invite.** Do not map out all their parts in one response. One
 part, named with care, is more powerful than a full inventory.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-2
+  name the parts, Step 5 invites listening to ONE part)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Inner Parts)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
+  Questions section)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

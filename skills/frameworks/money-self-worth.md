@@ -139,3 +139,15 @@ Return the user to one living question:
 - what money has come to mean
 - what part of them money activates
 - what kind of worth they are trying to secure through it
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+  keep focus on meaning and identity, not financial facts)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
+  Questions and Pattern-Specific Inquiry Questions sections)
+- **Redirect if out of scope:** `templates/redirect-templates.md` (financial advice
+  section)
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

@@ -136,3 +136,15 @@ When the user begins to make meaning - "I've been thinking about what they meant
 from Grief Companion toward mirror-mode reflection or meaning integration.
 
 Never force this transition. Let the user lead it.
+
+## Paired template
+
+- **Primary structure:** `templates/response-structure.md` (Sanctuary - witness only
+  for acute grief; Mirror for anticipatory, ambiguous, complicated grief)
+- **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
+  acute, Grief anticipatory, Grief ambiguous, Grief complicated)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section;
+  no questions for first 2-3 exchanges in acute grief)
+- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

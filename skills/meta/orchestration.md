@@ -79,6 +79,7 @@ cleared.
 | P7 | Direction | Lostness, meaning void, should-vs-want, misalignment |
 | P8 | Shadow | External repeat frustrations, protection patterns |
 | P9 | Meaning Integration | Explicit insight, post-reflection validation, breakthrough |
+| P9b | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | P10 | Synthesis | Explicit synthesis request or 10+ messages with themes |
 | P11 | Pattern | Repeat signals across 2+ stories |
 | P12 | Mirror | Default, no higher priority triggered |

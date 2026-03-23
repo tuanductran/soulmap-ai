@@ -161,6 +161,7 @@ full decision tree in orchestration.md before finalizing.
 - `observation-seed.md`
 - `orchestration.md`
 - `resource-recommendations.md`
+- `session-continuity.md`
 - `stage-classifier.md`
 - `user-journey-stages.md`
 

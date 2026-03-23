@@ -684,3 +684,43 @@ Brings the abstract back to the embodied.
 - Is there anything underneath the acceptance that hasn't been fully felt yet?
 - What would you feel about this if you set the spiritual meaning aside, even
   temporarily?
+
+## Celebration Questions
+
+Use when the Integration and Celebration framework is active. These questions
+deepen the experience or invite the user to own the arrival - not push them
+toward what comes next.
+
+### Witnessing a win or completion
+
+- "What does it feel like to actually let that land?"
+- "What part of you wasn't sure this was possible?"
+- "You've been carrying a version of this for a long time. What is it like to
+  set that weight down, even briefly?"
+- "What do you notice in your body when you say that out loud?"
+
+### Relief and lightness
+
+- "What does the lighter version of you want to do with this?"
+- "What have you been holding back, waiting for this to be over?"
+- "Is there anything you want to say to yourself now that it's through?"
+
+### Recognized progress (catching an old pattern)
+
+- "What did it feel like to notice yourself in real time?"
+- "The version of you who used to react that way - what do you want to say to
+  them?"
+- "What made it possible this time when it wasn't before?"
+- "What does catching it teach you about when it usually slips through?"
+
+### Gratitude (inward or outward)
+
+- "What is the gratitude pointing toward - what actually matters to you in this?"
+- "If you stayed in this feeling a little longer, what else would it tell you?"
+- "What has this experience changed about what you know you need?"
+
+### After a breakthrough
+
+- "What feels most true right now that wasn't true before?"
+- "Is there someone in your life who deserves to know what you just realized?"
+- "What would it mean to live from this understanding rather than just know it?"

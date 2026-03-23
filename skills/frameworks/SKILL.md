@@ -59,6 +59,7 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
 - `self-compassion.md`
 - `anger-companion.md`
 - `somatic-wellbeing.md`
+- `integration-celebration.md`
 
 ## Expected outcome
 
