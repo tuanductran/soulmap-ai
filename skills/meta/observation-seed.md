@@ -9,11 +9,11 @@ An observation seed is an optional single sentence placed after the session send
 It is not homework. It is not a reflective question to answer. It is an invitation
 to notice something in real life between sessions.
 
-**Decision rule - when to plant a seed:**
+**Decision rule, when to plant a seed:**
 
 A seed is appropriate ONLY when ALL three conditions are true:
 
-1. The session surfaced a named pattern, theme, or moment of recognition - specific
+1. The session surfaced a named pattern, theme, or moment of recognition, specific
    enough to observe in daily life.
 2. The session ended with insight or shift, not in unresolved acute distress.
 3. The user's final messages signal capacity: they are reflective, not flooded.
@@ -42,24 +42,24 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Overthinking | "Notice the moment you shift from feeling to analyzing." |
 | Withdrawal | "Notice the moment just before you go quiet." |
 | Perfectionism | "Notice what you tell yourself when something is almost ready but not quite." |
-| External frustration repeating | "Notice the next time the same frustration arrives - and what it is actually asking you to look at." |
+| External frustration repeating | "Notice the next time the same frustration arrives, and what it is actually asking you to look at." |
 
 ### Inner Parts (Inner Parts Reflection)
 
 | Parts visible | Seed |
 | :--- | :--- |
 | Two conflicting parts | "Notice when those two parts show up in the same moment this week." |
-| Protective part | "Notice when the protective part activates - what it thinks is about to happen." |
+| Protective part | "Notice when the protective part activates, what it thinks is about to happen." |
 | Fearful part | "Notice the first physical signal that the fearful part is beginning to show up." |
 | Tired part | "Notice when you are carrying something you were never asked to carry." |
 | Critical part | "Notice the gap between what the critical voice says and what you would say to a friend in the same situation." |
-| Yearning part | "Notice when the longing is most present - and what tends to be happening around it." |
+| Yearning part | "Notice when the longing is most present, and what tends to be happening around it." |
 
 ### Direction (Life Direction Clarifier)
 
 | Direction signal | Seed |
 | :--- | :--- |
-| Lostness | "Notice when you feel most like yourself - and when you feel furthest from it." |
+| Lostness | "Notice when you feel most like yourself, and when you feel furthest from it." |
 | Should vs want | "Notice the difference in your body between a yes that is chosen and a yes that is performed." |
 | Meaning void | "Notice what small things leave you feeling like something mattered." |
 | Misalignment | "Notice the moment in your day when you feel most like you are living someone else's life." |
@@ -70,7 +70,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Anger type | Seed |
 | :--- | :--- |
 | Active anger | "Notice what the anger is protecting the next time it arrives." |
-| Self-anger | "Notice when the harshest voice in you speaks - and what it is actually afraid of." |
+| Self-anger | "Notice when the harshest voice in you speaks, and what it is actually afraid of." |
 | Residual anger | "Notice what you are still carrying that the anger has been guarding." |
 | Anger at injustice | "Notice the difference between anger that wants to fix something and anger that wants to be witnessed." |
 
@@ -79,7 +79,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Territory | Seed |
 | :--- | :--- |
 | Identity shift | "Notice what still feels like you, even in the in-between." |
-| Meaning depth | "Notice the moments when something - however small - still feels like it matters." |
+| Meaning depth | "Notice the moments when something, however small, still feels like it matters." |
 | Endings | "Notice what this chapter is asking you to acknowledge before it closes." |
 | Larger questions | "Notice when the question feels heavy and when it feels almost alive." |
 
@@ -90,8 +90,8 @@ moved from the acute wound to a more reflective relationship with the loss.
 
 | Grief phase | Seed |
 | :--- | :--- |
-| Moving toward meaning | "Notice when you feel closest to them - and what that closeness asks of you." |
-| Ambiguous loss | "Notice when the loss arrives in unexpected moments - and let it be real." |
+| Moving toward meaning | "Notice when you feel closest to them, and what that closeness asks of you." |
+| Ambiguous loss | "Notice when the loss arrives in unexpected moments, and let it be real." |
 | After complicated grief | "Notice when you can hold both feelings at the same time without one defeating the other." |
 
 ### Mirror (Default Reflective Mode)
@@ -108,11 +108,11 @@ moved from the acute wound to a more reflective relationship with the loss.
 
 | Pattern named | Seed |
 | :--- | :--- |
-| Abandonment loop | "Notice the moment when closeness starts to feel like a threat - what the first signal is." |
+| Abandonment loop | "Notice the moment when closeness starts to feel like a threat, what the first signal is." |
 | Approval seeking | "Notice the moment when you check how someone is responding before deciding how you feel." |
 | Self-sabotage | "Notice the moment just before something good when something in you wants to pull back." |
 | Over-responsibility | "Notice what you pick up that was not yours to carry." |
-| Fear of rejection | "Notice a moment when you wanted to ask for something and did not - and what you told yourself." |
+| Fear of rejection | "Notice a moment when you wanted to ask for something and did not, and what you told yourself." |
 
 ### Meaning Integration (Integration moments)
 
@@ -120,7 +120,7 @@ Seeds here are about carrying the awareness into daily life, not acting on it.
 
 | Insight type | Seed |
 | :--- | :--- |
-| Pattern named for first time | "Notice the next time this pattern begins - not to stop it, just to see it one moment earlier." |
+| Pattern named for first time | "Notice the next time this pattern begins, not to stop it, just to see it one moment earlier." |
 | Origin connection made | "Notice when the current version of that old learning shows up this week." |
 | Breakthrough | "Notice where the clarity you found today lives in your actual life." |
 
@@ -147,13 +147,13 @@ send-off that orients the user toward their life.
 > [session send-off sentence]. [observation seed sentence].
 
 **Example (Shadow session):**
-> "Whatever opened in this conversation - take it back into your days. Notice the
+> "Whatever opened in this conversation, take it back into your days. Notice the
 > moment just before you say yes when you mean no."
 
 **Example (Direction session):**
 > "The question belongs with you now, not here. Notice when you feel most like
-> yourself - and when you feel furthest from it."
+> yourself, and when you feel furthest from it."
 
 **No seed example (when conditions not met):**
-> "Something real happened in this conversation. Whatever clarity came - it is yours."
+> "Something real happened in this conversation. Whatever clarity came, it is yours."
 > [End. No seed needed.]

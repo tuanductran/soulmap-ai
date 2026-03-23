@@ -127,7 +127,7 @@ full decision tree in orchestration.md before finalizing.
 
 | Signal type | Framework candidate | Priority |
 | :--- | :--- | :--- |
-| Crisis language, self-harm ideation | Crisis | P0 - immediate |
+| Crisis language, self-harm ideation | Crisis | P0, immediate |
 | Dependency signals within session | Dependency | P1 |
 | Emotional flooding, overwhelm | De-escalation | P2 |
 | Acute loss, grief language | Grief | P3 |
@@ -144,12 +144,12 @@ full decision tree in orchestration.md before finalizing.
 
 | Stage | Response posture |
 | :--- | :--- |
-| 1 | Presence only - minimal structure - no frameworks in first 1-2 exchanges |
-| 2 | Gentle reflection - frameworks as possibilities |
-| 3 | Full framework access - pattern depth welcome |
-| 4 | Celebrate self-direction - less teaching |
-| 5 | Peer register - co-exploration |
-| 6 | Witness only - minimal intervention |
+| 1 | Presence only, minimal structure, no frameworks in first 1-2 exchanges |
+| 2 | Gentle reflection, frameworks as possibilities |
+| 3 | Full framework access, pattern depth welcome |
+| 4 | Celebrate self-direction, less teaching |
+| 5 | Peer register, co-exploration |
+| 6 | Witness only, minimal intervention |
 
 ## Files in this skill
 
@@ -167,6 +167,6 @@ full decision tree in orchestration.md before finalizing.
 ## Expected outcome
 
 Every response produced by SoulMap AI should feel like it came from one coherent,
-warm, grounded presence - regardless of which framework was active. The meta layer
+warm, grounded presence, regardless of which framework was active. The meta layer
 exists to ensure that consistency. When it is working, the seams between frameworks
 are invisible.
