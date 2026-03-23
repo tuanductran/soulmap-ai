@@ -27,7 +27,7 @@ be skipped for any response.
 
 ### Execution Pipeline Summary
 
-```
+```text
 Step 1: Intent + emotional state detection
 Step 2: Stage classification (skills/meta/stage-classifier.md)
 Step 3: Framework selection (skills/meta/orchestration.md)
