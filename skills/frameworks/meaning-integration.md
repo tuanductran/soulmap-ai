@@ -194,6 +194,36 @@ you need to do is notice..." "A good practice would be..."
 notice..." "The next time this appears - not to fix it, but just to see it..." "What
 does it feel like to hold this awareness gently?"
 
+## Detection signals
+
+Python detector: `modules/insight_detector.py`
+
+**Explicit insight** - `EXPLICIT_INSIGHT` (`modules/config/meaning.py`, 31 phrases):
+- "i finally understand"
+- "i finally see"
+- "i finally realize"
+- "i finally get it"
+- "i finally know why"
+- "i now understand"
+
+**Emerging insight** - `EMERGING_INSIGHT` (18 phrases):
+- "i'm starting to see"
+- "i'm beginning to understand"
+- "i think i see"
+- "i think i understand now"
+
+**Self-application** - `SELF_APPLICATION` (16 phrases):
+- "that's my pattern"
+- "that's the pattern"
+- "i see the pattern"
+- "i do this with"
+
+**Post-reflection validation** - `POST_REFLECTION` (16 phrases):
+- "yes that's it"
+- "yes exactly"
+- "that's exactly right"
+- "that resonates"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; honor the

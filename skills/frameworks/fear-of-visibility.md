@@ -121,6 +121,21 @@ but "what does the fear know that you haven't fully heard yet."
 | Fear of visibility + grief about past attempt | Grief first |
 | Fear of visibility as primary, no other dominant signal | This framework |
 
+## Detection signals
+
+Python detector: `modules/visibility_fear_detector.py`
+
+**Primary signals** - `VISIBILITY_FEAR_SIGNALS` (`modules/config/patterns.py`, 28 phrases):
+- "afraid to post"
+- "afraid to share"
+- "afraid to put myself out there"
+- "what if people judge me"
+- "what if people see who i really am"
+- "i can't let people see"
+
+**Secondary scoring**: shrinking language + public/sharing context together scores 2.
+Examples: "hold back" + "share", "go quiet" + "post", "invisible" + "put out there".
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 3 focuses

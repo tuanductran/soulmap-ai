@@ -334,6 +334,36 @@ It is a gentle invitation to look at what might be within their influence - not 
 the other person is innocent, but because the user's own patterns are the only thing
 they can actually work with.
 
+## Detection signals
+
+Python detector: `modules/shadow_pattern_detector.py`
+
+**External repeat** - `EXTERNAL_REPEAT_SIGNALS` (`modules/config/patterns.py`, 22 phrases):
+- "people always"
+- "they always"
+- "everyone always"
+- "he always"
+- "she always"
+- "people never"
+
+**Bypass - accountability** - `BYPASS_ACCOUNTABILITY` (8 phrases):
+- "it was their karma not mine"
+- "they were my teacher"
+- "i called this into my life"
+- "i manifested this situation"
+
+**Bypass - dismissal** - `BYPASS_DISMISS` (19 phrases):
+- "everything happens for a reason"
+- "it was meant to be"
+- "the universe has a plan"
+- "this is my karma"
+
+**Spiritual inflation** - `SPIRITUAL_INFLATION` (10 phrases):
+- "as a lightworker"
+- "as an empath i feel"
+- "i'm highly sensitive so"
+- "my vibration is too high for"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; name the

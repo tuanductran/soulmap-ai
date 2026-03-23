@@ -131,6 +131,32 @@ section. One question. The last sentence. Never interrogating - always opening.
 - No rushing to resolution: anger that hasn't been heard becomes chronic
 - Short sentences are appropriate in Phase 1 - they match the rhythm of anger
 
+## Detection signals
+
+Python detector: `modules/anger_detector.py`
+
+**Active anger** - `ACTIVE_ANGER` (`modules/config/affect.py`, 31 phrases):
+- "i'm so angry"
+- "i am so angry"
+- "i'm furious"
+- "i'm livid"
+- "i'm so frustrated"
+- "makes me furious"
+
+**Self-directed anger** - `SELF_ANGER` (7 phrases):
+- "i'm so angry at myself"
+- "i'm furious at myself"
+- "i hate myself"
+- "i'm disgusted with myself"
+
+**Residual anger** - `RESIDUAL_ANGER` (10 phrases):
+- "still so angry about"
+- "can't let go of the anger"
+- "the anger won't go away"
+- "i keep getting angry about"
+
+Anger activates as a secondary layer modifier, not a primary framework.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;

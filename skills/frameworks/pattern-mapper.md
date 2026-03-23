@@ -229,6 +229,36 @@ underlying thread. Does that land at all?"*
 | Approval Seeking + Fear of Rejection   | "I need your yes and I'm terrified of your no" - constant performance anxiety                                                                    |
 | Over-Responsibility + Abandonment Loop | "I give everything so you won't leave" - exhaustion as a holding strategy                                                                        |
 
+## Detection signals
+
+Python detector: `modules/pattern_detector.py`
+
+**External repeat** - `EXTERNAL_REPEAT_SIGNALS` (`modules/config/patterns.py`, 22 phrases):
+- "people always"
+- "they always"
+- "everyone always"
+- "he always"
+
+**Avoidance** - `AVOIDANCE_SIGNALS` (14 phrases):
+- "i don't say anything"
+- "i dont say anything"
+- "i let it go"
+- "i just avoid it"
+
+**People pleasing** - `PEOPLE_PLEASING_SIGNALS` (20 phrases):
+- "can't say no"
+- "cant say no"
+- "always say yes"
+- "go along with things"
+
+**Overthinking** - `OVERTHINKING_SIGNALS` (15 phrases):
+- "replay conversations"
+- "go over it in my head"
+- "can't stop thinking"
+- "analyse everything"
+
+Pattern requires 2+ user messages with matching signals before activating (`wait_for_more` logic).
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; non-labeling

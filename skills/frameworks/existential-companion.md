@@ -197,6 +197,36 @@ offering a framework that might not be true."
 | Inner Parts conflict                 | Parts may be visible in existential exploration - name them if present, but don't reduce the existential to a parts problem |
 
 
+## Detection signals
+
+Python detector: `modules/existential_detector.py`
+
+**Identity shift** - `IDENTITY_SHIFT` (`modules/config/meaning.py`, 29 phrases):
+- "don't recognize myself"
+- "i don't recognize myself anymore"
+- "i do not recognize myself"
+- "i do not recognize myself anymore"
+- "i dont recognize myself"
+- "i've lost myself"
+
+**Larger questions** - `LARGER_QUESTIONS` (20 phrases):
+- "what happens when we die"
+- "what happens after death"
+- "fear of death"
+- "aware that i'm going to die"
+
+**Endings / transition** - `ENDINGS_GRIEF` (18 phrases):
+- "a chapter is ending"
+- "chapter of my life is ending"
+- "chapter is closing"
+- "era is ending"
+
+**Meaning depth** - `MEANING_DEPTH` (28 phrases):
+- "whether any of this means anything at all"
+- "what's the point of anything"
+- "what is the point of all this"
+- "what is the point of any of this"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; enter the

@@ -123,6 +123,38 @@ exchanges in this framework are appropriate.
 If synthesis is requested after a celebration exchange - move to
 `conversation-synthesis.md`.
 
+## Detection signals
+
+Python detector: `modules/celebration_detector.py`
+
+**Win/completion** - `CELEBRATION_WIN` (`modules/config/affect.py`, 19 phrases):
+- "i finally did it"
+- "i did it"
+- "i finally said it"
+- "i said it"
+- "i got the job"
+- "we made it"
+
+**Relief** - `CELEBRATION_RELIEF` (20 phrases):
+- "i can breathe again"
+- "feel lighter"
+- "feeling lighter"
+- "i feel lighter"
+
+**Gratitude** - `CELEBRATION_GRATITUDE` (12 phrases):
+- "i'm so grateful"
+- "i am so grateful"
+- "so grateful"
+- "i feel grateful"
+
+**Recognized progress** - `CELEBRATION_PROGRESS` (23 phrases):
+- "i noticed i didn't react"
+- "i noticed i did not react"
+- "i caught myself this time"
+- "i caught myself"
+
+Threshold: score >= 2. Mixed pain signals reduce score by 2 (negative override).
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror, light register -

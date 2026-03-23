@@ -128,6 +128,26 @@ enough in my family"), move to ancestral-patterns.md.
 If the user has a breakthrough about what they are protecting, move to
 meaning-integration.md.
 
+## Detection signals
+
+Python detector: `modules/perfectionism_paralysis_detector.py`
+
+**Paralysis signals** - `PERFECTIONISM_PARALYSIS_SIGNALS` (`modules/config/patterns.py`, 26 phrases):
+- "i can't start until i know it's right"
+- "i can't share until it's perfect"
+- "i keep reworking the same thing"
+- "i can never finish anything"
+- "i almost sent it but"
+- "i keep deleting and starting over"
+
+**General perfectionism** - `PERFECTIONISM_SIGNALS` (15 phrases) - secondary:
+- "has to be perfect"
+- "if it's not perfect"
+- "if it is not perfect"
+- "can't start until"
+
+History bonus: repeated not-ready signals across prior turns adds +1 to score.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 2 names

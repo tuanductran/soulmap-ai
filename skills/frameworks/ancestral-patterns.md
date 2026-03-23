@@ -116,6 +116,21 @@ into anger-companion.md - the recognition has opened a door, let them walk throu
 If the user reaches a moment of genuine insight or shift after ancestral work, move to
 meaning-integration.md.
 
+## Detection signals
+
+Python detector: `modules/ancestral_detector.py`
+
+**Primary signals** - `ANCESTRAL_SIGNALS` (`modules/config/patterns.py`, 38 phrases):
+- "just like my mother"
+- "just like my father"
+- "just like my parents"
+- "same as my mother"
+- "same as my father"
+- "my mother was the same way"
+
+**Secondary scoring**: parent reference + pattern language together scores 2 (threshold).
+Examples: "my mother" + "same pattern", "growing up" + "was taught".
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-3

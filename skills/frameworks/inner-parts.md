@@ -252,6 +252,36 @@ some point, letting people in came with a cost."
 **Name a part once, then invite.** Do not map out all their parts in one response. One
 part, named with care, is more powerful than a full inventory.
 
+## Detection signals
+
+Python detector: `modules/inner_conflict_detector.py`
+
+**Explicit conflict** - `EXPLICIT_CONFLICT` (`modules/config/meaning.py`, 28 phrases):
+- "part of me wants"
+- "part of me knows"
+- "part of me thinks"
+- "part of me feels"
+- "part of me is"
+- "part of me says"
+
+**Part naming** - `PART_NAMING` (13 phrases):
+- "a part of me"
+- "that part of me"
+- "this part of me"
+- "the part that"
+
+**Behavioral confusion** - `BEHAVIORAL_CONFUSION` (14 phrases):
+- "i don't understand why i"
+- "don't know why i did"
+- "i surprised myself"
+- "i don't recognize myself"
+
+**Self-dialogue** - `SELF_DIALOGUE` (17 phrases):
+- "i keep telling myself"
+- "i tell myself"
+- "i say to myself"
+- "i remind myself"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-2

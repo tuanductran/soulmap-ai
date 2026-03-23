@@ -140,6 +140,14 @@ Return the user to one living question:
 - what part of them money activates
 - what kind of worth they are trying to secure through it
 
+## Detection signals
+
+No dedicated Python detector. Routes via default Mirror (P12). The AI model applies
+this framework through language understanding when reading the .skill package.
+
+Related signals that may co-activate: `LOSTNESS_SIGNALS` (direction detector),
+`MISALIGNMENT_SIGNALS` (direction), `PEOPLE_PLEASING_SIGNALS` (pattern-mapper).
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;

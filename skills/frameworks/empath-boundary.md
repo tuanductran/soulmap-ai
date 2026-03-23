@@ -121,6 +121,21 @@ If the user has a realization about what they are protecting by absorbing others
 (an avoidance of their own pain, a role they were given in childhood), move to
 shadow-patterns.md or ancestral-patterns.md.
 
+## Detection signals
+
+Python detector: `modules/empath_detector.py`
+
+**Primary signals** - `EMPATH_SIGNALS` (`modules/config/patterns.py`, 29 phrases):
+- "i absorb everyone's emotions"
+- "i feel what others feel"
+- "i don't know which feelings are mine"
+- "i can't tell if this is my emotion"
+- "i walk into a room and feel the energy"
+- "i feel drained after being with people"
+
+**Secondary scoring**: depletion language + people context together scores 2.
+Examples: "drained" + "being around people", "exhausted" + "family gatherings".
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 1 is

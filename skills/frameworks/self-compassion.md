@@ -82,6 +82,14 @@ you?"
 **Instead:** Acknowledge the harshness. Name the critic's intention. Offer the friend
 question. One inquiry question.
 
+## Detection signals
+
+No dedicated Python detector. Routes via default Mirror (P12). The AI model applies
+this framework through language understanding when reading the .skill package.
+
+Related signals that may co-activate: `SELF_ANGER` (anger secondary layer),
+`PERFECTIONISM_SIGNALS` (pattern-mapper), `PEOPLE_PLEASING_SIGNALS` (pattern-mapper).
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; acknowledge the

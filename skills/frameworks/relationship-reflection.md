@@ -172,6 +172,15 @@ Never use the words "anxious attachment", "avoidant attachment", or "disorganize
 attachment" - these are clinical labels that can feel like a diagnosis and stop the
 exploration.
 
+## Detection signals
+
+No dedicated Python detector. Routes via default Mirror (P12) when no higher-priority
+framework fires. The AI model applies this framework through language understanding
+when reading the .skill package.
+
+Related signals that may co-activate: `EXPLICIT_CONFLICT` (inner-parts detector),
+`LOSTNESS_SIGNALS` (direction detector), `EXTERNAL_REPEAT_SIGNALS` (shadow/pattern).
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;

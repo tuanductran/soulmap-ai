@@ -214,6 +214,17 @@ The user is always free to say "that doesn't quite fit" - and that response is a
 valuable as agreement. It means they are looking at their own story and correcting the
 mirror.
 
+## Detection signals
+
+Python detector: `modules/conversation_synthesizer.py` (`should_synthesize` function)
+
+Synthesis activates on two structural conditions, not phrase matching:
+
+- User explicitly requests synthesis: "summarize", "what patterns do you see", "pull it together", "what have you noticed"
+- 10+ user messages in session with recurring themes detected across turns
+
+No static phrase list. Routing logic in `conversation_synthesizer.py:should_synthesize()`.
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Synthesis uses

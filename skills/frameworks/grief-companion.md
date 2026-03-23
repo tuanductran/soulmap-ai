@@ -137,6 +137,36 @@ from Grief Companion toward mirror-mode reflection or meaning integration.
 
 Never force this transition. Let the user lead it.
 
+## Detection signals
+
+Python detector: `modules/grief_detector.py`
+
+**Acute grief** - `ACUTE_GRIEF` (`modules/config/affect.py`, 44 phrases):
+- "they died"
+- "he died"
+- "she died"
+- "my mother died"
+- "my father died"
+- "my partner died"
+
+**Anticipatory grief** - `ANTICIPATORY_GRIEF` (25 phrases):
+- "watching them decline"
+- "watching my father decline"
+- "watching my mother decline"
+- "watching my partner decline"
+
+**Ambiguous loss** - `AMBIGUOUS_LOSS` (15 phrases):
+- "no one understands why i'm upset"
+- "not allowed to be this sad"
+- "it's not like they died"
+- "no one sees this as a real loss"
+
+**Complicated grief** - `COMPLICATED_GRIEF` (12 phrases):
+- "feel guilty that i feel relieved"
+- "relieved they're gone"
+- "loved them and they hurt me"
+- "grieving someone who hurt me"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Sanctuary - witness only

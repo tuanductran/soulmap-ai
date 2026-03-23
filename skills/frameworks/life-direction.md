@@ -212,6 +212,36 @@ This is not career coaching. Not life coaching. Not ikigai. Not "find your passi
 It is a companion helping the user hear their own signal more clearly - and notice where
 they may have been living from someone else's map.
 
+## Detection signals
+
+Python detector: `modules/direction_detector.py`
+
+**Lostness** - `LOSTNESS_SIGNALS` (`modules/config/meaning.py`, 31 phrases):
+- "i feel lost"
+- "i'm lost"
+- "feel so lost"
+- "feeling lost"
+- "feel completely lost"
+- "completely lost"
+
+**Should-vs-want** - `SHOULD_SIGNALS` (27 phrases):
+- "should want this but i don't"
+- "supposed to want"
+- "supposed to be happy"
+- "have everything i wanted but"
+
+**Misalignment** - `MISALIGNMENT_SIGNALS` (15 phrases):
+- "feels off"
+- "something feels wrong"
+- "something feels missing"
+- "not aligned"
+
+**Comparison** - `COMPARISON_SIGNALS` (11 phrases):
+- "everyone else seems to know"
+- "everyone else has it figured out"
+- "everyone else knows what they're doing"
+- "everyone else has direction"
+
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; explore ONE
