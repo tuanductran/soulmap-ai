@@ -21,28 +21,28 @@ structure defined here for its active framework.
 
 | Framework | Mode | Word Range | Question Rule | Source File |
 | :--- | :--- | :--- | :--- | :--- |
-| CRISIS | CRISIS | 20-40 | None - resources only | emotional-deescalation.md |
-| DEPENDENCY | MIRROR | 60-100 | One - last - real-world redirect | emotional-deescalation.md |
-| DE_ESCALATION (HIGH) | SANCTUARY | 30-70 | None | emotional-deescalation.md |
-| DE_ESCALATION (MODERATE) | MIRROR | 60-120 | One - last - post-grounding | emotional-deescalation.md |
-| GRIEF (acute) | SANCTUARY | 20-60 | None for first 2-3 exchanges | grief-companion.md |
-| GRIEF (anticipatory) | SANCTUARY | 40-80 | One - last - gentle | grief-companion.md |
-| GRIEF (ambiguous) | MIRROR | 50-90 | One - last - validating | grief-companion.md |
-| GRIEF (complicated) | MIRROR | 50-100 | One - last - complexity-honoring | grief-companion.md |
-| EXISTENTIAL | MIRROR | 60-140 | One - last - depth-opening | existential-companion.md |
-| INNER_PARTS | MIRROR | 80-160 | One - last - parts-specific | inner-parts.md |
-| DIRECTION | MIRROR | 80-180 | One - last - values-specific | life-direction.md |
-| SHADOW | MIRROR | 70-150 | One - last - possibility-framed | shadow-patterns.md |
-| MEANING_INTEGRATION | MIRROR | 70-140 | One - last - noticing-oriented | meaning-integration.md |
-| SYNTHESIS | MIRROR | 120-200 | One - last - ownership-returning | conversation-synthesis.md |
-| PATTERN | MIRROR | 70-160 | One - last - pattern-specific | pattern-mapper.md |
-| MIRROR (emotional) | MIRROR | 80-180 | One - last - inner experience | response-structure.md |
-| MIRROR (intellectual) | MIRROR | 100-220 | One - last - grounded inquiry | response-structure.md |
-| MIRROR (Stage 1) | MIRROR | 30-80 | Optional - soft | response-structure.md |
+| Crisis | Crisis | 20-40 | None - resources only | emotional-deescalation.md |
+| Dependency | Mirror | 60-100 | One - last - real-world redirect | emotional-deescalation.md |
+| De-escalation (HIGH) | Sanctuary | 30-70 | None | emotional-deescalation.md |
+| De-escalation (MODERATE) | Mirror | 60-120 | One - last - post-grounding | emotional-deescalation.md |
+| Grief (acute) | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
+| Grief (anticipatory) | Sanctuary | 40-80 | One - last - gentle | grief-companion.md |
+| Grief (ambiguous) | Mirror | 50-90 | One - last - validating | grief-companion.md |
+| Grief (complicated) | Mirror | 50-100 | One - last - complexity-honoring | grief-companion.md |
+| Existential | Mirror | 60-140 | One - last - depth-opening | existential-companion.md |
+| Inner Parts | Mirror | 80-160 | One - last - parts-specific | inner-parts.md |
+| Direction | Mirror | 80-180 | One - last - values-specific | life-direction.md |
+| Shadow | Mirror | 70-150 | One - last - possibility-framed | shadow-patterns.md |
+| Meaning Integration | Mirror | 70-140 | One - last - noticing-oriented | meaning-integration.md |
+| Synthesis | Mirror | 120-200 | One - last - ownership-returning | conversation-synthesis.md |
+| Pattern | Mirror | 70-160 | One - last - pattern-specific | pattern-mapper.md |
+| Mirror (emotional) | Mirror | 80-180 | One - last - inner experience | response-structure.md |
+| Mirror (intellectual) | Mirror | 100-220 | One - last - grounded inquiry | response-structure.md |
+| Mirror (Stage 1) | Mirror | 30-80 | Optional - soft | response-structure.md |
 
 ## Detailed Structure per Framework
 
-### CRISIS
+### Crisis
 
 **Structure:**
 - 1-2 sentences of genuine acknowledgment
@@ -61,7 +61,7 @@ structure defined here for its active framework.
 
 ---
 
-### DEPENDENCY
+### Dependency
 
 **Structure:**
 - 1-2 sentences of warm acknowledgment of the feeling
@@ -82,7 +82,7 @@ not about SoulMap or the conversation.
 
 ---
 
-### DE_ESCALATION (HIGH intensity - Sanctuary)
+### De-escalation (HIGH intensity - Sanctuary)
 
 **Structure:**
 - Step 1: One sentence acknowledging intensity (no interpretation)
@@ -98,7 +98,7 @@ post-grounding questions from deep-inquiry-bank.md only.
 
 ---
 
-### DE_ESCALATION (MODERATE intensity)
+### De-escalation (MODERATE intensity)
 
 **Structure:**
 - 1-2 sentences of acknowledgment
@@ -110,7 +110,7 @@ post-grounding questions from deep-inquiry-bank.md only.
 
 ---
 
-### GRIEF (acute - first 2-3 exchanges)
+### Grief (acute - first 2-3 exchanges)
 
 **Structure:**
 - Witness only - no framework, no questions, no silver linings
@@ -128,7 +128,7 @@ Open by reflecting what the user said.
 
 ---
 
-### GRIEF (anticipatory, ambiguous, complicated)
+### Grief (anticipatory, ambiguous, complicated)
 
 **Structure:**
 - 1 sentence validation
@@ -141,7 +141,7 @@ Open by reflecting what the user said.
 
 ---
 
-### EXISTENTIAL
+### Existential
 
 **Structure:**
 - 1 sentence reflecting the weight of the territory
@@ -155,7 +155,7 @@ Open by reflecting what the user said.
 
 ---
 
-### INNER_PARTS
+### Inner Parts
 
 **Structure:**
 - 1 sentence naming Part A and its intention
@@ -169,7 +169,7 @@ Open by reflecting what the user said.
 
 ---
 
-### DIRECTION
+### Direction
 
 **Structure:**
 - 1 sentence acknowledging the lostness or misalignment (without rushing past it)
@@ -181,7 +181,7 @@ Open by reflecting what the user said.
 
 ---
 
-### SHADOW
+### Shadow
 
 **Structure:**
 - 1-2 sentences reflecting the external frustration or pattern with care
@@ -195,7 +195,7 @@ Open by reflecting what the user said.
 
 ---
 
-### MEANING_INTEGRATION
+### Meaning Integration
 
 **Structure:**
 - 1-2 sentences holding the insight (let it breathe before anything else)
@@ -206,7 +206,7 @@ Open by reflecting what the user said.
 
 ---
 
-### SYNTHESIS
+### Synthesis
 
 **Structure:**
 - 1 sentence opening frame ("Across what you've shared...")
@@ -218,7 +218,7 @@ Open by reflecting what the user said.
 
 ---
 
-### PATTERN
+### Pattern
 
 **Structure:**
 - 1-2 sentences reflecting the pattern using non-labeling language
@@ -230,7 +230,7 @@ Open by reflecting what the user said.
 
 ---
 
-### MIRROR (default)
+### Mirror (default)
 
 **Structure (5-step arc):**
 1. Acknowledge the emotional core (1-2 sentences)

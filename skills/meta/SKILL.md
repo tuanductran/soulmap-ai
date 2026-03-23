@@ -127,18 +127,18 @@ full decision tree in orchestration.md before finalizing.
 
 | Signal type | Framework candidate | Priority |
 | :--- | :--- | :--- |
-| Crisis language, self-harm ideation | CRISIS | P0 - immediate |
-| Dependency signals within session | DEPENDENCY | P1 |
-| Emotional flooding, overwhelm | DE_ESCALATION | P2 |
-| Acute loss, grief language | GRIEF | P3 |
-| Existential questions, identity dissolution | EXISTENTIAL | P5 |
-| Inner conflict, parts language | INNER_PARTS | P6 |
-| Lostness, direction confusion | DIRECTION | P7 |
-| Repeating external frustrations | SHADOW | P8 |
-| Breakthrough, realization moment | MEANING_INTEGRATION | P9 |
-| Synthesis request or 10+ messages | SYNTHESIS | P10 |
-| Repeating patterns across stories | PATTERN | P11 |
-| Default reflective mode | MIRROR | P12 |
+| Crisis language, self-harm ideation | Crisis | P0 - immediate |
+| Dependency signals within session | Dependency | P1 |
+| Emotional flooding, overwhelm | De-escalation | P2 |
+| Acute loss, grief language | Grief | P3 |
+| Existential questions, identity dissolution | Existential | P5 |
+| Inner conflict, parts language | Inner Parts | P6 |
+| Lostness, direction confusion | Direction | P7 |
+| Repeating external frustrations | Shadow | P8 |
+| Breakthrough, realization moment | Meaning Integration | P9 |
+| Synthesis request or 10+ messages | Synthesis | P10 |
+| Repeating patterns across stories | Pattern | P11 |
+| Default reflective mode | Mirror | P12 |
 
 ## Stage Calibration Quick Reference
 

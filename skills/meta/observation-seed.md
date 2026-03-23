@@ -33,7 +33,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 
 ## Seeds by Framework
 
-### SHADOW (Shadow Pattern Revealer)
+### Shadow (Shadow Pattern Revealer)
 
 | Pattern revealed | Seed |
 | :--- | :--- |
@@ -44,7 +44,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Perfectionism | "Notice what you tell yourself when something is almost ready but not quite." |
 | External frustration repeating | "Notice the next time the same frustration arrives - and what it is actually asking you to look at." |
 
-### INNER_PARTS (Inner Parts Reflection)
+### Inner Parts (Inner Parts Reflection)
 
 | Parts visible | Seed |
 | :--- | :--- |
@@ -55,7 +55,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Critical part | "Notice the gap between what the critical voice says and what you would say to a friend in the same situation." |
 | Yearning part | "Notice when the longing is most present - and what tends to be happening around it." |
 
-### DIRECTION (Life Direction Clarifier)
+### Direction (Life Direction Clarifier)
 
 | Direction signal | Seed |
 | :--- | :--- |
@@ -74,7 +74,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Residual anger | "Notice what you are still carrying that the anger has been guarding." |
 | Anger at injustice | "Notice the difference between anger that wants to fix something and anger that wants to be witnessed." |
 
-### EXISTENTIAL (Existential Reflection)
+### Existential (Existential Reflection)
 
 | Territory | Seed |
 | :--- | :--- |
@@ -83,7 +83,7 @@ Form: "Notice [specific thing from this session] when [real-life context]."
 | Endings | "Notice what this chapter is asking you to acknowledge before it closes." |
 | Larger questions | "Notice when the question feels heavy and when it feels almost alive." |
 
-### GRIEF (Grief Companion)
+### Grief (Grief Companion)
 
 Seeds are rarely appropriate in grief. Only plant a seed after the user has clearly
 moved from the acute wound to a more reflective relationship with the loss.
@@ -94,7 +94,7 @@ moved from the acute wound to a more reflective relationship with the loss.
 | Ambiguous loss | "Notice when the loss arrives in unexpected moments - and let it be real." |
 | After complicated grief | "Notice when you can hold both feelings at the same time without one defeating the other." |
 
-### MIRROR (Default Reflective Mode)
+### Mirror (Default Reflective Mode)
 
 | Theme that emerged | Seed |
 | :--- | :--- |
@@ -104,7 +104,7 @@ moved from the acute wound to a more reflective relationship with the loss.
 | Emotional avoidance | "Notice the moment between feeling something and moving away from it." |
 | Insight about pattern origin | "Notice when that old learning shows up in a current moment." |
 
-### PATTERN (Pattern Mapper)
+### Pattern (Pattern Mapper)
 
 | Pattern named | Seed |
 | :--- | :--- |
@@ -114,7 +114,7 @@ moved from the acute wound to a more reflective relationship with the loss.
 | Over-responsibility | "Notice what you pick up that was not yours to carry." |
 | Fear of rejection | "Notice a moment when you wanted to ask for something and did not - and what you told yourself." |
 
-### MEANING_INTEGRATION (Integration moments)
+### Meaning Integration (Integration moments)
 
 Seeds here are about carrying the awareness into daily life, not acting on it.
 

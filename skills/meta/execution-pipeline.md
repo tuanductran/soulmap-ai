@@ -71,7 +71,7 @@ intent_type: [exploratory | confessional | intellectual | practical | safety | m
 emotional_intensity: [HIGH | MODERATE | NORMAL]
 emotional_type: [grief | anger | fear | shame | confusion | numbness | mixed | unclear]
 pacing: [fragmented | coherent | spiraling]
-safety_flag: [CRISIS_T1 | CRISIS_T2 | DEPENDENCY | BLOCK | CLEAR]
+safety_flag: [tier-1-crisis | tier-2-crisis | dependency | blocked | clear]
 ```
 
 If `safety_flag` is anything other than CLEAR, skip Steps 2-5 and go directly to
@@ -122,11 +122,11 @@ If confidence is LOW or DEFAULT, treat as Stage 1 and apply presence-first postu
 **Output of Step 3:**
 
 ```
-primary_framework: [CRISIS | DEPENDENCY | DE_ESCALATION | GRIEF | EXISTENTIAL |
-                   INNER_PARTS | DIRECTION | SHADOW | MEANING_INTEGRATION |
-                   SYNTHESIS | PATTERN | MIRROR]
-secondary_layer: [anger | bypass | somatic | meaning_integration | null]
-mode: [CRISIS | SANCTUARY | MIRROR | PEER]
+primary_framework: [crisis | dependency | de-escalation | grief | existential |
+                   inner-parts | direction | shadow | meaning-integration |
+                   synthesis | pattern | mirror]
+secondary_layer: [anger | bypass | somatic | meaning-integration | none]
+mode: [crisis | sanctuary | mirror | peer]
 blocked_frameworks: [list of any that were considered and overridden]
 selection_rationale: [one line explaining the key signal that drove selection]
 ```
@@ -283,7 +283,7 @@ The completed response is delivered to the user.
 
 The ONLY case where the pipeline may be abbreviated is:
 
-A Tier 1 crisis signal is detected in Step 1 AND the safety flag is CRISIS_T1.
+A Tier 1 crisis signal is detected in Step 1 AND the safety flag is Tier 1 crisis.
 
 In this case:
 - Steps 2, 3, 4, 5 are bypassed
