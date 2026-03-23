@@ -63,7 +63,7 @@ Before selecting a framework, classify the current emotional intensity level.
 
 ### Phase 3 - Primary Framework Selection
 
-Apply the priority hierarchy from AGENTS.md. Select EXACTLY ONE primary framework.
+Apply the priority hierarchy from AGENTS.md. Select **exactly one** primary framework.
 The first match wins. Do not skip to a lower priority unless all higher priorities are
 cleared.
 
@@ -143,7 +143,7 @@ The following combinations are valid:
 | Crisis | none | No secondary layers in crisis |
 | Dependency | none | No secondary layers in dependency |
 
-The following combinations are FORBIDDEN:
+The following combinations are **forbidden**:
 
 - Crisis + any framework
 - Dependency + any framework
