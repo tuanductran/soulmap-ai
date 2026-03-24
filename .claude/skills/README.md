@@ -20,6 +20,12 @@ contract.
 - `operations-and-safety-review`
 - `release-readiness-review`
 
+## Product development skills
+
+- `detector-engineer`
+- `eval-suite-maintainer`
+- `framework-author`
+
 ## Docs and content skills
 
 - `brand-copy-review`
