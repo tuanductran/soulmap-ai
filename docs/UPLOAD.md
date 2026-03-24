@@ -29,9 +29,9 @@ Treat `.claude-plugin/` as opaque metadata during packaging and upload. Do not e
 
 ## AI tool compatibility
 
-**ChatGPT:** ChatGPT’s official docs describe uploads for common file types and project reference material such as PDFs, spreadsheets, docs, images, and pasted text. They do not explicitly document `.zip` or `.skill` as first-class upload formats, so the safest workflow is to extract the archive first and upload the Markdown or text files you want it to use.
+**ChatGPT:** ChatGPT's official docs describe uploads for common file types and project reference material such as PDFs, spreadsheets, docs, images, and pasted text. They do not explicitly document `.zip` or `.skill` as first-class upload formats, so the safest workflow is to extract the archive first and upload the Markdown or text files you want it to use.
 
-**Claude:** Claude’s official upload docs cover standard document types, and Anthropic’s Skills docs describe custom Skills as ZIP-based packages containing a `SKILL.md` file. For Claude, use the extracted knowledge files for normal document uploads, and use a ZIP-based skill package only in workflows that explicitly support Claude Skills.
+**Claude:** Claude's official upload docs cover standard document types, and Anthropic's Skills docs describe custom Skills as ZIP-based packages containing a `SKILL.md` file. For Claude, use the extracted knowledge files for normal document uploads, and use a ZIP-based skill package only in workflows that explicitly support Claude Skills.
 
 **Any Agent Skills-compatible agent:** Agent Skills are an open format built around a portable skill folder with `SKILL.md` at the root, so the `.skill` archive should be treated as a transport package that can be unpacked into that directory structure.
 
@@ -53,7 +53,7 @@ What you get:
 Suggested use:
 
 1. Extract the zip.
-2. Upload the Markdown or text files that match your tool’s supported file types.
+2. Upload the Markdown or text files that match your tool's supported file types.
 3. Point the tool at `SKILL.md`, `AGENTS.md`, and the relevant folders under `skills/` and `templates/`.
 
 ### Skill example for skill-oriented tools
