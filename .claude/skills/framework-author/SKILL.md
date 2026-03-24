@@ -31,12 +31,12 @@ This skill helps you author frameworks that are:
 
 ## Framework File Location
 
-New frameworks live here: `skills/frameworks/{framework-name}.md`
+New frameworks live here: `skills/frameworks/` (use kebab-case filename matching the framework name).
 
 Examples:
-- `skills/frameworks/mirror.md` - reflective mode
-- `skills/frameworks/crisis.md` - crisis response
-- `skills/frameworks/grief.md` - grief support
+- `skills/frameworks/emotional-deescalation.md` - crisis and de-escalation response
+- `skills/frameworks/grief-companion.md` - grief support
+- `skills/frameworks/inner-parts.md` - inner conflict work
 
 ## YAML Frontmatter
 
@@ -364,6 +364,29 @@ Examples:
 | `inner-parts.md` | `INNER_PARTS` | `wl6` |
 | `shadow-patterns.md` | `SHADOW` | `wl8` |
 | `crisis.md` | `CRISIS` | `crisis` |
+
+## Workflow
+
+1. Read `AGENTS.md` Section 2 (Framework Selection) to verify priority placement.
+2. Read an existing framework file in `skills/frameworks/` for structural reference.
+3. Create the new file under `skills/frameworks/` with the required sections.
+4. Add the framework to the priority hierarchy in `skills/meta/orchestration.md`.
+5. Add the framework to `skills/meta/framework-template-map.md`.
+6. Work with [`detector-engineer`](../detector-engineer/SKILL.md) to implement the detector.
+7. Work with [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md) to add eval coverage.
+8. Run `python -m tools.build_skill` and `python -m pytest -q` before committing.
+
+## Definition Of Done
+
+A framework file is done when:
+
+- YAML frontmatter has a valid `name` matching the filename stem
+- `## Activation Signals` section is present with observable detection language
+- `## Response Structure` section defines the arc and word count range
+- `## Paired template` section references the correct template and inquiry bank section
+- A corresponding detector exists in `modules/` or is planned
+- At least one eval group in `evals/groups.json` covers the primary activation signal
+- `python -m tools.build_skill` includes the new file without error
 
 ## Relationship to Other Skills
 

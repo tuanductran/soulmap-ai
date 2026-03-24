@@ -1,6 +1,6 @@
 ---
 name: detector-engineer
-description: Develop and maintain Python detector modules that identify framework selection signals in conversation history.
+description: Build and maintain Python detector modules that identify framework selection signals in conversation history.
 ---
 
 # Detector Engineer
@@ -9,7 +9,7 @@ Use this skill when writing new detector modules, extending existing detectors, 
 
 ## Do not use this skill for
 
-- Editing rules and conventions - refer to `detector-development.md`
+- Editing rules and conventions - refer to [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
 - Writing or extending test groups in evals/groups.json - use [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md)
 - Defining framework activation signals - use [`framework-author`](../framework-author/SKILL.md)
 - General Python work outside modules/ - use code editing tools directly
@@ -338,6 +338,27 @@ for norm_msg in normalized_messages:
         if pattern.search(norm_msg):  # Fast lookup
             score += 10
 ```
+
+## Workflow
+
+1. Read `.claude/rules/detector-development.md` before writing any code.
+2. Check `modules/config/` for existing signal phrase constants to extend rather than duplicate.
+3. Write the detector following the anatomy and return value contract defined in this skill.
+4. Add threshold constants to `modules/config/safety.py` or the appropriate domain config.
+5. Integrate the detector call into `modules/framework_selector.py` at the correct priority.
+6. Add eval cases to `evals/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
+7. Run `python -m pytest -q` and `python -m tools.eval_groups` before pushing.
+
+## Definition Of Done
+
+A detector is done when:
+
+- It returns a dict matching the standard return value contract above
+- All signal constants live in `modules/config/` not inline in the function
+- It is called at the correct priority in `modules/framework_selector.py`
+- At least one eval case in `evals/groups.json` covers its primary signal
+- `python -m pytest -q` passes with no regressions
+- `python -m tools.eval_groups` passes for all groups it affects
 
 ## Relationship to Other Skills
 

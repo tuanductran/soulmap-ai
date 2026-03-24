@@ -9,7 +9,7 @@ Use this skill when working with the evaluation suite infrastructure-adding test
 
 ## Do not use this skill for
 
-- Modifying the core framework selection logic - use code editing tools directly and follow `detector-development.md`
+- Modifying the core framework selection logic - use code editing tools directly and follow [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
 - Writing framework skill files (Activation Signals, Response Structure) - use [`framework-author`](../framework-author/SKILL.md)
 - Developing new detector modules - use [`detector-engineer`](../detector-engineer/SKILL.md)
 - Creating non-eval tests - use standard pytest patterns
@@ -230,6 +230,26 @@ pytest tests/test_safety_evals.py -v
 4. **Source everything** - if you add a test case, it should be backed by a source file
 5. **Run evals before committing** - verify all tests pass before merging
 6. **Keep groups related** - group similar test cases under the same `g` and `cat`
+
+## Workflow
+
+1. Read `evals/README.md` to understand the current eval suite structure.
+2. Identify the framework or safety behavior the new group is testing.
+3. Find the source files (in `skills/` or `templates/`) that justify the test cases.
+4. Write the group following the structure defined in this skill.
+5. Add `source_markers` for high-confidence slices that reference specific policy text.
+6. Run `python -m tools.eval_groups` and verify no existing assertions broke.
+7. Run `python -m pytest -q` before committing.
+
+## Definition Of Done
+
+An eval group is done when:
+
+- All items have a `note` field describing what is being tested
+- All asserted items have expectations backed by real source files in `sources`
+- `source_markers` are present for any high-risk or safety-critical slice
+- `python -m tools.eval_groups` passes for the new group
+- `python -m pytest -q` passes with no regressions
 
 ## Relationship to Other Skills
 

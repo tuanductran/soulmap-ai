@@ -13,15 +13,15 @@ Use these conventions when working with the evaluation suite and test groups.
 
 The `evals/` directory contains executable test case definitions:
 
-- `groups.json` - the master registry of eval groups and test cases
-- `*_cases.json` - source data files (selector_cases.json, response_cases.json, etc.)
+- `evals/groups.json` - the master registry of eval groups and test cases
+- individual case files (selector_cases.json, response_cases.json, etc.) - source data for specific eval suites
 - `README.md` - documentation for running and extending evals
 
-`groups.json` is executable, not static config. Each change affects which assertions SoulMap must pass.
+`evals/groups.json` is executable, not static config. Each change affects which assertions SoulMap must pass.
 
 ## Group Structure
 
-Each group in `groups.json` has this schema:
+Each group in `evals/groups.json` has this schema:
 
 ```json
 {
@@ -157,7 +157,7 @@ These assertions validate that the safety detector is working as expected on the
 
 ## Validation Errors
 
-Common issues when editing `groups.json`:
+Common issues when editing `evals/groups.json`:
 
 | Error | Fix |
 |-------|-----|
@@ -169,7 +169,7 @@ Common issues when editing `groups.json`:
 
 ## Testing Eval Groups
 
-After editing `groups.json`, run the test suite:
+After editing `evals/groups.json`, run the test suite:
 
 ```bash
 pytest tests/test_safety_evals.py -v
