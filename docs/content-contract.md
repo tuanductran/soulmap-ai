@@ -35,6 +35,19 @@ Rules:
 
 The repository enforces this via `python -m modules.markdown_contract`.
 
+## Ordered lists
+
+This repo uses sequential ordered-list numbering:
+
+```md
+1. first
+2. second
+3. third
+```
+
+Do not normalize ordered lists to repeated `1.` markers. Repo checks and release tooling
+expect sequential numbering.
+
 ## Formatter safety (avoid YAML breakage)
 
 Some Markdown formatters can rewrite or relocate YAML front matter.

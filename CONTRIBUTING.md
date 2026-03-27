@@ -43,6 +43,8 @@ from breaking structure.
 
 See [docs/content-contract.md](docs/content-contract.md).
 
+Ordered lists should stay sequential (`1. 2. 3.`), not normalized to repeated `1.`.
+
 ## Pre-commit (optional)
 
 If you use git for this repo:

@@ -107,23 +107,18 @@ main CI quality gates.
 ## Adding new knowledge files
 
 1. Add a new `*.md` under `skills/` (pick the best category folder).
-
 2. Use kebab-case filenames (no `_`) and keep headings/links GitHub-friendly (the repo
    runs a Markdown contract check).
-
 3. Start the file with YAML front matter metadata:
-
    ```yaml
    ---
    name: "file-stem"
    description: "One short sentence describing the full file."
    ---
    ```
-
 4. For files under `skills/` and `templates/`, set frontmatter `name` to the exact
    filename stem in kebab-case. Example: `skills/brand/brand-doctrine.md` must use
    `name: "brand-doctrine"`.
-
 5. Use the repo tooling for Markdown changes. `python -m tools.format` and
    `bash scripts/format.sh` now preserve front matter while applying `pymarkdown`
    consistently across docs, `skills/`, and `templates/`.

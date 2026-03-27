@@ -18,13 +18,13 @@ def test_markdown_contract_has_no_issues() -> None:
         raise AssertionError(f"Markdown contract issues found:\n{rendered}")
 
 
-def test_markdown_contract_allows_canonical_ordered_lists(tmp_path: Path) -> None:
+def test_markdown_contract_rejects_canonical_ordered_lists(tmp_path: Path) -> None:
     path = tmp_path / "canonical.md"
     path.write_text("1. one\n1. two\n1. three\n", encoding="utf-8")
 
     issues = check_markdown_file(path, tmp_path)
 
-    assert not [issue for issue in issues if "Ordered list numbering" in issue.message]
+    assert [issue for issue in issues if "Ordered list" in issue.message]
 
 
 def test_markdown_contract_allows_sequential_ordered_lists(tmp_path: Path) -> None:
@@ -42,7 +42,7 @@ def test_markdown_contract_rejects_mixed_ordered_lists(tmp_path: Path) -> None:
 
     issues = check_markdown_file(path, tmp_path)
 
-    assert [issue for issue in issues if "Ordered list numbering" in issue.message]
+    assert [issue for issue in issues if "Ordered list" in issue.message]
 
 
 def test_markdown_contract_does_not_flag_numeric_comments_in_code_fences(

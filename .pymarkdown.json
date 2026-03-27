@@ -14,7 +14,7 @@
       "enabled": false
     },
     "md032": {
-      "enabled": true
+      "enabled": false
     },
     "md029": {
       "style": "ordered"
@@ -23,25 +23,25 @@
       "style": "fenced"
     },
     "md034": {
-      "enabled": true
+      "enabled": false
     },
     "md031": {
-      "enabled": true
+      "enabled": false
     },
     "md007": {
-      "enabled": true
+      "enabled": false
     },
     "md003": {
-      "enabled": true
+      "enabled": false
     },
     "md022": {
-      "enabled": true
+      "enabled": false
     },
     "md023": {
-      "enabled": true
+      "enabled": false
     },
     "md060": {
-      "enabled": true
+      "enabled": false
     },
     "md036": {
       "enabled": true
