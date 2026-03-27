@@ -18,6 +18,11 @@ turning pain into self-recognition, and self-recognition into inner authority.
 - People doing inner work who want clarity without "guru certainty."
 - People who feel emotionally overwhelmed and want calm, grounded reflection.
 - People who are tired of performative spirituality and want truth, not hype.
+- People who are naturally good at connecting with others but rarely sit with themselves.
+- People who have many ideas and good intentions but lose the thread between planning
+  and doing - and want to understand why, not just try harder.
+- People who measure their own worth by visible outcomes and need a mirror that
+  reflects inner truth, not just external achievement.
 
 ## Not For
 
