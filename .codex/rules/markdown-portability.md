@@ -1,11 +1,3 @@
----
-paths:
-  - '**/*.md'
-  - .pymarkdown.json
-  - .pre-commit-config.yaml
-  - pyproject.toml
----
-
 # Markdown Portability Rules
 
 Keep Markdown compatible across AI tools and OS editors.
@@ -31,7 +23,7 @@ All Markdown files in this repository (including those inside `skills/` and `tem
 
 - **MD029 (Ordered list item prefix):** Always use sequential numbering for ordered lists (`1. 2. 3.`). Do NOT use the repetitive `1. 1. 1.` format.
 - **MD032 (Blanks around lists):** Always surround lists (ul/ol) with blank lines.
-- **MD031 (Blanks around fenced code blocks):** Always surround fenced code blocks with blank lines. 
+- **MD031 (Blanks around fenced code blocks):** Always surround fenced code blocks with blank lines.
 - **MD040 (Fenced code language):** Always specify a language tag for fenced code blocks (e.g., `python`, `json`, `yaml`, `text`, `markdown`).
 - **MD034 (Bare URLs):** Wrap bare URLs in angle brackets (`<http...>`) if not using link syntax.
 - **Format on Save:** Remember to always run `python3 -m tools.format` and/or `python3 -m tools.lint` to verify compliance after modifying Markdown files.

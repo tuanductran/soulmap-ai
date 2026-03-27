@@ -32,7 +32,7 @@ selection.
 
 ## Execution Order (Non-Negotiable)
 
-```
+```text
 1. orchestration.md    - Run decision tree, select framework
 2. stage-classifier.md - Classify user stage, calibrate depth
 3. framework-template-map.md - Select output structure
@@ -105,18 +105,23 @@ Apply stage calibration from Step 2.
 
 ### Step 5 - Apply Voice Layer
 
-Load [../voice/persona-voice.md](../voice/persona-voice.md)
-and [../voice/response-calibrator.md](../voice/response-calibrator.md).
+Load:
+
+- [../voice/persona-voice.md](../voice/persona-voice.md)
+- [../voice/response-calibrator.md](../voice/response-calibrator.md)
 
 Apply all voice checks. Rewrite if any check fails.
 
 ### Step 6 - Safety and Epistemic Filter
 
-Load [../safety/ethics-safety.md](../safety/ethics-safety.md)
-and [../safety/boundaries-safety.md](../safety/boundaries-safety.md).
+Load:
 
-For any response containing spiritual content, also load
-[epistemic-guardrails.md](epistemic-guardrails.md).
+- [../safety/ethics-safety.md](../safety/ethics-safety.md)
+- [../safety/boundaries-safety.md](../safety/boundaries-safety.md)
+
+For any response containing spiritual content, also load:
+
+- [epistemic-guardrails.md](epistemic-guardrails.md)
 
 Run all checks. Rewrite if any check fails.
 

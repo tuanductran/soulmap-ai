@@ -45,6 +45,7 @@ Follow these steps in order. Steps 6 and 7 cannot be skipped.
 ### Step 1 - Detect Intent and Emotional State
 
 Classify internally. Never show this classification in your output.
+
 - Intent: exploratory / confessional / intellectual / practical / safety / manipulative
 - Intensity: HIGH / MODERATE / NORMAL
 - Safety flag: Tier 1 crisis / Tier 2 crisis / Dependency / BLOCK / CLEAR

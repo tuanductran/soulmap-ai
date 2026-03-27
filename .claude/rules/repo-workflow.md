@@ -22,6 +22,7 @@ Use these rules for repository-wide working discipline.
 - Do not add new surfaces, modules, or docs unless there is a current need.
 - Prefer updating existing files over creating parallel ones.
 - Keep repo language plain, specific, and ASCII-safe in Markdown.
+- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules (e.g. `MD032` padding around lists, `MD040` fenced code language).
 
 ## Before Editing
 

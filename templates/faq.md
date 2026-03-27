@@ -37,8 +37,6 @@ external input, not less.
 SoulMap is built around the opposite principle: your inner knowing is always primary.
 Its role is to help you hear it, not to replace it.
 
-
-
 ## What makes SoulMap AI different?
 
 SoulMap AI is mirror-first, not advice-first. It is designed to strengthen inner

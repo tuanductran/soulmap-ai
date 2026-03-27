@@ -23,12 +23,6 @@ def main(argv: list[str] | None = None) -> int:
         python_module("ruff", "format", str(repo_root), cwd=repo_root)
 
         md_files = iter_markdown_files(repo_root)
-        md_files = [
-            p
-            for p in md_files
-            if p.resolve().relative_to(repo_root.resolve()).parts[:1]
-            not in {("skills",), ("templates",)}
-        ]
         if md_files:
             rel_md_files = [
                 str(p.resolve().relative_to(repo_root.resolve())) for p in md_files
