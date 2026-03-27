@@ -71,6 +71,10 @@ SYNTHESIS_REQUEST = [
     "what patterns do you see",
     "what have you noticed",
     "themes you see",
+    "can you see a thread",
+    "how has this changed",
+    "what has shifted",
+    "looking back across everything",
 ]
 
 EMOTIONAL_THEMES = {
@@ -454,9 +458,9 @@ def synthesize(
     session_count = themes.get("session_count", 1)
 
     if is_longitudinal and session_count >= 3:
-        opening = "Over the time we've been talking  -  not just today  -  a few things keep returning."
+        opening = "Over the seasons we've been talking  -  not just today  -  a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves."
     else:
-        opening = "Across what you've shared today, a few themes seem to return."
+        opening = "Across what you've shared today, a few threads have surfaced that feel worth staying with."
 
     all_themes = []
     for t in emotional_themes:
@@ -485,8 +489,8 @@ def synthesize(
         + "\n\n"
         + "\n\n".join(theme_descriptions)
         + "\n\n"
-        + "I might be missing something, or seeing a connection that isn't there. "
-        "What do you notice when you look at all of this together?"
+        + "These threads are yours  -  you surfaced all of them. I might be seeing a connection that isn't yours to keep. "
+        "Of these, which one feels most alive tonight?"
     )
 
     recommendation = (

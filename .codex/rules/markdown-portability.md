@@ -1,11 +1,3 @@
----
-paths:
-  - '**/*.md'
-  - .pymarkdown.json
-  - .pre-commit-config.yaml
-  - pyproject.toml
----
-
 # Markdown Portability Rules
 
 Keep Markdown compatible across AI tools and OS editors.

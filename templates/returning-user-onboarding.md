@@ -79,6 +79,7 @@ The key is honesty before anything else. Do not simulate recall.
 > fresh with you. If you want to bring something forward, I'm here for it."
 
 **What not to say:**
+
 - "I remember" (implies personal recall the system does not have)
 - "I don't remember anything" (false if memory data exists)
 

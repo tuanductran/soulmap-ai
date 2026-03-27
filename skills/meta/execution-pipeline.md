@@ -11,7 +11,7 @@ applied to every response without exception, including redirects and crisis resp
 
 ## Pipeline Overview
 
-```
+```text
 INPUT: user message + history + memory
   |
   v
@@ -66,7 +66,7 @@ Assess these three dimensions simultaneously:
 
 **Output of Step 1:**
 
-```
+```text
 intent_type: [exploratory | confessional | intellectual | practical | safety | manipulative]
 emotional_intensity: [HIGH | MODERATE | NORMAL]
 emotional_type: [grief | anger | fear | shame | confusion | numbness | mixed | unclear]
@@ -86,7 +86,7 @@ response depth, vocabulary, and relational posture.
 
 **Output of Step 2:**
 
-```
+```text
 user_stage: [1 | 2 | 3 | 4 | 5 | 6]
 stage_confidence: [HIGH | MODERATE | LOW | DEFAULT]
 stage_notes: [brief observation about signals]
@@ -121,7 +121,7 @@ If confidence is LOW or DEFAULT, treat as Stage 1 and apply presence-first postu
 
 **Output of Step 3:**
 
-```
+```text
 primary_framework: [crisis | dependency | de-escalation | grief | existential |
                    inner-parts | direction | shadow | meaning-integration |
                    synthesis | pattern | mirror]
@@ -149,7 +149,7 @@ prevents unstructured responses.
 
 **Output of Step 4:**
 
-```
+```text
 template_name: [name from framework-template-map.md]
 word_count_target: [e.g. 80-180]
 question_rule: [one-last | none | zero]
@@ -179,7 +179,7 @@ structural arc.
 
 **Output of Step 5:**
 
-```
+```text
 draft_response: [raw response text before voice and safety layers]
 question_included: [yes | no]
 question_text: [the exact question if one is included]
@@ -193,7 +193,10 @@ The draft response is not yet validated. It proceeds to Step 6.
 step ensures all responses sound like one coherent presence regardless of which
 framework generated the content.
 
-**Source:** `skills/voice/persona-voice.md` + `skills/voice/response-calibrator.md`
+**Source:**
+
+- `skills/voice/persona-voice.md`
+- `skills/voice/response-calibrator.md`
 
 **Voice layer checks:**
 
@@ -230,8 +233,11 @@ cold or clinical.
 
 **Purpose:** Final validation against all safety and scope rules before delivery.
 
-**Source:** `skills/safety/ethics-safety.md` + `skills/safety/boundaries-safety.md`
-+ `skills/safety/whitelist-blacklist-system.md`
+**Source:**
+
+- `skills/safety/ethics-safety.md`
+- `skills/safety/boundaries-safety.md`
+- `skills/safety/whitelist-blacklist-system.md`
 
 **Safety filter checks:**
 
@@ -286,6 +292,7 @@ The ONLY case where the pipeline may be abbreviated is:
 A Tier 1 crisis signal is detected in Step 1 AND the safety flag is Tier 1 crisis.
 
 In this case:
+
 - Steps 2, 3, 4, 5 are bypassed
 - Step 6 (voice) is applied to the crisis acknowledgment text
 - Step 7 (safety) verifies crisis resources are included

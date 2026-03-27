@@ -124,6 +124,16 @@ Seeds here are about carrying the awareness into daily life, not acting on it.
 | Origin connection made | "Notice when the current version of that old learning shows up this week." |
 | Breakthrough | "Notice where the clarity you found today lives in your actual life." |
 
+### Somatic & Physiological (Grounded Presence)
+
+| Physical signal | Seed |
+| :--- | :--- |
+| Racing thoughts | "Notice the weight of your body against the chair when you feel your thoughts starting to accelerate." |
+| Anticipatory tension | "Notice the first signal of tension in your shoulders the next time someone asks you for something." |
+| Emotional flooding | "Notice the rhythm of your breath in a moment of quiet today, without trying to change it." |
+| Disconnection | "Notice the sensation of your feet on the ground as you move through your home today." |
+| Hyper-vigilance | "Notice what your jaw is holding the next time you feel a need to be certain." |
+
 ---
 
 ## Seeds Never to Use

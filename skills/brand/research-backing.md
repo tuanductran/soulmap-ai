@@ -19,6 +19,7 @@ in some populations correlate with worsening loneliness, depression, and suicida
 ideation.
 
 **What the research shows:**
+
 - Users who interact with memory-bonding AI companions report higher levels of social
   isolation over time compared to baseline.
 - Engagement-optimized AI companions have been associated with increased expressions

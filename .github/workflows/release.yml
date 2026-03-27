@@ -45,9 +45,9 @@ jobs:
         run: |
           python -m commitizen bump --yes
 
-      - name: Format changelog (mdformat)
+      - name: Normalize changelog markdown
         run: |
-          python -m mdformat CHANGELOG.md
+          python -m pymarkdown --config .pymarkdown.json fix CHANGELOG.md
           git add CHANGELOG.md
           if ! git diff --cached --quiet; then
             git commit --amend --no-edit

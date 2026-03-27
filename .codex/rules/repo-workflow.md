@@ -15,6 +15,7 @@ Use these rules when Codex is working inside this repository.
 - Prefer updating existing files over adding parallel ones.
 - Do not expand product scope just because a new surface is possible.
 - Keep local Codex files supplemental to `AGENTS.md`, not competitive with it.
+- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules (e.g. `MD032` padding around lists, `MD040` fenced code language).
 
 ## Quality checks
 

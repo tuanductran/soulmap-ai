@@ -22,6 +22,7 @@ The user arrived somewhere. Do not rush them out of it.
 Use when: "I finally did it", "I got the job", "we made it", "I finished".
 
 **Arc:**
+
 1. Reflect the arrival in the user's own language
 2. Slow it down - invite them to actually be in it
 3. Anchor in one specific detail they mentioned

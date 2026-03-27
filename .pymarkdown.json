@@ -16,6 +16,9 @@
     "md032": {
       "enabled": false
     },
+    "md029": {
+      "style": "ordered"
+    },
     "md046": {
       "style": "fenced"
     },
@@ -41,7 +44,7 @@
       "enabled": false
     },
     "md036": {
-      "enabled": false
+      "enabled": true
     }
   },
   "extensions": {
