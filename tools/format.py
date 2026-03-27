@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import subprocess
+
 from tools._markdown import iter_markdown_files
 from tools._repo import REPO_ROOT
 from tools._run import python_executable, python_module, repo_tooling_lock, run
@@ -31,10 +33,24 @@ def main(argv: list[str] | None = None) -> int:
                 rel for rel in rel_md_files if not rel.startswith(".claude/rules/")
             ]
             if rel_md_files_for_pymarkdown:
-                run(
-                    [python, "-m", "pymarkdown", "fix", *rel_md_files_for_pymarkdown],
+                result = run(
+                    [
+                        python,
+                        "-m",
+                        "pymarkdown",
+                        "--config",
+                        ".pymarkdown.json",
+                        "fix",
+                        *rel_md_files_for_pymarkdown,
+                    ],
                     cwd=repo_root,
+                    check=False,
                 )
+                if result.returncode not in (0, 3):
+                    raise subprocess.CalledProcessError(
+                        result.returncode,
+                        result.args,
+                    )
 
     return 0
 

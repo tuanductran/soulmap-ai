@@ -295,9 +295,18 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
         match = ordered_re.match(raw)
         if not match:
             if raw.strip() == "":
-                prev_indent = None
-                prev_num = None
-                prev_line_was_item = False
+                continue
+
+            if (
+                prev_line_was_item
+                and prev_indent is not None
+                and raw.startswith(f"{prev_indent}   ")
+            ):
+                continue
+
+            prev_indent = None
+            prev_num = None
+            prev_line_was_item = False
             continue
 
         indent, num_str = match.groups()

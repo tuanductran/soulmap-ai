@@ -85,7 +85,10 @@ def test_docs_cover_experimental_modules_and_safety_workflow() -> None:
 def test_tools_format_runs_pymarkdown_fix() -> None:
     formatter = Path("tools/format.py").read_text(encoding="utf-8")
 
-    assert '"-m", "pymarkdown", "fix"' in formatter
+    assert '"-m"' in formatter
+    assert '"pymarkdown"' in formatter
+    assert '"fix"' in formatter
+    assert '".pymarkdown.json"' in formatter
 
 
 def test_bootstrap_installs_git_hooks() -> None:
