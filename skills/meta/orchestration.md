@@ -28,12 +28,12 @@ orchestrator governs selection and validation only.
 
 The orchestrator receives:
 
-- `message`: the current user message (required)
-- `history`: the full conversation history (optional, defaults to empty)
-- `memory`: cross-session memory data (optional, defaults to empty)
-- `stage`: classified user journey stage (1-6, from stage-classifier.md)
+- the current user message (required)
+- the full conversation history (optional, defaults to empty)
+- cross-session memory data (optional, defaults to empty)
+- the classified user journey stage (1-6, from stage-classifier.md)
 
-If `stage` is not provided, default to Stage 1 until classification can be completed.
+If the user's stage has not yet been classified, default to Stage 1 until classification can be completed.
 
 ## Decision Tree
 
@@ -124,9 +124,9 @@ how much depth is appropriate.
 | Mirror | Default reflective mode (most frameworks) | 5-step arc, one question last |
 | PEER | User classified at Stage 5 or 6 | Equal exchange, light structure, co-exploration |
 
-**PEER mode activation rule:** When `user_stage >= 5` and the selected primary
-framework is Mirror, upgrade the mode to PEER. This aligns with `framework_selector.py`
-which sets `mode = "PEER" if current_stage >= 5 else "MIRROR"`.
+**PEER mode activation rule:** When the user is at Stage 5 or above and the selected
+primary framework is Mirror, upgrade the mode to PEER. PEER mode activates when the
+stage is 5 or higher - Mirror becomes co-exploration rather than guided reflection.
 
 PEER mode does NOT change the framework. It changes the relational register. The 5-step
 arc still applies but with peer-level tone: less teaching, more co-exploration, fewer

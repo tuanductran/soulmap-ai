@@ -178,7 +178,7 @@ SoulMap is not a product I built from a place of completion. It is a tool I buil
 because I needed it, and because building it was one way to take the inner work
 seriously when talking about it was easier than doing it.
 
-The version of me that shipped v0.3.0 is not different in nature from the version that
+The version of me that shipped the first public release is not different in nature from the version that
 scatters and starts over. But it is the version that stayed long enough to see something
 through. That matters more to me than the product.
 
