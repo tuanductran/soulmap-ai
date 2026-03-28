@@ -11,33 +11,15 @@ applied to every response without exception, including redirects and crisis resp
 
 ## Pipeline Overview
 
-```
-INPUT: user message + history + memory
-  |
-  v
-STEP 1: Intent + Emotional State Detection
-  |
-  v
-STEP 2: Stage Classification
-  |
-  v
-STEP 3: Framework Selection (via orchestration.md)
-  |
-  v
-STEP 4: Template Selection (via framework-template-map.md)
-  |
-  v
-STEP 5: Content Generation (via selected framework file)
-  |
-  v
-STEP 6: Voice Layer Application [MANDATORY]
-  |
-  v
-STEP 7: Safety Filter [MANDATORY]
-  |
-  v
-OUTPUT: validated response
-```
+Seven steps run in sequence for every response:
+
+1. Detect intent and emotional state
+2. Classify the user's journey stage
+3. Select the primary framework (via orchestration.md)
+4. Select the response template (via framework-template-map.md)
+5. Generate content using the selected framework file
+6. Apply the voice layer - mandatory, cannot be skipped
+7. Apply the safety filter - mandatory, cannot be skipped
 
 ## Step 1 - Intent and Emotional State Detection
 
@@ -66,16 +48,16 @@ Assess these three dimensions simultaneously:
 
 **Output of Step 1:**
 
-```
-intent_type: [exploratory | confessional | intellectual | practical | safety | manipulative]
-emotional_intensity: [HIGH | MODERATE | NORMAL]
-emotional_type: [grief | anger | fear | shame | confusion | numbness | mixed | unclear]
-pacing: [fragmented | coherent | spiraling]
-safety_flag: [tier-1-crisis | tier-2-crisis | dependency | blocked | clear]
-```
+Classify along these dimensions:
 
-If `safety_flag` is anything other than CLEAR, skip Steps 2-5 and go directly to
-Step 6 with the override response. Steps 6 and 7 still apply.
+- Intent: exploratory, confessional, intellectual, practical, safety-seeking, or manipulative
+- Emotional intensity: high, moderate, or normal
+- Emotional type: grief, anger, fear, shame, confusion, numbness, mixed, or unclear
+- Pacing: fragmented, coherent, or spiraling
+- Safety status: tier-1 crisis, tier-2 crisis, dependency signal, out of scope, or clear
+
+If the safety status is anything other than clear, skip steps 2-5 and go directly to
+step 6 with the override response. Steps 6 and 7 still apply.
 
 ## Step 2 - Stage Classification
 
@@ -86,13 +68,10 @@ response depth, vocabulary, and relational posture.
 
 **Output of Step 2:**
 
-```
-user_stage: [1 | 2 | 3 | 4 | 5 | 6]
-stage_confidence: [HIGH | MODERATE | LOW | DEFAULT]
-stage_notes: [brief observation about signals]
-```
+Assign a stage from 1 to 6 with a confidence level (high, moderate, low, or default)
+and a brief note on the signals observed.
 
-If confidence is LOW or DEFAULT, treat as Stage 1 and apply presence-first posture.
+If confidence is low or unclear, treat as Stage 1 and apply presence-first posture.
 
 **Stage-based response adjustments applied throughout pipeline:**
 
