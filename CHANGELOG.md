@@ -5,6 +5,20 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.4.0 (2026-03-28)
+
+### Feat
+
+- **brand**: enrich ICP and founder story from personal numerology lens
+
+### Fix
+
+- **markdown**: resolve lint violations
+- remove technical implementation details from skills and templates
+- **docs**: replace smart quotes with ASCII apostrophes in UPLOAD.md
+- **claude**: resolve 5 contract test failures in new workflow docs
+- **workflow**: guard manual release markdown checks
+
 ## v0.3.0 (2026-03-23)
 
 ### Feat
