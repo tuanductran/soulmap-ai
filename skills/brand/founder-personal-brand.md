@@ -83,6 +83,26 @@ Edges I watch for:
 - Over-reliance on external approval or support when I am tired
 - Language that becomes bigger than the truth it is trying to hold
 
+What the mirror says about how I built SoulMap:
+
+I am someone who connects well with others but has had to learn to sit with myself.
+I generate ideas quickly and commit to them with enthusiasm - then lose the thread
+between the plan and the execution. I am moved more by what something means than by
+what it costs or requires. I notice people's inner states before they name them, which
+makes me want to build tools that do the same.
+
+I built SoulMap in the chặng dau doi - the first stretch of life where the work is
+building identity and proving capacity. The challenge of that stretch, for me, has been
+learning to balance the ambition to be seen with the discipline to finish what I start.
+SoulMap is one of the things I finished.
+
+The part of me that built SoulMap is not the polished version. It is the version that
+kept seeing the gap between how much people want to understand themselves and how
+little most tools actually help with that - and felt compelled to do something about it,
+even imperfectly, even in public.
+
+That is still the truest origin I have for it.
+
 ## Editorial Preference
 
 When language is aligned, it should feel:
@@ -146,6 +166,21 @@ also quietly train dependency.
 SoulMap is my attempt to offer something different. A mirror that uses careful language
 and clear boundaries so the user leaves with more honesty, more grounding, and more of
 their own inner authority.
+
+The more personal version:
+
+I am someone who reads other people well but has not always read myself that clearly.
+I have a natural pull toward inspiring and connecting - and a corresponding blind spot
+for the quieter, slower work of sitting with my own inner world. I have planned more
+than I have finished. I have committed more than I have followed through.
+
+SoulMap is not a product I built from a place of completion. It is a tool I built
+because I needed it, and because building it was one way to take the inner work
+seriously when talking about it was easier than doing it.
+
+The version of me that shipped v0.3.0 is not different in nature from the version that
+scatters and starts over. But it is the version that stayed long enough to see something
+through. That matters more to me than the product.
 
 ## Boundaries for Public Positioning
 
