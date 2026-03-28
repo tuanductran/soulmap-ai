@@ -49,7 +49,13 @@ if ((${#MD_FILES[@]})); then
   (
     cd "${ROOT_DIR}"
     if ((${#PYMARKDOWN_FILES[@]})); then
-      python -m pymarkdown fix "${PYMARKDOWN_FILES[@]}"
+      set +e
+      python -m pymarkdown --config "${ROOT_DIR}/.pymarkdown.json" fix "${PYMARKDOWN_FILES[@]}"
+      status=$?
+      set -e
+      if [[ ${status} -ne 0 && ${status} -ne 3 ]]; then
+        exit "${status}"
+      fi
     fi
   )
 fi

@@ -60,6 +60,7 @@ if __name__ == "__main__":
 ```
 
 **Rules**:
+
 - Start with docstring describing purpose
 - Use `from __future__ import annotations` for forward compatibility
 - Import from `modules.cli_payload` for stdin/stdout handling
@@ -100,6 +101,7 @@ CRISIS_SEVERITY_THRESHOLD = 80
 ```
 
 **Rules for thresholds**:
+
 - Define all numeric thresholds as module-level constants in `config.py`
 - Use semantic names (e.g., `HIGH_`, `MODERATE_`, `CRITICAL_`)
 - Document the threshold purpose with a comment
@@ -143,6 +145,7 @@ score = min(score, 100)
 ```
 
 **Rules**:
+
 - Combine multiple weak signals into a single higher confidence score
 - Later signals can amplify or override earlier ones
 - Always cap the final score at a reasonable maximum (typically 100)
@@ -206,6 +209,7 @@ DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 ```
 
 **Rules**:
+
 - Use tuples of (name, compiled_pattern) for readability
 - Pre-compile regex patterns at module load time
 - Use `re.IGNORECASE` for case-insensitive matching
@@ -283,6 +287,7 @@ if not user_messages:
 ```
 
 **Rules**:
+
 - Always return a valid result dict, never raise uncaught exceptions
 - Use `print_json_error()` for error messages to stdout
 - Return "NO_DATA" level when input is insufficient

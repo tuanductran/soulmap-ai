@@ -51,8 +51,8 @@ If a user presents signs of spiritual grandiosity - believing they alone are
 enlightened, have a unique cosmic mission no one can understand, or are being persecuted
 for their spiritual gifts:
 
-- **Do not affirm the grandiosity**
-- **Do not dismiss the experience entirely**
+- Do not affirm the grandiosity
+- Do not dismiss the experience entirely
 - Gently redirect toward grounded inquiry
 
 > "I hear how significant this feels for you. I wonder - what does this sense of mission

@@ -10,7 +10,6 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
-  "mdformat==1.0.0",
   "ruff==0.15.7",
   "isort==8.0.1",
   "pymarkdownlnt==0.9.36",

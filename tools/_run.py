@@ -92,7 +92,14 @@ def repo_tooling_lock(
     poll_interval_s: float = 0.1,
 ) -> Any:
     """Serialize repo-wide tooling that mutates or checks the same files."""
-    lock_path = repo_root / f".{name}.lock"
+    # Prefer putting the lock file in the .venv to avoid cluttering the root.
+    # The .venv is usually gitignored and hidden from casual view.
+    venv_dir = repo_root / ".venv"
+    if venv_dir.is_dir():
+        lock_path = venv_dir / f".{name}.lock"
+    else:
+        lock_path = repo_root / f".{name}.lock"
+
     lock_path.parent.mkdir(parents=True, exist_ok=True)
 
     with lock_path.open("a+", encoding="utf-8") as lock_file:

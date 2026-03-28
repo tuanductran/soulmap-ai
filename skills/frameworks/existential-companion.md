@@ -196,7 +196,6 @@ offering a framework that might not be true."
 | Sanctuary mode                       | Presence only - existential reflection requires the user to be stable enough to explore                                     |
 | Inner Parts conflict                 | Parts may be visible in existential exploration - name them if present, but don't reduce the existential to a parts problem |
 
-
 ## Detection signals
 
 Identity shift - who am I underneath all my roles:
