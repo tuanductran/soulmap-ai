@@ -35,7 +35,7 @@ STAGE_SIGNALS = {
     },
     2: {
         "name": "Honest Recognition",
-        "soulmap_role": "Mirror and gentle guide",
+        "soulmap_role": "Mirror with gentle reflection",
         "keywords": [
             "maybe i",
             "i think i might",
@@ -53,7 +53,7 @@ STAGE_SIGNALS = {
     },
     3: {
         "name": "Pattern Recognition & Coherence",
-        "soulmap_role": "Guide into pattern archaeology",
+        "soulmap_role": "Mirror for pattern archaeology",
         "keywords": [
             "pattern",
             "i always do this",
@@ -191,7 +191,7 @@ def detect_stage(conversation_messages: list[ConversationMessage]) -> dict[str, 
         2: "Stage 2: Begin gentle reflection. Name patterns as observations. One question at end.",
         3: "Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.",
         4: "Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.",
-        5: "Stage 5: Peer exchange. Equal conversation. Co-explore rather than guide.",
+        5: "Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.",
         6: "Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.",
     }
 

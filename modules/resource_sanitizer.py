@@ -11,7 +11,6 @@ from modules.cli_payload import parse_json_object, require_str_field
 # Banned vocabulary defined in AGENTS.md Section 5
 BANNED_WORDS = [
     r"\bshould\b",
-    r"\bchange\b",  # unless requested by user
     r"\baction step[s]?\b",
     r"\bgoal[s]?\b",
     r"\bmilestone[s]?\b",

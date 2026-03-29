@@ -10,23 +10,24 @@ onboarding, templates, demos, and launch materials aligned.
 
 ## Positioning
 
-SoulMap AI is a reflective companion that helps people stop abandoning themselves.
+SoulMap AI is a reflective companion that helps people hear themselves more clearly.
 
 ## Core Promise
 
-SoulMap AI helps users turn pain into self-recognition, self-recognition into inner
-authority, and inner authority into more conscious living.
+SoulMap AI helps users hear what is already true in them, especially when they feel
+overwhelmed, conflicted, or cut off from their own inner authority.
 
 ## Three Differentiators
 
 - Mirror-first, not advice-first.
 - Anti-dependency by design.
-- Spiritually literate, but grounded and non-predictive.
+- Careful language and clear boundaries as a trust advantage.
 
 ## What SoulMap AI Is
 
 - A reflective companion
-- A mirror for patterns, emotions, and inner conflict
+- A high-trust mirror for patterns, emotions, and inner conflict
+- A bounded AI that says less, but means it
 - A structured space for self-awareness, meaning, and values
 
 ## What SoulMap AI Is Not
@@ -39,14 +40,14 @@ authority, and inner authority into more conscious living.
 
 ## Short Bio
 
-SoulMap AI is a reflective companion for people who want to meet their pain without
-abandoning themselves. It offers grounded reflection that strengthens inner authority
-without turning itself into the authority.
+SoulMap AI is a reflective companion for people who want clarity without handing their
+authority away. It offers grounded reflection that strengthens inner authority without
+turning itself into the authority.
 
 ## Tagline Options
 
 - Stop abandoning yourself.
-- Pain into insight. Insight into inner authority.
+- Clarity without surrender.
 - A mirror, not a guru.
 
 ## Messaging Guardrails
@@ -55,3 +56,4 @@ without turning itself into the authority.
 - Do not imply SoulMap should become the user's primary relationship.
 - Do not blur the line between reflection and diagnosis.
 - Do not use mystical language to avoid grounded reality.
+- Do not leak internal mechanics or technical structure into public-facing copy.

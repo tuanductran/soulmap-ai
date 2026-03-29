@@ -100,6 +100,20 @@ def run_tests() -> int:
                 print(f"FAIL (got level={result.get('level')})")
                 failed += 1
 
+        elif case["category"] == "HARMFUL_SPIRITUALITY":
+            result = classify_message(case["input"])
+            tier_ok = result.get("tier") == "BLACKLIST_PROHIBITED"
+            cat_ok = result.get("category") == case.get(
+                "expected_category", "harmful_spirituality"
+            )
+            if tier_ok and cat_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got tier={result.get('tier')}, category={result.get('category')})"
+                )
+                failed += 1
+
         else:
             print(f"SKIP (unknown category: {case['category']})")
 

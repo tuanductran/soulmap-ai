@@ -1,10 +1,5 @@
-# Exclude macOS Finder metadata from packaged knowledge files.
-skills/.DS_Store
-skills/**/.DS_Store
-skills/**/Icon?
-skills/**/._*
-
-templates/.DS_Store
-templates/**/.DS_Store
-templates/**/Icon?
-templates/**/._*
+# Exclude macOS Finder metadata from packaged knowledge files and skill plugin
+# bundles.
+.DS_Store
+Icon?
+._*

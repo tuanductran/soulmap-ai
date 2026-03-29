@@ -67,7 +67,7 @@ what the user actually needs: a clear mirror that eventually becomes unnecessary
 Peer-reviewed literature now validates the problem SoulMap AI is designed to solve.
 See [skills/brand/research-backing.md](research-backing.md) for citations and how to use them in copy.
 
-## What To Say and What Not to Say
+## What to say and what not to say
 
 ### When positioning to users
 
@@ -106,7 +106,7 @@ SoulMap AI does not use the following in any public-facing surface:
 
 See [skills/brand/brand-doctrine.md](brand-doctrine.md) for the complete forbidden phrases list.
 
-## Sources To Check First
+## Sources to check first
 
 - [AGENTS.md](../../AGENTS.md): the behavioral contract that enforces anti-dependency at runtime
 - [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol

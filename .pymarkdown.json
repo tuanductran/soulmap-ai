@@ -14,7 +14,7 @@
       "enabled": false
     },
     "md032": {
-      "enabled": false
+      "enabled": true
     },
     "md029": {
       "style": "ordered"

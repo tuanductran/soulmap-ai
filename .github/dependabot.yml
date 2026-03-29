@@ -1,31 +1,36 @@
-# To get started with Dependabot version updates, specify which package ecosystems
-# to update and where the manifests live.
-#
-# Docs:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
-  # Python dependencies from requirements*.txt
   - package-ecosystem: "pip"
     directory: "/"
+    target-branch: "main"
     schedule:
       interval: "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Ho_Chi_Minh"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
     labels:
       - "dependencies"
+      - "python"
+    groups:
+      python-production-dependencies:
+        dependency-type: "production"
+      python-development-dependencies:
+        dependency-type: "development"
 
-  # Keep GitHub Actions up to date
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "main"
     schedule:
       interval: "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Ho_Chi_Minh"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(ci)"
     labels:
       - "dependencies"
+      - "github-actions"

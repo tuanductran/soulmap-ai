@@ -11,13 +11,16 @@ python -m tools.build_skill --skill   # skill package
 
 ### `dist/soulmap-ai.zip`
 
-Standard zip archive containing `skills/`, `templates/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`.
+Standard zip archive containing `skills/`, `templates/`, root
+[`../SKILL.md`](../SKILL.md), [`../AGENTS.md`](../AGENTS.md), and `LICENSE`.
 
 This build intentionally excludes `.claude-plugin/`.
 
 Use this when you want a clean knowledge archive for manual extraction, project knowledge, or document-based AI workflows.
 
-`AGENTS.md` is intended to stand on its own in this extracted package. Do not assume repo-local workflow files are present unless they are explicitly bundled too.
+[`AGENTS.md`](../AGENTS.md) is intended to stand on its own in this extracted package.
+Do not assume repo-local workflow files are present unless they are explicitly bundled
+too.
 
 ### `dist/soulmap-ai.skill`
 
@@ -27,39 +30,57 @@ Use this when you need to keep skill metadata bundled with the knowledge files.
 
 Treat `.claude-plugin/` as opaque metadata during packaging and upload. Do not edit, rewrite, or flatten it as part of the build.
 
+For the local packaging-only role of this folder, see
+[../.claude-plugin/README.md](../.claude-plugin/README.md).
+
 ## AI tool compatibility
 
 ### ChatGPT
 
 ChatGPT handles ZIP files differently depending on the context you are working in.
 
-**Conversations (Plus/Pro with Code Interpreter enabled):** You can upload a ZIP file directly and ChatGPT will extract and read its contents using the Code Interpreter sandbox. This makes the standard `dist/soulmap-ai.zip` usable as a multi-file upload in a single step - upload the archive, then ask ChatGPT to read `SKILL.md`, `AGENTS.md`, and the relevant folders under `skills/` and `templates/`.
+**Conversations (Plus/Pro with Code Interpreter enabled):** You can upload a ZIP file
+directly and ChatGPT will extract and read its contents using the Code Interpreter
+sandbox. This makes the standard `dist/soulmap-ai.zip` usable as a multi-file upload in
+a single step, upload the archive, then ask ChatGPT to read [`../SKILL.md`](../SKILL.md),
+[`../AGENTS.md`](../AGENTS.md), and the relevant folders under [`../skills/`](../skills/)
+and [`../templates/`](../templates/).
 
 **Custom GPT knowledge base:** ZIP files are not supported as Custom GPT knowledge files. OpenAI's knowledge retrieval system indexes individual text-based documents (PDF, DOCX, TXT, Markdown). For a Custom GPT, extract the archive and upload the individual Markdown and text files you want indexed.
 
 **Recommended workflow for Custom GPT:**
 
 1. Extract `dist/soulmap-ai.zip`.
-2. Upload `SKILL.md`, `AGENTS.md`, and the key files under `skills/` and `templates/`.
+2. Upload [`../SKILL.md`](../SKILL.md), [`../AGENTS.md`](../AGENTS.md), and the key
+   files under [`../skills/`](../skills/) and [`../templates/`](../templates/).
 3. Keep each file under 512 MB and prefer plain Markdown or TXT for reliable retrieval.
 
 ### Claude
 
 Claude handles ZIP files only via the Custom Skills feature, not as regular document uploads.
 
-**Custom Skills (Pro, Max, Team, Enterprise - requires Code Execution enabled):** Claude's official Skills system accepts ZIP archives through `Customize > Skills > Upload a skill`. The archive must contain a `SKILL.md` at the root. The `dist/soulmap-ai.skill` file follows exactly this structure and can be uploaded directly - rename it to `.zip` first if the upload dialog requires a `.zip` extension.
+**Custom Skills (Pro, Max, Team, Enterprise, requires Code Execution enabled):**
+Claude's official Skills system accepts ZIP archives through `Customize > Skills >
+Upload a skill`. The archive must contain a root
+[`../SKILL.md`](../SKILL.md). The `dist/soulmap-ai.skill` file follows exactly this
+structure and can be uploaded directly, rename it to `.zip` first if the upload dialog
+requires a `.zip` extension.
 
 **Claude.ai conversations and Project knowledge:** ZIP files are not supported as regular uploads. Claude accepts PDF, DOCX, TXT, RTF, HTML, CSV, Markdown, and images up to 30 MB per file. For Project knowledge, upload the individual extracted files.
 
 **Recommended workflow for Claude Projects:**
 
 1. Extract `dist/soulmap-ai.zip`.
-2. Upload `SKILL.md`, `AGENTS.md`, and the relevant files under `skills/` and `templates/` to the Project knowledge base.
+2. Upload [`../SKILL.md`](../SKILL.md), [`../AGENTS.md`](../AGENTS.md), and the relevant
+   files under [`../skills/`](../skills/) and [`../templates/`](../templates/) to the
+   Project knowledge base.
 3. For the full Custom Skills experience, upload `dist/soulmap-ai.skill` (or rename to `.zip`) via `Customize > Skills`.
 
 ### Any Agent Skills-compatible agent
 
-Agent Skills are an open format built around a portable skill folder with `SKILL.md` at the root. The `.skill` archive is a transport package that can be unpacked into that directory structure on any compatible agent runtime.
+Agent Skills are an open format built around a portable skill folder with
+[`../SKILL.md`](../SKILL.md) at the root. The `.skill` archive is a transport package
+that can be unpacked into that directory structure on any compatible agent runtime.
 
 ## Standard build examples
 
@@ -79,13 +100,16 @@ What you get:
 Suggested use for ChatGPT with Code Interpreter:
 
 1. Upload `dist/soulmap-ai.zip` directly in a ChatGPT Plus/Pro conversation.
-2. Ask ChatGPT to extract the archive and load `SKILL.md` and `AGENTS.md` as the governing instruction set.
+2. Ask ChatGPT to extract the archive and load [`../SKILL.md`](../SKILL.md) and
+   [`../AGENTS.md`](../AGENTS.md) as the governing instruction set.
 
 Suggested use for Custom GPT knowledge or Claude Projects:
 
 1. Extract the zip.
 2. Upload the Markdown or text files that match your tool's supported file types.
-3. Point the tool at `SKILL.md`, `AGENTS.md`, and the relevant folders under `skills/` and `templates/`.
+3. Point the tool at [`../SKILL.md`](../SKILL.md), [`../AGENTS.md`](../AGENTS.md), and
+   the relevant folders under [`../skills/`](../skills/) and
+   [`../templates/`](../templates/).
 
 ### Skill build for Claude Custom Skills or skill-oriented agents
 

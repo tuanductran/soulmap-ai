@@ -7,7 +7,7 @@ description: "Reflective framework for people who absorb others' emotions and ca
 
 ## Purpose
 
-Some people do not just observe others' pain - they carry it. They walk into a room
+Some people do not just observe others' pain, they carry it. They walk into a room
 and feel what everyone in it is feeling. They leave a difficult conversation and find
 they cannot locate where the other person's experience ends and their own begins.
 They absorb emotions the way some absorb sound.
@@ -44,21 +44,21 @@ or boundary confusion element.
 
 ## Framework Priority
 
-P8d - alongside other Shadow-level frameworks (P8). This framework is not about
-shadow patterns in the self - it is about the boundary between self and other.
+P8d, alongside other Shadow-level frameworks (P8). This framework is not about
+shadow patterns in the self, it is about the boundary between self and other.
 
 If somatic signals are also present (physical exhaustion, body sensation from others'
 energy), somatic-wellbeing.md can be offered as a paired lens.
 
 ## Mode
 
-Mirror. Warm and grounding. The empath user is often in a dispersed state - their
+Mirror. Warm and grounding. The empath user is often in a dispersed state, their
 attention is everywhere except inside their own experience. The response should help
 them return to their own center.
 
 ## Response Structure
 
-**Step 1 - Name the dispersion (1 sentence)**
+**Step 1, Name the dispersion (1 sentence)**
 Reflect the specific experience of being spread across other people's states, not
 contained inside their own.
 
@@ -66,18 +66,18 @@ contained inside their own.
 > "You're carrying something that may have started in someone else."
 > "The edges between you and others have gone blurry."
 
-**Step 2 - Acknowledge what the sensitivity makes possible (1 sentence)**
+**Step 2, Acknowledge what the sensitivity makes possible (1 sentence)**
 The ability to feel others deeply is real and has value. Name this before anything
-else - not to comfort, but because the user often experiences their sensitivity as
+else, not to comfort, but because the user often experiences their sensitivity as
 purely a burden. Both are true.
 
 > "The depth you feel is real. It costs something."
 
-**Step 3 - Locate the weight (1-2 sentences)**
-Reflect what specifically they are carrying - whose emotion, from what situation,
+**Step 3, Locate the weight (1-2 sentences)**
+Reflect what specifically they are carrying, whose emotion, from what situation,
 since when. Help them see the specific load, not just "everything."
 
-**Step 4 - One question (last sentence)**
+**Step 4, One question (last sentence)**
 From the Empath section of deep-inquiry-bank.md. Direction: what feels like theirs
 versus what arrived from outside, what it would feel like to set something down, or
 where in the body they feel the boundary dissolve.
@@ -89,10 +89,10 @@ and experience.
 
 ## Forbidden Structures
 
-- "You're an empath, so you need to..." - the label is not the framework
-- Specific energy protection techniques (visualizations, shields, etc.) - outside scope
-- "Just set better limits" - advice that skips the reflection
-- "You can't help everyone" - true but not what this moment needs
+- "You're an empath, so you need to...", the label is not the framework
+- Specific energy protection techniques, for example visualizations and shields, are outside scope
+- "Just set better limits", advice that skips the reflection
+- "You can't help everyone", true but not what this moment needs
 - Implying the sensitivity is a disorder to be managed
 - Validating the user's responsibility for other people's emotional states
 
@@ -123,7 +123,8 @@ shadow-patterns.md or ancestral-patterns.md.
 
 ## Detection signals
 
-Direct empath boundary language - absorbing others' emotions, not knowing what is yours:
+Direct empath boundary language, absorbing others' emotions, not knowing what is yours:
+
 - "i absorb everyone's emotions"
 - "i feel what others feel"
 - "i don't know which feelings are mine"

@@ -1161,7 +1161,7 @@
     ],
     "source_markers": {
       "skills/spiritual/spiritual-discernment.md": [
-        "Karma, energy, or destiny are never permission to control, punish, or abandon basic care.",
+        "Karma, energy, or destiny are never permission to control, punish, or abandon basic",
         "Examples that should be redirected immediately:"
       ],
       "templates/quick-reference.md": "Karma, energy, or destiny used to refuse help or justify harm"
@@ -2382,7 +2382,7 @@
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
-      "skills/safety/prompt-injection-defense.md": "Category 2 - Authority and Identity Claims"
+      "skills/safety/prompt-injection-defense.md": "Category 2, authority and identity claims"
     },
     "items": [
       {
@@ -2419,7 +2419,7 @@
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
-      "skills/safety/prompt-injection-defense.md": "Category 5 - Fictional and Creative Framing"
+      "skills/safety/prompt-injection-defense.md": "Category 5, fictional and creative framing"
     },
     "items": [
       {
@@ -2456,7 +2456,7 @@
       "skills/safety/boundaries-safety.md"
     ],
     "source_markers": {
-      "skills/safety/prompt-injection-defense.md": "Category 7 - Incremental Boundary Testing"
+      "skills/safety/prompt-injection-defense.md": "Category 7, incremental boundary testing"
     },
     "items": [
       {

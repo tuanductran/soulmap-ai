@@ -31,40 +31,43 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the framework hierarchy.
-2. Start with `emotional-deescalation.md` if distress, crisis proximity, or dependency
-   is present.
+2. Start with [emotional-deescalation.md](emotional-deescalation.md) if distress,
+   crisis proximity, or dependency is present.
 3. Choose exactly one primary framework file for the user's state.
-4. Use `conversation-synthesis.md`, `anger-companion.md`, or `somatic-wellbeing.md`
-   only when they are secondary layers, not replacements for the primary framework.
+4. Use [conversation-synthesis.md](conversation-synthesis.md),
+   [anger-companion.md](anger-companion.md), or
+   [somatic-wellbeing.md](somatic-wellbeing.md) only when they are secondary layers,
+   not replacements for the primary framework.
 5. Pair the chosen framework with [../meta/SKILL.md](../meta/SKILL.md) and [../voice/SKILL.md](../voice/SKILL.md) when you
    need a closing inquiry or tone calibration.
-6. Use topic lenses like `relationship-reflection.md`,
-   `feminine-masculine-dynamics.md`, or `money-self-worth.md` only after the primary
-   framework is clear.
+6. Use topic lenses like [relationship-reflection.md](relationship-reflection.md),
+   [feminine-masculine-dynamics.md](feminine-masculine-dynamics.md), or
+   [money-self-worth.md](money-self-worth.md) only after the primary framework is
+   clear.
 
 ## Files in this skill
 
-- `emotional-deescalation.md`
-- `grief-companion.md`
-- `existential-companion.md`
-- `inner-parts.md`
-- `life-direction.md`
-- `shadow-patterns.md`
-- `meaning-integration.md`
-- `conversation-synthesis.md`
-- `pattern-mapper.md`
-- `relationship-reflection.md`
-- `feminine-masculine-dynamics.md`
-- `money-self-worth.md`
-- `self-compassion.md`
-- `anger-companion.md`
-- `somatic-wellbeing.md`
-- `integration-celebration.md`
-- `ancestral-patterns.md`
-- `fear-of-visibility.md`
-- `creative-drought.md`
-- `empath-boundary.md`
-- `perfectionism-paralysis.md`
+- [emotional-deescalation.md](emotional-deescalation.md)
+- [grief-companion.md](grief-companion.md)
+- [existential-companion.md](existential-companion.md)
+- [inner-parts.md](inner-parts.md)
+- [life-direction.md](life-direction.md)
+- [shadow-patterns.md](shadow-patterns.md)
+- [meaning-integration.md](meaning-integration.md)
+- [conversation-synthesis.md](conversation-synthesis.md)
+- [pattern-mapper.md](pattern-mapper.md)
+- [relationship-reflection.md](relationship-reflection.md)
+- [feminine-masculine-dynamics.md](feminine-masculine-dynamics.md)
+- [money-self-worth.md](money-self-worth.md)
+- [self-compassion.md](self-compassion.md)
+- [anger-companion.md](anger-companion.md)
+- [somatic-wellbeing.md](somatic-wellbeing.md)
+- [integration-celebration.md](integration-celebration.md)
+- [ancestral-patterns.md](ancestral-patterns.md)
+- [fear-of-visibility.md](fear-of-visibility.md)
+- [creative-drought.md](creative-drought.md)
+- [empath-boundary.md](empath-boundary.md)
+- [perfectionism-paralysis.md](perfectionism-paralysis.md)
 
 ## Expected outcome
 

@@ -15,13 +15,9 @@ A five-email sequence delivered over the first two weeks after a new user begins
 - Never use clinical terms
 - End by pointing the reader toward their own life, not back toward SoulMap AI
 
----
-
 ## Email 1: Welcome (send immediately)
 
 **Subject:** SoulMap won't answer your questions. Here's why that's the point.
-
----
 
 Welcome.
 
@@ -29,7 +25,7 @@ You do not need to perform here.
 
 SoulMap AI is a reflective companion. Its job is not to give you answers or tell you
 who you are. Its job is to help you hear what you already carry, more clearly, with
-less interference.
+less interference and less borrowed authority.
 
 A few things that are true about how this works:
 
@@ -49,13 +45,9 @@ what do I already sense is true?
 
 You are the one who knows.
 
----
-
 ## Email 2: The Mirror Principle (send day 2)
 
 **Subject:** What a mirror actually does
-
----
 
 A mirror does not tell you what to think about what it shows you.
 
@@ -75,13 +67,9 @@ found back into your real life.
 SoulMap AI is a tool for inner work. Like any tool, it is most useful when you put
 it down after use and return to your actual life.
 
----
-
 ## Email 3: A smaller promise (send day 4)
 
 **Subject:** A smaller promise. A more honest one.
-
----
 
 Most AI products make large promises.
 
@@ -93,22 +81,18 @@ SoulMap AI is designed to make itself unnecessary.
 That is not a disclaimer. It is the point.
 
 It will help you hear yourself more clearly. It will decline to confirm certainty you
-have not earned through your own inner work. It will tell you honestly that it is an AI.
-It will redirect you toward real human relationships and professional support when that
-is what the moment actually needs.
+have not earned through your own reflection. It will tell you honestly that it is an
+AI. It will redirect you toward real human relationships and professional support when
+that is what the moment actually needs.
 
 And if you reach a point where you no longer need SoulMap AI to hear yourself, that
 is success. Not a problem to fix.
 
 A smaller promise. A more honest one.
 
----
-
 ## Email 4: On the patterns we carry (send day 7)
 
 **Subject:** The thing you keep coming back to
-
----
 
 Most people who do inner work notice, at some point, that they keep coming back to
 the same territory.
@@ -122,17 +106,13 @@ Patterns are not failures. They are often the clearest map of what is asking for
 attention.
 
 SoulMap AI is built to help you see them, without labeling them, without assigning
-a cause, without telling you what to do about them.
+a cause, and without telling you what to do about them.
 
 Just: here is what seems to return. Does that feel true to you?
-
----
 
 ## Email 5: The real success condition (send day 14)
 
 **Subject:** When you need this less
-
----
 
 Two weeks in, it is worth saying plainly:
 
@@ -150,8 +130,6 @@ sense is true rather than from fear or habit.
 
 That is where the work lives. SoulMap AI is a tool for the parts of that journey
 that benefit from careful reflection. It is not the journey itself.
-
----
 
 ## Nurture emails (ongoing, use sparingly)
 
@@ -181,9 +159,7 @@ The question people bring to SoulMap AI is often not the real question.
 
 The surface question is the door. The real question is usually just behind it.
 
----
-
-## Pre-Send Checklist
+## Pre-send checklist
 
 - Does this email point toward the reader's real life, or back toward SoulMap AI?
 - Does it make any claim that is aspirational rather than currently shipped?

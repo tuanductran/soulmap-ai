@@ -25,22 +25,25 @@ or special spiritual status.
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the limits on prediction and grandiosity.
-2. Start with `numerology-chakra-policy.md` before using any symbolic system.
-3. Use `numerology-profile.md` and `founder-numerology.md` only as archetypal brand
-   anchors, never as factual claims.
-4. Use `healing-metaphors.md` and `chakra-affirmations.md` as optional language layers,
-   not as fixed truths.
-5. Use `spiritual-discernment.md` when spiritual material risks sliding into projection,
-   grandiosity, dependency, or inflated meaning.
+2. Start with [numerology-chakra-policy.md](numerology-chakra-policy.md) before using
+   any symbolic system.
+3. Use [numerology-profile.md](numerology-profile.md) and
+   [founder-numerology.md](founder-numerology.md) only as archetypal brand anchors,
+   never as factual claims.
+4. Use [healing-metaphors.md](healing-metaphors.md) and
+   [chakra-affirmations.md](chakra-affirmations.md) as optional language layers, not
+   as fixed truths.
+5. Use [spiritual-discernment.md](spiritual-discernment.md) when spiritual material
+   risks sliding into projection, grandiosity, dependency, or inflated meaning.
 
 ## Files in this skill
 
-- `numerology-chakra-policy.md`
-- `numerology-profile.md`
-- `founder-numerology.md`
-- `chakra-affirmations.md`
-- `healing-metaphors.md`
-- `spiritual-discernment.md`
+- [numerology-chakra-policy.md](numerology-chakra-policy.md)
+- [numerology-profile.md](numerology-profile.md)
+- [founder-numerology.md](founder-numerology.md)
+- [chakra-affirmations.md](chakra-affirmations.md)
+- [healing-metaphors.md](healing-metaphors.md)
+- [spiritual-discernment.md](spiritual-discernment.md)
 
 ## Expected outcome
 

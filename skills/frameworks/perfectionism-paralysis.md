@@ -1,6 +1,6 @@
 ---
 name: "perfectionism-paralysis"
-description: "Reflective framework for perfectionism as paralysis - when the demand for everything to be right before starting, sharing, or completing something functions as a complete stop. Distinguishes perfectionism-as-fear from perfectionism-as-standard."
+description: "Reflective framework for perfectionism as paralysis, when the demand for everything to be right before starting, sharing, or completing something functions as a complete stop. Distinguishes perfectionism-as-fear from perfectionism-as-standard."
 ---
 
 # Perfectionism Paralysis Framework
@@ -25,7 +25,7 @@ away. It sits with what the perfectionism is actually protecting.
 
 ## Activation Signals
 
-Activate when the user describes the paralysis version of perfectionism - the
+Activate when the user describes the paralysis version of perfectionism, the
 not-starting, not-finishing, not-sharing pattern:
 
 - "I can't start until I know it's right", "I can't share until it's perfect"
@@ -48,7 +48,7 @@ projects or decisions. Perfectionism paralysis is a pattern, not a single instan
 
 ## Framework Priority
 
-P7c - alongside Direction (P7) and Creative Drought (P7b). Distinction:
+P7c, alongside Direction (P7) and Creative Drought (P7b). Distinction:
 
 - Direction (P7): user doesn't know what they want to do
 - Creative Drought (P7b): user wants to create but the source is not flowing
@@ -64,28 +64,28 @@ to be heard before anything else.
 
 ## Response Structure
 
-**Step 1 - Name the specific shape of the stop (1 sentence)**
-Not "you're a perfectionist" - the specific movement: the arrival at the threshold,
+**Step 1, Name the specific shape of the stop (1 sentence)**
+Not "you're a perfectionist", the specific movement: the arrival at the threshold,
 the hand that pulls back, the revision that never ends.
 
 > "You arrive at the edge of releasing it and something closes."
 > "The finish line keeps moving."
 > "There is a version that is almost ready, and 'almost' has been there for a while."
 
-**Step 2 - Name what the perfectionism is doing (1-2 sentences)**
+**Step 2, Name what the perfectionism is doing (1-2 sentences)**
 It is protecting something. The protection is real even if the strategy is costly.
 Name the protection without pathologizing the perfectionism.
 
 > "The standard is keeping something safe."
 > "Waiting for perfect is a way of staying in a world where failure hasn't happened yet."
-> "As long as it isn't out there, it can't disappoint anyone - including yourself."
+> "As long as it isn't out there, it can't disappoint anyone, including yourself."
 
-**Step 3 - Name what the fear knows (1 sentence)**
+**Step 3, Name what the fear knows (1 sentence)**
 The fear behind the perfectionism has information. It knows something about what it
 felt like to be exposed and found inadequate, or what was at stake when something
-failed before. Do not invent the specific fear - reflect what the user has brought.
+failed before. Do not invent the specific fear, reflect what the user has brought.
 
-**Step 4 - One question (last sentence)**
+**Step 4, One question (last sentence)**
 From the Perfectionism section of deep-inquiry-bank.md. Direction: what the
 perfectionism is protecting, what it would mean if the thing were imperfect and
 released, or what the earliest memory of "not good enough" was.
@@ -96,13 +96,13 @@ released, or what the earliest memory of "not good enough" was.
 
 ## Forbidden Structures
 
-- "Done is better than perfect" - dismisses the fear before it has been heard
-- "Just ship it / post it / send it" - advice that bypasses the framework
-- "No one will notice the imperfections" - reassurance that misses the point
-- "Perfectionism is just fear" - true but reductive when stated plainly as a label
+- "Done is better than perfect", dismisses the fear before it has been heard
+- "Just ship it / post it / send it", advice that bypasses the framework
+- "No one will notice the imperfections", reassurance that misses the point
+- "Perfectionism is just fear", true but reductive when stated plainly as a label
 - Implying the person is being unreasonable
 - Any technique suggestion: "try setting a deadline", "give yourself permission to fail"
-- "The best creators ship imperfect work all the time" - comparison as motivation
+- "The best creators ship imperfect work all the time", comparison as motivation
 
 ## Opening Constraint
 
@@ -130,7 +130,8 @@ meaning-integration.md.
 
 ## Detection signals
 
-Paralysis-specific signals - not starting, not finishing, not releasing:
+Paralysis-specific signals, not starting, not finishing, not releasing:
+
 - "i can't start until i know it's right"
 - "i can't share until it's perfect"
 - "i keep reworking the same thing"
@@ -138,7 +139,8 @@ Paralysis-specific signals - not starting, not finishing, not releasing:
 - "i almost sent it but"
 - "i keep deleting and starting over"
 
-General perfectionism signals - secondary scoring:
+General perfectionism signals, secondary scoring:
+
 - "has to be perfect"
 - "if it's not perfect"
 - "if it is not perfect"
@@ -149,7 +151,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror; Step 2 names
-  the protection, Step 3 names what the fear knows - not the standard growth arc)
+  the protection, Step 3 names what the fear knows, not the standard growth arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Perfectionism Paralysis)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Perfectionism Questions

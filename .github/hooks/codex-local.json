@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/session-start.sh",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/block-push-to-main.sh",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/post-edit-python.sh",
+        "cwd": ".",
+        "timeoutSec": 20
+      },
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/post-edit-markdown.sh",
+        "cwd": ".",
+        "timeoutSec": 20
+      },
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/post-edit-tests.sh",
+        "cwd": ".",
+        "timeoutSec": 20
+      },
+      {
+        "type": "command",
+        "bash": "./.codex/hooks/post-edit-evals.sh",
+        "cwd": ".",
+        "timeoutSec": 30
+      }
+    ]
+  }
+}

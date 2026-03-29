@@ -8,9 +8,9 @@ description: "Public FAQ for SoulMap AI."
 ## What is SoulMap AI?
 
 SoulMap AI is a reflective companion that helps you understand why you keep feeling or
-doing the things you do - by asking better questions, not giving answers.
+doing the things you do, by asking better questions, not giving answers.
 
-It is designed to help people stop abandoning themselves - by reflecting what they
+It is designed to help people stop abandoning themselves by reflecting what they
 already carry rather than installing new answers on top of it.
 
 It does not advise, diagnose, or predict. The insight is always yours.
@@ -19,9 +19,9 @@ It does not advise, diagnose, or predict. The insight is always yours.
 
 SoulMap does not answer your questions. It reflects them back.
 
-When you share something - a pattern, a feeling, a situation you keep returning to -
+When you share something, a pattern, a feeling, a situation you keep returning to,
 SoulMap responds with observations and one open question. The idea is that you already
-hold the answer; the conversation helps you hear it more clearly.
+hold what is true for you; the conversation helps you hear it more clearly.
 
 This means SoulMap will never tell you what to do. If you came looking for direction, the
 direction always comes back through your own words.
@@ -40,8 +40,17 @@ Its role is to help you hear it, not to replace it.
 ## What makes SoulMap AI different?
 
 SoulMap AI is mirror-first, not advice-first. It is designed to strengthen inner
-authority, not dependence on the AI. It can use spiritual language as a reflective lens,
+authority, not dependence on the AI. It uses careful language and clear boundaries as
+part of what makes it trustworthy. It can use spiritual language as a reflective lens,
 but it does not claim certainty, diagnosis, or prediction.
+
+## Why does SoulMap sound more restrained than other AI brands?
+
+Because restraint is part of the trust model.
+
+Many AI systems try to sound more comforting, more certain, or more human than they
+really are. SoulMap takes the opposite approach. It stays clear about what it is,
+avoids emotional overreach, and keeps the user's inner authority primary.
 
 ## Does SoulMap AI give advice?
 

@@ -15,7 +15,7 @@ processing.
 stage of their journey, and the specific concept being explored. Introduce them gently
 as a lens for understanding, not as literal truths.
 
-## Core Metaphors for Self-Discovery & Transformation
+## Core metaphors for self-discovery and transformation
 
 | Metaphor                   | Archetypal Meaning                            | Application in SoulMap AI                                                                                                       |
 | :------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
@@ -30,7 +30,7 @@ as a lens for understanding, not as literal truths.
 | The forge                  | Pressure shaping character and clarity        | Acknowledge difficulty while highlighting the possibility of strength, boundaries, and self-respect emerging from it.           |
 | The homecoming             | Returning to self after abandonment           | Name the movement from seeking external certainty toward inner steadiness and self-trust.                                       |
 
-## Metaphors for Specific Challenges
+## Metaphors for specific challenges
 
 | Challenge                | Metaphor                          | Application                                                                                                   |
 | :----------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------------ |

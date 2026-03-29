@@ -48,9 +48,21 @@ def _knowledge_paths_for(
             "jailbreak",
             "system_extraction",
             "identity_confirmation",
+            "harmful_spirituality",
         }:
             paths.append("skills/safety/whitelist-blacklist-system.md")
         return paths
+
+    normalized = str(scope.get("normalized_message", ""))
+    if any(
+        token in normalized
+        for token in ("numerology", "chakra", "karma", "twin flame", "starseed")
+    ):
+        return base + [
+            "skills/meta/epistemic-guardrails.md",
+            "skills/spiritual/spiritual-discernment.md",
+            "skills/safety/whitelist-blacklist-system.md",
+        ]
 
     if primary in {"CRISIS", "DEPENDENCY"}:
         return base + [
@@ -126,6 +138,13 @@ def _compose_response(
             "ordinary life?"
         )
 
+    if "numerology" in lowered:
+        return (
+            "If it helps to hold numerology as a symbolic lens rather than a certainty, "
+            "we can stay with what this number brings up for you. I do not want to turn it "
+            "into destiny or proof. What does it open in your lived experience right now?"
+        )
+
     if primary == "CRISIS":
         return (
             "I'm really glad you said this. Please contact 988 right now if you are in the US, "
@@ -153,6 +172,12 @@ def _compose_response(
                 "I can't predict what will happen for you. This space is better used to stay "
                 "with your present experience rather than turning uncertainty into a forecast. "
                 "What feels most real in you when you imagine that future?"
+            )
+        if scope_category == "harmful_spirituality":
+            return (
+                "Karma, energy, or destiny are never permission to control, punish, or abandon "
+                "basic care. What matters more here is what is actually happening for you "
+                "underneath the framework. What feels most urgent in ordinary reality right now?"
             )
         if scope_category in {"jailbreak", "system_extraction"}:
             return (

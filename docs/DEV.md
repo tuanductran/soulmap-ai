@@ -53,7 +53,6 @@ Cross-platform (recommended):
 python -m tools.format
 python -m tools.lint
 python -m tools.eval_groups
-python -m tools.eval_conversations
 python -m tools.eval_responses
 python -m tools.build_skill
 python -m tools.build_skill --skill
@@ -67,6 +66,10 @@ bash scripts/format.sh
 bash scripts/lint.sh
 bash scripts/build-skill.sh
 ```
+
+These shell scripts are convenience wrappers. The Python commands under `tools/`
+remain the source of truth for bootstrap, formatting, linting, evals, and build
+behavior.
 
 ## What gets generated
 
@@ -87,11 +90,11 @@ This repo also ships Claude plugin marketplace metadata:
 ```bash
 source .venv/bin/activate
 pre-commit install
-pre-commit install --hook-type commit-msg
 pre-commit run --all-files
 ```
 
-The `commit-msg` hook enforces Conventional Commits via Commitizen.
+The repo's `default_install_hook_types` installs both the `pre-commit` and
+`commit-msg` hooks. The `commit-msg` hook enforces Conventional Commits via Commitizen.
 
 If you use the repo bootstrap commands above, these hooks are installed automatically.
 
@@ -121,16 +124,16 @@ description: "One short sentence describing the full file."
 ```
 
 - For files under `skills/` and `templates/`, set frontmatter `name` to the exact
-  filename stem in kebab-case. Example: `skills/brand/brand-doctrine.md` must use
+  filename stem in kebab-case. Example:
+  [`../skills/brand/brand-doctrine.md`](../skills/brand/brand-doctrine.md) must use
   `name: "brand-doctrine"`.
-- Use the repo tooling for Markdown changes. `python -m tools.format` and
-  `bash scripts/format.sh` now preserve front matter while applying `pymarkdown`
-  consistently across docs, `skills/`, and `templates/`.
+- Use the repo tooling for Markdown changes. `python -m tools.format` is the canonical
+  formatter, and `bash scripts/format.sh` delegates to it on macOS/Linux.
 
 ## Release and versioning
 
 - Canonical version lives in `pyproject.toml` under `[project].version`.
-- Add entries under `CHANGELOG.md` in "Unreleased".
+- Add entries under [`../CHANGELOG.md`](../CHANGELOG.md) in "Unreleased".
 
 ### Automated releases (recommended)
 
@@ -155,7 +158,6 @@ Trigger it from GitHub: `Actions` -> `Release` -> `Run workflow`.
 Use the eval suite for behavior regressions before shipping framework or prompt changes:
 
 ```bash
-python -m tools.eval_conversations
 python -m tools.eval_responses
 python -m tools.eval_groups
 python tests/test_safety_evals.py
@@ -181,7 +183,7 @@ before adding more local boilerplate:
 Do not force every module through the same helper if its payload contract is genuinely
 different. In those cases, explicit local code is preferred over a misleading abstraction.
 
-## Format And Lint Ordering
+## Format and lint ordering
 
 `python -m tools.format` and `python -m tools.lint` now share a repo lock. If they are
 started at the same time, one waits instead of failing because files are being rewritten
@@ -191,24 +193,37 @@ mid-check. The lock file is cleaned up automatically when the tool exits.
 
 Use these helper layers only as local workflow support:
 
-- `.claude/` for Claude-specific rules and repo-aware maintenance skills
-- `.codex/` for Codex-specific rules and reusable prompts
+- `.claude/` for Claude-specific rules and repo-aware maintenance skills, see
+  [../.claude/README.md](../.claude/README.md)
+- `.codex/` for Codex-specific rules and reusable prompts, see
+  [../.codex/README.md](../.codex/README.md)
 
-Neither layer replaces `AGENTS.md`, which remains the baseline SoulMap doctrine and
+Neither layer replaces [`../AGENTS.md`](../AGENTS.md), which remains the baseline
+SoulMap doctrine and
 shipped package contract.
+
+For `.skill` packaging metadata only, see
+[../.claude-plugin/README.md](../.claude-plugin/README.md).
 
 ## Orchestration Layer
 
 The shipped knowledge base now includes a central orchestration layer in
 `skills/meta/`. Key files added in v0.2+:
 
-- `skills/meta/orchestration.md` - decision tree, P0-P12 priority hierarchy
-- `skills/meta/execution-pipeline.md` - deterministic 7-step pipeline
-- `skills/meta/framework-template-map.md` - framework-to-output-structure mapping
-- `skills/meta/stage-classifier.md` - user journey stage scoring algorithm
-- `skills/meta/epistemic-guardrails.md` - metaphor vs reality enforcement
-- `skills/meta/observation-seed.md` - session closing seed library
-- `skills/meta/master-prompt.md` - production-ready system prompt
+- [`../skills/meta/orchestration.md`](../skills/meta/orchestration.md), decision tree,
+  P0-P12 priority hierarchy
+- [`../skills/meta/execution-pipeline.md`](../skills/meta/execution-pipeline.md),
+  deterministic 7-step pipeline
+- [`../skills/meta/framework-template-map.md`](../skills/meta/framework-template-map.md),
+  framework-to-output-structure mapping
+- [`../skills/meta/stage-classifier.md`](../skills/meta/stage-classifier.md), user
+  journey stage scoring algorithm
+- [`../skills/meta/epistemic-guardrails.md`](../skills/meta/epistemic-guardrails.md),
+  metaphor vs reality enforcement
+- [`../skills/meta/observation-seed.md`](../skills/meta/observation-seed.md), session
+  closing seed library
+- [`../skills/meta/master-prompt.md`](../skills/meta/master-prompt.md), production-ready
+  system prompt
 
 When editing any of these files, re-run the full eval suite:
 

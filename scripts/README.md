@@ -2,6 +2,9 @@
 
 This folder contains bash helpers for contributor workflows.
 
+The shell scripts here are thin macOS/Linux wrappers around the canonical Python entry
+points in `tools/`.
+
 ## Common commands
 
 ```bash
@@ -18,6 +21,7 @@ python -m tools.format
 python -m tools.lint
 python -m tools.build_skill
 python -m tools.build_skill --skill
+python -m tools.eval_groups
 python -m tools.eval_responses
 ```
 

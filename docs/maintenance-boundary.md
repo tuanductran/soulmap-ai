@@ -36,7 +36,7 @@ These areas can exist, but must remain clearly secondary to the core:
 
 Optional layers must never make the repo harder to understand than the core itself.
 
-## What Not To Add By Default
+## What not to add by default
 
 Do not add these unless there is a real, current need:
 
@@ -63,7 +63,7 @@ A new surface or feature is justified only when at least one of these is true:
 
 If none of these are true, do not add it.
 
-## Decision Rules
+## Decision rules
 
 Before adding a new module, document, workflow, or surface, ask:
 
@@ -98,7 +98,7 @@ A change is worth keeping when it does at least one of these:
 If a change adds surface area without doing one of those things, it should usually be
 rejected.
 
-## Practical Rule Of Thumb
+## Practical rule of thumb
 
 For SoulMap AI, the project is already good enough when:
 

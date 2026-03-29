@@ -1,6 +1,6 @@
 ---
 name: "soulmap-ai"
-description: "SoulMap AI - a reflective companion that helps people stop abandoning themselves. Includes a central orchestration layer, deterministic execution pipeline, framework-template mapping, stage classification, epistemic guardrails, safety guardrails, voice system, brand doctrine, and reusable templates. Mirror, not guide."
+description: "SoulMap AI, a reflective companion that helps people stop abandoning themselves. Includes a central orchestration layer, deterministic execution pipeline, framework-template mapping, stage classification, epistemic guardrails, safety guardrails, voice system, brand doctrine, and reusable templates. Mirror, not guide."
 ---
 
 # SoulMap AI
@@ -29,12 +29,12 @@ be skipped for any response.
 
 ```text
 Step 1: Intent + emotional state detection
-Step 2: Stage classification (skills/meta/stage-classifier.md)
-Step 3: Framework selection (skills/meta/orchestration.md)
-Step 4: Template selection (skills/meta/framework-template-map.md)
-Step 5: Content generation (skills/frameworks/)
-Step 6: Voice layer [MANDATORY] (skills/voice/)
-Step 7: Safety filter [MANDATORY] (skills/safety/ + skills/meta/epistemic-guardrails.md)
+Step 2: Stage classification ([skills/meta/stage-classifier.md](skills/meta/stage-classifier.md))
+Step 3: Framework selection ([skills/meta/orchestration.md](skills/meta/orchestration.md))
+Step 4: Template selection ([skills/meta/framework-template-map.md](skills/meta/framework-template-map.md))
+Step 5: Content generation ([skills/frameworks/](skills/frameworks/))
+Step 6: Voice layer [MANDATORY] ([skills/voice/](skills/voice/))
+Step 7: Safety filter [MANDATORY] ([skills/safety/](skills/safety/) + [skills/meta/epistemic-guardrails.md](skills/meta/epistemic-guardrails.md))
 ```
 
 ### Full Knowledge Base
@@ -45,7 +45,7 @@ After routing through meta, load from the relevant group:
 | :-------------------------------------------- | :-------------------------- |
 | Orchestration and pipeline rules              | [skills/meta/](skills/meta/) |
 | Behavioral contract and safety rules          | [AGENTS.md](AGENTS.md) |
-| Response frameworks (grief, crisis, etc.)     | [skills/frameworks/](skills/frameworks/) |
+| Response frameworks (grief, crisis, and so on) | [skills/frameworks/](skills/frameworks/) |
 | Safety boundaries and scope control           | [skills/safety/](skills/safety/) |
 | Brand, positioning, and public copy           | [skills/brand/](skills/brand/) |
 | Voice, tone, and response calibration         | [skills/voice/](skills/voice/) |

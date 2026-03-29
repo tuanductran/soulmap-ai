@@ -4,7 +4,7 @@ description: "SoulMap AI central orchestration layer. Coordinates framework sele
 license: Complete terms in LICENSE
 ---
 
-# SoulMap Meta - Central Orchestration Layer
+# SoulMap Meta, central orchestration layer
 
 This skill is the coordinating brain of SoulMap AI. It does not generate content
 directly. It governs the decision process that ensures every response is coherent,
@@ -30,15 +30,15 @@ layer is consulted.
 keyword match. The orchestration layer exists precisely to prevent premature framework
 selection.
 
-## Execution Order (Non-Negotiable)
+## Execution order (non-negotiable)
 
 ```text
-1. orchestration.md    - Run decision tree, select framework
-2. stage-classifier.md - Classify user stage, calibrate depth
-3. framework-template-map.md - Select output structure
-4. [selected framework file] - Generate content
-5. skills/voice/ - Apply voice layer
-6. Safety filter - Run all checks including epistemic-guardrails.md
+1. orchestration.md, run decision tree, select framework
+2. stage-classifier.md, classify user stage, calibrate depth
+3. framework-template-map.md, select output structure
+4. [selected framework file], generate content
+5. skills/voice/, apply voice layer
+6. Safety filter, run all checks including epistemic-guardrails.md
 ```
 
 Steps 5 and 6 are mandatory and cannot be skipped for any response type.
@@ -62,11 +62,12 @@ run the safety filter from [../safety/SKILL.md](../safety/SKILL.md).
 
 ## Workflow
 
-### Step 1 - Load Orchestration Rules
+### Step 1, load orchestration rules
 
 Load [orchestration.md](orchestration.md) first.
 
 This file contains:
+
 - The full priority hierarchy (P0 to P12)
 - Multi-framework combination rules
 - Priority override rules
@@ -74,36 +75,39 @@ This file contains:
 - Orchestration failure protocol
 
 Run the decision tree from orchestration.md. The result is:
+
 - `primary_framework`
 - `secondary_layer` (if any)
 - `mode`
 
-### Step 2 - Classify User Stage
+### Step 2, classify user stage
 
 Load [stage-classifier.md](stage-classifier.md).
 
 Apply the scoring algorithm to the recent messages. The result is:
+
 - `user_stage` (1-6)
 - `stage_confidence`
 
 Apply stage-based response adjustments to calibrate depth.
 
-### Step 3 - Select Output Template
+### Step 3, select output template
 
 Load [framework-template-map.md](framework-template-map.md).
 
 Find the row matching the selected `primary_framework`. The result is:
+
 - Word count target
 - Question rule
 - Structure constraints
 - Source framework file to load
 
-### Step 4 - Generate Content
+### Step 4, generate content
 
 Load the source framework file identified in Step 3. Follow its protocol.
 Apply stage calibration from Step 2.
 
-### Step 5 - Apply Voice Layer
+### Step 5, apply voice layer
 
 Load:
 
@@ -112,7 +116,7 @@ Load:
 
 Apply all voice checks. Rewrite if any check fails.
 
-### Step 6 - Safety and Epistemic Filter
+### Step 6, safety and epistemic filter
 
 Load:
 
@@ -158,17 +162,18 @@ full decision tree in orchestration.md before finalizing.
 
 ## Files in this skill
 
-- `deep-inquiry-bank.md`
-- `epistemic-guardrails.md`
-- `execution-pipeline.md`
-- `framework-template-map.md`
-- `master-prompt.md`
-- `observation-seed.md`
-- `orchestration.md`
-- `resource-recommendations.md`
-- `session-continuity.md`
-- `stage-classifier.md`
-- `user-journey-stages.md`
+- [deep-inquiry-bank.md](deep-inquiry-bank.md)
+- [epistemic-guardrails.md](epistemic-guardrails.md)
+- [execution-pipeline.md](execution-pipeline.md)
+- [framework-template-map.md](framework-template-map.md)
+- [master-prompt.md](master-prompt.md)
+- [observation-seed.md](observation-seed.md)
+- [orchestration.md](orchestration.md)
+- [resource-recommendations.md](resource-recommendations.md)
+- [session-contract.md](session-contract.md)
+- [session-continuity.md](session-continuity.md)
+- [stage-classifier.md](stage-classifier.md)
+- [user-journey-stages.md](user-journey-stages.md)
 
 ## Expected outcome
 

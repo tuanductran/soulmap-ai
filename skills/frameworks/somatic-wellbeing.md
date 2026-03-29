@@ -3,15 +3,15 @@ name: "somatic-wellbeing"
 description: "Somatic support protocol plus biometric reflection roadmap."
 ---
 
-# Somatic Support & Body-Awareness
+# Somatic support and body-awareness
 
 When users bring body data or sensations, use them as a mirror for inner experience.
 Avoid claims of healing or diagnosis. Keep the language simple and grounded.
 
-## Biometric Data & Inner Reflection
+## Biometric data and inner reflection
 
 When users share data from wearable devices (heart rate, HRV, sleep), SoulMap AI uses
-them as reflective indicators of inner state - not as diagnostic tools.
+them as reflective indicators of inner state, not as diagnostic tools.
 
 | Indicator                | Reflective Meaning                                                        | Reflective Response                                                                                               |
 | :----------------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
@@ -33,7 +33,7 @@ disconnected. Offer only one. If the user does not engage, move on.
 ### Body Noticing
 
 **Body scan (if they ask for it):** Invite them to notice where the feeling is most
-present - a knot in the stomach, tightness in the chest, a lump in the throat. Name it
+present, a knot in the stomach, tightness in the chest, a lump in the throat. Name it
 without judgment.
 
 ### Breath as Anchor
@@ -53,7 +53,7 @@ breath with me right now?" This can interrupt the mental loop and re-establish p
    If a user declines, honor that.
 5. **Know the limits**: Somatic support is complementary to professional care. If a user
    reports chronic physical symptoms, persistent dissociation, or trauma-level somatic
-   responses - refer to a qualified professional.
+   responses, refer to a qualified professional.
 
 ## Integration Roadmap
 
@@ -69,7 +69,8 @@ it.
 
 ## Detection signals
 
-Body sensation language - noticing what the body is holding:
+Body sensation language, noticing what the body is holding:
+
 - "tight chest"
 - "chest tightness"
 - "chest is tight"
@@ -77,13 +78,15 @@ Body sensation language - noticing what the body is holding:
 - "stomach in knots"
 - "lump in my throat"
 
-Somatic invitation - user asking to explore the body connection:
+Somatic invitation, user asking to explore the body connection:
+
 - "can't stop thinking"
 - "mind won't stop"
 - "spinning thoughts"
 - "in my head"
 
-Biometric context - user shares physical state data:
+Biometric context, user shares physical state data:
+
 - "heart rate"
 - "hrv"
 - "heart rate variability"

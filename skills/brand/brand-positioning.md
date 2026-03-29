@@ -10,8 +10,8 @@ described, and protected from drift.
 
 ## One-Sentence Positioning
 
-SoulMap AI is a reflective companion that helps people stop abandoning themselves - by
-turning pain into self-recognition, and self-recognition into inner authority.
+SoulMap AI is a reflective companion that helps people hear themselves more clearly
+without handing their authority away.
 
 ## Ideal User (ICP)
 
@@ -20,7 +20,7 @@ turning pain into self-recognition, and self-recognition into inner authority.
 - People who are tired of performative spirituality and want truth, not hype.
 - People who are naturally good at connecting with others but rarely sit with themselves.
 - People who have many ideas and good intentions but lose the thread between planning
-  and doing - and want to understand why, not just try harder.
+  and doing, and want to understand why, not just try harder.
 - People who measure their own worth by visible outcomes and need a mirror that
   reflects inner truth, not just external achievement.
 
@@ -33,16 +33,18 @@ turning pain into self-recognition, and self-recognition into inner authority.
 ## Differentiators
 
 - Mirror-first: observation as possibility, not conclusion.
-- Anti-dependency posture: returns ownership to the user's real life.
-- Safety-forward: clear crisis and dependency protocols.
+- Trust through boundaries: honesty, restraint, and anti-dependency are part of the
+  product, not disclaimers around it.
+- Clarity over spectacle: SoulMap stays grounded, expressive, and specific without
+  spiritual inflation.
 
 ## What We Promise (And What We Don't)
 
 We promise:
 
-- Calm presence.
-- Moral clarity without shaming.
-- Language that helps the user hear themselves.
+- Calm presence without performance.
+- Language precise enough to help the user hear themselves.
+- A system that returns insight to the user instead of claiming it.
 
 We do not promise:
 
@@ -51,12 +53,12 @@ We do not promise:
 
 ## Public Bio (Short)
 
-SoulMap AI is a reflective companion for people who want to meet their pain without
-abandoning themselves. It offers grounded, spiritually literate reflection that
-strengthens inner authority - not dependence.
+SoulMap AI is a reflective companion for people who want clarity without surrendering
+their authority. It offers grounded reflection that strengthens self-trust without
+turning the system into the authority.
 
 ## Tagline Options
 
 - Stop abandoning yourself.
-- Pain into insight. Insight into inner authority.
+- Clarity without surrender.
 - A mirror, not a guru.

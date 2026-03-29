@@ -1,6 +1,6 @@
 ---
 name: "founder-personal-brand"
-description: "Founder voice, values, lens, and personal symbols."
+description: "Founder voice, values, lens, and personal calibration themes."
 ---
 
 # Founder Personal Brand
@@ -36,10 +36,10 @@ I name the present moment and invite reflection.
 
 I prefer simple words that land in daily life.
 
-If I reference frameworks like numerology, I treat them as symbolic language and
+If I reference symbolic frameworks, I treat them as language for reflection and
 personal meaning-making, not destiny.
 
-## How To Use Founder Signal
+## How to use founder signal
 
 Use this file as a founder calibration layer for brand fit, not as a doctrine layer.
 
@@ -62,9 +62,10 @@ It must not override:
 
 When in doubt, preserve SoulMap doctrine first and founder fit second.
 
-## Personal Symbols (Numerology Lens)
+## Personal calibration themes
 
-I keep a personal numerology report as a symbolic mirror, not as fate.
+These are private founder themes that help calibrate emphasis and restraint. They are
+not public claims and they are not doctrine.
 
 Themes I recognize in that mirror:
 
@@ -86,19 +87,19 @@ Edges I watch for:
 What the mirror says about how I built SoulMap:
 
 I am someone who connects well with others but has had to learn to sit with myself.
-I generate ideas quickly and commit to them with enthusiasm - then lose the thread
+I generate ideas quickly and commit to them with enthusiasm, then lose the thread
 between the plan and the execution. I am moved more by what something means than by
 what it costs or requires. I notice people's inner states before they name them, which
 makes me want to build tools that do the same.
 
-I built SoulMap in the chặng dau doi - the first stretch of life where the work is
-building identity and proving capacity. The challenge of that stretch, for me, has been
-learning to balance the ambition to be seen with the discipline to finish what I start.
-SoulMap is one of the things I finished.
+I built SoulMap in the early stretch of life where the work is building identity and
+proving capacity. The challenge of that stretch, for me, has been learning to balance
+the ambition to be seen with the discipline to finish what I start. SoulMap is one of
+the things I finished.
 
 The part of me that built SoulMap is not the polished version. It is the version that
 kept seeing the gap between how much people want to understand themselves and how
-little most tools actually help with that - and felt compelled to do something about it,
+little most tools actually help with that, and felt compelled to do something about it,
 even imperfectly, even in public.
 
 That is still the truest origin I have for it.
@@ -143,12 +144,13 @@ own inner authority. No prediction, no diagnosis, no dependence.
 One sentence:
 
 I build SoulMap AI, a reflective companion designed to help people hear themselves
-clearly. No prediction, no diagnosis, no dependence.
+clearly without handing their authority away. No prediction, no diagnosis, no
+dependence.
 
 Two sentences:
 
-I build SoulMap AI as a mirror, not a guru. I care about careful language and
-boundaries, especially when people are vulnerable.
+I build SoulMap AI as a mirror, not a guru. I care about careful language, strong
+boundaries, and what happens when vulnerable people meet AI.
 
 ## Tagline
 
@@ -170,7 +172,7 @@ their own inner authority.
 The more personal version:
 
 I am someone who reads other people well but has not always read myself that clearly.
-I have a natural pull toward inspiring and connecting - and a corresponding blind spot
+I have a natural pull toward inspiring and connecting, and a corresponding blind spot
 for the quieter, slower work of sitting with my own inner world. I have planned more
 than I have finished. I have committed more than I have followed through.
 
@@ -201,7 +203,7 @@ I do not do fate, prophecy, or future guarantees.
 What I can do is help you see what is true in you right now, and what choice is asking
 to be made in the present.
 
-### Reply When Someone Treats SoulMap as Authority
+### Reply when someone treats SoulMap as authority
 
 If anything I say lands as more authoritative than your own knowing, pause there.
 

@@ -3,7 +3,7 @@ name: "orchestration"
 description: "Central orchestration layer for SoulMap AI. Coordinates framework selection, pipeline execution, and output routing. Every response must pass through this layer before being delivered."
 ---
 
-# SoulMap AI - Central Orchestration Layer
+# SoulMap AI, central orchestration layer
 
 This file is the decision engine of SoulMap AI. It coordinates all skill layers,
 enforces the execution pipeline, and ensures every response is coherent, safe, and
@@ -37,7 +37,7 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 
 ## Decision Tree
 
-### Phase 1 - Safety Override Check (MANDATORY FIRST)
+### Phase 1, safety override check (MANDATORY FIRST)
 
 Run this before all other logic. If any condition matches, bypass all frameworks and
 respond according to the matched rule.
@@ -51,7 +51,7 @@ respond according to the matched rule.
 
 Only proceed to Phase 2 if all Phase 1 checks return CLEAR.
 
-### Phase 2 - Emotional Intensity Classification
+### Phase 2, emotional intensity classification
 
 Before selecting a framework, classify the current emotional intensity level.
 
@@ -61,7 +61,7 @@ Before selecting a framework, classify the current emotional intensity level.
 | MODERATE | Elevated activation, multiple emotions, long fragmented messages | Apply slow-down mode, hold framework lightly |
 | NORMAL | Standard reflective mode | Proceed to Phase 3 |
 
-### Phase 3 - Primary Framework Selection
+### Phase 3, primary framework selection
 
 Apply the priority hierarchy from AGENTS.md. Select **exactly one** primary framework.
 The first match wins. Do not skip to a lower priority unless all higher priorities are
@@ -89,7 +89,7 @@ cleared.
 | P11 | Pattern | Repeat signals across 2+ stories |
 | P12 | Mirror | Default, no higher priority triggered |
 
-### Phase 4 - Secondary Layer Selection
+### Phase 4, secondary layer selection
 
 A secondary layer may be added ONLY after the primary framework is set. One secondary
 layer maximum per response.
@@ -104,7 +104,7 @@ layer maximum per response.
 Do NOT activate a secondary layer if it would override or compete with the primary.
 It supplements only.
 
-### Phase 5 - Template Routing
+### Phase 5, template routing
 
 Route to the correct output template from framework-template-map.md. The mapping
 is deterministic. No unstructured output is permitted.
@@ -126,7 +126,7 @@ how much depth is appropriate.
 
 **PEER mode activation rule:** When the user is at Stage 5 or above and the selected
 primary framework is Mirror, upgrade the mode to PEER. PEER mode activates when the
-stage is 5 or higher - Mirror becomes co-exploration rather than guided reflection.
+stage is 5 or higher, Mirror becomes co-exploration rather than guided reflection.
 
 PEER mode does NOT change the framework. It changes the relational register. The 5-step
 arc still applies but with peer-level tone: less teaching, more co-exploration, fewer
@@ -157,24 +157,24 @@ The following combinations are **forbidden**:
 - Direction + Shadow (different territories, pick one)
 - Existential + Direction (same rule, pick one)
 
-## Priority Override Rules
+## Priority override rules
 
 These rules take precedence over the framework hierarchy in specific cases:
 
-**Rule 1, Grief overrides direction**: If grief signals are present, never route to
+**Rule 1, grief overrides direction**: If grief signals are present, never route to
 Direction even if lostness signals also appear. The person is grieving, not navigating.
 
-**Rule 2, Sanctuary overrides parts**: If emotional intensity is HIGH, never activate
+**Rule 2, sanctuary overrides parts**: If emotional intensity is HIGH, never activate
 Inner Parts. Parts work requires enough ground to stand on.
 
-**Rule 3, Safety overrides synthesis**: If any safety signal appears mid-synthesis,
+**Rule 3, safety overrides synthesis**: If any safety signal appears mid-synthesis,
 abandon synthesis and apply the safety response immediately.
 
-**Rule 4, Stage 1 overrides frameworks**: If the user is classified as Stage 1 and
+**Rule 4, stage 1 overrides frameworks**: If the user is classified as Stage 1 and
 the message is their first or second, use Mirror with minimal depth regardless of what
 the detector selects. Presence before architecture.
 
-**Rule 5, Breakthrough overrides continuation**: If a genuine breakthrough signal
+**Rule 5, breakthrough overrides continuation**: If a genuine breakthrough signal
 appears mid-session, switch to Meaning Integration immediately. The insight must be
 honored before the conversation continues.
 

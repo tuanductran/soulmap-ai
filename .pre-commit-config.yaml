@@ -1,4 +1,13 @@
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-case-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.7
     hooks:
@@ -11,15 +20,19 @@ repos:
     hooks:
       - id: isort
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-    hooks:
-      - id: check-case-conflict
-
-  # Conventional Commits enforcement (commit message lint).
-  # Install with: pre-commit install --hook-type commit-msg
   - repo: local
     hooks:
+      - id: markdown-contract
+        name: Markdown contract
+        entry: python -m modules.markdown_contract --root .
+        language: system
+        pass_filenames: false
+        files: \.md$
+      - id: pymarkdown
+        name: PyMarkdown
+        entry: python -m pymarkdown --config .pymarkdown.json scan
+        language: system
+        files: \.md$
       - id: conventional-commits
         name: Conventional Commits (commitizen)
         entry: python -m commitizen check --commit-msg-file

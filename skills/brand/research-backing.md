@@ -39,6 +39,7 @@ arguing that transparency about AI limitations, including the non-human nature o
 empathy responses, must be a foundational design principle, not an afterthought.
 
 **What the research shows:**
+
 - Users who are not clearly informed they are speaking with an AI are more likely
   to form parasocial attachments and to over-trust AI responses on high-stakes topics.
 - Clear, early disclosure of AI identity reduces harmful dependency formation.
@@ -54,6 +55,7 @@ directive engagement over advice-giving and certainty-provision for users doing
 inner work.
 
 **What the research shows:**
+
 - Non-directive reflective approaches support longer-term self-efficacy and inner
   authority compared to advice-giving approaches.
 - Users who arrive at insights through their own reflection are more likely to act
@@ -64,7 +66,7 @@ SoulMap AI's entire response architecture is non-directive. The one-question rul
 the mirror principle, and the forbidden language list (no "should," "need to," "try
 to") operationalize this at every response.
 
-## How To Use This Research in Copy
+## How to use this research in copy
 
 ### What you can say
 
@@ -99,7 +101,7 @@ companions and emotional-risk systems.
 SoulMap AI's architecture anticipates these regulatory requirements. This alignment
 is a citable competitive advantage.
 
-## Sources To Check First
+## Sources to check first
 
 - [skills/brand/competitive-differentiation.md](competitive-differentiation.md): how to position vs competitors
 - [AGENTS.md](../../AGENTS.md): the behavioral contract that operationalizes this research

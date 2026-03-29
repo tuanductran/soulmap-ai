@@ -6,7 +6,7 @@ This document describes what data is and is not handled by this project.
 ## What This Repository Is
 
 SoulMap AI is a Markdown knowledge base, a set of local Python modules, and a packaged
-Agent Skills archive. It is a content and logic layer -- not a deployed service.
+Agent Skills archive. It is a content and logic layer, not a deployed service.
 
 There is no SoulMap AI server. There is no SoulMap AI account system. There is no
 SoulMap AI backend that receives or stores your conversations.
@@ -44,8 +44,10 @@ pytest) operate entirely locally.
 
 ## Security
 
-If you discover a security concern -- including prompt injection vectors or unsafe
-handling of user-provided data -- see `SECURITY.md` for the disclosure process.
+If you discover a security concern, including prompt injection vectors or unsafe
+handling of user-provided data, use the repository's private vulnerability reporting
+flow on GitHub. In a full repository checkout, see `SECURITY.md` for the detailed
+disclosure process.
 
 ## Questions
 

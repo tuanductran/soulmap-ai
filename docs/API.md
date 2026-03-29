@@ -41,7 +41,7 @@ Notes:
 
 - `primary_framework` is always exactly one value. `MEANING_INTEGRATION` is the correct
   identifier for insight and integration moments (previously labelled `INSIGHT` in older
-  documentation - the Python module uses `MEANING_INTEGRATION` exclusively).
+  documentation, the Python module uses `MEANING_INTEGRATION` exclusively).
 - `secondary_layer` is optional and is only an annotation.
 - `safety_status`, `safety_reason`, and `safety_flags` expose the result of the
   independent safety gate after framework selection.

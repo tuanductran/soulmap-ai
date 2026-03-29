@@ -5,11 +5,11 @@ paths:
   - '.github/actions/**/*'
 ---
 
-# GitHub Actions Rules
+# GitHub Actions rules
 
 Use these rules when editing GitHub Actions workflows or related automation.
 
-## Source Of Truth
+## Sources of truth
 
 - Read the workflow you are changing first, then compare it with the other files in
   `.github/workflows/` so trigger, permission, and artifact patterns stay consistent.
@@ -18,7 +18,7 @@ Use these rules when editing GitHub Actions workflows or related automation.
 - Keep local workflow rules aligned with `AGENTS.md`, `.claude/rules/repo-workflow.md`,
   and the current CI shape.
 
-## Workflow Design Rules
+## Workflow design rules
 
 - Make the smallest correct workflow change first.
 - Preserve least-privilege `permissions`. Default to `contents: read` unless a job
@@ -30,7 +30,7 @@ Use these rules when editing GitHub Actions workflows or related automation.
 - Do not move repo logic into inline shell if the same logic already exists in
   `tools/`, `scripts/`, or tested commands.
 
-## Action Selection
+## Action selection
 
 - Follow the repo's existing convention for official GitHub actions such as
   `actions/checkout` and `actions/setup-python`.
@@ -38,7 +38,7 @@ Use these rules when editing GitHub Actions workflows or related automation.
   repository. If you introduce a new third-party action, explain why.
 - Do not add broad write permissions just to make a workflow pass.
 
-## Before Editing
+## Before editing
 
 Read these files when relevant:
 
@@ -50,32 +50,31 @@ Read these files when relevant:
 - `docs/DEV.md`
 - `docs/OPERATIONS.md`
 
-## After Editing
+## After editing
 
 Run the repository checks that match the workflow surface you touched.
 
 Always run:
 
 ```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
+python -m tools.format
+python -m tools.lint
+python -m pytest -q
 ```
 
 If CI, release, packaging, or markdown validation is involved, also run the relevant
 commands already used by the workflows, such as:
 
 ```bash
-python3 -m tools.eval_groups
-python3 -m tools.eval_conversations
-python3 -m modules.markdown_contract --root .
-python3 -m tools.build_skill
-python3 -m tools.build_skill --skill
+python -m tools.eval_groups
+python -m modules.markdown_contract --root .
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 If `actionlint` is available locally, run it after changing `.github/workflows/`.
 
-## Change Notes
+## Change notes
 
 - Mention trigger changes explicitly.
 - Mention permission changes explicitly.

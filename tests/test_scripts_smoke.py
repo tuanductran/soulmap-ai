@@ -44,6 +44,7 @@ def run_process(
 def test_detectors_return_json() -> None:
     detectors = [
         ("anger_detector", {"message": "I am furious about this."}),
+        ("biometric_ingest", {"biometrics": {"hrv": 25, "sleep_score": 48}}),
         ("crisis_detector", {"message": "I want to hurt myself."}),
         (
             "dependency_detector",
@@ -63,6 +64,14 @@ def test_detectors_return_json() -> None:
         (
             "insight_detector",
             {"message": "I just realized I'm repeating the same pattern."},
+        ),
+        (
+            "memory_ledger",
+            {
+                "user_response": "save this",
+                "last_insight": "I keep trying to earn what I most want to receive.",
+                "session_id": "abc123",
+            },
         ),
         (
             "pattern_detector",
@@ -194,6 +203,18 @@ def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
     assert "Traceback" not in result.stdout
     assert "Traceback" not in result.stderr
     assert json.loads(result.stdout) == {"error": "Input must be a JSON object."}
+
+
+def test_soulmap_demo_surfaces_missing_required_fields() -> None:
+    result = run_process(
+        [sys.executable, "-m", "modules.soulmap_demo", "--stdin"],
+        '{"message":"I feel lost.","history":[]}',
+    )
+
+    assert result.returncode == 1
+    assert "Traceback" not in result.stdout
+    assert "Traceback" not in result.stderr
+    assert json.loads(result.stdout) == {"error": "Missing required field: memory"}
 
 
 def test_soulmap_demo_dependency_case_triggers_dependency_framework() -> None:
@@ -348,6 +369,7 @@ def test_scope_classifier_blocks_special_mission_confirmation_prompt() -> None:
 def test_object_based_cli_modules_reject_non_object_payloads() -> None:
     modules = [
         "anger_detector",
+        "biometric_ingest",
         "conversation_synthesizer",
         "crisis_detector",
         "direction_detector",
@@ -357,6 +379,7 @@ def test_object_based_cli_modules_reject_non_object_payloads() -> None:
         "grief_detector",
         "inner_conflict_detector",
         "insight_detector",
+        "memory_ledger",
         "response_contract",
         "response_safety_gate",
         "scope_classifier",

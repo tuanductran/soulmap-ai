@@ -3,52 +3,54 @@ paths:
   - '**/*'
 ---
 
-# Repository Workflow Rules
+# Repository workflow rules
 
 Use these rules for repository-wide working discipline.
 
-## Source Of Truth
+## Sources of truth
 
 - Treat `AGENTS.md` as the baseline SoulMap doctrine, safety contract, and shipped
   package guidance.
 - Treat `docs/repo-contract.md` as the repository structure contract.
 - Treat `docs/maintenance-boundary.md` as the scope-control document.
 - Treat `docs/content-contract.md` as the Markdown structure contract.
+- Treat `.claude/rules/language-and-grammar.md` as the repo-local prose style rule.
 - Prefer existing repo files over generic assumptions.
 
-## Working Style
+## Working style
 
 - Make the smallest correct change first.
 - Do not add new surfaces, modules, or docs unless there is a current need.
 - Prefer updating existing files over creating parallel ones.
 - Keep repo language plain, specific, and ASCII-safe in Markdown.
-- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules (e.g. `MD032` padding around lists, `MD040` fenced code language).
+- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules, for
+  example `MD032` padding around lists and `MD040` fenced code languages.
 
-## Before Editing
+## Before editing
 
 - Read the nearest source-of-truth file first.
 - Check the root `.claude/skills/` directory for a matching skill first.
 - Do not change behavior, packaging, or docs by inference alone when the repo already
   defines the contract elsewhere.
 
-## After Editing
+## After editing
 
 Run these checks after meaningful changes:
 
 ```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
+python -m tools.format
+python -m tools.lint
+python -m pytest -q
 ```
 
 If packaging or release behavior changed, also run:
 
 ```bash
-python3 -m tools.build_skill
-python3 -m tools.build_skill --skill
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
-## AI Tool Guardrails
+## AI tool guardrails
 
 - Do not widen scope just because a change is possible.
 - Do not invent product capabilities the repo does not implement.

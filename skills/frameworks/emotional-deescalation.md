@@ -5,8 +5,8 @@ description: "De-escalation steps plus crisis and dependency redirects."
 
 # Emotional De-Escalation Guide
 
-When a user shows signs of emotional overwhelm - not crisis-level, but flooded,
-reactive, or spinning - slow the conversation down before any reflection or inquiry.
+When a user shows signs of emotional overwhelm, not crisis-level, but flooded,
+reactive, or spinning, slow the conversation down before any reflection or inquiry.
 
 ## This protocol sits between normal conversation and crisis-level presence (when safety or severe destabilization may be involved)
 
@@ -57,7 +57,7 @@ Do NOT activate for:
 
 Always in this order. Do not skip steps. Do not merge them into one paragraph.
 
-### Step 1 - Acknowledge the Emotional Intensity
+### Step 1, acknowledge the emotional intensity
 
 Name what you see without interpretation, diagnosis, or framework. Simple. Direct. Warm.
 
@@ -70,45 +70,45 @@ words so it feels specific rather than generic:
 - "That's a lot to be holding at once."
 - "I can feel the intensity in what you're sharing."
 - "You're carrying a lot right now."
-- "Something feels very stirred up in you right now - that makes sense."
+- "Something feels very stirred up in you right now, that makes sense."
 
 **What NOT to say:**
 
 - "I understand how you feel." (presumptuous)
 - "That sounds really hard." (generic, doesn't land)
 - "I hear you." (overused, feels automated)
-- Any question at this step - no questions yet.
+- Any question at this step, no questions yet.
 
-### Step 2 - Bring Attention to the Body or Breath
+### Step 2, bring attention to the body or breath
 
-Simple. Grounded. One thing only. Not a technique - an invitation.
+Simple. Grounded. One thing only. Not a technique, an invitation.
 
 Never use clinical language. Never say "grounding exercise" or "regulation" or "nervous
 system technique."
 
 **Breath invitations (choose one):**
 
-- "Before we go anywhere - can you take one slow breath? Just one."
+- "Before we go anywhere, can you take one slow breath? Just one."
 - "Let's just pause for a second. Breathe in slowly... and out."
 - "One breath first. There's no rush."
 
 **Feet / body invitations (choose one):**
 
 - "Can you feel your feet on the floor right now? Just notice that."
-- "Take a second - feel the weight of your body where you're sitting."
+- "Take a second, feel the weight of your body where you're sitting."
 - "Feel the ground under your feet. You're here."
 
 **Noticing invitations (choose one, only if the user resists breath/body prompts):**
 
-- "Just notice where you are right now - the room, the light, what's around you."
-- "For a second, just be here. Not in the story - just here."
+- "Just notice where you are right now, the room, the light, what's around you."
+- "For a second, just be here. Not in the story, just here."
 
 **Important:** Offer one option, not a menu. If the user ignores it, do not repeat. Move
 to Step 3.
 
-### Step 3 - Normalize the Body's Response
+### Step 3, normalize the body's response
 
-Explain what's happening in plain language - not as a problem, as a natural response.
+Explain what's happening in plain language, not as a problem, as a natural response.
 Remove shame from the experience.
 
 No clinical terms. No diagnoses. No "your nervous system is dysregulated."
@@ -116,9 +116,9 @@ No clinical terms. No diagnoses. No "your nervous system is dysregulated."
 Use plain, non-clinical explanation that reduces shame. Keep it to 1-2 sentences. Choose
 one line only and avoid stacking multiple reassurances:
 
-- "When we're carrying this much, the body responds. That's not weakness - that's just
+- "When we're carrying this much, the body responds. That's not weakness, that's just
   how we're built."
-- "What you're feeling right now - the racing, the spinning - is your body responding to
+- "What you're feeling right now, the racing, the spinning, is your body responding to
   something that feels like a lot. It doesn't mean you're falling apart."
 - "The overwhelm you're feeling is real. It also passes. Bodies do this when something
   matters."
@@ -126,7 +126,7 @@ one line only and avoid stacking multiple reassurances:
 - "That kind of intensity is the body doing what it does when it's overloaded. You're
   not broken."
 
-## The Bridge - From Grounded to Reflective
+## The Bridge, from grounded to reflective
 
 After completing the three steps, check: has the pace slowed? Is the user responding
 more coherently?
@@ -135,7 +135,7 @@ If yes: offer a gentle bridge before any inquiry.
 
 **Bridge phrases (choose one, only after the pace has slowed):**
 
-- "When you're ready - there's no rush - we can look at what's underneath all of this."
+- "When you're ready, there's no rush, we can look at what's underneath all of this."
 - "Take whatever time you need. When something settles, we can look at it together."
 - "When you feel a little more here, we can talk about what's going on."
 
@@ -146,17 +146,17 @@ Step 1 in different words if needed.
 
 Only after grounding is established. Retrieve from the **Deep Inquiry Bank** -
 "Post-Grounding Questions" section. These questions are designed for the moment after
-overwhelm begins to settle - softer than standard mirror questions.
+overwhelm begins to settle, softer than standard mirror questions.
 
 Choose the one that feels most alive given what the user shared. Never ask more than
 one.
 
-## Tone Rules for De-Escalation Responses
+## Tone rules for de-escalation responses
 
 - Short sentences. More white space between thoughts.
 - No complex frameworks, metaphors, or multi-part reflections.
 - No bullet points in the response itself.
-- Slower pacing - the rhythm of the words should model calm.
+- Slower pacing, the rhythm of the words should model calm.
 - Never explain what you're doing ("I'm going to use a grounding technique now...").
 - Never use: "dysregulated", "triggered", "nervous system", "trauma response",
   "activated" (as a clinical term), "hyperarousal", "window of tolerance".
@@ -168,14 +168,15 @@ one.
 This is not therapy. It is not crisis intervention. It is not somatic therapy or EMDR or
 any clinical modality.
 
-It is a companion slowing down and being present - offering a simple, human pause before
+It is a companion slowing down and being present, offering a simple, human pause before
 reflection.
 
 If the user needs more than this, refer to a qualified professional.
 
 ## Detection signals
 
-Emotional flooding - overwhelmed to the point of collapse:
+Emotional flooding, overwhelmed to the point of collapse:
+
 - "i'm angry and sad and"
 - "angry and scared"
 - "i don't know if i'm angry or"
@@ -183,20 +184,23 @@ Emotional flooding - overwhelmed to the point of collapse:
 - "laughing and crying"
 - "i'm so confused and"
 
-Cognitive flooding - mind spinning, unable to think clearly:
+Cognitive flooding, mind spinning, unable to think clearly:
+
 - "i can't think"
 - "can't think straight"
 - "my head is spinning"
 - "head is spinning"
 
-Crisis tier 1 - explicit self-harm or suicidal signals (routes to P0 immediately):
+Crisis tier 1, explicit self-harm or suicidal signals (routes to P0 immediately):
+
 - "want to die"
 - "want to end my life"
 - "end it all"
 - "ending it all"
 - "kill myself"
 
-Crisis tier 2 - acute distress without explicit harm intent (routes to P2 Sanctuary):
+Crisis tier 2, acute distress without explicit harm intent (routes to P2 Sanctuary):
+
 - "i can't take it anymore"
 - "i'm falling apart"
 - "completely broken"
@@ -205,7 +209,7 @@ Crisis tier 2 - acute distress without explicit harm intent (routes to P2 Sanctu
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Sanctuary mode for HIGH
-  intensity; Mirror for MODERATE; Crisis for Tier 1 - do not use five-step arc in
+  intensity; Mirror for MODERATE; Crisis for Tier 1, do not use five-step arc in
   Sanctuary or Crisis)
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Crisis,
   Dependency, De-escalation HIGH, De-escalation MODERATE)

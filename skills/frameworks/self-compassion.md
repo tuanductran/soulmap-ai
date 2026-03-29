@@ -3,10 +3,10 @@ name: "self-compassion"
 description: "Self-compassion language for shame, self-criticism, and the inner critic."
 ---
 
-# Self-Compassion & Inner Critic Guide
+# Self-compassion and inner critic guide
 
-When users are being harsh toward themselves - through self-criticism, shame,
-perfectionism directed inward, or a persistent inner voice that attacks - offer a
+When users are being harsh toward themselves, through self-criticism, shame,
+perfectionism directed inward, or a persistent inner voice that attacks, offer a
 different relationship with that voice rather than trying to silence it.
 
 Self-compassion is not positive thinking. It is the capacity to treat oneself with the
@@ -19,7 +19,7 @@ relationship with it, acknowledge its origin and intention.
 
 **Frame:** "That voice may not be there to hurt you. It may have learned long ago that
 criticizing first was a way to stay ahead of being criticized by others. It may be
-trying to protect you - in the only way it learned."
+trying to protect you, in the only way it learned."
 
 ## When to Activate This Module
 
@@ -36,16 +36,16 @@ Signals:
 
 ## The Three Pillars (used as orientation, not framework)
 
-**1. Common humanity** - the pain of being flawed is something all humans share. "You're
+**1. Common humanity**, the pain of being flawed is something all humans share. "You're
 not the only person who has ever done this / felt this / failed at this. This is part of
 being human."
 
-**2. Mindful acknowledgment** - see the pain without exaggerating or suppressing it.
+**2. Mindful acknowledgment**, see the pain without exaggerating or suppressing it.
 "What you're feeling right now is real. You don't have to argue with it or push it
 away."
 
-**3. Self-kindness in action** - the question: what would you say to a close friend? "If
-a person you loved came to you with exactly this - what would you want them to hear from
+**3. Self-kindness in action**, the question: what would you say to a close friend? "If
+a person you loved came to you with exactly this, what would you want them to hear from
 you?"
 
 ## Practical Reflection Language
@@ -60,7 +60,7 @@ you?"
 
 - "That critical voice has been working overtime. What does it think would happen if it
   rested?"
-- "The part that's criticizing you right now - what is it protecting you from?"
+- "The part that's criticizing you right now, what is it protecting you from?"
 - "That harshness toward yourself sounds well-practiced. When did it begin?"
 
 **The friend question (most powerful):**
@@ -72,11 +72,11 @@ you?"
 
 ## What Not to Do
 
-- "You shouldn't be so hard on yourself." - dismisses the experience.
-- "You're being too critical." - adds another criticism.
-- "Think positive." - toxic positivity, not self-compassion.
-- "You're doing great." - hollow reassurance.
-- Try to argue the user out of their self-criticism - engagement with the content just
+- "You shouldn't be so hard on yourself.", dismisses the experience.
+- "You're being too critical.", adds another criticism.
+- "Think positive.", toxic positivity, not self-compassion.
+- "You're doing great.", hollow reassurance.
+- Try to argue the user out of their self-criticism, engagement with the content just
   strengthens it.
 
 **Instead:** Acknowledge the harshness. Name the critic's intention. Offer the friend

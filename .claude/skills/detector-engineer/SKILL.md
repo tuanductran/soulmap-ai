@@ -9,14 +9,16 @@ Use this skill when writing new detector modules, extending existing detectors, 
 
 ## Do not use this skill for
 
-- Editing rules and conventions - refer to [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
-- Writing or extending test groups in evals/groups.json - use [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md)
-- Defining framework activation signals - use [`framework-author`](../framework-author/SKILL.md)
-- General Python work outside modules/ - use code editing tools directly
+- Editing rules and conventions, refer to [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
+- Writing or extending test groups in evals/groups.json, use [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md)
+- Defining framework activation signals, use [`framework-author`](../framework-author/SKILL.md)
+- General Python work outside modules/, use code editing tools directly
 
 ## Mission
 
-Detectors are the sensors in SoulMap's framework selection system. They analyze conversation history and score the presence of specific signals (crisis indicators, dependency language, existential confusion, etc.).
+Detectors are the sensors in SoulMap's framework selection system. They analyze
+conversation history and score the presence of specific signals such as crisis
+indicators, dependency language, and existential confusion.
 
 This skill helps you:
 
@@ -67,12 +69,13 @@ Every detector returns a standardized dict:
 ```
 
 **Levels**:
-- `TIER_1` - Highest severity (crisis, immediate danger)
-- `HIGH` - Strong signals requiring framework override
-- `MODERATE` - Notable signals worth attention
-- `LOW` - Weak signals, may be context-dependent
-- `NONE` - No signals found
-- `NO_DATA` - Insufficient input to analyze
+
+- `TIER_1`, Highest severity (crisis, immediate danger)
+- `HIGH`, Strong signals requiring framework override
+- `MODERATE`, Notable signals worth attention
+- `LOW`, Weak signals, may be context-dependent
+- `NONE`, No signals found
+- `NO_DATA`, Insufficient input to analyze
 
 ## Signal Detection Patterns
 
@@ -94,6 +97,7 @@ for pattern_name, pattern_regex in SIGNAL_PATTERNS:
 ```
 
 **Rules**:
+
 - Pre-compile patterns at module load (not in functions)
 - Use descriptive names for each pattern
 - Use `re.IGNORECASE` for human input matching
@@ -133,10 +137,10 @@ if recent_messages_show_pattern(messages):
 
 Thresholds define when a detector's score triggers a framework override.
 
-### Define Thresholds in config.py
+### Define thresholds in `modules/config/`
 
 ```python
-# modules/config.py
+# modules/config/safety.py or modules/config/meaning.py
 HIGH_DEPENDENCY_THRESHOLD = 50      # Score >= 50 triggers Dependency framework
 MODERATE_DEPENDENCY_THRESHOLD = 25  # Score >= 25 warrants caution
 CRISIS_SEVERITY_THRESHOLD = 80      # Tier 1 crisis score
@@ -157,8 +161,8 @@ else:
 
 ### Tune Thresholds Based on Evals
 
-1. Run `python3 -m soulmap_ai.tools.eval_groups` to see which tests fail
-2. If detector scores are too high/low, adjust the threshold in `config.py`
+1. Run `python -m tools.eval_groups` to see which tests fail
+2. If detector scores are too high or low, adjust the threshold in the relevant file under `modules/config/`
 3. Re-run evals to verify the fix
 4. Document threshold rationale in comments
 
@@ -222,16 +226,17 @@ from modules import your_detector
 
 def select_framework(messages: list) -> str:
     # ... crisis check first (highest priority) ...
-    
+
     # Your detector
     result = your_detector.analyze_signal(messages)
     if result["level"] == "HIGH":
         return "YOUR_FRAMEWORK"
-    
+
     # ... continue with other detectors ...
 ```
 
 **Rules**:
+
 - Check detectors in priority order (defined in AGENTS.md Section 2)
 - Higher-priority signals always override lower-priority ones
 - Each detector should handle its own edge cases gracefully
@@ -266,7 +271,7 @@ Add test cases to `evals/groups.json` that should trigger your detector:
 
 ```json
 {
-  "g": "Your Framework - Core Signal",
+  "g": "Your Framework, Core Signal",
   "cat": "your_cat",
   "sources": ["skills/frameworks/your_framework.md"],
   "items": [
@@ -281,7 +286,7 @@ Add test cases to `evals/groups.json` that should trigger your detector:
 Then run:
 
 ```bash
-python3 -m soulmap_ai.tools.eval_groups
+python -m tools.eval_groups
 ```
 
 Verify your detector's test cases pass.
@@ -307,7 +312,7 @@ This ensures consistent handling of quotes, whitespace, and common text variatio
 Test your detector from the command line:
 
 ```bash
-echo '{"messages": [{"role": "user", "content": "test input"}]}' | python3 -m modules.your_detector
+echo '{"messages": [{"role": "user", "content": "test input"}]}' | python -m modules.your_detector
 ```
 
 Expected output:
@@ -349,7 +354,7 @@ for norm_msg in normalized_messages:
 6. Add eval cases to `evals/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
 7. Run `python -m pytest -q` and `python -m tools.eval_groups` before pushing.
 
-## Definition Of Done
+## Definition of done
 
 A detector is done when:
 
@@ -360,7 +365,7 @@ A detector is done when:
 - `python -m pytest -q` passes with no regressions
 - `python -m tools.eval_groups` passes for all groups it affects
 
-## Relationship to Other Skills
+## Relationship to other skills
 
 - **framework-author** defines what signals activate a framework → you implement detectors to identify those signals
 - **eval-suite-maintainer** writes test cases → you tune your detector to pass those tests

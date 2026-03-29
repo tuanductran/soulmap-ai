@@ -1,54 +1,60 @@
-# Codex Repo Workflow
+# Repository workflow rules
 
-Use these rules when Codex is working inside this repository.
+Use these rules for repository-wide working discipline.
 
-## Source of truth
+## Sources of truth
 
-- `AGENTS.md` is the baseline SoulMap doctrine, safety contract, and shipped package guide.
-- `docs/repo-contract.md` is the structural contract.
-- `docs/maintenance-boundary.md` is the scope-control document.
-- `docs/content-contract.md` is the Markdown contract.
+- Treat `AGENTS.md` as the baseline SoulMap doctrine, safety contract, and shipped
+  package guidance.
+- Treat `docs/repo-contract.md` as the repository structure contract.
+- Treat `docs/maintenance-boundary.md` as the scope-control document.
+- Treat `docs/content-contract.md` as the Markdown structure contract.
+- Treat `.codex/rules/language-and-grammar.md` as the repo-local prose style rule.
+- Prefer existing repo files over generic assumptions.
 
 ## Working style
 
 - Make the smallest correct change first.
-- Prefer updating existing files over adding parallel ones.
-- Do not expand product scope just because a new surface is possible.
-- Keep local Codex files supplemental to `AGENTS.md`, not competitive with it.
-- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules (e.g. `MD032` padding around lists, `MD040` fenced code language).
+- Do not add new surfaces, modules, or docs unless there is a current need.
+- Prefer updating existing files over creating parallel ones.
+- Keep repo language plain, specific, and ASCII-safe in Markdown.
+- Ensure all Markdown updates comply strictly with `.pymarkdown.json` rules, for
+  example `MD032` padding around lists and `MD040` fenced code languages.
 
-## Quality checks
+## Before editing
 
-After meaningful edits, run:
+- Read the nearest source-of-truth file first.
+- Check the root `.codex/skills/` directory for a matching skill first.
+- Do not change behavior, packaging, or docs by inference alone when the repo already
+  defines the contract elsewhere.
 
-```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
-```
+## After editing
 
-If a change touches `CHANGELOG.md`, root Markdown, or `docs/*.md`, do not skip
-`python3 -m tools.lint` before pushing or tagging a release.
-
-Before any manual release or tag push, run:
+Run these checks after meaningful changes:
 
 ```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
+python -m tools.format
+python -m tools.lint
+python -m pytest -q
 ```
 
-If packaging or release behavior changed, also run:
+If the change touches docs contracts, evals, packaging, or release flows, also run the
+relevant checks:
 
 ```bash
-python3 -m tools.build_skill
-python3 -m tools.build_skill --skill
+python -m tools.eval_groups
+python -m tools.build_skill
+python -m tools.build_skill --skill
+python -m modules.markdown_contract --root .
 ```
 
-For behavior and content validation, run when relevant:
+If the change touches `CHANGELOG.md`, root Markdown, or `docs/*.md`, do not skip
+`python -m tools.lint` before a manual release or tag push.
 
-```bash
-python3 -m tools.eval_responses
-python3 tests/test_safety_evals.py
-python3 -m modules.markdown_contract --root .
-```
+## AI tool guardrails
+
+- Do not widen scope just because a change is possible.
+- Do not invent product capabilities the repo does not implement.
+- Do not add dependency-inviting copy, advice-like language, or unsupported claims.
+- Do not leave generated caches or build artifacts in the working tree unless they are
+  intentionally part of the task.

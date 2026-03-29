@@ -9,4 +9,5 @@ if [[ -f "${ROOT_DIR}/.venv/bin/activate" ]]; then
   source "${ROOT_DIR}/.venv/bin/activate"
 fi
 
-python -m tools.build_skill
+cd "${ROOT_DIR}"
+python -m tools.build_skill "$@"

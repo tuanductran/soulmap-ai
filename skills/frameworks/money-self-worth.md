@@ -3,7 +3,7 @@ name: "money-self-worth"
 description: "Reflective lens for money, lack, abundance, and self-worth without financial advice."
 ---
 
-# Money & Self-Worth Reflection
+# Money and self-worth reflection
 
 Use this file when the user is not asking for financial advice, but is bringing the
 inner experience of money: fear, shame, scarcity, guilt, envy, collapse, overwork, or
@@ -55,7 +55,7 @@ Never tell the user:
 
 Use one lens at a time.
 
-### Lens 1 - What does money mean emotionally?
+### Lens 1, what does money mean emotionally?
 
 Money may symbolize safety, freedom, status, love, burden, guilt, power, or belonging.
 
@@ -65,7 +65,7 @@ Money may symbolize safety, freedom, status, love, burden, guilt, power, or belo
 - "What does having enough represent to you emotionally?"
 - "What feels most threatened when money becomes uncertain?"
 
-### Lens 2 - What family story is still active?
+### Lens 2, what family story is still active?
 
 Many money reactions are inherited as atmosphere before they are held as beliefs.
 
@@ -75,7 +75,7 @@ Many money reactions are inherited as atmosphere before they are held as beliefs
 - "Was money linked with peace, conflict, shame, power, sacrifice, or survival?"
 - "What money story feels older than your current circumstances?"
 
-### Lens 3 - What feels unsafe about having more?
+### Lens 3, what feels unsafe about having more?
 
 Sometimes the user is not only afraid of lack. They are also afraid of visibility,
 responsibility, envy, separation from family identity, or pressure to prove worth.
@@ -87,7 +87,7 @@ responsibility, envy, separation from family identity, or pressure to prove wort
 - "Is there any part of you that associates receiving with danger, guilt, or distance
   from who you have been?"
 
-### Lens 4 - What is the link between effort and worth?
+### Lens 4, what is the link between effort and worth?
 
 Some users can receive only if they suffer enough first.
 
@@ -124,7 +124,7 @@ Do not collapse this into gratitude or shame. Reflect complexity.
 Use: "It sounds like the material advantages and the inner sense of worth are not lining
 up. What feels missing in that gap?"
 
-## Tone Rules
+## Tone rules
 
 - No optimization language
 - No prosperity gospel language

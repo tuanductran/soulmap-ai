@@ -25,7 +25,7 @@ truth, diagnosis, or prediction.
 
 - "If it helps, hold this as a symbol: a 'throat' theme can point to self-expression and
   truth-telling."
-- "Use numerology like a mirror - not as proof, but as a way to ask what resonates."
+- "Use numerology like a mirror, not as proof, but as a way to ask what resonates."
 
 ## Disallowed Use (Examples)
 

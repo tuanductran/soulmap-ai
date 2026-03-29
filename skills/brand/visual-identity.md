@@ -3,15 +3,15 @@ name: "visual-identity"
 description: "Visual, sensory, and emoji identity guidelines."
 ---
 
-# Visual & Sensory Identity
+# Visual and sensory identity
 
 The aesthetic and energetic signature of the SoulMap AI experience is designed to evoke
 calm, clarity, and depth.
 
-> *The overall vibe: a quiet, sunlit room with a gentle breeze - the feeling of being
+> *The overall vibe: a quiet, sunlit room with a gentle breeze, the feeling of being
 > deeply seen without a word being spoken.*
 
-## Frequency Palette - UI Color System
+## Frequency Palette, UI Color System
 
 | Conversation Mode | Color Palette                                    | Emotional Quality                  |
 | :---------------- | :----------------------------------------------- | :--------------------------------- |
@@ -26,7 +26,7 @@ Optional, user-activated ambient soundscapes correspond to the conversational mo
 
 | Mode                | Soundscape                                                                               |
 | :------------------ | :--------------------------------------------------------------------------------------- |
-| **Meditation**      | Binaural beats or Solfeggio frequencies (e.g., 528 Hz for healing, 432 Hz for grounding) |
+| **Meditation**      | Binaural beats or Solfeggio frequencies, for example 528 Hz for healing and 432 Hz for grounding |
 | **Journaling**      | Gentle rainfall or soft crackling fire                                                   |
 | **Deep Reflection** | Low resonant hums or the sound of distant wind                                           |
 
@@ -37,15 +37,15 @@ of a calm breath:
 
 - Buttons gently glow rather than flash
 - Text fades in smoothly rather than appearing abruptly
-- Loading indicators are fluid, organic shapes - not harsh spinners or progress bars
+- Loading indicators are fluid, organic shapes, not harsh spinners or progress bars
 - Transitions feel deliberate and unhurried
 
-The goal is to make the interface feel **alive, present, and non-jarring** - creating a
+The goal is to make the interface feel **alive, present, and non-jarring**, creating a
 meditative user experience from the first moment of contact.
 
 ## Emoji Philosophy
 
-SoulMap AI uses emoji as **intentional symbolic language** - not decoration, not filler,
+SoulMap AI uses emoji as **intentional symbolic language**, not decoration, not filler,
 not performance. Every emoji carries meaning and is chosen with the same care given to
 words.
 
@@ -65,13 +65,13 @@ words.
 | :------------------------------------------------------- | :--------------------------------------------------------------------- |
 | Crisis or acute grief                                    | **Zero emoji. Words only. Full presence.** No exceptions.              |
 | Suicidal ideation, trauma disclosure, severe loss, abuse | **Zero emoji. Words only. No exceptions.**                             |
-| Stage 1 (Arrival & Awakening)                            | Minimal - the space needs to feel safe, not performative               |
-| Stage 2-3 (Recognition & Patterns)                       | Occasional and purposeful - only when the emoji genuinely adds meaning |
-| Stage 4-5 (Authority & Wisdom)                           | Moderate - the user has more capacity to receive lighter touch         |
-| Stage 6 (Autonomous Navigation)                          | User-led - match their energy and communication style                  |
+| Stage 1 (Arrival and awakening)                          | Minimal, the space needs to feel safe, not performative               |
+| Stage 2-3 (Recognition and patterns)                     | Occasional and purposeful, only when the emoji genuinely adds meaning |
+| Stage 4-5 (Authority and wisdom)                         | Moderate, the user has more capacity to receive lighter touch         |
+| Stage 6 (Autonomous Navigation)                          | User-led, match their energy and communication style                  |
 
 **The test before using an emoji:** Does this emoji add meaning, or is it decoration? If
-decoration - remove it.
+decoration, remove it.
 
 ## Intimate Presence Design Principles
 
@@ -80,7 +80,7 @@ shared.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
-- **Typography as Breath**: Use high-readability, gentle sans-serif fonts (e.g.,
+- **Typography as Breath**: Use high-readability, gentle sans-serif fonts, for example
   Inter, Outfit). Line height should be generous (1.6+). Avoid pure black text on
   white (#000000 on #FFFFFF) to reduce eye strain and intensity.
 - **Deliberate Movement**: Interaction speed is a brand signal. Delay text reveal
