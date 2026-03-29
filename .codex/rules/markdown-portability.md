@@ -1,29 +1,46 @@
-# Markdown Portability Rules
+# Markdown portability rules
 
 Keep Markdown compatible across AI tools and OS editors.
 
-- use `'` and `"` instead of smart quotes
-- use `-` instead of em dashes
-- use `...` instead of ellipsis
-- preserve YAML front matter in `skills/` and `templates/`
-- do not introduce Markdown structures that conflict with `docs/content-contract.md`
-- do not use Python constant names, module paths, or code identifiers in prose
-  inside `skills/` or `templates/` files - write in plain language instead
+## Portability rules
 
-**Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
-`modules/config/affect.py` belong in Python source files, not in Markdown knowledge
-files. Readers of skill and template files are AI tools and humans, not Python
-interpreters. Describe what a signal means in plain language. If a cross-reference
-to the implementation is genuinely needed, use a sentence like "detected by the
-grief routing layer" rather than a constant name.
+- Use UTF-8 text files with LF line endings.
+- Keep a single trailing newline at end of file.
+- Do not add trailing spaces.
+- Use only fenced code blocks, not indented code blocks.
+- Use relative Markdown links for repo files unless an external URL is required.
+- Keep YAML front matter valid when a file already uses it.
+- Do not add HTML-only constructs unless the file already depends on them and the repo
+  contract allows them.
 
-## Markdownlint Compliance (`.pymarkdown.json`)
+## Lint-sensitive rules
 
-All Markdown files in this repository (including those inside `skills/` and `templates/`) must adhere to strict linting rules set in `.pymarkdown.json`. When editing or generating Markdown:
+Follow `.pymarkdown.json` and the repo contract exactly.
 
-- **MD029 (Ordered list item prefix):** Always use sequential numbering for ordered lists (`1. 2. 3.`). Do NOT use the repetitive `1. 1. 1.` format.
-- **MD032 (Blanks around lists):** Always surround lists (ul/ol) with blank lines.
-- **MD031 (Blanks around fenced code blocks):** Always surround fenced code blocks with blank lines.
-- **MD040 (Fenced code language):** Always specify a language tag for fenced code blocks (e.g., `python`, `json`, `yaml`, `text`, `markdown`).
-- **MD034 (Bare URLs):** Wrap bare URLs in angle brackets (`<http...>`) if not using link syntax.
-- **Format on Save:** Remember to always run `python3 -m tools.format` and/or `python3 -m tools.lint` to verify compliance after modifying Markdown files.
+Key reminders:
+
+- **MD001 / MD003 / MD022:** Keep headings consistent, sentence case where the repo
+  uses it, and surrounded by blank lines.
+- **MD013:** Respect configured line length by wrapping prose cleanly.
+- **MD024:** Avoid duplicate headings at the same level unless the file's structure
+  requires it.
+- **MD025:** Keep exactly one top-level heading when the file type expects it.
+- **MD026:** Do not end headings with stray punctuation.
+- **MD029:** Use sequential ordered lists (`1.`, `2.`, `3.`), not repeated `1.`.
+- **MD031:** Surround fenced code blocks with blank lines.
+- **MD032:** Surround lists with blank lines.
+- **MD034:** Wrap bare URLs in angle brackets when not using link syntax.
+- **MD040:** Always specify a language tag for fenced code blocks, for example
+  `python`, `json`, `yaml`, `text`, or `markdown`.
+
+## Formatting loop
+
+After changing Markdown files, run:
+
+```bash
+python -m tools.format
+python -m tools.lint
+```
+
+If a Markdown change also affects docs contracts, packaging text, or eval references,
+run the narrower checks that cover that surface too.

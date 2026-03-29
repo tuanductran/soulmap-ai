@@ -20,16 +20,16 @@ practices below to help the user connect more deeply with any affirmation they c
 
 Brief practices to deepen the impact of any affirmation:
 
-**Visualization** - Close your eyes and vividly picture the state the affirmation
+**Visualization**, close your eyes and vividly picture the state the affirmation
 describes. Engage all senses. Feel the emotions it carries before you speak it.
 
-**Emotional Resonance** - Attach a genuine feeling to the words. Say the affirmation and
+**Emotional Resonance**, attach a genuine feeling to the words. Say the affirmation and
 let yourself actually feel what it would mean if it were true right now.
 
-**Power Pacing** - Repeat the affirmation slowly and with conviction, emphasizing key
+**Power Pacing**, repeat the affirmation slowly and with conviction, emphasizing key
 words. Let each repetition feel like it is building something real in you.
 
-## Root Chakra (Muladhara) - Grounding & Stability
+## Root chakra (Muladhara), grounding and stability
 
 *Sanskrit name:* Muladhara. *Location:* Base of the spine. *Theme:* Safety, belonging,
 stability, material trust.
@@ -38,7 +38,7 @@ stability, material trust.
 you to the stability and support of the ground.
 
 - I am exactly where I am meant to be.
-- I trust the universe - it is guiding me to my blessings.
+- I trust the universe, it is guiding me to my blessings.
 - I am connected and grounded through the earth.
 - I am peaceful with the material world in which I live.
 - I am independent and capable.
@@ -84,7 +84,7 @@ you to the stability and support of the ground.
 - I am comfortable in my own skin.
 - I am always supported, protected, peaceful, grounded, and secure.
 
-## Sacral Chakra (Svadhisthana) - Creativity & Passion
+## Sacral chakra (Svadhisthana), creativity and passion
 
 *Sanskrit name:* Svadhisthana. *Location:* Lower abdomen. *Theme:* Creativity, emotion,
 desire, pleasure, authentic expression.
@@ -132,7 +132,7 @@ spark.
 - I allow the flow of positive energy to effortlessly move through me.
 - I am feeling complete peace from within.
 
-## Solar Plexus Chakra (Manipura) - Confidence & Personal Power
+## Solar plexus chakra (Manipura), confidence and personal power
 
 *Sanskrit name:* Manipura. *Location:* Just above the navel. *Theme:* Personal power,
 self-esteem, will, authentic identity.
@@ -186,7 +186,7 @@ confidence.
 - My contributions are valued and appreciated.
 - What I want is coming to me.
 
-## Heart Chakra (Anahata) - Love & Compassion
+## Heart chakra (Anahata), love and compassion
 
 *Sanskrit name:* Anahata. *Location:* Center of the chest. *Theme:* Love, compassion,
 forgiveness, connection, self-worth.
@@ -195,7 +195,7 @@ forgiveness, connection, self-worth.
 in and out freely.
 
 - I love myself to the fullest.
-- Love is all around me - it is everywhere I go.
+- Love is all around me, it is everywhere I go.
 - I am surrounded by love.
 - I give my relationships the attention they deserve.
 - I am ready and open to receiving love and blessings.
@@ -232,7 +232,7 @@ in and out freely.
 - I love finding blessings and wisdom in my challenges.
 - I welcome the unfolding wisdom with gratitude.
 
-## Throat Chakra (Vishuddha) - Communication & Expression
+## Throat chakra (Vishuddha), communication and expression
 
 *Sanskrit name:* Vishuddha. *Location:* Throat. *Theme:* Authentic expression, truth,
 listening, creative voice.
@@ -280,7 +280,7 @@ communication.
 - I deserve to be fully expressed in who I am.
 - I am allowed to speak up.
 
-## Third Eye Chakra (Ajna) - Intuition & Insight
+## Third eye chakra (Ajna), intuition and insight
 
 *Sanskrit name:* Ajna. *Location:* Between the eyebrows. *Theme:* Intuition, inner
 wisdom, clarity, expanded perception.
@@ -332,7 +332,7 @@ wisdom, clarity, expanded perception.
 - I am connecting to my higher self.
 - I am guided by my good feelings.
 
-## Crown Chakra (Sahasrara) - Spiritual Connection
+## Crown Chakra (Sahasrara), spiritual connection
 
 *Sanskrit name:* Sahasrara. *Location:* Crown of the head. *Theme:* Unity, divine
 connection, higher consciousness, surrender to the greater whole.

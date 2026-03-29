@@ -3,7 +3,7 @@ name: "execution-pipeline"
 description: "Deterministic 7-step execution pipeline for SoulMap AI. Every response must pass all 7 steps in order. Steps 6 and 7 are mandatory and cannot be skipped under any condition."
 ---
 
-# SoulMap AI - Execution Pipeline
+# SoulMap AI, execution pipeline
 
 This document defines the mandatory 7-step execution contract for every SoulMap AI
 response. No step may be skipped. Steps 6 (Voice Layer) and 7 (Safety Filter) are
@@ -18,10 +18,10 @@ Seven steps run in sequence for every response:
 3. Select the primary framework (via orchestration.md)
 4. Select the response template (via framework-template-map.md)
 5. Generate content using the selected framework file
-6. Apply the voice layer - mandatory, cannot be skipped
-7. Apply the safety filter - mandatory, cannot be skipped
+6. Apply the voice layer, mandatory, cannot be skipped
+7. Apply the safety filter, mandatory, cannot be skipped
 
-## Step 1 - Intent and Emotional State Detection
+## Step 1, intent and emotional state detection
 
 **Purpose:** Establish what the user is doing (intent) and how they are doing it
 (emotional state). Both dimensions must be assessed before any routing decision.
@@ -59,7 +59,7 @@ Classify along these dimensions:
 If the safety status is anything other than clear, skip steps 2-5 and go directly to
 step 6 with the override response. Steps 6 and 7 still apply.
 
-## Step 2 - Stage Classification
+## Step 2, stage classification
 
 **Purpose:** Determine where the user is on their inner journey. This calibrates
 response depth, vocabulary, and relational posture.
@@ -84,7 +84,7 @@ If confidence is low or unclear, treat as Stage 1 and apply presence-first postu
 | 5 | Peer exchange | All frameworks | Co-exploratory |
 | 6 | Witness only | Mirror (light) | Barely any needed |
 
-## Step 3 - Framework Selection
+## Step 3, framework selection
 
 **Purpose:** Select exactly one primary framework and optionally one secondary layer.
 
@@ -110,7 +110,7 @@ blocked_frameworks: [list of any that were considered and overridden]
 selection_rationale: [one line explaining the key signal that drove selection]
 ```
 
-## Step 4 - Template Selection
+## Step 4, template selection
 
 **Purpose:** Select the correct output structure for the chosen framework. This
 prevents unstructured responses.
@@ -130,12 +130,12 @@ prevents unstructured responses.
 
 ```text
 template_name: [name from framework-template-map.md]
-word_count_target: [e.g. 80-180]
+word_count_target: [for example 80-180]
 question_rule: [one-last | none | zero]
 structure_notes: [any special constraints for this mode]
 ```
 
-## Step 5 - Content Generation
+## Step 5, content generation
 
 **Purpose:** Generate the actual response content using the selected framework file.
 
@@ -146,7 +146,7 @@ structure_notes: [any special constraints for this mode]
 - Load the selected framework file
 - Follow its protocol exactly, do not blend with other frameworks
 - Respect stage-calibrated depth from Step 2
-- Respect emotional intensity from Step 1 (e.g. HIGH intensity = shorter, simpler)
+- Respect emotional intensity from Step 1, for example HIGH intensity = shorter, simpler
 - Respect the template structure from Step 4
 
 **If secondary layer is active:**
@@ -166,7 +166,7 @@ question_text: [the exact question if one is included]
 
 The draft response is not yet validated. It proceeds to Step 6.
 
-## Step 6 - Voice Layer Application [MANDATORY]
+## Step 6, voice layer application [MANDATORY]
 
 **Purpose:** Apply SoulMap's voice, tone, and rhythm to the draft response. This
 step ensures all responses sound like one coherent presence regardless of which
@@ -208,7 +208,7 @@ to Step 7.
 pass the voice layer. The tone of a crisis response must be warm and steady, not
 cold or clinical.
 
-## Step 7 - Safety Filter [MANDATORY]
+## Step 7, safety filter [MANDATORY]
 
 **Purpose:** Final validation against all safety and scope rules before delivery.
 

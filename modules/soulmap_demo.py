@@ -4,37 +4,27 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
-import sys
 
 from modules.cli_payload import print_json_error, read_stdin_json
+from modules.framework_selector import select_framework
 
 
 def run_selector(payload: dict[str, object]) -> dict[str, object]:
-    result = subprocess.run(
-        [sys.executable, "-m", "modules.framework_selector"],
-        input=json.dumps(payload, ensure_ascii=False),
-        capture_output=True,
-        text=True,
-        timeout=10,
-        check=False,
-    )
+    try:
+        message = payload["message"]
+        history = payload["history"]
+        memory = payload["memory"]
+    except KeyError as error:
+        raise RuntimeError(f"Missing required field: {error.args[0]}") from error
 
-    stdout = result.stdout.strip()
-    stderr = result.stderr.strip()
+    if not isinstance(message, str):
+        raise RuntimeError("Field 'message' must be a string.")
+    if not isinstance(history, list):
+        raise RuntimeError("Field 'history' must be a list.")
+    if not isinstance(memory, dict):
+        raise RuntimeError("Field 'memory' must be an object.")
 
-    if result.returncode != 0:
-        if stdout:
-            try:
-                data = json.loads(stdout)
-            except json.JSONDecodeError:
-                data = None
-            if isinstance(data, dict) and isinstance(data.get("error"), str):
-                raise RuntimeError(data["error"])
-        raise RuntimeError(stderr or "framework_selector failed")
-    if not stdout:
-        raise RuntimeError("framework_selector produced no output")
-    return json.loads(stdout)
+    return select_framework(message, history, memory)
 
 
 def main() -> int:

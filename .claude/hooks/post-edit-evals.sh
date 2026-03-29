@@ -33,12 +33,12 @@ fi
 echo "[hook:post-edit-evals] ✓ JSON syntax valid" >&2
 
 # 2. Validate against schema and run eval_groups if available
-if [[ -f "modules/tools/eval_groups.py" ]] || python3 -c "from soulmap_ai.tools import eval_groups" 2>/dev/null; then
+if [[ -f "tools/eval_groups.py" ]] || python3 -c "import tools.eval_groups" 2>/dev/null; then
   echo "[hook:post-edit-evals] Running eval_groups validation..." >&2
-  
-  OUTPUT=$(python3 -m soulmap_ai.tools.eval_groups 2>&1 || true)
+
+  OUTPUT=$(python3 -m tools.eval_groups 2>&1 || true)
   EXIT_CODE=$?
-  
+
   if [[ $EXIT_CODE -ne 0 ]] || echo "$OUTPUT" | grep -q "FAIL\|ERROR"; then
     echo "[hook:post-edit-evals] ⚠ Eval issues detected:" >&2
     echo "$OUTPUT" >&2

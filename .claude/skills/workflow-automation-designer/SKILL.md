@@ -4,7 +4,7 @@ description: Design repeatable development and release workflows for SoulMap AI 
 disable-model-invocation: true
 ---
 
-# Workflow Automation Designer
+# Workflow automation designer
 
 Use this skill when turning a repeated manual process into a documented workflow,
 automation plan, or CI-friendly sequence.
@@ -17,46 +17,46 @@ Examples:
 - packaging workflow
 - QA handoff workflow
 
-## Sources To Check First
+## Sources to check first
 
 Before designing any workflow, inspect the relevant existing tooling and contracts:
 
-- `.claude/rules/repo-workflow.md` - current working discipline and quality checks
-- `.github/workflows/` - existing CI workflows
-- `tools/` - cross-platform Python tooling scripts
-- `scripts/` - bash helper scripts
-- `docs/DEV.md` - developer setup and day-to-day commands
-- `docs/OPERATIONS.md` - operational checklists and release guidance
-- `templates/launch-readiness-checklist.md` - release gate template
+- `.claude/rules/repo-workflow.md`, current working discipline and quality checks
+- `.github/workflows/`, existing CI workflows
+- `tools/`, cross-platform Python tooling scripts
+- `scripts/`, bash helper scripts
+- `docs/DEV.md`, developer setup and day-to-day commands
+- `docs/OPERATIONS.md`, operational checklists and release guidance
+- `templates/launch-readiness-checklist.md`, release gate template
 
 ## Do not use this skill for
 
-- Release readiness checks - use
+- Release readiness checks, use
   [`release-readiness-review`](../release-readiness-review/SKILL.md)
-- Identifying gaps in the project - use
+- Identifying gaps in the project, use
   [`research-and-gap-analysis`](../research-and-gap-analysis/SKILL.md)
-- Writing documentation - use
+- Writing documentation, use
   [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
 
 ## Mission
 
 Convert repeated repo work into clear, reproducible steps.
 
-## What To Check
+## What to check
 
 ### Repetition
 
 Identify tasks that happen often and currently rely on memory.
 
-### Sequence Integrity
+### Sequence integrity
 
 Make sure the order of steps is correct and safe.
 
-### Tool Fit
+### Tool fit
 
 Choose the simplest workflow that fits the repo's current tooling.
 
-### Handoff Clarity
+### Handoff clarity
 
 Ensure another contributor can run the workflow without hidden context.
 
@@ -68,27 +68,27 @@ Ensure another contributor can run the workflow without hidden context.
 4. Add checkpoints and expected outputs.
 5. Note what can be automated now versus later.
 
-## Expected Output
+## Expected output
 
-### Current Process
+### Current process
 
 Summarize the manual flow today.
 
-### Proposed Workflow
+### Proposed workflow
 
 List the improved step-by-step sequence.
 
-### Automation Notes
+### Automation notes
 
 Call out which parts fit scripts, CI, or checklists.
 
-## Writing Rules
+## Writing rules
 
 - Prefer explicit commands.
 - Prefer small workflows over giant abstract pipelines.
 - Do not invent automation infrastructure that is not present.
 
-## Definition Of Done
+## Definition of done
 
 The workflow should be:
 

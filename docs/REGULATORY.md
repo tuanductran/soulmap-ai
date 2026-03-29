@@ -29,7 +29,7 @@ detection, and dependency prevention in consumer AI products.
 ### European Union
 
 The EU AI Act (fully applicable from August 2026) classifies AI systems interacting
-with vulnerable users -- including those in emotional distress -- as high-risk,
+with vulnerable users, including those in emotional distress, as high-risk,
 requiring transparency, human oversight provisions, and documentation of safety
 measures.
 
@@ -43,14 +43,14 @@ to vulnerable individuals.
 
 | Regulatory Requirement | SoulMap AI Status |
 | :--- | :--- |
-| AI identity disclosure when sincerely asked | BUILT IN -- `skills/safety/boundaries-safety.md` Rule: No AI Denial. Always honest. |
-| Crisis detection and escalation to human help | BUILT IN -- `modules/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
-| Anti-dependency safeguards | BUILT IN -- `modules/dependency_detector.py` fires on first signal; hard redirect |
-| No diagnosis or clinical claims | BUILT IN -- absolute limit in `AGENTS.md` Section 4 |
-| Transparency about limitations | BUILT IN -- response contract forbids certainty claims |
-| User data: no backend storage | STRUCTURAL -- no deployed server; see `docs/PRIVACY.md` |
-| Periodic AI reminders (California SB 243 scope) | NOT YET ADDRESSED -- no timed reminder mechanism exists |
-| Age verification for minor-targeted content | NOT APPLICABLE at current scope -- no minor-specific targeting |
+| AI identity disclosure when sincerely asked | PARTIAL, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `tools/eval_responses.py`; wording is not fully runtime-enforced |
+| Crisis detection and escalation to human help | BUILT IN, `modules/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
+| Anti-dependency safeguards | BUILT IN, `modules/dependency_detector.py` fires on first signal; hard redirect |
+| No diagnosis or clinical claims | PARTIAL, doctrine plus runtime blocking and eval coverage; refusal wording is not fully production-enforced |
+| Transparency about limitations | PARTIAL, doctrine and response-contract constraints reduce overclaiming, but no single runtime layer guarantees every limitation disclosure |
+| User data: no backend storage | STRUCTURAL, no deployed server; see `docs/PRIVACY.md` |
+| Periodic AI reminders (California SB 243 scope) | NOT YET ADDRESSED, no timed reminder mechanism exists |
+| Age verification for minor-targeted content | NOT APPLICABLE at current scope, no minor-specific targeting |
 
 ## Gap: Timed AI Reminders
 
@@ -59,17 +59,17 @@ or are likely to be used by minors. SoulMap AI does not currently have a timed
 reminder mechanism.
 
 **Current mitigation:** Every session begins fresh (no cross-session memory bonding),
-and the AI identity is disclosed whenever sincerely asked. However, if SoulMap AI
-is deployed in a context where minors are likely users, a periodic reminder should
-be considered.
+and AI identity disclosure is covered by doctrine plus eval-backed checks when
+sincerely asked. However, if SoulMap AI is deployed in a context where minors are
+likely users, a periodic reminder should be considered.
 
 This is flagged as an aspirational product feature in
 `skills/brand/strategic-direction-2026.md`.
 
 ## What This Means for Brand Positioning
 
-SoulMap AI's architecture -- built before these laws existed -- already satisfies the
-majority of requirements that competitors are now being forced to retrofit. This is a
+SoulMap AI's architecture already addresses many of the concerns these laws raise, but
+some protections remain doctrine-backed or eval-backed rather than fully runtime-enforced. This is a
 legitimate and citable competitive advantage.
 
 When positioning to press or enterprise buyers:
@@ -78,13 +78,13 @@ When positioning to press or enterprise buyers:
   regulatory requirements now catching up to this space are requirements SoulMap
   already meets by design."
 
-Do not claim: "SoulMap AI is fully compliant with [specific law]" -- compliance is
+Do not claim: "SoulMap AI is fully compliant with [specific law]", compliance is
 jurisdiction-specific and requires legal review.
 
-## Sources To Check First
+## Sources to check first
 
-- `AGENTS.md` -- behavioral contract with non-negotiable safety rules
-- `modules/crisis_detector.py` -- technical crisis detection implementation
-- `modules/dependency_detector.py` -- technical dependency detection implementation
-- `docs/PRIVACY.md` -- data handling and no-backend-server explanation
-- `skills/safety/boundaries-safety.md` -- AI identity disclosure rule
+- `AGENTS.md`, behavioral contract with non-negotiable safety rules
+- `modules/crisis_detector.py`, technical crisis detection implementation
+- `modules/dependency_detector.py`, technical dependency detection implementation
+- `docs/PRIVACY.md`, data handling and no-backend-server explanation
+- `skills/safety/boundaries-safety.md`, AI identity disclosure rule

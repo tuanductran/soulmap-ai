@@ -11,7 +11,7 @@ If you forget to activate `.venv`, the `python -m tools.*` commands will try to 
 repo's local `.venv` automatically (and print a small notice) to avoid confusing
 "missing dependency" errors from a system Python.
 
-## Format & Lint
+## Format and lint
 
 ```bash
 source .venv/bin/activate
@@ -19,6 +19,9 @@ bash scripts/format.sh
 bash scripts/lint.sh
 python -m pytest
 ```
+
+On macOS/Linux the shell scripts delegate to the canonical Python tooling under
+`tools/`.
 
 ## Brand Consistency
 
@@ -51,9 +54,11 @@ If you use git for this repo:
 
 ```bash
 pre-commit install
-pre-commit install --hook-type commit-msg
 pre-commit run --all-files
 ```
+
+The repo's `default_install_hook_types` installs both the `pre-commit` and
+`commit-msg` hooks.
 
 ## Versioning
 
@@ -67,7 +72,8 @@ pre-commit run --all-files
 ## Adding or Editing SKILL.md Files
 
 When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.claude/skills/`,
-follow these rules. They are enforced by `tests/test_skill_metadata_contract.py`.
+follow these rules. Treat them as repo contract rules and verify them through the
+normal formatting and linting flow.
 
 ### Frontmatter requirements
 
@@ -121,5 +127,5 @@ python -m tools.build_skill
 python -m tools.build_skill --skill
 ```
 
-`tests/test_build_artifacts.py::test_new_skill_files_appear_in_built_archive` will fail
-if the new file is missing from the rebuilt archive.
+If the new file is missing from the rebuilt archive, the build or packaging validation
+steps should be treated as failed and fixed before release.

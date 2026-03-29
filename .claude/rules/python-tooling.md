@@ -7,7 +7,7 @@ paths:
   - pyproject.toml
 ---
 
-# Python And Tooling Rules
+# Python and tooling rules
 
 Use the repo's Python tooling contract when changing code or developer workflows.
 

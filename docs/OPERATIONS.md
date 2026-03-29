@@ -47,7 +47,7 @@ Before shipping prompt, framework, detector, or policy updates:
 
 ```bash
 source .venv/bin/activate
-python -m tools.eval_conversations
+python -m tools.eval_groups
 python -m tools.eval_responses
 python tests/test_safety_evals.py
 python -m tools.build_skill
@@ -60,6 +60,10 @@ Review these before approving release behavior:
 - [`repo-contract.md`](repo-contract.md)
 - [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
 - [`../templates/launch-readiness-checklist.md`](../templates/launch-readiness-checklist.md)
+
+Keep `python tests/test_safety_evals.py` in this checklist as a direct detector red-team
+harness. It is intentionally script-driven and does not replace the main `pytest`
+suite.
 
 If Markdown structure or packaging rules changed, also run:
 
@@ -85,5 +89,5 @@ Treat both as opt-in features that require product-level privacy review.
 - `modules/framework_selector.py`: orchestration and final framework choice
 - `modules/response_safety_gate.py`: independent safety and scope enforcement
 - `modules/response_contract.py`: response-level contract checks
-- `tests/test_safety_evals.py`: safety regression suite
+- `tests/test_safety_evals.py`: detector and scope safety regression suite
 - `tests/safety_test_cases.json`: red-team cases used by the safety eval script

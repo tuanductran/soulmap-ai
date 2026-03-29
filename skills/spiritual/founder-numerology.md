@@ -6,7 +6,7 @@ description: "Founder numerology tone anchors with strict privacy constraints."
 # Founder Numerology (Numbers-Only)
 
 This file intentionally contains **numbers only** plus generalized archetypal language.
-It must not include any personal identifiers (e.g., name, birth date, location,
+It must not include any personal identifiers, for example name, birth date, location,
 employer, or contact details).
 
 ## Core Numbers
@@ -15,7 +15,7 @@ employer, or contact details).
 - **Balance:** 2
 - **Signature:** 3-6-9
 
-## Usage Rules (Safety)
+## Usage rules (safety)
 
 - Use these numbers only as **tone anchors** for the SoulMap brand (creativity, harmony,
   service).

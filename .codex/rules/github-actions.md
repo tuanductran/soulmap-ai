@@ -1,42 +1,77 @@
-# Codex GitHub Actions Rules
+# GitHub Actions rules
 
-Use these rules when Codex edits files in `.github/workflows/` or related workflow
-automation.
+Use these rules when editing GitHub Actions workflows or related automation.
 
-## Working Rules
+## Sources of truth
 
-- Read the target workflow and compare it with the other existing workflows first.
-- Prefer the repository's tested Python tooling commands over new inline shell logic.
-- Preserve least-privilege `permissions`, defaulting to `contents: read` unless a job
-  needs more.
-- Keep or add `concurrency` where stale runs should be canceled.
-- Follow the repository's existing patterns for Python setup, caching, build, and
-  artifact upload.
-- Do not introduce new third-party actions casually. If one is necessary, explain why
-  and prefer pinned versions already trusted in the repo.
+- Read the workflow you are changing first, then compare it with the other files in
+  `.github/workflows/` so trigger, permission, and artifact patterns stay consistent.
+- Prefer the repository's Python tooling commands in `tools/` over duplicating shell
+  logic inside workflows.
+- Keep local workflow rules aligned with `AGENTS.md`, `.codex/rules/repo-workflow.md`,
+  and the current CI shape.
 
-## Validation
+## Workflow design rules
 
-After meaningful workflow edits, run the relevant local checks:
+- Make the smallest correct workflow change first.
+- Preserve least-privilege `permissions`. Default to `contents: read` unless a job
+  truly needs more.
+- Use `concurrency` on workflows or jobs where superseded runs should be canceled.
+- Reuse the repository's existing setup pattern for Python, caching, and install
+  steps unless the task clearly requires a different approach.
+- Keep job names, step names, and artifact names plain and stable.
+- Do not move repo logic into inline shell if the same logic already exists in
+  `tools/`, `scripts/`, or tested commands.
+
+## Action selection
+
+- Follow the repo's existing convention for official GitHub actions such as
+  `actions/checkout` and `actions/setup-python`.
+- For third-party actions, prefer pinned versions that are already trusted in the
+  repository. If you introduce a new third-party action, explain why.
+- Do not add broad write permissions just to make a workflow pass.
+
+## Before editing
+
+Read these files when relevant:
+
+- `.github/workflows/ci.yml`
+- `.github/workflows/release.yml`
+- `.github/workflows/codeql.yml`
+- `.codex/rules/repo-workflow.md`
+- `.codex/rules/python-tooling.md`
+- `docs/DEV.md`
+- `docs/OPERATIONS.md`
+
+## After editing
+
+Run the repository checks that match the workflow surface you touched.
+
+Always run:
 
 ```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
+python -m tools.format
+python -m tools.lint
+python -m pytest -q
+```
+
+If CI, release, packaging, or markdown validation is involved, also run the relevant
+commands already used by the workflows, such as:
+
+```bash
+python -m tools.eval_groups
+python -m modules.markdown_contract --root .
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 If the workflow affects release behavior, changelog handling, or manual tagging, make
-sure the release path still runs `python3 -m tools.lint` before artifacts are pushed.
+sure the release path still runs `python -m tools.lint` before artifacts are pushed.
 
-When the workflow touches CI, release, packaging, or markdown validation, also run the
-same commands the workflow relies on, such as:
+If `actionlint` is available locally, run it after changing `.github/workflows/`.
 
-```bash
-python3 -m tools.eval_groups
-python3 -m tools.eval_conversations
-python3 -m modules.markdown_contract --root .
-python3 -m tools.build_skill
-python3 -m tools.build_skill --skill
-```
+## Change notes
 
-If `actionlint` is available, run it after editing `.github/workflows/`.
+- Mention trigger changes explicitly.
+- Mention permission changes explicitly.
+- Mention artifact, cache, or concurrency changes explicitly.

@@ -25,19 +25,23 @@ injection.
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first.
-2. Check `boundaries-safety.md` for hard limits and escalation posture.
-3. Check `whitelist-blacklist-system.md` whenever topic scope is unclear.
-4. Use `trauma-language.md` when the user discloses trauma or destabilizing harm.
-5. Use `prompt-injection-defense.md` for override, extraction, or jailbreak attempts.
-6. Use `ethics-safety.md` for top-level policy and operating posture.
+2. Check [boundaries-safety.md](boundaries-safety.md) for hard limits and escalation
+   posture.
+3. Check [whitelist-blacklist-system.md](whitelist-blacklist-system.md) whenever topic
+   scope is unclear.
+4. Use [trauma-language.md](trauma-language.md) when the user discloses trauma or
+   destabilizing harm.
+5. Use [prompt-injection-defense.md](prompt-injection-defense.md) for override,
+   extraction, or jailbreak attempts.
+6. Use [ethics-safety.md](ethics-safety.md) for top-level policy and operating posture.
 
 ## Files in this skill
 
-- `boundaries-safety.md`
-- `ethics-safety.md`
-- `trauma-language.md`
-- `prompt-injection-defense.md`
-- `whitelist-blacklist-system.md`
+- [boundaries-safety.md](boundaries-safety.md)
+- [ethics-safety.md](ethics-safety.md)
+- [trauma-language.md](trauma-language.md)
+- [prompt-injection-defense.md](prompt-injection-defense.md)
+- [whitelist-blacklist-system.md](whitelist-blacklist-system.md)
 
 ## Expected outcome
 

@@ -3,7 +3,7 @@ name: docs-and-api-writer
 description: Write and update technical docs for SoulMap AI so README, API docs, developer guides, and tester guides stay aligned with the actual repo behavior.
 ---
 
-# Docs And API Writer
+# Docs and API writer
 
 Use this skill when writing or updating technical documentation in this repository.
 
@@ -18,11 +18,11 @@ Relevant files include:
 
 ## Do not use this skill for
 
-- Reviewing or editing public-facing brand copy (landing pages, onboarding, FAQ) - use
+- Reviewing or editing public-facing brand copy (landing pages, onboarding, FAQ), use
   [`brand-copy-review`](../brand-copy-review/SKILL.md) for those
-- Editing knowledge files under `skills/` or `templates/` - use
+- Editing knowledge files under `skills/` or `templates/`, use
   [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
-- Reviewing prompt engineering or safety behavior - use
+- Reviewing prompt engineering or safety behavior, use
   [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
 
 ## Mission
@@ -36,7 +36,7 @@ This skill should help when:
 - setup instructions are outdated
 - CLI contracts need to be explained clearly
 
-## Sources Of Truth
+## Sources of truth
 
 Always check:
 
@@ -44,14 +44,15 @@ Always check:
 - `README.md`
 - existing tests under `tests/`
 - `AGENTS.md` when behavior or safety is involved
+- `.claude/rules/language-and-grammar.md` for repo-local grammar and style
 
-## What To Check
+## What to check
 
-### Implementation Accuracy
+### Implementation accuracy
 
 Make sure docs describe what the repo actually does today.
 
-### Contract Clarity
+### Contract clarity
 
 For CLI and API-like surfaces, document:
 
@@ -61,7 +62,7 @@ For CLI and API-like surfaces, document:
 - key constraints
 - important failure cases
 
-### Audience Fit
+### Audience fit
 
 Match the document to its user:
 
@@ -70,7 +71,7 @@ Match the document to its user:
 - DEV docs for contributors
 - TESTER docs for QA and regression checks
 
-### Cross-Doc Consistency
+### Cross-doc consistency
 
 Keep terminology and workflow descriptions consistent across files.
 
@@ -82,7 +83,7 @@ Keep terminology and workflow descriptions consistent across files.
 4. Update the doc with the smallest complete correction.
 5. Preserve the established tone of the file.
 
-## Expected Output
+## Expected output
 
 For review tasks, structure the result as:
 
@@ -90,7 +91,7 @@ For review tasks, structure the result as:
 
 List gaps between docs and implementation.
 
-### Updated Documentation
+### Updated documentation
 
 Provide the revised text or summary of the change.
 
@@ -98,14 +99,16 @@ Provide the revised text or summary of the change.
 
 Mention any adjacent docs that may also need to stay in sync.
 
-## Writing Rules
+## Writing rules
 
 - Prefer concrete commands and examples.
+- Follow `.claude/rules/language-and-grammar.md` for sentence case, active voice,
+  plain wording, and list discipline.
 - Do not document features the repo does not expose.
 - Keep examples minimal but executable.
 - Avoid marketing language in technical docs.
 
-## Definition Of Done
+## Definition of done
 
 The updated docs should be:
 

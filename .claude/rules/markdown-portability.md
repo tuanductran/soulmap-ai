@@ -6,7 +6,7 @@ paths:
   - pyproject.toml
 ---
 
-# Markdown Portability Rules
+# Markdown portability rules
 
 Keep Markdown compatible across AI tools and OS editors.
 
@@ -16,7 +16,7 @@ Keep Markdown compatible across AI tools and OS editors.
 - preserve YAML front matter in `skills/` and `templates/`
 - do not introduce Markdown structures that conflict with `docs/content-contract.md`
 - do not use Python constant names, module paths, or code identifiers in prose
-  inside `skills/` or `templates/` files - write in plain language instead
+  inside `skills/` or `templates/` files, write in plain language instead
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
 `modules/config/affect.py` belong in Python source files, not in Markdown knowledge
@@ -32,6 +32,7 @@ All Markdown files in this repository (including those inside `skills/` and `tem
 - **MD029 (Ordered list item prefix):** Always use sequential numbering for ordered lists (`1. 2. 3.`). Do NOT use the repetitive `1. 1. 1.` format.
 - **MD032 (Blanks around lists):** Always surround lists (ul/ol) with blank lines.
 - **MD031 (Blanks around fenced code blocks):** Always surround fenced code blocks with blank lines.
-- **MD040 (Fenced code language):** Always specify a language tag for fenced code blocks (e.g., `python`, `json`, `yaml`, `text`, `markdown`).
+- **MD040 (Fenced code language):** Always specify a language tag for fenced code
+  blocks, for example `python`, `json`, `yaml`, `text`, or `markdown`.
 - **MD034 (Bare URLs):** Wrap bare URLs in angle brackets (`<http...>`) if not using link syntax.
-- **Format on Save:** Remember to always run `python3 -m tools.format` and/or `python3 -m tools.lint` to verify compliance after modifying Markdown files.
+- **Format on Save:** Remember to always run `python -m tools.format` and/or `python -m tools.lint` to verify compliance after modifying Markdown files.

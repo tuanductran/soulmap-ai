@@ -37,7 +37,7 @@ stability and breaking changes in behavior.
 - add language specifier to fenced code block in SKILL.md
 - **safety**: sync Markdown blacklist/whitelist with Python implementation
 - **crisis**: patch 4 morphological gaps in crisis detection
-- **product**: close 4 runtime gaps - opener logic, tagline tiers, demo link, frustration redirect
+- **product**: close 4 runtime gaps, opener logic, tagline tiers, demo link, frustration redirect
 - **tests**: normalize package paths across platforms
 - **packaging**: include modules.config in published package
 - **tooling**: handle repo lock cleanup errors

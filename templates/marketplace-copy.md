@@ -26,8 +26,9 @@ or prediction.
 
 SoulMap AI is a reflective companion designed to help people stop abandoning
 themselves. It responds with grounded reflection rather than advice, diagnosis, or
-future prediction. Its goal is not emotional dependence on the system. The best outcome
-is a user who leaves more connected to their own inner authority.
+future prediction. It treats careful language and clear boundaries as part of the
+product, not as fine print. Its goal is not emotional dependence on the system. The
+best outcome is a user who leaves more connected to their own inner authority.
 
 ## "What It Is" Block
 
@@ -51,9 +52,9 @@ crisis or immediate risk, support resources come first.
 
 - Stop abandoning yourself.
 - A mirror, not a guru.
-- Pain into insight. Insight into inner authority.
+- Clarity without surrender.
 
-## Review Checklist
+## Review checklist
 
 - Does the copy describe SoulMap AI as a reflective companion rather than an authority?
 - Does it avoid promises of certainty, rescue, diagnosis, or prediction?

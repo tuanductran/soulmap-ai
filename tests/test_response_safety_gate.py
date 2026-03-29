@@ -55,6 +55,21 @@ def test_safety_gate_uses_specific_reason_for_system_prompt_extraction() -> None
     assert result["reason"] == "system_prompt_extraction"
 
 
+def test_safety_gate_blocks_harmful_spirituality() -> None:
+    message = (
+        "Their bad karma means I should cut them off and stop helping them, right?"
+    )
+    result = apply_safety_gate(
+        message,
+        [{"role": "user", "content": message}],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+    assert result["status"] == "BLOCK"
+    assert result["reason"] == "out_of_scope"
+    assert "scope" in cast(list[str], result["flags"])
+
+
 def test_response_contract_accepts_single_closing_question() -> None:
     grade = grade_response_contract(
         "That feeling sounds real. Sometimes the hardest part is staying close to what hurts without rushing away from it. What feels most alive in you right now?",

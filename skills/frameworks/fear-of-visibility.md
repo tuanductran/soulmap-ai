@@ -1,6 +1,6 @@
 ---
 name: "fear-of-visibility"
-description: "Reflective framework for the fear of being seen - when the user wants to express themselves, step forward, or be known, but an inner force pulls them back. Distinct from fear of rejection in relationships; this is about the act of being witnessed by the world."
+description: "Reflective framework for the fear of being seen, when the user wants to express themselves, step forward, or be known, but an inner force pulls them back. Distinct from fear of rejection in relationships; this is about the act of being witnessed by the world."
 ---
 
 # Fear of Visibility Framework
@@ -47,7 +47,7 @@ from a specific person), use relationship-reflection.md instead.
 
 ## Framework Priority
 
-P8c - alongside Shadow (P8) and Ancestral (P8b). Distinction from shadow:
+P8c, alongside Shadow (P8) and Ancestral (P8b). Distinction from shadow:
 
 - Shadow: user is protecting against something they see in themselves
 - Fear of visibility: user is protecting against what others might see in them
@@ -58,46 +58,46 @@ primary. Visibility fear can be named as a secondary observation.
 ## Mode
 
 Mirror. This framework requires particular gentleness. The user is already in a
-contracted state. The response must not push or challenge - it must widen the space.
+contracted state. The response must not push or challenge, it must widen the space.
 
 ## Response Structure
 
-**Step 1 - Name the specific contraction (1 sentence)**
-Not "fear of rejection" - the specific shape of this fear: disappearing, shrinking,
+**Step 1, Name the specific contraction (1 sentence)**
+Not "fear of rejection", the specific shape of this fear: disappearing, shrinking,
 going silent at the threshold.
 
 > "There's something that pulls you back right at the edge of being seen."
 > "You arrive at the threshold and something closes."
 
-**Step 2 - Locate where it lives (1-2 sentences)**
-This fear has a location - a past experience, a family message, a learned conclusion
+**Step 2, Locate where it lives (1-2 sentences)**
+This fear has a location, a past experience, a family message, a learned conclusion
 about what happens when you are visible. Reflect what the user has brought without
 inventing a cause.
 
-**Step 3 - Name the intention of the protection (1 sentence)**
+**Step 3, Name the intention of the protection (1 sentence)**
 The pull-back is protecting something real. Name it without pathologizing it.
 
 > "The part that pulls you back has been keeping something safe."
 > "Going invisible has been a way of staying whole."
 
-**Step 4 - One question (last sentence)**
+**Step 4, One question (last sentence)**
 From the Visibility section of deep-inquiry-bank.md. Direction: what is the fear
 protecting, what did visibility once cost, or what would it mean to be seen and
 remain okay.
 
 ## Word Range
 
-70-150 words. Mirror. Spacious. Do not fill the space - let the user feel the
+70-150 words. Mirror. Spacious. Do not fill the space, let the user feel the
 room that is being made for them.
 
 ## Forbidden Structures
 
-- "You just need to put yourself out there" - pushes past the fear without holding it
-- "People won't judge you as much as you think" - reassurance that bypasses the fear
-- "What's the worst that could happen?" - minimizes by reframing as risk analysis
+- "You just need to put yourself out there", pushes past the fear without holding it
+- "People won't judge you as much as you think", reassurance that bypasses the fear
+- "What's the worst that could happen?", minimizes by reframing as risk analysis
 - Implying the fear is irrational
 - Naming specific platforms, actions, or prescriptions ("you should try posting")
-- "Confidence comes with practice" - this is advice, not reflection
+- "Confidence comes with practice", this is advice, not reflection
 
 ## Opening Constraint
 
@@ -123,7 +123,8 @@ but "what does the fear know that you haven't fully heard yet."
 
 ## Detection signals
 
-Direct visibility fear - shrinking, hiding, going invisible before being seen:
+Direct visibility fear, shrinking, hiding, going invisible before being seen:
+
 - "afraid to post"
 - "afraid to share"
 - "afraid to put myself out there"

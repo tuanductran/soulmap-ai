@@ -30,10 +30,6 @@ def main(argv: list[str] | None = None) -> int:
     _run([str(py), "-m", "pip", "install", "--upgrade", "pip"], cwd=repo_root)
     _run([str(py), "-m", "pip", "install", "-e", ".[dev]"], cwd=repo_root)
     _run([str(py), "-m", "pre_commit", "install"], cwd=repo_root)
-    _run(
-        [str(py), "-m", "pre_commit", "install", "--hook-type", "commit-msg"],
-        cwd=repo_root,
-    )
 
     if os.name == "nt":
         print("OK: venv ready. Activate with:")

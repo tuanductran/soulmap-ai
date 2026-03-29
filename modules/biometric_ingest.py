@@ -13,16 +13,15 @@ def map_biometrics_to_somatic_prompt(
 ) -> dict[str, object]:
     """Translates wearable numbers to a neutral, mirror-ready somatic reflection."""
 
-    # Safe checks
     hrv = biometrics.get("hrv")
     sleep = biometrics.get("sleep_score")
 
     signals = []
     if isinstance(hrv, int | float) and hrv < 30:
-        signals.append("Heart rate variability suggests high physiological load.")
+        signals.append("Your body may be carrying heavier strain than usual right now.")
 
     if isinstance(sleep, int | float) and sleep < 50:
-        signals.append("Sleep architecture indicates insufficient rest/recovery.")
+        signals.append("Your recent rest may be lower than what supports steadiness.")
 
     if not signals:
         return {"status": "NO_SOMATIC_ALERT", "context": None}
@@ -32,8 +31,8 @@ def map_biometrics_to_somatic_prompt(
         "status": "BIOMETRIC_ALERT",
         "context": summary,
         "instruction": (
-            "Acknowledge emotional state first. Then use biometric data as a reflective indicator "
-            " -  NOT diagnostic. Use somatic_wellbeing.md. "
+            "Acknowledge emotional state first. Then use biometric data only as a possible reflective "
+            "signal, not as diagnosis or authority. Use somatic_wellbeing.md. "
             "Follow with ONE question: 'What does this reflect in your inner experience right now?'"
         ),
     }

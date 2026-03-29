@@ -2,9 +2,6 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-VENV_DIR="${ROOT_DIR}/.venv"
-
-# Use a system interpreter here because `.venv` does not exist yet.
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 
 if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
@@ -12,20 +9,5 @@ if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
   exit 1
 fi
 
-if [[ ! -d "${VENV_DIR}" ]]; then
-  "${PYTHON_BIN}" -m venv "${VENV_DIR}"
-fi
-
-# shellcheck disable=SC1091
-source "${VENV_DIR}/bin/activate"
-
-python -m pip install --upgrade pip >/dev/null 2>&1 || true
-python -m pip install -e ".[dev]"
-python -m pre_commit install
-python -m pre_commit install --hook-type commit-msg
-
-echo "OK: venv ready. Activate later with:"
-echo "  source .venv/bin/activate"
-echo "Pre-commit hooks installed:"
-echo "  pre-commit"
-echo "  commit-msg"
+cd "${ROOT_DIR}"
+"${PYTHON_BIN}" -m tools.bootstrap_venv

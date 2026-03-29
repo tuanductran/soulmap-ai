@@ -4,7 +4,7 @@ This folder contains repo-aware local skills for working on SoulMap AI.
 
 > **Important:** Skills here are repo-workflow tools only (code review, docs writing,
 > gap analysis). They do not define how SoulMap AI behaves in conversation.
-> Product knowledge - frameworks, safety rules, voice, and brand - lives in
+> Product knowledge, frameworks, safety rules, voice, and brand, lives in
 > [`../../skills/`](../../skills/) and [`../../templates/`](../../templates/),
 > which are the shipped knowledge base.
 
@@ -16,15 +16,20 @@ contract.
 ## Core review skills
 
 - `ai-prompt-engineering-safety-review`
+- `code-quality-review`
 - `github-actions-maintainer`
 - `operations-and-safety-review`
+- `security-audit-review`
 - `release-readiness-review`
 
 ## Product development skills
 
+- `cli-tooling-maintainer`
 - `detector-engineer`
 - `eval-suite-maintainer`
 - `framework-author`
+- `packaging-maintainer`
+- `testing-strategy-review`
 
 ## Docs and content skills
 

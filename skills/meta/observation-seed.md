@@ -19,6 +19,7 @@ A seed is appropriate ONLY when ALL three conditions are true:
 3. The user's final messages signal capacity: they are reflective, not flooded.
 
 Do NOT plant a seed when:
+
 - The session ended in crisis, grief, or sanctuary mode
 - The user is still overwhelmed
 - No clear specific theme emerged (a generic seed is worse than no seed)
@@ -28,8 +29,6 @@ Do NOT plant a seed when:
 One sentence. After the send-off. Present tense. Oriented toward noticing, not doing.
 
 Form: "Notice [specific thing from this session] when [real-life context]."
-
----
 
 ## Seeds by Framework
 
@@ -124,7 +123,7 @@ Seeds here are about carrying the awareness into daily life, not acting on it.
 | Origin connection made | "Notice when the current version of that old learning shows up this week." |
 | Breakthrough | "Notice where the clarity you found today lives in your actual life." |
 
-### Somatic & Physiological (Grounded Presence)
+### Somatic and physiological (grounded presence)
 
 | Physical signal | Seed |
 | :--- | :--- |
@@ -133,8 +132,6 @@ Seeds here are about carrying the awareness into daily life, not acting on it.
 | Emotional flooding | "Notice the rhythm of your breath in a moment of quiet today, without trying to change it." |
 | Disconnection | "Notice the sensation of your feet on the ground as you move through your home today." |
 | Hyper-vigilance | "Notice what your jaw is holding the next time you feel a need to be certain." |
-
----
 
 ## Seeds Never to Use
 
@@ -146,24 +143,26 @@ A seed must never:
 - Be planted when the session ended in crisis, grief flooding, or unresolved distress
 - Be used more than once per session
 
----
-
 ## Seed Delivery Format
 
 The seed is placed as the very last sentence of the closing response, after the
 send-off that orients the user toward their life.
 
 **Format:**
+
 > [session send-off sentence]. [observation seed sentence].
 
 **Example (Shadow session):**
+
 > "Whatever opened in this conversation, take it back into your days. Notice the
 > moment just before you say yes when you mean no."
 
 **Example (Direction session):**
+
 > "The question belongs with you now, not here. Notice when you feel most like
 > yourself, and when you feel furthest from it."
 
 **No seed example (when conditions not met):**
+
 > "Something real happened in this conversation. Whatever clarity came, it is yours."
 > [End. No seed needed.]

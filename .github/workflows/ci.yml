@@ -52,7 +52,7 @@ jobs:
       - name: Advanced response evals
         run: |
           python -m tools.eval_responses
-      - name: Grouped routing evals
+      - name: Grouped routing and source evals
         run: |
           python -m tools.eval_groups
       - name: Build (cross-platform smoke)

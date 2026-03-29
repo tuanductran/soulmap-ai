@@ -5,11 +5,11 @@ paths:
   - tests/test_*_detector.py
 ---
 
-# Detector Development Rules
+# Detector development rules
 
 Use these conventions when writing or extending Python detector modules.
 
-## Module Structure
+## Module structure
 
 Every detector module follows this structure:
 
@@ -38,10 +38,10 @@ HistoryMessage = dict[str, str]
 def analyze_signal(conversation_messages: list) -> dict:
     """
     Main detection function.
-    
+
     Args:
         conversation_messages: List of dicts with 'role' and 'content' keys.
-    
+
     Returns:
         Dict with keys: level (str), score (int), signals (list), recommendation (str)
     """
@@ -66,9 +66,10 @@ if __name__ == "__main__":
 - Import from `modules.cli_payload` for stdin/stdout handling
 - Import config constants from `modules.config`
 - Define type hints using `HistoryMessage = dict[str, str]`
-- Name the main function descriptively (e.g., `analyze_dependency`, `detect_crisis`)
+- Name the main function descriptively, for example `analyze_dependency` or
+  `detect_crisis`
 
-## Scoring Methods
+## Scoring methods
 
 Detectors return a standardized dict with four keys:
 
@@ -76,7 +77,7 @@ Detectors return a standardized dict with four keys:
 |-----|------|-------------|
 | `level` | str | Signal level: `"TIER_1"`, `"HIGH"`, `"MODERATE"`, `"LOW"`, `"NONE"`, `"NO_DATA"` |
 | `score` | int | Numeric score (0-100 for consistency, or match threshold convention) |
-| `signals` | list | List of signal descriptions found (e.g., `["only_you_understand_me"]`) |
+| `signals` | list | List of signal descriptions found, for example `["only_you_understand_me"]` |
 | `recommendation` | str | Plain English recommendation for the framework or action |
 
 Example return value:
@@ -90,7 +91,7 @@ Example return value:
 }
 ```
 
-## Threshold Conventions
+## Threshold conventions
 
 Thresholds are defined in `modules/config.py` as named constants:
 
@@ -103,7 +104,7 @@ CRISIS_SEVERITY_THRESHOLD = 80
 **Rules for thresholds**:
 
 - Define all numeric thresholds as module-level constants in `config.py`
-- Use semantic names (e.g., `HIGH_`, `MODERATE_`, `CRITICAL_`)
+- Use semantic names, for example `HIGH_`, `MODERATE_`, or `CRITICAL_`
 - Document the threshold purpose with a comment
 - Use thresholds consistently across detectors
 - Thresholds should be tuned through eval suite assertions (see `evals/groups.json`)
@@ -116,7 +117,7 @@ HIGH_DEPENDENCY_THRESHOLD = 50  # Score >= 50 triggers Dependency framework
 MODERATE_DEPENDENCY_THRESHOLD = 25  # Score >= 25 warrants dependency caution
 ```
 
-## Secondary Scoring Patterns
+## Secondary scoring patterns
 
 Some signals contribute partial scores. Use this pattern:
 
@@ -151,35 +152,35 @@ score = min(score, 100)
 - Always cap the final score at a reasonable maximum (typically 100)
 - Document the weighting rationale in code comments
 
-## Integration Methods
+## Integration methods
 
-### Framework Selector Integration
+### Framework selector integration
 
 Add your detector to the framework selection chain in `modules/framework_selector.py`:
 
 ```python
 def select_framework(conversation_messages: list) -> str:
     # ... existing priority checks ...
-    
+
     # Your detector here
     crisis_result = crisis_detector.analyze_crisis(conversation_messages)
     if crisis_result["level"] == "TIER_1":
         return "CRISIS"
-    
+
     # Continue with other detectors
 ```
 
-### CLI Tool Integration
+### CLI tool integration
 
 Detectors can be run standalone via CLI:
 
 ```bash
-echo '{"messages": [...]}' | python3 -m modules.dependency_detector
+echo '{"messages": [...]}' | python -m modules.dependency_detector
 ```
 
 This works automatically if your module follows the `if __name__ == "__main__"` pattern.
 
-### Test Integration
+### Test integration
 
 Write unit tests in `tests/test_YOUR_detector.py`:
 
@@ -191,7 +192,7 @@ def test_analyzer_detects_signal():
     assert "only_you_understand_me" in result["signals"]
 ```
 
-## Pattern Definitions
+## Pattern definitions
 
 Detectors use regex patterns to identify signals. Store pattern definitions at module level:
 
@@ -216,7 +217,7 @@ DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 - Document what each pattern detects
 - Keep patterns maintainable and not overly complex
 
-## Message Normalization
+## Message normalization
 
 Always normalize user messages before pattern matching:
 
@@ -231,9 +232,9 @@ for message in conversation_messages:
 
 This handles quote standardization and whitespace cleanup consistently across all detectors.
 
-## Testing and Validation
+## Testing and validation
 
-### Unit Tests
+### Unit tests
 
 Write focused tests for each detector:
 
@@ -251,15 +252,15 @@ def test_no_signal():
     assert result["level"] == "NONE"
 ```
 
-### Integration Tests
+### Integration tests
 
 Test your detector through the eval suite:
 
 1. Add test cases to `evals/groups.json` with `expect_primary_framework` set to the framework your detector selects
-2. Run `python3 -m soulmap_ai.tools.eval_groups` to validate
+2. Run `python -m tools.eval_groups` to validate
 3. Adjust thresholds if eval cases fail unexpectedly
 
-## Error Handling
+## Error handling
 
 Detectors must handle malformed input gracefully:
 

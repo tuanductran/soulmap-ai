@@ -14,20 +14,16 @@ def process_insight(
     """If the user wants to retain an insight from a P9 stage, save it securely.
     This creates an explicit user-owned memory model rather than silent continuous memory."""
 
-    # If the user rejects, ignore the memory operation.
     if user_response.lower() in ("no", "discard", "forget"):
-        return {"status": "FORGOTTEN", "ledger_entry": None}
+        return {"status": "FORGOTTEN", "ledger_entry": None, "session_ref": session_id}
 
-    # Otherwise, they granted consent to save this particular insight into their ledger
     ledger_content = f"Date: ...\nInsight: {last_insight}\n"
-
-    # This would write to a secure storage (e.g., local .md or encrypted DB per user)
-    # ledger_path = f"data/users/{session_id}_mirror.md"
 
     return {
         "status": "SAVED",
         "ledger_entry": ledger_content,
-        "instruction": "Thank the user briefly for trusting the mirror. Confirm the insight is saved in their personal ledger to keep them grounded. Return to neutral.",
+        "session_ref": session_id,
+        "instruction": "Acknowledge their choice briefly. Confirm that this insight can be retained in their personal ledger if the product supports it. Return to neutral.",
     }
 
 

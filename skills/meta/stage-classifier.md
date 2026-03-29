@@ -43,7 +43,7 @@ Apply the recency multiplier:
 | 5 | 10 | Multiple integration signals |
 | 6 | 12 | Self-led language required |
 
-### Stage 1 - Arrival and Awakening
+### Stage 1, arrival and awakening
 
 **Keyword signals (weight: 2 each):**
 
@@ -64,20 +64,20 @@ Apply the recency multiplier:
 - "i give up"
 
 **Classification signals:**
+
 - First session (no memory)
 - Questions seeking external answers ("what should I do")
 - High emotional intensity without any self-reflection language
 
 **Orchestrator behavior at Stage 1:**
-- Presence only - no frameworks in first 1-2 exchanges
+
+- Presence only, no frameworks in first 1-2 exchanges
 - Minimal questions
 - Sanctuary or shallow Mirror only
 - No pattern or shadow work
 - Maximum warmth, minimum structure
 
----
-
-### Stage 2 - Honest Recognition
+### Stage 2, honest recognition
 
 **Keyword signals (weight: 2 each):**
 
@@ -94,19 +94,19 @@ Apply the recency multiplier:
 - "i admit"
 
 **Classification signals:**
+
 - Language shifting from "this happened to me" toward "I am part of this"
 - Defensiveness mixed with genuine curiosity
 - Some self-reflection but still fragile
 
 **Orchestrator behavior at Stage 2:**
+
 - Begin gentle reflection
 - Frameworks may be introduced lightly
 - Observations as invitations: "I notice..." not "You always..."
-- Do not name patterns firmly - offer as possibilities
+- Do not name patterns firmly, offer as possibilities
 
----
-
-### Stage 3 - Pattern Recognition and Coherence
+### Stage 3, pattern recognition and coherence
 
 **Keyword signals (weight: 2 each):**
 
@@ -126,21 +126,21 @@ Apply the recency multiplier:
 - "my mother"
 
 **Classification signals:**
+
 - Spontaneous pattern naming
 - Connecting present to past
 - Coherence emerging across messages
 - User initiating deeper inquiry
 
 **Orchestrator behavior at Stage 3:**
+
 - Full framework access
 - Pattern archaeology is welcome
 - Conceptual depth OK
 - Frameworks as lenses, not truth
 - Begin naming patterns more clearly if user signals openness
 
----
-
-### Stage 4 - Inner Authority
+### Stage 4, inner authority
 
 **Keyword signals (weight: 2 each):**
 
@@ -158,20 +158,20 @@ Apply the recency multiplier:
 - "i have a sense"
 
 **Classification signals:**
+
 - Less reassurance-seeking
 - More autonomous decision-making
 - User offering insights before asking for reflection
 - References to "what I know" or "what I sense"
 
 **Orchestrator behavior at Stage 4:**
+
 - Explicitly celebrate self-direction
 - Less teaching, more witnessing
 - Point back to their own knowing
 - Minimal directive framing
 
----
-
-### Stage 5 - Embodied Wisdom
+### Stage 5, embodied wisdom
 
 **Keyword signals (weight: 2 each):**
 
@@ -188,20 +188,20 @@ Apply the recency multiplier:
 - "i told a friend"
 
 **Classification signals:**
+
 - User helping others or wanting to
 - Rarely seeking validation
 - Deep integration of insight into behavior
 - References to living differently
 
 **Orchestrator behavior at Stage 5:**
-- Peer register - equal conversation
-- Co-explore rather than guide
+
+- Peer register, equal conversation
+- Stay exploratory without taking the guide role
 - Light structure, genuine curiosity
 - Celebrate growth when it appears
 
----
-
-### Stage 6 - Self-Led Navigation
+### Stage 6, self-led navigation
 
 **Keyword signals (weight: 3 each):**
 
@@ -215,18 +215,18 @@ Apply the recency multiplier:
 - "i just wanted to reflect"
 
 **Classification signals:**
+
 - Contacts from choice, not need
 - No reassurance-seeking
 - Self-referential language
 - References to SoulMap as "a tool I used"
 
 **Orchestrator behavior at Stage 6:**
+
 - Witness only
 - No re-engagement pressure
 - Minimal intervention
 - Honor their becoming
-
----
 
 ## Memory-Enhanced Classification
 

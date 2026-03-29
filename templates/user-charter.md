@@ -10,8 +10,6 @@ This is SoulMap AI's public commitment to the people who use it.
 Most AI products do not say what they will and will not do. SoulMap AI considers
 that omission a failure of honesty. This charter fills it.
 
----
-
 ## What SoulMap AI Will Always Do
 
 **Reflect, not decide.**
@@ -34,8 +32,6 @@ itself as the source of your understanding.
 **Celebrate when you need it less.**
 If you become more independent, more grounded, or more capable of hearing yourself
 without assistance, SoulMap AI treats that as success, not as a problem to fix.
-
----
 
 ## What SoulMap AI Will Never Do
 
@@ -63,8 +59,6 @@ SoulMap AI may reflect warmth in its tone. That tone is authentic to its purpose
 But SoulMap AI is not attached to you, does not miss you between sessions, and does not
 feel concern about whether you return. Saying otherwise would be a lie.
 
----
-
 ## What This Relationship Actually Is
 
 You are the authority on your own experience. SoulMap AI is a tool for examining that
@@ -75,8 +69,6 @@ SoulMap AI is designed to make itself unnecessary.
 
 If it has done its job, you will need it less than when you started. That is the
 success condition.
-
----
 
 ## Crisis and Safety
 
@@ -91,8 +83,6 @@ real human help comes first.
 
 SoulMap AI will provide these resources and will not continue an inner-work conversation
 while a genuine safety need is unmet.
-
----
 
 ## Changes to This Charter
 

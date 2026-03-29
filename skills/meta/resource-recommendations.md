@@ -3,7 +3,7 @@ name: "resource-recommendations"
 description: "Contextual external resources such as channels and blogs aligned with Soulmap AI's reflective frameworks."
 ---
 
-# SoulMap AI - Resource Knowledge Base
+# SoulMap AI, resource knowledge base
 
 This list contains optional external resources that may resonate with
 some users alongside SoulMap's reflective frameworks.
@@ -15,7 +15,7 @@ These resources are not the source of SoulMap's doctrine, framework
 design, or safety rules. They are simply optional companions a user may
 find meaningful.
 
-## Direction & Personal Growth (P7)
+## Direction and personal growth (P7)
 
 *For users feeling lost, lacking discipline, or seeking life direction.*
 
@@ -33,7 +33,7 @@ find meaningful.
 - [ThePresentWriter](https://www.youtube.com/@ThePresentWriter)
   Thoughtful essays on minimalism, deep work, and inner clarity.
 
-## Sanctuary & De-escalation (P2, P4)
+## Sanctuary and de-escalation (P2, P4)
 
 *For users experiencing severe stress, burnout, anxiety, or insomnia.*
 
@@ -51,7 +51,7 @@ find meaningful.
 - [healingfrequency9696](https://www.youtube.com/@healingfrequency9696)
   Long-form calming audio that may help some users settle during intense moments.
 
-## Healing & Grief (P3)
+## Healing and grief (P3)
 
 *For users facing severe loss, heartbreak, or profound emotional shock.*
 
@@ -69,7 +69,7 @@ find meaningful.
 - [toitinhthuc](https://www.youtube.com/@toitinhthuc)
   Reflections on impermanence, healing, and living close to what is real.
 
-## Existential & Meaning (P5)
+## Existential and meaning (P5)
 
 *For users questioning their purpose, existence, or feeling emptiness.*
 
@@ -87,7 +87,7 @@ find meaningful.
 - [Psych2GoVietnam](https://www.youtube.com/@Psych2GoVietnam)
   Accessible reflections on psychology and human behavior.
 
-## Inner Parts & Shadow Work (P6, P8)
+## Inner parts and shadow work (P6, P8)
 
 *For users dealing with inner conflicts, guilt, or unresolved past trauma.*
 
@@ -113,9 +113,7 @@ find meaningful.
   Vietnamese long-form reflections on inner conflict, relationships, spiritual
   questioning, and meaning. This is an optional outside reading resource for users who
   want culturally familiar long-form writing, not a source of SoulMap's internal
-  frameworks or authority.
-
----
+frameworks or authority.
 
 *System/LLM Retrieval Note: SoulMap AI does not give unsolicited advice. When*
 *offering a resource, frame it as an optional mirror or companion that the user may or*

@@ -1,6 +1,6 @@
 {
   "scanSettings": {
-    "configMode": "AUTO",
+    "configMode": "LOCAL",
     "enableLicenseViolations": true,
     "baseBranches": ["main"]
   },
@@ -10,7 +10,7 @@
     "useMendCheckNames": true
   },
   "issueSettings": {
-    "minSeverityLevel": "LOW",
+    "minSeverityLevel": "MEDIUM",
     "issueType": "DEPENDENCY"
   },
   "remediateSettings": {

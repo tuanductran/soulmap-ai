@@ -21,8 +21,6 @@ All copy here passes the brand content quality filter from [skills/brand/content
 - Never use clinical terms
 - Never claim features that are aspirational rather than currently shipped
 
----
-
 ## LinkedIn
 
 **Audience:** Professionals doing inner work, leaders, coaches, people navigating
@@ -30,8 +28,6 @@ meaning and burnout. Slightly longer form. Intellectual tone welcome.
 
 **Tone:** Grounded, direct, thoughtful. Founder voice appropriate here. Not
 inspirational poster. Not corporate. Real.
-
----
 
 ### Post: What most AI companions will not tell you
 
@@ -50,8 +46,6 @@ Not a problem to fix.
 
 What would it mean to use a tool that is genuinely trying to make itself unnecessary?
 
----
-
 ### Post: The most honest thing I can say about SoulMap AI
 
 It will not tell you who you are.
@@ -66,8 +60,6 @@ what you already know.
 
 That is a smaller promise than most AI products make. It is also a more honest one.
 
----
-
 ### Post: Why I built the anti-dependency rule in at the system level
 
 I kept seeing the same thing in spiritual spaces and self-help spaces.
@@ -76,16 +68,12 @@ Someone reaches for certainty when they are hurting. They find a community, a te
 a tool that makes them feel seen. And gradually, without noticing, they start checking
 in before they trust themselves.
 
-SoulMap AI has active dependency protection built into every session.
+SoulMap AI is built to name dependency risk early instead of rewarding it.
 
-The first time a user signals they are relying on SoulMap instead of their own
-relationships and inner authority, the system names it and redirects, warmly but
-clearly.
+If a user starts leaning on SoulMap instead of their own relationships and inner
+authority, it names that shift and redirects, warmly but clearly.
 
-Not because I want users to leave. Because that is what actually helping someone
-looks like.
-
----
+Not because I want users to leave. Because that is what trust looks like.
 
 ### Post: What inner authority actually means in practice
 
@@ -101,8 +89,6 @@ SoulMap AI is designed to interrupt that pattern, not extend it.
 
 What would you know right now if you stopped waiting for permission to know it?
 
----
-
 ## Instagram
 
 **Audience:** People interested in spirituality, inner work, healing, self-awareness.
@@ -113,8 +99,6 @@ Not toxic positivity. Grounded presence.
 
 **Format:** Lead with the emotional reality. Short paragraphs. End with one
 reflective question or a quiet statement, not a call to action.
-
----
 
 ### Caption: The mirror
 
@@ -127,8 +111,6 @@ to depend on.
 
 What do you already sense is true that you have not fully trusted yet?
 
----
-
 ### Caption: Grounded spirituality
 
 You do not need someone to confirm your awakening.
@@ -138,8 +120,6 @@ You do not need a label for your sensitivity.
 You do not need a destiny reading to know what matters to you right now.
 
 What you might need is a clean mirror and enough quiet to hear yourself.
-
----
 
 ### Caption: The abandonment pattern
 
@@ -151,8 +131,6 @@ To reach for certainty. For someone to tell us who we are and what it means.
 
 The work is not to stop reaching. It is to notice what you are reaching away from.
 
----
-
 ### Caption: Pain into recognition
 
 Pain is not a problem to solve before the inner work begins.
@@ -160,8 +138,6 @@ Pain is not a problem to solve before the inner work begins.
 It is often the beginning of it.
 
 What are you carrying right now that has not been heard yet?
-
----
 
 ### Caption: When you do not need this tool anymore
 
@@ -173,14 +149,10 @@ Not engagement. Not return visits. Not a deepening bond with an AI.
 
 You, more honest with yourself, more grounded, more yours.
 
----
-
 ## Twitter / X
 
 **Audience:** Mixed: curious, skeptical, intellectually engaged.
 **Tone:** Direct, a little dry, honest. Founder voice. No performance.
-
----
 
 ### Tweet: Core stance
 
@@ -190,18 +162,14 @@ SoulMap AI is optimized for you to need it less.
 
 One of these is easier to build a business around.
 
----
-
 ### Tweet: Anti-dependency as architecture
 
-SoulMap AI has dependency protection that activates mid-session.
+SoulMap AI is designed to interrupt dependency, not reward it.
 
-If a user starts relying on it instead of their real relationships, the system
-names it and redirects, warmly but without hesitation.
+If a user starts relying on it instead of their real relationships, SoulMap names that
+shift and redirects, warmly but without hesitation.
 
 This is not a disclaimer. It is a feature.
-
----
 
 ### Tweet: On certainty
 
@@ -210,8 +178,6 @@ People reach for certainty when they are hurting.
 SoulMap AI is built to offer clarity instead.
 
 Those are not the same thing.
-
----
 
 ### Tweet: What it will not do
 
@@ -225,15 +191,11 @@ SoulMap AI will not:
 
 A smaller promise. A more honest one.
 
----
-
 ### Tweet: The real success metric
 
 The success condition for SoulMap AI is a user who needs it less over time.
 
 That is it. That is the metric.
-
----
 
 ## Hashtag Guidelines
 
@@ -247,9 +209,7 @@ joining a broader conversation.
 `#spiritualawakening`: these attract audiences expecting certainty and identity
 confirmation, which is misaligned with SoulMap AI's posture.
 
----
-
-## Pre-Post Checklist
+## Pre-post checklist
 
 1. Does it sound like a human or a brand?
 2. Does it begin where the reader is, or where you wish they were?

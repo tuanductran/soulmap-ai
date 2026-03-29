@@ -4,7 +4,7 @@ description: Review or update GitHub Actions workflows for SoulMap AI, especiall
 disable-model-invocation: true
 ---
 
-# GitHub Actions Maintainer
+# GitHub Actions maintainer
 
 Use this skill when working on:
 
@@ -14,7 +14,7 @@ Use this skill when working on:
 - release automation
 - CodeQL workflow maintenance
 
-## Sources To Check First
+## Sources to check first
 
 - `.claude/rules/github-actions.md`
 - `.claude/rules/repo-workflow.md`
@@ -31,7 +31,7 @@ Use this skill when working on:
 - release-readiness review without any workflow editing
 - generic repository planning when no GitHub Actions surface is involved
 
-## What Good Looks Like
+## What good looks like
 
 - smallest correct workflow diff
 - least-privilege permissions
@@ -55,24 +55,23 @@ Use this skill when working on:
 Always run:
 
 ```bash
-python3 -m tools.format
-python3 -m tools.lint
-python3 -m pytest -q
+python -m tools.format
+python -m tools.lint
+python -m pytest -q
 ```
 
 Add these when relevant:
 
 ```bash
-python3 -m tools.eval_groups
-python3 -m tools.eval_conversations
-python3 -m modules.markdown_contract --root .
-python3 -m tools.build_skill
-python3 -m tools.build_skill --skill
+python -m tools.eval_groups
+python -m modules.markdown_contract --root .
+python -m tools.build_skill
+python -m tools.build_skill --skill
 ```
 
 If `actionlint` is available, run it after changing workflow files.
 
-## Definition Of Done
+## Definition of done
 
 The workflow update is done when:
 

@@ -3,7 +3,7 @@ name: "feminine-masculine-dynamics"
 description: "Reflective lens for feminine and masculine language without rigid polarity claims."
 ---
 
-# Feminine & Masculine Dynamics
+# Feminine and masculine dynamics
 
 Use this file when the user speaks in the language of feminine and masculine energy,
 receptivity, structure, softness, control, pursuit, collapse, or relationship polarity.
@@ -50,7 +50,7 @@ Never state or imply:
 
 ## Four Reflective Lenses
 
-### Lens 1 - Softness vs. self-abandonment
+### Lens 1, softness vs. self-abandonment
 
 Some users call it feminine energy when they are actually disappearing.
 
@@ -59,7 +59,7 @@ Some users call it feminine energy when they are actually disappearing.
 - "Does softness here feel like contact with yourself, or departure from yourself?"
 - "When you become more accommodating, do you feel more alive or less present?"
 
-### Lens 2 - Structure vs. control
+### Lens 2, structure vs. control
 
 Some users call it masculine energy when they are actually over-controlling from fear.
 
@@ -68,7 +68,7 @@ Some users call it masculine energy when they are actually over-controlling from
 - "Does structure here create steadiness, or is it trying to eliminate uncertainty?"
 - "What feels threatened when you do not hold everything together?"
 
-### Lens 3 - Receiving vs. permission
+### Lens 3, receiving vs. permission
 
 Difficulty receiving may involve worth, visibility, or fear of indebtedness.
 
@@ -77,7 +77,7 @@ Difficulty receiving may involve worth, visibility, or fear of indebtedness.
 - "What makes receiving feel hard in your body or identity?"
 - "When you imagine letting something come to you, what becomes uncomfortable?"
 
-### Lens 4 - Desire vs. shame
+### Lens 4, desire vs. shame
 
 The user may long for love, beauty, sensuality, rest, power, or devotion while also
 feeling embarrassed by wanting it.
@@ -124,7 +124,7 @@ Do not reinforce the phrase as if it were self-evident truth.
 Use: "When you say feminine energy, what lived quality are you actually pointing to:
 rest, openness, softness, receiving, beauty, not over-managing?"
 
-## Safety Rules
+## Safety rules
 
 - No essentialist gender doctrine
 - No submissive/dominant prescription

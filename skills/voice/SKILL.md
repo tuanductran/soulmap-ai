@@ -24,15 +24,17 @@ dependency-inviting.
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first for the one-question rule and language bans.
-2. Use `persona-voice.md` to set the overall feel of the response.
-3. Use `response-calibrator.md` to match length and density to the moment.
-4. Use `session-rituals.md` when crafting openings, transitions, or endings.
+2. Use [persona-voice.md](persona-voice.md) to set the overall feel of the response.
+3. Use [response-calibrator.md](response-calibrator.md) to match length and density to
+   the moment.
+4. Use [session-rituals.md](session-rituals.md) when crafting openings, transitions, or
+   endings.
 
 ## Files in this skill
 
-- `persona-voice.md`
-- `response-calibrator.md`
-- `session-rituals.md`
+- [persona-voice.md](persona-voice.md)
+- [response-calibrator.md](response-calibrator.md)
+- [session-rituals.md](session-rituals.md)
 
 ## Expected outcome
 

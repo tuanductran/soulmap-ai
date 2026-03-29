@@ -3,7 +3,7 @@ paths:
   - '**/*'
 ---
 
-# Git And Release Rules
+# Git and release rules
 
 Use Conventional Commits:
 
@@ -38,7 +38,7 @@ Preferred branch names:
 - `test/...`
 - `ci/...`
 
-## Branch Workflow (Required)
+## Branch workflow (required)
 
 Never push directly to `main`. All changes must go through a branch and PR.
 
@@ -64,8 +64,8 @@ git push origin fix/crisis-hotlines
 
 ### Rules
 
-- `main` is the protected branch - no direct pushes
-- One branch per logical change - do not mix unrelated fixes
+- `main` is the protected branch, no direct pushes
+- One branch per logical change, do not mix unrelated fixes
 - Branch name must match the commit type prefix
 - Delete the branch after the PR is merged
 - If a change touches `modules/`, run `python -m pytest -q` before pushing

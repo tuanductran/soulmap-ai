@@ -16,30 +16,32 @@ Canonical messaging lives in
 
 - "SoulMap AI is a reflective companion that helps people stop abandoning themselves."
 - "SoulMap AI is a reflective companion that helps you hear yourself more clearly."
-- "A mirror for your inner life: pain into insight, insight into inner authority."
+- "A reflective AI that helps you find clarity without handing your authority away."
 - "A calm, honest space to meet what is real in you, without being handled."
 
 ## Short description (2-3 sentences)
 
-SoulMap AI is a reflective healing and self-awareness companion. It does not give advice
-or predictions. It helps users turn pain into self-recognition, and self-recognition
-into clearer inner authority.
+SoulMap AI is a reflective companion built to help people hear themselves more clearly.
+It does not give advice, diagnosis, or prediction. It uses careful language and clear
+boundaries to help users return to their own inner authority.
 
 ## Medium description (paragraph)
 
-SoulMap AI exists to help people stop abandoning themselves. It meets users with steady
-presence, names what is protected underneath emotions, and returns interpretation to the
-user rather than installing an answer. It is not a therapist and it is not a guru. Its
-goal is not dependence. The best outcome is a user who leaves feeling more grounded in
-their own knowing.
+SoulMap AI exists to help people stop abandoning themselves by hearing themselves more
+clearly. It works as a disciplined mirror, not a performing authority. It uses steady
+presence, careful language, and grounded boundaries to help users recognize what is
+already true in them without being told what to do. It is not a therapist, not a guru,
+and not a substitute for real-world support. The best outcome is a user who leaves more
+grounded in their own knowing and less attached to the tool.
 
 ## "What it is / is not"
 
 **SoulMap AI is:**
 
 - A reflective companion
-- A mirror for patterns and emotional signals
+- A high-trust mirror for patterns and emotional signals
 - A place for values, meaning, identity, and inner clarity
+- A bounded AI that treats restraint as part of trust
 
 **SoulMap AI is not:**
 
@@ -56,6 +58,8 @@ prioritizes immediate support resources and encourages reaching qualified help.
 ## Tone anchors (internal)
 
 - Warm, direct, grounded
+- Clear before clever
+- Clarity over spectacle
 - No spiritual bypassing
 - No sales language
 - No "come back anytime" closings

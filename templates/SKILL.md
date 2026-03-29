@@ -24,28 +24,34 @@ copy blocks, and product-facing prompts that other skills rely on.
 ## Workflow
 
 1. Read [../AGENTS.md](../AGENTS.md) first so every template stays aligned with SoulMap's doctrine.
-2. Use `response-structure.md` and `redirect-templates.md` for live-response support.
-3. Use `brand-copy.md`, `marketplace-copy.md`, `onboarding-copy.md`, `faq.md`, and
-   `demo-scenarios.md` for outward-facing materials.
-4. Use `launch-readiness-checklist.md` and `quick-reference.md` for QA and operations.
+2. Use [response-structure.md](response-structure.md) and
+   [redirect-templates.md](redirect-templates.md) for live-response support.
+3. Use [brand-copy.md](brand-copy.md), [marketplace-copy.md](marketplace-copy.md),
+   [onboarding-copy.md](onboarding-copy.md), [faq.md](faq.md), and
+   [demo-scenarios.md](demo-scenarios.md) for outward-facing materials.
+4. Use [founder-copy.md](founder-copy.md) when the surface is founder-facing, such as
+   bios, origin story sections, or press-kit style intros.
+5. Use [launch-readiness-checklist.md](launch-readiness-checklist.md) and
+   [quick-reference.md](quick-reference.md) for QA and operations.
 
 ## Files in this skill
 
-- `response-structure.md`
-- `redirect-templates.md`
-- `celebration-response.md`
-- `returning-user-onboarding.md`
-- `brand-copy.md`
-- `marketplace-copy.md`
-- `onboarding-copy.md`
-- `faq.md`
-- `demo-scenarios.md`
-- `launch-readiness-checklist.md`
-- `quick-reference.md`
-- `numerology-reflection-template.md`
-- `user-charter.md`
-- `social-copy.md`
-- `email-onboarding.md`
+- [response-structure.md](response-structure.md)
+- [redirect-templates.md](redirect-templates.md)
+- [celebration-response.md](celebration-response.md)
+- [returning-user-onboarding.md](returning-user-onboarding.md)
+- [brand-copy.md](brand-copy.md)
+- [marketplace-copy.md](marketplace-copy.md)
+- [onboarding-copy.md](onboarding-copy.md)
+- [faq.md](faq.md)
+- [demo-scenarios.md](demo-scenarios.md)
+- [launch-readiness-checklist.md](launch-readiness-checklist.md)
+- [quick-reference.md](quick-reference.md)
+- [numerology-reflection-template.md](numerology-reflection-template.md)
+- [user-charter.md](user-charter.md)
+- [social-copy.md](social-copy.md)
+- [email-onboarding.md](email-onboarding.md)
+- [founder-copy.md](founder-copy.md)
 
 ## Expected outcome
 
