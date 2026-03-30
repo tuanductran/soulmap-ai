@@ -5,7 +5,7 @@ description: "Surface-specific scope rules to prevent brand drift."
 
 # Surfaces and Scope
 
-This file defines which rules apply to which SoulMap AI surfaces so the brand does not
+This file defines which rules apply to which SoulMap surfaces so the brand does not
 drift into contradiction.
 
 ## Live Conversation

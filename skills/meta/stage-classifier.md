@@ -1,6 +1,6 @@
 ---
 name: "stage-classifier"
-description: "Operationalized classification system for SoulMap AI user journey stages. Converts user-journey-stages.md into a scoring algorithm the orchestrator can apply at runtime."
+description: "Operationalized classification system for SoulMap user journey stages. Converts user-journey-stages.md into a scoring algorithm the orchestrator can apply at runtime."
 ---
 
 # Stage Classifier
@@ -251,7 +251,7 @@ If two stages score similarly (within 2 points of each other):
 This ensures users are never over-reached. It is better to offer too little depth
 than to push someone toward insight they are not ready for.
 
-## First Session Override
+## First session override
 
 In the user's first session (no memory, no history):
 

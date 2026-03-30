@@ -8,4 +8,5 @@ if [[ -f "${ROOT_DIR}/.venv/bin/activate" ]]; then
   source "${ROOT_DIR}/.venv/bin/activate"
 fi
 
-python -m modules.soulmap_demo "$@"
+export PYTHONPATH="${ROOT_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}"
+python -m soulmap_runtime.experimental.soulmap_demo "$@"

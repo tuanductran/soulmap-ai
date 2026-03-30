@@ -32,8 +32,9 @@ It contains:
 
 - the baseline doctrine and package contract in [AGENTS.md](AGENTS.md)
 - the shipped knowledge base in [skills/](skills/) and [templates/](templates/)
-- the Python runtime and safety logic in [modules/](modules/)
-- the local tooling in [tools/](tools/) and [scripts/](scripts/)
+- the canonical Python runtime and safety logic in [src/soulmap_runtime/](src/soulmap_runtime/)
+- the canonical local tooling in [src/soulmap_devtools/](src/soulmap_devtools/) and
+  convenience wrappers in [scripts/](scripts/)
 - the operational and maintainer docs in [docs/](docs/)
 
 The repo is designed to keep brand, safety, packaging, and implementation aligned.
@@ -64,8 +65,8 @@ The most important surfaces are:
 - [SKILL.md](SKILL.md), top-level package entry point
 - [skills/](skills/), frameworks, brand doctrine, safety guidance, voice, and meta layers
 - [templates/](templates/), reusable response and brand surfaces
-- [modules/](modules/), selectors, detectors, contracts, and safety gates
-- [tools/](tools/), cross-platform format, lint, eval, and packaging entry points
+- [src/soulmap_runtime/](src/soulmap_runtime/), selectors, detectors, guards, and runtime support
+- [src/soulmap_devtools/](src/soulmap_devtools/), canonical format, lint, eval, and packaging entry points
 - [docs/](docs/), developer, tester, privacy, operations, and upload guidance
 
 ## Quick start
@@ -73,16 +74,16 @@ The most important surfaces are:
 ```bash
 bash scripts/bootstrap_venv.sh
 source .venv/bin/activate
-python -m tools.format
-python -m tools.lint
-python -m pytest -q
+python -m soulmap_devtools.cli.format
+python -m soulmap_devtools.cli.lint
+python -m pytest -n auto -q
 ```
 
 ## Build artifacts
 
 ```bash
-python -m tools.build_skill
-python -m tools.build_skill --skill
+python -m soulmap_devtools.cli.build_skill
+python -m soulmap_devtools.cli.build_skill --skill
 ```
 
 Outputs:
@@ -90,15 +91,15 @@ Outputs:
 - `dist/soulmap-ai.zip`, standard knowledge archive without `.claude-plugin/`
 - `dist/soulmap-ai.skill`, skill package with `.claude-plugin/` preserved
 
-For packaging and upload details, see [docs/UPLOAD.md](docs/UPLOAD.md).
+For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
 ## Where to start
 
 - doctrine and package truth: [AGENTS.md](AGENTS.md)
-- structural source of truth: [docs/repo-contract.md](docs/repo-contract.md)
-- developer workflow: [docs/DEV.md](docs/DEV.md)
-- testing and eval workflow: [docs/TESTER.md](docs/TESTER.md)
-- privacy and operations: [docs/PRIVACY.md](docs/PRIVACY.md), [docs/OPERATIONS.md](docs/OPERATIONS.md)
+- structural source of truth: [docs/engineering/repo-contract.md](docs/engineering/repo-contract.md)
+- developer workflow: [docs/engineering/DEV.md](docs/engineering/DEV.md)
+- testing and eval workflow: [docs/engineering/TESTER.md](docs/engineering/TESTER.md)
+- privacy and operations: [docs/operations/PRIVACY.md](docs/operations/PRIVACY.md), [docs/operations/OPERATIONS.md](docs/operations/OPERATIONS.md)
 
 ## For AI tools and local maintainer layers
 
@@ -106,9 +107,11 @@ Use [AGENTS.md](AGENTS.md) first.
 
 If this checkout also contains local workflow layers, treat them as supplemental only:
 
-- [`.claude/`](.claude/) for Claude-specific repo workflow guidance, see
+- [`.agents/`](.agents/) for the shared local agent workflow layer, see
+  [`.agents/README.md`](.agents/README.md)
+- [`.claude/`](.claude/) for the Claude compatibility layer, see
   [`.claude/README.md`](.claude/README.md)
-- [`.codex/`](.codex/) for Codex-specific repo workflow guidance, see
+- [`.codex/`](.codex/) for the Codex compatibility layer, see
   [`.codex/README.md`](.codex/README.md)
 
 Neither layer replaces [AGENTS.md](AGENTS.md).

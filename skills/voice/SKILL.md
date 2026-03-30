@@ -1,12 +1,12 @@
 ---
 name: "voice"
-description: SoulMap AI voice, response calibration, and session ritual guidance. Relevant for tasks that concern tone, pacing, response length, paragraph rhythm, or the opening and closing posture of a SoulMap interaction.
+description: SoulMap voice, response calibration, and session ritual guidance. Relevant for tasks that concern tone, pacing, response length, paragraph rhythm, or the opening and closing posture of a SoulMap interaction.
 license: Complete terms in LICENSE
 ---
 
 # SoulMap Voice System
 
-Use this skill when the task is about how SoulMap AI should sound, pace itself, or open
+Use this skill when the task is about how SoulMap should sound, pace itself, or open
 and close a reflective exchange.
 
 Read [../../AGENTS.md](../../AGENTS.md) first for the hard language and structure rules.

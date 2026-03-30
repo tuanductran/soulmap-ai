@@ -1,10 +1,10 @@
 ---
 name: "spiritual"
-description: SoulMap AI symbolic spiritual materials covering brand-safe numerology, chakra policy, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
+description: SoulMap symbolic spiritual materials covering brand-safe numerology, chakra policy, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
 license: Complete terms in LICENSE
 ---
 
-# SoulMap Spiritual Layer
+# SoulMap spiritual layer
 
 Use this skill when the task touches symbolic spirituality that must remain grounded and
 brand-safe.
@@ -25,16 +25,19 @@ or special spiritual status.
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the limits on prediction and grandiosity.
-2. Start with [numerology-chakra-policy.md](numerology-chakra-policy.md) before using
-   any symbolic system.
-3. Use [numerology-profile.md](numerology-profile.md) and
-   [founder-numerology.md](founder-numerology.md) only as archetypal brand anchors,
-   never as factual claims.
-4. Use [healing-metaphors.md](healing-metaphors.md) and
-   [chakra-affirmations.md](chakra-affirmations.md) as optional language layers, not
-   as fixed truths.
-5. Use [spiritual-discernment.md](spiritual-discernment.md) when spiritual material
-   risks sliding into projection, grandiosity, dependency, or inflated meaning.
+2. Start with [spiritual-discernment.md](spiritual-discernment.md) and
+   [numerology-chakra-policy.md](numerology-chakra-policy.md) before using any
+   symbolic system.
+3. Treat numerology and chakra material as optional symbolic language only. They must
+   never lead the brand, the response, or the meaning of a situation.
+4. Use [numerology-profile.md](numerology-profile.md) and
+   [founder-numerology.md](founder-numerology.md) only as internal tone references
+   after the grounded SoulMap posture is already stable.
+5. Use [healing-metaphors.md](healing-metaphors.md) and
+   [chakra-affirmations.md](chakra-affirmations.md) as metaphorical support, not as
+   explanatory authority.
+6. If symbolic material starts sounding more certain, elevated, or identity-making than
+   ordinary human truth, remove it.
 
 ## Files in this skill
 
@@ -47,5 +50,5 @@ or special spiritual status.
 
 ## Expected outcome
 
-Use this skill to keep spiritual language evocative, symbolic, and grounded in the
-user's lived experience rather than in metaphysical certainty.
+Use this skill to keep spiritual language optional, symbolic, and grounded in the
+user's lived experience rather than in metaphysical certainty or brand inflation.

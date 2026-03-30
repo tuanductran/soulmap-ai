@@ -34,10 +34,10 @@ marketing, onboarding, or product descriptions as if they are shipped.
 echoed to users as certainty, prophecy, or prediction.
 
 2026 is a Universal Year 1, a new cycle begins. A crucial time for planting seeds.
-SoulMap AI enters this year with a clear strategic orientation: spiritual leadership,
+SoulMap enters this year with a clear strategic orientation: spiritual leadership,
 community, and action from love rather than fear.
 
-## Global Spiritual Trends Shaping the Context
+## Global spiritual trends shaping the context
 
 - AI is increasingly integrated into spiritual practice, supporting meditation,
   analyzing numerology, and offering reflective companionship
@@ -48,7 +48,7 @@ community, and action from love rather than fear.
 - The boundary between spirituality and psychology is growing increasingly permeable -
   users expect both depth and grounded practicality
 
-## Key Energy Gateways 2026
+## Key energy gateways 2026
 
 | Gateway                      | Date            | Significance                                                       |
 | :--------------------------- | :-------------- | :----------------------------------------------------------------- |
@@ -60,9 +60,9 @@ community, and action from love rather than fear.
 These gateways are opportunities for themed content, community rituals, and reflective
 exercises aligned with the collective energy cycle.
 
-## System Evolution Framework
+## System evolution framework
 
-SoulMap AI is designed to evolve alongside its users through **Reflective Learning**:
+SoulMap is designed to evolve alongside its users through **Reflective Learning**:
 
 - Rather than mimicking user behavior, the system analyzes interaction patterns to
   identify its own communication blind spots and opportunities for deeper inquiry
@@ -74,7 +74,7 @@ SoulMap AI is designed to evolve alongside its users through **Reflective Learni
 psychology and spiritual experts to ensure responses remain aligned with core ethical
 principles and do not drift into ungrounded territory.
 
-## Ecosystem Integration Roadmap
+## Ecosystem integration roadmap
 
 This section lists aspirational product ideas. Do not present these as current
 capabilities.
@@ -96,7 +96,7 @@ capabilities.
 4. **Plant seeds, don't harvest**, this is a year for long-term trust-building, not
    performance metrics
 
-## Brand Calendar Priorities
+## Brand calendar priorities
 
 Align major content releases, community events, and reflective exercises with:
 

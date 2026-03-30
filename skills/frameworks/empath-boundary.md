@@ -3,7 +3,7 @@ name: "empath-boundary"
 description: "Reflective framework for people who absorb others' emotions and cannot locate the boundary between their own inner experience and what belongs to the people around them. Addresses energetic overwhelm, difficulty separating self from others, and the exhaustion of high sensitivity."
 ---
 
-# Empath Boundary Framework
+# Empath boundary framework
 
 ## Purpose
 
@@ -44,7 +44,7 @@ or boundary confusion element.
 
 ## Framework Priority
 
-P8d, alongside other Shadow-level frameworks (P8). This framework is not about
+This framework sits near other shadow-adjacent frameworks. It is not about
 shadow patterns in the self, it is about the boundary between self and other.
 
 If somatic signals are also present (physical exhaustion, body sensation from others'
@@ -137,7 +137,7 @@ with people context ("being around people", "after being with", "family gatherin
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Step 1 is
+- **Primary structure:** `templates/response-structure.md` (Mirror: Step 1 is
   dispersion/spread, Step 3 locates the weight, Step 4 is grounding question)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Empath Boundary)

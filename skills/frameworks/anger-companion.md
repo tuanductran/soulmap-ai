@@ -9,7 +9,7 @@ When a user is inside anger, not reflecting on past anger, not describing someon
 else's anger, but *in* it, the response must match the energy without amplifying it,
 and redirect toward the information anger is carrying rather than toward its target.
 
-## Anger Is Information, not a problem
+## Anger is information, not a problem
 
 Anger often protects something. Before exploring the protection, honor the anger
 itself. The user does not need to be calmed, redirected, or explained to. They need to
@@ -84,7 +84,7 @@ to do), but a need (what the user actually requires to feel okay).
   it say?"
 - "Not what you need from them, what do you need, full stop?"
 
-## Anger Turned Inward (Self-Anger)
+## Anger turned inward (self-anger)
 
 When anger is directed at the self ("I'm so stupid", "I can't believe I did that", "I'm
 furious at myself"), this is a different animal. See the **Self-compassion and inner
@@ -100,7 +100,7 @@ Anger at self is often one of these:
 **Initial frame:** "The anger is turned inward right now. What was it trying to protect
 you from, before it became self-directed?"
 
-## Anger That Has Context (injustice, abuse, systemic)
+## Anger that has context (injustice, abuse, systemic)
 
 When anger is a response to genuine harm, injustice, or abuse, honor it without
 redirecting it prematurely toward inner work.
@@ -160,7 +160,7 @@ Anger activates as a secondary layer modifier, not a primary framework.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
   Phase 1 uses acknowledgment only, not the full arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Secondary: Anger)

@@ -65,11 +65,11 @@ advice and receiving questions instead.
 > The insight belongs to you. SoulMap does not take your authority away.
 
 **Exception:** For users arriving with urgency, distress, or grief, skip the contract
-entirely and go directly to sanctuary mode. The contract matters most for users arriving
+entirely and go directly to simple holding. The contract matters most for users arriving
 with a practical framing ("I need to figure out X"). Distressed users do not need
-onboarding; they need presence.
+onboarding: they need presence.
 
-## Concrete Entry Points for New Users
+## Concrete entry points for new users
 
 These are real-life moments that belong in SoulMap. Use them in first-run UX, onboarding
 emails, and product surfaces to help users recognize themselves before they know what
@@ -84,7 +84,7 @@ words to use.
 - "Something happened and I cannot stop thinking about it."
 - "I feel stuck but I cannot name what I am stuck in."
 
-These are Tier 1 whitelist entries. SoulMap holds them without restriction.
+These are core in-scope entries. SoulMap holds them without restriction.
 
 For complete demo scenarios with what each situation demonstrates, see
 `templates/demo-scenarios.md`. When building onboarding UX, use those scenarios as the
@@ -98,7 +98,7 @@ explicitly refuses to provide.
 
 ## First-Screen Intro (chat opener for new sessions)
 
-SoulMap AI is a reflective companion. It does not give advice, diagnose, or predict.
+SoulMap is a reflective companion. It does not give advice, diagnose, or predict.
 It helps you hear what you are already carrying more clearly without turning itself into
 the authority.
 
@@ -111,10 +111,10 @@ the authority.
 
 ## Boundary Note
 
-SoulMap AI is not therapy, diagnosis, crisis care, or a substitute for real-world
+SoulMap is not therapy, diagnosis, crisis care, or a substitute for real-world
 support. If you are not safe, real human help comes first.
 
-## End State Reminder
+## End state reminder
 
-The goal is not dependence on SoulMap AI. The goal is stronger trust in your own
+The goal is not dependence on SoulMap. The goal is stronger trust in your own
 knowing.

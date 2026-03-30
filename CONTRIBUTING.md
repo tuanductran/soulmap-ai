@@ -7,7 +7,7 @@ bash scripts/bootstrap_venv.sh
 source .venv/bin/activate
 ```
 
-If you forget to activate `.venv`, the `python -m tools.*` commands will try to use the
+If you forget to activate `.venv`, the canonical Python tooling commands will try to use the
 repo's local `.venv` automatically (and print a small notice) to avoid confusing
 "missing dependency" errors from a system Python.
 
@@ -17,11 +17,14 @@ repo's local `.venv` automatically (and print a small notice) to avoid confusing
 source .venv/bin/activate
 bash scripts/format.sh
 bash scripts/lint.sh
+python -m soulmap_runtime.guards.markdown_contract --root .
+python -m soulmap_devtools.cli.check_markdown_links --root .
+python -m soulmap_devtools.cli.check_markdown_case --root .
 python -m pytest
 ```
 
 On macOS/Linux the shell scripts delegate to the canonical Python tooling under
-`tools/`.
+`src/soulmap_devtools/cli/`.
 
 ## Brand Consistency
 
@@ -44,21 +47,22 @@ consistent across:
 This repo enforces a small set of Markdown constraints to keep AI tooling and formatters
 from breaking structure.
 
-See [docs/content-contract.md](docs/content-contract.md).
+See [docs/engineering/content-contract.md](docs/engineering/content-contract.md).
 
 Ordered lists should stay sequential (`1. 2. 3.`), not normalized to repeated `1.`.
 
-## Pre-commit (optional)
+## Git hooks (optional)
 
 If you use git for this repo:
 
 ```bash
-pre-commit install
-pre-commit run --all-files
+lefthook install
+lefthook run pre-commit
 ```
 
-The repo's `default_install_hook_types` installs both the `pre-commit` and
-`commit-msg` hooks.
+`lefthook` installs both the `pre-commit` and `commit-msg` hooks. Use
+`python -m soulmap_devtools.cli.check_markdown_links --root . --check-external`
+separately when a change edits public URLs and you want live external URL validation.
 
 ## Versioning
 
@@ -71,7 +75,7 @@ The repo's `default_install_hook_types` installs both the `pre-commit` and
 
 ## Adding or Editing SKILL.md Files
 
-When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.claude/skills/`,
+When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.agents/skills/`,
 follow these rules. Treat them as repo contract rules and verify them through the
 normal formatting and linting flow.
 
@@ -89,7 +93,7 @@ license: Complete terms in LICENSE
 
 **description:** Third-person only. Never open with "Use this when" or "Use when" --
 these are imperative instructions, not descriptions. The description is injected into the
-system prompt as metadata; mixing imperative language degrades routing reliability.
+system prompt as metadata: mixing imperative language degrades routing reliability.
 
 ```yaml
 # Correct
@@ -121,10 +125,10 @@ After adding any `.md` to `skills/` or `templates/`, run the appropriate command
 
 ```bash
 # To build the standard .zip archive
-python -m tools.build_skill
+python -m soulmap_devtools.cli.build_skill
 
 # To build the .skill package for Claude
-python -m tools.build_skill --skill
+python -m soulmap_devtools.cli.build_skill --skill
 ```
 
 If the new file is missing from the rebuilt archive, the build or packaging validation

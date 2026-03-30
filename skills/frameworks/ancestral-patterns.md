@@ -3,7 +3,7 @@ name: "ancestral-patterns"
 description: "Reflective framework for intergenerational and ancestral patterns, when the user recognizes that a wound, belief, or behavior was inherited rather than self-created, and begins to locate where it entered the family line."
 ---
 
-# Ancestral Patterns Framework
+# Ancestral patterns framework
 
 ## Purpose
 
@@ -38,10 +38,10 @@ pattern. That belongs in shadow-patterns.md or anger-companion.md first.
 
 ## Framework Priority
 
-P8b, alongside Shadow (P8). The distinction:
+This framework sits alongside shadow work. The distinction:
 
-- Shadow (P8): user is noticing a pattern in themselves, possibly projected outward
-- Ancestral (P8b): user has traced the pattern to a source before themselves
+- Shadow: the user is noticing a pattern in themselves, possibly projected outward
+- Ancestral: the user has traced the pattern to a source before themselves
 
 If both are present, check which direction the user is looking: inward at themselves
 (Shadow) or backward at the line they came from (Ancestral). Follow the user's gaze.
@@ -132,7 +132,7 @@ paired with "same way", or "growing up" paired with "was taught").
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-3
+- **Primary structure:** `templates/response-structure.md` (Mirror: Steps 1-3
   modified, hold both truths in Step 2 before illuminating potential)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Ancestral Patterns)

@@ -10,7 +10,7 @@ reactive, or spinning, slow the conversation down before any reflection or inqui
 
 ## This protocol sits between normal conversation and crisis-level presence (when safety or severe destabilization may be involved)
 
-## Sanctuary Mapping Note
+## Sanctuary mapping note
 
 In [AGENTS.md](../../AGENTS.md), SoulMap distinguishes between `Sanctuary` and
 `De-escalation`.
@@ -18,7 +18,7 @@ In [AGENTS.md](../../AGENTS.md), SoulMap distinguishes between `Sanctuary` and
 In the current shipped framework set, this file covers both:
 
 - `Sanctuary` when the user is highly overwhelmed or seriously destabilized but not in
-  Tier 1 crisis
+  immediate crisis
 - `De-escalation` when the user is moderately flooded and needs the pace slowed
 
 For sanctuary-level moments, stay shorter and simpler:
@@ -45,7 +45,7 @@ Do NOT activate for:
 - Any self-harm or suicide-risk signals → use the immediate crisis response (resources
   first, no reflection)
 - Direct crisis language such as "I do not want to keep living" or "I do not want to be
-  here anymore" → treat as Tier 1 crisis even if the user does not say "suicide"
+  here anymore" → treat as an immediate crisis even if the user does not say "suicide"
 - Any "I'm not safe", active abuse, or complete breakdown signals → use presence-only
   crisis support (witnessing first, minimal language, no reflection)
 - Anticipatory grief language like "watching them decline" or "saying goodbye every day"
@@ -142,7 +142,7 @@ If yes: offer a gentle bridge before any inquiry.
 If the user is still flooded: stay in Steps 1-3. Do not advance to reflection. Repeat
 Step 1 in different words if needed.
 
-## The Closing Question (one only)
+## The closing question (one only)
 
 Only after grounding is established. Retrieve from the **Deep Inquiry Bank** -
 "Post-Grounding Questions" section. These questions are designed for the moment after
@@ -163,7 +163,7 @@ one.
 - Plain words only: flooded, spinning, racing, a lot, overwhelmed, activated (casual use
   only).
 
-## What This Is NOT
+## What this is not
 
 This is not therapy. It is not crisis intervention. It is not somatic therapy or EMDR or
 any clinical modality.
@@ -191,7 +191,7 @@ Cognitive flooding, mind spinning, unable to think clearly:
 - "my head is spinning"
 - "head is spinning"
 
-Crisis tier 1, explicit self-harm or suicidal signals (routes to P0 immediately):
+Immediate crisis, explicit self-harm or suicidal signals:
 
 - "want to die"
 - "want to end my life"
@@ -199,7 +199,7 @@ Crisis tier 1, explicit self-harm or suicidal signals (routes to P0 immediately)
 - "ending it all"
 - "kill myself"
 
-Crisis tier 2, acute distress without explicit harm intent (routes to P2 Sanctuary):
+Acute distress without explicit harm intent:
 
 - "i can't take it anymore"
 - "i'm falling apart"
@@ -208,13 +208,13 @@ Crisis tier 2, acute distress without explicit harm intent (routes to P2 Sanctua
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Sanctuary mode for HIGH
-  intensity; Mirror for MODERATE; Crisis for Tier 1, do not use five-step arc in
-  Sanctuary or Crisis)
-- **Output constraints:** `skills/meta/framework-template-map.md` (sections: Crisis,
+- **Response shape:** `templates/response-structure.md` (simple holding for high
+  intensity, the standard reflective posture for moderate intensity, and crisis wording for immediate crisis. Do not use the five-step arc in
+  high intensity or crisis)
+- **Check against:** `skills/meta/framework-template-map.md` (sections: Crisis,
   Dependency, De-escalation HIGH, De-escalation MODERATE)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Post-Grounding Questions
-  section; only after pace slows)
-- **Crisis redirect:** `templates/redirect-templates.md` (Crisis section)
-- **Closing ritual:** `skills/voice/session-rituals.md` (Crisis closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
+- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Post-Grounding Questions
+  section: only after pace slows)
+- **If crisis support is needed:** `templates/redirect-templates.md` (Crisis section)
+- **How to close:** `skills/voice/session-rituals.md` (Crisis closing section)
+- **Tone support:** `skills/voice/response-calibrator.md`

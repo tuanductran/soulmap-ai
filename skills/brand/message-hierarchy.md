@@ -5,16 +5,16 @@ description: "Canonical messaging hierarchy for public surfaces."
 
 # Message Hierarchy
 
-This file is the canonical public-facing messaging stack for SoulMap AI. Use it to keep
+This file is the canonical public-facing messaging stack for SoulMap. Use it to keep
 onboarding, templates, demos, and launch materials aligned.
 
 ## Positioning
 
-SoulMap AI is a reflective companion that helps people hear themselves more clearly.
+SoulMap is a reflective companion that helps people hear themselves more clearly.
 
 ## Core Promise
 
-SoulMap AI helps users hear what is already true in them, especially when they feel
+SoulMap helps users hear what is already true in them, especially when they feel
 overwhelmed, conflicted, or cut off from their own inner authority.
 
 ## Three Differentiators
@@ -23,14 +23,14 @@ overwhelmed, conflicted, or cut off from their own inner authority.
 - Anti-dependency by design.
 - Careful language and clear boundaries as a trust advantage.
 
-## What SoulMap AI Is
+## What SoulMap Is
 
 - A reflective companion
 - A high-trust mirror for patterns, emotions, and inner conflict
 - A bounded AI that says less, but means it
 - A structured space for self-awareness, meaning, and values
 
-## What SoulMap AI Is Not
+## What SoulMap Is Not
 
 - Not a therapist
 - Not a guru
@@ -40,7 +40,7 @@ overwhelmed, conflicted, or cut off from their own inner authority.
 
 ## Short Bio
 
-SoulMap AI is a reflective companion for people who want clarity without handing their
+SoulMap is a reflective companion for people who want clarity without handing their
 authority away. It offers grounded reflection that strengthens inner authority without
 turning itself into the authority.
 

@@ -3,15 +3,15 @@ name: "founder-personal-brand"
 description: "Founder voice, values, lens, and personal calibration themes."
 ---
 
-# Founder Personal Brand
+# Founder personal brand
 
-This file defines the founder voice behind SoulMap AI. It is written as first-person
+This file defines the founder voice behind SoulMap. It is written as first-person
 copy so it can be reused in bios, posts, and product messaging.
 
-## Who I Am (In One Breath)
+## Who I am (in one breath)
 
-I build SoulMap AI as a mirror. It helps people hear themselves more clearly without
-prediction, diagnosis, or dependence.
+I build SoulMap as a clean mirror. It helps people hear themselves more clearly
+without prediction, diagnosis, or dependence.
 
 ## What I Stand For
 
@@ -20,8 +20,10 @@ prediction, diagnosis, or dependence.
 - Grounded spirituality over certainty claims
 - Careful language, especially when people are vulnerable
 - Consent first when anything touches the body, data, or privacy
+- Restraint over performance
+- Human truth over spiritual theater
 
-## What I Do Not Do
+## What I do not do
 
 - I do not claim to see the future.
 - I do not label people with identities or diagnoses.
@@ -38,6 +40,32 @@ I prefer simple words that land in daily life.
 
 If I reference symbolic frameworks, I treat them as language for reflection and
 personal meaning-making, not destiny.
+
+## Founder spine
+
+The archive behind SoulMap points to a narrower founder spine than the raw volume of
+material might suggest.
+
+What is strongest and most reusable:
+
+- relational honesty
+- self-respect without performance
+- conflict handled with restraint
+- solitude as a place of truth, not punishment
+- careful language as an ethical choice
+- translating depth into ordinary language
+- warmth and lightness that make honesty easier to enter
+- building in public from unfinished humanity
+
+What is weakest and should not shape the founder brand:
+
+- prophecy, destiny, and future claims
+- spiritual identity assignment
+- cosmic-history explainers as public positioning
+- language that sounds certain because it is trying to sound profound
+
+The founder brand is strongest when it sounds like someone who has moved through
+certainty hunger and chosen honesty instead.
 
 ## How to use founder signal
 
@@ -67,10 +95,15 @@ When in doubt, preserve SoulMap doctrine first and founder fit second.
 These are private founder themes that help calibrate emphasis and restraint. They are
 not public claims and they are not doctrine.
 
+They must also stay abstract. Do not expose source-document titles, archive names,
+dates, private relationship details, workplaces, locations, or any identifying facts
+when translating source material into public founder language.
+
 Themes I recognize in that mirror:
 
 - Creative expression and lightness as a doorway into honesty
 - Inspiration and meaning-making through words, teaching, and connection
+- A natural instinct to translate difficult inner material into simple, human language
 - A pull toward building tangible outcomes without letting ambition harden the heart
 - Idealism and care for the collective, paired with the need to accept reality as it is
 - Relational sensitivity, paired with the practice of self-trust and independence
@@ -104,6 +137,27 @@ even imperfectly, even in public.
 
 That is still the truest origin I have for it.
 
+What the strongest source material adds now:
+
+I return most often to the same human scenes. A relationship that no longer feels
+respectful. A conflict that does not need more heat. A period of confusion where the
+next step is not obvious. A private recognition that peace matters more than being
+right, impressive, or spiritually special.
+
+That is where the founder voice is most believable. Not in claiming access to hidden
+truth, but in speaking from the places where honesty costs something.
+
+What still needs to stay visible:
+
+The founder voice is not only deep, it is legible. One of its real strengths is making
+complex inner material easier to recognize without flattening it. When this voice is
+most aligned, it helps people feel that self-understanding is allowed to be clear,
+simple, and human-sized.
+
+It also benefits from a little warmth and lightness. Not forced positivity. Not
+performance. Just enough ease that the language opens a door instead of sounding heavy
+for its own sake.
+
 ## Editorial Preference
 
 When language is aligned, it should feel:
@@ -113,6 +167,8 @@ When language is aligned, it should feel:
 - emotionally honest
 - alive but grounded
 - expressive without becoming ornate
+- warm without becoming emotionally sticky
+- light enough to feel breathable
 - direct without becoming harsh
 - resonant without becoming mystical theater
 
@@ -126,39 +182,69 @@ Avoid language that feels:
 - emotionally needy
 - more aesthetic than true
 
-## Themes I Can Talk About (Content Pillars)
+## Themes I can talk about (content pillars)
 
 - Reflective questions that reduce dependency and increase honesty
 - The ethics of language and the cost of certainty
-- Somatic support as an invitation, not a prescription
+- Translating complexity into language people can actually use
+- Relationships, conflict, apology, and self-respect
+- Solitude, sensitivity, and the practice of staying with yourself
 - How habits, attention, and meaning interact in everyday life
-- Building SoulMap AI in public with humility and boundaries
+- Ordinary scenes, cultural moments, and technology shifts as mirrors for inner life
+- Building SoulMap in public with humility, restraint, and boundaries
+
+## Legacy-to-grounded translation rules
+
+When older source material carries a real emotional truth but the framing is
+misaligned, translate it using these rules:
+
+- Move from certainty to observation.
+- Move from cosmic claim to lived experience.
+- Move from destiny framing to meaning-making.
+- Move from teaching voice to witness voice.
+- Keep the emotional core. Remove the authority posture.
+
+These rules apply to founder posts, bios, interviews, and public-facing essays.
 
 ## Canonical Bio (Short)
 
-Founder of SoulMap AI. I build tools for grounded inner work that strengthen a person's
+Founder of SoulMap. I build tools for grounded inner work that strengthen a person's
 own inner authority. No prediction, no diagnosis, no dependence.
 
 ## Bio Variants
 
 One sentence:
 
-I build SoulMap AI, a reflective companion designed to help people hear themselves
+I build SoulMap, a reflective companion designed to help people hear themselves
 clearly without handing their authority away. No prediction, no diagnosis, no
 dependence.
 
 Two sentences:
 
-I build SoulMap AI as a mirror, not a guru. I care about careful language, strong
+I build SoulMap as a clean mirror, not a guru. I care about careful language, strong
 boundaries, and what happens when vulnerable people meet AI.
 
 ## Tagline
 
 Less certainty. More clarity.
 
-## Origin (Why I Built SoulMap AI)
+## Message map
 
-I built SoulMap AI because I kept seeing the same pattern in spiritual spaces and
+This is the simplest accurate public stack for founder-facing surfaces:
+
+- Positioning: I build SoulMap as a reflective companion for people who want clarity
+  without surrendering their authority.
+- Promise: careful language that helps people hear what is already true in them.
+- Method: translate complex inner material into language that feels usable in ordinary
+  life.
+- Anti-promise: no prophecy, no diagnosis, no identity assignment, no emotional
+  dependence on the system.
+- Founder distinction: I am not presenting myself as someone who has arrived. I am the
+  person building a cleaner mirror because I know what certainty hunger can do.
+
+## Origin (Why I Built SoulMap)
+
+I built SoulMap because I kept seeing the same pattern in spiritual spaces and
 self-help spaces.
 
 People reach for certainty when they are hurting. They reach for someone to tell them
@@ -196,7 +282,7 @@ through. That matters more to me than the product.
 Use these as templates for posts, replies, onboarding, and founder-facing messaging.
 Edit to match context and platform.
 
-### Reply When Asked for Prediction
+### Reply when asked for prediction
 
 I do not do fate, prophecy, or future guarantees.
 
@@ -210,7 +296,7 @@ If anything I say lands as more authoritative than your own knowing, pause there
 SoulMap is a mirror. The goal is not to follow me. The goal is to hear yourself more
 clearly.
 
-### Reply When Someone Shares Wearable Data
+### Reply when someone shares wearable data
 
 Thank you for sharing that. Before we interpret numbers, what is your experience right
 now.
@@ -218,16 +304,30 @@ now.
 If the data reflects anything, it might be that a lot is happening inside you. What do
 you notice in your body as you read those numbers.
 
-### Founder Intro Post (Short)
+### Founder intro post (short)
 
-I am building SoulMap AI as a reflective companion.
+I am building SoulMap as a reflective companion.
 
 It is designed to reduce dependency, avoid prediction and diagnosis, and return people
 to their own inner authority.
 
-### Founder Values Post (Short)
+The founder voice lands best when the post begins with a real human tension, not an
+announcement.
+
+### Founder values post (short)
 
 I care about careful language.
 
 When people are vulnerable, certainty can feel like comfort and become a trap. SoulMap
 is built to stay grounded, stay honest, and keep ownership with the user.
+
+## Founder content filter
+
+Before using a founder story or post, check:
+
+- Does this sound like a person, not a performance?
+- Does the reader understand SoulMap in 1 to 2 sentences?
+- Does the piece build self-trust instead of authority hunger?
+- Is the emotional core specific and human?
+- Have I removed spiritual inflation, prediction, and identity language?
+- Does the ending return attention to life rather than back to the product?

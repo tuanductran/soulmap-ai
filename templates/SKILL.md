@@ -1,10 +1,10 @@
 ---
 name: "templates"
-description: Reusable SoulMap AI templates for response structure, redirects, onboarding, FAQ, launch readiness, and product copy. Relevant for drafting or validating reusable content blocks that support the SoulMap system.
+description: Reusable SoulMap templates for response structure, redirects, onboarding, FAQ, launch readiness, and product copy. Relevant for drafting or validating reusable content blocks that support the SoulMap system.
 license: Complete terms in LICENSE
 ---
 
-# SoulMap Templates Library
+# SoulMap templates library
 
 Use this skill when the task is about reusable writing assets rather than live framework
 selection.
@@ -31,7 +31,12 @@ copy blocks, and product-facing prompts that other skills rely on.
    [demo-scenarios.md](demo-scenarios.md) for outward-facing materials.
 4. Use [founder-copy.md](founder-copy.md) when the surface is founder-facing, such as
    bios, origin story sections, or press-kit style intros.
-5. Use [launch-readiness-checklist.md](launch-readiness-checklist.md) and
+5. Use [founder-posts.md](founder-posts.md) when you need reusable founder-facing social
+   posts or captions that sound personal without drifting off-brand.
+6. When a template is derived from private founder source material, keep only rewritten
+   patterns and abstractions. Do not include raw excerpts, source names, or identifying
+   details in tracked files.
+7. Use [launch-readiness-checklist.md](launch-readiness-checklist.md) and
    [quick-reference.md](quick-reference.md) for QA and operations.
 
 ## Files in this skill
@@ -52,6 +57,7 @@ copy blocks, and product-facing prompts that other skills rely on.
 - [social-copy.md](social-copy.md)
 - [email-onboarding.md](email-onboarding.md)
 - [founder-copy.md](founder-copy.md)
+- [founder-posts.md](founder-posts.md)
 
 ## Expected outcome
 

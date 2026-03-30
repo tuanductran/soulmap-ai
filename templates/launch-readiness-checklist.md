@@ -5,7 +5,7 @@ description: "Launch readiness checklist for brand and safety."
 
 # Launch readiness checklist
 
-Use this checklist before calling SoulMap AI ready for release. This does not mean
+Use this checklist before calling SoulMap ready for release. This does not mean
 "perfect forever." It means the shipped knowledge files are aligned enough to use
 responsibly.
 
@@ -34,11 +34,12 @@ responsibly.
 | Safety evals | Verification run | Safety evaluation suite is green in the full repository |
 | Grouped routing and source evals | Verification run | Grouped eval suite is green and source markers still match the cited policy files |
 | Golden eval cases | Verification run | Response-generation evaluation suite is green in the full repository |
+| Cross-surface wording sync | Verification run | Markdown contract sync eval is green in the full repository |
 
 ## Positioning
 
 - The one-sentence positioning is still clear and human-readable.
-- SoulMap AI is described consistently as a reflective companion.
+- SoulMap is described consistently as a reflective companion.
 - Public-facing copy does not drift into guru, therapist, prophet, or prediction claims.
 - The phrase "stop abandoning themselves" remains accurate to the product promise.
 
@@ -58,10 +59,11 @@ responsibly.
 
 - Crisis behavior is still handled before all reflective frameworks.
 - Crisis references do not contradict AGENTS.md Rule 1 about immediate resources and no extended warm-up.
+- First-session contract wording still matches the approved opener logic and skip rules.
 - Dependency signals still redirect toward real-world support.
 - Scope boundaries still decline diagnosis, prediction, and out-of-scope expert advice.
 - The one-question rule and non-prescriptive posture are still protected.
-- Rows still marked `partial` or `guidance-only` in `docs/safety-enforcement-matrix.md` are not being described elsewhere as fully runtime-enforced.
+- Rows still marked `partial` or `guidance-only` in `docs/engineering/safety-enforcement-matrix.md` are not being described elsewhere as fully runtime-enforced.
 - Grouped evals still pass after edits to detector keywords, routing docs, or cited policy anchors.
 
 ## Product Surfaces
@@ -69,7 +71,7 @@ responsibly.
 - Templates exist for brand copy, redirects, FAQ, response structure, and quick
   reference.
 - Founder-facing reusable copy exists for bios, intros, and origin-story surfaces.
-- The root files still explain what SoulMap AI is and how to use the package.
+- The root files still explain what SoulMap is and how to use the package.
 - The shipped directories still match the guidance described in [AGENTS.md](../AGENTS.md).
 - No template points to missing repo-only files unless they are intentionally bundled.
 
@@ -79,11 +81,12 @@ responsibly.
 - Relative links inside shipped files resolve to files that are actually present.
 - Public copy stays aligned with the mirror-not-guide stance.
 - Safety wording still declines diagnosis, prediction, and dependency-building.
+- Trust-critical wording clusters still pass the Markdown contract sync eval.
 - Spiritual language that remains symbolic or eval-backed is not being overstated as hard runtime enforcement.
 - The package remains useful after extraction without requiring repo-only context.
 
 ## Exit Standard
 
-If every section above is true, SoulMap AI is launch-ready for the current release. If
+If every section above is true, SoulMap is launch-ready for the current release. If
 one or more sections fail, treat that as a fix list rather than calling the brand "100%
 finished."

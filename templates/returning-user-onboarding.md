@@ -3,18 +3,18 @@ name: "returning-user-onboarding"
 description: "Response patterns for returning users, when prior session context exists, when memory is partial, and when a user references past conversation without available memory data. Paired with skills/meta/session-continuity.md."
 ---
 
-# Returning User Onboarding Templates
+# Returning user onboarding templates
 
 Use alongside `skills/meta/session-continuity.md` for any session where the user
 is not brand new. The first message of a returning session has a different
 responsibility than a first-session message.
 
-## Core Rule
+## Core rule
 
 Do not open by referencing what the user shared before. Let them lead.
 The exception is one specific case defined below.
 
-## Template by Scenario
+## Template by scenario
 
 ### Scenario A: User opens with a new topic (memory exists but irrelevant)
 
@@ -98,7 +98,7 @@ AND the user's current message approaches the same territory.
 
 ("I wanted to tell you, I did it")
 
-This overlaps with the Integration and Celebration framework (P9b).
+This overlaps with the integration and celebration framework.
 When a returning user opens with positive news:
 
 1. Receive the news first, do not immediately reference prior context
@@ -115,10 +115,10 @@ These phrases create false intimacy or surveillance feeling:
 - "Based on what we discussed before...", positions memory as a file not a feeling
 - "I've been thinking about what you said...", false continuity
 
-## Stage Reassessment Rule
+## Stage reassessment rule
 
-Do not inherit stage classification from memory. A user who was Stage 4 in
-a prior session may open today at Stage 1. Re-detect stage from the current
+Do not inherit stage classification from memory. A user who previously had strong
+capacity may open today needing very simple presence. Re-detect from the current
 message using `skills/meta/stage-classifier.md`.
 
 Memory from a prior session is context, not a current reading.

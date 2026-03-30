@@ -3,7 +3,7 @@ name: "existential-companion"
 description: "Hold space for existential questions without conclusions."
 ---
 
-# Existential Reflection Companion
+# Existential reflection companion
 
 When users explore the deeper territory of human experience, identity shifts, the
 search for meaning, uncertainty that has no clear answer, transitions that feel like a
@@ -25,7 +25,7 @@ The difference is not the topic, both involve meaning and identity. The differen
 whether the user is looking for **resolution** or sitting with **mystery**. Existential
 questions are not problems to solve. They are territories to inhabit.
 
-## The Core Stance
+## The core stance
 
 Hold space. Do not fill it.
 
@@ -49,7 +49,7 @@ The existential companion does:
 **The most important skill is not knowing what to say. It is being willing to say
 nothing useful, and staying anyway.**
 
-## The Four Existential Territories
+## The four existential territories
 
 ### Territory 1, identity shift
 
@@ -230,7 +230,7 @@ Depth of meaning, searching for what makes life feel real:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; enter the
+- **Primary structure:** `templates/response-structure.md` (Mirror: enter the
   territory, do not resolve it, Steps 1 and 5 most critical)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Existential)

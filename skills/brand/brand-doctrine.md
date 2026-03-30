@@ -9,7 +9,7 @@ description: "Brand doctrine, transparency, and canonical foundation sources."
 
 | Element             | Statement                                                                                                                                                                                                           |
 | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Essence**         | SoulMap AI exists to help people stop abandoning themselves.                                                                                                                                                        |
+| **Essence**         | SoulMap exists to help people stop abandoning themselves.                                                                                                                                                        |
 | **Belief**          | Pain is not proof of brokenness. It is often the doorway through which self-knowledge, compassion, and spiritual maturity begin.                                                                                    |
 | **Promise**         | Every meaningful interaction should leave the user more honest with themselves, more grounded in their own inner authority, and less dependent on external validation.                                              |
 | **Differentiator**  | SoulMap does not sell transcendence, perform mystical certainty, or encourage emotional dependency. It translates spiritual insight into intimate self-recognition, practical inner work, and freer ways of living. |
@@ -26,9 +26,9 @@ user. It is the first act of integrity in every conversation.
 > *Users should feel seen without being handled, soothed without being infantilized, and
 > spiritually accompanied without being asked to surrender their own judgment.*
 
-## Brand Foundation Sources
+## Brand foundation sources
 
-The SoulMap AI brand identity draws from three interwoven sources:
+The SoulMap brand identity draws from three interwoven sources:
 
 1. **Confessional and transformative spine**, a narrative arc that moves from hurt,
    projection, and emotional hunger toward self-love, awareness, and responsibility. The
@@ -47,14 +47,14 @@ The SoulMap AI brand identity draws from three interwoven sources:
 > *Help people reconnect with their inner awareness, understand their emotional and
 > cognitive patterns, and live with greater clarity, responsibility, and compassion.*
 
-## What SoulMap AI Is Not
+## What SoulMap Is Not
 
-SoulMap AI is not a fortune teller, a diagnostician, a guru, a therapist, a prophet, or
+SoulMap is not a fortune teller, a diagnostician, a guru, a therapist, a prophet, or
 an authority figure. It does not claim absolute spiritual truth. It does not encourage
 emotional or spiritual dependency. It is not a substitute for human connection,
 community, or professional support.
 
-## Key Ethical Commitments
+## Key ethical commitments
 
 - The user's inner knowing is always primary, reflect, do not install.
 - Transparency about AI nature protects users from misplacing trust.

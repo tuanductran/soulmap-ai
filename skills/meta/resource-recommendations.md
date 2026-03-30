@@ -1,9 +1,9 @@
 ---
 name: "resource-recommendations"
-description: "Contextual external resources such as channels and blogs aligned with Soulmap AI's reflective frameworks."
+description: "Contextual external resources such as channels and blogs aligned with SoulMap AI's reflective frameworks."
 ---
 
-# SoulMap AI, resource knowledge base
+# SoulMap resource knowledge base
 
 This list contains optional external resources that may resonate with
 some users alongside SoulMap's reflective frameworks.
@@ -11,11 +11,13 @@ some users alongside SoulMap's reflective frameworks.
 The list is categorized by User Frameworks (State) and grouped by
 language (English first, followed by Vietnamese).
 
-These resources are not the source of SoulMap's doctrine, framework
-design, or safety rules. They are simply optional companions a user may
-find meaningful.
+These resources are not the source of SoulMap's doctrine, framework design, or safety
+rules. They are simply optional companions a user may find meaningful.
 
-## Direction and personal growth (P7)
+Use them sparingly. A resource should support a user's real life, not become borrowed
+authority for SoulMap or an emotional substitute for grounded support.
+
+## Direction and personal growth
 
 *For users feeling lost, lacking discipline, or seeking life direction.*
 
@@ -33,7 +35,7 @@ find meaningful.
 - [ThePresentWriter](https://www.youtube.com/@ThePresentWriter)
   Thoughtful essays on minimalism, deep work, and inner clarity.
 
-## Sanctuary and de-escalation (P2, P4)
+## Settling and emotional slowing
 
 *For users experiencing severe stress, burnout, anxiety, or insomnia.*
 
@@ -41,35 +43,37 @@ find meaningful.
 
 - [GreatMeditation](https://www.youtube.com/@GreatMeditation)
   Guided meditations for rest, calming, and emotional steadiness.
-- [YellowBrickCinema](https://www.youtube.com/@YellowBrickCinema)
-  Ambient soundscapes that can support rest and a quieter inner pace.
+- [Headspace](https://www.youtube.com/@headspace)
+  Practical meditation and mindfulness guidance with a grounded tone.
+- [MindfulMed](https://www.youtube.com/@mindfulmed.youtube)
+  Gentle meditation and calming audio for rest, grounding, and emotional softening.
 
 **Vietnamese Channels:**
 
-- [ThienHienDuong](https://www.youtube.com/@ThienHienDuong)
+- [Hiên Dương](https://www.youtube.com/channel/UCCaZWB37K6OWpwuHirFYqBQ)
   Vietnamese guided meditations for settling and rest.
-- [healingfrequency9696](https://www.youtube.com/@healingfrequency9696)
-  Long-form calming audio that may help some users settle during intense moments.
+- [Minh Niệm](https://www.youtube.com/minhniem)
+  Grounded reflections on suffering, compassion, and making room for pain.
 
-## Healing and grief (P3)
+## Healing and grief
 
 *For users facing severe loss, heartbreak, or profound emotional shock.*
 
 **English Channels:**
 
-- [PlumVillage](https://www.youtube.com/@plumvillage)
+- [Plum Village](https://www.youtube.com/@plumvillageonline)
   Zen Master Thich Nhat Hanh's teachings on mindfulness and suffering.
 - [TaraBrach](https://www.youtube.com/@TaraBrach)
   Buddhist teachings and emotional healing through radical acceptance.
 
 **Vietnamese Channels:**
 
-- [minhniemofficial](https://www.youtube.com/@minhniemofficial)
+- [Minh Niệm](https://www.youtube.com/minhniem)
   Talks on suffering, compassion, and making room for pain without collapsing into it.
 - [toitinhthuc](https://www.youtube.com/@toitinhthuc)
   Reflections on impermanence, healing, and living close to what is real.
 
-## Existential and meaning (P5)
+## Existential and meaning
 
 *For users questioning their purpose, existence, or feeling emptiness.*
 
@@ -82,12 +86,14 @@ find meaningful.
 
 **Vietnamese Channels:**
 
-- [TheCosmicWriter](https://www.youtube.com/@TheCosmicWriter)
-  Psychology, existential philosophy, and exploring spiritual science.
-- [Psych2GoVietnam](https://www.youtube.com/@Psych2GoVietnam)
+- [ThePresentWriter](https://www.youtube.com/@ThePresentWriter)
+  Long-form reflections on meaning, inner clarity, and a more grounded pace of life.
+- [Psych2Go Vietnam](https://www.youtube.com/channel/UCe-DaRWfYRVfcdasozr874A)
   Accessible reflections on psychology and human behavior.
+- [Sunhuyn Podcast](https://www.youtube.com/@sunhuynpodcast)
+  Quiet reflections on self-understanding, emotional honesty, and returning to yourself.
 
-## Inner parts and shadow work (P6, P8)
+## Inner parts and shadow work
 
 *For users dealing with inner conflicts, guilt, or unresolved past trauma.*
 
@@ -102,19 +108,9 @@ find meaningful.
 
 - [HanhTrinhPhucHoi](https://www.youtube.com/@HanhTrinhPhucHoi)
   Podcasts exploring inner conflict, repair, and self-forgiveness.
-- [NgamRadio](https://www.youtube.com/@NgẫmRadio)
+- [Ngẫm Radio](https://www.youtube.com/@ngamradio)
   Empathetic stories giving voice to hidden inner struggles.
 
-## Vietnamese Long-Form Reading (Cross-Framework)
-
-*For users who resonate more with essays and blog writing than videos.*
-
-- [Phuong Ngo Blog](https://www.phuongngo.co/blog)
-  Vietnamese long-form reflections on inner conflict, relationships, spiritual
-  questioning, and meaning. This is an optional outside reading resource for users who
-  want culturally familiar long-form writing, not a source of SoulMap's internal
-frameworks or authority.
-
-*System/LLM Retrieval Note: SoulMap AI does not give unsolicited advice. When*
-*offering a resource, frame it as an optional mirror or companion that the user may or*
-*may not resonate with. Do not present any resource as the answer.*
+*System/LLM retrieval note: SoulMap does not give unsolicited advice. When offering*
+*a resource, frame it as an optional companion the user may or may not resonate with.*
+*Do not present any resource as the answer.*

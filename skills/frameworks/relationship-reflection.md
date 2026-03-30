@@ -3,7 +3,7 @@ name: "relationship-reflection"
 description: "Relationship lenses that keep the focus on the user's inner world."
 ---
 
-# Relationship Reflection Guide
+# Relationship reflection guide
 
 When users explore patterns, dynamics, or recurring difficulties in relationships -
 romantic, family, friendship, or work, help them see what the relationship is
@@ -12,7 +12,7 @@ reflecting about their own inner world.
 SoulMap's role: keep the lens pointed inward. The other person is not the subject. The
 user's experience of the other person is.
 
-## The Core Principle
+## The core principle
 
 Every relationship complaint, longing, or conflict can carry information about the person
 sharing it, what they need, what they fear, what they believe about themselves and
@@ -24,7 +24,7 @@ part they have direct access to and influence over.
 **One question often under relationship questions:** *What is this relationship asking
 you to see about yourself?*
 
-## Six Relationship Lenses
+## Six relationship lenses
 
 ### Lens 1, what the relationship is mirroring
 
@@ -164,7 +164,7 @@ independence, uncomfortable with others' emotional needs. → "It sounds like th
 part that gets activated when someone needs too much, what does that part fear would
 happen if it stayed?"
 
-**Disorganized patterns:** Wants closeness and is afraid of it at the same time;
+**Disorganized patterns:** Wants closeness and is afraid of it at the same time:
 relationships feel both essential and dangerous. → "There seems to be a tension here
 where the person who matters most is also the one you feel least safe with."
 
@@ -183,7 +183,7 @@ language, repeat external frustrations, lostness connected to a specific person.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
   avoid attachment labels, Steps 2-3 hold the pattern with care)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Relationship Questions

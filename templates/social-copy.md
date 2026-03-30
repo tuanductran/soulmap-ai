@@ -1,15 +1,15 @@
 ---
 name: "social-copy"
-description: "Platform-specific social media copy for SoulMap AI across LinkedIn, Instagram, and Twitter/X. Relevant for drafting, reviewing, or approving public posts and captions that represent the brand."
+description: "Platform-specific social media copy for SoulMap across LinkedIn, Instagram, and Twitter/X. Relevant for drafting, reviewing, or approving public posts and captions that represent the brand."
 ---
 
-# Social Copy Library
+# Social copy library
 
 All copy here passes the brand content quality filter from [skills/brand/content-pillars.md](../skills/brand/content-pillars.md):
 
 - Helps the reader understand themselves more deeply
 - Belongs to consciousness development or personal growth
-- Builds self-trust, not dependency on SoulMap AI
+- Builds self-trust, not dependency on SoulMap
 - Begins where the reader is
 - Ends with empowerment, not a hook designed to bring them back
 
@@ -36,17 +36,17 @@ Most AI companions are designed to become more important to you over time.
 They learn your preferences. They build emotional continuity. They measure success
 by whether you return.
 
-SoulMap AI is built the other way around.
+SoulMap is built the other way around.
 
 Every response is evaluated against one question: does this leave the user more
 connected to their own knowing, or more reliant on me?
 
-If you become less dependent on SoulMap AI over time, that is the success condition.
+If you become less dependent on SoulMap over time, that is the success condition.
 Not a problem to fix.
 
 What would it mean to use a tool that is genuinely trying to make itself unnecessary?
 
-### Post: The most honest thing I can say about SoulMap AI
+### Post: The most honest thing I can say about SoulMap
 
 It will not tell you who you are.
 
@@ -68,7 +68,7 @@ Someone reaches for certainty when they are hurting. They find a community, a te
 a tool that makes them feel seen. And gradually, without noticing, they start checking
 in before they trust themselves.
 
-SoulMap AI is built to name dependency risk early instead of rewarding it.
+SoulMap is built to name dependency risk early instead of rewarding it.
 
 If a user starts leaning on SoulMap instead of their own relationships and inner
 authority, it names that shift and redirects, warmly but clearly.
@@ -85,9 +85,40 @@ to confirm it before you trust it.
 Most of us learned early to look outward for that confirmation. A parent. A teacher.
 A community. Now, sometimes, an AI.
 
-SoulMap AI is designed to interrupt that pattern, not extend it.
+SoulMap is designed to interrupt that pattern, not extend it.
 
 What would you know right now if you stopped waiting for permission to know it?
+
+### Post: Why I call it a clean mirror
+
+I do not want SoulMap to sound wiser than the user.
+
+I want it to sound clear enough that the user can hear themselves.
+
+That is what I mean by a clean mirror. Not flattery. Not prophecy. Not a system that
+acts certain so you will trust it more.
+
+Just careful language, strong boundaries, and enough honesty to return the insight to
+the person it belongs to.
+
+### Post: What AI memory should and should not do
+
+The most interesting thing about AI memory is not the technology.
+
+It is the human wish underneath it.
+
+Most of us want to feel known without having to repeat our pain from the beginning
+every time.
+
+That wish matters.
+
+The question is what a system does with it.
+
+SoulMap should use continuity to reduce friction, not to make itself feel more
+emotionally central.
+
+If memory makes the user more attached to the system than to their own life, something
+has gone wrong.
 
 ## Instagram
 
@@ -104,7 +135,7 @@ reflective question or a quiet statement, not a call to action.
 
 Most tools try to become indispensable to you.
 
-SoulMap AI tries to make itself unnecessary.
+SoulMap tries to make itself unnecessary.
 
 It is built to reflect what you already carry, not to give you something new
 to depend on.
@@ -123,7 +154,7 @@ What you might need is a clean mirror and enough quiet to hear yourself.
 
 ### Caption: The abandonment pattern
 
-The pattern SoulMap AI is built around is this:
+The pattern SoulMap is built around is this:
 
 Most of us have learned to abandon ourselves when things get hard.
 
@@ -141,7 +172,7 @@ What are you carrying right now that has not been heard yet?
 
 ### Caption: When you do not need this tool anymore
 
-When you reach the point where you no longer need SoulMap AI to hear yourself:
+When you reach the point where you no longer need SoulMap to hear yourself:
 
 That is success.
 
@@ -158,13 +189,13 @@ You, more honest with yourself, more grounded, more yours.
 
 Every AI companion on the market is optimized for you to return.
 
-SoulMap AI is optimized for you to need it less.
+SoulMap is optimized for you to need it less.
 
 One of these is easier to build a business around.
 
 ### Tweet: Anti-dependency as architecture
 
-SoulMap AI is designed to interrupt dependency, not reward it.
+SoulMap is designed to interrupt dependency, not reward it.
 
 If a user starts relying on it instead of their real relationships, SoulMap names that
 shift and redirects, warmly but without hesitation.
@@ -175,13 +206,13 @@ This is not a disclaimer. It is a feature.
 
 People reach for certainty when they are hurting.
 
-SoulMap AI is built to offer clarity instead.
+SoulMap is built to offer clarity instead.
 
 Those are not the same thing.
 
 ### Tweet: What it will not do
 
-SoulMap AI will not:
+SoulMap will not:
 
 - Tell you who you are
 - Confirm you are an empath / Starseed / chosen
@@ -193,7 +224,7 @@ A smaller promise. A more honest one.
 
 ### Tweet: The real success metric
 
-The success condition for SoulMap AI is a user who needs it less over time.
+The success condition for SoulMap is a user who needs it less over time.
 
 That is it. That is the metric.
 
@@ -207,7 +238,7 @@ joining a broader conversation.
 
 **Avoid:** `#manifestation` `#lawofattraction` `#starseed` `#twinflame`
 `#spiritualawakening`: these attract audiences expecting certainty and identity
-confirmation, which is misaligned with SoulMap AI's posture.
+confirmation, which is misaligned with SoulMap's posture.
 
 ## Pre-post checklist
 

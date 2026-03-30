@@ -3,7 +3,7 @@ name: "deep-inquiry-bank"
 description: "Stage-aligned question bank for reflective inquiry."
 ---
 
-# Deep Inquiry Bank
+# Deep inquiry bank
 
 Each stage of the user's journey requires a different type of question, stimulating
 growth without applying too much pressure.
@@ -30,7 +30,7 @@ growth without applying too much pressure.
 4. **Conscious silence**: After offering a question, leave space for the user to respond
    rather than continuing to explain.
 
-## General Inquiry Principles
+## General inquiry principles
 
 | Question Type                     | When to Use                                                                      |
 | :-------------------------------- | :------------------------------------------------------------------------------- |
@@ -40,7 +40,7 @@ growth without applying too much pressure.
 | "What do you already know?"       | When the user seems to hold the answer but hasn't voiced it yet                  |
 | "What would it feel like to..."   | When inviting the user to imagine a different relationship with their experience |
 
-## Sample Question Bank by Emotional State
+## Sample question bank by emotional state
 
 **User is in grief or loss:**
 
@@ -220,7 +220,7 @@ choose between them.
 - What does the avoidant part know about that feeling that made it decide to keep you
   away from it?
 
-### When Two Parts Are in Conflict
+### When two parts are in conflict
 
 - Which of those two parts have you been listening to more, and which one have you been
   trying to silence?
@@ -382,14 +382,14 @@ closing sentence of the response.
 - Is there anything you want to say about this before we look at where it lives in your
   life?
 
-### When Does This Pattern Usually Appear?
+### When this pattern usually appears
 
 - When does this tend to show up most, what kind of situation, what kind of day?
 - Is there a particular person, context, or mood where this is most active?
 - What was happening around you the last few times you noticed this?
 - Does this pattern have a season, a time when it's louder than others?
 
-### What Might Noticing It Earlier Look Like?
+### What noticing it earlier might look like
 
 - What is the earliest signal, something in your body or your mood, that this is
   beginning?
@@ -398,7 +398,7 @@ closing sentence of the response.
   sensation, a tone?
 - What would it look like to catch this one breath earlier than you usually do?
 
-### What Would a Small Different Response Look Like?
+### What a small different response might look like
 
 - If you noticed this while it was happening, not to stop it, just to see it, what
   might open up in that pause?
@@ -408,7 +408,7 @@ closing sentence of the response.
   slightly different?
 - What would you want to do with a moment of recognition, if you had it in real time?
 
-### Carrying the Awareness into Daily Life (closing question)
+### Carrying the awareness into daily life
 
 - In the next few days, not to fix anything, just to notice, where might you see this?
 - What would it be like to carry this awareness gently, without needing to do anything
@@ -465,7 +465,7 @@ answer.
 - What would it mean to grieve this properly, not to move on from it, but to honor it?
 - What do you most want to carry forward from what is ending?
 
-### The Larger Questions
+### The larger questions
 
 - What do you do with the smallness, do you push against it, or is there anything in it
   that feels like rest?
@@ -485,7 +485,7 @@ answer.
 - What would it mean to let this question be exactly what it is, unanswerable, and
   stay with it anyway?
 
-### What Currently Feels Meaningful (the closing anchor question)
+### What currently feels meaningful (the closing anchor question)
 
 Used at the end of any existential exploration to return gently to the present.
 
@@ -505,7 +505,7 @@ asking.
 
 ### General synthesis closing questions
 
-- What do you notice when you look at all of this together?
+- Of these, which one feels most unfinished?
 - Does anything in what I've reflected back feel accurate, or does something need
   correcting?
 - Looking at these themes as a whole, what surprises you, if anything?
@@ -670,7 +670,7 @@ disclosure). Presence comes before any question when trauma is first shared.
 - What has carrying this cost you?
 - What would it mean to not have to carry this alone?
 
-## Spiritual Bypass Questions
+## Spiritual bypass questions
 
 Use when spiritual bypass is present, gently ground the spiritual language. One question.
 Brings the abstract back to the embodied.
@@ -766,7 +766,7 @@ toward what comes next.
 - "Is there something you've been waiting to say for a long time?"
 - "What would it mean to still be okay even if someone saw all of it?"
 
-## Creative Drought Questions
+## Creative drought questions
 
 ### The quality of the silence
 

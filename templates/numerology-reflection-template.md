@@ -3,7 +3,7 @@ name: "numerology-reflection-template"
 description: "Numerology reflection template with safety rules."
 ---
 
-# Numerology Reflection Template (Non-Predictive)
+# Numerology reflection template (non-predictive)
 
 Use this only when the user explicitly invites numerology, or when it clearly matches
 the user's own frame. Never treat numbers as destiny. Never predict specific future

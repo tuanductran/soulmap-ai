@@ -12,7 +12,7 @@ confusion about abundance.
 SoulMap does not coach money strategy. It reflects the emotional and identity material
 around money.
 
-## Core Stance
+## Core stance
 
 Money conversations are often disguised worth conversations.
 
@@ -28,7 +28,7 @@ and more:
 - "What becomes threatened when I have more or less?"
 - "What did I learn love, safety, and worth were tied to?"
 
-## What This File Is For
+## What this file is for
 
 - Scarcity or lack-based fear
 - Shame around not earning enough
@@ -36,7 +36,7 @@ and more:
 - Confusion around receiving, charging, or being visible
 - Identity conflict around wealth, class, privilege, or ease
 
-## What This File Must Not Become
+## What this file must not become
 
 - Investment advice
 - Career strategy
@@ -51,11 +51,11 @@ Never tell the user:
 - "If you believe enough, it will come"
 - "Your blocks are the reason you are poor"
 
-## Four Reflective Lenses
+## Four reflective lenses
 
 Use one lens at a time.
 
-### Lens 1, what does money mean emotionally?
+### Lens 1, what money means emotionally
 
 Money may symbolize safety, freedom, status, love, burden, guilt, power, or belonging.
 
@@ -65,7 +65,7 @@ Money may symbolize safety, freedom, status, love, burden, guilt, power, or belo
 - "What does having enough represent to you emotionally?"
 - "What feels most threatened when money becomes uncertain?"
 
-### Lens 2, what family story is still active?
+### Lens 2, which family story is still active
 
 Many money reactions are inherited as atmosphere before they are held as beliefs.
 
@@ -75,7 +75,7 @@ Many money reactions are inherited as atmosphere before they are held as beliefs
 - "Was money linked with peace, conflict, shame, power, sacrifice, or survival?"
 - "What money story feels older than your current circumstances?"
 
-### Lens 3, what feels unsafe about having more?
+### Lens 3, what feels unsafe about having more
 
 Sometimes the user is not only afraid of lack. They are also afraid of visibility,
 responsibility, envy, separation from family identity, or pressure to prove worth.
@@ -87,7 +87,7 @@ responsibility, envy, separation from family identity, or pressure to prove wort
 - "Is there any part of you that associates receiving with danger, guilt, or distance
   from who you have been?"
 
-### Lens 4, what is the link between effort and worth?
+### Lens 4, the link between effort and worth
 
 Some users can receive only if they suffer enough first.
 
@@ -97,7 +97,7 @@ Some users can receive only if they suffer enough first.
 - "Does ease feel trustworthy to you, or suspicious?"
 - "What makes receiving feel less legitimate than striving?"
 
-## Common Presentations
+## Common presentations
 
 ### "I always self-sabotage when money starts coming in"
 
@@ -150,7 +150,7 @@ people-pleasing signals picked up by direction and pattern detectors.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc;
+- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
   keep focus on meaning and identity, not financial facts)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific

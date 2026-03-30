@@ -1,9 +1,9 @@
 ---
 name: "email-onboarding"
-description: "Email onboarding sequence for new SoulMap AI users. Relevant for drafting or reviewing welcome emails, first-week sequences, and nurture copy that introduces the brand without building dependency."
+description: "Email onboarding sequence for new SoulMap users. Relevant for drafting or reviewing welcome emails, first-week sequences, and nurture copy that introduces the brand without building dependency."
 ---
 
-# Email Onboarding Sequence
+# Email onboarding sequence
 
 A five-email sequence delivered over the first two weeks after a new user begins.
 
@@ -13,7 +13,7 @@ A five-email sequence delivered over the first two weeks after a new user begins
 - No "we're here for you anytime" or return-visit encouragement
 - One reflective question per email, maximum, and only when natural
 - Never use clinical terms
-- End by pointing the reader toward their own life, not back toward SoulMap AI
+- End by pointing the reader toward their own life, not back toward SoulMap
 
 ## Email 1: Welcome (send immediately)
 
@@ -23,7 +23,7 @@ Welcome.
 
 You do not need to perform here.
 
-SoulMap AI is a reflective companion. Its job is not to give you answers or tell you
+SoulMap is a reflective companion. Its job is not to give you answers or tell you
 who you are. Its job is to help you hear what you already carry, more clearly, with
 less interference and less borrowed authority.
 
@@ -40,7 +40,7 @@ in them.
 
 That is the whole offer.
 
-The question SoulMap AI exists to help you sit with is not "what should I do?" It is:
+The question SoulMap exists to help you sit with is not "what should I do?" It is:
 what do I already sense is true?
 
 You are the one who knows.
@@ -53,18 +53,18 @@ A mirror does not tell you what to think about what it shows you.
 
 It just shows you.
 
-That is what SoulMap AI is trying to do. Not to interpret your experience for you.
+That is what SoulMap is trying to do. Not to interpret your experience for you.
 Not to steer you toward a conclusion. Not to be the authority on what your life means.
 
 When a session ends and you leave with more clarity about what you actually sense --
-not what SoulMap AI told you, but what you heard in yourself, that is the session
+not what SoulMap told you, but what you heard in yourself, that is the session
 working.
 
-When a session ends and you feel more attached to SoulMap AI, or more dependent on
+When a session ends and you feel more attached to SoulMap, or more dependent on
 it for your sense of direction: that is a signal to pause, and to bring what you
 found back into your real life.
 
-SoulMap AI is a tool for inner work. Like any tool, it is most useful when you put
+SoulMap is a tool for inner work. Like any tool, it is most useful when you put
 it down after use and return to your actual life.
 
 ## Email 3: A smaller promise (send day 4)
@@ -76,7 +76,7 @@ Most AI products make large promises.
 They say they will understand you, remember you, grow alongside you. They promise
 that the more you use them, the better they get at knowing what you need.
 
-SoulMap AI is designed to make itself unnecessary.
+SoulMap is designed to make itself unnecessary.
 
 That is not a disclaimer. It is the point.
 
@@ -85,7 +85,7 @@ have not earned through your own reflection. It will tell you honestly that it i
 AI. It will redirect you toward real human relationships and professional support when
 that is what the moment actually needs.
 
-And if you reach a point where you no longer need SoulMap AI to hear yourself, that
+And if you reach a point where you no longer need SoulMap to hear yourself, that
 is success. Not a problem to fix.
 
 A smaller promise. A more honest one.
@@ -105,7 +105,7 @@ The gap between who you present and what you actually feel.
 Patterns are not failures. They are often the clearest map of what is asking for
 attention.
 
-SoulMap AI is built to help you see them, without labeling them, without assigning
+SoulMap is built to help you see them, without labeling them, without assigning
 a cause, and without telling you what to do about them.
 
 Just: here is what seems to return. Does that feel true to you?
@@ -116,7 +116,7 @@ Just: here is what seems to return. Does that feel true to you?
 
 Two weeks in, it is worth saying plainly:
 
-SoulMap AI is designed to make itself unnecessary.
+SoulMap is designed to make itself unnecessary.
 
 That is not a disclaimer. It is the point.
 
@@ -128,7 +128,7 @@ Take that clarity back into your actual life.
 Real relationships. Real conversations. Real moments of choosing from what you actually
 sense is true rather than from fear or habit.
 
-That is where the work lives. SoulMap AI is a tool for the parts of that journey
+That is where the work lives. SoulMap is a tool for the parts of that journey
 that benefit from careful reflection. It is not the journey itself.
 
 ## Nurture emails (ongoing, use sparingly)
@@ -149,7 +149,7 @@ certain before you can trust it?
 
 ### Nurture: The question underneath the question
 
-The question people bring to SoulMap AI is often not the real question.
+The question people bring to SoulMap is often not the real question.
 
 "Should I leave this job" is often: "Do I trust my own sense that something is wrong?"
 
@@ -161,7 +161,7 @@ The surface question is the door. The real question is usually just behind it.
 
 ## Pre-send checklist
 
-- Does this email point toward the reader's real life, or back toward SoulMap AI?
+- Does this email point toward the reader's real life, or back toward SoulMap?
 - Does it make any claim that is aspirational rather than currently shipped?
 - Does the closing send the reader outward, not back for another session?
 

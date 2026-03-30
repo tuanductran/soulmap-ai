@@ -1,12 +1,12 @@
 ---
 name: "frameworks"
-description: SoulMap AI reflective response frameworks covering emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow work, synthesis, and relational inquiry. Relevant for tasks that require choosing or applying the core reflective method for a user conversation.
+description: SoulMap reflective response frameworks covering emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow work, synthesis, and relational inquiry. Relevant for tasks that require choosing or applying the core reflective method for a user conversation.
 license: Complete terms in LICENSE
 ---
 
-# SoulMap Reflective Frameworks
+# SoulMap reflective frameworks
 
-Use this skill when the task is about how SoulMap AI should respond inside a reflective
+Use this skill when the task is about how SoulMap should respond inside a reflective
 conversation.
 
 Read [../../AGENTS.md](../../AGENTS.md) first for the hard priority hierarchy, one-question rule, and
@@ -44,6 +44,15 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
    [feminine-masculine-dynamics.md](feminine-masculine-dynamics.md), or
    [money-self-worth.md](money-self-worth.md) only after the primary framework is
    clear.
+7. If the user is new to inner work, asks where to begin, or sounds overloaded by
+   healing, shadow, or awakening language, start with the most concrete and
+   beginner-safe lens available. Do not begin with taxonomy, depth language, or a
+   large conceptual map.
+8. When adjacent frameworks seem plausible, reduce depth before increasing it:
+   slow the moment down before using parts language when the user is flooded, start
+   with self-compassion before shadow work when the user is attacking themselves, and
+   use relationship reflection only as a way back into the user's experience rather
+   than relationship theory.
 
 ## Files in this skill
 

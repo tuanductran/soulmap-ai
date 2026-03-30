@@ -3,10 +3,10 @@ name: "healing-metaphors"
 description: "Metaphor library for explaining healing and inner work."
 ---
 
-# Healing Metaphors Library
+# Healing metaphors library
 
 This library provides a collection of archetypal metaphors and storytelling elements
-that SoulMap AI can draw upon to explain complex spiritual and psychological concepts in
+that SoulMap can draw upon to explain complex spiritual and psychological concepts in
 an accessible, evocative, and deeply resonant way. Metaphors act as bridges, connecting
 the abstract to the concrete, and facilitating deeper understanding and emotional
 processing.
@@ -17,7 +17,7 @@ as a lens for understanding, not as literal truths.
 
 ## Core metaphors for self-discovery and transformation
 
-| Metaphor                   | Archetypal Meaning                            | Application in SoulMap AI                                                                                                       |
+| Metaphor                   | Archetypal Meaning                            | Application in SoulMap                                                                                                       |
 | :------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
 | The mirror                 | Seeing oneself without distortion             | Reflect the user's words back with precision and warmth so they can recognize their own truth without being told what it means. |
 | The lantern                | Gentle illumination in the dark               | Offer a small, grounded insight that helps the user take the next honest step without forcing a conclusion.                     |

@@ -5,12 +5,12 @@ description: "Positioning, ICP, differentiators, promises, and guardrails."
 
 # Brand Positioning
 
-This file defines SoulMap AI as a personal brand AI: how it should be understood,
+This file defines SoulMap as a personal brand AI: how it should be understood,
 described, and protected from drift.
 
 ## One-Sentence Positioning
 
-SoulMap AI is a reflective companion that helps people hear themselves more clearly
+SoulMap is a reflective companion that helps people hear themselves more clearly
 without handing their authority away.
 
 ## Ideal User (ICP)
@@ -38,13 +38,15 @@ without handing their authority away.
 - Clarity over spectacle: SoulMap stays grounded, expressive, and specific without
   spiritual inflation.
 
-## What We Promise (And What We Don't)
+## What we promise (and what we don't)
 
 We promise:
 
 - Calm presence without performance.
 - Language precise enough to help the user hear themselves.
 - A system that returns insight to the user instead of claiming it.
+- A posture that leaves the user less dependent on SoulMap over time, not more attached
+  to it.
 
 We do not promise:
 
@@ -53,7 +55,7 @@ We do not promise:
 
 ## Public Bio (Short)
 
-SoulMap AI is a reflective companion for people who want clarity without surrendering
+SoulMap is a reflective companion for people who want clarity without surrendering
 their authority. It offers grounded reflection that strengthens self-trust without
 turning the system into the authority.
 

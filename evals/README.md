@@ -9,7 +9,8 @@ Evaluation case files for SoulMap AI automated testing and quality-assurance too
 **Input:** a user `message` with full expected outputs.
 **Asserts:** full end-to-end pipeline, framework selection, safety gate, response
 generation, contract check, and sanitizer, all in one pass.
-**Used by:** `tools/eval_responses.py` (run as `python -m tools.eval_responses`)
+**Used by:** `src/soulmap_devtools/evals/eval_responses.py` (run as
+`python -m soulmap_devtools.cli.eval_responses`)
 
 These are the golden cases. All 17 must pass before a release.
 
@@ -19,7 +20,7 @@ Structured QA taxonomy for grouped routing examples, safety slices, and edge-cas
 coverage. This file is a local eval dataset and is not part of the shipped knowledge
 package.
 
-**Used by:** `tools/eval_groups.py` directly.
+**Used by:** `src/soulmap_devtools/evals/eval_groups.py` directly.
 
 Some items include explicit expectation fields such as `expect_primary_framework`,
 `expect_secondary_layer`, `expect_mode`, `expect_scope_tier`, or
@@ -36,6 +37,36 @@ is still present, not just that the file exists.
 Items without expectations still act as grouped exploratory coverage and reporting
 seeds.
 
+### `markdown_contract_cases.json`
+
+Cross-surface sync cases for doctrine, runtime examples, and shipped Markdown.
+
+**Used by:** `src/soulmap_devtools/evals/eval_markdown_contracts.py` (run as
+`python -m soulmap_devtools.cli.eval_markdown_contracts`)
+
+These cases keep wording-level contracts aligned across:
+
+- runtime examples in `src/`
+- doctrine files such as `AGENTS.md`
+- shipped files in `skills/` and `templates/`
+
+Use this dataset when a behavior change must stay synchronized across multiple files,
+not just inside Python.
+
+## Markdown QA versus evals
+
+The repo now has two different Markdown quality layers:
+
+- repo-local Markdown QA commands for structural hygiene in tracked docs:
+  - `python -m soulmap_runtime.guards.markdown_contract --root .`
+  - `python -m soulmap_devtools.cli.check_markdown_links --root .`
+  - `python -m soulmap_devtools.cli.check_markdown_case --root .`
+- eval datasets in `evals/` for cross-surface behavioral and wording contracts
+
+Use the Markdown QA commands for broken local links, anchor drift, and canonical
+SoulMap-specific term casing. Use `markdown_contract_cases.json` when a wording rule
+must stay synchronized across runtime examples, doctrine, and shipped knowledge files.
+
 ## When to add cases
 
 | Situation | Add to |
@@ -44,6 +75,7 @@ seeds.
 | Response contract and wording regressions, full pipeline | `response_generation_cases.json` |
 | New behavioral requirement, full end-to-end validation | `response_generation_cases.json` |
 | New safety failure mode documented | `response_generation_cases.json` |
+| Cross-file wording drift between runtime and Markdown | `markdown_contract_cases.json` |
 
 Keep `response_generation_cases.json` additions minimal, each case runs the full
 Claude API pipeline and increases eval cost and run time.

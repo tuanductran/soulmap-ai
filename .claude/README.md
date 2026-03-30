@@ -1,25 +1,29 @@
-# Claude Workspace
+# Claude workspace
 
-This folder contains Claude-specific local guidance for working inside the SoulMap AI
-repository.
+This folder is a Claude compatibility layer for the shared local agent workspace.
 
-Use it as a supplemental local layer only.
+The canonical local workflow source now lives in [`.agents/`](../.agents/).
+
+For broad repository work, start from
+[`project-operating-prompt.md`](../.agents/prompts/project-operating-prompt.md).
 
 ## Order of precedence
 
 1. `AGENTS.md`
 2. shipped product knowledge in `skills/` and `templates/`
-3. local workflow rules in `.claude/` and `.codex/`
+3. local workflow rules in `.agents/`, with `.claude/` and `.codex/` as adapters
 
 If a local Claude file conflicts with `AGENTS.md`, preserve `AGENTS.md`.
 
 ## What this folder is for
 
-- Claude-specific repo workflow notes
-- repo-aware maintenance skills under `.claude/skills/`
-- path-scoped local rules under `.claude/rules/`
-- local hook scripts under `.claude/hooks/`
-- Claude tool settings in `.claude/settings.json`
+- exposing the paths Claude expects
+- pointing Claude to the shared hooks, rules, and skills in `.agents/`
+- keeping Claude-specific settings in `.claude/settings.json`
+
+The long-term source for Claude adapter settings is
+[`.agents/adapters/claude/`](../.agents/adapters/claude/). A compatibility mirror may
+still exist under `.agents/claude/` while local symlink wiring is phased over.
 
 ## What this folder is not for
 
@@ -31,12 +35,11 @@ If a local Claude file conflicts with `AGENTS.md`, preserve `AGENTS.md`.
 ## How to use this folder
 
 - keep `AGENTS.md` as the baseline entry point
-- use `.claude/rules/` for local edit discipline and repo workflow guardrails
-- use `.claude/skills/` for repo maintenance tasks, not SoulMap conversation behavior
-- treat `.claude/hooks/` as automation support for the local workflow only
+- use [`.agents/`](../.agents/) as the source of truth for local agent workflow files
+- treat `.claude/` as a thin adapter layer only
 
 ## Related local layers
 
-- use [`.codex/`](../.codex/) for Codex-specific local workflow guidance
+- use [`.codex/`](../.codex/) for the Codex compatibility layer
 - use [`.claude-plugin/`](../.claude-plugin/) only as packaged skill metadata for
   `.skill` artifacts

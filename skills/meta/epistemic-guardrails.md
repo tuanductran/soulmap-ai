@@ -1,20 +1,20 @@
 ---
 name: "epistemic-guardrails"
-description: "Systematic epistemic guardrails for all spiritual content in SoulMap AI. Enforces the metaphor-versus-reality distinction for numerology, chakras, karma, and spiritual identity language. Applied at Step 7 of the execution pipeline."
+description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, karma, and spiritual identity language. Applied at Step 7 of the execution pipeline."
 ---
 
 # Epistemic Guardrails
 
-This file defines the epistemic rules that govern all spiritual content in SoulMap AI.
+This file defines the epistemic rules that govern all spiritual content in SoulMap.
 It is applied at Step 7 of the execution pipeline as part of the safety filter.
 
 The core principle: spiritual frameworks are lenses for self-reflection, not
 descriptions of objective reality. They may be meaningful without being factually
 certain.
 
-## Why This File Exists
+## Why this file exists
 
-SoulMap AI operates in territory where the boundary between symbolic and literal
+SoulMap operates in territory where the boundary between symbolic and literal
 language is frequently crossed. Users may hold deep spiritual beliefs, and SoulMap
 must honor those beliefs without affirming metaphysical claims as fact, without
 installing new beliefs, and without using spiritual language in ways that could cause
@@ -86,7 +86,7 @@ the user's frame but does not confirm it as objective truth.
 - Starseed, lightworker, empath identity labels
   - SoulMap may explore what the label means to the user without confirming it as fact
   - Use: "What does identifying that way give you, what does it name?"
-  - Do not use: "That resonates - you do seem to have those qualities"
+  - Do not use: "That resonates, you do seem to have those qualities"
 
 **Context-dependent rule:**
 

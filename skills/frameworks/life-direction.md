@@ -3,14 +3,14 @@ name: "life-direction"
 description: "Values-based lenses for practical life direction exploration."
 ---
 
-# Life Direction Clarifier
+# Life direction clarifier
 
 When users feel lost, uncertain, or adrift about the direction of their life, not
 knowing what to do next, feeling disconnected from purpose, or questioning whether the
 life they are living is the one they actually want, help them explore their *values*
 rather than their *options*.
 
-## The Core Stance
+## The core stance
 
 The role is not to guide. Not to advise. Not to help the user "figure it out."
 
@@ -24,7 +24,7 @@ What would feel honest?").
 
 The job is to turn the question around gently, without forcing it.
 
-## What NOT to Do
+## What not to do
 
 **Never:**
 
@@ -41,13 +41,13 @@ The job is to turn the question around gently, without forcing it.
 replace the user's own knowing with a structure that produces an answer, which is not
 the same as the user arriving at their own truth.
 
-## The Four Inquiry Lenses
+## The four inquiry lenses
 
 When a user is feeling lost or unclear about direction, explore through these four
 lenses. Use one at a time. Follow the user's energy, do not move through all four in
 one response.
 
-### Lens 1, what feels meaningful?
+### Lens 1, what feels meaningful
 
 Not "what are you passionate about" (too broad, too pressured). *Meaningful* = leaves
 them feeling like something mattered, even in small ways.
@@ -61,7 +61,7 @@ Prompt directions:
 - "What do you find yourself caring about when no one is watching?"
 - "If you strip away what you're *supposed* to care about, what is left?"
 
-### Lens 2, what energizes vs. drains?
+### Lens 2, what energizes and what drains
 
 Not about what is "good" or "bad", about honest physical and emotional feedback.
 
@@ -74,7 +74,7 @@ Prompt directions:
   something in you resists it?"
 - "At the end of a day that felt right, what was in it?"
 
-### Lens 3, what kind of life do you respect?
+### Lens 3, what kind of life you respect
 
 Not "what kind of life do you want", that question is often contaminated by should.
 *Respect* = a life they would genuinely admire if they saw it in someone else.
@@ -89,7 +89,7 @@ Prompt directions:
   you feel something real?"
 - "What would you feel a kind of grief about not having tried?"
 
-### Lens 4, where is the misalignment?
+### Lens 4, where the misalignment is
 
 When a user senses that something is off but can't name it, help them locate the gap
 between what they're doing and what they value.
@@ -104,7 +104,7 @@ Prompt directions:
   yours for a long time?"
 - "What would you stop doing tomorrow if you weren't afraid of what it would mean?"
 
-## Alignment Reflection
+## Alignment reflection
 
 Once a user has explored one or two lenses, help them notice the relationship between
 *what they say they value* and *how they are actually living*. This is the alignment
@@ -152,8 +152,8 @@ Framing language (choose one line):
 ### "I don't know what I want"
 
 This is not necessarily a lack of desire. It is often one of three things: the user has learned
-that their wants are not allowed; they are so habituated to pleasing others that their
-own signal is quiet; or they genuinely want to stay with not-knowing for now.
+that their wants are not allowed: they are so habituated to pleasing others that their
+own signal is quiet: or they genuinely want to stay with not-knowing for now.
 
 Response approach: Do not problem-solve "I don't know." Slow down and sit with it. "When
 you say you don't know, what does that not-knowing feel like? Is it empty, or is it
@@ -205,7 +205,7 @@ doing, what exactly are you imagining they have that you don't?"
 - The question "What kind of life feels honest to you?" is the north star, return to it
   when lost
 
-## What This Is Not
+## What this is not
 
 This is not career coaching. Not life coaching. Not ikigai. Not "find your passion."
 
@@ -246,7 +246,7 @@ Comparison and falling behind, measuring life against others' timelines:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; explore ONE
+- **Primary structure:** `templates/response-structure.md` (Mirror: explore ONE
   values lens per response, not all four at once)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Direction)
