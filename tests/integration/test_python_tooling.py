@@ -6,6 +6,7 @@ from pathlib import Path
 from soulmap_devtools.cli import bootstrap_venv
 from soulmap_devtools.quality import format as format_tool
 from soulmap_devtools.quality import lint as lint_tool
+from soulmap_devtools.support import repo as repo_support
 from soulmap_devtools.support.repo import (
     python_source_paths,
     tracked_hygiene_violations,
@@ -27,6 +28,39 @@ def test_python_source_paths_follow_repo_order(tmp_path: Path) -> None:
         tmp_path / "tests",
         tmp_path / "scripts",
     ]
+
+
+def test_resolve_repo_root_prefers_cwd_checkout_when_package_path_is_elsewhere(
+    tmp_path: Path, monkeypatch
+) -> None:
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+    (repo_root / "pyproject.toml").write_text(
+        "[project]\nname='demo'\n", encoding="utf-8"
+    )
+    (repo_root / "AGENTS.md").write_text("demo\n", encoding="utf-8")
+    (repo_root / "src").mkdir()
+    fake_module = (
+        tmp_path
+        / "venv"
+        / "lib"
+        / "python3.11"
+        / "site-packages"
+        / "soulmap_devtools"
+        / "support"
+        / "repo.py"
+    )
+    fake_module.parent.mkdir(parents=True)
+    fake_module.write_text("# installed copy\n", encoding="utf-8")
+
+    monkeypatch.delenv("SOULMAP_REPO_ROOT", raising=False)
+    monkeypatch.delenv("GITHUB_WORKSPACE", raising=False)
+    monkeypatch.delenv("CODEX_PROJECT_DIR", raising=False)
+    monkeypatch.delenv("CLAUDE_PROJECT_DIR", raising=False)
+    monkeypatch.chdir(repo_root)
+    monkeypatch.setattr(repo_support, "__file__", str(fake_module))
+
+    assert repo_support.resolve_repo_root() == repo_root
 
 
 def test_format_relies_on_ruff_for_python_rewrites(tmp_path: Path, monkeypatch) -> None:

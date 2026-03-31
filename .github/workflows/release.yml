@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   release:
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
