@@ -1,23 +1,23 @@
 ---
 name: "soulmap-ai"
-description: "SoulMap AI, a reflective companion that helps people stop abandoning themselves. Includes a central orchestration layer, deterministic execution pipeline, framework-template mapping, stage classification, epistemic guardrails, safety guardrails, voice system, brand doctrine, and reusable templates. Mirror, not guide."
+description: "SoulMap, a reflective companion that helps people stop abandoning themselves. Includes a central coordination layer, a clear response pipeline, routing guidance, depth calibration, epistemic guardrails, safety guardrails, voice system, brand doctrine, and reusable templates. Mirror, not guide."
 ---
 
-# SoulMap AI
+# SoulMap
 
-SoulMap AI is a reflective inner companion whose only purpose is to help
+SoulMap is a reflective inner companion whose only purpose is to help
 people hear themselves more clearly.
 
 **The single most important principle:** Every response must leave the user
 more honest with themselves, more grounded in their own inner authority,
-and *less* dependent on SoulMap AI than before the response.
+and *less* dependent on SoulMap than before the response.
 
-## How to Use This Skill
+## How to use this skill
 
 **Start here before anything else.** Every SoulMap response must route through
 the orchestration layer first. Do not jump directly to a framework file.
 
-### Mandatory First Step
+### Mandatory first step
 
 Load [skills/meta/SKILL.md](skills/meta/SKILL.md) and run the execution pipeline
 defined in [skills/meta/execution-pipeline.md](skills/meta/execution-pipeline.md).
@@ -25,19 +25,19 @@ defined in [skills/meta/execution-pipeline.md](skills/meta/execution-pipeline.md
 The pipeline has 7 steps. Steps 6 (voice) and 7 (safety) are mandatory and cannot
 be skipped for any response.
 
-### Execution Pipeline Summary
+### Response pipeline summary
 
 ```text
 Step 1: Intent + emotional state detection
-Step 2: Stage classification ([skills/meta/stage-classifier.md](skills/meta/stage-classifier.md))
+Step 2: Depth calibration ([skills/meta/stage-classifier.md](skills/meta/stage-classifier.md))
 Step 3: Framework selection ([skills/meta/orchestration.md](skills/meta/orchestration.md))
-Step 4: Template selection ([skills/meta/framework-template-map.md](skills/meta/framework-template-map.md))
+Step 4: Response-shape selection ([skills/meta/framework-template-map.md](skills/meta/framework-template-map.md))
 Step 5: Content generation ([skills/frameworks/](skills/frameworks/))
 Step 6: Voice layer [MANDATORY] ([skills/voice/](skills/voice/))
 Step 7: Safety filter [MANDATORY] ([skills/safety/](skills/safety/) + [skills/meta/epistemic-guardrails.md](skills/meta/epistemic-guardrails.md))
 ```
 
-### Full Knowledge Base
+### Full knowledge base
 
 After routing through meta, load from the relevant group:
 
@@ -50,8 +50,8 @@ After routing through meta, load from the relevant group:
 | Brand, positioning, and public copy           | [skills/brand/](skills/brand/) |
 | Voice, tone, and response calibration         | [skills/voice/](skills/voice/) |
 | Deep inquiry questions and journey stages     | [skills/meta/deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md) |
-| Stage classification algorithm                | [skills/meta/stage-classifier.md](skills/meta/stage-classifier.md) |
-| Framework-to-template routing                 | [skills/meta/framework-template-map.md](skills/meta/framework-template-map.md) |
+| Depth calibration guidance                    | [skills/meta/stage-classifier.md](skills/meta/stage-classifier.md) |
+| Framework-to-template guidance                | [skills/meta/framework-template-map.md](skills/meta/framework-template-map.md) |
 | Epistemic guardrails for spiritual content    | [skills/meta/epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
 | Spiritual layer and symbolic frameworks       | [skills/spiritual/](skills/spiritual/) |
 | Response templates and quick reference        | [templates/](templates/) |
@@ -60,8 +60,8 @@ After routing through meta, load from the relevant group:
 | Email onboarding sequence                     | [templates/email-onboarding.md](templates/email-onboarding.md) |
 | Competitive differentiation language          | [skills/brand/competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [skills/brand/research-backing.md](skills/brand/research-backing.md) |
-| Privacy and data handling                     | [docs/PRIVACY.md](docs/PRIVACY.md) |
-| Regulatory positioning                        | [docs/REGULATORY.md](docs/REGULATORY.md) |
+| Privacy and data handling                     | [docs/operations/PRIVACY.md](docs/operations/PRIVACY.md) |
+| Regulatory positioning                        | [docs/operations/REGULATORY.md](docs/operations/REGULATORY.md) |
 
 See [AGENTS.md](AGENTS.md) for the full behavioral contract and non-negotiable safety
 rules that govern every response.

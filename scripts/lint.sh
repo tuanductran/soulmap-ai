@@ -9,4 +9,5 @@ if [[ -f "${ROOT_DIR}/.venv/bin/activate" ]]; then
 fi
 
 cd "${ROOT_DIR}"
-python -m tools.lint "$@"
+export PYTHONPATH="${ROOT_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}"
+python -m soulmap_devtools.cli.lint "$@"

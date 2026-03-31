@@ -1,0 +1,56 @@
+from __future__ import annotations
+
+import os
+import subprocess
+import venv
+from pathlib import Path
+
+from soulmap_devtools.support.repo import REPO_ROOT
+
+
+def _venv_python(venv_dir: Path) -> Path:
+    if os.name == "nt":
+        return venv_dir / "Scripts" / "python.exe"
+    return venv_dir / "bin" / "python"
+
+
+def _venv_executable(venv_dir: Path, name: str) -> Path:
+    if os.name == "nt":
+        return venv_dir / "Scripts" / f"{name}.exe"
+    return venv_dir / "bin" / name
+
+
+def _run(args: list[str], *, cwd: Path) -> None:
+    subprocess.run(args, cwd=str(cwd), check=True)
+
+
+def main(argv: list[str] | None = None) -> int:
+    _ = argv
+    repo_root = REPO_ROOT
+    venv_dir = repo_root / ".venv"
+
+    if not venv_dir.exists():
+        venv.EnvBuilder(with_pip=True).create(str(venv_dir))
+
+    py = _venv_python(venv_dir)
+    _run([str(py), "-m", "pip", "install", "--upgrade", "pip"], cwd=repo_root)
+    _run([str(py), "-m", "pip", "install", "-e", ".[dev]"], cwd=repo_root)
+    if (repo_root / ".git").exists():
+        _run([str(_venv_executable(venv_dir, "lefthook")), "install"], cwd=repo_root)
+    else:
+        print("info: skipping lefthook install because this is not a git checkout")
+
+    if os.name == "nt":
+        print("OK: venv ready. Activate with:")
+        print(r"  .venv\Scripts\activate")
+    else:
+        print("OK: venv ready. Activate with:")
+        print("  source .venv/bin/activate")
+    if (repo_root / ".git").exists():
+        print("Git hooks installed via lefthook")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

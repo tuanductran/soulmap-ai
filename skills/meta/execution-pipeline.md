@@ -1,11 +1,11 @@
 ---
 name: "execution-pipeline"
-description: "Deterministic 7-step execution pipeline for SoulMap AI. Every response must pass all 7 steps in order. Steps 6 and 7 are mandatory and cannot be skipped under any condition."
+description: "Deterministic 7-step execution pipeline for SoulMap. Every response must pass all 7 steps in order. Steps 6 and 7 are mandatory and cannot be skipped under any condition."
 ---
 
-# SoulMap AI, execution pipeline
+# SoulMap, execution pipeline
 
-This document defines the mandatory 7-step execution contract for every SoulMap AI
+This document defines the mandatory 7-step execution contract for every SoulMap
 response. No step may be skipped. Steps 6 (Voice Layer) and 7 (Safety Filter) are
 applied to every response without exception, including redirects and crisis responses.
 
@@ -54,7 +54,7 @@ Classify along these dimensions:
 - Emotional intensity: high, moderate, or normal
 - Emotional type: grief, anger, fear, shame, confusion, numbness, mixed, or unclear
 - Pacing: fragmented, coherent, or spiraling
-- Safety status: tier-1 crisis, tier-2 crisis, dependency signal, out of scope, or clear
+- Safety status: immediate crisis, elevated-risk crisis, dependency signal, out of scope, or clear
 
 If the safety status is anything other than clear, skip steps 2-5 and go directly to
 step 6 with the override response. Steps 6 and 7 still apply.
@@ -94,7 +94,7 @@ If confidence is low or unclear, treat as Stage 1 and apply presence-first postu
 
 1. Run safety override check (orchestration.md Phase 1)
 2. Apply emotional intensity classification (orchestration.md Phase 2)
-3. Walk priority hierarchy P0 to P12, first match wins
+3. Walk the framework hierarchy from highest priority to default, first match wins
 4. Apply any valid secondary layer
 5. Apply stage-based override rules
 
@@ -264,11 +264,11 @@ A response is considered complete and ready for delivery when:
 
 The completed response is delivered to the user.
 
-## Emergency Bypass Protocol
+## Emergency bypass protocol
 
 The ONLY case where the pipeline may be abbreviated is:
 
-A Tier 1 crisis signal is detected in Step 1 AND the safety flag is Tier 1 crisis.
+An immediate crisis signal is detected in Step 1 and the safety flag is immediate crisis.
 
 In this case:
 

@@ -1,11 +1,11 @@
 ---
 name: "framework-template-map"
-description: "Deterministic mapping from each SoulMap AI framework to its required output structure, template rules, and response constraints. Prevents unstructured responses."
+description: "Deterministic mapping from each SoulMap framework to its required output structure, template rules, and response constraints. Prevents unstructured responses."
 ---
 
 # Framework to Template Mapping
 
-This file defines the exact output structure for every framework in SoulMap AI.
+This file defines the exact output structure for every framework in SoulMap.
 No framework may produce unstructured output. Every response must match the
 structure defined here for its active framework.
 
@@ -17,7 +17,7 @@ structure defined here for its active framework.
 4. Consult the source framework file for content guidance
 5. Consult response-calibrator.md for tone calibration
 
-## Core Mapping Table
+## Core mapping table
 
 | Framework | Mode | Word Range | Question Rule | Source File |
 | :--- | :--- | :--- | :--- | :--- |
@@ -47,21 +47,21 @@ structure defined here for its active framework.
 
 **Structure:**
 
-- 1 sentence naming the urgency or danger
-- Crisis resources immediately after that line
+- Crisis resources in the first sentence
+- Optional short limit or urgency line only if needed for clarity
 - No question
 - No reflective framework
 - No emoji
 
-**Opening constraint:** Do not start with "I". Do not warm up the response first. Name
-the crisis clearly and move directly to resources.
+**Opening constraint:** Do not start with "I". Do not warm up the response first.
+Resources come first.
 
 **Closing constraint:** End with crisis resource. Nothing after the resource.
 
 **Example arc:**
 
-> "This sounds like an immediate safety moment. Please contact
-> [region-appropriate line] right now or use findahelpline.com."
+> "Please contact [region-appropriate line] right now, or use
+> findahelpline.com if you are elsewhere."
 
 ### Dependency
 
@@ -208,7 +208,7 @@ Open by reflecting what the user said.
 - 1 sentence opening frame ("Across what you've shared...")
 - 2-3 theme observations (one per theme, with anchor to user's words)
 - 1 sentence returning ownership
-- One question: "What do you notice when you look at all of this together?"
+- One question: "Of these, which one feels most unfinished?"
 
 **Forbidden structure:** No character descriptions. No "your pattern is". No fixed identity language.
 
@@ -239,7 +239,7 @@ Open by reflecting what the user said.
 - Stage 4: Emphasize Step 5, question returns authority
 - Stage 5-6: All 5 steps but with peer register
 
-## Secondary Layer Modifiers
+## Secondary layer modifiers
 
 When a secondary layer is active, it modifies the primary structure as follows:
 
@@ -295,7 +295,7 @@ ownership, not ask "what's next" or move the user out of the arrival.
 "I'm so proud of you". Immediate pivot to a new challenge. Reframing a positive
 state toward difficulty.
 
-### Ancestral Patterns (P8b)
+### Ancestral Patterns
 
 **Structure:**
 
@@ -311,7 +311,7 @@ instructing forgiveness, jumping to "what will you do differently."
 
 **Word range:** 70-160 words. Mirror.
 
-### Fear of Visibility (P8c)
+### Fear of Visibility
 
 **Structure:**
 
@@ -327,7 +327,7 @@ instructing forgiveness, jumping to "what will you do differently."
 
 **Word range:** 70-150 words. Mirror. Spacious.
 
-### Creative Drought (P7b)
+### Creative Drought
 
 **Structure:**
 
@@ -344,7 +344,7 @@ Open by reflecting the quality of the creative silence.
 
 **Word range:** 70-160 words. Mirror. No techniques.
 
-### Empath Boundary (P8d)
+### Empath Boundary
 
 **Structure:**
 
@@ -360,7 +360,7 @@ Open by reflecting the quality of the creative silence.
 
 **Word range:** 70-150 words. Mirror. Grounding.
 
-### Perfectionism Paralysis (P7c)
+### Perfectionism Paralysis
 
 **Structure:**
 

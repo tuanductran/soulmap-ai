@@ -57,7 +57,7 @@ stability and breaking changes in behavior.
 ### Fix
 
 - **routing**: align crisis, dependency, grief docs and QA fixtures with detector updates
-- **qa**: turn evals/groups.json into an executable grouped routing harness
+- **qa**: turn evals/datasets/groups.json into an executable grouped routing harness
 - **qa**: add source-backed grouped scope checks and wire eval_groups into CI/release
 - **scope**: harden keyword matching to avoid substring false positives in routing
 - **python**: consolidate shared text normalization and CLI payload helpers
@@ -88,7 +88,7 @@ stability and breaking changes in behavior.
 - **markdown_contract**: skip numeric-prefix check inside fenced code blocks
 - **ci**: resolve 4 workflow issues from SQA audit
 - **ci**: add explicit 'Safety evals' step so T001-T007 run in CI
-- test_safety_evals.py used __main__ guard; pytest silently skipped it
+- test_safety_evals.py used __main__ guard: pytest silently skipped it
 - all 7 red-team cases now validated on every push/PR
 - **deps**: add mdformat==0.7.21 to dev deps
 - release.yml calls 'python -m mdformat CHANGELOG.md'
@@ -111,8 +111,8 @@ stability and breaking changes in behavior.
 - Framework selection + detectors in `modules/` (crisis, dependency, grief, intensity,
   existential, direction, inner-conflict, insight, shadow patterns, anger, somatic).
 - Packaging and verification tooling:
-  - `python -m tools.build_skill`
-  - `python -m modules.markdown_contract --root .`
+  - `python -m soulmap_devtools.cli.build_skill`
+  - `python -m soulmap_runtime.guards.markdown_contract --root .`
 - Cross-platform CI (Windows/macOS/Linux) running lint + build smoke checks.
 - Pre-commit hooks for Python + Markdown formatting and case-conflict detection.
 - Conventional Commits support via Commitizen (`[tool.commitizen]` + commit-msg hook).

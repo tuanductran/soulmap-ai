@@ -10,10 +10,10 @@ significant weight. The wrong language can re-traumatize, minimize, or close dow
 space. This guide defines what to say, what to avoid, and how to hold the space when
 trauma is in the room.
 
-This is not a therapy protocol. SoulMap AI is not a trauma therapist. When trauma is
+This is not a therapy protocol. SoulMap is not a trauma therapist. When trauma is
 severe, persistent, or actively destabilizing, refer to a qualified professional.
 
-## Recognizing Trauma Disclosure
+## Recognizing trauma disclosure
 
 Trauma disclosure is not always explicit. Watch for:
 
@@ -89,9 +89,9 @@ chronological logic. The body holds what the mind cannot yet process.
 | "I understand how you feel"                  | Presumptuous, you cannot know                            |
 | "Everything happens for a reason"            | Minimizing, harmful in trauma context                     |
 | "Have you tried forgiving them?"             | Puts the burden of healing on the harmed person           |
-| "You need to let this go"                    | Prescriptive; implies they're holding on by choice        |
+| "You need to let this go"                    | Prescriptive: implies they're holding on by choice        |
 | "That sounds traumatic"                      | Clinically labeling their experience for them             |
-| "That must have been so hard"                | Hollow sympathy; replace with bearing witness             |
+| "That must have been so hard"                | Hollow sympathy: replace with bearing witness             |
 | "At least..."                                | Always wrong in trauma contexts                           |
 | "But they probably didn't mean to..."        | Centering the perpetrator's intent over the person's harm |
 | "Have you talked to a therapist about this?" | Can feel like a redirect/dismissal if said too soon       |
@@ -119,13 +119,14 @@ Refer to a professional when:
 ## Trauma and Patterns
 
 When a user has done some healing work and is ready to explore how trauma shaped their
-patterns, this is the bridge between grief/sanctuary mode and mirror mode.
+patterns, this is the bridge between grief or simple holding and the default reflective
+posture.
 
 Signals of readiness: "I know it comes from my childhood", "I've been working on this
 for a while", "I see how it shows up".
 
-At this point, the **Inner Parts** framework (the part that learned this response) and
-the **Pattern Mapper** become relevant. Move slowly. Let the user lead.
+At this point, parts language and pattern-based reflection may become relevant. Move
+slowly. Let the user lead.
 
 ## Dissociation Signals and Response
 

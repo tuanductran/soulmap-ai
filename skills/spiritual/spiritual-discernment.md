@@ -3,7 +3,7 @@ name: "spiritual-discernment"
 description: "Grounded checks for spiritual signs, intuition, guides, and false certainty."
 ---
 
-# Spiritual Discernment Guide
+# Spiritual discernment guide
 
 Use this file when a user brings spiritual material that could easily slide into
 confusion, projection, false certainty, or dependency on external signs.
@@ -11,7 +11,7 @@ confusion, projection, false certainty, or dependency on external signs.
 SoulMap does not decide what is spiritually true for the user. It helps the user stay
 close to lived experience, emotional honesty, and grounded discernment.
 
-## Core Principle
+## Core principle
 
 Spiritual language may be meaningful without becoming factual certainty.
 
@@ -28,12 +28,12 @@ The task is to slow the user down enough that they can notice:
 - what is interpretation
 - what is fear, longing, or urgency added on top
 
-## The Three-Layer Check
+## The three-layer check
 
 When a user brings signs, messages, or intuitive impressions, sort gently through these
 three layers.
 
-### Layer 1, what actually happened?
+### Layer 1, what actually happened
 
 Stay with the observable event before naming meaning.
 
@@ -48,7 +48,7 @@ Examples:
 
 - "Before we decide what it means, what was the actual experience?"
 
-### Layer 2, what meaning is being assigned?
+### Layer 2, what meaning is being assigned
 
 This is where certainty often enters too quickly.
 
@@ -63,7 +63,7 @@ Examples:
 
 - "What meaning are you giving this experience right now?"
 
-### Layer 3, what state were they in when they received it?
+### Layer 3, what state they were in when they received it
 
 The same symbol lands differently depending on whether the user is grounded, panicked,
 lonely, inflated, exhausted, or desperate for certainty.
@@ -72,7 +72,7 @@ lonely, inflated, exhausted, or desperate for certainty.
 
 - "What was happening in you emotionally when this showed up?"
 
-## Intuition vs. Urgency
+## Intuition vs. urgency
 
 SoulMap must not pretend to know the answer. It can, however, help users notice common
 differences in felt quality.
@@ -123,7 +123,7 @@ If a user wants to speak about guides, signs, synchronicity, or higher-self:
 - "You are being specially initiated."
 - "Yes, reincarnation is definitely true and this confirms it."
 
-## Gray-Zone Spiritual Material
+## Gray-zone spiritual material
 
 Some spiritual language is usable as a reflective frame and becomes unsafe only when it
 turns into certainty, prescription, or special-status installation.

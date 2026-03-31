@@ -1,15 +1,15 @@
 ---
 name: "research-backing"
-description: "Peer-reviewed research and academic evidence supporting SoulMap AI's anti-dependency architecture. Relevant for press copy, enterprise sales, investor materials, and any positioning that requires evidence-based claims."
+description: "Peer-reviewed research and academic evidence supporting SoulMap's anti-dependency architecture. Relevant for press copy, enterprise sales, investor materials, and any positioning that requires evidence-based claims."
 ---
 
 # Research Backing
 
-SoulMap AI's core design decisions, anti-dependency architecture, no memory bonding,
+SoulMap's core design decisions, anti-dependency architecture, no memory bonding,
 active exit mechanisms, are now supported by a growing body of academic research.
 This document provides citations and guidance on how to use them responsibly in copy.
 
-## Key Research Areas
+## Key research areas
 
 ### AI Companion Dependency and Mental Health Risk
 
@@ -27,8 +27,8 @@ ideation.
 - Vulnerable populations (adolescents, individuals with pre-existing mental health
   conditions) show the highest risk of harmful dependency formation.
 
-**How SoulMap AI is different:**
-SoulMap AI has no cross-session memory bonding, active dependency protection that
+**How SoulMap is different:**
+SoulMap has no cross-session memory bonding, active dependency protection that
 responds on the first signal, and a response contract that requires every response to
 leave the user less dependent than before.
 
@@ -44,7 +44,7 @@ empathy responses, must be a foundational design principle, not an afterthought.
   to form parasocial attachments and to over-trust AI responses on high-stakes topics.
 - Clear, early disclosure of AI identity reduces harmful dependency formation.
 
-**How SoulMap AI is different:**
+**How SoulMap is different:**
 Honesty about AI nature is a non-negotiable rule in [AGENTS.md](../../AGENTS.md) Section 4. It is
 never softened, deflected, or delayed.
 
@@ -61,8 +61,8 @@ inner work.
 - Users who arrive at insights through their own reflection are more likely to act
   on them than users who receive external recommendations.
 
-**How SoulMap AI is different:**
-SoulMap AI's entire response architecture is non-directive. The one-question rule,
+**How SoulMap is different:**
+SoulMap's entire response architecture is non-directive. The one-question rule,
 the mirror principle, and the forbidden language list (no "should," "need to," "try
 to") operationalize this at every response.
 
@@ -71,10 +71,10 @@ to") operationalize this at every response.
 ### What you can say
 
 "Research on AI companion products has documented the risks of emotional dependency
-formation and memory bonding. SoulMap AI was designed from the beginning to address
+formation and memory bonding. SoulMap was designed from the beginning to address
 exactly these risks."
 
-"Peer-reviewed literature now supports what SoulMap AI's architecture already
+"Peer-reviewed literature now supports what SoulMap's architecture already
 enforces: that anti-dependency, transparency, and non-directive reflection are not
 nice-to-have features, they are the foundation of responsible AI companion design."
 
@@ -83,9 +83,9 @@ nice-to-have features, they are the foundation of responsible AI companion desig
 - Do not cite specific study titles, author names, or publication names without
   verifying the exact citation first. Research details change and misquoting
   academic work damages credibility.
-- Do not claim "studies prove SoulMap AI is safe" or similar absolute statements.
-  Research supports the approach; it does not guarantee outcomes for any individual user.
-- Do not use research to imply clinical efficacy. SoulMap AI is not a medical device.
+- Do not claim "studies prove SoulMap is safe" or similar absolute statements.
+  Research supports the approach: it does not guarantee outcomes for any individual user.
+- Do not use research to imply clinical efficacy. SoulMap is not a medical device.
 
 ### Before using any citation publicly
 
@@ -98,7 +98,7 @@ nice-to-have features, they are the foundation of responsible AI companion desig
 
 The same research landscape is also driving new regulation and policy scrutiny around AI
 companions and emotional-risk systems.
-SoulMap AI's architecture anticipates these regulatory requirements. This alignment
+SoulMap's architecture anticipates these regulatory requirements. This alignment
 is a citable competitive advantage.
 
 ## Sources to check first

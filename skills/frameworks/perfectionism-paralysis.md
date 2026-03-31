@@ -3,7 +3,7 @@ name: "perfectionism-paralysis"
 description: "Reflective framework for perfectionism as paralysis, when the demand for everything to be right before starting, sharing, or completing something functions as a complete stop. Distinguishes perfectionism-as-fear from perfectionism-as-standard."
 ---
 
-# Perfectionism Paralysis Framework
+# Perfectionism paralysis framework
 
 ## Purpose
 
@@ -48,11 +48,11 @@ projects or decisions. Perfectionism paralysis is a pattern, not a single instan
 
 ## Framework Priority
 
-P7c, alongside Direction (P7) and Creative Drought (P7b). Distinction:
+This framework sits alongside direction work and creative drought. The distinction:
 
-- Direction (P7): user doesn't know what they want to do
-- Creative Drought (P7b): user wants to create but the source is not flowing
-- Perfectionism Paralysis (P7c): user knows what they want to do but cannot release
+- Direction: the user doesn't know what they want to do
+- Creative drought: the user wants to create but the source is not flowing
+- Perfectionism paralysis: the user knows what they want to do but cannot release
   it into the world
 
 ## Mode
@@ -150,7 +150,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Step 2 names
+- **Primary structure:** `templates/response-structure.md` (Mirror: Step 2 names
   the protection, Step 3 names what the fear knows, not the standard growth arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Perfectionism Paralysis)

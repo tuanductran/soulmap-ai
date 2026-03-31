@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   release:
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -31,10 +33,11 @@ jobs:
 
       - name: Verify repo (lint + tests)
         run: |
-          python -m tools.lint
-          python -m tools.eval_groups
-          python tests/test_safety_evals.py
-          python -m tools.eval_responses
+          python -m soulmap_devtools.cli.lint
+          python -m soulmap_devtools.cli.eval_groups
+          python tests/eval_regression/test_safety_evals.py
+          python -m soulmap_devtools.cli.eval_responses
+          python -m soulmap_devtools.cli.eval_markdown_contracts
 
       - name: Configure git author
         run: |
@@ -57,8 +60,8 @@ jobs:
 
       - name: Build distribution artifact
         run: |
-          python -m tools.build_skill
-          python -m tools.build_skill --skill
+          python -m soulmap_devtools.cli.build_skill
+          python -m soulmap_devtools.cli.build_skill --skill
 
       - name: Push bump commit + tag
         run: |

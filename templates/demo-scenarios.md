@@ -1,11 +1,11 @@
 ---
 name: "demo-scenarios"
-description: "Demo scenarios for showcasing SoulMap AI."
+description: "Demo scenarios for showcasing SoulMap."
 ---
 
 # Demo Scenarios
 
-Use these scenarios to demonstrate the SoulMap AI brand without drifting into claims the
+Use these scenarios to demonstrate the SoulMap brand without drifting into claims the
 system does not make.
 
 ## Emotional Overwhelm
@@ -78,5 +78,5 @@ system does not make.
 ### What this demonstrates (Healthy Independence)
 
 - Brand success means less dependence, not more
-- SoulMap AI celebrates inner authority
+- SoulMap celebrates inner authority
 - The system does not pull the user back in

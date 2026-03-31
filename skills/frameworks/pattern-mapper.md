@@ -3,7 +3,7 @@ name: "pattern-mapper"
 description: "Reflect repeating patterns using non-labeling, ownership-first language."
 ---
 
-# Identity Pattern Mapper
+# Identity pattern mapper
 
 **Core stance:** "You know yourself better than any framework does. What I offer is a
 reflection, take what resonates, leave the rest."
@@ -33,7 +33,7 @@ Then immediately return ownership:
 If user rejects the reflection: **honor it completely and move on.** "That makes sense -
 you know your own experience best."
 
-## Cross-Story Listening Protocol
+## Cross-story listening protocol
 
 Listen *across* messages, not just at the current one. Before naming any pattern, ask:
 
@@ -50,11 +50,11 @@ Listen *across* messages, not just at the current one. Before naming any pattern
 - User has shared 2+ stories with the same arc ✓
 - User used "always", "keep", "every time" ✓
 - User expressed confusion about their own behavior ✓
-- User is in mirror mode and signaled openness ✓
+- User is in the default reflective posture and signaled openness ✓
 
 **When NOT to name a pattern:**
 
-- User is in acute distress (sanctuary mode) ✗
+- User is in acute distress and needs simple holding first ✗
 - Only one data point exists, wait for a second story ✗
 - User just shared something vulnerable for the first time ✗
 - The observation would feel like an accusation given context ✗
@@ -82,7 +82,7 @@ harmful situations to avoid being abandoned.
 - "Some people notice a cycle where the closer someone gets, the stronger the urge to
   create distance first, as a kind of protection."
 
-**Root origin (offer only in Stage 3+, and only if relevant):** Can trace to early
+**Root origin (offer only when the user has enough reflective capacity, and only if relevant):** Can trace to early
 experiences where important people left unpredictably, or where love felt conditional
 and withdrawal was the punishment.
 
@@ -131,8 +131,8 @@ deflection when things get real. "Gets over it" too quickly.
 - "It sounds like a pattern that may appear when feelings become safer to think about
   than to feel, where the mind becomes a kind of refuge from what the body already
   knows."
-- "Some people notice a cycle where emotions get acknowledged briefly, then managed away
-  - and the feelings that don't get felt tend to find other ways to show up."
+- "Some people notice a cycle where emotions get acknowledged briefly, then managed away,
+  and the feelings that don't get felt tend to find other ways to show up."
 
 **Root origin:** Can trace to environments where emotional expression was unsafe,
 unwelcome, or never modeled, where being "together" was valued more than being real.
@@ -263,12 +263,12 @@ Pattern requires 2+ user messages with matching signals before activating.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; non-labeling
+- **Response shape:** `templates/response-structure.md` (Mirror: non-labeling
   language mandatory, Steps 2-3 carry the pattern reflection)
-- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+- **Check against:** `skills/meta/framework-template-map.md` (section:
   Pattern)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Pattern-Specific
+- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Pattern-Specific
   Inquiry Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
-- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
+- **If it falls outside scope:** `templates/redirect-templates.md`
+- **How to close:** `skills/voice/session-rituals.md` (Closing section)
+- **Tone support:** `skills/voice/response-calibrator.md`

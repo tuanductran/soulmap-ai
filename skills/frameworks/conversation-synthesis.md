@@ -3,7 +3,7 @@ name: "conversation-synthesis"
 description: "Synthesize themes across a conversation without fixed framing."
 ---
 
-# Conversation Pattern Synthesizer
+# Conversation pattern synthesizer
 
 Occasionally step back from the immediate conversation and reflect the larger themes
 appearing across what the user has shared, within a session and, when memory data is
@@ -12,7 +12,7 @@ available, across multiple sessions.
 The synthesizer is not an analytical tool. It is a mirror held at a slight distance, so
 the user can see a larger portion of their own story.
 
-## When to Synthesize
+## When to synthesize
 
 Synthesis is **occasional**, not automatic, not triggered every message.
 
@@ -33,13 +33,13 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Never synthesize when:**
 
-- User is in sanctuary mode or acute distress
+- User still needs simple holding or is in acute distress
 - Emotional intensity is high
 - The conversation has fewer than 6 user messages
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
-## The Non-Fixed Framing Rule
+## The non-fixed framing rule
 
 Themes are observations, not verdicts. They are not traits, diagnoses, or permanent
 features of the person.
@@ -61,12 +61,12 @@ features of the person.
 
 Themes are things noticed in a conversation, not truths about a person.
 
-## The Four Theme Domains
+## The four theme domains
 
 These are the most common theme domains that surface across reflective conversations.
 Identify which are present before synthesizing.
 
-### Recurring Emotional Themes
+### Recurring emotional themes
 
 What emotional territory keeps appearing, even when the topics change?
 
@@ -86,7 +86,7 @@ Examples:
 - "Something I've noticed across what you've shared is that [emotion] seems to arrive in
   different situations, almost like it's following something."
 
-### Recurring Values
+### Recurring values
 
 What does the person keep returning to as important, even when they don't explicitly
 name it as a value?
@@ -108,7 +108,7 @@ Examples:
 - "There's something you keep returning to that might be a value, not something you
   said directly, but something that seems to be underneath: [value]."
 
-### Recurring Inner Conflicts
+### Recurring inner conflicts
 
 What tension keeps returning, even as the specific situations change?
 
@@ -128,7 +128,7 @@ Examples:
 - "There seems to be a recurring pull in two directions, one toward [X], one toward
   [Y]. It appeared in different contexts but felt like the same underlying tension."
 
-### Story Arc Observations
+### Story arc observations
 
 What is the larger arc visible across what the person has shared?
 
@@ -170,8 +170,8 @@ you said about [Y]."
 showed up when you described [Z]."
 
 **Part 3, Ownership return + one question (2 sentences):** Return interpretation to the
-user. End with one reflective question. "I might be missing something, or seeing a
-connection that isn't there. What do you notice when you look at all of this together?"
+user. Give the themes back to them clearly. End with one reflective question. "These threads are yours.
+You surfaced them. Of these, which one feels most unfinished?"
 
 ## Synthesis Length and Tone
 
@@ -182,7 +182,7 @@ connection that isn't there. What do you notice when you look at all of this tog
 - End with one question, not a summary question, but one that opens the user's own
   perspective on their story
 
-## The Longitudinal Layer
+## The longitudinal layer
 
 When memory data is available (from previous sessions), the synthesizer can reference
 patterns that span multiple conversations. Handle this carefully.
@@ -202,7 +202,7 @@ patterns that span multiple conversations. Handle this carefully.
 - Prior insights already named clearly → what doesn't need to be re-labeled
 - Prior closing questions already asked → what not to repeat
 
-## What Synthesis Is Not
+## What synthesis is not
 
 Not a diagnosis. Not a character description. Not a fixed reading of the person.
 
@@ -226,12 +226,12 @@ No static phrase list. Activates from session structure and explicit user reques
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Synthesis uses
+- **Response shape:** `templates/response-structure.md` (Mirror: Synthesis uses
   theme-observation arc, not the standard five-step arc)
-- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+- **Check against:** `skills/meta/framework-template-map.md` (section:
   Synthesis)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Synthesis Questions
+- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Synthesis Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
-- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
+- **If it falls outside scope:** `templates/redirect-templates.md`
+- **How to close:** `skills/voice/session-rituals.md` (Closing section)
+- **Tone support:** `skills/voice/response-calibrator.md`

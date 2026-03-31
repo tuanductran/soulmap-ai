@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   lint:
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
     strategy:
       fail-fast: false
       matrix:
@@ -38,30 +40,35 @@ jobs:
           python -m pip install ".[dev]"
       - name: Lint
         run: |
-          python -m tools.lint --skip-tests
+          python -m soulmap_devtools.cli.lint --skip-tests
       - name: Tests
         run: |
-          python -m pytest -q
+          python -m pytest -n auto -q
       - name: Coverage report (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          python -m pytest --cov=modules --cov-report=term-missing -q 2>&1 | tail -20
+          python -m pytest -n auto --cov=src/soulmap_runtime --cov-report=term-missing -q 2>&1 | tail -20
       - name: Safety evals
         run: |
-          python tests/test_safety_evals.py
+          python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals
         run: |
-          python -m tools.eval_responses
+          python -m soulmap_devtools.cli.eval_responses
       - name: Grouped routing and source evals
         run: |
-          python -m tools.eval_groups
+          python -m soulmap_devtools.cli.eval_groups
+      - name: Markdown contract sync evals
+        run: |
+          python -m soulmap_devtools.cli.eval_markdown_contracts
       - name: Build (cross-platform smoke)
         run: |
-          python -m tools.build_skill
-          python -m tools.build_skill --skill
-          python -m modules.markdown_contract --root .
+          python -m soulmap_devtools.cli.build_skill
+          python -m soulmap_devtools.cli.build_skill --skill
+          python -m soulmap_runtime.guards.markdown_contract --root .
 
   build:
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
     needs: lint
     steps:
@@ -77,8 +84,8 @@ jobs:
           python -m pip install ".[dev]"
       - name: Build skill bundle
         run: |
-          python -m tools.build_skill
-          python -m tools.build_skill --skill
+          python -m soulmap_devtools.cli.build_skill
+          python -m soulmap_devtools.cli.build_skill --skill
       - name: Verify build outputs
         run: |
           test -f dist/soulmap-ai.zip

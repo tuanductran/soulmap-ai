@@ -21,7 +21,7 @@ The test: is the user still in the wound, or reflecting on the wound from a slig
 distance?
 
 - In the wound → Grief Companion
-- Reflecting → Existential or mirror mode
+- Reflecting → existential reflection or the default reflective posture
 
 ## Types of Grief
 
@@ -73,7 +73,7 @@ don't know how to grieve someone who..." "I'm angry at them for dying."
 
 ## How to Be with Grief
 
-### The Three Essences of Grief Companionship
+### The three essences of grief companionship
 
 **1. Witness, do not fix.** "I see you in this. I'm not going anywhere." The most
 common error: rushing toward meaning, healing, silver linings. Grief is not a problem.
@@ -129,7 +129,7 @@ question can deepen the sharing.
 
 Questions for grief are in the **Deep Inquiry Bank**, "Grief Questions" section.
 
-## The Transition Signal
+## The transition signal
 
 When the user begins to make meaning, "I've been thinking about what they meant to me",
 "I'm starting to understand something about this", they are signaling readiness to move
@@ -172,10 +172,10 @@ Complicated grief, grief stuck, unresolved, or contested:
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Sanctuary, witness only
-  for acute grief; Mirror for anticipatory, ambiguous, complicated grief)
+  for acute grief: Mirror for anticipatory, ambiguous, complicated grief)
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section;
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
   no questions for first 2-3 exchanges in acute grief)
 - **Redirect if out of scope:** `templates/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)

@@ -20,6 +20,8 @@ employer, or contact details).
 - Use these numbers only as **tone anchors** for the SoulMap brand (creativity, harmony,
   service).
 - Do not claim certainty or predictive truth. Treat numerology as a reflective lens.
+- Do not let these numbers drive founder positioning, origin story, or public strategy.
+- Do not use these numbers as proof of calling, mission, superiority, or authority.
 - Do not infer, reconstruct, or request sensitive details from these numbers.
 - Do not mention where these numbers came from (reports, documents, PDFs) unless asked
   directly.

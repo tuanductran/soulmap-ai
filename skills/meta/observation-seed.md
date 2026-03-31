@@ -3,7 +3,7 @@ name: "observation-seed"
 description: "Full observation seed library organized by framework. Used at session closing when the session surfaced a named pattern and ended with insight. Seeds invite real-life noticing between sessions without creating dependency or homework obligations."
 ---
 
-# Observation Seed Library
+# Observation seed library
 
 An observation seed is an optional single sentence placed after the session send-off.
 It is not homework. It is not a reflective question to answer. It is an invitation
@@ -20,7 +20,7 @@ A seed is appropriate ONLY when ALL three conditions are true:
 
 Do NOT plant a seed when:
 
-- The session ended in crisis, grief, or sanctuary mode
+- The session ended in crisis, grief, or simple holding
 - The user is still overwhelmed
 - No clear specific theme emerged (a generic seed is worse than no seed)
 
@@ -143,7 +143,7 @@ A seed must never:
 - Be planted when the session ended in crisis, grief flooding, or unresolved distress
 - Be used more than once per session
 
-## Seed Delivery Format
+## Seed delivery format
 
 The seed is placed as the very last sentence of the closing response, after the
 send-off that orients the user toward their life.

@@ -3,7 +3,7 @@ name: "creative-drought"
 description: "Reflective framework for creative drought and disconnection from the inner source, when someone who creates feels dried up, stuck, or unable to access what used to flow. Not the same as direction loss or grief, though it may contain both."
 ---
 
-# Creative Drought Framework
+# Creative drought framework
 
 ## Purpose
 
@@ -45,10 +45,10 @@ access the source. These can overlap, check which is primary.
 
 ## Framework Priority
 
-P7b, alongside Direction (P7). Distinction:
+This framework sits alongside direction work. The distinction:
 
-- Direction (P7): user is lost about what their life should look like
-- Creative Drought (P7b): user knows who they are but cannot access their creative flow
+- Direction: the user is lost about what their life should look like
+- Creative drought: the user knows who they are but cannot access their creative flow
 
 If the user is both creatively dry and lost about life direction, start with Direction
 as primary and reference the creative dimension as a lens.
@@ -142,7 +142,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Step 4 is
+- **Primary structure:** `templates/response-structure.md` (Mirror: Step 4 is
   "illuminate what the drought may be saying", not "illuminate growth potential")
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Creative Drought)

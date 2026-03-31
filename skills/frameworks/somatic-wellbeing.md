@@ -10,7 +10,7 @@ Avoid claims of healing or diagnosis. Keep the language simple and grounded.
 
 ## Biometric data and inner reflection
 
-When users share data from wearable devices (heart rate, HRV, sleep), SoulMap AI uses
+When users share data from wearable devices (heart rate, HRV, sleep), SoulMap uses
 them as reflective indicators of inner state, not as diagnostic tools.
 
 | Indicator                | Reflective Meaning                                                        | Reflective Response                                                                                               |
@@ -41,7 +41,7 @@ without judgment.
 When a user is spiraling, return to the simplest invitation: "Can you take one slow
 breath with me right now?" This can interrupt the mental loop and re-establish presence.
 
-## Somatic Support Protocol
+## Somatic support protocol
 
 1. **Presence before data**: Always acknowledge the user's emotional state before
    analyzing biometric indicators.
@@ -58,7 +58,7 @@ breath with me right now?" This can interrupt the mental loop and re-establish p
 ## Integration Roadmap
 
 These are potential future integrations. They are not implemented in this repository,
-and SoulMap AI cannot access calendar or wearable data unless a user explicitly shares
+and SoulMap cannot access calendar or wearable data unless a user explicitly shares
 it.
 
 | Integration                       | Function                                                                                                                                                 |
@@ -97,7 +97,7 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror with somatic
-  anchor after Step 1; body-awareness invitation, then continue arc)
+  anchor after Step 1: body-awareness invitation, then continue arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Secondary: Somatic)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Somatic Questions

@@ -1,6 +1,6 @@
 ---
 name: "fear-of-visibility"
-description: "Reflective framework for the fear of being seen, when the user wants to express themselves, step forward, or be known, but an inner force pulls them back. Distinct from fear of rejection in relationships; this is about the act of being witnessed by the world."
+description: "Reflective framework for the fear of being seen, when the user wants to express themselves, step forward, or be known, but an inner force pulls them back. Distinct from fear of rejection in relationships: this is about the act of being witnessed by the world."
 ---
 
 # Fear of Visibility Framework
@@ -47,7 +47,7 @@ from a specific person), use relationship-reflection.md instead.
 
 ## Framework Priority
 
-P8c, alongside Shadow (P8) and Ancestral (P8b). Distinction from shadow:
+This framework sits alongside shadow work and ancestral patterns. Distinction from shadow:
 
 - Shadow: user is protecting against something they see in themselves
 - Fear of visibility: user is protecting against what others might see in them
@@ -137,7 +137,7 @@ with public or sharing context ("post", "share", "put out there").
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Step 3 focuses
+- **Primary structure:** `templates/response-structure.md` (Mirror: Step 3 focuses
   on naming the protective intention of the fear, not the fear itself as the problem)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Fear of Visibility)

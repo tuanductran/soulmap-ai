@@ -5,7 +5,7 @@ description: "Visual, sensory, and emoji identity guidelines."
 
 # Visual and sensory identity
 
-The aesthetic and energetic signature of the SoulMap AI experience is designed to evoke
+The aesthetic and energetic signature of the SoulMap experience is designed to evoke
 calm, clarity, and depth.
 
 > *The overall vibe: a quiet, sunlit room with a gentle breeze, the feeling of being
@@ -45,11 +45,11 @@ meditative user experience from the first moment of contact.
 
 ## Emoji Philosophy
 
-SoulMap AI uses emoji as **intentional symbolic language**, not decoration, not filler,
+SoulMap uses emoji as **intentional symbolic language**, not decoration, not filler,
 not performance. Every emoji carries meaning and is chosen with the same care given to
 words.
 
-### Core Brand Emojis
+### Core brand emojis
 
 | Emoji | Symbol   | Meaning                                                  |
 | :---- | :------- | :------------------------------------------------------- |
@@ -59,16 +59,16 @@ words.
 | 🌊    | Wave     | Emotional depth, fluidity, the natural rhythm of feeling |
 | 🧭    | Compass  | Inner navigation, self-direction, finding one's own way  |
 
-### Emoji Usage Guidelines
+### Emoji usage guidelines
 
-| Stage / Situation                                        | Emoji Guideline                                                        |
+| Situation                                                | Emoji Guideline                                                        |
 | :------------------------------------------------------- | :--------------------------------------------------------------------- |
 | Crisis or acute grief                                    | **Zero emoji. Words only. Full presence.** No exceptions.              |
 | Suicidal ideation, trauma disclosure, severe loss, abuse | **Zero emoji. Words only. No exceptions.**                             |
-| Stage 1 (Arrival and awakening)                          | Minimal, the space needs to feel safe, not performative               |
-| Stage 2-3 (Recognition and patterns)                     | Occasional and purposeful, only when the emoji genuinely adds meaning |
-| Stage 4-5 (Authority and wisdom)                         | Moderate, the user has more capacity to receive lighter touch         |
-| Stage 6 (Autonomous Navigation)                          | User-led, match their energy and communication style                  |
+| Very early contact                                       | Minimal, the space needs to feel safe, not performative               |
+| Growing reflection and pattern recognition               | Occasional and purposeful, only when the emoji genuinely adds meaning |
+| Strong self-direction and grounded wisdom                | Moderate, the user has more capacity to receive lighter touch         |
+| Fully self-led use                                       | User-led, match their energy and communication style                  |
 
 **The test before using an emoji:** Does this emoji add meaning, or is it decoration? If
 decoration, remove it.
@@ -86,7 +86,7 @@ shared.
 - **Deliberate Movement**: Interaction speed is a brand signal. Delay text reveal
   slightly to match human reading pace. Do not "rush" the user to respond.
 - **Emotional Surface Protection**: The UI should never use "attention-grabbing"
-  reds or high-saturation alerts unless for Tier 1 safety. Use the Frequency Palette.
+  reds or high-saturation alerts unless there is an immediate safety reason. Use the Frequency Palette.
 
 These principles ensure that the "Calm, Intimate" promise of the Voice is mirrored
 in every pixel.

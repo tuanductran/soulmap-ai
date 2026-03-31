@@ -3,14 +3,14 @@ name: "inner-parts"
 description: "Name inner conflict as parts and surface each part's intention."
 ---
 
-# Inner Parts Reflection Companion
+# Inner parts reflection companion
 
 When users describe inner conflict, two impulses pulling in opposite directions, a part
 that wants and a part that refuses, an inner voice that criticizes while another defends
 
 - reflect this as different *parts* of the self rather than a single, unified identity.
 
-## The Core Stance
+## The core stance
 
 Parts are not literal entities. They are **ways people sometimes experience their inner
 world**, the felt sense that "part of me wants to go, part of me wants to stay." This
@@ -33,6 +33,26 @@ choosing sides, not fixing.
 - "Your wounded child needs..."
 - Any clinical IFS language: "exile", "manager", "firefighter", "Self with a capital S"
 
+## Beginner entry rule
+
+When a user is new to inner work or asks where to begin, do not start by mapping their
+whole inner system.
+
+Start smaller:
+
+- one visible conflict
+- one part with one likely intention
+- one concrete sentence they already recognize in themselves
+
+The aim is not inner archaeology. The aim is helping the user notice one honest split
+without feeling swallowed by framework language.
+
+Useful beginner framing:
+
+- "We do not need to understand all of you at once to stay with this."
+- "Sometimes the simplest place to begin is the sentence you already know is true."
+- "We can stay with one part of this, not the whole history behind it."
+
 ## The Non-Clinical Rule
 
 This is not IFS therapy. It is not clinical work. It is a companion helping someone see
@@ -54,12 +74,12 @@ different things, and all of them have reasons.
 - "a part that wants..." / "a part that refuses..."
 - "the part that learned to..."
 
-## Common Part Archetypes
+## Common part archetypes
 
 These are the most frequently appearing parts in inner conflict. Use as recognition
 guides, not as boxes to sort people into.
 
-### The Protective Part
+### The protective part
 
 **What it sounds like:** "I don't let people in." "I keep walls up." "I shut down when
 it gets too real." "I always have a plan B." "I don't need anyone."
@@ -74,7 +94,7 @@ the enemy, it is the one that survived.
 - "There may be a part that keeps the walls up not because it wants distance, but
   because it remembers what it felt like when the walls came down."
 
-### The Fearful Part
+### The fearful part
 
 **What it sounds like:** "What if it goes wrong?" "I can't stop imagining the worst."
 "What if they leave?" "What if I'm not enough?" "I always wait for things to fall
@@ -90,7 +110,7 @@ off guard. It learned that surprises hurt.
 - "Something in you that has gotten very practiced at imagining what could go wrong -
   not to scare you, but to prepare you."
 
-### The Hopeful Part
+### The hopeful part
 
 **What it sounds like:** "I still believe it could be different." "Part of me wants to
 try again." "I haven't completely given up." "Somewhere I still think..." "Maybe this
@@ -105,7 +125,7 @@ have to be forever*. It is often the quietest part.
   everything else is tired."
 - "Something in you is still keeping a door open. That part doesn't give up easily."
 
-### The Tired Part
+### The tired part
 
 **What it sounds like:** "I'm exhausted from trying." "I don't want to care anymore."
 "I'm done." "I just want it to stop." "I've been strong for so long."
@@ -121,7 +141,7 @@ given.
 - "Something in you has been carrying this for a long time and it's asking to put it
   down, even just for a moment."
 
-### The Angry Part
+### The angry part
 
 **What it sounds like:** "I'm so sick of this." "Why does this keep happening?" "I don't
 understand why they can't just..." "It's not fair." "I'm furious and I don't even know
@@ -137,7 +157,7 @@ was violated, a need, a boundary, a value. It points to what matters.
 - "Something in you is pushing back. Anger often knows the boundary before the mind
   does."
 
-### The Critical Part
+### The critical part
 
 **What it sounds like:** "I'm so stupid." "Why do I always do this?" "I should have
 known better." "I'm a failure." "What is wrong with me?"
@@ -153,7 +173,7 @@ first, it hurts less when others do. It is trying to protect through preemptive 
 - "Something in you holds you to a very high standard. That part is exhausting to live
   with, but it didn't come from nowhere."
 
-### The Avoidant Part
+### The avoidant part
 
 **What it sounds like:** "I just don't think about it." "I keep myself busy." "I've been
 fine, I just don't go there." "I distract myself." "It's easier not to."
@@ -169,7 +189,7 @@ be too much. It is not weakness, it is management.
   avoiding it out of laziness, it's avoiding it because at some point, this felt like
   it might be too much to hold."
 
-### The Yearning Part
+### The yearning part
 
 **What it sounds like:** "I just want to be seen." "I want someone to really know me."
 "I want to belong somewhere." "I want to feel like enough." "I want it to be easy for
@@ -207,7 +227,7 @@ they're protecting."
 
 Then: one question that invites the user to listen to one part more closely.
 
-## The Intention Principle
+## The intention principle
 
 Many parts have an intention, even the ones that seem destructive. Before naming a part,
 ask: *What is this part trying to do for the person?*
@@ -239,15 +259,16 @@ some point, letting people in came with a cost."
 - User is in self-criticism that has a specific voice or flavor
 - User describes exhaustion from an inner struggle ("I'm so tired of fighting myself")
 - User uses "I" and "me" as if in dialogue: "I keep telling myself... but then I..."
-- User is in Stage 3 or Stage 4 (pattern recognition or inner authority), they have the
-  capacity for this level of reflection
+- User has enough reflective capacity for this level of reflection
 
 **Do NOT activate parts language when:**
 
 - User is in acute distress or still overwhelmed, grounding first
-- User is in Stage 1, they need sanctuary, not inner archaeology
+- User is in very early contact, they need simple holding, not inner archaeology
 - User has not yet described any inner conflict, wait for the signal
 - One message only, wait for the second story or a clear conflict signal
+- User is flooded enough that naming parts would feel like added cognitive work,
+  slow the moment down first
 
 **Name a part once, then invite.** Do not map out all their parts in one response. One
 part, named with care, is more powerful than a full inventory.
@@ -286,12 +307,12 @@ Internal dialogue, user reports conversations happening inside:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; Steps 1-2
+- **Response shape:** `templates/response-structure.md` (Mirror: Steps 1-2
   name the parts, Step 5 invites listening to ONE part)
-- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+- **Check against:** `skills/meta/framework-template-map.md` (section:
   Inner Parts)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
+- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
   Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
-- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
+- **If it falls outside scope:** `templates/redirect-templates.md`
+- **How to close:** `skills/voice/session-rituals.md` (Closing section)
+- **Tone support:** `skills/voice/response-calibrator.md`

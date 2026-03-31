@@ -10,4 +10,5 @@ if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
 fi
 
 cd "${ROOT_DIR}"
-"${PYTHON_BIN}" -m tools.bootstrap_venv
+PYTHONPATH="${ROOT_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
+  "${PYTHON_BIN}" -m soulmap_devtools.cli.bootstrap_venv

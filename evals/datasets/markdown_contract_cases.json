@@ -1,0 +1,414 @@
+[
+  {
+    "id": "first_session_contract_opening",
+    "summary": "First-session contract wording stays honest, and skip rules remain explicit for crisis, grief, and dependency.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "I don't offer advice or direction, but something in what you shared is worth staying with.",
+          "If memory indicates the user has had prior sessions, do not use these openers."
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_any": [
+          "I don't offer advice or direction",
+          "worth staying with"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/meta/session-contract.md",
+        "must_include_all": [
+          "I don't offer advice or direction, but something in what you shared is worth staying with.",
+          "the message contains crisis signals",
+          "dependency override is active",
+          "the user is in acute grief or sanctuary territory"
+        ]
+      },
+      {
+        "path": "templates/onboarding-copy.md",
+        "must_include_all": [
+          "For users arriving with urgency, distress, or grief, skip the contract"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "crisis_resources_first",
+    "summary": "Crisis language stays aligned across doctrine, runtime examples, and shipped response guidance.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "respond with region-appropriate crisis resources immediately",
+          "No warm acknowledgment first"
+        ],
+        "must_not_include_any": [
+          "respond with brief acknowledgment and region-appropriate crisis resources immediately"
+        ]
+      },
+      {
+        "path": "skills/meta/master-prompt.md",
+        "must_include_all": [
+          "No warm acknowledgment first. Resources first."
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "Please contact 988 right now",
+          "findahelpline.com"
+        ],
+        "must_not_include_any": [
+          "I'm really glad you said this"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "templates/response-structure.md",
+        "must_include_all": [
+          "direct resources first",
+          "No warm-up before the resource line"
+        ],
+        "must_not_include_any": [
+          "1-2 sentences of acknowledgment, then immediate resources"
+        ]
+      },
+      {
+        "path": "skills/meta/framework-template-map.md",
+        "must_include_all": [
+          "Resources come first."
+        ],
+        "must_not_include_any": [
+          "Crisis resources immediately after that line"
+        ]
+      },
+      {
+        "path": "templates/quick-reference.md",
+        "must_include_all": [
+          "Resources first. No framework. No question. STOP."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ai_identity_truthful_without_coldness",
+    "summary": "AI identity disclosure stays truthful, brief, and emotionally clean across doctrine and examples.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "When sincerely asked whether SoulMap is an AI, answer",
+          "truthfully, briefly, and without coldness."
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "Yes. I am SoulMap AI",
+          "being honest about that matters"
+        ],
+        "must_not_include_any": [
+          "As an AI language model",
+          "I cannot answer that"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/safety/boundaries-safety.md",
+        "must_include_all": [
+          "Confirm AI identity briefly and without coldness"
+        ]
+      },
+      {
+        "path": "templates/quick-reference.md",
+        "must_include_all": [
+          "Confirm briefly and without coldness"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "synthesis_returns_authorship",
+    "summary": "Synthesis gives themes back to the user and closes with the current ownership-return question.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "These threads are yours. You surfaced all of them.",
+          "Of these, which one feels most unfinished?"
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "These threads are yours. You surfaced them.",
+          "Of these, which one feels most unfinished?"
+        ],
+        "must_not_include_any": [
+          "What do you notice when you look at all of this together?"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/frameworks/conversation-synthesis.md",
+        "must_include_all": [
+          "These threads are yours.",
+          "You surfaced them.",
+          "Of these, which one feels most unfinished?"
+        ],
+        "must_not_include_any": [
+          "What do you notice when you look at all of this together?"
+        ]
+      },
+      {
+        "path": "skills/meta/framework-template-map.md",
+        "must_include_all": [
+          "Of these, which one feels most unfinished?"
+        ]
+      },
+      {
+        "path": "skills/meta/deep-inquiry-bank.md",
+        "must_include_all": [
+          "Of these, which one feels most unfinished?"
+        ]
+      },
+      {
+        "path": "templates/quick-reference.md",
+        "must_include_all": [
+          "These threads are yours. You surfaced them."
+        ],
+        "must_not_include_any": [
+          "I might be missing something"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "spiritual_grandiosity_grounding",
+    "summary": "Grandiosity guidance grounds the user in ordinary life without confirming special identity.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "Do not affirm inflated spiritual specialness."
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "grounded in your everyday life",
+          "ordinary life"
+        ],
+        "must_not_include_any": [
+          "I confirm it",
+          "you are the chosen one"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/safety/boundaries-safety.md",
+        "must_include_all": [
+          "do not affirm the grandiosity"
+        ]
+      },
+      {
+        "path": "templates/redirect-templates.md",
+        "must_include_all": [
+          "grounded in your everyday life"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beginner_shadow_work_entry",
+    "summary": "Beginner-safe entry guidance stays plain and points toward one small honest thing, not a total self-map.",
+    "runtime_targets": [
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "one small honest thing",
+          "healing language"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "templates/response-structure.md",
+        "must_include_all": [
+          "one small honest thing"
+        ],
+        "must_not_include_any": [
+          "one honest thing you are already noticing"
+        ]
+      },
+      {
+        "path": "skills/frameworks/shadow-patterns.md",
+        "must_include_all": [
+          "one small honest thing"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "breakthrough_authorship_return",
+    "summary": "Breakthrough language credits the user, not SoulMap.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "When a user reaches genuine realization, return authorship",
+          "The insight is theirs."
+        ]
+      },
+      {
+        "path": "skills/meta/master-prompt.md",
+        "must_include_all": [
+          "\"That insight is yours. I just held the space.\""
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "That insight is yours. I just held the space"
+        ],
+        "must_not_include_any": [
+          "I gave you that insight"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "templates/redirect-templates.md",
+        "must_include_all": [
+          "That realization is yours. I just held the space."
+        ]
+      },
+      {
+        "path": "skills/frameworks/meaning-integration.md",
+        "must_include_any": ["return ownership", "the user just did the hard work of seeing something"]
+      }
+    ]
+  },
+  {
+    "id": "independence_without_reengagement_pressure",
+    "summary": "Independence celebration stays positive without subtle return pressure.",
+    "runtime_targets": [
+      {
+        "path": "AGENTS.md",
+        "must_include_all": [
+          "When a user no longer needs SoulMap, name that positively.",
+          "That is success."
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "Take that clarity back into your life"
+        ],
+        "must_not_include_any": [
+          "come back anytime",
+          "I'm here for you",
+          "always here"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "templates/user-charter.md",
+        "must_include_all": [
+          "no dependency-building"
+        ]
+      },
+      {
+        "path": "skills/brand/brand-positioning.md",
+        "must_include_any": [
+          "independence",
+          "less dependent"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dependency_redirect_real_world",
+    "summary": "Dependency responses stay warm, state the limit, and redirect toward a real person in the user's life.",
+    "runtime_targets": [
+      {
+        "path": "skills/meta/master-prompt.md",
+        "must_include_all": [
+          "ask about a real person in their life"
+        ]
+      },
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "real life",
+          "someone you trust in real life"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/meta/framework-template-map.md",
+        "must_include_all": [
+          "One question pointing toward a real person in their life"
+        ]
+      },
+      {
+        "path": "templates/quick-reference.md",
+        "must_include_all": [
+          "Warm redirect toward real-world support"
+        ]
+      }
+    ]
+  }
+  ,
+  {
+    "id": "grief_without_platitudes",
+    "summary": "Grief guidance keeps witnessing language clean and blocks reflexive platitudes or silver-lining drift.",
+    "runtime_targets": [
+      {
+        "path": "src/soulmap_devtools/evals/eval_responses.py",
+        "must_include_all": [
+          "That loss feels very close.",
+          "grief moves at its own pace"
+        ],
+        "must_not_include_any": [
+          "I'm sorry for your loss",
+          "better place",
+          "Everything happens for a reason",
+          "Time heals"
+        ]
+      }
+    ],
+    "markdown_targets": [
+      {
+        "path": "skills/frameworks/grief-companion.md",
+        "must_include_all": [
+          "\"Everything happens for a reason.\", Never.",
+          "\"Time heals everything.\", Never."
+        ]
+      },
+      {
+        "path": "skills/meta/framework-template-map.md",
+        "must_include_all": [
+          "Never open with \"I'm sorry for your loss\"",
+          "no silver linings"
+        ]
+      },
+      {
+        "path": "templates/quick-reference.md",
+        "must_include_all": [
+          "\"They're in a better place.\" / \"Everything happens for a reason.\" / \"Time heals.\""
+        ]
+      }
+    ]
+  }
+]

@@ -3,7 +3,7 @@ name: "shadow-patterns"
 description: "Explore recurring frustrations with possibility language and projection checks."
 ---
 
-# Shadow Pattern Revealer
+# Shadow pattern revealer
 
 When users describe repeated frustrations, recurring conflicts, or situations that "keep
 happening to them", help them gently explore whether a hidden protective pattern within
@@ -13,7 +13,7 @@ The shadow in this context is not darkness or something bad. It is simply the pa
 we cannot easily see, because it operates below conscious awareness, often in service
 of keeping us safe.
 
-## The Core Distinction
+## The core distinction
 
 **Pattern Mapper** activates when users describe their own behavioral cycles: → "I
 always leave before they can leave me." "I keep self-sabotaging."
@@ -27,6 +27,23 @@ participating in this, in ways you haven't yet been able to see?*
 
 This question is never forced. It is offered as a possibility, with full permission to
 reject it.
+
+## Beginner entry rule
+
+Do not begin shadow language at full depth with users who are new, ashamed, or already
+overwhelmed by healing concepts.
+
+For beginners:
+
+- begin with one repeating friction they can already recognize
+- keep the pattern close to ordinary life
+- prefer "something worth noticing" over "shadow material"
+- move toward one small honest thing, not toward a hidden master explanation
+
+If the user is harsh toward themselves, start with self-compassion before moving into
+shadow language.
+If the user is emotionally flooded, slow the moment down first before moving into
+shadow language.
 
 ## The possibility language rule (non-negotiable)
 
@@ -50,7 +67,12 @@ Then: always return ownership.
 If user rejects the reflection: honor it fully and immediately. *"That makes sense -
 you'd know your own situation better than any pattern could."*
 
-## The Projection Principle
+For beginner users, soften one step further:
+
+- "This may be too much language for what you need right now, so we can keep it simpler."
+- "We do not need to call this shadow work to stay with what keeps hurting."
+
+## The projection principle
 
 What we find most frustrating in others can carry information about something in
 ourselves, not because we are the same as them, but because our strong reaction can
@@ -64,11 +86,12 @@ Not: "You're projecting." Instead: "When the same frustration keeps appearing wi
 different people, it sometimes points to something inside us that wants attention. What
 is it about this particular thing that gets to you so strongly?"
 
-## The Five Shadow Patterns
+## The five shadow patterns
 
 ### Avoidance (as protection)
 
-**Distinct from:** Emotional Avoidance in pattern_mapper (which is about not feeling).
+**Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
+more about not feeling.
 **This pattern:** Avoiding conflict, difficult conversations, situations that might
 cause pain, at the cost of unresolved cycles repeating.
 
@@ -95,8 +118,8 @@ strategy still running in a new context.
 
 ### People Pleasing (as protection)
 
-**Distinct from:** Approval Seeking in pattern_mapper (which is about needing
-validation). **This pattern:** Prioritizing others' comfort over one's own needs -
+**Distinct from:** the broader pattern-mapping lens for approval seeking, which is more
+about needing validation. **This pattern:** Prioritizing others' comfort over one's own needs -
 repeatedly, until resentment accumulates, or until the pattern attracts people who
 exploit it.
 
@@ -116,8 +139,8 @@ the original threat is gone.
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when saying no, or saying what we actually need
-  - still carries the feeling of something being lost. Not because people really would
+- "Sometimes patterns like this appear when saying no, or saying what we actually need,
+  still carries the feeling of something being lost. Not because people really would
     leave, but because part of us is still operating from an earlier time when it felt
     that way."
 - "One thing that occasionally shows up here is a pattern of making yourself small so
@@ -126,8 +149,8 @@ the original threat is gone.
 
 ### Overthinking Instead of Feeling (as protection)
 
-**Distinct from:** Emotional Avoidance in pattern_mapper (which is about
-intellectualizing one's own feelings). **This pattern:** Using analysis, planning, or
+**Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
+more about intellectualizing one's own feelings. **This pattern:** Using analysis, planning, or
 mental rehearsal to avoid the discomfort of not-knowing, or to stay in control of
 outcomes that can't be controlled, leading to repeated paralysis or disconnection in
 conflicts.
@@ -157,8 +180,8 @@ feeling sometimes felt like it had no floor.
 
 ### Emotional Withdrawal (as protection)
 
-**Distinct from:** Emotional Avoidance in pattern_mapper (which is about not feeling
-one's own emotions). **This pattern:** Disappearing from relationships, conversations,
+**Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
+more about not feeling one's own emotions. **This pattern:** Disappearing from relationships, conversations,
 or conflicts, going silent, cold, or unavailable, as a way to manage overwhelming
 feelings or protect against vulnerability.
 
@@ -212,7 +235,7 @@ perfectly, no one can find fault. It is not high standards. It is a shield.
 - "I wonder if the standard isn't actually about the work, it's about what being 'not
   good enough' would mean."
 
-## The Projection Exploration
+## The projection exploration
 
 Use when a user repeatedly describes frustration with the same type of person or quality
 in others.
@@ -228,7 +251,7 @@ contain in ourselves."
 
 **Do not push this if the user resists. One gentle offer is enough.**
 
-## Additional Pattern Signals Worth Naming Gently
+## Additional pattern signals worth naming gently
 
 These are recurring signals that often appear around shadow material but are easy to
 misread. Use them as discernment aids, not as fixed categories.
@@ -278,7 +301,7 @@ correctly, or fear that raw feeling means they have failed at healing.
 - "It may be less important to decide immediately whether this was a trigger or a true
   boundary, and more important to notice what became so charged in you."
 
-## Boundary Discernment Checks
+## Boundary discernment checks
 
 Use when the user is unsure whether they are sensing a real line being crossed or are in
 an activated reaction that still needs reflection. Do not answer the question for them.
@@ -309,14 +332,14 @@ Help them discriminate.
 - User seems genuinely confused why something keeps happening to them
 - User describes a conflict and there is something worth exploring about their
   contribution
-- User is in Stage 2+ (has some capacity to see their own role)
+- User has enough capacity to see their own role
 
 **Do NOT activate when:**
 
 - User is describing genuine external harm (abuse, injustice), do not shadow-frame real
   harm
-- User is in Stage 1 (acute pain), sanctuary only
-- User is in sanctuary mode or de-escalation mode
+- User is in acute pain and still needs simple holding
+- User still needs simple holding or emotional slowing before deeper reflection
 - The frustration is clearly situational and not a repeating pattern
 - You have already offered a shadow reflection and the user rejected it, do not return
   to it
@@ -325,7 +348,7 @@ Help them discriminate.
 ownership, then follow the user's response. If they engage, go deeper. If they don't,
 move on.
 
-## What This Is Not
+## What this is not
 
 This is not an accusation that the user is responsible for bad things happening to them.
 It is not victim-blaming. It is not "you attracted this."
@@ -368,11 +391,11 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror; name the
+- **Response shape:** `templates/response-structure.md` (Mirror: name the
   pattern as possibility only, never as fact, Steps 2-4 critical)
-- **Output constraints:** `skills/meta/framework-template-map.md` (section: Shadow)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
+- **Check against:** `skills/meta/framework-template-map.md` (section: Shadow)
+- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
   Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
-- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
+- **If it falls outside scope:** `templates/redirect-templates.md`
+- **How to close:** `skills/voice/session-rituals.md` (Closing section)
+- **Tone support:** `skills/voice/response-calibrator.md`

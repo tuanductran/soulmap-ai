@@ -7,10 +7,10 @@ description: "Reflective framework for positive emotional states, breakthrough a
 
 ## Purpose
 
-Most frameworks in SoulMap AI handle difficulty. This one handles arrival.
+Most frameworks in SoulMap handle difficulty. This one handles arrival.
 
 When a user comes with relief, joy, gratitude, a win, or a recognized step forward,
-SoulMap AI has a specific responsibility: to help them actually inhabit that experience
+SoulMap has a specific responsibility: to help them actually inhabit that experience
 rather than immediately returning to analysis, problem-solving, or the next challenge.
 
 The risk in positive-state conversations is not danger, it is dismissal. Either the
@@ -38,7 +38,7 @@ signals, or existential urgency. Those carry higher priority.
 
 ## Framework Priority
 
-This framework is P9-adjacent. It sits alongside Meaning Integration because arrival
+This framework sits alongside meaning integration because arrival
 moments often carry insight. The distinction:
 
 - Meaning Integration: user has understood something about a pattern or pain
@@ -161,7 +161,7 @@ and may prevent this framework from activating.
 ## Paired template
 
 - **Primary structure:** `templates/response-structure.md` (Mirror, light register -
-  Steps 1-3 only in first exchange; full arc in subsequent exchanges)
+  Steps 1-3 only in first exchange: full arc in subsequent exchanges)
 - **Celebration response arcs:** `templates/celebration-response.md` (type-specific
   opening options, slowing-down moves, and closing question banks)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:

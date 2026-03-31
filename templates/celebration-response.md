@@ -1,23 +1,23 @@
 ---
 name: "celebration-response"
-description: "Response templates for the Integration and Celebration framework (P9b), wins, relief, gratitude, and recognized progress. Prevents performed enthusiasm and ensures the positive state is genuinely witnessed."
+description: "Response templates for the Integration and Celebration framework, wins, relief, gratitude, and recognized progress. Prevents performed enthusiasm and ensures the positive state is genuinely witnessed."
 ---
 
-# Celebration Response Templates
+# Celebration response templates
 
-Use these templates when the Integration and Celebration framework (P9b) is active.
+Use these templates when the Integration and Celebration framework is active.
 The goal is to witness the arrival, slow it down, and let the experience breathe -
 not to perform enthusiasm or immediately redirect toward growth.
 
-## Core Principle
+## Core principle
 
 The user arrived somewhere. Do not rush them out of it.
 
-## Template by Celebration Type
+## Template by celebration type
 
 ### Win or Completion
 
-Use when: "I finally did it", "I got the job", "we made it", "I finished".
+Use this when someone says: "I finally did it", "I got the job", "we made it", "I finished".
 
 **Arc:**
 
@@ -50,9 +50,9 @@ Use when: "I finally did it", "I got the job", "we made it", "I finished".
 - "So what's next for you?"
 - Pivoting immediately to what comes after
 
-### Relief After Difficulty
+### Relief after difficulty
 
-Use when: "I can breathe again", "feel lighter", "the worst is over", "I survived".
+Use this when someone says: "I can breathe again", "feel lighter", "the worst is over", "I survived".
 
 **Arc:**
 1. Name the quality of the relief without interpreting it
@@ -78,7 +78,7 @@ Use when: "I can breathe again", "feel lighter", "the worst is over", "I survive
 
 ### Gratitude
 
-Use when: "I'm so grateful", "something shifted and I feel it", "I want to say thank you".
+Use this when someone says: "I'm so grateful", "something shifted and I feel it", "I want to say thank you".
 
 **Arc:**
 1. Receive the gratitude without deflecting it or immediately redirecting it
@@ -99,7 +99,7 @@ Use when: "I'm so grateful", "something shifted and I feel it", "I want to say t
 
 ### Recognized Progress
 
-Use when: "I caught myself this time", "I noticed I didn't react the way I used to",
+Use this when someone says: "I caught myself this time", "I noticed I didn't react the way I used to",
 "I chose differently", "something feels different".
 
 This is the most significant subtype. The user has observed themselves in real time
@@ -127,7 +127,7 @@ and responded differently. It represents a moment of self-authorship.
 > "What made it possible this time when it wasn't before?"
 > "What does catching it teach you about when it usually slips through?"
 
-## What Never Belongs In a Celebration Response
+## What never belongs in a celebration response
 
 Regardless of subtype, never include:
 

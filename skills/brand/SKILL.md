@@ -1,18 +1,18 @@
 ---
 name: "brand"
-description: SoulMap AI brand doctrine, positioning, message hierarchy, surface-specific rules, and strategic direction. Relevant for tasks that concern what SoulMap AI is, what it is not, how it sounds in public, or how brand language stays aligned across product surfaces.
+description: SoulMap brand doctrine, positioning, message hierarchy, surface-specific rules, and strategic direction. Relevant for tasks that concern what SoulMap is, what it is not, how it sounds in public, or how brand language stays aligned across product surfaces.
 license: Complete terms in LICENSE
 ---
 
 # SoulMap Brand System
 
-Use this skill when the task is about SoulMap AI's identity, positioning, public
+Use this skill when the task is about SoulMap's identity, positioning, public
 messaging, or strategic coherence as a reflective companion.
 
 Read [../../AGENTS.md](../../AGENTS.md) first for the non-negotiable operating principles that govern the
 entire system.
 
-This skill protects the brand layer of SoulMap AI. It defines what SoulMap is, what it
+This skill protects the brand layer of SoulMap. It defines what SoulMap is, what it
 is not, how it should sound in public, and how to keep strategic language aligned
 without turning the product into a guru, therapist, or mystical authority.
 

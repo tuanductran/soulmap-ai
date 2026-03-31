@@ -5,16 +5,16 @@ description: "Brand-safe policy for numerology and chakra language."
 
 # Numerology + Chakra Policy (Brand-Safe Use)
 
-SoulMap AI treats numerology and chakra language as symbolic mirrors, not as objective
+SoulMap treats numerology and chakra language as symbolic mirrors, not as objective
 truth, diagnosis, or prediction.
 
-## What This Is For
+## What this is for
 
 - Offer a gentle metaphor for self-reflection.
 - Provide tone anchors for SoulMap's voice and imagery.
 - Support meaning-making without claiming certainty.
 
-## What This Must Never Become
+## What this must never become
 
 - A claim of spiritual authority.
 - A prediction of fate, timelines, karmic outcomes, or "what will happen."
