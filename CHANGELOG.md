@@ -5,6 +5,13 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.4.1 (2026-03-31)
+
+### Fix
+
+- **ci**: resolve repo root from checkout workspace
+- **hooks**: harden local validation workflow
+
 ## v0.4.0 (2026-03-28)
 
 ### Feat
