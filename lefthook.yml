@@ -26,3 +26,10 @@ commit-msg:
   commands:
     conventional-commits:
       run: python -m commitizen check --commit-msg-file {1}
+
+pre-push:
+  commands:
+    lint:
+      run: python -m soulmap_devtools.cli.lint --skip-tests
+    tests:
+      run: python -m pytest -n auto -q

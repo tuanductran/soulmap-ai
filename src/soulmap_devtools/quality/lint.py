@@ -47,8 +47,8 @@ def main(argv: list[str] | None = None) -> int:
             cwd=repo_root,
         )
 
-        python_module("ruff", "check", str(repo_root), cwd=repo_root)
-        python_module("ruff", "format", "--check", str(repo_root), cwd=repo_root)
+        python_module("ruff", "check", *python_paths, cwd=repo_root)
+        python_module("ruff", "format", "--check", *python_paths, cwd=repo_root)
 
         if _pyright_available(repo_root):
             python_module("pyright", cwd=repo_root)

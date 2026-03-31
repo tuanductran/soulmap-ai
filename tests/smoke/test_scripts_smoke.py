@@ -225,13 +225,59 @@ def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
 
 def test_local_agent_hooks_have_valid_shell_syntax() -> None:
     for hook in [
+        ".agents/hooks/block-push-to-main.sh",
         ".agents/hooks/post-edit-markdown.sh",
         ".agents/hooks/post-edit-evals.sh",
+        ".agents/hooks/post-edit-python.sh",
+        ".agents/hooks/post-edit-tests.sh",
+        ".agents/hooks/session-start.sh",
     ]:
         result = run_process(["bash", "-n", hook], timeout_s=5)
         assert result.returncode == 0, (
             f"{hook} failed shell syntax check: {result.stderr}"
         )
+
+
+def test_post_edit_evals_hook_does_not_flag_zero_failed_checks() -> None:
+    payload = json.dumps(
+        {
+            "tool_input": {
+                "file_path": str(ROOT / "evals/datasets/markdown_contract_cases.json")
+            }
+        }
+    )
+    result = run_process(["bash", ".agents/hooks/post-edit-evals.sh"], payload, 15)
+
+    assert result.returncode == 0, result.stderr
+    assert "Markdown contract issues detected" not in result.stdout
+    assert "[hook:post-edit-evals] Markdown contract eval passed." in result.stderr
+
+
+def test_post_edit_markdown_hook_bootstraps_repo_python_for_relative_paths() -> None:
+    payload = json.dumps({"tool_input": {"file_path": "AGENTS.md"}})
+    result = run_process(["bash", ".agents/hooks/post-edit-markdown.sh"], payload, 15)
+
+    assert result.returncode == 0, result.stderr
+    assert "ModuleNotFoundError" not in result.stdout
+    assert "ModuleNotFoundError" not in result.stderr
+
+
+def test_post_edit_tests_hook_reports_real_failures() -> None:
+    failing_test = ROOT / "tests" / "_tmp_post_edit_hook_failure_test.py"
+    failing_test.write_text(
+        "def test_tmp_failure() -> None:\n    assert False\n", encoding="utf-8"
+    )
+    try:
+        payload = json.dumps(
+            {"tool_input": {"file_path": "tests/_tmp_post_edit_hook_failure_test.py"}}
+        )
+        result = run_process(["bash", ".agents/hooks/post-edit-tests.sh"], payload, 15)
+    finally:
+        failing_test.unlink(missing_ok=True)
+
+    assert result.returncode == 0, result.stderr
+    assert "Test failures in" in result.stdout
+    assert "[hook:post-edit-tests] Tests failed" in result.stderr
 
 
 def test_soulmap_demo_surfaces_missing_required_fields() -> None:

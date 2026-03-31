@@ -39,6 +39,13 @@ REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE
 
 cd "$REPO_ROOT"
 
+if [[ -f "${REPO_ROOT}/.venv/bin/activate" ]]; then
+  # Mirror the local repo workflow so hooks can import project modules reliably.
+  source "${REPO_ROOT}/.venv/bin/activate"
+fi
+
+export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:${PYTHONPATH}}"
+
 echo "[hook:post-edit-evals] Validating $FILE_PATH" >&2
 
 TARGET_FILE="evals/datasets/groups.json"
@@ -69,6 +76,30 @@ run_eval_command() {
   return "$exit_code"
 }
 
+markdown_eval_has_failures() {
+  local output="$1"
+
+  python3 -c '
+import json
+import sys
+
+try:
+    payload = json.loads(sys.stdin.read())
+except Exception:
+    raise SystemExit(1)
+
+ok = payload.get("ok")
+if ok is False:
+    raise SystemExit(0)
+
+summary = payload.get("summary")
+if isinstance(summary, dict) and summary.get("failed_checks", 0):
+    raise SystemExit(0)
+
+raise SystemExit(1)
+' <<<"$output"
+}
+
 if [[ "$TARGET_FILE" == "evals/datasets/groups.json" ]] && ([[ -f "src/soulmap_devtools/evals/eval_groups.py" ]] || python3 -c "import soulmap_devtools.evals.eval_groups" 2>/dev/null); then
   if OUTPUT=$(run_eval_command python -m soulmap_devtools.cli.eval_groups); then
     EXIT_CODE=0
@@ -93,7 +124,7 @@ if [[ "$TARGET_FILE" == "evals/datasets/markdown_contract_cases.json" ]] && ([[ 
     EXIT_CODE=$?
   fi
 
-  if [[ $EXIT_CODE -ne 0 ]] || echo "$OUTPUT" | grep -q "failed_checks"; then
+  if [[ $EXIT_CODE -ne 0 ]] || markdown_eval_has_failures "$OUTPUT"; then
     echo "[hook:post-edit-evals] Markdown contract issues detected:" >&2
     echo "$OUTPUT" >&2
     echo "Markdown contract issues detected in evals/datasets/markdown_contract_cases.json:"

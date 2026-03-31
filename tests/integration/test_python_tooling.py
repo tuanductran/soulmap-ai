@@ -50,8 +50,25 @@ def test_format_relies_on_ruff_for_python_rewrites(tmp_path: Path, monkeypatch) 
 
     format_tool.main([])
 
-    assert ("ruff", ("check", "--fix", str(tmp_path))) in calls
-    assert ("ruff", ("format", str(tmp_path))) in calls
+    assert (
+        "ruff",
+        (
+            "check",
+            "--fix",
+            str(tmp_path / "src"),
+            str(tmp_path / "tests"),
+            str(tmp_path / "scripts"),
+        ),
+    ) in calls
+    assert (
+        "ruff",
+        (
+            "format",
+            str(tmp_path / "src"),
+            str(tmp_path / "tests"),
+            str(tmp_path / "scripts"),
+        ),
+    ) in calls
     assert not any(module == "isort" for module, _args in calls)
 
 
@@ -86,8 +103,25 @@ def test_lint_checks_all_python_source_paths(tmp_path: Path, monkeypatch) -> Non
             str(tmp_path / "scripts"),
         ),
     ) in calls
-    assert ("ruff", ("check", str(tmp_path))) in calls
-    assert ("ruff", ("format", "--check", str(tmp_path))) in calls
+    assert (
+        "ruff",
+        (
+            "check",
+            str(tmp_path / "src"),
+            str(tmp_path / "tests"),
+            str(tmp_path / "scripts"),
+        ),
+    ) in calls
+    assert (
+        "ruff",
+        (
+            "format",
+            "--check",
+            str(tmp_path / "src"),
+            str(tmp_path / "tests"),
+            str(tmp_path / "scripts"),
+        ),
+    ) in calls
     assert (
         "soulmap_devtools.cli.check_markdown_links",
         ("--root", str(tmp_path)),
@@ -161,6 +195,7 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "pre-commit:" in config
     assert "parallel: false" in config
     assert "commit-msg:" in config
+    assert "pre-push:" in config
     assert "python -m ruff check --fix" in config
     assert "python -m ruff format" in config
     assert "python -m soulmap_runtime.guards.markdown_contract --root ." in config
@@ -168,6 +203,8 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "python -m soulmap_devtools.cli.check_markdown_case --root ." in config
     assert "python -m pymarkdown --config .pymarkdown.json scan" in config
     assert "python -m commitizen check --commit-msg-file" in config
+    assert "python -m soulmap_devtools.cli.lint --skip-tests" in config
+    assert "python -m pytest -n auto -q" in config
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(

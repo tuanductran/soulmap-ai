@@ -16,10 +16,19 @@ def main(argv: list[str] | None = None) -> int:
     _ = argv
     repo_root = REPO_ROOT
     python = python_executable(repo_root)
+    python_paths = [
+        str(path)
+        for path in (
+            repo_root / "src",
+            repo_root / "tests",
+            repo_root / "scripts",
+        )
+        if path.exists()
+    ]
 
     with repo_tooling_lock(repo_root):
-        python_module("ruff", "check", "--fix", str(repo_root), cwd=repo_root)
-        python_module("ruff", "format", str(repo_root), cwd=repo_root)
+        python_module("ruff", "check", "--fix", *python_paths, cwd=repo_root)
+        python_module("ruff", "format", *python_paths, cwd=repo_root)
 
         md_files = iter_markdown_files(repo_root)
         if md_files:

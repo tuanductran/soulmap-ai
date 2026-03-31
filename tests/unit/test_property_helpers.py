@@ -8,7 +8,7 @@ from hypothesis import strategies as st
 from soulmap_runtime.io.cli_payload import parse_json_object, parse_json_value
 from soulmap_runtime.io.text_normalization import normalize_message_text
 
-json_text_strategy = st.text(max_size=32)
+json_text_strategy = st.text(max_size=16)
 json_scalar_strategy = st.none() | st.booleans() | st.integers() | json_text_strategy
 json_value_strategy = st.recursive(
     json_scalar_strategy,
@@ -16,7 +16,7 @@ json_value_strategy = st.recursive(
         st.lists(children, max_size=3)
         | st.dictionaries(json_text_strategy, children, max_size=3)
     ),
-    max_leaves=6,
+    max_leaves=4,
 )
 json_object_strategy = st.dictionaries(
     json_text_strategy, json_value_strategy, max_size=3

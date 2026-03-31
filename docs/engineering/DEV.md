@@ -22,6 +22,7 @@ This bootstrap flow also installs the local Git hooks for:
 
 - `lefthook`
 - `commit-msg`
+- `pre-push`
 
 Or install directly from `pyproject.toml`:
 
@@ -46,7 +47,8 @@ python -m soulmap_devtools.cli.bootstrap_venv
 .venv\Scripts\activate
 ```
 
-The Windows bootstrap flow also installs the local `lefthook` and `commit-msg` hooks.
+The Windows bootstrap flow also installs the local `lefthook`, `commit-msg`, and
+`pre-push` hooks.
 
 ## Day-to-day commands
 
@@ -131,6 +133,13 @@ lefthook run pre-commit
 
 `lefthook` installs both the `pre-commit` and `commit-msg` hooks. The `commit-msg`
 hook enforces Conventional Commits via Commitizen.
+
+This repo also defines a `pre-push` hook that runs the local CI core:
+
+```bash
+python -m soulmap_devtools.cli.lint --skip-tests
+python -m pytest -n auto -q
+```
 
 If you use the repo bootstrap commands above, these hooks are installed automatically.
 

@@ -39,10 +39,22 @@ REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE
 
 case "$FILE_PATH" in
   "$REPO_ROOT"/*) ;;
+  *.md) FILE_PATH="$REPO_ROOT/$FILE_PATH" ;;
   *) exit 0 ;;
 esac
 
 cd "$REPO_ROOT"
+
+if [[ ! -f "$FILE_PATH" ]]; then
+  exit 0
+fi
+
+if [[ -f "${REPO_ROOT}/.venv/bin/activate" ]]; then
+  # shellcheck disable=SC1091
+  source "${REPO_ROOT}/.venv/bin/activate"
+fi
+
+export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:${PYTHONPATH}}"
 
 run_contract_command() {
   local output

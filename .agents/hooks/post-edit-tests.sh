@@ -31,21 +31,54 @@ else:
     print("")
 ' 2>/dev/null || echo "")
 
-if [[ "$FILE_PATH" != *"/tests/"*.py ]]; then
-  exit 0
-fi
+case "$FILE_PATH" in
+  *"/tests/"*.py|tests/*.py) ;;
+  *) exit 0 ;;
+esac
 
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
 cd "$REPO_ROOT"
 
-OUTPUT=$(python -m pytest "$FILE_PATH" -q --tb=short 2>&1 || true)
-EXIT_CODE=$?
+case "$FILE_PATH" in
+  "$REPO_ROOT"/*) TARGET_FILE="$FILE_PATH" ;;
+  *) TARGET_FILE="$REPO_ROOT/$FILE_PATH" ;;
+esac
+
+if [[ ! -f "$TARGET_FILE" ]]; then
+  exit 0
+fi
+
+if [[ -f "${REPO_ROOT}/.venv/bin/activate" ]]; then
+  # shellcheck disable=SC1091
+  source "${REPO_ROOT}/.venv/bin/activate"
+fi
+
+export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:${PYTHONPATH}}"
+
+run_test_command() {
+  local output
+  local exit_code
+
+  set +e
+  output=$("$@" 2>&1)
+  exit_code=$?
+  set -e
+
+  printf '%s' "$output"
+  return "$exit_code"
+}
+
+if OUTPUT=$(run_test_command python -m pytest "$TARGET_FILE" -q --tb=short); then
+  EXIT_CODE=0
+else
+  EXIT_CODE=$?
+fi
 
 if [[ $EXIT_CODE -ne 0 ]]; then
-  echo "[hook:post-edit-tests] Tests failed for $FILE_PATH" >&2
+  echo "[hook:post-edit-tests] Tests failed for $TARGET_FILE" >&2
   echo "$OUTPUT" >&2
-  echo "Test failures in $FILE_PATH after edit:"
+  echo "Test failures in $TARGET_FILE after edit:"
   echo "$OUTPUT"
 else
   echo "[hook:post-edit-tests] All tests passed." >&2

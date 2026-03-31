@@ -35,17 +35,32 @@ if [[ "$FILE_PATH" != *.py ]]; then
   exit 0
 fi
 
-if [[ "$FILE_PATH" != *"/src/"* ]] && \
-   [[ "$FILE_PATH" != *"/tests/"* ]] && \
-   [[ "$FILE_PATH" != *"/scripts/"* ]]; then
-  exit 0
-fi
+case "$FILE_PATH" in
+  *"/src/"*|src/*.py|*"/tests/"*.py|tests/*.py|*"/scripts/"*.py|scripts/*.py) ;;
+  *) exit 0 ;;
+esac
 
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
 cd "$REPO_ROOT"
 
-python -m ruff check --fix "$FILE_PATH" 2>&1 || true
-python -m ruff format "$FILE_PATH" 2>&1 || true
+case "$FILE_PATH" in
+  "$REPO_ROOT"/*) TARGET_FILE="$FILE_PATH" ;;
+  *) TARGET_FILE="$REPO_ROOT/$FILE_PATH" ;;
+esac
+
+if [[ ! -f "$TARGET_FILE" ]]; then
+  exit 0
+fi
+
+if [[ -f "${REPO_ROOT}/.venv/bin/activate" ]]; then
+  # shellcheck disable=SC1091
+  source "${REPO_ROOT}/.venv/bin/activate"
+fi
+
+export PYTHONPATH="${REPO_ROOT}/src${PYTHONPATH:+:${PYTHONPATH}}"
+
+python -m ruff check --fix "$TARGET_FILE" 2>&1 || true
+python -m ruff format "$TARGET_FILE" 2>&1 || true
 
 exit 0

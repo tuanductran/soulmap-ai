@@ -63,6 +63,9 @@ lefthook run pre-commit
 `lefthook` installs both the `pre-commit` and `commit-msg` hooks. Use
 `python -m soulmap_devtools.cli.check_markdown_links --root . --check-external`
 separately when a change edits public URLs and you want live external URL validation.
+The repo also defines a `pre-push` hook that runs
+`python -m soulmap_devtools.cli.lint --skip-tests` and `python -m pytest -n auto -q`
+before a branch is pushed.
 
 ## Versioning
 

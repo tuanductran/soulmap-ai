@@ -55,6 +55,16 @@ python -m soulmap_devtools.cli.check_markdown_links --root . --check-external
 Keep this external mode opt-in. It depends on live network responses and should not be
 treated as the default fast local gate.
 
+Before pushing, keep the local CI mirror green:
+
+```bash
+python -m soulmap_devtools.cli.lint --skip-tests
+python -m pytest -n auto -q
+```
+
+The repo's `lefthook` `pre-push` hook now runs those commands automatically when the
+hook is installed.
+
 If packaging or release behavior changed, also run:
 
 ```bash
