@@ -24,6 +24,13 @@ SPECIAL_MODULES = {
 
 
 def _bash_runtime_available() -> bool:
+    # The repo's shell hooks and wrapper scripts are macOS/Linux tooling. GitHub's
+    # Windows runners may expose a bash executable via Git Bash, but that is not the
+    # supported contract for these smoke tests and can fail for path/runtime reasons
+    # unrelated to the repo's shipped Windows workflow.
+    if os.name == "nt":
+        return False
+
     bash = shutil.which("bash")
     if not bash:
         return False
