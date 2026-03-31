@@ -39,6 +39,7 @@ build/
 dist/
 htmlcov/
 pip-wheel-metadata/
+uv.lock
 
 # Vendored or extracted JS dependencies for local tooling
 .bun-cache/
