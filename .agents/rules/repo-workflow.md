@@ -62,8 +62,8 @@ python -m soulmap_devtools.cli.lint --skip-tests
 python -m pytest -n auto -q
 ```
 
-The repo's `lefthook` `pre-push` hook now runs those commands automatically when the
-hook is installed.
+Do not rely on `git push` hooks for this repo. Run those commands explicitly before
+pushing when the change is meaningful or touches tested/runtime surfaces.
 
 If packaging or release behavior changed, also run:
 

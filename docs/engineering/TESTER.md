@@ -41,7 +41,7 @@ Use this order:
 3. Local Markdown case check for SoulMap-specific canonical term drift.
 4. Full `python -m soulmap_devtools.cli.lint` when you want the complete maintainer gate.
 
-For push-time protection, the repo's `pre-push` hook runs:
+Before pushing, run the local CI core manually:
 
 ```bash
 python -m soulmap_devtools.cli.lint --skip-tests

@@ -35,7 +35,7 @@ If you edit public URLs in Markdown and want live external validation, run:
 python -m soulmap_devtools.cli.check_markdown_links --root . --check-external
 ```
 
-The repo's `pre-push` hook mirrors the local CI core with:
+Before pushing, mirror the local CI core with:
 
 ```bash
 python -m soulmap_devtools.cli.lint --skip-tests

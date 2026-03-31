@@ -72,7 +72,7 @@ git push origin fix/crisis-hotlines
 - If a change touches `skills/` or `templates/`, run `python -m soulmap_runtime.guards.markdown_contract --root .` before pushing
 - If a change touches `CHANGELOG.md`, root Markdown, or `docs/*.md`, run `python -m soulmap_devtools.cli.lint` before pushing or tagging a release
 - Before any manual release or tag push, run `python -m soulmap_devtools.cli.format`, `python -m soulmap_devtools.cli.lint`, and `python -m pytest -n auto -q`
-- Keep `lefthook` installed locally so `pre-push` runs `python -m soulmap_devtools.cli.lint --skip-tests` and `python -m pytest -n auto -q` before the branch leaves your machine
+- Keep `lefthook` installed locally for commit-time checks. Before pushing, run `python -m soulmap_devtools.cli.lint --skip-tests` and `python -m pytest -n auto -q` yourself
 
 ### Branch naming examples
 

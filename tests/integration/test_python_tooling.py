@@ -229,7 +229,6 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "pre-commit:" in config
     assert "parallel: false" in config
     assert "commit-msg:" in config
-    assert "pre-push:" in config
     assert "python -m ruff check --fix" in config
     assert "python -m ruff format" in config
     assert "python -m soulmap_runtime.guards.markdown_contract --root ." in config
@@ -237,8 +236,7 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "python -m soulmap_devtools.cli.check_markdown_case --root ." in config
     assert "python -m pymarkdown --config .pymarkdown.json scan" in config
     assert "python -m commitizen check --commit-msg-file" in config
-    assert "python -m soulmap_devtools.cli.lint --skip-tests" in config
-    assert "python -m pytest -n auto -q" in config
+    assert "pre-push:" not in config
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(
