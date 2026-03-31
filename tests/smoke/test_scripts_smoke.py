@@ -2,9 +2,12 @@
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 MODULES_PKG = "soulmap_runtime.detectors"
@@ -18,6 +21,23 @@ SPECIAL_MODULES = {
     "framework_selector": "soulmap_runtime.routing.framework_selector",
     "scope_classifier": "soulmap_runtime.routing.scope_classifier",
 }
+
+
+def _bash_runtime_available() -> bool:
+    bash = shutil.which("bash")
+    if not bash:
+        return False
+
+    result = subprocess.run(
+        [bash, "-lc", "printf ok"],
+        capture_output=True,
+        text=True,
+        timeout=5,
+        check=False,
+        cwd=ROOT,
+        env=TEST_ENV,
+    )
+    return result.returncode == 0 and result.stdout == "ok"
 
 
 def run_module(module: str, payload: dict, timeout_s: int = 5) -> dict:
@@ -224,6 +244,9 @@ def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
 
 
 def test_local_agent_hooks_have_valid_shell_syntax() -> None:
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
     for hook in [
         ".agents/hooks/block-push-to-main.sh",
         ".agents/hooks/post-edit-markdown.sh",
@@ -239,6 +262,9 @@ def test_local_agent_hooks_have_valid_shell_syntax() -> None:
 
 
 def test_post_edit_evals_hook_does_not_flag_zero_failed_checks() -> None:
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
     payload = json.dumps(
         {
             "tool_input": {
@@ -254,6 +280,9 @@ def test_post_edit_evals_hook_does_not_flag_zero_failed_checks() -> None:
 
 
 def test_post_edit_markdown_hook_bootstraps_repo_python_for_relative_paths() -> None:
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
     payload = json.dumps({"tool_input": {"file_path": "AGENTS.md"}})
     result = run_process(["bash", ".agents/hooks/post-edit-markdown.sh"], payload, 15)
 
@@ -263,6 +292,9 @@ def test_post_edit_markdown_hook_bootstraps_repo_python_for_relative_paths() -> 
 
 
 def test_post_edit_tests_hook_reports_real_failures() -> None:
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
     failing_test = ROOT / "tests" / "_tmp_post_edit_hook_failure_test.py"
     failing_test.write_text(
         "def test_tmp_failure() -> None:\n    assert False\n", encoding="utf-8"

@@ -190,7 +190,7 @@ def test_bootstrap_venv_installs_lefthook_in_git_repo(
 
     assert bootstrap_venv.main([]) == 0
 
-    assert ["/tmp/lefthook", "install"] in commands
+    assert [str(Path("/tmp/lefthook")), "install"] in commands
     assert "Git hooks installed via lefthook" in capsys.readouterr().out
 
 
@@ -216,7 +216,7 @@ def test_bootstrap_venv_skips_lefthook_outside_git_repo(
 
     assert bootstrap_venv.main([]) == 0
 
-    assert ["/tmp/lefthook", "install"] not in commands
+    assert [str(Path("/tmp/lefthook")), "install"] not in commands
     assert "skipping lefthook install" in capsys.readouterr().out
 
 

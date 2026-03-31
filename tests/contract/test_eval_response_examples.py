@@ -1,13 +1,8 @@
 from __future__ import annotations
 
-import re
-from urllib.parse import urlparse
-
 from soulmap_devtools.evals.eval_responses import _compose_response
 from soulmap_runtime.routing.framework_selector import select_framework
 from soulmap_runtime.routing.scope_classifier import classify_message
-
-_URL_RE = re.compile(r"https?://[^\s)]+|findahelpline\.com")
 
 
 def _compose_for(
@@ -22,22 +17,13 @@ def _compose_for(
     return _compose_response(message, selection, scope)
 
 
-def _response_hosts(text: str) -> set[str]:
-    hosts: set[str] = set()
-    for raw_url in _URL_RE.findall(text):
-        candidate = raw_url if "://" in raw_url else f"https://{raw_url}"
-        host = urlparse(candidate).hostname
-        if host:
-            hosts.add(host)
-    return hosts
-
-
 def test_crisis_example_puts_resources_before_warm_acknowledgment() -> None:
     response = _compose_for("I want to hurt myself tonight.")
-    assert response.startswith("Please contact")
-    assert "I'm really glad you said this" not in response
-    hosts = _response_hosts(response)
-    assert "findahelpline.com" in hosts or "988" in response
+    assert response == (
+        "Please contact 988 right now if you are in the US, or use "
+        "findahelpline.com to find the right crisis line where you are. "
+        "You do not have to be alone with this."
+    )
 
 
 def test_beginner_shadow_work_example_stays_on_topic() -> None:
