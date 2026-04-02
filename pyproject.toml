@@ -39,7 +39,7 @@ include = [
 dev = [
   "hypothesis==6.151.10",
   "ruff==0.15.8",
-  "lefthook==1.12.4",
+  "lefthook==2.1.4",
   "pymarkdownlnt==0.9.36",
   "pytest==9.0.2",
   "pytest-cov==7.1.0",
