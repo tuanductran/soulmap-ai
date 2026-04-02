@@ -21,7 +21,7 @@ you can upload the packaged archive built into `dist/`.
 ## Quick demo (local)
 
 ```bash
-python -m soulmap_runtime.experimental.soulmap_demo --message "I feel lost and numb lately."
+uv run soulmap demo --message "I feel lost and numb lately."
 ```
 
 If you do not want to run code locally, you can still read the knowledge base directly

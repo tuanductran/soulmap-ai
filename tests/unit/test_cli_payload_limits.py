@@ -4,7 +4,7 @@ import io
 
 import pytest
 
-from soulmap_runtime.io.cli_payload import (
+from soulmap.runtime.io.cli_payload import (
     parse_json_object,
     parse_json_value,
     print_json_error,

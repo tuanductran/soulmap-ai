@@ -3,28 +3,26 @@
 ## Setup
 
 ```bash
+uv python install 3.11
 bash scripts/bootstrap_venv.sh
-source .venv/bin/activate
 ```
 
-If you forget to activate `.venv`, the canonical Python tooling commands will try to use the
-repo's local `.venv` automatically (and print a small notice) to avoid confusing
-"missing dependency" errors from a system Python.
+Activating `.venv` is optional when you use `uv run ...`. This repo standardizes on
+Python 3.11 for local development and CI.
 
 ## Format and lint
 
 ```bash
-source .venv/bin/activate
-bash scripts/format.sh
-bash scripts/lint.sh
-python -m soulmap_runtime.guards.markdown_contract --root .
-python -m soulmap_devtools.cli.check_markdown_links --root .
-python -m soulmap_devtools.cli.check_markdown_case --root .
-python -m pytest
+uv run soulmap format
+uv run soulmap lint
+uv run soulmap markdown-contract --root .
+uv run soulmap check-links --root .
+uv run soulmap check-case --root .
+uv run soulmap test
 ```
 
-On macOS/Linux the shell scripts delegate to the canonical Python tooling under
-`src/soulmap_devtools/cli/`.
+On macOS/Linux the shell scripts delegate to the canonical `uv run soulmap ...`
+commands.
 
 ## Brand Consistency
 
@@ -61,11 +59,11 @@ lefthook run pre-commit
 ```
 
 `lefthook` installs both the `pre-commit` and `commit-msg` hooks. Use
-`python -m soulmap_devtools.cli.check_markdown_links --root . --check-external`
+`uv run soulmap check-links --root . --check-external`
 separately when a change edits public URLs and you want live external URL validation.
 This repo intentionally does not run a heavy `pre-push` hook. Before pushing, run
-`python -m soulmap_devtools.cli.lint --skip-tests` and
-`python -m pytest -n auto -q` yourself.
+`uv run soulmap lint --skip-tests` and
+`uv run soulmap test -n auto -q` yourself.
 
 ## Versioning
 
@@ -78,7 +76,7 @@ This repo intentionally does not run a heavy `pre-push` hook. Before pushing, ru
 
 ## Adding or Editing SKILL.md Files
 
-When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.agents/skills/`,
+When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.claude/skills/`,
 follow these rules. Treat them as repo contract rules and verify them through the
 normal formatting and linting flow.
 
@@ -128,10 +126,10 @@ After adding any `.md` to `skills/` or `templates/`, run the appropriate command
 
 ```bash
 # To build the standard .zip archive
-python -m soulmap_devtools.cli.build_skill
+uv run soulmap build
 
 # To build the .skill package for Claude
-python -m soulmap_devtools.cli.build_skill --skill
+uv run soulmap build --skill
 ```
 
 If the new file is missing from the rebuilt archive, the build or packaging validation

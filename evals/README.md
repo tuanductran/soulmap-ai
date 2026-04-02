@@ -9,8 +9,8 @@ Evaluation case files for SoulMap AI automated testing and quality-assurance too
 **Input:** a user `message` with full expected outputs.
 **Asserts:** full end-to-end pipeline, framework selection, safety gate, response
 generation, contract check, and sanitizer, all in one pass.
-**Used by:** `src/soulmap_devtools/evals/eval_responses.py` (run as
-`python -m soulmap_devtools.cli.eval_responses`)
+**Used by:** `src/soulmap/devtools/evals/eval_responses.py` (run as
+`uv run soulmap eval-responses`)
 
 These are the golden cases. All 17 must pass before a release.
 
@@ -20,7 +20,7 @@ Structured QA taxonomy for grouped routing examples, safety slices, and edge-cas
 coverage. This file is a local eval dataset and is not part of the shipped knowledge
 package.
 
-**Used by:** `src/soulmap_devtools/evals/eval_groups.py` directly.
+**Used by:** `src/soulmap/devtools/evals/eval_groups.py` directly.
 
 Some items include explicit expectation fields such as `expect_primary_framework`,
 `expect_secondary_layer`, `expect_mode`, `expect_scope_tier`, or
@@ -41,8 +41,8 @@ seeds.
 
 Cross-surface sync cases for doctrine, runtime examples, and shipped Markdown.
 
-**Used by:** `src/soulmap_devtools/evals/eval_markdown_contracts.py` (run as
-`python -m soulmap_devtools.cli.eval_markdown_contracts`)
+**Used by:** `src/soulmap/devtools/evals/eval_markdown_contracts.py` (run as
+`uv run soulmap eval-markdown-contracts`)
 
 These cases keep wording-level contracts aligned across:
 
@@ -58,9 +58,9 @@ not just inside Python.
 The repo now has two different Markdown quality layers:
 
 - repo-local Markdown QA commands for structural hygiene in tracked docs:
-  - `python -m soulmap_runtime.guards.markdown_contract --root .`
-  - `python -m soulmap_devtools.cli.check_markdown_links --root .`
-  - `python -m soulmap_devtools.cli.check_markdown_case --root .`
+  - `uv run soulmap markdown-contract --root .`
+  - `uv run soulmap check-links --root .`
+  - `uv run soulmap check-case --root .`
 - eval datasets in `evals/` for cross-surface behavioral and wording contracts
 
 Use the Markdown QA commands for broken local links, anchor drift, and canonical

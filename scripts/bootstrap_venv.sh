@@ -2,13 +2,11 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-PYTHON_BIN="${PYTHON_BIN:-python3}"
 
-if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
-  echo "Error: '${PYTHON_BIN}' not found. Set PYTHON_BIN or install Python." >&2
+if ! command -v uv >/dev/null 2>&1; then
+  echo "Error: 'uv' not found. Install uv and rerun bootstrap." >&2
   exit 1
 fi
 
 cd "${ROOT_DIR}"
-PYTHONPATH="${ROOT_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
-  "${PYTHON_BIN}" -m soulmap_devtools.cli.bootstrap_venv
+uv run soulmap bootstrap

@@ -1,29 +1,27 @@
 # Claude workspace
 
-This folder is a Claude compatibility layer for the shared local agent workspace.
-
-The canonical local workflow source now lives in [`.agents/`](../.agents/).
+This folder is the repo's local AI workflow layer for Claude-based maintenance work.
 
 For broad repository work, start from
-[`project-operating-prompt.md`](../.agents/prompts/project-operating-prompt.md).
+[`prompts/project-operating-prompt.md`](prompts/project-operating-prompt.md).
 
 ## Order of precedence
 
 1. `AGENTS.md`
 2. shipped product knowledge in `skills/` and `templates/`
-3. local workflow rules in `.agents/`, with `.claude/` and `.codex/` as adapters
+3. local workflow files in `.claude/`
 
 If a local Claude file conflicts with `AGENTS.md`, preserve `AGENTS.md`.
 
 ## What this folder is for
 
-- exposing the paths Claude expects
-- pointing Claude to the shared hooks, rules, and skills in `.agents/`
-- keeping Claude-specific settings in `.claude/settings.json`
-
-The long-term source for Claude adapter settings is
-[`.agents/adapters/claude/`](../.agents/adapters/claude/). A compatibility mirror may
-still exist under `.agents/claude/` while local symlink wiring is phased over.
+- local hooks in `hooks/`
+- repo-local maintainer rules in `rules/`
+- repeatable maintainer skills in `skills/`
+- reusable maintenance prompts in `prompts/`
+- Claude settings in `.claude/settings.json`
+- future Claude subagents in `.claude/agents/` when the repo needs true Claude-native
+  subagent files
 
 ## What this folder is not for
 
@@ -34,12 +32,24 @@ still exist under `.agents/claude/` while local symlink wiring is phased over.
 
 ## How to use this folder
 
-- keep `AGENTS.md` as the baseline entry point
-- use [`.agents/`](../.agents/) as the source of truth for local agent workflow files
-- treat `.claude/` as a thin adapter layer only
+- keep `CLAUDE.md` as the Claude entry point and `AGENTS.md` as the baseline doctrine
+- treat `.claude/` as supplemental local workflow support
+- keep doctrine, safety, and shipped package truth outside this folder
+
+## Claude-native surfaces
+
+Claude Code officially reads these project-level surfaces directly:
+
+- `CLAUDE.md`
+- `.claude/settings.json`
+- `.claude/settings.local.json` when present and intentionally local-only
+- `.claude/agents/*.md` when the repo defines Claude subagents
+
+The repo's `hooks/`, `rules/`, `prompts/`, and `skills/` folders under `.claude/` are
+still useful, but they are supporting files rather than Claude Code-native entry
+points.
 
 ## Related local layers
 
-- use [`.codex/`](../.codex/) for the Codex compatibility layer
 - use [`.claude-plugin/`](../.claude-plugin/) only as packaged skill metadata for
   `.skill` artifacts

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import cast
 
-from soulmap_runtime.guards.resource_sanitizer import check_banned_language
-from soulmap_runtime.guards.response_contract import grade_response_contract
-from soulmap_runtime.guards.response_safety_gate import apply_safety_gate
+from soulmap.runtime.guards.resource_sanitizer import check_banned_language
+from soulmap.runtime.guards.response_contract import grade_response_contract
+from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
 
 
 def test_safety_gate_overrides_crisis() -> None:

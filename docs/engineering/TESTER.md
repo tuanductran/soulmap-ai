@@ -10,7 +10,7 @@
 ## Run the full test suite
 
 ```bash
-python -m soulmap_devtools.cli.lint
+uv run soulmap lint
 ```
 
 This runs:
@@ -19,7 +19,7 @@ This runs:
 - Markdown QA checks: the Markdown contract guard, local Markdown link checker, local
   Markdown case checker, and PyMarkdown.
 
-`python -m soulmap_devtools.cli.format` and `python -m soulmap_devtools.cli.lint` also coordinate through a shared
+`uv run soulmap format` and `uv run soulmap lint` also coordinate through a shared
 repo lock, so starting them in parallel should wait cleanly instead of producing a false
 red formatting failure.
 
@@ -29,9 +29,9 @@ Run these when you want a fast pass on docs and knowledge files without the rest
 Python suite:
 
 ```bash
-python -m soulmap_runtime.guards.markdown_contract --root .
-python -m soulmap_devtools.cli.check_markdown_links --root .
-python -m soulmap_devtools.cli.check_markdown_case --root .
+uv run soulmap markdown-contract --root .
+uv run soulmap check-links --root .
+uv run soulmap check-case --root .
 ```
 
 Use this order:
@@ -39,13 +39,13 @@ Use this order:
 1. Markdown contract for structure and portability.
 2. Local Markdown link check for in-repo files, images, and anchors.
 3. Local Markdown case check for SoulMap-specific canonical term drift.
-4. Full `python -m soulmap_devtools.cli.lint` when you want the complete maintainer gate.
+4. Full `uv run soulmap lint` when you want the complete maintainer gate.
 
 Before pushing, run the local CI core manually:
 
 ```bash
-python -m soulmap_devtools.cli.lint --skip-tests
-python -m pytest -n auto -q
+uv run soulmap lint --skip-tests
+uv run soulmap test -n auto -q
 ```
 
 Treat that pair as the minimum local CI mirror before a branch leaves your machine.
@@ -53,7 +53,7 @@ Treat that pair as the minimum local CI mirror before a branch leaves your machi
 For live external URL validation, run:
 
 ```bash
-python -m soulmap_devtools.cli.check_markdown_links --root . --check-external
+uv run soulmap check-links --root . --check-external
 ```
 
 Add `--fail-on-warning` when you want transient external-link warnings, such as `403`
@@ -76,8 +76,8 @@ When reviewing safety claims manually, keep the matrix status labels strict:
 ## Build artifacts
 
 ```bash
-python -m soulmap_devtools.cli.build_skill
-python -m soulmap_devtools.cli.build_skill --skill
+uv run soulmap build
+uv run soulmap build --skill
 ```
 
 Verify:
@@ -93,41 +93,41 @@ The orchestration layer (`skills/meta/`) coordinates all framework selection and
 pipeline execution. When testing changes to this layer:
 
 ```bash
-python -m soulmap_devtools.cli.eval_groups
-python -m soulmap_devtools.cli.eval_responses
-python -m soulmap_devtools.cli.eval_markdown_contracts
-python tests/eval_regression/test_safety_evals.py
+uv run soulmap eval-groups
+uv run soulmap eval-responses
+uv run soulmap eval-markdown-contracts
+uv run python tests/eval_regression/test_safety_evals.py
 ```
 
-`python tests/eval_regression/test_safety_evals.py` is a direct red-team harness, not a normal pytest
+`uv run python tests/eval_regression/test_safety_evals.py` is a direct red-team harness, not a normal pytest
 module. Keep it in the release/test flow alongside broad `pytest -n auto -q` runs rather than trying to
 fold it into the standard test collection.
 
 Key files to verify after any change to `skills/meta/`:
 
 - [orchestration.md](../../skills/meta/orchestration.md), plain-language priority order
-  must match `src/soulmap_runtime/routing/framework_selector.py`
+  must match `src/soulmap/runtime/routing/framework_selector.py`
 - [framework-template-map.md](../../skills/meta/framework-template-map.md), framework
   names must use plain language, not Python constants
 - [stage-classifier.md](../../skills/meta/stage-classifier.md), stage keywords must stay
-  aligned with `src/soulmap_runtime/routing/stage_detector.py`
+  aligned with `src/soulmap/runtime/routing/stage_detector.py`
 - [epistemic-guardrails.md](../../skills/meta/epistemic-guardrails.md), spiritual
   examples should stay consistent with response eval coverage
 - [whitelist-blacklist-system.md](../../skills/safety/whitelist-blacklist-system.md),
-  must mirror `src/soulmap_runtime/routing/scope_classifier.py` keyword lists
+  must mirror `src/soulmap/runtime/routing/scope_classifier.py` keyword lists
 
 ## Manual spot checks (optional)
 
 Run the local selector demo:
 
 ```bash
-python -m soulmap_runtime.experimental.soulmap_demo --message "I feel lost and numb lately."
+uv run soulmap demo --message "I feel lost and numb lately."
 ```
 
 Try a crisis-style message (do not use real personal details):
 
 ```bash
-python -m soulmap_runtime.experimental.soulmap_demo --message "I want to hurt myself."
+uv run soulmap demo --message "I want to hurt myself."
 ```
 
 Confirm the output selects `CRISIS` and does not include reflective frameworks.
@@ -137,7 +137,7 @@ Confirm the output selects `CRISIS` and does not include reflective frameworks.
 Run the response-generation harness:
 
 ```bash
-python -m soulmap_devtools.cli.eval_responses
+uv run soulmap eval-responses
 ```
 
 This checks a fuller pipeline:
@@ -158,7 +158,7 @@ Run the grouped routing harness when you want taxonomy-level drift detection acr
 framework slices:
 
 ```bash
-python -m soulmap_devtools.cli.eval_groups
+uv run soulmap eval-groups
 ```
 
 This is especially useful after editing detector keywords, `evals/datasets/groups.json`, or
@@ -172,7 +172,7 @@ Run the Markdown contract harness when you want cross-surface drift detection be
 runtime examples, doctrine, and shipped Markdown:
 
 ```bash
-python -m soulmap_devtools.cli.eval_markdown_contracts
+uv run soulmap eval-markdown-contracts
 ```
 
 This is the fastest way to catch wording drift in trust-critical clusters such as
@@ -185,19 +185,19 @@ Inspect `.github/workflows/ci.yml` and confirm it still covers the repo's critic
 contracts:
 
 - PR autofix via `autofix-ci/action`
-- `python -m soulmap_devtools.cli.format`
+- `uv run soulmap format`
 - workflow validation via `actionlint`
-- `python -m soulmap_devtools.cli.lint --skip-tests`
-- `python -m pytest -n auto -q`
-- `python tests/eval_regression/test_safety_evals.py`
-- `python -m soulmap_devtools.cli.eval_responses`
-- `python -m soulmap_devtools.cli.eval_groups`
-- `python -m soulmap_devtools.cli.eval_markdown_contracts`
-- `python -m soulmap_devtools.cli.build_skill`
-- `python -m soulmap_devtools.cli.build_skill --skill`
-- `python -m soulmap_runtime.guards.markdown_contract --root .`
-- `python -m soulmap_devtools.cli.check_markdown_links --root .`
-- `python -m soulmap_devtools.cli.check_markdown_case --root .`
+- `uv run soulmap lint --skip-tests`
+- `uv run soulmap test -n auto -q`
+- `uv run python tests/eval_regression/test_safety_evals.py`
+- `uv run soulmap eval-responses`
+- `uv run soulmap eval-groups`
+- `uv run soulmap eval-markdown-contracts`
+- `uv run soulmap build`
+- `uv run soulmap build --skill`
+- `uv run soulmap markdown-contract --root .`
+- `uv run soulmap check-links --root .`
+- `uv run soulmap check-case --root .`
 
 Inspect `.github/workflows/release.yml` and confirm it still verifies the repo before
 release and rebuilds both distribution artifacts.
@@ -234,7 +234,7 @@ Use these when automated checks are green but you want to probe human-risk defec
 - Risk: blocked or sensitive responses are technically correct but emotionally off,
   dependency-building, or too authoritative
 - Files or flows: [`../templates/redirect-templates.md`](../../templates/redirect-templates.md),
-  `src/soulmap_devtools/evals/eval_responses.py`, `src/soulmap_runtime/guards/resource_sanitizer.py`, and
+  `src/soulmap/devtools/evals/eval_responses.py`, `src/soulmap/runtime/guards/resource_sanitizer.py`, and
   `evals/datasets/response_generation_cases.json`
 - Probe:
   - AI identity disclosure

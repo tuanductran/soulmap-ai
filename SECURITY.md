@@ -21,7 +21,7 @@ This repository contains content and local scripts. No deployed services by defa
 The following are in scope:
 
 - Prompt injection vectors in skills, templates, or response logic
-- Unsafe subprocess invocation in `src/soulmap_devtools/`, compatibility wrappers, or `scripts/`
+- Unsafe subprocess invocation in `src/soulmap/devtools/`, compatibility wrappers, or `scripts/`
 - Mishandling of user-provided data in local runtime modules
 - Hardcoded credentials, keys, or secrets committed to the repository
 - Dependencies with known critical vulnerabilities (CVE)

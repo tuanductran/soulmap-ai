@@ -3,26 +3,26 @@ pre-commit:
   commands:
     ruff-check-fix:
       glob: "*.py"
-      run: python -m ruff check --fix {staged_files}
+      run: uv run ruff check --fix {staged_files}
       stage_fixed: true
     ruff-format:
       glob: "*.py"
-      run: python -m ruff format {staged_files}
+      run: uv run ruff format {staged_files}
       stage_fixed: true
     markdown-contract:
       glob: "*.md"
-      run: python -m soulmap_runtime.guards.markdown_contract --root .
+      run: uv run soulmap markdown-contract --root .
     markdown-links:
       glob: "*.md"
-      run: python -m soulmap_devtools.cli.check_markdown_links --root . {staged_files}
+      run: uv run soulmap check-links --root . {staged_files}
     markdown-case:
       glob: "*.md"
-      run: python -m soulmap_devtools.cli.check_markdown_case --root . {staged_files}
+      run: uv run soulmap check-case --root . {staged_files}
     pymarkdown:
       glob: "*.md"
-      run: python -m pymarkdown --config .pymarkdown.json scan {staged_files}
+      run: uv run pymarkdown --config .pymarkdown.json scan {staged_files}
 
 commit-msg:
   commands:
     conventional-commits:
-      run: python -m commitizen check --commit-msg-file {1}
+      run: uv run cz check --commit-msg-file {1}

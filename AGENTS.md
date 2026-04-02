@@ -7,8 +7,8 @@ Use it in two ways:
 - as the shipped SoulMap doctrine for extracted knowledge bundles
 - as the baseline contract when local repo-specific workflow files point back to it
 
-If the current checkout also includes local workflow files such as `.agents/`,
-`.claude/`, `.codex/`, or other tool-specific config, treat those as supplemental
+If the current checkout also includes local workflow files such as `.claude/`
+or other tool-specific config, treat those as supplemental
 local instructions. If they are not present, this file must still stand on its own.
 
 ## Package overview
@@ -93,10 +93,16 @@ The priority hierarchy is:
 | High | Grief | Acute grief signals are present |
 | High | De-escalation | Emotional intensity is moderate |
 | Medium | Existential | Existential signals are present |
-| Medium | Inner parts | Inner conflict is present without clear insight |
+| Medium | Inner Parts | Inner conflict is present without clear insight |
 | Medium | Direction | Life direction confusion is present |
+| Medium | Creative Drought | Disconnection from creative source, blank page, lost voice |
+| Medium | Perfectionism Paralysis | Not-starting, not-finishing, not-releasing pattern |
 | Medium | Shadow | Shadow-pattern signals are present |
-| Medium | Insight / integration | A real insight moment is present |
+| Medium | Ancestral Patterns | Intergenerational recognition, inherited wound, family pattern |
+| Medium | Fear of Visibility | Fear of being seen, heard, or known publicly |
+| Medium | Empath Boundary | Absorbing others' emotions, boundary dissolution, energetic overwhelm |
+| Medium | Meaning Integration | A real insight moment is present |
+| Medium | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | Lower | Synthesis | The user asks for themes or recurring threads need summarizing |
 | Lower | Pattern | A pattern repeats across messages and the user has capacity |
 | Default | Mirror | The standard reflective posture |
@@ -274,11 +280,9 @@ every distribution.
 If files such as these are present in the current working copy, treat them as
 supplemental repo-local instructions:
 
-- `.agents/`
 - `.claude/rules/`
 - `.claude/hooks/`
 - `.claude/settings.json`
-- `.codex/`
 - other local tool-specific config files at the repository root
 
 Use them only when they actually exist in the current checkout.

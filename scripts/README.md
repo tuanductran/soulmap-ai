@@ -3,13 +3,12 @@
 This folder contains bash helpers for contributor workflows.
 
 The shell scripts here are thin macOS/Linux wrappers around the canonical Python entry
-points in `src/soulmap_devtools/` and `src/soulmap_runtime/`.
+points in `src/soulmap/devtools/` and `src/soulmap/runtime/`.
 
 ## Common commands
 
 ```bash
 bash scripts/bootstrap_venv.sh
-source .venv/bin/activate
 bash scripts/format.sh
 bash scripts/lint.sh
 ```
@@ -17,29 +16,29 @@ bash scripts/lint.sh
 Cross-platform equivalents are the canonical Python entrypoints:
 
 ```bash
-python -m soulmap_devtools.cli.format
-python -m soulmap_devtools.cli.lint
-python -m soulmap_runtime.guards.markdown_contract --root .
-python -m soulmap_devtools.cli.check_markdown_links --root .
-python -m soulmap_devtools.cli.check_markdown_case --root .
-python -m soulmap_devtools.cli.build_skill
-python -m soulmap_devtools.cli.build_skill --skill
-python -m soulmap_devtools.cli.eval_groups
-python -m soulmap_devtools.cli.eval_responses
-python -m soulmap_devtools.cli.eval_markdown_contracts
+uv run soulmap format
+uv run soulmap lint
+uv run soulmap markdown-contract --root .
+uv run soulmap check-links --root .
+uv run soulmap check-case --root .
+uv run soulmap build
+uv run soulmap build --skill
+uv run soulmap eval-groups
+uv run soulmap eval-responses
+uv run soulmap eval-markdown-contracts
 ```
 
 If you edit public URLs in Markdown and want live external validation, run:
 
 ```bash
-python -m soulmap_devtools.cli.check_markdown_links --root . --check-external
+uv run soulmap check-links --root . --check-external
 ```
 
 Before pushing, mirror the local CI core with:
 
 ```bash
-python -m soulmap_devtools.cli.lint --skip-tests
-python -m pytest -n auto -q
+uv run soulmap lint --skip-tests
+uv run soulmap test -n auto -q
 ```
 
 For setup and workflow details, use [`docs/engineering/DEV.md`](../docs/engineering/DEV.md).

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from soulmap_runtime.io.text_normalization import normalize_message_text
+from soulmap.runtime.io.text_normalization import normalize_message_text
 
 
 def test_normalize_message_text_normalizes_quotes_and_whitespace() -> None:

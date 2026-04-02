@@ -4,7 +4,7 @@ import time
 from multiprocessing import get_context
 from pathlib import Path
 
-from soulmap_devtools.support.run import repo_tooling_lock
+from soulmap.devtools.support.run import repo_tooling_lock
 
 
 def _lock_worker(lock_dir: str, sleep_s: float, queue) -> None:

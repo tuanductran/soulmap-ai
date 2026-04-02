@@ -9,14 +9,14 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-from soulmap_runtime.detectors.crisis_detector import detect_crisis  # noqa: E402
-from soulmap_runtime.detectors.dependency_detector import (  # noqa: E402
+from soulmap.runtime.detectors.crisis_detector import detect_crisis  # noqa: E402
+from soulmap.runtime.detectors.dependency_detector import (  # noqa: E402
     analyze_dependency,
 )
-from soulmap_runtime.guards.resource_sanitizer import (  # noqa: E402
+from soulmap.runtime.guards.resource_sanitizer import (  # noqa: E402
     check_banned_language,
 )
-from soulmap_runtime.routing.scope_classifier import classify_message  # noqa: E402
+from soulmap.runtime.routing.scope_classifier import classify_message  # noqa: E402
 
 
 def run_tests() -> int:

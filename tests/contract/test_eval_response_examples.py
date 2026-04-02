@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from soulmap_devtools.evals.eval_responses import _compose_response
-from soulmap_runtime.routing.framework_selector import select_framework
-from soulmap_runtime.routing.scope_classifier import classify_message
+from soulmap.devtools.evals.eval_responses import _compose_response
+from soulmap.runtime.routing.framework_selector import select_framework
+from soulmap.runtime.routing.scope_classifier import classify_message
 
 
 def _compose_for(
