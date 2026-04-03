@@ -8,7 +8,7 @@ JSON in, JSON out.
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.routing.framework_selector
+python -m soulmap.runtime.routing.framework_selector
 ```
 
 Input: a JSON object via stdin:
@@ -77,7 +77,7 @@ Error output:
 Many detectors also support JSON via stdin:
 
 ```bash
-echo '{"message":"..."}' | python -m soulmap_runtime.detectors.grief_detector
+echo '{"message":"..."}' | python -m soulmap.runtime.detectors.grief_detector
 ```
 
 The exact contract varies by module.
@@ -91,7 +91,7 @@ The SoulMap AI knowledge base is stored as Markdown under `skills/` and `templat
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.guards.response_safety_gate
+python -m soulmap.runtime.guards.response_safety_gate
 ```
 
 Purpose:
@@ -104,7 +104,7 @@ Purpose:
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.guards.response_contract
+python -m soulmap.runtime.guards.response_contract
 ```
 
 Purpose:
@@ -117,7 +117,7 @@ Purpose:
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.guards.resource_sanitizer
+python -m soulmap.runtime.guards.resource_sanitizer
 ```
 
 Input:
@@ -141,7 +141,7 @@ not part of the default CLI flow.
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.experimental.biometric_ingest
+python -m soulmap.runtime.experimental.biometric_ingest
 ```
 
 Input:
@@ -162,7 +162,7 @@ Use only when the product has explicit user consent for health-context ingestion
 Entrypoint:
 
 ```bash
-python -m soulmap_runtime.memory.memory_ledger
+python -m soulmap.runtime.memory.memory_ledger
 ```
 
 Input:
@@ -183,8 +183,8 @@ cross-session memory.
 Cross-platform:
 
 ```bash
-python -m soulmap_devtools.cli.build_skill
-python -m soulmap_devtools.cli.build_skill --skill
+uv run soulmap build
+uv run soulmap build --skill
 ```
 
 Output:

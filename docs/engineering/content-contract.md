@@ -33,7 +33,7 @@ Rules:
   section.
 - Keep a blank line between the closing `---` and the first `#` heading.
 
-The repository enforces this via `python -m soulmap_runtime.guards.markdown_contract`.
+The repository enforces this via `uv run soulmap markdown-contract`.
 
 ## Source hygiene
 
@@ -47,7 +47,7 @@ Tracked Markdown must not contain:
 If source material is sensitive or source-specific, rewrite it into abstractions and
 reusable patterns before it enters `skills/`, `templates/`, or `docs/`.
 
-The repository enforces this via `python -m soulmap_runtime.guards.markdown_contract`.
+The repository enforces this via `uv run soulmap markdown-contract`.
 
 ## Ordered lists
 
@@ -68,7 +68,7 @@ Some Markdown formatters can rewrite or relocate YAML front matter.
 
 To avoid structural damage:
 
-- Use `python -m soulmap_devtools.cli.format` / `python -m soulmap_devtools.cli.lint` or `bash scripts/format.sh` /
+- Use `uv run soulmap format` / `uv run soulmap lint` or `bash scripts/format.sh` /
   `bash scripts/lint.sh`.
 - Do not run auto-formatters over `skills/` and `templates/` unless they are known to
   preserve YAML front matter exactly.

@@ -43,9 +43,9 @@ to vulnerable individuals.
 
 | Regulatory Requirement | SoulMap AI Status |
 | :--- | :--- |
-| AI identity disclosure when sincerely asked | PARTIAL, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `src/soulmap_devtools/evals/eval_responses.py`: wording is not fully runtime-enforced |
-| Crisis detection and escalation to human help | BUILT IN, `src/soulmap_runtime/detectors/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
-| Anti-dependency safeguards | BUILT IN, `src/soulmap_runtime/detectors/dependency_detector.py` fires on first signal: hard redirect |
+| AI identity disclosure when sincerely asked | PARTIAL, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `src/soulmap/devtools/evals/eval_responses.py`: wording is not fully runtime-enforced |
+| Crisis detection and escalation to human help | BUILT IN, `src/soulmap/runtime/detectors/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
+| Anti-dependency safeguards | BUILT IN, `src/soulmap/runtime/detectors/dependency_detector.py` fires on first signal: hard redirect |
 | No diagnosis or clinical claims | PARTIAL, doctrine plus runtime blocking and eval coverage: refusal wording is not fully production-enforced |
 | Transparency about limitations | PARTIAL, doctrine and response-contract constraints reduce overclaiming, but no single runtime layer guarantees every limitation disclosure |
 | User data: no backend storage | STRUCTURAL, no deployed server: see `docs/operations/PRIVACY.md` |
@@ -84,7 +84,7 @@ jurisdiction-specific and requires legal review.
 ## Sources to check first
 
 - `AGENTS.md`, behavioral contract with non-negotiable safety rules
-- `src/soulmap_runtime/detectors/crisis_detector.py`, technical crisis detection implementation
-- `src/soulmap_runtime/detectors/dependency_detector.py`, technical dependency detection implementation
+- `src/soulmap/runtime/detectors/crisis_detector.py`, technical crisis detection implementation
+- `src/soulmap/runtime/detectors/dependency_detector.py`, technical dependency detection implementation
 - `docs/operations/PRIVACY.md`, data handling and no-backend-server explanation
 - `skills/safety/boundaries-safety.md`, AI identity disclosure rule

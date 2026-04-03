@@ -20,13 +20,16 @@ venv.bak/
 
 # Test, lint, and local tooling caches
 .cache/
+.dmypy.json
 .hypothesis/
 .mypy_cache/
 .nox/
 .pre-commit-cache/
 .pytest_cache/
+.pyre/
 .ruff_cache/
 .tox/
+.uv-cache/
 
 # Build and packaging artifacts
 .eggs/
@@ -36,10 +39,10 @@ venv.bak/
 *.egg-info/
 *.dist-info/
 build/
+coverage.xml
 dist/
 htmlcov/
 pip-wheel-metadata/
-uv.lock
 
 # Vendored or extracted JS dependencies for local tooling
 .bun-cache/

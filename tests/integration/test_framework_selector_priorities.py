@@ -20,7 +20,7 @@ def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
     if debug:
         env["SOULMAP_DEBUG"] = "1"
     result = subprocess.run(
-        [sys.executable, "-m", "soulmap_runtime.routing.framework_selector"],
+        [sys.executable, "-m", "soulmap.runtime.routing.framework_selector"],
         input=json.dumps(payload, ensure_ascii=False),
         capture_output=True,
         text=True,

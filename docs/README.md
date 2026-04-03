@@ -10,7 +10,7 @@ Use this folder as the entry point for repo documentation.
   [`operations/UPLOAD.md`](operations/UPLOAD.md), and
   [`integrations/README.md`](integrations/README.md)
 - Repository automation reviewers: [`.github/workflows/`](../.github/workflows/) and
-  [`.github/hooks/codex-local.json`](../.github/hooks/codex-local.json)
+  [`.claude/hooks/`](../.claude/hooks/)
 - Users: [`product/USER.md`](product/USER.md)
 - Privacy and legal review: [`operations/PRIVACY.md`](operations/PRIVACY.md) and
   [`operations/REGULATORY.md`](operations/REGULATORY.md)

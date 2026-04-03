@@ -11,8 +11,8 @@ Each platform requires different files and setup steps.
 ## Build the distribution artifacts first
 
 ```bash
-python -m soulmap_devtools.cli.build_skill           # dist/soulmap-ai.zip
-python -m soulmap_devtools.cli.build_skill --skill   # dist/soulmap-ai.skill
+uv run soulmap build           # dist/soulmap-ai.zip
+uv run soulmap build --skill   # dist/soulmap-ai.skill
 ```
 
 ## Claude (Skills)
@@ -133,7 +133,7 @@ Set visibility to **Public** to allow discovery.
 
 When a new SoulMap release ships:
 
-1. Run `python -m soulmap_devtools.cli.build_skill` to rebuild artifacts
+1. Run `uv run soulmap build` to rebuild artifacts
 2. Update ChatGPT GPT: re-upload changed knowledge files, update instructions if changed
 3. Update Gemini Gem: re-upload changed files
 4. Update Poe bot: paste updated system prompt

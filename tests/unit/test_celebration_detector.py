@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from soulmap_runtime.detectors.celebration_detector import detect_celebration
-from soulmap_runtime.routing.framework_selector import select_framework
+from soulmap.runtime.detectors.celebration_detector import detect_celebration
+from soulmap.runtime.routing.framework_selector import select_framework
 
 # ---------------------------------------------------------------------------
 # Helpers

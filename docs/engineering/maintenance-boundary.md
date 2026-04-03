@@ -13,10 +13,10 @@ focus:
 
 - `AGENTS.md` as the baseline behavioral, safety, and shipped-package contract
 - `skills/` and `templates/` as the core knowledge base
-- `src/soulmap_runtime/routing/framework_selector.py` and the existing detector stack
-- `src/soulmap_runtime/guards/response_safety_gate.py`
-- `src/soulmap_runtime/guards/response_contract.py`
-- `src/soulmap_runtime/guards/resource_sanitizer.py`
+- `src/soulmap/runtime/routing/framework_selector.py` and the existing detector stack
+- `src/soulmap/runtime/guards/response_safety_gate.py`
+- `src/soulmap/runtime/guards/response_contract.py`
+- `src/soulmap/runtime/guards/resource_sanitizer.py`
 - the current packaging flow for `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`
   including the `.claude-plugin/` boundary between them
 - the current test and Markdown contract suite
@@ -28,10 +28,10 @@ priority problem.
 
 These areas can exist, but must remain clearly secondary to the core:
 
-- experimental modules such as `src/soulmap_runtime/experimental/biometric_ingest.py`
-- experimental modules such as `src/soulmap_runtime/memory/memory_ledger.py`
+- experimental modules such as `src/soulmap/runtime/experimental/biometric_ingest.py`
+- experimental modules such as `src/soulmap/runtime/memory/memory_ledger.py`
 - spiritual or symbolic extensions that sit outside the main product promise
-- local workflow assets under `.agents/`
+- local workflow assets under `.claude/`
 - future platform adapters beyond the current Claude-first flow
 
 Optional layers must never make the repo harder to understand than the core itself.

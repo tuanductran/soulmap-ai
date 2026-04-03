@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from soulmap_devtools.checks import check_markdown_case, check_markdown_links
+from soulmap.devtools.checks import check_markdown_case, check_markdown_links
 
 
 def test_markdown_link_checker_accepts_valid_local_links(tmp_path: Path) -> None:
@@ -177,5 +177,14 @@ def test_markdown_case_checker_flags_wrong_case(tmp_path: Path) -> None:
 def test_markdown_case_checker_skips_exempt_paths(tmp_path: Path) -> None:
     source = tmp_path / "CHANGELOG.md"
     source.write_text("soulmap ai github ruff pyright\n", encoding="utf-8")
+
+    assert check_markdown_case.check_repo(tmp_path) == []
+
+
+def test_markdown_case_checker_skips_claude_entrypoint(tmp_path: Path) -> None:
+    source = tmp_path / "CLAUDE.md"
+    source.write_text(
+        "# CLAUDE\n\nThis file points Claude Code at repo guidance.\n", encoding="utf-8"
+    )
 
     assert check_markdown_case.check_repo(tmp_path) == []

@@ -32,8 +32,8 @@ It contains:
 
 - the baseline doctrine and package contract in [AGENTS.md](AGENTS.md)
 - the shipped knowledge base in [skills/](skills/) and [templates/](templates/)
-- the canonical Python runtime and safety logic in [src/soulmap_runtime/](src/soulmap_runtime/)
-- the canonical local tooling in [src/soulmap_devtools/](src/soulmap_devtools/) and
+- the canonical Python runtime and safety logic in [src/soulmap/runtime/](src/soulmap/runtime/)
+- the canonical local tooling in [src/soulmap/devtools/](src/soulmap/devtools/) and
   convenience wrappers in [scripts/](scripts/)
 - the operational and maintainer docs in [docs/](docs/)
 
@@ -65,25 +65,28 @@ The most important surfaces are:
 - [SKILL.md](SKILL.md), top-level package entry point
 - [skills/](skills/), frameworks, brand doctrine, safety guidance, voice, and meta layers
 - [templates/](templates/), reusable response and brand surfaces
-- [src/soulmap_runtime/](src/soulmap_runtime/), selectors, detectors, guards, and runtime support
-- [src/soulmap_devtools/](src/soulmap_devtools/), canonical format, lint, eval, and packaging entry points
+- [src/soulmap/runtime/](src/soulmap/runtime/), selectors, detectors, guards, and runtime support
+- [src/soulmap/devtools/](src/soulmap/devtools/), canonical format, lint, eval, and packaging entry points
 - [docs/](docs/), developer, tester, privacy, operations, and upload guidance
 
 ## Quick start
 
 ```bash
+uv python install 3.11
 bash scripts/bootstrap_venv.sh
-source .venv/bin/activate
-python -m soulmap_devtools.cli.format
-python -m soulmap_devtools.cli.lint
-python -m pytest -n auto -q
+uv run soulmap format
+uv run soulmap lint
+uv run soulmap test -n auto -q
 ```
+
+`bash scripts/bootstrap_venv.sh` now syncs the local environment from `uv.lock` and
+targets Python 3.11 explicitly.
 
 ## Build artifacts
 
 ```bash
-python -m soulmap_devtools.cli.build_skill
-python -m soulmap_devtools.cli.build_skill --skill
+uv run soulmap build
+uv run soulmap build --skill
 ```
 
 Outputs:
@@ -107,14 +110,10 @@ Use [AGENTS.md](AGENTS.md) first.
 
 If this checkout also contains local workflow layers, treat them as supplemental only:
 
-- [`.agents/`](.agents/) for the shared local agent workflow layer, see
-  [`.agents/README.md`](.agents/README.md)
-- [`.claude/`](.claude/) for the Claude compatibility layer, see
+- [`.claude/`](.claude/) for the local Claude workflow layer, see
   [`.claude/README.md`](.claude/README.md)
-- [`.codex/`](.codex/) for the Codex compatibility layer, see
-  [`.codex/README.md`](.codex/README.md)
 
-Neither layer replaces [AGENTS.md](AGENTS.md).
+This layer does not replace [AGENTS.md](AGENTS.md).
 
 For skill-package metadata preserved only in `.skill` artifacts, see
 [.claude-plugin/README.md](.claude-plugin/README.md).

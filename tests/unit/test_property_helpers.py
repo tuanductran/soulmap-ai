@@ -5,8 +5,8 @@ import json
 from hypothesis import given
 from hypothesis import strategies as st
 
-from soulmap_runtime.io.cli_payload import parse_json_object, parse_json_value
-from soulmap_runtime.io.text_normalization import normalize_message_text
+from soulmap.runtime.io.cli_payload import parse_json_object, parse_json_value
+from soulmap.runtime.io.text_normalization import normalize_message_text
 
 json_text_strategy = st.text(max_size=16)
 json_scalar_strategy = st.none() | st.booleans() | st.integers() | json_text_strategy

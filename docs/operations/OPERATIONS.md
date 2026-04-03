@@ -46,13 +46,12 @@ any wrapper around the knowledge base in this repo.
 Before shipping prompt, framework, detector, or policy updates:
 
 ```bash
-source .venv/bin/activate
-python -m soulmap_devtools.cli.eval_groups
-python -m soulmap_devtools.cli.eval_responses
-python tests/eval_regression/test_safety_evals.py
-python -m soulmap_devtools.cli.build_skill
-python -m soulmap_devtools.cli.build_skill --skill
-python -m pytest -n auto -q
+uv run soulmap eval-groups
+uv run soulmap eval-responses
+uv run python tests/eval_regression/test_safety_evals.py
+uv run soulmap build
+uv run soulmap build --skill
+uv run soulmap test -n auto -q
 ```
 
 Review these before approving release behavior:
@@ -61,15 +60,15 @@ Review these before approving release behavior:
 - [`../engineering/safety-enforcement-matrix.md`](../engineering/safety-enforcement-matrix.md)
 - [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md)
 
-Keep `python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team
+Keep `uv run python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team
 harness. It is intentionally script-driven and does not replace the main `pytest`
 suite.
 
 If Markdown structure or packaging rules changed, also run:
 
 ```bash
-python -m soulmap_devtools.cli.format
-python -m soulmap_devtools.cli.lint
+uv run soulmap format
+uv run soulmap lint
 ```
 
 ## Experimental modules
@@ -77,17 +76,17 @@ python -m soulmap_devtools.cli.lint
 The repo currently contains two integration-oriented modules that should not be enabled
 silently in production:
 
-- `src/soulmap_runtime/experimental/biometric_ingest.py`: only use with explicit user consent and a documented
+- `src/soulmap/runtime/experimental/biometric_ingest.py`: only use with explicit user consent and a documented
   health-data retention policy.
-- `src/soulmap_runtime/memory/memory_ledger.py`: only use when the product asks for explicit permission to
+- `src/soulmap/runtime/memory/memory_ledger.py`: only use when the product asks for explicit permission to
   retain a user-confirmed insight.
 
 Treat both as opt-in features that require product-level privacy review.
 
 ## Ownership map
 
-- `src/soulmap_runtime/routing/framework_selector.py`: orchestration and final framework choice
-- `src/soulmap_runtime/guards/response_safety_gate.py`: independent safety and scope enforcement
-- `src/soulmap_runtime/guards/response_contract.py`: response-level contract checks
+- `src/soulmap/runtime/routing/framework_selector.py`: orchestration and final framework choice
+- `src/soulmap/runtime/guards/response_safety_gate.py`: independent safety and scope enforcement
+- `src/soulmap/runtime/guards/response_contract.py`: response-level contract checks
 - `tests/eval_regression/test_safety_evals.py`: detector and scope safety regression suite
 - `evals/datasets/safety_test_cases.json`: red-team cases used by the safety eval script

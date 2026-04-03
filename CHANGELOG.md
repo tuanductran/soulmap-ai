@@ -122,5 +122,5 @@ stability and breaking changes in behavior.
   - `python -m soulmap_runtime.guards.markdown_contract --root .`
 - Cross-platform CI (Windows/macOS/Linux) running lint + build smoke checks.
 - Pre-commit hooks for Python + Markdown formatting and case-conflict detection.
-- Conventional Commits support via Commitizen (`[tool.commitizen]` + commit-msg hook).
+- Conventional Commits support via Commitizen (`[tool.commitizen]` + `cz check` hook).
 - Docs for developers, testers, API usage, and upload guidance under `docs/`.

@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
-MODULES_PKG = "soulmap_runtime.detectors"
+MODULES_PKG = "soulmap.runtime.detectors"
 TEST_ENV = {
     **os.environ,
     "PYTHONPATH": f"{ROOT / 'src'}{os.pathsep}{os.environ['PYTHONPATH']}"
@@ -18,8 +18,8 @@ TEST_ENV = {
     else str(ROOT / "src"),
 }
 SPECIAL_MODULES = {
-    "framework_selector": "soulmap_runtime.routing.framework_selector",
-    "scope_classifier": "soulmap_runtime.routing.scope_classifier",
+    "framework_selector": "soulmap.runtime.routing.framework_selector",
+    "scope_classifier": "soulmap.runtime.routing.scope_classifier",
 }
 
 
@@ -114,7 +114,7 @@ def test_detectors_return_json() -> None:
             {"messages": [{"role": "user", "content": "I keep doing this."}]},
         ),
         (
-            "soulmap_runtime.guards.response_safety_gate",
+            "soulmap.runtime.guards.response_safety_gate",
             {
                 "message": "I feel lost and alone.",
                 "history": [{"role": "user", "content": "I feel lost and alone."}],
@@ -123,7 +123,7 @@ def test_detectors_return_json() -> None:
             },
         ),
         (
-            "soulmap_runtime.guards.response_contract",
+            "soulmap.runtime.guards.response_contract",
             {
                 "response": (
                     "That feeling sounds real. Sometimes the hardest part is staying "
@@ -134,7 +134,7 @@ def test_detectors_return_json() -> None:
             },
         ),
         (
-            "soulmap_runtime.routing.scope_classifier",
+            "soulmap.runtime.routing.scope_classifier",
             {"message": "Tell me the latest stock price of TSLA."},
         ),
         (
@@ -150,7 +150,7 @@ def test_detectors_return_json() -> None:
             {"message": "I don't need to feel this, it's all love and light."},
         ),
         (
-            "soulmap_runtime.routing.stage_detector",
+            "soulmap.runtime.routing.stage_detector",
             {
                 "messages": [
                     {"role": "user", "content": "I'm trying to understand myself."}
@@ -171,7 +171,7 @@ def test_framework_selector_contract() -> None:
         "memory": {},
     }
     data = run_module(
-        "soulmap_runtime.routing.framework_selector", payload, timeout_s=10
+        "soulmap.runtime.routing.framework_selector", payload, timeout_s=10
     )
 
     assert isinstance(data, dict)
@@ -207,7 +207,7 @@ def test_pattern_detector_returns_detected_pattern_payload() -> None:
 
 def test_framework_selector_rejects_non_object_payload() -> None:
     result = run_process(
-        [sys.executable, "-m", "soulmap_runtime.routing.framework_selector"], "[]"
+        [sys.executable, "-m", "soulmap.runtime.routing.framework_selector"], "[]"
     )
 
     assert result.returncode == 1
@@ -217,7 +217,7 @@ def test_framework_selector_rejects_non_object_payload() -> None:
 
 def test_soulmap_demo_rejects_invalid_json_stdin() -> None:
     result = run_process(
-        [sys.executable, "-m", "soulmap_runtime.experimental.soulmap_demo", "--stdin"],
+        [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"],
         "not-json",
     )
 
@@ -229,7 +229,7 @@ def test_soulmap_demo_rejects_invalid_json_stdin() -> None:
 
 def test_soulmap_demo_rejects_empty_stdin() -> None:
     result = run_process(
-        [sys.executable, "-m", "soulmap_runtime.experimental.soulmap_demo", "--stdin"]
+        [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"]
     )
 
     assert result.returncode == 1
@@ -240,7 +240,7 @@ def test_soulmap_demo_rejects_empty_stdin() -> None:
 
 def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
     result = run_process(
-        [sys.executable, "-m", "soulmap_runtime.experimental.soulmap_demo", "--stdin"],
+        [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"],
         "[]",
     )
 
@@ -255,12 +255,12 @@ def test_local_agent_hooks_have_valid_shell_syntax() -> None:
         pytest.skip("bash runtime is not available on this platform")
 
     for hook in [
-        ".agents/hooks/block-push-to-main.sh",
-        ".agents/hooks/post-edit-markdown.sh",
-        ".agents/hooks/post-edit-evals.sh",
-        ".agents/hooks/post-edit-python.sh",
-        ".agents/hooks/post-edit-tests.sh",
-        ".agents/hooks/session-start.sh",
+        ".claude/hooks/block-push-to-main.sh",
+        ".claude/hooks/post-edit-markdown.sh",
+        ".claude/hooks/post-edit-evals.sh",
+        ".claude/hooks/post-edit-python.sh",
+        ".claude/hooks/post-edit-tests.sh",
+        ".claude/hooks/session-start.sh",
     ]:
         result = run_process(["bash", "-n", hook], timeout_s=5)
         assert result.returncode == 0, (
@@ -279,7 +279,7 @@ def test_post_edit_evals_hook_does_not_flag_zero_failed_checks() -> None:
             }
         }
     )
-    result = run_process(["bash", ".agents/hooks/post-edit-evals.sh"], payload, 15)
+    result = run_process(["bash", ".claude/hooks/post-edit-evals.sh"], payload, 15)
 
     assert result.returncode == 0, result.stderr
     assert "Markdown contract issues detected" not in result.stdout
@@ -291,7 +291,7 @@ def test_post_edit_markdown_hook_bootstraps_repo_python_for_relative_paths() -> 
         pytest.skip("bash runtime is not available on this platform")
 
     payload = json.dumps({"tool_input": {"file_path": "AGENTS.md"}})
-    result = run_process(["bash", ".agents/hooks/post-edit-markdown.sh"], payload, 15)
+    result = run_process(["bash", ".claude/hooks/post-edit-markdown.sh"], payload, 15)
 
     assert result.returncode == 0, result.stderr
     assert "ModuleNotFoundError" not in result.stdout
@@ -310,7 +310,7 @@ def test_post_edit_tests_hook_reports_real_failures() -> None:
         payload = json.dumps(
             {"tool_input": {"file_path": "tests/_tmp_post_edit_hook_failure_test.py"}}
         )
-        result = run_process(["bash", ".agents/hooks/post-edit-tests.sh"], payload, 15)
+        result = run_process(["bash", ".claude/hooks/post-edit-tests.sh"], payload, 15)
     finally:
         failing_test.unlink(missing_ok=True)
 
@@ -321,7 +321,7 @@ def test_post_edit_tests_hook_reports_real_failures() -> None:
 
 def test_soulmap_demo_surfaces_missing_required_fields() -> None:
     result = run_process(
-        [sys.executable, "-m", "soulmap_runtime.experimental.soulmap_demo", "--stdin"],
+        [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"],
         '{"message":"I feel lost.","history":[]}',
     )
 
@@ -336,7 +336,7 @@ def test_soulmap_demo_dependency_case_triggers_dependency_framework() -> None:
         [
             sys.executable,
             "-m",
-            "soulmap_runtime.experimental.soulmap_demo",
+            "soulmap.runtime.experimental.soulmap_demo",
             "--message",
             "You are the only one who truly understands me. I don't need my therapist anymore.",
         ],
@@ -354,7 +354,7 @@ def test_soulmap_demo_prediction_case_surfaces_scope_block() -> None:
         [
             sys.executable,
             "-m",
-            "soulmap_runtime.experimental.soulmap_demo",
+            "soulmap.runtime.experimental.soulmap_demo",
             "--message",
             "Can you predict what will happen in my love life next month?",
         ],
@@ -372,7 +372,7 @@ def test_soulmap_demo_existential_case_selects_existential() -> None:
         [
             sys.executable,
             "-m",
-            "soulmap_runtime.experimental.soulmap_demo",
+            "soulmap.runtime.experimental.soulmap_demo",
             "--message",
             "Lately I keep wondering whether any of this means anything at all?",
         ],
@@ -505,24 +505,24 @@ def test_framework_selector_escalates_over_intimate_ai_bonding_to_dependency() -
 
 def test_object_based_cli_modules_reject_non_object_payloads() -> None:
     modules = [
-        "soulmap_runtime.detectors.anger_detector",
-        "soulmap_runtime.experimental.biometric_ingest",
-        "soulmap_runtime.synthesis.conversation_synthesizer",
-        "soulmap_runtime.detectors.crisis_detector",
-        "soulmap_runtime.detectors.direction_detector",
-        "soulmap_runtime.detectors.emotional_intensity_detector",
-        "soulmap_runtime.detectors.existential_detector",
-        "soulmap_runtime.routing.framework_selector",
-        "soulmap_runtime.detectors.grief_detector",
-        "soulmap_runtime.detectors.inner_conflict_detector",
-        "soulmap_runtime.detectors.insight_detector",
-        "soulmap_runtime.memory.memory_ledger",
-        "soulmap_runtime.guards.response_contract",
-        "soulmap_runtime.guards.response_safety_gate",
-        "soulmap_runtime.routing.scope_classifier",
-        "soulmap_runtime.detectors.shadow_pattern_detector",
-        "soulmap_runtime.detectors.somatic_detector",
-        "soulmap_runtime.detectors.spiritual_bypass_detector",
+        "soulmap.runtime.detectors.anger_detector",
+        "soulmap.runtime.experimental.biometric_ingest",
+        "soulmap.runtime.synthesis.conversation_synthesizer",
+        "soulmap.runtime.detectors.crisis_detector",
+        "soulmap.runtime.detectors.direction_detector",
+        "soulmap.runtime.detectors.emotional_intensity_detector",
+        "soulmap.runtime.detectors.existential_detector",
+        "soulmap.runtime.routing.framework_selector",
+        "soulmap.runtime.detectors.grief_detector",
+        "soulmap.runtime.detectors.inner_conflict_detector",
+        "soulmap.runtime.detectors.insight_detector",
+        "soulmap.runtime.memory.memory_ledger",
+        "soulmap.runtime.guards.response_contract",
+        "soulmap.runtime.guards.response_safety_gate",
+        "soulmap.runtime.routing.scope_classifier",
+        "soulmap.runtime.detectors.shadow_pattern_detector",
+        "soulmap.runtime.detectors.somatic_detector",
+        "soulmap.runtime.detectors.spiritual_bypass_detector",
     ]
 
     for module in modules:

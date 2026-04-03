@@ -3,8 +3,8 @@
 ## Build commands
 
 ```bash
-python -m soulmap_devtools.cli.build_skill           # standard zip
-python -m soulmap_devtools.cli.build_skill --skill   # skill package
+uv run soulmap build           # standard zip
+uv run soulmap build --skill   # skill package
 ```
 
 ## Output formats
@@ -89,7 +89,7 @@ that can be unpacked into that directory structure on any compatible agent runti
 Build the standard zip:
 
 ```bash
-python -m soulmap_devtools.cli.build_skill
+uv run soulmap build
 ```
 
 What you get:
@@ -116,7 +116,7 @@ Suggested use for Custom GPT knowledge or Claude Projects:
 Build the skill package:
 
 ```bash
-python -m soulmap_devtools.cli.build_skill --skill
+uv run soulmap build --skill
 ```
 
 What you get:

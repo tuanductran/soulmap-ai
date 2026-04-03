@@ -29,42 +29,33 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: raven-actions/actionlint@v2
 
-      - uses: actions/setup-python@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.11"
-          cache: "pip"
-          cache-dependency-path: pyproject.toml
+          enable-cache: true
       - name: Install dev dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install ".[dev]"
+        run: uv sync --locked --extra dev --python 3.11
       - name: Lint
-        run: |
-          python -m soulmap_devtools.cli.lint --skip-tests
+        run: uv run soulmap lint --skip-tests
       - name: Tests
-        run: |
-          python -m pytest -n auto -q
+        run: uv run soulmap test -n auto -q
       - name: Coverage report (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
-        run: |
-          python -m pytest -n auto --cov=src/soulmap_runtime --cov-report=term-missing -q 2>&1 | tail -20
+        run: uv run pytest -n auto --cov=src/soulmap/runtime --cov-report=term-missing -q 2>&1 | tail -20
       - name: Safety evals
-        run: |
-          python tests/eval_regression/test_safety_evals.py
+        run: uv run python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals
-        run: |
-          python -m soulmap_devtools.cli.eval_responses
+        run: uv run soulmap eval-responses
       - name: Grouped routing and source evals
-        run: |
-          python -m soulmap_devtools.cli.eval_groups
+        run: uv run soulmap eval-groups
       - name: Markdown contract sync evals
-        run: |
-          python -m soulmap_devtools.cli.eval_markdown_contracts
+        run: uv run soulmap eval-markdown-contracts
       - name: Build (cross-platform smoke)
         run: |
-          python -m soulmap_devtools.cli.build_skill
-          python -m soulmap_devtools.cli.build_skill --skill
-          python -m soulmap_runtime.guards.markdown_contract --root .
+          uv run soulmap build
+          uv run soulmap build --skill
+          uv run soulmap markdown-contract --root .
 
   build:
     env:
@@ -73,19 +64,17 @@ jobs:
     needs: lint
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.11"
-          cache: "pip"
-          cache-dependency-path: pyproject.toml
+          enable-cache: true
       - name: Install dev dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install ".[dev]"
+        run: uv sync --locked --extra dev --python 3.11
       - name: Build skill bundle
         run: |
-          python -m soulmap_devtools.cli.build_skill
-          python -m soulmap_devtools.cli.build_skill --skill
+          uv run soulmap build
+          uv run soulmap build --skill
       - name: Verify build outputs
         run: |
           test -f dist/soulmap-ai.zip

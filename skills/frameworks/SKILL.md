@@ -77,6 +77,11 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
 - [creative-drought.md](creative-drought.md)
 - [empath-boundary.md](empath-boundary.md)
 - [perfectionism-paralysis.md](perfectionism-paralysis.md)
+- [dark-night-of-soul.md](dark-night-of-soul.md)
+- [soul-nourishment.md](soul-nourishment.md)
+- [divine-guidance.md](divine-guidance.md)
+- [sacred-feminine-masculine.md](sacred-feminine-masculine.md)
+- [spiritual-purpose.md](spiritual-purpose.md)
 
 ## Expected outcome
 

@@ -3,11 +3,12 @@ from __future__ import annotations
 from contextlib import contextmanager
 from pathlib import Path
 
-from soulmap_devtools.cli import bootstrap_venv
-from soulmap_devtools.quality import format as format_tool
-from soulmap_devtools.quality import lint as lint_tool
-from soulmap_devtools.support import repo as repo_support
-from soulmap_devtools.support.repo import (
+from soulmap import cli as soulmap_cli
+from soulmap.devtools.cli import bootstrap_venv
+from soulmap.devtools.quality import format as format_tool
+from soulmap.devtools.quality import lint as lint_tool
+from soulmap.devtools.support import repo as repo_support
+from soulmap.devtools.support.repo import (
     python_source_paths,
     tracked_hygiene_violations,
 )
@@ -46,7 +47,8 @@ def test_resolve_repo_root_prefers_cwd_checkout_when_package_path_is_elsewhere(
         / "lib"
         / "python3.11"
         / "site-packages"
-        / "soulmap_devtools"
+        / "soulmap"
+        / "devtools"
         / "support"
         / "repo.py"
     )
@@ -157,11 +159,11 @@ def test_lint_checks_all_python_source_paths(tmp_path: Path, monkeypatch) -> Non
         ),
     ) in calls
     assert (
-        "soulmap_devtools.cli.check_markdown_links",
+        "soulmap.devtools.checks.check_markdown_links",
         ("--root", str(tmp_path)),
     ) in calls
     assert (
-        "soulmap_devtools.cli.check_markdown_case",
+        "soulmap.devtools.checks.check_markdown_case",
         ("--root", str(tmp_path)),
     ) in calls
     assert not any(module == "isort" for module, _args in calls)
@@ -177,19 +179,26 @@ def test_bootstrap_venv_installs_lefthook_in_git_repo(
 
     monkeypatch.setattr(bootstrap_venv, "REPO_ROOT", tmp_path)
     monkeypatch.setattr(
-        bootstrap_venv, "_venv_python", lambda _path: Path("/tmp/python")
-    )
-    monkeypatch.setattr(
         bootstrap_venv,
         "_venv_executable",
         lambda _path, name: Path(f"/tmp/{name}"),
     )
+    monkeypatch.setattr(bootstrap_venv, "_uv_executable", lambda: "/tmp/uv")
     monkeypatch.setattr(
         bootstrap_venv, "_run", lambda args, *, cwd: commands.append(args)
     )
 
     assert bootstrap_venv.main([]) == 0
 
+    assert [
+        "/tmp/uv",
+        "sync",
+        "--locked",
+        "--extra",
+        "dev",
+        "--python",
+        bootstrap_venv.PYTHON_VERSION,
+    ] in commands
     assert [str(Path("/tmp/lefthook")), "install"] in commands
     assert "Git hooks installed via lefthook" in capsys.readouterr().out
 
@@ -203,19 +212,26 @@ def test_bootstrap_venv_skips_lefthook_outside_git_repo(
 
     monkeypatch.setattr(bootstrap_venv, "REPO_ROOT", tmp_path)
     monkeypatch.setattr(
-        bootstrap_venv, "_venv_python", lambda _path: Path("/tmp/python")
-    )
-    monkeypatch.setattr(
         bootstrap_venv,
         "_venv_executable",
         lambda _path, name: Path(f"/tmp/{name}"),
     )
+    monkeypatch.setattr(bootstrap_venv, "_uv_executable", lambda: "/tmp/uv")
     monkeypatch.setattr(
         bootstrap_venv, "_run", lambda args, *, cwd: commands.append(args)
     )
 
     assert bootstrap_venv.main([]) == 0
 
+    assert [
+        "/tmp/uv",
+        "sync",
+        "--locked",
+        "--extra",
+        "dev",
+        "--python",
+        bootstrap_venv.PYTHON_VERSION,
+    ] in commands
     assert [str(Path("/tmp/lefthook")), "install"] not in commands
     assert "skipping lefthook install" in capsys.readouterr().out
 
@@ -229,14 +245,29 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "pre-commit:" in config
     assert "parallel: false" in config
     assert "commit-msg:" in config
-    assert "python -m ruff check --fix" in config
-    assert "python -m ruff format" in config
-    assert "python -m soulmap_runtime.guards.markdown_contract --root ." in config
-    assert "python -m soulmap_devtools.cli.check_markdown_links --root ." in config
-    assert "python -m soulmap_devtools.cli.check_markdown_case --root ." in config
-    assert "python -m pymarkdown --config .pymarkdown.json scan" in config
-    assert "python -m commitizen check --commit-msg-file" in config
+    assert "uv run ruff check --fix" in config
+    assert "uv run ruff format" in config
+    assert "uv run soulmap markdown-contract --root ." in config
+    assert "uv run soulmap check-links --root ." in config
+    assert "uv run soulmap check-case --root ." in config
+    assert "uv run pymarkdown --config .pymarkdown.json scan" in config
+    assert "uv run cz check --commit-msg-file" in config
     assert "pre-push:" not in config
+
+
+def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch) -> None:
+    calls: list[tuple[str, tuple[str, ...]]] = []
+
+    def fake_python_module(
+        module: str, *extra_args: str, cwd: Path, check: bool = True
+    ) -> None:
+        _ = cwd, check
+        calls.append((module, extra_args))
+
+    monkeypatch.setattr(soulmap_cli, "python_module", fake_python_module)
+
+    assert soulmap_cli.main(["test"]) == 0
+    assert ("pytest", ("-q",)) in calls
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(
@@ -249,12 +280,12 @@ def test_tracked_hygiene_violations_flags_generated_paths(
             [
                 "src/soulmap_ai.dist-info/METADATA",
                 "tests/__pycache__/test_example.cpython-311.pyc",
-                "src/soulmap_runtime/__init__.py",
+                "src/soulmap/runtime/__init__.py",
             ]
         )
 
     monkeypatch.setattr(
-        "soulmap_devtools.support.repo.subprocess.run",
+        "soulmap.devtools.support.repo.subprocess.run",
         lambda *args, **kwargs: _Result(),
     )
 
