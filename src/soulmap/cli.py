@@ -37,7 +37,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "build": build_skill.main,
         "check-case": check_markdown_case.main,
         "check-links": check_markdown_links.main,
-        "demo": lambda args: soulmap_demo.main(args),
+        "demo": soulmap_demo.main,
         "eval-groups": eval_groups.main,
         "eval-markdown-contracts": eval_markdown_contracts.main,
         "eval-responses": eval_responses.main,
