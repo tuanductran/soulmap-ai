@@ -5,6 +5,12 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.5.0 (2026-04-03)
+
+### Feat
+
+- Add 5 new frameworks and fix QA issues
+
 ## v0.4.1 (2026-03-31)
 
 ### Fix
