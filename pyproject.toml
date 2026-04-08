@@ -37,7 +37,7 @@ include = [
 
 [project.optional-dependencies]
 dev = [
-  "hypothesis==6.151.10",
+  "hypothesis==6.151.11",
   "ruff==0.15.8",
   "lefthook==2.1.4",
   "pymarkdownlnt==0.9.36",
