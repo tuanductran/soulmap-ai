@@ -45,7 +45,7 @@ dev = [
   "pytest-cov==7.1.0",
   "pytest-xdist==3.8.0",
   "pyright==1.1.408",
-  "commitizen==4.13.9",
+  "commitizen==4.13.10",
 ]
 
 [tool.ruff]
