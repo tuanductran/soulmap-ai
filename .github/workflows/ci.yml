@@ -35,9 +35,13 @@ jobs:
           python-version: "3.11"
           enable-cache: true
       - name: Install dev dependencies
-        run: uv sync --locked --extra dev --python 3.11
+        run: uv sync --locked --python 3.11
       - name: Lint
         run: uv run soulmap lint --skip-tests
+      - name: Dead code detection (Vulture)
+        run: uv run vulture
+      - name: Dependency analysis (Deptry)
+        run: uv run deptry .
       - name: Tests
         run: uv run soulmap test -n auto -q
       - name: Coverage report (ubuntu only)
@@ -70,7 +74,7 @@ jobs:
           python-version: "3.11"
           enable-cache: true
       - name: Install dev dependencies
-        run: uv sync --locked --extra dev --python 3.11
+        run: uv sync --locked --python 3.11
       - name: Build skill bundle
         run: |
           uv run soulmap build

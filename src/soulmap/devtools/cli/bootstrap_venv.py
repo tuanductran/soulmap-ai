@@ -41,8 +41,6 @@ def main(argv: list[str] | None = None) -> int:
             uv_bin,
             "sync",
             "--locked",
-            "--extra",
-            "dev",
             "--python",
             PYTHON_VERSION,
         ],

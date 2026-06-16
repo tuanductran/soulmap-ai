@@ -27,7 +27,7 @@ This repo uses `uv.lock` as the canonical locked dependency set. To sync the pro
 directly from the lock file:
 
 ```bash
-uv sync --locked --extra dev --python 3.11
+uv sync --locked --python 3.11
 ```
 
 `uv sync` installs the project in editable mode for local development, so contributor

@@ -1,11 +1,17 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "soulmap-ai",
+  "version": "0.5.0",
   "description": "Reflective companion skills, safety guardrails, voice systems, and reusable templates for SoulMap AI.",
+  "owner": {
+    "name": "Tuan Duc Tran",
+    "email": "tuanductran.dev@gmail.com"
+  },
   "plugins": [
     {
       "name": "SoulMap Brand System",
-      "source": "./",
       "description": "Brand doctrine, positioning, message hierarchy, strategic direction, and surface-specific rules that define SoulMap AI's identity and boundaries.",
+      "source": "./",
       "skills": [
         "./skills/brand"
       ]
@@ -20,40 +26,40 @@
     },
     {
       "name": "SoulMap Safety Guardrails",
-      "source": "./",
       "description": "Safety, ethics, trauma language, whitelist-blacklist scope control, prompt injection defense, and dependency boundary rules.",
+      "source": "./",
       "skills": [
         "./skills/safety"
       ]
     },
     {
       "name": "SoulMap Meta Guidance",
-      "source": "./",
       "description": "Deep inquiry prompts, user journey stages, orchestration rules, execution pipeline, and meta-level guidance for selecting the right reflective posture. Includes session-continuity protocol for memory-enabled environments and prior-session reference handling.",
+      "source": "./",
       "skills": [
         "./skills/meta"
       ]
     },
     {
       "name": "SoulMap Spiritual Layer",
-      "source": "./",
       "description": "Spiritual policies, symbolic numerology guidance, healing metaphors, and chakra-related support content used within SoulMap's guardrails.",
+      "source": "./",
       "skills": [
         "./skills/spiritual"
       ]
     },
     {
       "name": "SoulMap Voice System",
-      "source": "./",
       "description": "Persona, response calibration, and session ritual guidance for keeping SoulMap's tone consistent across interactions.",
+      "source": "./",
       "skills": [
         "./skills/voice"
       ]
     },
     {
       "name": "SoulMap Templates Library",
-      "source": "./",
       "description": "Reusable templates for response structure, redirects, onboarding, launch readiness, FAQ, and reflective scenarios.",
+      "source": "./",
       "skills": [
         "./templates"
       ]
