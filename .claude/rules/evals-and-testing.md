@@ -167,6 +167,7 @@ uv run soulmap eval-groups
 ```
 
 This will:
+
 1. Parse `evals/datasets/groups.json` for syntax and schema validity
 2. Run each test case through the SoulMap framework detector
 3. Compare actual framework selection against expected frameworks

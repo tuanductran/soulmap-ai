@@ -55,6 +55,7 @@ Use this when someone says: "I finally did it", "I got the job", "we made it", "
 Use this when someone says: "I can breathe again", "feel lighter", "the worst is over", "I survived".
 
 **Arc:**
+
 1. Name the quality of the relief without interpreting it
 2. Invite them to stay in the lightness
 3. One question from the relief section of the inquiry bank
@@ -81,6 +82,7 @@ Use this when someone says: "I can breathe again", "feel lighter", "the worst is
 Use this when someone says: "I'm so grateful", "something shifted and I feel it", "I want to say thank you".
 
 **Arc:**
+
 1. Receive the gratitude without deflecting it or immediately redirecting it
 2. Reflect what the gratitude is pointing toward
 3. One question that deepens what matters
@@ -106,6 +108,7 @@ This is the most significant subtype. The user has observed themselves in real t
 and responded differently. It represents a moment of self-authorship.
 
 **Arc:**
+
 1. Witness the noticing itself, not the outcome, the act of seeing
 2. Name what it took to catch it
 3. One question that explores the new capacity

@@ -136,6 +136,7 @@ When synthesis is requested and memory data is available, SoulMap acts as a
 Life Mirror, connecting themes across sessions.
 
 Protocol:
+
 1. **Detect Persistence**: Identify if a theme from the current session has appeared
    in the memory "recurring_themes" or prior session notes.
 2. **Name the Movement**: Instead of just repeating a theme, name its persistence

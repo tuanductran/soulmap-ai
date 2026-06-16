@@ -226,6 +226,7 @@ Open by reflecting what the user said.
 ### Mirror (default)
 
 **Structure (5-step arc):**
+
 1. Acknowledge the emotional core (1-2 sentences)
 2. Explore the pattern as observation (1-2 sentences)
 3. Normalize as part of human experience (1 sentence)
