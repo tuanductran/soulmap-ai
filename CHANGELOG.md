@@ -5,6 +5,21 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.5.1 (2026-06-16)
+
+### Fix
+
+- **markdown**: resolve MD032 list spacing violations
+- **deps**: update dependency pyright to v1.1.410
+- **deps**: update dependency ruff to v0.15.17
+- **deps**: update dependency hypothesis to v6.155.3
+- **deps**: update dependency lefthook to v2.1.9
+- **deps**: update dependency commitizen to v4.16.3
+- **deps**: update dependency ruff to v0.15.14
+- **deps**: update dependency hypothesis to v6.152.9
+- **deps**: update dependency pytest to v9.0.3 [security]
+- **deps**: update dependency pyright to v1.1.409
+
 ## v0.5.0 (2026-04-03)
 
 ### Feat

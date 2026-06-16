@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "soulmap-ai"
-version = "0.5.0"
+version = "0.5.1"
 description = "SoulMap AI knowledge base, orchestration runtime, and local developer tooling."
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
