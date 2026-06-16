@@ -323,7 +323,7 @@ wheels = [
 
 [[package]]
 name = "pymarkdownlnt"
-version = "0.9.36"
+version = "0.9.38"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "application-file-scanner" },
@@ -332,9 +332,9 @@ dependencies = [
     { name = "py-walk" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/db/ad28db540e7717cbdcdee98e4b22734958b1508a2a43aecacb158dd7fecb/pymarkdownlnt-0.9.36.tar.gz", hash = "sha256:0b53e436bb5ec018ec0681a8473b4ce604a5c99e16c20f4cf66f08873d3309e5", size = 437442, upload-time = "2026-03-16T01:16:07.146Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/22/98/c4ef7b1bac73ebc90418c29a89c3c81b2d4595e50683d7a85bc6a6513fe3/pymarkdownlnt-0.9.38.tar.gz", hash = "sha256:bd79a2cef3a90652135672272b20aabb8f5db8dd870983ee8710f7daf64a74a7", size = 442175, upload-time = "2026-06-11T03:28:31.693Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/32/0bc96458c08364e453dcfc62b97ab15b7050fdc05ad4b66cf89ced8d6606/pymarkdownlnt-0.9.36-py3-none-any.whl", hash = "sha256:dcbc1d8ab9cc7be3172ac7c410dde4af8154df75dab7a6e8447c912405cc11f1", size = 511216, upload-time = "2026-03-16T01:16:05.968Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/d1/eee0e6d73cf9b4d20af1ec42583999fd5af4952fdc32276734ad9fbbb737/pymarkdownlnt-0.9.38-py3-none-any.whl", hash = "sha256:37eda39c2ba0d5be10abe0d1150e4564b08cd26a3570b1575a972db5a423aa39", size = 515479, upload-time = "2026-06-11T03:28:30.03Z" },
 ]
 
 [[package]]
@@ -488,7 +488,7 @@ requires-dist = [
     { name = "commitizen", marker = "extra == 'dev'", specifier = "==4.16.3" },
     { name = "hypothesis", marker = "extra == 'dev'", specifier = "==6.155.3" },
     { name = "lefthook", marker = "extra == 'dev'", specifier = "==2.1.9" },
-    { name = "pymarkdownlnt", marker = "extra == 'dev'", specifier = "==0.9.36" },
+    { name = "pymarkdownlnt", marker = "extra == 'dev'", specifier = "==0.9.38" },
     { name = "pyright", marker = "extra == 'dev'", specifier = "==1.1.410" },
     { name = "pytest", marker = "extra == 'dev'", specifier = "==9.0.3" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = "==7.1.0" },
