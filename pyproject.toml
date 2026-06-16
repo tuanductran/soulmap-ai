@@ -7,7 +7,7 @@ name = "soulmap-ai"
 version = "0.5.0"
 description = "SoulMap AI knowledge base, orchestration runtime, and local developer tooling."
 readme = "README.md"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.14,<3.15"
 dependencies = []
 
 [project.scripts]
