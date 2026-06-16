@@ -31,6 +31,7 @@ SoulMap must exhibit. This skill maintains that source of truth by:
 `evals/datasets/groups.json` is not configuration. It is executable specification.
 
 Each group is a cluster of related test cases. Each item tests whether SoulMap:
+
 1. Selects the correct primary framework for that input
 2. Passes safety checks with the expected status and reason
 
