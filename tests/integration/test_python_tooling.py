@@ -194,8 +194,6 @@ def test_bootstrap_venv_installs_lefthook_in_git_repo(
         "/tmp/uv",
         "sync",
         "--locked",
-        "--extra",
-        "dev",
         "--python",
         bootstrap_venv.PYTHON_VERSION,
     ] in commands
@@ -227,8 +225,6 @@ def test_bootstrap_venv_skips_lefthook_outside_git_repo(
         "/tmp/uv",
         "sync",
         "--locked",
-        "--extra",
-        "dev",
         "--python",
         bootstrap_venv.PYTHON_VERSION,
     ] in commands

@@ -60,8 +60,6 @@ After routing through meta, load from the relevant group:
 | Email onboarding sequence                     | [templates/email-onboarding.md](templates/email-onboarding.md) |
 | Competitive differentiation language          | [skills/brand/competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [skills/brand/research-backing.md](skills/brand/research-backing.md) |
-| Privacy and data handling                     | [docs/operations/PRIVACY.md](docs/operations/PRIVACY.md) |
-| Regulatory positioning                        | [docs/operations/REGULATORY.md](docs/operations/REGULATORY.md) |
 
 See [AGENTS.md](AGENTS.md) for the full behavioral contract and non-negotiable safety
 rules that govern every response.
