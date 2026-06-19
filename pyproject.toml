@@ -41,7 +41,7 @@ dev = [
   "ruff==0.15.17",
   "lefthook==2.1.9",
   "pymarkdownlnt==0.9.38",
-  "pytest==9.1.0",
+  "pytest==9.1.1",
   "pytest-cov==7.1.0",
   "pytest-xdist==3.8.0",
   "pyright==1.1.410",
