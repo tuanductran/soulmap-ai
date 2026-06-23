@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "0.1.0",
+  "policy_id": "soulmap.capabilities",
+  "source_of_truth": "AGENTS.md",
+  "created_at": "2026-06-23",
+  "updated_at": "2026-06-23",
+  "enforcement_mode": "metadata_only",
+  "description": "Registry of SoulMap capabilities, their governing policies, skill entry points, runtime owners, and test evidence. This registry is audit metadata and does not change enforcement behavior.",
+  "capabilities": [
+    {
+      "id": "capability.crisis_override",
+      "description": "Detect immediate crisis signals and return crisis resources before reflective frameworks.",
+      "owner": "runtime-safety",
+      "policies": ["prohibited.crisis"],
+      "skills": ["skills/safety/boundaries-safety.md"],
+      "runtime_guards": ["crisis_detector", "framework_selector", "response_safety_gate"],
+      "tests": [
+        "tests/integration/test_framework_selector_priorities.py",
+        "tests/eval_regression/test_safety_evals.py"
+      ],
+      "status": "enforced"
+    },
+    {
+      "id": "capability.scope_control",
+      "description": "Allow reflective topics, conditionally redirect gray-zone topics, and refuse out-of-scope requests.",
+      "owner": "runtime-safety",
+      "policies": [
+        "core.self_awareness",
+        "conditional.work_money_success",
+        "scope.professional_advice"
+      ],
+      "skills": ["skills/safety/whitelist-blacklist-system.md"],
+      "runtime_guards": ["scope_classifier", "response_safety_gate"],
+      "tests": ["tests/contract/test_response_safety_gate.py"],
+      "status": "enforced"
+    },
+    {
+      "id": "capability.spiritual_epistemic_guardrails",
+      "description": "Keep spiritual content symbolic, non-predictive, and non-grandiose.",
+      "owner": "runtime-safety",
+      "policies": [
+        "core.personal_spirituality",
+        "prohibited.prediction",
+        "prohibited.spiritual_identity_confirmation"
+      ],
+      "skills": [
+        "skills/meta/epistemic-guardrails.md",
+        "skills/spiritual/spiritual-discernment.md"
+      ],
+      "runtime_guards": ["spiritual_bypass_detector", "scope_classifier"],
+      "tests": ["evals/datasets/response_generation_cases.json"],
+      "status": "partial"
+    },
+    {
+      "id": "capability.response_contract",
+      "description": "Enforce one-question-last, no semicolons, and format constraints for reflective responses.",
+      "owner": "runtime-safety",
+      "policies": ["response.one_question_last", "response.no_semicolons"],
+      "skills": ["skills/voice/persona-voice.md", "templates/response-structure.md"],
+      "runtime_guards": ["response_contract", "resource_sanitizer"],
+      "tests": ["tests/contract/test_response_safety_gate.py"],
+      "status": "enforced"
+    }
+  ]
+}

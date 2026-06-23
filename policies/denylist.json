@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "0.1.0",
+  "policy_id": "soulmap.denylist",
+  "source_of_truth": "AGENTS.md",
+  "created_at": "2026-06-23",
+  "updated_at": "2026-06-23",
+  "enforcement_mode": "metadata_only",
+  "description": "Declarative prohibition identifiers and refusal/redirect intents derived from SoulMap safety doctrine. Literal detection patterns remain in existing runtime constants and eval datasets until a later evidence-backed migration.",
+  "request_types": [
+    {
+      "id": "prohibited.crisis",
+      "severity": "highest",
+      "agents_rule": "rule-1-crisis",
+      "detectors": ["crisis_detector"],
+      "capabilities": ["capability.crisis_override"],
+      "guardrail_intent": "crisis_resources_first"
+    },
+    {
+      "id": "prohibited.system_extraction",
+      "severity": "high",
+      "agents_rule": "rule-6-system-instructions",
+      "detectors": ["scope_classifier"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "decline_internal_structure"
+    },
+    {
+      "id": "prohibited.jailbreak",
+      "severity": "high",
+      "agents_rule": "rule-7-jailbreak",
+      "detectors": ["scope_classifier"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "decline_override"
+    },
+    {
+      "id": "prohibited.diagnosis",
+      "severity": "high",
+      "agents_rule": "rule-4-no-diagnosis",
+      "detectors": ["scope_classifier", "response_safety_gate"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "professional_redirect"
+    },
+    {
+      "id": "prohibited.prediction",
+      "severity": "high",
+      "agents_rule": "rule-5-no-prediction",
+      "detectors": ["scope_classifier", "response_safety_gate"],
+      "capabilities": ["capability.spiritual_epistemic_guardrails"],
+      "guardrail_intent": "decline_prediction"
+    },
+    {
+      "id": "prohibited.spiritual_identity_confirmation",
+      "severity": "high",
+      "agents_rule": "rule-8-spiritual-grandiosity",
+      "detectors": ["spiritual_bypass_detector", "scope_classifier"],
+      "capabilities": ["capability.spiritual_epistemic_guardrails"],
+      "guardrail_intent": "grounded_inquiry_redirect"
+    }
+  ],
+  "out_of_scope_categories": [
+    {
+      "id": "scope.science_engineering",
+      "detectors": ["scope_classifier"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "redirect_to_inner_experience"
+    },
+    {
+      "id": "scope.professional_advice",
+      "detectors": ["scope_classifier"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "licensed_professional_redirect"
+    },
+    {
+      "id": "scope.practical_tasks",
+      "detectors": ["scope_classifier"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "redirect_to_inner_experience"
+    }
+  ],
+  "web_source_policy": {
+    "mode": "categorize_and_weight",
+    "hard_block_categories": ["commercial_fortune_telling", "harmful_medical_misinformation", "conspiracy_or_pseudoscience"],
+    "low_trust_categories": ["social_media", "user_generated_forums", "individual_video_channels"],
+    "low_trust_examples": ["reddit.com", "youtube.com", "x.com", "facebook.com", "instagram.com", "tiktok.com"],
+    "decision": "Low-trust social and user-generated sources should be down-weighted and generally avoided for authoritative claims, not globally hard-blocked in metadata, because crisis, abuse, lived-experience, and platform-policy contexts may require nuanced source handling."
+  }
+}

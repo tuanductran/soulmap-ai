@@ -27,6 +27,7 @@ include = [
   "/.claude-plugin",
   "/.github",
   "/docs",
+  "/policies",
   "/evals",
   "/scripts",
   "/skills",

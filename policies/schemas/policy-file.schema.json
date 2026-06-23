@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://soulmap.local/policies/schemas/policy-file.schema.json",
+  "title": "SoulMap policy metadata file",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "policy_version",
+    "policy_id",
+    "source_of_truth",
+    "created_at",
+    "updated_at",
+    "enforcement_mode",
+    "description"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "policy_id": {"type": "string", "pattern": "^soulmap\\."},
+    "source_of_truth": {"const": "AGENTS.md"},
+    "created_at": {"type": "string", "format": "date"},
+    "updated_at": {"type": "string", "format": "date"},
+    "enforcement_mode": {"enum": ["metadata_only", "diagnostic", "enforced"]},
+    "description": {"type": "string"}
+  },
+  "additionalProperties": true
+}

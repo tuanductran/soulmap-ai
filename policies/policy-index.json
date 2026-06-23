@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "0.1.0",
+  "policy_id": "soulmap.policy_index",
+  "source_of_truth": "AGENTS.md",
+  "created_at": "2026-06-23",
+  "updated_at": "2026-06-23",
+  "enforcement_mode": "metadata_only",
+  "description": "Top-level index for declarative policy metadata consumed by governance checks, audit reports, and future runtime diagnostics. It must not change runtime behavior by itself.",
+  "files": [
+    {
+      "id": "allowlist",
+      "path": "policies/allowlist.json",
+      "schema": "policies/schemas/policy-file.schema.json",
+      "purpose": "Permitted and conditional reflective scope metadata"
+    },
+    {
+      "id": "denylist",
+      "path": "policies/denylist.json",
+      "schema": "policies/schemas/policy-file.schema.json",
+      "purpose": "Prohibited request, out-of-scope, and source-trust metadata"
+    },
+    {
+      "id": "capability_registry",
+      "path": "policies/capability-registry.json",
+      "schema": "policies/schemas/policy-file.schema.json",
+      "purpose": "Capability-to-policy-to-runtime ownership metadata"
+    }
+  ],
+  "runtime_contract": {
+    "load_order": ["denylist", "allowlist", "capability_registry"],
+    "precedence": [
+      "crisis",
+      "existing_runtime_denylists",
+      "existing_runtime_allowlists",
+      "framework_selection",
+      "response_contract",
+      "policy_metadata_trace"
+    ],
+    "fallback": "If a policy metadata file is unavailable, runtime behavior must remain unchanged. Governance checks should fail in CI, but request-time safety must continue to rely on existing detectors, classifiers, guards, and eval-backed constants."
+  }
+}

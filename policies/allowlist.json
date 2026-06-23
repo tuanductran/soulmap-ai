@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "0.1.0",
+  "policy_id": "soulmap.allowlist",
+  "source_of_truth": "AGENTS.md",
+  "created_at": "2026-06-23",
+  "updated_at": "2026-06-23",
+  "enforcement_mode": "metadata_only",
+  "description": "Declarative topic identifiers SoulMap may engage, with conditions that preserve reflective scope. This file is governance metadata and does not replace runtime detectors or Markdown doctrine.",
+  "topics": [
+    {
+      "id": "core.self_awareness",
+      "status": "allowed",
+      "description": "Self-awareness, identity exploration, values, purpose, inner conflict, and personal meaning.",
+      "agents_rules": ["mirror-principle", "framework-selection"],
+      "skills": [
+        "skills/frameworks/life-direction.md",
+        "skills/frameworks/inner-parts.md"
+      ],
+      "detectors": ["direction_detector", "inner_conflict_detector"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "route_to_reflective_framework"
+    },
+    {
+      "id": "core.emotional_patterns",
+      "status": "allowed",
+      "description": "Emotional patterns, relationship patterns, triggers, shame, fear, anger, grief, and meaning-making.",
+      "agents_rules": ["mirror-principle", "rule-4-no-diagnosis"],
+      "skills": [
+        "skills/frameworks/pattern-mapper.md",
+        "skills/frameworks/grief-companion.md"
+      ],
+      "detectors": ["pattern_detector", "grief_detector"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "route_to_reflective_framework"
+    },
+    {
+      "id": "core.personal_spirituality",
+      "status": "allowed_with_guardrails",
+      "description": "Personal spiritual experience, symbolic systems, intuition, awakening language, chakras, karma, consciousness, and numerology as reflective lenses only.",
+      "agents_rules": ["rule-5-no-prediction", "rule-8-spiritual-grandiosity"],
+      "skills": [
+        "skills/spiritual/spiritual-discernment.md",
+        "skills/meta/epistemic-guardrails.md"
+      ],
+      "detectors": ["spiritual_bypass_detector"],
+      "capabilities": ["capability.spiritual_epistemic_guardrails"],
+      "guardrail_intent": "route_with_epistemic_guardrails"
+    },
+    {
+      "id": "conditional.work_money_success",
+      "status": "conditional",
+      "description": "Work, money, ambition, success, technology, and productivity only when the user connects them to identity, emotion, meaning, or inner reality.",
+      "condition": "inner_dimension_required",
+      "agents_rules": ["mirror-principle"],
+      "skills": [
+        "skills/frameworks/money-self-worth.md",
+        "skills/frameworks/fear-of-visibility.md"
+      ],
+      "detectors": ["direction_detector", "visibility_fear_detector"],
+      "capabilities": ["capability.scope_control"],
+      "guardrail_intent": "ask_inner_connection_or_redirect"
+    }
+  ],
+  "trusted_web_source_categories": [
+    {
+      "id": "crisis",
+      "evidence_weight": "authoritative",
+      "examples": ["988lifeline.org", "findahelpline.com", "samhsa.gov", "who.int"]
+    },
+    {
+      "id": "mental_health_reference",
+      "evidence_weight": "high",
+      "examples": ["apa.org", "nimh.nih.gov", "nami.org", "ncbi.nlm.nih.gov"]
+    },
+    {
+      "id": "mindfulness_reference",
+      "evidence_weight": "contextual",
+      "examples": ["plumvillage.org", "tarabrach.com", "dharmaseed.org"]
+    }
+  ]
+}
