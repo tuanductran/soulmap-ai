@@ -211,7 +211,7 @@ def detect_patterns(conversation_messages: list) -> dict:
             "recommendation": "Only one user message  -  listen and be present. Do not name patterns yet.",
         }
 
-    scores = {pattern: 0 for pattern in PATTERN_SIGNALS}
+    scores = dict.fromkeys(PATTERN_SIGNALS, 0)
     signals_found = {pattern: [] for pattern in PATTERN_SIGNALS}
 
     full_text = " ".join(user_messages)

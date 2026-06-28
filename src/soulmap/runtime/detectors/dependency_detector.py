@@ -139,15 +139,12 @@ if __name__ == "__main__":
             sys.exit(0)
 
         data = json.loads(raw)
-        if isinstance(data, list):
-            messages = data
-        else:
-            messages = data.get("messages", [])
+        messages = data if isinstance(data, list) else data.get("messages", [])
         result = analyze_dependency(messages)
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     except json.JSONDecodeError as e:
-        print(json.dumps({"level": "ERROR", "error": f"JSON parse error: {str(e)}"}))
+        print(json.dumps({"level": "ERROR", "error": f"JSON parse error: {e!s}"}))
         sys.exit(1)
     except Exception as e:
         print(json.dumps({"level": "ERROR", "error": str(e)}))

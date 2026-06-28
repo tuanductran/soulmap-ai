@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "soulmap-ai",
-  "version": "0.5.0",
   "description": "Reflective companion skills, safety guardrails, voice systems, and reusable templates for SoulMap AI.",
   "owner": {
     "name": "Tuan Duc Tran",

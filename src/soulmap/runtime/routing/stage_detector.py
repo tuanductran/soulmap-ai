@@ -154,7 +154,7 @@ def detect_stage(conversation_messages: list[ConversationMessage]) -> dict[str, 
             "recommendation": "No conversation history. Default to Stage 1: presence-first, no frameworks.",
         }
 
-    scores = {stage: 0 for stage in range(1, 7)}
+    scores = dict.fromkeys(range(1, 7), 0)
     signals_found = {stage: [] for stage in range(1, 7)}
 
     for msg in user_messages:

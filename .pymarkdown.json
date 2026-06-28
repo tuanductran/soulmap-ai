@@ -10,41 +10,14 @@
     "md025": {
       "enabled": false
     },
-    "md033": {
-      "enabled": false
-    },
     "md032": {
-      "enabled": true
-    },
-    "md029": {
-      "style": "ordered"
+      "enabled": false
     },
     "md046": {
       "style": "fenced"
     },
-    "md034": {
-      "enabled": false
-    },
-    "md031": {
-      "enabled": false
-    },
-    "md007": {
-      "enabled": false
-    },
-    "md003": {
-      "enabled": false
-    },
-    "md022": {
-      "enabled": false
-    },
-    "md023": {
-      "enabled": false
-    },
     "md060": {
       "enabled": false
-    },
-    "md036": {
-      "enabled": true
     }
   },
   "extensions": {
