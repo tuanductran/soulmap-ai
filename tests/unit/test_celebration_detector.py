@@ -206,5 +206,5 @@ class TestFrameworkSelectorP9b:
 # ---------------------------------------------------------------------------
 
 
-def detect_celebrate(msg: str, history: list) -> dict:  # noqa: D103
+def detect_celebrate(msg: str, history: list) -> dict:
     return detect_celebration(msg, history)

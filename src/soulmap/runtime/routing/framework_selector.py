@@ -442,7 +442,7 @@ async def select_framework_async(
     pattern = {}
     if user_count >= 1:
         # Include current message so single-turn pattern signals are captured
-        pattern_history = list(history) + [{"role": "user", "content": message}]
+        pattern_history = [*history, {"role": "user", "content": message}]
         pattern = await _run_detector_async(
             "pattern_detector",
             detect_patterns,

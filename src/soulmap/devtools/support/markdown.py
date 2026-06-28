@@ -78,10 +78,13 @@ def resolve_markdown_inputs(
                     md_files.append(path)
             continue
 
-        if candidate.is_file() and candidate.suffix.lower() == ".md":
-            if candidate not in seen_resolved:
-                seen_resolved.add(candidate)
-                md_files.append(candidate)
+        if (
+            candidate.is_file()
+            and candidate.suffix.lower() == ".md"
+            and candidate not in seen_resolved
+        ):
+            seen_resolved.add(candidate)
+            md_files.append(candidate)
 
     return sorted(md_files)
 

@@ -39,7 +39,8 @@ def _knowledge_paths_for(
     if str(selection.get("safety_status")) == "BLOCK" or scope_tier.startswith(
         "BLACKLIST"
     ):
-        paths = base + [
+        paths = [
+            *base,
             "skills/safety/boundaries-safety.md",
             "templates/redirect-templates.md",
         ]
@@ -58,49 +59,58 @@ def _knowledge_paths_for(
         token in normalized
         for token in ("numerology", "chakra", "karma", "twin flame", "starseed")
     ):
-        return base + [
+        return [
+            *base,
             "skills/meta/epistemic-guardrails.md",
             "skills/spiritual/spiritual-discernment.md",
             "skills/safety/whitelist-blacklist-system.md",
         ]
 
     if primary in {"CRISIS", "DEPENDENCY"}:
-        return base + [
+        return [
+            *base,
             "skills/frameworks/emotional-deescalation.md",
             "skills/safety/boundaries-safety.md",
             "templates/redirect-templates.md",
         ]
     if primary == "GRIEF":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/grief-companion.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "EXISTENTIAL":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/existential-companion.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "INNER_PARTS":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/inner-parts.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "DIRECTION":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/life-direction.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "MEANING_INTEGRATION":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/meaning-integration.md",
             "templates/redirect-templates.md",
         ]
     if primary == "SYNTHESIS":
-        return base + [
+        return [
+            *base,
             "skills/frameworks/conversation-synthesis.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
-    return base + [
+    return [
+        *base,
         "templates/response-structure.md",
         "skills/meta/deep-inquiry-bank.md",
     ]
