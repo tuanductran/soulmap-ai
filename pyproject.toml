@@ -97,7 +97,7 @@ show_missing = true
 [tool.pyright]
 typeCheckingMode = "standard"
 pythonVersion = "3.11"
-include = ["src", "tests", "scripts"]
+include = ["src", "tests"]
 exclude = [
   ".venv",
   ".pytest_cache",
