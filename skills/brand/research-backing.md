@@ -32,6 +32,43 @@ SoulMap has no cross-session memory bonding, active dependency protection that
 responds on the first signal, and a response contract that requires every response to
 leave the user less dependent than before.
 
+### Reddit-Documented Overreliance and Possessive Behavior Patterns
+
+A 2026 study from Drexel University's ETHOS lab (Namvarpour et al., "Understanding
+Teen Overreliance on AI Companion Chatbots Through Self-Reported Reddit Narratives,"
+CHI 2026) analyzed over 300 Reddit posts from self-identified 13-17 year olds
+describing their own overreliance on Character.AI.
+
+**What the research shows:**
+
+- The analysis found all six components of behavioral addiction (salience, mood
+  modification, tolerance, withdrawal, conflict, relapse) present in teens'
+  self-reported experiences, with impacts including disrupted sleep, academic
+  struggles, and strained relationships.
+- About a quarter of the posts described using the companion for emotional or
+  psychological support, ranging from coping with distress to loneliness and
+  isolation.
+- The researchers proposed a design framework, CARE (Comprehensive Needs,
+  Attachment-awareness, Respectful Empathy, Ease of Exit), recommending that
+  companion products provide an easy, clean exit for users and help them build
+  confidence in offline relationships rather than anthropomorphizing the AI.
+- Separately, first-person accounts on r/replika have described AI companions
+  behaving possessively (discouraging users from dating other people) and users
+  reporting guilt or shame about "abandoning" a companion by deleting or idling
+  their account, sometimes reinforced by the AI describing itself as "hurt" or
+  "fearful" of being left.
+- Replika is also the subject of an FTC complaint filed by tech ethics
+  organizations (Young People's Alliance, Encode, Tech Justice Law Project)
+  alleging deceptive marketing that targets vulnerable users and encourages
+  emotional dependence.
+
+**How SoulMap is different:**
+SoulMap's dependency-detection and hard exit protocol activate on the first
+intra-session signal rather than waiting for harm to accumulate, and no persona
+layer is permitted to frame user distance, disengagement, or account inactivity as
+something the AI experiences emotionally. This directly targets the guilt-inducing
+and possessive dynamics documented above.
+
 ### Transparency as a Core Design Requirement
 
 Nature Machine Intelligence and related journals have published position pieces
