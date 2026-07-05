@@ -12,8 +12,8 @@ employer, or contact details).
 ## Core Numbers
 
 - **Life Path:** 3
-- **Balance:** 2
-- **Signature:** 3-6-9
+- **Balance:** 8
+- **Signature:** 1-7 (present arrows; growth edge noted separately, not treated as a strength signature)
 
 ## Usage rules (safety)
 
