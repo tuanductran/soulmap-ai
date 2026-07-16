@@ -5,17 +5,25 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    ACUTE_GRIEF,
-    AMBIGUOUS_LOSS,
-    ANTICIPATORY_GRIEF,
-    COMPLICATED_GRIEF,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/grief-companion.md,
+# "## Detection signals". Nothing is hardcoded here.
+_GRIEF_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/grief-companion.md"), "Detection signals"
+)
+ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
+ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
+AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
+COMPLICATED_GRIEF = _GRIEF_GROUPS["complicated grief"]
 
 HistoryMessage = dict[str, str]
 

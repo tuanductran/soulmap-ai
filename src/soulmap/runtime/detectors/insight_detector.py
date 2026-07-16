@@ -5,17 +5,26 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    EMERGING_INSIGHT,
-    EXPLICIT_INSIGHT,
-    POST_REFLECTION,
-    SELF_APPLICATION,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/meaning-integration.md,
+# "## Detection signals". Nothing is hardcoded here.
+_INSIGHT_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/meaning-integration.md"),
+    "Detection signals",
+)
+EXPLICIT_INSIGHT = _INSIGHT_GROUPS["explicit insight"]
+EMERGING_INSIGHT = _INSIGHT_GROUPS["emerging insight"]
+SELF_APPLICATION = _INSIGHT_GROUPS["self-application"]
+POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
 
 HistoryMessage = dict[str, str]
 
