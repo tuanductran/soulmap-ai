@@ -154,7 +154,7 @@ but "what does the fear know that you haven't fully heard yet."
 
 ## Detection signals
 
-Direct visibility fear, shrinking, hiding, going invisible before being seen:
+Direct visibility fear:
 
 - "afraid to post"
 - "afraid to share"
@@ -162,9 +162,53 @@ Direct visibility fear, shrinking, hiding, going invisible before being seen:
 - "what if people judge me"
 - "what if people see who i really am"
 - "i can't let people see"
+- "i hide this part of myself"
+- "i shrink when people look at me"
+- "i go invisible"
+- "i want to say something but i hold back"
+- "afraid of attention"
+- "afraid of being noticed"
+- "what if i'm wrong in public"
+- "afraid to be wrong out loud"
+- "i keep myself small"
+- "i make myself smaller"
+- "what if people see through me"
+- "afraid to claim space"
+- "i don't take up space"
+- "i delete everything before i post"
+- "i almost shared this but"
+- "i almost posted but"
+- "i hold back what i really think"
+- "i don't want to be seen"
+- "being visible feels dangerous"
+- "being seen feels risky"
+- "i disappear when people look at me"
+- "i go quiet when i'm watched"
 
-Secondary combination: shrinking language ("hold back", "go quiet", "invisible") paired
-with public or sharing context ("post", "share", "put out there").
+Shrinking:
+
+- "hold back"
+- "pull back"
+- "stay quiet"
+- "go quiet"
+- "disappear"
+- "invisible"
+- "small"
+- "hide"
+- "hidden"
+- "silent"
+
+Public expression:
+
+- "share"
+- "post"
+- "publish"
+- "speak up"
+- "say something"
+- "put out there"
+- "show people"
+- "let people see"
+- "let others see"
 
 ## Paired template
 
