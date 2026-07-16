@@ -81,7 +81,9 @@ def _add_markdown_phrases(
 def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
     """Extract only Markdown knowledge consumed by the runtime parsers."""
     text = path.read_text(encoding="utf-8")
-    source_kind = "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
+    source_kind = (
+        "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
+    )
 
     if path.name == "pattern-mapper.md":
         knowledge: dict[str, tuple[str, str]] = {}
@@ -98,9 +100,7 @@ def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
     for heading in _SIGNAL_HEADINGS:
         groups = extract_labeled_groups(text, heading)
         if groups:
-            phrases = tuple(
-                phrase for group in groups.values() for phrase in group
-            )
+            phrases = tuple(phrase for group in groups.values() for phrase in group)
         else:
             phrases = extract_keyword_section(text, heading)
         _add_markdown_phrases(

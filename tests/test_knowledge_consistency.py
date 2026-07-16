@@ -45,7 +45,7 @@ def test_find_python_markdown_duplicates_extracts_multiple_signal_units(
     skills = tmp_path / "skills"
     skills.mkdir()
     (skills / "safety.md").write_text(
-        '## Detection signals\n\nCrisis signals:\n\n'
+        "## Detection signals\n\nCrisis signals:\n\n"
         '- "want to die" or "want to end my life"\n',
         encoding="utf-8",
     )
@@ -91,8 +91,8 @@ def test_pattern_mapper_is_classified_as_structured_framework(tmp_path: Path) ->
     skills = tmp_path / "skills/frameworks"
     skills.mkdir(parents=True)
     (skills / "pattern-mapper.md").write_text(
-        '## Pattern 1: Example pattern\n\n'
-        '**Detection signals:**\n\n'
+        "## Pattern 1: Example pattern\n\n"
+        "**Detection signals:**\n\n"
         '- "pattern phrase"\n',
         encoding="utf-8",
     )
