@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from soulmap.runtime.knowledge.consistency import (
+    find_config_usage,
     find_python_markdown_duplicates,
 )
 
@@ -140,6 +141,50 @@ def test_non_signal_sections_are_not_treated_as_knowledge(tmp_path: Path) -> Non
     )
 
     assert find_python_markdown_duplicates(tmp_path) == ()
+
+
+def test_find_config_usage_distinguishes_active_and_orphaned_constants(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "patterns.py").write_text(
+        'ACTIVE: tuple[str, ...] = ("active",)\n'
+        'ORPHANED: tuple[str, ...] = ("orphaned",)\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors"
+    detector.mkdir(parents=True)
+    (detector / "example.py").write_text(
+        "from soulmap.runtime.config.patterns import ACTIVE\n\n"
+        "VALUE = ACTIVE\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+    by_constant = {item.constant: item for item in usage}
+
+    assert not by_constant["ACTIVE"].is_orphaned
+    assert by_constant["ACTIVE"].referenced_from == (detector / "example.py",)
+    assert by_constant["ORPHANED"].is_orphaned
+
+
+def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "patterns.py").write_text(
+        'SIGNALS: tuple[str, ...] = ("signal",)\n',
+        encoding="utf-8",
+    )
+    (config / "__init__.py").write_text(
+        "from .patterns import SIGNALS\n\n__all__ = [\"SIGNALS\"]\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert usage[0].is_orphaned
 
 
 def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
