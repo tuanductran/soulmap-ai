@@ -85,10 +85,15 @@ def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
 
 def _classification(python_path: Path, constant: str) -> str:
     """Classify overlap without deciding ownership or mutating either source."""
-    if python_path.name == "safety.py" and (
-        constant.startswith("CRISIS_") or constant == "GRANDIOSITY_SIGNALS"
-    ):
+    if python_path.name != "safety.py":
+        return "knowledge_duplicate"
+
+    if constant.startswith("CRISIS_"):
         return "safety_protected_overlap"
+
+    if constant == "GRANDIOSITY_SIGNALS":
+        return "review_required"
+
     return "knowledge_duplicate"
 
 
