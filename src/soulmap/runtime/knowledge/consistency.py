@@ -162,9 +162,12 @@ def find_config_usage(
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
         for node in ast.walk(tree):
-            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                if node.id in references:
-                    references[node.id].add(path)
+            if (
+                isinstance(node, ast.Name)
+                and isinstance(node.ctx, ast.Load)
+                and node.id in references
+            ):
+                references[node.id].add(path)
 
     return tuple(
         ConfigUsage(
