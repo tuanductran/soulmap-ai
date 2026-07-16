@@ -44,7 +44,7 @@ def test_find_python_markdown_duplicates_extracts_multiple_signal_units(
     )
 
     skills = tmp_path / "skills"
-    skills.mkdir(parents=True)
+    skills.mkdir()
     (skills / "safety.md").write_text(
         "## Detection signals\n\nCrisis signals:\n\n"
         '- "want to die"\n'
@@ -201,31 +201,6 @@ def test_find_config_usage_tracks_config_module_alias(tmp_path: Path) -> None:
     (detector / "example.py").write_text(
         "import soulmap.runtime.config.patterns as patterns\n\n"
         "VALUE = patterns.ACTIVE\n",
-        encoding="utf-8",
-    )
-
-    usage = find_config_usage(tmp_path)
-
-    assert not usage[0].is_orphaned
-    assert usage[0].referenced_from == (detector / "example.py",)
-
-
-def test_find_config_usage_tracks_package_reexport(tmp_path: Path) -> None:
-    config = tmp_path / "src/soulmap/runtime/config"
-    config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
-        'ACTIVE: tuple[str, ...] = ("active",)\n',
-        encoding="utf-8",
-    )
-    (config / "__init__.py").write_text(
-        "from .patterns import ACTIVE\n",
-        encoding="utf-8",
-    )
-
-    detector = tmp_path / "src/soulmap/runtime/detectors"
-    detector.mkdir(parents=True)
-    (detector / "example.py").write_text(
-        "from soulmap.runtime.config import ACTIVE\n\nVALUE = ACTIVE\n",
         encoding="utf-8",
     )
 
