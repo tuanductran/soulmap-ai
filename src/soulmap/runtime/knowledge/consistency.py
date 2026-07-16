@@ -28,6 +28,19 @@ class KnowledgeDuplicate:
     classification: str
 
 
+@dataclass(frozen=True, slots=True)
+class ConfigUsage:
+    """Runtime usage information for one Python config constant."""
+
+    python_path: Path
+    constant: str
+    referenced_from: tuple[Path, ...]
+
+    @property
+    def is_orphaned(self) -> bool:
+        return not self.referenced_from
+
+
 def _string_values(node: ast.AST) -> tuple[str, ...]:
     if not isinstance(node, (ast.Tuple, ast.List, ast.Set)):
         return ()
@@ -125,6 +138,42 @@ def _classification(python_path: Path, constant: str) -> str:
         return "review_required"
 
     return "knowledge_duplicate"
+
+
+def find_config_usage(
+    root: Path,
+    *,
+    python_root: Path = Path("src/soulmap/runtime/config"),
+) -> tuple[ConfigUsage, ...]:
+    """Find runtime references to config constants without treating exports as usage."""
+    config_dir = root / python_root
+    config_files = sorted(config_dir.glob("*.py"))
+    constants = {
+        (path, constant)
+        for path in config_files
+        for constant in _python_knowledge(path)
+    }
+    names = {constant for _, constant in constants}
+    references: dict[str, set[Path]] = {constant: set() for constant in names}
+    runtime_root = root / "src/soulmap/runtime"
+
+    for path in sorted(runtime_root.rglob("*.py")):
+        if config_dir in path.parents or path == config_dir:
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                if node.id in references:
+                    references[node.id].add(path)
+
+    return tuple(
+        ConfigUsage(
+            python_path=path,
+            constant=constant,
+            referenced_from=tuple(sorted(references[constant])),
+        )
+        for path, constant in sorted(constants)
+    )
 
 
 def find_python_markdown_duplicates(
