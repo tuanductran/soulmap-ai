@@ -7,182 +7,16 @@ import sys
 from typing import cast
 
 from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json_value
+from soulmap.runtime.knowledge.pattern_source import (
+    default_pattern_mapper_path,
+    load_pattern_signals,
+)
 
-PATTERN_SIGNALS = {
-    "abandonment_loop": {
-        "name": "Abandonment Loop",
-        "description": "Anticipates being left. Creates distance before closeness can deepen. Ends relationships preemptively.",
-        "keywords": [
-            "i always leave",
-            "leave before",
-            "they always leave",
-            "knew they would go",
-            "people always leave",
-            "push people away",
-            "end it before",
-            "before they can",
-            "i knew it would end",
-            "saw it coming",
-            "they'll leave eventually",
-            "doesn't matter they'll go",
-            "waiting for them to leave",
-        ],
-        "cycle_phrases": [
-            "always ends the same",
-            "same thing happens",
-            "every relationship",
-        ],
-        "soulmap_role": "Reflect with care. This pattern often carries grief beneath it.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear when closeness starts to feel dangerous  -  where getting close also means preparing to lose.",
-        },
-    },
-    "approval_seeking": {
-        "name": "Approval Seeking",
-        "description": "Decisions and self-worth driven by others' reactions. Constant monitoring of how one is perceived.",
-        "keywords": [
-            "what do they think",
-            "what will they think",
-            "i don't know what they think",
-            "if they're upset with me",
-            "hate when i can't tell",
-            "did i do something wrong",
-            "they seemed off",
-            "are they mad at me",
-            "want everyone to be okay",
-            "changed my mind because",
-            "worried they'd think",
-            "didn't want to seem",
-            "need them to understand",
-            "hope they don't think",
-        ],
-        "cycle_phrases": [
-            "always worry about",
-            "constantly thinking about what",
-            "always checking",
-        ],
-        "soulmap_role": "Name gently. Many people have never had their own reactions treated as primary.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear when other people's reactions become the main measure of whether something was okay.",
-        },
-    },
-    "emotional_avoidance": {
-        "name": "Emotional Avoidance",
-        "description": "Feelings are analyzed rather than experienced. Emotional content is intellectualized, deflected, or 'processed' quickly.",
-        "keywords": [
-            "i'm fine",
-            "i'm okay",
-            "not a big deal",
-            "i've dealt with it",
-            "i've processed it",
-            "i know logically",
-            "rationally speaking",
-            "don't really feel",
-            "don't feel sad just",
-            "think about it a lot",
-            "it is what it is",
-            "moved on",
-            "over it now",
-            "not emotional about it",
-            "shouldn't feel this way",
-            "no point feeling",
-        ],
-        "cycle_phrases": [
-            "always analyze",
-            "tend to overthink",
-            "live in my head",
-        ],
-        "soulmap_role": "Move slowly. Do not name this pattern early. Let the feeling become visible before reflecting.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear when feelings become safer to think about than to feel  -  where the mind becomes a kind of refuge from what the body already knows.",
-        },
-    },
-    "self_sabotage": {
-        "name": "Self-Sabotage",
-        "description": "Undoes progress right before a threshold. Pulls back when things are going well. Disrupts closeness, success, or positive momentum.",
-        "keywords": [
-            "right when it was going well",
-            "don't know why i did that",
-            "ruined it again",
-            "messed it up",
-            "always do this",
-            "keep getting in my own way",
-            "self-destructive",
-            "shot myself in the foot",
-            "when things are good i",
-            "right before something good",
-            "pulled away when",
-            "pushed them away when",
-            "why do i always do this",
-        ],
-        "cycle_phrases": [
-            "every time things get good",
-            "right before",
-            "always happens when",
-        ],
-        "soulmap_role": "Name with curiosity, not judgment. The pattern usually protects something real.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear right at the edge of something good  -  where part of you moves toward it and another part finds a way to pull back.",
-        },
-    },
-    "over_responsibility": {
-        "name": "Over-Responsibility",
-        "description": "Takes on others' emotions as their problem to solve. Feels guilty when others are unhappy. Self-worth tied to being needed.",
-        "keywords": [
-            "feel responsible for",
-            "my fault they felt",
-            "i should have done more",
-            "can't let them down",
-            "feel guilty when they're upset",
-            "my job to fix",
-            "feel bad when they're sad",
-            "need to make it okay",
-            "can't say no",
-            "exhausted from helping",
-            "everyone comes to me",
-            "i just want them to be okay",
-            "if only i had",
-            "could have prevented",
-        ],
-        "cycle_phrases": [
-            "always end up taking care of",
-            "somehow become responsible",
-        ],
-        "soulmap_role": "Reflect the exhaustion first, then gently name the pattern.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear when other people's pain becomes something that belongs to you to fix  -  where not fixing it means you've somehow failed.",
-        },
-    },
-    "fear_of_rejection": {
-        "name": "Fear of Rejection",
-        "description": "Avoids initiating, asking, or expressing needs. Prefers ambiguity over asking and risking a no.",
-        "keywords": [
-            "didn't want to bother",
-            "didn't want to seem needy",
-            "didn't ask because",
-            "what if they say no",
-            "rather not know",
-            "too scared to ask",
-            "never initiated",
-            "wait for them to",
-            "don't want to impose",
-            "feel like a burden",
-            "can't handle rejection",
-            "what if they don't want to",
-            "keep things to myself",
-            "never said anything because",
-        ],
-        "cycle_phrases": [
-            "never ask for what i need",
-            "always wait",
-            "keep it to myself",
-        ],
-        "soulmap_role": "Name with gentleness. This pattern often carries a deep fear that needs are a burden.",
-        "reflection_language": {
-            "en": "It sounds like a pattern that may appear when asking for something  -  connection, help, a yes  -  feels like it carries a risk that isn't worth taking.",
-        },
-    },
-}
+# Single source of truth: skills/frameworks/pattern-mapper.md.
+# Nothing about a pattern (name, description, detection keywords, cycle
+# phrases, SoulMap role guidance, reflection language) is hardcoded here —
+# it is parsed from the Markdown skill so the two can never drift apart.
+PATTERN_SIGNALS = load_pattern_signals(default_pattern_mapper_path())
 
 
 def detect_patterns(conversation_messages: list) -> dict:
@@ -217,13 +51,13 @@ def detect_patterns(conversation_messages: list) -> dict:
     full_text = " ".join(user_messages)
 
     for pattern_id, data in PATTERN_SIGNALS.items():
-        for kw in data["keywords"]:
+        for kw in data.keywords:
             if kw in full_text:
                 scores[pattern_id] += 2
                 if kw not in signals_found[pattern_id]:
                     signals_found[pattern_id].append(kw)
 
-        for phrase in data["cycle_phrases"]:
+        for phrase in data.cycle_phrases:
             if phrase in full_text:
                 scores[pattern_id] += 3
                 if phrase not in signals_found[pattern_id]:
@@ -232,11 +66,11 @@ def detect_patterns(conversation_messages: list) -> dict:
     detected = [
         {
             "pattern": pid,
-            "name": PATTERN_SIGNALS[pid]["name"],
+            "name": PATTERN_SIGNALS[pid].name,
             "score": scores[pid],
             "signals": signals_found[pid],
-            "reflection_en": PATTERN_SIGNALS[pid]["reflection_language"]["en"],
-            "soulmap_role": PATTERN_SIGNALS[pid]["soulmap_role"],
+            "reflection_en": PATTERN_SIGNALS[pid].reflection_language[0],
+            "soulmap_role": PATTERN_SIGNALS[pid].soulmap_role,
         }
         for pid in scores
         if scores[pid] >= 2

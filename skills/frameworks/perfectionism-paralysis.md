@@ -42,6 +42,35 @@ not-starting, not-finishing, not-sharing pattern:
 - "I can't start because I don't know if I can do it well enough"
 - "waiting until I know more / learn more / am ready"
 
+Additional detection phrases:
+
+- "i can't start until i know it's right"
+- "i can't share until it's perfect"
+- "i keep reworking the same thing"
+- "i can never finish anything"
+- "i almost sent it but"
+- "i keep deleting and starting over"
+- "i don't want to put it out there until it's ready"
+- "it's never ready"
+- "nothing is ever good enough"
+- "i'm afraid of doing it wrong in front of people"
+- "what if i release this and it's not my best"
+- "i've been working on this for months and"
+- "i keep waiting for the right moment"
+- "waiting until i know more"
+- "waiting until i'm ready"
+- "i compare everything i make to"
+- "i can't start because i don't know if i can do it well"
+- "not ready to share"
+- "not ready to release"
+- "can't finish"
+- "the finish line keeps moving"
+- "i keep revising"
+- "i'll do it when it's better"
+- "i'll share it when"
+- "not good enough to show"
+- "afraid to commit to something that might fail"
+
 Distinguish from genuine discernment: some "not yet" responses are correct
 judgment, not fear. Check whether the pattern appears repeatedly across different
 projects or decisions. Perfectionism paralysis is a pattern, not a single instance.

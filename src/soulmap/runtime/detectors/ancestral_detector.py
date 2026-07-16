@@ -5,11 +5,20 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import ANCESTRAL_SIGNALS
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
+)
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_keyword_section,
+)
+
+# Single source of truth: skills/frameworks/ancestral-patterns.md,
+# "## Activation Signals". Nothing is hardcoded here.
+ANCESTRAL_SIGNALS = load_keyword_section(
+    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Activation Signals"
 )
 
 HistoryMessage = dict[str, str]

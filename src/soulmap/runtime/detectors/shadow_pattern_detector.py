@@ -5,19 +5,39 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    AVOIDANCE_SIGNALS,
-    EXTERNAL_REPEAT_SIGNALS,
-    OVERTHINKING_SIGNALS,
-    PEOPLE_PLEASING_SIGNALS,
-    PERFECTIONISM_SIGNALS,
-    WITHDRAWAL_SIGNALS,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_keyword_section,
+)
+
+# Single source of truth: skills/frameworks/shadow-patterns.md and
+# skills/frameworks/self-compassion.md. Nothing is hardcoded here — every
+# phrase list is parsed straight from those Markdown skills.
+_SHADOW_PATH = default_skill_path("skills/frameworks/shadow-patterns.md")
+_SELF_COMPASSION_PATH = default_skill_path("skills/frameworks/self-compassion.md")
+
+EXTERNAL_REPEAT_SIGNALS = load_keyword_section(
+    _SHADOW_PATH, "External frustration signals"
+)
+AVOIDANCE_SIGNALS = load_keyword_section(_SHADOW_PATH, "Avoidance (as protection)")
+PEOPLE_PLEASING_SIGNALS = load_keyword_section(
+    _SHADOW_PATH, "People Pleasing (as protection)"
+)
+OVERTHINKING_SIGNALS = load_keyword_section(
+    _SHADOW_PATH, "Overthinking Instead of Feeling (as protection)"
+)
+WITHDRAWAL_SIGNALS = load_keyword_section(
+    _SHADOW_PATH, "Emotional Withdrawal (as protection)"
+)
+PERFECTIONISM_SIGNALS = load_keyword_section(
+    _SHADOW_PATH, "Perfectionism (as protection)"
+)
+SELF_CRITIC_SIGNALS = load_keyword_section(_SELF_COMPASSION_PATH, "Detection signals")
 
 HistoryMessage = dict[str, str]
 
@@ -109,17 +129,6 @@ def detect_shadow_patterns(
             "for shadow patterns emerging across the conversation."
         )
 
-    SELF_CRITIC_SIGNALS = [
-        "i'm so stupid",
-        "i'm pathetic",
-        "i hate myself",
-        "what's wrong with me",
-        "i can't do anything right",
-        "i'm my own worst enemy",
-        "i deserve this",
-        "i'm so disappointed in myself",
-        "i'm worthless",
-    ]
     for phrase in SELF_CRITIC_SIGNALS:
         if phrase in msg:
             patterns_found.append("self_criticism")

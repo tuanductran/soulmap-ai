@@ -41,6 +41,37 @@ known publicly or interpersonally:
 - "I delete everything before I post it"
 - "I almost shared this but couldn't"
 
+Additional detection phrases:
+
+- "afraid to post"
+- "afraid to share"
+- "afraid to put myself out there"
+- "what if people judge me"
+- "what if people see who i really am"
+- "i can't let people see"
+- "i hide this part of myself"
+- "i shrink when people look at me"
+- "i go invisible"
+- "i want to say something but i hold back"
+- "afraid of attention"
+- "afraid of being noticed"
+- "what if i'm wrong in public"
+- "afraid to be wrong out loud"
+- "i keep myself small"
+- "i make myself smaller"
+- "what if people see through me"
+- "afraid to claim space"
+- "i don't take up space"
+- "i delete everything before i post"
+- "i almost shared this but"
+- "i almost posted but"
+- "i hold back what i really think"
+- "i don't want to be seen"
+- "being visible feels dangerous"
+- "being seen feels risky"
+- "i disappear when people look at me"
+- "i go quiet when i'm watched"
+
 Do not activate for general social anxiety without a specific link to self-expression
 or being known. If the signal is primarily about relationships (fear of rejection
 from a specific person), use relationship-reflection.md instead.

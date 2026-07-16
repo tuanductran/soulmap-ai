@@ -5,17 +5,25 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    BEHAVIORAL_CONFUSION,
-    EXPLICIT_CONFLICT,
-    PART_NAMING,
-    SELF_DIALOGUE,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/inner-parts.md,
+# "## Detection signals". Nothing is hardcoded here.
+_INNER_PARTS_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/inner-parts.md"), "Detection signals"
+)
+EXPLICIT_CONFLICT = _INNER_PARTS_GROUPS["explicit inner conflict"]
+PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
+BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
+SELF_DIALOGUE = _INNER_PARTS_GROUPS["internal dialogue"]
 
 HistoryMessage = dict[str, str]
 

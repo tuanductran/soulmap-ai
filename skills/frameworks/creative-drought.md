@@ -39,6 +39,38 @@ process, or expressive capacity:
 - "I'm afraid what I make isn't good enough to share"
 - "I start things and abandon them", "I can't finish anything"
 
+Additional detection phrases:
+
+- "i don't know what to create anymore"
+- "i used to know what to say"
+- "the ideas have stopped coming"
+- "nothing comes out"
+- "i sit down to work and there's nothing"
+- "i stare at the blank page"
+- "i've lost my voice"
+- "i don't know what i want to say"
+- "i used to be able to write"
+- "i used to be able to make"
+- "i feel creatively empty"
+- "i feel dried up"
+- "nothing inspires me"
+- "everything i make feels fake"
+- "nothing feels authentic anymore"
+- "i keep copying others"
+- "i don't know what's original"
+- "everything feels derivative"
+- "i start things and abandon them"
+- "i can't finish anything"
+- "the source has gone quiet"
+- "creative block"
+- "writer's block"
+- "no inspiration"
+- "can't find inspiration"
+- "lost my creativity"
+- "lost my muse"
+- "can't create"
+- "nothing flows"
+
 Distinguish from direction-loss: the user in direction loss doesn't know where to
 go in life. The user in creative drought knows they are a creative person but cannot
 access the source. These can overlap, check which is primary.

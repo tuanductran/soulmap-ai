@@ -5,17 +5,26 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    CELEBRATION_GRATITUDE,
-    CELEBRATION_PROGRESS,
-    CELEBRATION_RELIEF,
-    CELEBRATION_WIN,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/integration-celebration.md,
+# "## Detection signals". Nothing is hardcoded here.
+_CELEBRATION_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/integration-celebration.md"),
+    "Detection signals",
+)
+CELEBRATION_WIN = _CELEBRATION_GROUPS["win or completion"]
+CELEBRATION_RELIEF = _CELEBRATION_GROUPS["relief after difficulty"]
+CELEBRATION_GRATITUDE = _CELEBRATION_GROUPS["gratitude"]
+CELEBRATION_PROGRESS = _CELEBRATION_GROUPS["recognized progress"]
 
 HistoryMessage = dict[str, str]
 
