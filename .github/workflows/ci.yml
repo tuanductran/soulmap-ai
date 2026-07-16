@@ -78,15 +78,11 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
-      - name: Capture test diagnostics
-        run: uv run pytest -n auto -q > pytest.log 2>&1 || true
-      - name: Upload knowledge audit artifacts
+      - name: Upload knowledge inventory
         uses: actions/upload-artifact@v7
         with:
           name: soulmap-knowledge-inventory
-          path: |
-            knowledge-inventory.txt
-            pytest.log
+          path: knowledge-inventory.txt
           if-no-files-found: error
 
   build:
