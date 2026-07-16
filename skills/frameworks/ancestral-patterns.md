@@ -159,17 +159,34 @@ meaning-integration.md.
 
 ## Detection signals
 
-Direct ancestral or intergenerational language:
+Parent references:
 
-- "just like my mother"
-- "just like my father"
-- "just like my parents"
-- "same as my mother"
-- "same as my father"
-- "my mother was the same way"
+- "my mother"
+- "my father"
+- "my parents"
+- "my grandmother"
+- "my grandfather"
+- "my family"
+- "growing up"
+- "as a child"
+- "when i was young"
 
-Secondary combination: parent reference + pattern language together, for example "my mother"
-paired with "same way", or "growing up" paired with "was taught").
+Pattern language:
+
+- "same pattern"
+- "same thing"
+- "same way"
+- "always did"
+- "always said"
+- "was taught"
+- "was raised"
+- "never showed"
+- "never said"
+- "couldn't show"
+- "passed this"
+- "passed it"
+- "this too"
+- "like them"
 
 ## Paired template
 
