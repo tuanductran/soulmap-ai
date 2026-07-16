@@ -3,6 +3,7 @@ from pathlib import Path
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
     find_python_markdown_duplicates,
+    markdown_consumers,
 )
 
 
@@ -29,6 +30,7 @@ def test_find_python_markdown_duplicates(tmp_path: Path) -> None:
     assert duplicates[0].python_path == config / "patterns.py"
     assert duplicates[0].markdown_path == skills / "example.md"
     assert duplicates[0].markdown_section == "Detection signals"
+    assert duplicates[0].markdown_group == "signal group"
     assert duplicates[0].source_kind == "markdown"
     assert duplicates[0].classification == "knowledge_duplicate"
 
@@ -284,3 +286,20 @@ def test_find_python_markdown_duplicates_is_diagnostic_only(tmp_path: Path) -> N
     )
 
     assert find_python_markdown_duplicates(tmp_path) == ()
+
+
+def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> None:
+    markdown = tmp_path / "skills/frameworks/example.md"
+    markdown.parent.mkdir(parents=True)
+    markdown.write_text("## Detection signals\n", encoding="utf-8")
+
+    detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text(
+        "SIGNALS = load_labeled_groups(\n"
+        '    default_skill_path("skills/frameworks/example.md"), "Detection signals"\n'
+        ")\n",
+        encoding="utf-8",
+    )
+
+    assert markdown_consumers(tmp_path, markdown) == (detector,)

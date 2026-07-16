@@ -26,6 +26,7 @@ class KnowledgeDuplicate:
     constant: str
     markdown_path: Path
     markdown_section: str
+    markdown_group: str
     source_kind: str
     classification: str
 
@@ -81,19 +82,20 @@ def _python_knowledge(path: Path) -> dict[str, tuple[str, ...]]:
 
 
 def _add_markdown_phrases(
-    knowledge: dict[str, tuple[str, str]],
+    knowledge: dict[str, tuple[str, str, str]],
     phrases: tuple[str, ...],
     *,
     section: str,
+    group: str,
     source_kind: str,
 ) -> None:
     for phrase in phrases:
         normalized = phrase.strip().lower()
         if normalized:
-            knowledge[normalized] = (section, source_kind)
+            knowledge[normalized] = (section, group, source_kind)
 
 
-def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
+def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str, str]]:
     """Extract only Markdown knowledge consumed by the runtime parsers."""
     text = path.read_text(encoding="utf-8")
     source_kind = (
@@ -101,31 +103,63 @@ def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
     )
 
     if path.name == "pattern-mapper.md":
-        knowledge: dict[str, tuple[str, str]] = {}
+        knowledge: dict[str, tuple[str, str, str]] = {}
         for pattern in parse_pattern_mapper(text).values():
             _add_markdown_phrases(
                 knowledge,
                 pattern.keywords,
                 section="Detection signals",
+                group=pattern.name,
                 source_kind=source_kind,
             )
         return knowledge
 
-    knowledge = {}
+    knowledge: dict[str, tuple[str, str, str]] = {}
     for heading in _SIGNAL_HEADINGS:
         groups = extract_labeled_groups(text, heading)
         if groups:
-            phrases = tuple(phrase for group in groups.values() for phrase in group)
+            for group, phrases in groups.items():
+                _add_markdown_phrases(
+                    knowledge,
+                    phrases,
+                    section=heading,
+                    group=group,
+                    source_kind=source_kind,
+                )
         else:
             phrases = extract_keyword_section(text, heading)
-        _add_markdown_phrases(
-            knowledge,
-            phrases,
-            section=heading,
-            source_kind=source_kind,
-        )
+            _add_markdown_phrases(
+                knowledge,
+                phrases,
+                section=heading,
+                group=heading,
+                source_kind=source_kind,
+            )
 
     return knowledge
+
+
+def markdown_consumers(root: Path, markdown_path: Path) -> tuple[Path, ...]:
+    """Find runtime files that load a Markdown source via ``default_skill_path``."""
+    relative_path = markdown_path.relative_to(root).as_posix()
+    consumers: list[Path] = []
+
+    for path in sorted((root / "src/soulmap/runtime").rglob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if not (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id == "default_skill_path"
+                and node.args
+                and isinstance(node.args[0], ast.Constant)
+                and node.args[0].value == relative_path
+            ):
+                continue
+            consumers.append(path)
+            break
+
+    return tuple(consumers)
 
 
 def _classification(python_path: Path, constant: str) -> str:
@@ -287,17 +321,17 @@ def find_python_markdown_duplicates(
         for path in (root / markdown_root).rglob("*.md")
     )
 
-    markdown_index: dict[str, tuple[tuple[Path, str, str], ...]] = {}
+    markdown_index: dict[str, tuple[tuple[Path, str, str, str], ...]] = {}
     for path in markdown_files:
-        for phrase, (section, source_kind) in _markdown_knowledge(path).items():
+        for phrase, (section, group, source_kind) in _markdown_knowledge(path).items():
             markdown_index.setdefault(phrase, ())
-            markdown_index[phrase] += ((path, section, source_kind),)
+            markdown_index[phrase] += ((path, section, group, source_kind),)
 
     duplicates: list[KnowledgeDuplicate] = []
     for python_path in python_files:
         for constant, phrases in _python_knowledge(python_path).items():
             for phrase in phrases:
-                for markdown_path, section, source_kind in markdown_index.get(
+                for markdown_path, section, group, source_kind in markdown_index.get(
                     phrase, ()
                 ):
                     duplicates.append(
@@ -307,6 +341,7 @@ def find_python_markdown_duplicates(
                             constant=constant,
                             markdown_path=markdown_path,
                             markdown_section=section,
+                            markdown_group=group,
                             source_kind=source_kind,
                             classification=_classification(python_path, constant),
                         )
