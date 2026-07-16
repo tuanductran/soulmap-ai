@@ -5,17 +5,28 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    COGNITIVE_FLOODING,
-    EMOTIONAL_FLOODING,
-    PACING_SIGNALS,
-    PHYSICAL_OVERWHELM,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/emotional-deescalation.md,
+# "## Detection signals". Nothing is hardcoded here. (This detector only
+# consumes the flooding/pacing/physical groups — the crisis-adjacent groups
+# in that file are for crisis_detector's own separate, careful sync pass.)
+_DEESCALATION_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/emotional-deescalation.md"),
+    "Detection signals",
+)
+COGNITIVE_FLOODING = _DEESCALATION_GROUPS["cognitive flooding"]
+EMOTIONAL_FLOODING = _DEESCALATION_GROUPS["emotional flooding"]
+PACING_SIGNALS = _DEESCALATION_GROUPS["pacing signals"]
+PHYSICAL_OVERWHELM = _DEESCALATION_GROUPS["physical overwhelm"]
 
 HistoryMessage = dict[str, str]
 
