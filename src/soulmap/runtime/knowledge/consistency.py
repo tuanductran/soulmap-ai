@@ -60,7 +60,7 @@ def _python_knowledge(path: Path) -> dict[str, tuple[str, ...]]:
         if isinstance(node, ast.Assign):
             targets = node.targets
             value = node.value
-        elif isinstance(node, ast.AnnAssign) and node.target is not None:
+        elif isinstance(node, ast.AnnAssign):
             targets = (node.target,)
             value = node.value
         else:
