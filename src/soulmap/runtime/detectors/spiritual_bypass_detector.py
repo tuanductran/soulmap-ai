@@ -5,17 +5,32 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import (
-    BYPASS_ACCOUNTABILITY,
-    BYPASS_DISMISS,
-    GENUINE_INTEGRATION,
-    PREMATURE_ACCEPTANCE,
-    SPIRITUAL_INFLATION,
-)
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
+)
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_keyword_section,
+)
+
+# Single source of truth: skills/spiritual/spiritual-discernment.md,
+# "## Detection signal reference". Nothing is hardcoded here — the phrase
+# lists are parsed straight from that Markdown skill.
+_DISCERNMENT_PATH = default_skill_path("skills/spiritual/spiritual-discernment.md")
+BYPASS_DISMISS = load_keyword_section(_DISCERNMENT_PATH, "Bypass: Dismissing Pain")
+PREMATURE_ACCEPTANCE = load_keyword_section(
+    _DISCERNMENT_PATH, "Bypass: Premature Acceptance"
+)
+SPIRITUAL_INFLATION = load_keyword_section(
+    _DISCERNMENT_PATH, "Bypass: Spiritual Inflation"
+)
+BYPASS_ACCOUNTABILITY = load_keyword_section(
+    _DISCERNMENT_PATH, "Bypass: Bypassing Accountability"
+)
+GENUINE_INTEGRATION = load_keyword_section(
+    _DISCERNMENT_PATH, "Genuine Integration Signals"
 )
 
 HistoryMessage = dict[str, str]

@@ -74,6 +74,20 @@ harmful situations to avoid being abandoned.
 - "I'd rather be alone than wait for it to happen"
 - String of relationships ending similarly
 - "I push people away" without wanting to
+- "they always leave"
+- "people always leave"
+- "I end it before they can"
+- "before they can leave me"
+- "I saw it coming"
+- "they'll leave eventually"
+- "doesn't matter, they'll go anyway"
+- "waiting for them to leave"
+
+**Cycle phrases:**
+
+- "always ends the same"
+- "same thing happens"
+- "every relationship"
 
 **Reflection language (choose one line):**
 
@@ -81,6 +95,8 @@ harmful situations to avoid being abandoned.
   where getting close also means preparing to lose."
 - "Some people notice a cycle where the closer someone gets, the stronger the urge to
   create distance first, as a kind of protection."
+
+**SoulMap role:** Reflect with care. This pattern often carries grief beneath it.
 
 **Root origin (offer only when the user has enough reflective capacity, and only if relevant):** Can trace to early
 experiences where important people left unpredictably, or where love felt conditional
@@ -99,6 +115,21 @@ avoid disapproval. Over-explains, over-apologizes, over-performs.
 - "I changed my mind because of what they might think"
 - Shapeshifts personality for different people
 - Relief when receiving validation, anxiety without it
+- "what do they think"
+- "what will they think"
+- "did I do something wrong"
+- "are they mad at me"
+- "I want everyone to be okay"
+- "I was worried they'd think"
+- "I didn't want to seem needy"
+- "I need them to understand"
+- "I hope they don't think badly of me"
+
+**Cycle phrases:**
+
+- "always worry about"
+- "constantly thinking about what"
+- "always checking"
 
 **Reflection language (choose one line):**
 
@@ -106,6 +137,9 @@ avoid disapproval. Over-explains, over-apologizes, over-performs.
   main measure of whether something was okay."
 - "Some people notice a cycle where the absence of approval feels like a threat, and
   approval, when it comes, feels like relief rather than just a nice thing."
+
+**SoulMap role:** Name gently. Many people have never had their own reactions treated
+as primary.
 
 **Root origin:** Can trace to environments where love or safety was conditional on
 performance, behavior, or managing a parent's emotional state.
@@ -125,6 +159,20 @@ deflection when things get real. "Gets over it" too quickly.
 - Explains situation in detail but never describes feelings
 - Moves quickly past something significant
 - Answers emotional questions with analysis
+- "not a big deal"
+- "rationally speaking"
+- "it is what it is"
+- "I've moved on"
+- "I'm over it now"
+- "not emotional about it"
+- "I shouldn't feel this way"
+- "no point feeling this"
+
+**Cycle phrases:**
+
+- "always analyze"
+- "tend to overthink"
+- "live in my head"
 
 **Reflection language (choose one line):**
 
@@ -133,6 +181,9 @@ deflection when things get real. "Gets over it" too quickly.
   knows."
 - "Some people notice a cycle where emotions get acknowledged briefly, then managed away,
   and the feelings that don't get felt tend to find other ways to show up."
+
+**SoulMap role:** Move slowly. Do not name this pattern early. Let the feeling become
+visible before reflecting.
 
 **Root origin:** Can trace to environments where emotional expression was unsafe,
 unwelcome, or never modeled, where being "together" was valued more than being real.
@@ -151,6 +202,22 @@ Withdraws just as connection deepens. Feels more comfortable in struggle than in
 - "I keep getting in my own way"
 - Repeatedly reaches a threshold then retreats
 - Expresses confusion about own behavior
+- "right when it was going well"
+- "ruined it again"
+- "messed it up"
+- "self-destructive"
+- "shot myself in the foot"
+- "when things are good I..."
+- "right before something good"
+- "I pulled away when"
+- "I pushed them away when"
+- "why do I always do this"
+
+**Cycle phrases:**
+
+- "every time things get good"
+- "right before"
+- "always happens when"
 
 **Reflection language (choose one line):**
 
@@ -158,6 +225,9 @@ Withdraws just as connection deepens. Feels more comfortable in struggle than in
   part of you moves toward it and another part finds a way to pull back."
 - "Some people notice a cycle where success or closeness gets close enough to feel real,
   and then something happens that seems to protect them from having to hold it."
+
+**SoulMap role:** Name with curiosity, not judgment. The pattern usually protects
+something real.
 
 **Root origin:** Can trace to early experiences where good things didn't last, or
 were followed by loss, or where succeeding meant something dangerous (standing out,
@@ -178,6 +248,21 @@ making problems disappear.
 - "I feel guilty when I say no"
 - Describes exhaustion from carrying others
 - Self-worth tied to being needed
+- "it's my fault they felt that way"
+- "I should have done more"
+- "it's my job to fix this"
+- "I feel bad when they're sad"
+- "I need to make it okay"
+- "I can't say no"
+- "I'm exhausted from helping"
+- "everyone comes to me"
+- "I just want them to be okay"
+- "I could have prevented it"
+
+**Cycle phrases:**
+
+- "always end up taking care of"
+- "somehow become responsible"
 
 **Reflection language (choose one line):**
 
@@ -185,6 +270,8 @@ making problems disappear.
   that belongs to you to fix, where not fixing it means you've somehow failed."
 - "Some people notice a cycle where the only way to feel okay is to make sure everyone
   else is okay first, and their own needs become last, or invisible."
+
+**SoulMap role:** Reflect the exhaustion first, then gently name the pattern.
 
 **Root origin:** Can trace to childhood roles where the child became the emotional
 caretaker for a parent or sibling, where love meant managing someone else's state.
@@ -202,6 +289,23 @@ distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they n
 - "What if they don't want to?"
 - Silence and waiting rather than asking
 - Minimizes own needs to avoid being a burden
+- "I didn't want to seem needy"
+- "I didn't ask because"
+- "what if they say no"
+- "too scared to ask"
+- "I never initiated"
+- "I'll wait for them to"
+- "I don't want to impose"
+- "I feel like a burden"
+- "I can't handle rejection"
+- "I keep things to myself"
+- "I never said anything because"
+
+**Cycle phrases:**
+
+- "never ask for what I need"
+- "always wait"
+- "keep it to myself"
 
 **Reflection language (choose one line):**
 
@@ -209,6 +313,9 @@ distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they n
   help, a yes, feels like it carries a risk that isn't worth taking."
 - "Some people notice a cycle where staying small feels safer than risking a no, where
   not asking protects something that feels too fragile to test."
+
+**SoulMap role:** Name with gentleness. This pattern often carries a deep fear that
+needs are a burden.
 
 **Root origin:** Can trace to experiences where asking was met with rejection,
 ridicule, or indifference, or where needs were treated as inconveniences.

@@ -33,6 +33,47 @@ Activate when the user's message contains intergenerational or ancestral recogni
   know if she was ever taught to love herself", "she couldn't give what she never
   had"
 
+Additional detection phrases:
+
+- "just like my mother"
+- "just like my father"
+- "just like my parents"
+- "same as my mother"
+- "same as my father"
+- "my mother was the same way"
+- "my father was the same way"
+- "this runs in my family"
+- "runs in the family"
+- "it goes back generations"
+- "every woman in my family"
+- "every man in my family"
+- "the men in my family"
+- "the women in my family"
+- "we all do this"
+- "my grandmother was like this"
+- "my grandfather was like this"
+- "i was raised to believe"
+- "i was taught to"
+- "in my family we never"
+- "nobody in my family ever"
+- "she couldn't give what she never had"
+- "he couldn't give what he never had"
+- "she was doing what she knew"
+- "he was doing what he knew"
+- "she was wounded too"
+- "he was wounded too"
+- "i grieve for what my mother"
+- "i grieve for what my father"
+- "inherited from"
+- "passed down to me"
+- "carried through generations"
+- "intergenerational"
+- "ancestral"
+- "family pattern"
+- "family wound"
+- "mother wound"
+- "father wound"
+
 Do not activate when the user is simply angry at a parent without recognizing the
 pattern. That belongs in shadow-patterns.md or anger-companion.md first.
 

@@ -5,13 +5,24 @@ import re
 import sys
 
 from soulmap.runtime.config import (
-    DECISION_SEEKING,
-    DEPENDENCY_KEYWORDS,
     HIGH_DEPENDENCY_THRESHOLD,
-    ISOLATION_SIGNALS,
     MODERATE_DEPENDENCY_THRESHOLD,
 )
 from soulmap.runtime.io.text_normalization import normalize_message_text
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth for phrase lists: skills/safety/boundaries-safety.md,
+# "### Detection signals". Nothing is hardcoded here — only the numeric
+# thresholds above remain in config, since they aren't phrase content.
+_DEPENDENCY_GROUPS = load_labeled_groups(
+    default_skill_path("skills/safety/boundaries-safety.md"), "Detection signals"
+)
+DECISION_SEEKING = _DEPENDENCY_GROUPS["decision seeking"]
+DEPENDENCY_KEYWORDS = _DEPENDENCY_GROUPS["dependency keywords"]
+ISOLATION_SIGNALS = _DEPENDENCY_GROUPS["isolation signals"]
 
 DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
