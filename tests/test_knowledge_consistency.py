@@ -94,6 +94,26 @@ def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
     assert duplicates[0].classification == "safety_protected_overlap"
 
 
+def test_grandiosity_overlap_requires_review(tmp_path: Path) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'GRANDIOSITY_SIGNALS: tuple[str, ...] = ("grandiosity phrase",)\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    (skills / "safety.md").write_text(
+        '## Signals\n\n- grandiosity phrase\n',
+        encoding="utf-8",
+    )
+
+    duplicates = find_python_markdown_duplicates(tmp_path)
+
+    assert duplicates[0].classification == "review_required"
+
+
 def test_find_python_markdown_duplicates_is_diagnostic_only(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
