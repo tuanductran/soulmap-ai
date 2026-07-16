@@ -93,7 +93,7 @@ def test_pattern_mapper_is_classified_as_structured_framework(tmp_path: Path) ->
     skills = tmp_path / "skills/frameworks"
     skills.mkdir(parents=True)
     (skills / "pattern-mapper.md").write_text(
-        '### Example pattern\n\n**Detection signals:**\n\n- "pattern phrase"\n',
+        '## Pattern 1: Example pattern\n\n**Detection signals:**\n\n- "pattern phrase"\n',
         encoding="utf-8",
     )
 
