@@ -5,12 +5,24 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.config import ACTIVE_ANGER, RESIDUAL_ANGER, SELF_ANGER
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
+
+# Single source of truth: skills/frameworks/anger-companion.md,
+# "## Detection signals". Nothing is hardcoded here.
+_ANGER_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/anger-companion.md"), "Detection signals"
+)
+ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
+SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
+RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
 
 HistoryMessage = dict[str, str]
 
