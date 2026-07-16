@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import sys
-
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
@@ -26,6 +25,7 @@ _DEESCALATION_GROUPS = load_labeled_groups(
 COGNITIVE_FLOODING = _DEESCALATION_GROUPS["cognitive flooding"]
 EMOTIONAL_FLOODING = _DEESCALATION_GROUPS["emotional flooding"]
 PACING_SIGNALS = _DEESCALATION_GROUPS["pacing signals"]
+INTENSITY_MODIFIERS = _DEESCALATION_GROUPS["intensity modifiers"]
 PHYSICAL_OVERWHELM = _DEESCALATION_GROUPS["physical overwhelm"]
 
 HistoryMessage = dict[str, str]
@@ -49,15 +49,7 @@ def check_escalation(history: list[HistoryMessage]) -> bool:
     )
 
     late_msg = user_msgs[-1].lower()
-    intensity_words = [
-        "i can't",
-        "everything",
-        "nothing",
-        "always",
-        "never",
-        "all of it",
-    ]
-    has_intensity = any(w in late_msg for w in intensity_words)
+    has_intensity = any(word in late_msg for word in INTENSITY_MODIFIERS)
 
     return escalating_length and has_intensity
 
