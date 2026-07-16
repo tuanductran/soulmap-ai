@@ -10,6 +10,7 @@ from soulmap.runtime.knowledge.consistency import (
     KnowledgeDuplicate,
     find_config_usage,
     find_python_markdown_duplicates,
+    markdown_consumers,
 )
 
 
@@ -34,6 +35,19 @@ def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) ->
 
         for (python_path, constant), constant_entries in sorted(by_constant.items()):
             lines.append(f"  {python_path.relative_to(root)}::{constant}")
+            ownership = {
+                (entry.markdown_path, entry.markdown_section, entry.markdown_group)
+                for entry in constant_entries
+            }
+            for markdown_path, section, group in sorted(ownership):
+                lines.append(f"    ownership: {markdown_path.relative_to(root)}")
+                lines.append(f"      section: {section} / {group}")
+                consumers = markdown_consumers(root, markdown_path)
+                if consumers:
+                    for consumer in consumers:
+                        lines.append(f"      loaded by: {consumer.relative_to(root)}")
+                else:
+                    lines.append("      loaded by: no runtime loader found")
             for entry in sorted(
                 constant_entries,
                 key=lambda item: (
@@ -82,6 +96,11 @@ def main(argv: list[str] | None = None) -> int:
         default=REPO_ROOT,
         help="Repo root (default: SoulMap repository root).",
     )
+    parser.add_argument(
+        "--max-knowledge-duplicates",
+        type=int,
+        help="Fail when semantic knowledge duplicates exceed this threshold.",
+    )
     args = parser.parse_args(argv)
 
     root = args.root.resolve()
@@ -89,6 +108,18 @@ def main(argv: list[str] | None = None) -> int:
     usage = find_config_usage(root)
     print(_format_inventory(duplicates, root))
     print(f"\n{_format_usage(usage, root)}")
+    if args.max_knowledge_duplicates is not None:
+        duplicate_count = sum(
+            duplicate.classification == "knowledge_duplicate"
+            for duplicate in duplicates
+        )
+        if duplicate_count > args.max_knowledge_duplicates:
+            print(
+                "\nKnowledge migration guard failed: "
+                f"{duplicate_count} knowledge duplicates exceed "
+                f"{args.max_knowledge_duplicates}."
+            )
+            return 1
     return 0
 
 

@@ -40,6 +40,8 @@ jobs:
         run: uv run soulmap lint --skip-tests
       - name: Knowledge consistency inventory
         run: uv run soulmap audit-knowledge
+      - name: Knowledge migration guard
+        run: uv run soulmap audit-knowledge --max-knowledge-duplicates 519
       - name: Dead code detection (Vulture)
         run: uv run vulture
       - name: Dependency analysis (Deptry)
