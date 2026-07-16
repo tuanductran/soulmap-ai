@@ -63,6 +63,28 @@ jobs:
           uv run soulmap build --skill
           uv run soulmap markdown-contract --root .
 
+  knowledge-audit:
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.3.2
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - name: Install dev dependencies
+        run: uv sync --locked --python 3.11
+      - name: Generate knowledge inventory
+        run: uv run soulmap audit-knowledge > knowledge-inventory.txt
+      - name: Upload knowledge inventory
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmap-knowledge-inventory
+          path: knowledge-inventory.txt
+          if-no-files-found: error
+
   build:
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
