@@ -7,8 +7,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-_BULLET_RE = re.compile(r"^\s*[-*+]\s+(?:`([^`]+)`|\"([^\"]+)\"|'([^']+)'|(.+?))\s*$")
+_BULLET_RE = re.compile(r"^\s*[-*+]\s+(.+?)\s*$")
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
+_QUOTED_SIGNAL_RE = re.compile(r'''(?:"([^"]+)"|'([^']+)'|`([^`]+)`)''')
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,8 +62,25 @@ def _python_knowledge(path: Path) -> dict[str, tuple[str, ...]]:
     return knowledge
 
 
+def _markdown_signal_units(bullet: str) -> tuple[str, ...]:
+    """Extract semantic signal units from one Markdown bullet.
+
+    A bullet may contain multiple signals, for example:
+    ``- "signal A" or "signal B"``. Quoted and inline-code values are treated
+    as individual units. Bullets without explicit signal delimiters retain the
+    whole bullet as one unit for backwards-compatible Markdown parsing.
+    """
+    quoted = tuple(
+        value
+        for match in _QUOTED_SIGNAL_RE.finditer(bullet)
+        for value in match.groups()
+        if value is not None
+    )
+    return quoted or (bullet,)
+
+
 def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
-    """Extract list knowledge with its Markdown section and source type."""
+    """Extract semantic signal units with their Markdown section and source type."""
     section = ""
     source_kind = "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
     knowledge: dict[str, tuple[str, str]] = {}
@@ -75,10 +93,10 @@ def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
 
         bullet = _BULLET_RE.match(line)
         if bullet and section:
-            phrase = next(value for value in bullet.groups() if value is not None)
-            normalized = phrase.strip().lower()
-            if normalized:
-                knowledge[normalized] = (section, source_kind)
+            for phrase in _markdown_signal_units(bullet.group(1)):
+                normalized = phrase.strip().lower()
+                if normalized:
+                    knowledge[normalized] = (section, source_kind)
 
     return knowledge
 
@@ -110,9 +128,10 @@ def find_python_markdown_duplicates(
     """Find exact Python/Markdown overlaps with source-aware diagnostics.
 
     This is a diagnostic check only. It does not decide ownership or mutate files.
-    Markdown knowledge is read from list items under their actual headings. The
-    pattern mapper receives a distinct source kind because its Markdown format is
-    structured around pattern frameworks rather than generic skill prose.
+    Markdown knowledge is read from semantic signal units under their actual
+    headings. The pattern mapper receives a distinct source kind because its
+    Markdown format is structured around pattern frameworks rather than generic
+    skill prose.
     """
     python_files = sorted((root / python_root).glob("*.py"))
     markdown_files = sorted(
