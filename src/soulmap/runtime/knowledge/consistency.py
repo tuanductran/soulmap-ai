@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 import ast
-import re
 from dataclasses import dataclass
 from pathlib import Path
 
-_BULLET_RE = re.compile(r"^\s*[-*+]\s+(.+?)\s*$")
-_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
-_QUOTED_SIGNAL_RE = re.compile(r"""(?:"([^"]+)"|'([^']+)'|`([^`]+)`)""")
+from soulmap.runtime.knowledge.keyword_lists import (
+    extract_keyword_section,
+    extract_labeled_groups,
+)
+from soulmap.runtime.knowledge.pattern_source import parse_pattern_mapper
+
+_SIGNAL_HEADINGS = ("Activation Signals", "Detection signals")
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,43 +65,50 @@ def _python_knowledge(path: Path) -> dict[str, tuple[str, ...]]:
     return knowledge
 
 
-def _markdown_signal_units(bullet: str) -> tuple[str, ...]:
-    """Extract semantic signal units from one Markdown bullet.
-
-    A bullet may contain multiple signals, for example:
-    ``- "signal A" or "signal B"``. Quoted and inline-code values are treated
-    as individual units. Bullets without explicit signal delimiters retain the
-    whole bullet as one unit for backwards-compatible Markdown parsing.
-    """
-    quoted = tuple(
-        value
-        for match in _QUOTED_SIGNAL_RE.finditer(bullet)
-        for value in match.groups()
-        if value is not None
-    )
-    return quoted or (bullet,)
+def _add_markdown_phrases(
+    knowledge: dict[str, tuple[str, str]],
+    phrases: tuple[str, ...],
+    *,
+    section: str,
+    source_kind: str,
+) -> None:
+    for phrase in phrases:
+        normalized = phrase.strip().lower()
+        if normalized:
+            knowledge[normalized] = (section, source_kind)
 
 
 def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
-    """Extract semantic signal units with their Markdown section and source type."""
-    section = ""
-    source_kind = (
-        "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
-    )
-    knowledge: dict[str, tuple[str, str]] = {}
+    """Extract only Markdown knowledge consumed by the runtime parsers."""
+    text = path.read_text(encoding="utf-8")
+    source_kind = "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
 
-    for line in path.read_text(encoding="utf-8").splitlines():
-        heading = _HEADING_RE.match(line)
-        if heading:
-            section = heading.group(2)
-            continue
+    if path.name == "pattern-mapper.md":
+        knowledge: dict[str, tuple[str, str]] = {}
+        for pattern in parse_pattern_mapper(text).values():
+            _add_markdown_phrases(
+                knowledge,
+                pattern.keywords,
+                section="Detection signals",
+                source_kind=source_kind,
+            )
+        return knowledge
 
-        bullet = _BULLET_RE.match(line)
-        if bullet and section:
-            for phrase in _markdown_signal_units(bullet.group(1)):
-                normalized = phrase.strip().lower()
-                if normalized:
-                    knowledge[normalized] = (section, source_kind)
+    knowledge = {}
+    for heading in _SIGNAL_HEADINGS:
+        groups = extract_labeled_groups(text, heading)
+        if groups:
+            phrases = tuple(
+                phrase for group in groups.values() for phrase in group
+            )
+        else:
+            phrases = extract_keyword_section(text, heading)
+        _add_markdown_phrases(
+            knowledge,
+            phrases,
+            section=heading,
+            source_kind=source_kind,
+        )
 
     return knowledge
 
@@ -130,10 +140,7 @@ def find_python_markdown_duplicates(
     """Find exact Python/Markdown overlaps with source-aware diagnostics.
 
     This is a diagnostic check only. It does not decide ownership or mutate files.
-    Markdown knowledge is read from semantic signal units under their actual
-    headings. The pattern mapper receives a distinct source kind because its
-    Markdown format is structured around pattern frameworks rather than generic
-    skill prose.
+    Markdown knowledge is parsed with the same runtime loaders used by detectors.
     """
     python_files = sorted((root / python_root).glob("*.py"))
     markdown_files = sorted(
