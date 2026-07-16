@@ -6,7 +6,9 @@ from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.consistency import (
+    ConfigUsage,
     KnowledgeDuplicate,
+    find_config_usage,
     find_python_markdown_duplicates,
 )
 
@@ -48,6 +50,23 @@ def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) ->
     return "\n".join(lines)
 
 
+def _format_usage(usage: tuple[ConfigUsage, ...], root: Path) -> str:
+    active = tuple(item for item in usage if not item.is_orphaned)
+    orphaned = tuple(item for item in usage if item.is_orphaned)
+    lines = [
+        "Config usage inventory",
+        f"active constants: {len(active)}",
+        f"orphaned constants: {len(orphaned)}",
+    ]
+
+    if orphaned:
+        lines.append("\n[orphaned]")
+        for item in orphaned:
+            lines.append(f"  {item.python_path.relative_to(root)}::{item.constant}")
+
+    return "\n".join(lines)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="soulmap audit-knowledge")
     parser.add_argument(
@@ -60,7 +79,9 @@ def main(argv: list[str] | None = None) -> int:
 
     root = args.root.resolve()
     duplicates = find_python_markdown_duplicates(root)
+    usage = find_config_usage(root)
     print(_format_inventory(duplicates, root))
+    print(f"\n{_format_usage(usage, root)}")
     return 0
 
 
