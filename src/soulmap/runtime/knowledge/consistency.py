@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
+from importlib.util import resolve_name
 from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import (
@@ -13,6 +14,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.knowledge.pattern_source import parse_pattern_mapper
 
 _SIGNAL_HEADINGS = ("Activation Signals", "Detection signals")
+_CONFIG_MODULE_PREFIX = "soulmap.runtime.config"
 
 
 @dataclass(frozen=True, slots=True)
@@ -140,40 +142,125 @@ def _classification(python_path: Path, constant: str) -> str:
     return "knowledge_duplicate"
 
 
+def _module_name(path: Path, root: Path) -> str:
+    relative = path.relative_to(root / "src").with_suffix("")
+    return ".".join(relative.parts)
+
+
+def _is_config_module(module: str) -> bool:
+    return module == _CONFIG_MODULE_PREFIX or module.startswith(
+        f"{_CONFIG_MODULE_PREFIX}."
+    )
+
+
+def _resolve_import_module(
+    module: str | None,
+    level: int,
+    path: Path,
+    root: Path,
+) -> str:
+    if level == 0:
+        return module or ""
+
+    package = _module_name(path, root).rsplit(".", 1)[0]
+    relative = "." * level + (module or "")
+    return resolve_name(relative, package)
+
+
+def _config_symbols(
+    root: Path,
+    config_dir: Path,
+) -> dict[str, dict[str, tuple[Path, str]]]:
+    symbols: dict[str, dict[str, tuple[Path, str]]] = {}
+    for path in sorted(config_dir.glob("*.py")):
+        module = _module_name(path, root)
+        symbols[module] = {
+            constant: (path, constant)
+            for constant in _python_knowledge(path)
+        }
+    return symbols
+
+
+def _config_references(
+    path: Path,
+    root: Path,
+    symbols: dict[str, dict[str, tuple[Path, str]]],
+) -> set[tuple[Path, str]]:
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    direct_names: dict[str, tuple[Path, str]] = {}
+    module_aliases: dict[str, str] = {}
+
+    for node in tree.body:
+        if isinstance(node, ast.ImportFrom):
+            module = _resolve_import_module(node.module, node.level, path, root)
+            if not _is_config_module(module):
+                continue
+            module_symbols = symbols.get(module, {})
+            for alias in node.names:
+                if alias.name == "*":
+                    continue
+                symbol = module_symbols.get(alias.name)
+                if symbol is not None:
+                    direct_names[alias.asname or alias.name] = symbol
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                if not _is_config_module(alias.name):
+                    continue
+                if alias.asname:
+                    module_aliases[alias.asname] = alias.name
+
+    references: set[tuple[Path, str]] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+            symbol = direct_names.get(node.id)
+            if symbol is not None:
+                references.add(symbol)
+        elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
+            module = module_aliases.get(node.value.id)
+            if module is None:
+                continue
+            symbol = symbols.get(module, {}).get(node.attr)
+            if symbol is not None:
+                references.add(symbol)
+
+    return references
+
+
 def find_config_usage(
     root: Path,
     *,
     python_root: Path = Path("src/soulmap/runtime/config"),
 ) -> tuple[ConfigUsage, ...]:
-    """Find runtime references to config constants without treating exports as usage."""
+    """Find runtime references to config constants by import provenance.
+
+    Local variables with the same name as a config constant are not treated as
+    config usage unless the runtime file actually imports that constant or its
+    config module.
+    """
     config_dir = root / python_root
     config_files = sorted(config_dir.glob("*.py"))
+    symbols = _config_symbols(root, config_dir)
     constants = {
         (path, constant)
         for path in config_files
         for constant in _python_knowledge(path)
     }
-    names = {constant for _, constant in constants}
-    references: dict[str, set[Path]] = {constant: set() for constant in names}
+    references: dict[tuple[Path, str], set[Path]] = {
+        symbol: set() for symbol in constants
+    }
     runtime_root = root / "src/soulmap/runtime"
 
     for path in sorted(runtime_root.rglob("*.py")):
         if config_dir in path.parents or path == config_dir:
             continue
-        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-        for node in ast.walk(tree):
-            if (
-                isinstance(node, ast.Name)
-                and isinstance(node.ctx, ast.Load)
-                and node.id in references
-            ):
-                references[node.id].add(path)
+        for symbol in _config_references(path, root, symbols):
+            references[symbol].add(path)
 
     return tuple(
         ConfigUsage(
             python_path=path,
             constant=constant,
-            referenced_from=tuple(sorted(references[constant])),
+            referenced_from=tuple(sorted(references[(path, constant)])),
         )
         for path, constant in sorted(constants)
     )
