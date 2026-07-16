@@ -69,7 +69,7 @@ def test_find_python_markdown_duplicates_scans_framework_root(tmp_path: Path) ->
     )
 
     frameworks = tmp_path / "frameworks"
-    frameworks.mkdir()
+    frameworks.mkdir(parents=True)
     (frameworks / "example.md").write_text(
         '## Detection signals\n\nSignal group:\n\n- "framework phrase"\n',
         encoding="utf-8",
@@ -157,8 +157,7 @@ def test_find_config_usage_distinguishes_active_and_orphaned_constants(
     detector = tmp_path / "src/soulmap/runtime/detectors"
     detector.mkdir(parents=True)
     (detector / "example.py").write_text(
-        "from soulmap.runtime.config.patterns import ACTIVE\n\n"
-        "VALUE = ACTIVE\n",
+        "from soulmap.runtime.config.patterns import ACTIVE\n\nVALUE = ACTIVE\n",
         encoding="utf-8",
     )
 
@@ -178,7 +177,7 @@ def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     (config / "__init__.py").write_text(
-        "from .patterns import SIGNALS\n\n__all__ = [\"SIGNALS\"]\n",
+        'from .patterns import SIGNALS\n\n__all__ = ["SIGNALS"]\n',
         encoding="utf-8",
     )
 
