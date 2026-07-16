@@ -38,6 +38,8 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Lint
         run: uv run soulmap lint --skip-tests
+      - name: Knowledge consistency inventory
+        run: uv run soulmap audit-knowledge
       - name: Dead code detection (Vulture)
         run: uv run vulture
       - name: Dependency analysis (Deptry)
