@@ -168,6 +168,49 @@ def test_find_config_usage_distinguishes_active_and_orphaned_constants(
     assert by_constant["ORPHANED"].is_orphaned
 
 
+def test_find_config_usage_ignores_same_name_local_variable(tmp_path: Path) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "patterns.py").write_text(
+        'ACTIVE: tuple[str, ...] = ("active",)\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors"
+    detector.mkdir(parents=True)
+    (detector / "example.py").write_text(
+        'ACTIVE = load_keyword_section("Activation Signals")\n'
+        "VALUE = ACTIVE\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert usage[0].is_orphaned
+
+
+def test_find_config_usage_tracks_config_module_alias(tmp_path: Path) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "patterns.py").write_text(
+        'ACTIVE: tuple[str, ...] = ("active",)\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors"
+    detector.mkdir(parents=True)
+    (detector / "example.py").write_text(
+        "import soulmap.runtime.config.patterns as patterns\n\n"
+        "VALUE = patterns.ACTIVE\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert not usage[0].is_orphaned
+    assert usage[0].referenced_from == (detector / "example.py",)
+
+
 def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
@@ -195,7 +238,7 @@ def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
     )
 
     skills = tmp_path / "skills"
-    skills.mkdir()
+    skills.mkdir(parents=True)
     (skills / "safety.md").write_text(
         '## Detection signals\n\nCrisis signals:\n\n- "protected phrase"\n',
         encoding="utf-8",
@@ -215,7 +258,7 @@ def test_grandiosity_overlap_requires_review(tmp_path: Path) -> None:
     )
 
     skills = tmp_path / "skills"
-    skills.mkdir()
+    skills.mkdir(parents=True)
     (skills / "safety.md").write_text(
         '## Detection signals\n\nSignals:\n\n- "grandiosity phrase"\n',
         encoding="utf-8",
@@ -235,7 +278,7 @@ def test_find_python_markdown_duplicates_is_diagnostic_only(tmp_path: Path) -> N
     )
 
     skills = tmp_path / "skills"
-    skills.mkdir()
+    skills.mkdir(parents=True)
     (skills / "example.md").write_text(
         '## Detection signals\n\nSignals:\n\n- "markdown only"\n',
         encoding="utf-8",
