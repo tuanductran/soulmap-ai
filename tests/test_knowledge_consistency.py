@@ -182,9 +182,7 @@ def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
         encoding="utf-8",
     )
 
-    usage = find_config_usage(tmp_path)
-
-    assert usage[0].is_orphaned
+    assert find_config_usage(tmp_path) == ()
 
 
 def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
