@@ -4,8 +4,11 @@ import argparse
 from collections import defaultdict
 from pathlib import Path
 
-from soulmap.runtime.knowledge.consistency import KnowledgeDuplicate, find_python_markdown_duplicates
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge.consistency import (
+    KnowledgeDuplicate,
+    find_python_markdown_duplicates,
+)
 
 
 def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) -> str:
@@ -21,7 +24,9 @@ def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) ->
     for classification in sorted(grouped):
         entries = grouped[classification]
         lines.append(f"\n[{classification}] {len(entries)}")
-        by_constant: dict[tuple[Path, str], list[KnowledgeDuplicate]] = defaultdict(list)
+        by_constant: dict[tuple[Path, str], list[KnowledgeDuplicate]] = defaultdict(
+            list
+        )
         for entry in entries:
             by_constant[(entry.python_path, entry.constant)].append(entry)
 
@@ -29,7 +34,11 @@ def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) ->
             lines.append(f"  {python_path.relative_to(root)}::{constant}")
             for entry in sorted(
                 constant_entries,
-                key=lambda item: (item.markdown_path, item.markdown_section, item.phrase),
+                key=lambda item: (
+                    item.markdown_path,
+                    item.markdown_section,
+                    item.phrase,
+                ),
             ):
                 markdown_path = entry.markdown_path.relative_to(root)
                 lines.append(

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sys
+
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,

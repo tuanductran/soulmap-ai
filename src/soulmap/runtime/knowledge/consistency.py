@@ -9,7 +9,7 @@ from pathlib import Path
 
 _BULLET_RE = re.compile(r"^\s*[-*+]\s+(.+?)\s*$")
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
-_QUOTED_SIGNAL_RE = re.compile(r'''(?:"([^"]+)"|'([^']+)'|`([^`]+)`)''')
+_QUOTED_SIGNAL_RE = re.compile(r"""(?:"([^"]+)"|'([^']+)'|`([^`]+)`)""")
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,7 +82,9 @@ def _markdown_signal_units(bullet: str) -> tuple[str, ...]:
 def _markdown_knowledge(path: Path) -> dict[str, tuple[str, str]]:
     """Extract semantic signal units with their Markdown section and source type."""
     section = ""
-    source_kind = "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
+    source_kind = (
+        "pattern_framework" if path.name == "pattern-mapper.md" else "markdown"
+    )
     knowledge: dict[str, tuple[str, str]] = {}
 
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -150,7 +152,9 @@ def find_python_markdown_duplicates(
     for python_path in python_files:
         for constant, phrases in _python_knowledge(python_path).items():
             for phrase in phrases:
-                for markdown_path, section, source_kind in markdown_index.get(phrase, ()):
+                for markdown_path, section, source_kind in markdown_index.get(
+                    phrase, ()
+                ):
                     duplicates.append(
                         KnowledgeDuplicate(
                             phrase=phrase,
