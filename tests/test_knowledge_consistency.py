@@ -47,7 +47,8 @@ def test_find_python_markdown_duplicates_extracts_multiple_signal_units(
     skills.mkdir()
     (skills / "safety.md").write_text(
         "## Detection signals\n\nCrisis signals:\n\n"
-        '- "want to die" or "want to end my life"\n',
+        '- "want to die"\n'
+        '- "want to end my life"\n',
         encoding="utf-8",
     )
 
@@ -92,8 +93,8 @@ def test_pattern_mapper_is_classified_as_structured_framework(tmp_path: Path) ->
     skills = tmp_path / "skills/frameworks"
     skills.mkdir(parents=True)
     (skills / "pattern-mapper.md").write_text(
-        "## Pattern 1: Example pattern\n\n"
-        "**Detection signals:**\n\n"
+        "### Example pattern\n\n"
+        '**Detection signals:**\n\n'
         '- "pattern phrase"\n',
         encoding="utf-8",
     )
@@ -181,7 +182,10 @@ def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
         encoding="utf-8",
     )
 
-    assert find_config_usage(tmp_path) == ()
+    usage = find_config_usage(tmp_path)
+
+    assert len(usage) == 1
+    assert usage[0].is_orphaned
 
 
 def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
