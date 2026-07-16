@@ -32,6 +32,33 @@ def test_find_python_markdown_duplicates(tmp_path: Path) -> None:
     assert duplicates[0].classification == "knowledge_duplicate"
 
 
+def test_find_python_markdown_duplicates_extracts_multiple_signal_units(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'CRISIS_TIER1: tuple[str, ...] = ("want to die", "want to end my life")\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    (skills / "safety.md").write_text(
+        '## Crisis signals\n\n'
+        '- "want to die" or "want to end my life"\n',
+        encoding="utf-8",
+    )
+
+    duplicates = find_python_markdown_duplicates(tmp_path)
+
+    assert {duplicate.phrase for duplicate in duplicates} == {
+        "want to die",
+        "want to end my life",
+    }
+    assert len(duplicates) == 2
+
+
 def test_find_python_markdown_duplicates_scans_framework_root(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
