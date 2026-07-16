@@ -202,6 +202,84 @@ This includes SoulMap itself.
 - "If this is true for you, it will need to become clearer in your actual life, not only
   inside an interpretation."
 
+## Detection signal reference
+
+Phrases that mark spiritual bypass in the four detection categories below, plus
+genuine-integration phrases that reduce the bypass score when they co-occur.
+
+### Bypass: Dismissing Pain
+
+- "everything happens for a reason"
+- "it was meant to be"
+- "the universe has a plan"
+- "this is my karma"
+- "i'm meant to learn from this"
+- "it's all happening for my highest good"
+- "i just need to let go"
+- "i need to surrender"
+- "i need to accept it"
+- "i shouldn't be attached"
+- "i need to raise my vibration"
+- "this is just an ego reaction"
+- "i need to transcend this"
+- "at a soul level i chose this"
+- "my higher self knows why"
+- "i'm being tested"
+- "this is a lesson i needed"
+- "everything is perfect as it is"
+- "i just need to be grateful"
+
+### Bypass: Premature Acceptance
+
+- "i've already forgiven them"
+- "i'm at peace with it"
+- "i've moved on"
+- "i'm over it now"
+- "i've accepted it"
+- "i'm grateful for the lesson"
+- "it made me stronger"
+- "everything worked out for the best"
+- "i'm not angry anymore"
+- "i've released it"
+
+### Bypass: Spiritual Inflation
+
+- "as a lightworker"
+- "as an empath i feel"
+- "i'm highly sensitive so"
+- "my vibration is too high for"
+- "i've ascended past"
+- "from a 5d perspective"
+- "i've done the work"
+- "i'm very spiritually advanced"
+- "most people can't understand"
+- "i operate at a different level"
+
+### Bypass: Bypassing Accountability
+
+- "it was their karma not mine"
+- "they were my teacher"
+- "i called this into my life"
+- "i manifested this situation"
+- "i attracted them for a reason"
+- "we were meant to cross paths"
+- "they reflected my shadow to me"
+- "the universe sent them"
+
+### Genuine Integration Signals
+
+- "still feeling"
+- "still processing"
+- "even though i know"
+- "trying to accept but"
+- "working on accepting"
+- "i feel angry and also"
+- "both are true"
+- "complicated"
+- "haven't fully"
+- "still sitting with"
+- "it's hard even though"
+
 ## Safety rules
 
 - Never confirm spiritual identity claims as fact.

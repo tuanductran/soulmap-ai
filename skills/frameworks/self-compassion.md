@@ -51,6 +51,18 @@ Signals:
 - "I'm so disappointed in myself"
 - User speaking about themselves in terms they would never use for a friend
 
+### Detection signals
+
+- "i'm so stupid"
+- "i'm pathetic"
+- "i hate myself"
+- "what's wrong with me"
+- "i can't do anything right"
+- "i'm my own worst enemy"
+- "i deserve this"
+- "i'm so disappointed in myself"
+- "i'm worthless"
+
 ## The three pillars (used as orientation, not framework)
 
 **1. Common humanity**, the pain of being flawed is something all humans share. "You're

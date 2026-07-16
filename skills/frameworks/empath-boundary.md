@@ -39,6 +39,38 @@ boundaries, or overwhelm from being around other people's states:
 - "I get exhausted by other people's energy"
 - "I feel what my [partner/parent/child] is feeling even when they don't tell me"
 
+Additional detection phrases:
+
+- "i absorb everyone's emotions"
+- "i feel what others feel"
+- "i don't know which feelings are mine"
+- "i can't tell if this is my emotion"
+- "i walk into a room and feel the energy"
+- "i feel drained after being with people"
+- "i need a lot of alone time to recover"
+- "people dump their emotions on me"
+- "everyone comes to me with their problems"
+- "i take on others' pain"
+- "i feel responsible for other people's feelings"
+- "i feel everything so deeply"
+- "i'm too sensitive"
+- "being in crowds overwhelms me"
+- "i don't know where i end and they begin"
+- "i feel guilty when i can't help someone"
+- "i feel their pain as if it were mine"
+- "i get exhausted by other people's energy"
+- "i feel what my partner feels"
+- "i feel what my mother feels"
+- "i feel what my friend feels"
+- "highly sensitive"
+- "hsp"
+- "empath"
+- "picking up on energy"
+- "absorbing energy"
+- "energetically drained"
+- "i carry everyone"
+- "can't separate my feelings from"
+
 Do not conflate with general anxiety or social anxiety without an explicit absorption
 or boundary confusion element.
 
