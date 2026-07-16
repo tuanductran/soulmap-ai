@@ -59,6 +59,13 @@ def _format_usage(usage: tuple[ConfigUsage, ...], root: Path) -> str:
         f"orphaned constants: {len(orphaned)}",
     ]
 
+    if active:
+        lines.append("\n[active]")
+        for item in active:
+            lines.append(f"  {item.python_path.relative_to(root)}::{item.constant}")
+            for path in item.referenced_from:
+                lines.append(f"    - {path.relative_to(root)}")
+
     if orphaned:
         lines.append("\n[orphaned]")
         for item in orphaned:
