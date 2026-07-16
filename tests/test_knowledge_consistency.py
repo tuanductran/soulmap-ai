@@ -179,8 +179,7 @@ def test_find_config_usage_ignores_same_name_local_variable(tmp_path: Path) -> N
     detector = tmp_path / "src/soulmap/runtime/detectors"
     detector.mkdir(parents=True)
     (detector / "example.py").write_text(
-        'ACTIVE = load_keyword_section("Activation Signals")\n'
-        "VALUE = ACTIVE\n",
+        'ACTIVE = load_keyword_section("Activation Signals")\nVALUE = ACTIVE\n',
         encoding="utf-8",
     )
 

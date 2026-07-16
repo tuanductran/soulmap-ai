@@ -175,8 +175,7 @@ def _config_symbols(
     for path in sorted(config_dir.glob("*.py")):
         module = _module_name(path, root)
         symbols[module] = {
-            constant: (path, constant)
-            for constant in _python_knowledge(path)
+            constant: (path, constant) for constant in _python_knowledge(path)
         }
     return symbols
 
