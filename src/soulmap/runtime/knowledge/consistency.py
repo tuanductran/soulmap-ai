@@ -72,7 +72,7 @@ def _python_knowledge(path: Path) -> dict[str, tuple[str, ...]]:
         if not values:
             continue
         for target in targets:
-            if isinstance(target, ast.Name):
+            if isinstance(target, ast.Name) and target.id != "__all__":
                 knowledge[target.id] = values
 
     return knowledge
