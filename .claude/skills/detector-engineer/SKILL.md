@@ -140,7 +140,7 @@ Thresholds define when a detector's score triggers a framework override.
 ### Define thresholds in `src/soulmap/runtime/config/`
 
 ```python
-# src/soulmap/runtime/config/safety.py or src/soulmap/runtime/config/meaning.py
+# src/soulmap/runtime/config/safety.py
 HIGH_DEPENDENCY_THRESHOLD = 50      # Score >= 50 triggers Dependency framework
 MODERATE_DEPENDENCY_THRESHOLD = 25  # Score >= 25 warrants caution
 CRISIS_SEVERITY_THRESHOLD = 80      # Immediate-crisis score
