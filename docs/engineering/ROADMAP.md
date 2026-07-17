@@ -29,11 +29,15 @@ Markdown-backed loading:
 - Anger detection signals
 - Grief detection signals
 - Celebration detection signals
+- Pattern-mapper, shadow-pattern, and spiritual-bypass detection knowledge
+  formerly held in `src/soulmap/runtime/config/patterns.py`
 
 As part of this work, `src/soulmap/runtime/config/affect.py` has been
-fully retired as a runtime knowledge source. It no longer defines any
-constants; the detectors that previously imported from it now load their
-phrase lists directly from their owning Markdown skill files.
+fully retired as a runtime knowledge source, and
+`src/soulmap/runtime/config/patterns.py` has been removed from the
+repository entirely. Detectors that previously imported from either
+module now load their phrase lists directly from their owning Markdown
+skill files.
 
 ---
 
@@ -60,19 +64,14 @@ ownership can change with any migration batch.
 
 ## Safe to migrate later
 
-`src/soulmap/runtime/config/patterns.py` contains constants that current
-audit tooling reports as orphaned (no remaining runtime importers).
-Several of these already have a plausible Markdown owner discoverable in
-`skills/`. They were intentionally excluded from the current migration
-pass rather than migrated opportunistically - see "Patterns Module"
-below.
+None identified. `src/soulmap/runtime/config/patterns.py` has been
+removed, and no other non-protected module currently holds orphaned
+knowledge constants according to repository audit tooling.
 
 ## Requires additional audit
 
-Constants in `patterns.py` that are not yet confirmed orphaned, or whose
-Markdown ownership has not been independently verified, require a fresh
-audit pass before any migration decision. Do not assume a constant is
-safe to remove based on this document; re-run the audit tooling.
+None currently open. Re-run `soulmap audit-knowledge` before assuming
+this stays true, since the inventory changes with every migration batch.
 
 ## Protected
 
@@ -101,20 +100,13 @@ validation checklist.
 
 # Patterns Module
 
-`patterns.py` still contains orphaned constants according to
-`soulmap audit-knowledge`. It was intentionally excluded from the
-current migration pass rather than folded into it, so that each
-migration batch stays small, independently reviewable, and scoped to
-constants whose Markdown ownership had already been directly confirmed
-by reading the consuming detector.
-
-No constant in `patterns.py` should be removed without its own audit
-pass that independently confirms, per constant: zero remaining runtime
-importers, an explicit Markdown owner, and a detector that already loads
-the equivalent content directly from that Markdown file. This document
-does not recommend removing anything in `patterns.py` - it only records
-that the module is a known candidate for a future, separately audited
-migration.
+`src/soulmap/runtime/config/patterns.py` has been removed from the
+repository. The constants it held were retired only after each one was
+independently confirmed, per constant, to have zero remaining runtime
+importers, an explicit Markdown owner, and a detector that already
+loaded the equivalent content directly from that Markdown file. This
+section is kept as a record of that migration rather than as an open
+item.
 
 ---
 
@@ -189,9 +181,10 @@ hardcoded in Python.
 # Future Work
 
 The repository's own audit tooling is the authoritative record of what
-work remains at any given time. As of the most recent audit, orphaned
-constants remain in `patterns.py` (candidate for a future, separately
-audited migration batch) and in `safety.py` (protected; see above).
-Future contributors should re-run `soulmap audit-knowledge` rather than
-rely on this section, since the inventory changes with every migration
-batch.
+work remains at any given time. As of the most recent audit, the only
+orphaned constants are `MISALIGNMENT_SIGNALS` (intentionally preserved;
+see "Meaning Module") and the contents of `safety.py` (protected; see
+above) - there is no non-protected module with outstanding migration
+work. Future contributors should re-run `soulmap audit-knowledge` rather
+than rely on this section, since the inventory changes with every
+migration batch.
