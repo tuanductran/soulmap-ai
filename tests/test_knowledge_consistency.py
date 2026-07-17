@@ -10,7 +10,7 @@ from soulmap.runtime.knowledge.consistency import (
 def test_find_python_markdown_duplicates(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("shared phrase", "python only")\n',
         encoding="utf-8",
     )
@@ -27,7 +27,7 @@ def test_find_python_markdown_duplicates(tmp_path: Path) -> None:
     assert len(duplicates) == 1
     assert duplicates[0].phrase == "shared phrase"
     assert duplicates[0].constant == "SIGNALS"
-    assert duplicates[0].python_path == config / "patterns.py"
+    assert duplicates[0].python_path == config / "meaning.py"
     assert duplicates[0].markdown_path == skills / "example.md"
     assert duplicates[0].markdown_section == "Detection signals"
     assert duplicates[0].markdown_group == "signal group"
@@ -66,7 +66,7 @@ def test_find_python_markdown_duplicates_extracts_multiple_signal_units(
 def test_find_python_markdown_duplicates_scans_framework_root(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("framework phrase",)\n',
         encoding="utf-8",
     )
@@ -87,7 +87,7 @@ def test_find_python_markdown_duplicates_scans_framework_root(tmp_path: Path) ->
 def test_pattern_mapper_is_classified_as_structured_framework(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("pattern phrase",)\n',
         encoding="utf-8",
     )
@@ -108,7 +108,7 @@ def test_pattern_mapper_is_classified_as_structured_framework(tmp_path: Path) ->
 def test_activation_signals_use_runtime_keyword_parser(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("activation phrase",)\n',
         encoding="utf-8",
     )
@@ -129,7 +129,7 @@ def test_activation_signals_use_runtime_keyword_parser(tmp_path: Path) -> None:
 def test_non_signal_sections_are_not_treated_as_knowledge(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("shared phrase",)\n',
         encoding="utf-8",
     )
@@ -149,7 +149,7 @@ def test_find_config_usage_distinguishes_active_and_orphaned_constants(
 ) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'ACTIVE: tuple[str, ...] = ("active",)\n'
         'ORPHANED: tuple[str, ...] = ("orphaned",)\n',
         encoding="utf-8",
@@ -158,7 +158,7 @@ def test_find_config_usage_distinguishes_active_and_orphaned_constants(
     detector = tmp_path / "src/soulmap/runtime/detectors"
     detector.mkdir(parents=True)
     (detector / "example.py").write_text(
-        "from soulmap.runtime.config.patterns import ACTIVE\n\nVALUE = ACTIVE\n",
+        "from soulmap.runtime.config.meaning import ACTIVE\n\nVALUE = ACTIVE\n",
         encoding="utf-8",
     )
 
@@ -173,7 +173,7 @@ def test_find_config_usage_distinguishes_active_and_orphaned_constants(
 def test_find_config_usage_ignores_same_name_local_variable(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'ACTIVE: tuple[str, ...] = ("active",)\n',
         encoding="utf-8",
     )
@@ -193,7 +193,7 @@ def test_find_config_usage_ignores_same_name_local_variable(tmp_path: Path) -> N
 def test_find_config_usage_tracks_config_module_alias(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'ACTIVE: tuple[str, ...] = ("active",)\n',
         encoding="utf-8",
     )
@@ -201,8 +201,7 @@ def test_find_config_usage_tracks_config_module_alias(tmp_path: Path) -> None:
     detector = tmp_path / "src/soulmap/runtime/detectors"
     detector.mkdir(parents=True)
     (detector / "example.py").write_text(
-        "import soulmap.runtime.config.patterns as patterns\n\n"
-        "VALUE = patterns.ACTIVE\n",
+        "import soulmap.runtime.config.meaning as meaning\n\nVALUE = meaning.ACTIVE\n",
         encoding="utf-8",
     )
 
@@ -215,7 +214,7 @@ def test_find_config_usage_tracks_config_module_alias(tmp_path: Path) -> None:
 def test_config_exports_are_not_runtime_usage(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("signal",)\n',
         encoding="utf-8",
     )
@@ -273,7 +272,7 @@ def test_grandiosity_overlap_requires_review(tmp_path: Path) -> None:
 def test_find_python_markdown_duplicates_is_diagnostic_only(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
-    (config / "patterns.py").write_text(
+    (config / "meaning.py").write_text(
         'SIGNALS: tuple[str, ...] = ("python only",)\n',
         encoding="utf-8",
     )
