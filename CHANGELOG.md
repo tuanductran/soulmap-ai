@@ -5,6 +5,54 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.6.0 (2026-07-17)
+
+### Feat
+
+- **audit**: expose config dependency mapping
+- **audit**: report orphaned runtime config constants
+- **knowledge**: audit runtime config usage before migration
+- **cli**: expose knowledge audit command
+- **audit**: add repository knowledge inventory command
+- **knowledge**: add Markdown duplicate consistency check
+- **skills**: improve emotional de-escalation phrase coverage
+- **frameworks**: expand detection phrases across skill frameworks
+
+### Fix
+
+- **audit**: track config usage by import provenance
+- **knowledge**: use actual pattern mapper heading format
+- **knowledge**: simplify runtime usage condition
+- **knowledge**: satisfy strict AST typing
+- **knowledge**: exclude __all__ from config usage audit
+- **audit**: make audit tools an explicit package
+- **knowledge**: parse semantic Markdown signal units
+- **knowledge**: keep grandiosity overlap reviewable
+- **numerology**: correct Balance number and Signature reading
+
+### Refactor
+
+- **runtime**: remove legacy patterns config module
+- **config**: remove celebration constants and stale re-exports
+- **config**: remove obsolete affect constants after markdown migration
+- **knowledge**: remove insight config duplicates
+- **config**: remove existential re-exports from config surface
+- **knowledge**: migrate existential signals from meaning config
+- **knowledge**: migrate inner conflict signals
+- **knowledge**: remove direction config duplicates
+- **knowledge**: reuse runtime Markdown parsers
+- **knowledge**: make consistency audit source-aware
+- **knowledge**: remove migrated affect exports
+- **knowledge**: remove migrated affect signal constants
+- **detector**: load intensity modifiers from Markdown
+- **knowledge**: move intensity modifiers to Markdown
+- **detector**: load ancestral secondary signals from Markdown
+- **knowledge**: move ancestral secondary signals to Markdown
+- **detector**: load visibility secondary signals from Markdown
+- **knowledge**: move visibility secondary signals to Markdown
+- **knowledge**: remove migrated pattern exports
+- **knowledge**: remove migrated pattern signal constants
+
 ## v0.5.1 (2026-06-16)
 
 ### Fix
