@@ -4,6 +4,7 @@ import argparse
 import subprocess
 from collections.abc import Callable
 
+from soulmap.devtools.audit import knowledge as audit_knowledge
 from soulmap.devtools.checks import check_markdown_case, check_markdown_links
 from soulmap.devtools.cli import bootstrap_venv
 from soulmap.devtools.evals import (
@@ -33,6 +34,7 @@ def _run_pytest(args: list[str]) -> int:
 
 def _command_table() -> dict[str, CommandHandler]:
     return {
+        "audit-knowledge": audit_knowledge.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
         "check-case": check_markdown_case.main,

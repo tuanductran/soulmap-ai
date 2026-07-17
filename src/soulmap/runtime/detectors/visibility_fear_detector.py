@@ -12,14 +12,17 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
-    load_keyword_section,
+    load_labeled_groups,
 )
 
 # Single source of truth: skills/frameworks/fear-of-visibility.md,
-# "## Activation Signals". Nothing is hardcoded here.
-VISIBILITY_FEAR_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Activation Signals"
+# "## Detection signals". Nothing is hardcoded here.
+_VISIBILITY_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Detection signals"
 )
+VISIBILITY_FEAR_SIGNALS = _VISIBILITY_GROUPS["direct visibility fear"]
+SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
+PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 2
@@ -39,33 +42,10 @@ def detect_visibility_fear(
             signals.append(f"visibility_fear: '{phrase}'")
             break
 
-    # Secondary: shrinking + public/sharing context
-    shrink_refs = (
-        "hold back",
-        "pull back",
-        "stay quiet",
-        "go quiet",
-        "disappear",
-        "invisible",
-        "small",
-        "hide",
-        "hidden",
-        "silent",
-    )
-    public_refs = (
-        "share",
-        "post",
-        "publish",
-        "speak up",
-        "say something",
-        "put out there",
-        "show people",
-        "let people see",
-        "let others see",
-    )
+    # Secondary: shrinking + public/sharing context.
     if (
-        any(s in msg for s in shrink_refs)
-        and any(p in msg for p in public_refs)
+        any(signal in msg for signal in SHRINKING_SIGNALS)
+        and any(signal in msg for signal in PUBLIC_EXPRESSION_SIGNALS)
         and score == 0
     ):
         score += 2

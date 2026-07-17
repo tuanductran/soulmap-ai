@@ -183,12 +183,6 @@ Emotional flooding, overwhelmed to the point of collapse:
 - "crying and angry"
 - "laughing and crying"
 - "i'm so confused and"
-- "i'm angry and sad and"
-- "angry and scared"
-- "i don't know if i'm angry or"
-- "crying and angry"
-- "laughing and crying"
-- "i'm so confused and"
 - "everything feels"
 - "i feel everything"
 - "i feel nothing and everything"
@@ -211,10 +205,6 @@ Emotional flooding, overwhelmed to the point of collapse:
 
 Cognitive flooding, mind spinning, unable to think clearly:
 
-- "i can't think"
-- "can't think straight"
-- "my head is spinning"
-- "head is spinning"
 - "i can't think"
 - "can't think straight"
 - "my head is spinning"
@@ -261,19 +251,22 @@ Pacing signals, uncertainty that calls for slowing down rather than pushing forw
 - "i don't even know"
 - "i just don't know"
 - "i honestly don't know"
-- "i don't even know"
-- "i just don't know"
-- "i honestly don't know"
 - "i don't know i don't know"
 - "everything is just"
 - "and then and then"
 - "but also but also"
 
+Intensity modifiers:
+
+- "i can't"
+- "everything"
+- "nothing"
+- "always"
+- "never"
+- "all of it"
+
 Physical overwhelm, the body registering distress before words catch up:
 
-- "my heart is racing"
-- "heart racing"
-- "can't breathe properly"
 - "my heart is racing"
 - "heart racing"
 - "can't breathe properly"

@@ -13,13 +13,19 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
     load_keyword_section,
+    load_labeled_groups,
 )
 
 # Single source of truth: skills/frameworks/ancestral-patterns.md,
-# "## Activation Signals". Nothing is hardcoded here.
+# "## Activation Signals" and "## Detection signals". Nothing is hardcoded here.
 ANCESTRAL_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/ancestral-patterns.md"), "Activation Signals"
 )
+_ANCESTRAL_GROUPS = load_labeled_groups(
+    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Detection signals"
+)
+PARENT_SIGNALS = _ANCESTRAL_GROUPS["parent references"]
+PATTERN_SIGNALS = _ANCESTRAL_GROUPS["pattern language"]
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 2
@@ -39,37 +45,9 @@ def detect_ancestral(
             signals.append(f"ancestral: '{phrase}'")
             break
 
-    # Secondary signals: parent references + pattern language together
-    parent_refs = (
-        "my mother",
-        "my father",
-        "my parents",
-        "my grandmother",
-        "my grandfather",
-        "my family",
-        "growing up",
-        "as a child",
-        "when i was young",
-    )
-    pattern_refs = (
-        "same pattern",
-        "same thing",
-        "same way",
-        "always did",
-        "always said",
-        "was taught",
-        "was raised",
-        "never showed",
-        "never said",
-        "couldn't show",
-        "passed this",
-        "passed it",
-        "this too",
-        "like them",
-    )
-
-    has_parent = any(p in msg for p in parent_refs)
-    has_pattern = any(p in msg for p in pattern_refs)
+    # Secondary signals: parent references + pattern language together.
+    has_parent = any(signal in msg for signal in PARENT_SIGNALS)
+    has_pattern = any(signal in msg for signal in PATTERN_SIGNALS)
     if has_parent and has_pattern and score == 0:
         score += 2
         signals.append("parent_ref + pattern_language")
