@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from .meaning import MISALIGNMENT_SIGNALS
 from .safety import (
     CRISIS_TIER1,
     CRISIS_TIER2,
@@ -22,6 +21,5 @@ __all__ = [
     "GRANDIOSITY_SIGNALS",
     "HIGH_DEPENDENCY_THRESHOLD",
     "ISOLATION_SIGNALS",
-    "MISALIGNMENT_SIGNALS",
     "MODERATE_DEPENDENCY_THRESHOLD",
 ]
