@@ -112,14 +112,12 @@ item.
 
 # Meaning Module
 
-`MISALIGNMENT_SIGNALS` in `src/soulmap/runtime/config/meaning.py`
-remains in place. It was intentionally preserved rather than migrated
-alongside the rest of the meaning-related knowledge, because the
-direction detector that uses equivalent signals loads its own copy
-directly from Markdown independently of this constant. Removing it
-without first re-confirming, via the audit tooling, that nothing else
-depends on it would be a guess rather than an evidence-based migration
-decision, so it is left in place until a dedicated audit says otherwise.
+`src/soulmap/runtime/config/meaning.py` has been removed from the
+repository. Its sole constant, `MISALIGNMENT_SIGNALS`, was confirmed via
+audit tooling to have zero remaining runtime importers - the direction
+detector already loaded its own equivalent copy directly from
+`life-direction.md` - so it was deleted along with the now-empty module
+and its re-export from `src/soulmap/runtime/config/__init__.py`.
 
 ---
 
@@ -182,8 +180,7 @@ hardcoded in Python.
 
 The repository's own audit tooling is the authoritative record of what
 work remains at any given time. As of the most recent audit, the only
-orphaned constants are `MISALIGNMENT_SIGNALS` (intentionally preserved;
-see "Meaning Module") and the contents of `safety.py` (protected; see
+orphaned constants are the contents of `safety.py` (protected; see
 above) - there is no non-protected module with outstanding migration
 work. Future contributors should re-run `soulmap audit-knowledge` rather
 than rely on this section, since the inventory changes with every
