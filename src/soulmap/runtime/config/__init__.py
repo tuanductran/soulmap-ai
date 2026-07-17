@@ -2,12 +2,6 @@
 
 from __future__ import annotations
 
-from .affect import (
-    CELEBRATION_GRATITUDE,
-    CELEBRATION_PROGRESS,
-    CELEBRATION_RELIEF,
-    CELEBRATION_WIN,
-)
 from .meaning import MISALIGNMENT_SIGNALS
 from .patterns import (
     AVOIDANCE_SIGNALS,
@@ -37,10 +31,6 @@ __all__ = [
     "AVOIDANCE_SIGNALS",
     "BYPASS_ACCOUNTABILITY",
     "BYPASS_DISMISS",
-    "CELEBRATION_GRATITUDE",
-    "CELEBRATION_PROGRESS",
-    "CELEBRATION_RELIEF",
-    "CELEBRATION_WIN",
     "CRISIS_TIER1",
     "CRISIS_TIER2",
     "DECISION_SEEKING",
