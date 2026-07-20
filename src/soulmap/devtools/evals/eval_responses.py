@@ -42,7 +42,7 @@ def _knowledge_paths_for(
         paths = [
             *base,
             "skills/safety/boundaries-safety.md",
-            "templates/redirect-templates.md",
+            "skills/meta/redirect-templates.md",
         ]
         if scope_category in {
             "prediction",
@@ -71,7 +71,7 @@ def _knowledge_paths_for(
             *base,
             "skills/frameworks/emotional-deescalation.md",
             "skills/safety/boundaries-safety.md",
-            "templates/redirect-templates.md",
+            "skills/meta/redirect-templates.md",
         ]
     if primary == "GRIEF":
         return [
@@ -101,7 +101,7 @@ def _knowledge_paths_for(
         return [
             *base,
             "skills/frameworks/meaning-integration.md",
-            "templates/redirect-templates.md",
+            "skills/meta/redirect-templates.md",
         ]
     if primary == "SYNTHESIS":
         return [
@@ -111,7 +111,7 @@ def _knowledge_paths_for(
         ]
     return [
         *base,
-        "templates/response-structure.md",
+        "skills/meta/response-structure.md",
         "skills/meta/deep-inquiry-bank.md",
     ]
 

@@ -226,12 +226,12 @@ No static phrase list. Activates from session structure and explicit user reques
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (Mirror: Synthesis uses
+- **Response shape:** `skills/meta/response-structure.md` (Mirror: Synthesis uses
   theme-observation arc, not the standard five-step arc)
 - **Check against:** `skills/meta/framework-template-map.md` (section:
   Synthesis)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Synthesis Questions
   section)
-- **If it falls outside scope:** `templates/redirect-templates.md`
+- **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

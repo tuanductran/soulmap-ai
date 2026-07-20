@@ -150,12 +150,12 @@ people-pleasing signals picked up by direction and pattern detectors.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror five-step arc:
   keep focus on meaning and identity, not financial facts)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
   Questions and Pattern-Specific Inquiry Questions sections)
-- **Redirect if out of scope:** `templates/redirect-templates.md` (financial advice
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md` (financial advice
   section)
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

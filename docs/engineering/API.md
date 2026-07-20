@@ -70,7 +70,7 @@ Error output:
 | `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration.md` | medium |
 | `SYNTHESIS` | `skills/frameworks/conversation-synthesis.md` | lower |
 | `PATTERN` | `skills/frameworks/pattern-mapper.md` | lower |
-| `MIRROR` | `templates/response-structure.md` | default |
+| `MIRROR` | `skills/meta/response-structure.md` | default |
 
 ## Individual detectors
 

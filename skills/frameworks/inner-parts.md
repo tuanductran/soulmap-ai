@@ -379,12 +379,12 @@ Internal dialogue, user reports conversations happening inside:
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (Mirror: Steps 1-2
+- **Response shape:** `skills/meta/response-structure.md` (Mirror: Steps 1-2
   name the parts, Step 5 invites listening to ONE part)
 - **Check against:** `skills/meta/framework-template-map.md` (section:
   Inner Parts)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
   Questions section)
-- **If it falls outside scope:** `templates/redirect-templates.md`
+- **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

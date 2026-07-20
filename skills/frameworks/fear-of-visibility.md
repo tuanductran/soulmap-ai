@@ -212,12 +212,12 @@ Public expression:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: Step 3 focuses
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: Step 3 focuses
   on naming the protective intention of the fear, not the fear itself as the problem)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Fear of Visibility)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Visibility Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

@@ -70,11 +70,11 @@ Do NOT add a group just to test code-use `tests/` for that.
   "g": "Human-readable group name describing what is tested",
   "cat": "short category code (wl1, wl2, crisis, and so on)",
   "sources": [
-    "templates/response-structure.md",
-    "templates/quick-reference.md"
+    "skills/meta/response-structure.md",
+    "skills/meta/quick-reference.md"
   ],
   "source_markers": {
-    "templates/quick-reference.md": "quoted text from that file"
+    "skills/meta/quick-reference.md": "quoted text from that file"
   },
   "items": [
     {
@@ -146,7 +146,7 @@ Use `source_markers` to create an audit trail. Map file paths to direct quotes f
 ```json
 "source_markers": {
   "skills/frameworks/grief-companion.md": "acute loss, fresh grief",
-  "templates/quick-reference.md": "I just found out..."
+  "skills/meta/quick-reference.md": "I just found out..."
 }
 ```
 

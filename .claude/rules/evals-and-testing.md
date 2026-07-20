@@ -96,10 +96,10 @@ Example:
   "cat": "wl3",
   "sources": [
     "skills/frameworks/existential-companion.md",
-    "templates/quick-reference.md"
+    "skills/meta/quick-reference.md"
   ],
   "source_markers": {
-    "templates/quick-reference.md": "I don't know what my life is for anymore"
+    "skills/meta/quick-reference.md": "I don't know what my life is for anymore"
   },
   "items": [
     {
@@ -152,7 +152,7 @@ Valid framework names (from framework files in `skills/frameworks/`):
 ```json
 "source_markers": {
   "skills/frameworks/grief-companion.md": "acute loss, fresh grief, death of someone close",
-  "templates/quick-reference.md": "I just found out that..."
+  "skills/meta/quick-reference.md": "I just found out that..."
 }
 ```
 

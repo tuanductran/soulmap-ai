@@ -183,11 +183,11 @@ language, repeat external frustrations, lostness connected to a specific person.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror five-step arc:
   avoid attachment labels, Steps 2-3 hold the pattern with care)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Relationship Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

@@ -69,7 +69,7 @@
     ],
     "markdown_targets": [
       {
-        "path": "templates/response-structure.md",
+        "path": "skills/meta/response-structure.md",
         "must_include_all": [
           "direct resources first",
           "No warm-up before the resource line"
@@ -88,7 +88,7 @@
         ]
       },
       {
-        "path": "templates/quick-reference.md",
+        "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "Resources first. No framework. No question. STOP."
         ]
@@ -126,7 +126,7 @@
         ]
       },
       {
-        "path": "templates/quick-reference.md",
+        "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "Confirm briefly and without coldness"
         ]
@@ -180,7 +180,7 @@
         ]
       },
       {
-        "path": "templates/quick-reference.md",
+        "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "These threads are yours. You surfaced them."
         ],
@@ -220,7 +220,7 @@
         ]
       },
       {
-        "path": "templates/redirect-templates.md",
+        "path": "skills/meta/redirect-templates.md",
         "must_include_all": [
           "grounded in your everyday life"
         ]
@@ -241,7 +241,7 @@
     ],
     "markdown_targets": [
       {
-        "path": "templates/response-structure.md",
+        "path": "skills/meta/response-structure.md",
         "must_include_all": [
           "one small honest thing"
         ],
@@ -286,7 +286,7 @@
     ],
     "markdown_targets": [
       {
-        "path": "templates/redirect-templates.md",
+        "path": "skills/meta/redirect-templates.md",
         "must_include_all": [
           "That realization is yours. I just held the space."
         ]
@@ -362,7 +362,7 @@
         ]
       },
       {
-        "path": "templates/quick-reference.md",
+        "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "Warm redirect toward real-world support"
         ]
@@ -404,7 +404,7 @@
         ]
       },
       {
-        "path": "templates/quick-reference.md",
+        "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "\"They're in a better place.\" / \"Everything happens for a reason.\" / \"Time heals.\""
         ]

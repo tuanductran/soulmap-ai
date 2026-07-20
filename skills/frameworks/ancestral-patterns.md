@@ -190,12 +190,12 @@ Pattern language:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: Steps 1-3
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: Steps 1-3
   modified, hold both truths in Step 2 before illuminating potential)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Ancestral Patterns)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Ancestral Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
