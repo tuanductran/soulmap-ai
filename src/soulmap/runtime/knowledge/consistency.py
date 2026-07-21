@@ -201,6 +201,41 @@ def _resolve_import_module(
     return resolve_name(relative, package)
 
 
+def _reexported_symbols(
+    init_path: Path,
+    root: Path,
+    symbols: dict[str, dict[str, tuple[Path, str]]],
+) -> dict[str, tuple[Path, str]]:
+    """Resolve the names a config package's ``__init__.py`` re-exports.
+
+    ``from soulmap.runtime.config import X`` only works at runtime if
+    ``__init__.py`` actually imports ``X`` from one of its submodules. This
+    mirrors that resolution so the audit's symbol table has an entry for the
+    plain package name, not just per-submodule module names.
+    """
+    if not init_path.is_file():
+        return {}
+
+    tree = ast.parse(init_path.read_text(encoding="utf-8"), filename=str(init_path))
+    reexported: dict[str, tuple[Path, str]] = {}
+
+    for node in tree.body:
+        if not isinstance(node, ast.ImportFrom):
+            continue
+        module = _resolve_import_module(node.module, node.level, init_path, root)
+        module_symbols = symbols.get(module, {})
+        if not module_symbols:
+            continue
+        for alias in node.names:
+            if alias.name == "*":
+                continue
+            symbol = module_symbols.get(alias.name)
+            if symbol is not None:
+                reexported[alias.asname or alias.name] = symbol
+
+    return reexported
+
+
 def _config_symbols(
     root: Path,
     config_dir: Path,
@@ -211,6 +246,12 @@ def _config_symbols(
         symbols[module] = {
             constant: (path, constant) for constant in _python_knowledge(path)
         }
+
+    package_module = _module_name(config_dir, root)
+    reexported = _reexported_symbols(config_dir / "__init__.py", root, symbols)
+    if reexported:
+        symbols[package_module] = reexported
+
     return symbols
 
 
