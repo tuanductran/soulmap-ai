@@ -286,13 +286,13 @@ Physical overwhelm, the body registering distress before words catch up:
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (simple holding for high
+- **Response shape:** `skills/meta/response-structure.md` (simple holding for high
   intensity, the standard reflective posture for moderate intensity, and crisis wording for immediate crisis. Do not use the five-step arc in
   high intensity or crisis)
 - **Check against:** `skills/meta/framework-template-map.md` (sections: Crisis,
   Dependency, De-escalation HIGH, De-escalation MODERATE)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Post-Grounding Questions
   section: only after pace slows)
-- **If crisis support is needed:** `templates/redirect-templates.md` (Crisis section)
+- **If crisis support is needed:** `skills/meta/redirect-templates.md` (Crisis section)
 - **How to close:** `skills/voice/session-rituals.md` (Crisis closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

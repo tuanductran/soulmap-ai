@@ -370,12 +370,12 @@ Pattern requires 2+ user messages with matching signals before activating.
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (Mirror: non-labeling
+- **Response shape:** `skills/meta/response-structure.md` (Mirror: non-labeling
   language mandatory, Steps 2-3 carry the pattern reflection)
 - **Check against:** `skills/meta/framework-template-map.md` (section:
   Pattern)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Pattern-Specific
   Inquiry Questions section)
-- **If it falls outside scope:** `templates/redirect-templates.md`
+- **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

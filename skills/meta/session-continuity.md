@@ -158,4 +158,4 @@ history of the user's growing awareness.
   from memory: re-detect from current message)
 - **Safety boundary:** `skills/safety/boundaries-safety.md` (sensitive disclosure
   handling)
-- **Redirect if memory question is out of scope:** `templates/redirect-templates.md`
+- **Redirect if memory question is out of scope:** `skills/meta/redirect-templates.md`

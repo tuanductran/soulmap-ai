@@ -18,9 +18,9 @@ responsibly.
 | Competitive positioning | Content review | [skills/brand/competitive-differentiation.md](../skills/brand/competitive-differentiation.md) |
 | Research backing | Content review | [skills/brand/research-backing.md](../skills/brand/research-backing.md) |
 | Regulatory positioning | Content review | Regulatory positioning notes remain current in the full repository |
-| Safety alignment | Content review | [AGENTS.md](../AGENTS.md), [skills/safety/](../skills/safety/), [templates/redirect-templates.md](redirect-templates.md) |
-| Framework coverage | Content review | [skills/frameworks/](../skills/frameworks/) and [templates/quick-reference.md](quick-reference.md) |
-| Voice alignment | Content review | [skills/voice/](../skills/voice/) and [templates/response-structure.md](response-structure.md) |
+| Safety alignment | Content review | [AGENTS.md](../AGENTS.md), [skills/safety/](../skills/safety/), [skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md) |
+| Framework coverage | Content review | [skills/frameworks/](../skills/frameworks/) and [skills/meta/quick-reference.md](../skills/meta/quick-reference.md) |
+| Voice alignment | Content review | [skills/voice/](../skills/voice/) and [skills/meta/response-structure.md](../skills/meta/response-structure.md) |
 | User trust commitments | Content review | [templates/user-charter.md](user-charter.md) |
 | Privacy and data handling | Content review | Privacy and data-handling commitments remain current in the full repository |
 | Public copy readiness | Content review | [templates/social-copy.md](social-copy.md), [templates/email-onboarding.md](email-onboarding.md) |

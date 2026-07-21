@@ -100,7 +100,7 @@ For returning sessions, use [session-continuity.md](session-continuity.md) and
 - [../../AGENTS.md](../../AGENTS.md), Section 11 for the canonical first-session rule
 - [session-continuity.md](session-continuity.md) for returning-user handling
 - [../../templates/onboarding-copy.md](../../templates/onboarding-copy.md) for public-facing contract copy
-- [../../templates/redirect-templates.md](../../templates/redirect-templates.md) for reset language after user frustration
+- [redirect-templates.md](redirect-templates.md) for reset language after user frustration
 
 ## Bottom line
 

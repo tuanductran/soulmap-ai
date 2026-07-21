@@ -233,7 +233,7 @@ Use these when automated checks are green but you want to probe human-risk defec
 
 - Risk: blocked or sensitive responses are technically correct but emotionally off,
   dependency-building, or too authoritative
-- Files or flows: [`../templates/redirect-templates.md`](../../templates/redirect-templates.md),
+- Files or flows: [`../../skills/meta/redirect-templates.md`](../../skills/meta/redirect-templates.md),
   `src/soulmap/devtools/evals/eval_responses.py`, `src/soulmap/runtime/guards/resource_sanitizer.py`, and
   `evals/datasets/response_generation_cases.json`
 - Probe:

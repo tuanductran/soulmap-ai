@@ -234,14 +234,14 @@ and may prevent this framework from activating.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror, light register -
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror, light register -
   Steps 1-3 only in first exchange: full arc in subsequent exchanges)
 - **Celebration response arcs:** `templates/celebration-response.md` (type-specific
   opening options, slowing-down moves, and closing question banks)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Integration and Celebration)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Celebration section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and celebration
   closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

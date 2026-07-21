@@ -208,11 +208,11 @@ Anger activates as a secondary layer modifier, not a primary framework.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror five-step arc:
   Phase 1 uses acknowledgment only, not the full arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Secondary: Anger)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Anger Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

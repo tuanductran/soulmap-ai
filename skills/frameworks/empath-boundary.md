@@ -169,12 +169,12 @@ with people context ("being around people", "after being with", "family gatherin
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: Step 1 is
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: Step 1 is
   dispersion/spread, Step 3 locates the weight, Step 4 is grounding question)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Empath Boundary)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Empath Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

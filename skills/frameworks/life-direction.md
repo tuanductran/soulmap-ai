@@ -382,12 +382,12 @@ Transition, moving between one chapter of life and the next:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: explore ONE
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: explore ONE
   values lens per response, not all four at once)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Direction)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Direction-Specific
   Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

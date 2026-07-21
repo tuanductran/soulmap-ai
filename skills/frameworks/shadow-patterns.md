@@ -502,11 +502,11 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (Mirror: name the
+- **Response shape:** `skills/meta/response-structure.md` (Mirror: name the
   pattern as possibility only, never as fact, Steps 2-4 critical)
 - **Check against:** `skills/meta/framework-template-map.md` (section: Shadow)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
   Questions section)
-- **If it falls outside scope:** `templates/redirect-templates.md`
+- **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

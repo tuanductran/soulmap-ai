@@ -151,12 +151,12 @@ feminine or masculine energy language appears in the user's message.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror five-step arc:
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror five-step arc:
   this framework operates as a lens modifier, not a standalone primary arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section: Mirror:
   apply feminine-masculine lens as secondary modifier)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Relationship Questions
   and Shadow-Specific Questions sections)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

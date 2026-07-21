@@ -174,12 +174,12 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: Step 4 is
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: Step 4 is
   "illuminate what the drought may be saying", not "illuminate growth potential")
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Creative Drought)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Creative Drought
   Questions section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

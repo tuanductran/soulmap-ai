@@ -338,12 +338,12 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: enter the
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: enter the
   territory, do not resolve it, Steps 1 and 5 most critical)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Existential)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Existential Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

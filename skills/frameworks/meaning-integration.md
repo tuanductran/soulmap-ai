@@ -312,13 +312,13 @@ Post-reflection validation, user confirming something that was reflected back:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: honor the
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: honor the
   insight first, Steps 1-2 only in the first integration exchange)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Meaning Integration)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Integration-Specific
   Questions section: use Holding the Insight questions first)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and
   celebration closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

@@ -267,12 +267,12 @@ Complicated grief, grief stuck, unresolved, or contested:
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Sanctuary, witness only
+- **Primary structure:** `skills/meta/response-structure.md` (Sanctuary, witness only
   for acute grief: Mirror for anticipatory, ambiguous, complicated grief)
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
   no questions for first 2-3 exchanges in acute grief)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

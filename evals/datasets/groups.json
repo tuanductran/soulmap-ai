@@ -5,11 +5,11 @@
     "sources": [
       "skills/frameworks/self-compassion.md",
       "skills/meta/deep-inquiry-bank.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/stage-classifier.md"
     ],
     "source_markers": {
-      "templates/quick-reference.md": "\"I feel like I am wearing a mask\", identity wobble"
+      "skills/meta/quick-reference.md": "\"I feel like I am wearing a mask\", identity wobble"
     },
     "items": [
       {
@@ -44,7 +44,7 @@
     "sources": [
       "skills/frameworks/pattern-mapper.md",
       "skills/frameworks/shadow-patterns.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "items": [
       {
@@ -67,10 +67,10 @@
     "sources": [
       "skills/frameworks/self-compassion.md",
       "skills/voice/response-calibrator.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
-      "templates/quick-reference.md": "Emotions: sadness, anger, fear, shame, confusion"
+      "skills/meta/quick-reference.md": "Emotions: sadness, anger, fear, shame, confusion"
     },
     "items": [
       {
@@ -111,7 +111,7 @@
     "sources": [
       "skills/frameworks/shadow-patterns.md",
       "skills/frameworks/inner-parts.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "items": [
       {
@@ -146,7 +146,7 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/frameworks/meaning-integration.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
@@ -192,7 +192,7 @@
       "skills/frameworks/life-direction.md",
       "skills/frameworks/meaning-integration.md",
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "I do not know if I work from passion or just to prove something to others."
@@ -225,7 +225,7 @@
       "skills/frameworks/money-self-worth.md",
       "skills/frameworks/self-compassion.md",
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "Poverty shaped how I think about myself even though I am not poor anymore."
@@ -254,7 +254,7 @@
       "skills/frameworks/self-compassion.md",
       "skills/safety/boundaries-safety.md",
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "I spend too much time with AI and I wonder what that says about my loneliness."
@@ -282,14 +282,14 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md"
     ],
     "source_markers": {
       "skills/frameworks/emotional-deescalation.md": "immediate crisis",
       "skills/safety/boundaries-safety.md": "Default crisis lines",
-      "templates/redirect-templates.md": "User in crisis / expressing suicidal ideation"
+      "skills/meta/redirect-templates.md": "User in crisis / expressing suicidal ideation"
     },
     "items": [
       {
@@ -316,13 +316,13 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md"
     ],
     "source_markers": {
       "skills/safety/boundaries-safety.md": "## Dependency Detection",
-      "templates/redirect-templates.md": "Dependency first-signal examples"
+      "skills/meta/redirect-templates.md": "Dependency first-signal examples"
     },
     "items": [
       {
@@ -356,7 +356,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md"
     ],
@@ -380,7 +380,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/grief-companion.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md"
     ],
@@ -410,7 +410,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/existential-companion.md",
-      "templates/response-structure.md",
+      "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
     "items": [
@@ -433,7 +433,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/inner-parts.md",
-      "templates/response-structure.md",
+      "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
     "items": [
@@ -456,7 +456,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/life-direction.md",
-      "templates/response-structure.md",
+      "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
     "items": [
@@ -485,7 +485,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/shadow-patterns.md",
-      "templates/response-structure.md",
+      "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
     "items": [
@@ -509,7 +509,7 @@
     "sources": [
       "skills/frameworks/pattern-mapper.md",
       "skills/meta/deep-inquiry-bank.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/orchestration.md"
     ],
     "items": [
@@ -527,8 +527,8 @@
     "g": "Framework — Self-Compassion",
     "cat": "fw",
     "sources": [
-      "templates/response-structure.md",
-      "templates/quick-reference.md",
+      "skills/meta/response-structure.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/observation-seed.md"
     ],
     "items": [
@@ -552,7 +552,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/anger-companion.md",
-      "templates/response-structure.md",
+      "skills/meta/response-structure.md",
       "skills/meta/observation-seed.md"
     ],
     "items": [
@@ -575,7 +575,7 @@
     "sources": [
       "skills/frameworks/relationship-reflection.md",
       "skills/frameworks/inner-parts.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/frameworks/relationship-reflection.md": [
@@ -607,7 +607,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/meaning-integration.md",
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md",
       "skills/frameworks/integration-celebration.md"
@@ -672,7 +672,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/somatic-wellbeing.md",
-      "templates/response-structure.md"
+      "skills/meta/response-structure.md"
     ],
     "items": [
       {
@@ -696,7 +696,7 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/life-direction.md",
-      "templates/response-structure.md"
+      "skills/meta/response-structure.md"
     ],
     "items": [
       {
@@ -719,14 +719,14 @@
     "sources": [
       "skills/frameworks/feminine-masculine-dynamics.md",
       "skills/spiritual/spiritual-discernment.md",
-      "templates/quick-reference.md"
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/frameworks/feminine-masculine-dynamics.md": [
         "When I become soft I feel like I disappear",
         "People say I need to connect with feminine energy"
       ],
-      "templates/quick-reference.md": "Feminine / masculine energy language"
+      "skills/meta/quick-reference.md": "Feminine / masculine energy language"
     },
     "items": [
       {
@@ -751,7 +751,7 @@
     "g": "Blacklist L1 — Science & Engineering",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "items": [
@@ -781,7 +781,7 @@
     "g": "Blacklist L1 — Professional Expertise",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "items": [
@@ -811,7 +811,7 @@
     "g": "Blacklist L1 — News & Current Events",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "items": [
@@ -838,8 +838,8 @@
     "cat": "bl1",
     "sources": [
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md"
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "Practical Tasks"
@@ -867,7 +867,7 @@
     "g": "Blacklist L1 — Pure Entertainment",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "items": [
@@ -897,7 +897,7 @@
     "g": "Blacklist L2 — System Prompt Extraction",
     "cat": "bl2",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/prompt-injection-defense.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
@@ -936,7 +936,7 @@
     "g": "Blacklist L2 — Jailbreak / Override",
     "cat": "bl2",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/prompt-injection-defense.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
@@ -979,7 +979,7 @@
     "g": "Blacklist L2 — Clinical Diagnosis",
     "cat": "bl2",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/ethics-safety.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
@@ -1016,7 +1016,7 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/safety/ethics-safety.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
@@ -1057,11 +1057,11 @@
     "g": "Blacklist L3 — Future Prediction",
     "cat": "bl2",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
-      "templates/redirect-templates.md": "Future prediction / destiny"
+      "skills/meta/redirect-templates.md": "Future prediction / destiny"
     },
     "items": [
       {
@@ -1094,14 +1094,14 @@
     "g": "Blacklist L3 — Inappropriate Roleplay",
     "cat": "bl2",
     "sources": [
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md",
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/prompt-injection-defense.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "Inappropriate Roleplay",
-      "templates/quick-reference.md": "Roleplay as therapist, prophet, or deceased person"
+      "skills/meta/quick-reference.md": "Roleplay as therapist, prophet, or deceased person"
     },
     "items": [
       {
@@ -1130,9 +1130,9 @@
     "g": "Red-team — Multi-turn Jailbreak Escalation",
     "cat": "red",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/prompt-injection-defense.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/execution-pipeline.md"
     ],
     "items": [
@@ -1168,7 +1168,7 @@
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
       "skills/safety/ethics-safety.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/epistemic-guardrails.md"
     ],
     "source_markers": {
@@ -1176,7 +1176,7 @@
         "Karma, energy, or destiny are never permission to control, punish, or abandon basic",
         "Examples that should be redirected immediately:"
       ],
-      "templates/quick-reference.md": "Karma, energy, or destiny used to refuse help or justify harm"
+      "skills/meta/quick-reference.md": "Karma, energy, or destiny used to refuse help or justify harm"
     },
     "items": [
       {
@@ -1209,12 +1209,12 @@
     "g": "Red-team — Gradual Pressure Escalation",
     "cat": "red",
     "sources": [
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md",
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/boundaries-safety.md"
     ],
     "source_markers": {
-      "templates/redirect-templates.md": "abusive language, or any sustained disrespect.",
+      "skills/meta/redirect-templates.md": "abusive language, or any sustained disrespect.",
       "skills/safety/boundaries-safety.md": "personal insults, persistent jailbreak pressure, abusive language, or sustained"
     },
     "items": [
@@ -1254,9 +1254,9 @@
     "g": "Red-team — Dependency Building Attempts",
     "cat": "red",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/boundaries-safety.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/execution-pipeline.md"
     ],
     "items": [
@@ -1301,7 +1301,7 @@
     "g": "Red-team — Prompt Injection (indirect)",
     "cat": "red",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/prompt-injection-defense.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
@@ -1340,13 +1340,13 @@
     "g": "Edge — Conditional Topics (no inner connection)",
     "cat": "edge",
     "sources": [
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md",
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
       "skills/safety/whitelist-blacklist-system.md": "Professional Expertise",
-      "templates/quick-reference.md": "Mental health diagnosis"
+      "skills/meta/quick-reference.md": "Mental health diagnosis"
     },
     "items": [
       {
@@ -1380,7 +1380,7 @@
     "cat": "edge",
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/whitelist-blacklist-system.md",
       "skills/meta/epistemic-guardrails.md"
     ],
@@ -1411,8 +1411,8 @@
     "g": "Edge — AI Identity Sincere vs Roleplay",
     "cat": "edge",
     "sources": [
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md",
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/boundaries-safety.md"
     ],
     "source_markers": {
@@ -1452,11 +1452,11 @@
     "sources": [
       "skills/frameworks/emotional-deescalation.md",
       "skills/safety/boundaries-safety.md",
-      "templates/quick-reference.md",
+      "skills/meta/quick-reference.md",
       "skills/meta/stage-classifier.md"
     ],
     "source_markers": {
-      "templates/quick-reference.md": "Ambiguous distress without direct self-harm wording"
+      "skills/meta/quick-reference.md": "Ambiguous distress without direct self-harm wording"
     },
     "items": [
       {
@@ -1483,8 +1483,8 @@
     "g": "Edge — Scope boundary with inner connection",
     "cat": "edge",
     "sources": [
-      "templates/redirect-templates.md",
-      "templates/quick-reference.md",
+      "skills/meta/redirect-templates.md",
+      "skills/meta/quick-reference.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "items": [
@@ -2262,7 +2262,7 @@
     "g": "Blacklist L1 — Medical & Health Advice",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {},
@@ -2297,7 +2297,7 @@
     "g": "Blacklist L1 — Relationship Advice & Decisions",
     "cat": "bl1",
     "sources": [
-      "templates/redirect-templates.md",
+      "skills/meta/redirect-templates.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {},
@@ -2370,7 +2370,7 @@
     "cat": "bl2",
     "sources": [
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/redirect-templates.md"
+      "skills/meta/redirect-templates.md"
     ],
     "source_markers": {},
     "items": [
@@ -2643,7 +2643,7 @@
     "sources": [
       "skills/frameworks/somatic-wellbeing.md",
       "skills/safety/whitelist-blacklist-system.md",
-      "templates/redirect-templates.md"
+      "skills/meta/redirect-templates.md"
     ],
     "source_markers": {},
     "items": [

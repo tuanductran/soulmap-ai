@@ -154,12 +154,12 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror with somatic
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror with somatic
   anchor after Step 1: body-awareness invitation, then continue arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Secondary: Somatic)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Somatic Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

@@ -216,7 +216,7 @@ Create eval test cases in `evals/datasets/groups.json`:
   "cat": "your_cat",
   "sources": [
     "skills/frameworks/your_framework.md",
-    "templates/quick-reference.md"
+    "skills/meta/quick-reference.md"
   ],
   "source_markers": {
     "skills/frameworks/your_framework.md": "Signal from 'Activation Signals' section"
@@ -236,7 +236,7 @@ Create eval test cases in `evals/datasets/groups.json`:
 
 ### Update quick reference (if applicable)
 
-If the framework should appear in `templates/quick-reference.md`, add an entry:
+If the framework should appear in `skills/meta/quick-reference.md`, add an entry:
 
 ```markdown
 | Your Framework | Signal | Example |

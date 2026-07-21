@@ -179,12 +179,12 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Paired template
 
-- **Primary structure:** `templates/response-structure.md` (Mirror: Step 2 names
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: Step 2 names
   the protection, Step 3 names what the fear knows, not the standard growth arc)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Perfectionism Paralysis)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Perfectionism Questions
   section)
-- **Redirect if out of scope:** `templates/redirect-templates.md`
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`

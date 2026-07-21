@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
     find_python_markdown_duplicates,
@@ -285,6 +286,82 @@ def test_find_python_markdown_duplicates_is_diagnostic_only(tmp_path: Path) -> N
     )
 
     assert find_python_markdown_duplicates(tmp_path) == ()
+
+
+def test_find_config_usage_tracks_package_level_reexport_import(
+    tmp_path: Path,
+) -> None:
+    """Regression test for Issue #126.
+
+    A detector that imports a constant via the config *package*
+    (``from soulmap.runtime.config import X``, relying on ``__init__.py`` to
+    re-export it) must be recognized as a real reference, not a false
+    orphan. Before the fix, the symbol table only had entries keyed by each
+    submodule's own module name (e.g. ``...config.safety``), never by the
+    plain package name (``...config``) that this import style resolves to.
+    """
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'CRISIS_TIER1: tuple[str, ...] = ("want to die",)\n',
+        encoding="utf-8",
+    )
+    (config / "__init__.py").write_text(
+        'from .safety import CRISIS_TIER1\n\n__all__ = ["CRISIS_TIER1"]\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors"
+    detector.mkdir(parents=True)
+    (detector / "crisis_detector.py").write_text(
+        "from soulmap.runtime.config import CRISIS_TIER1\n\nVALUE = CRISIS_TIER1\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+    by_constant = {item.constant: item for item in usage}
+
+    assert not by_constant["CRISIS_TIER1"].is_orphaned
+    assert by_constant["CRISIS_TIER1"].referenced_from == (
+        detector / "crisis_detector.py",
+    )
+
+
+def test_find_config_usage_package_reexport_requires_actual_import(
+    tmp_path: Path,
+) -> None:
+    """A name only defined in a submodule, and never imported by
+    ``__init__.py``, must not resolve via the package name -- the package
+    genuinely does not export it, so a hypothetical
+    ``from soulmap.runtime.config import X`` would fail at runtime too."""
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'NOT_REEXPORTED: tuple[str, ...] = ("phrase",)\n',
+        encoding="utf-8",
+    )
+    (config / "__init__.py").write_text("", encoding="utf-8")
+
+    usage = find_config_usage(tmp_path)
+
+    assert usage[0].constant == "NOT_REEXPORTED"
+    assert usage[0].is_orphaned
+
+
+def test_real_repository_crisis_constants_are_not_orphaned() -> None:
+    """End-to-end regression guard for Issue #126 against the real repo.
+
+    ``crisis_detector.py`` imports these via
+    ``from soulmap.runtime.config import ...`` (package-level, not
+    submodule-level). Before the fix this pattern was always misreported as
+    orphaned regardless of actual usage.
+    """
+    usage = find_config_usage(REPO_ROOT)
+    by_constant = {item.constant: item for item in usage}
+
+    for constant in ("CRISIS_TIER1", "CRISIS_TIER2", "GRANDIOSITY_SIGNALS"):
+        assert constant in by_constant, constant
+        assert not by_constant[constant].is_orphaned, constant
 
 
 def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> None:

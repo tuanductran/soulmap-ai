@@ -121,11 +121,11 @@ people-pleasing signals picked up by the pattern detector.
 
 ## Paired template
 
-- **Response shape:** `templates/response-structure.md` (Mirror: acknowledge the
+- **Response shape:** `skills/meta/response-structure.md` (Mirror: acknowledge the
   inner critic's intention before offering the friend question)
 - **Check against:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Self-Compassion
   Questions section)
-- **If it falls outside scope:** `templates/redirect-templates.md`
+- **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`

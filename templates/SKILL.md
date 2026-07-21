@@ -24,8 +24,9 @@ copy blocks, and product-facing prompts that other skills rely on.
 ## Workflow
 
 1. Read [../AGENTS.md](../AGENTS.md) first so every template stays aligned with SoulMap's doctrine.
-2. Use [response-structure.md](response-structure.md) and
-   [redirect-templates.md](redirect-templates.md) for live-response support.
+2. Live-response support now lives in the orchestration layer: see
+   [../skills/meta/response-structure.md](../skills/meta/response-structure.md) and
+   [../skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md).
 3. Use [brand-copy.md](brand-copy.md), [marketplace-copy.md](marketplace-copy.md),
    [onboarding-copy.md](onboarding-copy.md), [faq.md](faq.md), and
    [demo-scenarios.md](demo-scenarios.md) for outward-facing materials.
@@ -37,12 +38,11 @@ copy blocks, and product-facing prompts that other skills rely on.
    patterns and abstractions. Do not include raw excerpts, source names, or identifying
    details in tracked files.
 7. Use [launch-readiness-checklist.md](launch-readiness-checklist.md) and
-   [quick-reference.md](quick-reference.md) for QA and operations.
+   [../skills/meta/quick-reference.md](../skills/meta/quick-reference.md) for QA and
+   operations.
 
 ## Files in this skill
 
-- [response-structure.md](response-structure.md)
-- [redirect-templates.md](redirect-templates.md)
 - [celebration-response.md](celebration-response.md)
 - [returning-user-onboarding.md](returning-user-onboarding.md)
 - [brand-copy.md](brand-copy.md)
@@ -51,13 +51,16 @@ copy blocks, and product-facing prompts that other skills rely on.
 - [faq.md](faq.md)
 - [demo-scenarios.md](demo-scenarios.md)
 - [launch-readiness-checklist.md](launch-readiness-checklist.md)
-- [quick-reference.md](quick-reference.md)
 - [numerology-reflection-template.md](numerology-reflection-template.md)
 - [user-charter.md](user-charter.md)
 - [social-copy.md](social-copy.md)
 - [email-onboarding.md](email-onboarding.md)
 - [founder-copy.md](founder-copy.md)
 - [founder-posts.md](founder-posts.md)
+
+`response-structure.md`, `redirect-templates.md`, and `quick-reference.md` moved to
+[../skills/meta/](../skills/meta/) because they are live-response orchestration content,
+not reusable outward-facing copy.
 
 ## Expected outcome
 
