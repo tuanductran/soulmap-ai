@@ -41,7 +41,7 @@ Always inspect:
 - `docs/engineering/TESTER.md`
 - `docs/engineering/API.md`
 - `docs/operations/OPERATIONS.md`
-- `templates/launch-readiness-checklist.md`
+- `templates/launch-readiness-checklist.md` (internal-only, not shipped)
 - relevant tests under `tests/`
 
 ## What to check

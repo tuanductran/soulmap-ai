@@ -5,7 +5,8 @@ connected knowledge graph.
 
 - Start from `AGENTS.md`, `docs/engineering/repo-contract.md`, `docs/engineering/content-contract.md`, and
   `README.md`.
-- Treat `skills/` and `templates/` as shipped source of truth.
+- Treat `skills/` as shipped source of truth. `templates/` is internal-only and is
+  not shipped.
 - Treat `docs/` as the explanation and operating layer around those shipped surfaces.
 - Check for:
   - forgotten or weakly surfaced files

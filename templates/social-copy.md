@@ -1,8 +1,3 @@
----
-name: "social-copy"
-description: "Platform-specific social media copy for SoulMap across LinkedIn, Instagram, and Twitter/X. Relevant for drafting, reviewing, or approving public posts and captions that represent the brand."
----
-
 # Social copy library
 
 All copy here passes the brand content quality filter from [skills/brand/content-pillars.md](../skills/brand/content-pillars.md):

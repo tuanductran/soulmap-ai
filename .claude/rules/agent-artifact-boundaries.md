@@ -14,7 +14,7 @@ When there is uncertainty about ownership or precedence, start from
 - put stable repo-wide maintainer guidance in `.claude/rules/`
 - put repeatable maintainer workflows in `.claude/skills/`
 - put reusable task prompts in `.claude/prompts/`
-- keep shipped product behavior in `AGENTS.md`, `skills/`, and `templates/`, not in
+- keep shipped product behavior in `AGENTS.md` and `skills/`, not in
   local workflow files
 - do not create a new skill when a rule plus an existing skill already covers the task
 - do not create a new rule for one-off work that belongs in a prompt or a task-local edit

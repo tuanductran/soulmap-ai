@@ -1,8 +1,3 @@
----
-name: "marketplace-copy"
-description: "Marketplace listing copy for SoulMap."
----
-
 # Marketplace Copy
 
 Use these blocks for assistant directories, plugin marketplaces, skill catalogs, and

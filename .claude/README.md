@@ -8,7 +8,7 @@ For broad repository work, start from
 ## Order of precedence
 
 1. `AGENTS.md`
-2. shipped product knowledge in `skills/` and `templates/`
+2. shipped product knowledge in `skills/` (`templates/` is internal-only, not shipped)
 3. local workflow files in `.claude/`
 
 If a local Claude file conflicts with `AGENTS.md`, preserve `AGENTS.md`.

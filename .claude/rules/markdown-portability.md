@@ -13,7 +13,8 @@ Keep Markdown compatible across AI tools and OS editors.
 - use `'` and `"` instead of smart quotes
 - use `-` instead of em dashes
 - use `...` instead of ellipsis
-- preserve YAML front matter in `skills/` and `templates/`
+- preserve YAML front matter in `skills/` (required); `templates/` is internal-only
+  and does not require front matter
 - do not introduce Markdown structures that conflict with
   `docs/engineering/content-contract.md`
 - do not use Python constant names, module paths, or code identifiers in prose

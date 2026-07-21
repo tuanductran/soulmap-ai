@@ -61,7 +61,7 @@ Always start with these before forming any opinion about what is missing:
 - `docs/engineering/repo-contract.md`, structural source of truth for all repo surfaces
 - `docs/engineering/safety-enforcement-matrix.md`, evidence map for safety claims
 - `docs/engineering/maintenance-boundary.md`, scope-control document
-- `skills/` and `templates/`, shipped knowledge base
+- `skills/`, shipped knowledge base (`templates/` is internal-only, not shipped)
 - `src/soulmap/runtime/` and `src/soulmap/devtools/`, implementation: compare against docs and tests
 - `tests/`, check for coverage gaps against the riskiest behaviors
 - `CHANGELOG.md`, what has changed recently

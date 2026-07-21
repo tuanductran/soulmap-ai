@@ -64,7 +64,7 @@ integrity:
 
 - [`repo-contract.md`](repo-contract.md)
 - [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md)
+- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 
 When reviewing safety claims manually, keep the matrix status labels strict:
 
@@ -162,10 +162,10 @@ uv run soulmap eval-groups
 ```
 
 This is especially useful after editing detector keywords, `evals/datasets/groups.json`, or
-framework examples in `skills/` and `templates/`.
+framework examples in `skills/`.
 
-The grouped harness also verifies that the `skills/` and `templates/` source files
-referenced by each group still exist and, for groups using `source_markers`, still
+The grouped harness also verifies that the `skills/` source files (and any internal-only
+`templates/` files still cited for phrase-matching) referenced by each group still exist and, for groups using `source_markers`, still
 contain the expected policy anchor text.
 
 Run the Markdown contract harness when you want cross-surface drift detection between
@@ -217,7 +217,8 @@ Use these when automated checks are green but you want to probe human-risk defec
   [`../templates/brand-copy.md`](../../templates/brand-copy.md),
   [`../templates/marketplace-copy.md`](../../templates/marketplace-copy.md),
   [`../templates/onboarding-copy.md`](../../templates/onboarding-copy.md), and
-  [`../templates/faq.md`](../../templates/faq.md)
+  [`../templates/faq.md`](../../templates/faq.md) (`templates/` is internal-only, not
+  shipped, but public copy quality still matters)
 - Probe:
   - compare one-liners, bios, and public descriptions against
     [`../skills/brand/message-hierarchy.md`](../../skills/brand/message-hierarchy.md)
@@ -255,8 +256,9 @@ Use these when automated checks are green but you want to probe human-risk defec
 - Risk: the shipped artifact claims or implies repo-only files that are not present after
   extraction
 - Files or flows: [`../AGENTS.md`](../../AGENTS.md), [`../SKILL.md`](../../SKILL.md),
-  [`../skills/`](../../skills/), [`../templates/`](../../templates/),
+  [`../skills/`](../../skills/),
   [`../operations/UPLOAD.md`](../operations/UPLOAD.md), and distribution artifacts under `dist/`
+  (`templates/` is intentionally excluded, since it is internal-only and not shipped)
 - Probe:
   - build `dist/soulmap-ai.zip`
   - inspect extracted files for stale references to repo-only paths

@@ -31,7 +31,7 @@ This repository is the working source for the SoulMap AI system.
 It contains:
 
 - the baseline doctrine and package contract in [AGENTS.md](AGENTS.md)
-- the shipped knowledge base in [skills/](skills/) and [templates/](templates/)
+- the shipped knowledge base in [skills/](skills/)
 - the canonical Python runtime and safety logic in [src/soulmap/runtime/](src/soulmap/runtime/)
 - the canonical local tooling in [src/soulmap/devtools/](src/soulmap/devtools/) and
   convenience wrappers in [scripts/](scripts/)
@@ -63,8 +63,8 @@ The most important surfaces are:
 
 - [AGENTS.md](AGENTS.md), baseline doctrine, safety law, response behavior, and shipped package guide
 - [SKILL.md](SKILL.md), top-level package entry point
-- [skills/](skills/), frameworks, brand doctrine, safety guidance, voice, and meta layers
-- [templates/](templates/), reusable response and brand surfaces
+- [skills/](skills/), frameworks, brand doctrine, safety guidance, voice, and meta layers (including
+  the shipped response and redirect templates in skills/meta/)
 - [src/soulmap/runtime/](src/soulmap/runtime/), selectors, detectors, guards, and runtime support
 - [src/soulmap/devtools/](src/soulmap/devtools/), canonical format, lint, eval, and packaging entry points
 - [docs/](docs/), developer, tester, privacy, operations, and upload guidance

@@ -1,8 +1,3 @@
----
-name: "email-onboarding"
-description: "Email onboarding sequence for new SoulMap users. Relevant for drafting or reviewing welcome emails, first-week sequences, and nurture copy that introduces the brand without building dependency."
----
-
 # Email onboarding sequence
 
 A five-email sequence delivered over the first two weeks after a new user begins.

@@ -1,8 +1,3 @@
----
-name: "demo-scenarios"
-description: "Demo scenarios for showcasing SoulMap."
----
-
 # Demo Scenarios
 
 Use these scenarios to demonstrate the SoulMap brand without drifting into claims the

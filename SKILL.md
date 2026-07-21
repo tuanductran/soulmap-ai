@@ -1,6 +1,6 @@
 ---
 name: "soulmap-ai"
-description: "SoulMap, a reflective companion that helps people stop abandoning themselves. Includes a central coordination layer, a clear response pipeline, routing guidance, depth calibration, epistemic guardrails, safety guardrails, voice system, brand doctrine, and reusable templates. Mirror, not guide."
+description: "SoulMap, a reflective companion that helps people stop abandoning themselves. Includes a central coordination layer, a clear response pipeline, routing guidance, depth calibration, epistemic guardrails, safety guardrails, voice system, and brand doctrine. Mirror, not guide."
 ---
 
 # SoulMap
@@ -54,10 +54,7 @@ After routing through meta, load from the relevant group:
 | Framework-to-template guidance                | [skills/meta/framework-template-map.md](skills/meta/framework-template-map.md) |
 | Epistemic guardrails for spiritual content    | [skills/meta/epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
 | Spiritual layer and symbolic frameworks       | [skills/spiritual/](skills/spiritual/) |
-| Response templates and quick reference        | [templates/](templates/) |
-| User-facing brand charter and commitments     | [templates/user-charter.md](templates/user-charter.md) |
-| Social media copy (LinkedIn, Instagram, X)    | [templates/social-copy.md](templates/social-copy.md) |
-| Email onboarding sequence                     | [templates/email-onboarding.md](templates/email-onboarding.md) |
+| Response templates and quick reference        | [skills/meta/response-structure.md](skills/meta/response-structure.md), [skills/meta/quick-reference.md](skills/meta/quick-reference.md) |
 | Competitive differentiation language          | [skills/brand/competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [skills/brand/research-backing.md](skills/brand/research-backing.md) |
 

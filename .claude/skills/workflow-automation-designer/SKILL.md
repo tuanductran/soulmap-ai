@@ -27,7 +27,7 @@ Before designing any workflow, inspect the relevant existing tooling and contrac
 - `scripts/`, bash helper scripts
 - `docs/engineering/DEV.md`, developer setup and day-to-day commands
 - `docs/operations/OPERATIONS.md`, operational checklists and release guidance
-- `templates/launch-readiness-checklist.md`, release gate template
+- `templates/launch-readiness-checklist.md`, release gate template (internal-only, not shipped)
 
 ## Do not use this skill for
 

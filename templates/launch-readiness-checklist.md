@@ -1,8 +1,3 @@
----
-name: "launch-readiness-checklist"
-description: "Launch readiness checklist for brand and safety."
----
-
 # Launch readiness checklist
 
 Use this checklist before calling SoulMap ready for release. This does not mean
@@ -13,7 +8,7 @@ responsibly.
 
 | Area | Evidence type | Primary evidence |
 | :--- | :--- | :--- |
-| Package entry points | File review | [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), [templates/SKILL.md](SKILL.md) |
+| Package entry points | File review | [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), [templates/README.md](README.md) |
 | Brand alignment | Content review | [skills/brand/](../skills/brand/) and [templates/brand-copy.md](brand-copy.md) |
 | Competitive positioning | Content review | [skills/brand/competitive-differentiation.md](../skills/brand/competitive-differentiation.md) |
 | Research backing | Content review | [skills/brand/research-backing.md](../skills/brand/research-backing.md) |
@@ -77,7 +72,8 @@ responsibly.
 
 ## Validation
 
-- [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), [skills/](../skills/), and [templates/](./) describe the same package.
+- [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), and [skills/](../skills/) describe the
+  shipped package. This `templates/` folder is internal-only and is not part of it.
 - Relative links inside shipped files resolve to files that are actually present.
 - Public copy stays aligned with the mirror-not-guide stance.
 - Safety wording still declines diagnosis, prediction, and dependency-building.

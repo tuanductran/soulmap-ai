@@ -16,7 +16,7 @@ must stay faithful to the operating model defined in:
 - `skills/safety/`
 - `skills/meta/`
 - `skills/voice/`
-- `templates/`
+- `templates/` (internal-only, not shipped)
 - `src/soulmap/runtime/routing/framework_selector.py`
 - `src/soulmap/runtime/guards/response_safety_gate.py`
 - `src/soulmap/runtime/guards/response_contract.py`

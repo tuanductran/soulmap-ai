@@ -18,11 +18,11 @@ Use it to answer four questions for every major repo surface:
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
 | `skills/` | Shipped knowledge base content | Shipped | Frameworks, brand doctrine, safety knowledge, voice and meta references | Markdown contract checks, eval source checks, build smoke, and release review |
-| `templates/` | Shipped reusable templates | Shipped | Redirects, quick reference, launch checklist, response structure, brand and FAQ templates | Markdown contract checks, eval source checks, build smoke, and release review |
+| `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, repo-wide linting, and review against repo structure |
-| `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, `templates/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` | `uv run soulmap build`, extraction checks, and release review |
+| `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
 
 ## Ownership Boundaries
@@ -31,7 +31,7 @@ Use it to answer four questions for every major repo surface:
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
-- Shipped knowledge truth lives in `skills/` and `templates/`.
+- Shipped knowledge truth lives in `skills/`. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Explanatory and operational truth lives in `docs/`.
@@ -65,6 +65,6 @@ The repo is release-ready only when all of the following are true:
 - no stale references remain in [../README.md](../README.md), `docs/`, `.claude/`,
   tests, or build notes
 
-Use [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md)
+Use [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 as the release gate and [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
 as the evidence map for safety claims.

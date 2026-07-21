@@ -35,6 +35,7 @@ optimizing for easy green runs.
 
 - evals that pass because assertions are too loose
 - cases with no clear source backing in `AGENTS.md`, `skills/`, or `templates/`
+  (`templates/` is internal-only, not shipped)
 - wording checks that drift from runtime examples
 - evaluator logic that is brittle, fuzzy, or easy to satisfy accidentally
 - important failure modes that appear in code or docs but are not represented in datasets

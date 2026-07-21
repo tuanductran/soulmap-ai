@@ -1,8 +1,3 @@
----
-name: "numerology-reflection-template"
-description: "Numerology reflection template with safety rules."
----
-
 # Numerology reflection template (non-predictive)
 
 Use this only when the user explicitly invites numerology, or when it clearly matches

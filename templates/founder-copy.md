@@ -1,8 +1,3 @@
----
-name: "founder-copy"
-description: "Reusable founder-facing copy blocks for bios, about sections, origin story, and intro posts that stay aligned with SoulMap doctrine."
----
-
 # Founder copy
 
 Use these blocks for founder bios, about sections, intro posts, press kits, and

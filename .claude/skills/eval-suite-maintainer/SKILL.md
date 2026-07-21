@@ -250,7 +250,8 @@ uv run python tests/eval_regression/test_safety_evals.py
 
 1. Read `evals/README.md` to understand the current eval suite structure.
 2. Identify the framework or safety behavior the new group is testing.
-3. Find the source files (in `skills/` or `templates/`) that justify the test cases.
+3. Find the source files (in `skills/`, or `templates/` for internal-only copy) that
+   justify the test cases.
 4. Write the group following the structure defined in this skill.
 5. Add `source_markers` for high-confidence slices that reference specific policy text.
 6. Run `uv run soulmap eval-groups` and verify no existing assertions broke.

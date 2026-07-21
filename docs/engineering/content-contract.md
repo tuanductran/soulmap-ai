@@ -17,7 +17,8 @@ Examples:
 
 ## Required metadata (YAML front matter)
 
-All Markdown files under `skills/` and `templates/` must begin with YAML front matter:
+All Markdown files under `skills/` must begin with YAML front matter. `templates/` is
+internal-only and is not subject to this requirement:
 
 ```yaml
 ---
@@ -45,7 +46,8 @@ Tracked Markdown must not contain:
 - metadata markers copied from import or extraction output
 
 If source material is sensitive or source-specific, rewrite it into abstractions and
-reusable patterns before it enters `skills/`, `templates/`, or `docs/`.
+reusable patterns before it enters `skills/`, `templates/`, or `docs/` (`templates/` is
+internal-only, but the same sensitivity rule still applies there).
 
 The repository enforces this via `uv run soulmap markdown-contract`.
 
@@ -70,5 +72,5 @@ To avoid structural damage:
 
 - Use `uv run soulmap format` / `uv run soulmap lint` or `bash scripts/format.sh` /
   `bash scripts/lint.sh`.
-- Do not run auto-formatters over `skills/` and `templates/` unless they are known to
-  preserve YAML front matter exactly.
+- Do not run auto-formatters over `skills/` unless they are known to preserve YAML
+  front matter exactly.

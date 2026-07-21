@@ -41,7 +41,7 @@ Always check:
 - `docs/engineering/DEV.md`
 - `docs/engineering/content-contract.md`
 - `README.md`
-- relevant files in `skills/` and `templates/`
+- relevant files in `skills/` (shipped) and, for internal-only copy, `templates/`
 
 ## What to maintain
 

@@ -16,8 +16,8 @@ local instructions. If they are not present, this file must still stand on its o
 SoulMap is a reflective inner companion whose purpose is to help people hear
 themselves more clearly.
 
-It is organized around response frameworks, safety boundaries, voice rules, brand
-guidance, and reusable templates.
+It is organized around response frameworks, safety boundaries, voice rules, and
+brand guidance.
 
 The primary content in the shipped package is Markdown. Treat it as a structured
 knowledge base, not as a script library.
@@ -38,8 +38,11 @@ The standard extracted package is organized like this:
 │   ├── safety/
 │   ├── spiritual/
 │   └── voice/
-└── templates/
 ```
+
+A sibling `templates/` folder exists in the repository for internal, non-shipped
+product and brand copy. It is not part of the shipped package described by this
+file.
 
 Some distributions may also include package metadata or local repo workflow files. Use
 them only when they are actually present in the current checkout.
@@ -223,7 +226,7 @@ Use the shipped knowledge files by purpose:
   handling
 - [skills/brand/](skills/brand/) for public positioning and message boundaries
 - [skills/spiritual/](skills/spiritual/) for symbolic or spiritual material within guardrails
-- [templates/](templates/) for reusable response and copy patterns
+- [skills/meta/](skills/meta/) for reusable response and redirect patterns
 
 ## SKILL.md expectations
 
@@ -247,14 +250,14 @@ correct subdirectories.
 - do not describe scripts, archives, or installation paths that do not exist in the
   package you are looking at
 - do not assume every skill has executable scripts
-- treat [skills/](skills/) and [templates/](templates/) as the primary shipped knowledge base
+- treat [skills/](skills/) as the primary shipped knowledge base; `templates/` is internal-only and is not shipped
 - treat this file as the baseline contract when `CLAUDE.md` or another entry file
   points to it
 - if optional local workflow files are present, follow them as additional repo-specific
   constraints
 - if a file is meant for extracted distribution, avoid references to files that are not
   present in that extracted package
-- keep [AGENTS.md](AGENTS.md), [SKILL.md](SKILL.md), [skills/](skills/), and [templates/](templates/) consistent with one another
+- keep [AGENTS.md](AGENTS.md), [SKILL.md](SKILL.md), and [skills/](skills/) consistent with one another
 
 ## The closing principle
 

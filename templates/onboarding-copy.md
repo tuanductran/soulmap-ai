@@ -1,8 +1,3 @@
----
-name: "onboarding-copy"
-description: "Onboarding copy for product surfaces, including headline tiers, session contract, entry points, and boundary note."
----
-
 # Onboarding Copy
 
 Use these blocks for first-run product surfaces, welcome screens, and guided onboarding.

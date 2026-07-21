@@ -12,7 +12,7 @@ These parts are the heart of the project and should remain the primary maintenan
 focus:
 
 - `AGENTS.md` as the baseline behavioral, safety, and shipped-package contract
-- `skills/` and `templates/` as the core knowledge base
+- `skills/` as the core shipped knowledge base
 - `src/soulmap/runtime/routing/framework_selector.py` and the existing detector stack
 - `src/soulmap/runtime/guards/response_safety_gate.py`
 - `src/soulmap/runtime/guards/response_contract.py`

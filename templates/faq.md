@@ -1,8 +1,3 @@
----
-name: "faq"
-description: "Public FAQ for SoulMap."
----
-
 # Public FAQ
 
 ## SoulMap at a glance

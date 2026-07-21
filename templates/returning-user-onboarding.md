@@ -1,8 +1,3 @@
----
-name: "returning-user-onboarding"
-description: "Response patterns for returning users, when prior session context exists, when memory is partial, and when a user references past conversation without available memory data. Paired with skills/meta/session-continuity.md."
----
-
 # Returning user onboarding templates
 
 Use alongside `skills/meta/session-continuity.md` for any session where the user

@@ -163,7 +163,7 @@ description: "One short sentence describing the full file."
 ---
 ```
 
-- For files under `skills/` and `templates/`, set frontmatter `name` to the exact
+- For files under `skills/`, set frontmatter `name` to the exact
   filename stem in kebab-case. Example:
   [`../skills/brand/brand-doctrine.md`](../../skills/brand/brand-doctrine.md) must use
   `name: "brand-doctrine"`.
@@ -189,7 +189,7 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 
 Before triggering a release, review:
 
-- [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md)
+- [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 - [`repo-contract.md`](repo-contract.md)
 - [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
 
@@ -208,7 +208,7 @@ uv run soulmap test -n auto -q
 
 `uv run soulmap eval-groups` is the lightest taxonomy-level guardrail here. It checks
 grouped routing expectations from `evals/datasets/groups.json` and validates the referenced
-`skills/` / `templates/` policy sources at the same time. For higher-risk slices,
+`skills/` policy sources at the same time. For higher-risk slices,
 `groups.json` can also define `source_markers` so evals fail if the cited files no
 longer contain the expected policy anchor.
 

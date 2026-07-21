@@ -64,10 +64,9 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
         )
 
     # - Metadata: important docs should start with YAML front matter metadata.
-    #   - `SKILL.md`, `skills/**.md`, and `templates/**.md`.
-    if rel.as_posix() == "SKILL.md" or (
-        rel.parts and rel.parts[0] in {"skills", "templates"}
-    ):
+    #   - `SKILL.md` and `skills/**.md` only. `templates/` is internal-only and
+    #     is not subject to the skill packaging contract.
+    if rel.as_posix() == "SKILL.md" or (rel.parts and rel.parts[0] == "skills"):
         meta = parse_yaml_front_matter(lines[:50])
         if not meta or not meta.get("name") or not meta.get("description"):
             issues.append(

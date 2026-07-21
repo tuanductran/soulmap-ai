@@ -26,8 +26,8 @@ Some items include explicit expectation fields such as `expect_primary_framework
 `expect_secondary_layer`, `expect_mode`, `expect_scope_tier`, or
 `expect_safety_status`. Those items are treated as executable assertions.
 
-Every group should declare `sources` pointing at the relevant `skills/` or
-`templates/` files. The grouped harness validates those source paths so policy docs and
+Every group should declare `sources` pointing at the relevant `skills/` files (or, for
+phrase-matching only, internal-only `templates/` files). The grouped harness validates those source paths so policy docs and
 eval routing do not drift apart quietly.
 
 Groups may also declare `source_markers` for higher-confidence slices. These markers are
@@ -48,7 +48,7 @@ These cases keep wording-level contracts aligned across:
 
 - runtime examples in `src/`
 - doctrine files such as `AGENTS.md`
-- shipped files in `skills/` and `templates/`
+- shipped files in `skills/` (`templates/` is internal-only and is not shipped)
 
 Use this dataset when a behavior change must stay synchronized across multiple files,
 not just inside Python.

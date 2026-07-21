@@ -11,7 +11,7 @@ uv run soulmap build --skill   # skill package
 
 ### `dist/soulmap-ai.zip`
 
-Standard zip archive containing `skills/`, `templates/`, root
+Standard zip archive containing `skills/`, root
 [`../SKILL.md`](../../SKILL.md), [`../AGENTS.md`](../../AGENTS.md), and `LICENSE`.
 
 This build intentionally excludes `.claude-plugin/`.
@@ -43,8 +43,7 @@ ChatGPT handles ZIP files differently depending on the context you are working i
 directly and ChatGPT will extract and read its contents using the Code Interpreter
 sandbox. This makes the standard `dist/soulmap-ai.zip` usable as a multi-file upload in
 a single step, upload the archive, then ask ChatGPT to read [`../SKILL.md`](../../SKILL.md),
-[`../AGENTS.md`](../../AGENTS.md), and the relevant folders under [`../skills/`](../../skills/)
-and [`../templates/`](../../templates/).
+[`../AGENTS.md`](../../AGENTS.md), and the relevant folders under [`../skills/`](../../skills/).
 
 **Custom GPT knowledge base:** ZIP files are not supported as Custom GPT knowledge files. OpenAI's knowledge retrieval system indexes individual text-based documents (PDF, DOCX, TXT, Markdown). For a Custom GPT, extract the archive and upload the individual Markdown and text files you want indexed.
 
@@ -52,7 +51,7 @@ and [`../templates/`](../../templates/).
 
 1. Extract `dist/soulmap-ai.zip`.
 2. Upload [`../SKILL.md`](../../SKILL.md), [`../AGENTS.md`](../../AGENTS.md), and the key
-   files under [`../skills/`](../../skills/) and [`../templates/`](../../templates/).
+   files under [`../skills/`](../../skills/).
 3. Keep each file under 512 MB and prefer plain Markdown or TXT for reliable retrieval.
 
 ### Claude
@@ -72,8 +71,7 @@ requires a `.zip` extension.
 
 1. Extract `dist/soulmap-ai.zip`.
 2. Upload [`../SKILL.md`](../../SKILL.md), [`../AGENTS.md`](../../AGENTS.md), and the relevant
-   files under [`../skills/`](../../skills/) and [`../templates/`](../../templates/) to the
-   Project knowledge base.
+   files under [`../skills/`](../../skills/) to the Project knowledge base.
 3. For the full Custom Skills experience, upload `dist/soulmap-ai.skill` (or rename to `.zip`) via `Customize`, then `Skills`.
 
 ### Any agent with Skills support
@@ -108,8 +106,7 @@ Suggested use for Custom GPT knowledge or Claude Projects:
 1. Extract the zip.
 2. Upload the Markdown or text files that match your tool's supported file types.
 3. Point the tool at [`../SKILL.md`](../../SKILL.md), [`../AGENTS.md`](../../AGENTS.md), and
-   the relevant folders under [`../skills/`](../../skills/) and
-   [`../templates/`](../../templates/).
+   the relevant folders under [`../skills/`](../../skills/).
 
 ### Skill build for Claude Custom Skills or skill-oriented agents
 

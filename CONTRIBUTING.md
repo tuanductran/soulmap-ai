@@ -31,7 +31,7 @@ consistent across:
 
 - [README.md](README.md)
 - [skills/brand/SKILL.md](skills/brand/SKILL.md)
-- [templates/SKILL.md](templates/SKILL.md)
+- [templates/README.md](templates/README.md) (internal-only, not shipped)
 - [skills/brand/message-hierarchy.md](skills/brand/message-hierarchy.md)
 - [skills/brand/surfaces-and-scope.md](skills/brand/surfaces-and-scope.md)
 - [skills/brand/brand-positioning.md](skills/brand/brand-positioning.md)
@@ -76,7 +76,7 @@ This repo intentionally does not run a heavy `pre-push` hook. Before pushing, ru
 
 ## Adding or Editing SKILL.md Files
 
-When creating or updating a `SKILL.md` in `skills/`, `templates/`, or `.claude/skills/`,
+When creating or updating a `SKILL.md` in `skills/` or `.claude/skills/`,
 follow these rules. Treat them as repo contract rules and verify them through the
 normal formatting and linting flow.
 
@@ -122,7 +122,7 @@ disable-model-invocation: true
 
 ### Build contract
 
-After adding any `.md` to `skills/` or `templates/`, run the appropriate command(s) to rebuild the distribution artifacts:
+After adding any `.md` to `skills/`, run the appropriate command(s) to rebuild the distribution artifacts. (`templates/` is internal-only and is excluded from the build.)
 
 ```bash
 # To build the standard .zip archive

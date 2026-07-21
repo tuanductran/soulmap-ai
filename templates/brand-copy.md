@@ -1,8 +1,3 @@
----
-name: "brand-copy"
-description: "Reusable brand copy blocks for public surfaces."
----
-
 # Brand copy blocks (reusable)
 
 These blocks are for product pages, tool descriptions, onboarding, and other public

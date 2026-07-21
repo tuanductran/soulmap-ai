@@ -20,7 +20,7 @@ Relevant files include:
 
 - Reviewing or editing public-facing brand copy (landing pages, onboarding, FAQ), use
   [`brand-copy-review`](../brand-copy-review/SKILL.md) for those
-- Editing knowledge files under `skills/` or `templates/`, use
+- Editing knowledge files under `skills/` (shipped) or `templates/` (internal-only), use
   [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
 - Reviewing prompt engineering or safety behavior, use
   [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)

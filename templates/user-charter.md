@@ -1,8 +1,3 @@
----
-name: "user-charter"
-description: "SoulMap's public-facing commitment to user independence and the boundaries of the reflective relationship. Relevant for onboarding copy, product surfaces, FAQ, and press materials where the brand's core user promise must be stated clearly."
----
-
 # User Charter
 
 This is SoulMap's public commitment to the people who use it.

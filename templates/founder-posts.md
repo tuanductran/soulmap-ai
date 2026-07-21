@@ -1,8 +1,3 @@
----
-name: "founder-posts"
-description: "Reusable founder-facing social post templates that translate private themes into grounded SoulMap brand language."
----
-
 # Founder posts
 
 Use these post templates when you want founder-facing social content that feels personal,

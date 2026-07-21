@@ -84,7 +84,7 @@ The exact contract varies by module.
 
 ## Knowledge base
 
-The SoulMap AI knowledge base is stored as Markdown under `skills/` and `templates/`.
+The SoulMap AI knowledge base is stored as Markdown under `skills/`.
 
 ## Safety gate
 

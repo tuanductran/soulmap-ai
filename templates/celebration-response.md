@@ -1,8 +1,3 @@
----
-name: "celebration-response"
-description: "Response templates for the Integration and Celebration framework, wins, relief, gratitude, and recognized progress. Prevents performed enthusiasm and ensures the positive state is genuinely witnessed."
----
-
 # Celebration response templates
 
 Use these templates when the Integration and Celebration framework is active.

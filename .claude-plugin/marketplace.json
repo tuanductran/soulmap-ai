@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "soulmap-ai",
-  "description": "Reflective companion skills, safety guardrails, voice systems, and reusable templates for SoulMap AI.",
+  "description": "Reflective companion skills, safety guardrails, and voice systems for SoulMap AI.",
   "owner": {
     "name": "Tuan Duc Tran",
     "email": "tuanductran.dev@gmail.com"
@@ -54,14 +54,5 @@
       "skills": [
         "./skills/voice"
       ]
-    },
-    {
-      "name": "SoulMap Templates Library",
-      "description": "Reusable templates for response structure, redirects, onboarding, launch readiness, FAQ, and reflective scenarios.",
-      "source": "./",
-      "skills": [
-        "./templates"
-      ]
-    }
-  ]
+    }]
 }

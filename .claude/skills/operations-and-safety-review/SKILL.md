@@ -24,7 +24,7 @@ Relevant files include:
   [`ai-prompt-engineering-safety-review`](../ai-prompt-engineering-safety-review/SKILL.md)
 - Writing or updating technical docs, use
   [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md)
-- Editing knowledge files under `skills/` or `templates/`, use
+- Editing knowledge files under `skills/` (shipped) or `templates/` (internal-only), use
   [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
 
 ## Mission

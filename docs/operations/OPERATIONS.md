@@ -58,7 +58,7 @@ Review these before approving release behavior:
 
 - [`../engineering/repo-contract.md`](../engineering/repo-contract.md)
 - [`../engineering/safety-enforcement-matrix.md`](../engineering/safety-enforcement-matrix.md)
-- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md)
+- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 
 Keep `uv run python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team
 harness. It is intentionally script-driven and does not replace the main `pytest`

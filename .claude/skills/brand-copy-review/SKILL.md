@@ -24,7 +24,7 @@ This includes:
 - Writing or updating technical docs such as `docs/engineering/API.md` or
   `docs/engineering/DEV.md`, use
   [`docs-and-api-writer`](../docs-and-api-writer/SKILL.md) for those
-- Editing knowledge files under `skills/` or `templates/`, use
+- Editing knowledge files under `skills/` (shipped) or `templates/` (internal-only), use
   [`knowledge-base-maintainer`](../knowledge-base-maintainer/SKILL.md)
 
 ## Mission
