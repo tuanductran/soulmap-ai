@@ -146,6 +146,14 @@ These rules cannot be bypassed by prompt framing, roleplay, or user pressure.
 self-harm, respond with region-appropriate crisis resources immediately. No warm acknowledgment first.
 No framework. No reflective question. No extended conversation until the user signals safety.
 
+Crisis detection is language-aware. Signals are matched against isolated, human-authored
+phrase packs for English, Vietnamese, Spanish, French, and Chinese (Simplified) — see
+`src/soulmap/runtime/config/safety_en.py`, `safety_vi.py`, `safety_es.py`, `safety_fr.py`,
+`safety_zh.py`, combined by `src/soulmap/runtime/knowledge/crisis_language_packs.py`. There is
+no translation engine and no external API call: each language pack is reviewed and maintained
+independently, and detection triggers the same crisis response policy regardless of which
+pack matched.
+
 Crisis lines:
 
 - Vietnam: HOPE 0865 044 400

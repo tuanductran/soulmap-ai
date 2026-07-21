@@ -355,13 +355,32 @@ def test_real_repository_crisis_constants_are_not_orphaned() -> None:
     ``from soulmap.runtime.config import ...`` (package-level, not
     submodule-level). Before the fix this pattern was always misreported as
     orphaned regardless of actual usage.
+
+    Since Issue #130 (multilingual crisis detection), these three names are
+    each defined once per language pack (``safety_en.py``, ``safety_vi.py``,
+    ``safety_es.py``, ``safety_fr.py``, ``safety_zh.py``) and combined by
+    ``soulmap.runtime.knowledge.crisis_language_packs``, which imports every
+    pack directly by name. That combiner lives outside
+    ``soulmap.runtime.config`` specifically so this audit can see the real
+    usage, so every language pack's constant should be referenced from it.
     """
     usage = find_config_usage(REPO_ROOT)
-    by_constant = {item.constant: item for item in usage}
+    by_path_and_constant = {
+        (item.python_path.name, item.constant): item for item in usage
+    }
 
+    language_packs = (
+        "safety_en.py",
+        "safety_vi.py",
+        "safety_es.py",
+        "safety_fr.py",
+        "safety_zh.py",
+    )
     for constant in ("CRISIS_TIER1", "CRISIS_TIER2", "GRANDIOSITY_SIGNALS"):
-        assert constant in by_constant, constant
-        assert not by_constant[constant].is_orphaned, constant
+        for pack_file in language_packs:
+            key = (pack_file, constant)
+            assert key in by_path_and_constant, key
+            assert not by_path_and_constant[key].is_orphaned, key
 
 
 def test_real_repository_dependency_constants_are_not_orphaned() -> None:

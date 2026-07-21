@@ -36,9 +36,20 @@ over any static document.
 
 ## Protected modules
 
-`src/soulmap/runtime/config/safety.py` and
+`src/soulmap/runtime/config/safety.py`, the per-language crisis packs
+(`safety_en.py`, `safety_vi.py`, `safety_es.py`, `safety_fr.py`, `safety_zh.py`),
+`src/soulmap/runtime/knowledge/crisis_language_packs.py` (which combines the packs
+by direct import, not Markdown loading), and
 `src/soulmap/runtime/detectors/crisis_detector.py` use hardcoded Python constants
 rather than Markdown-loaded phrase lists. This is intentional.
+
+Crisis detection (Issue #130) is multilingual but still fully static: each
+language pack is a literal, human-authored tuple of phrases with no translation
+engine, no machine translation, and no external API call anywhere in the runtime.
+Adding a language means adding a new `safety_<code>.py` module with the same three
+tuples (`CRISIS_TIER1`, `CRISIS_TIER2`, `GRANDIOSITY_SIGNALS`) and importing it
+from `crisis_language_packs.py` — nothing else in the detection pipeline changes,
+and the crisis response policy itself does not vary by language.
 
 Safety-critical detection carries a much higher cost of failure than
 framework-detection knowledge. A parsing error or an incomplete Markdown loading
