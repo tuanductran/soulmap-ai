@@ -364,6 +364,61 @@ def test_real_repository_crisis_constants_are_not_orphaned() -> None:
         assert not by_constant[constant].is_orphaned, constant
 
 
+def test_real_repository_dependency_constants_are_not_orphaned() -> None:
+    """Regression guard: dependency detector constants must be active, not orphaned.
+
+    ``dependency_detector.py`` imports DECISION_SEEKING, DEPENDENCY_KEYWORDS,
+    and ISOLATION_SIGNALS via ``from soulmap.runtime.config import ...``.
+    These were previously reported as orphaned because the detector used to
+    create same-named local variables from Markdown instead of importing from
+    config, meaning the audit never saw a real import reference.
+    """
+    usage = find_config_usage(REPO_ROOT)
+    by_constant = {item.constant: item for item in usage}
+
+    for constant in ("DECISION_SEEKING", "DEPENDENCY_KEYWORDS", "ISOLATION_SIGNALS"):
+        assert constant in by_constant, f"{constant} not found in config usage"
+        assert not by_constant[constant].is_orphaned, (
+            f"{constant} incorrectly reported as orphaned — "
+            "dependency_detector.py must import it from soulmap.runtime.config"
+        )
+        referenced = {p.name for p in by_constant[constant].referenced_from}
+        assert "dependency_detector.py" in referenced, (
+            f"{constant} active but not referenced by dependency_detector.py: "
+            f"found {referenced}"
+        )
+
+
+def test_local_variable_same_name_as_config_constant_is_still_orphaned(
+    tmp_path: Path,
+) -> None:
+    """A detector that creates a local variable with the same name as a config
+    constant — without importing the constant — must still be reported as
+    orphaned. This guards the audit against false-active false positives.
+    """
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'DEPENDENCY_KEYWORDS: tuple[str, ...] = ("phrase",)\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors"
+    detector.mkdir(parents=True)
+    # Creates a local var with same name via Markdown load — no config import
+    (detector / "dep.py").write_text(
+        '_GROUPS = load_labeled_groups(path, "Detection signals")\n'
+        'DEPENDENCY_KEYWORDS = _GROUPS["dependency keywords"]\n'
+        "VALUE = DEPENDENCY_KEYWORDS\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+    assert len(usage) == 1
+    assert usage[0].constant == "DEPENDENCY_KEYWORDS"
+    assert usage[0].is_orphaned
+
+
 def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> None:
     markdown = tmp_path / "skills/frameworks/example.md"
     markdown.parent.mkdir(parents=True)
