@@ -45,7 +45,7 @@ dev = [
   "pytest-cov>=7.1.0",
   "pytest-xdist>=3.8.0",
   "pyright>=1.1.411",
-  "commitizen>=4.16.4",
+  "commitizen>=4.16.5",
   "deptry>=0.25.1",
   "vulture>=2.16",
 ]
