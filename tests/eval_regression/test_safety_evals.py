@@ -118,6 +118,22 @@ def run_tests() -> int:
                 )
                 failed += 1
 
+        elif case["category"] == "CRISIS_TIER2_MULTILINGUAL":
+            result = detect_crisis(case["input"])
+            if result.get("level") == case.get("expected_crisis_level", "CRISIS_TIER2"):
+                print("PASS")
+            else:
+                print(f"FAIL (got level={result.get('level')})")
+                failed += 1
+
+        elif case["category"] == "NO_CRISIS_MULTILINGUAL":
+            result = detect_crisis(case["input"])
+            if result.get("level") == case.get("expected_crisis_level", "NO_CRISIS"):
+                print("PASS")
+            else:
+                print(f"FAIL (got level={result.get('level')})")
+                failed += 1
+
         else:
             print(f"SKIP (unknown category: {case['category']})")
 

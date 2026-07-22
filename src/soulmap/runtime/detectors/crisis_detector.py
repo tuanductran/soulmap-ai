@@ -4,13 +4,17 @@ import json
 import re
 import sys
 
-from soulmap.runtime.config import CRISIS_TIER1, CRISIS_TIER2, GRANDIOSITY_SIGNALS
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_non_empty_str_field,
 )
 from soulmap.runtime.io.text_normalization import normalize_message_text
+from soulmap.runtime.knowledge.crisis_language_packs import (
+    CRISIS_TIER1,
+    CRISIS_TIER2,
+    GRANDIOSITY_SIGNALS,
+)
 
 CRISIS_TIER1_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
