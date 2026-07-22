@@ -16,6 +16,9 @@ from soulmap.runtime.detectors.dependency_detector import (  # noqa: E402
 from soulmap.runtime.guards.resource_sanitizer import (  # noqa: E402
     check_banned_language,
 )
+from soulmap.runtime.guards.response_safety_contract import (  # noqa: E402
+    check_response_safety_contract,
+)
 from soulmap.runtime.routing.scope_classifier import classify_message  # noqa: E402
 
 
@@ -52,6 +55,22 @@ def run_tests() -> int:
                 print("PASS")
             else:
                 print(f"FAIL (got status={result.get('status')})")
+                failed += 1
+
+        elif case["category"] == "RESPONSE_SAFETY_CONTRACT":
+            result = check_response_safety_contract(case["output"])
+            status_ok = result.get("status") == case["expected_status"]
+            expected_category = case.get("expected_violation_category")
+            category_ok = expected_category is None or expected_category in result.get(
+                "categories", []
+            )
+            if status_ok and category_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got status={result.get('status')}, "
+                    f"categories={result.get('categories')})"
+                )
                 failed += 1
 
         elif case["category"] == "JAILBREAK":
