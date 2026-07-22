@@ -48,7 +48,7 @@ language pack is a literal, human-authored tuple of phrases with no translation
 engine, no machine translation, and no external API call anywhere in the runtime.
 Adding a language means adding a new `safety_<code>.py` module with the same three
 tuples (`CRISIS_TIER1`, `CRISIS_TIER2`, `GRANDIOSITY_SIGNALS`) and importing it
-from `crisis_language_packs.py` — nothing else in the detection pipeline changes,
+from `crisis_language_packs.py` - nothing else in the detection pipeline changes,
 and the crisis response policy itself does not vary by language.
 
 Safety-critical detection carries a much higher cost of failure than
