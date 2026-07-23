@@ -100,6 +100,12 @@ def _knowledge_paths_for(
             "skills/frameworks/life-direction.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
+    if primary == "SHADOW":
+        return [
+            *base,
+            "skills/frameworks/shadow-patterns.md",
+            "skills/meta/deep-inquiry-bank.md",
+        ]
     if primary == "MEANING_INTEGRATION":
         return [
             *base,
@@ -246,6 +252,14 @@ def _compose_response(
             "Feeling lost can make every option feel louder and less trustworthy at the same time. "
             "Sometimes the deeper question is not which path is correct, but what kind of life would let "
             "you stay closer to what matters. What value feels most important not to abandon as you look ahead?"
+        )
+
+    if primary == "SHADOW":
+        return (
+            "Sometimes patterns like this appear when part of us learned, a long time ago, that staying "
+            "quiet or keeping the peace was safer than saying what was actually true. That is not a flaw "
+            "in you, it is a strategy that once made sense. What do you notice in yourself right now as you "
+            "look at that pattern?"
         )
 
     if primary == "MEANING_INTEGRATION":
