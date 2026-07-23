@@ -131,6 +131,43 @@ Input:
 Use this contract when validating conversational outputs against banned vocabulary and
 one-question structure rules from `AGENTS.md`.
 
+## Response safety contract validator
+
+Entrypoint:
+
+```bash
+python -m soulmap.runtime.guards.response_safety_contract
+```
+
+Input:
+
+```json
+{
+  "response_text": "string"
+}
+```
+
+Purpose:
+
+- Validate a generated response's content against SoulMap's non-negotiable safety
+  categories before it reaches the user: diagnosis, prediction presented as fact,
+  dependency reinforcement, guru positioning, excessive certainty, and loss of user
+  independence (Issue #132).
+- This is content validation, distinct from `response_contract.py` (structure/style)
+  and `resource_sanitizer.py` (banned vocabulary). It detects violations only - it
+  never generates, rewrites, or regenerates the response.
+
+Output:
+
+```json
+{
+  "status": "PASS|FAIL_REWRITE_REQUIRED",
+  "violations": [{"category": "string", "pattern": "string"}],
+  "categories": ["string"],
+  "instruction": "string (only present when status is FAIL_REWRITE_REQUIRED)"
+}
+```
+
 ## Experimental integration modules
 
 These modules are available for local experimentation and wrapper products, but they are

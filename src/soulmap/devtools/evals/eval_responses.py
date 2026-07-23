@@ -7,6 +7,9 @@ from pathlib import Path
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.guards.resource_sanitizer import check_banned_language
 from soulmap.runtime.guards.response_contract import grade_response_contract
+from soulmap.runtime.guards.response_safety_contract import (
+    check_response_safety_contract,
+)
 from soulmap.runtime.routing.framework_selector import select_framework
 from soulmap.runtime.routing.scope_classifier import classify_message
 
@@ -290,6 +293,7 @@ def main(argv: list[str] | None = None) -> int:
         response = _compose_response(case["message"], selection, scope)
         contract = grade_response_contract(response, selection)
         sanitizer = check_banned_language(response)
+        safety_contract = check_response_safety_contract(response)
 
         must_include_any = case.get("must_include_any", [])
         includes_ok = not must_include_any or any(
@@ -306,6 +310,7 @@ def main(argv: list[str] | None = None) -> int:
         question_ok = _question_count(response) == case["expected_question_count"]
         contract_ok = bool(contract["ok"])
         sanitizer_ok = sanitizer["status"] == "PASS"
+        safety_contract_ok = safety_contract["status"] == "PASS"
         passed = (
             primary_ok
             and safety_ok
@@ -314,6 +319,7 @@ def main(argv: list[str] | None = None) -> int:
             and excludes_ok
             and contract_ok
             and sanitizer_ok
+            and safety_contract_ok
         )
         ok = ok and passed
 
@@ -338,6 +344,7 @@ def main(argv: list[str] | None = None) -> int:
                     "excludes_ok": excludes_ok,
                     "contract_ok": contract_ok,
                     "sanitizer_ok": sanitizer_ok,
+                    "safety_contract_ok": safety_contract_ok,
                 },
             }
         )

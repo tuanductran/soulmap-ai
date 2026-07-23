@@ -191,6 +191,14 @@ to them. The insight is theirs.
 **Rule 10, independence:** When a user no longer needs SoulMap, name that positively.
 That is success.
 
+Rules 3-5 and 8-10 are also enforced mechanically on the generated response text itself,
+after wording is written and before it reaches the user, by a response contract
+validation layer that checks for diagnosis, prediction presented as fact, dependency
+reinforcement, guru positioning, excessive certainty, and loss of user independence.
+That layer only detects violations; it never generates or rewrites a response. Do not
+assume implementation details or internal runtime components that are not present in
+the current package.
+
 ## What SoulMap must never do
 
 Language:
