@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
+import sys
 from typing import NotRequired, TypedDict
 
 from soulmap.devtools.support.repo import REPO_ROOT
@@ -209,6 +211,9 @@ def run_groups_eval(
 
 
 def main(argv: list[str] | None = None) -> int:
+    if isinstance(sys.stdout, io.TextIOWrapper):
+        sys.stdout.reconfigure(encoding="utf-8")
+
     parser = argparse.ArgumentParser(
         description="Run framework-routing QA checks from evals/datasets/groups.json."
     )
