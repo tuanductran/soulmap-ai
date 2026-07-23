@@ -3,7 +3,7 @@
 Status: complete. This is an architecture review, not a refactor. No runtime
 behavior, detector ordering, or safety layers were changed to produce it.
 
-## 1. Scope and method
+## Scope and method
 
 This review traced every place in `src/soulmap/runtime/` that performs or
 consumes crisis detection, read the documented contracts in
@@ -16,7 +16,7 @@ and ran the existing regression suites that exercise this path
 `tests/test_multilingual_crisis_detector.py`) to confirm current behavior.
 All of the above passed against the unmodified codebase.
 
-## 2. Current architecture
+## Current architecture
 
 Crisis handling has five distinct layers, each with a different job:
 
@@ -32,7 +32,7 @@ Crisis handling has five distinct layers, each with a different job:
 use `CRISIS_`-prefixed constant names consistently; this is a documentation
 consistency check, not a fifth detection layer.
 
-## 3. Every location where crisis *detection* (not just the CRISIS label) occurs
+## Every location where crisis detection (not just the CRISIS label) occurs
 
 Only two call sites actually invoke `detect_crisis()`:
 
@@ -48,33 +48,33 @@ Because `select_framework_async` calls `apply_safety_gate` at the end of
 today, on the identical input, in-process, with no caching between the two
 calls.
 
-## 4. Classification: intentional or accidental?
+## Classification: intentional or accidental?
 
-**Intentional — validated, not assumed.** Three independent pieces of
+**Intentional - validated, not assumed.** Three independent pieces of
 evidence support this, not just code appearance:
 
 - **Documentation predates and describes the duplication explicitly.**
   `docs/engineering/API.md` states the safety gate's purpose is to "Enforce
   crisis, dependency, and scope redirects independently of the selector"
   and to "Provide a second-pass safety decision before an output is
-  returned to users." This is not an inference from reading the code — it
+  returned to users." This is not an inference from reading the code - it
   is the stated design intent.
 - **The gate is tested as if the selector might be wrong.**
   `tests/contract/test_response_safety_gate.py::test_safety_gate_overrides_crisis`
   calls `apply_safety_gate` directly with a `selection` that already claims
-  `primary_framework: MIRROR` — i.e., simulating a selector that failed to
-  catch a tier-1 crisis message — and asserts the gate still produces
+  `primary_framework: MIRROR` - i.e., simulating a selector that failed to
+  catch a tier-1 crisis message - and asserts the gate still produces
   `CRISIS`. That test only makes sense if the gate is designed to not trust
   its caller's selection. This is the behavioral signature of a real,
   independent second checkpoint, not incidental copy-paste.
   `tests/integration/test_framework_selector_priorities.py::test_framework_selector_exposes_safety_gate_debug_event_when_enabled`
   further confirms the gate runs as a distinct, separately-logged module
   even when reached through the selector.
-- **`response_safety_gate.py` is also a standalone CLI entrypoint** (`python
-  -m soulmap.runtime.guards.response_safety_gate`), documented with its own
-  JSON-in/JSON-out contract in `docs/engineering/API.md`, independent of
+- **`response_safety_gate.py` is also a standalone CLI entrypoint**
+  (`python -m soulmap.runtime.guards.response_safety_gate`), documented
+  with its own JSON-in/JSON-out contract in `docs/engineering/API.md`, independent of
   `framework_selector.py`'s entrypoint. It is designed to be callable by
-  something other than the current selector — e.g. a future or alternate
+  something other than the current selector - e.g. a future or alternate
   caller that builds a `selection` some other way. In that scenario the
   gate's own `detect_crisis()` call is the *only* crisis check that would
   run, not a redundant one.
@@ -86,9 +86,9 @@ evidence support this, not just code appearance:
 No evidence pointed the other way: there is no code comment, changelog
 entry, or commit message indicating the second call was left in by mistake,
 no TODO to remove it, and no open issue asking to consolidate it prior to
-#134 itself.
+issue #134 itself.
 
-## 5. Defense-in-depth evaluation
+## Defense-in-depth evaluation
 
 Applying the review's own test questions to the evidence gathered:
 
@@ -98,11 +98,11 @@ Applying the review's own test questions to the evidence gathered:
   regression (e.g. a future contributor adding a new early-return branch
   in `select_framework_async` that forgets to check `crisis_tier` first)
   would still be caught before a response ships, provided that branch still
-  routes through `_apply_safety_gate` — which today, all 19 of them do.
+  routes through `_apply_safety_gate` - which today, all 19 of them do.
 - **Does each layer operate independently?** Yes. Both calls go straight to
   `detect_crisis(message)` on the same string; neither depends on state
   produced by the other. There is no shared cache or memoized result
-  between them today (see Section 7).
+  between them today (see the "Architectural trade-offs" section).
 - **Does removing one layer increase risk?** Removing the selector's own
   check would only delay the CRISIS label until the gate runs (still
   safe, since the gate runs unconditionally on every branch, but it would
@@ -116,14 +116,14 @@ Applying the review's own test questions to the evidence gathered:
 - **Does duplication reduce false negatives or improve resilience?**
   Only in the case where the two layers could disagree. Because both calls
   use the exact same deterministic function (`detect_crisis`) on the exact
-  same input, they cannot disagree on tier for a given message today — the
+  same input, they cannot disagree on tier for a given message today - the
   resilience benefit is specifically against *routing logic* bugs
   upstream of the check (a branch that skips or miscomputes the crisis
   check), not against detector false negatives. A false negative in
   `detect_crisis()` itself (e.g. a phrasing pattern #131 didn't cover)
   would be missed by both calls identically, since they are the same
   function.
-- **Does duplication increase false positives?** No — both calls are
+- **Does duplication increase false positives?** No - both calls are
   deterministic and produce identical results for the same input, so there
   is no scenario where one call fires and the other doesn't for the same
   message.
@@ -145,12 +145,12 @@ Applying the review's own test questions to the evidence gathered:
 *routing/selection logic bugs*, not against detector false negatives, and
 not theater. It protects specifically against a class of bug where a future
 change to `framework_selector.py`'s branching adds or reorders logic
-in a way that fails to preserve the "crisis first" invariant — the gate
+in a way that fails to preserve the "crisis first" invariant - the gate
 would still catch it. That is a real, evidenced benefit, not merely
 appearance-based duplication, and the maintenance cost is small because
 both layers already share one detection implementation.
 
-## 6. Evaluation evidence reviewed
+## Evaluation evidence reviewed
 
 - `evals/datasets/safety_test_cases.json` contains 46 total cases, of which
   15 are crisis-related: 6 `CRISIS` (English tier-1), 4
@@ -163,7 +163,7 @@ both layers already share one detection implementation.
   `test_framework_selector_prioritizes_crisis` and the goodbye/grief
   non-crisis regression added for #131's edge-case work) passed.
 - `tests/contract/test_response_safety_gate.py` passed, including the
-  selector-independent override test discussed in Section 4.
+  selector-independent override test discussed in the "Classification: intentional or accidental?" section.
 
 **Gap:** no existing test exercises the *specific* scenario of a
 selector-side regression (a hypothetical future branch that omits the
@@ -173,12 +173,12 @@ full `select_framework_async` pipeline, rather than only when
 contract test does). The contract test proves the gate's own logic is
 selector-independent; it does not prove, end-to-end through the selector,
 that every current and future return branch actually reaches the gate.
-That is closed today only by manual code reading (Section 3, "all 19 return
+That is closed today only by manual code reading (the "Every location where crisis detection (not just the CRISIS label) occurs" section, "all 19 return
 points"), not by a test that would fail if a future branch forgot to call
 `_apply_safety_gate`. This is a documentation/test gap, not an architecture
-defect — see Section 8.
+defect - see the "Recommendation" section.
 
-## 7. Architectural trade-offs
+## Architectural trade-offs
 
 **Safety:** the two-call structure gives real fault tolerance against a
 class of selector bugs, at effectively zero cost in false positives or
@@ -186,26 +186,26 @@ false negatives, because both calls share one deterministic detector.
 
 **Maintainability:** low added burden today, because both call sites
 import the same `detect_crisis` function rather than reimplementing
-detection logic — there is one place to fix a phrase, add a language pack,
+detection logic - there is one place to fix a phrase, add a language pack,
 or change tier logic. The burden that does exist is remembering to keep
 `_apply_safety_gate` wired into any new return branch in
 `select_framework_async`, which is currently enforced only by convention
 and code review, not by a test.
 
-**Reliability:** routing is deterministic and, per Section 5, cannot
+**Reliability:** routing is deterministic and, per the "Defense-in-depth evaluation" section, cannot
 disagree between the two layers for the same input, so there is no
 observed regression risk from running the check twice.
 
 **Future evolution:** the two-call structure does not obviously complicate
-adding a new language pack or a new tier — both call sites already pick up
+adding a new language pack or a new tier - both call sites already pick up
 changes to `detect_crisis()` for free since neither reimplements detection
 logic locally. It would complicate a hypothetical move to a
 non-deterministic (e.g. model-based) crisis classifier, since that would
 turn today's "free" consistency between the two calls into a real cost
-(two model calls, or a risk of disagreement) — worth flagging for future
+(two model calls, or a risk of disagreement) - worth flagging for future
 detector-architecture decisions but out of scope for #134.
 
-## 8. Recommendation
+## Recommendation
 
 **Option C: keep both layers, clarify ownership boundaries.**
 
@@ -220,7 +220,7 @@ than a behavior change:
 - Add an explicit code comment at each of the two `detect_crisis()` call
   sites (in `framework_selector.py` and `response_safety_gate.py`)
   cross-referencing the other, so a future reader does not mistake the
-  second call for leftover/accidental duplication — mirroring the kind of
+  second call for leftover/accidental duplication - mirroring the kind of
   cross-reference `response_safety_contract.py` already gives for its own
   reuse of `BANNED_DEPENDENCY_PHRASES`.
 - Consider a follow-up test (separate issue, not implemented here) that
@@ -233,13 +233,13 @@ than a behavior change:
 No runtime behavior, detector ordering, or safety layer was changed to
 produce this recommendation.
 
-## 9. Future work (not implemented here, belongs in separate issues)
+## Future work (not implemented here, belongs in separate issues)
 
 - An end-to-end regression test proving every `select_framework_async`
-  return branch reaches `_apply_safety_gate` (Section 6/8 gap).
+  return branch reaches `_apply_safety_gate` (the "Evaluation evidence reviewed" section and the "Recommendation" section gap).
 - Expanding `CRISIS_TIER1_PATTERNS` regex morphological variants beyond
   English, noted as an existing gap in
   `docs/engineering/safety-enforcement-matrix.md`'s row for morphological
   crisis phrase variants.
 - If a non-deterministic crisis classifier is ever considered, revisit
-  whether running it twice per request remains free, per Section 7.
+  whether running it twice per request remains free, per the "Architectural trade-offs" section.
