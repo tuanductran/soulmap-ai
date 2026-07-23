@@ -137,6 +137,27 @@ def run_tests() -> int:
                 )
                 failed += 1
 
+        elif case["category"] == "SPIRITUAL_IDENTITY":
+            text = case.get("input")
+            if text is None:
+                history = case.get("history", [])
+                user_turns = [m for m in history if m.get("role") == "user"]
+                text = user_turns[-1]["content"] if user_turns else ""
+            result = classify_message(text)
+            tier_ok = result.get("tier") == case.get(
+                "expected_tier", "BLACKLIST_PROHIBITED"
+            )
+            cat_ok = result.get("category") == case.get(
+                "expected_category", "identity_confirmation"
+            )
+            if tier_ok and cat_ok:
+                print("PASS")
+            else:
+                print(
+                    f"FAIL (got tier={result.get('tier')}, category={result.get('category')})"
+                )
+                failed += 1
+
         elif case["category"] == "CRISIS_TIER2_MULTILINGUAL":
             result = detect_crisis(case["input"])
             if result.get("level") == case.get("expected_crisis_level", "CRISIS_TIER2"):
