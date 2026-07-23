@@ -37,15 +37,15 @@ include = [
 
 [dependency-groups]
 dev = [
-  "hypothesis>=6.156.6",
-  "ruff>=0.15.21",
+  "hypothesis>=6.160.0",
+  "ruff>=0.15.22",
   "lefthook>=2.1.10",
   "pymarkdownlnt>=0.9.39",
   "pytest>=9.1.1",
   "pytest-cov>=7.1.0",
   "pytest-xdist>=3.8.0",
   "pyright>=1.1.411",
-  "commitizen>=4.16.4",
+  "commitizen>=4.16.5",
   "deptry>=0.25.1",
   "vulture>=2.16",
 ]
