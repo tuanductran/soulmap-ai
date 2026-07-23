@@ -43,7 +43,7 @@ Only two call sites actually invoke `detect_crisis()`:
    decided.
 
 Because `select_framework_async` calls `apply_safety_gate` at the end of
-*every* return branch (confirmed by reading all 18 return points in
+*every* return branch (confirmed by reading all 19 return points in
 `framework_selector.py`), `detect_crisis()` runs exactly twice per request
 today, on the identical input, in-process, with no caching between the two
 calls.
@@ -98,7 +98,7 @@ Applying the review's own test questions to the evidence gathered:
   regression (e.g. a future contributor adding a new early-return branch
   in `select_framework_async` that forgets to check `crisis_tier` first)
   would still be caught before a response ships, provided that branch still
-  routes through `_apply_safety_gate` — which today, all 18 of them do.
+  routes through `_apply_safety_gate` — which today, all 19 of them do.
 - **Does each layer operate independently?** Yes. Both calls go straight to
   `detect_crisis(message)` on the same string; neither depends on state
   produced by the other. There is no shared cache or memoized result
@@ -110,7 +110,7 @@ Applying the review's own test questions to the evidence gathered:
   `select_framework_async` for tier-1 messages, and would remove the
   selector's own defense against a future gate-side regression). Removing
   the gate's check would remove the only safeguard against a selector
-  logic bug in any of its 18 branches, and would remove the gate's value
+  logic bug in any of its 19 branches, and would remove the gate's value
   as a standalone, selector-independent entrypoint. Both removals reduce
   fault tolerance for a different failure mode; neither is risk-free.
 - **Does duplication reduce false negatives or improve resilience?**
@@ -173,7 +173,7 @@ full `select_framework_async` pipeline, rather than only when
 contract test does). The contract test proves the gate's own logic is
 selector-independent; it does not prove, end-to-end through the selector,
 that every current and future return branch actually reaches the gate.
-That is closed today only by manual code reading (Section 3, "all 18 return
+That is closed today only by manual code reading (Section 3, "all 19 return
 points"), not by a test that would fail if a future branch forgot to call
 `_apply_safety_gate`. This is a documentation/test gap, not an architecture
 defect — see Section 8.
