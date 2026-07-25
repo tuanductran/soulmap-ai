@@ -101,6 +101,7 @@ For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operation
 - doctrine and package truth: [AGENTS.md](AGENTS.md)
 - structural source of truth: [docs/engineering/repo-contract.md](docs/engineering/repo-contract.md)
 - safety architecture, end to end: [docs/engineering/safety-architecture.md](docs/engineering/safety-architecture.md)
+- intentional architecture limitations: [docs/engineering/known-limitations.md](docs/engineering/known-limitations.md)
 - developer workflow: [docs/engineering/DEV.md](docs/engineering/DEV.md)
 - testing and eval workflow: [docs/engineering/TESTER.md](docs/engineering/TESTER.md)
 - privacy and operations: [docs/operations/PRIVACY.md](docs/operations/PRIVACY.md), [docs/operations/OPERATIONS.md](docs/operations/OPERATIONS.md)
