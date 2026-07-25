@@ -3,6 +3,11 @@
 Status: complete. This is an architecture review, not a refactor. No runtime
 behavior, detector ordering, or safety layers were changed to produce it.
 
+For where crisis detection's two call sites sit within the full request
+pipeline (detectors, framework selector, safety gate, response validation),
+see [`docs/engineering/safety-architecture.md`](safety-architecture.md). This
+document stays focused on the crisis-detection duplication question only.
+
 ## Scope and method
 
 This review traced every place in `src/soulmap/runtime/` that performs or

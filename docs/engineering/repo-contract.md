@@ -67,4 +67,7 @@ The repo is release-ready only when all of the following are true:
 
 Use [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 as the release gate and [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-as the evidence map for safety claims.
+as the evidence map for safety claims. For a narrative walkthrough of how the
+runtime and `skills/` knowledge base cooperate end to end, including request
+flow and layer ownership, see
+[`docs/engineering/safety-architecture.md`](safety-architecture.md).

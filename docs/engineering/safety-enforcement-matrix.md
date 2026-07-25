@@ -1,6 +1,11 @@
 # Safety enforcement matrix
 
-This matrix turns SoulMap AI safety claims into an evidence-backed map.
+This matrix turns SoulMap AI safety claims into an evidence-backed map. For a
+narrative explanation of how these layers fit together end to end, request
+flow, execution order, and ownership boundaries, see
+[`docs/engineering/safety-architecture.md`](safety-architecture.md). This
+document stays focused on evidence per rule and does not restate that
+walkthrough.
 
 Status values:
 

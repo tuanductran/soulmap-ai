@@ -1,5 +1,9 @@
 # Runtime Knowledge Architecture
 
+For how this knowledge-loading layer fits into the full request pipeline
+alongside routing and safety enforcement, see
+[`docs/engineering/safety-architecture.md`](safety-architecture.md).
+
 Detectors in `src/soulmap/runtime/` load their phrase lists directly from the
 shipped Markdown skill files at import time. The loader utilities in
 `src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
