@@ -39,5 +39,7 @@ Use this folder as the entry point for repo documentation.
   safety claims
 - [`engineering/content-contract.md`](engineering/content-contract.md): Markdown structure rules
 - [`engineering/maintenance-boundary.md`](engineering/maintenance-boundary.md): scope and maintenance guardrails
+- [`engineering/known-limitations.md`](engineering/known-limitations.md): canonical reference for
+  intentional architectural limitations and design boundaries
 - [`engineering/adr/`](engineering/adr/): permanent Architecture Decision Records, starting with
   [`0001-layered-crisis-detection.md`](engineering/adr/0001-layered-crisis-detection.md)

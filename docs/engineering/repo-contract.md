@@ -70,4 +70,7 @@ as the release gate and [`docs/engineering/safety-enforcement-matrix.md`](safety
 as the evidence map for safety claims. For a narrative walkthrough of how the
 runtime and `skills/` knowledge base cooperate end to end, including request
 flow and layer ownership, see
-[`docs/engineering/safety-architecture.md`](safety-architecture.md).
+[`docs/engineering/safety-architecture.md`](safety-architecture.md). For the
+canonical reference on intentional architectural limitations and what the
+repository does not do by design, see
+[`docs/engineering/known-limitations.md`](known-limitations.md).
