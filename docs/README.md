@@ -14,7 +14,8 @@ Use this folder as the entry point for repo documentation.
 - Users: [`product/USER.md`](product/USER.md)
 - Privacy and legal review: [`operations/PRIVACY.md`](operations/PRIVACY.md) and
   [`operations/REGULATORY.md`](operations/REGULATORY.md)
-- Reviewers: [`engineering/repo-contract.md`](engineering/repo-contract.md) and
+- Reviewers: [`engineering/repo-contract.md`](engineering/repo-contract.md),
+  [`engineering/safety-architecture.md`](engineering/safety-architecture.md), and
   [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md)
 
 ## Reference Docs
@@ -31,6 +32,8 @@ Use this folder as the entry point for repo documentation.
 - [`operations/UPLOAD.md`](operations/UPLOAD.md): how to package and upload the knowledge base
 - [`engineering/repo-contract.md`](engineering/repo-contract.md): repository structure, ownership, and release
   boundaries
+- [`engineering/safety-architecture.md`](engineering/safety-architecture.md): end-to-end explanation of the
+  safety pipeline, layer ownership, and priority order
 - [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md): evidence map for
   safety claims
 - [`engineering/content-contract.md`](engineering/content-contract.md): Markdown structure rules
