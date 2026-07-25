@@ -17,14 +17,14 @@ whether a proposed change is consistent with the project's design.
 
 **Related documents:**
 
-- [`AGENTS.md`](../../AGENTS.md) — baseline doctrine, safety law, and
+- [`AGENTS.md`](../../AGENTS.md) - baseline doctrine, safety law, and
   shipped package contract
-- [`docs/engineering/repo-contract.md`](repo-contract.md) — structural
+- [`docs/engineering/repo-contract.md`](repo-contract.md) - structural
   source of truth for every top-level repository surface
-- [`docs/engineering/safety-architecture.md`](safety-architecture.md) —
+- [`docs/engineering/safety-architecture.md`](safety-architecture.md) -
   end-to-end request pipeline and layer ownership
 - [`docs/engineering/knowledge-architecture.md`](knowledge-architecture.md)
-  — how the runtime loads knowledge from Markdown and which modules are
+  - how the runtime loads knowledge from Markdown and which modules are
   protected
 
 ---
@@ -58,8 +58,8 @@ returns.
 
 ### Why it exists
 
-SoulMap follows a knowledge-first architecture. The content of a response —
-its wording, tone, and emotional register — belongs to Markdown under `skills/`
+SoulMap follows a knowledge-first architecture. The content of a response -
+its wording, tone, and emotional register - belongs to Markdown under `skills/`
 and `AGENTS.md`, not to executable Python. Generating responses in Python would
 couple content decisions to code changes, making it impossible to update
 SoulMap's voice or doctrine without modifying and re-testing the runtime.
@@ -80,7 +80,7 @@ read in a Markdown file without reading Python source.
 
 ### Implementation boundary
 
-```
+```mermaid
 flowchart LR
     A[Framework selector\n+ safety gate\ndecide routing] ==> B[LLM generates\nresponse text\nfollowing the instruction]
     B ==> C[response_contract.py\nstructure validation]
@@ -142,7 +142,7 @@ is exactly one authoritative location per piece of content.
 
 ### Implementation boundary
 
-```
+```mermaid
 flowchart LR
     A["skills/ (Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
     B -- parsed phrase lists --> C["src/soulmap/runtime/detectors/"]
@@ -160,7 +160,7 @@ below.
 ### Related documentation
 
 - [`docs/engineering/knowledge-architecture.md`](knowledge-architecture.md)
-  — authoritative description of how the runtime loads Markdown, which
+  - authoritative description of how the runtime loads Markdown, which
   modules are the protected exception, and the guidelines for changing the
   knowledge layer
 - [`AGENTS.md`](../../AGENTS.md), "Knowledge file usage" section
@@ -169,7 +169,7 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
-- `skills/` — all shipped knowledge files
+- `skills/` - all shipped knowledge files
 
 ---
 
@@ -221,8 +221,8 @@ usage."
 
 ### Related implementation
 
-- `src/soulmap/runtime/` — full runtime source
-- `src/soulmap/devtools/` — full tooling source
+- `src/soulmap/runtime/` - full runtime source
+- `src/soulmap/devtools/` - full tooling source
 
 ---
 
@@ -285,7 +285,7 @@ deterministic detection approach for routing decisions.
 - [`docs/engineering/safety-architecture.md`](safety-architecture.md),
   "Layer 4" and "Why safety is layered instead of centralized" sections
 - [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-  — the rule-by-rule mapping of `AGENTS.md` safety rules to code, tests,
+  - the rule-by-rule mapping of `AGENTS.md` safety rules to code, tests,
   and evals with current enforcement status
 - [`docs/engineering/API.md`](API.md#response-safety-contract-validator)
 
@@ -337,7 +337,7 @@ precisely because there is one selection to compare against.
 
 ### Implementation boundary
 
-```
+```mermaid
 flowchart TD
     A[Request] ==> B[Detectors run in priority order]
     B ==> C{First matching condition}
@@ -356,9 +356,9 @@ to fall through to multiple frameworks simultaneously.
   "Layer 2, framework selector" and "Priority order and override behavior" sections
 - [`AGENTS.md`](../../AGENTS.md), "Framework selection" section
 - [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-  — doctrine-level decision tree that mirrors the Python selector's ordering
+  - doctrine-level decision tree that mirrors the Python selector's ordering
 - [`docs/engineering/API.md`](API.md#framework-selector)
-  — selector JSON contract
+  - selector JSON contract
 
 ### Related implementation
 
@@ -414,9 +414,9 @@ skill-oriented environments.
 
 ### Related implementation
 
-- `src/soulmap/devtools/` — build CLI entry points
-- `.distignore` — exclusion list for build packaging
-- `.github/workflows/release.yml` — release packaging steps
+- `src/soulmap/devtools/` - build CLI entry points
+- `.distignore` - exclusion list for build packaging
+- `.github/workflows/release.yml` - release packaging steps
 
 ---
 
@@ -516,9 +516,9 @@ it is superseded by a newer ADR that explicitly replaces it.
 ### Related documentation
 
 - [`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md)
-  — the permanent decision record for dual crisis detection call sites
+  - the permanent decision record for dual crisis detection call sites
 - [`docs/engineering/crisis-detection-layering-review.md`](crisis-detection-layering-review.md)
-  — the full defense-in-depth argument that the ADR codifies
+  - the full defense-in-depth argument that the ADR codifies
 
 ---
 
@@ -586,7 +586,7 @@ calls the combined pack; it has no knowledge of which language matched.
 ### Related documentation
 
 - [`docs/engineering/knowledge-architecture.md`](knowledge-architecture.md#protected-modules)
-  — the authoritative rationale for the protected-module exception
+  - the authoritative rationale for the protected-module exception
 - [`AGENTS.md`](../../AGENTS.md), "Non-negotiable safety rules", Rule 1
 
 ### Related implementation
@@ -646,14 +646,14 @@ framework-grouping drift before they reach a release.
 
 ### Related documentation
 
-- [`docs/engineering/TESTER.md`](TESTER.md) — full testing and evaluation workflow
+- [`docs/engineering/TESTER.md`](TESTER.md) - full testing and evaluation workflow
 - [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-  — current enforcement status per `AGENTS.md` rule
+  - current enforcement status per `AGENTS.md` rule
 
 ### Related implementation
 
-- `evals/` — eval fixtures and grouping definitions
-- `src/soulmap/devtools/` — eval CLI entry points
+- `evals/` - eval fixtures and grouping definitions
+- `src/soulmap/devtools/` - eval CLI entry points
 - `tests/eval_regression/test_safety_evals.py`
 
 ---
