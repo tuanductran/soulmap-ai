@@ -5,6 +5,20 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.7.0 (2026-07-25)
+
+### Feat
+
+- **safety**: add response contract validation layer for content safety
+- **safety**: add multilingual crisis detection for vi/es/fr/zh
+
+### Fix
+
+- **docs**: replace em dashes with ascii hyphens and add code block language tags
+- skip HTML comment validation inside fenced code blocks
+- **audit**: resolve false-positive orphaned constants in config usage inventory
+- **audit**: resolve package-level config re-exports in audit-knowledge
+
 ## v0.6.0 (2026-07-17)
 
 ### Feat
