@@ -13,6 +13,9 @@ authoritative detail and must not be duplicated here:
 - [`docs/engineering/crisis-detection-layering-review.md`](crisis-detection-layering-review.md)
   is a focused review of why crisis detection specifically runs twice per
   request. Read it for the full defense-in-depth argument.
+- [`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md)
+  is the permanent, canonical decision record for that duplication - read
+  it before proposing to consolidate the two `detect_crisis()` call sites.
 
 This document does not restate every enforcement row or the crisis-duplication
 analysis. It answers a different question: for contributors who have not yet
@@ -184,7 +187,9 @@ selector. The full argument for why this duplication is deliberate
 defense-in-depth, including the specific class of selector bug it protects
 against, is in
 [`crisis-detection-layering-review.md`](crisis-detection-layering-review.md)
-and is not repeated here.
+and is not repeated here. The binding decision itself - keep both call
+sites, do not consolidate them - is recorded permanently in
+[`adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md).
 
 ### Priority order and override behavior (cross-cutting)
 
@@ -310,6 +315,8 @@ implementation status.
   map from `AGENTS.md` rules to code, tests, and evals
 - [`crisis-detection-layering-review.md`](crisis-detection-layering-review.md),
   focused review of the two-call crisis detection duplication
+- [`adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md),
+  the permanent decision record for that duplication
 - [`knowledge-architecture.md`](knowledge-architecture.md), how the runtime
   loads knowledge from Markdown, and the protected-module exceptions
 - [`repo-contract.md`](repo-contract.md), structural source of truth for

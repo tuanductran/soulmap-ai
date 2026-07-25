@@ -3,6 +3,12 @@
 Status: complete. This is an architecture review, not a refactor. No runtime
 behavior, detector ordering, or safety layers were changed to produce it.
 
+The decision this review reached is now recorded permanently in
+[`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md).
+That ADR is the canonical, binding reference for "keep both call sites, do
+not consolidate them" - treat this document as the evidence and analysis
+behind that decision, not as a second place to look for the decision itself.
+
 For where crisis detection's two call sites sit within the full request
 pipeline (detectors, framework selector, safety gate, response validation),
 see [`docs/engineering/safety-architecture.md`](safety-architecture.md). This
@@ -217,7 +223,9 @@ detector-architecture decisions but out of scope for #134.
 The duplication should remain. It is documented, tested as an independent
 safeguard, and provides real protection against selector-side routing
 regressions at negligible cost, since both layers already share one
-detection implementation rather than maintaining two.
+detection implementation rather than maintaining two. This recommendation
+is now the accepted, permanent decision recorded in
+[`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md).
 
 The one gap worth closing, as a documentation/test clarification rather
 than a behavior change:

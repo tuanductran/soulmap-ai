@@ -15,8 +15,9 @@ Use this folder as the entry point for repo documentation.
 - Privacy and legal review: [`operations/PRIVACY.md`](operations/PRIVACY.md) and
   [`operations/REGULATORY.md`](operations/REGULATORY.md)
 - Reviewers: [`engineering/repo-contract.md`](engineering/repo-contract.md),
-  [`engineering/safety-architecture.md`](engineering/safety-architecture.md), and
-  [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md)
+  [`engineering/safety-architecture.md`](engineering/safety-architecture.md),
+  [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md), and
+  [`engineering/adr/`](engineering/adr/) for permanent architecture decision records
 
 ## Reference Docs
 
@@ -38,3 +39,5 @@ Use this folder as the entry point for repo documentation.
   safety claims
 - [`engineering/content-contract.md`](engineering/content-contract.md): Markdown structure rules
 - [`engineering/maintenance-boundary.md`](engineering/maintenance-boundary.md): scope and maintenance guardrails
+- [`engineering/adr/`](engineering/adr/): permanent Architecture Decision Records, starting with
+  [`0001-layered-crisis-detection.md`](engineering/adr/0001-layered-crisis-detection.md)
