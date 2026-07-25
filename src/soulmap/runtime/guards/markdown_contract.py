@@ -148,10 +148,18 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     if in_fence:
         issues.append(Issue(path, len(lines) or 1, "Unclosed fenced code block"))
 
-    # 2c) HTML comments must be balanced.
-    joined = "\n".join(lines)
-    opens = joined.count("<!--")
-    closes = joined.count("-->")
+    # 2c) HTML comments must be balanced (skip inside fenced code blocks).
+    in_fence = False
+    opens = 0
+    closes = 0
+    for raw in lines:
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        opens += raw.count("<!--")
+        closes += raw.count("-->")
     if opens != closes:
         issues.append(
             Issue(

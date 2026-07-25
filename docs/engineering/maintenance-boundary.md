@@ -14,7 +14,10 @@ focus:
 - `AGENTS.md` as the baseline behavioral, safety, and shipped-package contract
 - `skills/` as the core shipped knowledge base
 - `src/soulmap/runtime/routing/framework_selector.py` and the existing detector stack
-- `src/soulmap/runtime/guards/response_safety_gate.py`
+- `src/soulmap/runtime/guards/response_safety_gate.py` (both files' independent
+  crisis-detection call sites are a deliberate defense-in-depth pair, not
+  duplication to consolidate - see
+  [`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md))
 - `src/soulmap/runtime/guards/response_contract.py`
 - `src/soulmap/runtime/guards/resource_sanitizer.py`
 - the current packaging flow for `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`
