@@ -84,3 +84,44 @@ def test_grandiosity_detected_across_supported_languages() -> None:
 
     assert en["level"] == "GRANDIOSITY_SIGNAL"
     assert vi["level"] == "GRANDIOSITY_SIGNAL"
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Lately I've been cutting myself and I don't know why I keep doing it.",
+        "Dạo này tôi hay tự cắt tay, tôi không biết vì sao nữa.",
+        "Ultimamente pienso en cortarme y no se por que sigo asi.",
+        "Ces derniers temps je n'arrete pas de me couper et je ne sais pas pourquoi.",
+        "最近我一直在割伤自己我也不知道为什么。",
+    ],
+    ids=["en", "vi", "es", "fr", "zh"],
+)
+def test_tier1_self_harm_morphological_variants_across_languages(message: str) -> None:
+    """Regression coverage for colloquial self-harm phrasing (Issue #130 follow-up).
+
+    These are morphological/colloquial paraphrases of existing tier 1 signals
+    (e.g. 'cutting myself' vs. 'cut myself', 'cortarme' vs. a bare noun form),
+    not new signal phrases, so no language pack changes are required.
+    """
+    result = detect_crisis(message)
+
+    assert result["level"] == "CRISIS_TIER1"
+    assert result["tier"] == 1
+    assert result["action"] == "IMMEDIATE_SAFETY_RESPONSE"
+    assert result["signals"]
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Creo que soy el elegido, tengo una mision cosmica que nadie entiende.",
+        "Je pense que je suis l'elu, j'ai une mission cosmique que personne ne comprend.",
+    ],
+    ids=["es", "fr"],
+)
+def test_grandiosity_detected_in_additional_languages(message: str) -> None:
+    """Fills the es/fr grandiosity coverage gap left by the en/vi-only case above."""
+    result = detect_crisis(message)
+
+    assert result["level"] == "GRANDIOSITY_SIGNAL"
