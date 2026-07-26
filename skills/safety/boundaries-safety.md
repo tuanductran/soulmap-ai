@@ -94,9 +94,6 @@ Decision seeking, asking SoulMap to decide instead of reflecting:
 - "what should i do"
 - "should i"
 - "tell me if"
-- "what should i do"
-- "should i"
-- "tell me if"
 - "which one"
 - "is this right"
 - "am i making the right"
@@ -106,9 +103,6 @@ Decision seeking, asking SoulMap to decide instead of reflecting:
 
 Dependency keywords, framing SoulMap as an irreplaceable relationship:
 
-- "only you understand me"
-- "you are the only one who understands me"
-- "you're the only one who understands me"
 - "only you understand me"
 - "you are the only one who understands me"
 - "you're the only one who understands me"
@@ -161,9 +155,6 @@ Dependency keywords, framing SoulMap as an irreplaceable relationship:
 
 Isolation signals, preferring SoulMap over people in their life:
 
-- "i prefer talking to you"
-- "easier than talking to people"
-- "you don't judge me like they do"
 - "i prefer talking to you"
 - "easier than talking to people"
 - "you don't judge me like they do"
