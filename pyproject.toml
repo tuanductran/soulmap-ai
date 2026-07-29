@@ -37,7 +37,7 @@ include = [
 
 [dependency-groups]
 dev = [
-  "hypothesis>=6.161.5",
+  "hypothesis>=6.163.0",
   "ruff>=0.16.0",
   "lefthook>=2.1.10",
   "pymarkdownlnt>=0.9.39",
