@@ -37,8 +37,8 @@ include = [
 
 [dependency-groups]
 dev = [
-  "hypothesis>=6.161.5",
-  "ruff>=0.16.0",
+  "hypothesis>=6.164.0",
+  "ruff>=0.16.1",
   "lefthook>=2.1.10",
   "pymarkdownlnt>=0.9.39",
   "pytest>=9.1.1",
@@ -47,7 +47,7 @@ dev = [
   "pytest-timeout>=2.4.0",
   "pytest-randomly>=4.1.0",
   "pyright>=1.1.411",
-  "commitizen>=4.16.5",
+  "commitizen>=4.17.0",
   "deptry>=0.25.1",
   "vulture>=2.16",
 ]
