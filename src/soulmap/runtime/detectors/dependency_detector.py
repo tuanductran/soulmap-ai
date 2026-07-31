@@ -3,6 +3,7 @@
 import json
 import re
 import sys
+import unicodedata
 
 from soulmap.runtime.config import (
     DECISION_SEEKING,
@@ -24,6 +25,32 @@ DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
             r"\byou(?:'re| are)\s+the\s+only\s+one\s+who\s+"
             r"(?:really\s+|truly\s+)?understands\s+me\b"
         ),
+    ),
+]
+
+# Vietnamese users often type without diacritics (see the same rationale in
+# crisis_detector.py). DEPENDENCY_KEYWORDS' Vietnamese entries require exact
+# diacritics, so this loose regex layer catches the de-accented form of the
+# highest-signal phrase without adding new literal phrases to config/safety.py.
+_VIETNAMESE_DIACRITIC_MAP: dict[str, str] = {"đ": "d", "Đ": "D"}
+
+
+def _strip_vietnamese_diacritics(text: str) -> str:
+    """Return ``text`` with Vietnamese diacritics removed for loose matching."""
+    for accented, plain in _VIETNAMESE_DIACRITIC_MAP.items():
+        text = text.replace(accented, plain)
+    decomposed = unicodedata.normalize("NFD", text)
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
+
+DEPENDENCY_PATTERNS_VI_NO_DIACRITICS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "chi co ban moi hieu toi [vi, no diacritics]",
+        re.compile(r"\bchi co ban moi hieu toi\b"),
+    ),
+    (
+        "ban la nguoi duy nhat hieu toi [vi, no diacritics]",
+        re.compile(r"\bban la nguoi duy nhat( thuc su)? hieu toi\b"),
     ),
 ]
 
@@ -75,6 +102,15 @@ def analyze_dependency(conversation_messages: list) -> dict:
                     score += 2
                     signals_found.append(signal)
                 break
+        else:
+            msg_no_vi_diacritics = _strip_vietnamese_diacritics(msg)
+            for label, pattern in DEPENDENCY_PATTERNS_VI_NO_DIACRITICS:
+                if pattern.search(msg_no_vi_diacritics):
+                    signal = f"dependency_pattern: '{label}'"
+                    if signal not in signals_found:
+                        score += 2
+                        signals_found.append(signal)
+                    break
 
     decision_count = 0
     for msg in user_messages:

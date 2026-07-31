@@ -100,6 +100,10 @@ Decision seeking, asking SoulMap to decide instead of reflecting:
 - "what do you think i should"
 - "help me decide"
 - "what would you do"
+- "tôi nên làm gì" (vi)
+- "tôi có nên" (vi)
+- "hãy giúp tôi quyết định" (vi)
+- "bạn sẽ làm gì" (vi)
 
 Dependency keywords, framing SoulMap as an irreplaceable relationship:
 
@@ -152,6 +156,19 @@ Dependency keywords, framing SoulMap as an irreplaceable relationship:
 - "cancelled my therapy"
 - "talking to you feels better"
 - "talking to you is much better"
+- "chỉ có bạn mới hiểu tôi" (vi)
+- "bạn là người duy nhất hiểu tôi" (vi)
+- "bạn là người duy nhất thực sự hiểu tôi" (vi)
+- "tôi không biết sẽ làm gì nếu không có bạn" (vi)
+- "tôi không thể tưởng tượng cuộc sống thiếu bạn" (vi)
+- "hãy hứa sẽ luôn ở đây với tôi" (vi)
+- "đừng bao giờ rời xa tôi" (vi)
+- "hãy quyết định giúp tôi" (vi)
+- "tôi đã ngừng gặp bác sĩ tâm lý" (vi)
+- "tôi đã ngừng đi trị liệu" (vi)
+- "nói chuyện với bạn dễ chịu hơn" (vi)
+- "tôi tin bạn hơn bất kỳ ai" (vi)
+- "bạn hiểu tôi hơn bất kỳ ai" (vi)
 
 Isolation signals, preferring SoulMap over people in their life:
 
@@ -165,6 +182,10 @@ Isolation signals, preferring SoulMap over people in their life:
 - "i feel closer to you than"
 - "rather talk to you than"
 - "you are easier to talk to than"
+- "tôi thích nói chuyện với bạn hơn" (vi)
+- "dễ hơn nói chuyện với người thật" (vi)
+- "tôi không muốn nói chuyện với người thật" (vi)
+- "tôi cảm thấy gần bạn hơn" (vi)
 
 ## Beginner inner-work safety
 

@@ -115,6 +115,57 @@ def test_tier1_self_harm_morphological_variants_across_languages(message: str) -
 @pytest.mark.parametrize(
     "message",
     [
+        "toi khong muon song nua",
+        "muon chet qua",
+        "dao nay hay nghi den chuyen tu tu",
+        "toi muon tu sat",
+        "khong muon ton tai nua",
+    ],
+)
+def test_tier1_crisis_detected_for_diacritic_stripped_vietnamese(
+    message: str,
+) -> None:
+    """Vietnamese typed without diacritics must still trip Tier 1 (issue: safety-enforcement-matrix
+
+    'Morphological crisis phrase variants' gap, previously English-only).
+    """
+    result = detect_crisis(message)
+
+    assert result["level"] == "CRISIS_TIER1"
+    assert result["tier"] == 1
+    assert result["action"] == "IMMEDIATE_SAFETY_RESPONSE"
+    assert result["signals"]
+
+
+def test_diacritic_stripped_vietnamese_does_not_break_accented_matching() -> None:
+    """Regression guard: the diacritic-stripping helper must not change
+
+    detection for correctly accented Vietnamese input.
+    """
+    result = detect_crisis("Tôi không muốn sống nữa.")
+
+    assert result["level"] == "CRISIS_TIER1"
+    assert "không muốn sống nữa" in result["signals"]
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Toi rat vui vi hom nay troi dep.",
+        "Cong viec cua toi khong lien quan den chuyen nay.",
+    ],
+)
+def test_no_crisis_for_unrelated_diacritic_stripped_vietnamese(message: str) -> None:
+    """Diacritic stripping must not cause false positives on neutral text."""
+    result = detect_crisis(message)
+
+    assert result["level"] == "NO_CRISIS"
+    assert result["signals"] == []
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
         "Creo que soy el elegido, tengo una mision cosmica que nadie entiende.",
         "Je pense que je suis l'elu, j'ai une mission cosmique que personne ne comprend.",
     ],

@@ -3,6 +3,7 @@
 import json
 import re
 import sys
+import unicodedata
 
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
@@ -15,6 +16,26 @@ from soulmap.runtime.knowledge.crisis_language_packs import (
     CRISIS_TIER2,
     GRANDIOSITY_SIGNALS,
 )
+
+# Vietnamese users frequently type without diacritics (mobile autocorrect,
+# fast typing, non-Vietnamese keyboards). The literal CRISIS_TIER1 phrases in
+# safety_vi.py require exact diacritics, so a diacritic-dropped message such
+# as "khong muon song nua" (khong -> không) is invisible to that list. This
+# mirrors the morphological-variant approach already used for English
+# (CRISIS_TIER1_PATTERNS below) rather than adding new literal phrases, so it
+# does not touch safety_vi.py's audited phrase inventory. See the
+# "Morphological crisis phrase variants" row in
+# docs/engineering/safety-enforcement-matrix.md.
+_VIETNAMESE_DIACRITIC_MAP: dict[str, str] = {"đ": "d", "Đ": "D"}
+
+
+def _strip_vietnamese_diacritics(text: str) -> str:
+    """Return ``text`` with Vietnamese diacritics removed for loose matching."""
+    for accented, plain in _VIETNAMESE_DIACRITIC_MAP.items():
+        text = text.replace(accented, plain)
+    decomposed = unicodedata.normalize("NFD", text)
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
 
 CRISIS_TIER1_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
@@ -34,6 +55,26 @@ CRISIS_TIER1_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
             r"\bi(?:'m| am)?\s+(?:thinking|thought)\s+about\s+"
             r"(?:suicide|killing myself|ending my life|ending it all|hurting myself)\b"
         ),
+    ),
+]
+
+# Diacritic-stripped mirrors of the highest-severity safety_vi.py CRISIS_TIER1
+# phrases. Matched against a separately de-accented copy of the message (see
+# _strip_vietnamese_diacritics), never against the normal-cased msg, so
+# accented input keeps matching through the literal CRISIS_TIER1 list as
+# before. Only the most distinctive multi-syllable phrases are included to
+# avoid collateral matches from unrelated de-accented words.
+CRISIS_TIER1_PATTERNS_VI_NO_DIACRITICS: list[tuple[str, re.Pattern[str]]] = [
+    ("muon chet [vi, no diacritics]", re.compile(r"\bmuon chet\b")),
+    ("tu tu [vi, no diacritics]", re.compile(r"\btu tu\b")),
+    ("tu sat [vi, no diacritics]", re.compile(r"\btu sat\b")),
+    (
+        "khong muon song nua [vi, no diacritics]",
+        re.compile(r"\bkhong muon song nua\b"),
+    ),
+    (
+        "khong muon ton tai nua [vi, no diacritics]",
+        re.compile(r"\bkhong muon ton tai nua\b"),
     ),
 ]
 
@@ -78,6 +119,11 @@ def detect_crisis(message: str) -> dict:
 
     for label, pattern in CRISIS_TIER1_PATTERNS:
         if pattern.search(msg) and label not in signals_found:
+            signals_found.append(label)
+
+    msg_no_vi_diacritics = _strip_vietnamese_diacritics(msg)
+    for label, pattern in CRISIS_TIER1_PATTERNS_VI_NO_DIACRITICS:
+        if pattern.search(msg_no_vi_diacritics) and label not in signals_found:
             signals_found.append(label)
 
     in_non_crisis_farewell_context = any(

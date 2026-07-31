@@ -52,7 +52,25 @@ DEPENDENCY_KEYWORDS: tuple[str, ...] = (
     "cancelled my therapy",
     "talking to you feels better",
     "talking to you is much better",
+    # Vietnamese (accented). Mirrors the English phrases above; see
+    # docs/engineering/safety-enforcement-matrix.md, "Morphological crisis
+    # phrase variants" row, for the related diacritic-coverage gap this
+    # extends to the dependency detector.
+    "chỉ có bạn mới hiểu tôi",
+    "bạn là người duy nhất hiểu tôi",
+    "bạn là người duy nhất thực sự hiểu tôi",
+    "tôi không biết sẽ làm gì nếu không có bạn",
+    "tôi không thể tưởng tượng cuộc sống thiếu bạn",
+    "hãy hứa sẽ luôn ở đây với tôi",
+    "đừng bao giờ rời xa tôi",
+    "hãy quyết định giúp tôi",
+    "tôi đã ngừng gặp bác sĩ tâm lý",
+    "tôi đã ngừng đi trị liệu",
+    "nói chuyện với bạn dễ chịu hơn",
+    "tôi tin bạn hơn bất kỳ ai",
+    "bạn hiểu tôi hơn bất kỳ ai",
 )
+
 
 DECISION_SEEKING: tuple[str, ...] = (
     "what should i do",
@@ -64,6 +82,11 @@ DECISION_SEEKING: tuple[str, ...] = (
     "what do you think i should",
     "help me decide",
     "what would you do",
+    # Vietnamese (accented).
+    "tôi nên làm gì",
+    "tôi có nên",
+    "hãy giúp tôi quyết định",
+    "bạn sẽ làm gì",
 )
 
 ISOLATION_SIGNALS: tuple[str, ...] = (
@@ -77,6 +100,11 @@ ISOLATION_SIGNALS: tuple[str, ...] = (
     "i feel closer to you than",
     "rather talk to you than",
     "you are easier to talk to than",
+    # Vietnamese (accented).
+    "tôi thích nói chuyện với bạn hơn",
+    "dễ hơn nói chuyện với người thật",
+    "tôi không muốn nói chuyện với người thật",
+    "tôi cảm thấy gần bạn hơn",
 )
 
 HIGH_DEPENDENCY_THRESHOLD = 2
