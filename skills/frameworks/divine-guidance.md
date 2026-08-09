@@ -20,6 +20,19 @@ Learning to recognize the difference between what is true and what you want to b
 
 The user's task is not to receive perfect guidance, but to develop the capacity to recognize the difference.
 
+## Activation Signals
+
+Activate when the user describes trying to discern inner knowing from fear,
+projection, or wishful thinking, or asks whether their intuition can be trusted:
+
+- "I don't know if this is intuition or fear", "is this real guidance or wishful thinking"
+- "I can't tell if this is my inner knowing or just what I want"
+- "I don't trust my own intuition", "I was taught my inner voice is untrustworthy"
+- "I keep looking for outside confirmation instead of trusting myself"
+- "I don't know if I'm hearing guidance or just my own anxiety"
+- "how do I know if this feeling is real or just what I want to be true"
+- "I feel paralyzed because I don't know what I actually know"
+
 ## What this framework addresses
 
 Users often:

@@ -36,6 +36,19 @@ The Dark Night strips away spiritual experiences, feelings of connection, certai
 
 This is not the same as depression, though they can coexist. The Dark Night is a form of spiritual honesty. It is what happens when the scaffolding of consolation, vision, or even meaning temporarily collapses, and what remains is presence itself-not because it is pleasant, but because it is true.
 
+## Activation Signals
+
+Activate when the user describes spiritual emptiness, loss of faith, or disconnection
+from what once felt alive, distinct from ordinary sadness or clinical depression:
+
+- "I feel spiritually empty", "I feel disconnected from everything I used to believe"
+- "I've lost my faith", "I don't feel connected to anything sacred anymore"
+- "everything that used to feel meaningful feels hollow now"
+- "I can't feel my practice anymore", "prayer feels empty", "meditation does nothing"
+- "I don't know what I trust anymore", "I feel like I'm in a spiritual dry spell"
+- "I feel abandoned by whatever I used to believe in"
+- "nothing feels sacred anymore", "I've lost my sense of the sacred"
+
 ## The response structure
 
 1. Acknowledge what has been lost or gone numb (connection, meaning, felt sense of the sacred)

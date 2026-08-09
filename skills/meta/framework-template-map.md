@@ -36,6 +36,16 @@ structure defined here for its active framework.
 | Meaning Integration | Mirror | 70-140 | One, last, noticing-oriented | meaning-integration.md |
 | Synthesis | Mirror | 120-200 | One, last, ownership-returning | conversation-synthesis.md |
 | Pattern | Mirror | 70-160 | One, last, pattern-specific | pattern-mapper.md |
+| Ancestral Patterns | Mirror | 70-160 | One, last, from Ancestral Questions | ancestral-patterns.md |
+| Fear of Visibility | Mirror, Spacious | 70-150 | One, last, from Visibility Questions | fear-of-visibility.md |
+| Creative Drought | Mirror, No techniques | 70-160 | One, last, from Creative Drought Questions | creative-drought.md |
+| Empath Boundary | Mirror, Grounding | 70-150 | One, last, from Empath Questions | empath-boundary.md |
+| Perfectionism Paralysis | Mirror, No advice | 70-160 | One, last, from Perfectionism Questions | perfectionism-paralysis.md |
+| Dark Night of the Soul | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul.md |
+| Soul Nourishment | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |
+| Divine Guidance | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance.md |
+| Sacred Polarity | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
+| Spiritual Purpose | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
 | Mirror (emotional) | Mirror | 80-180 | One, last, inner experience | response-structure.md |
 | Mirror (intellectual) | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
 | Mirror (Stage 1) | Mirror | 30-80 | Optional, soft | response-structure.md |

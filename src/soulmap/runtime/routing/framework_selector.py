@@ -12,8 +12,10 @@ from soulmap.runtime.detectors.anger_detector import detect_anger
 from soulmap.runtime.detectors.celebration_detector import detect_celebration
 from soulmap.runtime.detectors.creative_drought_detector import detect_creative_drought
 from soulmap.runtime.detectors.crisis_detector import detect_crisis
+from soulmap.runtime.detectors.dark_night_detector import detect_dark_night
 from soulmap.runtime.detectors.dependency_detector import analyze_dependency
 from soulmap.runtime.detectors.direction_detector import detect_direction_need
+from soulmap.runtime.detectors.divine_guidance_detector import detect_divine_guidance
 from soulmap.runtime.detectors.emotional_intensity_detector import detect_intensity
 from soulmap.runtime.detectors.empath_detector import detect_empath_overwhelm
 from soulmap.runtime.detectors.existential_detector import detect_existential
@@ -24,9 +26,14 @@ from soulmap.runtime.detectors.pattern_detector import detect_patterns
 from soulmap.runtime.detectors.perfectionism_paralysis_detector import (
     detect_perfectionism_paralysis,
 )
+from soulmap.runtime.detectors.sacred_polarity_detector import detect_sacred_polarity
 from soulmap.runtime.detectors.shadow_pattern_detector import detect_shadow_patterns
 from soulmap.runtime.detectors.somatic_detector import detect_somatic
+from soulmap.runtime.detectors.soul_nourishment_detector import detect_soul_nourishment
 from soulmap.runtime.detectors.spiritual_bypass_detector import detect_bypass
+from soulmap.runtime.detectors.spiritual_purpose_detector import (
+    detect_spiritual_purpose,
+)
 from soulmap.runtime.detectors.visibility_fear_detector import detect_visibility_fear
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
 from soulmap.runtime.io.cli_payload import (
@@ -430,6 +437,41 @@ async def select_framework_async(
             history,
             debug_events=debug_events,
         ),
+        "dark_night": _run_detector_async(
+            "dark_night_detector",
+            detect_dark_night,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "soul_nourishment": _run_detector_async(
+            "soul_nourishment_detector",
+            detect_soul_nourishment,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "divine_guidance": _run_detector_async(
+            "divine_guidance_detector",
+            detect_divine_guidance,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "sacred_polarity": _run_detector_async(
+            "sacred_polarity_detector",
+            detect_sacred_polarity,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "spiritual_purpose": _run_detector_async(
+            "spiritual_purpose_detector",
+            detect_spiritual_purpose,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
     }
 
     results = await asyncio.gather(*tasks.values())
@@ -617,6 +659,76 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["empath"],
             "instruction": res["empath"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["dark_night"].get("dark_night_detected"):
+        selection = {
+            "primary_framework": "DARK_NIGHT_OF_SOUL",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["dark_night"],
+            "instruction": res["dark_night"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["soul_nourishment"].get("soul_nourishment_detected"):
+        selection = {
+            "primary_framework": "SOUL_NOURISHMENT",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["soul_nourishment"],
+            "instruction": res["soul_nourishment"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["divine_guidance"].get("divine_guidance_detected"):
+        selection = {
+            "primary_framework": "DIVINE_GUIDANCE",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["divine_guidance"],
+            "instruction": res["divine_guidance"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["sacred_polarity"].get("sacred_polarity_detected"):
+        selection = {
+            "primary_framework": "SACRED_POLARITY",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["sacred_polarity"],
+            "instruction": res["sacred_polarity"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["spiritual_purpose"].get("spiritual_purpose_detected"):
+        selection = {
+            "primary_framework": "SPIRITUAL_PURPOSE",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["spiritual_purpose"],
+            "instruction": res["spiritual_purpose"].get("recommendation", ""),
             "blocked": [],
         }
         return _maybe_attach_debug(

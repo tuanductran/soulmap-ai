@@ -18,6 +18,7 @@ Use this folder as the entry point for repo documentation.
   [`engineering/safety-architecture.md`](engineering/safety-architecture.md),
   [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md), and
   [`engineering/adr/`](engineering/adr/) for permanent architecture decision records
+- Roadmap and direction: [`ROADMAP.md`](ROADMAP.md)
 
 ## Reference Docs
 
@@ -41,5 +42,9 @@ Use this folder as the entry point for repo documentation.
 - [`engineering/maintenance-boundary.md`](engineering/maintenance-boundary.md): scope and maintenance guardrails
 - [`engineering/known-limitations.md`](engineering/known-limitations.md): canonical reference for
   intentional architectural limitations and design boundaries
+- [`engineering/library-vs-framework.md`](engineering/library-vs-framework.md): the reusable Library
+  layer vs the swappable Framework layer in `src/soulmap/runtime/`, and the authoring rule for new
+  frameworks
+- [`ROADMAP.md`](ROADMAP.md): development phases, what shipped, and open future work
 - [`engineering/adr/`](engineering/adr/): permanent Architecture Decision Records, starting with
   [`0001-layered-crisis-detection.md`](engineering/adr/0001-layered-crisis-detection.md)
