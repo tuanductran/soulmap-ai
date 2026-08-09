@@ -17,6 +17,19 @@ The user may use all three and call them all self-care. The distinction matters 
 - Distraction: Helps the user escape temporarily. Energy is displaced, not replenished.
 - Numbing: Flattens sensation. Energy becomes unavailable.
 
+## Activation Signals
+
+Activate when the user names something that feeds their spirit, or questions what
+genuinely nourishes them versus what distracts or numbs them:
+
+- "this feeds my soul", "this is what actually nourishes me"
+- "I feel more myself when I", "being in nature makes me feel alive"
+- "I feel guilty taking time for what feeds me"
+- "I forget what actually works for me under stress"
+- "I confuse being busy with taking care of myself"
+- "I mistake excitement for actually feeling alive"
+- "what actually nourishes me versus what just distracts me"
+
 ## What this framework addresses
 
 Users often:

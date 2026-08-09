@@ -17,6 +17,19 @@ This is not about gender. It is about the fundamental human capacities for both 
 
 Neither is better. Both are alive in everyone. The question is not "Am I this or that?" but "Am I honoring both?"
 
+## Activation Signals
+
+Activate when the user explores the balance of receptivity and action, surrender
+and will, or vulnerability and strength within themselves or their relationships:
+
+- "I only know how to do, I don't know how to just be"
+- "I can't set boundaries", "I don't know how to soften"
+- "I feel guilty taking space", "I feel guilty making demands of others"
+- "I move without listening", "I listen without ever moving"
+- "I am either all receiving or all doing, there's no in between"
+- "I was punished for being too soft" "I was punished for taking up space"
+- "I don't know how to hold both my power and my softness"
+
 ## What this framework addresses
 
 Users often:

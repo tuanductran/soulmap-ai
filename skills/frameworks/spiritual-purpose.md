@@ -19,6 +19,19 @@ The user's task is to notice which energy is operating:
 
 The user's task is to notice which one is operating, and to make choices from that awareness.
 
+## Activation Signals
+
+Activate when the user questions whether their direction comes from authentic
+alignment versus obligation, fear, or the need to prove something:
+
+- "I don't know if this is my calling or just what I think I should do"
+- "I'm waiting for certainty before I act"
+- "I keep telling myself it's my purpose but it feels forced"
+- "I don't know if I want this or I just want to prove something"
+- "I feel frozen because I haven't found my one true purpose"
+- "I sacrifice what I actually care about for security"
+- "is this passion or is this just intensity"
+
 ## What this framework addresses
 
 Users often:
