@@ -304,15 +304,16 @@ Completed:
 
 Not yet done:
 
-* Expand unit test coverage for the remaining `runtime/guards/` modules, the
-  layer closest to final output safety. `markdown_contract.py` now has focused
-  unit coverage at 96%; `response_contract.py`, `resource_sanitizer.py`, and
-  the response-output contracts still need stronger branch coverage.
-* Unit test coverage for `devtools/` (audit-knowledge, eval_groups,
-  eval_responses, build_skill) - currently 7-30%, functionally verified only
-  through direct CLI invocation, not pytest-level unit tests
+* Strengthen branch coverage for the remaining output-safety guards
+  (`response_safety_contract.py` at 86% and `response_safety_gate.py` at 85%).
+  Focused coverage now stands at 96% for `markdown_contract.py` and 100% for
+  both `response_contract.py` and `resource_sanitizer.py`.
+* Expand unit coverage for the remaining `devtools/` surfaces. Focused tests
+  now cover `audit-knowledge` (99%), `eval_groups` (98%), `eval_responses`
+  (99%), and `build_skill` (97%); support, Markdown-checker, and quality
+  helper modules remain below the desired coverage bar.
 * Unit test coverage for `runtime/synthesis/conversation_synthesizer.py`
-  (currently 74%)
+  (currently 79%)
 
 ---
 
