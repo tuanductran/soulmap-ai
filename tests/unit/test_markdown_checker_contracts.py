@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from soulmap.devtools.checks import check_markdown_case, check_markdown_links
+from soulmap.devtools.support.markdown import MarkdownReference
 
 
 def test_case_checker_skips_code_and_prevents_overlapping_term_reports(
@@ -161,3 +162,150 @@ def test_link_checker_response_status_and_warning_cli_behavior(
         )
         == 1
     )
+
+
+def test_link_checker_request_wrapper_handles_response_and_transport_errors(
+    monkeypatch,
+) -> None:
+    from email.message import Message
+    from urllib.error import HTTPError, URLError
+
+    requests: list[tuple[str, str, float]] = []
+
+    class _Response:
+        status = 201
+
+        def __enter__(self) -> _Response:
+            return self
+
+        def __exit__(self, *_args: object) -> None:
+            return None
+
+    def successful_urlopen(request, *, timeout: float) -> _Response:
+        requests.append((request.full_url, request.get_method(), timeout))
+        return _Response()
+
+    monkeypatch.setattr(check_markdown_links, "urlopen", successful_urlopen)
+    assert check_markdown_links._request_external_target(
+        "https://example.com/path",
+        method="HEAD",
+        timeout=1.5,
+    ) == (201, None)
+    assert requests == [("https://example.com/path", "HEAD", 1.5)]
+
+    http_error = HTTPError(
+        "https://example.com",
+        418,
+        "teapot",
+        hdrs=Message(),
+        fp=None,
+    )
+    monkeypatch.setattr(
+        check_markdown_links,
+        "urlopen",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(http_error),
+    )
+    status, error = check_markdown_links._request_external_target(
+        "https://example.com",
+        method="GET",
+        timeout=1.0,
+    )
+    assert status == 418
+    assert error is http_error
+
+    url_error = URLError("offline")
+    monkeypatch.setattr(
+        check_markdown_links,
+        "urlopen",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(url_error),
+    )
+    status, error = check_markdown_links._request_external_target(
+        "https://example.com",
+        method="GET",
+        timeout=1.0,
+    )
+    assert status is None
+    assert error is url_error
+
+
+def test_link_checker_handles_non_http_and_unknown_network_failure(
+    tmp_path: Path, monkeypatch
+) -> None:
+    source = tmp_path / "README.md"
+    source.write_text("# Source\n", encoding="utf-8")
+
+    assert (
+        check_markdown_links._check_external_target(
+            current_file=source,
+            target="mailto:hello@example.com",
+            line=1,
+            timeout=1.0,
+        )
+        == []
+    )
+
+    monkeypatch.setattr(
+        check_markdown_links,
+        "_request_external_target",
+        lambda *_args, **_kwargs: (None, None),
+    )
+    issues = check_markdown_links._check_external_target(
+        current_file=source,
+        target="https://example.com",
+        line=1,
+        timeout=1.0,
+    )
+
+    assert len(issues) == 1
+    assert issues[0].severity == "warning"
+    assert "request failed" in issues[0].message
+
+
+def test_link_checker_skips_empty_reference_and_non_integer_response_code(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    source = tmp_path / "README.md"
+    source.write_text("# Source\n", encoding="utf-8")
+
+    class _UnknownStatus:
+        status = None
+
+        def getcode(self) -> str:
+            return "unknown"
+
+    monkeypatch.setattr(
+        check_markdown_links,
+        "iter_markdown_references",
+        lambda _lines: [
+            MarkdownReference(1, "empty", ""),
+        ],
+    )
+
+    assert check_markdown_links._http_status_from_response(_UnknownStatus()) is None
+    assert (
+        check_markdown_links.check_file_with_options(
+            source,
+            tmp_path,
+            check_external=False,
+            timeout=1.0,
+        )
+        == []
+    )
+
+
+def test_link_checker_wrapper_and_cli_cover_clean_and_error_results(
+    tmp_path: Path,
+    capsys,
+) -> None:
+    clean = tmp_path / "clean.md"
+    clean.write_text("# Clean\n", encoding="utf-8")
+
+    assert check_markdown_links.check_file(clean, tmp_path) == []
+    assert check_markdown_links.main(["--root", str(tmp_path), "clean.md"]) == 0
+
+    broken = tmp_path / "broken.md"
+    broken.write_text("[Missing](missing.md)\n", encoding="utf-8")
+
+    assert check_markdown_links.main(["--root", str(tmp_path), "broken.md"]) == 1
+    assert "broken.md:1: Broken local link: missing.md" in capsys.readouterr().out

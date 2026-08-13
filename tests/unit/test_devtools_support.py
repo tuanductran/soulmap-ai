@@ -294,3 +294,38 @@ def test_repo_tooling_lock_tolerates_missing_or_unremovable_cleanup_file(
         "warning: failed to remove repo tooling lock .stuck.lock: busy"
         in capsys.readouterr().err
     )
+
+
+@pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
+def test_repo_tooling_lock_retries_before_waiting_notice(
+    tmp_path: Path,
+    monkeypatch,
+    capsys,
+) -> None:
+    fcntl = importlib.import_module("fcntl")
+    attempts = 0
+    sleep_calls: list[float] = []
+    times = iter([0.0, 0.4])
+
+    def fake_flock(_fd: int, flags: int) -> None:
+        nonlocal attempts
+        if flags & fcntl.LOCK_UN:
+            return
+        attempts += 1
+        if attempts == 1:
+            raise OSError("busy")
+
+    monkeypatch.setattr(fcntl, "flock", fake_flock)
+    monkeypatch.setattr(run_support.time, "monotonic", lambda: next(times))
+    monkeypatch.setattr(
+        run_support.time,
+        "sleep",
+        lambda delay: sleep_calls.append(delay),
+    )
+
+    with run_support.repo_tooling_lock(tmp_path, name="quiet", poll_interval_s=0.01):
+        pass
+
+    assert attempts == 2
+    assert sleep_calls == [0.01]
+    assert capsys.readouterr().err == ""

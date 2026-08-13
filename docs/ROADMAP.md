@@ -291,7 +291,7 @@ Not yet done (tracked, see [Future Direction](#future-direction)):
 
 ---
 
-### Phase 8 - Test Coverage Hardening (in progress)
+### Phase 8 - Test Coverage Hardening (completed for core and tooling targets)
 
 Completed:
 
@@ -312,15 +312,13 @@ Completed:
   `eval_responses` (99%), `build_skill` (97%), `check_markdown_case` (98%),
   and `quality/lint` (100%)
 
-Not yet done:
+The core and tooling coverage target is complete. Focused tests now cover
+POSIX/Windows tooling-lock behavior and deterministic HTTP response, fallback,
+and transport-error paths in the Markdown link checker.
 
-* Continue coverage work for lower-level `devtools` support and integration
-  paths, especially the cross-platform portions of `support/run.py` and the
-  external-network error paths of the Markdown link checker. Bootstrap setup
-  now has focused coverage at 100%.
-* Decide whether thin `devtools/cli/` entry-point wrappers need direct unit
-  coverage or should remain verified through the canonical `soulmap` CLI and
-  integration checks
+A deliberately low-priority follow-up remains: decide whether thin
+`devtools/cli/` entry-point wrappers need direct unit coverage or should remain
+verified through the canonical `soulmap` CLI and integration checks.
 
 ---
 
