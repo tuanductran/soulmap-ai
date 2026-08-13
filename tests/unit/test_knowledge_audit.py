@@ -31,14 +31,15 @@ def test_format_inventory_groups_entries_and_reports_runtime_loader(
     monkeypatch.setattr(audit, "markdown_consumers", lambda _root, _path: (loader,))
 
     output = audit._format_inventory((duplicate,), tmp_path)
+    normalized = output.replace("\\", "/")
 
-    assert "Knowledge consistency inventory" in output
-    assert "total overlaps: 1" in output
-    assert "[knowledge_duplicate] 1" in output
-    assert "src/config.py::PHRASES" in output
-    assert "ownership: skills/framework.md" in output
-    assert "loaded by: src/loader.py" in output
-    assert "'hold this gently' -> skills/framework.md [Detection signals]" in output
+    assert "Knowledge consistency inventory" in normalized
+    assert "total overlaps: 1" in normalized
+    assert "[knowledge_duplicate] 1" in normalized
+    assert "src/config.py::PHRASES" in normalized
+    assert "ownership: skills/framework.md" in normalized
+    assert "loaded by: src/loader.py" in normalized
+    assert "'hold this gently' -> skills/framework.md [Detection signals]" in normalized
 
 
 def test_format_inventory_reports_missing_runtime_loader(
@@ -64,14 +65,15 @@ def test_format_usage_separates_active_and_orphaned_constants(tmp_path: Path) ->
     )
 
     output = audit._format_usage((active, orphaned), tmp_path)
+    normalized = output.replace("\\", "/")
 
-    assert "active constants: 1" in output
-    assert "orphaned constants: 1" in output
-    assert "[active]" in output
-    assert "src/active.py::ACTIVE" in output
-    assert "- src/consumer.py" in output
-    assert "[orphaned]" in output
-    assert "src/orphaned.py::ORPHANED" in output
+    assert "active constants: 1" in normalized
+    assert "orphaned constants: 1" in normalized
+    assert "[active]" in normalized
+    assert "src/active.py::ACTIVE" in normalized
+    assert "- src/consumer.py" in normalized
+    assert "[orphaned]" in normalized
+    assert "src/orphaned.py::ORPHANED" in normalized
 
 
 def test_audit_cli_honors_duplicate_threshold(
