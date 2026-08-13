@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -12,12 +13,12 @@ def test_venv_executable_covers_posix_and_windows_layouts(
 ) -> None:
     venv_dir = tmp_path / ".venv"
 
-    monkeypatch.setattr(bootstrap_venv.os, "name", "posix")
+    monkeypatch.setattr(bootstrap_venv, "os", SimpleNamespace(name="posix"))
     assert bootstrap_venv._venv_executable(venv_dir, "python") == (
         venv_dir / "bin" / "python"
     )
 
-    monkeypatch.setattr(bootstrap_venv.os, "name", "nt")
+    monkeypatch.setattr(bootstrap_venv, "os", SimpleNamespace(name="nt"))
     assert bootstrap_venv._venv_executable(venv_dir, "python") == (
         venv_dir / "Scripts" / "python.exe"
     )
@@ -52,7 +53,7 @@ def test_bootstrap_main_reports_windows_activation_and_git_hooks(
     (tmp_path / ".git").mkdir()
     calls: list[list[str]] = []
     monkeypatch.setattr(bootstrap_venv, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(bootstrap_venv.os, "name", "nt")
+    monkeypatch.setattr(bootstrap_venv, "os", SimpleNamespace(name="nt"))
     monkeypatch.setattr(bootstrap_venv, "_uv_executable", lambda: "uv")
     monkeypatch.setattr(
         bootstrap_venv,

@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, cast
+
+import pytest
 
 from soulmap.devtools.support import markdown as markdown_support
 from soulmap.devtools.support import run as run_support
@@ -202,22 +206,24 @@ def test_python_executable_warns_once_without_venv_or_ci(
     assert capsys.readouterr().err.count("warning: no local `.venv` detected") == 1
 
 
+@pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
 def test_repo_tooling_lock_waits_then_cleans_root_lock(
     tmp_path: Path, monkeypatch, capsys
 ) -> None:
+    fcntl = cast(Any, run_support.fcntl)
     attempts = 0
     sleep_calls: list[float] = []
     times = iter([0.0, 0.6])
 
     def fake_flock(_fd: int, flags: int) -> None:
         nonlocal attempts
-        if flags & run_support.fcntl.LOCK_UN:
+        if flags & fcntl.LOCK_UN:
             return
         attempts += 1
         if attempts == 1:
             raise OSError("busy")
 
-    monkeypatch.setattr(run_support.fcntl, "flock", fake_flock)
+    monkeypatch.setattr(fcntl, "flock", fake_flock)
     monkeypatch.setattr(run_support.time, "monotonic", lambda: next(times))
     monkeypatch.setattr(
         run_support.time, "sleep", lambda delay: sleep_calls.append(delay)
@@ -247,7 +253,7 @@ def test_repo_tooling_lock_uses_windows_venv_lock_and_unlocks(
         def locking(_fd: int, mode: int, _size: int) -> None:
             lock_modes.append(mode)
 
-    monkeypatch.setattr(run_support.os, "name", "nt")
+    monkeypatch.setattr(run_support, "os", SimpleNamespace(name="nt"))
     monkeypatch.setattr(run_support, "msvcrt", _Msvcrt, raising=False)
 
     with run_support.repo_tooling_lock(tmp_path, name="windows"):
