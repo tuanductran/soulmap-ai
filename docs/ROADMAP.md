@@ -301,19 +301,26 @@ Completed:
   `pattern`, `emotional_intensity`) raised from a 52-79% range to 89-100%
   (97% overall for `runtime/detectors/`), with every phrase sourced verbatim
   from the corresponding Markdown framework file
+* Focused coverage for all response-output guards: `markdown_contract.py` at
+  96%, and `response_contract.py`, `resource_sanitizer.py`,
+  `response_safety_contract.py`, and `response_safety_gate.py` at 100%
+* Focused coverage for `runtime/synthesis/conversation_synthesizer.py` at
+  100%, including recurring-theme scoring, longitudinal memory, trigger
+  thresholds, and user-ownership framing
+* Focused coverage for audit, eval, packaging, Markdown support, checker, and
+  quality tooling, including `audit-knowledge` (99%), `eval_groups` (98%),
+  `eval_responses` (99%), `build_skill` (97%), `check_markdown_case` (98%),
+  and `quality/lint` (100%)
 
 Not yet done:
 
-* Strengthen branch coverage for the remaining output-safety guards
-  (`response_safety_contract.py` at 86% and `response_safety_gate.py` at 85%).
-  Focused coverage now stands at 96% for `markdown_contract.py` and 100% for
-  both `response_contract.py` and `resource_sanitizer.py`.
-* Expand unit coverage for the remaining `devtools/` surfaces. Focused tests
-  now cover `audit-knowledge` (99%), `eval_groups` (98%), `eval_responses`
-  (99%), and `build_skill` (97%); support, Markdown-checker, and quality
-  helper modules remain below the desired coverage bar.
-* Unit test coverage for `runtime/synthesis/conversation_synthesizer.py`
-  (currently 79%)
+* Continue coverage work for lower-level `devtools` support and integration
+  paths, especially the cross-platform portions of `support/run.py` and the
+  external-network error paths of the Markdown link checker. Bootstrap setup
+  now has focused coverage at 100%.
+* Decide whether thin `devtools/cli/` entry-point wrappers need direct unit
+  coverage or should remain verified through the canonical `soulmap` CLI and
+  integration checks
 
 ---
 
