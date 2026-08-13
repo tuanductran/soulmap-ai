@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import os
 import subprocess
 from pathlib import Path
@@ -210,7 +211,7 @@ def test_python_executable_warns_once_without_venv_or_ci(
 def test_repo_tooling_lock_waits_then_cleans_root_lock(
     tmp_path: Path, monkeypatch, capsys
 ) -> None:
-    fcntl = cast(Any, run_support.fcntl)
+    fcntl = importlib.import_module("fcntl")
     attempts = 0
     sleep_calls: list[float] = []
     times = iter([0.0, 0.6])
