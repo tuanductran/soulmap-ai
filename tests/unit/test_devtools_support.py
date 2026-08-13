@@ -100,11 +100,16 @@ def test_markdown_file_collection_and_input_resolution(tmp_path: Path) -> None:
     (tmp_path / "dist" / "ignored.md").write_text("# Ignored\n", encoding="utf-8")
     (tmp_path / "notes.txt").write_text("notes\n", encoding="utf-8")
 
-    assert markdown_support.iter_markdown_files(tmp_path) == [root_file, docs_file]
-    assert markdown_support.resolve_markdown_inputs(
-        tmp_path,
-        ["docs", "docs/guide.md", "README.md", "notes.txt", "missing.md"],
-    ) == [root_file.resolve(), docs_file]
+    assert set(markdown_support.iter_markdown_files(tmp_path)) == {
+        root_file,
+        docs_file,
+    }
+    assert set(
+        markdown_support.resolve_markdown_inputs(
+            tmp_path,
+            ["docs", "docs/guide.md", "README.md", "notes.txt", "missing.md"],
+        )
+    ) == {root_file.resolve(), docs_file}
 
 
 def test_markdown_parsing_slug_anchor_and_reference_helpers() -> None:

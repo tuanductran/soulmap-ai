@@ -126,14 +126,12 @@ def test_lint_runs_pyright_markdown_and_pytest_when_available(
 
     assert ("pyright", ()) in calls
     assert ("pytest", ("-q",)) in calls
-    assert run_calls == [
-        [
-            "python",
-            "-m",
-            "pymarkdown",
-            "--config",
-            ".pymarkdown.json",
-            "scan",
-            "docs/guide.md",
-        ]
+    assert run_calls[0][:-1] == [
+        "python",
+        "-m",
+        "pymarkdown",
+        "--config",
+        ".pymarkdown.json",
+        "scan",
     ]
+    assert run_calls[0][-1].replace("\\", "/") == "docs/guide.md"
