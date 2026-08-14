@@ -1,12 +1,16 @@
 ---
 title: "SoulMap AI, platform integration guide"
 description: "Step-by-step instructions for deploying SoulMap AI on ChatGPT, Gemini, Poe, and Claude."
+doctrine_source: "AGENTS.md"
+soulmap_version: "0.8.0"
 ---
 
 # SoulMap AI, platform integration guide
 
 This file documents how to deploy SoulMap on each supported AI platform.
-Each platform requires different files and setup steps.
+Each platform requires different files and setup steps. The front matter declares
+its exact package compatibility and canonical doctrine source; all platform guides
+must be reviewed when that version changes.
 
 ## Build the distribution artifacts first
 

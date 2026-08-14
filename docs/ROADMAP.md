@@ -382,7 +382,14 @@ a superseding ADR revisits it.
 
 ---
 
-### Phase 11 - Platform & Distribution Expansion (proposed, not started)
+### Phase 11 - Platform & Distribution Expansion (in progress)
+
+Completed foundation:
+
+* `docs/integrations/*.md` now declare `AGENTS.md` as their canonical doctrine
+  source and the exact compatible package version in front matter. The Markdown
+  contract validates both fields against repository truth, so release drift in
+  any of the Claude, ChatGPT, Gemini, or Poe guides fails local CI.
 
 Not yet done:
 
@@ -391,8 +398,8 @@ Not yet done:
   [`docs/engineering/maintenance-boundary.md`](../docs/engineering/maintenance-boundary.md)
 * Deeper integration testing across the four currently documented platforms
   (Claude, ChatGPT, Gemini, Poe) beyond manual deployment guides
-* Formal versioning/compatibility guarantees for `docs/integrations/*.md`
-  instruction sets as the doctrine in `AGENTS.md` evolves
+* A documented compatibility policy for platform behavior changes beyond the
+  exact package/doctrine metadata contract now enforced in CI
 
 ---
 

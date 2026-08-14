@@ -119,3 +119,76 @@ def test_markdown_contract_check_repo_and_cli_report_relative_path(
     assert issues[0].message == "Unclosed fenced code block"
     assert markdown_contract.main(["--root", str(tmp_path)]) == 1
     assert "bad.md:3: Unclosed fenced code block" in capsys.readouterr().out
+
+
+def _write_integration_guide(
+    root: Path,
+    *,
+    doctrine_source: str = "AGENTS.md",
+    soulmap_version: str = "0.8.0",
+) -> Path:
+    guide_dir = root / "docs" / "integrations"
+    guide_dir.mkdir(parents=True)
+    source = guide_dir / "chatgpt-instructions.md"
+    source.write_text(
+        "---\n"
+        'title: "Integration guide"\n'
+        'description: "A compatibility-tested platform guide."\n'
+        f'doctrine_source: "{doctrine_source}"\n'
+        f'soulmap_version: "{soulmap_version}"\n'
+        "---\n\n"
+        "# Integration guide\n",
+        encoding="utf-8",
+    )
+    return source
+
+
+def test_markdown_contract_accepts_matching_integration_metadata(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "pyproject.toml").write_text(
+        '[project]\nversion = "0.8.0"\n', encoding="utf-8"
+    )
+    source = _write_integration_guide(tmp_path)
+
+    assert markdown_contract.check_markdown_file(source, tmp_path) == []
+
+
+def test_markdown_contract_flags_missing_integration_metadata(tmp_path: Path) -> None:
+    guide_dir = tmp_path / "docs" / "integrations"
+    guide_dir.mkdir(parents=True)
+    source = guide_dir / "poe-system-prompt.md"
+    source.write_text(
+        "---\n"
+        'title: "Poe guide"\n'
+        'description: "A platform guide."\n'
+        "---\n\n"
+        "# Poe guide\n",
+        encoding="utf-8",
+    )
+
+    messages = _messages(markdown_contract.check_markdown_file(source, tmp_path))
+
+    assert "Missing integration metadata: doctrine_source" in messages
+    assert "Missing integration metadata: soulmap_version" in messages
+
+
+def test_markdown_contract_flags_integration_doctrine_and_version_drift(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "pyproject.toml").write_text(
+        '[project]\nversion = "0.8.0"\n', encoding="utf-8"
+    )
+    source = _write_integration_guide(
+        tmp_path,
+        doctrine_source="docs/AGENTS-copy.md",
+        soulmap_version="0.7.0",
+    )
+
+    messages = _messages(markdown_contract.check_markdown_file(source, tmp_path))
+
+    assert "Integration doctrine_source must be AGENTS.md" in messages
+    assert (
+        "Integration soulmap_version must match pyproject.toml version "
+        "(expected 0.8.0, got 0.7.0)"
+    ) in messages
