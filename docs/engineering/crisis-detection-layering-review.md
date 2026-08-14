@@ -198,10 +198,10 @@ false negatives, because both calls share one deterministic detector.
 **Maintainability:** low added burden today, because both call sites
 import the same `detect_crisis` function rather than reimplementing
 detection logic - there is one place to fix a phrase, add a language pack,
-or change tier logic. The burden that does exist is remembering to keep
-`_apply_safety_gate` wired into any new return branch in
-`select_framework_async`, which is currently enforced only by convention
-and code review, not by a test.
+or change tier logic. The remaining maintenance burden is extending the
+parametrized routing regression whenever `select_framework_async` gains a
+return branch. `tests/regression/test_routing_safety_gate.py` now proves the
+current branch set reaches `_apply_safety_gate`.
 
 **Reliability:** routing is deterministic and, per the "Defense-in-depth evaluation" section, cannot
 disagree between the two layers for the same input, so there is no
@@ -227,32 +227,21 @@ detection implementation rather than maintaining two. This recommendation
 is now the accepted, permanent decision recorded in
 [`docs/engineering/adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md).
 
-The one gap worth closing, as a documentation/test clarification rather
-than a behavior change:
+The documentation and regression clarifications identified by this review
+are now complete:
 
-- Add an explicit code comment at each of the two `detect_crisis()` call
-  sites (in `framework_selector.py` and `response_safety_gate.py`)
-  cross-referencing the other, so a future reader does not mistake the
-  second call for leftover/accidental duplication - mirroring the kind of
-  cross-reference `response_safety_contract.py` already gives for its own
-  reuse of `BANNED_DEPENDENCY_PHRASES`.
-- Consider a follow-up test (separate issue, not implemented here) that
-  exercises `select_framework_async` end-to-end for a constructed scenario
-  where the selector's own crisis short-circuit is bypassed, to
-  mechanically prove the gate still catches it through the full pipeline
-  rather than only when called in isolation, and to fail loudly if a
-  future return branch is added without wiring in `_apply_safety_gate`.
+- Both `detect_crisis()` call sites include comments cross-referencing ADR
+  0001, so the second checkpoint is not mistaken for accidental duplication.
+- `tests/regression/test_routing_safety_gate.py` covers every current selector
+  outcome and simulates a selector-side Tier 1 miss. The gate independently
+  re-derives the raw message and overrides the result to `CRISIS`.
 
-No runtime behavior, detector ordering, or safety layer was changed to
-produce this recommendation.
+No runtime behavior, detector ordering, or safety layer changed as part of the
+original review. The later evidence hardening only verifies the architecture it
+recommended.
 
-## Future work (not implemented here, belongs in separate issues)
+## Future maintenance
 
-- An end-to-end regression test proving every `select_framework_async`
-  return branch reaches `_apply_safety_gate` (the "Evaluation evidence reviewed" section and the "Recommendation" section gap).
-- Expanding `CRISIS_TIER1_PATTERNS` regex morphological variants beyond
-  English, noted as an existing gap in
-  `docs/engineering/safety-enforcement-matrix.md`'s row for morphological
-  crisis phrase variants.
 - If a non-deterministic crisis classifier is ever considered, revisit
-  whether running it twice per request remains free, per the "Architectural trade-offs" section.
+  whether running it twice per request remains free, per the "Architectural
+  trade-offs" section and ADR 0001.
