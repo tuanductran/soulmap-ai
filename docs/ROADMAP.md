@@ -3,7 +3,8 @@
 > **Repository:** [soulmap-ai](https://github.com/tuanductran/soulmap-ai)
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
-> **Status:** Actively maintained, current release v0.7.0
+> **Status:** Actively maintained, current release v0.8.0
+> **Last updated:** 14 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -70,7 +71,8 @@ SoulMap AI ships a knowledge base covering:
 
 * Frameworks - grief, life direction, shadow patterns, inner parts, anger, existential
   companion, perfectionism paralysis, empath boundary, creative drought, somatic
-  wellbeing, emotional de-escalation, pattern mapper
+  wellbeing, emotional de-escalation, pattern mapper, dark night of the soul, soul
+  nourishment, divine guidance, sacred polarity, and spiritual purpose
 * Spiritual discernment - bypass detection, grounded reflective framing
 * Safety - crisis detection, dependency detection, boundaries, whitelist/blacklist
 * Meta - master prompt, orchestration, response and redirect templates
@@ -265,7 +267,7 @@ Completed:
 
 ---
 
-### Phase 7 - Response Safety & Multilingual Crisis Detection (v0.7.0) - current
+### Phase 7 - Response Safety & Multilingual Crisis Detection (v0.7.0)
 
 Completed:
 
@@ -283,15 +285,15 @@ Completed:
 
 Not yet done (tracked, see [Future Direction](#future-direction)):
 
-* `CRISIS_TIER1_PATTERNS` regex morphological variants remain English-only -
-  multilingual coverage exists at the phrase-pack level, not yet at the
-  regex-pattern level
+* Historical note: `CRISIS_TIER1_PATTERNS` morphology was English-only in
+  v0.7.0. Sentence-level morphology is now covered in Phase 10; broader
+  language-specific variants remain a maintenance consideration.
 * `response_safety_contract.py` is deterministic regex/substring matching
   only; it does not catch paraphrased or implied violations
 
 ---
 
-### Phase 8 - Test Coverage Hardening (completed for core and tooling targets)
+### Phase 8 - Test Coverage Hardening (v0.8.0, complete)
 
 Completed:
 
@@ -322,29 +324,53 @@ verified through the canonical `soulmap` CLI and integration checks.
 
 ---
 
-### Phase 9 - Morphological & Semantic Detection Depth (proposed, not started)
+### Phase 9 - v0.8.0 Knowledge, Routing & Synthesis Alignment (complete)
 
-Not yet done:
+Completed:
 
-* Expand `CRISIS_TIER1_PATTERNS` regex morphological variants beyond English,
-  closing the gap noted in `docs/engineering/safety-enforcement-matrix.md`
-  and `docs/engineering/crisis-detection-layering-review.md`'s "Future work"
-  section
-* End-to-end regression test proving every `select_framework_async` return
-  branch reaches `_apply_safety_gate`, per the same "Future work" section
-* Evaluate semantic-level validation for `response_safety_contract.py` beyond
-  literal regex/substring matching, per Issue #132's stated future work -
-  contingent on whether an LLM dependency is judged acceptable given the
-  "no LLM in safety enforcement" non-goal below
-
-This phase intentionally has no committed implementation plan yet; SoulMap's
-own [`known-limitations.md`](../docs/engineering/known-limitations.md) treats
-several adjacent ideas as explicit non-goals unless revisited with a new ADR
-(see the non-goals table below).
+* Routed the five spiritual frameworks that had knowledge assets but no primary
+  framework route: dark night of the soul, soul nourishment, divine guidance,
+  sacred polarity, and spiritual purpose.
+* Corrected conversation synthesis so the current user message participates in
+  history-based analysis, rather than being omitted from the synthesis input.
+* Aligned runtime `Activate` instruction targets with the canonical kebab-case
+  knowledge filenames, and added a contract test to prevent target drift.
+* Synchronized voice session-ritual first-session guidance with the canonical
+  session contract and corrected the safety configuration documentation link.
+* Hardened core, contract, synthesis, and developer-tool test coverage to
+  96.8% line and 92.6% branch coverage across the package at release time.
 
 ---
 
-### Phase 10 - Platform & Distribution Expansion (proposed, not started)
+### Phase 10 - Routing Safety & Multilingual Morphology (post-v0.8.0, in progress)
+
+Completed:
+
+* End-to-end regression coverage now proves every current
+  `select_framework_async` primary-framework path reaches `_apply_safety_gate`.
+  The matrix includes the five spiritual framework routes introduced in v0.8.0
+  (`dark_night`, `soul_nourishment`, `divine_guidance`, `sacred_polarity`, and
+  `spiritual_purpose`) as well as the existing safety and mirror paths.
+* `CRISIS_TIER1_PATTERNS` now covers reviewed sentence-level morphology beyond
+  English for Vietnamese, Spanish, French, and Simplified Chinese, with
+  positive and near-miss regression cases. Literal per-language phrase packs
+  remain the primary source of truth.
+
+Still open:
+
+* Evaluate semantic-level validation for `response_safety_contract.py` beyond
+  literal regex/substring matching, per Issue #132's stated future work. This
+  remains contingent on whether an LLM dependency is judged acceptable despite
+  the "no LLM in safety enforcement" non-goal below.
+
+Phase 10 deliberately remains narrow: deterministic safety evidence and
+maintenance only. SoulMap's [`known-limitations.md`](../docs/engineering/known-limitations.md)
+continues to treat adjacent platform and model-based ideas as explicit non-goals
+unless a new ADR revisits them.
+
+---
+
+### Phase 11 - Platform & Distribution Expansion (proposed, not started)
 
 Not yet done:
 

@@ -21,6 +21,11 @@ DEFAULTS = {
     "detect_visibility_fear": {"visibility_fear_detected": False},
     "detect_empath_overwhelm": {"empath_detected": False},
     "detect_celebration": {"celebration_detected": False},
+    "detect_dark_night": {"dark_night_detected": False},
+    "detect_soul_nourishment": {"soul_nourishment_detected": False},
+    "detect_divine_guidance": {"divine_guidance_detected": False},
+    "detect_sacred_polarity": {"sacred_polarity_detected": False},
+    "detect_spiritual_purpose": {"spiritual_purpose_detected": False},
     "detect_patterns": {},
     "detect_stage": {"stage": 1},
 }
@@ -55,6 +60,23 @@ SCENARIOS = [
         {"detect_visibility_fear": {"visibility_fear_detected": True}},
     ),
     ("EMPATH_BOUNDARY", {"detect_empath_overwhelm": {"empath_detected": True}}),
+    ("DARK_NIGHT_OF_SOUL", {"detect_dark_night": {"dark_night_detected": True}}),
+    (
+        "SOUL_NOURISHMENT",
+        {"detect_soul_nourishment": {"soul_nourishment_detected": True}},
+    ),
+    (
+        "DIVINE_GUIDANCE",
+        {"detect_divine_guidance": {"divine_guidance_detected": True}},
+    ),
+    (
+        "SACRED_POLARITY",
+        {"detect_sacred_polarity": {"sacred_polarity_detected": True}},
+    ),
+    (
+        "SPIRITUAL_PURPOSE",
+        {"detect_spiritual_purpose": {"spiritual_purpose_detected": True}},
+    ),
     ("INTEGRATION_CELEBRATION", {"detect_celebration": {"celebration_detected": True}}),
     ("MEANING_INTEGRATION", {"detect_insight": {"insight_detected": True}}),
     (
