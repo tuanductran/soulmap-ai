@@ -21,7 +21,7 @@ Use it to answer four questions for every major repo surface:
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
-| `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, repo-wide linting, and review against repo structure |
+| `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
 
@@ -45,6 +45,9 @@ Use it to answer four questions for every major repo surface:
   verifiable in the repo.
 - If a rule is release-critical, it must be backed by code, tests, evals, or an
   explicit manual-review note.
+- Integration guides must declare their canonical doctrine source and exact package
+  compatibility in front matter; `markdown-contract` verifies those fields against
+  `AGENTS.md` and `pyproject.toml`.
 - `.claude/` is the canonical local workflow layer. It is not part of the shipped archive, but it must still be documented and structurally validated.
 - `.github/` is an operational layer, not product doctrine, and should stay aligned
   with the repo's actual checks, release flow, and local hook wiring.

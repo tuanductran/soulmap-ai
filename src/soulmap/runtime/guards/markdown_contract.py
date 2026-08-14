@@ -27,6 +27,9 @@ _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
 # tool-specific numbering conventions in the knowledge base.
 _NUMBERED_HEADING_PREFIX_RE = re.compile(r"^\(?\d+\)?\s*[.)]\s+")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
+_PACKAGE_VERSION_RE = re.compile(r'^version\s*=\s*["\']([^"\']+)["\']\s*$')
+_INTEGRATION_METADATA = ("title", "description", "doctrine_source", "soulmap_version")
+_INTEGRATION_DOCTRINE_SOURCE = "AGENTS.md"
 _BANNED_UNICODE = {
     "\u2019": "U+2019 RIGHT SINGLE QUOTATION MARK (use ASCII apostrophe ')",
     "\u2018": "U+2018 LEFT SINGLE QUOTATION MARK (use ASCII apostrophe ')",
@@ -50,6 +53,22 @@ def _iter_markdown_files(root: Path) -> list[Path]:
     return iter_markdown_files(root)
 
 
+def _package_version(repo_root: Path) -> str | None:
+    """Return the repository package version without adding a TOML dependency."""
+    pyproject = repo_root / "pyproject.toml"
+    if not pyproject.is_file():
+        return None
+    for raw in pyproject.read_text(encoding="utf-8").splitlines():
+        match = _PACKAGE_VERSION_RE.match(raw.strip())
+        if match:
+            return match.group(1)
+    return None
+
+
+def _is_integration_guide(rel: Path) -> bool:
+    return rel.parts[:2] == ("docs", "integrations")
+
+
 def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     issues: list[Issue] = []
     text = path.read_text(encoding="utf-8")
@@ -64,11 +83,18 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
         )
 
     # - Metadata: important docs should start with YAML front matter metadata.
-    #   - `SKILL.md` and `skills/**.md` only. `templates/` is internal-only and
-    #     is not subject to the skill packaging contract.
-    if rel.as_posix() == "SKILL.md" or (rel.parts and rel.parts[0] == "skills"):
+    #   - `SKILL.md` and `skills/**.md` require the shipped skill contract.
+    #   - `docs/integrations/**.md` declares its canonical doctrine source and
+    #     exact package compatibility so release drift is checked locally.
+    is_skill_document = rel.as_posix() == "SKILL.md" or (
+        rel.parts and rel.parts[0] == "skills"
+    )
+    is_integration_guide = _is_integration_guide(rel)
+    if is_skill_document or is_integration_guide:
         meta = parse_yaml_front_matter(lines[:50])
-        if not meta or not meta.get("name") or not meta.get("description"):
+        if is_skill_document and (
+            not meta or not meta.get("name") or not meta.get("description")
+        ):
             issues.append(
                 Issue(
                     path,
@@ -76,6 +102,35 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     "Missing YAML front matter metadata (--- name: ... description: ... ---)",
                 )
             )
+        if is_integration_guide:
+            for key in _INTEGRATION_METADATA:
+                if not meta or not meta.get(key):
+                    issues.append(
+                        Issue(path, 1, f"Missing integration metadata: {key}")
+                    )
+            if meta and meta.get("doctrine_source") != _INTEGRATION_DOCTRINE_SOURCE:
+                issues.append(
+                    Issue(
+                        path,
+                        1,
+                        "Integration doctrine_source must be AGENTS.md",
+                    )
+                )
+            expected_version = _package_version(repo_root)
+            actual_version = meta.get("soulmap_version") if meta else None
+            if (
+                expected_version
+                and actual_version
+                and actual_version != expected_version
+            ):
+                issues.append(
+                    Issue(
+                        path,
+                        1,
+                        "Integration soulmap_version must match pyproject.toml "
+                        f"version (expected {expected_version}, got {actual_version})",
+                    )
+                )
 
     # 0) Portability: disallow typography characters that can confuse tools or break diffs.
     for i, raw in enumerate(lines, start=1):
