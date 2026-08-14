@@ -5,6 +5,19 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.8.0 (2026-08-14)
+
+### Feat
+
+- route the 5 unrouted spiritual frameworks + close two docs gaps
+
+### Fix
+
+- **knowledge**: align runtime framework targets
+- **synthesis**: include current message in analysis
+- fix error package from `uv.lock`
+- fix error version from `uv.lock`
+
 ## v0.7.0 (2026-07-25)
 
 ### Feat
