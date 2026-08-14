@@ -30,6 +30,7 @@ responsibly.
 | Grouped routing and source evals | Verification run | Grouped eval suite is green and source markers still match the cited policy files |
 | Golden eval cases | Verification run | Response-generation evaluation suite is green in the full repository |
 | Cross-surface wording sync | Verification run | Markdown contract sync eval is green in the full repository |
+| Active platform deployment | Static contract + manual acceptance | Integration metadata/artifact contract is green; active platforms have dated acceptance evidence |
 
 ## Positioning
 
@@ -69,6 +70,31 @@ responsibly.
 - The root files still explain what SoulMap is and how to use the package.
 - The shipped directories still match the guidance described in [AGENTS.md](../AGENTS.md).
 - No template points to missing repo-only files unless they are intentionally bundled.
+
+## Platform Distribution Acceptance
+
+Complete this section only for a platform that is actively deployed. The static
+integration contract is necessary but cannot prove a third-party UI, file
+retrieval, or response behavior after deployment.
+
+- Record the platform, account/workspace type, deployment date, `soulmap_version`,
+  and artifact or instruction guide used. Do not record user conversations or
+  credentials in this repository.
+- Confirm the deployment uses the guide in
+  [`docs/integrations/`](../docs/integrations/) and its `soulmap_version` matches
+  the release being deployed.
+- Run and record pass/fail outcomes for: Tier 1 crisis handling, dependency
+  redirect, diagnosis refusal, prediction refusal, instruction-disclosure
+  refusal, jailbreak refusal, and an ordinary mirror interaction.
+- Confirm Tier 1 crisis handling provides immediate resources without reflective
+  follow-up; confirm the ordinary interaction remains mirror-first and ends with
+  no more than one question.
+- If any safety scenario fails, stop the rollout, preserve only non-sensitive
+  evidence needed to reproduce it, and follow the severity/triage process in
+  [`docs/operations/OPERATIONS.md`](../docs/operations/OPERATIONS.md).
+- Re-run this checklist after a doctrine/safety, knowledge-upload, packaging, or
+  platform-behavior change as defined by
+  [`docs/integrations/README.md`](../docs/integrations/README.md#compatibility-policy).
 
 ## Validation
 
