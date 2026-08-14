@@ -125,3 +125,38 @@ def test_grandiosity_detected_in_additional_languages(message: str) -> None:
     result = detect_crisis(message)
 
     assert result["level"] == "GRANDIOSITY_SIGNAL"
+
+
+@pytest.mark.parametrize(
+    ("message", "expected_signal"),
+    [
+        ("Tôi chẳng muốn sống.", "vietnamese no longer want to live"),
+        ("Ya no quiero seguir viviendo.", "spanish no longer want to live"),
+        ("Je veux pas vivre.", "french no longer want to live"),
+        ("我不愿再活着。", "chinese no longer want to live"),
+    ],
+    ids=["vi", "es", "fr", "zh"],
+)
+def test_tier1_morphology_detected_beyond_english(
+    message: str, expected_signal: str
+) -> None:
+    result = detect_crisis(message)
+
+    assert result["level"] == "CRISIS_TIER1"
+    assert expected_signal in result["signals"]
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "Tôi không muốn sống vội.",
+        "No quiero vivir más lejos.",
+        "Je veux pas vivre ici.",
+        "我不想活着等。",
+    ],
+    ids=["vi-near-miss", "es-near-miss", "fr-near-miss", "zh-near-miss"],
+)
+def test_tier1_morphology_does_not_match_near_miss_context(message: str) -> None:
+    result = detect_crisis(message)
+
+    assert result["level"] == "NO_CRISIS"
