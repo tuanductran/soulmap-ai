@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import cast
 
+import pytest
+
 from soulmap.runtime.guards.response_safety_contract import (
     check_response_safety_contract,
 )
@@ -129,3 +131,58 @@ def test_dependency_reinforcement_reuses_resource_sanitizer_phrases() -> None:
 
     dependency_patterns = dict(_CATEGORY_PATTERNS)["dependency_reinforcement"]
     assert dependency_patterns == tuple(BANNED_DEPENDENCY_PHRASES)
+
+
+@pytest.mark.parametrize(
+    ("response", "expected_category"),
+    [
+        ("I would diagnose you with depression.", "diagnosis"),
+        ("Your future is already set.", "prediction_as_fact"),
+        ("As your teacher, I know the truth.", "guru_positioning"),
+        ("There can be no doubt about your path.", "excessive_certainty"),
+        ("Do not question my guidance.", "loss_of_independence"),
+        ("You only need me to understand this.", "dependency_reinforcement"),
+    ],
+    ids=[
+        "diagnosis",
+        "prediction",
+        "guru",
+        "certainty",
+        "independence",
+        "dependency",
+    ],
+)
+def test_additional_explicit_safety_contract_phrasings_are_detected(
+    response: str, expected_category: str
+) -> None:
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert expected_category in cast(list[str], result["categories"])
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        "I cannot diagnose you from one conversation.",
+        "Your future is not set, and you retain choices.",
+        "A teacher can support reflection without deciding your path.",
+        "There may still be doubt, and that is human.",
+        "Please question any guidance, including mine.",
+        "You may need support beyond this conversation.",
+    ],
+    ids=[
+        "diagnosis-boundary",
+        "future-agency",
+        "teacher-context",
+        "certainty-hedge",
+        "guidance-agency",
+        "support-boundary",
+    ],
+)
+def test_additional_safety_contract_patterns_preserve_near_miss_context(
+    response: str,
+) -> None:
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"

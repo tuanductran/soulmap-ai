@@ -37,3 +37,4 @@ Number ADRs sequentially, zero-padded to four digits:
 | ADR | Title | Status |
 | --- | --- | --- |
 | [0001](0001-layered-crisis-detection.md) | Layered Crisis Detection as Intentional Defense-in-Depth | Accepted |
+| [0002](0002-deterministic-response-safety-enforcement.md) | Deterministic Response Safety Enforcement | Accepted |

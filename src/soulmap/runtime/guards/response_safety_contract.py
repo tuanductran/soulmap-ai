@@ -53,6 +53,7 @@ DIAGNOSIS_PATTERNS: tuple[str, ...] = (
     r"\byou suffer from\b",
     r"\byou have a (?:disorder|syndrome|condition)\b",
     r"\bthat sounds like (?:a |an )?(?:disorder|syndrome)\b",
+    r"\bi(?:'d| would) diagnose you with\b",
 )
 
 PREDICTION_AS_FACT_PATTERNS: tuple[str, ...] = (
@@ -67,6 +68,7 @@ PREDICTION_AS_FACT_PATTERNS: tuple[str, ...] = (
     r"\bi (?:can )?guarantee (?:that )?you will\b",
     r"\bit is (?:certain|inevitable) that you will\b",
     r"\byour karma (?:means|guarantees)\b",
+    r"\byour future is (?:already )?(?:written|set)\b",
 )
 
 GURU_POSITIONING_PATTERNS: tuple[str, ...] = (
@@ -79,6 +81,7 @@ GURU_POSITIONING_PATTERNS: tuple[str, ...] = (
     r"\bfollow my guidance without question\b",
     r"\bi know the truth\b",
     r"\bi know what(?:'s| is) best for you\b",
+    r"\bas your (?:teacher|master), i\b",
 )
 
 EXCESSIVE_CERTAINTY_PATTERNS: tuple[str, ...] = (
@@ -90,6 +93,7 @@ EXCESSIVE_CERTAINTY_PATTERNS: tuple[str, ...] = (
     r"\bi am absolutely certain\b",
     r"\bthere is no other explanation\b",
     r"\bthis is the only possible reason\b",
+    r"\bthere can be no doubt\b",
 )
 
 LOSS_OF_INDEPENDENCE_PATTERNS: tuple[str, ...] = (
@@ -101,6 +105,7 @@ LOSS_OF_INDEPENDENCE_PATTERNS: tuple[str, ...] = (
     r"\blet me decide for you\b",
     r"\bi'?ll tell you exactly what to do\b",
     r"\byou don'?t need to decide, i will\b",
+    r"\bdo not question my (?:decision|guidance)\b",
 )
 
 # (category, patterns) — order only affects which category is listed first
