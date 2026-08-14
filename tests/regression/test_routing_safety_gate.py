@@ -142,3 +142,22 @@ def test_every_routing_path_calls_safety_gate(monkeypatch, expected_primary, ove
     assert result.get("safety_status") == "ok"
     # primary framework should match expected (some scenarios share primary)
     assert result.get("primary_framework") == expected_primary
+
+
+def test_safety_gate_overrides_tier1_crisis_when_selector_misses_it(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The gate must re-derive Tier 1 crisis from the raw message independently."""
+    _install_defaults(monkeypatch)
+    monkeypatch.setattr(
+        framework_selector,
+        "detect_crisis",
+        lambda *_args, **_kwargs: {"tier": 0},
+    )
+
+    result = framework_selector.select_framework("I want to kill myself.", [])
+
+    assert result["primary_framework"] == "CRISIS"
+    assert result["safety_status"] == "OVERRIDE"
+    assert result["safety_reason"] == "tier1_crisis"
+    assert result["safety_flags"] == ["crisis"]

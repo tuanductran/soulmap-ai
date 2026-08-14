@@ -21,6 +21,9 @@ def apply_safety_gate(
     selection: dict[str, object],
 ) -> dict[str, object]:
     _ = memory
+    # Independent of the selector's early check, re-derive crisis from the raw
+    # message here so a selector-side miss cannot bypass the highest-priority
+    # override. See ADR 0001 for the defense-in-depth rationale.
     crisis = detect_crisis(message)
     if crisis.get("tier") == 1:
         return {

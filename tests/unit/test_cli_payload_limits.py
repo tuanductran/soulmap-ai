@@ -10,10 +10,13 @@ from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     read_stdin_json_value,
+    require_dict_field,
+    require_list_field,
     require_message_history_fields,
     require_message_history_memory_fields,
     require_message_history_memory_selection_fields,
     require_non_empty_str_field,
+    require_str_field,
 )
 
 
@@ -114,3 +117,33 @@ def test_require_message_history_memory_selection_fields_returns_gate_payload() 
         {"stage": 1},
         {"primary_framework": "MIRROR"},
     )
+
+
+def test_parse_json_helpers_reject_empty_invalid_and_scalar_payloads() -> None:
+    with pytest.raises(ValueError, match="No input provided"):
+        parse_json_object("")
+    with pytest.raises(ValueError, match="JSON parse error"):
+        parse_json_object("{")
+    with pytest.raises(ValueError, match="Input must be a JSON object"):
+        parse_json_object("[]")
+    with pytest.raises(ValueError, match="JSON parse error"):
+        parse_json_value("{")
+    with pytest.raises(ValueError, match="Input must be a JSON object or array"):
+        parse_json_value("true")
+
+
+def test_require_field_helpers_reject_wrong_runtime_types() -> None:
+    with pytest.raises(ValueError, match="Field 'message' must be a string"):
+        require_str_field({"message": 1}, "message")
+    with pytest.raises(ValueError, match="Field 'history' must be a list"):
+        require_list_field({"history": "not-a-list"}, "history")
+    with pytest.raises(ValueError, match="Field 'memory' must be a JSON object"):
+        require_dict_field({"memory": []}, "memory")
+
+
+def test_print_json_error_preserves_unicode_for_string_input(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    print_json_error("đầu vào không hợp lệ", ensure_ascii=False)
+
+    assert capsys.readouterr().out.strip() == '{"error": "đầu vào không hợp lệ"}'

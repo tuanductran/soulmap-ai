@@ -350,7 +350,10 @@ Completed:
   `select_framework_async` primary-framework path reaches `_apply_safety_gate`.
   The matrix includes the five spiritual framework routes introduced in v0.8.0
   (`dark_night`, `soul_nourishment`, `divine_guidance`, `sacred_polarity`, and
-  `spiritual_purpose`) as well as the existing safety and mirror paths.
+  `spiritual_purpose`) as well as the existing safety and mirror paths. A
+  selector-miss regression also forces the selector's local crisis detector to
+  miss a real Tier 1 message, proving the gate independently re-derives and
+  overrides it to `CRISIS`.
 * `CRISIS_TIER1_PATTERNS` now covers reviewed sentence-level morphology beyond
   English for Vietnamese, Spanish, French, and Simplified Chinese, with
   positive and near-miss regression cases. Literal per-language phrase packs

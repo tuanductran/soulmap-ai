@@ -294,15 +294,14 @@ not produced by, any of the following:
 - Adding a shared cache or memoization between the two call sites.
 - Introducing a new safety layer beyond the five described here.
 
-The one concrete, currently-unimplemented gap this ADR inherits from the
+The regression gap inherited from the
 [#134 review's recommendation](../crisis-detection-layering-review.md#recommendation)
-is a possible future regression test that would exercise
-`select_framework_async` end-to-end with a constructed scenario where the
-selector's own crisis short-circuit is bypassed, to mechanically prove the
-gate still catches it through the full pipeline rather than only when
-`apply_safety_gate` is called in isolation. That test is not implemented by
-this ADR and belongs in a separate issue, consistent with the review's own
-"Future work" section.
+is covered by `tests/regression/test_routing_safety_gate.py`. Its
+`test_safety_gate_overrides_tier1_crisis_when_selector_misses_it` scenario
+forces the selector's locally imported `detect_crisis()` to return Tier 0 for
+a real Tier 1 message. The gate retains its separate detector import, so the
+test proves it independently re-derives the raw message and overrides the
+selector result to `CRISIS` through the full pipeline.
 
 ## Future Maintenance Guidance
 
@@ -310,10 +309,11 @@ this ADR and belongs in a separate issue, consistent with the review's own
   new ADR that supersedes this one and re-evaluating the defense-in-depth
   argument above.
 - **When adding a new return branch to `framework_selector.py`**, verify it
-  still calls `apply_safety_gate` before returning. This "every branch
-  reaches the gate" property, not a test today, is what the defense-in-depth
-  argument depends on; re-verify it against the source whenever the
-  selector's branching changes, per
+  still calls `apply_safety_gate` before returning. The parametrized routing
+  regression in `tests/regression/test_routing_safety_gate.py` protects the
+  current branch set, and the selector-miss scenario proves the gate's
+  independent crisis override. Extend those tests whenever selector branching
+  changes, per
   [`safety-architecture.md`'s ordering notes](../safety-architecture.md#request-flow-end-to-end).
 - **When changing `detect_crisis()`'s signature or return contract**,
   update both call sites together; they must continue to share one

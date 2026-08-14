@@ -24,9 +24,11 @@ def test_paralysis_signal_is_detected() -> None:
 
 
 def test_general_perfectionism_signal_is_detected_as_secondary() -> None:
-    result = detect_perfectionism_paralysis("Nothing is ever good enough for me.")
+    result = detect_perfectionism_paralysis("People never meet my standards.")
 
     assert result["perfectionism_paralysis_detected"] is True
+    signals = cast(list[str], result["signals"])
+    assert signals == ["perfectionism: 'people never meet my standards.'"]
 
 
 def test_paralysis_signal_takes_priority_over_general_signal() -> None:
@@ -86,3 +88,14 @@ def test_recommendation_present_when_detected() -> None:
 
     assert result["perfectionism_paralysis_detected"] is True
     assert result["recommendation"]
+
+
+def test_neutral_history_does_not_add_persistence_signal() -> None:
+    history = [{"role": "user", "content": "I took a walk this morning."}]
+
+    result = detect_perfectionism_paralysis("It's never ready, honestly.", history)
+
+    assert result["perfectionism_paralysis_detected"] is True
+    assert result["score"] == 3
+    signals = cast(list[str], result["signals"])
+    assert "pattern_persistence_in_history" not in signals

@@ -727,8 +727,8 @@ copy it into a `docs/` file. Duplication creates drift.
 ## Non-goals
 
 The following are explicitly outside SoulMap's current scope. They are not
-limitations that will be addressed in v0.6.x. Future work may revisit some of
-them, but no implementation plan exists for any of them at this time.
+planned for the current release train. Future work may revisit some of them,
+but no implementation plan exists for any of them at this time.
 
 | Non-goal | Why it is not a goal |
 | --- | --- |

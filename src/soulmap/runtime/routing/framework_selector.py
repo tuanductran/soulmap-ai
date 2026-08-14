@@ -152,6 +152,9 @@ async def select_framework_async(
     }
     debug_events: list[dict] | None = [] if debug_enabled else None
 
+    # This is the routing short-circuit checkpoint. response_safety_gate.py
+    # deliberately re-derives crisis from the raw message before delivery;
+    # see ADR 0001 for the defense-in-depth rationale.
     crisis = await _run_detector_async(
         "crisis_detector",
         detect_crisis,
