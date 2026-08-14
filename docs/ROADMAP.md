@@ -390,16 +390,22 @@ Completed foundation:
   source and the exact compatible package version in front matter. The Markdown
   contract validates both fields against repository truth, so release drift in
   any of the Claude, ChatGPT, Gemini, or Poe guides fails local CI.
+* Static integration contracts verify core identity/safety anchors in each
+  platform instruction surface and ensure every archive file referenced by the
+  deployment upload lists actually ships in the standard distribution artifact.
+* The integration index defines compatibility actions by change type, while the
+  internal launch checklist records non-sensitive, dated manual acceptance
+  evidence for any platform that is actively deployed. Repository tests do not
+  claim to prove third-party deployment behavior.
 
 Not yet done:
 
 * Additional platform adapters beyond the current Claude-first flow, referenced
   as allowed-but-optional in
   [`docs/engineering/maintenance-boundary.md`](../docs/engineering/maintenance-boundary.md)
-* Deeper integration testing across the four currently documented platforms
-  (Claude, ChatGPT, Gemini, Poe) beyond manual deployment guides
-* A documented compatibility policy for platform behavior changes beyond the
-  exact package/doctrine metadata contract now enforced in CI
+* Live integration testing across the four currently documented platforms
+  (Claude, ChatGPT, Gemini, Poe), which requires an active deployment and
+  operator-recorded manual acceptance evidence
 
 ---
 

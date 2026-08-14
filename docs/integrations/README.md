@@ -133,6 +133,21 @@ Copy from [poe-system-prompt.md](poe-system-prompt.md) under
 
 Set visibility to **Public** to allow discovery.
 
+## Compatibility policy
+
+Treat `AGENTS.md` as the canonical doctrine and `soulmap_version` front matter
+as the exact package compatibility marker. The Markdown contract checks both;
+this policy defines the required human review after a change passes that static
+check.
+
+| Change type | Required platform action |
+| --- | --- |
+| Editorial patch with no behavior, safety, upload-set, or platform-step change | Review the affected guide only; no platform redeploy is required. |
+| Doctrine, safety, framework-priority, routing, or response-boundary change | Review every guide, rebuild artifacts, update all active platform deployments, and complete the manual acceptance checklist. |
+| Knowledge upload-set or packaging-boundary change | Review the ChatGPT and Gemini upload lists, verify referenced files are in the standard archive, and re-upload changed knowledge to active deployments. |
+| Platform UI, limit, or supported-file-type change | Update the affected guide, record the operational verification date, and complete the manual acceptance checklist on that platform. |
+| Unsupported or behaviorally incompatible platform | Mark the deployment flow unsupported rather than weakening doctrine or claiming compatibility without evidence. |
+
 ## Updating across platforms
 
 When a new SoulMap release ships:
