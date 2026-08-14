@@ -84,6 +84,5 @@ MODERATE_DEPENDENCY_THRESHOLD = 1
 
 # Crisis-tier and grandiosity signals moved to per-language packs
 # (safety_en.py, safety_vi.py, safety_es.py, safety_fr.py, safety_zh.py) and
-# are combined in safety_languages.py. Import CRISIS_TIER1, CRISIS_TIER2, and
-# GRANDIOSITY_SIGNALS from soulmap.runtime.config, which re-exports the
-# combined multilingual tuples from safety_languages.py.
+# are combined in soulmap.runtime.knowledge.crisis_language_packs. Import
+# CRISIS_TIER1, CRISIS_TIER2, and GRANDIOSITY_SIGNALS from that module.

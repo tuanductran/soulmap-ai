@@ -417,8 +417,11 @@ def synthesize(
         Dict with: themes, synthesis_ready (bool), synthesis_frame (str),
                    is_longitudinal (bool), recommendation (str)
     """
+    analysis_history = [*history, {"role": "user", "content": message}]
     user_count = sum(
-        1 for m in history if isinstance(m, dict) and m.get("role") == "user"
+        1
+        for item in analysis_history
+        if isinstance(item, dict) and item.get("role") == "user"
     )
 
     if user_count < 6:
@@ -432,7 +435,7 @@ def synthesize(
             ),
         }
 
-    themes: ExtractedThemes = extract_themes(history)
+    themes: ExtractedThemes = extract_themes(analysis_history)
 
     if memory:
         themes = merge_memory_themes(themes, memory)

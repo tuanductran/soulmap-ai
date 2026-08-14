@@ -116,7 +116,7 @@ def test_should_synthesize_covers_explicit_natural_threshold_and_no_trigger() ->
 
 
 def test_synthesize_returns_insufficient_data_and_theme_outcomes() -> None:
-    insufficient_data = synthesizer.synthesize("pattern?", _user_messages(["one"] * 5))
+    insufficient_data = synthesizer.synthesize("pattern?", _user_messages(["one"] * 4))
     insufficient_themes = synthesizer.synthesize(
         "pattern?", _user_messages(["plain"] * 6)
     )
@@ -125,6 +125,30 @@ def test_synthesize_returns_insufficient_data_and_theme_outcomes() -> None:
     assert insufficient_data["reason"] == "insufficient_data"
     assert insufficient_themes["synthesis_ready"] is False
     assert insufficient_themes["reason"] == "insufficient_recurring_themes"
+
+
+def test_synthesize_includes_current_message_with_prior_history() -> None:
+    history = _user_messages(
+        [
+            "I feel lonely.",
+            "My own path matters.",
+            "I am thinking it through.",
+            "I am taking it slowly.",
+            "I want to stay with this.",
+        ]
+    )
+
+    result = synthesizer.synthesize(
+        "I feel isolated, and I need my own path.",
+        history,
+    )
+
+    assert result["synthesis_ready"] is True
+    themes = cast(dict[str, object], result["themes"])
+    assert themes["emotional"] == [
+        {"theme": "loneliness", "score": 2, "anchors": [0, 5]}
+    ]
+    assert themes["values"] == [{"theme": "autonomy", "score": 2, "anchors": [1, 5]}]
 
 
 def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
