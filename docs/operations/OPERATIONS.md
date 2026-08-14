@@ -48,6 +48,7 @@ Before shipping prompt, framework, detector, or policy updates:
 ```bash
 uv run soulmap eval-groups
 uv run soulmap eval-responses
+uv run soulmap markdown-contract --root .
 uv run python tests/eval_regression/test_safety_evals.py
 uv run soulmap build
 uv run soulmap build --skill
@@ -59,10 +60,16 @@ Review these before approving release behavior:
 - [`../engineering/repo-contract.md`](../engineering/repo-contract.md)
 - [`../engineering/safety-enforcement-matrix.md`](../engineering/safety-enforcement-matrix.md)
 - [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
+- [`../integrations/README.md`](../integrations/README.md#compatibility-policy) when a change affects an active platform deployment
 
 Keep `uv run python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team
 harness. It is intentionally script-driven and does not replace the main `pytest`
 suite.
+
+For an active platform deployment, record the manual acceptance evidence required
+by the launch-readiness checklist after the static contract is green. Do not treat
+passing repository tests as evidence that a third-party platform deployed or
+retrieved the guides correctly.
 
 If Markdown structure or packaging rules changed, also run:
 
