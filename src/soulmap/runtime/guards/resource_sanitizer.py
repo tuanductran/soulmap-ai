@@ -30,6 +30,7 @@ BANNED_DEPENDENCY_PHRASES = [
     r"\byour soulmate ai\b",
     r"\brelationship status\b",
     r"\bmore than just an ai\b",
+    r"\byou only need me\b",
 ]
 
 

@@ -342,7 +342,7 @@ Completed:
 
 ---
 
-### Phase 10 - Routing Safety & Multilingual Morphology (post-v0.8.0, in progress)
+### Phase 10 - Deterministic Response-Safety Governance (post-v0.8.0, complete)
 
 Completed:
 
@@ -355,18 +355,27 @@ Completed:
   English for Vietnamese, Spanish, French, and Simplified Chinese, with
   positive and near-miss regression cases. Literal per-language phrase packs
   remain the primary source of truth.
+* ADR 0002 records the decision to keep response-safety enforcement and its CI
+  regression gate deterministic. Semantic or LLM classification is not added
+  to runtime enforcement, safety gating, or CI; any future reversal requires a
+  superseding ADR with explicit fallback, privacy, reproducibility, cost, and
+  rollback evidence.
+* The safety-enforcement matrix now records sentence-level multilingual
+  morphology and the approved deterministic boundary for the response-safety
+  contract.
 
-Still open:
+Ongoing maintenance:
 
-* Evaluate semantic-level validation for `response_safety_contract.py` beyond
-  literal regex/substring matching, per Issue #132's stated future work. This
-  remains contingent on whether an LLM dependency is judged acceptable despite
-  the "no LLM in safety enforcement" non-goal below.
+* Add a narrowly scoped deterministic pattern only for a human-reviewed,
+  documented phrasing gap, with positive regression and a relevant near-miss
+  where feasible.
+* Keep the safety-enforcement matrix and ADR references synchronized whenever
+  the response-safety categories or enforcement architecture change.
 
-Phase 10 deliberately remains narrow: deterministic safety evidence and
+Phase 10 deliberately stays narrow: deterministic safety evidence and
 maintenance only. SoulMap's [`known-limitations.md`](../docs/engineering/known-limitations.md)
-continues to treat adjacent platform and model-based ideas as explicit non-goals
-unless a new ADR revisits them.
+continues to treat model-based safety enforcement as an explicit non-goal unless
+a superseding ADR revisits it.
 
 ---
 
@@ -482,7 +491,7 @@ GitHub Release + git tag
 ```
 
 Version history: `v0.1.0` → `v0.2.0` → `v0.3.0` → `v0.4.0` → `v0.4.1` →
-`v0.5.0` → `v0.5.1` → `v0.6.0` → `v0.7.0` (current).
+`v0.5.0` → `v0.5.1` → `v0.6.0` → `v0.7.0` → `v0.8.0` (current).
 
 ---
 
@@ -505,10 +514,10 @@ these are not planned unless a new ADR revisits them:
 
 ### Open, tracked future work
 
-* Multilingual `CRISIS_TIER1_PATTERNS` regex morphological variants
-* End-to-end regression proof that every `select_framework_async` branch
-  reaches `_apply_safety_gate`
-* `runtime/guards/` and `devtools/` unit test coverage expansion
+* Maintain human-reviewed deterministic regression evidence for newly
+  observed response-safety phrasing gaps
+* Decide whether thin `devtools/cli/` wrappers need direct unit coverage or
+  remain covered through canonical CLI and integration checks
 * Platform adapters beyond the current Claude-first flow
 
 ---
