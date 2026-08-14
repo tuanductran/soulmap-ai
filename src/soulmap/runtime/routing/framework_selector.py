@@ -256,7 +256,7 @@ async def select_framework_async(
             "mode": "SANCTUARY",
             "context": {"intensity": intensity, "crisis": crisis},
             "instruction": (
-                "SANCTUARY MODE. Activate emotional_deescalation.md 3-step "
+                "SANCTUARY MODE. Activate emotional-deescalation.md 3-step "
                 "protocol: acknowledge → ground → normalize. NO 5-step framework. "
                 "NO inquiry question. 2-4 sentences maximum. Wait for user."
             ),
@@ -507,7 +507,7 @@ async def select_framework_async(
             "mode": "SANCTUARY",
             "context": res["grief"],
             "instruction": (
-                "Activate grief_companion.md. Presence first  -  witness the loss "
+                "Activate grief-companion.md. Presence first  -  witness the loss "
                 "before any reflection. End with one grief-specific question."
             ),
             "blocked": ["direction", "shadow", "existential", "synthesis"],
@@ -527,7 +527,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["existential"],
             "instruction": (
-                "Activate existential_companion.md. Territory: "
+                "Activate existential-companion.md. Territory: "
                 f"{res['existential'].get('territory', 'general')}. Hold space. "
                 "Do not resolve. End with one question that goes deeper."
             ),
@@ -547,7 +547,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["conflict"],
             "instruction": (
-                "Activate inner_parts.md. Name 1-2 parts with hidden intention. "
+                "Activate inner-parts.md. Name 1-2 parts with hidden intention. "
                 "Do not take sides. End with one parts-specific question."
             ),
             "blocked": ["direction", "shadow"],
@@ -568,7 +568,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["direction"],
             "instruction": (
-                "Activate life_direction.md. Presentation: "
+                "Activate life-direction.md. Presentation: "
                 f"{res['direction'].get('presentation', 'lost')}. Explore values "
                 "NOT options. End with direction-specific question."
             ),
@@ -614,7 +614,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["shadow"],
             "instruction": (
-                "Activate shadow_patterns.md. Frame as possibility ONLY. Return "
+                "Activate shadow-patterns.md. Frame as possibility ONLY. Return "
                 "ownership. End with shadow-specific question."
             ),
             "blocked": [],
@@ -760,7 +760,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["insight"],
             "instruction": (
-                "Activate meaning_integration.md. Hold the insight first. Do NOT "
+                "Activate meaning-integration.md. Hold the insight first. Do NOT "
                 "prescribe change. End with conscious-noticing question."
             ),
             "blocked": [],
@@ -779,7 +779,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["synthesis"],
             "instruction": (
-                "Activate conversation_synthesis.md. Name 2-3 themes max. Return "
+                "Activate conversation-synthesis.md. Name 2-3 themes max. Return "
                 "ownership. End with synthesis question."
             ),
             "blocked": [],
@@ -796,7 +796,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": pattern,
             "instruction": (
-                "Activate pattern_mapper.md. Pattern: "
+                "Activate pattern-mapper.md. Pattern: "
                 f"{pattern.get('primary_pattern')}. Reflect hidden intention. End "
                 "with pattern-specific question."
             ),

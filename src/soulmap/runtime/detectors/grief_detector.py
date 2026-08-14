@@ -99,7 +99,7 @@ def detect_grief(
         "score": score,
         "signals": signals,
         "recommendation": (
-            f"Activate grief_companion.md. Type: {grief_type}. "
+            f"Activate grief-companion.md. Type: {grief_type}. "
             f"{type_guidance.get(grief_type or '', '')} "
             "Retrieve grief questions from deep-inquiry-bank.md  -  'Grief Questions' section."
         ),
