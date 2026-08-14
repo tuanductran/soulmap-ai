@@ -291,7 +291,7 @@ Not yet done (tracked, see [Future Direction](#future-direction)):
 
 ---
 
-### Phase 8 - Test Coverage Hardening (in progress)
+### Phase 8 - Test Coverage Hardening (completed for core and tooling targets)
 
 Completed:
 
@@ -301,17 +301,24 @@ Completed:
   `pattern`, `emotional_intensity`) raised from a 52-79% range to 89-100%
   (97% overall for `runtime/detectors/`), with every phrase sourced verbatim
   from the corresponding Markdown framework file
+* Focused coverage for all response-output guards: `markdown_contract.py` at
+  96%, and `response_contract.py`, `resource_sanitizer.py`,
+  `response_safety_contract.py`, and `response_safety_gate.py` at 100%
+* Focused coverage for `runtime/synthesis/conversation_synthesizer.py` at
+  100%, including recurring-theme scoring, longitudinal memory, trigger
+  thresholds, and user-ownership framing
+* Focused coverage for audit, eval, packaging, Markdown support, checker, and
+  quality tooling, including `audit-knowledge` (99%), `eval_groups` (98%),
+  `eval_responses` (99%), `build_skill` (97%), `check_markdown_case` (98%),
+  and `quality/lint` (100%)
 
-Not yet done:
+The core and tooling coverage target is complete. Focused tests now cover
+POSIX/Windows tooling-lock behavior and deterministic HTTP response, fallback,
+and transport-error paths in the Markdown link checker.
 
-* Unit test coverage for `runtime/guards/` (response contract, resource
-  sanitizer, Markdown contract) - currently 7-86%, the layer closest to final
-  output safety
-* Unit test coverage for `devtools/` (audit-knowledge, eval_groups,
-  eval_responses, build_skill) - currently 7-30%, functionally verified only
-  through direct CLI invocation, not pytest-level unit tests
-* Unit test coverage for `runtime/synthesis/conversation_synthesizer.py`
-  (currently 74%)
+A deliberately low-priority follow-up remains: decide whether thin
+`devtools/cli/` entry-point wrappers need direct unit coverage or should remain
+verified through the canonical `soulmap` CLI and integration checks.
 
 ---
 
