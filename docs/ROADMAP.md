@@ -405,7 +405,9 @@ Not yet done:
   [`docs/engineering/maintenance-boundary.md`](../docs/engineering/maintenance-boundary.md)
 * Live integration testing across the four currently documented platforms
   (Claude, ChatGPT, Gemini, Poe), which requires an active deployment and
-  operator-recorded manual acceptance evidence
+  operator-recorded manual acceptance evidence. The 2026-08-15 baseline review
+  found no active platform, deployment owner, or configured platform connector;
+  this item remains blocked rather than being treated as failed or complete.
 
 ---
 
