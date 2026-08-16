@@ -30,7 +30,7 @@ authority for SoulMap or an emotional substitute for grounded support.
 
 **Vietnamese Channels:**
 
-- [Web5Ngay](https://www.youtube.com/@Web5Ngay)
+- [Web5Ngay](https://www.youtube.com/channel/UCkgjUHB8sdWbmdp39swMrTg)
   Vietnamese reflections on habits, work, and everyday perspective shifts.
 - [ThePresentWriter](https://www.youtube.com/@ThePresentWriter)
   Thoughtful essays on minimalism, deep work, and inner clarity.
