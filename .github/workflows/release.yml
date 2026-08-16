@@ -29,9 +29,14 @@ jobs:
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
 
-      - name: Verify repo (lint + tests)
+      - name: Verify repository contracts and tests
         run: |
-          uv run soulmap lint
+          uv run soulmap markdown-contract --root .
+          uv run soulmap check-links --root .
+          uv run soulmap check-case --root .
+          uv run soulmap audit-knowledge
+          uv run soulmap lint --skip-tests
+          uv run soulmap test -n auto -q
           uv run soulmap eval-groups
           uv run python tests/eval_regression/test_safety_evals.py
           uv run soulmap eval-responses
