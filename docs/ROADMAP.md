@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, current release v0.8.0
-> **Last updated:** 14 August 2026
+> **Last updated:** 16 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -408,6 +408,38 @@ Not yet done:
   operator-recorded manual acceptance evidence. The 2026-08-15 baseline review
   found no active platform, deployment owner, or configured platform connector;
   this item remains blocked rather than being treated as failed or complete.
+
+---
+
+### Phase 12 - Toolchain Support & Test Reproducibility (in progress)
+
+This track was identified after reviewing the locked development toolchain and official
+compatibility policies for Python 3.11. It is maintenance work, not a package migration
+or a new product surface.
+
+Completed foundation:
+
+* `docs/engineering/package-compatibility-research.md` records official compatibility,
+  lifecycle and operating-boundary findings for every direct development tool in the
+  v0.8.0 lock baseline.
+* `tests/contract/test_toolchain_support_contract.py` checks that the Python floor, CI
+  Python baseline, direct development packages, lockfile and research matrix do not
+  drift apart.
+* The policy records that pytest-xdist and pytest-randomly failures must preserve seed,
+  worker count, operating system, Python version and lock state before diagnosis, and
+  that pytest-timeout is a hang/deadlock signal rather than a performance benchmark.
+
+Remaining work:
+
+* Add a small CI diagnostic summary that exposes the pytest-randomly seed and worker
+  mode when a parallel test job fails, while retaining a serial `-n 0` reproduction path.
+* Record the latest tested Python 3.11 patch release and review lockfile refreshes
+  against upstream deprecations and security advisories.
+* Keep dependency updates grouped by purpose and require the full repository gate before
+  release; do not add a scanner or replace a package without a documented blocker.
+
+The track explicitly does not add a Python version expansion, a runtime dependency,
+semantic safety classification, or platform adapter.
 
 ---
 
