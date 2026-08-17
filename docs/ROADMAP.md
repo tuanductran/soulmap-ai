@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, current release v0.8.0
-> **Last updated:** 16 August 2026
+> **Last updated:** 17 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -366,6 +366,10 @@ Completed:
 * The safety-enforcement matrix now records sentence-level multilingual
   morphology and the approved deterministic boundary for the response-safety
   contract.
+* Reviewed Vietnamese input safety phrase packs now cover accented and
+  diacritic-stripped diagnosis, prediction, jailbreak, and system-extraction
+  requests, with deterministic regression fixtures and grouped-eval evidence.
+  This remains a narrow maintenance expansion, not semantic classification.
 
 Ongoing maintenance:
 
@@ -428,13 +432,18 @@ Completed foundation:
 * The policy records that pytest-xdist and pytest-randomly failures must preserve seed,
   worker count, operating system, Python version and lock state before diagnosis, and
   that pytest-timeout is a hang/deadlock signal rather than a performance benchmark.
+* `scripts/pytest_diagnostics.py` gives CI and release verification an explicit
+  pytest-randomly seed, records xdist worker mode and Python/OS context in the
+  GitHub step summary on failure, and prints a serial `-n 0` reproduction command.
+* The 2026-08-17 baseline review records Python 3.11.16, the latest official
+  3.11 security bugfix release at review time, in
+  `docs/engineering/package-compatibility-research.md` with the upstream release
+  evidence and security-review boundary.
 
 Remaining work:
 
-* Add a small CI diagnostic summary that exposes the pytest-randomly seed and worker
-  mode when a parallel test job fails, while retaining a serial `-n 0` reproduction path.
-* Record the latest tested Python 3.11 patch release and review lockfile refreshes
-  against upstream deprecations and security advisories.
+* Review future lockfile refreshes against upstream deprecations and security
+  advisories.
 * Keep dependency updates grouped by purpose and require the full repository gate before
   release; do not add a scanner or replace a package without a documented blocker.
 

@@ -1,6 +1,6 @@
 # Python 3.11 package compatibility research
 
-**Research date:** 2026-08-16
+**Research date:** 2026-08-17
 
 This note records official package evidence for the development toolchain used by SoulMap AI. It is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
@@ -26,6 +26,8 @@ This note records official package evidence for the development toolchain used b
 ## Locked baseline and support policy
 
 The v0.8.0 lock baseline uses Python `>=3.11` in `pyproject.toml` and CI installs Python 3.11. The sandbox used during this research runs Python 3.12.3, so local success is not a substitute for the CI Python 3.11 evidence.
+
+As of 2026-08-17, the latest official Python 3.11 source release is **Python 3.11.16**, released on 2026-08-12. Python.org classifies it as a security bugfix release for the legacy 3.11 series. The repository records this patch as the current CI review baseline without expanding the Python support floor or claiming that local Python 3.12 success substitutes for CI evidence. The release notes include security fixes affecting areas such as `ssl`, `webbrowser`, archive extraction, `ftplib`, `io.open_code`, HTTP handling, and XML parsing; future lockfile refresh reviews should check the same official release notes and the project's transitive package advisories. [15]
 
 The repository should retain a support floor of Python 3.11, test the latest available 3.11 patch release in CI, and treat the lockfile as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
 
@@ -57,3 +59,4 @@ This document does not introduce a new runtime dependency, package migration, Py
 [12]: https://pypi.org/project/vulture/ "Vulture on PyPI"
 [13]: https://hatch.pypa.io/latest/ "Hatch documentation"
 [14]: https://lefthook.dev/ "lefthook documentation"
+[15]: https://www.python.org/downloads/release/python-31116/ "Python 3.11.16 release notes"
