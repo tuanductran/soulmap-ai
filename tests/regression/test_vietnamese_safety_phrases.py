@@ -61,3 +61,18 @@ def test_vietnamese_safety_phrases_block_by_category(
     assert result["tier"] == "BLACKLIST_PROHIBITED"
     assert result["category"] == expected_category
     assert result["action"] == "DECLINE_AND_REDIRECT"
+
+
+_VIETNAMESE_SAFETY_NEAR_MISSES = (
+    "Điều gì sẽ xảy ra trong bộ phim này?",
+    "Tôi đọc hướng dẫn sử dụng cho thiết bị mới.",
+    "Tôi có bị kẹt xe trên đường về không?",
+    "Tôi đang đóng vai AI trong trò chơi.",
+)
+
+
+@pytest.mark.parametrize("message", _VIETNAMESE_SAFETY_NEAR_MISSES)
+def test_vietnamese_safety_phrases_avoid_broad_false_positives(message: str) -> None:
+    result = classify_message(message)
+
+    assert result["tier"] != "BLACKLIST_PROHIBITED"
