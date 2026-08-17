@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, current release v0.8.0
-> **Last updated:** 16 August 2026
+> **Last updated:** 17 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -366,6 +366,10 @@ Completed:
 * The safety-enforcement matrix now records sentence-level multilingual
   morphology and the approved deterministic boundary for the response-safety
   contract.
+* Reviewed Vietnamese input safety phrase packs now cover accented and
+  diacritic-stripped diagnosis, prediction, jailbreak, and system-extraction
+  requests, with deterministic regression fixtures and grouped-eval evidence.
+  This remains a narrow maintenance expansion, not semantic classification.
 
 Ongoing maintenance:
 
