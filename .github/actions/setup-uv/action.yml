@@ -43,9 +43,11 @@ runs:
         }
         New-Item -ItemType Directory -Force -Path $installDir | Out-Null
         $env:UV_UNMANAGED_INSTALL = $installDir
-        $installer = Invoke-WebRequest -UseBasicParsing `
-          -Uri "https://astral.sh/uv/$env:UV_VERSION/install.ps1"
-        & ([scriptblock]::Create($installer.Content))
+        $scriptPath = Join-Path $env:RUNNER_TEMP "uv-install.ps1"
+        Invoke-WebRequest -UseBasicParsing `
+          -Uri "https://astral.sh/uv/$env:UV_VERSION/install.ps1" `
+          -OutFile $scriptPath
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $scriptPath
         Add-Content -Path $env:GITHUB_PATH -Value $installDir
         Add-Content -Path $env:GITHUB_ENV -Value "UV_PYTHON=$env:UV_PYTHON_VERSION"
         & (Join-Path $installDir "uv.exe") --version
