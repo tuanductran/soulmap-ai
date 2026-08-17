@@ -21,10 +21,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: ./.github/actions/setup-uv
         with:
           python-version: "3.11"
-          enable-cache: true
 
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
