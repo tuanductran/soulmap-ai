@@ -443,6 +443,11 @@ Completed foundation:
   3.11 security bugfix release at review time, in
   `docs/engineering/package-compatibility-research.md` with the upstream release
   evidence and security-review boundary.
+* CI, release, CodeQL, and autofix now use local composite installers instead of
+  third-party setup-uv/actionlint archives. uv is pinned to 0.12.5 through the
+  official unmanaged installer, while actionlint 1.7.12 is downloaded from its
+  release URL and SHA-256 verified before workflow validation. This removes the
+  repeated codeload rate-limit failure mode without adding a runtime dependency.
 
 Remaining work:
 
