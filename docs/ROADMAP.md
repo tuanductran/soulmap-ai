@@ -370,6 +370,10 @@ Completed:
   diacritic-stripped diagnosis, prediction, jailbreak, and system-extraction
   requests, with deterministic regression fixtures and grouped-eval evidence.
   This remains a narrow maintenance expansion, not semantic classification.
+* Closed the remaining Issue #133 identity-boundary gap: direct requests to
+  delegate self-definition to SoulMap or treat it as a spiritual guide/awakener
+  now use the deterministic `identity_confirmation` boundary, with reflective
+  and fictional near-miss coverage.
 
 Ongoing maintenance:
 

@@ -359,6 +359,10 @@ BLACKLIST_PROHIBITED = {
         "means i have a special mission",
         "confirm i am",
         "tell me i am special",
+        "tell me who i truly am",
+        "i cannot trust my own sense of it",
+        "are you my spiritual guide",
+        "can you awaken me",
     ],
     "harmful_spirituality": [
         "deserves to be harmed because their karma says so",
