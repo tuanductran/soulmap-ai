@@ -1,6 +1,6 @@
 # Scripts
 
-This folder contains bash helpers for contributor workflows.
+This folder contains shell and Python helpers for contributor workflows and CI.
 
 The shell scripts here are thin macOS/Linux wrappers around the canonical Python entry
 points in `src/soulmap/devtools/` and `src/soulmap/runtime/`.
@@ -39,6 +39,13 @@ Before pushing, mirror the local CI core with:
 ```bash
 uv run soulmap lint --skip-tests
 uv run soulmap test -n auto -q
+```
+
+CI and release verification use the reproducibility helper to record an explicit
+pytest-randomly seed and preserve a serial reproduction command when parallel tests fail:
+
+```bash
+uv run python scripts/pytest_diagnostics.py
 ```
 
 For setup and workflow details, use [`docs/engineering/DEV.md`](../docs/engineering/DEV.md).

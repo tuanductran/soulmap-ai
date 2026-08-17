@@ -7,6 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 PYPROJECT = REPO_ROOT / "pyproject.toml"
 LOCKFILE = REPO_ROOT / "uv.lock"
 RESEARCH = REPO_ROOT / "docs" / "engineering" / "package-compatibility-research.md"
+PYTEST_DIAGNOSTICS = REPO_ROOT / "scripts" / "pytest_diagnostics.py"
 WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "ci.yml",
     REPO_ROOT / ".github" / "workflows" / "release.yml",
@@ -53,6 +54,21 @@ def test_python_floor_and_ci_baseline_are_aligned() -> None:
         assert 'python-version: "3.11"' in workflow_text
 
 
+def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
+    script_text = PYTEST_DIAGNOSTICS.read_text(encoding="utf-8")
+    assert "uv" in script_text
+    assert "--randomly-seed=" in script_text
+    assert "-n 0 -q" in script_text
+
+    ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
+    release_text = WORKFLOWS[1].read_text(encoding="utf-8")
+    for workflow_text in (ci_text, release_text):
+        assert "uv run python scripts/pytest_diagnostics.py" in workflow_text
+
+    assert "PYTEST_RANDOMLY_SEED" in ci_text
+    assert '--randomly-seed="${PYTEST_RANDOMLY_SEED}"' in ci_text
+
+
 def test_direct_dev_packages_are_locked() -> None:
     lock_text = LOCKFILE.read_text(encoding="utf-8")
 
@@ -72,3 +88,5 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "Python 3.11" in research_text
     assert "pytest-randomly" in research_text
     assert "pytest-xdist" in research_text
+    assert "Python 3.11.16" in research_text
+    assert "python.org/downloads/release/python-31116" in research_text

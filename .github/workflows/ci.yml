@@ -46,11 +46,11 @@ jobs:
         run: uv run vulture
       - name: Dependency analysis (Deptry)
         run: uv run deptry .
-      - name: Tests
-        run: uv run soulmap test -n auto -q
+      - name: Tests with reproducibility diagnostics
+        run: uv run python scripts/pytest_diagnostics.py
       - name: Coverage report (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
-        run: uv run pytest -n auto --cov=src/soulmap/runtime --cov-report=term-missing -q 2>&1 | tail -20
+        run: uv run pytest -n auto --randomly-seed="${PYTEST_RANDOMLY_SEED}" --cov=src/soulmap/runtime --cov-report=term-missing -q 2>&1 | tail -20
       - name: Safety evals
         run: uv run python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals
