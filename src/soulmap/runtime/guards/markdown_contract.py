@@ -14,7 +14,9 @@ from pathlib import Path
 from soulmap.devtools.support.markdown import (
     extract_heading_anchors,
     is_external_markdown_target,
+    iter_disallowed_markdown_references,
     iter_markdown_files,
+    iter_markdown_references,
     parse_yaml_front_matter,
     split_markdown_link_target,
 )
@@ -26,7 +28,6 @@ _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
 # Disallow headings like `## 1) Foo` or `## 1. Foo` to keep anchors stable and avoid
 # tool-specific numbering conventions in the knowledge base.
 _NUMBERED_HEADING_PREFIX_RE = re.compile(r"^\(?\d+\)?\s*[.)]\s+")
-_MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 _PACKAGE_VERSION_RE = re.compile(r'^version\s*=\s*["\']([^"\']+)["\']\s*$')
 _INTEGRATION_METADATA = ("title", "description", "doctrine_source", "soulmap_version")
 _INTEGRATION_DOCTRINE_SOURCE = "AGENTS.md"
@@ -225,18 +226,15 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
         )
 
     # 2d) Images should have non-empty alt text for accessibility.
-    in_fence = False
-    for i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
-            continue
-        for alt, target in _MD_IMAGE_RE.findall(raw):
-            if not alt.strip():
-                issues.append(
-                    Issue(path, i, f"Image missing alt text: {target.strip()}")
+    for reference in iter_markdown_references(lines):
+        if reference.is_image and not reference.label.strip():
+            issues.append(
+                Issue(
+                    path,
+                    reference.line,
+                    f"Image missing alt text: {reference.target.strip()}",
                 )
+            )
 
     # 2b) Ordered lists: require sequential numbering (`1. 2. 3.`) so repo tooling
     # and rendered Markdown stay aligned. Repeated `1.` markers are intentionally
@@ -300,48 +298,47 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     anchors = {anchor.slug for anchor in extract_heading_anchors(lines)}
 
     # 4) Relative file links should exist, and file+anchor links should resolve.
-    in_fence = False
-    for i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
+    for reference in iter_disallowed_markdown_references(lines):
+        issues.append(Issue(path, reference.line, "Disallowed link scheme"))
+
+    for reference in iter_markdown_references(lines):
+        if reference.is_image:
             continue
-        if in_fence:
+        i = reference.line
+        target = reference.target.strip()
+        if not target or is_external_markdown_target(target):
             continue
-        for _label, target in re.findall(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)", raw):
-            target = target.strip()
-            if not target or is_external_markdown_target(target):
-                continue
-            if target.startswith(("javascript:", "data:")):
-                issues.append(Issue(path, i, "Disallowed link scheme"))
-                continue
+        if target.startswith(("javascript:", "data:")):
+            issues.append(Issue(path, i, "Disallowed link scheme"))
+            continue
 
-            file_part, frag = split_markdown_link_target(target)
-            if file_part == "" and frag is not None:
-                if frag not in anchors:
-                    issues.append(Issue(path, i, f"Broken anchor link: #{frag}"))
-                continue
+        file_part, frag = split_markdown_link_target(target)
+        if file_part == "" and frag is not None:
+            if frag not in anchors:
+                issues.append(Issue(path, i, f"Broken anchor link: #{frag}"))
+            continue
 
-            # Skip pure fragment in empty file_part case already handled above.
-            resolved = (path.parent / file_part).resolve()
-            try:
-                resolved.relative_to(repo_root.resolve())
-            except ValueError:
-                issues.append(Issue(path, i, "Link escapes repo root"))
-                continue
+        # Skip pure fragment in empty file_part case already handled above.
+        resolved = (path.parent / file_part).resolve()
+        try:
+            resolved.relative_to(repo_root.resolve())
+        except ValueError:
+            issues.append(Issue(path, i, "Link escapes repo root"))
+            continue
 
-            if not resolved.exists():
-                issues.append(Issue(path, i, f"Broken relative link: {file_part}"))
-                continue
+        if not resolved.exists():
+            issues.append(Issue(path, i, f"Broken relative link: {file_part}"))
+            continue
 
-            if frag is not None and resolved.suffix.lower() == ".md":
-                other_lines = resolved.read_text(encoding="utf-8").splitlines()
-                other_anchors = {
-                    anchor.slug for anchor in extract_heading_anchors(other_lines)
-                }
-                if frag not in other_anchors:
-                    issues.append(
-                        Issue(path, i, f"Broken cross-file anchor: {file_part}#{frag}")
-                    )
+        if frag is not None and resolved.suffix.lower() == ".md":
+            other_lines = resolved.read_text(encoding="utf-8").splitlines()
+            other_anchors = {
+                anchor.slug for anchor in extract_heading_anchors(other_lines)
+            }
+            if frag not in other_anchors:
+                issues.append(
+                    Issue(path, i, f"Broken cross-file anchor: {file_part}#{frag}")
+                )
 
     return issues
 
