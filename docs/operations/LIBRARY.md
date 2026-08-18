@@ -26,7 +26,7 @@ Verify those exact files before upload with:
 uv run python scripts/verify_artifact_hashes.py
 ```
 
-The verifier is local-only and does not contact GitHub. It fails with a non-zero exit code if the manifest is missing or invalid, an artifact is missing, its byte size differs, or its SHA-256 digest differs. A successful run prints one `PASS` line per artifact.
+The verifier is local-only and does not contact GitHub. It fails with a non-zero exit code if the manifest is missing or invalid, an artifact is missing, its byte size differs, or its SHA-256 digest differs. A successful run prints one `PASS` line per artifact. The CI build job runs the same verifier before uploading the three generated files as a workflow artifact, and the release job runs it again before publishing the GitHub Release assets.
 
 The three files have distinct roles:
 
