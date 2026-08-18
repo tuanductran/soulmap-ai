@@ -452,6 +452,10 @@ Completed foundation:
   official unmanaged installer, while actionlint 1.7.12 is downloaded from its
   release URL and SHA-256 verified before workflow validation. This removes the
   repeated codeload rate-limit failure mode without adding a runtime dependency.
+* Direct tests now execute every thin `src/soulmap/devtools/cli/` entrypoint and cover
+  the meaningful `quality.format` Markdown-file and subprocess-status branches. The
+  wrappers remain forwarding layers, while behavior stays tested in their canonical
+  implementation modules.
 
 Remaining work:
 
@@ -588,8 +592,6 @@ these are not planned unless a new ADR revisits them:
 
 * Maintain human-reviewed deterministic regression evidence for newly
   observed response-safety phrasing gaps
-* Decide whether thin `devtools/cli/` wrappers need direct unit coverage or
-  remain covered through canonical CLI and integration checks
 * Platform adapters beyond the current Claude-first flow
 
 ---

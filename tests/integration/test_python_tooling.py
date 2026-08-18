@@ -1,7 +1,14 @@
 from __future__ import annotations
 
+import importlib
+import runpy
+import subprocess
+import sys
 from contextlib import contextmanager
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 from soulmap import cli as soulmap_cli
 from soulmap.devtools.cli import bootstrap_venv
@@ -106,6 +113,137 @@ def test_format_relies_on_ruff_for_python_rewrites(tmp_path: Path, monkeypatch) 
         ),
     ) in calls
     assert not any(module == "isort" for module, _args in calls)
+
+
+def test_format_runs_markdown_fix_for_existing_files(
+    tmp_path: Path, monkeypatch
+) -> None:
+    (tmp_path / "src").mkdir()
+    markdown_file = tmp_path / "docs" / "guide.md"
+    markdown_file.parent.mkdir()
+    markdown_file.write_text("# Guide\n", encoding="utf-8")
+    module_calls: list[tuple[str, tuple[str, ...]]] = []
+    run_calls: list[tuple[list[str], bool]] = []
+
+    monkeypatch.setattr(format_tool, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(format_tool, "repo_tooling_lock", _noop_lock)
+    monkeypatch.setattr(format_tool, "python_executable", lambda _root: "python")
+    monkeypatch.setattr(
+        format_tool, "iter_markdown_files", lambda _root: [markdown_file]
+    )
+
+    def fake_python_module(
+        module: str, *extra_args: str, cwd: Path, check: bool = True
+    ) -> None:
+        _ = cwd, check
+        module_calls.append((module, extra_args))
+
+    def fake_run(args: list[str], *, cwd: Path, check: bool):
+        _ = cwd
+        run_calls.append((args, check))
+        return SimpleNamespace(returncode=0, args=args)
+
+    monkeypatch.setattr(format_tool, "python_module", fake_python_module)
+    monkeypatch.setattr(format_tool, "run", fake_run)
+
+    assert format_tool.main([]) == 0
+
+    assert module_calls == [
+        (
+            "ruff",
+            ("check", "--fix", str(tmp_path / "src")),
+        ),
+        ("ruff", ("format", str(tmp_path / "src"))),
+    ]
+    assert run_calls == [
+        (
+            [
+                "python",
+                "-m",
+                "pymarkdown",
+                "--config",
+                ".pymarkdown.json",
+                "fix",
+                str(Path("docs") / "guide.md"),
+            ],
+            False,
+        )
+    ]
+
+
+@pytest.mark.parametrize("returncode", [0, 3])
+def test_format_accepts_pymarkdown_fix_statuses(
+    tmp_path: Path, monkeypatch, returncode: int
+) -> None:
+    (tmp_path / "src").mkdir()
+    markdown_file = tmp_path / "README.md"
+    markdown_file.write_text("# README\n", encoding="utf-8")
+
+    monkeypatch.setattr(format_tool, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(format_tool, "repo_tooling_lock", _noop_lock)
+    monkeypatch.setattr(format_tool, "python_executable", lambda _root: "python")
+    monkeypatch.setattr(
+        format_tool, "iter_markdown_files", lambda _root: [markdown_file]
+    )
+    monkeypatch.setattr(format_tool, "python_module", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        format_tool,
+        "run",
+        lambda args, *, cwd, check: SimpleNamespace(returncode=returncode, args=args),
+    )
+
+    assert format_tool.main([]) == 0
+
+
+def test_format_propagates_unexpected_pymarkdown_fix_status(
+    tmp_path: Path, monkeypatch
+) -> None:
+    (tmp_path / "src").mkdir()
+    markdown_file = tmp_path / "README.md"
+    markdown_file.write_text("# README\n", encoding="utf-8")
+    command = ["python", "-m", "pymarkdown", "fix", "README.md"]
+
+    monkeypatch.setattr(format_tool, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(format_tool, "repo_tooling_lock", _noop_lock)
+    monkeypatch.setattr(format_tool, "python_executable", lambda _root: "python")
+    monkeypatch.setattr(
+        format_tool, "iter_markdown_files", lambda _root: [markdown_file]
+    )
+    monkeypatch.setattr(format_tool, "python_module", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        format_tool,
+        "run",
+        lambda args, *, cwd, check: SimpleNamespace(returncode=1, args=command),
+    )
+
+    with pytest.raises(subprocess.CalledProcessError) as exc_info:
+        format_tool.main([])
+
+    assert exc_info.value.returncode == 1
+    assert exc_info.value.cmd == command
+
+
+def test_format_skips_missing_python_source_paths(tmp_path: Path, monkeypatch) -> None:
+    src = tmp_path / "src"
+    src.mkdir()
+    calls: list[tuple[str, tuple[str, ...]]] = []
+
+    monkeypatch.setattr(format_tool, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(format_tool, "repo_tooling_lock", _noop_lock)
+    monkeypatch.setattr(format_tool, "python_executable", lambda _root: "python")
+    monkeypatch.setattr(format_tool, "iter_markdown_files", lambda _root: [])
+    monkeypatch.setattr(
+        format_tool,
+        "python_module",
+        lambda module, *args, cwd, check=True: calls.append((module, args)),
+    )
+
+    format_tool.main([])
+
+    assert calls == [
+        ("ruff", ("check", "--fix", str(src))),
+        ("ruff", ("format", str(src))),
+    ]
 
 
 def test_lint_checks_all_python_source_paths(tmp_path: Path, monkeypatch) -> None:
@@ -264,6 +402,45 @@ def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch) -> None:
 
     assert soulmap_cli.main(["test"]) == 0
     assert ("pytest", ("-q",)) in calls
+
+
+@pytest.mark.parametrize(
+    ("wrapper", "implementation"),
+    [
+        ("build_skill", "soulmap.devtools.packaging.build_skill"),
+        ("check_markdown_case", "soulmap.devtools.checks.check_markdown_case"),
+        ("check_markdown_links", "soulmap.devtools.checks.check_markdown_links"),
+        ("eval_groups", "soulmap.devtools.evals.eval_groups"),
+        (
+            "eval_markdown_contracts",
+            "soulmap.devtools.evals.eval_markdown_contracts",
+        ),
+        ("eval_responses", "soulmap.devtools.evals.eval_responses"),
+        ("format", "soulmap.devtools.quality.format"),
+        ("lint", "soulmap.devtools.quality.lint"),
+    ],
+)
+def test_thin_cli_wrapper_forwards_to_implementation_main(
+    monkeypatch, wrapper: str, implementation: str
+) -> None:
+    implementation_module = importlib.import_module(implementation)
+    calls: list[object] = []
+
+    def fake_main(argv=None) -> int:
+        calls.append(argv)
+        return 0
+
+    monkeypatch.setattr(implementation_module, "main", fake_main)
+    monkeypatch.setattr(sys, "argv", [f"soulmap-{wrapper}", "--sentinel"])
+
+    with pytest.raises(SystemExit) as exc_info:
+        runpy.run_module(
+            f"soulmap.devtools.cli.{wrapper}",
+            run_name="__main__",
+        )
+
+    assert exc_info.value.code == 0
+    assert calls == [None]
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(
