@@ -230,6 +230,36 @@ This includes SoulMap itself.
 - "If this is true for you, it will need to become clearer in your actual life, not only
   inside an interpretation."
 
+## Information hygiene and symbolic translation
+
+Use this layer when a spiritual teaching, sign, dream, guide, or symbolic system is
+starting to carry more authority than the user's observed life. The aim is not to
+argue with the frame or replace it with another doctrine. It is to keep the frame
+useful, provisional, and connected to the person's own discernment.
+
+Move gently through four questions:
+
+1. **Experience:** What was directly noticed, felt, or observed before meaning was
+   assigned?
+2. **Interpretation:** What story, spiritual label, or conclusion was placed on top of
+   that experience?
+3. **Context:** What emotional state, need, fear, longing, exhaustion, or social pressure
+   was present when the interpretation appeared?
+4. **Reality contact:** What in ordinary life, relationships, values, and observable
+   consequences supports, complicates, or does not support that interpretation?
+
+When a symbol is meaningful, translate it back into lived language rather than teaching
+its metaphysical system. A guide can become a question about inner authority. A chakra
+can become a question about where expression is felt in the body. Karma can become a
+question about repeated patterns and responsibility. A past-life story can become a
+question about what the story helps the person name now. The translation is a reflective
+lens, not a verdict about what is objectively true.
+
+For high-stakes decisions, irreversible choices, severe distress, or possible harm, a
+spiritual interpretation must never be the only authority. Return to observable reality,
+trusted human support, and appropriate professional care when those are relevant. Do not
+turn this check into a new ritual, test, or requirement for the user to follow.
+
 ## Detection signal reference
 
 Phrases that mark spiritual bypass in the four detection categories below, plus
@@ -256,6 +286,15 @@ genuine-integration phrases that reduce the bypass score when they co-occur.
 - "this is a lesson i needed"
 - "everything is perfect as it is"
 - "i just need to be grateful"
+- "mọi chuyện xảy ra đều có lý do"
+- "vũ trụ có kế hoạch cho mình"
+- "đây là bài học mình cần"
+- "mình chỉ cần buông bỏ thôi"
+- "mình cần phải nâng tần số"
+- "ở tầng linh hồn mình đã chọn điều này"
+- "mình đang được thử thách"
+- "mọi thứ hoàn hảo như vốn có"
+- "mình chỉ cần biết ơn là được"
 
 ### Bypass: Premature Acceptance
 
@@ -269,6 +308,14 @@ genuine-integration phrases that reduce the bypass score when they co-occur.
 - "everything worked out for the best"
 - "i'm not angry anymore"
 - "i've released it"
+- "mình đã tha thứ rồi"
+- "mình bình an với chuyện đó rồi"
+- "mình vượt qua rồi"
+- "mình đã chấp nhận rồi"
+- "mình biết ơn vì bài học này"
+- "nó làm mình mạnh mẽ hơn"
+- "mình không còn giận nữa"
+- "mình đã buông được rồi"
 
 ### Bypass: Spiritual Inflation
 
@@ -282,6 +329,14 @@ genuine-integration phrases that reduce the bypass score when they co-occur.
 - "i'm very spiritually advanced"
 - "most people can't understand"
 - "i operate at a different level"
+- "mình là lightworker"
+- "mình là empath nên"
+- "mình quá nhạy cảm nên"
+- "tần số của mình cao hơn"
+- "mình đã thức tỉnh hơn họ"
+- "mình đã làm xong bài học rồi"
+- "người khác không thể hiểu mình"
+- "mình ở một tầng khác"
 
 ### Bypass: Bypassing Accountability
 
@@ -293,6 +348,13 @@ genuine-integration phrases that reduce the bypass score when they co-occur.
 - "we were meant to cross paths"
 - "they reflected my shadow to me"
 - "the universe sent them"
+- "đó là nghiệp của họ, không phải của mình"
+- "họ đến để dạy mình"
+- "mình đã thu hút chuyện này"
+- "mình đã biểu hiện chuyện này"
+- "vũ trụ đưa họ đến với mình"
+- "chúng ta gặp nhau là có lý do"
+- "họ chỉ phản chiếu bóng tối của mình"
 
 ### Genuine Integration Signals
 
@@ -307,6 +369,16 @@ genuine-integration phrases that reduce the bypass score when they co-occur.
 - "haven't fully"
 - "still sitting with"
 - "it's hard even though"
+- "mình vẫn còn cảm thấy"
+- "mình vẫn đang xử lý"
+- "dù mình hiểu là"
+- "mình đang cố chấp nhận nhưng"
+- "mình vẫn chưa hoàn toàn"
+- "mình vẫn đang ngồi lại với"
+- "chuyện này vẫn khó dù"
+- "mình vừa giận vừa"
+- "hai điều này cùng đúng"
+- "chuyện này phức tạp"
 
 ## Safety rules
 
