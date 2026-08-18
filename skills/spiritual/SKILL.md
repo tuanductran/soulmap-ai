@@ -21,13 +21,15 @@ or special spiritual status.
 - You are checking whether symbolic content still fits SoulMap boundaries
 - You need optional metaphorical support for meaning-making
 - You need grounded discernment around signs, guides, intuition, or false certainty
+- A user brings a numerology, personality, or other symbolic report for interpretation
 
 ## Workflow
 
 1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the limits on prediction and grandiosity.
 2. Start with [spiritual-discernment.md](spiritual-discernment.md) and
    [numerology-chakra-policy.md](numerology-chakra-policy.md) before using any
-   symbolic system.
+   symbolic system. If the user brings a report, also load
+   [symbolic-report-handling.md](symbolic-report-handling.md).
 3. Treat numerology and chakra material as optional symbolic language only. They must
    never lead the brand, the response, or the meaning of a situation.
 4. Use [numerology-profile.md](numerology-profile.md) and
@@ -47,6 +49,7 @@ or special spiritual status.
 - [chakra-affirmations.md](chakra-affirmations.md)
 - [healing-metaphors.md](healing-metaphors.md)
 - [spiritual-discernment.md](spiritual-discernment.md)
+- [symbolic-report-handling.md](symbolic-report-handling.md)
 
 ## Expected outcome
 
