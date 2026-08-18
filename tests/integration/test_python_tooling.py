@@ -164,7 +164,7 @@ def test_format_runs_markdown_fix_for_existing_files(
                 "--config",
                 ".pymarkdown.json",
                 "fix",
-                "docs/guide.md",
+                str(Path("docs") / "guide.md"),
             ],
             False,
         )
