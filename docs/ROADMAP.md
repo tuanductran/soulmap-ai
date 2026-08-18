@@ -402,9 +402,13 @@ Completed foundation:
   platform instruction surface and ensure every archive file referenced by the
   deployment upload lists actually ships in the standard distribution artifact.
 * The integration index defines compatibility actions by change type, while the
-  internal launch checklist records non-sensitive, dated manual acceptance
-  evidence for any platform that is actively deployed. Repository tests do not
+  internal launch checklist records non-sensitive, dated manual acceptance evidence for any platform that is actively deployed. Repository tests do not
   claim to prove third-party deployment behavior.
+* Library v1 now has a versioned source catalog at `library/catalog.json` and a
+  generated `dist/soulmap-ai-library.json` manifest with release URL, compatibility,
+  artifact size, and SHA-256 metadata. The release workflow publishes the manifest
+  beside the standard ZIP and `.skill` archives; this is still manual distribution,
+  not a public marketplace registration or one-click installer.
 
 Not yet done:
 
