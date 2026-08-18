@@ -4,12 +4,13 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 from urllib.request import Request, urlopen
 
 from soulmap.devtools.support.markdown import (
     extract_heading_anchors,
     is_external_markdown_target,
+    iter_disallowed_markdown_references,
     iter_markdown_references,
     resolve_local_markdown_target,
     resolve_markdown_inputs,
@@ -140,7 +141,7 @@ def _check_local_target(
     issues: list[Issue] = []
     file_part, fragment = split_markdown_link_target(target)
 
-    if "\\" in file_part:
+    if "\\" in unquote(file_part):
         return [Issue(current_file, line, f"Unsupported local path pattern: {target}")]
 
     if file_part == "" and fragment is not None:
@@ -222,6 +223,13 @@ def check_file_with_options(
     issues: list[Issue] = []
     lines = path.read_text(encoding="utf-8").splitlines()
 
+    for reference in iter_disallowed_markdown_references(lines):
+        target = reference.target.strip()
+        if target:
+            issues.append(
+                Issue(path, reference.line, f"Disallowed link scheme: {target}")
+            )
+
     for reference in iter_markdown_references(lines):
         target = reference.target.strip()
         if not target:
@@ -236,11 +244,6 @@ def check_file_with_options(
                         timeout=timeout,
                     )
                 )
-            continue
-        if target.startswith(("javascript:", "data:", "file:")):
-            issues.append(
-                Issue(path, reference.line, f"Disallowed link scheme: {target}")
-            )
             continue
         issues.extend(
             _check_local_target(

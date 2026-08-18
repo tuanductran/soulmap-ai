@@ -329,3 +329,25 @@ def test_repo_tooling_lock_retries_before_waiting_notice(
     assert attempts == 2
     assert sleep_calls == [0.01]
     assert capsys.readouterr().err == ""
+
+
+def test_markdown_references_use_commonmark_tokens_for_edge_cases() -> None:
+    lines = [
+        'Reference [guide][g] and [nested](docs/(inner).md "title").',
+        "",
+        '![Logo](assets/logo.png "caption")',
+        "",
+        "[g]: docs/guidance.md#inner-knowing",
+        "",
+        "```md",
+        "[Ignored](missing.md)",
+        "```",
+    ]
+
+    assert markdown_support.iter_markdown_references(lines) == [
+        markdown_support.MarkdownReference(
+            1, "guide", "docs/guidance.md#inner-knowing"
+        ),
+        markdown_support.MarkdownReference(1, "nested", "docs/(inner).md"),
+        markdown_support.MarkdownReference(3, "Logo", "assets/logo.png", is_image=True),
+    ]

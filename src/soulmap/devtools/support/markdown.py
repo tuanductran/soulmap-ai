@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import unquote
 
+from markdown_it import MarkdownIt
+
 _EXCLUDED_DIRS = {
     ".git",
     ".venv",
@@ -22,7 +24,12 @@ _FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 _MD_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
+_UNSAFE_MD_LINK_RE = re.compile(
+    r"(?<!!)\[([^\]]+)\]\(\s*((?:javascript|data|file):[^)\s]+)",
+    re.IGNORECASE,
+)
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
+_MARKDOWN_PARSER = MarkdownIt("commonmark")
 
 
 @dataclass(frozen=True)
@@ -181,7 +188,66 @@ def is_external_markdown_target(target: str) -> bool:
     return lower.startswith(("http://", "https://", "mailto:", "tel:"))
 
 
-def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
+def _token_attribute(token: object, name: str) -> str | None:
+    attrs = getattr(token, "attrs", None)
+    if not isinstance(attrs, dict):
+        return None
+    value = attrs.get(name)
+    return value if isinstance(value, str) else None
+
+
+def _inline_token_label(token: object) -> str:
+    content = getattr(token, "content", "")
+    return content if isinstance(content, str) else ""
+
+
+def _reference_line(
+    lines: list[str],
+    *,
+    label: str,
+    is_image: bool,
+    start_line: int,
+) -> int:
+    marker = f"![{label}]" if is_image else f"[{label}]"
+    for line_no in range(max(start_line, 1), len(lines) + 1):
+        if marker in lines[line_no - 1]:
+            return line_no
+    return start_line
+
+
+def _raw_reference_target(
+    lines: list[str],
+    *,
+    label: str,
+    parsed_target: str,
+    is_image: bool,
+    start_line: int,
+) -> str:
+    marker = f"![{label}]" if is_image else f"[{label}]"
+    for line_no in range(max(start_line, 1), len(lines) + 1):
+        raw = lines[line_no - 1]
+        start = raw.find(f"{marker}(")
+        if start < 0:
+            continue
+        end = raw.find(")", start + len(marker) + 1)
+        if end < 0:
+            continue
+        candidate = raw[start + len(marker) + 1 : end].strip()
+        if unquote(candidate) == unquote(parsed_target):
+            return candidate
+    return parsed_target
+
+
+def _markdown_source(lines: list[str]) -> str:
+    if any(line.endswith(("\n", "\r")) for line in lines):
+        return "".join(lines)
+    return "\n".join(lines)
+
+
+def iter_disallowed_markdown_references(
+    lines: list[str],
+) -> list[MarkdownReference]:
+    """Find unsafe Markdown destinations that parsers intentionally discard."""
     references: list[MarkdownReference] = []
     in_fence = False
 
@@ -191,26 +257,118 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
             continue
         if in_fence:
             continue
+        for label, target in _UNSAFE_MD_LINK_RE.findall(raw):
+            references.append(
+                MarkdownReference(
+                    line=line_no,
+                    label=label,
+                    target=target,
+                )
+            )
 
+    return references
+
+
+def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
+    """Extract parsed Markdown links and images outside code blocks.
+
+    The repository keeps its own reference dataclass and policy checks, while
+    ``markdown-it-py`` handles CommonMark edge cases such as reference links,
+    nested destinations, link titles, autolinks, and inline markup. HTML links
+    remain outside this helper's scope because they are not Markdown references.
+    """
+    references: list[MarkdownReference] = []
+    source = _markdown_source(lines)
+
+    for block_token in _MARKDOWN_PARSER.parse(source):
+        if getattr(block_token, "type", None) != "inline":
+            continue
+        children = getattr(block_token, "children", None) or []
+        token_map = getattr(block_token, "map", None)
+        block_line = int(token_map[0]) + 1 if token_map else 1
+        open_link: dict[str, str] | None = None
+
+        for token in children:
+            token_type = getattr(token, "type", None)
+            if token_type == "link_open":
+                open_link = {
+                    "label": "",
+                    "target": _token_attribute(token, "href") or "",
+                }
+                continue
+
+            if token_type == "link_close":
+                if open_link is not None:
+                    references.append(
+                        MarkdownReference(
+                            line=_reference_line(
+                                lines,
+                                label=open_link["label"],
+                                is_image=False,
+                                start_line=block_line,
+                            ),
+                            label=open_link["label"],
+                            target=_raw_reference_target(
+                                lines,
+                                label=open_link["label"],
+                                parsed_target=open_link["target"],
+                                is_image=False,
+                                start_line=block_line,
+                            ),
+                        )
+                    )
+                open_link = None
+                continue
+
+            if token_type == "image":
+                references.append(
+                    MarkdownReference(
+                        line=_reference_line(
+                            lines,
+                            label=_inline_token_label(token),
+                            is_image=True,
+                            start_line=block_line,
+                        ),
+                        label=_inline_token_label(token),
+                        target=_token_attribute(token, "src") or "",
+                        is_image=True,
+                    )
+                )
+                continue
+
+            if (
+                open_link is not None
+                and isinstance(token_type, str)
+                and not token_type.endswith(("_open", "_close"))
+            ):
+                open_link["label"] += _inline_token_label(token)
+
+    known = {(ref.line, ref.label, ref.target, ref.is_image) for ref in references}
+    in_fence = False
+    for line_no, raw in enumerate(lines, start=1):
+        if _FENCE_RE.match(raw):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         for label, target in _MD_IMAGE_RE.findall(raw):
-            references.append(
-                MarkdownReference(
-                    line=line_no,
-                    label=label,
-                    target=target,
-                    is_image=True,
-                )
+            if label.strip():
+                continue
+            reference = MarkdownReference(
+                line=line_no,
+                label=label,
+                target=target.strip(),
+                is_image=True,
             )
-
-        for label, target in _MD_LINK_RE.findall(raw):
-            references.append(
-                MarkdownReference(
-                    line=line_no,
-                    label=label,
-                    target=target,
-                    is_image=False,
-                )
+            key = (
+                reference.line,
+                reference.label,
+                reference.target,
+                reference.is_image,
             )
+            if key not in known:
+                references.append(reference)
+                known.add(key)
 
     return references
 

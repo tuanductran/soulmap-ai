@@ -103,6 +103,18 @@ This keeps normal local lint deterministic. External checks use `HEAD` first, fa
 back to `GET` when needed, and treat common anti-bot or rate-limit responses such as
 `403` and `429` as warnings unless you also pass `--fail-on-warning`.
 
+The Markdown reference layer uses `markdown-it-py` from the development dependency group
+for CommonMark tokenization. This makes reference links, link titles, nested destinations,
+autolinks, images, and fenced-code boundaries more reliable than a regex-only scan while
+keeping SoulMap-specific rules (unsafe schemes, repo-root boundaries, anchor policy,
+accessibility, and canonical wording) in local code. It is not a runtime HTML renderer.
+
+`mdformat`, `python-frontmatter`, Pydantic, `jsonschema`, and HTML sanitizers remain
+evaluated alternatives rather than dependencies: each needs a separate compatibility
+contract or a concrete consumer before it should be added. See
+[`../research/python-markdown-package-notes.md`](../research/python-markdown-package-notes.md)
+for the package comparison and decision boundary.
+
 ## What gets generated
 
 - `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`.
