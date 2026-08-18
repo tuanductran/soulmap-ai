@@ -423,11 +423,12 @@ Not yet done:
 
 ---
 
-### Phase 12 - Toolchain Support & Test Reproducibility (in progress)
+### Phase 12 - Toolchain Support & Test Reproducibility (complete; maintenance ongoing)
 
 This track was identified after reviewing the locked development toolchain and official
-compatibility policies for Python 3.11. It is maintenance work, not a package migration
-or a new product surface.
+compatibility policies for Python 3.11. Its implementation work is complete; the
+remaining obligations are recurring maintenance, not a package migration or a new
+product surface.
 
 Completed foundation:
 
@@ -457,7 +458,7 @@ Completed foundation:
   wrappers remain forwarding layers, while behavior stays tested in their canonical
   implementation modules.
 
-Remaining work:
+Maintenance obligations:
 
 * Apply the [dependency refresh and advisory review checklist](../docs/operations/dependency-refresh.md)
   whenever a future lockfile refresh is triggered by upstream deprecations, security

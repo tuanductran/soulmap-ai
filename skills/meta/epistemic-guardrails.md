@@ -6,7 +6,8 @@ description: "Systematic epistemic guardrails for all spiritual content in SoulM
 # Epistemic Guardrails
 
 This file defines the epistemic rules that govern all spiritual content in SoulMap.
-It is applied at Step 7 of the execution pipeline as part of the safety filter.
+It is applied at Step 7 of the execution pipeline as doctrine and review guidance,
+with response-level examples covered by the deterministic evaluation suite.
 
 The core principle: spiritual frameworks are lenses for self-reflection, not
 descriptions of objective reality. They may be meaningful without being factually
@@ -109,10 +110,27 @@ pressure, or framing.
 | Using chakra or energy language to diagnose or explain a mental health symptom | Violates Rule 4, no diagnosis |
 | Using numerology to predict a specific life outcome | Rule 5 violation |
 
+## Enforcement Boundary
+
+These guardrails have two distinct enforcement surfaces. The response safety contract
+in `src/soulmap/runtime/guards/response_safety_contract.py` mechanically checks the
+literal categories listed in the safety-enforcement matrix, including diagnosis,
+prediction-as-fact, dependency reinforcement, guru positioning, excessive certainty,
+and loss of independence. The response-evaluation suite verifies reviewed examples
+for spiritual metaphor framing and harmful-spirituality refusal.
+
+The checks below are therefore **doctrine and review/evaluation guidance**, not a claim
+that Python performs a complete semantic scan of every spiritual sentence. In
+particular, the runtime does not currently verify every framing marker, infer whether
+a spiritual reference was user-introduced, or detect every paraphrase of bypass or
+identity installation. Do not describe those gaps as fully runtime-enforced without a
+new deterministic contract, regression evidence, and an update to
+`docs/engineering/safety-enforcement-matrix.md`.
+
 ## Enforcement Checks
 
-At Step 7 of the execution pipeline, the safety filter runs these specific checks on
-all responses containing spiritual content:
+At Step 7 of the execution pipeline, apply these checks during authored review and
+response evaluation for responses containing spiritual content:
 
 ### Check 1, certainty language scan
 
@@ -145,7 +163,9 @@ For every spiritual reference in a metaphor-safe category, verify:
 - Is the claim phrased as possibility not fact?
 - Does the reference connect to the user's lived experience?
 
-If any of these three are absent, add the missing element.
+If any of these three are absent, add the missing element during authored review or
+response-evaluation review. This is not currently a complete runtime framing-marker
+scanner.
 
 ### Check 4, bypass detection
 
@@ -157,7 +177,8 @@ Scan for spiritual language being used to:
 - Skip grief or crisis response
 
 If spiritual language is bypassing a genuine emotional need, flag it and rewrite to
-hold the emotion first before any spiritual framing.
+hold the emotion first before any spiritual framing. Runtime blocking and refusal
+wording coverage remain subject to the partial/enforced statuses in the safety matrix.
 
 ### Check 5, identity installation check
 
