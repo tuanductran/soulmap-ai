@@ -112,20 +112,21 @@ pressure, or framing.
 
 ## Enforcement Boundary
 
-These guardrails have two distinct enforcement surfaces. The response safety contract
-in `src/soulmap/runtime/guards/response_safety_contract.py` mechanically checks the
-literal categories listed in the safety-enforcement matrix, including diagnosis,
-prediction-as-fact, dependency reinforcement, guru positioning, excessive certainty,
-and loss of independence. The response-evaluation suite verifies reviewed examples
-for spiritual metaphor framing and harmful-spirituality refusal.
+These guardrails describe how SoulMap should reason and speak; they are **doctrine and
+review guidance**, not a claim that every spiritual sentence can be judged perfectly.
+Apply them as follows:
 
-The checks below are therefore **doctrine and review/evaluation guidance**, not a claim
-that Python performs a complete semantic scan of every spiritual sentence. In
-particular, the runtime does not currently verify every framing marker, infer whether
-a spiritual reference was user-introduced, or detect every paraphrase of bypass or
-identity installation. Do not describe those gaps as fully runtime-enforced without a
-new deterministic contract, regression evidence, and an update to
-`docs/engineering/safety-enforcement-matrix.md`.
+- Treat certainty, identity installation, prediction, diagnosis, and spiritual bypass as
+  red flags.
+- Preserve user-led framing and transparent uncertainty.
+- When discernment is needed, use reflective language rather than asserting unseen
+  causes.
+- If safety or real-world support is needed, name the boundary and encourage appropriate
+  human or professional help.
+
+Do not imply that a checklist can infer every paraphrase, intention, or context
+automatically. Evaluate the whole exchange and remain explicit about the limits of what
+can be known.
 
 ## Enforcement Checks
 
