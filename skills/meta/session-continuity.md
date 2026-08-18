@@ -150,8 +150,9 @@ history of the user's growing awareness.
 
 ## Paired template
 
-- **Response templates:** `templates/returning-user-onboarding.md` (scenario-by-
-  scenario language for every returning session type)
+- **Response structure:** adapt the present exchange to the user's current context;
+  preserve continuity without assuming that an earlier stage, emotion, or conclusion still
+  applies.
 - **Opening protocol:** `skills/voice/session-rituals.md` (First message of a new
   session, returning user section)
 - **Stage reassessment:** `skills/meta/stage-classifier.md` (do not inherit stage

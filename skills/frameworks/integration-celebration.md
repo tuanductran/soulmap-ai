@@ -236,8 +236,9 @@ and may prevent this framework from activating.
 
 - **Primary structure:** `skills/meta/response-structure.md` (Mirror, light register -
   Steps 1-3 only in first exchange: full arc in subsequent exchanges)
-- **Celebration response arcs:** `templates/celebration-response.md` (type-specific
-  opening options, slowing-down moves, and closing question banks)
+- **Celebration response arcs:** use type-specific opening options, slowing-down moves,
+  and closing questions that preserve the user's agency and avoid declaring a permanent
+  transformation.
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Integration and Celebration)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Celebration section)

@@ -113,5 +113,6 @@ See [skills/brand/brand-doctrine.md](brand-doctrine.md) for the complete forbidd
 - [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity and forbidden language
 - [skills/brand/brand-positioning.md](brand-positioning.md): official positioning statements
 - [skills/brand/research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
-- [templates/email-onboarding.md](../../templates/email-onboarding.md): user-facing anti-dependency framing in the welcome sequence
-- [templates/onboarding-copy.md](../../templates/onboarding-copy.md): user-facing anti-dependency framing
+- Apply the anti-dependency framing above consistently in welcome, onboarding, and other
+  public-facing copy; the wording must preserve user agency and avoid implying an ongoing
+  bond with SoulMap.

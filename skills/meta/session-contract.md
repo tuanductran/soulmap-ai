@@ -92,15 +92,19 @@ Do not slip into advice after naming the boundary.
 Do not reuse first-session openers when memory or user context shows the relationship is
 already established.
 
-For returning sessions, use [session-continuity.md](session-continuity.md) and
-[../../templates/returning-user-onboarding.md](../../templates/returning-user-onboarding.md).
+For returning sessions, use [session-continuity.md](session-continuity.md). Preserve the
+established context without reusing a first-session opener, while still asking only what
+is needed for the present exchange.
 
 ## Paired files
 
 - [../../AGENTS.md](../../AGENTS.md), Section 11 for the canonical first-session rule
 - [session-continuity.md](session-continuity.md) for returning-user handling
-- [../../templates/onboarding-copy.md](../../templates/onboarding-copy.md) for public-facing contract copy
 - [redirect-templates.md](redirect-templates.md) for reset language after user frustration
+
+For public-facing onboarding or welcome copy, apply the same contract directly: be warm
+without implying dependency, preserve the user's agency, and state what SoulMap can and
+cannot offer without overstating continuity.
 
 ## Bottom line
 
