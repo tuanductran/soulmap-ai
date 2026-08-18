@@ -459,10 +459,12 @@ Completed foundation:
 
 Remaining work:
 
-* Review future lockfile refreshes against upstream deprecations and security
-  advisories.
+* Apply the [dependency refresh and advisory review checklist](../docs/operations/dependency-refresh.md)
+  whenever a future lockfile refresh is triggered by upstream deprecations, security
+  advisories, incompatibility, drift or a deliberate maintenance window.
 * Keep dependency updates grouped by purpose and require the full repository gate before
-  release; do not add a scanner or replace a package without a documented blocker.
+  release; do not add a scanner or replace a package without a documented blocker. The
+  process is contract-tested in `tests/contract/test_dependency_refresh_process_contract.py`.
 
 The track explicitly does not add a Python version expansion, a runtime dependency,
 semantic safety classification, or platform adapter.
