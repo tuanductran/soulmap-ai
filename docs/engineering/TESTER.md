@@ -200,6 +200,8 @@ contracts:
 - `uv run soulmap eval-markdown-contracts`
 - `uv run soulmap build`
 - `uv run soulmap build --skill`
+- `uv run soulmap library-manifest`
+- `uv run python scripts/verify_artifact_hashes.py`
 - `uv run soulmap markdown-contract --root .`
 - `uv run soulmap check-links --root .`
 - `uv run soulmap check-case --root .`

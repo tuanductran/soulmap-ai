@@ -200,8 +200,9 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Lint + tests
 - Version bump (Commitizen)
 - Changelog update (Commitizen)
-- Building `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`
-- Creating a GitHub Release and uploading both artifacts
+- Building `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`, and the versioned Library manifest
+- Verifying artifact SHA-256 integrity before release mutation
+- Creating a GitHub Release and uploading all three artifacts
 
 Before triggering a release, review:
 
