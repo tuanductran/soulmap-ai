@@ -41,7 +41,8 @@ Because pytest-xdist and pytest-randomly intentionally introduce process and ord
 
 ## Upgrade and security response
 
-Dependency updates should be handled through the existing Dependabot/Renovate dashboard and `uv.lock` refresh process. A package security advisory or incompatible release should trigger a focused branch, an explicit compatibility note, full local validation, and CI evidence on Python 3.11 before release. Do not replace packages or add a security scanner solely because it is available; add a new tool only when it protects a specific repository contract or resolves a documented blocker.
+Dependency updates should be handled through the existing Dependabot/Renovate dashboard and `uv.lock` refresh process. The operational sequence, evidence fields and release boundary are defined in [`docs/operations/dependency-refresh.md`](../operations/dependency-refresh.md). A package security advisory or incompatible release should trigger a focused branch, an explicit compatibility note, full local validation, and CI evidence on Python 3.11 before release. Do not replace packages or add a security scanner solely because it is available; add a new tool only when it protects a specific repository
+ contract or resolves a documented blocker.
 
 This document does not introduce a new runtime dependency, package migration, Python-version expansion, platform adapter, or semantic safety layer.
 
