@@ -20,6 +20,14 @@ uv run soulmap library-manifest
 
 The command builds both distribution archives and writes `dist/soulmap-ai-library.json`. The generated manifest takes the project version from `pyproject.toml`, resolves the corresponding GitHub Release URL, and records the byte size and SHA-256 digest of each archive.
 
+Verify those exact files before upload with:
+
+```bash
+uv run python scripts/verify_artifact_hashes.py
+```
+
+The verifier is local-only and does not contact GitHub. It fails with a non-zero exit code if the manifest is missing or invalid, an artifact is missing, its byte size differs, or its SHA-256 digest differs. A successful run prints one `PASS` line per artifact.
+
 The three files have distinct roles:
 
 | File | Role |
@@ -46,7 +54,7 @@ Before a release, run the repository workflow described in [`../../docs/engineer
 https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}
 ```
 
-A release reviewer should verify that the manifest version equals the tag, both artifact paths exist, the recorded sizes match the downloaded files, and the SHA-256 values recompute successfully. Any mismatch is a release failure, not a reason to edit the manifest manually.
+A release reviewer should verify that the manifest version equals the tag, both artifact paths exist, the recorded sizes match the downloaded files, and the SHA-256 values recompute successfully. The release workflow runs `scripts/verify_artifact_hashes.py` before upload. Any mismatch is a release failure, not a reason to edit the manifest manually.
 
 ## Non-goals
 
