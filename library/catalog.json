@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "library_id": "soulmap-ai",
+  "display_name": "SoulMap AI",
+  "project_version_source": "pyproject.toml:[project].version",
+  "repository": "https://github.com/tuanductran/soulmap-ai",
+  "license": "MIT",
+  "source_of_truth": {
+    "runtime_manifest": "SKILL.md",
+    "doctrine": "AGENTS.md",
+    "plugin_metadata": ".claude-plugin/marketplace.json",
+    "knowledge_root": "skills/"
+  },
+  "distribution": {
+    "catalog_status": "versioned-source-catalog",
+    "installation_mode": "manual-upload",
+    "automatic_installation": false,
+    "platform_acceptance": "operator-recorded",
+    "release_url_template": "https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}"
+  },
+  "compatibility": {
+    "root_manifest": "SKILL.md",
+    "knowledge_archive": "dist/soulmap-ai.zip",
+    "skill_archive": "dist/soulmap-ai.skill",
+    "claude_plugin_metadata": ".claude-plugin/marketplace.json",
+    "supported_surfaces": [
+      "Claude Custom Skills",
+      "ChatGPT project knowledge",
+      "Any agent with Skills support"
+    ]
+  },
+  "entries": [
+    {
+      "id": "brand",
+      "plugin_name": "SoulMap Brand System",
+      "path": "skills/brand",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    },
+    {
+      "id": "frameworks",
+      "plugin_name": "SoulMap Core Frameworks",
+      "path": "skills/frameworks",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    },
+    {
+      "id": "safety",
+      "plugin_name": "SoulMap Safety Guardrails",
+      "path": "skills/safety",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    },
+    {
+      "id": "meta",
+      "plugin_name": "SoulMap Meta Guidance",
+      "path": "skills/meta",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    },
+    {
+      "id": "spiritual",
+      "plugin_name": "SoulMap Spiritual Layer",
+      "path": "skills/spiritual",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    },
+    {
+      "id": "voice",
+      "plugin_name": "SoulMap Voice System",
+      "path": "skills/voice",
+      "kind": "knowledge-skill",
+      "status": "stable"
+    }
+  ]
+}
