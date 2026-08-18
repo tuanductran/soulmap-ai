@@ -222,9 +222,11 @@ Cross-platform:
 ```bash
 uv run soulmap build
 uv run soulmap build --skill
+uv run soulmap library-manifest
 ```
 
 Output:
 
 - `dist/soulmap-ai.zip`
 - `dist/soulmap-ai.skill`
+- `dist/soulmap-ai-library.json`

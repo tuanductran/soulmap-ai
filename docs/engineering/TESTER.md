@@ -78,12 +78,17 @@ When reviewing safety claims manually, keep the matrix status labels strict:
 ```bash
 uv run soulmap build
 uv run soulmap build --skill
+uv run soulmap library-manifest
 ```
 
 Verify:
 
 - `dist/soulmap-ai.zip` exists and excludes `.claude-plugin/`.
 - `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/` as-is.
+- `dist/soulmap-ai-library.json` exists and contains the current project version, release URL,
+  both artifact paths, byte sizes, and SHA-256 digests matching the generated files.
+- The CI `build` job and release workflow both run
+  `scripts/verify_artifact_hashes.py` before uploading artifacts.
 - As a minimum smoke check, `.claude-plugin/marketplace.json` is still present inside the
   `.skill` artifact.
 

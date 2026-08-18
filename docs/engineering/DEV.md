@@ -107,6 +107,10 @@ back to `GET` when needed, and treat common anti-bot or rate-limit responses suc
 
 - `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`.
 - `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved.
+- `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
+  SHA-256 digests when `uv run soulmap library-manifest` is used.
+
+For the catalog and manual distribution boundary, see [`operations/LIBRARY.md`](../operations/LIBRARY.md).
 
 ## Claude plugin packaging
 

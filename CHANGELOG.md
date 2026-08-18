@@ -5,6 +5,13 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## Unreleased
+
+### Feat
+
+- **library**: add a versioned catalog and generated release manifest with artifact
+  checksums, compatibility metadata, and manual distribution boundaries
+
 ## v0.8.0 (2026-08-14)
 
 ### Feat

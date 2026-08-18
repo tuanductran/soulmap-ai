@@ -7,7 +7,7 @@ Use this folder as the entry point for repo documentation.
 - Contributors: [`engineering/DEV.md`](engineering/DEV.md)
 - Testers: [`engineering/TESTER.md`](engineering/TESTER.md)
 - Operators: [`operations/OPERATIONS.md`](operations/OPERATIONS.md),
-  [`operations/UPLOAD.md`](operations/UPLOAD.md), and
+  [`operations/UPLOAD.md`](operations/UPLOAD.md), [`operations/LIBRARY.md`](operations/LIBRARY.md), and
   [`integrations/README.md`](integrations/README.md)
 - Repository automation reviewers: [`.github/workflows/`](../.github/workflows/) and
   [`.claude/hooks/`](../.claude/hooks/)
@@ -32,6 +32,7 @@ Use this folder as the entry point for repo documentation.
 - [`operations/PRIVACY.md`](operations/PRIVACY.md): disclosure, reporting, and data-handling stance
 - [`operations/REGULATORY.md`](operations/REGULATORY.md): regulatory positioning and compliance boundary notes
 - [`operations/UPLOAD.md`](operations/UPLOAD.md): how to package and upload the knowledge base
+- [`operations/LIBRARY.md`](operations/LIBRARY.md): versioned catalog, artifact verification, and manual distribution boundary
 - [`engineering/repo-contract.md`](engineering/repo-contract.md): repository structure, ownership, and release
   boundaries
 - [`engineering/safety-architecture.md`](engineering/safety-architecture.md): end-to-end explanation of the

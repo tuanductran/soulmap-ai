@@ -60,10 +60,11 @@ jobs:
           version="$(uv run cz version --project)"
           git tag -f "v${version}"
 
-      - name: Build distribution artifact
-        run: |
-          uv run soulmap build
-          uv run soulmap build --skill
+      - name: Build distribution artifacts and Library manifest
+        run: uv run soulmap library-manifest
+
+      - name: Verify artifact SHA-256 integrity
+        run: uv run python scripts/verify_artifact_hashes.py
 
       - name: Push bump commit + tag
         run: |
@@ -82,3 +83,4 @@ jobs:
           files: |
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json

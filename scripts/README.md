@@ -23,6 +23,8 @@ uv run soulmap check-links --root .
 uv run soulmap check-case --root .
 uv run soulmap build
 uv run soulmap build --skill
+uv run soulmap library-manifest
+uv run python scripts/verify_artifact_hashes.py
 uv run soulmap eval-groups
 uv run soulmap eval-responses
 uv run soulmap eval-markdown-contracts
@@ -46,6 +48,14 @@ pytest-randomly seed and preserve a serial reproduction command when parallel te
 
 ```bash
 uv run python scripts/pytest_diagnostics.py
+```
+
+After building the Library artifacts, verify their recorded size and SHA-256 values
+without network access:
+
+```bash
+uv run soulmap library-manifest
+uv run python scripts/verify_artifact_hashes.py
 ```
 
 For setup and workflow details, use [`docs/engineering/DEV.md`](../docs/engineering/DEV.md).

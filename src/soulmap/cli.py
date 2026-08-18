@@ -12,7 +12,7 @@ from soulmap.devtools.evals import (
     eval_markdown_contracts,
     eval_responses,
 )
-from soulmap.devtools.packaging import build_skill
+from soulmap.devtools.packaging import build_skill, library
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
@@ -45,6 +45,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "eval-responses": eval_responses.main,
         "format": format_tool.main,
         "lint": lint_tool.main,
+        "library-manifest": library.main,
         "markdown-contract": markdown_contract.main,
         "test": _run_pytest,
     }
