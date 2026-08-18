@@ -25,15 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Install actionlint
+        if: matrix.os == 'ubuntu-latest'
+        uses: ./.github/actions/actionlint
+
       - name: Validate GitHub Actions workflows
         if: matrix.os == 'ubuntu-latest'
-        uses: raven-actions/actionlint@v2
+        run: actionlint
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: ./.github/actions/setup-uv
         with:
           python-version: "3.11"
-          enable-cache: true
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
       - name: Lint
@@ -72,10 +75,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: ./.github/actions/setup-uv
         with:
           python-version: "3.11"
-          enable-cache: true
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
       - name: Generate knowledge inventory
@@ -95,10 +97,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: ./.github/actions/setup-uv
         with:
           python-version: "3.11"
-          enable-cache: true
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
       - name: Build skill bundle

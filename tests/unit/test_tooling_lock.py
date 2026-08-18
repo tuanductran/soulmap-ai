@@ -34,12 +34,12 @@ def test_repo_tooling_lock_serializes_parallel_processes(tmp_path: Path) -> None
     assert first.exitcode == 0
     assert second.exitcode == 0
 
-    first_acquired = events[0][1]
-    first_released = events[1][1]
-    second_acquired = events[2][1]
-    second_released = events[3][1]
+    acquired = sorted(timestamp for event, timestamp in events if event == "acquired")
+    released = sorted(timestamp for event, timestamp in events if event == "released")
 
-    assert first_acquired <= first_released <= second_acquired <= second_released
+    assert len(acquired) == 2
+    assert len(released) == 2
+    assert acquired[0] <= released[0] <= acquired[1] <= released[1]
     assert not (tmp_path / ".format-lint.lock").exists()
 
 

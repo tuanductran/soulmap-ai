@@ -12,6 +12,9 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "ci.yml",
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
+CI_WORKFLOWS = tuple((REPO_ROOT / ".github" / "workflows").glob("*.yml"))
+SETUP_UV_ACTION = REPO_ROOT / ".github" / "actions" / "setup-uv" / "action.yml"
+ACTIONLINT_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "action.yml"
 
 DIRECT_DEV_PACKAGES = {
     "hypothesis",
@@ -69,6 +72,31 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     assert '--randomly-seed="${PYTEST_RANDOMLY_SEED}"' in ci_text
 
 
+def test_workflows_use_local_resilient_tool_installers() -> None:
+    setup_uv_text = SETUP_UV_ACTION.read_text(encoding="utf-8")
+    actionlint_text = ACTIONLINT_ACTION.read_text(encoding="utf-8")
+
+    assert 'UV_VERSION: "0.12.5"' in setup_uv_text
+    assert "UV_UNMANAGED_INSTALL" in setup_uv_text
+    assert "https://astral.sh/uv/${UV_VERSION}/install.sh" in setup_uv_text
+    assert 'default: "1.7.12"' in actionlint_text
+    assert (
+        "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+        in actionlint_text
+    )
+    assert "sha256sum --check --strict" in actionlint_text
+
+    for workflow_path in CI_WORKFLOWS:
+        workflow_text = workflow_path.read_text(encoding="utf-8")
+        assert "astral-sh/setup-uv" not in workflow_text
+        assert "raven-actions/actionlint" not in workflow_text
+        assert "uses: ./.github/actions/setup-uv" in workflow_text
+
+    assert "uses: ./.github/actions/actionlint" in (
+        REPO_ROOT / ".github" / "workflows" / "ci.yml"
+    ).read_text(encoding="utf-8")
+
+
 def test_direct_dev_packages_are_locked() -> None:
     lock_text = LOCKFILE.read_text(encoding="utf-8")
 
@@ -90,3 +118,5 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
+    assert "| uv | 0.12.5 (CI installer pin) |" in research_text
+    assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text

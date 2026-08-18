@@ -22,6 +22,8 @@ This note records official package evidence for the development toolchain used b
 | Vulture | 2.16 | [PyPI project metadata](https://pypi.org/project/vulture/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14 for CPython/PyPy. Its findings remain subject to the repository confidence threshold and human review. |
 | Hatchling | transitive build backend | [Hatch documentation](https://hatch.pypa.io/latest/) | Hatch documents reproducible builds, uv-supported environments and PEP 517 build workflows. SoulMap's explicit ZIP/skill builders remain the product artifact source. |
 | lefthook | 2.1.10 | [lefthook documentation](https://lefthook.dev/) | lefthook is a Git hooks manager, not a Python runtime package. Python 3.11 compatibility does not apply to the binary; the relevant contract is that hooks invoke `uv run` commands consistently. |
+| uv | 0.12.5 (CI installer pin) | [uv installer documentation](https://docs.astral.sh/uv/reference/installer/) | CI installs uv through the official unmanaged standalone installer into the ephemeral runner. It is a toolchain executable, not a SoulMap runtime or locked project dependency. |
+| actionlint | 1.7.12 (CI binary pin) | [actionlint installation documentation](https://github.com/rhysd/actionlint/blob/main/docs/install.md) | CI downloads the Linux amd64 release archive from the official release URL and verifies a repository-pinned SHA-256 before checking workflows. It replaces a third-party action archive dependency and is CI-only. |
 
 ## Locked baseline and support policy
 
@@ -60,3 +62,5 @@ This document does not introduce a new runtime dependency, package migration, Py
 [13]: https://hatch.pypa.io/latest/ "Hatch documentation"
 [14]: https://lefthook.dev/ "lefthook documentation"
 [15]: https://www.python.org/downloads/release/python-31116/ "Python 3.11.16 release notes"
+[16]: https://docs.astral.sh/uv/reference/installer/ "uv installer options"
+[17]: https://github.com/rhysd/actionlint/blob/main/docs/install.md "actionlint installation documentation"

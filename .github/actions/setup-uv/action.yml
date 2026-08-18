@@ -1,0 +1,53 @@
+name: Install uv
+
+description: Install a pinned uv release without downloading a GitHub Action archive.
+
+inputs:
+  python-version:
+    description: Python version to expose through UV_PYTHON.
+    required: false
+    default: "3.11"
+
+runs:
+  using: composite
+  steps:
+    - name: Install uv (Unix)
+      if: runner.os != 'Windows'
+      shell: bash
+      env:
+        UV_VERSION: "0.12.5"
+        UV_PYTHON_VERSION: ${{ inputs.python-version }}
+      run: |
+        set -euo pipefail
+        install_dir="${RUNNER_TEMP}/soulmap-uv"
+        rm -rf "$install_dir"
+        mkdir -p "$install_dir"
+        curl --fail --location --retry 5 --retry-all-errors --silent --show-error \
+          "https://astral.sh/uv/${UV_VERSION}/install.sh" | \
+          env UV_UNMANAGED_INSTALL="$install_dir" sh
+        echo "$install_dir" >> "$GITHUB_PATH"
+        echo "UV_PYTHON=${UV_PYTHON_VERSION}" >> "$GITHUB_ENV"
+        "$install_dir/uv" --version
+
+    - name: Install uv (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      env:
+        UV_VERSION: "0.12.5"
+        UV_PYTHON_VERSION: ${{ inputs.python-version }}
+      run: |
+        $ErrorActionPreference = "Stop"
+        $installDir = Join-Path $env:RUNNER_TEMP "soulmap-uv"
+        if (Test-Path $installDir) {
+          Remove-Item -Recurse -Force $installDir
+        }
+        New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+        $env:UV_UNMANAGED_INSTALL = $installDir
+        $scriptPath = Join-Path $env:RUNNER_TEMP "uv-install.ps1"
+        Invoke-WebRequest -UseBasicParsing `
+          -Uri "https://astral.sh/uv/$env:UV_VERSION/install.ps1" `
+          -OutFile $scriptPath
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $scriptPath
+        Add-Content -Path $env:GITHUB_PATH -Value $installDir
+        Add-Content -Path $env:GITHUB_ENV -Value "UV_PYTHON=$env:UV_PYTHON_VERSION"
+        & (Join-Path $installDir "uv.exe") --version
