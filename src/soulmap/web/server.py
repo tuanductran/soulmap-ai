@@ -35,6 +35,8 @@ CSS = """
   --focus: #0b5c58;
   --shadow: 0 22px 60px rgba(42, 57, 59, 0.11);
   --radius: 24px;
+  --radius-hero: 32px;
+  --radius-hero-inner: 20px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
@@ -93,8 +95,8 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
 .button:hover { transform: translateY(-2px); background: var(--teal-dark); }
 .button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
 .button.secondary:hover { background: rgba(47, 111, 107, .08); }
-.mirror-card { position: relative; padding: clamp(2rem, 5vw, 3.5rem); border: 1px solid rgba(47, 111, 107, .16); border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%; background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(222,238,231,.62)); box-shadow: var(--shadow); }
-.mirror-card::before { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(47, 111, 107, .18); border-radius: inherit; pointer-events: none; }
+.mirror-card { position: relative; padding: clamp(2rem, 5vw, 3.5rem); border: 1px solid rgba(47, 111, 107, .16); border-radius: var(--radius-hero) 36px 28px 32px; background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(222,238,231,.62)); box-shadow: var(--shadow); }
+.mirror-card::before { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(47, 111, 107, .18); border-radius: var(--radius-hero-inner) 22px 16px 18px; pointer-events: none; }
 .mirror-card blockquote { position: relative; margin: 0; font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.25; letter-spacing: -.03em; }
 .mirror-card cite { position: relative; display: block; margin-top: 1.4rem; color: var(--muted); font-size: .9rem; font-style: normal; }
 .section { padding: 5.5rem 0; }

@@ -88,6 +88,7 @@ The public surface follows a restrained SoulMap visual system rather than imitat
 | --- | --- |
 | Structure | Each public page has one `h1`, meaningful landmark structure, and sequential section/card headings. |
 | Contrast | Light and dark tokens are selected for readable text and accent use; the warm gold accent is reserved for an accessible ochre token when it carries meaning. |
+| Shape | Content cards use the shared 24px surface radius. The Home mirror card is the single expressive hero exception, using a restrained asymmetric 32px/20px token pair rather than a full capsule. |
 | Interaction | Keyboard users receive a visible `:focus-visible` ring. Primary controls are at least 48px high and navigation links are at least 44px high. |
 | Adaptation | The layout responds at mobile, tablet, and desktop widths. Narrow navigation remains scrollable rather than shrinking targets below a usable size. Safe-area insets are respected on supported devices. |
 | Preferences | `prefers-color-scheme`, `prefers-reduced-motion`, and `prefers-reduced-transparency` are supported without JavaScript. |

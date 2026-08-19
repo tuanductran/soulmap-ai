@@ -61,6 +61,10 @@ def test_website_is_responsive_and_accessible() -> None:
     assert "@media (max-width: 640px)" in css
     assert "--gold: #8a681f" in css
     assert "--muted: #5d6b70" in css
+    assert "--radius-hero: 32px" in css
+    assert "--radius-hero-inner: 20px" in css
+    assert "border-radius: var(--radius-hero) 36px 28px 32px" in css
+    assert "border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%" not in css
     assert "#c99b50" not in css
     assert "prefers-reduced-motion" in css
     assert "prefers-color-scheme: dark" in css
