@@ -79,6 +79,7 @@ When reviewing safety claims manually, keep the matrix status labels strict:
 uv run soulmap build
 uv run soulmap build --skill
 uv run soulmap library-manifest
+uv run python scripts/verify_extracted_artifacts.py
 ```
 
 Verify:
@@ -91,6 +92,9 @@ Verify:
   `scripts/verify_artifact_hashes.py` before uploading artifacts.
 - As a minimum smoke check, `.claude-plugin/marketplace.json` is still present inside the
   `.skill` artifact.
+- `uv run python scripts/verify_extracted_artifacts.py` passes after extraction: the ZIP and
+  `.skill` contain the expected shipped files, keep their plugin boundary, and contain no
+  repository-only paths or implementation references inside `skills/`.
 
 ## Orchestration layer checks
 
@@ -202,6 +206,7 @@ contracts:
 - `uv run soulmap build --skill`
 - `uv run soulmap library-manifest`
 - `uv run python scripts/verify_artifact_hashes.py`
+- `uv run python scripts/verify_extracted_artifacts.py`
 - `uv run soulmap markdown-contract --root .`
 - `uv run soulmap check-links --root .`
 - `uv run soulmap check-case --root .`

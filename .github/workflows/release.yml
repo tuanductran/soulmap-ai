@@ -66,6 +66,9 @@ jobs:
       - name: Verify artifact SHA-256 integrity
         run: uv run python scripts/verify_artifact_hashes.py
 
+      - name: Verify extracted artifact boundaries
+        run: uv run python scripts/verify_extracted_artifacts.py
+
       - name: Push bump commit + tag
         run: |
           git push --follow-tags
