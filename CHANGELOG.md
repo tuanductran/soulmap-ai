@@ -5,17 +5,28 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
+## v0.9.0 (2026-08-19)
 
 ### Feat
 
-- **library**: add a versioned catalog and generated release manifest with artifact
-  checksums, compatibility metadata, and manual distribution boundaries
-- **skills**: add grounded handling for user-provided symbolic and numerology reports
+- **skills**: add grounded symbolic report handling
+- **markdown**: use CommonMark tokens for link contracts
+- **spiritual**: add grounded discernment refinements
+- **library**: add versioned catalog manifest
+- **ci**: add pytest reproducibility diagnostics
+- **safety**: add Vietnamese input phrase packs
+- **safety**: harden deterministic response contracts
+- **integrations**: enforce compatibility metadata
+- **safety**: harden deterministic response contracts
 
 ### Fix
 
-- **packaging**: verify extracted ZIP and `.skill` boundaries before artifact upload
+- **skills**: remove repository-only references from shipped doctrine
+- **ci**: harden Windows installer and lock test
+- **ci**: avoid action archive download rate limits
+- **safety**: close identity confirmation boundary gap
+- **safety**: narrow Vietnamese phrase matching
+- **resources**: refresh Web5Ngay channel link
 
 ## v0.8.0 (2026-08-14)
 
