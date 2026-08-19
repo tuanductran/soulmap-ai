@@ -108,6 +108,29 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'id="skill-modal"' in html
 
 
+def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
+    _, english_body = _request("/partials/skill/meta.en.html")
+    english = english_body.decode("utf-8")
+    _, vietnamese_body = _request("/partials/skill/meta.vi.html")
+    vietnamese = vietnamese_body.decode("utf-8")
+
+    for html, labels in (
+        (
+            english,
+            ("Open in ChatGPT", "Open in Claude", "Open in Claude Code"),
+        ),
+        (
+            vietnamese,
+            ("Mở trong ChatGPT", "Mở trong Claude", "Mở trong Claude Code"),
+        ),
+    ):
+        assert "https://chatgpt.com/?q=" in html
+        assert "https://claude.ai/new?q=" in html
+        assert "claude-cli://open?q=" in html
+        for label in labels:
+            assert label in html
+
+
 def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
     _, catalog_body = _request("/api/skills.json")
     catalog = catalog_body.decode("utf-8")
