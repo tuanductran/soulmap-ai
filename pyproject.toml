@@ -8,9 +8,26 @@ version = "0.9.0"
 description = "SoulMap AI knowledge base, orchestration runtime, and local developer tooling."
 readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Tuan Duc Tran" }]
+keywords = ["reflective AI", "inner work", "AI skills", "developer tooling"]
+classifiers = [
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
   "markdown-it-py>=4.2.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/tuanductran/soulmap-ai"
+Repository = "https://github.com/tuanductran/soulmap-ai"
+Documentation = "https://github.com/tuanductran/soulmap-ai/tree/main/docs"
+Issues = "https://github.com/tuanductran/soulmap-ai/issues"
 
 [project.scripts]
 soulmap = "soulmap.cli:main"
@@ -25,9 +42,6 @@ include = [
   "/LICENSE",
   "/README.md",
   "/pyproject.toml",
-  "/.claude",
-  "/.claude-plugin",
-  "/.github",
   "/docs",
   "/evals",
   "/scripts",

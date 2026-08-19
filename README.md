@@ -96,6 +96,16 @@ Outputs:
 
 For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
+## Distribution boundary
+
+The Python wheel and source distribution are local developer/test tooling surfaces. They
+provide the `soulmap` CLI and repository validation code, but they are not standalone
+knowledge-base runtimes and do not replace the repository's `skills/` source tree.
+
+For use in AI tools, import the generated `dist/soulmap-ai.skill` or
+`dist/soulmap-ai.zip` artifact. Those artifacts are the supported distribution surface for
+SoulMap doctrine and package knowledge; the Python distribution is not an AI Skill installer.
+
 ## Where to start
 
 - doctrine and package truth: [AGENTS.md](AGENTS.md)

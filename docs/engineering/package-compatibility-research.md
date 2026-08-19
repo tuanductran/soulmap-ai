@@ -1,16 +1,16 @@
 # Python 3.11 package compatibility research
 
-**Research date:** 2026-08-17
+**Research date:** 2026-08-19
 
 This note records official package evidence for the development toolchain used by SoulMap AI. It is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
 ## Official compatibility findings
 
-| Package | Locked version on v0.8.0 | Official source | Relevant finding for SoulMap |
+| Package | Locked version on v0.9.0 | Official source | Relevant finding for SoulMap |
 | --- | --- | --- | --- |
-| Ruff | 0.16.2 | [Ruff documentation](https://docs.astral.sh/ruff/) | Current docs advertise Python 3.14 compatibility, `pyproject.toml` support, caching and active development. Python 3.11 is below the documented compatibility ceiling; upgrades still require repository CI evidence. |
+| Ruff | 0.16.3 | [Ruff documentation](https://docs.astral.sh/ruff/) | Current docs advertise Python 3.14 compatibility, `pyproject.toml` support, caching and active development. Python 3.11 is below the documented compatibility ceiling; upgrades still require repository CI evidence. |
 | pytest | 9.1.1 | [pytest compatibility policy](https://docs.pytest.org/en/stable/backwards-compatibility.html) | pytest 9.0+ supports Python 3.10+, so Python 3.11 is supported. Its deprecation policy makes warnings an upgrade signal rather than something to ignore silently. |
-| Hypothesis | 6.165.3 | [Hypothesis compatibility](https://hypothesis.readthedocs.io/en/latest/compatibility.html) | Hypothesis supports and tests CPython/PyPy 3.10+. It officially supports only the latest patch release of each supported Python version; documented APIs generally do not break except at major versions. |
+| Hypothesis | 6.165.9 | [Hypothesis compatibility](https://hypothesis.readthedocs.io/en/latest/compatibility.html) | Hypothesis supports and tests CPython/PyPy 3.10+. It officially supports only the latest patch release of each supported Python version; documented APIs generally do not break except at major versions. |
 | PyMarkdownLnt | 0.9.39 | [PyPI project metadata](https://pypi.org/project/pymarkdownlnt/) | Requires Python >=3.10 and classifies Python 3.10 through 3.13. Python 3.11 is a declared supported interpreter, matching the Markdown contract role. |
 | pytest-cov | 7.1.0 | [PyPI project metadata](https://pypi.org/project/pytest-cov/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14. It supports coverage contexts and xdist integration; coverage data must remain reproducible under parallel workers. |
 | pytest-xdist | 3.8.0 | [pytest-xdist documentation](https://pytest-xdist.readthedocs.io/en/latest/) | `pytest -n auto` starts workers based on available CPUs and distributes tests randomly. Test order/count must remain consistent; a serial diagnostic path is still required for failures. |
@@ -27,9 +27,9 @@ This note records official package evidence for the development toolchain used b
 
 ## Locked baseline and support policy
 
-The v0.8.0 lock baseline uses Python `>=3.11` in `pyproject.toml` and CI installs Python 3.11. The sandbox used during this research runs Python 3.12.3, so local success is not a substitute for the CI Python 3.11 evidence.
+The v0.9.0 lock baseline uses Python `>=3.11` in `pyproject.toml` and CI installs Python 3.11. The sandbox used during this research runs Python 3.12.3, so local success is not a substitute for the CI Python 3.11 evidence.
 
-As of 2026-08-17, the latest official Python 3.11 source release is **Python 3.11.16**, released on 2026-08-12. Python.org classifies it as a security bugfix release for the legacy 3.11 series. The repository records this patch as the current CI review baseline without expanding the Python support floor or claiming that local Python 3.12 success substitutes for CI evidence. The release notes include security fixes affecting areas such as `ssl`, `webbrowser`, archive extraction, `ftplib`, `io.open_code`, HTTP handling, and XML parsing; future lockfile refresh reviews should check the same official release notes and the project's transitive package advisories. [15]
+As of 2026-08-19, the latest official Python 3.11 source release is **Python 3.11.16**, released on 2026-08-12. Python.org classifies it as a security bugfix release for the legacy 3.11 series. The repository records this patch as the current CI review baseline without expanding the Python support floor or claiming that local Python 3.12 success substitutes for CI evidence. The release notes include security fixes affecting areas such as `ssl`, `webbrowser`, archive extraction, `ftplib`, `io.open_code`, HTTP handling, and XML parsing; future lockfile refresh reviews should check the same official release notes and the project's transitive package advisories. [15]
 
 The repository should retain a support floor of Python 3.11, test the latest available 3.11 patch release in CI, and treat the lockfile as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
 
