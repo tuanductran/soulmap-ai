@@ -25,13 +25,14 @@ CSS = """
 :root {
   color-scheme: light;
   --ink: #26333a;
-  --muted: #65747a;
+  --muted: #5d6b70;
   --paper: #f7f5ef;
   --surface: rgba(255, 255, 255, 0.78);
   --line: rgba(38, 51, 58, 0.13);
   --teal: #2f6f6b;
   --teal-dark: #1f514e;
-  --gold: #c99b50;
+  --gold: #8a681f;
+  --focus: #0b5c58;
   --shadow: 0 22px 60px rgba(42, 57, 59, 0.11);
   --radius: 24px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -39,7 +40,7 @@ CSS = """
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
 body {
   margin: 0;
   min-width: 320px;
@@ -48,10 +49,17 @@ body {
     radial-gradient(circle at 10% 0%, rgba(201, 155, 80, 0.12), transparent 30rem),
     radial-gradient(circle at 90% 12%, rgba(47, 111, 107, 0.10), transparent 28rem),
     var(--paper);
-  line-height: 1.65;
+    line-height: 1.65;
+  overflow-x: hidden;
 }
 a { color: inherit; }
-.container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+.container {
+ width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
 .skip-link {
   position: absolute; left: 1rem; top: -5rem; padding: .7rem 1rem;
   background: var(--ink); color: white; border-radius: 999px; z-index: 5;
@@ -60,25 +68,28 @@ a { color: inherit; }
 .site-header {
   position: sticky; top: 0; z-index: 4; backdrop-filter: blur(16px);
   background: rgba(247, 245, 239, .84); border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
 }
 .nav { display: flex; align-items: center; justify-content: space-between; min-height: 76px; gap: 1rem; }
-.brand { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; font-weight: 750; letter-spacing: -.02em; }
+.brand { display: inline-flex; align-items: center; min-height: 44px; gap: .7rem; text-decoration: none; font-weight: 700; letter-spacing: -.02em; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: var(--teal-dark); background: rgba(47, 111, 107, .13); font-size: 1.2rem; }
 .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
-.nav-links a { padding: .45rem .7rem; color: var(--muted); font-size: .93rem; text-decoration: none; border-radius: 999px; }
+.nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem .75rem; color: var(--muted); font-size: .93rem; text-decoration: none; border-radius: 999px; }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--teal-dark); background: rgba(47, 111, 107, .09); }
-main { overflow: hidden; }
+main { position: relative; }
 .hero { padding: clamp(4.5rem, 10vw, 8rem) 0 5rem; }
 .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(2rem, 7vw, 6rem); }
 .eyebrow { color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-h1, h2, h3 { margin: 0 0 1rem; line-height: 1.12; letter-spacing: -.045em; }
-h1 { max-width: 720px; font-size: clamp(3rem, 7vw, 6rem); font-weight: 760; }
+h1, h2, h3 { margin: 0 0 1rem; line-height: 1.12; letter-spacing: -.03em; text-wrap: balance; }
+h1 { max-width: 720px; font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; }
+
 h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
 h3 { font-size: 1.25rem; letter-spacing: -.02em; }
-p { margin: 0 0 1rem; }
+.card-title, .step-title, .download-card h2 { font-size: 1.25rem; letter-spacing: -.02em; }
+p { margin: 0 0 1rem; text-wrap: pretty; }
 .lede { max-width: 650px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.32rem); }
 .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.15rem; border: 1px solid var(--teal); border-radius: 999px; color: white; background: var(--teal); text-decoration: none; font-weight: 720; transition: transform .2s ease, background .2s ease; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.15rem; border: 1px solid var(--teal); border-radius: 999px; color: white; background: var(--teal); text-decoration: none; font-weight: 700; transition: transform .2s ease, background .2s ease; }
 .button:hover { transform: translateY(-2px); background: var(--teal-dark); }
 .button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
 .button.secondary:hover { background: rgba(47, 111, 107, .08); }
@@ -90,7 +101,11 @@ p { margin: 0 0 1rem; }
 .section.tinted { background: rgba(255,255,255,.48); border-block: 1px solid var(--line); }
 .section-heading { max-width: 700px; margin-bottom: 2rem; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.card, .step, .download-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .card { height: 100%; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 12px 35px rgba(42, 57, 59, .05); }
+@media (hover: hover) {
+  .card:hover, .step:hover, .download-card:hover { transform: translateY(-2px); border-color: rgba(47, 111, 107, .28); box-shadow: 0 16px 40px rgba(42, 57, 59, .10); }
+}
 .card p, .muted { color: var(--muted); }
 .card .number { color: var(--gold); font-size: .8rem; font-weight: 800; letter-spacing: .15em; }
 .split { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
@@ -107,7 +122,8 @@ p { margin: 0 0 1rem; }
 .download-card + .download-card { margin-top: 1rem; }
 .download-card p { margin-bottom: 0; color: var(--muted); }
 .note-label { color: var(--teal); font-size: .76rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-.site-footer { margin-top: 5rem; padding: 2.5rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+.site-footer { margin-top: 5rem; padding: 2.5rem 0 calc(2.5rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+
 .footer-grid { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
 .footer-links a { color: var(--muted); }
@@ -115,6 +131,31 @@ p { margin: 0 0 1rem; }
   .hero-grid, .split { grid-template-columns: 1fr; }
   .hero { padding-top: 4rem; }
   .mirror-card { max-width: 680px; }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ink: #f0f3ef;
+    --muted: #b7c3bf;
+    --paper: #192322;
+    --surface: rgba(34, 48, 46, .9);
+    --line: rgba(224, 239, 233, .16);
+    --teal: #84c5ba;
+    --teal-dark: #a2dfd0;
+    --gold: #e0b86a;
+    --focus: #a2dfd0;
+    --shadow: 0 22px 60px rgba(0, 0, 0, .28);
+  }
+  .site-header { background: rgba(25, 35, 34, .9); }
+  .skip-link { color: var(--paper); background: var(--ink); }
+  .button { color: #132522; background: var(--teal); border-color: var(--teal); }
+  .button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
+  .mirror-card { background: linear-gradient(145deg, rgba(49, 70, 66, .9), rgba(38, 67, 61, .75)); }
+  .section.tinted { background: rgba(34, 48, 46, .48); }
+  .callout { background: rgba(224, 184, 106, .14); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header { backdrop-filter: none; background: var(--paper); }
 }
 @media (max-width: 640px) {
   .container { width: min(100% - 28px, 560px); }
@@ -166,9 +207,10 @@ def _layout(title: str, description: str, path: str, content: str) -> str:
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="{safe_description}">
-    <meta name="theme-color" content="#f7f5ef">
+    <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#192322" media="(prefers-color-scheme: dark)">
     <title>{safe_title} · {SITE_NAME}</title>
     <link rel="stylesheet" href="/static/site.css">
   </head>
@@ -249,9 +291,9 @@ def _how_it_works() -> str:
     </section>
     <section class="section tinted">
       <div class="container steps">
-        <article class="step"><div><h3>You bring what is present</h3><p>A question, a conflict, a repeating pattern, a loss, or something that does not yet have a name.</p></div></article>
-        <article class="step"><div><h3>SoulMap reflects the shape</h3><p>It stays close to your words, notices possible patterns, and uses careful language rather than certainty.</p></div></article>
-        <article class="step"><div><h3>You keep the meaning</h3><p>The conversation returns interpretation, choice, and next movement to your own inner authority.</p></div></article>
+        <article class="step"><div><h2 class="step-title">You bring what is present</h2><p>A question, a conflict, a repeating pattern, a loss, or something that does not yet have a name.</p></div></article>
+        <article class="step"><div><h2 class="step-title">SoulMap reflects the shape</h2><p>It stays close to your words, notices possible patterns, and uses careful language rather than certainty.</p></div></article>
+        <article class="step"><div><h2 class="step-title">You keep the meaning</h2><p>The conversation returns interpretation, choice, and next movement to your own inner authority.</p></div></article>
       </div>
     </section>
     <section class="section">
@@ -274,9 +316,9 @@ def _boundaries() -> str:
     </section>
     <section class="section tinted">
       <div class="container grid">
-        <article class="card"><h3>SoulMap does not diagnose</h3><p>It does not name mental health conditions or turn a lived experience into a clinical label.</p></article>
-        <article class="card"><h3>SoulMap does not predict</h3><p>It does not forecast your future, promise outcomes, or turn symbolism into destiny.</p></article>
-        <article class="card"><h3>SoulMap does not replace support</h3><p>If you are unsafe or at risk of harm, seek immediate help from local emergency or crisis resources.</p></article>
+        <article class="card"><h2 class="card-title">SoulMap does not diagnose</h2><p>It does not name mental health conditions or turn a lived experience into a clinical label.</p></article>
+        <article class="card"><h2 class="card-title">SoulMap does not predict</h2><p>It does not forecast your future, promise outcomes, or turn symbolism into destiny.</p></article>
+        <article class="card"><h2 class="card-title">SoulMap does not replace support</h2><p>If you are unsafe or at risk of harm, seek immediate help from local emergency or crisis resources.</p></article>
       </div>
     </section>
     <section class="section">
@@ -304,8 +346,8 @@ def _download() -> str:
     </section>
     <section class="section tinted">
       <div class="container">
-        <div class="download-card"><div><h3>Skill package</h3><p><code>dist/soulmap-ai.skill</code> · preserves Skill metadata</p></div><a class="button" href="{RELEASE_URL}">Open releases</a></div>
-        <div class="download-card"><div><h3>Knowledge archive</h3><p><code>dist/soulmap-ai.zip</code> · clean extraction for document workflows</p></div><a class="button secondary" href="{RELEASE_URL}">View release files</a></div>
+        <div class="download-card"><div><h2>Skill package</h2><p><code>dist/soulmap-ai.skill</code> · preserves Skill metadata</p></div><a class="button" href="{RELEASE_URL}">Open releases</a></div>
+        <div class="download-card"><div><h2>Knowledge archive</h2><p><code>dist/soulmap-ai.zip</code> · clean extraction for document workflows</p></div><a class="button secondary" href="{RELEASE_URL}">View release files</a></div>
       </div>
     </section>
     <section class="section">
@@ -328,9 +370,9 @@ def _notes() -> str:
     </section>
     <section class="section tinted">
       <div class="container grid">
-        <article class="card"><span class="note-label">Self-recognition</span><h3>The feeling before the explanation</h3><p>Sometimes clarity begins by staying with the exact texture of what is here before reaching for a story about it.</p></article>
-        <article class="card"><span class="note-label">Relational honesty</span><h3>Repair is more than apology</h3><p>An apology can name regret. Repair asks what becomes different after the words have been spoken.</p></article>
-        <article class="card"><span class="note-label">Grounded inner work</span><h3>When certainty feels like relief</h3><p>The wish for an answer may be carrying a wish to stop listening. The two are not always the same.</p></article>
+        <article class="card"><span class="note-label">Self-recognition</span><h2 class="card-title">The feeling before the explanation</h2><p>Sometimes clarity begins by staying with the exact texture of what is here before reaching for a story about it.</p></article>
+        <article class="card"><span class="note-label">Relational honesty</span><h2 class="card-title">Repair is more than apology</h2><p>An apology can name regret. Repair asks what becomes different after the words have been spoken.</p></article>
+        <article class="card"><span class="note-label">Grounded inner work</span><h2 class="card-title">When certainty feels like relief</h2><p>The wish for an answer may be carrying a wish to stop listening. The two are not always the same.</p></article>
       </div>
     </section>
     <section class="section"><div class="container callout"><p>These notes are invitations, not prescriptions. Keep what clarifies something in your own experience and leave the rest.</p></div></section>

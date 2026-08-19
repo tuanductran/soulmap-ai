@@ -59,12 +59,29 @@ def test_website_is_responsive_and_accessible() -> None:
     assert captured["status"] == "200 OK"
     css = body.decode("utf-8")
     assert "@media (max-width: 640px)" in css
+    assert "--gold: #8a681f" in css
+    assert "--muted: #5d6b70" in css
+    assert "#c99b50" not in css
     assert "prefers-reduced-motion" in css
+    assert "prefers-color-scheme: dark" in css
+    assert "prefers-reduced-transparency" in css
+    assert "safe-area-inset" in css
+    assert ":focus-visible" in css
+    assert "min-height: 44px" in css
     assert ".skip-link" in css
 
 
 def test_web_command_is_public_cli_surface() -> None:
     assert "web" in _command_table()
+
+
+def test_secondary_page_card_headings_are_sequential() -> None:
+    for path in ("/how-it-works", "/boundaries", "/download", "/notes"):
+        _, body = _request(path)
+        html = body.decode("utf-8")
+        assert html.count("<h1>") == 1
+        assert "<h3>" not in html
+        assert "<h2" in html
 
 
 def test_static_export_writes_pages_project_layout(tmp_path: Path) -> None:
@@ -80,4 +97,6 @@ def test_static_export_writes_pages_project_layout(tmp_path: Path) -> None:
     html = (output / "index.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/' in html
     assert 'href="/"' not in html
+    assert "viewport-fit=cover" in html
+    assert 'media="(prefers-color-scheme: dark)"' in html
     assert "<script" not in html
