@@ -24,9 +24,8 @@
     </button>
   </span>
 </div>
-<div class="provider-grid">
-  <a class="button secondary" href="$chatgpt_url" target="_blank" rel="noopener">$chatgpt_label</a>
-  <a class="button secondary" href="$claude_url" target="_blank" rel="noopener">$claude_label</a>
-  <a class="button secondary" href="$claude_code_url">$claude_code_label</a>
-</div>
-<p class="modal-note">$handoff_note</p>
+<section class="prompt-pack" aria-labelledby="prompt-pack-title-$slug">
+  <h3 id="prompt-pack-title-$slug">$prompt_heading</h3>
+  <p class="modal-note">$prompt_intro</p>
+  <div class="prompt-scenarios">$prompt_scenarios</div>
+</section>

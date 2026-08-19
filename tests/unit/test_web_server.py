@@ -1,3 +1,4 @@
+import json
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any, cast
@@ -7,6 +8,7 @@ from wsgiref.util import setup_testing_defaults
 import pytest
 
 from soulmap.cli import _command_table
+from soulmap.web.catalog import CATALOG
 from soulmap.web.server import application, export_static
 
 
@@ -34,7 +36,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
     ("path", "status"),
     [
         ("/", "200 OK"),
-        ("/en", "200 OK"),
+        ("/en", "301 Moved Permanently"),
         ("/vi", "200 OK"),
         ("/how-it-works", "200 OK"),
         ("/boundaries", "200 OK"),
@@ -46,6 +48,8 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/static/site.css", "200 OK"),
         ("/static/site.js", "200 OK"),
         ("/api/skills.json", "200 OK"),
+        ("/api/skills/meta/prompts.json", "200 OK"),
+        ("/api/skills/meta/prompts.vi.json", "200 OK"),
         ("/api/raw/meta.md", "200 OK"),
         ("/missing", "404 Not Found"),
     ],
@@ -63,6 +67,14 @@ def test_public_website_routes(path: str, status: str) -> None:
         in headers["Content-Security-Policy"]
     )
     assert headers["Permissions-Policy"] == "camera=(), microphone=(), geolocation=()"
+
+
+def test_english_prefixed_routes_redirect_to_canonical_root() -> None:
+    captured, body = _request("/en/how-it-works", "q=mirror")
+    assert captured["status"] == "301 Moved Permanently"
+    headers = dict(cast(list[tuple[str, str]], captured["headers"]))
+    assert headers["Location"] == "/how-it-works?q=mirror"
+    assert body.decode("utf-8") == "Canonical English route: /how-it-works?q=mirror\n"
 
 
 def test_website_is_responsive_accessible_and_progressive() -> None:
@@ -105,9 +117,36 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert html.count('integrity="sha384-') == 2
     assert 'src="/static/site.js"' in html
     assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
+    assert 'hx-get="/partials/skills-grid.html?lang=en"' in html
+    assert 'hx-trigger="input changed delay:350ms"' in html
+    assert 'hx-target="#skill-grid"' in html
+    assert 'hx-swap="outerHTML"' in html
+    assert 'hx-indicator="#skill-search-loading"' in html
+    assert 'hx-sync="this:replace"' in html
+    assert 'method="get"' in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
+
+
+def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
+    captured, fragment_body = _request(
+        "/partials/skills-grid.html", "lang=en&q=spiritual"
+    )
+    fragment = fragment_body.decode("utf-8")
+    assert captured["status"] == "200 OK"
+    assert '<div class="skill-grid" id="skill-grid"' in fragment
+    assert "Grounded symbolic layer" in fragment
+    assert "Core orchestration" not in fragment
+    assert "Reflective frameworks" not in fragment
+
+    full_captured, full_body = _request("/skills", "q=spiritual")
+    full_page = full_body.decode("utf-8")
+    assert full_captured["status"] == "200 OK"
+    assert 'name="q"' in full_page
+    assert 'value="spiritual"' in full_page
+    assert "Grounded symbolic layer" in full_page
+    assert "Core orchestration" not in full_page
 
 
 def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
@@ -116,21 +155,56 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
     _, vietnamese_body = _request("/partials/skill/meta.vi.html")
     vietnamese = vietnamese_body.decode("utf-8")
 
-    for html, labels in (
+    for html, labels, heading, prompt_label, source_label, question_label in (
         (
             english,
             ("Open in ChatGPT", "Open in Claude", "Open in Claude Code"),
+            "Choose a context-specific prompt",
+            "Prompt",
+            "Source Skill bundle",
+            "Starter question",
         ),
         (
             vietnamese,
             ("Mở trong ChatGPT", "Mở trong Claude", "Mở trong Claude Code"),
+            "Chọn prompt theo bối cảnh",
+            "Prompt",
+            "Skill bundle nguồn",
+            "Câu hỏi bắt đầu",
         ),
     ):
+        assert heading in html
+        assert html.count(prompt_label) >= 3
+        assert html.count(source_label) >= 3
+        assert html.count(question_label) >= 3
+        assert (
+            html.count("https://tuanductran.github.io/soulmap-ai/api/raw/meta.md") >= 3
+        )
         assert "https://chatgpt.com/?q=" in html
         assert "https://claude.ai/new?q=" in html
         assert "claude-cli://open?q=" in html
+        assert "Provider links may require sign-in" not in html
+        assert "Use this public SoulMap Markdown bundle" not in html
         for label in labels:
             assert label in html
+
+
+@pytest.mark.parametrize("slug", [entry.slug for entry in CATALOG])
+def test_every_skill_fragment_has_context_prompt_source_and_provider_links(
+    slug: str,
+) -> None:
+    _, body = _request(f"/partials/skill/{slug}.en.html")
+    html = body.decode("utf-8")
+
+    assert html.count('class="prompt-scenario"') == 3
+    assert html.count('class="prompt-scenario__prompt"') == 3
+    assert html.count('class="prompt-scenario__source"') == 3
+    assert html.count('class="prompt-scenario__question"') == 3
+    assert html.count("https://tuanductran.github.io/soulmap-ai/api/raw/") >= 3
+    assert html.count("https://chatgpt.com/?q=") == 3
+    assert html.count("https://claude.ai/new?q=") == 3
+    assert html.count("claude-cli://open?q=") == 3
+    assert "Provider links may require sign-in" not in html
 
 
 def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
@@ -139,6 +213,23 @@ def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
     assert '"slug": "meta"' in catalog
     assert '"slug": "frameworks"' in catalog
     assert '"raw_path": "/api/raw/meta.md"' in catalog
+    assert (
+        '"raw_url": "https://tuanductran.github.io/soulmap-ai/api/raw/meta.md"'
+        in catalog
+    )
+    assert '"prompt_scenarios": [' in catalog
+
+    _, prompts_body = _request("/api/skills/meta/prompts.json")
+    prompts = json.loads(prompts_body.decode("utf-8"))
+    assert prompts["locale"] == "en"
+    assert prompts["raw_url"].endswith("/api/raw/meta.md")
+    assert len(prompts["scenarios"]) == 3
+    assert all(item["prompt"] and item["question"] for item in prompts["scenarios"])
+
+    _, vi_prompts_body = _request("/api/skills/meta/prompts.vi.json")
+    vi_prompts = json.loads(vi_prompts_body.decode("utf-8"))
+    assert vi_prompts["locale"] == "vi"
+    assert "Bắt đầu một phiên phản chiếu" in vi_prompts["scenarios"][0]["title"]
 
     _, vi_catalog_body = _request("/api/skills.json", "lang=vi")
     vi_catalog = vi_catalog_body.decode("utf-8")
@@ -149,6 +240,13 @@ def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
     raw = raw_body.decode("utf-8")
     assert "# SoulMap Skill bundle: Core orchestration" in raw
     assert "execution-pipeline.md" in raw
+    assert "## Suggested prompts by context" in raw
+    assert "**Prompt:**" in raw
+    assert (
+        "**Source Skill bundle:** https://tuanductran.github.io/soulmap-ai/api/raw/meta.md"
+        in raw
+    )
+    assert "**Starter question:**" in raw
     assert "AGENTS.md" not in raw
     assert "SoulMap behavioral contract" in raw
     for forbidden in (".claude/", "src/", "tests/", "pyproject.toml", "uv.lock"):
@@ -197,7 +295,6 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert len(written) > 50
     expected = (
         "index.html",
-        "en/index.html",
         "vi/index.html",
         "skills/index.html",
         "vi/skills/index.html",
@@ -205,8 +302,12 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "vi/skills/meta/index.html",
         "partials/skill/meta.en.html",
         "partials/skill/meta.vi.html",
+        "partials/skills-grid.html",
+        "vi/partials/skills-grid.html",
         "api/skills.json",
         "api/raw/meta.md",
+        "api/skills/meta/prompts.json",
+        "api/skills/meta/prompts.vi.json",
         "static/site.css",
         "static/site.js",
         "robots.txt",
@@ -219,6 +320,11 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'src="/soulmap-ai/static/site.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
+    assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' in skills_html
+    grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
+    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
+    detail_html = (output / "partials/skill/meta.en.html").read_text(encoding="utf-8")
+    assert 'href="/soulmap-ai/api/raw/meta.md"' in detail_html
     assert 'href="/"' not in html
     assert "viewport-fit=cover" in html
     assert 'media="(prefers-color-scheme: dark)"' in html

@@ -143,3 +143,14 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
   .step::before { width: 44px; height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+.prompt-pack { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.prompt-scenarios { display: grid; gap: 1rem; }
+.prompt-scenario { padding: 1rem; border: 1px solid var(--line); border-radius: 16px; background: rgba(47,111,107,.04); }
+.prompt-scenario h4 { margin: 0 0 .5rem; color: var(--teal-dark); font-size: 1rem; }
+.prompt-scenario p { margin-bottom: .75rem; }
+.prompt-scenario__context { color: var(--muted); font-size: .92rem; }
+.prompt-scenario__prompt { padding: .8rem 1rem; border-left: 3px solid var(--teal); background: var(--surface-strong); }
+.prompt-scenario__source { margin: .75rem 0; font-size: .9rem; }
+.prompt-scenario__source a { color: var(--teal-dark); font-weight: 700; overflow-wrap: anywhere; }
+.prompt-scenario__question { padding-top: .65rem; border-top: 1px solid var(--line); font-style: italic; }
+@media (prefers-color-scheme: dark) { .prompt-scenario { background: rgba(132,197,186,.07); } }

@@ -7,6 +7,10 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from soulmap.web.prompt_pack import scenarios_for
+
+PUBLIC_RAW_BASE_URL = "https://tuanductran.github.io/soulmap-ai"
+
 
 @dataclass(frozen=True)
 class SkillEntry:
@@ -27,7 +31,7 @@ class SkillEntry:
     directory: str
     featured_file: str
 
-    def public_dict(self) -> dict[str, str]:
+    def public_dict(self) -> dict[str, object]:
         """Return metadata safe for the public catalog API."""
         return {
             "slug": self.slug,
@@ -38,7 +42,11 @@ class SkillEntry:
             "best_for": self.best_for_en,
             "boundary": self.boundary_en,
             "raw_path": f"/api/raw/{self.slug}.md",
+            "raw_url": f"{PUBLIC_RAW_BASE_URL}/api/raw/{self.slug}.md",
             "featured_file": self.featured_file,
+            "prompt_scenarios": [
+                scenario.localized("en") for scenario in scenarios_for(self.slug)
+            ],
         }
 
 
@@ -193,10 +201,24 @@ def raw_markdown(entry: SkillEntry) -> str:
         sections.append(f"\n---\n\n## {path.name}\n\n")
         sections.append(_sanitize_public_markdown(path.read_text(encoding="utf-8")))
         sections.append("\n")
+    scenarios = scenarios_for(entry.slug)
+    raw_url = f"{PUBLIC_RAW_BASE_URL}/api/raw/{entry.slug}.md"
+    if scenarios:
+        sections.append("\n---\n\n## Suggested prompts by context\n\n")
+        sections.append(
+            "Use one scenario that matches the user's context. Keep the source bundle "
+            "as the reference and return authorship to the user.\n\n"
+        )
+        for scenario in scenarios:
+            sections.append(f"### {scenario.title_en}\n\n")
+            sections.append(f"**When:** {scenario.when_en}\n\n")
+            sections.append(f"**Prompt:** {scenario.prompt_en}\n\n")
+            sections.append(f"**Source Skill bundle:** {raw_url}\n\n")
+            sections.append(f"**Starter question:** {scenario.question_en}\n\n")
     return "".join(sections)
 
 
-def catalog_json(locale: str = "en") -> str:
+def catalog_json(locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL) -> str:
     """Serialize localized public catalog metadata without private paths."""
     language = "vi" if locale == "vi" else "en"
     entries = []
@@ -208,7 +230,14 @@ def catalog_json(locale: str = "en") -> str:
                 "group": entry.group,
                 **fields,
                 "raw_path": f"/api/raw/{entry.slug}.md",
+                "raw_url": f"{raw_base_url.rstrip('/')}/api/raw/{entry.slug}.md"
+                if raw_base_url
+                else "",
                 "featured_file": entry.featured_file,
+                "prompt_scenarios": [
+                    scenario.localized(language)
+                    for scenario in scenarios_for(entry.slug)
+                ],
             }
         )
     return json.dumps(
