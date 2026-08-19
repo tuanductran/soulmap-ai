@@ -52,6 +52,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/skills/meta", "200 OK"),
         ("/static/site.css", "200 OK"),
         ("/static/site.js", "200 OK"),
+        ("/sitemap.xml", "200 OK"),
         ("/api/skills.json", "200 OK"),
         ("/api/skills/meta/prompts.json", "200 OK"),
         ("/api/skills/meta/prompts.vi.json", "200 OK"),
@@ -80,6 +81,68 @@ def test_english_prefixed_routes_redirect_to_canonical_root() -> None:
     headers = dict(cast(list[tuple[str, str]], captured["headers"]))
     assert headers["Location"] == "/how-it-works?q=mirror"
     assert body.decode("utf-8") == "Canonical English route: /how-it-works?q=mirror\n"
+
+
+def test_seo_metadata_is_absolute_localized_and_server_rendered() -> None:
+    _, english_body = _request("/how-it-works")
+    english = english_body.decode("utf-8")
+    assert (
+        '<link rel="canonical" href="https://tuanductran.github.io/soulmap-ai/how-it-works/">'
+        in english
+    )
+    assert (
+        'hreflang="en" href="https://tuanductran.github.io/soulmap-ai/how-it-works/"'
+        in english
+    )
+    assert (
+        'hreflang="vi" href="https://tuanductran.github.io/soulmap-ai/vi/how-it-works/"'
+        in english
+    )
+    assert (
+        'hreflang="x-default" href="https://tuanductran.github.io/soulmap-ai/how-it-works/"'
+        in english
+    )
+    assert 'property="og:type" content="website"' in english
+    assert 'name="twitter:card" content="summary"' in english
+    assert '<script type="application/ld+json">' in english
+    assert '"@type":"Organization"' in english
+    assert '"@type":"WebPage"' in english
+
+    _, vietnamese_body = _request("/vi/how-it-works")
+    vietnamese = vietnamese_body.decode("utf-8")
+    assert '<html lang="vi">' in vietnamese
+    assert (
+        '<link rel="canonical" href="https://tuanductran.github.io/soulmap-ai/vi/how-it-works/">'
+        in vietnamese
+    )
+    assert (
+        'hreflang="en" href="https://tuanductran.github.io/soulmap-ai/how-it-works/"'
+        in vietnamese
+    )
+    assert (
+        'hreflang="vi" href="https://tuanductran.github.io/soulmap-ai/vi/how-it-works/"'
+        in vietnamese
+    )
+    assert '"inLanguage":"vi"' in vietnamese
+
+
+def test_sitemap_and_robots_reference_only_public_canonical_urls() -> None:
+    sitemap_captured, sitemap_body = _request("/sitemap.xml")
+    sitemap = sitemap_body.decode("utf-8")
+    assert sitemap_captured["status"] == "200 OK"
+    assert 'xmlns:xhtml="http://www.w3.org/1999/xhtml"' in sitemap
+    assert "https://tuanductran.github.io/soulmap-ai/faq/" in sitemap
+    assert "https://tuanductran.github.io/soulmap-ai/vi/privacy/" in sitemap
+    assert "https://tuanductran.github.io/soulmap-ai/en/" not in sitemap
+    assert "https://tuanductran.github.io/soulmap-ai/api/" not in sitemap
+    assert sitemap.count('hreflang="x-default"') >= 2
+
+    robots_captured, robots_body = _request("/robots.txt")
+    robots = robots_body.decode("utf-8")
+    assert robots_captured["status"] == "200 OK"
+    assert "User-agent: *" in robots
+    assert "Allow: /" in robots
+    assert "Sitemap: https://tuanductran.github.io/soulmap-ai/sitemap.xml" in robots
 
 
 def test_faq_and_privacy_pages_use_public_i18n_content() -> None:
@@ -138,7 +201,7 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     html = body.decode("utf-8")
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
-    assert "<title>SoulMap Skills · SoulMap AI</title>" in html
+    assert "<title>Choose the layer that fits the moment. · SoulMap AI</title>" in html
     assert "SoulMap AI · SoulMap AI" not in html
     assert 'name="htmx-config"' in html
     assert "includeIndicatorStyles" in html
@@ -160,6 +223,9 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
+    assert 'rel="canonical"' in html
+    assert 'hreflang="x-default"' in html
+    assert "application/ld+json" in html
 
 
 def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
@@ -340,6 +406,10 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "vi/faq/index.html",
         "vi/privacy/index.html",
         "skills/index.html",
+        "privacy/index.html",
+        "vi/faq/index.html",
+        "vi/privacy/index.html",
+        "skills/index.html",
         "vi/skills/index.html",
         "skills/meta/index.html",
         "vi/skills/meta/index.html",
@@ -354,6 +424,7 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "static/site.css",
         "static/site.js",
         "robots.txt",
+        "sitemap.xml",
     )
     for relative in expected:
         assert (output / relative).exists(), relative

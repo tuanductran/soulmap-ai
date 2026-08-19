@@ -26,6 +26,7 @@ from soulmap.web.catalog import (
 from soulmap.web.i18n import LOCALES as TEXT
 from soulmap.web.i18n import messages_json
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
+from soulmap.web.seo import metadata, robots_txt, sitemap_xml
 from soulmap.web.templates import render_template
 
 HOST = "127.0.0.1"
@@ -56,6 +57,29 @@ def _nav_path(route: str, locale: str) -> str:
 
 def _text(locale: str, key: str) -> str:
     return escape(tr(locale, key))
+
+
+_SEO_COPY_KEYS: dict[str, tuple[str, str]] = {
+    "/": ("home_h1", "home_lede"),
+    "/how-it-works": ("how_h1", "how_lede"),
+    "/boundaries": ("boundaries_h1", "boundaries_lede"),
+    "/download": ("download_h1", "download_lede"),
+    "/notes": ("notes_h1", "notes_lede"),
+    "/about": ("about_h1", "about_lede"),
+    "/faq": ("faq_h1", "faq_lede"),
+    "/privacy": ("privacy_page_h1", "privacy_page_lede"),
+    "/skills": ("catalog_h1", "catalog_lede"),
+}
+
+
+def _seo_copy(
+    path: str, locale: str, fallback_title: str, fallback_description: str
+) -> tuple[str, str]:
+    keys = _SEO_COPY_KEYS.get(path)
+    if keys is None:
+        return fallback_title, fallback_description
+    title_key, description_key = keys
+    return tr(locale, title_key), tr(locale, description_key)
 
 
 def _nav(path: str, locale: str) -> str:
@@ -90,6 +114,15 @@ def _nav(path: str, locale: str) -> str:
 
 def _layout(title: str, description: str, path: str, content: str, locale: str) -> str:
     language = "vi" if locale == "vi" else "en"
+    seo_title, seo_description = _seo_copy(path, locale, title, description)
+    seo = metadata(
+        site_url=PUBLIC_SITE_URL,
+        repository_url=REPOSITORY_URL,
+        route=path,
+        locale=locale,
+        title=seo_title,
+        description=seo_description,
+    )
     footer = render_template(
         "partials/footer.html",
         footer_label=_text(locale, "footer"),
@@ -105,14 +138,22 @@ def _layout(title: str, description: str, path: str, content: str, locale: str) 
     return render_template(
         "layout.html",
         language=language,
-        description=escape(description, quote=True),
+        description=escape(seo_description, quote=True),
         locale_json=messages_json(locale),
-        title=escape(title),
+        title=escape(seo_title),
         site_name=escape(SITE_NAME),
         skip_label=_text(locale, "skip"),
         nav=_nav(path, locale),
         content=content,
         footer=footer,
+        canonical_url=seo["canonical_url"],
+        alternate_links=seo["alternate_links"],
+        og_title=seo["og_title"],
+        og_description=seo["og_description"],
+        og_url=seo["og_url"],
+        og_locale=seo["og_locale"],
+        og_locale_alternate=seo["og_locale_alternate"],
+        json_ld=seo["json_ld"],
         htmx_url=escape(HTMX_URL, quote=True),
         htmx_sri=escape(HTMX_SRI, quote=True),
         alpine_url=escape(ALPINE_URL, quote=True),
@@ -471,6 +512,12 @@ def _not_found(locale: str) -> str:
     )
 
 
+def _sitemap_routes() -> list[str]:
+    routes = list(_pages())
+    routes.extend(f"/skills/{entry.slug}" for entry in CATALOG)
+    return routes
+
+
 def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
     return {
         "/": (
@@ -604,7 +651,19 @@ def application(
         )
     if path == "/robots.txt":
         return _response(
-            start_response, "200 OK", "text/plain", "User-agent: *\nAllow: /\n"
+            start_response,
+            "200 OK",
+            "text/plain",
+            robots_txt(PUBLIC_SITE_URL),
+            [("Cache-Control", "public, max-age=300")],
+        )
+    if path == "/sitemap.xml":
+        return _response(
+            start_response,
+            "200 OK",
+            "application/xml",
+            sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()),
+            [("Cache-Control", "public, max-age=300")],
         )
     if path == "/api/skills.json":
         return _response(
@@ -744,7 +803,11 @@ def application(
             "200 OK",
             "text/html",
             _layout(
-                entry.title_en, entry.summary_en, "/skills/" + slug, content, locale
+                locale_fields(entry, locale)["title"],
+                locale_fields(entry, locale)["summary"],
+                "/skills/" + slug,
+                content,
+                locale,
             ),
         )
     if path == "/skills":
@@ -830,8 +893,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
                 output,
                 f"{prefix}/skills/{entry.slug}",
                 _layout(
-                    entry.title_en,
-                    entry.summary_en,
+                    locale_fields(entry, locale)["title"],
+                    locale_fields(entry, locale)["summary"],
                     f"/skills/{entry.slug}",
                     _skill_page(entry.slug, locale),
                     locale,
@@ -905,12 +968,16 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         (Path(__file__).with_name("static") / "site.js").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
-    (output / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
+    (output / "sitemap.xml").write_text(
+        sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()), encoding="utf-8"
+    )
     written.extend(
         [
             output / "static" / "site.css",
             output / "static" / "site.js",
             output / "robots.txt",
+            output / "sitemap.xml",
         ]
     )
     return written
