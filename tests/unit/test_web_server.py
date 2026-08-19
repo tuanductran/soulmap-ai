@@ -52,6 +52,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/skills/meta", "200 OK"),
         ("/static/site.css", "200 OK"),
         ("/static/site.js", "200 OK"),
+        ("/favicon.ico", "200 OK"),
         ("/sitemap.xml", "200 OK"),
         ("/api/skills.json", "200 OK"),
         ("/api/skills/meta/prompts.json", "200 OK"),
@@ -171,6 +172,15 @@ def test_private_alias_redirects_to_canonical_privacy_route() -> None:
     assert body.decode("utf-8") == "Canonical privacy route: /privacy?from=legacy\n"
 
 
+def test_favicon_route_returns_original_ico_bytes() -> None:
+    captured, body = _request("/favicon.ico")
+    assert captured["status"] == "200 OK"
+    headers = dict(cast(list[tuple[str, str]], captured["headers"]))
+    assert headers["Content-Type"] == "image/x-icon; charset=utf-8"
+    assert body[:4] == b"\x00\x00\x01\x00"
+    assert len(body) > 1000
+
+
 def test_website_is_responsive_accessible_and_progressive() -> None:
     captured, body = _request("/static/site.css")
 
@@ -201,6 +211,7 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     html = body.decode("utf-8")
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
+    assert 'rel="icon" href="/favicon.ico" sizes="any"' in html
     assert "<title>Choose the layer that fits the moment. · SoulMap AI</title>" in html
     assert "SoulMap AI · SoulMap AI" not in html
     assert 'name="htmx-config"' in html
@@ -425,6 +436,7 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "static/site.js",
         "robots.txt",
         "sitemap.xml",
+        "favicon.ico",
     )
     for relative in expected:
         assert (output / relative).exists(), relative

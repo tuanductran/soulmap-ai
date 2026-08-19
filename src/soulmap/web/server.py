@@ -568,10 +568,10 @@ def _response(
     start_response: StartResponse,
     status: str,
     content_type: str,
-    body: str,
+    body: str | bytes,
     extra_headers: list[tuple[str, str]] | None = None,
 ) -> list[bytes]:
-    payload = body.encode("utf-8")
+    payload = body if isinstance(body, bytes) else body.encode("utf-8")
     headers = [
         ("Content-Type", f"{content_type}; charset=utf-8"),
         ("Content-Length", str(len(payload))),
@@ -632,6 +632,15 @@ def application(
         if query.get("lang", [locale])[0] in {"en", "vi"}
         else locale
     )
+    if path == "/favicon.ico":
+        favicon_path = Path(__file__).with_name("static") / "favicon.ico"
+        return _response(
+            start_response,
+            "200 OK",
+            "image/x-icon",
+            favicon_path.read_bytes(),
+            [("Cache-Control", "public, max-age=86400")],
+        )
     if path == "/static/site.css":
         return _response(
             start_response,
@@ -968,6 +977,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         (Path(__file__).with_name("static") / "site.js").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
+    favicon_source = Path(__file__).with_name("static") / "favicon.ico"
+    shutil.copyfile(favicon_source, output / "favicon.ico")
     (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
     (output / "sitemap.xml").write_text(
         sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()), encoding="utf-8"
@@ -976,6 +987,7 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         [
             output / "static" / "site.css",
             output / "static" / "site.js",
+            output / "favicon.ico",
             output / "robots.txt",
             output / "sitemap.xml",
         ]

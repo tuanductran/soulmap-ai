@@ -27,6 +27,7 @@ REQUIRED_FILES = {
     "api/raw/meta.md",
     "robots.txt",
     "sitemap.xml",
+    "favicon.ico",
 }
 FORBIDDEN_FILE_PARTS = {".claude", ".github", ".git", "dist", "src", "tests"}
 FORBIDDEN_SUFFIXES = {".py", ".toml", ".lock"}
