@@ -88,9 +88,10 @@ targets Python 3.11 explicitly.
 uv run soulmap web
 ```
 
-The local Python website defaults to `http://127.0.0.1:8765`. See
-[docs/product/WEBSITE.md](docs/product/WEBSITE.md) for routes, responsive behavior, and
-its deliberate boundary from the shipped AI artifacts.
+The local Python website defaults to `http://127.0.0.1:8765`. To export static files
+for GitHub Pages, use `uv run soulmap web --export-static --output site --base-path /soulmap-ai`.
+See [docs/product/WEBSITE.md](docs/product/WEBSITE.md) for routes, responsive behavior,
+workflow boundaries, and its deliberate separation from the shipped AI artifacts.
 
 ## Build artifacts
 

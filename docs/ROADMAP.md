@@ -490,6 +490,12 @@ Completed foundation:
   reduced-motion support, and local browser smoke validation.
 * Explicit separation from `skills/`, `.claude/`, runtime knowledge loaders, and custom AI
   artifacts.
+* `uv run soulmap web --export-static` generates a project-site-safe static tree with an
+  optional base path, and `scripts/verify_static_site.py` rejects source leakage, scripts,
+  symlinks, local hosts, missing routes, and unsafe links.
+* `.github/workflows/website-pages.yml` rebuilds on website-source changes, uploads the
+  verified output for inspection, and publishes only generated files to `gh-pages` after a
+  successful `main` build.
 
 Non-goals for this surface:
 

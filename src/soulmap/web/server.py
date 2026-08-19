@@ -8,7 +8,10 @@ It uses only the Python standard library so it can run from a repository checkou
 from __future__ import annotations
 
 import argparse
+import shutil
+from collections.abc import Callable
 from html import escape
+from pathlib import Path
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
@@ -380,19 +383,8 @@ def _response(
     return [payload]
 
 
-def application(
-    environ: dict[str, object], start_response: StartResponse
-) -> list[bytes]:
-    """Serve the public SoulMap website using the WSGI protocol."""
-    path = str(environ.get("PATH_INFO") or "/").rstrip("/") or "/"
-    if path == "/static/site.css":
-        return _response(start_response, "200 OK", "text/css", CSS)
-    if path == "/robots.txt":
-        return _response(
-            start_response, "200 OK", "text/plain", "User-agent: *\nAllow: /\n"
-        )
-
-    pages = {
+def _pages() -> dict[str, tuple[str, str, Callable[[], str]]]:
+    return {
         "/": (
             "Hear yourself more clearly",
             "A reflective companion built around self-trust.",
@@ -420,6 +412,21 @@ def application(
             _about,
         ),
     }
+
+
+def application(
+    environ: dict[str, object], start_response: StartResponse
+) -> list[bytes]:
+    """Serve the public SoulMap website using the WSGI protocol."""
+    path = str(environ.get("PATH_INFO") or "/").rstrip("/") or "/"
+    if path == "/static/site.css":
+        return _response(start_response, "200 OK", "text/css", CSS)
+    if path == "/robots.txt":
+        return _response(
+            start_response, "200 OK", "text/plain", "User-agent: *\nAllow: /\n"
+        )
+
+    pages = _pages()
     if path not in pages:
         return _response(
             start_response,
@@ -434,6 +441,45 @@ def application(
         "text/html",
         _layout(title, description, path, renderer()),
     )
+
+
+def _normalise_base_path(base_path: str) -> str:
+    cleaned = base_path.strip()
+    if not cleaned or cleaned == "/":
+        return ""
+    return "/" + cleaned.strip("/")
+
+
+def _apply_base_path(html: str, base_path: str) -> str:
+    if not base_path:
+        return html
+    return html.replace('href="/', f'href="{base_path}/')
+
+
+def export_static(output: Path, base_path: str = "") -> list[Path]:
+    """Export the public routes to a clean static directory."""
+    output = output.resolve()
+    if output.exists():
+        shutil.rmtree(output)
+    output.mkdir(parents=True)
+    normalised_base = _normalise_base_path(base_path)
+    written: list[Path] = []
+
+    for route, (title, description, renderer) in _pages().items():
+        destination = output / ("index.html" if route == "/" else route.strip("/"))
+        destination = destination if destination.suffix else destination / "index.html"
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        page = _layout(title, description, route, renderer())
+        destination.write_text(
+            _apply_base_path(page, normalised_base), encoding="utf-8"
+        )
+        written.append(destination)
+
+    (output / "static").mkdir()
+    (output / "static" / "site.css").write_text(CSS, encoding="utf-8")
+    (output / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    written.extend([output / "static" / "site.css", output / "robots.txt"])
+    return written
 
 
 def serve(host: str = HOST, port: int = PORT) -> None:
@@ -461,13 +507,30 @@ def serve(host: str = HOST, port: int = PORT) -> None:
 
 def main(args: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="soulmap web", description="Run the SoulMap public website."
+        prog="soulmap web", description="Run or export the SoulMap public website."
     )
     parser.add_argument("--host", default=HOST, help=f"Bind host (default: {HOST})")
     parser.add_argument(
         "--port", type=int, default=PORT, help=f"Bind port (default: {PORT})"
     )
+    parser.add_argument(
+        "--export-static",
+        action="store_true",
+        help="Write static files instead of serving.",
+    )
+    parser.add_argument(
+        "--output", type=Path, default=Path("site"), help="Static output directory."
+    )
+    parser.add_argument(
+        "--base-path",
+        default="",
+        help="URL path prefix for a GitHub Pages project site.",
+    )
     parsed = parser.parse_args(args)
+    if parsed.export_static:
+        written = export_static(parsed.output, parsed.base_path)
+        print(f"Exported {len(written)} static website files to {parsed.output}")
+        return 0
     serve(parsed.host, parsed.port)
     return 0
 

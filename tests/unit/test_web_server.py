@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any, cast
 from wsgiref.types import StartResponse
 from wsgiref.util import setup_testing_defaults
@@ -6,7 +7,7 @@ from wsgiref.util import setup_testing_defaults
 import pytest
 
 from soulmap.cli import _command_table
-from soulmap.web.server import application
+from soulmap.web.server import application, export_static
 
 
 def _request(path: str) -> tuple[dict[str, Any], bytes]:
@@ -64,3 +65,19 @@ def test_website_is_responsive_and_accessible() -> None:
 
 def test_web_command_is_public_cli_surface() -> None:
     assert "web" in _command_table()
+
+
+def test_static_export_writes_pages_project_layout(tmp_path: Path) -> None:
+    output = tmp_path / "site"
+    written = export_static(output, "/soulmap-ai")
+
+    assert len(written) == 8
+    assert (output / "index.html").exists()
+    assert (output / "how-it-works" / "index.html").exists()
+    assert (output / "static" / "site.css").exists()
+    assert (output / "robots.txt").exists()
+
+    html = (output / "index.html").read_text(encoding="utf-8")
+    assert 'href="/soulmap-ai/' in html
+    assert 'href="/"' not in html
+    assert "<script" not in html

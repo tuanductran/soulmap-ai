@@ -40,6 +40,8 @@ Use it to answer four questions for every major repo surface:
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Public website implementation truth lives in `src/soulmap/web/`; it is not part of the
   shipped Skill knowledge surface or custom `.skill`/`.zip` artifacts.
+- `gh-pages` is a generated publication branch containing static website output only; it is
+  never a source of doctrine, runtime code, or repository documentation.
 - Explanatory and operational truth lives in `docs/`.
 - Release artifact truth lives in `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`,
   `dist/soulmap-ai-library.json`, and the tests that verify them.

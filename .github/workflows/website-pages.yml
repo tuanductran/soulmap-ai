@@ -1,0 +1,121 @@
+name: Website Pages
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/website-pages.yml"
+      - ".github/actions/setup-uv/**"
+      - "src/soulmap/web/**"
+      - "src/soulmap/cli.py"
+      - "scripts/verify_static_site.py"
+      - "docs/product/WEBSITE.md"
+      - "README.md"
+      - "pyproject.toml"
+      - "uv.lock"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/website-pages.yml"
+      - ".github/actions/setup-uv/**"
+      - "src/soulmap/web/**"
+      - "src/soulmap/cli.py"
+      - "scripts/verify_static_site.py"
+      - "docs/product/WEBSITE.md"
+      - "README.md"
+      - "pyproject.toml"
+      - "uv.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-pages-${{ github.repository }}
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.11"
+  STATIC_OUTPUT: site
+  STATIC_ARTIFACT: soulmap-static-site-${{ github.sha }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install locked development environment
+        run: uv sync --locked --python "${PYTHON_VERSION}"
+
+      - name: Build project-site static output
+        env:
+          SITE_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          rm -rf "${STATIC_OUTPUT}"
+          uv run soulmap web \
+            --export-static \
+            --output "${STATIC_OUTPUT}" \
+            --base-path "${SITE_BASE_PATH}"
+          uv run python scripts/verify_static_site.py \
+            "${STATIC_OUTPUT}" \
+            --base-path "${SITE_BASE_PATH}"
+
+      - name: Upload static output for inspection
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.STATIC_ARTIFACT }}
+          path: ${{ env.STATIC_OUTPUT }}
+          if-no-files-found: error
+
+  publish-gh-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main for publication context
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Download verified static output
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ env.STATIC_ARTIFACT }}
+          path: ${{ runner.temp }}/soulmap-static-site
+
+      - name: Publish only static files to gh-pages
+        env:
+          PUBLISH_DIR: ${{ runner.temp }}/soulmap-static-site
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch origin gh-pages:refs/remotes/origin/gh-pages
+            git switch --create gh-pages --track origin/gh-pages
+          else
+            git switch --orphan gh-pages
+          fi
+
+          git rm -rf . || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R "${PUBLISH_DIR}/." .
+          touch .nojekyll
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "gh-pages is already up to date"
+          else
+            git commit -m "chore(site): publish ${GITHUB_SHA}"
+            git push --force origin gh-pages
+          fi
