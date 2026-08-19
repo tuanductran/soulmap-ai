@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="$language">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
+    <meta name="description" content="$description">
+    <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#192322" media="(prefers-color-scheme: dark)">
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="/static/site.css">
+    <script defer src="$htmx_url" integrity="$htmx_sri" crossorigin="anonymous"></script>
+    <script defer src="/static/site.js"></script>
+    <script defer src="$alpine_url" integrity="$alpine_sri" crossorigin="anonymous"></script>
+    <title>$title · $site_name</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">$skip_label</a>
+    $nav
+    <main id="main-content">$content</main>
+    $footer
+  </body>
+</html>
