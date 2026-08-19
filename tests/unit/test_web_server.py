@@ -36,7 +36,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
     ("path", "status"),
     [
         ("/", "200 OK"),
-        ("/en", "200 OK"),
+        ("/en", "301 Moved Permanently"),
         ("/vi", "200 OK"),
         ("/how-it-works", "200 OK"),
         ("/boundaries", "200 OK"),
@@ -67,6 +67,14 @@ def test_public_website_routes(path: str, status: str) -> None:
         in headers["Content-Security-Policy"]
     )
     assert headers["Permissions-Policy"] == "camera=(), microphone=(), geolocation=()"
+
+
+def test_english_prefixed_routes_redirect_to_canonical_root() -> None:
+    captured, body = _request("/en/how-it-works", "q=mirror")
+    assert captured["status"] == "301 Moved Permanently"
+    headers = dict(cast(list[tuple[str, str]], captured["headers"]))
+    assert headers["Location"] == "/how-it-works?q=mirror"
+    assert body.decode("utf-8") == "Canonical English route: /how-it-works?q=mirror\n"
 
 
 def test_website_is_responsive_accessible_and_progressive() -> None:
@@ -287,7 +295,6 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert len(written) > 50
     expected = (
         "index.html",
-        "en/index.html",
         "vi/index.html",
         "skills/index.html",
         "vi/skills/index.html",

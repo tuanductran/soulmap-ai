@@ -723,8 +723,19 @@ def application(
 ) -> list[bytes]:
     """Serve the public SoulMap website using the WSGI protocol."""
     raw_path = str(environ.get("PATH_INFO") or "/")
+    raw_query = str(environ.get("QUERY_STRING") or "")
+    if raw_path == "/en" or raw_path.startswith("/en/"):
+        canonical_path = raw_path[3:] or "/"
+        location = canonical_path + (f"?{raw_query}" if raw_query else "")
+        return _response(
+            start_response,
+            "301 Moved Permanently",
+            "text/plain",
+            f"Canonical English route: {location}\n",
+            [("Location", location), ("Cache-Control", "public, max-age=300")],
+        )
     path, locale = _normalise_request_path(raw_path)
-    query = parse_qs(str(environ.get("QUERY_STRING") or ""))
+    query = parse_qs(raw_query)
     locale = (
         query.get("lang", [locale])[0]
         if query.get("lang", [locale])[0] in {"en", "vi"}
@@ -968,16 +979,6 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
                 written,
                 normalised_base,
             )
-        if locale == "en":
-            for route, (title, description, renderer) in pages.items():
-                page_route = f"/en{route if route != '/' else ''}"
-                _write_page(
-                    output,
-                    page_route,
-                    _layout(title, description, route, renderer(locale), locale),
-                    written,
-                    normalised_base,
-                )
     for entry in CATALOG:
         for locale in ("en", "vi"):
             prefix = "" if locale == "en" else "/vi"

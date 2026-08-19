@@ -69,7 +69,7 @@ The filter also has a normal HTML form fallback at `/skills?q=...`, and each Ski
 
 ## i18n contract
 
-English is the default public locale. Vietnamese is available through `/vi/...` routes and the language switcher. UI copy is localized in the website surface; raw Skill bundles remain canonical Markdown unless a separately reviewed translated artifact exists. A query parameter such as `?lang=vi` is supported for API/partial requests, while route prefixes are used for shareable pages.
+English is the default public locale and uses the root routes (`/`, `/about`, `/skills`, and so on); the static build does not emit duplicate `/en/...` pages. Vietnamese is available through `/vi/...` routes and the language switcher. Runtime requests to legacy `/en/...` paths receive a permanent redirect to the corresponding root route. UI copy is localized in the website surface; raw Skill bundles remain canonical Markdown unless a separately reviewed translated artifact exists. A query parameter such as `?lang=vi` is supported for API/partial requests, while route prefixes are used for shareable pages.
 
 ## AI provider handoff contract
 
@@ -77,7 +77,7 @@ Every Skill scenario owns its prompt, context, starter question, and source URL.
 
 ## GitHub Pages workflow
 
-The repository workflow builds the static output from `src/soulmap/web/` and performs a static safety check before publishing. The source branch remains the canonical code surface; generated files are never committed to `skills/`, `dist/`, or the Python source package.
+The repository workflow builds the static output from `src/soulmap/web/` and performs a static safety check before publishing. The English canonical pages are emitted at the root, Vietnamese pages under `/vi/`, and no duplicate `/en/` page tree is generated. The source branch remains the canonical code surface; generated files are never committed to `skills/`, `dist/`, or the Python source package.
 
 Production publication uses the generated `gh-pages` branch because this repository needs a separately inspectable static output branch. In repository Settings, configure GitHub Pages to deploy from the `gh-pages` branch and its root directory. The workflow pushes that branch only after a successful `main` build and verifier run. The branch contains only generated public pages, catalog metadata, raw bundles, static assets, and partials; it is never a source of SoulMap doctrine or runtime code.
 
