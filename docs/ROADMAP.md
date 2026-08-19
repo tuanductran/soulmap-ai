@@ -475,6 +475,37 @@ semantic safety classification, or platform adapter.
 
 ---
 
+### Public Website Surface - Python-only, non-AI
+
+The repository now includes a deliberately small public website surface under
+`src/soulmap/web/`. It is served by Python's standard-library WSGI server and exists to
+explain SoulMap, publish boundaries, and direct users to the generated `.skill` and `.zip`
+artifacts.
+
+Completed foundation:
+
+* Responsive public pages for Home, How it works, Boundaries, Download, Notes, and About.
+* `uv run soulmap web` with configurable local host and port.
+* In-process route tests, security headers, skip-link/accessibility markers, responsive CSS,
+  reduced-motion support, and local browser smoke validation.
+* Explicit separation from `skills/`, `.claude/`, runtime knowledge loaders, and custom AI
+  artifacts.
+* `uv run soulmap web --export-static` generates a project-site-safe static tree with an
+  optional base path, and `scripts/verify_static_site.py` rejects source leakage, scripts,
+  symlinks, local hosts, missing routes, and unsafe links.
+* `.github/workflows/website-pages.yml` rebuilds on website-source changes, uploads the
+  verified output for inspection, and publishes only generated files to `gh-pages` after a
+  successful `main` build.
+
+Non-goals for this surface:
+
+* No live AI chat, accounts, database, memory, community feed, numerology calculator,
+  health claims, scheduled reminders, or platform connector.
+* No website content is treated as shipped Skill doctrine unless it is deliberately authored
+  and promoted through the existing knowledge-base workflow.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

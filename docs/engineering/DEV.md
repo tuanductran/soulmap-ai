@@ -121,6 +121,19 @@ for the package comparison and decision boundary.
 - `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved.
 - `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
   SHA-256 digests when `uv run soulmap library-manifest` is used.
+- `site/`: generated static website output for GitHub Pages; it is not part of the AI
+  Skill artifact set.
+
+To export and verify the website locally:
+
+```bash
+uv run soulmap web --export-static --output site --base-path /soulmap-ai
+uv run python scripts/verify_static_site.py site --base-path /soulmap-ai
+```
+
+The `website-pages.yml` workflow repeats these checks on website changes. It publishes
+only generated files to `gh-pages` after a `main` push; `main` remains the source of truth.
+For route and boundary details, see [`../product/WEBSITE.md`](../product/WEBSITE.md).
 
 For the catalog and manual distribution boundary, see [`operations/LIBRARY.md`](../operations/LIBRARY.md).
 

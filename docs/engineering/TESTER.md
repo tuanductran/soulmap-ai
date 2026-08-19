@@ -88,6 +88,15 @@ Verify:
 - `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/` as-is.
 - `dist/soulmap-ai-library.json` exists and contains the current project version, release URL,
   both artifact paths, byte sizes, and SHA-256 digests matching the generated files.
+- Static website output passes the project-site export and verifier:
+
+  ```bash
+  uv run soulmap web --export-static --output site --base-path /soulmap-ai
+  uv run python scripts/verify_static_site.py site --base-path /soulmap-ai
+  ```
+
+  The generated site must contain only HTML/CSS/robots output and must not contain source,
+  repository-only, Skills, or AI artifact files.
 - The CI `build` job and release workflow both run
   `scripts/verify_artifact_hashes.py` before uploading artifacts.
 - As a minimum smoke check, `.claude-plugin/marketplace.json` is still present inside the
@@ -95,6 +104,9 @@ Verify:
 - `uv run python scripts/verify_extracted_artifacts.py` passes after extraction: the ZIP and
   `.skill` contain the expected shipped files, keep their plugin boundary, and contain no
   repository-only paths or implementation references inside `skills/`.
+- `tests/contract/test_website_pages_workflow_contract.py` passes and confirms the Pages
+  workflow builds from `src/soulmap/web/`, verifies output, and publishes only generated
+  files to `gh-pages` after a `main` push.
 
 ## Orchestration layer checks
 

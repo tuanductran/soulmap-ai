@@ -25,6 +25,7 @@ Use this folder as the entry point for repo documentation.
 - [`engineering/DEV.md`](engineering/DEV.md): setup, tooling, and contributor workflow
 - [`engineering/TESTER.md`](engineering/TESTER.md): verification flow and QA checks
 - [`product/USER.md`](product/USER.md): what SoulMap is and how to use it
+- [`product/WEBSITE.md`](product/WEBSITE.md): local Python website routes, boundaries, and run command
 - [`engineering/API.md`](engineering/API.md): local CLI contracts for selector and detectors
 - [`integrations/README.md`](integrations/README.md): platform-specific setup for Claude, ChatGPT,
   Gemini, and Poe

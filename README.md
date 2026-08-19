@@ -82,6 +82,17 @@ uv run soulmap test -n auto -q
 `bash scripts/bootstrap_venv.sh` now syncs the local environment from `uv.lock` and
 targets Python 3.11 explicitly.
 
+## Run the website
+
+```bash
+uv run soulmap web
+```
+
+The local Python website defaults to `http://127.0.0.1:8765`. To export static files
+for GitHub Pages, use `uv run soulmap web --export-static --output site --base-path /soulmap-ai`.
+See [docs/product/WEBSITE.md](docs/product/WEBSITE.md) for routes, responsive behavior,
+workflow boundaries, and its deliberate separation from the shipped AI artifacts.
+
 ## Build artifacts
 
 ```bash
