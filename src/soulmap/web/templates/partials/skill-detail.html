@@ -20,8 +20,9 @@
   <a class="button small" href="$raw_href" target="_blank" rel="noopener">$raw_label</a>
   <span x-data="clipboard">
     <button class="button small secondary" type="button" x-on:click="copy('$raw_url')" aria-live="polite">
-      <span x-show="!copied" x-transition.opacity.duration.150ms>$copy_raw_label</span>
+      <span x-show="!copied && !copyFailed" x-transition.opacity.duration.150ms>$copy_raw_label</span>
       <span x-show="copied" x-cloak x-transition.opacity.duration.150ms>$copied_label</span>
+      <span x-show="copyFailed" x-cloak x-transition.opacity.duration.150ms>$copy_failed_label</span>
     </button>
   </span>
 </div>
