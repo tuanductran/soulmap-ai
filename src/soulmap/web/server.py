@@ -23,6 +23,7 @@ from soulmap.web.catalog import (
     locale_fields,
     raw_markdown,
 )
+from soulmap.web.prompt_pack import PromptScenario, scenarios_for
 from soulmap.web.templates import render_template
 
 HOST = "127.0.0.1"
@@ -142,7 +143,11 @@ TEXT: dict[str, dict[str, str]] = {
         "open_chatgpt": "Open in ChatGPT",
         "open_claude": "Open in Claude",
         "open_claude_code": "Open in Claude Code",
-        "handoff_note": "Provider links may require sign-in. When a provider does not support prefilled prompts, use the raw Markdown URL.",
+        "prompt_heading": "Choose a context-specific prompt",
+        "prompt_label": "Prompt",
+        "prompt_intro": "Use one prompt that matches the situation, then read the public Skill bundle at the source link below.",
+        "source_bundle": "Source Skill bundle",
+        "starter_question": "Starter question",
         "raw_heading": "Public raw bundle",
         "raw_note": "This URL returns one complete Markdown bundle for this Skill group.",
         "not_found": "That path is not here.",
@@ -254,7 +259,11 @@ TEXT: dict[str, dict[str, str]] = {
         "open_chatgpt": "Mở trong ChatGPT",
         "open_claude": "Mở trong Claude",
         "open_claude_code": "Mở trong Claude Code",
-        "handoff_note": "Provider link có thể yêu cầu đăng nhập. Khi provider không hỗ trợ prompt prefill, hãy dùng raw Markdown URL.",
+        "prompt_heading": "Chọn prompt theo bối cảnh",
+        "prompt_label": "Prompt",
+        "prompt_intro": "Chọn một prompt khớp với tình huống, rồi đọc Skill bundle công khai tại source link bên dưới.",
+        "source_bundle": "Skill bundle nguồn",
+        "starter_question": "Câu hỏi bắt đầu",
         "raw_heading": "Public raw bundle",
         "raw_note": "URL này trả về một Markdown bundle hoàn chỉnh cho nhóm Skill này.",
         "not_found": "Path này không tồn tại.",
@@ -473,11 +482,16 @@ def _about(locale: str) -> str:
     )
 
 
-def _provider_url(provider: str, raw_url: str, locale: str) -> str:
+def _provider_url(
+    provider: str, raw_url: str, scenario: PromptScenario, locale: str
+) -> str:
+    localized = scenario.localized(locale)
     prompt = (
-        tr(locale, "handoff_note")
-        + "\n\nUse this public SoulMap Markdown bundle: "
+        localized["prompt"]
+        + "\n\nRead the public SoulMap Skill bundle before responding:\n"
         + raw_url
+        + "\n\nStarter question: "
+        + localized["question"]
     )
     encoded = quote(prompt, safe="")
     if provider == "chatgpt":
@@ -485,6 +499,37 @@ def _provider_url(provider: str, raw_url: str, locale: str) -> str:
     if provider == "claude":
         return f"https://claude.ai/new?q={encoded}"
     return f"claude-cli://open?q={encoded}"
+
+
+def _render_prompt_scenario(
+    entry_slug: str, raw_url: str, scenario: PromptScenario, locale: str
+) -> str:
+    localized = scenario.localized(locale)
+    return render_template(
+        "partials/prompt-scenario.html",
+        scenario_title=escape(localized["title"]),
+        when_label=_text(locale, "use_when"),
+        scenario_when=escape(localized["when"]),
+        prompt_label=_text(locale, "prompt_label"),
+        scenario_prompt=escape(localized["prompt"]),
+        source_label=_text(locale, "source_bundle"),
+        raw_href=escape(f"/api/raw/{entry_slug}.md", quote=True),
+        raw_url=escape(raw_url, quote=True),
+        question_label=_text(locale, "starter_question"),
+        scenario_question=escape(localized["question"]),
+        chatgpt_url=escape(
+            _provider_url("chatgpt", raw_url, scenario, locale), quote=True
+        ),
+        claude_url=escape(
+            _provider_url("claude", raw_url, scenario, locale), quote=True
+        ),
+        claude_code_url=escape(
+            _provider_url("claude-code", raw_url, scenario, locale), quote=True
+        ),
+        chatgpt_label=_text(locale, "open_chatgpt"),
+        claude_label=_text(locale, "open_claude"),
+        claude_code_label=_text(locale, "open_claude_code"),
+    )
 
 
 def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
@@ -511,15 +556,12 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
         raw_url=escape(raw_url, quote=True),
         copied_label=_text(locale, "copied"),
         copy_raw_label=_text(locale, "copy_raw"),
-        chatgpt_url=escape(_provider_url("chatgpt", raw_url, locale), quote=True),
-        claude_url=escape(_provider_url("claude", raw_url, locale), quote=True),
-        claude_code_url=escape(
-            _provider_url("claude-code", raw_url, locale), quote=True
+        prompt_heading=_text(locale, "prompt_heading"),
+        prompt_intro=_text(locale, "prompt_intro"),
+        prompt_scenarios="".join(
+            _render_prompt_scenario(entry.slug, raw_url, scenario, locale)
+            for scenario in scenarios_for(entry.slug)
         ),
-        chatgpt_label=_text(locale, "open_chatgpt"),
-        claude_label=_text(locale, "open_claude"),
-        claude_code_label=_text(locale, "open_claude_code"),
-        handoff_note=_text(locale, "handoff_note"),
     )
 
 
@@ -690,6 +732,45 @@ def application(
                 ("Cache-Control", "public, max-age=300"),
             ],
         )
+    if path.startswith("/api/skills/") and (
+        path.endswith("/prompts.json") or path.endswith("/prompts.vi.json")
+    ):
+        prompt_locale = "vi" if path.endswith("/prompts.vi.json") else locale
+        suffix = (
+            "/prompts.vi.json" if path.endswith("/prompts.vi.json") else "/prompts.json"
+        )
+        slug = path.removeprefix("/api/skills/").removesuffix(suffix)
+        entry = get_skill(slug)
+        if entry is None:
+            return _response(
+                start_response,
+                "404 Not Found",
+                "application/json",
+                json.dumps({"error": "skill_not_found"}),
+            )
+        return _response(
+            start_response,
+            "200 OK",
+            "application/json",
+            json.dumps(
+                {
+                    "version": 1,
+                    "locale": prompt_locale,
+                    "slug": entry.slug,
+                    "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+                    "scenarios": [
+                        scenario.localized(prompt_locale)
+                        for scenario in scenarios_for(entry.slug)
+                    ],
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            [
+                ("Access-Control-Allow-Origin", "*"),
+                ("Cache-Control", "public, max-age=300"),
+            ],
+        )
     if path.startswith("/api/skills/") and path.endswith(".json"):
         entry = get_skill(path.removeprefix("/api/skills/").removesuffix(".json"))
         if entry is None:
@@ -703,6 +784,10 @@ def application(
             "slug": entry.slug,
             "group": entry.group,
             "raw_path": f"/api/raw/{entry.slug}.md",
+            "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+            "prompt_scenarios": [
+                scenario.localized(locale) for scenario in scenarios_for(entry.slug)
+            ],
         }
         return _response(
             start_response,
@@ -877,6 +962,30 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
             encoding="utf-8",
         )
         written.append(data_path)
+        prompt_dir = api_dir / "skills" / entry.slug
+        prompt_dir.mkdir(parents=True, exist_ok=True)
+        for prompt_locale in ("en", "vi"):
+            prompt_path = prompt_dir / (
+                "prompts.json" if prompt_locale == "en" else "prompts.vi.json"
+            )
+            prompt_path.write_text(
+                json.dumps(
+                    {
+                        "version": 1,
+                        "locale": prompt_locale,
+                        "slug": entry.slug,
+                        "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+                        "scenarios": [
+                            scenario.localized(prompt_locale)
+                            for scenario in scenarios_for(entry.slug)
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            written.append(prompt_path)
     (output / "static").mkdir()
     (output / "static" / "site.css").write_text(_read_static_css(), encoding="utf-8")
     (output / "static" / "site.js").write_text(

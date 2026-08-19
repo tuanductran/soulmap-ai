@@ -17,6 +17,8 @@ REQUIRED_FILES = {
     "static/site.css",
     "static/site.js",
     "api/skills.json",
+    "api/skills/meta/prompts.json",
+    "api/skills/meta/prompts.vi.json",
     "api/raw/meta.md",
     "robots.txt",
 }
