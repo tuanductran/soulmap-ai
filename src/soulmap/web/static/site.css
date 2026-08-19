@@ -114,6 +114,7 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
 .skill-card__body { flex: 1; }
 .skill-card__actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
 .code-pill { display: inline-flex; align-items: center; padding: .2rem .45rem; border: 1px solid var(--line); border-radius: 8px; color: var(--teal-dark); background: rgba(47,111,107,.06); font-size: .82rem; }
+body.modal-open { overflow: hidden; }
 .modal-shell { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 1rem; }
 .modal-backdrop { position: absolute; inset: 0; background: rgba(20,31,32,.56); backdrop-filter: blur(4px); }
 .modal-dialog { position: relative; width: min(720px, 100%); max-height: min(760px, calc(100dvh - 2rem)); overflow: auto; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 20px; color: var(--ink); background: var(--surface-strong); box-shadow: var(--shadow); }
