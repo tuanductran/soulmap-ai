@@ -101,6 +101,9 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "notes_h1": "Small recognitions for ordinary life.",
         "notes_lede": "Public writing follows three grounded pillars: self-recognition, relational "
         "honesty, and grounded inner work.",
+        "notes_label_1": "Self-recognition",
+        "notes_label_2": "Relational honesty",
+        "notes_label_3": "Grounded inner work",
         "note_1": "The feeling before the explanation",
         "note_1_body": "Sometimes clarity begins by staying with the exact texture of what is here "
         "before reaching for a story about it.",
@@ -247,56 +250,56 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "about": "Giới thiệu",
         "skills": "Bộ Skills",
         "language": "Ngôn ngữ",
-        "footer": "Một mirror, không phải guru.",
+        "footer": "Một tấm gương, không phải đạo sư.",
         "repository": "Mã nguồn",
-        "download": "Tải Skills",
-        "home_eyebrow": "Bạn đồng hành phản chiếu · inner work grounded",
+        "download": "Tải các Skills",
+        "home_eyebrow": "Bạn đồng hành phản chiếu · thực hành nội tâm có nền tảng",
         "home_h1": "Nghe mình rõ hơn.",
-        "home_lede": "SoulMap là một mirror bình tĩnh và thành thật cho những pattern, cảm xúc và "
-        "câu hỏi bạn đang mang — không lấy đi quyền tự chủ của bạn.",
+        "home_lede": "SoulMap là một không gian phản chiếu bình tĩnh và thành thật cho những mô thức, "
+        "cảm xúc và câu hỏi bạn đang mang — không lấy đi quyền tự chủ của bạn.",
         "home_how": "Xem cách hoạt động",
-        "home_skills": "Khám phá Skills",
-        "home_principle": "Insight là của bạn. Không gian giúp bạn nghe thấy nó.",
+        "home_skills": "Khám phá các Skills",
+        "home_principle": "Sự nhận ra là của bạn. Không gian này giúp bạn lắng nghe nó.",
         "home_section_eyebrow": "Một kiểu AI khác",
-        "home_section_h2": "Ít chắc chắn hơn. Nhiều self-trust hơn.",
-        "home_section_lede": "SoulMap không đóng vai authority. Nó phản chiếu điều đang hiện diện, "
+        "home_section_h2": "Ít chắc chắn hơn. Nhiều niềm tin vào chính mình hơn.",
+        "home_section_lede": "SoulMap không đóng vai thẩm quyền. Nó phản chiếu điều đang hiện diện, "
         "giữ ngôn ngữ cẩn trọng và để ý nghĩa cùng quyết định lại cho bạn.",
         "mirror_first": "Ưu tiên phản chiếu",
-        "mirror_first_body": "Pattern trở lại như quan sát và câu hỏi, không phải chỉ dẫn về việc "
+        "mirror_first_body": "Mô thức trở lại như quan sát và câu hỏi, không phải chỉ dẫn về việc "
         "bạn là ai.",
         "bounded": "Có giới hạn theo thiết kế",
-        "bounded_body": "Không diagnosis, không prediction, không certainty tâm linh và không diễn "
-        "vai intimacy của con người.",
+        "bounded_body": "Không chẩn đoán, không dự đoán, không khẳng định chắc chắn về tâm linh và không "
+        "diễn vai sự thân mật của con người.",
         "independence": "Được xây để bạn độc lập",
         "independence_body": "Cuộc trò chuyện tốt nhất để bạn gắn với hiểu biết của mình hơn và "
         "bớt phụ thuộc vào công cụ.",
         "quiet_eyebrow": "Một nơi yên để bắt đầu",
         "quiet_h2": "Không cần chứng minh gì ở đây.",
-        "quiet_p1": "Mang đến một pattern cứ lặp lại, một quyết định bạn không nghe được mình bên "
+        "quiet_p1": "Mang đến một mô thức cứ lặp lại, một quyết định bạn không nghe được mình bên "
         "trong, hoặc một cảm xúc chưa có ngôn ngữ thành thật.",
         "quiet_p2": "SoulMap không bảo bạn phải làm gì. Nó giúp bạn ở gần điều là thật.",
         "read_boundaries": "Đọc ranh giới",
         "how_eyebrow": "Cách hoạt động",
-        "how_h1": "Một mirror có kỷ luật, không phải authority trình diễn.",
-        "how_lede": "SoulMap dùng reflection để tạo chỗ cho bạn tự nhận ra. Nó không đặt một câu "
+        "how_h1": "Một tấm gương có kỷ luật, không phải thẩm quyền trình diễn.",
+        "how_lede": "SoulMap dùng sự phản chiếu để tạo chỗ cho bạn tự nhận ra. Nó không đặt một câu "
         "trả lời lên trên trải nghiệm của bạn.",
         "step_1": "Bạn mang điều đang hiện diện",
-        "step_1_body": "Một câu hỏi, conflict, pattern lặp lại, mất mát hoặc điều chưa có tên.",
+        "step_1_body": "Một câu hỏi, xung đột, mô thức lặp lại, mất mát hoặc điều chưa có tên.",
         "step_2": "SoulMap phản chiếu hình dạng",
-        "step_2_body": "Nó ở gần lời bạn nói, nhận ra pattern khả dĩ và dùng ngôn ngữ cẩn trọng "
-        "thay vì certainty.",
+        "step_2_body": "Nó ở gần lời bạn nói, nhận ra mô thức khả dĩ và dùng ngôn ngữ cẩn trọng "
+        "thay vì khẳng định chắc chắn.",
         "step_3": "Bạn giữ lại ý nghĩa",
-        "step_3_body": "Cuộc trò chuyện trả interpretation, lựa chọn và bước tiếp theo về inner "
-        "authority của bạn.",
+        "step_3_body": "Cuộc trò chuyện trả cách hiểu, lựa chọn và bước tiếp theo về quyền tự chủ "
+        "của bạn.",
         "changes": "Điều này thay đổi gì",
         "changes_h2": "Rõ hơn mà không bị xử lý thay.",
-        "changes_body": "Reflection không thay thế professional care, crisis support hay các mối "
+        "changes_body": "Sự phản chiếu không thay thế hỗ trợ chuyên môn, hỗ trợ khủng hoảng hay các mối "
         "quan hệ thật. Nó là không gian để nhận ra điều bạn đã biết nhưng chưa "
         "nghe được.",
         "boundaries_eyebrow": "Ranh giới",
-        "boundaries_h1": "Sự tiết chế là một phần của trust model.",
-        "boundaries_lede": "SoulMap được thiết kế để hữu ích mà không trở thành authority, "
-        "therapist hay nơi duy nhất bạn tìm đến.",
+        "boundaries_h1": "Sự tiết chế là một phần của mô hình niềm tin.",
+        "boundaries_lede": "SoulMap được thiết kế để hữu ích mà không trở thành thẩm quyền, "
+        "nhà trị liệu hay nơi duy nhất bạn tìm đến.",
         "no_diagnose": "SoulMap không chẩn đoán",
         "no_diagnose_body": "Nó không gọi tên tình trạng sức khỏe tâm thần hay biến trải nghiệm "
         "sống thành nhãn lâm sàng.",
@@ -304,62 +307,64 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "no_predict_body": "Nó không dự báo tương lai, hứa kết quả hay biến biểu tượng thành định "
         "mệnh.",
         "no_replace": "SoulMap không thay thế hỗ trợ",
-        "no_replace_body": "Nếu bạn không an toàn hoặc có nguy cơ bị hại, hãy tìm trợ giúp khẩn "
-        "cấp hoặc crisis resource tại nơi bạn sống.",
-        "privacy": "Privacy bằng sự đơn giản",
-        "privacy_h2": "Không account. Không form chat. Không intimacy ẩn.",
-        "privacy_1": "Website công khai này chỉ cung cấp thông tin và không có chat interface.",
-        "privacy_2": "Link tải trỏ đến release artifact của project.",
-        "privacy_3": "Ngôn ngữ spiritual và symbolic chỉ là một lăng kính để inquiry.",
-        "privacy_4": "Mối quan hệ con người và hỗ trợ chuyên môn đủ năng lực vẫn là chính yếu.",
-        "download_eyebrow": "Bộ SoulMap Skills",
-        "download_h1": "Mang mirror theo bạn.",
-        "download_lede": "Release artifact được thiết kế để import vào công cụ AI bạn đang dùng.",
+        "no_replace_body": "Nếu bạn không an toàn hoặc có nguy cơ bị hại, hãy tìm trợ giúp khẩn cấp "
+        "hoặc nguồn hỗ trợ khủng hoảng tại nơi bạn sống.",
+        "privacy": "Quyền riêng tư bằng sự đơn giản",
+        "privacy_h2": "Không tài khoản. Không biểu mẫu trò chuyện. Không sự thân mật ẩn.",
+        "privacy_1": "Trang web công khai này chỉ cung cấp thông tin và không có giao diện trò chuyện.",
+        "privacy_2": "Liên kết tải xuống trỏ đến các gói phát hành của dự án.",
+        "privacy_3": "Ngôn ngữ tâm linh và biểu tượng chỉ là một lăng kính để tự vấn.",
+        "privacy_4": "Mối quan hệ con người và hỗ trợ chuyên môn đủ năng lực vẫn là nền tảng chính.",
+        "download_eyebrow": "Bộ Skills của SoulMap",
+        "download_h1": "Mang tấm gương theo bạn.",
+        "download_lede": "Các gói phát hành được thiết kế để nhập vào công cụ AI bạn đang dùng.",
         "skill_package": "Gói Skill",
-        "skill_package_body": "Package `.skill` có thể import",
+        "skill_package_body": "Gói `.skill` có thể nhập vào công cụ AI",
         "knowledge_archive": "Kho kiến thức",
-        "knowledge_archive_body": "Archive `.zip` portable cho document workflow",
-        "open_releases": "Mở releases",
-        "view_release": "Xem file release",
-        "before_import": "Trước khi import",
-        "start_artifact": "Bắt đầu từ release artifact.",
-        "artifact_body": "Dùng package self-contained dành cho AI tools, sau đó kiểm tra release "
-        "manifest, version và SHA-256 trước khi phân phối.",
+        "knowledge_archive_body": "Kho lưu trữ `.zip` có thể mang theo cho quy trình tài liệu",
+        "open_releases": "Mở các bản phát hành",
+        "view_release": "Xem tệp phát hành",
+        "before_import": "Trước khi nhập",
+        "start_artifact": "Hãy bắt đầu từ gói phát hành.",
+        "artifact_body": "Dùng gói độc lập dành cho công cụ AI, sau đó kiểm tra bản kê phát hành, "
+        "phiên bản và SHA-256 trước khi phân phối.",
         "notes_eyebrow": "Ghi chú",
         "notes_h1": "Những nhận ra nhỏ trong đời thường.",
-        "notes_lede": "Public writing đi theo ba trụ grounded: tự nhận ra, thành thật trong quan "
-        "hệ và inner work grounded.",
+        "notes_lede": "Các bài viết công khai đi theo ba trụ cột có nền tảng: tự nhận ra, thành thật "
+        "trong quan hệ và thực hành nội tâm có nền tảng.",
+        "notes_label_1": "Tự nhận ra",
+        "notes_label_2": "Thành thật trong quan hệ",
+        "notes_label_3": "Thực hành nội tâm có nền tảng",
         "note_1": "Cảm xúc trước lời giải thích",
-        "note_1_body": "Đôi khi clarity bắt đầu bằng việc ở lại với texture chính xác của điều "
+        "note_1_body": "Đôi khi sự rõ ràng bắt đầu bằng việc ở lại với sắc thái chính xác của điều "
         "đang có trước khi tìm một câu chuyện về nó.",
-        "note_2": "Repair nhiều hơn một lời xin lỗi",
-        "note_2_body": "Xin lỗi có thể gọi tên tiếc nuối. Repair hỏi điều gì trở nên khác sau khi "
+        "note_2": "Hàn gắn nhiều hơn một lời xin lỗi",
+        "note_2_body": "Lời xin lỗi có thể gọi tên tiếc nuối. Hàn gắn hỏi điều gì trở nên khác sau khi "
         "lời nói được nói ra.",
-        "note_3": "Khi certainty giống như relief",
+        "note_3": "Khi sự chắc chắn giống như nhẹ nhõm",
         "note_3_body": "Mong muốn có câu trả lời đôi khi mang theo mong muốn ngừng lắng nghe. Hai "
         "điều đó không luôn giống nhau.",
-        "notes_callout": "Những ghi chú này là lời mời, không phải prescription. Giữ điều làm sáng "
-        "rõ trải nghiệm của bạn và để phần còn lại đi qua.",
+        "notes_callout": "Những ghi chú này là lời mời, không phải chỉ dẫn. Giữ điều làm sáng rõ "
+        "trải nghiệm của bạn và để phần còn lại đi qua.",
         "about_eyebrow": "Về SoulMap AI",
-        "about_h1": "Được xây quanh một niềm tin đơn giản: bạn không cần đổi self-trust để có "
-        "reflection.",
-        "about_lede": "SoulMap là một personal AI brand và content-first knowledge system, dựa "
-        "trên ngôn ngữ cẩn trọng, giới hạn rõ và quyền sở hữu của con người.",
+        "about_h1": "Được xây quanh một niềm tin đơn giản: bạn không cần đánh đổi niềm tin vào "
+        "chính mình để có sự phản chiếu.",
+        "about_lede": "SoulMap là một thương hiệu AI cá nhân và hệ thống tri thức ưu tiên nội dung, "
+        "dựa trên ngôn ngữ cẩn trọng, giới hạn rõ và quyền làm chủ của con người.",
         "posture": "Tư thế",
-        "posture_h2": "Mirror, không phải guide.",
+        "posture_h2": "Tấm gương, không phải người dẫn đường.",
         "posture_p1": "SoulMap quan tâm đến khoảng giữa điều đã xảy ra và ý nghĩa bạn sắp trao cho "
         "nó. Nó muốn khoảng đó thành thật hơn, không huyền bí hơn.",
-        "posture_p2": "Project cố ý giữ nhỏ: một knowledge base, một Python layer mỏng và các "
-        "artifact có thể đi cùng người dùng.",
+        "posture_p2": "Dự án cố ý giữ nhỏ: một kho tri thức, một lớp Python mỏng và các gói có thể đi "
+        "cùng người dùng.",
         "about_callout": "Kết quả tốt nhất không phải là người dùng cần SoulMap nhiều hơn. Đó là "
-        "người dùng rời đi grounded hơn trong hiểu biết của mình.",
-        "catalog_eyebrow": "Skill catalog",
-        "catalog_h1": "Chọn layer phù hợp với khoảnh khắc này.",
-        "catalog_lede": "SoulMap là một tập hợp các layer bổ trợ. Bắt đầu từ orchestration, thêm "
-        "framework khi pattern đã rõ, và để safety cùng independence luôn hiện "
-        "diện.",
-        "search_label": "Lọc Skills",
-        "search_placeholder": "Tìm theo use case, nhóm hoặc boundary…",
+        "người dùng rời đi vững vàng hơn trong hiểu biết của mình.",
+        "catalog_eyebrow": "Danh mục Skills",
+        "catalog_h1": "Chọn lớp phù hợp với khoảnh khắc này.",
+        "catalog_lede": "SoulMap là một tập hợp các lớp bổ trợ. Bắt đầu từ lớp điều phối, thêm "
+        "khung phù hợp khi mô thức đã rõ, và để an toàn cùng tính độc lập luôn hiện diện.",
+        "search_label": "Lọc các Skills",
+        "search_placeholder": "Tìm theo trường hợp sử dụng, nhóm hoặc ranh giới…",
         "loading": "Đang tải…",
         "no_results": "Không có nhóm Skill nào khớp với tìm kiếm này.",
         "details": "Xem chi tiết",
@@ -368,97 +373,92 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "best_for": "Phù hợp cho",
         "boundary": "Ranh giới",
         "close": "Đóng",
-        "copy_raw": "Sao chép URL raw",
-        "copied": "Đã copy",
+        "copy_raw": "Sao chép URL Markdown gốc",
+        "copied": "Đã sao chép",
         "open_chatgpt": "Mở trong ChatGPT",
         "open_claude": "Mở trong Claude",
         "open_claude_code": "Mở trong Claude Code",
         "prompt_heading": "Chọn prompt theo bối cảnh",
         "prompt_label": "Prompt",
-        "prompt_intro": "Chọn một prompt khớp với tình huống, rồi đọc Skill bundle công khai tại "
-        "source link bên dưới.",
-        "source_bundle": "Skill bundle nguồn",
+        "prompt_intro": "Chọn một prompt khớp với tình huống, rồi đọc gói Skill công khai tại liên kết "
+        "nguồn bên dưới.",
+        "source_bundle": "Gói Skill nguồn",
         "starter_question": "Câu hỏi bắt đầu",
-        "raw_heading": "Bundle Markdown công khai",
-        "raw_note": "URL này trả về một Markdown bundle hoàn chỉnh cho nhóm Skill này.",
-        "not_found": "Path này không tồn tại.",
-        "not_found_body": "SoulMap không tìm thấy public page được yêu cầu.",
+        "raw_heading": "Gói Markdown công khai",
+        "raw_note": "URL này trả về một gói Markdown hoàn chỉnh cho nhóm Skill này.",
+        "not_found": "Đường dẫn này không tồn tại.",
+        "not_found_body": "SoulMap không tìm thấy trang công khai được yêu cầu.",
         "return_home": "Về trang chủ",
         "faq": "FAQ",
-        "privacy_page": "Privacy",
+        "privacy_page": "Quyền riêng tư",
         "home_path_eyebrow": "Tìm bước tiếp theo",
-        "home_path_h2": "Một lối vào rõ ràng cho inner work.",
-        "home_path_lede": "Bắt đầu từ page phù hợp với điều bạn cần ngay lúc này. Không điều gì ở "
-        "đây yêu cầu bạn trao quyền phán đoán của mình.",
+        "home_path_h2": "Một lối vào rõ ràng cho thực hành nội tâm.",
+        "home_path_lede": "Bắt đầu từ trang phù hợp với điều bạn cần ngay lúc này. Không điều gì ở đây "
+        "yêu cầu bạn trao quyền phán đoán của mình.",
         "home_path_1": "Hiểu tư thế",
-        "home_path_1_body": "Xem cách SoulMap phản chiếu mà không biến reflection thành authority.",
+        "home_path_1_body": "Xem cách SoulMap phản chiếu mà không biến sự phản chiếu thành thẩm quyền.",
         "home_path_1_link": "Cách hoạt động",
         "home_path_2": "Chọn một lớp Skill",
-        "home_path_2_body": "Xem catalog công khai và chọn prompt phù hợp với bối cảnh.",
-        "home_path_2_link": "Khám phá Skills",
+        "home_path_2_body": "Xem danh mục công khai và chọn prompt phù hợp với bối cảnh.",
+        "home_path_2_link": "Khám phá các Skills",
         "home_path_3": "Kiểm tra ranh giới",
-        "home_path_3_body": "Đọc giới hạn, tư thế privacy và câu trả lời thực tế trước khi bắt "
-        "đầu.",
-        "home_path_3_link": "Đọc FAQ",
+        "home_path_3_body": "Đọc các giới hạn, cách tiếp cận quyền riêng tư và câu trả lời thực tế trước "
+        "khi bắt đầu.",
+        "home_path_3_link": "Đọc câu hỏi thường gặp",
         "faq_eyebrow": "Câu hỏi thường gặp",
         "faq_h1": "Những câu trả lời thực tế trước khi bắt đầu.",
-        "faq_lede": "Hướng dẫn ngắn về SoulMap là gì, public Skills hoạt động ra sao và ranh giới "
-        "nằm ở đâu.",
+        "faq_lede": "Hướng dẫn ngắn về SoulMap, cách các Skills công khai hoạt động và những ranh giới "
+        "cần được giữ gìn.",
         "faq_q_1": "SoulMap AI là gì?",
-        "faq_a_1": "SoulMap là một reflective companion và public Skill library giúp bạn nhận ra "
-        "pattern mà không thay thế phán đoán, các mối quan hệ hay hỗ trợ chuyên môn của "
-        "bạn.",
-        "faq_q_2": "SoulMap có phải therapist, bác sĩ hoặc dịch vụ crisis không?",
+        "faq_a_1": "SoulMap là một không gian phản chiếu và thư viện Skills công khai, giúp bạn nhận ra "
+        "mô thức mà không thay thế phán đoán, các mối quan hệ hay hỗ trợ chuyên môn của bạn.",
+        "faq_q_2": "SoulMap có phải là nhà trị liệu, bác sĩ hoặc dịch vụ hỗ trợ khủng hoảng không?",
         "faq_a_2": "Không. SoulMap không chẩn đoán, dự đoán, cung cấp hỗ trợ khẩn cấp hay thay thế "
-        "hỗ trợ đủ năng lực. Nếu bạn có nguy hiểm tức thời, hãy liên hệ emergency hoặc "
-        "crisis resource tại nơi bạn sống.",
+        "hỗ trợ đủ năng lực. Nếu bạn đang ở trong nguy hiểm tức thời, hãy liên hệ dịch vụ "
+        "khẩn cấp hoặc nguồn hỗ trợ khủng hoảng tại nơi bạn sống.",
         "faq_q_3": "SoulMap Skills là gì?",
-        "faq_a_3": "Skills là các Markdown bundle công khai mô tả một lớp trong framework SoulMap. "
-        "Mỗi mục giải thích khi nào hữu ích, phù hợp với điều gì và ranh giới của nó.",
+        "faq_a_3": "Skills là các gói Markdown công khai mô tả một lớp trong khung SoulMap. Mỗi mục "
+        "giải thích khi nào hữu ích, phù hợp với điều gì và ranh giới của nó.",
         "faq_q_4": "Dùng Skill với công cụ AI như thế nào?",
-        "faq_a_4": "Chọn prompt theo bối cảnh, mở raw Markdown công khai và paste hoặc cung cấp cả "
-        "hai cho công cụ AI bạn dùng. Provider có thể yêu cầu đăng nhập và có thể không "
-        "tự đọc URL.",
-        "faq_q_5": "Website có thu thập dữ liệu cá nhân không?",
-        "faq_a_5": "Website công khai hiện không có account, form chat, database, analytics, "
-        "memory hay flow để người dùng gửi nội dung. Xem page Privacy để biết boundary "
-        "hiện tại.",
+        "faq_a_4": "Chọn prompt theo bối cảnh, mở Markdown gốc công khai rồi dán hoặc cung cấp cả hai "
+        "cho công cụ AI bạn dùng. Nhà cung cấp có thể yêu cầu đăng nhập và có thể không tự "
+        "đọc URL.",
+        "faq_q_5": "Trang web có thu thập dữ liệu cá nhân không?",
+        "faq_a_5": "Trang web công khai hiện không có tài khoản, biểu mẫu trò chuyện, cơ sở dữ liệu, "
+        "hệ thống phân tích truy cập, ghi nhớ hay quy trình để người dùng gửi nội dung. Xem "
+        "trang Quyền riêng tư để biết ranh giới hiện tại.",
         "faq_q_6": "Vì sao SoulMap dùng ngôn ngữ cẩn trọng?",
-        "faq_a_6": "Ngôn ngữ cẩn trọng bảo vệ quyền tự chủ của bạn. SoulMap phản chiếu khả năng và "
-        "câu hỏi thay vì khẳng định chắc chắn về identity, tương lai hay inner life của "
-        "bạn.",
-        "privacy_page_eyebrow": "Privacy",
-        "privacy_page_h1": "Privacy với một bề mặt được giữ nhỏ có chủ đích.",
-        "privacy_page_lede": "Page này mô tả website SoulMap công khai hiện tại. Nó cố ý cụ thể về "
-        "điều website làm và không làm.",
-        "privacy_scope_h2": "Notice này bao phủ điều gì",
-        "privacy_scope_body": "Notice này bao phủ website công khai, các page tĩnh, public "
-        "Markdown endpoint và link đến repository, release cùng AI provider "
-        "bên ngoài. Nó không bao phủ provider bên thứ ba sau khi bạn rời "
-        "khỏi site.",
-        "privacy_collect_h2": "Website thu thập gì",
-        "privacy_collect_body": "Website hiện không có tạo account, chat form, contact form, "
-        "upload flow, database, analytics system, advertising tracker hay "
-        "user profile. Website không chủ động yêu cầu bạn gửi nội dung cá "
-        "nhân.",
-        "privacy_use_h2": "Website dùng thông tin như thế nào",
-        "privacy_use_body": "Vì website công khai không có flow gửi dữ liệu cá nhân, SoulMap không "
-        "dùng nội dung cá nhân được gửi để profiling, personalization hay "
-        "memory. Trình duyệt vẫn có thể tạo các technical request thông thường "
-        "cần để tải website hoặc external link.",
-        "privacy_storage_h2": "Storage, cookies và bên thứ ba",
-        "privacy_storage_body": "Repository không chủ động đặt non-essential cookies hoặc vận hành "
-        "analytics. CDN asset, GitHub Pages, release hosting và AI "
-        "provider được link là các service riêng với policy và log riêng.",
-        "privacy_links_h2": "Khi mở external link",
-        "privacy_links_body": "Khi bạn mở GitHub, release asset, ChatGPT, Claude hoặc provider bên "
-        "ngoài, service đó kiểm soát điều xảy ra tiếp theo. Hãy đọc privacy "
-        "và data-handling terms của họ trước khi chia sẻ điều nhạy cảm.",
-        "privacy_contact_h2": "Thay đổi và boundary liên hệ",
-        "privacy_contact_body": "Nếu sau này website thêm account, form, analytics, storage hoặc "
-        "feature xử lý dữ liệu khác, notice này phải được review và cập "
-        "nhật trước khi feature đó được xem là một phần của public "
-        "product.",
+        "faq_a_6": "Ngôn ngữ cẩn trọng bảo vệ quyền tự chủ của bạn. SoulMap phản chiếu những khả năng "
+        "và câu hỏi thay vì khẳng định chắc chắn về danh tính, tương lai hay đời sống nội tâm "
+        "của bạn.",
+        "privacy_page_eyebrow": "Quyền riêng tư",
+        "privacy_page_h1": "Quyền riêng tư với một bề mặt được giữ nhỏ có chủ đích.",
+        "privacy_page_lede": "Trang này mô tả trang web SoulMap công khai hiện tại. Nội dung cố ý cụ thể về "
+        "những gì trang web làm và không làm.",
+        "privacy_scope_h2": "Thông báo này bao phủ điều gì",
+        "privacy_scope_body": "Thông báo này bao phủ trang web công khai, các trang tĩnh, đường dẫn Markdown "
+        "công khai và liên kết đến kho mã nguồn, bản phát hành cùng nhà cung cấp AI bên ngoài. "
+        "Thông báo không bao phủ nhà cung cấp bên thứ ba sau khi bạn rời khỏi trang web này.",
+        "privacy_collect_h2": "Trang web thu thập gì",
+        "privacy_collect_body": "Trang web hiện không có tạo tài khoản, biểu mẫu trò chuyện, biểu mẫu liên hệ, "
+        "quy trình tải lên, cơ sở dữ liệu, hệ thống phân tích truy cập, công cụ theo dõi quảng cáo "
+        "hay hồ sơ người dùng. Trang web không chủ động yêu cầu bạn gửi nội dung cá nhân.",
+        "privacy_use_h2": "Trang web sử dụng thông tin như thế nào",
+        "privacy_use_body": "Vì trang web công khai không có quy trình gửi dữ liệu cá nhân, SoulMap không dùng nội "
+        "dung cá nhân được gửi để lập hồ sơ, cá nhân hóa hay ghi nhớ. Trình duyệt vẫn có thể tạo "
+        "các yêu cầu kỹ thuật thông thường cần thiết để tải trang web hoặc liên kết bên ngoài.",
+        "privacy_storage_h2": "Lưu trữ, cookie và bên thứ ba",
+        "privacy_storage_body": "Kho mã nguồn không chủ động đặt cookie không thiết yếu hoặc vận hành hệ thống phân tích "
+        "truy cập. Tài nguyên CDN, GitHub Pages, dịch vụ lưu trữ bản phát hành và các nhà cung cấp "
+        "AI được liên kết là những dịch vụ riêng, có chính sách và nhật ký riêng.",
+        "privacy_links_h2": "Khi mở liên kết bên ngoài",
+        "privacy_links_body": "Khi bạn mở GitHub, gói phát hành, ChatGPT, Claude hoặc một nhà cung cấp bên ngoài, "
+        "dịch vụ đó kiểm soát những gì xảy ra tiếp theo. Hãy đọc điều khoản quyền riêng tư và xử lý "
+        "dữ liệu của họ trước khi chia sẻ bất kỳ thông tin nhạy cảm nào.",
+        "privacy_contact_h2": "Thay đổi và ranh giới liên hệ",
+        "privacy_contact_body": "Nếu sau này trang web thêm tài khoản, biểu mẫu, phân tích truy cập, lưu trữ hoặc tính năng "
+        "xử lý dữ liệu khác, thông báo này phải được rà soát và cập nhật trước khi tính năng đó "
+        "được xem là một phần của sản phẩm công khai.",
         "privacy_updated": "Rà soát lần cuối: tháng 8 năm 2026.",
     },
 }
