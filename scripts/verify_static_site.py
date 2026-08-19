@@ -22,7 +22,6 @@ REQUIRED_FILES = {
 }
 FORBIDDEN_FILE_PARTS = {".claude", ".github", ".git", "dist", "src", "tests"}
 FORBIDDEN_SUFFIXES = {".py", ".toml", ".lock"}
-EXTERNAL_ORIGIN_PREFIXES = ("https://rsms.me/", "https://cdn.jsdelivr.net/")
 
 
 def _normalise_base_path(base_path: str) -> str:
@@ -51,6 +50,37 @@ def _validate_local_links(content: str, normalised_base: str, html_path: Path) -
             raise ValueError(
                 f"{html_path} contains links outside base path: {invalid_links}"
             )
+
+
+def _validate_script_tag(
+    script_tag: str, normalised_base: str, html_path: Path
+) -> None:
+    source_match = re.search(r'\bsrc\s*=\s*"([^"]+)"', script_tag, re.IGNORECASE)
+    if source_match is None:
+        return
+    script_src = source_match.group(1)
+    if (
+        script_src.startswith("/")
+        and normalised_base
+        and not script_src.startswith(normalised_base + "/")
+    ):
+        raise ValueError(f"{html_path} contains script outside base path: {script_src}")
+
+    parsed_src = urlparse(script_src)
+    if not (parsed_src.scheme or parsed_src.netloc):
+        return
+    if (
+        parsed_src.scheme.lower() != "https"
+        or parsed_src.hostname != "cdn.jsdelivr.net"
+        or parsed_src.port is not None
+        or parsed_src.username is not None
+        or parsed_src.password is not None
+    ):
+        raise ValueError(
+            f"{html_path} contains unapproved external script: {script_src}"
+        )
+    if not re.search(r'integrity="sha384-[^"]+"', script_tag, re.IGNORECASE):
+        raise ValueError(f"{html_path} CDN script is missing SRI: {html_path}")
 
 
 def verify_static_site(root: Path, base_path: str = "") -> None:
@@ -104,31 +134,9 @@ def verify_static_site(root: Path, base_path: str = "") -> None:
             )
         _validate_local_links(content, normalised_base, html_path.relative_to(root))
         for script_tag in re.findall(r"<script\b[^>]*>", content, re.IGNORECASE):
-            source_match = re.search(r'src="([^"]+)"', script_tag)
-            if source_match is None:
-                continue
-            script_src = source_match.group(1)
-            if (
-                script_src.startswith("/")
-                and normalised_base
-                and not script_src.startswith(normalised_base + "/")
-            ):
-                raise ValueError(
-                    f"{html_path.relative_to(root)} contains script outside base path: {script_src}"
-                )
-            parsed_src = urlparse(script_src)
-            if parsed_src.scheme:
-                if (
-                    parsed_src.scheme != "https"
-                    or parsed_src.netloc != "cdn.jsdelivr.net"
-                ):
-                    raise ValueError(
-                        f"{html_path.relative_to(root)} contains unapproved external script: {script_src}"
-                    )
-                if not re.search(r'integrity="sha384-[^"]+"', script_tag):
-                    raise ValueError(
-                        f"{html_path.relative_to(root)} CDN script is missing SRI: {html_path.relative_to(root)}"
-                    )
+            _validate_script_tag(
+                script_tag, normalised_base, html_path.relative_to(root)
+            )
 
 
 def main(args: list[str] | None = None) -> int:
