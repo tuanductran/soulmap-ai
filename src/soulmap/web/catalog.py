@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -157,6 +158,119 @@ CATALOG: tuple[SkillEntry, ...] = (
 )
 
 _BY_SLUG = {entry.slug: entry for entry in CATALOG}
+_SEARCH_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundary")
+
+
+def _normalise_search_text(value: str) -> str:
+    """Fold accents and punctuation so public search behaves consistently."""
+    decomposed = unicodedata.normalize("NFKD", value.casefold())
+    without_marks = "".join(
+        character for character in decomposed if not unicodedata.combining(character)
+    )
+    return re.sub(r"[^a-z0-9]+", " ", without_marks).strip()
+
+
+def _search_tokens(value: str) -> tuple[str, ...]:
+    return tuple(
+        token for token in _normalise_search_text(value).split() if len(token) > 1
+    )
+
+
+def _public_entry_dict(
+    entry: SkillEntry, locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL
+) -> dict[str, object]:
+    language = "vi" if locale == "vi" else "en"
+    fields = locale_fields(entry, language)
+    return {
+        "slug": entry.slug,
+        **fields,
+        "raw_path": f"/api/raw/{entry.slug}.md",
+        "raw_url": f"{raw_base_url.rstrip('/')}/api/raw/{entry.slug}.md"
+        if raw_base_url
+        else "",
+        "featured_file": entry.featured_file,
+        "prompt_scenarios": [
+            scenario.localized(language) for scenario in scenarios_for(entry.slug)
+        ],
+    }
+
+
+def search_catalog(
+    locale: str = "en", query: str = "", group: str = "", limit: int = 50
+) -> list[dict[str, object]]:
+    """Search localized Skill metadata with deterministic relevance ranking."""
+    language = "vi" if locale == "vi" else "en"
+    query_normalised = _normalise_search_text(query)
+    query_tokens = _search_tokens(query)
+    group_normalised = _normalise_search_text(group)
+    bounded_limit = max(1, min(limit, 100))
+    ranked: list[tuple[int, int, dict[str, object]]] = []
+
+    for position, entry in enumerate(CATALOG):
+        fields = locale_fields(entry, language)
+        normalized_fields = {
+            field: _normalise_search_text(fields[field]) for field in _SEARCH_FIELDS
+        }
+        normalized_slug = _normalise_search_text(entry.slug)
+        if group_normalised and group_normalised not in normalized_fields["group"]:
+            continue
+
+        matched_fields: list[str] = []
+        score = 0
+        if query_normalised:
+            if query_normalised == normalized_slug:
+                score += 1000
+                matched_fields.append("slug")
+            if query_normalised == normalized_fields["title"]:
+                score += 900
+                matched_fields.append("title")
+            for field, value in normalized_fields.items():
+                if query_normalised in value:
+                    score += {"group": 360, "title": 420}.get(field, 180)
+                    if field not in matched_fields:
+                        matched_fields.append(field)
+            for token in query_tokens:
+                for field, value in (
+                    ("slug", normalized_slug),
+                    *normalized_fields.items(),
+                ):
+                    if token in value:
+                        score += 40 if token == value else 15
+                        if field not in matched_fields:
+                            matched_fields.append(field)
+            if score == 0:
+                continue
+
+        result = _public_entry_dict(entry, language)
+        result["score"] = score
+        result["matched_fields"] = matched_fields
+        ranked.append((score, -position, result))
+
+    ranked.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return [result for _, _, result in ranked[:bounded_limit]]
+
+
+def catalog_search_json(
+    locale: str = "en", query: str = "", group: str = "", limit: int = 50
+) -> str:
+    """Serialize the public, localized advanced-search response."""
+    language = "vi" if locale == "vi" else "en"
+    bounded_limit = max(1, min(limit, 100))
+    all_results = search_catalog(language, query, group, 100)
+    results = all_results[:bounded_limit]
+    return json.dumps(
+        {
+            "version": 1,
+            "locale": language,
+            "query": query,
+            "group": group,
+            "limit": bounded_limit,
+            "total": len(all_results),
+            "results": results,
+        },
+        ensure_ascii=False,
+        indent=2,
+    )
 
 
 def get_skill(slug: str) -> SkillEntry | None:
@@ -228,24 +342,7 @@ def raw_markdown(entry: SkillEntry) -> str:
 def catalog_json(locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL) -> str:
     """Serialize localized public catalog metadata without private paths."""
     language = "vi" if locale == "vi" else "en"
-    entries = []
-    for entry in CATALOG:
-        fields = locale_fields(entry, language)
-        entries.append(
-            {
-                "slug": entry.slug,
-                **fields,
-                "raw_path": f"/api/raw/{entry.slug}.md",
-                "raw_url": f"{raw_base_url.rstrip('/')}/api/raw/{entry.slug}.md"
-                if raw_base_url
-                else "",
-                "featured_file": entry.featured_file,
-                "prompt_scenarios": [
-                    scenario.localized(language)
-                    for scenario in scenarios_for(entry.slug)
-                ],
-            }
-        )
+    entries = [_public_entry_dict(entry, language, raw_base_url) for entry in CATALOG]
     return json.dumps(
         {"version": 1, "locale": language, "skills": entries},
         ensure_ascii=False,
