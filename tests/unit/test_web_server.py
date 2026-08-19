@@ -159,8 +159,8 @@ def test_faq_and_privacy_pages_use_public_i18n_content() -> None:
     _, privacy_body = _request("/vi/privacy")
     privacy = privacy_body.decode("utf-8")
     assert '<html lang="vi">' in privacy
-    assert "Notice này bao phủ điều gì" in privacy
-    assert "Website hiện không có tạo account" in privacy
+    assert "Thông báo này bao phủ điều gì" in privacy
+    assert "Trang web hiện không có tạo tài khoản" in privacy
     assert privacy.count('<h2 class="card-title">') == 6
 
 
@@ -279,7 +279,7 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
             ("Mở trong ChatGPT", "Mở trong Claude", "Mở trong Claude Code"),
             "Chọn prompt theo bối cảnh",
             "Prompt",
-            "Skill bundle nguồn",
+            "Gói Skill nguồn",
             "Câu hỏi bắt đầu",
         ),
     ):
@@ -297,6 +297,11 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
         assert "Use this public SoulMap Markdown bundle" not in html
         for label in labels:
             assert label in html
+
+    _, voice_body = _request("/partials/skill/voice.vi.html")
+    voice = voice_body.decode("utf-8")
+    assert "không dùng biểu tượng cảm xúc" in voice
+    assert "không dùng emoji" not in voice
 
 
 @pytest.mark.parametrize("slug", [entry.slug for entry in CATALOG])
@@ -367,14 +372,27 @@ def test_localized_catalog_uses_requested_language() -> None:
     _, body = _request("/skills", "lang=vi")
     html = body.decode("utf-8")
     assert '<html lang="vi">' in html
-    assert "Chọn layer phù hợp với khoảnh khắc này." in html
+    assert "Chọn lớp phù hợp với khoảnh khắc này." in html
     locale_payload = html.split(
         '<script id="soulmap-locale-data" type="application/json">', 1
     )[1].split("</script>", 1)[0]
     locale_messages = json.loads(locale_payload)
-    assert locale_messages["home_skills"] == "Khám phá Skills"
+    assert locale_messages["home_skills"] == "Khám phá các Skills"
+    assert locale_messages["privacy_page"] == "Quyền riêng tư"
     visible_main = html.split('<main id="main-content">', 1)[1].split("</main>", 1)[0]
-    assert "Khám phá Skills" not in visible_main
+    assert "Khám phá các Skills" not in visible_main
+    assert "inner work" not in visible_main
+    assert "authority" not in visible_main
+    assert "privacy" not in visible_main.lower()
+    assert "Phản chiếu" in visible_main
+    assert "Reflection" not in visible_main
+
+    _, notes_body = _request("/vi/notes")
+    notes = notes_body.decode("utf-8")
+    assert "Tự nhận ra" in notes
+    assert "Thành thật trong quan hệ" in notes
+    assert "Thực hành nội tâm có nền tảng" in notes
+    assert "Grounded inner work" not in notes
 
     _, body = _request("/vi/skills")
     assert '<html lang="vi">' in body.decode("utf-8")

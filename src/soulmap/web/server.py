@@ -274,11 +274,10 @@ def _download(locale: str) -> str:
 
 
 def _notes(locale: str) -> str:
-    labels = ("Self-recognition", "Relational honesty", "Grounded inner work")
     cards = "".join(
-        f'<article class="card"><span class="note-label">{label}</span><h2 class="card-title">{_text(locale, title_key)}</h2><p>{_text(locale, body_key)}</p></article>'
-        for label, title_key, body_key in zip(
-            labels,
+        f'<article class="card"><span class="note-label">{_text(locale, label_key)}</span><h2 class="card-title">{_text(locale, title_key)}</h2><p>{_text(locale, body_key)}</p></article>'
+        for label_key, title_key, body_key in zip(
+            ("notes_label_1", "notes_label_2", "notes_label_3"),
             ("note_1", "note_2", "note_3"),
             ("note_1_body", "note_2_body", "note_3_body"),
             strict=True,
@@ -409,7 +408,7 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
     raw_url = f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md"
     return render_template(
         "partials/skill-detail.html",
-        group=escape(entry.group),
+        group=escape(fields["group"]),
         slug=escape(entry.slug),
         title=escape(fields["title"]),
         summary=escape(fields["summary"]),
@@ -446,7 +445,7 @@ def _skill_cards(locale: str, query: str = "") -> str:
         partial_href = f"/partials/skill/{entry.slug}.{locale}.html?lang={locale}"
         cards.append(
             f'<article class="skill-card" data-search="{escape(search_text)}">'
-            f'<div class="skill-card__meta"><span>{escape(entry.group)}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
+            f'<div class="skill-card__meta"><span>{escape(fields["group"])}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
             f'<div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>'
             f'<div class="skill-card__actions"><a class="button small" href="{escape(detail_href, quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="{escape(partial_href, quote=True)}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a></div>'
             "</article>"
@@ -493,7 +492,7 @@ def _skill_page(entry_slug: str, locale: str) -> str:
     fields = locale_fields(entry, locale)
     return render_template(
         "pages/skill-page.html",
-        group=escape(entry.group),
+        group=escape(fields["group"]),
         title=escape(fields["title"]),
         summary=escape(fields["summary"]),
         skills_href=escape(_nav_path("/skills", locale), quote=True),
@@ -735,7 +734,6 @@ def application(
             )
         data = locale_fields(entry, locale) | {
             "slug": entry.slug,
-            "group": entry.group,
             "raw_path": f"/api/raw/{entry.slug}.md",
             "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
             "prompt_scenarios": [
