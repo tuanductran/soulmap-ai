@@ -109,9 +109,36 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert html.count('integrity="sha384-') == 2
     assert 'src="/static/site.js"' in html
     assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
+    assert 'hx-get="/partials/skills-grid.html?lang=en"' in html
+    assert 'hx-trigger="input changed delay:350ms"' in html
+    assert 'hx-target="#skill-grid"' in html
+    assert 'hx-swap="outerHTML"' in html
+    assert 'hx-indicator="#skill-search-loading"' in html
+    assert 'hx-sync="this:replace"' in html
+    assert 'method="get"' in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
+
+
+def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
+    captured, fragment_body = _request(
+        "/partials/skills-grid.html", "lang=en&q=spiritual"
+    )
+    fragment = fragment_body.decode("utf-8")
+    assert captured["status"] == "200 OK"
+    assert '<div class="skill-grid" id="skill-grid"' in fragment
+    assert "Grounded symbolic layer" in fragment
+    assert "Core orchestration" not in fragment
+    assert "Reflective frameworks" not in fragment
+
+    full_captured, full_body = _request("/skills", "q=spiritual")
+    full_page = full_body.decode("utf-8")
+    assert full_captured["status"] == "200 OK"
+    assert 'name="q"' in full_page
+    assert 'value="spiritual"' in full_page
+    assert "Grounded symbolic layer" in full_page
+    assert "Core orchestration" not in full_page
 
 
 def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
@@ -268,6 +295,8 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "vi/skills/meta/index.html",
         "partials/skill/meta.en.html",
         "partials/skill/meta.vi.html",
+        "partials/skills-grid.html",
+        "vi/partials/skills-grid.html",
         "api/skills.json",
         "api/raw/meta.md",
         "api/skills/meta/prompts.json",
@@ -284,6 +313,11 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'src="/soulmap-ai/static/site.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
+    assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' in skills_html
+    grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
+    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
+    detail_html = (output / "partials/skill/meta.en.html").read_text(encoding="utf-8")
+    assert 'href="/soulmap-ai/api/raw/meta.md"' in detail_html
     assert 'href="/"' not in html
     assert "viewport-fit=cover" in html
     assert 'media="(prefers-color-scheme: dark)"' in html

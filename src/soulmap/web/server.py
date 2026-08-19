@@ -132,6 +132,8 @@ TEXT: dict[str, dict[str, str]] = {
         "catalog_lede": "SoulMap is a set of complementary layers. Start with orchestration, add a framework when the pattern is clear, and let safety and independence stay in the room.",
         "search_label": "Filter Skills",
         "search_placeholder": "Search by use case, group, or boundary…",
+        "loading": "Loading…",
+        "no_results": "No Skill groups match this search.",
         "details": "View details",
         "raw": "Raw Markdown",
         "use_when": "Use this when",
@@ -248,6 +250,8 @@ TEXT: dict[str, dict[str, str]] = {
         "catalog_lede": "SoulMap là một tập hợp các layer bổ trợ. Bắt đầu từ orchestration, thêm framework khi pattern đã rõ, và để safety cùng independence luôn hiện diện.",
         "search_label": "Lọc Skills",
         "search_placeholder": "Tìm theo use case, nhóm hoặc boundary…",
+        "loading": "Đang tải…",
+        "no_results": "Không có nhóm Skill nào khớp với tìm kiếm này.",
         "details": "Xem chi tiết",
         "raw": "Raw Markdown",
         "use_when": "Dùng khi",
@@ -565,18 +569,37 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
     )
 
 
-def _skill_catalog(locale: str) -> str:
+def _skill_cards(locale: str, query: str = "") -> str:
     cards = []
+    normalised_query = query.strip().lower()
     for entry in CATALOG:
         fields = locale_fields(entry, locale)
         search_text = " ".join(fields.values()).lower()
+        if normalised_query and normalised_query not in search_text:
+            continue
+        detail_href = _nav_path("/skills/" + entry.slug, locale)
+        partial_href = f"/partials/skill/{entry.slug}.{locale}.html?lang={locale}"
         cards.append(
-            f'<article class="skill-card" data-search="{escape(search_text)}" x-show="matches($el.dataset.search)" x-transition>'
+            f'<article class="skill-card" data-search="{escape(search_text)}">'
             f'<div class="skill-card__meta"><span>{escape(entry.group)}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
             f'<div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>'
-            f'<div class="skill-card__actions"><a class="button small" href="{escape(_nav_path("/skills/" + entry.slug, locale), quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="/partials/skill/{escape(entry.slug)}.{locale}.html?lang={locale}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a><span id="skill-loading" class="htmx-indicator" aria-live="polite">Loading…</span></div>'
+            f'<div class="skill-card__actions"><a class="button small" href="{escape(detail_href, quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="{escape(partial_href, quote=True)}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a></div>'
             "</article>"
         )
+    return (
+        "".join(cards)
+        or f'<p class="empty-state" role="status">{_text(locale, "no_results")}</p>'
+    )
+
+
+def _skill_grid_fragment(locale: str, query: str = "") -> str:
+    return render_template(
+        "partials/skill-grid.html",
+        skill_cards=_skill_cards(locale, query),
+    )
+
+
+def _skill_catalog(locale: str, query: str = "") -> str:
     return render_template(
         "pages/skill-catalog.html",
         catalog_eyebrow=_text(locale, "catalog_eyebrow"),
@@ -584,8 +607,15 @@ def _skill_catalog(locale: str) -> str:
         catalog_lede=_text(locale, "catalog_lede"),
         search_label=_text(locale, "search_label"),
         search_placeholder=_text(locale, "search_placeholder"),
+        loading_label=_text(locale, "loading"),
+        catalog_action=escape(_nav_path("/skills", locale), quote=True),
+        filter_endpoint=escape(
+            _nav_path("/partials/skills-grid.html", locale) + f"?lang={locale}",
+            quote=True,
+        ),
+        search_query=escape(query, quote=True),
         catalog_count=str(len(CATALOG)),
-        skill_cards="".join(cards),
+        skill_grid=_skill_grid_fragment(locale, query),
         close_label=_text(locale, "close"),
         details_label=_text(locale, "details"),
     )
@@ -816,6 +846,15 @@ def application(
                 ("Cache-Control", "public, max-age=300"),
             ],
         )
+    if path == "/partials/skills-grid.html":
+        query_value = query.get("q", [""])[0]
+        return _response(
+            start_response,
+            "200 OK",
+            "text/html",
+            _skill_grid_fragment(locale, query_value),
+            [("Vary", "HX-Request"), ("Cache-Control", "no-store")],
+        )
     if path.startswith("/partials/skill/") and path.endswith(".html"):
         filename = path.removeprefix("/partials/skill/").removesuffix(".html")
         slug, _, partial_locale = filename.rpartition(".")
@@ -851,6 +890,20 @@ def application(
             "text/html",
             _layout(
                 entry.title_en, entry.summary_en, "/skills/" + slug, content, locale
+            ),
+        )
+    if path == "/skills":
+        query_value = query.get("q", [""])[0]
+        return _response(
+            start_response,
+            "200 OK",
+            "text/html",
+            _layout(
+                "SoulMap Skills",
+                "Choose the SoulMap layer that fits the moment.",
+                path,
+                _skill_catalog(locale, query_value),
+                locale,
             ),
         )
     pages = _pages()
@@ -944,9 +997,24 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
             partial = output / f"partials/skill/{entry.slug}.{locale}.html"
             partial.parent.mkdir(parents=True, exist_ok=True)
             partial.write_text(
-                _skill_detail_fragment(entry.slug, locale), encoding="utf-8"
+                _apply_base_path(
+                    _skill_detail_fragment(entry.slug, locale), normalised_base
+                ),
+                encoding="utf-8",
             )
             written.append(partial)
+    for locale in ("en", "vi"):
+        grid_partial = output / (
+            "partials/skills-grid.html"
+            if locale == "en"
+            else "vi/partials/skills-grid.html"
+        )
+        grid_partial.parent.mkdir(parents=True, exist_ok=True)
+        grid_partial.write_text(
+            _apply_base_path(_skill_grid_fragment(locale), normalised_base),
+            encoding="utf-8",
+        )
+        written.append(grid_partial)
     api_dir = output / "api"
     (api_dir / "raw").mkdir(parents=True, exist_ok=True)
     (api_dir / "skills").mkdir(parents=True, exist_ok=True)

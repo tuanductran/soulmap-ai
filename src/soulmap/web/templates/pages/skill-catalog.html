@@ -8,13 +8,15 @@
 <section class="section tinted" x-data="skillCatalog">
   <div class="container">
     <div class="catalog-toolbar">
-      <div class="field">
+      <form class="field" action="$catalog_action" method="get" role="search">
         <label for="skill-search">$search_label</label>
-        <input class="input" id="skill-search" type="search" x-model="query" placeholder="$search_placeholder" autocomplete="off">
-      </div>
+        <input class="input" id="skill-search" name="q" type="search" value="$search_query" placeholder="$search_placeholder" autocomplete="off"
+          hx-get="$filter_endpoint" hx-trigger="input changed delay:350ms" hx-target="#skill-grid" hx-swap="outerHTML" hx-indicator="#skill-search-loading" hx-sync="this:replace">
+        <span id="skill-search-loading" class="htmx-indicator" role="status">$loading_label</span>
+      </form>
       <p class="muted">$catalog_count groups · raw bundles available</p>
     </div>
-    <div class="skill-grid">$skill_cards</div>
+    $skill_grid
   </div>
   <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-on:keydown="trap($$event)" role="presentation">
     <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>

@@ -49,6 +49,8 @@ Localized copy, route decisions, escaping, card generation, API behavior, and st
 | `/api/skills/<slug>/prompts.vi.json` | Vietnamese machine-readable prompt scenarios for one Skill group |
 | `/api/raw/<slug>.md` | One complete public Markdown bundle with context prompts and source links |
 | `/partials/skill/<slug>.<lang>.html` | Server-rendered htmx modal fragment |
+| `/partials/skills-grid.html` | English htmx Skill-filter fragment |
+| `/vi/partials/skills-grid.html` | Vietnamese htmx Skill-filter fragment |
 | `/static/site.css` | Responsive local stylesheet |
 | `/static/site.js` | Small Alpine CSP component layer |
 | `/robots.txt` | Minimal crawl policy |
@@ -61,9 +63,9 @@ Each catalog card provides a use-case summary, best-fit description, boundary st
 
 ## htmx, Alpine, and modal boundary
 
-The Skill detail modal uses htmx to request a server-rendered HTML fragment and Alpine CSP for local state, filtering, focus return, Escape handling, backdrop close, and a small clipboard action. The modal follows the WAI-ARIA dialog contract: it has `role="dialog"`, `aria-modal="true"`, a visible close control, a focus target, a contained tab sequence, and focus return to the invoking button.
+The Skill detail modal uses htmx to request a server-rendered HTML fragment and Alpine CSP for local modal state, focus return, Escape handling, backdrop close, and a small clipboard action. The catalog filter now uses htmx directly: the search input sends `input changed delay:350ms` to a localized grid fragment, swaps `#skill-grid` with `outerHTML`, shows a request indicator, and uses `hx-sync="this:replace"` to avoid stale response races. The modal follows the WAI-ARIA dialog contract: it has `role="dialog"`, `aria-modal="true"`, a visible close control, a focus target, a contained tab sequence, and focus return to the invoking button.
 
-If scripts fail, the card's normal link still opens the same Skill detail page, and the raw Markdown link remains directly usable. The website does not use an SPA, client-side router, local storage, authentication, or a server-side AI integration.
+The filter also has a normal HTML form fallback at `/skills?q=...`, and each Skill card keeps a normal detail link. If scripts fail, the page remains navigable and the raw Markdown link remains directly usable. The website does not use an SPA, client-side router, local storage, authentication, polling, live chat, or a server-side AI integration.
 
 ## i18n contract
 
@@ -78,6 +80,12 @@ Every Skill scenario owns its prompt, context, starter question, and source URL.
 The repository workflow builds the static output from `src/soulmap/web/` and performs a static safety check before publishing. The source branch remains the canonical code surface; generated files are never committed to `skills/`, `dist/`, or the Python source package.
 
 Production publication uses the generated `gh-pages` branch because this repository needs a separately inspectable static output branch. In repository Settings, configure GitHub Pages to deploy from the `gh-pages` branch and its root directory. The workflow pushes that branch only after a successful `main` build and verifier run. The branch contains only generated public pages, catalog metadata, raw bundles, static assets, and partials; it is never a source of SoulMap doctrine or runtime code.
+
+## Cloudflare Worker evaluation
+
+The static export is structurally compatible with Cloudflare Workers Static Assets: the generated site directory can be configured as `assets.directory`, while a Worker can be routed first only for API or fragment paths. This is a viable future deployment adapter, not a reason to remove the Python WSGI server or GitHub Pages fallback today.
+
+A pure Worker rewrite would introduce a second runtime and require a new implementation of routing, template rendering, raw bundle assembly, locale handling, CSP, and parity tests. Cloudflare's Python Workers are a separate beta runtime with a `WorkerEntrypoint`/`fetch` model and `pywrangler`; they do not run the current Python 3.11 WSGI process unchanged. The recommended migration sequence is therefore to keep Python and static export canonical, add a Worker adapter around the generated directory, route `/api/*` and `/partials/*` selectively, run parity tests against all existing contracts, and only then consider changing the production origin.
 
 ## Content boundary
 

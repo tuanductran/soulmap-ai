@@ -19,6 +19,8 @@ REQUIRED_FILES = {
     "api/skills.json",
     "api/skills/meta/prompts.json",
     "api/skills/meta/prompts.vi.json",
+    "partials/skills-grid.html",
+    "vi/partials/skills-grid.html",
     "api/raw/meta.md",
     "robots.txt",
 }
@@ -119,7 +121,7 @@ def verify_static_site(root: Path, base_path: str = "") -> None:
             )
 
     for html_path in sorted(root.rglob("*.html")):
-        if html_path.relative_to(root).as_posix().startswith("partials/"):
+        if "partials" in html_path.relative_to(root).parts:
             continue
         content = html_path.read_text(encoding="utf-8")
         required_markers = ("<html lang=", 'name="viewport"', 'id="main-content"')
