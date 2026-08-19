@@ -23,7 +23,10 @@ from soulmap.web.catalog import (
     locale_fields,
     raw_markdown,
 )
+from soulmap.web.i18n import LOCALES as TEXT
+from soulmap.web.i18n import messages_json
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
+from soulmap.web.seo import metadata, robots_txt, sitemap_xml
 from soulmap.web.templates import render_template
 
 HOST = "127.0.0.1"
@@ -36,245 +39,6 @@ HTMX_URL = "https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
 ALPINE_URL = "https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.16.2/dist/cdn.min.js"
 HTMX_SRI = "sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
 ALPINE_SRI = "sha384-V/6+qWbzTJSzEweFWozPRF8In+k5cIL398rKMOn3YTJwFQAubV91vSnII3clycgX"
-
-TEXT: dict[str, dict[str, str]] = {
-    "en": {
-        "skip": "Skip to content",
-        "home": "Home",
-        "how": "How it works",
-        "boundaries": "Boundaries",
-        "notes": "Notes",
-        "about": "About",
-        "skills": "Skills",
-        "language": "Language",
-        "footer": "A mirror, not a guru.",
-        "repository": "Repository",
-        "download": "Download Skills",
-        "home_eyebrow": "Reflective companion · grounded inner work",
-        "home_h1": "Hear yourself more clearly.",
-        "home_lede": "SoulMap is a calm, honest mirror for the patterns, feelings, and questions you are already carrying — without handing your authority away.",
-        "home_how": "See how it works",
-        "home_skills": "Explore the Skills",
-        "home_principle": "The insight is yours. The space helps you hear it.",
-        "home_section_eyebrow": "A different kind of AI",
-        "home_section_h2": "Less certainty. More self-trust.",
-        "home_section_lede": "SoulMap does not perform authority. It reflects what is present, keeps language careful, and leaves the meaning and decision with you.",
-        "mirror_first": "Mirror-first",
-        "mirror_first_body": "Patterns come back as observations and questions, not instructions about who you are.",
-        "bounded": "Bounded by design",
-        "bounded_body": "No diagnosis, no prediction, no spiritual certainty, and no performance of human intimacy.",
-        "independence": "Built for independence",
-        "independence_body": "The best conversation leaves you more connected to your own knowing and less attached to the tool.",
-        "quiet_eyebrow": "A quiet place to begin",
-        "quiet_h2": "Nothing to prove here.",
-        "quiet_p1": "Bring a pattern you keep repeating, a decision you cannot hear yourself inside, or a feeling that has not found honest language yet.",
-        "quiet_p2": "SoulMap will not tell you what to do. It will help you stay close to what is real.",
-        "read_boundaries": "Read the boundaries",
-        "how_eyebrow": "How it works",
-        "how_h1": "A disciplined mirror, not a performing authority.",
-        "how_lede": "SoulMap uses reflection to make room for your own recognition. It does not install an answer on top of your experience.",
-        "step_1": "You bring what is present",
-        "step_1_body": "A question, a conflict, a repeating pattern, a loss, or something that does not yet have a name.",
-        "step_2": "SoulMap reflects the shape",
-        "step_2_body": "It stays close to your words, notices possible patterns, and uses careful language rather than certainty.",
-        "step_3": "You keep the meaning",
-        "step_3_body": "The conversation returns interpretation, choice, and next movement to your own inner authority.",
-        "changes": "What this changes",
-        "changes_h2": "Clarity without being handled.",
-        "changes_body": "Reflection is not a replacement for professional care, crisis support, or real-world relationships. It is a space for noticing what you already know and may not yet be able to hear.",
-        "boundaries_eyebrow": "Boundaries",
-        "boundaries_h1": "Restraint is part of the trust model.",
-        "boundaries_lede": "SoulMap is designed to be useful without becoming your authority, your therapist, or your only place to turn.",
-        "no_diagnose": "SoulMap does not diagnose",
-        "no_diagnose_body": "It does not name mental health conditions or turn a lived experience into a clinical label.",
-        "no_predict": "SoulMap does not predict",
-        "no_predict_body": "It does not forecast your future, promise outcomes, or turn symbolism into destiny.",
-        "no_replace": "SoulMap does not replace support",
-        "no_replace_body": "If you are unsafe or at risk of harm, seek immediate help from local emergency or crisis resources.",
-        "privacy": "Privacy by simplicity",
-        "privacy_h2": "No account. No conversation form. No hidden intimacy.",
-        "privacy_1": "This public website is informational and does not provide a chat interface.",
-        "privacy_2": "Download links point to the project's release artifacts.",
-        "privacy_3": "Spiritual and symbolic language is offered only as a lens for inquiry.",
-        "privacy_4": "Human relationships and qualified professional support remain primary.",
-        "download_eyebrow": "SoulMap Skills",
-        "download_h1": "Take the mirror with you.",
-        "download_lede": "The release artifacts are designed to be imported into the AI tool you already use.",
-        "skill_package": "Skill package",
-        "skill_package_body": "Importable `.skill` release package",
-        "knowledge_archive": "Knowledge archive",
-        "knowledge_archive_body": "Portable `.zip` archive for document workflows",
-        "open_releases": "Open releases",
-        "view_release": "View release files",
-        "before_import": "Before importing",
-        "start_artifact": "Start with the release artifact.",
-        "artifact_body": "Use the self-contained package intended for AI tools, then check the release manifest for version and SHA-256 information.",
-        "notes_eyebrow": "Notes",
-        "notes_h1": "Small recognitions for ordinary life.",
-        "notes_lede": "Public writing follows three grounded pillars: self-recognition, relational honesty, and grounded inner work.",
-        "note_1": "The feeling before the explanation",
-        "note_1_body": "Sometimes clarity begins by staying with the exact texture of what is here before reaching for a story about it.",
-        "note_2": "Repair is more than apology",
-        "note_2_body": "An apology can name regret. Repair asks what becomes different after the words have been spoken.",
-        "note_3": "When certainty feels like relief",
-        "note_3_body": "The wish for an answer may be carrying a wish to stop listening. The two are not always the same.",
-        "notes_callout": "These notes are invitations, not prescriptions. Keep what clarifies something in your own experience and leave the rest.",
-        "about_eyebrow": "About SoulMap AI",
-        "about_h1": "Built around a simple belief: you should not have to trade self-trust for reflection.",
-        "about_lede": "SoulMap is a personal AI brand and a content-first knowledge system built around careful language, clear limits, and human ownership.",
-        "posture": "The posture",
-        "posture_h2": "Mirror, not guide.",
-        "posture_p1": "SoulMap is interested in the space between what happened and the meaning you are about to give it. It aims to make that space more honest, not more mystical.",
-        "posture_p2": "The project stays deliberately small: a knowledge base, a thin Python layer, and artifacts that can travel with the user.",
-        "about_callout": "The best outcome is not a user who needs SoulMap more. It is a user who leaves more grounded in their own knowing.",
-        "catalog_eyebrow": "The Skill catalog",
-        "catalog_h1": "Choose the layer that fits the moment.",
-        "catalog_lede": "SoulMap is a set of complementary layers. Start with orchestration, add a framework when the pattern is clear, and let safety and independence stay in the room.",
-        "search_label": "Filter Skills",
-        "search_placeholder": "Search by use case, group, or boundary…",
-        "loading": "Loading…",
-        "no_results": "No Skill groups match this search.",
-        "details": "View details",
-        "raw": "Raw Markdown",
-        "use_when": "Use this when",
-        "best_for": "Best for",
-        "boundary": "Boundary",
-        "close": "Close",
-        "copy_raw": "Copy raw URL",
-        "copied": "Copied",
-        "open_chatgpt": "Open in ChatGPT",
-        "open_claude": "Open in Claude",
-        "open_claude_code": "Open in Claude Code",
-        "prompt_heading": "Choose a context-specific prompt",
-        "prompt_label": "Prompt",
-        "prompt_intro": "Use one prompt that matches the situation, then read the public Skill bundle at the source link below.",
-        "source_bundle": "Source Skill bundle",
-        "starter_question": "Starter question",
-        "raw_heading": "Public raw bundle",
-        "raw_note": "This URL returns one complete Markdown bundle for this Skill group.",
-        "not_found": "That path is not here.",
-        "not_found_body": "SoulMap could not find the requested public page.",
-        "return_home": "Return home",
-    },
-    "vi": {
-        "skip": "Bỏ qua đến nội dung",
-        "home": "Trang chủ",
-        "how": "Cách hoạt động",
-        "boundaries": "Ranh giới",
-        "notes": "Ghi chú",
-        "about": "Giới thiệu",
-        "skills": "Skills",
-        "language": "Ngôn ngữ",
-        "footer": "Một mirror, không phải guru.",
-        "repository": "Repository",
-        "download": "Tải Skills",
-        "home_eyebrow": "Bạn đồng hành phản chiếu · inner work grounded",
-        "home_h1": "Nghe mình rõ hơn.",
-        "home_lede": "SoulMap là một mirror bình tĩnh và thành thật cho những pattern, cảm xúc và câu hỏi bạn đang mang — không lấy đi quyền tự chủ của bạn.",
-        "home_how": "Xem cách hoạt động",
-        "home_skills": "Khám phá Skills",
-        "home_principle": "Insight là của bạn. Không gian giúp bạn nghe thấy nó.",
-        "home_section_eyebrow": "Một kiểu AI khác",
-        "home_section_h2": "Ít chắc chắn hơn. Nhiều self-trust hơn.",
-        "home_section_lede": "SoulMap không đóng vai authority. Nó phản chiếu điều đang hiện diện, giữ ngôn ngữ cẩn trọng và để ý nghĩa cùng quyết định lại cho bạn.",
-        "mirror_first": "Mirror-first",
-        "mirror_first_body": "Pattern trở lại như quan sát và câu hỏi, không phải chỉ dẫn về việc bạn là ai.",
-        "bounded": "Bounded by design",
-        "bounded_body": "Không diagnosis, không prediction, không certainty tâm linh và không diễn vai intimacy của con người.",
-        "independence": "Được xây để bạn độc lập",
-        "independence_body": "Cuộc trò chuyện tốt nhất để bạn gắn với hiểu biết của mình hơn và bớt phụ thuộc vào công cụ.",
-        "quiet_eyebrow": "Một nơi yên để bắt đầu",
-        "quiet_h2": "Không cần chứng minh gì ở đây.",
-        "quiet_p1": "Mang đến một pattern cứ lặp lại, một quyết định bạn không nghe được mình bên trong, hoặc một cảm xúc chưa có ngôn ngữ thành thật.",
-        "quiet_p2": "SoulMap không bảo bạn phải làm gì. Nó giúp bạn ở gần điều là thật.",
-        "read_boundaries": "Đọc ranh giới",
-        "how_eyebrow": "Cách hoạt động",
-        "how_h1": "Một mirror có kỷ luật, không phải authority trình diễn.",
-        "how_lede": "SoulMap dùng reflection để tạo chỗ cho bạn tự nhận ra. Nó không đặt một câu trả lời lên trên trải nghiệm của bạn.",
-        "step_1": "Bạn mang điều đang hiện diện",
-        "step_1_body": "Một câu hỏi, conflict, pattern lặp lại, mất mát hoặc điều chưa có tên.",
-        "step_2": "SoulMap phản chiếu hình dạng",
-        "step_2_body": "Nó ở gần lời bạn nói, nhận ra pattern khả dĩ và dùng ngôn ngữ cẩn trọng thay vì certainty.",
-        "step_3": "Bạn giữ lại ý nghĩa",
-        "step_3_body": "Cuộc trò chuyện trả interpretation, lựa chọn và bước tiếp theo về inner authority của bạn.",
-        "changes": "Điều này thay đổi gì",
-        "changes_h2": "Rõ hơn mà không bị xử lý thay.",
-        "changes_body": "Reflection không thay thế professional care, crisis support hay các mối quan hệ thật. Nó là không gian để nhận ra điều bạn đã biết nhưng chưa nghe được.",
-        "boundaries_eyebrow": "Ranh giới",
-        "boundaries_h1": "Sự tiết chế là một phần của trust model.",
-        "boundaries_lede": "SoulMap được thiết kế để hữu ích mà không trở thành authority, therapist hay nơi duy nhất bạn tìm đến.",
-        "no_diagnose": "SoulMap không chẩn đoán",
-        "no_diagnose_body": "Nó không gọi tên tình trạng sức khỏe tâm thần hay biến trải nghiệm sống thành nhãn lâm sàng.",
-        "no_predict": "SoulMap không dự đoán",
-        "no_predict_body": "Nó không dự báo tương lai, hứa kết quả hay biến biểu tượng thành định mệnh.",
-        "no_replace": "SoulMap không thay thế hỗ trợ",
-        "no_replace_body": "Nếu bạn không an toàn hoặc có nguy cơ bị hại, hãy tìm trợ giúp khẩn cấp hoặc crisis resource tại nơi bạn sống.",
-        "privacy": "Privacy bằng sự đơn giản",
-        "privacy_h2": "Không account. Không form chat. Không intimacy ẩn.",
-        "privacy_1": "Website công khai này chỉ cung cấp thông tin và không có chat interface.",
-        "privacy_2": "Link tải trỏ đến release artifact của project.",
-        "privacy_3": "Ngôn ngữ spiritual và symbolic chỉ là một lăng kính để inquiry.",
-        "privacy_4": "Mối quan hệ con người và hỗ trợ chuyên môn đủ năng lực vẫn là chính yếu.",
-        "download_eyebrow": "SoulMap Skills",
-        "download_h1": "Mang mirror theo bạn.",
-        "download_lede": "Release artifact được thiết kế để import vào công cụ AI bạn đang dùng.",
-        "skill_package": "Skill package",
-        "skill_package_body": "Package `.skill` có thể import",
-        "knowledge_archive": "Knowledge archive",
-        "knowledge_archive_body": "Archive `.zip` portable cho document workflow",
-        "open_releases": "Mở releases",
-        "view_release": "Xem file release",
-        "before_import": "Trước khi import",
-        "start_artifact": "Bắt đầu từ release artifact.",
-        "artifact_body": "Dùng package self-contained dành cho AI tools, sau đó kiểm tra release manifest, version và SHA-256 trước khi phân phối.",
-        "notes_eyebrow": "Ghi chú",
-        "notes_h1": "Những nhận ra nhỏ trong đời thường.",
-        "notes_lede": "Public writing đi theo ba trụ grounded: tự nhận ra, thành thật trong quan hệ và inner work grounded.",
-        "note_1": "Cảm xúc trước lời giải thích",
-        "note_1_body": "Đôi khi clarity bắt đầu bằng việc ở lại với texture chính xác của điều đang có trước khi tìm một câu chuyện về nó.",
-        "note_2": "Repair nhiều hơn một lời xin lỗi",
-        "note_2_body": "Xin lỗi có thể gọi tên tiếc nuối. Repair hỏi điều gì trở nên khác sau khi lời nói được nói ra.",
-        "note_3": "Khi certainty giống như relief",
-        "note_3_body": "Mong muốn có câu trả lời đôi khi mang theo mong muốn ngừng lắng nghe. Hai điều đó không luôn giống nhau.",
-        "notes_callout": "Những ghi chú này là lời mời, không phải prescription. Giữ điều làm sáng rõ trải nghiệm của bạn và để phần còn lại đi qua.",
-        "about_eyebrow": "Về SoulMap AI",
-        "about_h1": "Được xây quanh một niềm tin đơn giản: bạn không cần đổi self-trust để có reflection.",
-        "about_lede": "SoulMap là một personal AI brand và content-first knowledge system, dựa trên ngôn ngữ cẩn trọng, giới hạn rõ và quyền sở hữu của con người.",
-        "posture": "Tư thế",
-        "posture_h2": "Mirror, không phải guide.",
-        "posture_p1": "SoulMap quan tâm đến khoảng giữa điều đã xảy ra và ý nghĩa bạn sắp trao cho nó. Nó muốn khoảng đó thành thật hơn, không huyền bí hơn.",
-        "posture_p2": "Project cố ý giữ nhỏ: một knowledge base, một Python layer mỏng và các artifact có thể đi cùng người dùng.",
-        "about_callout": "Kết quả tốt nhất không phải là người dùng cần SoulMap nhiều hơn. Đó là người dùng rời đi grounded hơn trong hiểu biết của mình.",
-        "catalog_eyebrow": "Skill catalog",
-        "catalog_h1": "Chọn layer phù hợp với khoảnh khắc này.",
-        "catalog_lede": "SoulMap là một tập hợp các layer bổ trợ. Bắt đầu từ orchestration, thêm framework khi pattern đã rõ, và để safety cùng independence luôn hiện diện.",
-        "search_label": "Lọc Skills",
-        "search_placeholder": "Tìm theo use case, nhóm hoặc boundary…",
-        "loading": "Đang tải…",
-        "no_results": "Không có nhóm Skill nào khớp với tìm kiếm này.",
-        "details": "Xem chi tiết",
-        "raw": "Raw Markdown",
-        "use_when": "Dùng khi",
-        "best_for": "Phù hợp cho",
-        "boundary": "Boundary",
-        "close": "Đóng",
-        "copy_raw": "Copy raw URL",
-        "copied": "Đã copy",
-        "open_chatgpt": "Mở trong ChatGPT",
-        "open_claude": "Mở trong Claude",
-        "open_claude_code": "Mở trong Claude Code",
-        "prompt_heading": "Chọn prompt theo bối cảnh",
-        "prompt_label": "Prompt",
-        "prompt_intro": "Chọn một prompt khớp với tình huống, rồi đọc Skill bundle công khai tại source link bên dưới.",
-        "source_bundle": "Skill bundle nguồn",
-        "starter_question": "Câu hỏi bắt đầu",
-        "raw_heading": "Public raw bundle",
-        "raw_note": "URL này trả về một Markdown bundle hoàn chỉnh cho nhóm Skill này.",
-        "not_found": "Path này không tồn tại.",
-        "not_found_body": "SoulMap không tìm thấy public page được yêu cầu.",
-        "return_home": "Về trang chủ",
-    },
-}
 
 
 def _read_static_css() -> str:
@@ -295,6 +59,29 @@ def _text(locale: str, key: str) -> str:
     return escape(tr(locale, key))
 
 
+_SEO_COPY_KEYS: dict[str, tuple[str, str]] = {
+    "/": ("home_h1", "home_lede"),
+    "/how-it-works": ("how_h1", "how_lede"),
+    "/boundaries": ("boundaries_h1", "boundaries_lede"),
+    "/download": ("download_h1", "download_lede"),
+    "/notes": ("notes_h1", "notes_lede"),
+    "/about": ("about_h1", "about_lede"),
+    "/faq": ("faq_h1", "faq_lede"),
+    "/privacy": ("privacy_page_h1", "privacy_page_lede"),
+    "/skills": ("catalog_h1", "catalog_lede"),
+}
+
+
+def _seo_copy(
+    path: str, locale: str, fallback_title: str, fallback_description: str
+) -> tuple[str, str]:
+    keys = _SEO_COPY_KEYS.get(path)
+    if keys is None:
+        return fallback_title, fallback_description
+    title_key, description_key = keys
+    return tr(locale, title_key), tr(locale, description_key)
+
+
 def _nav(path: str, locale: str) -> str:
     links = (
         ("/", "home"),
@@ -302,6 +89,7 @@ def _nav(path: str, locale: str) -> str:
         ("/boundaries", "boundaries"),
         ("/notes", "notes"),
         ("/about", "about"),
+        ("/faq", "faq"),
         ("/skills", "skills"),
     )
     rendered = "".join(
@@ -326,9 +114,22 @@ def _nav(path: str, locale: str) -> str:
 
 def _layout(title: str, description: str, path: str, content: str, locale: str) -> str:
     language = "vi" if locale == "vi" else "en"
+    seo_title, seo_description = _seo_copy(path, locale, title, description)
+    seo = metadata(
+        site_url=PUBLIC_SITE_URL,
+        repository_url=REPOSITORY_URL,
+        route=path,
+        locale=locale,
+        title=seo_title,
+        description=seo_description,
+    )
     footer = render_template(
         "partials/footer.html",
         footer_label=_text(locale, "footer"),
+        faq_href=escape(_nav_path("/faq", locale), quote=True),
+        faq_label=_text(locale, "faq"),
+        privacy_href=escape(_nav_path("/privacy", locale), quote=True),
+        privacy_label=_text(locale, "privacy_page"),
         download_href=escape(_nav_path("/download", locale), quote=True),
         download_label=_text(locale, "download"),
         repository_url=escape(REPOSITORY_URL, quote=True),
@@ -337,13 +138,22 @@ def _layout(title: str, description: str, path: str, content: str, locale: str) 
     return render_template(
         "layout.html",
         language=language,
-        description=escape(description, quote=True),
-        title=escape(title),
+        description=escape(seo_description, quote=True),
+        locale_json=messages_json(locale),
+        title=escape(seo_title),
         site_name=escape(SITE_NAME),
         skip_label=_text(locale, "skip"),
         nav=_nav(path, locale),
         content=content,
         footer=footer,
+        canonical_url=seo["canonical_url"],
+        alternate_links=seo["alternate_links"],
+        og_title=seo["og_title"],
+        og_description=seo["og_description"],
+        og_url=seo["og_url"],
+        og_locale=seo["og_locale"],
+        og_locale_alternate=seo["og_locale_alternate"],
+        json_ld=seo["json_ld"],
         htmx_url=escape(HTMX_URL, quote=True),
         htmx_sri=escape(HTMX_SRI, quote=True),
         alpine_url=escape(ALPINE_URL, quote=True),
@@ -363,6 +173,14 @@ def _home(locale: str) -> str:
             1,
         )
     )
+    path_cards = "".join(
+        f'<article class="card"><h3 class="card-title">{_text(locale, title_key)}</h3><p>{_text(locale, body_key)}</p><a class="link-button" href="{escape(_nav_path(href, locale), quote=True)}">{_text(locale, link_key)}</a></article>'
+        for title_key, body_key, link_key, href in (
+            ("home_path_1", "home_path_1_body", "home_path_1_link", "/how-it-works"),
+            ("home_path_2", "home_path_2_body", "home_path_2_link", "/skills"),
+            ("home_path_3", "home_path_3_body", "home_path_3_link", "/faq"),
+        )
+    )
     return render_template(
         "pages/home.html",
         home_eyebrow=_text(locale, "home_eyebrow"),
@@ -377,6 +195,10 @@ def _home(locale: str) -> str:
         home_section_h2=_text(locale, "home_section_h2"),
         home_section_lede=_text(locale, "home_section_lede"),
         principles=principles,
+        path_cards=path_cards,
+        home_path_eyebrow=_text(locale, "home_path_eyebrow"),
+        home_path_h2=_text(locale, "home_path_h2"),
+        home_path_lede=_text(locale, "home_path_lede"),
         quiet_eyebrow=_text(locale, "quiet_eyebrow"),
         quiet_h2=_text(locale, "quiet_h2"),
         quiet_p1=_text(locale, "quiet_p1"),
@@ -483,6 +305,49 @@ def _about(locale: str) -> str:
         posture_p1=_text(locale, "posture_p1"),
         posture_p2=_text(locale, "posture_p2"),
         about_callout=_text(locale, "about_callout"),
+    )
+
+
+def _faq(locale: str) -> str:
+    faq_items = "".join(
+        f'<details class="faq-item"><summary>{_text(locale, question_key)}</summary><div class="faq-answer"><p>{_text(locale, answer_key)}</p></div></details>'
+        for question_key, answer_key in (
+            ("faq_q_1", "faq_a_1"),
+            ("faq_q_2", "faq_a_2"),
+            ("faq_q_3", "faq_a_3"),
+            ("faq_q_4", "faq_a_4"),
+            ("faq_q_5", "faq_a_5"),
+            ("faq_q_6", "faq_a_6"),
+        )
+    )
+    return render_template(
+        "pages/faq.html",
+        faq_eyebrow=_text(locale, "faq_eyebrow"),
+        faq_h1=_text(locale, "faq_h1"),
+        faq_lede=_text(locale, "faq_lede"),
+        faq_items=faq_items,
+    )
+
+
+def _privacy(locale: str) -> str:
+    return render_template(
+        "pages/privacy.html",
+        privacy_page_eyebrow=_text(locale, "privacy_page_eyebrow"),
+        privacy_page_h1=_text(locale, "privacy_page_h1"),
+        privacy_page_lede=_text(locale, "privacy_page_lede"),
+        privacy_scope_h2=_text(locale, "privacy_scope_h2"),
+        privacy_scope_body=_text(locale, "privacy_scope_body"),
+        privacy_collect_h2=_text(locale, "privacy_collect_h2"),
+        privacy_collect_body=_text(locale, "privacy_collect_body"),
+        privacy_use_h2=_text(locale, "privacy_use_h2"),
+        privacy_use_body=_text(locale, "privacy_use_body"),
+        privacy_storage_h2=_text(locale, "privacy_storage_h2"),
+        privacy_storage_body=_text(locale, "privacy_storage_body"),
+        privacy_links_h2=_text(locale, "privacy_links_h2"),
+        privacy_links_body=_text(locale, "privacy_links_body"),
+        privacy_contact_h2=_text(locale, "privacy_contact_h2"),
+        privacy_contact_body=_text(locale, "privacy_contact_body"),
+        privacy_updated=_text(locale, "privacy_updated"),
     )
 
 
@@ -647,6 +512,12 @@ def _not_found(locale: str) -> str:
     )
 
 
+def _sitemap_routes() -> list[str]:
+    routes = list(_pages())
+    routes.extend(f"/skills/{entry.slug}" for entry in CATALOG)
+    return routes
+
+
 def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
     return {
         "/": (
@@ -675,6 +546,16 @@ def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
             "The brand posture and purpose behind SoulMap AI.",
             _about,
         ),
+        "/faq": (
+            "FAQ",
+            "Practical answers about SoulMap Skills, boundaries and privacy.",
+            _faq,
+        ),
+        "/privacy": (
+            "Privacy",
+            "The current public-site privacy boundary for SoulMap AI.",
+            _privacy,
+        ),
         "/skills": (
             "SoulMap Skills",
             "Choose the SoulMap layer that fits the moment.",
@@ -687,10 +568,10 @@ def _response(
     start_response: StartResponse,
     status: str,
     content_type: str,
-    body: str,
+    body: str | bytes,
     extra_headers: list[tuple[str, str]] | None = None,
 ) -> list[bytes]:
-    payload = body.encode("utf-8")
+    payload = body if isinstance(body, bytes) else body.encode("utf-8")
     headers = [
         ("Content-Type", f"{content_type}; charset=utf-8"),
         ("Content-Length", str(len(payload))),
@@ -734,6 +615,16 @@ def application(
             f"Canonical English route: {location}\n",
             [("Location", location), ("Cache-Control", "public, max-age=300")],
         )
+    if raw_path == "/private" or raw_path.startswith("/private/"):
+        suffix = raw_path.removeprefix("/private") or ""
+        location = "/privacy" + suffix + (f"?{raw_query}" if raw_query else "")
+        return _response(
+            start_response,
+            "301 Moved Permanently",
+            "text/plain",
+            f"Canonical privacy route: {location}\n",
+            [("Location", location), ("Cache-Control", "public, max-age=300")],
+        )
     path, locale = _normalise_request_path(raw_path)
     query = parse_qs(raw_query)
     locale = (
@@ -741,6 +632,15 @@ def application(
         if query.get("lang", [locale])[0] in {"en", "vi"}
         else locale
     )
+    if path == "/favicon.ico":
+        favicon_path = Path(__file__).with_name("static") / "favicon.ico"
+        return _response(
+            start_response,
+            "200 OK",
+            "image/x-icon",
+            favicon_path.read_bytes(),
+            [("Cache-Control", "public, max-age=86400")],
+        )
     if path == "/static/site.css":
         return _response(
             start_response,
@@ -760,7 +660,19 @@ def application(
         )
     if path == "/robots.txt":
         return _response(
-            start_response, "200 OK", "text/plain", "User-agent: *\nAllow: /\n"
+            start_response,
+            "200 OK",
+            "text/plain",
+            robots_txt(PUBLIC_SITE_URL),
+            [("Cache-Control", "public, max-age=300")],
+        )
+    if path == "/sitemap.xml":
+        return _response(
+            start_response,
+            "200 OK",
+            "application/xml",
+            sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()),
+            [("Cache-Control", "public, max-age=300")],
         )
     if path == "/api/skills.json":
         return _response(
@@ -900,7 +812,11 @@ def application(
             "200 OK",
             "text/html",
             _layout(
-                entry.title_en, entry.summary_en, "/skills/" + slug, content, locale
+                locale_fields(entry, locale)["title"],
+                locale_fields(entry, locale)["summary"],
+                "/skills/" + slug,
+                content,
+                locale,
             ),
         )
     if path == "/skills":
@@ -986,8 +902,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
                 output,
                 f"{prefix}/skills/{entry.slug}",
                 _layout(
-                    entry.title_en,
-                    entry.summary_en,
+                    locale_fields(entry, locale)["title"],
+                    locale_fields(entry, locale)["summary"],
                     f"/skills/{entry.slug}",
                     _skill_page(entry.slug, locale),
                     locale,
@@ -1061,12 +977,19 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         (Path(__file__).with_name("static") / "site.js").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
-    (output / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    favicon_source = Path(__file__).with_name("static") / "favicon.ico"
+    shutil.copyfile(favicon_source, output / "favicon.ico")
+    (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
+    (output / "sitemap.xml").write_text(
+        sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()), encoding="utf-8"
+    )
     written.extend(
         [
             output / "static" / "site.css",
             output / "static" / "site.js",
+            output / "favicon.ico",
             output / "robots.txt",
+            output / "sitemap.xml",
         ]
     )
     return written

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from pathlib import Path
 from urllib.parse import urlparse
@@ -12,6 +13,8 @@ REQUIRED_FILES = {
     "download/index.html",
     "notes/index.html",
     "about/index.html",
+    "faq/index.html",
+    "privacy/index.html",
     "skills/index.html",
     "vi/index.html",
     "static/site.css",
@@ -23,6 +26,8 @@ REQUIRED_FILES = {
     "vi/partials/skills-grid.html",
     "api/raw/meta.md",
     "robots.txt",
+    "sitemap.xml",
+    "favicon.ico",
 }
 FORBIDDEN_FILE_PARTS = {".claude", ".github", ".git", "dist", "src", "tests"}
 FORBIDDEN_SUFFIXES = {".py", ".toml", ".lock"}
@@ -54,6 +59,32 @@ def _validate_local_links(content: str, normalised_base: str, html_path: Path) -
             raise ValueError(
                 f"{html_path} contains links outside base path: {invalid_links}"
             )
+
+
+def _validate_seo_metadata(content: str, html_path: Path) -> None:
+    """Validate the SEO contract emitted by the shared layout."""
+    canonical = re.findall(r'<link rel="canonical" href="([^"]+)">', content)
+    if len(canonical) != 1 or not canonical[0].startswith("https://"):
+        raise ValueError(f"{html_path} must contain one absolute canonical URL")
+    alternates = dict(
+        re.findall(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">', content)
+    )
+    if set(alternates) != {"en", "vi", "x-default"}:
+        raise ValueError(f"{html_path} has incomplete hreflang metadata")
+    for key in ("og:type", "og:title", "og:description", "og:url", "twitter:card"):
+        if f'name="{key}"' not in content and f'property="{key}"' not in content:
+            raise ValueError(f"{html_path} is missing social metadata: {key}")
+    blocks = re.findall(
+        r'<script type="application/ld\+json">(.*?)</script>', content, re.DOTALL
+    )
+    if len(blocks) != 1:
+        raise ValueError(f"{html_path} must contain one JSON-LD block")
+    try:
+        payload = json.loads(blocks[0])
+    except json.JSONDecodeError as error:
+        raise ValueError(f"{html_path} contains invalid JSON-LD") from error
+    if payload.get("@context") != "https://schema.org" or not payload.get("@graph"):
+        raise ValueError(f"{html_path} contains incomplete JSON-LD")
 
 
 def _validate_script_tag(
@@ -120,6 +151,20 @@ def verify_static_site(root: Path, base_path: str = "") -> None:
                 f"static site contains unexpected generated source: {relative}"
             )
 
+    robots = (root / "robots.txt").read_text(encoding="utf-8")
+    if "Sitemap: " not in robots or "sitemap.xml" not in robots:
+        raise ValueError("robots.txt must reference sitemap.xml")
+    sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+    if (
+        "<urlset " not in sitemap
+        or 'xmlns:xhtml="http://www.w3.org/1999/xhtml"' not in sitemap
+    ):
+        raise ValueError("sitemap.xml is missing required namespaces")
+    if "<loc>https://" not in sitemap or 'hreflang="x-default"' not in sitemap:
+        raise ValueError(
+            "sitemap.xml must contain absolute URLs and x-default alternates"
+        )
+
     for html_path in sorted(root.rglob("*.html")):
         if "partials" in html_path.relative_to(root).parts:
             continue
@@ -137,6 +182,7 @@ def verify_static_site(root: Path, base_path: str = "") -> None:
                 f"{html_path.relative_to(root)} contains local development host"
             )
         _validate_local_links(content, normalised_base, html_path.relative_to(root))
+        _validate_seo_metadata(content, html_path.relative_to(root))
         for script_tag in re.findall(r"<script\b[^>]*>", content, re.IGNORECASE):
             _validate_script_tag(
                 script_tag, normalised_base, html_path.relative_to(root)
