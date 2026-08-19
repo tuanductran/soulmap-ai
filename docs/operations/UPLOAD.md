@@ -41,6 +41,17 @@ Treat `.claude-plugin/` as opaque metadata during packaging and upload. Do not e
 For the local packaging-only role of this folder, see
 [../.claude-plugin/README.md](../../.claude-plugin/README.md).
 
+## Python distribution boundary
+
+The Python wheel and source distribution are for local development, testing, and repository
+CLI tooling only. They are not standalone SoulMap knowledge runtimes and are not the
+artifacts to import into an AI tool.
+
+For AI-tool use, import one of the generated archives below:
+
+- `dist/soulmap-ai.skill` for skill-oriented tools that preserve `.claude-plugin/` metadata.
+- `dist/soulmap-ai.zip` for clean extraction, project knowledge, or document-oriented AI workflows.
+
 ## AI tool compatibility
 
 ### ChatGPT
@@ -100,8 +111,8 @@ uv run soulmap build
 
 What you get:
 
-* `dist/soulmap-ai.zip`
-* no `.claude-plugin/`
+- `dist/soulmap-ai.zip`
+- no `.claude-plugin/`
 
 Suggested use for ChatGPT with Code Interpreter:
 
@@ -126,9 +137,9 @@ uv run soulmap build --skill
 
 What you get:
 
-* `dist/soulmap-ai.skill`
-* `.claude-plugin/` preserved
-* `dist/soulmap-ai-library.json` when `uv run soulmap library-manifest` is used
+- `dist/soulmap-ai.skill`
+- `.claude-plugin/` preserved
+- `dist/soulmap-ai-library.json` when `uv run soulmap library-manifest` is used
 
 Suggested use for Claude Custom Skills:
 
@@ -148,7 +159,7 @@ Suggested use for other skill-oriented agents:
 
 Start with something explicit, for example:
 
-* "Use this file as the governing instruction set. Follow its safety rules strictly."
+- "Use this file as the governing instruction set. Follow its safety rules strictly."
 
 ### "Why is the AI not following everything?"
 
