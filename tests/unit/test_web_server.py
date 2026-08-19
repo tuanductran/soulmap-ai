@@ -62,7 +62,7 @@ def test_website_is_responsive_and_accessible() -> None:
     assert "--gold: #8a681f" in css
     assert "--muted: #5d6b70" in css
     assert "--radius-hero: 32px" in css
-    assert "--radius-hero-inner: 20px" in css
+    assert "--radius-hero-inner" not in css
     assert "border-radius: var(--radius-hero) 36px 28px 32px" in css
     assert "border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%" not in css
     assert "#c99b50" not in css
@@ -86,6 +86,16 @@ def test_secondary_page_card_headings_are_sequential() -> None:
         assert html.count("<h1>") == 1
         assert "<h3>" not in html
         assert "<h2" in html
+
+
+def test_download_page_uses_public_artifact_language() -> None:
+    _, body = _request("/download")
+    html = body.decode("utf-8")
+
+    for internal_path in ("src/", "tests/", ".claude/", "dist/"):
+        assert internal_path not in html
+    assert ".skill" in html
+    assert ".zip" in html
 
 
 def test_static_export_writes_pages_project_layout(tmp_path: Path) -> None:

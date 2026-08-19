@@ -36,7 +36,6 @@ CSS = """
   --shadow: 0 22px 60px rgba(42, 57, 59, 0.11);
   --radius: 24px;
   --radius-hero: 32px;
-  --radius-hero-inner: 20px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
@@ -51,7 +50,8 @@ body {
     radial-gradient(circle at 10% 0%, rgba(201, 155, 80, 0.12), transparent 30rem),
     radial-gradient(circle at 90% 12%, rgba(47, 111, 107, 0.10), transparent 28rem),
     var(--paper);
-    line-height: 1.65;
+  line-height: 1.65;
+
   overflow-x: hidden;
 }
 a { color: inherit; }
@@ -78,7 +78,6 @@ a:focus-visible, button:focus-visible {
 .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
 .nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem .75rem; color: var(--muted); font-size: .93rem; text-decoration: none; border-radius: 999px; }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--teal-dark); background: rgba(47, 111, 107, .09); }
-main { position: relative; }
 .hero { padding: clamp(4.5rem, 10vw, 8rem) 0 5rem; }
 .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(2rem, 7vw, 6rem); }
 .eyebrow { color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
@@ -96,7 +95,6 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
 .button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
 .button.secondary:hover { background: rgba(47, 111, 107, .08); }
 .mirror-card { position: relative; padding: clamp(2rem, 5vw, 3.5rem); border: 1px solid rgba(47, 111, 107, .16); border-radius: var(--radius-hero) 36px 28px 32px; background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(222,238,231,.62)); box-shadow: var(--shadow); }
-.mirror-card::before { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(47, 111, 107, .18); border-radius: var(--radius-hero-inner) 22px 16px 18px; pointer-events: none; }
 .mirror-card blockquote { position: relative; margin: 0; font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.25; letter-spacing: -.03em; }
 .mirror-card cite { position: relative; display: block; margin-top: 1.4rem; color: var(--muted); font-size: .9rem; font-style: normal; }
 .section { padding: 5.5rem 0; }
@@ -108,7 +106,7 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
 @media (hover: hover) {
   .card:hover, .step:hover, .download-card:hover { transform: translateY(-2px); border-color: rgba(47, 111, 107, .28); box-shadow: 0 16px 40px rgba(42, 57, 59, .10); }
 }
-.card p, .muted { color: var(--muted); }
+.card p { color: var(--muted); }
 .card .number { color: var(--gold); font-size: .8rem; font-weight: 800; letter-spacing: .15em; }
 .split { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
 .list { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
@@ -185,9 +183,10 @@ def _nav(path: str) -> str:
         ("/about", "About"),
     )
     rendered = "".join(
-        f'<a href="{href}"{active}>{label}</a>'
+        '<a href="{}"{}>{}</a>'.format(
+            href, ' aria-current="page"' if path == href else "", label
+        )
         for href, label in links
-        for active in [' aria-current="page"' if path == href else ""]
     )
     return f"""
     <header class="site-header">
@@ -343,19 +342,19 @@ def _download() -> str:
       <div class="container">
         <p class="eyebrow">SoulMap Skills</p>
         <h1>Take the mirror with you.</h1>
-        <p class="lede">The Python repository is for development and testing. These are the artifacts to import into an AI tool.</p>
+        <p class="lede">These are the release artifacts intended for import into an AI tool.</p>
       </div>
     </section>
     <section class="section tinted">
       <div class="container">
-        <div class="download-card"><div><h2>Skill package</h2><p><code>dist/soulmap-ai.skill</code> · preserves Skill metadata</p></div><a class="button" href="{RELEASE_URL}">Open releases</a></div>
-        <div class="download-card"><div><h2>Knowledge archive</h2><p><code>dist/soulmap-ai.zip</code> · clean extraction for document workflows</p></div><a class="button secondary" href="{RELEASE_URL}">View release files</a></div>
+        <div class="download-card"><div><h2>Skill package</h2><p>Importable `.skill` release package</p></div><a class="button" href="{RELEASE_URL}">Open releases</a></div>
+        <div class="download-card"><div><h2>Knowledge archive</h2><p>Portable `.zip` archive for document workflows</p></div><a class="button secondary" href="{RELEASE_URL}">View release files</a></div>
       </div>
     </section>
     <section class="section">
       <div class="container split">
-        <div><p class="eyebrow">Before importing</p><h2>Use the artifact, not the repository internals.</h2></div>
-        <div><p>Do not import <code>src/</code>, <code>tests/</code>, <code>.claude/</code>, or engineering documentation as SoulMap doctrine. The generated packages contain the self-contained knowledge surface intended for AI tools.</p><p>Check the release manifest for version and SHA-256 information before distributing an artifact.</p></div>
+        <div><p class="eyebrow">Before importing</p><h2>Start with the release artifact.</h2></div>
+        <div><p>The generated packages are the self-contained knowledge surface intended for AI tools.</p><p>Check the release manifest for version and SHA-256 information before distributing an artifact.</p></div>
       </div>
     </section>
     """
