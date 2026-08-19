@@ -21,7 +21,6 @@ document.addEventListener("alpine:init", () => {
   }));
 
   Alpine.data("skillCatalog", () => ({
-    query: "",
     openSlug: "",
     returnFocus: null,
     open(slug, trigger) {
@@ -62,9 +61,6 @@ document.addEventListener("alpine:init", () => {
         event.preventDefault();
         first.focus();
       }
-    },
-    matches(searchText) {
-      return !this.query || searchText.includes(this.query.trim().toLowerCase());
     }
   }));
 });

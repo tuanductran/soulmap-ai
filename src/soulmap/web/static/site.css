@@ -73,6 +73,16 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
 .section-heading { max-width: 700px; margin-bottom: 2rem; }
 .grid, .skill-grid, .provider-grid { display: grid; gap: 1rem; }
 .grid { grid-template-columns: repeat(3, 1fr); }
+.privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.faq-list { max-width: 860px; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-item summary { cursor: pointer; list-style: none; position: relative; padding: 1.15rem 2.5rem 1.15rem 0; font-weight: 750; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; top: .95rem; right: .25rem; color: var(--teal); font-size: 1.25rem; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-answer { max-width: 720px; padding: 0 2.5rem 1.25rem 0; color: var(--muted); }
+.faq-answer p { margin: 0; }
 .card, .step, .download-card, .skill-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .card { height: 100%; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-card); }
 @media (hover: hover) { .card:hover, .step:hover, .download-card:hover, .skill-card:hover { transform: translateY(-2px); border-color: rgba(47,111,107,.28); box-shadow: 0 16px 40px rgba(42,57,59,.10); } }
@@ -134,7 +144,7 @@ p { margin: 0 0 1rem; text-wrap: pretty; }
   .nav-links { justify-content: flex-start; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .25rem; }
   .nav-links a { flex: 0 0 auto; }
   .locale-switcher { border-left: 0; padding-left: 0; }
-  .grid, .skill-grid, .provider-grid { grid-template-columns: 1fr; }
+  .grid, .skill-grid, .provider-grid, .privacy-grid { grid-template-columns: 1fr; }
   .catalog-toolbar { align-items: stretch; flex-direction: column; }
   .field { max-width: none; }
   .section { padding: 4rem 0; }

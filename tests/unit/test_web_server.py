@@ -43,6 +43,11 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/download", "200 OK"),
         ("/notes", "200 OK"),
         ("/about", "200 OK"),
+        ("/faq", "200 OK"),
+        ("/privacy", "200 OK"),
+        ("/vi/faq", "200 OK"),
+        ("/vi/privacy", "200 OK"),
+        ("/private", "301 Moved Permanently"),
         ("/skills", "200 OK"),
         ("/skills/meta", "200 OK"),
         ("/static/site.css", "200 OK"),
@@ -77,6 +82,32 @@ def test_english_prefixed_routes_redirect_to_canonical_root() -> None:
     assert body.decode("utf-8") == "Canonical English route: /how-it-works?q=mirror\n"
 
 
+def test_faq_and_privacy_pages_use_public_i18n_content() -> None:
+    _, faq_body = _request("/faq")
+    faq = faq_body.decode("utf-8")
+    assert faq.count('<details class="faq-item">') == 6
+    assert faq.count("<summary>") == 6
+    visible_faq = faq.split('<main id="main-content">', 1)[1].split("</main>", 1)[0]
+    assert "faq_q_1" not in visible_faq
+    assert "src/soulmap" not in visible_faq
+    assert '<script id="soulmap-locale-data" type="application/json">' in faq
+
+    _, privacy_body = _request("/vi/privacy")
+    privacy = privacy_body.decode("utf-8")
+    assert '<html lang="vi">' in privacy
+    assert "Notice này bao phủ điều gì" in privacy
+    assert "Website hiện không có tạo account" in privacy
+    assert privacy.count('<h2 class="card-title">') == 6
+
+
+def test_private_alias_redirects_to_canonical_privacy_route() -> None:
+    captured, body = _request("/private", "from=legacy")
+    assert captured["status"] == "301 Moved Permanently"
+    headers = dict(cast(list[tuple[str, str]], captured["headers"]))
+    assert headers["Location"] == "/privacy?from=legacy"
+    assert body.decode("utf-8") == "Canonical privacy route: /privacy?from=legacy\n"
+
+
 def test_website_is_responsive_accessible_and_progressive() -> None:
     captured, body = _request("/static/site.css")
 
@@ -98,6 +129,8 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "min-height: 44px" in css
     assert ".modal-dialog" in css
     assert ".skill-grid" in css
+    assert ".faq-item" in css
+    assert ".privacy-grid" in css
 
 
 def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
@@ -258,7 +291,13 @@ def test_localized_catalog_uses_requested_language() -> None:
     html = body.decode("utf-8")
     assert '<html lang="vi">' in html
     assert "Chọn layer phù hợp với khoảnh khắc này." in html
-    assert "Khám phá Skills" not in html
+    locale_payload = html.split(
+        '<script id="soulmap-locale-data" type="application/json">', 1
+    )[1].split("</script>", 1)[0]
+    locale_messages = json.loads(locale_payload)
+    assert locale_messages["home_skills"] == "Khám phá Skills"
+    visible_main = html.split('<main id="main-content">', 1)[1].split("</main>", 1)[0]
+    assert "Khám phá Skills" not in visible_main
 
     _, body = _request("/vi/skills")
     assert '<html lang="vi">' in body.decode("utf-8")
@@ -296,6 +335,10 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     expected = (
         "index.html",
         "vi/index.html",
+        "faq/index.html",
+        "privacy/index.html",
+        "vi/faq/index.html",
+        "vi/privacy/index.html",
         "skills/index.html",
         "vi/skills/index.html",
         "skills/meta/index.html",
