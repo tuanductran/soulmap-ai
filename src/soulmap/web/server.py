@@ -23,6 +23,7 @@ from soulmap.web.catalog import (
     locale_fields,
     raw_markdown,
 )
+from soulmap.web.templates import render_template
 
 HOST = "127.0.0.1"
 PORT = 8765
@@ -263,153 +264,8 @@ TEXT: dict[str, dict[str, str]] = {
 }
 
 
-CSS = """
-:root {
-  color-scheme: light;
-  --font-sans: Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --ink: #26333a;
-  --muted: #5d6b70;
-  --paper: #f7f5ef;
-  --surface: rgba(255, 255, 255, .78);
-  --surface-strong: rgba(255, 255, 255, .92);
-  --line: rgba(38, 51, 58, .13);
-  --teal: #2f6f6b;
-  --teal-dark: #1f514e;
-  --gold: #8a681f;
-  --focus: #0b5c58;
-  --danger: #8b3a3a;
-  --shadow: 0 22px 60px rgba(42, 57, 59, .11);
-  --shadow-card: 0 12px 35px rgba(42, 57, 59, .05);
-  --radius: 24px;
-  --radius-hero: 32px;
-  --space-1: .25rem;
-  --space-2: .5rem;
-  --space-3: .75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --container: 1120px;
-  font-family: var(--font-sans);
-  font-feature-settings: "liga" 1, "calt" 1;
-}
-* { box-sizing: border-box; }
-[x-cloak] { display: none !important; }
-html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
-body { margin: 0; min-width: 320px; color: var(--ink); background: radial-gradient(circle at 10% 0%, rgba(201,155,80,.12), transparent 30rem), radial-gradient(circle at 90% 12%, rgba(47,111,107,.10), transparent 28rem), var(--paper); line-height: 1.65; overflow-x: hidden; font-family: var(--font-sans); }
-a { color: inherit; }
-a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 8px; }
-button, input { font: inherit; }
-button { cursor: pointer; }
-.container { width: min(var(--container), calc(100% - 40px)); margin: 0 auto; }
-.skip-link { position: absolute; left: 1rem; top: -5rem; padding: .7rem 1rem; background: var(--ink); color: white; border-radius: 999px; z-index: 10; }
-.skip-link:focus { top: 1rem; }
-.site-header { position: sticky; top: 0; z-index: 4; backdrop-filter: blur(16px); background: rgba(247,245,239,.84); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top); }
-.nav { display: flex; align-items: center; justify-content: space-between; min-height: 76px; gap: 1rem; }
-.brand { display: inline-flex; align-items: center; min-height: 44px; gap: .7rem; text-decoration: none; font-weight: 700; letter-spacing: -.02em; }
-.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: var(--teal-dark); background: rgba(47,111,107,.13); font-size: 1.2rem; }
-.nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
-.nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem .75rem; color: var(--muted); font-size: .93rem; text-decoration: none; border-radius: 999px; }
-.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--teal-dark); background: rgba(47,111,107,.09); }
-.locale-switcher { display: inline-flex; align-items: center; gap: .25rem; padding-left: .35rem; border-left: 1px solid var(--line); }
-.locale-switcher a { min-height: 36px; padding-inline: .55rem; font-size: .78rem; }
-.page-hero, .hero { padding: clamp(4.5rem, 10vw, 8rem) 0 5rem; }
-.hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(2rem, 7vw, 6rem); }
-.eyebrow { color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-h1, h2, h3 { margin: 0 0 1rem; line-height: 1.12; letter-spacing: -.03em; text-wrap: balance; }
-h1 { max-width: 850px; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800; }
-.hero h1 { max-width: 720px; font-size: clamp(3rem, 7vw, 6rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
-h3 { font-size: 1.25rem; letter-spacing: -.02em; }
-.card-title, .step-title, .download-card h2, .skill-card h2 { font-size: 1.25rem; letter-spacing: -.02em; }
-p { margin: 0 0 1rem; text-wrap: pretty; }
-.lede { max-width: 700px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.32rem); }
-.actions, .cluster { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; align-items: center; }
-.button, .link-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.15rem; border: 1px solid var(--teal); border-radius: 999px; color: white; background: var(--teal); text-decoration: none; font-weight: 700; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
-.button:hover, .link-button:hover { transform: translateY(-2px); background: var(--teal-dark); }
-.button.secondary, .link-button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
-.button.secondary:hover, .link-button.secondary:hover { background: rgba(47,111,107,.08); }
-.button.small, .link-button.small { min-height: 42px; padding: .55rem .8rem; font-size: .9rem; }
-.mirror-card { position: relative; padding: clamp(2rem, 5vw, 3.5rem); border: 1px solid rgba(47,111,107,.16); border-radius: var(--radius-hero) 36px 28px 32px; background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(222,238,231,.62)); box-shadow: var(--shadow); }
-.mirror-card blockquote { position: relative; margin: 0; font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.25; letter-spacing: -.03em; }
-.mirror-card cite { position: relative; display: block; margin-top: 1.4rem; color: var(--muted); font-size: .9rem; font-style: normal; }
-.section { padding: 5.5rem 0; }
-.section.tinted { background: rgba(255,255,255,.48); border-block: 1px solid var(--line); }
-.section-heading { max-width: 700px; margin-bottom: 2rem; }
-.grid, .skill-grid, .provider-grid { display: grid; gap: 1rem; }
-.grid { grid-template-columns: repeat(3, 1fr); }
-.card, .step, .download-card, .skill-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
-.card { height: 100%; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-card); }
-@media (hover: hover) { .card:hover, .step:hover, .download-card:hover, .skill-card:hover { transform: translateY(-2px); border-color: rgba(47,111,107,.28); box-shadow: 0 16px 40px rgba(42,57,59,.10); } }
-.card p, .skill-card p, .download-card p { color: var(--muted); }
-.card .number { color: var(--gold); font-size: .8rem; font-weight: 800; letter-spacing: .15em; }
-.split { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
-.list { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
-.list li { display: flex; gap: .75rem; align-items: flex-start; padding: .95rem 0; border-bottom: 1px solid var(--line); }
-.list li::before { content: "—"; color: var(--gold); font-weight: 800; }
-.callout { padding: 1.4rem 1.5rem; border-left: 3px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; background: rgba(201,155,80,.10); }
-.steps { counter-reset: step; display: grid; gap: 1rem; }
-.step { display: grid; grid-template-columns: 64px 1fr; gap: 1.2rem; align-items: start; padding: 1.4rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.step::before { counter-increment: step; content: counter(step, decimal-leading-zero); display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; color: var(--teal-dark); background: rgba(47,111,107,.12); font-weight: 800; }
-.download-card { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.download-card + .download-card { margin-top: 1rem; }
-.download-card p { margin-bottom: 0; }
-.note-label { color: var(--teal); font-size: .76rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-.site-footer { margin-top: 5rem; padding: 2.5rem 0 calc(2.5rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
-.footer-grid { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-.footer-links a { color: var(--muted); }
-.catalog-toolbar { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 2rem; }
-.field { display: grid; gap: .35rem; flex: 1; max-width: 680px; }
-.field label { font-size: .82rem; font-weight: 800; color: var(--teal-dark); }
-.input { width: 100%; min-height: 48px; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface-strong); }
-.skill-grid { grid-template-columns: repeat(3, 1fr); }
-.skill-card { display: flex; flex-direction: column; min-height: 100%; padding: 1.35rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-card); }
-.skill-card__meta { display: flex; justify-content: space-between; gap: .75rem; align-items: center; margin-bottom: .8rem; color: var(--teal); font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-.skill-card__body { flex: 1; }
-.skill-card__actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
-.code-pill { display: inline-flex; align-items: center; padding: .2rem .45rem; border: 1px solid var(--line); border-radius: 8px; color: var(--teal-dark); background: rgba(47,111,107,.06); font-size: .82rem; }
-.modal-shell { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 1rem; }
-.modal-backdrop { position: absolute; inset: 0; background: rgba(20,31,32,.56); backdrop-filter: blur(4px); }
-.modal-dialog { position: relative; width: min(720px, 100%); max-height: min(760px, calc(100dvh - 2rem)); overflow: auto; padding: clamp(1.25rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 20px; color: var(--ink); background: var(--surface-strong); box-shadow: var(--shadow); }
-.modal-close { position: absolute; top: .8rem; right: .8rem; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; color: var(--teal-dark); background: transparent; }
-.modal-dialog__header { padding-right: 3rem; }
-.provider-grid { grid-template-columns: repeat(3, 1fr); margin-top: 1rem; }
-.provider-grid .button { min-height: 44px; padding: .6rem .7rem; font-size: .82rem; text-align: center; }
-.modal-note { margin-top: 1rem; color: var(--muted); font-size: .9rem; }
-.htmx-indicator { display: none; color: var(--muted); font-size: .85rem; }
-.htmx-request .htmx-indicator, .htmx-request.htmx-indicator { display: inline; }
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-@media (max-width: 900px) { .skill-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 820px) { .hero-grid, .split { grid-template-columns: 1fr; } .hero { padding-top: 4rem; } .mirror-card { max-width: 680px; } }
-@media (prefers-color-scheme: dark) {
-  :root { color-scheme: dark; --ink: #f0f3ef; --muted: #b7c3bf; --paper: #192322; --surface: rgba(34,48,46,.9); --surface-strong: rgba(31,43,41,.98); --line: rgba(224,239,233,.16); --teal: #84c5ba; --teal-dark: #a2dfd0; --gold: #e0b86a; --focus: #a2dfd0; --shadow: 0 22px 60px rgba(0,0,0,.28); --shadow-card: 0 12px 35px rgba(0,0,0,.18); }
-  .site-header { background: rgba(25,35,34,.9); }
-  .skip-link { color: var(--paper); background: var(--ink); }
-  .button { color: #132522; background: var(--teal); border-color: var(--teal); }
-  .button.secondary, .link-button.secondary { color: var(--teal-dark); background: transparent; border-color: var(--line); }
-  .mirror-card { background: linear-gradient(145deg, rgba(49,70,66,.9), rgba(38,67,61,.75)); }
-  .section.tinted { background: rgba(34,48,46,.48); }
-  .callout { background: rgba(224,184,106,.14); }
-}
-@media (prefers-reduced-transparency: reduce) { .site-header { backdrop-filter: none; background: var(--paper); } .modal-backdrop { backdrop-filter: none; } }
-@media (max-width: 640px) {
-  .container { width: min(100% - 28px, 560px); }
-  .nav { align-items: flex-start; flex-direction: column; padding: .8rem 0; }
-  .nav-links { justify-content: flex-start; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .25rem; }
-  .nav-links a { flex: 0 0 auto; }
-  .locale-switcher { border-left: 0; padding-left: 0; }
-  .grid, .skill-grid, .provider-grid { grid-template-columns: 1fr; }
-  .catalog-toolbar { align-items: stretch; flex-direction: column; }
-  .field { max-width: none; }
-  .section { padding: 4rem 0; }
-  .download-card { align-items: flex-start; flex-direction: column; }
-  .step { grid-template-columns: 48px 1fr; gap: .85rem; }
-  .step::before { width: 44px; height: 44px; }
-}
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
-"""
+def _read_static_css() -> str:
+    return (Path(__file__).with_name("static") / "site.css").read_text(encoding="utf-8")
 
 
 def tr(locale: str, key: str) -> str:
@@ -422,143 +278,199 @@ def _nav_path(route: str, locale: str) -> str:
     return f"/{locale}{route if route != '/' else ''}"
 
 
+def _text(locale: str, key: str) -> str:
+    return escape(tr(locale, key))
+
+
 def _nav(path: str, locale: str) -> str:
     links = (
-        ("/", tr(locale, "home")),
-        ("/how-it-works", tr(locale, "how")),
-        ("/boundaries", tr(locale, "boundaries")),
-        ("/notes", tr(locale, "notes")),
-        ("/about", tr(locale, "about")),
-        ("/skills", tr(locale, "skills")),
+        ("/", "home"),
+        ("/how-it-works", "how"),
+        ("/boundaries", "boundaries"),
+        ("/notes", "notes"),
+        ("/about", "about"),
+        ("/skills", "skills"),
     )
     rendered = "".join(
         '<a href="{}"{}>{}</a>'.format(
-            _nav_path(href, locale),
+            escape(_nav_path(href, locale), quote=True),
             ' aria-current="page"' if path == href else "",
-            escape(label),
+            _text(locale, label_key),
         )
-        for href, label in links
+        for href, label_key in links
     )
     other_locale = "vi" if locale == "en" else "en"
-    return f"""
-    <header class="site-header">
-      <div class="container nav">
-        <a class="brand" href="{_nav_path("/", locale)}" aria-label="SoulMap AI home">
-          <span class="brand-mark" aria-hidden="true">◌</span>
-          <span>SoulMap AI</span>
-        </a>
-        <nav class="nav-links" aria-label="Primary navigation">{rendered}
-          <span class="locale-switcher" aria-label="{escape(tr(locale, "language"))}">
-            <a href="{_nav_path(path, other_locale)}" lang="{other_locale}">{other_locale.upper()}</a>
-          </span>
-        </nav>
-      </div>
-    </header>
-    """
+    return render_template(
+        "partials/nav.html",
+        brand_home=escape(_nav_path("/", locale), quote=True),
+        nav_links=rendered,
+        language_label=_text(locale, "language"),
+        locale_href=escape(_nav_path(path, other_locale), quote=True),
+        other_locale=other_locale,
+        other_locale_upper=other_locale.upper(),
+    )
 
 
 def _layout(title: str, description: str, path: str, content: str, locale: str) -> str:
-    safe_title = escape(title)
-    safe_description = escape(description)
     language = "vi" if locale == "vi" else "en"
-    return f"""<!doctype html>
-<html lang="{language}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="htmx-config" content='{{"includeIndicatorStyles":false}}'>
-    <meta name="description" content="{safe_description}">
-    <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#192322" media="(prefers-color-scheme: dark)">
-    <link rel="preconnect" href="https://rsms.me/">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="/static/site.css">
-    <script defer src="{HTMX_URL}" integrity="{HTMX_SRI}" crossorigin="anonymous"></script>
-    <script defer src="/static/site.js"></script>
-    <script defer src="{ALPINE_URL}" integrity="{ALPINE_SRI}" crossorigin="anonymous"></script>
-    <title>{safe_title} · {SITE_NAME}</title>
-  </head>
-  <body>
-    <a class="skip-link" href="#main-content">{escape(tr(locale, "skip"))}</a>
-    {_nav(path, locale)}
-    <main id="main-content">{content}</main>
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <span>{escape(tr(locale, "footer"))}</span>
-        <span class="footer-links">
-          <a href="{_nav_path("/download", locale)}">{escape(tr(locale, "download"))}</a>
-          <a href="{REPOSITORY_URL}">{escape(tr(locale, "repository"))}</a>
-        </span>
-      </div>
-    </footer>
-  </body>
-</html>"""
+    footer = render_template(
+        "partials/footer.html",
+        footer_label=_text(locale, "footer"),
+        download_href=escape(_nav_path("/download", locale), quote=True),
+        download_label=_text(locale, "download"),
+        repository_url=escape(REPOSITORY_URL, quote=True),
+        repository_label=_text(locale, "repository"),
+    )
+    return render_template(
+        "layout.html",
+        language=language,
+        description=escape(description, quote=True),
+        title=escape(title),
+        site_name=escape(SITE_NAME),
+        skip_label=_text(locale, "skip"),
+        nav=_nav(path, locale),
+        content=content,
+        footer=footer,
+        htmx_url=escape(HTMX_URL, quote=True),
+        htmx_sri=escape(HTMX_SRI, quote=True),
+        alpine_url=escape(ALPINE_URL, quote=True),
+        alpine_sri=escape(ALPINE_SRI, quote=True),
+    )
 
 
 def _home(locale: str) -> str:
-    return f"""
-    <section class="hero"><div class="container hero-grid"><div>
-      <p class="eyebrow">{tr(locale, "home_eyebrow")}</p><h1>{tr(locale, "home_h1")}</h1>
-      <p class="lede">{tr(locale, "home_lede")}</p><div class="actions">
-        <a class="button" href="{_nav_path("/how-it-works", locale)}">{tr(locale, "home_how")}</a>
-        <a class="button secondary" href="{_nav_path("/skills", locale)}">{tr(locale, "home_skills")}</a>
-      </div>
-    </div><div class="mirror-card" aria-label="SoulMap principle"><blockquote>“{tr(locale, "home_principle")}”</blockquote><cite>SoulMap principle</cite></div></div></section>
-    <section class="section tinted"><div class="container"><div class="section-heading"><p class="eyebrow">{tr(locale, "home_section_eyebrow")}</p><h2>{tr(locale, "home_section_h2")}</h2><p class="lede">{tr(locale, "home_section_lede")}</p></div><div class="grid">
-      <article class="card"><span class="number">01</span><h3>{tr(locale, "mirror_first")}</h3><p>{tr(locale, "mirror_first_body")}</p></article>
-      <article class="card"><span class="number">02</span><h3>{tr(locale, "bounded")}</h3><p>{tr(locale, "bounded_body")}</p></article>
-      <article class="card"><span class="number">03</span><h3>{tr(locale, "independence")}</h3><p>{tr(locale, "independence_body")}</p></article>
-    </div></div></section>
-    <section class="section"><div class="container split"><div><p class="eyebrow">{tr(locale, "quiet_eyebrow")}</p><h2>{tr(locale, "quiet_h2")}</h2></div><div><p>{tr(locale, "quiet_p1")}</p><p>{tr(locale, "quiet_p2")}</p><a class="button secondary" href="{_nav_path("/boundaries", locale)}">{tr(locale, "read_boundaries")}</a></div></div></section>
-    """
+    principles = "".join(
+        f'<article class="card"><span class="number">0{index}</span><h3>{_text(locale, title_key)}</h3><p>{_text(locale, body_key)}</p></article>'
+        for index, (title_key, body_key) in enumerate(
+            (
+                ("mirror_first", "mirror_first_body"),
+                ("bounded", "bounded_body"),
+                ("independence", "independence_body"),
+            ),
+            1,
+        )
+    )
+    return render_template(
+        "pages/home.html",
+        home_eyebrow=_text(locale, "home_eyebrow"),
+        home_h1=_text(locale, "home_h1"),
+        home_lede=_text(locale, "home_lede"),
+        how_href=escape(_nav_path("/how-it-works", locale), quote=True),
+        home_how=_text(locale, "home_how"),
+        skills_href=escape(_nav_path("/skills", locale), quote=True),
+        home_skills=_text(locale, "home_skills"),
+        home_principle=_text(locale, "home_principle"),
+        home_section_eyebrow=_text(locale, "home_section_eyebrow"),
+        home_section_h2=_text(locale, "home_section_h2"),
+        home_section_lede=_text(locale, "home_section_lede"),
+        principles=principles,
+        quiet_eyebrow=_text(locale, "quiet_eyebrow"),
+        quiet_h2=_text(locale, "quiet_h2"),
+        quiet_p1=_text(locale, "quiet_p1"),
+        quiet_p2=_text(locale, "quiet_p2"),
+        boundaries_href=escape(_nav_path("/boundaries", locale), quote=True),
+        read_boundaries=_text(locale, "read_boundaries"),
+    )
 
 
 def _how_it_works(locale: str) -> str:
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "how_eyebrow")}</p><h1>{tr(locale, "how_h1")}</h1><p class="lede">{tr(locale, "how_lede")}</p></div></section>
-    <section class="section tinted"><div class="container steps">
-      <article class="step"><div><h2 class="step-title">{tr(locale, "step_1")}</h2><p>{tr(locale, "step_1_body")}</p></div></article>
-      <article class="step"><div><h2 class="step-title">{tr(locale, "step_2")}</h2><p>{tr(locale, "step_2_body")}</p></div></article>
-      <article class="step"><div><h2 class="step-title">{tr(locale, "step_3")}</h2><p>{tr(locale, "step_3_body")}</p></div></article>
-    </div></section>
-    <section class="section"><div class="container split"><div><p class="eyebrow">{tr(locale, "changes")}</p><h2>{tr(locale, "changes_h2")}</h2></div><div class="callout"><p>{tr(locale, "changes_body")}</p></div></div></section>
-    """
+    steps = "".join(
+        f'<article class="step"><div><h2 class="step-title">{_text(locale, title_key)}</h2><p>{_text(locale, body_key)}</p></div></article>'
+        for title_key, body_key in (
+            ("step_1", "step_1_body"),
+            ("step_2", "step_2_body"),
+            ("step_3", "step_3_body"),
+        )
+    )
+    return render_template(
+        "pages/how-it-works.html",
+        how_eyebrow=_text(locale, "how_eyebrow"),
+        how_h1=_text(locale, "how_h1"),
+        how_lede=_text(locale, "how_lede"),
+        steps=steps,
+        changes=_text(locale, "changes"),
+        changes_h2=_text(locale, "changes_h2"),
+        changes_body=_text(locale, "changes_body"),
+    )
 
 
 def _boundaries(locale: str) -> str:
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "boundaries_eyebrow")}</p><h1>{tr(locale, "boundaries_h1")}</h1><p class="lede">{tr(locale, "boundaries_lede")}</p></div></section>
-    <section class="section tinted"><div class="container grid">
-      <article class="card"><h2 class="card-title">{tr(locale, "no_diagnose")}</h2><p>{tr(locale, "no_diagnose_body")}</p></article>
-      <article class="card"><h2 class="card-title">{tr(locale, "no_predict")}</h2><p>{tr(locale, "no_predict_body")}</p></article>
-      <article class="card"><h2 class="card-title">{tr(locale, "no_replace")}</h2><p>{tr(locale, "no_replace_body")}</p></article>
-    </div></section>
-    <section class="section"><div class="container split"><div><p class="eyebrow">{tr(locale, "privacy")}</p><h2>{tr(locale, "privacy_h2")}</h2></div><ul class="list"><li>{tr(locale, "privacy_1")}</li><li>{tr(locale, "privacy_2")}</li><li>{tr(locale, "privacy_3")}</li><li>{tr(locale, "privacy_4")}</li></ul></div></section>
-    """
+    cards = "".join(
+        f'<article class="card"><h2 class="card-title">{_text(locale, title_key)}</h2><p>{_text(locale, body_key)}</p></article>'
+        for title_key, body_key in (
+            ("no_diagnose", "no_diagnose_body"),
+            ("no_predict", "no_predict_body"),
+            ("no_replace", "no_replace_body"),
+        )
+    )
+    privacy_items = "".join(
+        f"<li>{_text(locale, key)}</li>"
+        for key in ("privacy_1", "privacy_2", "privacy_3", "privacy_4")
+    )
+    return render_template(
+        "pages/boundaries.html",
+        boundaries_eyebrow=_text(locale, "boundaries_eyebrow"),
+        boundaries_h1=_text(locale, "boundaries_h1"),
+        boundaries_lede=_text(locale, "boundaries_lede"),
+        boundary_cards=cards,
+        privacy=_text(locale, "privacy"),
+        privacy_h2=_text(locale, "privacy_h2"),
+        privacy_items=privacy_items,
+    )
 
 
 def _download(locale: str) -> str:
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "download_eyebrow")}</p><h1>{tr(locale, "download_h1")}</h1><p class="lede">{tr(locale, "download_lede")}</p></div></section>
-    <section class="section tinted"><div class="container"><div class="download-card"><div><h2>{tr(locale, "skill_package")}</h2><p>{tr(locale, "skill_package_body")}</p></div><a class="button" href="{RELEASE_URL}">{tr(locale, "open_releases")}</a></div><div class="download-card"><div><h2>{tr(locale, "knowledge_archive")}</h2><p>{tr(locale, "knowledge_archive_body")}</p></div><a class="button secondary" href="{RELEASE_URL}">{tr(locale, "view_release")}</a></div></div></section>
-    <section class="section"><div class="container split"><div><p class="eyebrow">{tr(locale, "before_import")}</p><h2>{tr(locale, "start_artifact")}</h2></div><div><p>{tr(locale, "artifact_body")}</p></div></div></section>
-    """
+    return render_template(
+        "pages/download.html",
+        download_eyebrow=_text(locale, "download_eyebrow"),
+        download_h1=_text(locale, "download_h1"),
+        download_lede=_text(locale, "download_lede"),
+        skill_package=_text(locale, "skill_package"),
+        skill_package_body=_text(locale, "skill_package_body"),
+        knowledge_archive=_text(locale, "knowledge_archive"),
+        knowledge_archive_body=_text(locale, "knowledge_archive_body"),
+        release_url=escape(RELEASE_URL, quote=True),
+        open_releases=_text(locale, "open_releases"),
+        view_release=_text(locale, "view_release"),
+        before_import=_text(locale, "before_import"),
+        start_artifact=_text(locale, "start_artifact"),
+        artifact_body=_text(locale, "artifact_body"),
+    )
 
 
 def _notes(locale: str) -> str:
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "notes_eyebrow")}</p><h1>{tr(locale, "notes_h1")}</h1><p class="lede">{tr(locale, "notes_lede")}</p></div></section>
-    <section class="section tinted"><div class="container grid"><article class="card"><span class="note-label">Self-recognition</span><h2 class="card-title">{tr(locale, "note_1")}</h2><p>{tr(locale, "note_1_body")}</p></article><article class="card"><span class="note-label">Relational honesty</span><h2 class="card-title">{tr(locale, "note_2")}</h2><p>{tr(locale, "note_2_body")}</p></article><article class="card"><span class="note-label">Grounded inner work</span><h2 class="card-title">{tr(locale, "note_3")}</h2><p>{tr(locale, "note_3_body")}</p></article></div></section>
-    <section class="section"><div class="container callout"><p>{tr(locale, "notes_callout")}</p></div></section>
-    """
+    labels = ("Self-recognition", "Relational honesty", "Grounded inner work")
+    cards = "".join(
+        f'<article class="card"><span class="note-label">{label}</span><h2 class="card-title">{_text(locale, title_key)}</h2><p>{_text(locale, body_key)}</p></article>'
+        for label, title_key, body_key in zip(
+            labels,
+            ("note_1", "note_2", "note_3"),
+            ("note_1_body", "note_2_body", "note_3_body"),
+            strict=True,
+        )
+    )
+    return render_template(
+        "pages/notes.html",
+        notes_eyebrow=_text(locale, "notes_eyebrow"),
+        notes_h1=_text(locale, "notes_h1"),
+        notes_lede=_text(locale, "notes_lede"),
+        note_cards=cards,
+        notes_callout=_text(locale, "notes_callout"),
+    )
 
 
 def _about(locale: str) -> str:
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "about_eyebrow")}</p><h1>{tr(locale, "about_h1")}</h1><p class="lede">{tr(locale, "about_lede")}</p></div></section>
-    <section class="section tinted"><div class="container split"><div><p class="eyebrow">{tr(locale, "posture")}</p><h2>{tr(locale, "posture_h2")}</h2></div><div><p>{tr(locale, "posture_p1")}</p><p>{tr(locale, "posture_p2")}</p></div></div></section>
-    <section class="section"><div class="container callout"><p>{tr(locale, "about_callout")}</p></div></section>
-    """
+    return render_template(
+        "pages/about.html",
+        about_eyebrow=_text(locale, "about_eyebrow"),
+        about_h1=_text(locale, "about_h1"),
+        about_lede=_text(locale, "about_lede"),
+        posture=_text(locale, "posture"),
+        posture_h2=_text(locale, "posture_h2"),
+        posture_p1=_text(locale, "posture_p1"),
+        posture_p2=_text(locale, "posture_p2"),
+        about_callout=_text(locale, "about_callout"),
+    )
 
 
 def _provider_url(provider: str, raw_url: str, locale: str) -> str:
@@ -581,13 +493,34 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
         return "<p>Skill not found.</p>"
     fields = locale_fields(entry, locale)
     raw_url = f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md"
-    return f"""
-    <div class="modal-dialog__header"><p class="eyebrow">{escape(entry.group)}</p><h2 id="skill-title-{escape(entry.slug)}">{escape(fields["title"])}</h2><p class="lede">{escape(fields["summary"])}</p></div>
-    <div class="split"><div><h3>{escape(tr(locale, "use_when"))}</h3><p>{escape(fields["use_when"])}</p><h3>{escape(tr(locale, "best_for"))}</h3><p>{escape(fields["best_for"])}</p></div><div><h3>{escape(tr(locale, "boundary"))}</h3><p>{escape(fields["boundary"])}</p><p class="modal-note">{escape(tr(locale, "raw_note"))}</p></div></div>
-    <div class="cluster"><a class="button small" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{escape(tr(locale, "raw"))}</a><span x-data="clipboard"><button class="button small secondary" type="button" x-on:click="copy('{escape(raw_url)}')"><span x-text="copied ? '{escape(tr(locale, "copied"))}' : '{escape(tr(locale, "copy_raw"))}'"></span></button></span></div>
-    <div class="provider-grid"><a class="button secondary" href="{escape(_provider_url("chatgpt", raw_url, locale))}" target="_blank" rel="noopener">{escape(tr(locale, "open_chatgpt"))}</a><a class="button secondary" href="{escape(_provider_url("claude", raw_url, locale))}" target="_blank" rel="noopener">{escape(tr(locale, "open_claude"))}</a><a class="button secondary" href="{escape(_provider_url("claude-code", raw_url, locale))}">{escape(tr(locale, "open_claude_code"))}</a></div>
-    <p class="modal-note">{escape(tr(locale, "handoff_note"))}</p>
-    """
+    return render_template(
+        "partials/skill-detail.html",
+        group=escape(entry.group),
+        slug=escape(entry.slug),
+        title=escape(fields["title"]),
+        summary=escape(fields["summary"]),
+        use_when_label=_text(locale, "use_when"),
+        use_when=escape(fields["use_when"]),
+        best_for_label=_text(locale, "best_for"),
+        best_for=escape(fields["best_for"]),
+        boundary_label=_text(locale, "boundary"),
+        boundary=escape(fields["boundary"]),
+        raw_note=_text(locale, "raw_note"),
+        raw_href=escape(f"/api/raw/{entry.slug}.md", quote=True),
+        raw_label=_text(locale, "raw"),
+        raw_url=escape(raw_url, quote=True),
+        copied_label=_text(locale, "copied"),
+        copy_raw_label=_text(locale, "copy_raw"),
+        chatgpt_url=escape(_provider_url("chatgpt", raw_url, locale), quote=True),
+        claude_url=escape(_provider_url("claude", raw_url, locale), quote=True),
+        claude_code_url=escape(
+            _provider_url("claude-code", raw_url, locale), quote=True
+        ),
+        chatgpt_label=_text(locale, "open_chatgpt"),
+        claude_label=_text(locale, "open_claude"),
+        claude_code_label=_text(locale, "open_claude_code"),
+        handoff_note=_text(locale, "handoff_note"),
+    )
 
 
 def _skill_catalog(locale: str) -> str:
@@ -595,16 +528,25 @@ def _skill_catalog(locale: str) -> str:
     for entry in CATALOG:
         fields = locale_fields(entry, locale)
         search_text = " ".join(fields.values()).lower()
-        cards.append(f"""
-        <article class="skill-card" data-search="{escape(search_text)}" x-show="matches($el.dataset.search)" x-transition>
-          <div class="skill-card__meta"><span>{escape(entry.group)}</span><span class="code-pill">{escape(entry.slug)}</span></div>
-          <div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>
-          <div class="skill-card__actions"><a class="button small" href="{_nav_path("/skills/" + entry.slug, locale)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="/partials/skill/{escape(entry.slug)}.{locale}.html?lang={locale}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open('{escape(entry.slug)}', $event.currentTarget)">{escape(tr(locale, "details"))}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{escape(tr(locale, "raw"))}</a><span id="skill-loading" class="htmx-indicator" aria-live="polite">Loading…</span></div>
-        </article>""")
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{tr(locale, "catalog_eyebrow")}</p><h1>{tr(locale, "catalog_h1")}</h1><p class="lede">{tr(locale, "catalog_lede")}</p></div></section>
-    <section class="section tinted" x-data="skillCatalog"><div class="container"><div class="catalog-toolbar"><div class="field"><label for="skill-search">{tr(locale, "search_label")}</label><input class="input" id="skill-search" type="search" x-model="query" placeholder="{tr(locale, "search_placeholder")}" autocomplete="off"></div><p class="muted">{len(CATALOG)} groups · raw bundles available</p></div><div class="skill-grid">{"".join(cards)}</div></div><div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-on:keydown="trap($event)" role="presentation"><div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div><div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug"><button class="modal-close" type="button" x-on:click="close" aria-label="{escape(tr(locale, "close"))}">x</button><h2 class="sr-only" id="skill-modal-title">SoulMap Skill details</h2><div id="skill-modal-content"><p>{escape(tr(locale, "details"))}</p></div></div></div></section>
-    """
+        cards.append(
+            f'<article class="skill-card" data-search="{escape(search_text)}" x-show="matches($el.dataset.search)" x-transition>'
+            f'<div class="skill-card__meta"><span>{escape(entry.group)}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
+            f'<div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>'
+            f'<div class="skill-card__actions"><a class="button small" href="{escape(_nav_path("/skills/" + entry.slug, locale), quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="/partials/skill/{escape(entry.slug)}.{locale}.html?lang={locale}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a><span id="skill-loading" class="htmx-indicator" aria-live="polite">Loading…</span></div>'
+            "</article>"
+        )
+    return render_template(
+        "pages/skill-catalog.html",
+        catalog_eyebrow=_text(locale, "catalog_eyebrow"),
+        catalog_h1=_text(locale, "catalog_h1"),
+        catalog_lede=_text(locale, "catalog_lede"),
+        search_label=_text(locale, "search_label"),
+        search_placeholder=_text(locale, "search_placeholder"),
+        catalog_count=str(len(CATALOG)),
+        skill_cards="".join(cards),
+        close_label=_text(locale, "close"),
+        details_label=_text(locale, "details"),
+    )
 
 
 def _skill_page(entry_slug: str, locale: str) -> str:
@@ -612,14 +554,25 @@ def _skill_page(entry_slug: str, locale: str) -> str:
     if entry is None:
         return _not_found(locale)
     fields = locale_fields(entry, locale)
-    return f"""
-    <section class="page-hero"><div class="container"><p class="eyebrow">{escape(entry.group)}</p><h1>{escape(fields["title"])}</h1><p class="lede">{escape(fields["summary"])}</p><a class="button secondary" href="{_nav_path("/skills", locale)}">{escape(tr(locale, "skills"))}</a></div></section>
-    <section class="section tinted"><div class="container card">{_skill_detail_fragment(entry_slug, locale)}</div></section>
-    """
+    return render_template(
+        "pages/skill-page.html",
+        group=escape(entry.group),
+        title=escape(fields["title"]),
+        summary=escape(fields["summary"]),
+        skills_href=escape(_nav_path("/skills", locale), quote=True),
+        skills_label=_text(locale, "skills"),
+        detail=_skill_detail_fragment(entry_slug, locale),
+    )
 
 
 def _not_found(locale: str) -> str:
-    return f'<section class="page-hero"><div class="container"><p class="eyebrow">404</p><h1>{escape(tr(locale, "not_found"))}</h1><p class="lede">{escape(tr(locale, "not_found_body"))}</p><a class="button" href="{_nav_path("/", locale)}">{escape(tr(locale, "return_home"))}</a></div></section>'
+    return render_template(
+        "pages/not-found.html",
+        not_found=_text(locale, "not_found"),
+        not_found_body=_text(locale, "not_found_body"),
+        home_href=escape(_nav_path("/", locale), quote=True),
+        return_home=_text(locale, "return_home"),
+    )
 
 
 def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
@@ -710,11 +663,11 @@ def application(
             start_response,
             "200 OK",
             "text/css",
-            CSS,
+            _read_static_css(),
             [("Cache-Control", "public, max-age=300")],
         )
     if path == "/static/site.js":
-        js_path = Path(__file__).with_name("site.js")
+        js_path = Path(__file__).with_name("static") / "site.js"
         return _response(
             start_response,
             "200 OK",
@@ -925,9 +878,9 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         )
         written.append(data_path)
     (output / "static").mkdir()
-    (output / "static" / "site.css").write_text(CSS, encoding="utf-8")
+    (output / "static" / "site.css").write_text(_read_static_css(), encoding="utf-8")
     (output / "static" / "site.js").write_text(
-        Path(__file__).with_name("site.js").read_text(encoding="utf-8"),
+        (Path(__file__).with_name("static") / "site.js").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
     (output / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")

@@ -1,0 +1,27 @@
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">$catalog_eyebrow</p>
+    <h1>$catalog_h1</h1>
+    <p class="lede">$catalog_lede</p>
+  </div>
+</section>
+<section class="section tinted" x-data="skillCatalog">
+  <div class="container">
+    <div class="catalog-toolbar">
+      <div class="field">
+        <label for="skill-search">$search_label</label>
+        <input class="input" id="skill-search" type="search" x-model="query" placeholder="$search_placeholder" autocomplete="off">
+      </div>
+      <p class="muted">$catalog_count groups · raw bundles available</p>
+    </div>
+    <div class="skill-grid">$skill_cards</div>
+  </div>
+  <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-on:keydown="trap($$event)" role="presentation">
+    <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug">
+      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">x</button>
+      <h2 class="sr-only" id="skill-modal-title">SoulMap Skill details</h2>
+      <div id="skill-modal-content"><p>$details_label</p></div>
+    </div>
+  </div>
+</section>

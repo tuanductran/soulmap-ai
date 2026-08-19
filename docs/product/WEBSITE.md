@@ -24,6 +24,12 @@ The exporter creates the English and Vietnamese page variants, Skill detail page
 
 The server uses Python's standard-library `wsgiref.simple_server`. It does not require a web framework, JavaScript build system, database, account system, or server-side external API. htmx 2.0.10 and Alpine CSP 3.16.2 are loaded from jsDelivr with pinned versions and SRI for progressive enhancement; direct links, server-rendered pages, raw Markdown URLs, and static export remain the fallback when scripts or a CDN are unavailable. Inter is loaded from the official `https://rsms.me/inter/inter.css` stylesheet with system fallbacks.
 
+## Template and asset architecture
+
+The website keeps document markup outside the Python router. `src/soulmap/web/templates/layout.html` owns the shared document shell, metadata, scripts, skip link, main landmark, and footer insertion. `templates/partials/` contains reusable navigation, footer, and Skill-detail fragments; `templates/pages/` contains page-level HTML for home, explanatory pages, download, notes, about, 404, Skill catalog, and Skill detail. `src/soulmap/web/templates.py` provides a small strict `string.Template` renderer from Python's standard library; it intentionally does not attempt to become a general-purpose template language or add a runtime dependency.
+
+Localized copy, route decisions, escaping, card generation, API behavior, and static export remain in Python. `src/soulmap/web/static/site.css` and `src/soulmap/web/static/site.js` are the canonical local assets served at `/static/site.css` and `/static/site.js`. This separation lets designers edit HTML/CSS without searching through a monolithic Python string while preserving the existing WSGI, htmx, Alpine, i18n, and GitHub Pages contracts.
+
 ## Routes
 
 | Route | Purpose |

@@ -1,0 +1,32 @@
+<div class="modal-dialog__header">
+  <p class="eyebrow">$group</p>
+  <h2 id="skill-title-$slug">$title</h2>
+  <p class="lede">$summary</p>
+</div>
+<div class="split">
+  <div>
+    <h3>$use_when_label</h3>
+    <p>$use_when</p>
+    <h3>$best_for_label</h3>
+    <p>$best_for</p>
+  </div>
+  <div>
+    <h3>$boundary_label</h3>
+    <p>$boundary</p>
+    <p class="modal-note">$raw_note</p>
+  </div>
+</div>
+<div class="cluster">
+  <a class="button small" href="$raw_href" target="_blank" rel="noopener">$raw_label</a>
+  <span x-data="clipboard">
+    <button class="button small secondary" type="button" x-on:click="copy('$raw_url')">
+      <span x-text="copied ? '$copied_label' : '$copy_raw_label'"></span>
+    </button>
+  </span>
+</div>
+<div class="provider-grid">
+  <a class="button secondary" href="$chatgpt_url" target="_blank" rel="noopener">$chatgpt_label</a>
+  <a class="button secondary" href="$claude_url" target="_blank" rel="noopener">$claude_label</a>
+  <a class="button secondary" href="$claude_code_url">$claude_code_label</a>
+</div>
+<p class="modal-note">$handoff_note</p>
