@@ -87,7 +87,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download verified static output
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.STATIC_ARTIFACT }}
           path: ${{ runner.temp }}/soulmap-static-site
