@@ -466,6 +466,7 @@ def _layout(title: str, description: str, path: str, content: str, locale: str) 
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="htmx-config" content='{{"includeIndicatorStyles":false}}'>
     <meta name="description" content="{safe_description}">
     <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#192322" media="(prefers-color-scheme: dark)">

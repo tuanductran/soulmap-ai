@@ -93,6 +93,8 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     html = body.decode("utf-8")
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
+    assert 'name="htmx-config"' in html
+    assert "includeIndicatorStyles" in html
     assert 'src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"' in html
     assert (
         'src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.16.2/dist/cdn.min.js"'
