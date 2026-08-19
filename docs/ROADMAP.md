@@ -3,7 +3,7 @@
 > **Repository:** [soulmap-ai](https://github.com/tuanductran/soulmap-ai)
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
-> **Status:** Actively maintained, current release v0.8.0
+> **Status:** Actively maintained, current release v0.9.0
 > **Last updated:** 19 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
@@ -283,11 +283,11 @@ Completed:
   re-exports
 * ASCII-hyphen and code-block-language-tag documentation cleanup
 
-Not yet done (tracked, see [Future Direction](#future-direction)):
+Maintenance note (not an open implementation item):
 
-* Historical note: `CRISIS_TIER1_PATTERNS` morphology was English-only in
-  v0.7.0. Sentence-level morphology is now covered in Phase 10; broader
-  language-specific variants remain a maintenance consideration.
+* `CRISIS_TIER1_PATTERNS` morphology was English-only in v0.7.0. Sentence-level
+  morphology is now covered in Phase 10; broader language-specific variants remain
+  a human-reviewed maintenance consideration.
 * `response_safety_contract.py` is deterministic regex/substring matching
   only; it does not catch paraphrased or implied violations
 
@@ -318,9 +318,9 @@ The core and tooling coverage target is complete. Focused tests now cover
 POSIX/Windows tooling-lock behavior and deterministic HTTP response, fallback,
 and transport-error paths in the Markdown link checker.
 
-A deliberately low-priority follow-up remains: decide whether thin
-`devtools/cli/` entry-point wrappers need direct unit coverage or should remain
-verified through the canonical `soulmap` CLI and integration checks.
+The previously low-priority wrapper-coverage follow-up is complete: thin
+`devtools/cli/` entry points now have direct execution coverage, while their behavior
+continues to be verified through canonical implementation and integration checks.
 
 ---
 
@@ -421,6 +421,9 @@ Not yet done:
   found no active platform, deployment owner, or configured platform connector;
   this item remains blocked rather than being treated as failed or complete.
 
+These two items are intentionally outside the current non-AI execution scope and
+remain unchanged for a future platform-specific workstream.
+
 ---
 
 ### Phase 12 - Toolchain Support & Test Reproducibility (complete; maintenance ongoing)
@@ -434,7 +437,7 @@ Completed foundation:
 
 * `docs/engineering/package-compatibility-research.md` records official compatibility,
   lifecycle and operating-boundary findings for every direct development tool in the
-  v0.8.0 lock baseline.
+  v0.9.0 lock baseline.
 * `tests/contract/test_toolchain_support_contract.py` checks that the Python floor, CI
   Python baseline, direct development packages, lockfile and research matrix do not
   drift apart.
@@ -444,7 +447,7 @@ Completed foundation:
 * `scripts/pytest_diagnostics.py` gives CI and release verification an explicit
   pytest-randomly seed, records xdist worker mode and Python/OS context in the
   GitHub step summary on failure, and prints a serial `-n 0` reproduction command.
-* The 2026-08-17 baseline review records Python 3.11.16, the latest official
+* The 2026-08-19 baseline review records Python 3.11.16, the latest official
   3.11 security bugfix release at review time, in
   `docs/engineering/package-compatibility-research.md` with the upstream release
   evidence and security-review boundary.
@@ -570,7 +573,7 @@ GitHub Release + git tag
 ```
 
 Version history: `v0.1.0` → `v0.2.0` → `v0.3.0` → `v0.4.0` → `v0.4.1` →
-`v0.5.0` → `v0.5.1` → `v0.6.0` → `v0.7.0` → `v0.8.0` (current).
+`v0.5.0` → `v0.5.1` → `v0.6.0` → `v0.7.0` → `v0.8.0` → `v0.9.0` (current).
 
 ---
 
