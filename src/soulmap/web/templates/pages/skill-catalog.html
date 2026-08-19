@@ -18,9 +18,10 @@
     </div>
     $skill_grid
   </div>
-  <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-on:keydown="trap($$event)" role="presentation">
+  <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-transition.opacity.duration.200ms x-on:keydown="trap($$event)" role="presentation">
     <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
-    <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug">
+    <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug"
+      x-transition.opacity.scale.origin.top.duration.200ms>
       <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">x</button>
       <h2 class="sr-only" id="skill-modal-title">SoulMap Skill details</h2>
       <div id="skill-modal-content"><p>$details_label</p></div>

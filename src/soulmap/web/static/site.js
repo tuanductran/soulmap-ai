@@ -25,11 +25,13 @@ document.addEventListener("alpine:init", () => {
     returnFocus: null,
     open(slug, trigger) {
       this.returnFocus = trigger || document.activeElement;
+      document.body.classList.add("modal-open");
       this.openSlug = slug;
       this.$nextTick(() => this.focusDialog());
     },
     close() {
       this.openSlug = "";
+      document.body.classList.remove("modal-open");
       this.$nextTick(() => {
         if (this.returnFocus && typeof this.returnFocus.focus === "function") {
           this.returnFocus.focus();

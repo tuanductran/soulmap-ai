@@ -200,6 +200,7 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "safe-area-inset" in css
     assert ":focus-visible" in css
     assert "min-height: 44px" in css
+    assert "body.modal-open { overflow: hidden; }" in css
     assert ".modal-dialog" in css
     assert ".skill-grid" in css
     assert ".faq-item" in css
@@ -223,6 +224,10 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     )
     assert html.count('integrity="sha384-') == 2
     assert 'src="/static/site.js"' in html
+    _, js_body = _request("/static/site.js")
+    js = js_body.decode("utf-8")
+    assert 'document.body.classList.add("modal-open")' in js
+    assert 'document.body.classList.remove("modal-open")' in js
     assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
     assert 'hx-get="/partials/skills-grid.html?lang=en"' in html
     assert 'hx-trigger="input changed delay:350ms"' in html
@@ -234,9 +239,19 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
+    assert "x-cloak" in html
+    assert "x-transition.opacity.duration.200ms" in html
+    assert "x-transition.opacity.scale.origin.top.duration.200ms" in html
     assert 'rel="canonical"' in html
     assert 'hreflang="x-default"' in html
     assert "application/ld+json" in html
+
+    _, fragment_body = _request("/partials/skill/meta.en.html")
+    fragment = fragment_body.decode("utf-8")
+    assert 'aria-live="polite"' in fragment
+    assert 'x-show="!copied"' in fragment
+    assert 'x-show="copied"' in fragment
+    assert "x-transition.opacity.duration.150ms" in fragment
 
 
 def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
