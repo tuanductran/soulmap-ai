@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, current release v0.8.0
-> **Last updated:** 17 August 2026
+> **Last updated:** 19 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -627,4 +627,4 @@ these are not planned unless a new ADR revisits them:
 
 ---
 
-Last updated: August 9, 2026
+Last updated: August 19, 2026

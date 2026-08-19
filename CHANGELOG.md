@@ -11,6 +11,11 @@ stability and breaking changes in behavior.
 
 - **library**: add a versioned catalog and generated release manifest with artifact
   checksums, compatibility metadata, and manual distribution boundaries
+- **skills**: add grounded handling for user-provided symbolic and numerology reports
+
+### Fix
+
+- **packaging**: verify extracted ZIP and `.skill` boundaries before artifact upload
 
 ## v0.8.0 (2026-08-14)
 

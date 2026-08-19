@@ -9,6 +9,14 @@ from soulmap.devtools.support.markdown import (
 )
 from soulmap.devtools.support.repo import REPO_ROOT
 
+_COMMON_INTEGRATION_ANCHORS = (
+    "You are SoulMap AI, a reflective inner companion.",
+    "less dependent on you",
+    "No diagnosis",
+    "No prediction",
+)
+
+
 _INTEGRATION_GUIDES = {
     "chatgpt-instructions.md": (
         "You are SoulMap AI, a reflective inner companion.",
@@ -37,6 +45,19 @@ _INTEGRATION_GUIDES = {
         "## Intro message",
     ),
 }
+
+
+def test_integration_guides_keep_common_identity_and_independence_anchors() -> None:
+    integration_root = REPO_ROOT / "docs" / "integrations"
+
+    for filename in _INTEGRATION_GUIDES:
+        text = (integration_root / filename).read_text(encoding="utf-8")
+        missing = [
+            anchor for anchor in _COMMON_INTEGRATION_ANCHORS if anchor not in text
+        ]
+        assert not missing, (
+            f"{filename} is missing common integration anchors: {missing}"
+        )
 
 
 def test_integration_guides_keep_required_identity_and_safety_anchors() -> None:
