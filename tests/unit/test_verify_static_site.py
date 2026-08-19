@@ -2,7 +2,34 @@ from pathlib import Path
 
 import pytest
 
-from scripts.verify_static_site import _validate_script_tag
+from scripts.verify_static_site import (
+    _validate_local_link_targets,
+    _validate_script_tag,
+)
+
+
+def test_local_link_targets_accept_directory_index_and_query(tmp_path: Path) -> None:
+    (tmp_path / "index.html").write_text("", encoding="utf-8")
+    (tmp_path / "skills").mkdir()
+    (tmp_path / "skills" / "index.html").write_text("", encoding="utf-8")
+    (tmp_path / "partials").mkdir()
+    (tmp_path / "partials" / "skills-grid.html").write_text("", encoding="utf-8")
+    content = (
+        '<a href="/soulmap-ai/">home</a>'
+        '<a href="/soulmap-ai/skills">skills</a>'
+        '<div hx-get="/soulmap-ai/partials/skills-grid.html?q=spiritual"></div>'
+    )
+    _validate_local_link_targets(content, "/soulmap-ai", tmp_path, Path("index.html"))
+
+
+def test_local_link_targets_reject_missing_artifact(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="missing local target"):
+        _validate_local_link_targets(
+            '<a href="/soulmap-ai/missing">missing</a>',
+            "/soulmap-ai",
+            tmp_path,
+            Path("index.html"),
+        )
 
 
 @pytest.mark.parametrize(

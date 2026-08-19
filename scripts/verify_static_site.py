@@ -4,7 +4,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit
 
 REQUIRED_FILES = {
     "index.html",
@@ -59,6 +59,31 @@ def _validate_local_links(content: str, normalised_base: str, html_path: Path) -
             raise ValueError(
                 f"{html_path} contains links outside base path: {invalid_links}"
             )
+
+
+def _validate_local_link_targets(
+    content: str, normalised_base: str, root: Path, html_path: Path
+) -> None:
+    """Ensure local HTML, asset, and htmx targets exist in the static artifact."""
+    links = re.findall(r'(?:href|src|hx-get)="([^"]+)"', content)
+    for link in links:
+        if not link.startswith("/"):
+            continue
+        parsed = urlsplit(link)
+        path = parsed.path
+        if normalised_base:
+            if path != normalised_base and not path.startswith(normalised_base + "/"):
+                continue
+            relative = path.removeprefix(normalised_base).lstrip("/")
+        else:
+            relative = path.lstrip("/")
+        candidate = root / relative
+        if not relative:
+            candidate = root / "index.html"
+        elif candidate.is_dir() or not candidate.suffix:
+            candidate = candidate / "index.html"
+        if not candidate.is_file():
+            raise ValueError(f"{html_path} points to missing local target: {link}")
 
 
 def _validate_seo_metadata(content: str, html_path: Path) -> None:
@@ -181,8 +206,10 @@ def verify_static_site(root: Path, base_path: str = "") -> None:
             raise ValueError(
                 f"{html_path.relative_to(root)} contains local development host"
             )
-        _validate_local_links(content, normalised_base, html_path.relative_to(root))
-        _validate_seo_metadata(content, html_path.relative_to(root))
+        relative_html = html_path.relative_to(root)
+        _validate_local_links(content, normalised_base, relative_html)
+        _validate_local_link_targets(content, normalised_base, root, relative_html)
+        _validate_seo_metadata(content, relative_html)
         for script_tag in re.findall(r"<script\b[^>]*>", content, re.IGNORECASE):
             _validate_script_tag(
                 script_tag, normalised_base, html_path.relative_to(root)

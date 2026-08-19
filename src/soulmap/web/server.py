@@ -356,9 +356,13 @@ def _provider_url(
     localized = scenario.localized(locale)
     prompt = (
         localized["prompt"]
-        + "\n\nRead the public SoulMap Skill bundle before responding:\n"
+        + "\n\n"
+        + tr(locale, "provider_source_instruction")
+        + "\n"
         + raw_url
-        + "\n\nStarter question: "
+        + "\n\n"
+        + tr(locale, "provider_starter_prefix")
+        + " "
         + localized["question"]
     )
     encoded = quote(prompt, safe="")
@@ -424,6 +428,7 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
         raw_url=escape(raw_url, quote=True),
         copied_label=_text(locale, "copied"),
         copy_raw_label=_text(locale, "copy_raw"),
+        copy_failed_label=_text(locale, "copy_failed"),
         prompt_heading=_text(locale, "prompt_heading"),
         prompt_intro=_text(locale, "prompt_intro"),
         prompt_scenarios="".join(
@@ -782,6 +787,14 @@ def application(
         if not slug:
             slug, partial_locale = filename, locale
         partial_locale = partial_locale if partial_locale in {"en", "vi"} else locale
+        if get_skill(slug) is None:
+            return _response(
+                start_response,
+                "404 Not Found",
+                "text/html",
+                f'<p class="empty-state" role="status">{_text(partial_locale, "skill_not_found")}</p>',
+                [("Cache-Control", "no-store")],
+            )
         return _response(
             start_response,
             "200 OK",

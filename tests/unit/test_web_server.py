@@ -2,6 +2,7 @@ import json
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any, cast
+from urllib.parse import unquote
 from wsgiref.types import StartResponse
 from wsgiref.util import setup_testing_defaults
 
@@ -58,6 +59,8 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/api/skills/meta/prompts.json", "200 OK"),
         ("/api/skills/meta/prompts.vi.json", "200 OK"),
         ("/api/raw/meta.md", "200 OK"),
+        ("/partials/skill/not-real.en.html", "404 Not Found"),
+        ("/partials/skill/not-real.vi.html", "404 Not Found"),
         ("/missing", "404 Not Found"),
     ],
 )
@@ -228,6 +231,8 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     js = js_body.decode("utf-8")
     assert 'document.body.classList.add("modal-open")' in js
     assert 'document.body.classList.remove("modal-open")' in js
+    assert "copyFailed: false" in js
+    assert "this.copyFailed = !success" in js
     assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
     assert 'hx-get="/partials/skills-grid.html?lang=en"' in html
     assert 'hx-trigger="input changed delay:350ms"' in html
@@ -239,6 +244,8 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
+    assert 'id="skill-loading"' in html
+    assert 'role="status"' in html
     assert "x-cloak" in html
     assert "x-transition.opacity.duration.200ms" in html
     assert "x-transition.opacity.scale.origin.top.duration.200ms" in html
@@ -249,8 +256,10 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     _, fragment_body = _request("/partials/skill/meta.en.html")
     fragment = fragment_body.decode("utf-8")
     assert 'aria-live="polite"' in fragment
-    assert 'x-show="!copied"' in fragment
+    assert 'x-show="!copied && !copyFailed"' in fragment
     assert 'x-show="copied"' in fragment
+    assert 'x-show="copyFailed"' in fragment
+    assert "copy_failed" not in fragment
     assert "x-transition.opacity.duration.150ms" in fragment
 
 
@@ -313,10 +322,38 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
         for label in labels:
             assert label in html
 
+    decoded_english = unquote(english)
+    decoded_vietnamese = unquote(vietnamese)
+    assert "Read the public SoulMap Skill bundle before responding:" in decoded_english
+    assert "Starter question:" in decoded_english
+    assert (
+        "Hãy đọc gói Skill SoulMap công khai trước khi phản hồi:" in decoded_vietnamese
+    )
+    assert "Câu hỏi bắt đầu:" in decoded_vietnamese
+    assert (
+        "Read the public SoulMap Skill bundle before responding:"
+        not in decoded_vietnamese
+    )
+    assert "Starter question:" not in decoded_vietnamese
+
     _, voice_body = _request("/partials/skill/voice.vi.html")
     voice = voice_body.decode("utf-8")
     assert "không dùng biểu tượng cảm xúc" in voice
     assert "không dùng emoji" not in voice
+
+
+def test_unknown_skill_partials_return_localized_not_found_errors() -> None:
+    captured_en, body_en = _request("/partials/skill/not-real.en.html")
+    captured_vi, body_vi = _request("/partials/skill/not-real.vi.html")
+
+    assert captured_en["status"] == "404 Not Found"
+    assert captured_vi["status"] == "404 Not Found"
+    assert "Skill not found." in body_en.decode("utf-8")
+    assert "Không tìm thấy Skill." in body_vi.decode("utf-8")
+    assert (
+        dict(cast(list[tuple[str, str]], captured_en["headers"]))["Cache-Control"]
+        == "no-store"
+    )
 
 
 @pytest.mark.parametrize("slug", [entry.slug for entry in CATALOG])

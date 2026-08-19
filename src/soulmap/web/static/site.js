@@ -1,9 +1,14 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("clipboard", () => ({
     copied: false,
+    copyFailed: false,
     async copy(value) {
+      this.copied = false;
+      this.copyFailed = false;
+      let success = false;
       try {
         await navigator.clipboard.writeText(value);
+        success = true;
       } catch (error) {
         const input = document.createElement("input");
         input.value = value;
@@ -12,11 +17,18 @@ document.addEventListener("alpine:init", () => {
         input.style.opacity = "0";
         document.body.appendChild(input);
         input.select();
-        document.execCommand("copy");
+        try {
+          success = document.execCommand("copy");
+        } catch (fallbackError) {
+          success = false;
+        }
         input.remove();
       }
-      this.copied = true;
-      window.setTimeout(() => { this.copied = false; }, 1600);
+      this.copied = success;
+      this.copyFailed = !success;
+      if (success) {
+        window.setTimeout(() => { this.copied = false; }, 1600);
+      }
     }
   }));
 
