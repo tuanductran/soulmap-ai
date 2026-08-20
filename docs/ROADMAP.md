@@ -3,8 +3,8 @@
 > **Repository:** [soulmap-ai](https://github.com/tuanductran/soulmap-ai)
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
-> **Status:** Actively maintained, current release v0.9.0
-> **Last updated:** 20 August 2026
+> **Status:** Actively maintained, v0.9.0 baseline; post-v0.9.0 roadmap in execution
+> **Last updated:** 21 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -34,11 +34,12 @@ For active implementation tasks, milestones, and execution tracking:
 2. [Repository Overview](#repository-overview)
 3. [Architecture](#architecture)
 4. [Development Phases](#development-phases)
-5. [Validation and Quality System](#validation-and-quality-system)
-6. [CI/CD and Automation](#cicd-and-automation)
-7. [Future Direction](#future-direction)
-8. [Success Metrics](#success-metrics)
-9. [Glossary](#glossary)
+5. [Next Phase Plan](#next-phase-plan)
+6. [Validation and Quality System](#validation-and-quality-system)
+7. [CI/CD and Automation](#cicd-and-automation)
+8. [Future Direction](#future-direction)
+9. [Success Metrics](#success-metrics)
+10. [Glossary](#glossary)
 
 ---
 
@@ -487,7 +488,7 @@ artifacts.
 Completed foundation:
 
 * Responsive public pages for Home, How it works, Boundaries, Download, Notes, About,
-  FAQ, Privacy, Skills catalog, and Skill detail routes in EN/VI.
+  FAQ, Privacy, Skills catalog, and Skill detail routes in EN/VI/KO.
 * `uv run soulmap web` with configurable local host and port.
 * In-process route tests, security headers, skip-link/accessibility markers, responsive CSS,
   reduced-motion support, and local browser smoke validation.
@@ -496,12 +497,16 @@ Completed foundation:
 * `uv run soulmap web --export-static` generates a project-site-safe static tree with an
   optional base path, and `scripts/verify_static_site.py` rejects source leakage, scripts,
   symlinks, local hosts, missing routes, and unsafe links.
-* The Skills catalog has localized EN/VI metadata, deterministic Search/Ask modes, safe
-  question starters, localized error states, compact Ask results, raw Markdown/API
-  bundles, htmx detail loading, Alpine transitions, and a static-export contract.
+* The Skills catalog has localized EN/VI/KO metadata and prompt scenarios, JSON-backed
+  locale catalogs with exact parity tests, deterministic Search/Ask modes, safe question
+  starters, localized error states, compact Ask results, raw Markdown/API bundles, htmx
+  detail loading, Alpine transitions, and a static-export contract.
 * Shared HTML head generation includes conservative `preload`, `preconnect`, and
   `dns-prefetch` hints derived from the actual external stylesheet/script origins, without
   adding runtime dependencies or speculative platform integrations.
+* The original `server.py` boundary is now split into HTTP/config, page renderers, Skill
+  views, and ordered route dispatch modules with compatibility aliases and characterization
+  tests preserved throughout the migration.
 * `.github/workflows/website-pages.yml` rebuilds on website-source changes, uploads the
   verified output for inspection, and publishes only generated files to `gh-pages` after a
   successful `main` build.
@@ -512,6 +517,109 @@ Non-goals for this surface:
   health claims, scheduled reminders, or platform connector.
 * No website content is treated as shipped Skill doctrine unless it is deliberately authored
   and promoted through the existing knowledge-base workflow.
+
+---
+
+## Next Phase Plan
+
+This section is the execution roadmap after the v0.9.0 baseline. It is intentionally ordered by risk and dependency rather than by feature novelty. Each phase should be delivered through one or more small pull requests, with characterization tests added before boundary changes and no automatic merge.
+
+### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
+
+**Priority:** P0 - immediate after the current web/tooling PR train.
+
+**Goal:** Make `main`, release metadata, documentation, generated artifacts, and repository contracts describe the same shipped state.
+
+| Workstream | Required outcome | Definition of Done |
+| --- | --- | --- |
+| Mainline reconciliation | Merge or explicitly close all reviewed PRs and remove stale branches from the active execution list | `main` is the only release baseline and `git diff` against the documented baseline is explainable |
+| Roadmap and contract sync | Keep `docs/ROADMAP.md`, `repo-contract.md`, `README.md`, integration guides, and release notes consistent | Markdown contracts, link checks, case checks, and documentation review pass |
+| Release identity | Align version, changelog, release manifest, artifact hashes, and website build metadata | A clean build produces the expected versioned artifacts and manifest without manual edits |
+| Ownership map | Record who owns runtime safety, knowledge, packaging, website, CI, and release review | Every active surface has one canonical owner document and one escalation path |
+
+The phase must not introduce a new runtime API, platform connector, or semantic safety layer. Its purpose is to remove repository ambiguity before further implementation begins.
+
+### Phase 14 - Runtime and Tooling Quality Consolidation
+
+**Priority:** P0 - high value, low product risk.
+
+**Goal:** Keep the Python layer small, typed, reproducible, and free of accidental dead code while preserving the knowledge-first boundary.
+
+The work includes a full Pyright pass over `src`, `tests`, and `scripts`; coverage configuration aligned with CI; branch-coverage review for routing, guards, packaging, Markdown support, and devtools; dead-code classification with Vulture; and focused performance measurements for import, build, static export, and detector loading. Any deletion must be preceded by a usage audit and a regression test where behavior is public.
+
+**Exit criteria:** Pyright is clean under the repository configuration; Deptry, Vulture, Ruff, and the full test suite pass; the combined runtime/web coverage floor remains at least 95%; benchmark results are recorded for any claimed performance improvement; and no content is moved from Markdown into Python.
+
+### Phase 15 - Safety and Knowledge Maintenance Without Semantic Expansion
+
+**Priority:** P0 - continuous safety track.
+
+**Goal:** Improve deterministic safety coverage only when a human-reviewed phrasing gap is demonstrated.
+
+Each change must begin with `soulmap audit-knowledge`, identify the canonical Markdown or protected Python source, add a positive case and a near-miss, update the relevant grouped eval, and refresh the safety-enforcement matrix. Crisis language packs remain protected Python modules. New language support requires qualified human authorship, explicit phrase review, and full before/after crisis evaluation. No automated translation is accepted as safety evidence.
+
+**Exit criteria:** All changed safety rows remain `enforced` or have a documented reason for `partial`; grouped and response evaluations pass; the relevant ADR or matrix row is updated; and the change does not add semantic classification, LLM calls, or probabilistic runtime behavior.
+
+### Phase 16 - Public Website and Static Export Hardening
+
+**Priority:** P1 - next product-facing track.
+
+**Goal:** Make the Python-only website reliable, accessible, localized, and reproducible across mobile, tablet, desktop, and GitHub Pages.
+
+| Area | Planned work |
+| --- | --- |
+| Localization | Maintain EN/VI/KO JSON parity, fallback tests, localized metadata, and a documented workflow for adding keys without hard-coded web copy |
+| Accessibility | Add keyboard and screen-reader regression checks for navigation, language menu, search/ask mode, modal fragments, focus return, and reduced motion |
+| Static correctness | Verify every localized route, canonical URL, hreflang, raw bundle, hash, asset path, and base-path variant in clean and incremental builds |
+| Performance | Track export time, incremental-build savings, HTML size, asset hints, and critical route response time without adding a JavaScript framework or runtime API |
+| Visual QA | Maintain browser smoke evidence at representative viewport sizes and check typography, spacing, contrast, radius, overflow, and touch targets |
+
+**Exit criteria:** Static verifier passes for EN/VI/KO and `/soulmap-ai`; browser smoke passes on desktop and narrow mobile viewports; accessibility checks cover the interactive controls; and the website remains independent from shipped Skill doctrine unless content is intentionally promoted.
+
+### Phase 17 - Packaging, Library, and Release Provenance
+
+**Priority:** P1 - required before broad distribution.
+
+**Goal:** Make every release artifact reproducible, inspectable, and safe to import into supported AI tools without claiming live provider behavior that has not been tested.
+
+The phase covers artifact manifest generation, SHA-256 verification, wheel/sdist resource checks, ZIP and `.skill` content contracts, catalog parity, release provenance attestations, clean-environment extraction tests, and release rollback documentation. The standard distribution remains the two-artifact model defined by `known-limitations.md`. Any new artifact format requires an ADR and a contract test before implementation.
+
+**Exit criteria:** A clean checkout can build the standard artifacts twice with explainable deterministic differences; hashes and manifest metadata agree; internal files do not leak into public Skill bundles; release CI verifies provenance; and upload/import instructions match the actual artifacts.
+
+### Phase 18 - Operations, Incident Readiness, and Maintenance Automation
+
+**Priority:** P1 - parallel maintenance track after release hardening.
+
+**Goal:** Reduce operational ambiguity without adding accounts, databases, scheduled runtime jobs, or user-data storage.
+
+Planned work includes dependency refresh evidence, security advisory review, CI failure diagnosis, release rollback, static-site publication recovery, artifact retention, ownership rotation, and a lightweight issue triage policy. Automation may open or label maintenance work, but a maintainer must review dependency changes, safety changes, release mutations, and any external publication action.
+
+**Exit criteria:** Operations documents identify triggers, owners, evidence, rollback steps, and escalation paths; scheduled or automated tasks do not mutate releases without human review; and the repository remains usable offline for tests, evals, packaging, and artifact verification.
+
+### Phase 19 - Optional Platform Acceptance Workstream
+
+**Priority:** P2 - blocked until prerequisites exist.
+
+**Goal:** Validate documented Claude, ChatGPT, Gemini, and Poe integration surfaces only when there is an active deployment owner, a chosen target, access to the relevant provider, and explicit manual acceptance scope.
+
+This phase is not a commitment to add provider connectors or runtime APIs. It may include provider-specific documentation fixes, raw Markdown fallback validation, prompt handoff checks, and operator-recorded acceptance evidence. Live behavior must never be inferred from repository tests. If a platform lacks reliable prefilled prompts or requires sign-in, the raw Markdown URL remains the canonical fallback.
+
+**Entry gate:** named owner, active deployment target, test account or documented takeover procedure, privacy review, rollback plan, and a separate PR scope. Without these prerequisites, the work remains blocked and should not be represented as incomplete implementation.
+
+### Phase Order and Pull Request Strategy
+
+| Order | Phase | Depends on | Recommended PR boundary |
+| --- | --- | --- | --- |
+| 1 | 13 | Current PR train and merged `main` | Repository truth, release metadata, and roadmap cleanup |
+| 2 | 14 | Phase 13 | Pyright/coverage/tooling alignment, then focused dead-code or performance fixes |
+| 3 | 15 | Phase 13; independent of website work | One safety gap or one documented maintenance cluster per PR |
+| 4 | 16 | Phase 13 and current static export contracts | Accessibility, localization, static verifier, and visual QA as separate PRs |
+| 5 | 17 | Phase 14 and Phase 16 build contracts | Packaging/provenance changes separate from content changes |
+| 6 | 18 | Phase 13 release ownership map | Operations documentation and automation changes separately reviewed |
+| 7 | 19 | Explicit entry gate above | One provider or one documentation acceptance surface per PR |
+
+### Global Definition of Done for Every Future Phase
+
+A phase is complete only when its source-of-truth documents are updated, characterization tests precede boundary changes, the relevant unit/contract/eval tests pass, Pyright and Ruff are clean, the full validation gates pass, static artifacts are verified when applicable, and the PR is reviewable without an automatic merge. Changes must preserve Python 3.11 support, the no-runtime-API boundary, Markdown knowledge ownership, deterministic safety enforcement, EN/VI/KO website parity, and the two-artifact packaging contract.
 
 ---
 
@@ -675,4 +783,4 @@ platform adapters and connectors.
 
 ---
 
-Last updated: August 20, 2026
+Last updated: August 21, 2026
