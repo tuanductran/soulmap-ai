@@ -73,6 +73,7 @@ def application(
     """Serve the public SoulMap website using the WSGI protocol."""
     return _dispatch(environ, start_response)
 
+
 def export_static(
     output: Path,
     base_path: str = "",

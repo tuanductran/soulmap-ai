@@ -44,10 +44,12 @@ from soulmap.web.skill_views import (
 def _read_static_css() -> str:
     return (Path(__file__).with_name("static") / "site.css").read_text(encoding="utf-8")
 
+
 def _sitemap_routes() -> list[str]:
     routes = list(_pages())
     routes.extend(f"/skills/{entry.slug}" for entry in CATALOG)
     return routes
+
 
 def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
     return {
@@ -94,9 +96,8 @@ def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
         ),
     }
 
-def dispatch(
-    environ: dict[str, object], start_response: StartResponse
-) -> list[bytes]:
+
+def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[bytes]:
     """Serve the public SoulMap website using the WSGI protocol."""
     raw_path = str(environ.get("PATH_INFO") or "/")
     raw_query = str(environ.get("QUERY_STRING") or "")
@@ -383,4 +384,3 @@ def dispatch(
         "text/html",
         _layout(title, description, path, renderer(locale), locale),
     )
-
