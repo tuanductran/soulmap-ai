@@ -156,6 +156,8 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     _, body = _request("/ko/faq")
     html = body.decode("utf-8")
     assert 'x-data="languageMenu"' in html
+    assert 'x-on:click="open = !open"' in html
+    assert 'x-on:keydown.escape="open = false"' in html
     assert 'aria-haspopup="menu"' in html
     assert 'aria-controls="language-menu"' in html
     assert 'id="language-menu"' in html
@@ -476,7 +478,6 @@ def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -
     assert "window.SoulMapSearch" in js
     assert "question-card__scenario" in js
     assert 'Alpine.data("languageMenu"' in js
-    assert "this.open = !this.open" in js
     assert "result.scenario.when" not in js
     assert 'credentials: "same-origin"' in js
 
