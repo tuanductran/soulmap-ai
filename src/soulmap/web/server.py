@@ -25,7 +25,7 @@ from soulmap.web.catalog import (
     raw_markdown,
 )
 from soulmap.web.i18n import LOCALES as TEXT
-from soulmap.web.i18n import messages_json
+from soulmap.web.i18n import SUPPORTED_LOCALES, messages_json
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
 from soulmap.web.seo import metadata, robots_txt, sitemap_xml
 from soulmap.web.templates import render_template
@@ -132,7 +132,17 @@ def _nav(path: str, locale: str) -> str:
         )
         for href, label_key in links
     )
-    other_locale = "vi" if locale == "en" else "en"
+    locale_options = "".join(
+        '<a class="locale-option" role="menuitem" href="{}" lang="{}"{}>'
+        '<span>{}</span><span class="locale-code">{}</span></a>'.format(
+            escape(_nav_path(path, target_locale), quote=True),
+            target_locale,
+            ' aria-current="page"' if target_locale == locale else "",
+            _text(locale, f"language_name_{target_locale}"),
+            target_locale.upper(),
+        )
+        for target_locale in SUPPORTED_LOCALES
+    )
     return render_template(
         "partials/nav.html",
         brand_home=escape(_nav_path("/", locale), quote=True),
@@ -140,14 +150,13 @@ def _nav(path: str, locale: str) -> str:
         nav_links=rendered,
         primary_nav_label=_text(locale, "primary_nav_label"),
         language_label=_text(locale, "language"),
-        locale_href=escape(_nav_path(path, other_locale), quote=True),
-        other_locale=other_locale,
-        other_locale_upper=other_locale.upper(),
+        locale_options=locale_options,
+        current_locale_upper=locale.upper(),
     )
 
 
 def _layout(title: str, description: str, path: str, content: str, locale: str) -> str:
-    language = "vi" if locale == "vi" else "en"
+    language = locale if locale in SUPPORTED_LOCALES else "en"
     seo_title, seo_description = _seo_copy(path, locale, title, description)
     seo = metadata(
         site_url=PUBLIC_SITE_URL,
@@ -653,7 +662,7 @@ def _response(
 def _normalise_request_path(path: str) -> tuple[str, str]:
     normal = "/" + path.strip("/") if path.strip("/") else "/"
     parts = normal.strip("/").split("/") if normal != "/" else []
-    if parts and parts[0] in {"en", "vi"}:
+    if parts and parts[0] in SUPPORTED_LOCALES:
         locale = parts.pop(0)
         route = "/" + "/".join(parts) if parts else "/"
         return route, locale
@@ -690,7 +699,7 @@ def application(
     query = parse_qs(raw_query)
     locale = (
         query.get("lang", [locale])[0]
-        if query.get("lang", [locale])[0] in {"en", "vi"}
+        if query.get("lang", [locale])[0] in SUPPORTED_LOCALES
         else locale
     )
     if path == "/favicon.ico":
@@ -763,14 +772,28 @@ def application(
                 ("Cache-Control", "public, max-age=300"),
             ],
         )
-    if path.startswith("/api/skills/") and (
-        path.endswith("/prompts.json") or path.endswith("/prompts.vi.json")
+    if (
+        path.startswith("/api/skills/")
+        and path.rsplit("/", 1)[-1].startswith("prompts")
+        and path.endswith(".json")
     ):
-        prompt_locale = "vi" if path.endswith("/prompts.vi.json") else locale
-        suffix = (
-            "/prompts.vi.json" if path.endswith("/prompts.vi.json") else "/prompts.json"
-        )
-        slug = path.removeprefix("/api/skills/").removesuffix(suffix)
+        prompt_path = path.removeprefix("/api/skills/")
+        prompt_slug, separator, prompt_filename = prompt_path.rpartition("/")
+        prompt_locale = locale
+        if separator and prompt_filename == "prompts.json":
+            suffix = "/prompts.json"
+        elif separator and prompt_filename.startswith("prompts."):
+            requested_locale = prompt_filename.removeprefix("prompts.").removesuffix(
+                ".json"
+            )
+            if requested_locale not in SUPPORTED_LOCALES:
+                prompt_slug = ""
+            prompt_locale = requested_locale
+            suffix = f"/prompts.{requested_locale}.json"
+        else:
+            prompt_slug = ""
+            suffix = ""
+        slug = prompt_slug if suffix else ""
         entry = get_skill(slug)
         if entry is None:
             return _response(
@@ -860,7 +883,9 @@ def application(
         slug, _, partial_locale = filename.rpartition(".")
         if not slug:
             slug, partial_locale = filename, locale
-        partial_locale = partial_locale if partial_locale in {"en", "vi"} else locale
+        partial_locale = (
+            partial_locale if partial_locale in SUPPORTED_LOCALES else locale
+        )
         if get_skill(slug) is None:
             return _response(
                 start_response,
@@ -976,8 +1001,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
     normalised_base = _normalise_base_path(base_path)
     written: list[Path] = []
     pages = _pages()
-    for locale in ("en", "vi"):
-        locale_prefix = "" if locale == "en" else "/vi"
+    for locale in SUPPORTED_LOCALES:
+        locale_prefix = "" if locale == "en" else f"/{locale}"
         for route, (title, description, renderer) in pages.items():
             page_route = f"{locale_prefix}{route if route != '/' else ''}" or "/"
             _write_page(
@@ -988,8 +1013,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
                 normalised_base,
             )
     for entry in CATALOG:
-        for locale in ("en", "vi"):
-            prefix = "" if locale == "en" else "/vi"
+        for locale in SUPPORTED_LOCALES:
+            prefix = "" if locale == "en" else f"/{locale}"
             _write_page(
                 output,
                 f"{prefix}/skills/{entry.slug}",
@@ -1012,11 +1037,11 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
                 encoding="utf-8",
             )
             written.append(partial)
-    for locale in ("en", "vi"):
+    for locale in SUPPORTED_LOCALES:
         grid_partial = output / (
             "partials/skills-grid.html"
             if locale == "en"
-            else "vi/partials/skills-grid.html"
+            else f"{locale}/partials/skills-grid.html"
         )
         grid_partial.parent.mkdir(parents=True, exist_ok=True)
         grid_partial.write_text(
@@ -1032,13 +1057,16 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         catalog_search_json(), encoding="utf-8"
     )
     written.extend([api_dir / "skills.json", api_dir / "skills" / "search.json"])
-    vi_api_dir = output / "vi" / "api" / "skills"
-    vi_api_dir.mkdir(parents=True, exist_ok=True)
-    (output / "vi" / "api" / "skills.json").write_text(
-        catalog_json("vi"), encoding="utf-8"
-    )
-    (vi_api_dir / "search.json").write_text(catalog_search_json("vi"), encoding="utf-8")
-    written.extend([output / "vi" / "api" / "skills.json", vi_api_dir / "search.json"])
+    for locale in SUPPORTED_LOCALES:
+        if locale == "en":
+            continue
+        locale_api_dir = output / locale / "api" / "skills"
+        locale_api_dir.mkdir(parents=True, exist_ok=True)
+        locale_api_json = output / locale / "api" / "skills.json"
+        locale_api_json.write_text(catalog_json(locale), encoding="utf-8")
+        locale_search_json = locale_api_dir / "search.json"
+        locale_search_json.write_text(catalog_search_json(locale), encoding="utf-8")
+        written.extend([locale_api_json, locale_search_json])
     for entry in CATALOG:
         raw_path = api_dir / "raw" / f"{entry.slug}.md"
         raw_path.write_text(raw_markdown(entry), encoding="utf-8")
@@ -1051,9 +1079,11 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         written.append(data_path)
         prompt_dir = api_dir / "skills" / entry.slug
         prompt_dir.mkdir(parents=True, exist_ok=True)
-        for prompt_locale in ("en", "vi"):
+        for prompt_locale in SUPPORTED_LOCALES:
             prompt_path = prompt_dir / (
-                "prompts.json" if prompt_locale == "en" else "prompts.vi.json"
+                "prompts.json"
+                if prompt_locale == "en"
+                else f"prompts.{prompt_locale}.json"
             )
             prompt_path.write_text(
                 json.dumps(

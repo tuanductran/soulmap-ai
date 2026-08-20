@@ -39,6 +39,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/", "200 OK"),
         ("/en", "301 Moved Permanently"),
         ("/vi", "200 OK"),
+        ("/ko", "200 OK"),
         ("/how-it-works", "200 OK"),
         ("/boundaries", "200 OK"),
         ("/download", "200 OK"),
@@ -48,6 +49,8 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/privacy", "200 OK"),
         ("/vi/faq", "200 OK"),
         ("/vi/privacy", "200 OK"),
+        ("/ko/faq", "200 OK"),
+        ("/ko/privacy", "200 OK"),
         ("/private", "301 Moved Permanently"),
         ("/skills", "200 OK"),
         ("/skills/meta", "200 OK"),
@@ -59,11 +62,14 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/api/skills.json", "200 OK"),
         ("/api/skills/search.json", "200 OK"),
         ("/vi/api/skills/search.json", "200 OK"),
+        ("/ko/api/skills/search.json", "200 OK"),
         ("/api/skills/meta/prompts.json", "200 OK"),
         ("/api/skills/meta/prompts.vi.json", "200 OK"),
+        ("/api/skills/meta/prompts.ko.json", "200 OK"),
         ("/api/raw/meta.md", "200 OK"),
         ("/partials/skill/not-real.en.html", "404 Not Found"),
         ("/partials/skill/not-real.vi.html", "404 Not Found"),
+        ("/partials/skill/not-real.ko.html", "404 Not Found"),
         ("/missing", "404 Not Found"),
     ],
 )
@@ -132,6 +138,33 @@ def test_seo_metadata_is_absolute_localized_and_server_rendered() -> None:
     )
     assert '"inLanguage":"vi"' in vietnamese
 
+    _, korean_body = _request("/ko/how-it-works")
+    korean = korean_body.decode("utf-8")
+    assert '<html lang="ko">' in korean
+    assert (
+        '<link rel="canonical" href="https://tuanductran.github.io/soulmap-ai/ko/how-it-works/">'
+        in korean
+    )
+    assert (
+        'hreflang="ko" href="https://tuanductran.github.io/soulmap-ai/ko/how-it-works/"'
+        in korean
+    )
+    assert '"inLanguage":"ko"' in korean
+
+
+def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
+    _, body = _request("/ko/faq")
+    html = body.decode("utf-8")
+    assert 'x-data="languageMenu"' in html
+    assert 'aria-haspopup="menu"' in html
+    assert 'aria-controls="language-menu"' in html
+    assert 'id="language-menu"' in html
+    assert 'role="menu"' in html
+    assert 'role="menuitem" href="/faq" lang="en"' in html
+    assert 'role="menuitem" href="/vi/faq" lang="vi"' in html
+    assert 'role="menuitem" href="/ko/faq" lang="ko" aria-current="page"' in html
+    assert "한국어" in html
+
 
 def test_sitemap_and_robots_reference_only_public_canonical_urls() -> None:
     sitemap_captured, sitemap_body = _request("/sitemap.xml")
@@ -140,6 +173,7 @@ def test_sitemap_and_robots_reference_only_public_canonical_urls() -> None:
     assert 'xmlns:xhtml="http://www.w3.org/1999/xhtml"' in sitemap
     assert "https://tuanductran.github.io/soulmap-ai/faq/" in sitemap
     assert "https://tuanductran.github.io/soulmap-ai/vi/privacy/" in sitemap
+    assert "https://tuanductran.github.io/soulmap-ai/ko/privacy/" in sitemap
     assert "https://tuanductran.github.io/soulmap-ai/en/" not in sitemap
     assert "https://tuanductran.github.io/soulmap-ai/api/" not in sitemap
     assert sitemap.count('hreflang="x-default"') >= 2
@@ -366,6 +400,14 @@ def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
     assert vi_payload["results"][0]["slug"] == "frameworks"
     assert vi_payload["results"][0]["group"] == "Phản chiếu"
 
+    ko_payload = json.loads(_request("/ko/api/skills/search.json")[1])
+    assert ko_payload["locale"] == "ko"
+    assert ko_payload["results"]
+
+    ko_prompt = json.loads(_request("/api/skills/meta/prompts.ko.json")[1])
+    assert ko_prompt["locale"] == "ko"
+    assert ko_prompt["scenarios"]
+
     group_body = _request("/api/skills/search.json", "group=Safety")[1]
     group_payload = json.loads(group_body)
     assert [result["slug"] for result in group_payload["results"]] == ["safety"]
@@ -433,6 +475,8 @@ def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -
     assert "event.preventDefault();" in js
     assert "window.SoulMapSearch" in js
     assert "question-card__scenario" in js
+    assert 'Alpine.data("languageMenu"' in js
+    assert "this.open = !this.open" in js
     assert "result.scenario.when" not in js
     assert 'credentials: "same-origin"' in js
 
@@ -660,29 +704,39 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     expected = (
         "index.html",
         "vi/index.html",
+        "ko/index.html",
         "faq/index.html",
         "privacy/index.html",
         "vi/faq/index.html",
         "vi/privacy/index.html",
+        "ko/faq/index.html",
+        "ko/privacy/index.html",
         "skills/index.html",
         "privacy/index.html",
         "vi/faq/index.html",
         "vi/privacy/index.html",
         "skills/index.html",
         "vi/skills/index.html",
+        "ko/skills/index.html",
         "skills/meta/index.html",
         "vi/skills/meta/index.html",
+        "ko/skills/meta/index.html",
         "partials/skill/meta.en.html",
         "partials/skill/meta.vi.html",
+        "partials/skill/meta.ko.html",
         "partials/skills-grid.html",
         "vi/partials/skills-grid.html",
+        "ko/partials/skills-grid.html",
         "api/skills.json",
         "api/skills/search.json",
         "vi/api/skills.json",
         "vi/api/skills/search.json",
+        "ko/api/skills.json",
+        "ko/api/skills/search.json",
         "api/raw/meta.md",
         "api/skills/meta/prompts.json",
         "api/skills/meta/prompts.vi.json",
+        "api/skills/meta/prompts.ko.json",
         "static/site.css",
         "static/site.js",
         "static/search.js",
@@ -722,6 +776,12 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'href="/"' not in html
     assert "viewport-fit=cover" in html
     assert 'media="(prefers-color-scheme: dark)"' in html
+    ko_skills_html = (output / "ko/skills/index.html").read_text(encoding="utf-8")
+    assert '<html lang="ko">' in ko_skills_html
+    assert 'action="/soulmap-ai/ko/skills"' in ko_skills_html
+    assert 'data-search-api="/soulmap-ai/ko/api/skills/search.json"' in ko_skills_html
+    assert 'x-data="languageMenu"' in ko_skills_html
+    assert "한국어" in ko_skills_html
     assert "<script" in html
     assert 'integrity="sha384-' in html
 

@@ -11,6 +11,7 @@ def test_public_url_uses_directory_style_canonical_paths() -> None:
     assert public_url(SITE, "/", "vi") == f"{SITE}/vi/"
     assert public_url(SITE, "/how-it-works", "en") == f"{SITE}/how-it-works/"
     assert public_url(SITE, "/how-it-works", "vi") == f"{SITE}/vi/how-it-works/"
+    assert public_url(SITE, "/how-it-works", "ko") == f"{SITE}/ko/how-it-works/"
 
 
 def test_alternate_links_are_reciprocal_and_include_x_default() -> None:
@@ -18,6 +19,9 @@ def test_alternate_links_are_reciprocal_and_include_x_default() -> None:
     assert 'hreflang="en" href="https://tuanductran.github.io/soulmap-ai/faq/"' in links
     assert (
         'hreflang="vi" href="https://tuanductran.github.io/soulmap-ai/vi/faq/"' in links
+    )
+    assert (
+        'hreflang="ko" href="https://tuanductran.github.io/soulmap-ai/ko/faq/"' in links
     )
     assert (
         'hreflang="x-default" href="https://tuanductran.github.io/soulmap-ai/faq/"'
@@ -50,10 +54,11 @@ def test_json_ld_is_valid_and_escapes_script_terminators() -> None:
     )
 
 
-def test_sitemap_contains_both_locales_for_each_route() -> None:
+def test_sitemap_contains_all_supported_locales_for_each_route() -> None:
     sitemap = sitemap_xml(SITE, ["/", "/privacy"])
-    assert sitemap.count("<url>") == 4
-    assert sitemap.count('hreflang="x-default"') == 4
+    assert sitemap.count("<url>") == 6
+    assert sitemap.count('hreflang="x-default"') == 6
     assert f"<loc>{SITE}/privacy/</loc>" in sitemap
     assert f"<loc>{SITE}/vi/privacy/</loc>" in sitemap
+    assert f"<loc>{SITE}/ko/privacy/</loc>" in sitemap
     assert "api/" not in sitemap

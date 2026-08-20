@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 from urllib.parse import urlparse, urlsplit
 
+from soulmap.web.i18n import SUPPORTED_LOCALES
+
 REQUIRED_FILES = {
     "index.html",
     "how-it-works/index.html",
@@ -33,6 +35,34 @@ REQUIRED_FILES = {
     "sitemap.xml",
     "favicon.ico",
 }
+_PUBLIC_ROUTES = (
+    "",
+    "how-it-works",
+    "boundaries",
+    "download",
+    "notes",
+    "about",
+    "faq",
+    "privacy",
+    "skills",
+)
+for _locale in SUPPORTED_LOCALES:
+    if _locale == "en":
+        continue
+    _prefix = f"{_locale}/"
+    REQUIRED_FILES.update(
+        {
+            f"{_prefix}{route}/index.html" if route else f"{_prefix}index.html"
+            for route in _PUBLIC_ROUTES
+        }
+    )
+    REQUIRED_FILES.update(
+        {
+            f"{_prefix}api/skills.json",
+            f"{_prefix}api/skills/search.json",
+            f"{_prefix}partials/skills-grid.html",
+        }
+    )
 FORBIDDEN_FILE_PARTS = {".claude", ".github", ".git", "dist", "src", "tests"}
 FORBIDDEN_SUFFIXES = {".py", ".toml", ".lock"}
 
@@ -102,7 +132,7 @@ def _validate_seo_metadata(content: str, html_path: Path) -> None:
     alternates = dict(
         re.findall(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">', content)
     )
-    if set(alternates) != {"en", "vi", "x-default"}:
+    if set(alternates) != set(SUPPORTED_LOCALES) | {"x-default"}:
         raise ValueError(f"{html_path} has incomplete hreflang metadata")
     for key in ("og:type", "og:title", "og:description", "og:url", "twitter:card"):
         if f'name="{key}"' not in content and f'property="{key}"' not in content:
