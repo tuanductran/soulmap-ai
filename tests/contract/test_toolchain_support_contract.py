@@ -72,6 +72,18 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     assert '--randomly-seed="${PYTEST_RANDOMLY_SEED}"' in ci_text
 
 
+def test_coverage_gate_is_enforced_without_masking_failures() -> None:
+    project_text = PYPROJECT.read_text(encoding="utf-8")
+    ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
+
+    assert "fail_under = 95" in project_text
+    assert "--cov-fail-under=95" in ci_text
+    assert "--cov=src/soulmap/web" in ci_text
+    assert "--cov-report=json:coverage.json" in ci_text
+    assert "name: soulmap-coverage" in ci_text
+    assert "--cov-report=term-missing -q 2>&1 | tail" not in ci_text
+
+
 def test_workflows_use_local_resilient_tool_installers() -> None:
     setup_uv_text = SETUP_UV_ACTION.read_text(encoding="utf-8")
     actionlint_text = ACTIONLINT_ACTION.read_text(encoding="utf-8")

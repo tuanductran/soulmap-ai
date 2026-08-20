@@ -53,7 +53,14 @@ jobs:
         run: uv run python scripts/pytest_diagnostics.py
       - name: Coverage report (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
-        run: uv run pytest -n auto --randomly-seed="${PYTEST_RANDOMLY_SEED}" --cov=src/soulmap/runtime --cov-report=term-missing -q 2>&1 | tail -20
+        run: uv run pytest -n auto --randomly-seed="${PYTEST_RANDOMLY_SEED}" --cov=src/soulmap/runtime --cov=src/soulmap/web --cov-report=term-missing --cov-report=json:coverage.json --cov-fail-under=95 -q
+      - name: Upload coverage report
+        if: always() && matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmap-coverage
+          path: coverage.json
+          if-no-files-found: warn
       - name: Safety evals
         run: uv run python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals

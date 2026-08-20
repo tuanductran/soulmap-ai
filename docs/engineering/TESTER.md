@@ -210,6 +210,8 @@ contracts:
 - workflow validation via `actionlint`
 - `uv run soulmap lint --skip-tests`
 - `uv run soulmap test -n auto -q`
+- coverage for `src/soulmap/runtime` and `src/soulmap/web` with the configured 95% floor
+- the `soulmap-coverage` JSON artifact on Ubuntu CI
 - `uv run python tests/eval_regression/test_safety_evals.py`
 - `uv run soulmap eval-responses`
 - `uv run soulmap eval-groups`
@@ -224,7 +226,9 @@ contracts:
 - `uv run soulmap check-case --root .`
 
 Inspect `.github/workflows/release.yml` and confirm it still verifies the repo before
-release and rebuilds both distribution artifacts.
+release and rebuilds both distribution artifacts. Web/static tests that write output should
+use pytest's `tmp_path` or an equivalent isolated directory; never use a shared fixed path
+when xdist can run tests concurrently.
 
 If PR autofix is expected, also confirm the `autofix.ci` GitHub App is installed for the
 repository. Without the app, the workflow step can exist but cannot push fix commits.

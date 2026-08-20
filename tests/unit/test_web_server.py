@@ -816,8 +816,8 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'integrity="sha384-' in html
 
 
-def test_static_export_has_no_source_code_paths_in_html() -> None:
-    output = Path("/tmp") / "soulmap-test-static-site"
+def test_static_export_has_no_source_code_paths_in_html(tmp_path: Path) -> None:
+    output = tmp_path / "soulmap-test-static-site"
     export_static(output, "/soulmap-ai")
     for html_path in output.rglob("*.html"):
         if html_path.relative_to(output).as_posix().startswith("partials/"):
