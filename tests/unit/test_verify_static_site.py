@@ -39,11 +39,22 @@ def test_local_link_targets_validate_form_action_and_search_api(tmp_path: Path) 
     (tmp_path / "api" / "skills" / "search.json").write_text("{}", encoding="utf-8")
     _validate_local_link_targets(
         '<form action="/soulmap-ai/skills"></form>'
+        '<form data-skill-root="/soulmap-ai/skills"></form>'
         '<form data-search-api="/soulmap-ai/api/skills/search.json"></form>',
         "/soulmap-ai",
         tmp_path,
         Path("skills/index.html"),
     )
+
+
+def test_local_link_targets_reject_missing_skill_root(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="missing local target"):
+        _validate_local_link_targets(
+            '<form data-skill-root="/soulmap-ai/missing"></form>',
+            "/soulmap-ai",
+            tmp_path,
+            Path("skills/index.html"),
+        )
 
 
 def test_local_link_targets_reject_missing_search_api(tmp_path: Path) -> None:

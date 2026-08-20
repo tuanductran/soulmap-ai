@@ -105,7 +105,9 @@ def _nav(path: str, locale: str) -> str:
     return render_template(
         "partials/nav.html",
         brand_home=escape(_nav_path("/", locale), quote=True),
+        brand_home_label=_text(locale, "brand_home_label"),
         nav_links=rendered,
+        primary_nav_label=_text(locale, "primary_nav_label"),
         language_label=_text(locale, "language"),
         locale_href=escape(_nav_path(path, other_locale), quote=True),
         other_locale=other_locale,
@@ -192,6 +194,7 @@ def _home(locale: str) -> str:
         skills_href=escape(_nav_path("/skills", locale), quote=True),
         home_skills=_text(locale, "home_skills"),
         home_principle=_text(locale, "home_principle"),
+        principle_label=_text(locale, "principle_label"),
         home_section_eyebrow=_text(locale, "home_section_eyebrow"),
         home_section_h2=_text(locale, "home_section_h2"),
         home_section_lede=_text(locale, "home_section_lede"),
@@ -479,6 +482,16 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         search_label=_text(locale, "search_label"),
         search_placeholder=_text(locale, "search_placeholder"),
         search_hint=_text(locale, "search_hint"),
+        search_mode_label=_text(locale, "search_mode_label"),
+        search_mode_search=_text(locale, "search_mode_search"),
+        search_mode_ask=_text(locale, "search_mode_ask"),
+        search_mode_search_hint=_text(locale, "search_mode_search_hint"),
+        search_mode_ask_hint=_text(locale, "search_mode_ask_hint"),
+        ask_intro=_text(locale, "ask_intro"),
+        ask_result_label=_text(locale, "ask_result_label"),
+        ask_use_label=_text(locale, "ask_use_label"),
+        ask_no_results=_text(locale, "ask_no_results"),
+        search_error=_text(locale, "search_error"),
         loading_label=_text(locale, "loading"),
         catalog_action=escape(_nav_path("/skills", locale), quote=True),
         search_api_endpoint=escape(
@@ -486,10 +499,11 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         ),
         search_locale=locale,
         search_query=escape(query, quote=True),
-        catalog_count=str(len(CATALOG)),
+        catalog_count=_text(locale, "catalog_count").format(count=len(CATALOG)),
         skill_grid=_skill_grid_fragment(locale, query),
         close_label=_text(locale, "close"),
         details_label=_text(locale, "details"),
+        modal_title=_text(locale, "modal_title"),
     )
 
 
@@ -656,8 +670,8 @@ def application(
             _read_static_css(),
             [("Cache-Control", "public, max-age=300")],
         )
-    if path == "/static/site.js":
-        js_path = Path(__file__).with_name("static") / "site.js"
+    if path in {"/static/site.js", "/static/search.js"}:
+        js_path = Path(__file__).with_name("static") / path.rsplit("/", 1)[-1]
         return _response(
             start_response,
             "200 OK",
@@ -891,7 +905,14 @@ def _normalise_base_path(base_path: str) -> str:
 def _apply_base_path(content: str, base_path: str) -> str:
     if not base_path:
         return content
-    for attribute in ("href", "src", "hx-get", "action", "data-search-api"):
+    for attribute in (
+        "href",
+        "src",
+        "hx-get",
+        "action",
+        "data-search-api",
+        "data-skill-root",
+    ):
         content = content.replace(f'{attribute}="/', f'{attribute}="{base_path}/')
     return content
 
@@ -1014,10 +1035,12 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
             written.append(prompt_path)
     (output / "static").mkdir()
     (output / "static" / "site.css").write_text(_read_static_css(), encoding="utf-8")
-    (output / "static" / "site.js").write_text(
-        (Path(__file__).with_name("static") / "site.js").read_text(encoding="utf-8"),
-        encoding="utf-8",
-    )
+    static_dir = Path(__file__).with_name("static")
+    for asset_name in ("site.js", "search.js"):
+        (output / "static" / asset_name).write_text(
+            (static_dir / asset_name).read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
     favicon_source = Path(__file__).with_name("static") / "favicon.ico"
     shutil.copyfile(favicon_source, output / "favicon.ico")
     (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
@@ -1028,6 +1051,7 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
         [
             output / "static" / "site.css",
             output / "static" / "site.js",
+            output / "static" / "search.js",
             output / "favicon.ico",
             output / "robots.txt",
             output / "sitemap.xml",

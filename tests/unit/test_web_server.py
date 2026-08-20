@@ -53,6 +53,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/skills/meta", "200 OK"),
         ("/static/site.css", "200 OK"),
         ("/static/site.js", "200 OK"),
+        ("/static/search.js", "200 OK"),
         ("/favicon.ico", "200 OK"),
         ("/sitemap.xml", "200 OK"),
         ("/api/skills.json", "200 OK"),
@@ -186,6 +187,25 @@ def test_favicon_route_returns_original_ico_bytes() -> None:
     assert len(body) > 1000
 
 
+def test_localized_shared_accessible_labels_are_not_hardcoded() -> None:
+    _, body = _request("/vi")
+    html = body.decode("utf-8")
+    _, en_body = _request("/")
+    en_html = en_body.decode("utf-8")
+
+    assert 'aria-label="SoulMap AI home"' in en_html
+    assert 'aria-label="Primary navigation"' in en_html
+    assert "<cite>SoulMap principle</cite>" in en_html
+    assert 'aria-label="Trang chủ SoulMap AI"' in html
+    assert 'aria-label="Điều hướng chính"' in html
+    assert (
+        '<div class="mirror-card" role="note" aria-label="Nguyên tắc SoulMap">' in html
+    )
+    assert "<cite>Nguyên tắc SoulMap</cite>" in html
+    assert "SoulMap principle" not in html
+    assert "Primary navigation" not in html
+
+
 def test_website_is_responsive_accessible_and_progressive() -> None:
     captured, body = _request("/static/site.css")
 
@@ -200,6 +220,9 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%" not in css
     assert "#c99b50" not in css
     assert "prefers-reduced-motion" in css
+    assert "select:focus-visible" in css
+    assert "textarea:focus-visible" in css
+    assert "button, input, select, textarea { font: inherit; }" in css
     assert "prefers-color-scheme: dark" in css
     assert "prefers-reduced-transparency" in css
     assert "safe-area-inset" in css
@@ -218,6 +241,8 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
     assert 'rel="icon" href="/favicon.ico" sizes="any"' in html
+    assert 'aria-label="SoulMap AI home"' in html
+    assert 'aria-label="Primary navigation"' in html
     assert "<title>Choose the layer that fits the moment. · SoulMap AI</title>" in html
     assert "SoulMap AI · SoulMap AI" not in html
     assert 'name="htmx-config"' in html
@@ -228,7 +253,11 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
         in html
     )
     assert html.count('integrity="sha384-') == 2
+    assert 'src="/static/search.js"' in html
     assert 'src="/static/site.js"' in html
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "SoulMapSearch" in search_js
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
     assert 'document.body.classList.add("modal-open")' in js
@@ -239,10 +268,18 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'hx-get="/partials/skills-grid.html?lang=en"' not in html
     assert 'method="get"' in html
     assert 'x-on:submit="preventSubmit($event)"' in html
+    assert 'data-skill-root="/skills"' in html
     assert 'data-search-api="/api/skills/search.json"' in html
+    assert 'data-search-error="Search is temporarily unavailable.' in html
+    assert 'aria-controls="skill-grid question-results"' in html
     assert 'data-search-locale="en"' in html
+    assert '<option value="search">Search Skills</option>' in html
+    assert '<option value="ask">Ask with a Skill</option>' in html
+    assert "SoulMap Skill details" in html
+    assert 'x-model="mode"' in html
+    assert 'id="question-results"' in html
     assert 'enterkeyhint="search"' in html
-    assert "Results update as you type" in html
+    assert "Choose Search or Ask" in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
@@ -311,19 +348,59 @@ def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
     assert [result["slug"] for result in group_payload["results"]] == ["safety"]
 
 
+def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
+    _, html_body = _request("/vi/skills")
+    html = html_body.decode("utf-8")
+    assert 'data-ask-intro="Chế độ Hỏi giúp bạn chọn một Skill công khai' in html
+    assert 'data-ask-result-label="Câu hỏi mở đầu"' in html
+    assert 'data-ask-use-label="Dùng câu hỏi này"' in html
+    assert 'id="question-results"' in html
+
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "prompt_scenarios" in search_js
+    assert "document" not in search_js
+    assert "innerHTML" not in search_js
+
+    _, site_body = _request("/static/site.js")
+    site_js = site_body.decode("utf-8")
+    assert "renderAskResults" in site_js
+    assert "renderSearchError" in site_js
+    assert 'role", "alert"' in site_js
+    assert "document.createElement" in site_js
+    assert "innerHTML" not in site_js
+
+    payload = json.loads(_request("/vi/api/skills/search.json")[1])
+    assert any(result["prompt_scenarios"] for result in payload["results"])
+    assert all(
+        "answer" not in scenario
+        for result in payload["results"]
+        for scenario in result["prompt_scenarios"]
+    )
+
+
 def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -> None:
     _, body = _request("/vi/skills")
     html = body.decode("utf-8")
     assert 'action="/vi/skills"' in html
     assert 'data-search-api="/vi/api/skills/search.json"' in html
+    assert 'data-search-error="Tìm kiếm tạm thời không khả dụng.' in html
+    assert "Chi tiết Skill SoulMap" in html
     assert 'data-search-locale="vi"' in html
-    assert "Kết quả cập nhật khi bạn nhập" in html
+    assert "Chọn Tìm kiếm hoặc Hỏi" in html
+    assert '<option value="ask">Hỏi cùng một Skill</option>' in html
+    assert 'data-skill-root="/vi/skills"' in html
+    assert 'id="question-results"' in html
+
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "SoulMapSearch" in search_js
 
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
     assert "preventSubmit(event)" in js
     assert "event.preventDefault();" in js
-    assert "scoreSearchEntry" in js
+    assert "window.SoulMapSearch" in js
     assert 'credentials: "same-origin"' in js
 
 
@@ -482,6 +559,8 @@ def test_localized_catalog_uses_requested_language() -> None:
     assert "privacy" not in visible_main.lower()
     assert "Phản chiếu" in visible_main
     assert "Reflection" not in visible_main
+    assert "6 nhóm · có bundle Markdown gốc" in visible_main
+    assert "groups · raw bundles available" not in visible_main
 
     _, notes_body = _request("/vi/notes")
     notes = notes_body.decode("utf-8")
@@ -551,6 +630,7 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "api/skills/meta/prompts.vi.json",
         "static/site.css",
         "static/site.js",
+        "static/search.js",
         "robots.txt",
         "sitemap.xml",
         "favicon.ico",
@@ -561,10 +641,13 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     html = (output / "index.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/' in html
     assert 'src="/soulmap-ai/static/site.js"' in html
+    assert 'src="/soulmap-ai/static/search.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
     assert 'action="/soulmap-ai/skills"' in skills_html
+    assert 'data-skill-root="/soulmap-ai/skills"' in skills_html
     assert 'data-search-api="/soulmap-ai/api/skills/search.json"' in skills_html
+    assert '<option value="ask">Ask with a Skill</option>' in skills_html
     assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' not in skills_html
     grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html

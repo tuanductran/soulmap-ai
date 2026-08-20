@@ -1,51 +1,3 @@
-const normaliseSearchText = (value) => {
-  const folded = String(value || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase();
-  return folded.replace(/[^a-z0-9]+/g, " ").trim();
-};
-
-const searchTerms = (value) => normaliseSearchText(value).split(/\s+/).filter(Boolean);
-
-const entrySearchText = (entry) =>
-  [
-    entry.slug,
-    entry.group,
-    entry.title,
-    entry.summary,
-    entry.use_when,
-    entry.best_for,
-    entry.boundary,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-const scoreSearchEntry = (entry, query) => {
-  const normalizedQuery = normaliseSearchText(query);
-  if (!normalizedQuery) return 0;
-  const terms = searchTerms(query);
-  const slug = normaliseSearchText(entry.slug);
-  const title = normaliseSearchText(entry.title);
-  const group = normaliseSearchText(entry.group);
-  const haystack = normaliseSearchText(entrySearchText(entry));
-  if (!terms.every((term) => haystack.includes(term))) return -1;
-
-  let score = 0;
-  if (normalizedQuery === slug) score += 1000;
-  if (normalizedQuery === title) score += 900;
-  if (normalizedQuery === group) score += 360;
-  if (slug.includes(normalizedQuery)) score += 500;
-  if (title.includes(normalizedQuery)) score += 420;
-  if (group.includes(normalizedQuery)) score += 360;
-  for (const term of terms) {
-    if (slug.startsWith(term)) score += 40;
-    if (title.startsWith(term)) score += 35;
-    if (haystack.includes(term)) score += 15;
-  }
-  return score;
-};
-
 document.addEventListener("alpine:init", () => {
   Alpine.data("clipboard", () => ({
     copied: false,
@@ -83,6 +35,8 @@ document.addEventListener("alpine:init", () => {
   Alpine.data("skillCatalog", () => ({
     openSlug: "",
     returnFocus: null,
+    mode: "search",
+    modeDescription: "",
     searchEntries: null,
     searchLoading: false,
     searchRequest: 0,
@@ -95,8 +49,20 @@ document.addEventListener("alpine:init", () => {
           input.addEventListener("input", () => this.search(form));
           input.addEventListener("change", () => this.search(form));
         }
+        this.updateModeDescription(form);
         this.search(form);
       });
+    },
+    updateModeDescription(form) {
+      this.modeDescription = this.mode === "ask"
+        ? form.dataset.searchAskHint
+        : form.dataset.searchSearchHint;
+    },
+    modeChanged() {
+      const form = this.$root.querySelector("form[data-search-api]");
+      if (!form) return;
+      this.updateModeDescription(form);
+      this.search(form);
     },
     preventSubmit(event) {
       event.preventDefault();
@@ -126,29 +92,67 @@ document.addEventListener("alpine:init", () => {
       return this.searchEntries;
     },
     async search(form) {
+      const engine = window.SoulMapSearch;
       const request = ++this.searchRequest;
       const input = form.querySelector("input[name=q]");
       const grid = this.$root.querySelector("#skill-grid");
-      if (!input || !grid) return;
-      const query = input.value;
+      const questionResults = this.$root.querySelector("#question-results");
+      if (!engine || !input || !grid || !questionResults) return;
+      const query = input.value.slice(0, engine.MAX_QUERY_LENGTH);
       const loading = form.querySelector("#skill-search-loading");
       if (loading) loading.hidden = false;
       grid.setAttribute("aria-busy", "true");
+      questionResults.setAttribute("aria-busy", "true");
       const entries = await this.loadSearchEntries(form);
       if (loading) loading.hidden = true;
       grid.setAttribute("aria-busy", "false");
-      if (request !== this.searchRequest || !entries) return;
+      questionResults.setAttribute("aria-busy", "false");
+      if (request !== this.searchRequest) return;
+      if (!entries) {
+        this.renderSearchError(form, grid, questionResults);
+        return;
+      }
 
+      if (this.mode === "ask") {
+        this.renderAskResults(engine.search(entries, query, { mode: "ask", limit: engine.MAX_QUESTION_RESULTS }), form, grid, questionResults);
+      } else {
+        this.renderSkillResults(engine.search(entries, query, { mode: "search", limit: engine.MAX_RESULTS }), grid, questionResults);
+      }
+      document.body.dispatchEvent(new CustomEvent("soulmap:search", {
+        detail: { mode: this.mode, query, count: this.mode === "ask" ? questionResults.querySelectorAll("article").length : grid.querySelectorAll(":scope > .skill-card:not([hidden])").length },
+      }));
+    },
+    renderSearchError(form, grid, questionResults) {
+      const message = document.createElement("p");
+      message.className = "empty-state search-error";
+      message.setAttribute("role", "alert");
+      message.textContent = form.dataset.searchError || "Search is temporarily unavailable.";
+      if (this.mode === "ask") {
+        grid.hidden = true;
+        questionResults.hidden = false;
+        questionResults.replaceChildren(message);
+        return;
+      }
+      questionResults.hidden = true;
+      grid.hidden = false;
+      for (const card of grid.querySelectorAll(":scope > .skill-card")) {
+        card.hidden = true;
+        card.setAttribute("aria-hidden", "true");
+      }
+      const existingError = grid.querySelector(":scope > .search-error");
+      if (existingError) existingError.remove();
+      grid.appendChild(message);
+    },
+    renderSkillResults(ranked, grid, questionResults) {
+      questionResults.hidden = true;
+      grid.hidden = false;
+      const existingError = grid.querySelector(":scope > .search-error");
+      if (existingError) existingError.remove();
       const cards = Array.from(grid.querySelectorAll(":scope > .skill-card"));
       const cardsBySlug = new Map(
         cards.map((card) => [card.querySelector(".code-pill")?.textContent?.trim(), card])
       );
-      const ranked = entries
-        .map((entry, index) => ({ entry, index, score: scoreSearchEntry(entry, query) }))
-        .filter((item) => item.score >= 0)
-        .sort((left, right) => right.score - left.score || left.index - right.index);
       const visibleSlugs = new Set(ranked.map((item) => item.entry.slug));
-
       for (const item of ranked) {
         const card = cardsBySlug.get(item.entry.slug);
         if (card) {
@@ -163,7 +167,6 @@ document.addEventListener("alpine:init", () => {
         card.hidden = !visible;
         card.setAttribute("aria-hidden", String(!visible));
       }
-
       const existingEmpty = grid.querySelector(":scope > .empty-state[data-client-search]");
       if (ranked.length === 0 && cards.length > 0) {
         const empty = existingEmpty || document.createElement("p");
@@ -175,6 +178,58 @@ document.addEventListener("alpine:init", () => {
       } else if (existingEmpty) {
         existingEmpty.remove();
       }
+    },
+    renderAskResults(ranked, form, grid, questionResults) {
+      grid.hidden = true;
+      questionResults.hidden = false;
+      questionResults.replaceChildren();
+      if (!ranked.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.setAttribute("role", "status");
+        empty.textContent = form.dataset.askEmpty || "No matching Skill scenario.";
+        questionResults.appendChild(empty);
+        return;
+      }
+      for (const result of ranked) {
+        const article = document.createElement("article");
+        article.className = "question-card";
+        const meta = document.createElement("p");
+        meta.className = "skill-card__meta";
+        meta.textContent = `${result.entry.group} · ${result.scenario.title}`;
+        const title = document.createElement("h2");
+        title.textContent = result.entry.title;
+        const when = document.createElement("p");
+        when.className = "muted";
+        when.textContent = result.scenario.when;
+        const label = document.createElement("p");
+        label.className = "question-label";
+        label.textContent = form.dataset.askResultLabel || "Starter question";
+        const question = document.createElement("blockquote");
+        question.textContent = result.scenario.question;
+        const actions = document.createElement("div");
+        actions.className = "skill-card__actions";
+        const useButton = document.createElement("button");
+        useButton.className = "button small";
+        useButton.type = "button";
+        useButton.textContent = form.dataset.askUseLabel || "Use this question";
+        useButton.addEventListener("click", () => this.useQuestion(result.scenario.question, form));
+        const skillLink = document.createElement("a");
+        skillLink.className = "link-button small secondary";
+        const skillRoot = form.dataset.skillRoot || "/skills";
+        skillLink.href = `${skillRoot.replace(/\/$/, "")}/${encodeURIComponent(result.entry.slug)}`;
+        skillLink.textContent = form.dataset.skillDetails || "View Skill";
+        actions.append(useButton, skillLink);
+        article.append(meta, title, when, label, question, actions);
+        questionResults.appendChild(article);
+      }
+    },
+    useQuestion(question, form) {
+      const input = form.querySelector("input[name=q]");
+      if (!input) return;
+      input.value = question;
+      input.focus();
+      this.search(form);
     },
     open(slug, trigger) {
       this.returnFocus = trigger || document.activeElement;
