@@ -15,11 +15,18 @@ def test_pages_workflow_builds_and_verifies_static_site() -> None:
         "--base-path",
         "scripts/verify_static_site.py",
         "actions/upload-artifact@v7",
+        "actions/cache@v6",
+        "hashFiles('pyproject.toml', 'uv.lock')",
+        "uv cache prune --ci",
     ):
         assert marker in content
 
     assert "dist/soulmap-ai" not in content
     assert "skills/" not in content
+    assert content.index("Restore uv cache") < content.index(
+        "Install locked development environment"
+    )
+    assert content.index("uv cache prune --ci") > content.index("verify_static_site.py")
 
 
 def test_pages_workflow_publishes_only_main_to_gh_pages() -> None:
@@ -39,8 +46,10 @@ def test_website_docs_describe_static_export_and_branch_boundary() -> None:
     for marker in (
         "--export-static",
         "--base-path",
+        "--incremental",
         "gh-pages",
         "static output",
         "never a source of SoulMap doctrine",
+        "deterministic read-only boundary",
     ):
         assert marker in content

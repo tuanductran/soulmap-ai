@@ -90,6 +90,8 @@ uv run soulmap web
 
 The local Python website defaults to `http://127.0.0.1:8765`. To export static files
 for GitHub Pages, use `uv run soulmap web --export-static --output site --base-path /soulmap-ai`.
+For repeated local edits, add `--incremental` to reuse a verified export when the web,
+public Skill, lockfile and exporter inputs are unchanged.
 See [docs/product/WEBSITE.md](docs/product/WEBSITE.md) for routes, responsive behavior,
 workflow boundaries, and its deliberate separation from the shipped AI artifacts.
 

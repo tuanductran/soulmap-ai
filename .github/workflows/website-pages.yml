@@ -50,6 +50,19 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Locate uv cache
+        id: uv-cache
+        shell: bash
+        run: echo "dir=$(uv cache dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore uv cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.uv-cache.outputs.dir }}
+          key: uv-${{ runner.os }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
+
       - name: Install locked development environment
         run: uv sync --locked --python "${PYTHON_VERSION}"
 
@@ -65,6 +78,10 @@ jobs:
           uv run python scripts/verify_static_site.py \
             "${STATIC_OUTPUT}" \
             --base-path "${SITE_BASE_PATH}"
+
+      - name: Prune uv cache for CI
+        if: always()
+        run: uv cache prune --ci
 
       - name: Upload static output for inspection
         uses: actions/upload-artifact@v7

@@ -134,6 +134,9 @@ To export and verify the website locally:
 ```bash
 uv run soulmap web --export-static --output site --base-path /soulmap-ai
 uv run python scripts/verify_static_site.py site --base-path /soulmap-ai
+
+# For repeated local edits, reuse the verified export when inputs are unchanged.
+uv run soulmap web --export-static --output site --base-path /soulmap-ai --incremental
 ```
 
 The `website-pages.yml` workflow repeats these checks on website changes. It publishes
