@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 from collections.abc import Callable
 from html import escape
 from pathlib import Path
@@ -16,7 +15,6 @@ from urllib.parse import parse_qs, quote, urlparse
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
-from soulmap.web.build import build_key, load_reusable_output, write_manifest
 from soulmap.web.catalog import (
     CATALOG,
     catalog_json,
@@ -25,6 +23,7 @@ from soulmap.web.catalog import (
     locale_fields,
     raw_markdown,
 )
+from soulmap.web.exporter import export_static as _export_static
 from soulmap.web.i18n import LOCALES as TEXT
 from soulmap.web.i18n import SUPPORTED_LOCALES, messages_json
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
@@ -961,38 +960,6 @@ def application(
     )
 
 
-def _normalise_base_path(base_path: str) -> str:
-    cleaned = base_path.strip()
-    if not cleaned or cleaned == "/":
-        return ""
-    return "/" + cleaned.strip("/")
-
-
-def _apply_base_path(content: str, base_path: str) -> str:
-    if not base_path:
-        return content
-    for attribute in (
-        "href",
-        "src",
-        "hx-get",
-        "action",
-        "data-search-api",
-        "data-skill-root",
-    ):
-        content = content.replace(f'{attribute}="/', f'{attribute}="{base_path}/')
-    return content
-
-
-def _write_page(
-    output: Path, route: str, page: str, written: list[Path], base_path: str
-) -> None:
-    destination = output / ("index.html" if route == "/" else route.strip("/"))
-    destination = destination if destination.suffix else destination / "index.html"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(_apply_base_path(page, base_path), encoding="utf-8")
-    written.append(destination)
-
-
 def export_static(
     output: Path,
     base_path: str = "",
@@ -1000,151 +967,20 @@ def export_static(
     incremental: bool = False,
     cache_dir: Path | None = None,
 ) -> list[Path]:
-    """Export public pages, APIs and bundles, optionally reusing a verified build."""
-    output = output.resolve()
-    normalised_base = _normalise_base_path(base_path)
-    build_cache = (
-        cache_dir or output.parent / f".{output.name}.soulmap-build"
-    ).resolve()
-    key = build_key(normalised_base)
-    if incremental:
-        reusable = load_reusable_output(build_cache, output, key)
-        if reusable is not None:
-            return reusable
-    if output.exists():
-        shutil.rmtree(output)
-    output.mkdir(parents=True)
-    written: list[Path] = []
-    pages = _pages()
-    for locale in SUPPORTED_LOCALES:
-        locale_prefix = "" if locale == "en" else f"/{locale}"
-        for route, (title, description, renderer) in pages.items():
-            page_route = f"{locale_prefix}{route if route != '/' else ''}" or "/"
-            _write_page(
-                output,
-                page_route,
-                _layout(title, description, route, renderer(locale), locale),
-                written,
-                normalised_base,
-            )
-    for entry in CATALOG:
-        for locale in SUPPORTED_LOCALES:
-            prefix = "" if locale == "en" else f"/{locale}"
-            _write_page(
-                output,
-                f"{prefix}/skills/{entry.slug}",
-                _layout(
-                    locale_fields(entry, locale)["title"],
-                    locale_fields(entry, locale)["summary"],
-                    f"/skills/{entry.slug}",
-                    _skill_page(entry.slug, locale),
-                    locale,
-                ),
-                written,
-                normalised_base,
-            )
-            partial = output / f"partials/skill/{entry.slug}.{locale}.html"
-            partial.parent.mkdir(parents=True, exist_ok=True)
-            partial.write_text(
-                _apply_base_path(
-                    _skill_detail_fragment(entry.slug, locale), normalised_base
-                ),
-                encoding="utf-8",
-            )
-            written.append(partial)
-    for locale in SUPPORTED_LOCALES:
-        grid_partial = output / (
-            "partials/skills-grid.html"
-            if locale == "en"
-            else f"{locale}/partials/skills-grid.html"
-        )
-        grid_partial.parent.mkdir(parents=True, exist_ok=True)
-        grid_partial.write_text(
-            _apply_base_path(_skill_grid_fragment(locale), normalised_base),
-            encoding="utf-8",
-        )
-        written.append(grid_partial)
-    api_dir = output / "api"
-    (api_dir / "raw").mkdir(parents=True, exist_ok=True)
-    (api_dir / "skills").mkdir(parents=True, exist_ok=True)
-    (api_dir / "skills.json").write_text(catalog_json(), encoding="utf-8")
-    (api_dir / "skills" / "search.json").write_text(
-        catalog_search_json(), encoding="utf-8"
+    """Export public pages through the isolated exporter module."""
+    return _export_static(
+        output,
+        base_path,
+        pages_factory=_pages,
+        page_layout=_layout,
+        skill_page_renderer=_skill_page,
+        skill_detail_renderer=_skill_detail_fragment,
+        skill_grid_renderer=_skill_grid_fragment,
+        static_css_reader=_read_static_css,
+        sitemap_routes=_sitemap_routes,
+        incremental=incremental,
+        cache_dir=cache_dir,
     )
-    written.extend([api_dir / "skills.json", api_dir / "skills" / "search.json"])
-    for locale in SUPPORTED_LOCALES:
-        if locale == "en":
-            continue
-        locale_api_dir = output / locale / "api" / "skills"
-        locale_api_dir.mkdir(parents=True, exist_ok=True)
-        locale_api_json = output / locale / "api" / "skills.json"
-        locale_api_json.write_text(catalog_json(locale), encoding="utf-8")
-        locale_search_json = locale_api_dir / "search.json"
-        locale_search_json.write_text(catalog_search_json(locale), encoding="utf-8")
-        written.extend([locale_api_json, locale_search_json])
-    for entry in CATALOG:
-        raw_path = api_dir / "raw" / f"{entry.slug}.md"
-        raw_path.write_text(raw_markdown(entry), encoding="utf-8")
-        written.append(raw_path)
-        data_path = api_dir / "skills" / f"{entry.slug}.json"
-        data_path.write_text(
-            json.dumps(entry.public_dict(), ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
-        written.append(data_path)
-        prompt_dir = api_dir / "skills" / entry.slug
-        prompt_dir.mkdir(parents=True, exist_ok=True)
-        for prompt_locale in SUPPORTED_LOCALES:
-            prompt_path = prompt_dir / (
-                "prompts.json"
-                if prompt_locale == "en"
-                else f"prompts.{prompt_locale}.json"
-            )
-            prompt_path.write_text(
-                json.dumps(
-                    {
-                        "version": 1,
-                        "locale": prompt_locale,
-                        "slug": entry.slug,
-                        "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
-                        "scenarios": [
-                            scenario.localized(prompt_locale)
-                            for scenario in scenarios_for(entry.slug)
-                        ],
-                    },
-                    ensure_ascii=False,
-                    indent=2,
-                ),
-                encoding="utf-8",
-            )
-            written.append(prompt_path)
-    (output / "static").mkdir()
-    (output / "static" / "site.css").write_text(_read_static_css(), encoding="utf-8")
-    static_dir = Path(__file__).with_name("static")
-    for asset_name in ("site.js", "search.js"):
-        (output / "static" / asset_name).write_text(
-            (static_dir / asset_name).read_text(encoding="utf-8"),
-            encoding="utf-8",
-        )
-    favicon_source = Path(__file__).with_name("static") / "favicon.ico"
-    shutil.copyfile(favicon_source, output / "favicon.ico")
-    (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
-    (output / "sitemap.xml").write_text(
-        sitemap_xml(PUBLIC_SITE_URL, _sitemap_routes()), encoding="utf-8"
-    )
-    written.extend(
-        [
-            output / "static" / "site.css",
-            output / "static" / "site.js",
-            output / "static" / "search.js",
-            output / "favicon.ico",
-            output / "robots.txt",
-            output / "sitemap.xml",
-        ]
-    )
-    if incremental:
-        write_manifest(build_cache, output, key, written)
-    return written
 
 
 def serve(host: str = HOST, port: int = PORT) -> None:

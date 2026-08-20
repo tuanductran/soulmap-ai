@@ -5,6 +5,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 concurrency:
   group: release
@@ -34,6 +36,7 @@ jobs:
           uv run soulmap check-links --root .
           uv run soulmap check-case --root .
           uv run soulmap audit-knowledge
+          uv run soulmap catalog-parity
           uv run soulmap lint --skip-tests
           uv run python scripts/pytest_diagnostics.py
           uv run soulmap eval-groups
@@ -68,6 +71,14 @@ jobs:
 
       - name: Verify extracted artifact boundaries
         run: uv run python scripts/verify_extracted_artifacts.py
+
+      - name: Generate release artifact provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json
 
       - name: Push bump commit + tag
         run: |

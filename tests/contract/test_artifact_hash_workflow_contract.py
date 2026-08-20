@@ -45,4 +45,15 @@ def test_release_workflow_verifies_before_uploading_library_manifest() -> None:
     assert VERIFY_COMMAND in content
     assert EXTRACT_COMMAND in content
     assert MANIFEST_PATH in content
+    assert "id-token: write" in content
+    assert "attestations: write" in content
+    assert "uses: actions/attest@v4" in content
+    assert "dist/soulmap-ai.zip" in content
+    assert "dist/soulmap-ai.skill" in content
     _assert_verify_before_final_manifest_upload(content)
+    _assert_order(
+        content,
+        EXTRACT_COMMAND,
+        "uses: actions/attest@v4",
+        "name: Push bump commit + tag",
+    )

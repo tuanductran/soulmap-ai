@@ -24,6 +24,7 @@ def test_release_docs_describe_all_current_artifact_steps() -> None:
         assert command in tester_text
         assert command in workflow_text
 
+    assert "uv run soulmap catalog-parity" in workflow_text
     assert "versioned Library manifest" in dev_text
     assert "Verifying artifact SHA-256 integrity" in dev_text
     assert "Verifying extracted ZIP and `.skill` boundaries" in dev_text

@@ -10,6 +10,16 @@ The source catalog is [`../../library/catalog.json`](../../library/catalog.json)
 
 The catalog has six entries: Brand, Core Frameworks, Safety Guardrails, Meta Guidance, Spiritual Layer, and Voice System. Each entry points to one directory under `skills/`, while [`SKILL.md`](../../SKILL.md) and [`AGENTS.md`](../../AGENTS.md) remain the governing root documents.
 
+## Catalog parity
+
+Before building or releasing, verify that the public web catalog, Library catalog and checked-in Skill directories agree:
+
+```bash
+uv run soulmap catalog-parity
+```
+
+This check validates public slugs, Library entry paths, featured files, Markdown presence and sanitized raw bundles. It does not publish the catalog or expose repository-only paths. A mismatch is a source maintenance failure and should be fixed before generating release artifacts.
+
 ## Generate a release manifest
 
 Run the following command from any directory inside the repository:
@@ -55,6 +65,8 @@ https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}
 ```
 
 A release reviewer should verify that the manifest version equals the tag, both artifact paths exist, the recorded sizes match the downloaded files, and the SHA-256 values recompute successfully. The release workflow runs `scripts/verify_artifact_hashes.py` before upload. Any mismatch is a release failure, not a reason to edit the manifest manually.
+
+The release workflow also requests GitHub artifact provenance for the ZIP, `.skill`, and Library manifest using `actions/attest@v4`. Consumers can verify a published artifact with `gh attestation verify <artifact> -R tuanductran/soulmap-ai`. The attestation links the artifact to the repository workflow and commit; it is provenance evidence, not a substitute for reviewing the artifact contents or SHA-256 manifest.
 
 ## Non-goals
 
