@@ -355,7 +355,7 @@ def _about(locale: str) -> str:
 
 def _faq(locale: str) -> str:
     faq_items = "".join(
-        f'<details class="faq-item"><summary>{_text(locale, question_key)}</summary><div class="faq-answer"><p>{_text(locale, answer_key)}</p></div></details>'
+        f'<details class="faq-item"><summary>{_text(locale, question_key)}<span class="faq-toggle" aria-hidden="true"><svg class="icon" viewBox="0 0 20 20" focusable="false"><path d="M10 3v14M3 10h14"/></svg></span></summary><div class="faq-answer"><p>{_text(locale, answer_key)}</p></div></details>'
         for question_key, answer_key in (
             ("faq_q_1", "faq_a_1"),
             ("faq_q_2", "faq_a_2"),

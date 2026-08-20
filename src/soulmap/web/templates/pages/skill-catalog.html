@@ -57,7 +57,9 @@
     <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
     <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug"
       x-transition.opacity.scale.origin.top.duration.200ms>
-      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">×</button>
+      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">
+        <svg class="icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16"/></svg>
+      </button>
       <h2 class="sr-only" id="skill-modal-title">$modal_title</h2>
       <p id="skill-loading" class="htmx-indicator modal-loading" role="status">$loading_label</p>
       <div id="skill-modal-content"><p>$details_label</p></div>

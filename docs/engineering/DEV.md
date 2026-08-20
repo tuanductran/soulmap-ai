@@ -109,6 +109,11 @@ autolinks, images, and fenced-code boundaries more reliable than a regex-only sc
 keeping SoulMap-specific rules (unsafe schemes, repo-root boundaries, anchor policy,
 accessibility, and canonical wording) in local code. It is not a runtime HTML renderer.
 
+`Werkzeug` is a dev-only WSGI test utility used by
+`tests/unit/test_web_server.py` to exercise the public JSON route through a real
+request/response client. It is deliberately not imported by the website runtime,
+so the stdlib WSGI server and GitHub Pages static export remain dependency-free.
+
 `mdformat`, `python-frontmatter`, Pydantic, `jsonschema`, and HTML sanitizers remain
 evaluated alternatives rather than dependencies: each needs a separate compatibility
 contract or a concrete consumer before it should be added. See

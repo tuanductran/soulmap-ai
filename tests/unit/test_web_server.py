@@ -7,6 +7,8 @@ from wsgiref.types import StartResponse
 from wsgiref.util import setup_testing_defaults
 
 import pytest
+from werkzeug.test import Client
+from werkzeug.wrappers import Response
 
 from soulmap.cli import _command_table
 from soulmap.web.catalog import CATALOG
@@ -31,6 +33,19 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
 
     body = b"".join(application(environ, cast(StartResponse, capture)))
     return captured, body
+
+
+def test_werkzeug_client_exercises_json_route() -> None:
+    response = Client(application, Response).get(
+        "/api/skills/search.json?q=bu%C3%B2n&limit=6"
+    )
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/json"
+    payload = response.get_json()
+    assert isinstance(payload, dict)
+    assert payload["locale"] == "en"
+    assert isinstance(payload["results"], list)
 
 
 @pytest.mark.parametrize(
@@ -165,6 +180,9 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     assert 'role="menuitem" href="/faq" lang="en"' in html
     assert 'role="menuitem" href="/vi/faq" lang="vi"' in html
     assert 'role="menuitem" href="/ko/faq" lang="ko" aria-current="page"' in html
+    assert '<svg class="icon icon-mark" viewBox="0 0 24 24"' in html
+    assert '<svg class="icon locale-chevron" viewBox="0 0 16 16"' in html
+    assert 'class="faq-toggle" aria-hidden="true"' in html
     assert html.index('<div class="locale-switcher"') < html.index(
         '<nav class="nav-links"'
     )
@@ -326,6 +344,10 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'x-on:submit="preventSubmit($event)"' in html
     assert 'data-skill-root="/skills"' in html
     assert 'class="section tinted catalog-section"' in html
+    assert 'class="modal-close"' in html
+    _, modal_body = _request("/partials/skill/meta.en.html", query="lang=en")
+    modal_html = modal_body.decode("utf-8")
+    assert 'class="icon provider-icon"' in modal_html
     assert 'data-search-api="/api/skills/search.json"' in html
     assert 'data-search-error="Search is temporarily unavailable.' in html
     assert 'aria-controls="search-panel ask-panel"' in html

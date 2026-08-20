@@ -66,6 +66,7 @@ dev = [
   "commitizen>=4.17.0",
   "deptry>=0.25.1",
   "vulture>=2.16",
+  "werkzeug>=3.1.8",
 ]
 
 [tool.ruff]
