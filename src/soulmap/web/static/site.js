@@ -1,4 +1,14 @@
 document.addEventListener("alpine:init", () => {
+  Alpine.data("languageMenu", () => ({
+    open: false,
+    toggle() {
+      this.open = !this.open;
+    },
+    close() {
+      this.open = false;
+    },
+  }));
+
   Alpine.data("clipboard", () => ({
     copied: false,
     copyFailed: false,

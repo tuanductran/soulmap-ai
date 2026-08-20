@@ -8,9 +8,18 @@ import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
+from soulmap.web.i18n import SUPPORTED_LOCALES
 from soulmap.web.prompt_pack import scenarios_for
 
 PUBLIC_RAW_BASE_URL = "https://tuanductran.github.io/soulmap-ai"
+
+
+def _content_locale(locale: str) -> str:
+    return "vi" if locale == "vi" else "en"
+
+
+def _response_locale(locale: str) -> str:
+    return locale if locale in SUPPORTED_LOCALES else "en"
 
 
 @dataclass(frozen=True)
@@ -179,7 +188,7 @@ def _search_tokens(value: str) -> tuple[str, ...]:
 def _public_entry_dict(
     entry: SkillEntry, locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL
 ) -> dict[str, object]:
-    language = "vi" if locale == "vi" else "en"
+    language = _content_locale(locale)
     fields = locale_fields(entry, language)
     return {
         "slug": entry.slug,
@@ -199,7 +208,7 @@ def search_catalog(
     locale: str = "en", query: str = "", group: str = "", limit: int = 50
 ) -> list[dict[str, object]]:
     """Search localized Skill metadata with deterministic relevance ranking."""
-    language = "vi" if locale == "vi" else "en"
+    language = _content_locale(locale)
     query_normalised = _normalise_search_text(query)
     query_tokens = _search_tokens(query)
     group_normalised = _normalise_search_text(group)
@@ -254,14 +263,14 @@ def catalog_search_json(
     locale: str = "en", query: str = "", group: str = "", limit: int = 50
 ) -> str:
     """Serialize the public, localized advanced-search response."""
-    language = "vi" if locale == "vi" else "en"
+    language = _content_locale(locale)
     bounded_limit = max(1, min(limit, 100))
     all_results = search_catalog(language, query, group, 100)
     results = all_results[:bounded_limit]
     return json.dumps(
         {
             "version": 1,
-            "locale": language,
+            "locale": _response_locale(locale),
             "query": query,
             "group": group,
             "limit": bounded_limit,
@@ -341,10 +350,10 @@ def raw_markdown(entry: SkillEntry) -> str:
 
 def catalog_json(locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL) -> str:
     """Serialize localized public catalog metadata without private paths."""
-    language = "vi" if locale == "vi" else "en"
+    language = _content_locale(locale)
     entries = [_public_entry_dict(entry, language, raw_base_url) for entry in CATALOG]
     return json.dumps(
-        {"version": 1, "locale": language, "skills": entries},
+        {"version": 1, "locale": _response_locale(locale), "skills": entries},
         ensure_ascii=False,
         indent=2,
     )
@@ -352,7 +361,7 @@ def catalog_json(locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL) ->
 
 def locale_fields(entry: SkillEntry, locale: str) -> dict[str, str]:
     """Return localized catalog copy with English fallback."""
-    language = "vi" if locale == "vi" else "en"
+    language = _content_locale(locale)
     return {
         "group": entry.group if language == "en" else entry.group_vi,
         "title": getattr(entry, f"title_{language}"),

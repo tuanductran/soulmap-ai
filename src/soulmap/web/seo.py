@@ -6,26 +6,35 @@ import json
 from html import escape
 from typing import Any
 
+from soulmap.web.i18n import SUPPORTED_LOCALES
+
+_LOCALE_PREFIXES = {
+    locale: "" if locale == "en" else f"/{locale}" for locale in SUPPORTED_LOCALES
+}
+_OG_LOCALES = {"en": "en_US", "vi": "vi_VN", "ko": "ko_KR"}
+
 
 def public_url(site_url: str, route: str, locale: str) -> str:
     """Return an absolute canonical public URL for a localized route."""
     normalized = route if route.startswith("/") else f"/{route}"
-    prefix = "/vi" if locale == "vi" else ""
+    prefix = _LOCALE_PREFIXES.get(locale, "")
     suffix = "/" if normalized == "/" else f"{normalized}/"
     return f"{site_url.rstrip('/')}{prefix}{suffix}"
 
 
 def alternate_links(site_url: str, route: str) -> str:
-    """Render reciprocal EN/VI hreflang links plus an English x-default."""
-    english = public_url(site_url, route, "en")
-    vietnamese = public_url(site_url, route, "vi")
-    return "\n".join(
-        (
-            f'<link rel="alternate" hreflang="en" href="{escape(english, quote=True)}">',
-            f'<link rel="alternate" hreflang="vi" href="{escape(vietnamese, quote=True)}">',
-            f'<link rel="alternate" hreflang="x-default" href="{escape(english, quote=True)}">',
-        )
+    """Render reciprocal locale hreflang links plus an English x-default."""
+    alternates = {
+        locale: public_url(site_url, route, locale) for locale in SUPPORTED_LOCALES
+    }
+    links = [
+        f'<link rel="alternate" hreflang="{locale}" href="{escape(url, quote=True)}">'
+        for locale, url in alternates.items()
+    ]
+    links.append(
+        f'<link rel="alternate" hreflang="x-default" href="{escape(alternates["en"], quote=True)}">'
     )
+    return "\n".join(links)
 
 
 def _safe_json(value: Any) -> str:
@@ -124,8 +133,10 @@ def metadata(
         "og_title": escaped_title,
         "og_description": escaped_description,
         "og_url": escape(canonical, quote=True),
-        "og_locale": "vi_VN" if locale == "vi" else "en_US",
-        "og_locale_alternate": "en_US" if locale == "vi" else "vi_VN",
+        "og_locale": _OG_LOCALES.get(locale, _OG_LOCALES["en"]),
+        "og_locale_alternate": ", ".join(
+            _OG_LOCALES[other] for other in SUPPORTED_LOCALES if other != locale
+        ),
         "json_ld": json_ld(
             site_url=site_url,
             repository_url=repository_url,
@@ -139,15 +150,15 @@ def metadata(
 
 
 def sitemap_xml(site_url: str, routes: list[str]) -> str:
-    """Render a small XML sitemap with reciprocal EN/VI alternate links."""
+    """Render a small XML sitemap with reciprocal locale alternate links."""
     from xml.sax.saxutils import escape as xml_escape
 
     entries: list[str] = []
     for route in routes:
         alternates = {
-            "en": public_url(site_url, route, "en"),
-            "vi": public_url(site_url, route, "vi"),
+            locale: public_url(site_url, route, locale) for locale in SUPPORTED_LOCALES
         }
+
         for _locale, canonical in alternates.items():
             links = "".join(
                 f'<xhtml:link rel="alternate" hreflang="{language}" href="{xml_escape(url)}" />'

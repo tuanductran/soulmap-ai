@@ -6,9 +6,16 @@
     </a>
     <nav class="nav-links" aria-label="$primary_nav_label">
       $nav_links
-      <span class="locale-switcher" aria-label="$language_label">
-        <a href="$locale_href" lang="$other_locale">$other_locale_upper</a>
-      </span>
+      <div class="locale-switcher" x-data="languageMenu" x-on:keydown.escape="close" x-on:click.outside="close">
+        <button class="locale-trigger" type="button" x-on:click="toggle" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
+          <span>$language_label</span>
+          <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
+          <span class="locale-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="locale-menu" id="language-menu" x-show="open" x-cloak role="menu" aria-label="$language_label">
+          $locale_options
+        </div>
+      </div>
     </nav>
   </div>
 </header>
