@@ -11,7 +11,7 @@ import json
 from collections.abc import Callable
 from html import escape
 from pathlib import Path
-from urllib.parse import parse_qs, quote, urlparse
+from urllib.parse import parse_qs, quote
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
@@ -23,72 +23,36 @@ from soulmap.web.catalog import (
     locale_fields,
     raw_markdown,
 )
+from soulmap.web.config import (
+    ALPINE_SRI,
+    ALPINE_URL,
+    HOST,
+    HTMX_SRI,
+    HTMX_URL,
+    INTER_CSS_URL,
+    PORT,
+    PUBLIC_SITE_URL,
+    RELEASE_URL,
+    REPOSITORY_URL,
+    SITE_NAME,
+)
 from soulmap.web.exporter import export_static as _export_static
-from soulmap.web.i18n import LOCALES as TEXT
+from soulmap.web.http import (
+    _nav_path,
+    _normalise_request_path,
+    _resource_hints,
+    _response,
+    _text,
+    tr,
+)
 from soulmap.web.i18n import SUPPORTED_LOCALES, messages_json
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
 from soulmap.web.seo import metadata, robots_txt, sitemap_xml
 from soulmap.web.templates import render_template
 
-HOST = "127.0.0.1"
-PORT = 8765
-SITE_NAME = "SoulMap AI"
-RELEASE_URL = "https://github.com/tuanductran/soulmap-ai/releases/latest"
-REPOSITORY_URL = "https://github.com/tuanductran/soulmap-ai"
-PUBLIC_SITE_URL = "https://tuanductran.github.io/soulmap-ai"
-HTMX_URL = "https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
-ALPINE_URL = "https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.16.2/dist/cdn.min.js"
-INTER_CSS_URL = "https://rsms.me/inter/inter.css"
-HTMX_SRI = "sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
-ALPINE_SRI = "sha384-V/6+qWbzTJSzEweFWozPRF8In+k5cIL398rKMOn3YTJwFQAubV91vSnII3clycgX"
-
 
 def _read_static_css() -> str:
     return (Path(__file__).with_name("static") / "site.css").read_text(encoding="utf-8")
-
-
-def _origin(url: str) -> str | None:
-    parsed = urlparse(url)
-    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-        return None
-    return f"{parsed.scheme}://{parsed.netloc}/"
-
-
-def _resource_hints() -> str:
-    """Generate conservative, deduplicated resource hints from critical URLs."""
-    external_urls = (INTER_CSS_URL, HTMX_URL, ALPINE_URL)
-    origins = tuple(
-        dict.fromkeys(origin for url in external_urls if (origin := _origin(url)))
-    )
-    critical_origin = _origin(INTER_CSS_URL)
-    hints: list[str] = []
-    if critical_origin:
-        hints.append(
-            f'<link rel="preconnect" href="{escape(critical_origin, quote=True)}">'
-        )
-    hints.extend(
-        f'<link rel="dns-prefetch" href="{escape(origin, quote=True)}">'
-        for origin in origins
-    )
-    hints.append(
-        f'<link rel="preload" href="{escape(INTER_CSS_URL, quote=True)}" '
-        'as="style" type="text/css">'
-    )
-    return "\n".join(hints)
-
-
-def tr(locale: str, key: str) -> str:
-    return TEXT.get(locale, TEXT["en"]).get(key, TEXT["en"].get(key, key))
-
-
-def _nav_path(route: str, locale: str) -> str:
-    if locale == "en":
-        return route or "/"
-    return f"/{locale}{route if route != '/' else ''}"
-
-
-def _text(locale: str, key: str) -> str:
-    return escape(tr(locale, key))
 
 
 _SEO_COPY_KEYS: dict[str, tuple[str, str]] = {
@@ -632,41 +596,6 @@ def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
             _skill_catalog,
         ),
     }
-
-
-def _response(
-    start_response: StartResponse,
-    status: str,
-    content_type: str,
-    body: str | bytes,
-    extra_headers: list[tuple[str, str]] | None = None,
-) -> list[bytes]:
-    payload = body if isinstance(body, bytes) else body.encode("utf-8")
-    headers = [
-        ("Content-Type", f"{content_type}; charset=utf-8"),
-        ("Content-Length", str(len(payload))),
-        ("X-Content-Type-Options", "nosniff"),
-        (
-            "Content-Security-Policy",
-            "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://rsms.me; font-src 'self' https://rsms.me; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; object-src 'none'",
-        ),
-        ("Permissions-Policy", "camera=(), microphone=(), geolocation=()"),
-        ("Referrer-Policy", "strict-origin-when-cross-origin"),
-    ]
-    if extra_headers:
-        headers.extend(extra_headers)
-    start_response(status, headers)
-    return [payload]
-
-
-def _normalise_request_path(path: str) -> tuple[str, str]:
-    normal = "/" + path.strip("/") if path.strip("/") else "/"
-    parts = normal.strip("/").split("/") if normal != "/" else []
-    if parts and parts[0] in SUPPORTED_LOCALES:
-        locale = parts.pop(0)
-        route = "/" + "/".join(parts) if parts else "/"
-        return route, locale
-    return normal, "en"
 
 
 def application(
