@@ -1,7 +1,7 @@
 (() => {
   const MAX_QUERY_LENGTH = 200;
   const MAX_RESULTS = 100;
-  const MAX_QUESTION_RESULTS = 12;
+  const MAX_QUESTION_RESULTS = 6;
   const SEARCH_FIELDS = ["slug", "group", "title", "summary", "use_when", "best_for", "boundary"];
   const SCENARIO_FIELDS = ["title", "when", "question"];
   const STOP_WORDS = new Set(["a", "an", "am", "and", "are", "can", "do", "for", "help", "i", "is", "it", "me", "my", "of", "the", "to", "what", "when", "with", "you", "toi", "minh", "la", "va", "cho", "cua", "mot", "nhung"]);
@@ -119,7 +119,10 @@
       .flatMap((result) => {
         const scenarios = result.matched_scenarios.length
           ? result.matched_scenarios
-          : (result.entry.prompt_scenarios || []).map((scenario, index) => ({ ...scenario, score: 0, matched_fields: [], index }));
+          : (normalise(query)
+            ? (result.entry.prompt_scenarios || []).slice(0, 1)
+            : (result.entry.prompt_scenarios || [])
+          ).map((scenario, index) => ({ ...scenario, score: 0, matched_fields: [], index }));
         return scenarios.map((scenario) => ({
           ...result,
           scenario,
