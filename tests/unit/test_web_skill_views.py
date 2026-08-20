@@ -19,7 +19,9 @@ from soulmap.web.skill_views import (
 
 @pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry.slug)
 @pytest.mark.parametrize("locale", SUPPORTED_LOCALES)
-def test_skill_detail_keeps_localized_prompt_source_contract(entry: object, locale: str) -> None:
+def test_skill_detail_keeps_localized_prompt_source_contract(
+    entry: object, locale: str
+) -> None:
     slug = entry.slug  # type: ignore[attr-defined]
     html = _skill_detail_fragment(slug, locale)
 
