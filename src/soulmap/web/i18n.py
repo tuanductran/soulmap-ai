@@ -137,7 +137,6 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "catalog_lede": "SoulMap is a set of complementary layers. Start with orchestration, add a "
         "framework when the pattern is clear, and let safety and independence stay "
         "in the room.",
-        "catalog_count": "{count} groups · raw bundles available",
         "search_label": "Find a Skill or question",
         "search_query_label": "Search the Skill catalog",
         "search_query_placeholder": "Search Skills by use case, group, boundary, or question…",
@@ -398,7 +397,6 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "catalog_h1": "Chọn lớp phù hợp với khoảnh khắc này.",
         "catalog_lede": "SoulMap là một tập hợp các lớp bổ trợ. Bắt đầu từ lớp điều phối, thêm "
         "khung phù hợp khi mô thức đã rõ, và để an toàn cùng tính độc lập luôn hiện diện.",
-        "catalog_count": "{count} nhóm · có bundle Markdown gốc",
         "search_label": "Tìm Skill hoặc câu hỏi",
         "search_query_label": "Tìm trong danh mục Skills",
         "search_query_placeholder": "Tìm Skills theo trường hợp sử dụng, nhóm, ranh giới hoặc câu hỏi…",
