@@ -223,7 +223,7 @@ def test_faq_and_privacy_pages_use_public_i18n_content() -> None:
     _, privacy_body = _request("/vi/privacy")
     privacy = privacy_body.decode("utf-8")
     assert '<html lang="vi">' in privacy
-    assert "Thông báo này bao phủ điều gì" in privacy
+    assert "Thông báo này áp dụng cho những gì" in privacy
     assert "Trang web hiện không có tạo tài khoản" in privacy
     assert privacy.count('<h2 class="card-title">') == 6
 

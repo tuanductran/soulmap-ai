@@ -111,9 +111,11 @@ def _skill_cards(locale: str, query: str = "") -> str:
             continue
         detail_href = _nav_path("/skills/" + entry.slug, locale)
         partial_href = f"/partials/skill/{entry.slug}.{locale}.html?lang={locale}"
+        skill_slug = escape(entry.slug, quote=True)
+        skill_id_label = escape(_text(locale, "skill_id_label"), quote=True)
         cards.append(
-            f'<article class="skill-card" data-search="{escape(search_text)}">'
-            f'<div class="skill-card__meta"><span>{escape(fields["group"])}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
+            f'<article class="skill-card" data-search="{escape(search_text)}" data-skill-slug="{skill_slug}">'
+            f'<div class="skill-card__meta"><span>{escape(fields["group"])}</span><span class="code-pill" data-skill-slug="{skill_slug}" aria-label="{skill_id_label}: {skill_slug}">{skill_slug}</span></div>'
             f'<div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>'
             f'<div class="skill-card__actions"><a class="button small" href="{escape(detail_href, quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="{escape(partial_href, quote=True)}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a></div>'
             "</article>"

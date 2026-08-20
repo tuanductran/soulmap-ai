@@ -61,6 +61,19 @@ def test_skill_catalog_preserves_locale_aware_search_contract(locale: str) -> No
     assert "mirror" in html.lower()
 
 
+@pytest.mark.parametrize(
+    ("locale", "skill_id_label"),
+    [("en", "Skill ID"), ("vi", "Mã Skill"), ("ko", "Skill 식별자")],
+)
+def test_skill_cards_expose_localized_skill_id_accessible_labels(
+    locale: str, skill_id_label: str
+) -> None:
+    html = _skill_catalog(locale)
+
+    assert f'aria-label="{skill_id_label}: meta"' in html
+    assert 'data-skill-slug="meta"' in html
+
+
 @pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry.slug)
 def test_skill_page_has_canonical_catalog_link(entry: object) -> None:
     slug = entry.slug  # type: ignore[attr-defined]
