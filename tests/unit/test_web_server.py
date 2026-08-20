@@ -321,6 +321,35 @@ def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
     assert [result["slug"] for result in group_payload["results"]] == ["safety"]
 
 
+def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
+    _, html_body = _request("/vi/skills")
+    html = html_body.decode("utf-8")
+    assert 'data-ask-intro="Chế độ Hỏi giúp bạn chọn một Skill công khai' in html
+    assert 'data-ask-result-label="Câu hỏi mở đầu"' in html
+    assert 'data-ask-use-label="Dùng câu hỏi này"' in html
+    assert 'id="question-results"' in html
+
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "prompt_scenarios" in search_js
+    assert "document" not in search_js
+    assert "innerHTML" not in search_js
+
+    _, site_body = _request("/static/site.js")
+    site_js = site_body.decode("utf-8")
+    assert "renderAskResults" in site_js
+    assert "document.createElement" in site_js
+    assert "innerHTML" not in site_js
+
+    payload = json.loads(_request("/vi/api/skills/search.json")[1])
+    assert any(result["prompt_scenarios"] for result in payload["results"])
+    assert all(
+        "answer" not in scenario
+        for result in payload["results"]
+        for scenario in result["prompt_scenarios"]
+    )
+
+
 def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -> None:
     _, body = _request("/vi/skills")
     html = body.decode("utf-8")
