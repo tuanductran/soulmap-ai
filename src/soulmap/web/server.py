@@ -12,7 +12,7 @@ import shutil
 from collections.abc import Callable
 from html import escape
 from pathlib import Path
-from urllib.parse import parse_qs, quote
+from urllib.parse import parse_qs, quote, urlparse
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
@@ -38,12 +38,43 @@ REPOSITORY_URL = "https://github.com/tuanductran/soulmap-ai"
 PUBLIC_SITE_URL = "https://tuanductran.github.io/soulmap-ai"
 HTMX_URL = "https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
 ALPINE_URL = "https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.16.2/dist/cdn.min.js"
+INTER_CSS_URL = "https://rsms.me/inter/inter.css"
 HTMX_SRI = "sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
 ALPINE_SRI = "sha384-V/6+qWbzTJSzEweFWozPRF8In+k5cIL398rKMOn3YTJwFQAubV91vSnII3clycgX"
 
 
 def _read_static_css() -> str:
     return (Path(__file__).with_name("static") / "site.css").read_text(encoding="utf-8")
+
+
+def _origin(url: str) -> str | None:
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    return f"{parsed.scheme}://{parsed.netloc}/"
+
+
+def _resource_hints() -> str:
+    """Generate conservative, deduplicated resource hints from critical URLs."""
+    external_urls = (INTER_CSS_URL, HTMX_URL, ALPINE_URL)
+    origins = tuple(
+        dict.fromkeys(origin for url in external_urls if (origin := _origin(url)))
+    )
+    critical_origin = _origin(INTER_CSS_URL)
+    hints: list[str] = []
+    if critical_origin:
+        hints.append(
+            f'<link rel="preconnect" href="{escape(critical_origin, quote=True)}">'
+        )
+    hints.extend(
+        f'<link rel="dns-prefetch" href="{escape(origin, quote=True)}">'
+        for origin in origins
+    )
+    hints.append(
+        f'<link rel="preload" href="{escape(INTER_CSS_URL, quote=True)}" '
+        'as="style" type="text/css">'
+    )
+    return "\n".join(hints)
 
 
 def tr(locale: str, key: str) -> str:
@@ -157,6 +188,8 @@ def _layout(title: str, description: str, path: str, content: str, locale: str) 
         og_locale=seo["og_locale"],
         og_locale_alternate=seo["og_locale_alternate"],
         json_ld=seo["json_ld"],
+        resource_hints=_resource_hints(),
+        inter_css_url=escape(INTER_CSS_URL, quote=True),
         htmx_url=escape(HTMX_URL, quote=True),
         htmx_sri=escape(HTMX_SRI, quote=True),
         alpine_url=escape(ALPINE_URL, quote=True),
