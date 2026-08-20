@@ -43,10 +43,10 @@ button { cursor: pointer; }
 .nav { display: flex; align-items: center; justify-content: space-between; min-height: 76px; gap: 1rem; }
 .brand { display: inline-flex; align-items: center; min-height: 44px; gap: .7rem; text-decoration: none; font-weight: 700; letter-spacing: -.02em; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: var(--teal-dark); background: rgba(47,111,107,.13); font-size: 1.2rem; }
-.nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
+.nav-links { display: flex; flex: 1 1 auto; min-width: 0; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
 .nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem .75rem; color: var(--muted); font-size: .93rem; text-decoration: none; border-radius: 999px; }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--teal-dark); background: rgba(47,111,107,.09); }
-.locale-switcher { position: relative; display: inline-flex; align-items: center; gap: .25rem; padding-left: .35rem; border-left: 1px solid var(--line); }
+.locale-switcher { position: relative; display: inline-flex; flex: 0 0 auto; align-items: center; gap: .25rem; padding-left: .35rem; border-left: 1px solid var(--line); }
 .locale-trigger { display: inline-flex; align-items: center; gap: .4rem; min-height: 36px; padding: .55rem .65rem; border: 0; border-radius: 999px; color: var(--muted); background: transparent; font-size: .78rem; }
 .locale-trigger:hover, .locale-trigger[aria-expanded="true"] { color: var(--teal-dark); background: rgba(47,111,107,.09); }
 .locale-chevron { font-size: .9rem; line-height: 1; }
@@ -179,7 +179,8 @@ body.modal-open { overflow: hidden; }
 @media (max-width: 640px) {
   .container { width: min(100% - 28px, 560px); }
   .nav { align-items: flex-start; flex-direction: column; padding: .8rem 0; }
-  .nav-links { justify-content: flex-start; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .25rem; }
+  .nav-links { flex: 0 0 auto; justify-content: flex-start; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .25rem; }
+  .locale-switcher { align-self: flex-start; }
   .nav-links a { flex: 0 0 auto; }
   .locale-switcher { border-left: 0; padding-left: 0; }
   .locale-menu { right: auto; left: 0; }
