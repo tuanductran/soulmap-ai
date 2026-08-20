@@ -18,11 +18,14 @@ To export a static copy for GitHub Pages or another static host:
 
 ```bash
 uv run soulmap web --export-static --output site --base-path /soulmap-ai
+
+# Reuse a verified local export when web/Skill sources are unchanged
+uv run soulmap web --export-static --output site --base-path /soulmap-ai --incremental
 ```
 
-The exporter creates the English and Vietnamese page variants, Skill detail pages, modal partials, catalog JSON, raw Markdown bundles, `static/site.css`, the small `static/site.js` progressive-enhancement layer, and `robots.txt`. The `--base-path` value is optional for a custom domain and should match the repository path when using a GitHub Pages project site.
+The exporter creates the English, Vietnamese and Korean page variants, Skill detail pages, modal partials, catalog JSON, raw Markdown bundles, `static/site.css`, the small `static/site.js` and `static/search.js` progressive-enhancement layers, and `robots.txt`. The `--base-path` value is optional for a custom domain and should match the repository path when using a GitHub Pages project site. `--incremental` enables a content-addressed manifest beside the output directory; it reuses the export only when the source fingerprint, normalized base path and exporter version match and every recorded file still exists. The default remains a clean export for backward compatibility.
 
-The server uses Python's standard-library `wsgiref.simple_server`. It does not require a web framework, JavaScript build system, database, account system, or server-side external API. htmx 2.0.10 and Alpine CSP 3.16.2 are loaded from jsDelivr with pinned versions and SRI for progressive enhancement; direct links, server-rendered pages, raw Markdown URLs, and static export remain the fallback when scripts or a CDN are unavailable. Inter is loaded from the official `https://rsms.me/inter/inter.css` stylesheet with system fallbacks.
+The server uses Python's standard-library `wsgiref.simple_server`. It does not require a web framework, JavaScript build system, database, account system, or server-side external API. htmx 2.0.10 and Alpine CSP 3.16.2 are loaded from jsDelivr with pinned versions and SRI for progressive enhancement; direct links, server-rendered pages, raw Markdown URLs, and static export remain the fallback when scripts or a CDN are unavailable. Inter is loaded from the official `https://rsms.me/inter/inter.css` stylesheet with system fallbacks. The build helper in `src/soulmap/web/build.py` is a deterministic read-only boundary: it fingerprints web templates/assets, public Skill Markdown, `pyproject.toml` and `uv.lock`, but it does not import response orchestration, detectors, memory, user data or live AI state from `soulmap.runtime`.
 
 ## Template and asset architecture
 
@@ -63,7 +66,7 @@ Each catalog card provides a use-case summary, best-fit description, boundary st
 
 ## htmx, Alpine, and modal boundary
 
-The Skill detail modal uses htmx to request a server-rendered HTML fragment and Alpine CSP for local modal state, focus return, Escape handling, backdrop close, and a small clipboard action. The catalog filter now uses htmx directly: the search input sends `input changed delay:350ms` to a localized grid fragment, swaps `#skill-grid` with `outerHTML`, shows a request indicator, and uses `hx-sync="this:replace"` to avoid stale response races. The modal follows the WAI-ARIA dialog contract: it has `role="dialog"`, `aria-modal="true"`, a visible close control, a focus target, a contained tab sequence, and focus return to the invoking button.
+The Skill detail modal uses htmx to request a server-rendered HTML fragment and Alpine CSP for local modal state, focus return, Escape handling, backdrop close, and a small clipboard action. The catalog Search/Ask surface uses Alpine CSP for mode state and the first-party `static/search.js` engine for deterministic accent-folded search and question ranking. It fetches the localized JSON catalog endpoint and keeps the normal HTML form/detail-link fallback. The modal follows the WAI-ARIA dialog contract: it has `role="dialog"`, `aria-modal="true"`, a visible close control, a focus target, a contained tab sequence, and focus return to the invoking button.
 
 The filter also has a normal HTML form fallback at `/skills?q=...`, and each Skill card keeps a normal detail link. If scripts fail, the page remains navigable and the raw Markdown link remains directly usable. The website does not use an SPA, client-side router, local storage, authentication, polling, live chat, or a server-side AI integration.
 
@@ -77,7 +80,7 @@ Every Skill scenario owns its prompt, context, starter question, and source URL.
 
 ## GitHub Pages workflow
 
-The repository workflow builds the static output from `src/soulmap/web/` and performs a static safety check before publishing. The English canonical pages are emitted at the root, Vietnamese pages under `/vi/`, and no duplicate `/en/` page tree is generated. The source branch remains the canonical code surface; generated files are never committed to `skills/`, `dist/`, or the Python source package.
+The repository workflow builds the static output from `src/soulmap/web/` and performs a static safety check before publishing. It restores the uv dependency cache keyed by `pyproject.toml` and `uv.lock`, then prunes the cache for CI; the generated site remains a verified artifact rather than a dependency cache. The English canonical pages are emitted at the root, Vietnamese pages under `/vi/`, Korean pages under `/ko/`, and no duplicate `/en/` page tree is generated. The source branch remains the canonical code surface; generated files are never committed to `skills/`, `dist/` or the Python source package.
 
 Production publication uses the generated `gh-pages` branch because this repository needs a separately inspectable static output branch. In repository Settings, configure GitHub Pages to deploy from the `gh-pages` branch and its root directory. The workflow pushes that branch only after a successful `main` build and verifier run. The branch contains only generated public pages, catalog metadata, raw bundles, static assets, and partials; it is never a source of SoulMap doctrine or runtime code.
 

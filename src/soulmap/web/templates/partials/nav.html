@@ -2,14 +2,16 @@
   <div class="container nav">
     <div class="nav-topline">
       <a class="brand" href="$brand_home" aria-label="$brand_home_label">
-        <span class="brand-mark" aria-hidden="true">◌</span>
+        <span class="brand-mark" aria-hidden="true">
+          <svg class="icon icon-mark" viewBox="0 0 24 24" focusable="false"><path d="M18.4 7.2A7 7 0 1 1 16.8 5.6"/><circle cx="18.2" cy="5.8" r="1.4"/></svg>
+        </span>
         <span>SoulMap AI</span>
       </a>
       <div class="locale-switcher" x-data="languageMenu" x-on:keydown.escape="open = false" x-on:click.outside="open = false">
         <button class="locale-trigger" type="button" x-on:click="open = !open" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
           <span>$language_label</span>
           <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
-          <span class="locale-chevron" aria-hidden="true">⌄</span>
+          <svg class="icon locale-chevron" viewBox="0 0 16 16" focusable="false"><path d="m3 6 5 5 5-5"/></svg>
         </button>
         <div class="locale-menu" id="language-menu" x-show="open" x-transition.opacity.duration.150ms x-cloak role="menu" aria-label="$language_label">
           $locale_options

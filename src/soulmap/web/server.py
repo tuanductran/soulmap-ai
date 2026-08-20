@@ -16,6 +16,7 @@ from urllib.parse import parse_qs, quote, urlparse
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
+from soulmap.web.build import build_key, load_reusable_output, write_manifest
 from soulmap.web.catalog import (
     CATALOG,
     catalog_json,
@@ -355,7 +356,7 @@ def _about(locale: str) -> str:
 
 def _faq(locale: str) -> str:
     faq_items = "".join(
-        f'<details class="faq-item"><summary>{_text(locale, question_key)}</summary><div class="faq-answer"><p>{_text(locale, answer_key)}</p></div></details>'
+        f'<details class="faq-item"><summary>{_text(locale, question_key)}<span class="faq-toggle" aria-hidden="true"><svg class="icon" viewBox="0 0 20 20" focusable="false"><path d="M10 3v14M3 10h14"/></svg></span></summary><div class="faq-answer"><p>{_text(locale, answer_key)}</p></div></details>'
         for question_key, answer_key in (
             ("faq_q_1", "faq_a_1"),
             ("faq_q_2", "faq_a_2"),
@@ -992,13 +993,27 @@ def _write_page(
     written.append(destination)
 
 
-def export_static(output: Path, base_path: str = "") -> list[Path]:
-    """Export public pages, locale variants, API JSON, raw bundles and partials."""
+def export_static(
+    output: Path,
+    base_path: str = "",
+    *,
+    incremental: bool = False,
+    cache_dir: Path | None = None,
+) -> list[Path]:
+    """Export public pages, APIs and bundles, optionally reusing a verified build."""
     output = output.resolve()
+    normalised_base = _normalise_base_path(base_path)
+    build_cache = (
+        cache_dir or output.parent / f".{output.name}.soulmap-build"
+    ).resolve()
+    key = build_key(normalised_base)
+    if incremental:
+        reusable = load_reusable_output(build_cache, output, key)
+        if reusable is not None:
+            return reusable
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
-    normalised_base = _normalise_base_path(base_path)
     written: list[Path] = []
     pages = _pages()
     for locale in SUPPORTED_LOCALES:
@@ -1127,6 +1142,8 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
             output / "sitemap.xml",
         ]
     )
+    if incremental:
+        write_manifest(build_cache, output, key, written)
     return written
 
 
@@ -1172,9 +1189,25 @@ def main(args: list[str] | None = None) -> int:
         default="",
         help="URL path prefix for a GitHub Pages project site.",
     )
+    parser.add_argument(
+        "--incremental",
+        action="store_true",
+        help="Reuse a verified local export when its source fingerprint is unchanged.",
+    )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=None,
+        help="Directory for the incremental manifest (defaults beside --output).",
+    )
     parsed = parser.parse_args(args)
     if parsed.export_static:
-        written = export_static(parsed.output, parsed.base_path)
+        written = export_static(
+            parsed.output,
+            parsed.base_path,
+            incremental=parsed.incremental,
+            cache_dir=parsed.cache_dir,
+        )
         print(f"Exported {len(written)} static website files to {parsed.output}")
         return 0
     serve(parsed.host, parsed.port)
