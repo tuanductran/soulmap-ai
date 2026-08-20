@@ -23,6 +23,7 @@ contract.
 - `operations-and-safety-review`
 - `security-audit-review`
 - `release-readiness-review`
+- `webapp-testing-review`
 
 ## Product development skills
 
@@ -63,12 +64,13 @@ fill a real SoulMap gap.
 
 Current examples:
 
-- `bug-hunt-review` narrows findings-first defect review into SoulMap's Python, shell,
-  workflow, and contract surfaces
-- `eval-audit-review` strengthens eval integrity without turning the repo into a
-  generic LLM-eval lab
-- `property-based-hardening` applies Hypothesis carefully to small deterministic
-  Python contracts
+- `webapp-testing-review` adapts the reconnaissance, semantic-selector, browser-matrix,
+  and rendered-evidence pattern from Anthropic's
+  [webapp-testing skill](https://github.com/anthropics/skills/tree/main/skills/webapp-testing)
+  to SoulMap's static export, htmx, Alpine, and EN/VI surfaces
+- `bug-hunt-review`, `eval-audit-review`, and `property-based-hardening` remain local
+  workflow skills whose patterns were selectively shaped by external practice; they
+  are listed once above as active local skills
 
 ## Shipped product knowledge (not in this folder)
 

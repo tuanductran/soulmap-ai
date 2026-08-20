@@ -4,7 +4,11 @@
 
 set -euo pipefail
 
-INPUT=$(cat)
+if [[ -t 0 ]]; then
+  INPUT=""
+else
+  INPUT=$(cat || true)
+fi
 FILE_PATH=$(echo "$INPUT" | python3 -c '
 import json, sys
 try:
