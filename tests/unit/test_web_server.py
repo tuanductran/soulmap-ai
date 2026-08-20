@@ -165,6 +165,7 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     assert 'role="menuitem" href="/faq" lang="en"' in html
     assert 'role="menuitem" href="/vi/faq" lang="vi"' in html
     assert 'role="menuitem" href="/ko/faq" lang="ko" aria-current="page"' in html
+    assert html.index("</nav>") < html.index('<div class="locale-switcher"')
     assert "한국어" in html
 
 
