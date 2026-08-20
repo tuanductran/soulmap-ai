@@ -240,6 +240,16 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     html = body.decode("utf-8")
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
+    assert (
+        '<link rel="preload" href="https://rsms.me/inter/inter.css" as="style" type="text/css">'
+        in html
+    )
+    assert '<link rel="preconnect" href="https://rsms.me/">' in html
+    assert '<link rel="dns-prefetch" href="https://rsms.me/">' in html
+    assert '<link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">' in html
+    assert html.count('rel="preload"') == 1
+    assert html.count('rel="preconnect"') == 1
+    assert html.count('rel="dns-prefetch"') == 2
     assert 'rel="icon" href="/favicon.ico" sizes="any"' in html
     assert 'aria-label="SoulMap AI home"' in html
     assert 'aria-label="Primary navigation"' in html
