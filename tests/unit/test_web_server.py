@@ -53,6 +53,7 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/skills/meta", "200 OK"),
         ("/static/site.css", "200 OK"),
         ("/static/site.js", "200 OK"),
+        ("/static/search.js", "200 OK"),
         ("/favicon.ico", "200 OK"),
         ("/sitemap.xml", "200 OK"),
         ("/api/skills.json", "200 OK"),
@@ -228,7 +229,11 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
         in html
     )
     assert html.count('integrity="sha384-') == 2
+    assert 'src="/static/search.js"' in html
     assert 'src="/static/site.js"' in html
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "SoulMapSearch" in search_js
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
     assert 'document.body.classList.add("modal-open")' in js
@@ -239,10 +244,15 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'hx-get="/partials/skills-grid.html?lang=en"' not in html
     assert 'method="get"' in html
     assert 'x-on:submit="preventSubmit($event)"' in html
+    assert 'data-skill-root="/skills"' in html
     assert 'data-search-api="/api/skills/search.json"' in html
     assert 'data-search-locale="en"' in html
+    assert '<option value="search">Search Skills</option>' in html
+    assert '<option value="ask">Ask with a Skill</option>' in html
+    assert 'x-model="mode"' in html
+    assert 'id="question-results"' in html
     assert 'enterkeyhint="search"' in html
-    assert "Results update as you type" in html
+    assert "Choose Search or Ask" in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
@@ -317,13 +327,20 @@ def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -
     assert 'action="/vi/skills"' in html
     assert 'data-search-api="/vi/api/skills/search.json"' in html
     assert 'data-search-locale="vi"' in html
-    assert "Kết quả cập nhật khi bạn nhập" in html
+    assert "Chọn Tìm kiếm hoặc Hỏi" in html
+    assert '<option value="ask">Hỏi cùng một Skill</option>' in html
+    assert 'data-skill-root="/vi/skills"' in html
+    assert 'id="question-results"' in html
+
+    _, search_body = _request("/static/search.js")
+    search_js = search_body.decode("utf-8")
+    assert "SoulMapSearch" in search_js
 
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
     assert "preventSubmit(event)" in js
     assert "event.preventDefault();" in js
-    assert "scoreSearchEntry" in js
+    assert "window.SoulMapSearch" in js
     assert 'credentials: "same-origin"' in js
 
 
@@ -551,6 +568,7 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "api/skills/meta/prompts.vi.json",
         "static/site.css",
         "static/site.js",
+        "static/search.js",
         "robots.txt",
         "sitemap.xml",
         "favicon.ico",
@@ -561,10 +579,13 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     html = (output / "index.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/' in html
     assert 'src="/soulmap-ai/static/site.js"' in html
+    assert 'src="/soulmap-ai/static/search.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
     assert 'action="/soulmap-ai/skills"' in skills_html
+    assert 'data-skill-root="/soulmap-ai/skills"' in skills_html
     assert 'data-search-api="/soulmap-ai/api/skills/search.json"' in skills_html
+    assert '<option value="ask">Ask with a Skill</option>' in skills_html
     assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' not in skills_html
     grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html

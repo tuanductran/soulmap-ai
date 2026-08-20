@@ -8,15 +8,29 @@
 <section class="section tinted" x-data="skillCatalog">
   <div class="container">
     <div class="catalog-toolbar">
-      <form class="field" action="$catalog_action" method="get" role="search" data-search-api="$search_api_endpoint" data-search-locale="$search_locale" x-on:submit="preventSubmit($$event)">
-        <label for="skill-search">$search_label</label>
-        <input class="input" id="skill-search" name="q" type="search" value="$search_query" placeholder="$search_placeholder" autocomplete="off" enterkeyhint="search" aria-describedby="skill-search-hint">
+      <form class="field search-form" action="$catalog_action" method="get" role="search" data-skill-root="$catalog_action" data-search-api="$search_api_endpoint" data-search-locale="$search_locale" data-search-search-hint="$search_mode_search_hint" data-search-ask-hint="$search_mode_ask_hint" data-ask-intro="$ask_intro" data-ask-empty="$ask_no_results" data-ask-result-label="$ask_result_label" data-ask-use-label="$ask_use_label" data-skill-details="$details_label" x-on:submit="preventSubmit($$event)">
+        <div class="search-controls">
+          <div class="search-mode">
+            <label for="skill-search-mode">$search_mode_label</label>
+            <select class="input" id="skill-search-mode" x-model="mode" x-on:change="modeChanged" aria-describedby="skill-mode-hint">
+              <option value="search">$search_mode_search</option>
+              <option value="ask">$search_mode_ask</option>
+            </select>
+          </div>
+          <div class="search-query">
+            <label for="skill-search">$search_label</label>
+            <input class="input" id="skill-search" name="q" type="search" value="$search_query" placeholder="$search_placeholder" autocomplete="off" enterkeyhint="search" maxlength="200" aria-describedby="skill-search-hint skill-mode-hint">
+          </div>
+        </div>
         <span id="skill-search-loading" class="search-loading" role="status" hidden>$loading_label</span>
         <span class="search-hint" id="skill-search-hint">$search_hint</span>
+        <span class="search-hint" id="skill-mode-hint" x-text="modeDescription">$search_mode_search_hint</span>
+        <p class="ask-intro" x-show="mode === 'ask'" x-cloak>$ask_intro</p>
       </form>
       <p class="muted">$catalog_count groups · raw bundles available</p>
     </div>
     $skill_grid
+    <div class="question-results" id="question-results" aria-live="polite" aria-busy="false" data-empty="$ask_no_results" hidden></div>
   </div>
   <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-transition.opacity.duration.200ms x-on:keydown="trap($$event)" role="presentation">
     <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>

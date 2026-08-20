@@ -163,7 +163,7 @@ _SEARCH_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundary
 
 def _normalise_search_text(value: str) -> str:
     """Fold accents and punctuation so public search behaves consistently."""
-    decomposed = unicodedata.normalize("NFKD", value.casefold())
+    decomposed = unicodedata.normalize("NFKD", value.casefold().replace("đ", "d"))
     without_marks = "".join(
         character for character in decomposed if not unicodedata.combining(character)
     )
