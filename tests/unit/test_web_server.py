@@ -587,8 +587,11 @@ def test_localized_catalog_uses_requested_language() -> None:
     assert "privacy" not in visible_main.lower()
     assert "Phản chiếu" in visible_main
     assert "Reflection" not in visible_main
-    assert "6 nhóm · có bundle Markdown gốc" in visible_main
-    assert "groups · raw bundles available" not in visible_main
+    search_heading = visible_main.split('<div class="mode-panel__heading">', 1)[
+        1
+    ].split("</div>", 1)[0]
+    assert search_heading.count("<p") == 1
+    assert '<p class="muted">' not in search_heading
     assert "Tìm trong danh mục Skills" in visible_main
     assert "Mô tả điều bạn muốn hỏi" in visible_main
     assert "Chọn một câu hỏi để bắt đầu" in visible_main

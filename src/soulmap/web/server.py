@@ -544,7 +544,6 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         ),
         search_locale=locale,
         search_query=escape(query, quote=True),
-        catalog_count=_text(locale, "catalog_count").format(count=len(CATALOG)),
         skill_grid=_skill_grid_fragment(locale, query),
         close_label=_text(locale, "close"),
         details_label=_text(locale, "details"),
