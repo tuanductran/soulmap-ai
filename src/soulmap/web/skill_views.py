@@ -70,7 +70,7 @@ def _render_prompt_scenario(
 def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
     entry = get_skill(entry_slug)
     if entry is None:
-        return "<p>Skill not found.</p>"
+        return f"<p>{escape(_text(locale, 'skill_not_found_inline'))}</p>"
     fields = locale_fields(entry, locale)
     raw_url = f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md"
     return render_template(

@@ -1,4 +1,4 @@
-"""Public SoulMap Skill catalog metadata and raw Markdown bundle helpers."""
+"""JSON-backed public Skill catalog and safe static serializers."""
 
 from __future__ import annotations
 
@@ -6,16 +6,35 @@ import json
 import re
 import unicodedata
 from dataclasses import dataclass
+from importlib.resources import files
 from pathlib import Path
+from typing import cast
 
 from soulmap.web.i18n import SUPPORTED_LOCALES
 from soulmap.web.prompt_pack import scenarios_for
 
 PUBLIC_RAW_BASE_URL = "https://tuanductran.github.io/soulmap-ai"
+_CATALOG_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundary")
+
+
+def _load_catalog_data() -> dict[str, object]:
+    payload = json.loads(
+        files("soulmap.web").joinpath("catalog_data.json").read_text(encoding="utf-8")
+    )
+    if not isinstance(payload, dict) or payload.get("version") != 1:
+        raise ValueError("Invalid catalog data version")
+    return payload
+
+
+_DATA = _load_catalog_data()
+_RAW_COPY_VALUE = _DATA.get("raw_copy")
+if not isinstance(_RAW_COPY_VALUE, dict):
+    raise ValueError("Catalog raw_copy must be an object")
+_RAW_COPY = cast(dict[str, dict[str, str]], _RAW_COPY_VALUE)
 
 
 def _content_locale(locale: str) -> str:
-    return "vi" if locale == "vi" else "en"
+    return locale if locale in SUPPORTED_LOCALES else "en"
 
 
 def _response_locale(locale: str) -> str:
@@ -27,31 +46,16 @@ class SkillEntry:
     """Public-facing metadata for one importable SoulMap capability group."""
 
     slug: str
-    group: str
-    group_vi: str
-    title_en: str
-    title_vi: str
-    summary_en: str
-    summary_vi: str
-    use_when_en: str
-    use_when_vi: str
-    best_for_en: str
-    best_for_vi: str
-    boundary_en: str
-    boundary_vi: str
     directory: str
     featured_file: str
+    locales: dict[str, dict[str, str]]
 
     def public_dict(self) -> dict[str, object]:
         """Return metadata safe for the public catalog API."""
+        fields = locale_fields(self, "en")
         return {
             "slug": self.slug,
-            "group": self.group,
-            "title": self.title_en,
-            "summary": self.summary_en,
-            "use_when": self.use_when_en,
-            "best_for": self.best_for_en,
-            "boundary": self.boundary_en,
+            **fields,
             "raw_path": f"/api/raw/{self.slug}.md",
             "raw_url": f"{PUBLIC_RAW_BASE_URL}/api/raw/{self.slug}.md",
             "featured_file": self.featured_file,
@@ -60,114 +64,95 @@ class SkillEntry:
             ],
         }
 
+    def _field(self, field: str, locale: str) -> str:
+        return locale_fields(self, locale)[field]
 
-CATALOG: tuple[SkillEntry, ...] = (
-    SkillEntry(
-        slug="meta",
-        group="Core",
-        group_vi="Cốt lõi",
-        title_en="Core orchestration",
-        title_vi="Điều phối cốt lõi",
-        summary_en="The routing layer that decides how SoulMap should listen, calibrate depth, choose a framework, and protect user authority.",
-        summary_vi="Lớp điều phối quyết định cách SoulMap lắng nghe, hiệu chỉnh độ sâu, chọn khung phù hợp và bảo vệ quyền tự chủ của người dùng.",
-        use_when_en="Start here when you are integrating SoulMap or need to understand the response pipeline.",
-        use_when_vi="Bắt đầu từ đây khi bạn đang tích hợp SoulMap hoặc cần hiểu quy trình phản hồi.",
-        best_for_en="Routing, stage calibration, response shape, session contract, and orchestration.",
-        best_for_vi="Điều phối, hiệu chỉnh giai đoạn, cấu trúc phản hồi, thỏa thuận phiên và tổ chức luồng.",
-        boundary_en="It is the coordination layer, not a standalone therapeutic or predictive prompt.",
-        boundary_vi="Đây là lớp điều phối, không phải prompt trị liệu hay dự đoán độc lập.",
-        directory="meta",
-        featured_file="SKILL.md",
-    ),
-    SkillEntry(
-        slug="frameworks",
-        group="Reflection",
-        group_vi="Phản chiếu",
-        title_en="Reflective frameworks",
-        title_vi="Các khung phản chiếu",
-        summary_en="Situation-specific mirrors for grief, anger, relationships, identity patterns, creativity, self-compassion, and inner work.",
-        summary_vi="Các tấm gương theo tình huống cho mất mát, giận dữ, quan hệ, mô thức về danh tính, sáng tạo, lòng trắc ẩn với bản thân và thực hành nội tâm.",
-        use_when_en="Use the framework that matches the lived pattern without turning it into a fixed identity.",
-        use_when_vi="Dùng khung phù hợp với mô thức đang sống mà không biến nó thành danh tính cố định.",
-        best_for_en="A focused conversation after the core layer has identified the right territory.",
-        best_for_vi="Một cuộc trò chuyện tập trung sau khi lớp cốt lõi đã xác định đúng vùng cần làm việc.",
-        boundary_en="Frameworks offer lenses and questions; they do not diagnose, label, or claim certainty.",
-        boundary_vi="Các khung chỉ đưa ra lăng kính và câu hỏi; không chẩn đoán, gắn nhãn hay khẳng định chắc chắn.",
-        directory="frameworks",
-        featured_file="SKILL.md",
-    ),
-    SkillEntry(
-        slug="safety",
-        group="Safety",
-        group_vi="An toàn",
-        title_en="Safety guardrails",
-        title_vi="Rào chắn an toàn",
-        summary_en="The non-negotiable boundaries for crisis language, trauma-informed wording, prompt injection, ethics, and scope control.",
-        summary_vi="Các giới hạn không thể thương lượng cho ngôn ngữ về khủng hoảng, cách diễn đạt hiểu biết về sang chấn, prompt injection, đạo đức và kiểm soát phạm vi.",
-        use_when_en="Load this whenever a conversation involves risk, crisis, trauma, diagnosis, prediction, or attempts to override the system.",
-        use_when_vi="Luôn tải lớp này khi hội thoại liên quan đến rủi ro, khủng hoảng, sang chấn, chẩn đoán, dự đoán hoặc nỗ lực vượt qua hệ thống.",
-        best_for_en="Safety classification, refusal/redirect, prompt-injection defense, and grounded support language.",
-        best_for_vi="Phân loại an toàn, từ chối/chuyển hướng, phòng thủ prompt injection và ngôn ngữ hỗ trợ có nền tảng.",
-        boundary_en="Safety overrides resonance; never use warmth to soften a necessary boundary.",
-        boundary_vi="An toàn luôn được ưu tiên hơn sự đồng điệu; không dùng sự ấm áp để làm mềm một ranh giới cần thiết.",
-        directory="safety",
-        featured_file="SKILL.md",
-    ),
-    SkillEntry(
-        slug="spiritual",
-        group="Symbolic",
-        group_vi="Biểu tượng",
-        title_en="Grounded symbolic layer",
-        title_vi="Lớp biểu tượng có nền tảng",
-        summary_en="Optional symbolic language for discernment, metaphors, numerology, chakra themes, and reports without spiritual grandiosity.",
-        summary_vi="Ngôn ngữ biểu tượng tùy chọn cho phân định, ẩn dụ, số học, chủ đề chakra và các báo cáo không thổi phồng tâm linh.",
-        use_when_en="Use only when symbolic framing helps the user inquire more honestly into lived experience.",
-        use_when_vi="Chỉ dùng khi cách diễn đạt biểu tượng giúp người dùng tự vấn trung thực hơn về trải nghiệm đang sống.",
-        best_for_en="Discernment, metaphor, symbolic reports, and brand-safe spiritual reflection.",
-        best_for_vi="Phân định, ẩn dụ, báo cáo biểu tượng và phản chiếu tâm linh an toàn cho thương hiệu.",
-        boundary_en="Symbolism is a lens, never proof of destiny, special status, or supernatural authority.",
-        boundary_vi="Biểu tượng là một lăng kính, không phải bằng chứng về định mệnh, vị thế đặc biệt hay quyền lực siêu nhiên.",
-        directory="spiritual",
-        featured_file="SKILL.md",
-    ),
-    SkillEntry(
-        slug="voice",
-        group="Voice",
-        group_vi="Giọng điệu",
-        title_en="Voice and calibration",
-        title_vi="Giọng điệu và hiệu chỉnh",
-        summary_en="The pacing, warmth, clarity, response length, and session rituals that make SoulMap feel coherent without becoming dependent.",
-        summary_vi="Nhịp điệu, sự ấm áp, độ rõ, độ dài phản hồi và các nghi thức phiên giúp SoulMap nhất quán mà không tạo phụ thuộc.",
-        use_when_en="Use this when the content is correct but the tone, pacing, or emotional distance feels wrong.",
-        use_when_vi="Dùng khi nội dung đúng nhưng giọng điệu, nhịp độ hoặc khoảng cách cảm xúc chưa phù hợp.",
-        best_for_en="Persona, response calibration, opening rituals, and grounded closing posture.",
-        best_for_vi="Persona, hiệu chỉnh phản hồi, nghi thức mở đầu và tư thế kết thúc có nền tảng.",
-        boundary_en="Voice shapes delivery; it must never add authority, intimacy hooks, or emotional rescue.",
-        boundary_vi="Giọng điệu chỉ định hình cách truyền đạt; không được thêm thẩm quyền, móc nối thân mật hay giải cứu cảm xúc.",
-        directory="voice",
-        featured_file="SKILL.md",
-    ),
-    SkillEntry(
-        slug="brand",
-        group="Brand",
-        group_vi="Thương hiệu",
-        title_en="Brand and positioning",
-        title_vi="Thương hiệu và định vị",
-        summary_en="Public positioning, visual identity, content pillars, differentiation, and scope language for a coherent SoulMap surface.",
-        summary_vi="Định vị công khai, nhận diện trực quan, trụ cột nội dung, điểm khác biệt và ngôn ngữ phạm vi cho một SoulMap nhất quán.",
-        use_when_en="Use this when writing public copy, naming a surface, or checking whether a visual decision still feels like SoulMap.",
-        use_when_vi="Dùng khi viết nội dung công khai, đặt tên cho một bề mặt hoặc kiểm tra một quyết định hình ảnh còn đúng chất SoulMap.",
-        best_for_en="Brand voice, visual system, strategic direction, and public-facing boundaries.",
-        best_for_vi="Giọng thương hiệu, hệ thống hình ảnh, định hướng chiến lược và các ranh giới hướng ra công chúng.",
-        boundary_en="Brand guidance is not a substitute for the runtime safety and orchestration layers.",
-        boundary_vi="Hướng dẫn thương hiệu không thay thế các lớp an toàn runtime và điều phối.",
-        directory="brand",
-        featured_file="visual-identity.md",
-    ),
-)
+    @property
+    def group(self) -> str:
+        return self._field("group", "en")
 
+    @property
+    def group_vi(self) -> str:
+        return self._field("group", "vi")
+
+    @property
+    def title_en(self) -> str:
+        return self._field("title", "en")
+
+    @property
+    def title_vi(self) -> str:
+        return self._field("title", "vi")
+
+    @property
+    def summary_en(self) -> str:
+        return self._field("summary", "en")
+
+    @property
+    def summary_vi(self) -> str:
+        return self._field("summary", "vi")
+
+    @property
+    def use_when_en(self) -> str:
+        return self._field("use_when", "en")
+
+    @property
+    def use_when_vi(self) -> str:
+        return self._field("use_when", "vi")
+
+    @property
+    def best_for_en(self) -> str:
+        return self._field("best_for", "en")
+
+    @property
+    def best_for_vi(self) -> str:
+        return self._field("best_for", "vi")
+
+    @property
+    def boundary_en(self) -> str:
+        return self._field("boundary", "en")
+
+    @property
+    def boundary_vi(self) -> str:
+        return self._field("boundary", "vi")
+
+
+def _build_catalog() -> tuple[SkillEntry, ...]:
+    raw_entries = _DATA.get("entries")
+    if not isinstance(raw_entries, list):
+        raise ValueError("Catalog entries must be a list")
+    entries: list[SkillEntry] = []
+    for raw_entry in raw_entries:
+        if not isinstance(raw_entry, dict):
+            raise ValueError("Catalog entry must be an object")
+        locales = raw_entry.get("locales")
+        if not isinstance(locales, dict) or set(locales) != set(SUPPORTED_LOCALES):
+            raise ValueError(f"Catalog locale parity failed: {raw_entry.get('slug')}")
+        normalized: dict[str, dict[str, str]] = {}
+        for locale in SUPPORTED_LOCALES:
+            fields = locales[locale]
+            if not isinstance(fields, dict) or set(fields) != set(_CATALOG_FIELDS):
+                raise ValueError(
+                    f"Catalog field parity failed: {raw_entry.get('slug')}/{locale}"
+                )
+            if not all(isinstance(value, str) for value in fields.values()):
+                raise ValueError(
+                    f"Catalog values must be strings: {raw_entry.get('slug')}/{locale}"
+                )
+            normalized[locale] = dict(fields)
+        entries.append(
+            SkillEntry(
+                slug=str(raw_entry["slug"]),
+                directory=str(raw_entry["directory"]),
+                featured_file=str(raw_entry["featured_file"]),
+                locales=normalized,
+            )
+        )
+    return tuple(entries)
+
+
+CATALOG: tuple[SkillEntry, ...] = _build_catalog()
 _BY_SLUG = {entry.slug: entry for entry in CATALOG}
-_SEARCH_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundary")
+_SEARCH_FIELDS = _CATALOG_FIELDS
 
 
 def _normalise_search_text(value: str) -> str:
@@ -298,53 +283,72 @@ def _repo_root() -> Path:
     return candidates[0]
 
 
-def _sanitize_public_markdown(markdown: str) -> str:
+def _sanitize_public_markdown(
+    markdown: str,
+    behavioral_contract: str = "SoulMap behavioral contract",
+    internal_references: str = "repository internals",
+) -> str:
     """Remove repository-only references while preserving public Skill guidance."""
     sanitized = re.sub(r"\[([^\]]+)\]\((?:\.\./)+AGENTS\.md\)", r"\1", markdown)
-    sanitized = re.sub(
-        r"\[AGENTS\.md\]\([^)]*\)", "SoulMap behavioral contract", sanitized
-    )
-    sanitized = sanitized.replace("AGENTS.md", "SoulMap behavioral contract")
+    sanitized = re.sub(r"\[AGENTS\.md\]\([^)]*\)", behavioral_contract, sanitized)
+    sanitized = sanitized.replace("AGENTS.md", behavioral_contract)
     sanitized = re.sub(
         r"(?<!\w)(?:\.claude/|\.github/|src/|tests/|pyproject\.toml|uv\.lock)(?:[A-Za-z0-9_./-]*)",
-        "repository internals",
+        internal_references,
         sanitized,
     )
     return sanitized
 
 
-def raw_markdown(entry: SkillEntry) -> str:
+def _raw_copy(locale: str) -> dict[str, str]:
+    language = _content_locale(locale)
+    selected = _RAW_COPY.get(language)
+    english = _RAW_COPY.get("en")
+    if not isinstance(selected, dict) or not isinstance(english, dict):
+        raise ValueError("Invalid raw copy locale data")
+    selected_copy = {str(key): str(value) for key, value in selected.items()}
+    english_copy = {str(key): str(value) for key, value in english.items()}
+    return {key: selected_copy.get(key, value) for key, value in english_copy.items()}
+
+
+def raw_markdown(entry: SkillEntry, locale: str = "en") -> str:
     """Build one complete public Markdown bundle for a catalog group."""
+    language = _content_locale(locale)
+    labels = _raw_copy(language)
+    fields = locale_fields(entry, language)
     directory = _repo_root() / "skills" / entry.directory
     files = sorted(directory.glob("*.md")) if directory.is_dir() else []
     sections = [
-        f"# SoulMap Skill bundle: {entry.title_en}\n\n",
-        f"> Canonical public raw bundle for `{entry.slug}`.\n\n",
+        f"# {labels['bundle_title']}: {fields['title']}\n\n",
+        f"> {labels['canonical_bundle']} `{entry.slug}`.\n\n",
     ]
     if not files:
-        sections.append(
-            "This raw bundle is not available in the current runtime checkout. "
-            "Use the published release artifact instead.\n"
-        )
+        sections.append(f"{labels['unavailable']}\n")
         return "".join(sections)
     for path in files:
         sections.append(f"\n---\n\n## {path.name}\n\n")
-        sections.append(_sanitize_public_markdown(path.read_text(encoding="utf-8")))
+        sections.append(
+            _sanitize_public_markdown(
+                path.read_text(encoding="utf-8"),
+                labels["behavioral_contract"],
+                labels["repository_internals"],
+            )
+        )
         sections.append("\n")
     scenarios = scenarios_for(entry.slug)
     raw_url = f"{PUBLIC_RAW_BASE_URL}/api/raw/{entry.slug}.md"
     if scenarios:
-        sections.append("\n---\n\n## Suggested prompts by context\n\n")
-        sections.append(
-            "Use one scenario that matches the user's context. Keep the source bundle "
-            "as the reference and return authorship to the user.\n\n"
-        )
+        sections.append(f"\n---\n\n## {labels['suggested_prompts']}\n\n")
+        sections.append(f"{labels['use_one']}\n\n")
         for scenario in scenarios:
-            sections.append(f"### {scenario.title_en}\n\n")
-            sections.append(f"**When:** {scenario.when_en}\n\n")
-            sections.append(f"**Prompt:** {scenario.prompt_en}\n\n")
-            sections.append(f"**Source Skill bundle:** {raw_url}\n\n")
-            sections.append(f"**Starter question:** {scenario.question_en}\n\n")
+            localized = scenario.localized(language)
+            sections.append(f"### {localized['title']}\n\n")
+            sections.append(f"**{labels['when']}:** {localized['when']}\n\n")
+            sections.append(f"**{labels['prompt']}:** {localized['prompt']}\n\n")
+            sections.append(f"**{labels['source_bundle']}:** {raw_url}\n\n")
+            sections.append(
+                f"**{labels['starter_question']}:** {localized['question']}\n\n"
+            )
     return "".join(sections)
 
 
@@ -362,11 +366,6 @@ def catalog_json(locale: str = "en", raw_base_url: str = PUBLIC_RAW_BASE_URL) ->
 def locale_fields(entry: SkillEntry, locale: str) -> dict[str, str]:
     """Return localized catalog copy with English fallback."""
     language = _content_locale(locale)
-    return {
-        "group": entry.group if language == "en" else entry.group_vi,
-        "title": getattr(entry, f"title_{language}"),
-        "summary": getattr(entry, f"summary_{language}"),
-        "use_when": getattr(entry, f"use_when_{language}"),
-        "best_for": getattr(entry, f"best_for_{language}"),
-        "boundary": getattr(entry, f"boundary_{language}"),
-    }
+    english = entry.locales["en"]
+    selected = entry.locales.get(language, {})
+    return {field: selected.get(field, english[field]) for field in _CATALOG_FIELDS}
