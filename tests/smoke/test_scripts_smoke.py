@@ -268,6 +268,17 @@ def test_local_agent_hooks_have_valid_shell_syntax() -> None:
         )
 
 
+def test_claude_settings_registers_eval_post_edit_hook() -> None:
+    settings = json.loads((ROOT / ".claude/settings.json").read_text(encoding="utf-8"))
+    commands = [
+        hook.get("command", "")
+        for group in settings.get("hooks", {}).get("PostToolUse", [])
+        for hook in group.get("hooks", [])
+    ]
+
+    assert any(".claude/hooks/post-edit-evals.sh" in command for command in commands)
+
+
 def test_post_edit_evals_hook_does_not_flag_zero_failed_checks() -> None:
     if not _bash_runtime_available():
         pytest.skip("bash runtime is not available on this platform")

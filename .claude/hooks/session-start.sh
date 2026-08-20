@@ -4,7 +4,11 @@
 
 set -euo pipefail
 
-INPUT=$(cat || true)
+if [[ -t 0 ]]; then
+  INPUT=""
+else
+  INPUT=$(cat || true)
+fi
 REPO_ROOT=$(printf '%s' "$INPUT" | python3 -c '
 import json, sys
 raw = sys.stdin.read().strip()
