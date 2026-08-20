@@ -298,6 +298,11 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'id="question-results"' in html
     assert 'enterkeyhint="search"' in html
     assert "Search only changes the Skill list below" in html
+    assert (
+        "Find the layer that matches your words, then open its details or raw bundle."
+        not in html
+    )
+    assert "Choose an existing Skill scenario as a grounded starting point." not in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
@@ -369,7 +374,7 @@ def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
 def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
     _, html_body = _request("/vi/skills")
     html = html_body.decode("utf-8")
-    assert 'data-ask-intro="Chế độ Hỏi giúp bạn chọn một Skill công khai' in html
+    assert '<p class="ask-intro">Chế độ Hỏi giúp bạn chọn một Skill công khai' in html
     assert 'data-ask-result-label="Câu hỏi mở đầu"' in html
     assert 'data-ask-use-label="Dùng câu hỏi này"' in html
     assert 'id="question-results"' in html
@@ -580,6 +585,11 @@ def test_localized_catalog_uses_requested_language() -> None:
     locale_messages = json.loads(locale_payload)
     assert locale_messages["home_skills"] == "Khám phá các Skills"
     assert locale_messages["privacy_page"] == "Quyền riêng tư"
+    assert "raw_heading" not in locale_messages
+    assert (
+        locale_messages["raw_note"]
+        == "URL này trả về một gói Markdown hoàn chỉnh cho nhóm Skill này."
+    )
     visible_main = html.split('<main id="main-content">', 1)[1].split("</main>", 1)[0]
     assert "Khám phá các Skills" not in visible_main
     assert "inner work" not in visible_main
@@ -587,10 +597,20 @@ def test_localized_catalog_uses_requested_language() -> None:
     assert "privacy" not in visible_main.lower()
     assert "Phản chiếu" in visible_main
     assert "Reflection" not in visible_main
+    assert "6 nhóm · có bundle Markdown gốc" not in visible_main
+    assert "groups · raw bundles available" not in visible_main
+    assert (
+        "Tìm lớp phù hợp với điều bạn viết, rồi mở chi tiết hoặc bundle gốc."
+        not in visible_main
+    )
+    assert (
+        "Chọn một kịch bản Skill có sẵn làm điểm bắt đầu có nền tảng."
+        not in visible_main
+    )
     search_heading = visible_main.split('<div class="mode-panel__heading">', 1)[
         1
     ].split("</div>", 1)[0]
-    assert search_heading.count("<p") == 1
+    assert search_heading.count("<p") == 0
     assert '<p class="muted">' not in search_heading
     assert "Tìm trong danh mục Skills" in visible_main
     assert "Mô tả điều bạn muốn hỏi" in visible_main
