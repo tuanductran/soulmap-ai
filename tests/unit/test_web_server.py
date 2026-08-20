@@ -325,6 +325,7 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'method="get"' in html
     assert 'x-on:submit="preventSubmit($event)"' in html
     assert 'data-skill-root="/skills"' in html
+    assert 'class="section tinted catalog-section"' in html
     assert 'data-search-api="/api/skills/search.json"' in html
     assert 'data-search-error="Search is temporarily unavailable.' in html
     assert 'aria-controls="search-panel ask-panel"' in html
