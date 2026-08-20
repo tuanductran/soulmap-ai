@@ -37,6 +37,9 @@ document.addEventListener("alpine:init", () => {
     returnFocus: null,
     mode: "search",
     modeDescription: "",
+    queryLabel: "",
+    queryPlaceholder: "",
+    queryHint: "",
     searchEntries: null,
     searchLoading: false,
     searchRequest: 0,
@@ -54,9 +57,19 @@ document.addEventListener("alpine:init", () => {
       });
     },
     updateModeDescription(form) {
-      this.modeDescription = this.mode === "ask"
+      const asking = this.mode === "ask";
+      this.modeDescription = asking
         ? form.dataset.searchAskHint
         : form.dataset.searchSearchHint;
+      this.queryLabel = asking
+        ? form.dataset.askQueryLabel
+        : form.dataset.searchQueryLabel;
+      this.queryPlaceholder = asking
+        ? form.dataset.askQueryPlaceholder
+        : form.dataset.searchQueryPlaceholder;
+      this.queryHint = asking
+        ? form.dataset.askQueryHint
+        : form.dataset.searchQueryHint;
     },
     modeChanged() {
       const form = this.$root.querySelector("form[data-search-api]");
@@ -199,9 +212,9 @@ document.addEventListener("alpine:init", () => {
         meta.textContent = `${result.entry.group} · ${result.scenario.title}`;
         const title = document.createElement("h2");
         title.textContent = result.entry.title;
-        const when = document.createElement("p");
-        when.className = "muted";
-        when.textContent = result.scenario.when;
+        const scenario = document.createElement("p");
+        scenario.className = "question-card__scenario";
+        scenario.textContent = result.scenario.title;
         const label = document.createElement("p");
         label.className = "question-label";
         label.textContent = form.dataset.askResultLabel || "Starter question";
@@ -218,9 +231,9 @@ document.addEventListener("alpine:init", () => {
         skillLink.className = "link-button small secondary";
         const skillRoot = form.dataset.skillRoot || "/skills";
         skillLink.href = `${skillRoot.replace(/\/$/, "")}/${encodeURIComponent(result.entry.slug)}`;
-        skillLink.textContent = form.dataset.skillDetails || "View Skill";
+        skillLink.textContent = form.dataset.askDetailsLabel || "View Skill";
         actions.append(useButton, skillLink);
-        article.append(meta, title, when, label, question, actions);
+        article.append(meta, title, scenario, label, question, actions);
         questionResults.appendChild(article);
       }
     },

@@ -231,6 +231,10 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "body.modal-open { overflow: hidden; }" in css
     assert ".modal-dialog" in css
     assert ".skill-grid" in css
+    assert ".mode-switch" in css
+    assert ".mode-option input:checked + span" in css
+    assert ".mode-panel" in css
+    assert ".question-card__scenario" in css
     assert ".faq-item" in css
     assert ".privacy-grid" in css
 
@@ -271,15 +275,19 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'data-skill-root="/skills"' in html
     assert 'data-search-api="/api/skills/search.json"' in html
     assert 'data-search-error="Search is temporarily unavailable.' in html
-    assert 'aria-controls="skill-grid question-results"' in html
+    assert 'aria-controls="search-panel ask-panel"' in html
     assert 'data-search-locale="en"' in html
-    assert '<option value="search">Search Skills</option>' in html
-    assert '<option value="ask">Ask with a Skill</option>' in html
-    assert "SoulMap Skill details" in html
+    assert 'data-search-query-label="Search the Skill catalog"' in html
+    assert 'data-ask-query-label="Describe what you want to ask"' in html
+    assert 'value="search"' in html and 'value="ask"' in html
+    assert 'id="search-panel"' in html
+    assert 'id="ask-panel"' in html
+    assert 'aria-labelledby="search-panel-title"' in html
+    assert 'aria-labelledby="ask-panel-title"' in html
     assert 'x-model="mode"' in html
     assert 'id="question-results"' in html
     assert 'enterkeyhint="search"' in html
-    assert "Choose Search or Ask" in html
+    assert "Search only changes the Skill list below" in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
@@ -387,20 +395,30 @@ def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -
     assert 'data-search-error="Tìm kiếm tạm thời không khả dụng.' in html
     assert "Chi tiết Skill SoulMap" in html
     assert 'data-search-locale="vi"' in html
-    assert "Chọn Tìm kiếm hoặc Hỏi" in html
-    assert '<option value="ask">Hỏi cùng một Skill</option>' in html
+    assert 'data-search-query-label="Tìm trong danh mục Skills"' in html
+    assert 'data-ask-query-label="Mô tả điều bạn muốn hỏi"' in html
+    assert 'value="ask"' in html
+    assert 'id="search-panel"' in html
+    assert 'id="ask-panel"' in html
+    assert (
+        'data-ask-query-hint="Hỏi chỉ khớp với các kịch bản công khai; không tự tạo câu trả lời."'
+        in html
+    )
     assert 'data-skill-root="/vi/skills"' in html
     assert 'id="question-results"' in html
 
     _, search_body = _request("/static/search.js")
     search_js = search_body.decode("utf-8")
     assert "SoulMapSearch" in search_js
+    assert "MAX_QUESTION_RESULTS = 6" in search_js
 
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
     assert "preventSubmit(event)" in js
     assert "event.preventDefault();" in js
     assert "window.SoulMapSearch" in js
+    assert "question-card__scenario" in js
+    assert "result.scenario.when" not in js
     assert 'credentials: "same-origin"' in js
 
 
@@ -561,6 +579,10 @@ def test_localized_catalog_uses_requested_language() -> None:
     assert "Reflection" not in visible_main
     assert "6 nhóm · có bundle Markdown gốc" in visible_main
     assert "groups · raw bundles available" not in visible_main
+    assert "Tìm trong danh mục Skills" in visible_main
+    assert "Mô tả điều bạn muốn hỏi" in visible_main
+    assert "Chọn một câu hỏi để bắt đầu" in visible_main
+    assert "Choose a question to begin" not in visible_main
 
     _, notes_body = _request("/vi/notes")
     notes = notes_body.decode("utf-8")
@@ -647,7 +669,10 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'action="/soulmap-ai/skills"' in skills_html
     assert 'data-skill-root="/soulmap-ai/skills"' in skills_html
     assert 'data-search-api="/soulmap-ai/api/skills/search.json"' in skills_html
-    assert '<option value="ask">Ask with a Skill</option>' in skills_html
+    assert 'data-search-query-label="Search the Skill catalog"' in skills_html
+    assert 'data-ask-query-label="Describe what you want to ask"' in skills_html
+    assert 'id="search-panel"' in skills_html
+    assert 'id="ask-panel"' in skills_html
     assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' not in skills_html
     grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
