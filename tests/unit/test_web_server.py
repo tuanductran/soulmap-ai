@@ -585,6 +585,11 @@ def test_localized_catalog_uses_requested_language() -> None:
     locale_messages = json.loads(locale_payload)
     assert locale_messages["home_skills"] == "Khám phá các Skills"
     assert locale_messages["privacy_page"] == "Quyền riêng tư"
+    assert "raw_heading" not in locale_messages
+    assert (
+        locale_messages["raw_note"]
+        == "URL này trả về một gói Markdown hoàn chỉnh cho nhóm Skill này."
+    )
     visible_main = html.split('<main id="main-content">', 1)[1].split("</main>", 1)[0]
     assert "Khám phá các Skills" not in visible_main
     assert "inner work" not in visible_main
