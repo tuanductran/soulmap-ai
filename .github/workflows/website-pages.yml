@@ -12,6 +12,7 @@ on:
       - "README.md"
       - "pyproject.toml"
       - "uv.lock"
+      - "tests/browser/**"
   push:
     branches: ["main"]
     paths:
@@ -24,6 +25,7 @@ on:
       - "README.md"
       - "pyproject.toml"
       - "uv.lock"
+      - "tests/browser/**"
   workflow_dispatch:
 
 permissions:
@@ -89,6 +91,43 @@ jobs:
           name: ${{ env.STATIC_ARTIFACT }}
           path: ${{ env.STATIC_OUTPUT }}
           if-no-files-found: error
+
+  browser-audit:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install locked development environment
+        run: uv sync --locked --python "${PYTHON_VERSION}"
+
+      - name: Install Chromium and system dependencies
+        run: uv run playwright install --with-deps chromium
+
+      - name: Run opt-in browser audit
+        run: >-
+          uv run pytest tests/browser
+          --run-browser
+          --browser chromium
+          --screenshot=only-on-failure
+          --full-page-screenshot
+          --tracing=retain-on-failure
+          --output=test-results
+
+      - name: Upload browser test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-test-results-${{ github.sha }}
+          path: test-results/
+          if-no-files-found: warn
 
   publish-gh-pages:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

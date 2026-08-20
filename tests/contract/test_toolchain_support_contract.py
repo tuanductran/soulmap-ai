@@ -31,6 +31,7 @@ DIRECT_DEV_PACKAGES = {
     "deptry",
     "vulture",
     "werkzeug",
+    "pytest-playwright",
 }
 RESEARCH_LABELS = {
     "hypothesis": "Hypothesis",
@@ -47,6 +48,7 @@ RESEARCH_LABELS = {
     "deptry": "Deptry",
     "vulture": "Vulture",
     "werkzeug": "Werkzeug",
+    "pytest-playwright": "pytest-playwright",
 }
 
 
