@@ -15,6 +15,9 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "about": "About",
         "skills": "Skills",
         "language": "Language",
+        "brand_home_label": "SoulMap AI home",
+        "primary_nav_label": "Primary navigation",
+        "principle_label": "SoulMap principle",
         "footer": "A mirror, not a guru.",
         "repository": "Repository",
         "download": "Download Skills",
@@ -134,6 +137,7 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "catalog_lede": "SoulMap is a set of complementary layers. Start with orchestration, add a "
         "framework when the pattern is clear, and let safety and independence stay "
         "in the room.",
+        "catalog_count": "{count} groups · raw bundles available",
         "search_label": "Find a Skill or question",
         "search_placeholder": "Search by use case, group, boundary, or question…",
         "search_hint": "Choose Search or Ask; results update as you type and Enter stays on this page.",
@@ -266,6 +270,9 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "about": "Giới thiệu",
         "skills": "Bộ Skills",
         "language": "Ngôn ngữ",
+        "brand_home_label": "Trang chủ SoulMap AI",
+        "primary_nav_label": "Điều hướng chính",
+        "principle_label": "Nguyên tắc SoulMap",
         "footer": "Một tấm gương, không phải đạo sư.",
         "repository": "Mã nguồn",
         "download": "Tải các Skills",
@@ -379,6 +386,7 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
         "catalog_h1": "Chọn lớp phù hợp với khoảnh khắc này.",
         "catalog_lede": "SoulMap là một tập hợp các lớp bổ trợ. Bắt đầu từ lớp điều phối, thêm "
         "khung phù hợp khi mô thức đã rõ, và để an toàn cùng tính độc lập luôn hiện diện.",
+        "catalog_count": "{count} nhóm · có bundle Markdown gốc",
         "search_label": "Tìm Skill hoặc câu hỏi",
         "search_placeholder": "Tìm theo trường hợp sử dụng, nhóm, ranh giới hoặc câu hỏi…",
         "search_hint": "Chọn Tìm kiếm hoặc Hỏi; kết quả cập nhật khi nhập và Enter vẫn ở trang này.",

@@ -187,6 +187,25 @@ def test_favicon_route_returns_original_ico_bytes() -> None:
     assert len(body) > 1000
 
 
+def test_localized_shared_accessible_labels_are_not_hardcoded() -> None:
+    _, body = _request("/vi")
+    html = body.decode("utf-8")
+    _, en_body = _request("/")
+    en_html = en_body.decode("utf-8")
+
+    assert 'aria-label="SoulMap AI home"' in en_html
+    assert 'aria-label="Primary navigation"' in en_html
+    assert "<cite>SoulMap principle</cite>" in en_html
+    assert 'aria-label="Trang chủ SoulMap AI"' in html
+    assert 'aria-label="Điều hướng chính"' in html
+    assert (
+        '<div class="mirror-card" role="note" aria-label="Nguyên tắc SoulMap">' in html
+    )
+    assert "<cite>Nguyên tắc SoulMap</cite>" in html
+    assert "SoulMap principle" not in html
+    assert "Primary navigation" not in html
+
+
 def test_website_is_responsive_accessible_and_progressive() -> None:
     captured, body = _request("/static/site.css")
 
@@ -201,6 +220,9 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%" not in css
     assert "#c99b50" not in css
     assert "prefers-reduced-motion" in css
+    assert "select:focus-visible" in css
+    assert "textarea:focus-visible" in css
+    assert "button, input, select, textarea { font: inherit; }" in css
     assert "prefers-color-scheme: dark" in css
     assert "prefers-reduced-transparency" in css
     assert "safe-area-inset" in css
@@ -219,6 +241,8 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
 
     assert 'href="https://rsms.me/inter/inter.css"' in html
     assert 'rel="icon" href="/favicon.ico" sizes="any"' in html
+    assert 'aria-label="SoulMap AI home"' in html
+    assert 'aria-label="Primary navigation"' in html
     assert "<title>Choose the layer that fits the moment. · SoulMap AI</title>" in html
     assert "SoulMap AI · SoulMap AI" not in html
     assert 'name="htmx-config"' in html
@@ -535,6 +559,8 @@ def test_localized_catalog_uses_requested_language() -> None:
     assert "privacy" not in visible_main.lower()
     assert "Phản chiếu" in visible_main
     assert "Reflection" not in visible_main
+    assert "6 nhóm · có bundle Markdown gốc" in visible_main
+    assert "groups · raw bundles available" not in visible_main
 
     _, notes_body = _request("/vi/notes")
     notes = notes_body.decode("utf-8")
