@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, current release v0.9.0
-> **Last updated:** 19 August 2026
+> **Last updated:** 20 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -131,6 +131,7 @@ soulmap-ai/
 │   │   ├── config/       Static safety config (multilingual crisis packs)
 │   │   ├── memory/       Experimental memory ledger
 │   │   └── experimental/ Experimental modules (biometric ingest, demo)
+│   ├── web/              Python-only public website and static export surface
 │   └── devtools/
 │       ├── audit/        Knowledge-usage audit (audit-knowledge)
 │       ├── evals/        eval-groups, eval-markdown-contracts, eval-responses
@@ -150,7 +151,8 @@ soulmap-ai/
 │   ├── product/          User-facing product doc
 │   └── integrations/      Per-platform deployment guides
 │
-└── .github/workflows/    ci.yml, autofix.yml, codeql.yml, release.yml
+└── .github/workflows/    ci.yml, autofix.yml, codeql.yml, release.yml,
+                         website-pages.yml
 ```
 
 ---
@@ -484,7 +486,8 @@ artifacts.
 
 Completed foundation:
 
-* Responsive public pages for Home, How it works, Boundaries, Download, Notes, and About.
+* Responsive public pages for Home, How it works, Boundaries, Download, Notes, About,
+  FAQ, Privacy, Skills catalog, and Skill detail routes in EN/VI.
 * `uv run soulmap web` with configurable local host and port.
 * In-process route tests, security headers, skip-link/accessibility markers, responsive CSS,
   reduced-motion support, and local browser smoke validation.
@@ -493,6 +496,12 @@ Completed foundation:
 * `uv run soulmap web --export-static` generates a project-site-safe static tree with an
   optional base path, and `scripts/verify_static_site.py` rejects source leakage, scripts,
   symlinks, local hosts, missing routes, and unsafe links.
+* The Skills catalog has localized EN/VI metadata, deterministic Search/Ask modes, safe
+  question starters, localized error states, compact Ask results, raw Markdown/API
+  bundles, htmx detail loading, Alpine transitions, and a static-export contract.
+* Shared HTML head generation includes conservative `preload`, `preconnect`, and
+  `dns-prefetch` hints derived from the actual external stylesheet/script origins, without
+  adding runtime dependencies or speculative platform integrations.
 * `.github/workflows/website-pages.yml` rebuilds on website-source changes, uploads the
   verified output for inspection, and publishes only generated files to `gh-pages` after a
   successful `main` build.
@@ -584,6 +593,7 @@ Responsibilities:
 | autofix.yml   | Automated formatting fixes on PRs                  |
 | codeql.yml    | Static security analysis                           |
 | release.yml   | Changelog and versioned release automation          |
+| website-pages.yml | Verified static website export and GitHub Pages publication |
 
 ### Release System
 
@@ -627,9 +637,13 @@ these are not planned unless a new ADR revisits them:
 
 ### Open, tracked future work
 
-* Maintain human-reviewed deterministic regression evidence for newly
-  observed response-safety phrasing gaps
-* Platform adapters beyond the current Claude-first flow
+The remaining roadmap work is intentionally bounded. Human-reviewed deterministic
+regression evidence remains an ongoing maintenance obligation whenever a real safety
+phrasing gap is observed. Platform adapters beyond the current Claude-first flow remain
+optional and blocked until there is an active platform owner, deployment target, and
+explicit scope for the required live acceptance evidence. They are not implemented in
+this non-AI workstream because the repository boundary explicitly excludes unused
+platform adapters and connectors.
 
 ---
 
@@ -661,4 +675,4 @@ these are not planned unless a new ADR revisits them:
 
 ---
 
-Last updated: August 19, 2026
+Last updated: August 20, 2026
