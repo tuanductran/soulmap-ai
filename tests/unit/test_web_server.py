@@ -246,9 +246,12 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'x-on:submit="preventSubmit($event)"' in html
     assert 'data-skill-root="/skills"' in html
     assert 'data-search-api="/api/skills/search.json"' in html
+    assert 'data-search-error="Search is temporarily unavailable.' in html
+    assert 'aria-controls="skill-grid question-results"' in html
     assert 'data-search-locale="en"' in html
     assert '<option value="search">Search Skills</option>' in html
     assert '<option value="ask">Ask with a Skill</option>' in html
+    assert "SoulMap Skill details" in html
     assert 'x-model="mode"' in html
     assert 'id="question-results"' in html
     assert 'enterkeyhint="search"' in html
@@ -338,6 +341,8 @@ def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
     _, site_body = _request("/static/site.js")
     site_js = site_body.decode("utf-8")
     assert "renderAskResults" in site_js
+    assert "renderSearchError" in site_js
+    assert 'role", "alert"' in site_js
     assert "document.createElement" in site_js
     assert "innerHTML" not in site_js
 
@@ -355,6 +360,8 @@ def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -
     html = body.decode("utf-8")
     assert 'action="/vi/skills"' in html
     assert 'data-search-api="/vi/api/skills/search.json"' in html
+    assert 'data-search-error="Tìm kiếm tạm thời không khả dụng.' in html
+    assert "Chi tiết Skill SoulMap" in html
     assert 'data-search-locale="vi"' in html
     assert "Chọn Tìm kiếm hoặc Hỏi" in html
     assert '<option value="ask">Hỏi cùng một Skill</option>' in html

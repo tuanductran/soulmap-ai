@@ -107,7 +107,11 @@ document.addEventListener("alpine:init", () => {
       if (loading) loading.hidden = true;
       grid.setAttribute("aria-busy", "false");
       questionResults.setAttribute("aria-busy", "false");
-      if (request !== this.searchRequest || !entries) return;
+      if (request !== this.searchRequest) return;
+      if (!entries) {
+        this.renderSearchError(form, grid, questionResults);
+        return;
+      }
 
       if (this.mode === "ask") {
         this.renderAskResults(engine.search(entries, query, { mode: "ask", limit: engine.MAX_QUESTION_RESULTS }), form, grid, questionResults);
@@ -118,9 +122,32 @@ document.addEventListener("alpine:init", () => {
         detail: { mode: this.mode, query, count: this.mode === "ask" ? questionResults.querySelectorAll("article").length : grid.querySelectorAll(":scope > .skill-card:not([hidden])").length },
       }));
     },
+    renderSearchError(form, grid, questionResults) {
+      const message = document.createElement("p");
+      message.className = "empty-state search-error";
+      message.setAttribute("role", "alert");
+      message.textContent = form.dataset.searchError || "Search is temporarily unavailable.";
+      if (this.mode === "ask") {
+        grid.hidden = true;
+        questionResults.hidden = false;
+        questionResults.replaceChildren(message);
+        return;
+      }
+      questionResults.hidden = true;
+      grid.hidden = false;
+      for (const card of grid.querySelectorAll(":scope > .skill-card")) {
+        card.hidden = true;
+        card.setAttribute("aria-hidden", "true");
+      }
+      const existingError = grid.querySelector(":scope > .search-error");
+      if (existingError) existingError.remove();
+      grid.appendChild(message);
+    },
     renderSkillResults(ranked, grid, questionResults) {
       questionResults.hidden = true;
       grid.hidden = false;
+      const existingError = grid.querySelector(":scope > .search-error");
+      if (existingError) existingError.remove();
       const cards = Array.from(grid.querySelectorAll(":scope > .skill-card"));
       const cardsBySlug = new Map(
         cards.map((card) => [card.querySelector(".code-pill")?.textContent?.trim(), card])

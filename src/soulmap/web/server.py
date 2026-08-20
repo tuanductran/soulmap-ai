@@ -488,6 +488,7 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         ask_result_label=_text(locale, "ask_result_label"),
         ask_use_label=_text(locale, "ask_use_label"),
         ask_no_results=_text(locale, "ask_no_results"),
+        search_error=_text(locale, "search_error"),
         loading_label=_text(locale, "loading"),
         catalog_action=escape(_nav_path("/skills", locale), quote=True),
         search_api_endpoint=escape(
@@ -499,6 +500,7 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         skill_grid=_skill_grid_fragment(locale, query),
         close_label=_text(locale, "close"),
         details_label=_text(locale, "details"),
+        modal_title=_text(locale, "modal_title"),
     )
 
 
