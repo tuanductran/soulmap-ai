@@ -165,7 +165,10 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     assert 'role="menuitem" href="/faq" lang="en"' in html
     assert 'role="menuitem" href="/vi/faq" lang="vi"' in html
     assert 'role="menuitem" href="/ko/faq" lang="ko" aria-current="page"' in html
-    assert html.index("</nav>") < html.index('<div class="locale-switcher"')
+    assert html.index('<div class="locale-switcher"') < html.index(
+        '<nav class="nav-links"'
+    )
+    assert html.index('<nav class="nav-links"') < html.index("</nav>")
     assert "한국어" in html
 
 
@@ -253,13 +256,15 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "--muted: #5d6b70" in css
     assert "--radius-hero: 32px" in css
     assert "--radius-hero-inner" not in css
-    assert "border-radius: var(--radius-hero) 36px 28px 32px" in css
+    assert "border-radius: 24px 34px 24px 34px" in css
     assert "border-radius: 40% 40% 34% 34% / 34% 34% 42% 42%" not in css
     assert "#c99b50" not in css
     assert "prefers-reduced-motion" in css
     assert "select:focus-visible" in css
     assert "textarea:focus-visible" in css
     assert "button, input, select, textarea { font: inherit; }" in css
+    assert "a { color: inherit; text-decoration: none; }" in css
+    assert ".nav-topline" in css
     assert "prefers-color-scheme: dark" in css
     assert "prefers-reduced-transparency" in css
     assert "safe-area-inset" in css
