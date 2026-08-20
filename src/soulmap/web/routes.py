@@ -53,47 +53,23 @@ def _sitemap_routes() -> list[str]:
 
 def _pages() -> dict[str, tuple[str, str, Callable[[str], str]]]:
     return {
-        "/": (
-            "Hear yourself more clearly",
-            "A reflective companion built around self-trust.",
-            _home,
-        ),
-        "/how-it-works": (
-            "How it works",
-            "How SoulMap uses reflection without taking authority away.",
-            _how_it_works,
-        ),
+        "/": ("page_title_home", "page_description_home", _home),
+        "/how-it-works": ("page_title_how", "page_description_how", _how_it_works),
         "/boundaries": (
-            "Boundaries",
-            "The safety and scope boundaries behind SoulMap.",
+            "page_title_boundaries",
+            "page_description_boundaries",
             _boundaries,
         ),
         "/download": (
-            "Download SoulMap Skills",
-            "Import the SoulMap Skill or knowledge archive into an AI tool.",
+            "page_title_download",
+            "page_description_download",
             _download,
         ),
-        "/notes": ("Notes", "Grounded public writing from SoulMap AI.", _notes),
-        "/about": (
-            "About SoulMap AI",
-            "The brand posture and purpose behind SoulMap AI.",
-            _about,
-        ),
-        "/faq": (
-            "FAQ",
-            "Practical answers about SoulMap Skills, boundaries and privacy.",
-            _faq,
-        ),
-        "/privacy": (
-            "Privacy",
-            "The current public-site privacy boundary for SoulMap AI.",
-            _privacy,
-        ),
-        "/skills": (
-            "SoulMap Skills",
-            "Choose the SoulMap layer that fits the moment.",
-            _skill_catalog,
-        ),
+        "/notes": ("page_title_notes", "page_description_notes", _notes),
+        "/about": ("page_title_about", "page_description_about", _about),
+        "/faq": ("page_title_faq", "page_description_faq", _faq),
+        "/privacy": ("page_title_privacy", "page_description_privacy", _privacy),
+        "/skills": ("page_title_skills", "page_description_skills", _skill_catalog),
     }
 
 
@@ -108,7 +84,7 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             start_response,
             "301 Moved Permanently",
             "text/plain",
-            f"Canonical English route: {location}\n",
+            _text("en", "canonical_english_route").format(location=location),
             [("Location", location), ("Cache-Control", "public, max-age=300")],
         )
     if raw_path == "/private" or raw_path.startswith("/private/"):
@@ -118,7 +94,7 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             start_response,
             "301 Moved Permanently",
             "text/plain",
-            f"Canonical privacy route: {location}\n",
+            _text("en", "canonical_privacy_route").format(location=location),
             [("Location", location), ("Cache-Control", "public, max-age=300")],
         )
     path, locale = _normalise_request_path(raw_path)
@@ -282,13 +258,16 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
         entry = get_skill(path.removeprefix("/api/raw/").removesuffix(".md"))
         if entry is None:
             return _response(
-                start_response, "404 Not Found", "text/plain", "Skill not found.\n"
+                start_response,
+                "404 Not Found",
+                "text/plain",
+                _text(locale, "error_skill_not_found_plain"),
             )
         return _response(
             start_response,
             "200 OK",
             "text/markdown",
-            raw_markdown(entry),
+            raw_markdown(entry, locale),
             [
                 ("Access-Control-Allow-Origin", "*"),
                 ("Content-Disposition", "inline"),
@@ -335,8 +314,8 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
                 "404 Not Found",
                 "text/html",
                 _layout(
-                    "Not found",
-                    "Page not found.",
+                    _text(locale, "not_found_title"),
+                    _text(locale, "not_found_description"),
                     "/skills",
                     _not_found(locale),
                     locale,
@@ -362,8 +341,8 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             "200 OK",
             "text/html",
             _layout(
-                "SoulMap Skills",
-                "Choose the SoulMap layer that fits the moment.",
+                _text(locale, "page_title_skills"),
+                _text(locale, "page_description_skills"),
                 path,
                 _skill_catalog(locale, query_value),
                 locale,
@@ -375,12 +354,24 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             start_response,
             "404 Not Found",
             "text/html",
-            _layout("Not found", "Page not found.", path, _not_found(locale), locale),
+            _layout(
+                _text(locale, "not_found_title"),
+                _text(locale, "not_found_description"),
+                path,
+                _not_found(locale),
+                locale,
+            ),
         )
-    title, description, renderer = pages[path]
+    title_key, description_key, renderer = pages[path]
     return _response(
         start_response,
         "200 OK",
         "text/html",
-        _layout(title, description, path, renderer(locale), locale),
+        _layout(
+            _text(locale, title_key),
+            _text(locale, description_key),
+            path,
+            renderer(locale),
+            locale,
+        ),
     )

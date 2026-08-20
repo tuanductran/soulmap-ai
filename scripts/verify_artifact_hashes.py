@@ -50,10 +50,11 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
         relative_path = artifact.get("path")
         expected_size = artifact.get("size_bytes")
         expected_sha256 = artifact.get("sha256")
-        if not all(
-            isinstance(value, str)
-            for value in (filename, relative_path, expected_sha256)
-        ) or not isinstance(expected_size, int):
+        if not isinstance(filename, str) or not isinstance(relative_path, str):
+            raise ArtifactIntegrityError(
+                "each artifact must define filename, path, size_bytes, and sha256"
+            )
+        if not isinstance(expected_size, int) or not isinstance(expected_sha256, str):
             raise ArtifactIntegrityError(
                 "each artifact must define filename, path, size_bytes, and sha256"
             )

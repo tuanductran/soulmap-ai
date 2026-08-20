@@ -27,7 +27,7 @@ def test_json_catalog_files_match_loaded_registry_and_have_exact_key_parity() ->
 
     assert catalogs == LOCALES
     assert all(set(catalogs[locale]) == english_keys for locale in SUPPORTED_LOCALES)
-    assert len(english_keys) == 193
+    assert len(english_keys) == 218
 
 
 def test_messages_for_preserves_english_fallback_contract() -> None:

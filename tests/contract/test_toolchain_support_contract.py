@@ -30,6 +30,7 @@ DIRECT_DEV_PACKAGES = {
     "commitizen",
     "deptry",
     "vulture",
+    "werkzeug",
 }
 RESEARCH_LABELS = {
     "hypothesis": "Hypothesis",
@@ -45,6 +46,7 @@ RESEARCH_LABELS = {
     "commitizen": "Commitizen",
     "deptry": "Deptry",
     "vulture": "Vulture",
+    "werkzeug": "Werkzeug",
 }
 
 
@@ -77,11 +79,18 @@ def test_coverage_gate_is_enforced_without_masking_failures() -> None:
     ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
 
     assert "fail_under = 95" in project_text
+    assert 'source = ["src/soulmap/runtime", "src/soulmap/web"]' in project_text
     assert "--cov-fail-under=95" in ci_text
     assert "--cov=src/soulmap/web" in ci_text
     assert "--cov-report=json:coverage.json" in ci_text
     assert "name: soulmap-coverage" in ci_text
     assert "--cov-report=term-missing -q 2>&1 | tail" not in ci_text
+
+
+def test_pyright_scope_covers_repository_python_surfaces() -> None:
+    project_text = PYPROJECT.read_text(encoding="utf-8")
+
+    assert 'include = ["src", "tests", "scripts"]' in project_text
 
 
 def test_workflows_use_local_resilient_tool_installers() -> None:
