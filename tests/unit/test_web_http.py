@@ -59,7 +59,9 @@ def test_normalise_request_path_handles_supported_locale_prefixes(
         ("/privacy", "ko", "/ko/privacy"),
     ],
 )
-def test_nav_path_keeps_english_unprefixed(route: str, locale: str, expected: str) -> None:
+def test_nav_path_keeps_english_unprefixed(
+    route: str, locale: str, expected: str
+) -> None:
     assert nav_path(route, locale) == expected
 
 
@@ -95,7 +97,9 @@ def test_response_has_shared_security_headers_and_byte_length() -> None:
     assert headers["Cache-Control"] == "no-store"
 
 
-def test_resource_hints_preconnect_dns_prefetch_and_css_preload_are_deduplicated() -> None:
+def test_resource_hints_preconnect_dns_prefetch_and_css_preload_are_deduplicated() -> (
+    None
+):
     hints = resource_hints()
 
     assert f'<link rel="preconnect" href="{origin(INTER_CSS_URL)}">' in hints
@@ -103,4 +107,7 @@ def test_resource_hints_preconnect_dns_prefetch_and_css_preload_are_deduplicated
     assert f'<link rel="dns-prefetch" href="{origin(HTMX_URL)}">' in hints
     assert f'<link rel="dns-prefetch" href="{origin(ALPINE_URL)}">' in hints
     assert hints.count('rel="dns-prefetch"') == 2
-    assert f'<link rel="preload" href="{INTER_CSS_URL}" as="style" type="text/css">' in hints
+    assert (
+        f'<link rel="preload" href="{INTER_CSS_URL}" as="style" type="text/css">'
+        in hints
+    )
