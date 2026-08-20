@@ -56,6 +56,8 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
         ("/favicon.ico", "200 OK"),
         ("/sitemap.xml", "200 OK"),
         ("/api/skills.json", "200 OK"),
+        ("/api/skills/search.json", "200 OK"),
+        ("/vi/api/skills/search.json", "200 OK"),
         ("/api/skills/meta/prompts.json", "200 OK"),
         ("/api/skills/meta/prompts.vi.json", "200 OK"),
         ("/api/raw/meta.md", "200 OK"),
@@ -234,13 +236,13 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert "copyFailed: false" in js
     assert "this.copyFailed = !success" in js
     assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
-    assert 'hx-get="/partials/skills-grid.html?lang=en"' in html
-    assert 'hx-trigger="input changed delay:350ms"' in html
-    assert 'hx-target="#skill-grid"' in html
-    assert 'hx-swap="outerHTML"' in html
-    assert 'hx-indicator="#skill-search-loading"' in html
-    assert 'hx-sync="this:replace"' in html
+    assert 'hx-get="/partials/skills-grid.html?lang=en"' not in html
     assert 'method="get"' in html
+    assert 'x-on:submit="preventSubmit($event)"' in html
+    assert 'data-search-api="/api/skills/search.json"' in html
+    assert 'data-search-locale="en"' in html
+    assert 'enterkeyhint="search"' in html
+    assert "Results update as you type" in html
     assert 'aria-haspopup="dialog"' in html
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
@@ -281,6 +283,48 @@ def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
     assert 'value="spiritual"' in full_page
     assert "Grounded symbolic layer" in full_page
     assert "Core orchestration" not in full_page
+
+
+def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
+    captured, body = _request("/api/skills/search.json", "q=spiritual&limit=1")
+    payload = json.loads(body)
+    assert captured["status"] == "200 OK"
+    assert payload["version"] == 1
+    assert payload["locale"] == "en"
+    assert payload["query"] == "spiritual"
+    assert payload["total"] == 1
+    assert payload["results"][0]["slug"] == "spiritual"
+    assert payload["results"][0]["score"] > 0
+    assert "summary" in payload["results"][0]
+
+    vi_captured, vi_body = _request(
+        "/vi/api/skills/search.json", "q=khung&group=Phản chiếu"
+    )
+    vi_payload = json.loads(vi_body)
+    assert vi_captured["status"] == "200 OK"
+    assert vi_payload["locale"] == "vi"
+    assert vi_payload["results"][0]["slug"] == "frameworks"
+    assert vi_payload["results"][0]["group"] == "Phản chiếu"
+
+    group_body = _request("/api/skills/search.json", "group=Safety")[1]
+    group_payload = json.loads(group_body)
+    assert [result["slug"] for result in group_payload["results"]] == ["safety"]
+
+
+def test_skill_catalog_blocks_enter_navigation_and_exposes_static_search_api() -> None:
+    _, body = _request("/vi/skills")
+    html = body.decode("utf-8")
+    assert 'action="/vi/skills"' in html
+    assert 'data-search-api="/vi/api/skills/search.json"' in html
+    assert 'data-search-locale="vi"' in html
+    assert "Kết quả cập nhật khi bạn nhập" in html
+
+    _, js_body = _request("/static/site.js")
+    js = js_body.decode("utf-8")
+    assert "preventSubmit(event)" in js
+    assert "event.preventDefault();" in js
+    assert "scoreSearchEntry" in js
+    assert 'credentials: "same-origin"' in js
 
 
 def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
@@ -499,6 +543,9 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "partials/skills-grid.html",
         "vi/partials/skills-grid.html",
         "api/skills.json",
+        "api/skills/search.json",
+        "vi/api/skills.json",
+        "vi/api/skills/search.json",
         "api/raw/meta.md",
         "api/skills/meta/prompts.json",
         "api/skills/meta/prompts.vi.json",
@@ -516,11 +563,21 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'src="/soulmap-ai/static/site.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
-    assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' in skills_html
+    assert 'action="/soulmap-ai/skills"' in skills_html
+    assert 'data-search-api="/soulmap-ai/api/skills/search.json"' in skills_html
+    assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' not in skills_html
     grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
     detail_html = (output / "partials/skill/meta.en.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/api/raw/meta.md"' in detail_html
+    assert (
+        (output / "api/skills/search.json").read_text(encoding="utf-8").startswith("{")
+    )
+    assert (
+        (output / "vi/api/skills/search.json")
+        .read_text(encoding="utf-8")
+        .startswith("{")
+    )
     assert 'href="/"' not in html
     assert "viewport-fit=cover" in html
     assert 'media="(prefers-color-scheme: dark)"' in html

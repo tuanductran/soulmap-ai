@@ -19,6 +19,7 @@ from wsgiref.types import StartResponse
 from soulmap.web.catalog import (
     CATALOG,
     catalog_json,
+    catalog_search_json,
     get_skill,
     locale_fields,
     raw_markdown,
@@ -464,6 +465,7 @@ def _skill_cards(locale: str, query: str = "") -> str:
 def _skill_grid_fragment(locale: str, query: str = "") -> str:
     return render_template(
         "partials/skill-grid.html",
+        no_results_label=_text(locale, "no_results"),
         skill_cards=_skill_cards(locale, query),
     )
 
@@ -476,12 +478,13 @@ def _skill_catalog(locale: str, query: str = "") -> str:
         catalog_lede=_text(locale, "catalog_lede"),
         search_label=_text(locale, "search_label"),
         search_placeholder=_text(locale, "search_placeholder"),
+        search_hint=_text(locale, "search_hint"),
         loading_label=_text(locale, "loading"),
         catalog_action=escape(_nav_path("/skills", locale), quote=True),
-        filter_endpoint=escape(
-            _nav_path("/partials/skills-grid.html", locale) + f"?lang={locale}",
-            quote=True,
+        search_api_endpoint=escape(
+            _nav_path("/api/skills/search.json", locale), quote=True
         ),
+        search_locale=locale,
         search_query=escape(query, quote=True),
         catalog_count=str(len(CATALOG)),
         skill_grid=_skill_grid_fragment(locale, query),
@@ -689,6 +692,23 @@ def application(
                 ("Cache-Control", "public, max-age=300"),
             ],
         )
+    if path == "/api/skills/search.json":
+        query_value = query.get("q", [""])[0]
+        group_value = query.get("group", [""])[0]
+        try:
+            limit_value = int(query.get("limit", ["50"])[0])
+        except ValueError:
+            limit_value = 50
+        return _response(
+            start_response,
+            "200 OK",
+            "application/json",
+            catalog_search_json(locale, query_value, group_value, limit_value),
+            [
+                ("Access-Control-Allow-Origin", "*"),
+                ("Cache-Control", "public, max-age=300"),
+            ],
+        )
     if path.startswith("/api/skills/") and (
         path.endswith("/prompts.json") or path.endswith("/prompts.vi.json")
     ):
@@ -871,7 +891,7 @@ def _normalise_base_path(base_path: str) -> str:
 def _apply_base_path(content: str, base_path: str) -> str:
     if not base_path:
         return content
-    for attribute in ("href", "src", "hx-get"):
+    for attribute in ("href", "src", "hx-get", "action", "data-search-api"):
         content = content.replace(f'{attribute}="/', f'{attribute}="{base_path}/')
     return content
 
@@ -947,7 +967,17 @@ def export_static(output: Path, base_path: str = "") -> list[Path]:
     (api_dir / "raw").mkdir(parents=True, exist_ok=True)
     (api_dir / "skills").mkdir(parents=True, exist_ok=True)
     (api_dir / "skills.json").write_text(catalog_json(), encoding="utf-8")
-    written.append(api_dir / "skills.json")
+    (api_dir / "skills" / "search.json").write_text(
+        catalog_search_json(), encoding="utf-8"
+    )
+    written.extend([api_dir / "skills.json", api_dir / "skills" / "search.json"])
+    vi_api_dir = output / "vi" / "api" / "skills"
+    vi_api_dir.mkdir(parents=True, exist_ok=True)
+    (output / "vi" / "api" / "skills.json").write_text(
+        catalog_json("vi"), encoding="utf-8"
+    )
+    (vi_api_dir / "search.json").write_text(catalog_search_json("vi"), encoding="utf-8")
+    written.extend([output / "vi" / "api" / "skills.json", vi_api_dir / "search.json"])
     for entry in CATALOG:
         raw_path = api_dir / "raw" / f"{entry.slug}.md"
         raw_path.write_text(raw_markdown(entry), encoding="utf-8")

@@ -32,6 +32,30 @@ def test_local_link_targets_reject_missing_artifact(tmp_path: Path) -> None:
         )
 
 
+def test_local_link_targets_validate_form_action_and_search_api(tmp_path: Path) -> None:
+    (tmp_path / "skills").mkdir()
+    (tmp_path / "skills" / "index.html").write_text("", encoding="utf-8")
+    (tmp_path / "api" / "skills").mkdir(parents=True)
+    (tmp_path / "api" / "skills" / "search.json").write_text("{}", encoding="utf-8")
+    _validate_local_link_targets(
+        '<form action="/soulmap-ai/skills"></form>'
+        '<form data-search-api="/soulmap-ai/api/skills/search.json"></form>',
+        "/soulmap-ai",
+        tmp_path,
+        Path("skills/index.html"),
+    )
+
+
+def test_local_link_targets_reject_missing_search_api(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="missing local target"):
+        _validate_local_link_targets(
+            '<form data-search-api="/soulmap-ai/api/skills/missing.json"></form>',
+            "/soulmap-ai",
+            tmp_path,
+            Path("skills/index.html"),
+        )
+
+
 @pytest.mark.parametrize(
     "script_tag",
     [

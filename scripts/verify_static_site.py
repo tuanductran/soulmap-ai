@@ -20,6 +20,9 @@ REQUIRED_FILES = {
     "static/site.css",
     "static/site.js",
     "api/skills.json",
+    "api/skills/search.json",
+    "vi/api/skills.json",
+    "vi/api/skills/search.json",
     "api/skills/meta/prompts.json",
     "api/skills/meta/prompts.vi.json",
     "partials/skills-grid.html",
@@ -49,7 +52,7 @@ def _is_allowed_generated_file(relative: Path) -> bool:
 
 
 def _validate_local_links(content: str, normalised_base: str, html_path: Path) -> None:
-    links = re.findall(r'(?:href|src|hx-get)="([^"]+)"', content)
+    links = re.findall(r'(?:href|src|hx-get|action|data-search-api)="([^"]+)"', content)
     local_links = [link for link in links if link.startswith("/")]
     if normalised_base:
         invalid_links = [
@@ -65,7 +68,7 @@ def _validate_local_link_targets(
     content: str, normalised_base: str, root: Path, html_path: Path
 ) -> None:
     """Ensure local HTML, asset, and htmx targets exist in the static artifact."""
-    links = re.findall(r'(?:href|src|hx-get)="([^"]+)"', content)
+    links = re.findall(r'(?:href|src|hx-get|action|data-search-api)="([^"]+)"', content)
     for link in links:
         if not link.startswith("/"):
             continue
