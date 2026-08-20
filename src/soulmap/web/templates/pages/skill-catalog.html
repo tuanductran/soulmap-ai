@@ -5,7 +5,7 @@
     <p class="lede">$catalog_lede</p>
   </div>
 </section>
-<section class="section tinted" x-data="skillCatalog">
+<section class="section tinted catalog-section" x-data="skillCatalog">
   <div class="container">
     <div class="catalog-toolbar">
       <form class="field search-form" action="$catalog_action" method="get" role="search" data-skill-root="$catalog_action" data-search-api="$search_api_endpoint" data-search-locale="$search_locale" data-search-search-hint="$search_mode_search_hint" data-search-ask-hint="$search_mode_ask_hint" data-search-query-label="$search_query_label" data-search-query-placeholder="$search_query_placeholder" data-search-query-hint="$search_query_hint" data-ask-query-label="$ask_query_label" data-ask-query-placeholder="$ask_query_placeholder" data-ask-query-hint="$ask_query_hint" data-search-error="$search_error" data-ask-empty="$ask_no_results" data-ask-result-label="$ask_result_label" data-ask-use-label="$ask_use_label" data-ask-details-label="$ask_details_label" x-on:submit="preventSubmit($$event)">
@@ -57,7 +57,7 @@
     <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
     <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug"
       x-transition.opacity.scale.origin.top.duration.200ms>
-      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">x</button>
+      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">×</button>
       <h2 class="sr-only" id="skill-modal-title">$modal_title</h2>
       <p id="skill-loading" class="htmx-indicator modal-loading" role="status">$loading_label</p>
       <div id="skill-modal-content"><p>$details_label</p></div>

@@ -214,3 +214,100 @@ html[lang="vi"] h1, html[lang="vi"] h2, html[lang="vi"] h3 { letter-spacing: -.0
 .prompt-scenario__source a { color: var(--teal-dark); font-weight: 700; overflow-wrap: anywhere; }
 .prompt-scenario__question { padding-top: .65rem; border-top: 1px solid var(--line); font-style: italic; }
 @media (prefers-color-scheme: dark) { .prompt-scenario { background: rgba(132,197,186,.07); } }
+
+/* Site-wide UI system: shared rhythm, hierarchy and resilient surfaces. */
+:root {
+  --container: 1160px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --section-space: clamp(4.5rem, 8vw, 7rem);
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+}
+html { scroll-padding-top: 8rem; }
+body { line-height: 1.7; }
+h1, h2, h3 { text-wrap: balance; }
+h1 { max-width: 18ch; }
+h2 { max-width: 24ch; }
+p, li { text-wrap: pretty; }
+.site-header { z-index: 10; }
+.nav-topline { min-height: 46px; }
+.nav-links { scrollbar-color: rgba(47,111,107,.38) transparent; scrollbar-width: thin; }
+.nav-links::-webkit-scrollbar { height: 3px; }
+.nav-links::-webkit-scrollbar-thumb { border-radius: 99px; background: rgba(47,111,107,.38); }
+.nav-links a, .locale-trigger, .button, .link-button { transition: color .18s var(--ease-out), background .18s var(--ease-out), border-color .18s var(--ease-out), box-shadow .18s var(--ease-out), transform .18s var(--ease-out); }
+.nav-links a:active, .locale-trigger:active, .button:active, .link-button:active { transform: scale(.98); }
+.page-hero { position: relative; isolation: isolate; overflow: hidden; padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(3.5rem, 7vw, 5.5rem); border-bottom: 1px solid var(--line); background: linear-gradient(135deg, rgba(201,155,80,.08), transparent 42%), linear-gradient(315deg, rgba(47,111,107,.06), transparent 48%); }
+.page-hero::after { position: absolute; right: 7%; bottom: 0; width: min(26vw, 300px); height: 1px; background: var(--gold); content: ""; opacity: .6; }
+.page-hero .container { position: relative; z-index: 1; }
+.page-hero .eyebrow { margin-bottom: 1.25rem; }
+.page-hero h1 { margin-bottom: 1.25rem; }
+.page-hero .lede { max-width: 65ch; }
+.hero { overflow: hidden; }
+.hero .eyebrow { max-width: 34rem; }
+.hero .actions { margin-top: 2.25rem; }
+.section { padding: var(--section-space) 0; }
+.section + .section { border-top: 1px solid rgba(38,51,58,.06); }
+.section.tinted { background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.28)); }
+.section-heading { max-width: 760px; margin-bottom: clamp(1.75rem, 4vw, 3rem); }
+.section-heading .eyebrow { margin-bottom: .8rem; }
+.section-heading .lede { max-width: 65ch; }
+.grid, .skill-grid, .privacy-grid { gap: clamp(1rem, 2vw, 1.35rem); }
+.card, .step, .download-card, .skill-card, .question-card { border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(42,57,59,.055); }
+.card, .skill-card { padding: clamp(1.2rem, 2.4vw, 1.55rem); }
+.card-title, .step-title, .download-card h2, .skill-card h2 { line-height: 1.25; }
+.card p, .step p, .download-card p, .skill-card p { max-width: 62ch; }
+.step { padding: clamp(1.15rem, 2.5vw, 1.5rem); }
+.step::before { border-radius: var(--radius-sm); }
+.callout { border-radius: 0 var(--radius-md) var(--radius-md) 0; box-shadow: 0 8px 24px rgba(42,57,59,.035); }
+.list li { padding: 1.05rem 0; }
+.faq-list { max-width: 900px; }
+.faq-item summary { font-size: clamp(1rem, 1.8vw, 1.15rem); }
+.download-card { padding: clamp(1.2rem, 2.5vw, 1.6rem); }
+.site-footer { margin-top: 0; padding-top: 2rem; }
+.footer-links { row-gap: .45rem; }
+.catalog-section { background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.36)); }
+.catalog-toolbar { margin-bottom: 2.5rem; padding: clamp(1rem, 2.5vw, 1.5rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-card); }
+.mode-switch__options { max-width: 500px; }
+.mode-option span { border-radius: var(--radius-sm); }
+.search-query { max-width: 780px; }
+.input { border-radius: var(--radius-sm); box-shadow: inset 0 1px 2px rgba(38,51,58,.04); }
+.mode-panel { margin-top: 2.75rem; }
+.mode-panel__heading { padding-bottom: .85rem; border-bottom: 1px solid var(--line); }
+.skill-card__actions .button, .skill-card__actions .link-button { min-height: 42px; }
+.question-card blockquote { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.modal-dialog { border-radius: var(--radius-lg); }
+.prompt-scenario { border-radius: var(--radius-md); }
+.prompt-scenario__prompt { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+@media (max-width: 820px) {
+  .page-hero { padding-top: 4rem; }
+  .hero-grid { gap: 2.5rem; }
+  .mirror-card { min-height: 300px; }
+  .section-heading { margin-bottom: 2rem; }
+}
+@media (max-width: 640px) {
+  .nav-topline { gap: .75rem; }
+  .brand { min-width: 0; }
+  .brand > span:last-child { white-space: nowrap; }
+  .locale-trigger { max-width: 52vw; }
+  .locale-trigger > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .page-hero { padding-bottom: 3.5rem; }
+  .page-hero::after { right: 1.75rem; width: 100px; }
+  .hero { padding-top: 3.75rem; }
+  .hero::before { inset: 14% -18% auto auto; width: 72vw; height: 72vw; }
+  .hero .actions { align-items: stretch; flex-direction: column; }
+  .hero .actions .button, .hero .actions .link-button { width: 100%; }
+  .mirror-card { min-height: 270px; padding: 1.75rem; }
+  .catalog-toolbar { border-radius: var(--radius-md); }
+  .mode-option { flex-basis: 0; }
+  .mode-option span { min-height: 44px; padding-inline: .65rem; }
+}
+html[lang="ko"] body { line-height: 1.78; }
+html[lang="ko"] .page-hero h1, html[lang="ko"] .hero h1 { letter-spacing: -.015em; }
+html[lang="ko"] .button, html[lang="ko"] .link-button { letter-spacing: -.01em; }
+html[lang="vi"] body { line-height: 1.72; }
+@media (prefers-color-scheme: dark) {
+  .section.tinted, .catalog-section { background: linear-gradient(180deg, rgba(34,48,46,.56), rgba(34,48,46,.34)); }
+  .page-hero { background: linear-gradient(135deg, rgba(224,184,106,.08), transparent 42%), linear-gradient(315deg, rgba(132,197,186,.08), transparent 48%); }
+  .section + .section { border-top-color: rgba(224,239,233,.08); }
+}
