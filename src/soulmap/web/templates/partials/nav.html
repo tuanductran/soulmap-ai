@@ -1,21 +1,23 @@
 <header class="site-header">
   <div class="container nav">
-    <a class="brand" href="$brand_home" aria-label="$brand_home_label">
-      <span class="brand-mark" aria-hidden="true">◌</span>
-      <span>SoulMap AI</span>
-    </a>
+    <div class="nav-topline">
+      <a class="brand" href="$brand_home" aria-label="$brand_home_label">
+        <span class="brand-mark" aria-hidden="true">◌</span>
+        <span>SoulMap AI</span>
+      </a>
+      <div class="locale-switcher" x-data="languageMenu" x-on:keydown.escape="open = false" x-on:click.outside="open = false">
+        <button class="locale-trigger" type="button" x-on:click="open = !open" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
+          <span>$language_label</span>
+          <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
+          <span class="locale-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="locale-menu" id="language-menu" x-show="open" x-transition.opacity.duration.150ms x-cloak role="menu" aria-label="$language_label">
+          $locale_options
+        </div>
+      </div>
+    </div>
     <nav class="nav-links" aria-label="$primary_nav_label">
       $nav_links
     </nav>
-    <div class="locale-switcher" x-data="languageMenu" x-on:keydown.escape="open = false" x-on:click.outside="open = false">
-      <button class="locale-trigger" type="button" x-on:click="open = !open" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
-        <span>$language_label</span>
-        <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
-        <span class="locale-chevron" aria-hidden="true">⌄</span>
-      </button>
-      <div class="locale-menu" id="language-menu" x-show="open" x-transition.opacity.duration.150ms x-cloak role="menu" aria-label="$language_label">
-        $locale_options
-      </div>
-    </div>
   </div>
 </header>
