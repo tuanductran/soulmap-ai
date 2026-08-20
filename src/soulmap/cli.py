@@ -12,7 +12,7 @@ from soulmap.devtools.evals import (
     eval_markdown_contracts,
     eval_responses,
 )
-from soulmap.devtools.packaging import build_skill, library
+from soulmap.devtools.packaging import build_skill, catalog_parity, library
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
@@ -38,6 +38,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "audit-knowledge": audit_knowledge.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
+        "catalog-parity": catalog_parity.main,
         "check-case": check_markdown_case.main,
         "check-links": check_markdown_links.main,
         "demo": soulmap_demo.main,

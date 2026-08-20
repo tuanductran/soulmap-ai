@@ -216,6 +216,7 @@ contracts:
 - `uv run soulmap eval-responses`
 - `uv run soulmap eval-groups`
 - `uv run soulmap eval-markdown-contracts`
+- `uv run soulmap catalog-parity`
 - `uv run soulmap build`
 - `uv run soulmap build --skill`
 - `uv run soulmap library-manifest`
