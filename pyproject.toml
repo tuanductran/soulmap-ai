@@ -97,7 +97,7 @@ pythonpath = ["src", "."]
 addopts = "-q"
 
 [tool.coverage.run]
-source = ["src/soulmap/runtime"]
+source = ["src/soulmap/runtime", "src/soulmap/web"]
 branch = true
 omit = [
   "src/soulmap/runtime/experimental/soulmap_demo.py",
@@ -117,7 +117,7 @@ fail_under = 95
 [tool.pyright]
 typeCheckingMode = "standard"
 pythonVersion = "3.11"
-include = ["src", "tests"]
+include = ["src", "tests", "scripts"]
 exclude = [
   ".venv",
   ".pytest_cache",
