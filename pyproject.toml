@@ -112,6 +112,7 @@ exclude_lines = [
   "raise SystemExit",
 ]
 show_missing = true
+fail_under = 95
 
 [tool.pyright]
 typeCheckingMode = "standard"
