@@ -579,8 +579,9 @@ default answer to that migration is no.
 
 Most non-crisis detection (framework routing, dependency, emotional intensity, and
 all topic-framework detectors) is language-unaware and operates on English text only.
-The current exception is the spiritual-bypass detector, which also loads the reviewed
-Vietnamese evidence in `reference/languages/vi/spiritual-bypass.json`.
+The current exception is the spiritual-bypass detector, which also loads reviewed
+locale evidence for Vietnamese (`vi`), Spanish (`es`), French (`fr`), Chinese (`zh`),
+and Korean (`ko`) from `reference/languages/`.
 
 ### Implementation boundary
 

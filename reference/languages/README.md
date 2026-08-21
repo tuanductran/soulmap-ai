@@ -25,8 +25,16 @@ for human review.
 
 | File | Purpose | Consumer |
 | --- | --- | --- |
-| `vi/spiritual-bypass.json` | Vietnamese spiritual-bypass and genuine-integration phrases | `spiritual_bypass_detector.py` |
+| `<locale>/spiritual-bypass.json` | Human-authored spiritual-bypass and genuine-integration phrases | `spiritual_bypass_detector.py` |
 | `vi/resources.json` | Optional Vietnamese resource recommendations | Future locale-aware tooling |
+
+## Supported runtime evidence
+
+The spiritual-bypass detector currently combines the English canonical phrases from
+`skills/spiritual/spiritual-discernment.md` with reviewed locale evidence for `vi`, `es`,
+`fr`, `zh`, and `ko`. The crisis detector has its separate protected language packs.
+These two mechanisms must not be conflated: locale evidence is not a translation engine,
+and matching a phrase does not prove the user's intent.
 
 ## Response language
 

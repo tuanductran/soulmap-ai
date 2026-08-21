@@ -47,12 +47,31 @@ def test_vietnamese_spiritual_reference_has_stable_schema() -> None:
     )
 
 
-def test_locale_loader_preserves_vietnamese_detection_evidence() -> None:
+@pytest.mark.parametrize(
+    ("phrase", "group"),
+    [
+        ("mình là empath nên", "bypass_spiritual_inflation"),
+        ("todo pasa por algo", "bypass_dismissing_pain"),
+        ("je leur ai déjà pardonné", "bypass_premature_acceptance"),
+        ("一切发生都有原因", "bypass_dismissing_pain"),
+        ("모든 일에는 이유가 있어", "bypass_dismissing_pain"),
+    ],
+)
+def test_locale_loader_preserves_supported_detection_evidence(
+    phrase: str, group: str
+) -> None:
     signals = load_locale_signal_groups(
         "spiritual-bypass.json", domain="spiritual_bypass"
     )
 
-    assert "mình là empath nên" in signals["bypass_spiritual_inflation"]
+    assert phrase in signals[group]
+
+
+def test_locale_loader_preserves_vietnamese_integration_evidence() -> None:
+    signals = load_locale_signal_groups(
+        "spiritual-bypass.json", domain="spiritual_bypass"
+    )
+
     assert "mình vẫn đang xử lý" in signals["genuine_integration"]
 
 

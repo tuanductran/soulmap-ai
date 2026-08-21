@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "locale": "es",
+  "language": "Spanish",
+  "domain": "spiritual_bypass",
+  "source_policy": "human-authored-runtime-reference",
+  "signals": {
+    "bypass_dismissing_pain": [
+      "todo pasa por algo",
+      "estaba destinado a suceder",
+      "el universo tiene un plan",
+      "esto es mi karma",
+      "estoy destinado a aprender de esto",
+      "todo sucede para mi bien mayor",
+      "solo tengo que dejarlo ir",
+      "necesito rendirme",
+      "necesito aceptarlo",
+      "no debería estar apegado",
+      "necesito elevar mi vibración",
+      "esto es solo una reacción del ego",
+      "necesito trascender esto",
+      "a nivel del alma elegí esto",
+      "me están poniendo a prueba",
+      "esta es una lección que necesitaba",
+      "todo es perfecto tal como es",
+      "solo tengo que agradecer"
+    ],
+    "bypass_premature_acceptance": [
+      "ya los he perdonado",
+      "estoy en paz con esto",
+      "ya lo superé",
+      "ya no me afecta",
+      "lo he aceptado",
+      "agradezco la lección",
+      "me hizo más fuerte",
+      "todo salió bien al final",
+      "ya no estoy enfadado",
+      "lo he dejado ir"
+    ],
+    "bypass_spiritual_inflation": [
+      "como trabajador de la luz",
+      "como empático siento",
+      "soy muy sensible, así que",
+      "mi vibración es demasiado alta para",
+      "he ascendido más allá de",
+      "desde una perspectiva de la quinta dimensión",
+      "he hecho el trabajo",
+      "soy muy avanzado espiritualmente",
+      "la mayoría de la gente no puede entenderme",
+      "funciono a otro nivel"
+    ],
+    "bypass_accountability": [
+      "era su karma, no el mío",
+      "ellos fueron mis maestros",
+      "yo atraje esto a mi vida",
+      "manifesté esta situación",
+      "los atraje por una razón",
+      "estábamos destinados a encontrarnos",
+      "ellos reflejaron mi sombra",
+      "el universo los envió"
+    ],
+    "genuine_integration": [
+      "todavía lo estoy sintiendo",
+      "todavía lo estoy procesando",
+      "aunque sé que",
+      "estoy intentando aceptarlo, pero",
+      "estoy trabajando en aceptarlo",
+      "me siento enfadado y también",
+      "ambas cosas son ciertas",
+      "es complicado",
+      "todavía no lo he asimilado del todo",
+      "todavía estoy con esto",
+      "es difícil aunque"
+    ]
+  }
+}
