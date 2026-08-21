@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "locale": "vi",
+  "language": "Vietnamese",
+  "domain": "resource_recommendations",
+  "source_policy": "curated-locale-reference",
+  "groups": {
+    "direction_and_personal_growth": [
+      {
+        "name": "Web5Ngay",
+        "url": "https://www.youtube.com/channel/UCkgjUHB8sdWbmdp39swMrTg",
+        "description": "Vietnamese reflections on habits, work, and everyday perspective shifts."
+      },
+      {
+        "name": "ThePresentWriter",
+        "url": "https://www.youtube.com/@ThePresentWriter",
+        "description": "Thoughtful essays on minimalism, deep work, and inner clarity."
+      }
+    ],
+    "settling_and_emotional_slowing": [
+      {
+        "name": "Hiên Dương",
+        "url": "https://www.youtube.com/channel/UCCaZWB37K6OWpwuHirFYqBQ",
+        "description": "Vietnamese guided meditations for settling and rest."
+      },
+      {
+        "name": "Minh Niệm",
+        "url": "https://www.youtube.com/minhniem",
+        "description": "Grounded reflections on suffering, compassion, and making room for pain."
+      }
+    ],
+    "healing_and_grief": [
+      {
+        "name": "Minh Niệm",
+        "url": "https://www.youtube.com/minhniem",
+        "description": "Talks on suffering, compassion, and making room for pain without collapsing into it."
+      },
+      {
+        "name": "toitinhthuc",
+        "url": "https://www.youtube.com/@toitinhthuc",
+        "description": "Reflections on impermanence, healing, and living close to what is real."
+      }
+    ],
+    "existential_and_meaning": [
+      {
+        "name": "ThePresentWriter",
+        "url": "https://www.youtube.com/@ThePresentWriter",
+        "description": "Long-form reflections on meaning, inner clarity, and a more grounded pace of life."
+      },
+      {
+        "name": "Psych2Go Vietnam",
+        "url": "https://www.youtube.com/channel/UCe-DaRWfYRVfcdasozr874A",
+        "description": "Accessible reflections on psychology and human behavior."
+      },
+      {
+        "name": "Sunhuyn Podcast",
+        "url": "https://www.youtube.com/@sunhuynpodcast",
+        "description": "Quiet reflections on self-understanding, emotional honesty, and returning to yourself."
+      }
+    ],
+    "inner_parts_and_shadow_work": [
+      {
+        "name": "HanhTrinhPhucHoi",
+        "url": "https://www.youtube.com/@HanhTrinhPhucHoi",
+        "description": "Podcasts exploring inner conflict, repair, and self-forgiveness."
+      },
+      {
+        "name": "Ngẫm Radio",
+        "url": "https://www.youtube.com/@ngamradio",
+        "description": "Empathetic stories giving voice to hidden inner struggles."
+      }
+    ]
+  }
+}

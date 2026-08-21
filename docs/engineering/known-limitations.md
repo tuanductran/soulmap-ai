@@ -537,12 +537,16 @@ pipeline changes.
 
 ### Why it exists
 
-Crisis detection is the one deliberate exception to the Markdown knowledge
+Crisis detection is the protected exception to the Markdown knowledge
 ownership rule. The full rationale is in
 [`knowledge-architecture.md`](knowledge-architecture.md#protected-modules):
 a parsing error or incomplete Markdown loading path could miss a genuine
 crisis signal. Static Python eliminates that failure mode. Crisis phrase lists
 are authored by humans for safety and must be explicit and reviewable.
+
+A separate, non-safety exception supports reviewed non-English evidence for selected
+non-crisis detectors. Those locale files live under `reference/languages/`, are loaded
+by an explicit runtime consumer, and do not contain doctrine or response content.
 
 ### Why it is intentional
 
@@ -573,15 +577,18 @@ default answer to that migration is no.
 | French | `config/safety_fr.py` | Crisis tier 1, tier 2, grandiosity signals |
 | Chinese | `config/safety_zh.py` | Crisis tier 1, tier 2, grandiosity signals |
 
-Non-crisis detection (framework routing, dependency, emotional intensity, and
-all topic-framework detectors) is language-unaware and operates on English
-text only.
+Most non-crisis detection (framework routing, dependency, emotional intensity, and
+all topic-framework detectors) is language-unaware and operates on English text only.
+The current exception is the spiritual-bypass detector, which also loads the reviewed
+Vietnamese evidence in `reference/languages/vi/spiritual-bypass.json`.
 
 ### Implementation boundary
 
-The five language packs are combined by `crisis_language_packs.py`. That
+The five crisis language packs are combined by `crisis_language_packs.py`. That
 module is a direct Python import, not a Markdown loader. `crisis_detector.py`
-calls the combined pack; it has no knowledge of which language matched.
+calls the combined pack; it has no knowledge of which language matched. Non-crisis
+locale evidence is discovered by `language_reference.py` and merged only by the
+consuming detector.
 
 ### Related documentation
 
@@ -597,7 +604,9 @@ calls the combined pack; it has no knowledge of which language matched.
 - `src/soulmap/runtime/config/safety_fr.py`
 - `src/soulmap/runtime/config/safety_zh.py`
 - `src/soulmap/runtime/knowledge/crisis_language_packs.py`
+- `src/soulmap/runtime/knowledge/language_reference.py`
 - `src/soulmap/runtime/detectors/crisis_detector.py`
+- `src/soulmap/runtime/detectors/spiritual_bypass_detector.py`
 
 ---
 

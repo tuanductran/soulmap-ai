@@ -55,8 +55,9 @@ in [README.md](../README.md):
 
 Every framework, safety rule, and detector is treated as a maintainable artifact with:
 
-* Markdown as the single source of truth for knowledge and detection phrases
-* a thin, deterministic Python layer for routing, safety gating, and packaging
+* canonical English Markdown as the source of truth for shipped knowledge and doctrine
+* narrowly scoped, human-authored locale evidence under `reference/languages/`
+* a thin, deterministic Python layer for routing, safety gating, packaging, and locale evidence loading
 * automated eval regression (`eval-groups`, `eval-markdown-contracts`, `eval-responses`)
 * explicit Architecture Decision Records for anything safety-adjacent
 * multi-platform distribution (Claude, ChatGPT, Gemini, Poe)
@@ -160,10 +161,11 @@ soulmap-ai/
 
 ### Detection & Safety Architecture
 
-Each detector follows a structured, Markdown-sourced format:
+Each detector follows a structured, source-backed format:
 
 ```text
-skills/frameworks/<framework>.md   → "## Detection signals" (source of truth)
+skills/frameworks/<framework>.md   → "## Detection signals" (canonical English source)
+reference/languages/<locale>/      → reviewed runtime-only locale evidence where needed
 src/soulmap/runtime/detectors/<framework>_detector.py  → loads + scores signals
 tests/test_<framework>_detector.py  → unit coverage of the loaded signals
 evals/datasets/groups.json          → grouped end-to-end routing coverage
@@ -619,7 +621,7 @@ This phase is not a commitment to add provider connectors or runtime APIs. It ma
 
 ### Global Definition of Done for Every Future Phase
 
-A phase is complete only when its source-of-truth documents are updated, characterization tests precede boundary changes, the relevant unit/contract/eval tests pass, Pyright and Ruff are clean, the full validation gates pass, static artifacts are verified when applicable, and the PR is reviewable without an automatic merge. Changes must preserve Python 3.11 support, the no-runtime-API boundary, Markdown knowledge ownership, deterministic safety enforcement, EN/VI/KO website parity, and the two-artifact packaging contract.
+A phase is complete only when its source-of-truth documents are updated, characterization tests precede boundary changes, the relevant unit/contract/eval tests pass, Pyright and Ruff are clean, the full validation gates pass, static artifacts are verified when applicable, and the PR is reviewable without an automatic merge. Changes must preserve Python 3.11 support, the no-runtime-API boundary, canonical English Markdown ownership, explicitly reviewed runtime locale evidence, deterministic safety enforcement, EN/VI/KO website parity, and the two-artifact packaging contract.
 
 ---
 
