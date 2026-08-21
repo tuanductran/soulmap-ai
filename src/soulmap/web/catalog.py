@@ -41,6 +41,18 @@ def _response_locale(locale: str) -> str:
     return locale if locale in SUPPORTED_LOCALES else "en"
 
 
+def raw_path(slug: str, locale: str = "en") -> str:
+    """Return the locale-prefixed public path for one raw Skill bundle."""
+    language = _content_locale(locale)
+    prefix = "" if language == "en" else f"/{language}"
+    return f"{prefix}/api/raw/{slug}.md"
+
+
+def raw_url(slug: str, locale: str = "en") -> str:
+    """Return the absolute public URL for one localized raw Skill bundle."""
+    return f"{PUBLIC_RAW_BASE_URL}{raw_path(slug, locale)}"
+
+
 @dataclass(frozen=True)
 class SkillEntry:
     """Public-facing metadata for one importable SoulMap capability group."""
@@ -50,17 +62,18 @@ class SkillEntry:
     featured_file: str
     locales: dict[str, dict[str, str]]
 
-    def public_dict(self) -> dict[str, object]:
-        """Return metadata safe for the public catalog API."""
-        fields = locale_fields(self, "en")
+    def public_dict(self, locale: str = "en") -> dict[str, object]:
+        """Return localized metadata safe for the public catalog API."""
+        language = _content_locale(locale)
+        fields = locale_fields(self, language)
         return {
             "slug": self.slug,
             **fields,
-            "raw_path": f"/api/raw/{self.slug}.md",
-            "raw_url": f"{PUBLIC_RAW_BASE_URL}/api/raw/{self.slug}.md",
+            "raw_path": raw_path(self.slug, language),
+            "raw_url": raw_url(self.slug, language),
             "featured_file": self.featured_file,
             "prompt_scenarios": [
-                scenario.localized("en") for scenario in scenarios_for(self.slug)
+                scenario.localized(language) for scenario in scenarios_for(self.slug)
             ],
         }
 
@@ -178,8 +191,8 @@ def _public_entry_dict(
     return {
         "slug": entry.slug,
         **fields,
-        "raw_path": f"/api/raw/{entry.slug}.md",
-        "raw_url": f"{raw_base_url.rstrip('/')}/api/raw/{entry.slug}.md"
+        "raw_path": raw_path(entry.slug, language),
+        "raw_url": f"{raw_base_url.rstrip('/')}{raw_path(entry.slug, language)}"
         if raw_base_url
         else "",
         "featured_file": entry.featured_file,
@@ -336,7 +349,7 @@ def raw_markdown(entry: SkillEntry, locale: str = "en") -> str:
         )
         sections.append("\n")
     scenarios = scenarios_for(entry.slug)
-    raw_url = f"{PUBLIC_RAW_BASE_URL}/api/raw/{entry.slug}.md"
+    source_url = raw_url(entry.slug, language)
     if scenarios:
         sections.append(f"\n---\n\n## {labels['suggested_prompts']}\n\n")
         sections.append(f"{labels['use_one']}\n\n")
@@ -345,7 +358,7 @@ def raw_markdown(entry: SkillEntry, locale: str = "en") -> str:
             sections.append(f"### {localized['title']}\n\n")
             sections.append(f"**{labels['when']}:** {localized['when']}\n\n")
             sections.append(f"**{labels['prompt']}:** {localized['prompt']}\n\n")
-            sections.append(f"**{labels['source_bundle']}:** {raw_url}\n\n")
+            sections.append(f"\n**{labels['source_bundle']}:** {source_url}\n\n")
             sections.append(
                 f"**{labels['starter_question']}:** {localized['question']}\n\n"
             )

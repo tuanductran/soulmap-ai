@@ -140,9 +140,17 @@ def test_localized_skills_controls_do_not_leak_ui_english(
         expect(form).not_to_have_attribute(
             "data-ask-query-hint", re.compile(r"\bAsk\b")
         )
-    expect(page.locator("#skill-grid .code-pill").first).to_have_attribute(
-        "aria-label", f"{skill_id_label}: meta"
+    slug = page.locator("#skill-grid .skill-card__slug").first
+    expect(slug).to_have_attribute("aria-label", f"{skill_id_label}: meta")
+    expect(slug).to_have_class(re.compile(r"\bsr-only\b"))
+    expect(page.locator("#skill-grid .code-pill")).to_have_count(0)
+    raw_href = page.locator(
+        '#skill-grid .skill-card a.link-button[href*="/api/raw/"]'
+    ).first
+    expected_raw_path = (
+        "/api/raw/meta.md" if locale == "en" else f"/{locale}/api/raw/meta.md"
     )
+    expect(raw_href).to_have_attribute("href", expected_raw_path)
 
 
 def test_skill_detail_htmx_modal_focus_and_provider_links(

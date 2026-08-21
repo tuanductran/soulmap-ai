@@ -517,7 +517,15 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
     _, vietnamese_body = _request("/partials/skill/meta.vi.html")
     vietnamese = vietnamese_body.decode("utf-8")
 
-    for html, labels, heading, prompt_label, source_label, question_label in (
+    for (
+        html,
+        labels,
+        heading,
+        prompt_label,
+        source_label,
+        question_label,
+        expected_raw_url,
+    ) in (
         (
             english,
             ("Open in ChatGPT", "Open in Claude", "Open in Claude Code"),
@@ -525,6 +533,7 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
             "Prompt",
             "Source Skill bundle",
             "Starter question",
+            "https://tuanductran.github.io/soulmap-ai/api/raw/meta.md",
         ),
         (
             vietnamese,
@@ -533,15 +542,14 @@ def test_skill_fragment_exposes_provider_handoffs_in_both_locales() -> None:
             "Prompt",
             "Gói Skill nguồn",
             "Câu hỏi bắt đầu",
+            "https://tuanductran.github.io/soulmap-ai/vi/api/raw/meta.md",
         ),
     ):
         assert heading in html
         assert html.count(prompt_label) >= 3
         assert html.count(source_label) >= 3
         assert html.count(question_label) >= 3
-        assert (
-            html.count("https://tuanductran.github.io/soulmap-ai/api/raw/meta.md") >= 3
-        )
+        assert html.count(expected_raw_url) >= 3
         assert "https://chatgpt.com/?q=" in html
         assert "https://claude.ai/new?q=" in html
         assert "claude-cli://open?q=" in html
@@ -624,12 +632,14 @@ def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
     _, vi_prompts_body = _request("/api/skills/meta/prompts.vi.json")
     vi_prompts = json.loads(vi_prompts_body.decode("utf-8"))
     assert vi_prompts["locale"] == "vi"
+    assert vi_prompts["raw_url"].endswith("/vi/api/raw/meta.md")
     assert "Bắt đầu một phiên phản chiếu" in vi_prompts["scenarios"][0]["title"]
 
     _, vi_catalog_body = _request("/api/skills.json", "lang=vi")
     vi_catalog = vi_catalog_body.decode("utf-8")
     assert '"locale": "vi"' in vi_catalog
     assert "Điều phối cốt lõi" in vi_catalog
+    assert '"raw_path": "/vi/api/raw/meta.md"' in vi_catalog
 
     _, raw_body = _request("/api/raw/meta.md")
     raw = raw_body.decode("utf-8")
@@ -643,6 +653,18 @@ def test_catalog_api_and_raw_bundle_are_public_and_complete() -> None:
     )
     assert "**Starter question:**" in raw
     assert "AGENTS.md" not in raw
+
+    _, vi_raw_body = _request("/api/raw/meta.md", "lang=vi")
+    vi_raw = vi_raw_body.decode("utf-8")
+    assert "# Gói Skill SoulMap: Điều phối cốt lõi" in vi_raw
+    assert (
+        "**Gói Skill nguồn:** https://tuanductran.github.io/soulmap-ai/vi/api/raw/meta.md"
+        in vi_raw
+    )
+    assert (
+        "**Gói Skill nguồn:** https://tuanductran.github.io/soulmap-ai/api/raw/meta.md"
+        not in vi_raw
+    )
     assert "SoulMap behavioral contract" in raw
     for forbidden in (".claude/", "src/", "tests/", "pyproject.toml", "uv.lock"):
         assert forbidden not in raw
@@ -764,9 +786,16 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "ko/api/skills.json",
         "ko/api/skills/search.json",
         "api/raw/meta.md",
+        "vi/api/raw/meta.md",
+        "ko/api/raw/meta.md",
+        "api/skills/meta.json",
+        "vi/api/skills/meta.json",
+        "ko/api/skills/meta.json",
         "api/skills/meta/prompts.json",
         "api/skills/meta/prompts.vi.json",
         "api/skills/meta/prompts.ko.json",
+        "vi/api/skills/meta/prompts.json",
+        "ko/api/skills/meta/prompts.json",
         "static/site.css",
         "static/site.js",
         "static/search.js",
@@ -795,6 +824,14 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
     detail_html = (output / "partials/skill/meta.en.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/api/raw/meta.md"' in detail_html
+    vi_detail_html = (output / "partials/skill/meta.vi.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'href="/soulmap-ai/vi/api/raw/meta.md"' in vi_detail_html
+    ko_detail_html = (output / "partials/skill/meta.ko.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'href="/soulmap-ai/ko/api/raw/meta.md"' in ko_detail_html
     assert (
         (output / "api/skills/search.json").read_text(encoding="utf-8").startswith("{")
     )

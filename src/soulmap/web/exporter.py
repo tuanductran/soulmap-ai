@@ -14,6 +14,8 @@ from soulmap.web.catalog import (
     catalog_search_json,
     locale_fields,
     raw_markdown,
+    raw_path,
+    raw_url,
 )
 from soulmap.web.i18n import SUPPORTED_LOCALES
 from soulmap.web.prompt_pack import scenarios_for
@@ -165,9 +167,9 @@ def export_static(
         locale_search_json.write_text(catalog_search_json(locale), encoding="utf-8")
         written.extend([locale_api_json, locale_search_json])
     for entry in CATALOG:
-        raw_path = api_dir / "raw" / f"{entry.slug}.md"
-        raw_path.write_text(raw_markdown(entry), encoding="utf-8")
-        written.append(raw_path)
+        english_raw_path = api_dir / "raw" / f"{entry.slug}.md"
+        english_raw_path.write_text(raw_markdown(entry), encoding="utf-8")
+        written.append(english_raw_path)
         data_path = api_dir / "skills" / f"{entry.slug}.json"
         data_path.write_text(
             json.dumps(entry.public_dict(), ensure_ascii=False, indent=2),
@@ -188,7 +190,7 @@ def export_static(
                         "version": 1,
                         "locale": prompt_locale,
                         "slug": entry.slug,
-                        "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+                        "raw_url": raw_url(entry.slug, prompt_locale),
                         "scenarios": [
                             scenario.localized(prompt_locale)
                             for scenario in scenarios_for(entry.slug)
@@ -200,6 +202,49 @@ def export_static(
                 encoding="utf-8",
             )
             written.append(prompt_path)
+            if prompt_locale == "en":
+                continue
+            localized_raw_path = output / raw_path(entry.slug, prompt_locale).lstrip(
+                "/"
+            )
+            localized_raw_path.parent.mkdir(parents=True, exist_ok=True)
+            localized_raw_path.write_text(
+                raw_markdown(entry, prompt_locale), encoding="utf-8"
+            )
+            written.append(localized_raw_path)
+            localized_data_path = (
+                output / prompt_locale / "api" / "skills" / f"{entry.slug}.json"
+            )
+            localized_data_path.parent.mkdir(parents=True, exist_ok=True)
+            localized_data_path.write_text(
+                json.dumps(
+                    entry.public_dict(prompt_locale), ensure_ascii=False, indent=2
+                ),
+                encoding="utf-8",
+            )
+            written.append(localized_data_path)
+            localized_prompt_path = (
+                output / prompt_locale / "api" / "skills" / entry.slug / "prompts.json"
+            )
+            localized_prompt_path.parent.mkdir(parents=True, exist_ok=True)
+            localized_prompt_path.write_text(
+                json.dumps(
+                    {
+                        "version": 1,
+                        "locale": prompt_locale,
+                        "slug": entry.slug,
+                        "raw_url": raw_url(entry.slug, prompt_locale),
+                        "scenarios": [
+                            scenario.localized(prompt_locale)
+                            for scenario in scenarios_for(entry.slug)
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            written.append(localized_prompt_path)
     (output / "static").mkdir()
     (output / "static" / "site.css").write_text(static_css_reader(), encoding="utf-8")
     for asset_name in ("site.js", "search.js"):

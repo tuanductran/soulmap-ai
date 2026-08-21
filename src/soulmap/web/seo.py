@@ -6,12 +6,23 @@ import json
 from html import escape
 from typing import Any
 
-from soulmap.web.i18n import SUPPORTED_LOCALES
+from soulmap.web.catalog import get_skill, locale_fields
+from soulmap.web.i18n import SUPPORTED_LOCALES, messages_for
 
 _LOCALE_PREFIXES = {
     locale: "" if locale == "en" else f"/{locale}" for locale in SUPPORTED_LOCALES
 }
 _OG_LOCALES = {"en": "en_US", "vi": "vi_VN", "ko": "ko_KR"}
+_BREADCRUMB_KEYS = {
+    "how-it-works": "how",
+    "boundaries": "boundaries",
+    "download": "download",
+    "notes": "notes",
+    "about": "about",
+    "faq": "faq",
+    "privacy": "privacy_page",
+    "skills": "skills",
+}
 
 
 def public_url(site_url: str, route: str, locale: str) -> str:
@@ -35,6 +46,18 @@ def alternate_links(site_url: str, route: str) -> str:
         f'<link rel="alternate" hreflang="x-default" href="{escape(alternates["en"], quote=True)}">'
     )
     return "\n".join(links)
+
+
+def _breadcrumb_label(segment: str, locale: str) -> str:
+    """Return a localized human label for a public route segment."""
+    messages = messages_for(locale)
+    message_key = _BREADCRUMB_KEYS.get(segment)
+    if message_key is not None:
+        return messages[message_key]
+    skill = get_skill(segment)
+    if skill is not None:
+        return locale_fields(skill, locale)["title"]
+    return segment.replace("-", " ").title()
 
 
 def _safe_json(value: Any) -> str:
@@ -90,7 +113,10 @@ def json_ld(
     ]
     if route != "/":
         segments = [segment for segment in route.strip("/").split("/") if segment]
-        labels = ["SoulMap AI", *segments]
+        labels = [
+            "SoulMap AI",
+            *(_breadcrumb_label(segment, locale) for segment in segments),
+        ]
         items: list[dict[str, Any]] = []
         for position, label in enumerate(labels, 1):
             item_route = (
@@ -99,7 +125,7 @@ def json_ld(
             item: dict[str, Any] = {
                 "@type": "ListItem",
                 "position": position,
-                "name": label.replace("-", " ").title(),
+                "name": label,
             }
             if position < len(labels):
                 item["item"] = public_url(site_url, item_route, locale)

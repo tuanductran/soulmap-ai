@@ -46,11 +46,17 @@ Localized copy, route decisions, escaping, card generation, API behavior, and st
 | `/skills` | Localized catalog of the six public SoulMap Skill groups |
 | `/skills/<slug>` | Direct, non-modal detail page for one Skill group |
 | `/vi/...` | Vietnamese UI route variants; English remains the default locale |
-| `/api/skills.json` | Public catalog metadata for all Skill groups |
-| `/api/skills/<slug>.json` | Localized metadata, absolute raw URL, and prompt scenario summaries |
+| `/ko/...` | Korean UI route variants |
+| `/api/skills.json` | English public catalog metadata for all Skill groups |
+| `/<lang>/api/skills.json` | Localized catalog metadata for Vietnamese or Korean |
+| `/api/skills/<slug>.json` | English metadata, absolute raw URL, and prompt scenario summaries |
+| `/<lang>/api/skills/<slug>.json` | Localized metadata, localized raw URL, and prompt scenario summaries |
 | `/api/skills/<slug>/prompts.json` | English machine-readable prompt scenarios for one Skill group |
 | `/api/skills/<slug>/prompts.vi.json` | Vietnamese machine-readable prompt scenarios for one Skill group |
-| `/api/raw/<slug>.md` | One complete public Markdown bundle with context prompts and source links |
+| `/api/skills/<slug>/prompts.ko.json` | Korean machine-readable prompt scenarios for one Skill group |
+| `/<lang>/api/skills/<slug>/prompts.json` | Locale-prefixed machine-readable prompt scenarios for Vietnamese or Korean |
+| `/api/raw/<slug>.md` | English public Markdown bundle with context prompts and source links |
+| `/<lang>/api/raw/<slug>.md` | Vietnamese or Korean localized public Markdown bundle with context prompts and source links |
 | `/partials/skill/<slug>.<lang>.html` | Server-rendered htmx modal fragment |
 | `/partials/skills-grid.html` | English htmx Skill-filter fragment |
 | `/vi/partials/skills-grid.html` | Vietnamese htmx Skill-filter fragment |
@@ -62,7 +68,7 @@ Localized copy, route decisions, escaping, card generation, API behavior, and st
 
 The catalog presents six complementary surfaces rather than implying that every file should be loaded at once. **Core orchestration** is the starting point for routing and response shape. **Reflective frameworks** are selected after the pattern is clear. **Safety guardrails** remain mandatory whenever risk, crisis, trauma, diagnosis, prediction, or prompt-injection pressure appears. **The grounded symbolic layer** is optional and never predictive. **Voice and calibration** shape delivery without adding authority or dependency. **Brand and positioning** guides public copy and visual coherence.
 
-Each catalog card provides a use-case summary, best-fit description, boundary statement, direct detail page, and raw Markdown URL. The detail surface then offers multiple context-specific scenarios for that Skill. Each scenario is ordered as prompt, absolute raw source link, starter question, and provider actions. Raw links are stable public URLs; they do not authenticate with, upload to, or call an AI provider.
+Each catalog card provides a use-case summary, best-fit description, boundary statement, direct detail page, and locale-aware raw Markdown URL. The detail surface then offers multiple context-specific scenarios for that Skill. Each scenario is ordered as prompt, absolute locale-aware raw source link, starter question, and provider actions. Raw links are stable public URLs; they do not authenticate with, upload to, or call an AI provider.
 
 ## htmx, Alpine, and modal boundary
 
@@ -72,7 +78,7 @@ The filter also has a normal HTML form fallback at `/skills?q=...`, and each Ski
 
 ## i18n contract
 
-English is the default public locale and uses the root routes (`/`, `/about`, `/skills`, and so on); the static build does not emit duplicate `/en/...` pages. Vietnamese is available through `/vi/...` routes and the language switcher. Runtime requests to legacy `/en/...` paths receive a permanent redirect to the corresponding root route. UI copy is localized in the website surface; raw Skill bundles remain canonical Markdown unless a separately reviewed translated artifact exists. A query parameter such as `?lang=vi` is supported for API/partial requests, while route prefixes are used for shareable pages.
+English is the default public locale and uses the root routes (`/`, `/about`, `/skills`, and so on); the static build does not emit duplicate `/en/...` pages. Vietnamese is available through `/vi/...` routes, Korean through `/ko/...` routes, and both are exposed in the language switcher. Runtime requests to legacy `/en/...` paths receive a permanent redirect to the corresponding root route. UI copy, catalog metadata, prompt scenarios and the public raw bundle headings/source links are localized for each supported locale; the underlying curated Skill Markdown remains the canonical source content unless a separately reviewed translated artifact exists. A query parameter such as `?lang=vi` is supported for dynamic API/partial requests, while locale-prefixed paths are emitted for shareable static API/raw artifacts.
 
 ## AI provider handoff contract
 

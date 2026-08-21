@@ -15,6 +15,10 @@ from soulmap.web.catalog import (
     get_skill,
     locale_fields,
     raw_markdown,
+    raw_url,
+)
+from soulmap.web.catalog import (
+    raw_path as localized_raw_path,
 )
 from soulmap.web.config import PUBLIC_SITE_URL
 from soulmap.web.http import _normalise_request_path, _response, _text
@@ -213,7 +217,7 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
                     "version": 1,
                     "locale": prompt_locale,
                     "slug": entry.slug,
-                    "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+                    "raw_url": raw_url(entry.slug, prompt_locale),
                     "scenarios": [
                         scenario.localized(prompt_locale)
                         for scenario in scenarios_for(entry.slug)
@@ -238,8 +242,8 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             )
         data = locale_fields(entry, locale) | {
             "slug": entry.slug,
-            "raw_path": f"/api/raw/{entry.slug}.md",
-            "raw_url": f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md",
+            "raw_path": localized_raw_path(entry.slug, locale),
+            "raw_url": raw_url(entry.slug, locale),
             "prompt_scenarios": [
                 scenario.localized(locale) for scenario in scenarios_for(entry.slug)
             ],

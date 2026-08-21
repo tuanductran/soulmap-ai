@@ -54,6 +54,48 @@ def test_json_ld_is_valid_and_escapes_script_terminators() -> None:
     )
 
 
+def test_json_ld_localizes_breadcrumb_labels_for_pages_and_skills() -> None:
+    vietnamese = json.loads(
+        json_ld(
+            site_url=SITE,
+            repository_url=REPOSITORY,
+            canonical_url=f"{SITE}/vi/skills/meta/",
+            locale="vi",
+            title="Điều phối cốt lõi",
+            description="Mô tả",
+            route="/skills/meta",
+        )
+    )
+    korean = json.loads(
+        json_ld(
+            site_url=SITE,
+            repository_url=REPOSITORY,
+            canonical_url=f"{SITE}/ko/how-it-works/",
+            locale="ko",
+            title="작동 방식",
+            description="설명",
+            route="/how-it-works",
+        )
+    )
+
+    vi_names = [
+        item["name"]
+        for item in next(
+            graph
+            for graph in vietnamese["@graph"]
+            if graph["@type"] == "BreadcrumbList"
+        )["itemListElement"]
+    ]
+    ko_names = [
+        item["name"]
+        for item in next(
+            graph for graph in korean["@graph"] if graph["@type"] == "BreadcrumbList"
+        )["itemListElement"]
+    ]
+    assert vi_names == ["SoulMap AI", "Bộ Skills", "Điều phối cốt lõi"]
+    assert ko_names == ["SoulMap AI", "작동 방식"]
+
+
 def test_sitemap_contains_all_supported_locales_for_each_route() -> None:
     sitemap = sitemap_xml(SITE, ["/", "/privacy"])
     assert sitemap.count("<url>") == 6
