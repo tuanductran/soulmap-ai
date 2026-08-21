@@ -20,7 +20,7 @@ from soulmap.runtime.knowledge.language_reference import load_locale_signal_grou
 # non-English evidence is runtime-only and lives under reference/languages/.
 _DISCERNMENT_PATH = default_skill_path("skills/spiritual/spiritual-discernment.md")
 _LOCALE_SIGNALS = load_locale_signal_groups(
-    "spiritual-bypass.json", domain="spiritual_bypass"
+    "spiritual-bypass.md", domain="spiritual_bypass"
 )
 
 

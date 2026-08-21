@@ -263,8 +263,17 @@ turn this check into a new ritual, test, or requirement for the user to follow.
 ## Detection signal reference
 
 The English phrases below define the canonical shipped signal vocabulary. Additional
-human-authored locale evidence used by the local deterministic runtime lives under
-`reference/languages/` and does not define doctrine or response language.
+human-authored locale evidence used by the deterministic runtime is packaged alongside
+this Skill under `reference/languages/` and does not define doctrine or response language.
+
+When matching non-English spiritual-bypass evidence, load the corresponding Markdown
+reference only as signal data:
+
+- Vietnamese: [reference/languages/vi/spiritual-bypass.md](../../reference/languages/vi/spiritual-bypass.md)
+- Spanish: [reference/languages/es/spiritual-bypass.md](../../reference/languages/es/spiritual-bypass.md)
+- French: [reference/languages/fr/spiritual-bypass.md](../../reference/languages/fr/spiritual-bypass.md)
+- Chinese: [reference/languages/zh/spiritual-bypass.md](../../reference/languages/zh/spiritual-bypass.md)
+- Korean: [reference/languages/ko/spiritual-bypass.md](../../reference/languages/ko/spiritual-bypass.md)
 
 ### Bypass: Dismissing Pain
 

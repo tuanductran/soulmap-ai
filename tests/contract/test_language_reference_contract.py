@@ -1,8 +1,7 @@
-"""Contracts for canonical English Skills and runtime locale evidence."""
+"""Contracts for canonical English Skills and packaged Markdown locale references."""
 
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 
@@ -32,19 +31,34 @@ def test_shipped_skills_do_not_contain_locale_prose() -> None:
     assert offenders == set()
 
 
-def test_vietnamese_spiritual_reference_has_stable_schema() -> None:
-    path = REPO_ROOT / "reference/languages/vi/spiritual-bypass.json"
-    payload = json.loads(path.read_text(encoding="utf-8"))
+def test_language_reference_tree_is_markdown_only() -> None:
+    reference_files = [
+        path
+        for path in (REPO_ROOT / "reference/languages").rglob("*")
+        if path.is_file() and path.name != "README.md"
+    ]
 
-    assert payload["schema_version"] == "1.0"
-    assert payload["locale"] == "vi"
-    assert payload["domain"] == "spiritual_bypass"
-    assert set(payload["signals"]) == _REQUIRED_GROUPS
-    assert all(
-        isinstance(phrase, str)
-        for phrases in payload["signals"].values()
-        for phrase in phrases
+    assert reference_files
+    assert all(path.suffix == ".md" for path in reference_files)
+
+
+def test_vietnamese_spiritual_reference_has_stable_markdown_schema() -> None:
+    path = REPO_ROOT / "reference/languages/vi/spiritual-bypass.md"
+    text = path.read_text(encoding="utf-8")
+    metadata = language_reference._parse_front_matter(text, path)
+    signals = load_locale_signal_groups(
+        "spiritual-bypass.md", domain="spiritual_bypass"
     )
+
+    assert metadata == {
+        "schema_version": "1.0",
+        "locale": "vi",
+        "language": "Vietnamese",
+        "domain": "spiritual_bypass",
+        "source_policy": "human-authored-runtime-reference",
+    }
+    assert set(signals) == _REQUIRED_GROUPS
+    assert all(phrases for phrases in signals.values())
 
 
 @pytest.mark.parametrize(
@@ -61,7 +75,7 @@ def test_locale_loader_preserves_supported_detection_evidence(
     phrase: str, group: str
 ) -> None:
     signals = load_locale_signal_groups(
-        "spiritual-bypass.json", domain="spiritual_bypass"
+        "spiritual-bypass.md", domain="spiritual_bypass"
     )
 
     assert phrase in signals[group]
@@ -69,72 +83,99 @@ def test_locale_loader_preserves_supported_detection_evidence(
 
 def test_locale_loader_preserves_vietnamese_integration_evidence() -> None:
     signals = load_locale_signal_groups(
-        "spiritual-bypass.json", domain="spiritual_bypass"
+        "spiritual-bypass.md", domain="spiritual_bypass"
     )
 
     assert "mình vẫn đang xử lý" in signals["genuine_integration"]
 
 
 def _write_reference_file(
-    root: Path, locale_directory: str, payload: object, filename: str = "signals.json"
+    root: Path,
+    locale_directory: str,
+    text: str,
+    filename: str = "signals.md",
 ) -> Path:
     path = root / locale_directory / filename
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload), encoding="utf-8")
+    path.write_text(text, encoding="utf-8")
     return path
 
 
-def test_locale_loader_merges_and_deduplicates_locale_files(tmp_path: Path) -> None:
+def _valid_reference(locale: str, phrases: list[str]) -> str:
+    lines = [
+        "---",
+        'schema_version: "1.0"',
+        f'locale: "{locale}"',
+        'language: "Test language"',
+        'domain: "test"',
+        'source_policy: "test"',
+        "---",
+        "",
+        "# Test reference",
+        "",
+        "## Bypass: Dismissing Pain",
+        "",
+        *[f'- "{phrase}"' for phrase in phrases],
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def test_locale_loader_merges_and_deduplicates_markdown_files(tmp_path: Path) -> None:
     reference_root = tmp_path / "reference/languages"
-    payload = {
-        "schema_version": "1.0",
-        "locale": "en",
-        "domain": "test",
-        "signals": {"group": ["Shared", "english"]},
-    }
-    _write_reference_file(reference_root, "en", payload)
+    _write_reference_file(
+        reference_root, "en", _valid_reference("en", ["Shared", "english"])
+    )
     _write_reference_file(
         reference_root,
         "vi",
-        {
-            **payload,
-            "locale": "vi",
-            "signals": {"group": ["shared", "vietnamese"]},
-        },
+        _valid_reference("vi", ["shared", "vietnamese"]),
     )
 
     original = language_reference._find_repo_file
     language_reference._find_repo_file = lambda _: reference_root
     try:
-        signals = load_locale_signal_groups("signals.json", domain="test")
+        signals = load_locale_signal_groups("signals.md", domain="test")
     finally:
         language_reference._find_repo_file = original
 
-    assert signals == {"group": ("shared", "english", "vietnamese")}
+    assert signals == {"bypass_dismissing_pain": ("shared", "english", "vietnamese")}
 
 
 @pytest.mark.parametrize(
-    ("payload", "error_fragment"),
+    ("text", "error_fragment"),
     [
-        ([], "must be an object"),
-        ({"locale": "en", "domain": "test"}, "has no signals object"),
-        ({"locale": "en", "domain": "wrong", "signals": {}}, "Expected domain"),
-        ({"domain": "test", "signals": {}}, "has no locale"),
-        ({"locale": "en", "domain": "test", "signals": []}, "no signals object"),
+        ("# no front matter\n", "has no front matter"),
         (
-            {"locale": "en", "domain": "test", "signals": {"group": "not-list"}},
-            "Invalid signal group",
+            '---\nschema_version: "1.0"\ndomain: "test"\n---\n',
+            "has no locale",
         ),
         (
-            {"locale": "en", "domain": "test", "signals": {"group": [""]}},
-            "Invalid phrase",
+            '---\nschema_version: "2.0"\nlocale: "en"\ndomain: "test"\n---\n',
+            "unsupported schema",
+        ),
+        (
+            '---\nschema_version: "1.0"\nlocale: "en"\ndomain: "wrong"\n---\n',
+            "Expected domain",
+        ),
+        (
+            '---\nschema_version: "1.0"\nlocale: "en"\ndomain: "test"\n---\n## Other\n',
+            "no signal sections",
+        ),
+        (
+            '---\nschema_version: "1.0"\nlocale: "en"\ndomain: "test"\n',
+            "unclosed front matter",
+        ),
+        (
+            "---\ninvalid-line\n---\n",
+            "Invalid front matter",
         ),
     ],
 )
-def test_locale_document_validation_rejects_invalid_schema(
-    tmp_path: Path, payload: object, error_fragment: str
+def test_markdown_locale_document_validation_rejects_invalid_schema(
+    tmp_path: Path, text: str, error_fragment: str
 ) -> None:
-    path = _write_reference_file(tmp_path, "en", payload)
+    path = _write_reference_file(tmp_path, "en", text)
 
     with pytest.raises(ValueError, match=error_fragment):
         language_reference._load_document(path, expected_domain="test")
@@ -145,17 +186,13 @@ def test_locale_loader_rejects_directory_locale_mismatch(tmp_path: Path) -> None
     path = _write_reference_file(
         reference_root,
         "vi",
-        {
-            "locale": "en",
-            "domain": "test",
-            "signals": {"group": ["phrase"]},
-        },
+        _valid_reference("en", ["phrase"]),
     )
     original = language_reference._find_repo_file
     language_reference._find_repo_file = lambda _: reference_root
     try:
         with pytest.raises(ValueError, match="does not match directory"):
-            load_locale_signal_groups("signals.json", domain="test")
+            load_locale_signal_groups("signals.md", domain="test")
     finally:
         language_reference._find_repo_file = original
 
@@ -189,6 +226,6 @@ def test_locale_loader_returns_empty_mapping_when_no_locale_files(
     original = language_reference._find_repo_file
     language_reference._find_repo_file = lambda _: reference_root
     try:
-        assert load_locale_signal_groups("signals.json", domain="test") == {}
+        assert load_locale_signal_groups("signals.md", domain="test") == {}
     finally:
         language_reference._find_repo_file = original

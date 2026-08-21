@@ -14,13 +14,13 @@ Formats
 -------
 soulmap-ai.zip
     Standard distribution zip for manual extraction and document-based tools.
-    Includes root SKILL.md, AGENTS.md, LICENSE, and skills/.
+    Includes root SKILL.md, AGENTS.md, LICENSE, skills/, and reference/.
     Excludes .claude-plugin/ and templates/ (internal-only, not shipped).
 
 soulmap-ai.skill
-    Skill-oriented archive with the same core knowledge files as the zip build.
-    Also includes the full .claude-plugin/ directory without rewriting it.
-    Excludes templates/ (internal-only, not shipped).
+    Skill-oriented archive with the same core knowledge files as the zip build,
+    including reference/. Also includes the full .claude-plugin/ directory without
+    rewriting it. Excludes templates/ (internal-only, not shipped).
 """
 
 from __future__ import annotations
@@ -63,7 +63,7 @@ def _iter_inputs(repo_root: Path) -> list[Path]:
         if candidate.is_file():
             paths.append(candidate)
 
-    for folder in ["skills"]:
+    for folder in ["skills", "reference"]:
         base = repo_root / folder
         for path in base.rglob("*"):
             if path.is_file():

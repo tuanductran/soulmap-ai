@@ -10,7 +10,7 @@ from the shipped Markdown skill files at import time. The loader utilities in
 structure and Python data structures.
 
 A narrow exception exists for reviewed non-English evidence. Those phrases live in
-runtime-only JSON files under `reference/languages/` and are loaded explicitly by the
+packaged Markdown files under `reference/languages/` and are loaded explicitly by the
 consuming detector. They support deterministic detection but do not define doctrine,
 framework guidance, voice, or response language.
 
@@ -43,9 +43,9 @@ reading the detector itself. There is no separate registry.
 
 The `soulmap audit-knowledge` command independently verifies the Python-side
 ownership by tracing runtime imports and cross-referencing them against Markdown
-content. Locale JSON ownership is verified by its schema contracts and the consuming
-detector tests. Together these checks provide the authoritative record of active
-sources, orphaned constants, and detector ownership. Trust the tools over any static
+content. Locale Markdown ownership is verified by its front-matter/heading contracts
+and the consuming detector tests. Together these checks provide the authoritative record
+of active sources, orphaned constants, and detector ownership. Trust the tools over any static
 document.
 
 ## Protected modules
@@ -57,9 +57,9 @@ by direct import, not Markdown loading), and
 `src/soulmap/runtime/detectors/crisis_detector.py` use hardcoded Python constants
 rather than Markdown-loaded phrase lists. This is intentional.
 
-The non-crisis `reference/languages/` directory is a separate, runtime-only evidence
-layer. It is not a protected safety module, does not replace human review, and does not
-enter either AI-facing artifact.
+The non-crisis `reference/languages/` directory is a packaged evidence layer. It is
+not a protected safety module, does not replace human review, and enters both AI-facing
+artifacts as a bundled Markdown reference resource.
 
 Crisis detection (Issue #130) is multilingual but still fully static: each
 language pack is a literal, human-authored tuple of phrases with no translation

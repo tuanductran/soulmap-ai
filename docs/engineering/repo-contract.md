@@ -18,7 +18,7 @@ Use it to answer four questions for every major repo surface:
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
 | `skills/` | Shipped knowledge base content | Shipped | Canonical English frameworks, brand doctrine, safety knowledge, voice and meta references | Markdown contract checks, eval source checks, build smoke, and release review |
-| `reference/` | Runtime-only locale evidence and optional localized references | Local-only source data | Human-authored locale phrase evidence and optional localized resource metadata; no doctrine or response content | Locale schema contracts, focused detector regression tests, and runtime validation |
+| `reference/` | Packaged Markdown locale evidence and optional localized references | Shipped resource data | Human-authored locale phrase evidence and optional localized resource metadata; no doctrine or response content | Markdown contracts, focused detector regression tests, package smoke, and runtime validation |
 | `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
@@ -36,7 +36,7 @@ Use it to answer four questions for every major repo surface:
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
-- Shipped knowledge truth lives in `skills/` and is canonical English. Runtime-only locale evidence lives in `reference/` and must not define doctrine or response content. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
+- Shipped knowledge truth lives in `skills/` and is canonical English. Packaged locale evidence lives in `reference/` and must not define doctrine or response content. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Public website implementation truth lives in `src/soulmap/web/`; it is not part of the
@@ -48,8 +48,8 @@ Use it to answer four questions for every major repo surface:
   `dist/soulmap-ai-library.json`, and the tests that verify them.
 - Python wheel/sdist output is local tooling only; it must not be described as the AI Skill
   installation surface. AI-tool imports use the generated `.skill` or `.zip` artifacts.
-  Source distributions may include `reference/` for local runtime and maintenance tooling,
-  but neither AI artifact includes it.
+  Both AI artifacts include the packaged Markdown under `reference/`; source distributions
+  include it as well for local runtime and maintenance tooling.
 
 ## Drift rules
 

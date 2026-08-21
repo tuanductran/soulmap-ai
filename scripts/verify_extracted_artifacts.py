@@ -62,9 +62,10 @@ def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
         candidate = repo_root / name
         if candidate.is_file():
             paths.add(candidate)
-    skills_root = repo_root / "skills"
-    if skills_root.is_dir():
-        paths.update(path for path in skills_root.rglob("*") if path.is_file())
+    for folder in ("skills", "reference"):
+        content_root = repo_root / folder
+        if content_root.is_dir():
+            paths.update(path for path in content_root.rglob("*") if path.is_file())
     if include_plugin:
         plugin_root = repo_root / ".claude-plugin"
         if plugin_root.is_dir():
@@ -138,7 +139,10 @@ def _assert_expected_members(
             )
 
         for name in sorted(actual):
-            if not name.startswith("skills/") or not name.endswith(".md"):
+            if not (
+                (name.startswith("skills/") or name.startswith("reference/"))
+                and name.endswith(".md")
+            ):
                 continue
             content = archive.read(name).decode("utf-8")
             violations = [

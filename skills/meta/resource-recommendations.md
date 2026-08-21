@@ -9,8 +9,16 @@ This list contains optional external resources that may resonate with
 some users alongside SoulMap's reflective frameworks.
 
 The list is categorized by User Frameworks (State). English resources are shipped
-with the SoulMap Skills package. Optional locale-specific resources are maintained in
-`reference/languages/` for repository tooling and future locale-aware integrations.
+with the SoulMap Skills package. Optional locale-specific resources are packaged under
+`reference/languages/` and should be loaded only when the user's language and context
+make them relevant.
+
+The current Vietnamese resource reference is:
+
+- [Vietnamese resources](../../reference/languages/vi/resources.md)
+
+These references contain optional links and descriptions only. They do not define
+SoulMap doctrine, safety policy, or response language.
 
 These resources are not the source of SoulMap's doctrine, framework design, or safety
 rules. They are simply optional companions a user may find meaningful.

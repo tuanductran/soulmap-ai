@@ -114,8 +114,9 @@ text; they never produce it.
 ### What it is
 
 Detection phrases, framework response structures, voice rules, safety
-doctrine, and brand guidance all live in `skills/` or `AGENTS.md` as
-Markdown. Python reads these files at import time but never originates their
+doctrine, and brand guidance all live in `skills/` or `AGENTS.md` as Markdown.
+Reviewed locale evidence and optional localized resources live in packaged Markdown
+under `reference/`. Python reads these files at import time but never originates their
 content.
 
 ### Why it exists
@@ -144,7 +145,8 @@ is exactly one authoritative location per piece of content.
 
 ```mermaid
 flowchart LR
-    A["skills/ (Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
+    A["skills/ (canonical Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
+    R["reference/ (packaged Markdown)"] -- loaded where explicitly consumed --> B
     B -- parsed phrase lists --> C["src/soulmap/runtime/detectors/"]
     C -- signals --> D["src/soulmap/runtime/routing/framework_selector.py"]
     D -- instruction string --> E[LLM]
@@ -169,7 +171,8 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
-- `skills/` - all shipped knowledge files
+- `skills/` - all shipped canonical knowledge files
+- `reference/` - packaged locale evidence and optional localized references
 
 ---
 
@@ -544,9 +547,10 @@ a parsing error or incomplete Markdown loading path could miss a genuine
 crisis signal. Static Python eliminates that failure mode. Crisis phrase lists
 are authored by humans for safety and must be explicit and reviewable.
 
-A separate, non-safety exception supports reviewed non-English evidence for selected
-non-crisis detectors. Those locale files live under `reference/languages/`, are loaded
-by an explicit runtime consumer, and do not contain doctrine or response content.
+A separate, non-safety evidence layer supports reviewed non-English phrases for selected
+non-crisis detectors. Those Markdown references live under `reference/languages/`, are
+packaged with the Skills, loaded by an explicit runtime consumer, and do not contain
+doctrine or response content.
 
 ### Why it is intentional
 

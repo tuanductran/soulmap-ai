@@ -2,8 +2,8 @@
 
 English phrases used below are taken verbatim from
 skills/spiritual/spiritual-discernment.md, "## Detection signal reference".
-Vietnamese phrase coverage is maintained in
-reference/languages/vi/spiritual-bypass.json and is tested separately. Nothing
+Locale phrase coverage is maintained in
+reference/languages/<locale>/spiritual-bypass.md and is tested separately. Nothing
 here is guessed.
 """
 

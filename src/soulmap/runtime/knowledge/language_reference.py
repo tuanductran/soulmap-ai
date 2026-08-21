@@ -1,13 +1,21 @@
-"""Load human-authored runtime-only language reference data."""
+"""Load human-authored runtime language references from Markdown."""
 
 from __future__ import annotations
 
-import json
 import os
 from pathlib import Path
-from typing import cast
+
+from soulmap.runtime.knowledge.keyword_lists import extract_keyword_section
 
 LocaleSignals = dict[str, tuple[str, ...]]
+
+_SECTION_KEYS = {
+    "Bypass: Dismissing Pain": "bypass_dismissing_pain",
+    "Bypass: Premature Acceptance": "bypass_premature_acceptance",
+    "Bypass: Spiritual Inflation": "bypass_spiritual_inflation",
+    "Bypass: Bypassing Accountability": "bypass_accountability",
+    "Genuine Integration Signals": "genuine_integration",
+}
 
 
 def _find_repo_file(relative_path: str) -> Path:
@@ -30,38 +38,52 @@ def _find_repo_file(relative_path: str) -> Path:
     )
 
 
-def _load_document(path: Path, *, expected_domain: str) -> tuple[str, LocaleSignals]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict):
-        raise ValueError(f"Language reference must be an object: {path}")
+def _parse_front_matter(text: str, path: Path) -> dict[str, str]:
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"Language reference has no front matter: {path}")
 
-    locale = payload.get("locale")
-    domain = payload.get("domain")
-    signals = payload.get("signals")
-    if not isinstance(locale, str) or not locale:
+    metadata: dict[str, str] = {}
+    for line in lines[1:]:
+        if line.strip() == "---":
+            return metadata
+        key, separator, value = line.partition(":")
+        if not separator or not key.strip() or not value.strip():
+            raise ValueError(f"Invalid front matter in language reference: {path}")
+        metadata[key.strip()] = value.strip().strip('"').strip("'")
+
+    raise ValueError(f"Language reference has unclosed front matter: {path}")
+
+
+def _load_document(path: Path, *, expected_domain: str) -> tuple[str, LocaleSignals]:
+    text = path.read_text(encoding="utf-8")
+    metadata = _parse_front_matter(text, path)
+    locale = metadata.get("locale", "")
+    domain = metadata.get("domain")
+    if not locale:
         raise ValueError(f"Language reference has no locale: {path}")
+    if metadata.get("schema_version") != "1.0":
+        raise ValueError(f"Language reference has unsupported schema: {path}")
     if domain != expected_domain:
         raise ValueError(f"Expected domain {expected_domain!r}, got {domain!r}: {path}")
-    if not isinstance(signals, dict):
-        raise ValueError(f"Language reference has no signals object: {path}")
 
     parsed: LocaleSignals = {}
-    for name, phrases in signals.items():
-        if not isinstance(name, str) or not isinstance(phrases, list):
-            raise ValueError(f"Invalid signal group in language reference: {path}")
-        if not all(isinstance(phrase, str) and phrase.strip() for phrase in phrases):
-            raise ValueError(f"Invalid phrase in language reference: {path}")
-        parsed[name] = tuple(dict.fromkeys(phrase.lower() for phrase in phrases))
+    for heading, group in _SECTION_KEYS.items():
+        phrases = extract_keyword_section(text, heading)
+        if phrases:
+            parsed[group] = phrases
 
+    if not parsed:
+        raise ValueError(f"Language reference has no signal sections: {path}")
     return locale, parsed
 
 
 def load_locale_signal_groups(filename: str, *, domain: str) -> LocaleSignals:
-    """Load and merge a signal document from every locale directory.
+    """Load and merge Markdown signal documents from every locale directory.
 
-    Locale files are deliberately runtime-only and human-authored. The loader discovers
-    ``reference/languages/<locale>/<filename>`` files so adding a reviewed locale does
-    not require editing a detector module.
+    Locale files are runtime-only and human-authored. The loader discovers
+    ``reference/languages/<locale>/<filename>`` files so adding a reviewed locale
+    does not require editing a detector module.
     """
     reference_root = _find_repo_file("reference/languages")
     merged: LocaleSignals = {}
@@ -73,9 +95,8 @@ def load_locale_signal_groups(filename: str, *, domain: str) -> LocaleSignals:
                 f"Locale {locale!r} does not match directory {directory_locale!r}: "
                 f"{path}"
             )
-        del locale
         for name, phrases in signals.items():
             existing = merged.get(name, ())
             merged[name] = tuple(dict.fromkeys((*existing, *phrases)))
 
-    return cast(LocaleSignals, merged)
+    return merged
