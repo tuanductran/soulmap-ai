@@ -242,6 +242,7 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Verifying web/Library/Skills catalog parity before release mutation
 - Verifying artifact SHA-256 integrity before release mutation
 - Verifying extracted ZIP and `.skill` boundaries before release mutation
+- Running the artifact security audit before release mutation
 - Creating a GitHub Release and uploading all three artifacts
 
 Before triggering a release, review:

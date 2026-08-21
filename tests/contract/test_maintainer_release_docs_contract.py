@@ -12,6 +12,7 @@ REQUIRED_ARTIFACT_COMMANDS = (
     "uv run soulmap library-manifest",
     "uv run python scripts/verify_artifact_hashes.py",
     "uv run python scripts/verify_extracted_artifacts.py",
+    "uv run python scripts/verify_artifact_security.py",
 )
 
 

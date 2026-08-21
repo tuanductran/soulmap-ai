@@ -9,6 +9,7 @@ RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release.yml"
 LIBRARY_COMMAND = "uv run soulmap library-manifest"
 VERIFY_COMMAND = "uv run python scripts/verify_artifact_hashes.py"
 EXTRACT_COMMAND = "uv run python scripts/verify_extracted_artifacts.py"
+SECURITY_COMMAND = "uv run python scripts/verify_artifact_security.py"
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
 
 
@@ -24,7 +25,8 @@ def _assert_order(content: str, *markers: str) -> None:
 def _assert_verify_before_final_manifest_upload(content: str) -> None:
     assert content.index(LIBRARY_COMMAND) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)
-    assert content.index(EXTRACT_COMMAND) < content.rindex(MANIFEST_PATH)
+    assert content.index(EXTRACT_COMMAND) < content.index(SECURITY_COMMAND)
+    assert content.index(SECURITY_COMMAND) < content.rindex(MANIFEST_PATH)
 
 
 def test_ci_build_job_verifies_and_uploads_library_manifest() -> None:
@@ -34,6 +36,7 @@ def test_ci_build_job_verifies_and_uploads_library_manifest() -> None:
     assert LIBRARY_COMMAND in content
     assert VERIFY_COMMAND in content
     assert EXTRACT_COMMAND in content
+    assert SECURITY_COMMAND in content
     assert MANIFEST_PATH in content
     _assert_verify_before_final_manifest_upload(content)
 
@@ -44,6 +47,7 @@ def test_release_workflow_verifies_before_uploading_library_manifest() -> None:
     assert LIBRARY_COMMAND in content
     assert VERIFY_COMMAND in content
     assert EXTRACT_COMMAND in content
+    assert SECURITY_COMMAND in content
     assert MANIFEST_PATH in content
     assert "id-token: write" in content
     assert "attestations: write" in content
