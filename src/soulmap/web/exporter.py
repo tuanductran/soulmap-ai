@@ -7,6 +7,7 @@ import shutil
 from collections.abc import Callable
 from pathlib import Path
 
+from soulmap.web.assets import STATIC_DIR
 from soulmap.web.build import build_key, load_reusable_output, write_manifest
 from soulmap.web.catalog import (
     CATALOG,
@@ -51,7 +52,7 @@ def _apply_base_path(content: str, base_path: str) -> str:
         "data-skill-root",
     ):
         content = content.replace(f'{attribute}="/', f'{attribute}="{base_path}/')
-    return content
+    return content.replace('url("/', f'url("{base_path}/')
 
 
 def _write_page(
@@ -246,14 +247,20 @@ def export_static(
             )
             written.append(localized_prompt_path)
     (output / "static").mkdir()
-    (output / "static" / "site.css").write_text(static_css_reader(), encoding="utf-8")
+    (output / "static" / "site.css").write_text(
+        _apply_base_path(static_css_reader(), normalised_base), encoding="utf-8"
+    )
     for asset_name in ("site.js", "search.js"):
-        static_dir = Path(__file__).with_name("static")
         (output / "static" / asset_name).write_text(
-            (static_dir / asset_name).read_text(encoding="utf-8"),
+            (STATIC_DIR / asset_name).read_text(encoding="utf-8"),
             encoding="utf-8",
         )
-    favicon_source = Path(__file__).with_name("static") / "favicon.ico"
+    fonts_output = output / "static" / "fonts"
+    fonts_output.mkdir(parents=True, exist_ok=True)
+    for font_name in ("InterVariable.woff2", "ManropeVariable.woff2"):
+        font_path = fonts_output / font_name
+        shutil.copyfile(STATIC_DIR / "fonts" / font_name, font_path)
+    favicon_source = STATIC_DIR / "favicon.ico"
     shutil.copyfile(favicon_source, output / "favicon.ico")
     (output / "robots.txt").write_text(robots_txt(PUBLIC_SITE_URL), encoding="utf-8")
     (output / "sitemap.xml").write_text(
@@ -264,6 +271,8 @@ def export_static(
             output / "static" / "site.css",
             output / "static" / "site.js",
             output / "static" / "search.js",
+            output / "static" / "fonts" / "InterVariable.woff2",
+            output / "static" / "fonts" / "ManropeVariable.woff2",
             output / "favicon.ico",
             output / "robots.txt",
             output / "sitemap.xml",

@@ -1,6 +1,121 @@
+(() => {
+  const metadataSelectors = [
+    'meta[name="description"]',
+    'meta[property^="og:"]',
+    'meta[name^="twitter:"]',
+  ];
+
+  function syncDocumentMetadata(responseText) {
+    if (!responseText || typeof DOMParser === "undefined") return;
+    const nextDocument = new DOMParser().parseFromString(responseText, "text/html");
+    if (!nextDocument.documentElement.lang) return;
+
+    document.documentElement.lang = nextDocument.documentElement.lang;
+    document.title = nextDocument.title;
+
+    for (const selector of metadataSelectors) {
+      for (const currentMeta of document.head.querySelectorAll(selector)) {
+        currentMeta.remove();
+      }
+      for (const nextMeta of nextDocument.head.querySelectorAll(selector)) {
+        document.head.appendChild(nextMeta.cloneNode(true));
+      }
+    }
+
+    const currentCanonical = document.head.querySelector('link[rel="canonical"]');
+    const nextCanonical = nextDocument.head.querySelector('link[rel="canonical"]');
+    if (currentCanonical && nextCanonical) {
+      currentCanonical.replaceWith(nextCanonical.cloneNode(true));
+    }
+
+    for (const currentAlternate of document.head.querySelectorAll('link[rel="alternate"]')) {
+      currentAlternate.remove();
+    }
+    for (const nextAlternate of nextDocument.head.querySelectorAll('link[rel="alternate"]')) {
+      document.head.appendChild(nextAlternate.cloneNode(true));
+    }
+
+    for (const id of ["soulmap-locale-data"] ) {
+      const currentScript = document.getElementById(id);
+      const nextScript = nextDocument.getElementById(id);
+      if (currentScript && nextScript) currentScript.textContent = nextScript.textContent;
+    }
+
+    const currentStructuredData = document.querySelector('script[type="application/ld+json"]');
+    const nextStructuredData = nextDocument.querySelector('script[type="application/ld+json"]');
+    if (currentStructuredData && nextStructuredData) {
+      currentStructuredData.textContent = nextStructuredData.textContent;
+    }
+  }
+
+  document.addEventListener("htmx:beforeRequest", () => {
+    document.documentElement.setAttribute("aria-busy", "true");
+  });
+
+  document.addEventListener("htmx:beforeSwap", (event) => {
+    const target = event.detail?.target;
+    if (target !== document.body) return;
+    syncDocumentMetadata(event.detail?.xhr?.responseText);
+  });
+
+  document.addEventListener("htmx:afterSettle", (event) => {
+    if (event.detail?.target !== document.body) return;
+    document.documentElement.removeAttribute("aria-busy");
+    document.body.classList.remove("modal-open");
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.dispatchEvent(new CustomEvent("soulmap:page-ready"));
+  });
+
+  document.addEventListener("htmx:responseError", () => {
+    document.documentElement.removeAttribute("aria-busy");
+  });
+})();
+
 document.addEventListener("alpine:init", () => {
   Alpine.data("languageMenu", () => ({
     open: false,
+    toggle() {
+      if (this.open) {
+        this.close(true);
+      } else {
+        this.openMenu();
+      }
+    },
+    openMenu() {
+      this.open = true;
+      this.$nextTick(() => this.focusFirst());
+    },
+    close(returnFocus = true) {
+      this.open = false;
+      if (returnFocus) {
+        this.$nextTick(() => {
+          this.$root.querySelector(".locale-trigger")?.focus();
+        });
+      }
+    },
+    focusFirst() {
+      this.$root.querySelector('[role="menuitem"]')?.focus();
+    },
+    onKeydown(event) {
+      const items = Array.from(this.$root.querySelectorAll('[role="menuitem"]'));
+      if (event.key === "Escape") {
+        event.preventDefault();
+        this.close(true);
+        return;
+      }
+      if (!items.length || !["ArrowDown", "ArrowUp"].includes(event.key)) return;
+      event.preventDefault();
+      if (!this.open) {
+        this.openMenu();
+        return;
+      }
+      const currentIndex = items.indexOf(document.activeElement);
+      const direction = event.key === "ArrowDown" ? 1 : -1;
+      const nextIndex = currentIndex < 0
+        ? 0
+        : (currentIndex + direction + items.length) % items.length;
+      items[nextIndex].focus();
+    },
   }));
 
   Alpine.data("navScroll", () => ({
@@ -296,13 +411,15 @@ document.addEventListener("alpine:init", () => {
       if (dialog) dialog.focus();
     },
     trap(event) {
+      if (!this.openSlug) return;
+      const dialog = this.$root.querySelector('[role="dialog"]');
+      if (!dialog || !dialog.contains(document.activeElement)) return;
       if (event.key === "Escape") {
         event.preventDefault();
         this.close();
         return;
       }
       if (event.key !== "Tab") return;
-      const dialog = event.currentTarget;
       const focusable = Array.from(
         dialog.querySelectorAll("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])")
       );

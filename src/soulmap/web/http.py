@@ -6,7 +6,7 @@ from html import escape
 from urllib.parse import urlparse
 from wsgiref.types import StartResponse
 
-from soulmap.web.config import ALPINE_URL, HTMX_URL, INTER_CSS_URL
+from soulmap.web.config import ALPINE_URL, HTMX_URL
 from soulmap.web.i18n import LOCALES as TEXT
 from soulmap.web.i18n import SUPPORTED_LOCALES
 
@@ -21,13 +21,13 @@ def origin(url: str) -> str | None:
 
 def resource_hints() -> str:
     """Generate conservative, deduplicated resource hints from critical URLs."""
-    external_urls = (INTER_CSS_URL, HTMX_URL, ALPINE_URL)
+    external_urls = (HTMX_URL, ALPINE_URL)
     origins = tuple(
         dict.fromkeys(
             origin_value for url in external_urls if (origin_value := origin(url))
         )
     )
-    critical_origin = origin(INTER_CSS_URL)
+    critical_origin = origin(HTMX_URL)
     hints: list[str] = []
     if critical_origin:
         hints.append(
@@ -36,10 +36,6 @@ def resource_hints() -> str:
     hints.extend(
         f'<link rel="dns-prefetch" href="{escape(value, quote=True)}">'
         for value in origins
-    )
-    hints.append(
-        f'<link rel="preload" href="{escape(INTER_CSS_URL, quote=True)}" '
-        'as="style" type="text/css">'
     )
     return "\n".join(hints)
 
@@ -74,7 +70,7 @@ def response(
         (
             "Content-Security-Policy",
             "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; "
-            "style-src 'self' https://rsms.me; font-src 'self' https://rsms.me; "
+            "style-src 'self'; style-src-attr 'unsafe-inline'; font-src 'self'; "
             "connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; "
             "object-src 'none'",
         ),

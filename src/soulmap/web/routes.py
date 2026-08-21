@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import parse_qs
 from wsgiref.types import StartResponse
 
+from soulmap.web.assets import read_font_asset, read_text_asset, static_asset_type
 from soulmap.web.catalog import (
     CATALOG,
     catalog_json,
@@ -46,7 +47,7 @@ from soulmap.web.skill_views import (
 
 
 def _read_static_css() -> str:
-    return (Path(__file__).with_name("static") / "site.css").read_text(encoding="utf-8")
+    return read_text_asset("site.css") or ""
 
 
 def _sitemap_routes() -> list[str]:
@@ -126,13 +127,28 @@ def dispatch(environ: dict[str, object], start_response: StartResponse) -> list[
             [("Cache-Control", "public, max-age=300")],
         )
     if path in {"/static/site.js", "/static/search.js"}:
-        js_path = Path(__file__).with_name("static") / path.rsplit("/", 1)[-1]
+        asset_name = path.rsplit("/", 1)[-1]
+        asset = read_text_asset(asset_name)
+        if asset is None:
+            return _response(start_response, "404 Not Found", "text/plain", "Not found")
         return _response(
             start_response,
             "200 OK",
-            "text/javascript",
-            js_path.read_text(encoding="utf-8"),
+            static_asset_type(asset_name) or "text/plain",
+            asset,
             [("Cache-Control", "public, max-age=300")],
+        )
+    if path.startswith("/static/fonts/"):
+        asset_name = path.removeprefix("/static/fonts/")
+        asset = read_font_asset(asset_name)
+        if asset is None:
+            return _response(start_response, "404 Not Found", "text/plain", "Not found")
+        return _response(
+            start_response,
+            "200 OK",
+            static_asset_type(asset_name) or "font/woff2",
+            asset,
+            [("Cache-Control", "public, max-age=31536000, immutable")],
         )
     if path == "/robots.txt":
         return _response(

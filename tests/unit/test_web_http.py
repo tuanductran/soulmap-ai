@@ -5,7 +5,7 @@ from wsgiref.types import StartResponse
 
 import pytest
 
-from soulmap.web.config import ALPINE_URL, HTMX_URL, INTER_CSS_URL
+from soulmap.web.config import ALPINE_URL, HTMX_URL
 from soulmap.web.http import (
     nav_path,
     normalise_request_path,
@@ -92,22 +92,22 @@ def test_response_has_shared_security_headers_and_byte_length() -> None:
     assert body == ["hé".encode()]
     assert headers["Content-Length"] == str(len(body[0]))
     assert headers["X-Content-Type-Options"] == "nosniff"
-    assert "frame-ancestors 'none'" in headers["Content-Security-Policy"]
+    csp = headers["Content-Security-Policy"]
+    assert "frame-ancestors 'none'" in csp
+    assert "style-src 'self'" in csp
+    assert "style-src-attr 'unsafe-inline'" in csp
+    assert "font-src 'self'" in csp
+    assert "rsms.me" not in csp
     assert headers["Permissions-Policy"] == "camera=(), microphone=(), geolocation=()"
     assert headers["Cache-Control"] == "no-store"
 
 
-def test_resource_hints_preconnect_dns_prefetch_and_css_preload_are_deduplicated() -> (
-    None
-):
+def test_resource_hints_preconnect_and_dns_prefetch_are_deduplicated() -> None:
     hints = resource_hints()
 
-    assert f'<link rel="preconnect" href="{origin(INTER_CSS_URL)}">' in hints
-    assert f'<link rel="dns-prefetch" href="{origin(INTER_CSS_URL)}">' in hints
+    assert f'<link rel="preconnect" href="{origin(HTMX_URL)}">' in hints
     assert f'<link rel="dns-prefetch" href="{origin(HTMX_URL)}">' in hints
     assert f'<link rel="dns-prefetch" href="{origin(ALPINE_URL)}">' in hints
-    assert hints.count('rel="dns-prefetch"') == 2
-    assert (
-        f'<link rel="preload" href="{INTER_CSS_URL}" as="style" type="text/css">'
-        in hints
-    )
+    assert hints.count('rel="dns-prefetch"') == 1
+    assert 'rel="preload"' not in hints
+    assert "rsms.me/inter" not in hints
