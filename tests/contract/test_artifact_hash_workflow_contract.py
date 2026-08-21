@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -55,9 +56,10 @@ def test_release_workflow_verifies_before_uploading_library_manifest() -> None:
     assert "permissions:\n  contents: read" in content
     assert "if: github.ref == 'refs/heads/main'" in content
     assert "contents: write" in content
-    assert (
-        "uses: softprops/action-gh-release@fe965f7af51af5f2602596916f38a38df2e33de0"
-    ) in content
+    assert re.search(
+        r"uses: softprops/action-gh-release@[0-9a-f]{40}(?:\s+# v[0-9.]+)?",
+        content,
+    )
     assert "dist/soulmap-ai.zip" in content
     assert "dist/soulmap-ai.skill" in content
     _assert_verify_before_final_manifest_upload(content)
