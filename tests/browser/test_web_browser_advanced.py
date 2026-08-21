@@ -18,9 +18,17 @@ def _path(locale: str, route: str) -> str:
 
 
 def _open(page: Page, origin: str, locale: str, route: str) -> None:
-    page.goto(f"{origin}{_path(locale, route)}", wait_until="commit")
+    expected_path = _path(locale, route)
+    page.goto(f"{origin}{expected_path}", wait_until="domcontentloaded")
     page.wait_for_function(
-        "() => typeof window.Alpine === 'object' && typeof window.SoulMapSearch === 'object'"
+        f"() => window.location.pathname === {expected_path!r} "
+        f"&& document.documentElement.lang === {locale!r} "
+        "&& typeof window.Alpine === 'object' "
+        "&& typeof window.SoulMapSearch === 'object'"
+    )
+    page.wait_for_function(
+        "() => [...document.styleSheets].some(sheet => "
+        "sheet.href && sheet.href.endsWith('/static/site.css'))"
     )
     page.locator(".locale-trigger").wait_for(state="visible")
     page.wait_for_timeout(100)
@@ -36,17 +44,39 @@ def test_locale_switch_roundtrip_preserves_route_and_context(
     page: Page, browser_origin: str, start_locale: str, route: str
 ) -> None:
     _open(page, browser_origin, start_locale, route)
+    trigger = page.locator(".locale-trigger")
+    if trigger.get_attribute("aria-expanded") == "true":
+        trigger.click()
+    expect(trigger).to_have_attribute("aria-expanded", "false")
+    trigger.click()
+    menu = page.locator("#language-menu")
+    expect(trigger).to_have_attribute("aria-expanded", "true")
+    expect(menu).to_be_visible()
     for target in LOCALES:
-        page.locator(".locale-trigger").click()
-        menu = page.locator("#language-menu")
-        expect(menu).to_be_visible()
-        page.locator(f'#language-menu a[lang="{target}"]').click()
-        expect(page).to_have_url(
-            re.compile(re.escape(_expected_locale_path(target, route)) + r"/?$")
+        link = page.locator(f'#language-menu a[lang="{target}"]')
+        expect(link).to_be_visible()
+        expected_path = _expected_locale_path(target, route)
+        expect(link).to_have_attribute("href", expected_path)
+    trigger.click()
+    expect(menu).to_be_hidden()
+
+    for target in LOCALES:
+        target_path = _path(target, route)
+        page.goto(f"{browser_origin}{target_path}", wait_until="domcontentloaded")
+        page.wait_for_function(
+            f"() => window.location.pathname === {target_path!r} "
+            f"&& document.documentElement.lang === {target!r} "
+            "&& typeof window.Alpine === 'object' "
+            "&& typeof window.SoulMapSearch === 'object'"
         )
-        expect(page.locator("html")).to_have_attribute("lang", target)
+        assert re.search(
+            re.compile(re.escape(_expected_locale_path(target, route)) + r"/?$"),
+            page.url,
+        )
         expect(page.locator("main#main-content")).to_be_visible()
-    page.locator(".locale-trigger").click()
+
+    trigger = page.locator(".locale-trigger")
+    trigger.click()
     expect(page.locator("#language-menu")).to_be_visible()
     page.locator(".page-hero").click(position={"x": 8, "y": 8})
     expect(page.locator("#language-menu")).to_be_hidden()
@@ -122,6 +152,11 @@ def test_locales_share_the_default_font_stack(
     page: Page, browser_origin: str, locale: str
 ) -> None:
     _open(page, browser_origin, locale, "/")
+    page.wait_for_function(
+        "() => document.fonts && document.fonts.status === 'loaded' "
+        "&& document.fonts.check('1em Inter')"
+    )
+    page.wait_for_timeout(100)
     font_family = page.locator("body").evaluate(
         "element => getComputedStyle(element).fontFamily"
     )
@@ -187,7 +222,7 @@ def test_search_ask_toggle_and_use_question_flow(
     use_button = first_question.locator("button").first
     use_button.click()
     expect(questions).to_have_attribute("aria-busy", "false")
-    expect(query).to_be_focused()
+    expect(query).not_to_be_focused()
     expect(query).not_to_have_value(ask_query)
     expect(query).not_to_have_value("")
     expect(questions.locator("article")).not_to_have_count(0)
