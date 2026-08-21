@@ -341,3 +341,109 @@ html[lang="vi"] body { line-height: 1.72; }
 }
 .provider-grid .button { gap: .45rem; }
 .provider-icon { width: .95rem; height: .95rem; stroke-width: 1.7; }
+
+/* Tailwind-inspired primitives: CSS-only tokens and reusable utilities. */
+:root {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --gutter-inline: .875rem;
+  --text-xs: .75rem;
+  --text-sm: .875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: clamp(1.5rem, 3vw, 2rem);
+  --text-3xl: clamp(2rem, 4vw, 3.25rem);
+  --text-display: clamp(2.8rem, 6vw, 5rem);
+  --leading-tight: 1.12;
+  --leading-snug: 1.25;
+  --leading-normal: 1.7;
+  --leading-relaxed: 1.78;
+  --measure-prose: 65ch;
+  --stack-gap: var(--space-4);
+  --cluster-gap: var(--space-3);
+}
+
+.container {
+  width: min(var(--container), calc(100% - (2 * var(--gutter-inline))));
+}
+
+.text-display {
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+  letter-spacing: -.03em;
+  font-weight: 800;
+}
+
+.text-body {
+  font-size: clamp(1.08rem, 2vw, 1.32rem);
+  line-height: var(--leading-relaxed);
+}
+
+.text-label {
+  color: var(--teal);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: .16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.text-small {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.prose-measure {
+  max-width: min(700px, var(--measure-prose));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--cluster-gap);
+}
+
+@media (min-width: 40rem) {
+  :root { --gutter-inline: 1.5rem; }
+}
+
+@media (min-width: 64rem) {
+  :root { --gutter-inline: 2rem; }
+}
+
+html[lang="ko"] .text-display,
+html[lang="ko"] .text-body {
+  letter-spacing: -.015em;
+}
+
+html[lang="ko"] .text-label {
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+html[lang="vi"] .text-display,
+html[lang="vi"] .text-body {
+  letter-spacing: -.025em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack,
+  .cluster,
+  .grid-auto { scroll-behavior: auto; }
+}
