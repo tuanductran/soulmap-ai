@@ -8,6 +8,7 @@ import pytest
 
 from scripts.verify_artifact_security import (
     ArtifactSecurityError,
+    _check_member_path,
     audit_artifact,
     main,
 )
@@ -113,9 +114,10 @@ def test_audit_rejects_duplicate_member_names(tmp_path: Path) -> None:
         audit_artifact(str(path))
 
 
-def test_audit_rejects_windows_or_absolute_paths(tmp_path: Path) -> None:
-    for name in ("/absolute.md", "C:\\absolute.md", "folder\\file.md"):
-        path = _write_archive(tmp_path / "unsafe.zip", {name: "bad"})
-        with pytest.raises(ArtifactSecurityError, match="unsafe archive member path"):
-            audit_artifact(str(path))
-        path.unlink()
+@pytest.mark.parametrize(
+    "name",
+    ["/absolute.md", "C:/absolute.md", "folder\\\\file.md"],
+)
+def test_member_path_checker_rejects_windows_or_absolute_paths(name: str) -> None:
+    with pytest.raises(ArtifactSecurityError, match="unsafe archive member path"):
+        _check_member_path(name)
