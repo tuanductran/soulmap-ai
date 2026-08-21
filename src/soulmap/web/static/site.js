@@ -54,7 +54,6 @@ document.addEventListener("alpine:init", () => {
         const input = form.querySelector("input[name=q]");
         if (input) {
           input.addEventListener("input", () => this.search(form));
-          input.addEventListener("change", () => this.search(form));
         }
         this.updateModeDescription(form);
         this.search(form);

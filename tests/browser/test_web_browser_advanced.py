@@ -1,0 +1,188 @@
+from __future__ import annotations
+
+import re
+
+import pytest
+from playwright.sync_api import Page, expect
+
+pytestmark = pytest.mark.browser
+
+LOCALES = ("en", "vi", "ko")
+ROUTES = ("/faq", "/skills", "/download")
+
+
+def _path(locale: str, route: str) -> str:
+    if locale == "en":
+        return route
+    return f"/{locale}" if route == "/" else f"/{locale}{route}"
+
+
+def _open(page: Page, origin: str, locale: str, route: str) -> None:
+    page.goto(f"{origin}{_path(locale, route)}", wait_until="commit")
+    page.wait_for_function(
+        "() => typeof window.Alpine === 'object' && typeof window.SoulMapSearch === 'object'"
+    )
+    page.locator(".locale-trigger").wait_for(state="visible")
+    page.wait_for_timeout(100)
+
+
+def _expected_locale_path(locale: str, route: str) -> str:
+    return _path(locale, route).rstrip("/") or "/"
+
+
+@pytest.mark.parametrize("start_locale", LOCALES)
+@pytest.mark.parametrize("route", ROUTES)
+def test_locale_switch_roundtrip_preserves_route_and_context(
+    page: Page, browser_origin: str, start_locale: str, route: str
+) -> None:
+    _open(page, browser_origin, start_locale, route)
+    for target in LOCALES:
+        page.locator(".locale-trigger").click()
+        menu = page.locator("#language-menu")
+        expect(menu).to_be_visible()
+        page.locator(f'#language-menu a[lang="{target}"]').click()
+        expect(page).to_have_url(
+            re.compile(re.escape(_expected_locale_path(target, route)) + r"/?$")
+        )
+        expect(page.locator("html")).to_have_attribute("lang", target)
+        expect(page.locator("main#main-content")).to_be_visible()
+    page.locator(".locale-trigger").click()
+    expect(page.locator("#language-menu")).to_be_visible()
+    page.locator(".page-hero").click(position={"x": 8, "y": 8})
+    expect(page.locator("#language-menu")).to_be_hidden()
+
+
+def test_locale_menu_keyboard_open_and_focus_return(
+    page: Page, browser_origin: str
+) -> None:
+    _open(page, browser_origin, "ko", "/faq")
+    trigger = page.locator(".locale-trigger")
+    trigger.focus()
+    page.keyboard.press("Enter")
+    expect(page.locator("#language-menu")).to_be_visible()
+    expect(trigger).to_have_attribute("aria-expanded", "true")
+    page.keyboard.press("Escape")
+    expect(page.locator("#language-menu")).to_be_hidden()
+    expect(trigger).to_be_focused()
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+def test_faq_keyboard_disclosures_keep_independent_state(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    _open(page, browser_origin, locale, "/faq")
+    items = page.locator("details.faq-item")
+    first_summary = items.nth(0).locator("summary")
+    second_summary = items.nth(1).locator("summary")
+    first_summary.focus()
+    page.keyboard.press("Enter")
+    expect(items.nth(0)).to_have_attribute("open", "")
+    second_summary.focus()
+    page.keyboard.press("Space")
+    expect(items.nth(1)).to_have_attribute("open", "")
+    expect(items.nth(0).locator(".faq-answer")).to_be_visible()
+    expect(items.nth(1).locator(".faq-answer")).to_be_visible()
+    first_summary.focus()
+    page.keyboard.press("Enter")
+    expect(items.nth(0)).not_to_have_attribute("open", "")
+    expect(items.nth(1)).to_have_attribute("open", "")
+
+
+@pytest.mark.parametrize(
+    ("locale", "search_query", "ask_query"),
+    [
+        ("en", "grief", "sad"),
+        ("vi", "khủng hoảng", "buồn bã"),
+        ("ko", "슬픔", "불안"),
+    ],
+)
+def test_search_ask_toggle_and_use_question_flow(
+    page: Page,
+    browser_origin: str,
+    locale: str,
+    search_query: str,
+    ask_query: str,
+) -> None:
+    _open(page, browser_origin, locale, "/skills")
+    form = page.locator("form[data-search-api]")
+    query = page.locator("#skill-search")
+    grid = page.locator("#skill-grid")
+    questions = page.locator("#question-results")
+    query.fill(search_query)
+    expect(grid).to_have_attribute("aria-busy", "false")
+    expect(grid.locator(".skill-card:not([hidden])")).not_to_have_count(0)
+    page.locator('label.mode-option:has(input[value="ask"])').click()
+    expect(page.locator("#ask-panel")).to_be_visible()
+    expect(page.locator("#search-panel")).to_be_hidden()
+    query.fill(ask_query)
+    expect(questions).to_have_attribute("aria-busy", "false")
+    expect(questions.locator("article")).not_to_have_count(0)
+    first_question = questions.locator("article").first
+    use_button = first_question.locator("button").first
+    use_button.click()
+    expect(questions).to_have_attribute("aria-busy", "false")
+    expect(query).to_be_focused()
+    expect(query).not_to_have_value(ask_query)
+    expect(query).not_to_have_value("")
+    expect(questions.locator("article")).not_to_have_count(0)
+    page.locator('label.mode-option:has(input[value="search"])').click()
+    expect(page.locator("#search-panel")).to_be_visible()
+    expect(page.locator("#ask-panel")).to_be_hidden()
+    expect(form).to_have_attribute(
+        "data-search-api", re.compile(r"/api/skills/search\.json")
+    )
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+def test_search_query_is_bounded_and_enter_stays_on_route(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    _open(page, browser_origin, locale, "/skills")
+    query = page.locator("#skill-search")
+    current_url = page.url
+    query.fill("x" * 5000)
+    query.press("Enter")
+    expect(page).to_have_url(current_url)
+    expect(page.locator("#skill-grid")).to_be_visible()
+    expect(page.locator("#skill-grid")).to_have_attribute("aria-busy", "false")
+    expect(page.locator("body")).not_to_contain_text(
+        "Search is temporarily unavailable"
+    )
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    page.set_viewport_size({"width": 320, "height": 720})
+    _open(page, browser_origin, locale, "/skills")
+    trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
+    trigger.click()
+    dialog = page.locator('[role="dialog"]')
+    expect(dialog).to_be_visible()
+    expect(page.locator("body")).to_have_class(re.compile(r"\bmodal-open\b"))
+    source_links = dialog.locator(".prompt-scenario__source a")
+    expect(source_links).to_have_count(3)
+    expected_raw = (
+        "/api/raw/meta.md" if locale == "en" else f"/{locale}/api/raw/meta.md"
+    )
+    for link in source_links.all():
+        expect(link).to_have_attribute("href", expected_raw)
+    focusable = dialog.locator(
+        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+    )
+    expect(focusable).not_to_have_count(0)
+    focusable.last.focus()
+    page.keyboard.press("Tab")
+    expect(focusable.first).to_be_focused()
+    page.keyboard.press("Shift+Tab")
+    expect(focusable.last).to_be_focused()
+    page.set_viewport_size({"width": 1280, "height": 900})
+    expect(dialog).to_be_visible()
+    assert page.evaluate("document.documentElement.scrollWidth") <= page.evaluate(
+        "document.documentElement.clientWidth"
+    )
+    page.locator(".modal-backdrop").click(position={"x": 2, "y": 2})
+    expect(dialog).to_be_hidden()
+    expect(trigger).to_be_focused()
+    expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
