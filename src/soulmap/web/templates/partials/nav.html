@@ -7,13 +7,13 @@
         </span>
         <span>SoulMap AI</span>
       </a>
-      <div class="locale-switcher" x-data="languageMenu" x-on:keydown.escape="open = false" x-on:click.outside="open = false">
-        <button class="locale-trigger" type="button" x-on:click="open = !open" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
+      <div class="locale-switcher" x-data="languageMenu" x-on:keydown="onKeydown($$event)" x-on:click.outside="close(false)">
+        <button class="locale-trigger" type="button" x-on:click="toggle" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
           <span>$language_label</span>
           <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
           <svg class="icon locale-chevron" viewBox="0 0 16 16" focusable="false"><path d="m3 6 5 5 5-5"/></svg>
         </button>
-        <div class="locale-menu" id="language-menu" x-show="open" x-transition.opacity.duration.150ms x-cloak role="menu" aria-label="$language_label">
+        <div class="locale-menu" id="language-menu" x-show="open" x-transition:enter="dropdown-enter" x-transition:enter-start="dropdown-enter-start" x-transition:enter-end="dropdown-enter-end" x-transition:leave="dropdown-leave" x-transition:leave-start="dropdown-leave-start" x-transition:leave-end="dropdown-leave-end" x-cloak role="menu" aria-label="$language_label">
           $locale_options
         </div>
       </div>

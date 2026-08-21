@@ -109,6 +109,55 @@ def test_language_menu_opens_switches_locale_and_closes_with_escape(
     expect(page.locator("#language-menu")).to_be_hidden()
 
 
+def test_language_menu_supports_arrow_navigation_and_focus_restore(
+    page: Page,
+    browser_origin: str,
+) -> None:
+    _open(page, f"{browser_origin}/faq")
+    trigger = page.locator(".locale-trigger")
+    menu = page.locator("#language-menu")
+
+    trigger.focus()
+    page.keyboard.press("ArrowDown")
+    expect(menu).to_be_visible()
+    expect(menu.get_by_role("menuitem").first).to_be_focused()
+
+    page.keyboard.press("ArrowDown")
+    expect(menu.get_by_role("menuitem").nth(1)).to_be_focused()
+
+    page.keyboard.press("Escape")
+    expect(menu).to_be_hidden()
+    expect(trigger).to_be_focused()
+
+
+def test_internal_links_use_progressive_navigation_and_history(
+    page: Page,
+    browser_origin: str,
+) -> None:
+    _open(page, f"{browser_origin}/")
+    initial_navigation_entries = page.evaluate(
+        "() => performance.getEntriesByType('navigation').length"
+    )
+
+    page.locator('nav.nav-links a[href="/faq"]').click()
+    page.wait_for_function(
+        "() => window.location.pathname === '/faq' "
+        "&& document.querySelector('html')?.lang === 'en' "
+        "&& document.querySelector('main#main-content h1')"
+    )
+    expect(page.locator("#main-content h1")).to_be_visible()
+    expect(page.locator("#page-shell")).to_have_attribute("hx-boost", "true")
+    expect(page.locator("html")).not_to_have_attribute("aria-busy")
+    assert (
+        page.evaluate("() => performance.getEntriesByType('navigation').length")
+        == initial_navigation_entries
+    )
+
+    page.go_back(wait_until="commit")
+    page.wait_for_function("() => window.location.pathname === '/' ")
+    expect(page.locator("main#main-content")).to_be_visible()
+
+
 def test_skills_search_ask_mode_and_enter_do_not_navigate(
     page: Page,
     browser_origin: str,

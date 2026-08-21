@@ -124,12 +124,7 @@ def browser_diagnostics(page):
     page.on("pageerror", lambda error: page_errors.append(str(error)))
 
     def record_failed_request(request) -> None:
-        failure = (request.failure or "").lower()
-        expected_font_cancel = (
-            request.url.startswith("https://rsms.me/inter/") and "cancel" in failure
-        )
-        if not expected_font_cancel:
-            failed_requests.append(f"{request.method} {request.url}: {request.failure}")
+        failed_requests.append(f"{request.method} {request.url}: {request.failure}")
 
     page.on("requestfailed", record_failed_request)
 

@@ -36,6 +36,18 @@ def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
     return captured, body
 
 
+def test_local_font_assets_are_allow_listed_and_cached() -> None:
+    headers, body = _request("/static/fonts/InterVariable.woff2")
+    assert headers["status"] == "200 OK"
+    assert len(body) > 1000
+    response_headers = dict(cast(list[tuple[str, str]], headers["headers"]))
+    assert response_headers["Content-Type"] == "font/woff2; charset=utf-8"
+    assert response_headers["Cache-Control"] == "public, max-age=31536000, immutable"
+
+    missing_headers, _ = _request("/static/fonts/unknown.woff2")
+    assert missing_headers["status"] == "404 Not Found"
+
+
 def test_werkzeug_client_exercises_json_route() -> None:
     response = Client(application, Response).get(
         "/api/skills/search.json?q=bu%C3%B2n&limit=6"
@@ -172,8 +184,10 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     _, body = _request("/ko/faq")
     html = body.decode("utf-8")
     assert 'x-data="languageMenu"' in html
-    assert 'x-on:click="open = !open"' in html
-    assert 'x-on:keydown.escape="open = false"' in html
+    assert 'x-on:click="toggle"' in html
+    assert 'x-on:keydown="onKeydown($event)"' in html
+    assert 'x-transition:enter="dropdown-enter"' in html
+    assert 'x-transition:leave="dropdown-leave"' in html
     assert 'aria-haspopup="menu"' in html
     assert 'aria-controls="language-menu"' in html
     assert 'id="language-menu"' in html
@@ -290,7 +304,8 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
         css,
     )
     assert "font-korean" not in css
-    assert "--font-sans: Inter, ui-sans-serif, system-ui" in css
+    assert '--font-sans: "Inter", ui-sans-serif, system-ui' in css
+    assert 'font-family: "Manrope"' in css
     assert "a { color: inherit; text-decoration: none; }" not in css
     assert re.search(r"a\s*\{\s*color:\s*inherit;\s*text-decoration:\s*none;\s*\}", css)
     assert ".nav-topline" in css
@@ -313,21 +328,16 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert ".privacy-grid" in css
 
 
-def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
+def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     _, body = _request("/skills")
     html = body.decode("utf-8")
 
-    assert 'href="https://rsms.me/inter/inter.css"' in html
-    assert (
-        '<link rel="preload" href="https://rsms.me/inter/inter.css" as="style" type="text/css">'
-        in html
-    )
-    assert '<link rel="preconnect" href="https://rsms.me/">' in html
-    assert '<link rel="dns-prefetch" href="https://rsms.me/">' in html
+    assert "rsms.me/inter" not in html
+    assert '<link rel="preconnect" href="https://cdn.jsdelivr.net/">' in html
     assert '<link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">' in html
-    assert html.count('rel="preload"') == 1
+    assert 'rel="preload"' not in html
     assert html.count('rel="preconnect"') == 1
-    assert html.count('rel="dns-prefetch"') == 2
+    assert html.count('rel="dns-prefetch"') == 1
     assert 'rel="icon" href="/favicon.ico" sizes="any"' in html
     assert 'aria-label="SoulMap AI home"' in html
     assert 'aria-label="Primary navigation"' in html
@@ -343,6 +353,14 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert html.count('integrity="sha384-') == 2
     assert 'src="/static/search.js"' in html
     assert 'src="/static/site.js"' in html
+    assert 'id="page-shell"' in html
+    assert 'hx-boost="true"' in html
+    assert 'hx-history-elt="body"' in html
+    assert 'hx-swap="innerHTML transition:true show:top"' in html
+    assert 'id="page-progress"' in html
+    assert 'url("/static/fonts/InterVariable.woff2")' in _request("/static/site.css")[
+        1
+    ].decode("utf-8")
     _, search_body = _request("/static/search.js")
     search_js = search_body.decode("utf-8")
     assert "SoulMapSearch" in search_js
@@ -388,8 +406,10 @@ def test_layout_loads_pinned_cdn_assets_with_sri() -> None:
     assert 'id="skill-loading"' in html
     assert 'role="status"' in html
     assert "x-cloak" in html
-    assert "x-transition.opacity.duration.200ms" in html
-    assert "x-transition.opacity.scale.origin.top.duration.200ms" in html
+    assert 'x-transition:enter="modal-shell-enter"' in html
+    assert 'x-transition:leave="modal-shell-leave"' in html
+    assert 'x-transition:enter="modal-dialog-enter"' in html
+    assert 'x-transition:leave="modal-dialog-leave"' in html
     assert 'rel="canonical"' in html
     assert 'hreflang="x-default"' in html
     assert "application/ld+json" in html
@@ -813,12 +833,17 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
         "static/site.css",
         "static/site.js",
         "static/search.js",
+        "static/fonts/InterVariable.woff2",
+        "static/fonts/ManropeVariable.woff2",
         "robots.txt",
         "sitemap.xml",
         "favicon.ico",
     )
     for relative in expected:
         assert (output / relative).exists(), relative
+    exported_css = (output / "static/site.css").read_text(encoding="utf-8")
+    assert 'url("/soulmap-ai/static/fonts/InterVariable.woff2")' in exported_css
+    assert 'url("/soulmap-ai/static/fonts/ManropeVariable.woff2")' in exported_css
 
     html = (output / "index.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/' in html
