@@ -4,23 +4,29 @@ For how this knowledge-loading layer fits into the full request pipeline
 alongside routing and safety enforcement, see
 [`docs/engineering/safety-architecture.md`](safety-architecture.md).
 
-Detectors in `src/soulmap/runtime/` load their phrase lists directly from the
-shipped Markdown skill files at import time. The loader utilities in
+Most detectors in `src/soulmap/runtime/` load their canonical phrase lists directly
+from the shipped Markdown skill files at import time. The loader utilities in
 `src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
 structure and Python data structures.
 
-This means there is one place to edit a detection phrase. The runtime reflects
-the skill files automatically, so detection behavior and documented framework
-knowledge cannot silently drift apart.
+A narrow exception exists for reviewed non-English evidence. Those phrases live in
+packaged Markdown files under `reference/languages/` and are loaded explicitly by the
+consuming detector. They support deterministic detection but do not define doctrine,
+framework guidance, voice, or response language.
+
+This means there is one authoritative source per phrase group. The runtime reflects the
+canonical English skill files and the explicitly owned locale reference automatically,
+so detection behavior and documented framework knowledge cannot silently drift apart.
 
 ## How detectors load knowledge
 
-Each detector declares its Markdown source path and section heading inline. The
-detector resolves the skill file at import time using `default_skill_path()` or
-`default_pattern_mapper_path()` from the knowledge module, which walks the
-directory tree or uses the `SOULMAP_REPO_ROOT` environment variable when set.
+Each detector declares its source path and section heading inline. Markdown-backed
+detectors resolve skill files at import time using `default_skill_path()` or
+`default_pattern_mapper_path()` from the knowledge module. Locale-backed detectors
+resolve `reference/languages/` through the language-reference loader. Both paths walk
+the directory tree or use the `SOULMAP_REPO_ROOT` environment variable when set.
 
-Two loader utilities cover all current detector patterns:
+Three loader utilities cover all current detector patterns:
 
 - `keyword_lists.py` parses flat quoted-phrase lists and labeled phrase groups
   from a named section under a Markdown heading. Used by detectors that need a
@@ -28,15 +34,19 @@ Two loader utilities cover all current detector patterns:
 - `pattern_source.py` parses the structured `## Pattern N:` sections in
   `skills/frameworks/pattern-mapper.md` into typed `PatternSignal` objects with
   names, descriptions, detection signals, cycle phrases, and reflection language.
+- `language_reference.py` loads validated, human-authored locale evidence from
+  `reference/languages/` for the narrow set of detectors that need non-English
+  phrase matching.
 
-The mapping between a detector and its Markdown source is visible by reading the
-detector itself. There is no separate registry.
+The mapping between a detector and its Markdown or locale source is visible by
+reading the detector itself. There is no separate registry.
 
-The `soulmap audit-knowledge` command independently verifies this ownership by
-tracing runtime imports and cross-referencing them against Markdown content. It is
-the authoritative, up-to-date record of which constants are active, which are
-orphaned, and which Markdown file owns which detection phrases. Trust the tool
-over any static document.
+The `soulmap audit-knowledge` command independently verifies the Python-side
+ownership by tracing runtime imports and cross-referencing them against Markdown
+content. Locale Markdown ownership is verified by its front-matter/heading contracts
+and the consuming detector tests. Together these checks provide the authoritative record
+of active sources, orphaned constants, and detector ownership. Trust the tools over any static
+document.
 
 ## Protected modules
 
@@ -46,6 +56,10 @@ over any static document.
 by direct import, not Markdown loading), and
 `src/soulmap/runtime/detectors/crisis_detector.py` use hardcoded Python constants
 rather than Markdown-loaded phrase lists. This is intentional.
+
+The non-crisis `reference/languages/` directory is a packaged evidence layer. It is
+not a protected safety module, does not replace human review, and enters both AI-facing
+artifacts as a bundled Markdown reference resource.
 
 Crisis detection (Issue #130) is multilingual but still fully static: each
 language pack is a literal, human-authored tuple of phrases with no translation
@@ -78,9 +92,9 @@ or the Markdown sections that back them:
   state before touching any phrase list or loader.
 - The repository is the source of truth. This document and prior summaries are not
   a substitute for running the audit tooling and reading the current code.
-- Runtime evidence is required. A phrase or constant must have a confirmed Markdown
-  owner and a detector that already loads from that file before any cleanup is
-  considered safe.
+- Runtime evidence is required. A phrase or constant must have a confirmed owner in
+  canonical Markdown, protected Python, or an explicitly validated locale reference,
+  plus a detector that already loads that source before any cleanup is considered safe.
 - Verify Markdown ownership by reading the consuming detector's loading code, not
   by inferring it from a constant's name.
 - Cross-check every audit finding with an independent repository search before

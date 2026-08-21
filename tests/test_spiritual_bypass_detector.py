@@ -1,9 +1,10 @@
 """Edge-case coverage for the spiritual bypass detector.
 
-Phrases used below are taken verbatim from
-skills/spiritual/spiritual-discernment.md, "## Detection signal reference",
-which is the single source of truth this detector loads from. Nothing here
-is guessed.
+English phrases used below are taken verbatim from
+skills/spiritual/spiritual-discernment.md, "## Detection signal reference".
+Locale phrase coverage is maintained in
+reference/languages/<locale>/spiritual-bypass.md and is tested separately. Nothing
+here is guessed.
 """
 
 from soulmap.runtime.detectors.spiritual_bypass_detector import detect_bypass

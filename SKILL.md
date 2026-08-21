@@ -54,6 +54,7 @@ After routing through meta, load from the relevant group:
 | Framework-to-template guidance                | [skills/meta/framework-template-map.md](skills/meta/framework-template-map.md) |
 | Epistemic guardrails for spiritual content    | [skills/meta/epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
 | Spiritual layer and symbolic frameworks       | [skills/spiritual/](skills/spiritual/) |
+| Locale evidence for supported detectors       | [reference/languages/](reference/languages/) - load only for the matching language and detector |
 | Response templates and quick reference        | [skills/meta/response-structure.md](skills/meta/response-structure.md), [skills/meta/quick-reference.md](skills/meta/quick-reference.md) |
 | Competitive differentiation language          | [skills/brand/competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [skills/brand/research-backing.md](skills/brand/research-backing.md) |

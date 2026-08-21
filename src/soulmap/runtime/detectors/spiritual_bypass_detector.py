@@ -14,23 +14,35 @@ from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.language_reference import load_locale_signal_groups
 
-# Single source of truth: skills/spiritual/spiritual-discernment.md,
-# "## Detection signal reference". Nothing is hardcoded here — the phrase
-# lists are parsed straight from that Markdown skill.
+# English signal vocabulary is canonical and shipped in the spiritual skill. Reviewed
+# non-English evidence is runtime-only and lives under reference/languages/.
 _DISCERNMENT_PATH = default_skill_path("skills/spiritual/spiritual-discernment.md")
-BYPASS_DISMISS = load_keyword_section(_DISCERNMENT_PATH, "Bypass: Dismissing Pain")
-PREMATURE_ACCEPTANCE = load_keyword_section(
-    _DISCERNMENT_PATH, "Bypass: Premature Acceptance"
+_LOCALE_SIGNALS = load_locale_signal_groups(
+    "spiritual-bypass.md", domain="spiritual_bypass"
 )
-SPIRITUAL_INFLATION = load_keyword_section(
-    _DISCERNMENT_PATH, "Bypass: Spiritual Inflation"
+
+
+def _signals_with_locale(section: str, locale_group: str) -> tuple[str, ...]:
+    english = load_keyword_section(_DISCERNMENT_PATH, section)
+    return tuple(dict.fromkeys((*english, *_LOCALE_SIGNALS.get(locale_group, ()))))
+
+
+BYPASS_DISMISS = _signals_with_locale(
+    "Bypass: Dismissing Pain", "bypass_dismissing_pain"
 )
-BYPASS_ACCOUNTABILITY = load_keyword_section(
-    _DISCERNMENT_PATH, "Bypass: Bypassing Accountability"
+PREMATURE_ACCEPTANCE = _signals_with_locale(
+    "Bypass: Premature Acceptance", "bypass_premature_acceptance"
 )
-GENUINE_INTEGRATION = load_keyword_section(
-    _DISCERNMENT_PATH, "Genuine Integration Signals"
+SPIRITUAL_INFLATION = _signals_with_locale(
+    "Bypass: Spiritual Inflation", "bypass_spiritual_inflation"
+)
+BYPASS_ACCOUNTABILITY = _signals_with_locale(
+    "Bypass: Bypassing Accountability", "bypass_accountability"
+)
+GENUINE_INTEGRATION = _signals_with_locale(
+    "Genuine Integration Signals", "genuine_integration"
 )
 
 HistoryMessage = dict[str, str]

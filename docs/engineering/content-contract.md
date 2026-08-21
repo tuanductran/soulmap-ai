@@ -17,8 +17,9 @@ Examples:
 
 ## Required metadata (YAML front matter)
 
-All Markdown files under `skills/` must begin with YAML front matter. `templates/` is
-internal-only and is not subject to this requirement:
+All Markdown files under `skills/` and packaged Markdown files under
+`reference/languages/` must begin with YAML front matter. `templates/` is internal-only
+and is not subject to this requirement:
 
 ```yaml
 ---
@@ -34,7 +35,21 @@ Rules:
   section.
 - Keep a blank line between the closing `---` and the first `#` heading.
 
-The repository enforces this via `uv run soulmap markdown-contract`.
+The repository enforces the `skills/` metadata contract via
+`uv run soulmap markdown-contract`. Language references use this additional contract:
+
+```yaml
+---
+schema_version: "1.0"
+locale: "vi"
+language: "Vietnamese"
+domain: "spiritual_bypass"
+source_policy: "human-authored-runtime-reference"
+---
+```
+
+Reference front matter identifies data ownership and locale; it must not contain
+translated doctrine, response guidance, or safety policy.
 
 ## Source hygiene
 

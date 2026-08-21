@@ -122,8 +122,10 @@ for the package comparison and decision boundary.
 
 ## What gets generated
 
-- `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`.
-- `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved.
+- `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`, including
+  canonical `skills/` and packaged Markdown `reference/`.
+- `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved, including the
+  same `skills/` and `reference/` content.
 - `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
   SHA-256 digests when `uv run soulmap library-manifest` is used.
 - `site/`: generated static website output for GitHub Pages; it is not part of the AI
@@ -186,10 +188,13 @@ main CI quality gates.
 
 ## Adding new knowledge files
 
-- Add a new `*.md` under `skills/` (pick the best category folder).
-- Use kebab-case filenames (no `_`) and keep headings/links GitHub-friendly (the repo
-  runs a Markdown contract check).
-- Start the file with YAML front matter metadata.
+For canonical doctrine, framework, voice, or safety guidance, add a new `*.md` under
+`skills/` and pick the best category folder. For reviewed locale evidence or optional
+localized resources, add a new `*.md` under `reference/languages/<locale>/` instead.
+Both surfaces are packaged into the `.zip` and `.skill` artifacts.
+
+Use kebab-case filenames (no `_`) and keep headings/links GitHub-friendly (the repo
+runs a Markdown contract check). Start every file with YAML front matter metadata.
 
 Use:
 
@@ -200,10 +205,22 @@ description: "One short sentence describing the full file."
 ---
 ```
 
-- For files under `skills/`, set frontmatter `name` to the exact
-  filename stem in kebab-case. Example:
-  [`../skills/brand/brand-doctrine.md`](../../skills/brand/brand-doctrine.md) must use
-  `name: "brand-doctrine"`.
+- For files under `skills/`, set frontmatter `name` to the exact filename stem in
+  kebab-case. Example: [`../skills/brand/brand-doctrine.md`](../../skills/brand/brand-doctrine.md)
+  must use `name: "brand-doctrine"`.
+- For files under `reference/languages/`, use the locale reference contract:
+
+  ```yaml
+  ---
+  schema_version: "1.0"
+  locale: "vi"
+  language: "Vietnamese"
+  domain: "spiritual_bypass"
+  source_policy: "human-authored-runtime-reference"
+  ---
+  ```
+
+  Keep headings stable across locales so the deterministic loader can reuse one parser.
 - Use the repo tooling for Markdown changes. `uv run soulmap format` is the canonical
   formatter, and `bash scripts/format.sh` delegates to it on macOS/Linux.
 - Before landing Markdown-heavy changes, run the contract check plus the focused local

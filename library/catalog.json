@@ -9,7 +9,8 @@
     "runtime_manifest": "SKILL.md",
     "doctrine": "AGENTS.md",
     "plugin_metadata": ".claude-plugin/marketplace.json",
-    "knowledge_root": "skills/"
+    "knowledge_root": "skills/",
+    "locale_references": "reference/languages/"
   },
   "distribution": {
     "catalog_status": "versioned-source-catalog",

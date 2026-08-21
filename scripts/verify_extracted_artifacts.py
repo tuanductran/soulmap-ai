@@ -25,6 +25,15 @@ FORBIDDEN_MEMBER_PREFIXES = (
     "templates/",
     "tests/",
 )
+FORBIDDEN_CORE_REFERENCES = (
+    "Python",
+    "python",
+    "src/soulmap/",
+    "docs/engineering/",
+    "tests/",
+    "scripts/",
+    ".py",
+)
 FORBIDDEN_SKILL_REFERENCES = (
     "src/soulmap/",
     "docs/engineering/",
@@ -62,9 +71,10 @@ def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
         candidate = repo_root / name
         if candidate.is_file():
             paths.add(candidate)
-    skills_root = repo_root / "skills"
-    if skills_root.is_dir():
-        paths.update(path for path in skills_root.rglob("*") if path.is_file())
+    for folder in ("skills", "reference"):
+        content_root = repo_root / folder
+        if content_root.is_dir():
+            paths.update(path for path in content_root.rglob("*") if path.is_file())
     if include_plugin:
         plugin_root = repo_root / ".claude-plugin"
         if plugin_root.is_dir():
@@ -137,8 +147,24 @@ def _assert_expected_members(
                 f"{archive_path.name} contains repository-only members: {forbidden_members}"
             )
 
+        for name in sorted(CORE_FILES):
+            content = archive.read(name).decode("utf-8")
+            violations = [
+                reference
+                for reference in FORBIDDEN_CORE_REFERENCES
+                if reference in content
+            ]
+            if violations:
+                raise ExtractedArtifactError(
+                    f"{archive_path.name}:{name} contains forbidden core references: "
+                    f"{violations}"
+                )
+
         for name in sorted(actual):
-            if not name.startswith("skills/") or not name.endswith(".md"):
+            if not (
+                (name.startswith("skills/") or name.startswith("reference/"))
+                and name.endswith(".md")
+            ):
                 continue
             content = archive.read(name).decode("utf-8")
             violations = [

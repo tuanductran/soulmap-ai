@@ -39,6 +39,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/public.md")
     _write(tmp_path, "skills/private.md")
+    _write(tmp_path, "reference/languages/vi/spiritual-bypass.md")
     _write(tmp_path, "templates/internal.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", "{}\n")
     _write(tmp_path, ".distignore", "skills/private.md\n")
@@ -46,7 +47,13 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     zip_path = build_tool.build_zip(tmp_path)
     skill_path = build_tool.build_skill(tmp_path)
 
-    core_names = {"LICENSE", "AGENTS.md", "SKILL.md", "skills/public.md"}
+    core_names = {
+        "LICENSE",
+        "AGENTS.md",
+        "SKILL.md",
+        "skills/public.md",
+        "reference/languages/vi/spiritual-bypass.md",
+    }
     assert _archive_names(zip_path) == core_names
     assert _archive_names(skill_path) == {
         *core_names,

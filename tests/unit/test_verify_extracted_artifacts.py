@@ -57,6 +57,22 @@ def test_verifier_rejects_missing_artifact(tmp_path: Path) -> None:
     assert "artifact not found" in result.stderr
 
 
+def test_verifier_rejects_internal_reference_in_packaged_core(tmp_path: Path) -> None:
+    _build_valid_repo(tmp_path)
+    _write(
+        tmp_path,
+        "AGENTS.md",
+        "This must not mention Python runtime internals.\n",
+    )
+    build_skill.build_zip(tmp_path)
+    build_skill.build_skill(tmp_path)
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "forbidden core references" in result.stderr
+
+
 def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) -> None:
     _build_valid_repo(tmp_path)
     _write(

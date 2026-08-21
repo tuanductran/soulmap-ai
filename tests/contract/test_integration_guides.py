@@ -95,7 +95,11 @@ def test_integration_readme_upload_references_ship_in_standard_archive() -> None
             target_path=target_path,
         )
         relative = target.relative_to(REPO_ROOT).as_posix()
-        if relative in {"AGENTS.md", "SKILL.md"} or relative.startswith("skills/"):
+        if (
+            relative in {"AGENTS.md", "SKILL.md"}
+            or relative.startswith("skills/")
+            or relative.startswith("reference/")
+        ):
             package_references.add(relative)
 
     assert package_references

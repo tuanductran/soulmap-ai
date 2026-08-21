@@ -103,7 +103,8 @@ Verify:
   `.skill` artifact.
 - `uv run python scripts/verify_extracted_artifacts.py` passes after extraction: the ZIP and
   `.skill` contain the expected shipped files, keep their plugin boundary, and contain no
-  repository-only paths or implementation references inside `skills/`.
+  repository-only paths or implementation references inside packaged core files
+  (`AGENTS.md` and `SKILL.md`) or the `skills/` and `reference/` trees.
 - `tests/contract/test_website_pages_workflow_contract.py` passes and confirms the Pages
   workflow builds from `src/soulmap/web/`, verifies output, and publishes only generated
   files to `gh-pages` after a `main` push.
@@ -285,7 +286,7 @@ Use these when automated checks are green but you want to probe human-risk defec
 - Risk: the shipped artifact claims or implies repo-only files that are not present after
   extraction
 - Files or flows: [`../AGENTS.md`](../../AGENTS.md), [`../SKILL.md`](../../SKILL.md),
-  [`../skills/`](../../skills/),
+  [`../skills/`](../../skills/), [`../reference/`](../../reference/),
   [`../operations/UPLOAD.md`](../operations/UPLOAD.md), and distribution artifacts under `dist/`
   (`templates/` is intentionally excluded, since it is internal-only and not shipped)
 - Probe:

@@ -114,8 +114,9 @@ text; they never produce it.
 ### What it is
 
 Detection phrases, framework response structures, voice rules, safety
-doctrine, and brand guidance all live in `skills/` or `AGENTS.md` as
-Markdown. Python reads these files at import time but never originates their
+doctrine, and brand guidance all live in `skills/` or `AGENTS.md` as Markdown.
+Reviewed locale evidence and optional localized resources live in packaged Markdown
+under `reference/`. Python reads these files at import time but never originates their
 content.
 
 ### Why it exists
@@ -144,7 +145,8 @@ is exactly one authoritative location per piece of content.
 
 ```mermaid
 flowchart LR
-    A["skills/ (Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
+    A["skills/ (canonical Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
+    R["reference/ (packaged Markdown)"] -- loaded where explicitly consumed --> B
     B -- parsed phrase lists --> C["src/soulmap/runtime/detectors/"]
     C -- signals --> D["src/soulmap/runtime/routing/framework_selector.py"]
     D -- instruction string --> E[LLM]
@@ -169,7 +171,8 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
-- `skills/` - all shipped knowledge files
+- `skills/` - all shipped canonical knowledge files
+- `reference/` - packaged locale evidence and optional localized references
 
 ---
 
@@ -537,12 +540,17 @@ pipeline changes.
 
 ### Why it exists
 
-Crisis detection is the one deliberate exception to the Markdown knowledge
+Crisis detection is the protected exception to the Markdown knowledge
 ownership rule. The full rationale is in
 [`knowledge-architecture.md`](knowledge-architecture.md#protected-modules):
 a parsing error or incomplete Markdown loading path could miss a genuine
 crisis signal. Static Python eliminates that failure mode. Crisis phrase lists
 are authored by humans for safety and must be explicit and reviewable.
+
+A separate, non-safety evidence layer supports reviewed non-English phrases for selected
+non-crisis detectors. Those Markdown references live under `reference/languages/`, are
+packaged with the Skills, loaded by an explicit runtime consumer, and do not contain
+doctrine or response content.
 
 ### Why it is intentional
 
@@ -573,15 +581,19 @@ default answer to that migration is no.
 | French | `config/safety_fr.py` | Crisis tier 1, tier 2, grandiosity signals |
 | Chinese | `config/safety_zh.py` | Crisis tier 1, tier 2, grandiosity signals |
 
-Non-crisis detection (framework routing, dependency, emotional intensity, and
-all topic-framework detectors) is language-unaware and operates on English
-text only.
+Most non-crisis detection (framework routing, dependency, emotional intensity, and
+all topic-framework detectors) is language-unaware and operates on English text only.
+The current exception is the spiritual-bypass detector, which also loads reviewed
+locale evidence for Vietnamese (`vi`), Spanish (`es`), French (`fr`), Chinese (`zh`),
+and Korean (`ko`) from `reference/languages/`.
 
 ### Implementation boundary
 
-The five language packs are combined by `crisis_language_packs.py`. That
+The five crisis language packs are combined by `crisis_language_packs.py`. That
 module is a direct Python import, not a Markdown loader. `crisis_detector.py`
-calls the combined pack; it has no knowledge of which language matched.
+calls the combined pack; it has no knowledge of which language matched. Non-crisis
+locale evidence is discovered by `language_reference.py` and merged only by the
+consuming detector.
 
 ### Related documentation
 
@@ -597,7 +609,9 @@ calls the combined pack; it has no knowledge of which language matched.
 - `src/soulmap/runtime/config/safety_fr.py`
 - `src/soulmap/runtime/config/safety_zh.py`
 - `src/soulmap/runtime/knowledge/crisis_language_packs.py`
+- `src/soulmap/runtime/knowledge/language_reference.py`
 - `src/soulmap/runtime/detectors/crisis_detector.py`
+- `src/soulmap/runtime/detectors/spiritual_bypass_detector.py`
 
 ---
 
