@@ -15,9 +15,9 @@ The public SoulMap website uses a small WSGI application with a deliberately nar
 
 ## Interaction boundaries
 
-AlpineJS owns local UI state such as dropdowns, modal focus, keyboard navigation, clipboard feedback and Skills search mode. htmx owns server-backed fragment requests and progressive same-origin navigation. Normal anchors remain valid fallbacks when JavaScript is unavailable. A new page-level interaction should first be evaluated against these existing boundaries rather than adding another router or client-side framework.
+AlpineJS owns local UI state such as dropdowns, modal focus, keyboard navigation, clipboard feedback and Skills search mode. htmx owns server-backed fragment requests for Skill details and other partial updates; full page navigation remains native so direct links and browser history keep their predictable behavior. Normal anchors remain valid fallbacks when JavaScript is unavailable. A new page-level interaction should first be evaluated against these existing boundaries rather than adding another router or client-side framework.
 
-The layout uses htmx boost as an opt-in progressive enhancement at the page shell. Search forms and Skill detail modal triggers explicitly opt out because they have their own client-side or fragment behavior. External provider links, raw Markdown links and downloads remain normal links. The WSGI server continues to return complete HTML documents, so direct requests and static export remain first-class paths.
+The layout intentionally does not use page-level htmx boost or a client-side router. Search forms and Skill detail modal triggers keep their own client-side or fragment behavior. External provider links, raw Markdown links and downloads remain normal links. The WSGI server continues to return complete HTML documents, so direct requests and static export remain first-class paths.
 
 ## Asset policy
 

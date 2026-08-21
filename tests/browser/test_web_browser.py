@@ -130,34 +130,6 @@ def test_language_menu_supports_arrow_navigation_and_focus_restore(
     expect(trigger).to_be_focused()
 
 
-def test_internal_links_use_progressive_navigation_and_history(
-    page: Page,
-    browser_origin: str,
-) -> None:
-    _open(page, f"{browser_origin}/")
-    initial_navigation_entries = page.evaluate(
-        "() => performance.getEntriesByType('navigation').length"
-    )
-
-    page.locator('nav.nav-links a[href="/faq"]').click()
-    page.wait_for_function(
-        "() => window.location.pathname === '/faq' "
-        "&& document.querySelector('html')?.lang === 'en' "
-        "&& document.querySelector('main#main-content h1')"
-    )
-    expect(page.locator("#main-content h1")).to_be_visible()
-    expect(page.locator("#page-shell")).to_have_attribute("hx-boost", "true")
-    expect(page.locator("html")).not_to_have_attribute("aria-busy")
-    assert (
-        page.evaluate("() => performance.getEntriesByType('navigation').length")
-        == initial_navigation_entries
-    )
-
-    page.go_back(wait_until="commit")
-    page.wait_for_function("() => window.location.pathname === '/' ")
-    expect(page.locator("main#main-content")).to_be_visible()
-
-
 def test_skills_search_ask_mode_and_enter_do_not_navigate(
     page: Page,
     browser_origin: str,

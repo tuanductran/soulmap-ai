@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="htmx-config" content='{"includeIndicatorStyles":false,"historyCacheSize":10}'>
-    <meta name="view-transition" content="same-origin">
+    <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
     <meta name="description" content="$description">
     <link rel="canonical" href="$canonical_url">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -31,14 +30,7 @@ $alternate_links
     <script defer src="$alpine_url" integrity="$alpine_sri" crossorigin="anonymous"></script>
     <title>$title · $site_name</title>
   </head>
-  <body
-    id="page-shell"
-    hx-boost="true"
-    hx-history-elt="body"
-    hx-indicator="#page-progress"
-    hx-swap="innerHTML transition:true show:top"
-  >
-    <div id="page-progress" class="page-progress htmx-indicator" role="status" aria-live="polite" aria-label="$loading_label"></div>
+  <body id="page-shell">
     <a class="skip-link" href="#main-content">$skip_label</a>
     $nav
     <main id="main-content">$content</main>
