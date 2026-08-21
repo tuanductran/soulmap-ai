@@ -18,8 +18,15 @@
         </div>
       </div>
     </div>
-    <nav class="nav-links" aria-label="$primary_nav_label">
-      $nav_links
-    </nav>
+    <div
+      class="nav-links-shell"
+      x-data="navScroll"
+      x-bind:data-scroll-left="canScrollLeft"
+      x-bind:data-scroll-right="canScrollRight"
+    >
+      <nav class="nav-links" aria-label="$primary_nav_label">
+        $nav_links
+      </nav>
+    </div>
   </div>
 </header>
