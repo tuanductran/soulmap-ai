@@ -245,6 +245,11 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Running the artifact security audit before release mutation
 - Creating a GitHub Release and uploading all three artifacts
 
+The release job is guarded to run only when the selected workflow ref is `main`. Before
+triggering a manual run, select `main` in the branch selector. The third-party release
+upload action is pinned to a verified full commit SHA; update that pin only with a
+reviewed upstream tag-to-SHA check.
+
 Before triggering a release, review:
 
 - [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)

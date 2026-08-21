@@ -98,7 +98,7 @@ Content is distributed through:
 | Build backend       | Hatchling                                 |
 | Validation         | Deterministic regex/substring detectors   |
 | Formatter / Linter | Ruff                                      |
-| Type checking      | Pyright (strict)                          |
+| Type checking      | Pyright (standard mode)                   |
 | Markdown Quality   | pymarkdownlnt                             |
 | Testing            | pytest, pytest-xdist, pytest-randomly, Hypothesis |
 | Dead code detection | Vulture                                  |
@@ -117,6 +117,18 @@ soulmap-ai/
 │
 ├── SKILL.md
 │   └── Top-level shipped package entry point
+│
+├── reference/
+│   └── languages/        Packaged human-authored locale evidence
+│
+├── library/
+│   └── catalog.json      Versioned Library source catalog
+│
+├── .claude/
+│   └── Local maintainer workflow layer (not shipped)
+│
+├── .claude-plugin/
+│   └── Skill-package metadata (preserved only in `.skill`)
 │
 ├── skills/
 │   ├── frameworks/       Reflective frameworks (grief, anger, existential, ...)
@@ -153,8 +165,12 @@ soulmap-ai/
 │   ├── product/          User-facing product doc
 │   └── integrations/      Per-platform deployment guides
 │
-└── .github/workflows/    ci.yml, autofix.yml, codeql.yml, release.yml,
-                         website-pages.yml
+├── .github/
+│   ├── CODEOWNERS        Maintainer ownership and review map
+│   ├── actions/          Pinned local CI helper actions
+│   ├── dependabot.yml    uv and GitHub Actions update policy
+│   └── workflows/        ci.yml, autofix.yml, codeql.yml, release.yml,
+│                         website-pages.yml
 ```
 
 ---
@@ -639,7 +655,7 @@ uv run soulmap lint
 Responsibilities:
 
 * Ruff formatting and linting
-* Pyright strict type checking
+* Pyright standard-mode type checking
 * pymarkdownlnt Markdown compliance
 * `soulmap check-links` broken-link detection
 * `soulmap check-case` case-consistency checks

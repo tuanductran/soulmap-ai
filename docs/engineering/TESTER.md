@@ -109,6 +109,8 @@ Verify:
 - The CI `build` job and release workflow both run
   `scripts/verify_artifact_hashes.py`, `scripts/verify_extracted_artifacts.py`, and
   `scripts/verify_artifact_security.py` before uploading or publishing artifacts.
+- The release workflow's mutating job is restricted to `refs/heads/main`, keeps write
+  permissions at job scope, and pins the third-party release action to a full commit SHA.
 - As a minimum smoke check, `.claude-plugin/marketplace.json` is still present inside the
   `.skill` artifact.
 - `uv run python scripts/verify_extracted_artifacts.py` passes after extraction: the ZIP and
