@@ -33,6 +33,8 @@ The website keeps document markup outside the Python router. `src/soulmap/web/te
 
 Localized copy, route decisions, escaping, card generation, API behavior, and static export remain in Python. `src/soulmap/web/static/site.css` and `src/soulmap/web/static/site.js` are the canonical local assets served at `/static/site.css` and `/static/site.js`. This separation lets designers edit HTML/CSS without searching through a monolithic Python string while preserving the existing WSGI, htmx, Alpine, i18n, and GitHub Pages contracts.
 
+The stylesheet also includes a small **Tailwind-inspired CSS-only primitive layer**. It reuses the same ideas as Tailwind's theme tokens without adding Tailwind, npm, PostCSS, or generated runtime CSS: named rem breakpoint values, semantic `text-display`, `text-body`, `text-label`, `text-small`, and `prose-measure` classes, plus reusable `stack`, `cluster`, and `grid-auto` layout primitives. Existing semantic component classes remain canonical; these utilities are additive and mobile-first.
+
 ## Routes
 
 | Route | Purpose |

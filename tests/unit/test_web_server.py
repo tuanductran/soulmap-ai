@@ -1,4 +1,5 @@
 import json
+import re
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any, cast
@@ -739,7 +740,7 @@ def test_secondary_page_card_headings_are_sequential() -> None:
     for path in ("/how-it-works", "/boundaries", "/download", "/notes", "/skills"):
         _, body = _request(path)
         html = body.decode("utf-8")
-        assert html.count("<h1>") == 1
+        assert len(re.findall(r"<h1(?:\s[^>]*)?>", html)) == 1
         assert "<h3>" not in html
         assert "<h2" in html
 
