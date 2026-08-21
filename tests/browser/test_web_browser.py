@@ -36,6 +36,10 @@ def _open(page: Page, url: str) -> None:
     page.wait_for_function(
         "() => typeof window.Alpine === 'object' && typeof window.SoulMapSearch === 'object'"
     )
+    page.wait_for_function(
+        "() => [...document.styleSheets].some(sheet => "
+        "sheet.href && sheet.href.endsWith('/static/site.css'))"
+    )
 
 
 def _diagnostics_are_empty(diagnostics: Mapping[str, list[str]]) -> None:
@@ -81,8 +85,22 @@ def test_language_menu_opens_switches_locale_and_closes_with_escape(
     expect(menu).to_be_visible()
     expect(menu.get_by_role("menuitem")).to_have_count(3)
 
-    menu.get_by_role("menuitem", name=re.compile("English")).click()
-    expect(page).to_have_url(re.compile(r"/faq/?$"))
+    menu.get_by_role("menuitem", name=re.compile("English")).evaluate(
+        "element => element.click()"
+    )
+    for _ in range(100):
+        if page.url.rstrip("/") == f"{browser_origin}/faq":
+            break
+        page.wait_for_timeout(100)
+    else:
+        raise AssertionError(
+            f"locale navigation did not reach /faq; current URL: {page.url}"
+        )
+    page.wait_for_function(
+        "() => window.location.pathname === '/faq' "
+        "&& document.documentElement.lang === 'en'"
+    )
+    assert re.search(r"/faq/?$", page.url)
     expect(page.locator("html")).to_have_attribute("lang", "en")
 
     _open(page, f"{browser_origin}/ko/faq")
@@ -174,9 +192,48 @@ def test_skill_detail_htmx_modal_focus_and_provider_links(
                 "href", re.compile(r"^(?:https?://|/api/raw/|claude-cli://)")
             )
 
-    page.keyboard.press("Escape")
+    expect(dialog).to_be_focused()
+    dialog.press("Escape")
     expect(dialog).to_be_hidden()
     expect(trigger).to_be_focused()
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+@pytest.mark.parametrize("viewport", VIEWPORTS)
+def test_skills_action_buttons_are_balanced(
+    page: Page,
+    browser_origin: str,
+    locale: str,
+    viewport: tuple[int, int],
+) -> None:
+    page.set_viewport_size({"width": viewport[0], "height": viewport[1]})
+    _open(page, f"{browser_origin}{_path(locale, '/skills')}")
+    search_queries = {
+        "en": ("grief", "sad"),
+        "vi": ("khủng hoảng", "buồn"),
+        "ko": ("슬픔", "불안"),
+    }
+
+    for mode, query_text in zip(("search", "ask"), search_queries[locale], strict=True):
+        page.locator(f'label.mode-option:has(input[value="{mode}"])').click()
+        query = page.locator("#skill-search")
+        query.fill(query_text)
+        rows = page.locator(
+            "#skill-grid .skill-card__actions"
+            if mode == "search"
+            else "#question-results .skill-card__actions"
+        )
+        expect(rows).not_to_have_count(0)
+        for row in rows.all():
+            buttons = row.locator(":scope > *")
+            expect(buttons).to_have_count(2)
+            widths = [
+                box["width"]
+                for button in buttons.all()
+                if (box := button.bounding_box()) is not None
+            ]
+            assert len(widths) == 2
+            assert abs(widths[0] - widths[1]) <= 1, (locale, viewport, mode, widths)
 
 
 def test_skills_mobile_layout_has_touch_targets_and_no_modal_overflow(

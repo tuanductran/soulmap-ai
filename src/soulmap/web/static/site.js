@@ -274,7 +274,6 @@ document.addEventListener("alpine:init", () => {
       const input = form.querySelector("input[name=q]");
       if (!input) return;
       input.value = question;
-      input.focus();
       this.search(form);
     },
     open(slug, trigger) {
