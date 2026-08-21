@@ -167,7 +167,7 @@ document.addEventListener("alpine:init", () => {
       if (existingError) existingError.remove();
       const cards = Array.from(grid.querySelectorAll(":scope > .skill-card"));
       const cardsBySlug = new Map(
-        cards.map((card) => [card.querySelector(".code-pill")?.textContent?.trim(), card])
+        cards.map((card) => [card.dataset.skillSlug || card.querySelector(".skill-card__slug")?.textContent?.trim(), card])
       );
       const visibleSlugs = new Set(ranked.map((item) => item.entry.slug));
       for (const item of ranked) {
@@ -179,7 +179,7 @@ document.addEventListener("alpine:init", () => {
         }
       }
       for (const card of cards) {
-        const slug = card.querySelector(".code-pill")?.textContent?.trim();
+        const slug = card.dataset.skillSlug || card.querySelector(".skill-card__slug")?.textContent?.trim();
         const visible = visibleSlugs.has(slug);
         card.hidden = !visible;
         card.setAttribute("aria-hidden", String(!visible));

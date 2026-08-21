@@ -5,8 +5,15 @@ from __future__ import annotations
 from html import escape
 from urllib.parse import quote
 
-from soulmap.web.catalog import CATALOG, get_skill, locale_fields
-from soulmap.web.config import PUBLIC_SITE_URL
+from soulmap.web.catalog import (
+    CATALOG,
+    get_skill,
+    locale_fields,
+    raw_path,
+)
+from soulmap.web.catalog import (
+    raw_url as raw_bundle_url,
+)
 from soulmap.web.http import _nav_path, _text, tr
 from soulmap.web.pages import _not_found
 from soulmap.web.prompt_pack import PromptScenario, scenarios_for
@@ -48,7 +55,7 @@ def _render_prompt_scenario(
         prompt_label=_text(locale, "prompt_label"),
         scenario_prompt=escape(localized["prompt"]),
         source_label=_text(locale, "source_bundle"),
-        raw_href=escape(f"/api/raw/{entry_slug}.md", quote=True),
+        raw_href=escape(raw_path(entry_slug, locale), quote=True),
         raw_url=escape(raw_url, quote=True),
         question_label=_text(locale, "starter_question"),
         scenario_question=escape(localized["question"]),
@@ -72,7 +79,7 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
     if entry is None:
         return f"<p>{escape(_text(locale, 'skill_not_found_inline'))}</p>"
     fields = locale_fields(entry, locale)
-    raw_url = f"{PUBLIC_SITE_URL}/api/raw/{entry.slug}.md"
+    raw_url = raw_bundle_url(entry.slug, locale)
     return render_template(
         "partials/skill-detail.html",
         group=escape(fields["group"]),
@@ -86,7 +93,7 @@ def _skill_detail_fragment(entry_slug: str, locale: str) -> str:
         boundary_label=_text(locale, "boundary"),
         boundary=escape(fields["boundary"]),
         raw_note=_text(locale, "raw_note"),
-        raw_href=escape(f"/api/raw/{entry.slug}.md", quote=True),
+        raw_href=escape(raw_path(entry.slug, locale), quote=True),
         raw_label=_text(locale, "raw"),
         raw_url=escape(raw_url, quote=True),
         copied_label=_text(locale, "copied"),
@@ -111,11 +118,13 @@ def _skill_cards(locale: str, query: str = "") -> str:
             continue
         detail_href = _nav_path("/skills/" + entry.slug, locale)
         partial_href = f"/partials/skill/{entry.slug}.{locale}.html?lang={locale}"
+        skill_slug = escape(entry.slug, quote=True)
+        skill_id_label = escape(_text(locale, "skill_id_label"), quote=True)
         cards.append(
-            f'<article class="skill-card" data-search="{escape(search_text)}">'
-            f'<div class="skill-card__meta"><span>{escape(fields["group"])}</span><span class="code-pill">{escape(entry.slug)}</span></div>'
+            f'<article class="skill-card" data-search="{escape(search_text)}" data-skill-slug="{skill_slug}">'
+            f'<div class="skill-card__meta"><span>{escape(fields["group"])}</span><span class="skill-card__slug sr-only" data-skill-slug="{skill_slug}" aria-label="{skill_id_label}: {skill_slug}">{skill_slug}</span></div>'
             f'<div class="skill-card__body"><h2>{escape(fields["title"])}</h2><p>{escape(fields["summary"])}</p></div>'
-            f'<div class="skill-card__actions"><a class="button small" href="{escape(detail_href, quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="{escape(partial_href, quote=True)}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="/api/raw/{escape(entry.slug)}.md" target="_blank" rel="noopener">{_text(locale, "raw")}</a></div>'
+            f'<div class="skill-card__actions"><a class="button small" href="{escape(detail_href, quote=True)}" aria-haspopup="dialog" aria-controls="skill-modal" hx-get="{escape(partial_href, quote=True)}" hx-target="#skill-modal-content" hx-swap="innerHTML" hx-indicator="#skill-loading" x-on:click="open(\'{escape(entry.slug)}\', $event.currentTarget)">{_text(locale, "details")}</a><a class="link-button small secondary" href="{escape(raw_path(entry.slug, locale), quote=True)}" target="_blank" rel="noopener">{_text(locale, "raw")}</a></div>'
             "</article>"
         )
     return (

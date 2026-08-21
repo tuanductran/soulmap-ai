@@ -21,6 +21,7 @@ This note records official package evidence for the development toolchain used b
 | Deptry | 0.25.1 | [Deptry documentation](https://deptry.com/) | Scans imports against dependency declarations and explicitly supports uv and PEP 621. It must run inside the project's dedicated virtual environment. |
 | Vulture | 2.16 | [PyPI project metadata](https://pypi.org/project/vulture/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14 for CPython/PyPy. Its findings remain subject to the repository confidence threshold and human review. |
 | Werkzeug | 3.1.8 | [Werkzeug documentation](https://werkzeug.palletsprojects.com/) | Used only by the WSGI contract tests as a development utility; it is not part of the runtime web implementation or production dependency surface. |
+| pytest-playwright | 0.9.0 | [pytest-playwright on PyPI](https://pypi.org/project/pytest-playwright/) and [Playwright Pytest plugin](https://playwright.dev/python/docs/test-runners) | Provides pytest fixtures and CLI options for browser end-to-end tests, requires Python >=3.10, and keeps browser binaries outside the Python package; CI must install the selected Chromium binary explicitly with Playwright's supported `--with-deps` command. |
 | Hatchling | transitive build backend | [Hatch documentation](https://hatch.pypa.io/latest/) | Hatch documents reproducible builds, uv-supported environments and PEP 517 build workflows. SoulMap's explicit ZIP/skill builders remain the product artifact source. |
 | lefthook | 2.1.10 | [lefthook documentation](https://lefthook.dev/) | lefthook is a Git hooks manager, not a Python runtime package. Python 3.11 compatibility does not apply to the binary; the relevant contract is that hooks invoke `uv run` commands consistently. |
 | uv | 0.12.5 (CI installer pin) | [uv installer documentation](https://docs.astral.sh/uv/reference/installer/) | CI installs uv through the official unmanaged standalone installer into the ephemeral runner. It is a toolchain executable, not a SoulMap runtime or locked project dependency. |
@@ -67,3 +68,6 @@ This document does not introduce a new runtime dependency, package migration, Py
 [16]: https://docs.astral.sh/uv/reference/installer/ "uv installer options"
 [17]: https://github.com/rhysd/actionlint/blob/main/docs/install.md "actionlint installation documentation"
 [18]: https://werkzeug.palletsprojects.com/ "Werkzeug documentation"
+[19]: https://pypi.org/project/pytest-playwright/ "pytest-playwright on PyPI"
+[20]: https://playwright.dev/python/docs/test-runners "Playwright Pytest plugin"
+[21]: https://playwright.dev/python/docs/browsers "Playwright browser installation"

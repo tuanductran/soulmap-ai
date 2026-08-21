@@ -63,6 +63,14 @@ for _locale in SUPPORTED_LOCALES:
             f"{_prefix}partials/skills-grid.html",
         }
     )
+for _locale in ("vi", "ko"):
+    REQUIRED_FILES.update(
+        {
+            f"{_locale}/api/raw/meta.md",
+            f"{_locale}/api/skills/meta.json",
+            f"{_locale}/api/skills/meta/prompts.json",
+        }
+    )
 FORBIDDEN_FILE_PARTS = {".claude", ".github", ".git", "dist", "src", "tests"}
 FORBIDDEN_SUFFIXES = {".py", ".toml", ".lock"}
 
@@ -75,7 +83,10 @@ def _normalise_base_path(base_path: str) -> str:
 
 
 def _is_allowed_generated_file(relative: Path) -> bool:
-    if relative.as_posix().startswith("api/raw/") and relative.suffix == ".md":
+    path = relative.as_posix()
+    if (
+        path.startswith("api/raw/") or path.startswith(("vi/api/raw/", "ko/api/raw/"))
+    ) and relative.suffix == ".md":
         return True
     if relative.as_posix().startswith("partials/") and relative.suffix == ".html":
         return True

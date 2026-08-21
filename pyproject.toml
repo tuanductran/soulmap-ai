@@ -67,6 +67,7 @@ dev = [
   "deptry>=0.25.1",
   "vulture>=2.16",
   "werkzeug>=3.1.8",
+  "pytest-playwright==0.9.0",
 ]
 
 [tool.ruff]
@@ -95,6 +96,9 @@ minversion = "9.0"
 testpaths = ["tests"]
 pythonpath = ["src", "."]
 addopts = "-q"
+markers = [
+  "browser: opt-in Playwright browser tests (requires --run-browser)",
+]
 
 [tool.coverage.run]
 source = ["src/soulmap/runtime", "src/soulmap/web"]
