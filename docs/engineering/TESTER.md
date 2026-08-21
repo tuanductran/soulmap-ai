@@ -79,8 +79,17 @@ When reviewing safety claims manually, keep the matrix status labels strict:
 uv run soulmap build
 uv run soulmap build --skill
 uv run soulmap library-manifest
+uv run python scripts/verify_artifact_hashes.py
 uv run python scripts/verify_extracted_artifacts.py
+uv run python scripts/verify_artifact_security.py
 ```
+
+`verify_artifact_security.py` audits archives before extraction. It rejects unsafe member
+paths, duplicate names, symlinks/special files, executable permissions, oversized or
+suspiciously compressed members, executable or nested-archive signatures, dangerous HTML
+or URL schemes, high-confidence secret patterns, invalid JSON, and broken relative
+Markdown links. Pass explicit archive paths to audit a subset; with no arguments it checks
+both generated distribution artifacts.
 
 Verify:
 
@@ -98,7 +107,8 @@ Verify:
   The generated site must contain only HTML/CSS/robots output and must not contain source,
   repository-only, Skills, or AI artifact files.
 - The CI `build` job and release workflow both run
-  `scripts/verify_artifact_hashes.py` before uploading artifacts.
+  `scripts/verify_artifact_hashes.py`, `scripts/verify_extracted_artifacts.py`, and
+  `scripts/verify_artifact_security.py` before uploading or publishing artifacts.
 - As a minimum smoke check, `.claude-plugin/marketplace.json` is still present inside the
   `.skill` artifact.
 - `uv run python scripts/verify_extracted_artifacts.py` passes after extraction: the ZIP and
@@ -223,6 +233,7 @@ contracts:
 - `uv run soulmap library-manifest`
 - `uv run python scripts/verify_artifact_hashes.py`
 - `uv run python scripts/verify_extracted_artifacts.py`
+- `uv run python scripts/verify_artifact_security.py`
 - `uv run soulmap markdown-contract --root .`
 - `uv run soulmap check-links --root .`
 - `uv run soulmap check-case --root .`

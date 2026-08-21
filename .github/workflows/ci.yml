@@ -121,6 +121,8 @@ jobs:
           uv run python scripts/verify_artifact_hashes.py
       - name: Verify extracted artifact boundaries
         run: uv run python scripts/verify_extracted_artifacts.py
+      - name: Run artifact security audit
+        run: uv run python scripts/verify_artifact_security.py
       - name: Upload skill artifact
         uses: actions/upload-artifact@v7
         with:
