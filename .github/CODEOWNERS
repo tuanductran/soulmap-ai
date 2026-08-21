@@ -1,0 +1,21 @@
+# SoulMap AI ownership map
+# Required review enforcement is controlled separately by GitHub branch protection.
+
+* @tuanductran
+
+# Safety and shipped knowledge surfaces
+/AGENTS.md @tuanductran
+/SKILL.md @tuanductran
+/skills/ @tuanductran
+/reference/ @tuanductran
+
+# Runtime, packaging and release controls
+/src/soulmap/runtime/ @tuanductran
+/src/soulmap/devtools/ @tuanductran
+/scripts/ @tuanductran
+/.github/ @tuanductran
+
+# Public website and operational contracts
+/src/soulmap/web/ @tuanductran
+/docs/ @tuanductran
+/tests/ @tuanductran

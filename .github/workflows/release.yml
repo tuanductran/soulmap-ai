@@ -4,9 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  id-token: write
-  attestations: write
+  contents: read
 
 concurrency:
   group: release
@@ -14,6 +12,11 @@ concurrency:
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
@@ -93,7 +96,7 @@ jobs:
           echo "version=$(uv run cz version --project)" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release + upload artifacts
-        uses: softprops/action-gh-release@v3.0.2
+        uses: softprops/action-gh-release@fe965f7af51af5f2602596916f38a38df2e33de0 # v3.0.2
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}

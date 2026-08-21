@@ -15,7 +15,7 @@ Use it to answer four questions for every major repo surface:
 | --- | --- | --- | --- | --- |
 | `AGENTS.md` | Baseline SoulMap doctrine, safety law, response behavior, framework priority, and shipped package guidance | Shipped source text for behavior and package use | SoulMap role, safety rules, framework hierarchy, response doctrine, package structure, and optional-local-file guidance | Indirectly verified by `src/soulmap/runtime/`, tests, evals, and docs alignment |
 | `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `AGENTS.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
-| `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
+| `.github/` | Repository automation, ownership, and hosting metadata | Local-only repo operations surface | CI workflows, local CI helper actions, Dependabot, CODEOWNERS, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, CODEOWNERS review, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
 | `skills/` | Shipped knowledge base content | Shipped | Canonical English frameworks, brand doctrine, safety knowledge, voice and meta references | Markdown contract checks, eval source checks, build smoke, and release review |
 | `reference/` | Packaged Markdown locale evidence and optional localized references | Shipped resource data | Human-authored locale phrase evidence and optional localized resource metadata; no doctrine or response content | Markdown contracts, focused detector regression tests, package smoke, and runtime validation |
@@ -34,7 +34,7 @@ Use it to answer four questions for every major repo surface:
 
 - Baseline doctrine and shipped package guidance live in [../AGENTS.md](../../AGENTS.md).
 - Local AI workflow truth lives in `.claude/`.
-- Repository automation and hook wiring truth live in `.github/`.
+- Repository automation, hook wiring, and review ownership truth live in `.github/`; `.github/CODEOWNERS` records the maintainer owner for critical surfaces, while branch-protection settings determine whether approval is enforced.
 - `.claude-plugin/` holds local skill-package metadata only.
 - Shipped knowledge truth lives in `skills/` and is canonical English. Packaged locale evidence lives in `reference/` and must not define doctrine or response content. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
