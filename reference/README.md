@@ -11,7 +11,7 @@ optional localized references. It does not define SoulMap doctrine, framework gu
 voice, safety policy, or generated response content.
 
 The shipped Skills package remains canonical English for doctrine and behavior. The
-Markdown locale references are packaged resources, not translated doctrine. Python may
-use them for deterministic detection where an explicit consumer and regression coverage
-exist. Python does not translate generated responses and no external translation API is
-required.
+Markdown locale references are packaged resources, not translated doctrine. The locale
+evidence may be used for deterministic detection only where an explicit consumer and
+regression coverage exist. It does not translate generated responses or alter the
+behavioral contract.

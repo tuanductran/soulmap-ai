@@ -21,6 +21,20 @@ _REQUIRED_GROUPS = {
 }
 
 
+def test_packaged_surfaces_do_not_mention_runtime_implementation() -> None:
+    paths = [REPO_ROOT / "AGENTS.md", REPO_ROOT / "SKILL.md"]
+    paths.extend((REPO_ROOT / "reference").rglob("*.md"))
+    forbidden = re.compile(r"\bPython\b|src/soulmap/|tests/|docs/engineering/|\.py\b")
+
+    offenders = {
+        path.relative_to(REPO_ROOT).as_posix()
+        for path in paths
+        if forbidden.search(path.read_text(encoding="utf-8"))
+    }
+
+    assert offenders == set()
+
+
 def test_shipped_skills_do_not_contain_locale_prose() -> None:
     offenders = {
         path.relative_to(REPO_ROOT).as_posix()

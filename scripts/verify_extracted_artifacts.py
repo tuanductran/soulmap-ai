@@ -25,6 +25,15 @@ FORBIDDEN_MEMBER_PREFIXES = (
     "templates/",
     "tests/",
 )
+FORBIDDEN_CORE_REFERENCES = (
+    "Python",
+    "python",
+    "src/soulmap/",
+    "docs/engineering/",
+    "tests/",
+    "scripts/",
+    ".py",
+)
 FORBIDDEN_SKILL_REFERENCES = (
     "src/soulmap/",
     "docs/engineering/",
@@ -137,6 +146,19 @@ def _assert_expected_members(
             raise ExtractedArtifactError(
                 f"{archive_path.name} contains repository-only members: {forbidden_members}"
             )
+
+        for name in sorted(CORE_FILES):
+            content = archive.read(name).decode("utf-8")
+            violations = [
+                reference
+                for reference in FORBIDDEN_CORE_REFERENCES
+                if reference in content
+            ]
+            if violations:
+                raise ExtractedArtifactError(
+                    f"{archive_path.name}:{name} contains forbidden core references: "
+                    f"{violations}"
+                )
 
         for name in sorted(actual):
             if not (

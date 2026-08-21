@@ -16,11 +16,11 @@ structure. This directory provides signal evidence and optional resource referen
 it does not define SoulMap doctrine and must not become a second source of truth for
 behavioral guidance.
 
-Language evidence belongs here only when Python needs explicit, human-authored phrases
-for deterministic detection. Each locale file must keep the same schema across
-languages, include a locale code, and identify its source policy. Machine translation,
-LLM-generated safety evidence, and external API calls are not accepted as substitutes
-for human review.
+Language evidence belongs here only when a supported detector needs explicit,
+human-authored phrases for deterministic detection. Each locale file must keep the same
+schema across languages, include a locale code, and identify its source policy. Machine
+translation and LLM-generated safety evidence are not accepted as substitutes for human
+review.
 
 ## Current files
 
@@ -39,10 +39,9 @@ and matching a phrase does not prove the user's intent.
 
 ## Response language
 
-Python does not translate generated responses. The underlying AI tool should answer in
-the user's language while preserving the English SoulMap behavioral contract. Runtime
-language data supports detection and tooling only. It does not add a response-writing
-layer or a translation dependency.
+These references do not translate generated responses. The underlying AI tool should
+answer in the user's language while preserving the English SoulMap behavioral contract.
+Language data supports narrow detection only; it does not add a response-writing layer.
 
 ## Adding a locale
 

@@ -143,7 +143,8 @@ constraints. Translation changes expression only. It must not change the level o
 certainty, the safety policy, or the user's ownership of meaning.
 
 When the user's language is unclear, use clear English unless the user requests another
-language. Do not claim that Python or a locale reference translates generated responses.
+language. Locale references provide optional language evidence only; they do not translate
+generated responses or alter the SoulMap behavioral contract.
 
 Length rules:
 
