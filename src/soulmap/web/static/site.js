@@ -192,6 +192,11 @@ document.addEventListener("alpine:init", () => {
     searchEntries: null,
     searchLoading: false,
     searchRequest: 0,
+    providerOpen: false,
+    providerQuestion: "",
+    providerPrompt: "",
+    providerRawUrl: "",
+    providerReturnFocus: null,
     init() {
       this.$nextTick(() => {
         const form = this.$root.querySelector("form[data-search-api]");
@@ -374,7 +379,7 @@ document.addEventListener("alpine:init", () => {
         useButton.className = "button small";
         useButton.type = "button";
         useButton.textContent = form.dataset.askUseLabel || "Use this question";
-        useButton.addEventListener("click", () => this.useQuestion(result.scenario.question, form));
+        useButton.addEventListener("click", () => this.useQuestion(result.scenario, result.entry, useButton));
         const skillLink = document.createElement("a");
         skillLink.className = "link-button small secondary";
         const skillRoot = form.dataset.skillRoot || "/skills";
@@ -385,11 +390,63 @@ document.addEventListener("alpine:init", () => {
         questionResults.appendChild(article);
       }
     },
-    useQuestion(question, form) {
-      const input = form.querySelector("input[name=q]");
-      if (!input) return;
-      input.value = question;
-      this.search(form);
+    useQuestion(scenario, entry, trigger) {
+      this.providerQuestion = scenario.question || "";
+      this.providerPrompt = scenario.prompt || "";
+      this.providerRawUrl = entry.raw_url || "";
+      this.providerReturnFocus = trigger || document.activeElement;
+      this.providerOpen = true;
+      this.$nextTick(() => this.focusProvider());
+    },
+    providerUrl(provider) {
+      const prompt = [
+        this.providerPrompt,
+        this.$root.querySelector("form[data-search-api]")?.dataset.providerSourceInstruction || "Read the public SoulMap Skill bundle before responding:",
+        this.providerRawUrl,
+        `${this.$root.querySelector("form[data-search-api]")?.dataset.providerStarterPrefix || "Starter question:"} ${this.providerQuestion}`,
+      ].filter(Boolean).join("\n\n");
+      const encoded = encodeURIComponent(prompt);
+      return provider === "chatgpt"
+        ? `https://chatgpt.com/?q=${encoded}`
+        : `https://claude.ai/new?q=${encoded}`;
+    },
+    closeProviderChooser(returnFocus = true) {
+      this.providerOpen = false;
+      if (returnFocus) {
+        this.$nextTick(() => {
+          if (this.providerReturnFocus && typeof this.providerReturnFocus.focus === "function") {
+            this.providerReturnFocus.focus();
+          }
+        });
+      }
+    },
+    focusProvider() {
+      const dialog = this.$root.querySelector("#provider-chooser-dialog:not([hidden])");
+      if (dialog) dialog.focus();
+    },
+    providerTrap(event) {
+      if (!this.providerOpen) return;
+      const dialog = this.$root.querySelector("#provider-chooser-dialog");
+      if (!dialog || !dialog.contains(document.activeElement)) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        this.closeProviderChooser();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        dialog.querySelectorAll("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])")
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     },
     open(slug, trigger) {
       this.returnFocus = trigger || document.activeElement;

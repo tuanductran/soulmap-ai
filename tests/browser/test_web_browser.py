@@ -228,7 +228,7 @@ def test_skill_detail_htmx_modal_focus_and_provider_links(
     trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
     trigger.click()
 
-    dialog = page.locator('[role="dialog"]')
+    dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     expect(dialog.locator(".modal-dialog__header h2")).to_be_visible()
     expect(dialog.locator(".prompt-scenario")).not_to_have_count(0)
@@ -299,7 +299,7 @@ def test_skills_mobile_layout_has_touch_targets_and_no_modal_overflow(
             assert box["height"] >= 44
 
     page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first.click()
-    dialog = page.locator('[role="dialog"]')
+    dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     assert page.evaluate("document.documentElement.scrollWidth") <= page.evaluate(
         "document.documentElement.clientWidth"
