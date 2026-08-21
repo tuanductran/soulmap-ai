@@ -3,6 +3,29 @@ document.addEventListener("alpine:init", () => {
     open: false,
   }));
 
+  Alpine.data("navScroll", () => ({
+    canScrollLeft: false,
+    canScrollRight: false,
+    scroller: null,
+    updateScrollState() {
+      if (!this.scroller) return;
+      const maxScroll = this.scroller.scrollWidth - this.scroller.clientWidth;
+      this.canScrollLeft = this.scroller.scrollLeft > 1;
+      this.canScrollRight = this.scroller.scrollLeft < maxScroll - 1;
+    },
+    init() {
+      this.scroller = this.$root.querySelector(".nav-links");
+      if (!this.scroller) return;
+      this.updateScrollState();
+      this.scroller.addEventListener("scroll", () => this.updateScrollState(), {
+        passive: true,
+      });
+      window.addEventListener("resize", () => this.updateScrollState(), {
+        passive: true,
+      });
+    },
+  }));
+
   Alpine.data("clipboard", () => ({
     copied: false,
     copyFailed: false,

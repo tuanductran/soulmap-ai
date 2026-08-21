@@ -187,7 +187,11 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     assert html.index('<div class="locale-switcher"') < html.index(
         '<nav class="nav-links"'
     )
+    assert html.index('class="nav-links-shell"') < html.index('<nav class="nav-links"')
     assert html.index('<nav class="nav-links"') < html.index("</nav>")
+    assert 'x-data="navScroll"' in html
+    assert 'x-bind:data-scroll-left="canScrollLeft"' in html
+    assert 'x-bind:data-scroll-right="canScrollRight"' in html
     assert "한국어" in html
 
 
@@ -281,15 +285,24 @@ def test_website_is_responsive_accessible_and_progressive() -> None:
     assert "prefers-reduced-motion" in css
     assert "select:focus-visible" in css
     assert "textarea:focus-visible" in css
-    assert "button, input, select, textarea { font: inherit; }" in css
-    assert "a { color: inherit; text-decoration: none; }" in css
+    assert re.search(
+        r"button,\s*input,\s*select,\s*textarea\s*\{\s*font:\s*inherit;\s*\}",
+        css,
+    )
+    assert "font-korean" not in css
+    assert "--font-sans: Inter, ui-sans-serif, system-ui" in css
+    assert "a { color: inherit; text-decoration: none; }" not in css
+    assert re.search(r"a\s*\{\s*color:\s*inherit;\s*text-decoration:\s*none;\s*\}", css)
     assert ".nav-topline" in css
+    assert ".nav-links-shell::before" in css
+    assert '.nav-links-shell[data-scroll-left="true"]::before' in css
+    assert '.nav-links-shell[data-scroll-right="true"]::after' in css
     assert "prefers-color-scheme: dark" in css
     assert "prefers-reduced-transparency" in css
     assert "safe-area-inset" in css
     assert ":focus-visible" in css
     assert "min-height: 44px" in css
-    assert "body.modal-open { overflow: hidden; }" in css
+    assert re.search(r"body\.modal-open\s*\{\s*overflow:\s*hidden;\s*\}", css)
     assert ".modal-dialog" in css
     assert ".skill-grid" in css
     assert ".mode-switch" in css

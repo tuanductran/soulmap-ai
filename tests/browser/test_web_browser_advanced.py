@@ -67,6 +67,72 @@ def test_locale_menu_keyboard_open_and_focus_return(
 
 
 @pytest.mark.parametrize("locale", LOCALES)
+def test_primary_nav_exposes_horizontal_scroll_edges(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    page.set_viewport_size({"width": 320, "height": 720})
+    _open(page, browser_origin, locale, "/faq")
+    shell = page.locator(".nav-links-shell")
+    nav = page.locator(".nav-links")
+    assert nav.evaluate("element => element.scrollWidth") > nav.evaluate(
+        "element => element.clientWidth"
+    )
+    expect(shell).not_to_have_attribute("data-scroll-left")
+    expect(shell).to_have_attribute("data-scroll-right", "true")
+
+    nav.evaluate(
+        "element => { element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2; }"
+    )
+    expect(shell).to_have_attribute("data-scroll-left", "true")
+    expect(shell).to_have_attribute("data-scroll-right", "true")
+
+    nav.evaluate("element => { element.scrollLeft = element.scrollWidth; }")
+    expect(shell).to_have_attribute("data-scroll-left", "true")
+    expect(shell).not_to_have_attribute("data-scroll-right")
+
+    nav.evaluate("element => { element.scrollLeft = 0; }")
+    expect(shell).not_to_have_attribute("data-scroll-left")
+    expect(shell).to_have_attribute("data-scroll-right", "true")
+    assert (
+        float(
+            page.locator(".nav-links-shell").evaluate(
+                "element => getComputedStyle(element, '::after').opacity"
+            )
+        )
+        > 0
+    )
+
+    nav.evaluate(
+        "element => { element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2; }"
+    )
+    expect(shell).to_have_attribute("data-scroll-left", "true")
+    expect(shell).to_have_attribute("data-scroll-right", "true")
+    assert (
+        float(
+            page.locator(".nav-links-shell").evaluate(
+                "element => getComputedStyle(element, '::before').opacity"
+            )
+        )
+        > 0
+    )
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+def test_locales_share_the_default_font_stack(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    _open(page, browser_origin, locale, "/")
+    font_family = page.locator("body").evaluate(
+        "element => getComputedStyle(element).fontFamily"
+    )
+    assert font_family.startswith("Inter")
+    assert (
+        page.locator("html").evaluate("element => getComputedStyle(element).fontFamily")
+        == font_family
+    )
+
+
+@pytest.mark.parametrize("locale", LOCALES)
 def test_faq_keyboard_disclosures_keep_independent_state(
     page: Page, browser_origin: str, locale: str
 ) -> None:
