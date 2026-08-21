@@ -16,13 +16,20 @@ document.addEventListener("alpine:init", () => {
     init() {
       this.scroller = this.$root.querySelector(".nav-links");
       if (!this.scroller) return;
-      this.updateScrollState();
-      this.scroller.addEventListener("scroll", () => this.updateScrollState(), {
-        passive: true,
+      const update = () => this.updateScrollState();
+      this.scroller.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update, { passive: true });
+      if ("ResizeObserver" in window) {
+        this.resizeObserver = new ResizeObserver(update);
+        this.resizeObserver.observe(this.scroller);
+      }
+      this.$nextTick(() => {
+        update();
+        requestAnimationFrame(() => requestAnimationFrame(update));
       });
-      window.addEventListener("resize", () => this.updateScrollState(), {
-        passive: true,
-      });
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(update);
+      }
     },
   }));
 
