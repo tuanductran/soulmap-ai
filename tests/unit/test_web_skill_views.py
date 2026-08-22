@@ -16,6 +16,16 @@ from soulmap.web.skill_views import (
 )
 
 
+def test_missing_skill_views_render_not_found_fallbacks() -> None:
+    detail = _skill_detail_fragment("not-real", "vi")
+    page = _skill_page("not-real", "ko")
+
+    assert detail.startswith("<p>")
+    assert "<p>" in detail and "</p>" in detail
+    assert page
+    assert "해당 경로가 없습니다." in page
+
+
 @pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry.slug)
 @pytest.mark.parametrize("locale", SUPPORTED_LOCALES)
 def test_skill_detail_keeps_localized_prompt_source_contract(

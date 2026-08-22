@@ -19,6 +19,26 @@ def test_source_fingerprint_changes_when_input_bytes_change(tmp_path: Path) -> N
     assert build.source_fingerprint(tmp_path, (source,)) != first
 
 
+def test_repository_root_falls_back_to_current_working_directory(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    real_path = Path
+
+    class PathShim:
+        def __new__(_cls, value: str) -> Path:
+            if value == str(build.__file__):
+                return real_path(tmp_path / "module.py")
+            return real_path(value)
+
+        @staticmethod
+        def cwd() -> Path:
+            return tmp_path
+
+    monkeypatch.setattr(build, "Path", PathShim)
+
+    assert build.repository_root() == tmp_path.resolve()
+
+
 def test_load_reusable_output_rejects_manifest_path_escape(tmp_path: Path) -> None:
     output = tmp_path / "site"
     cache = tmp_path / "cache"
@@ -39,6 +59,58 @@ def test_load_reusable_output_rejects_manifest_path_escape(tmp_path: Path) -> No
     )
 
     assert build.load_reusable_output(cache, output, key) is None
+
+
+@pytest.mark.parametrize(
+    "manifest",
+    [
+        "not-json",
+        {"version": 0},
+        {"version": build.MANIFEST_VERSION, "key": {}, "files": []},
+        {
+            "version": build.MANIFEST_VERSION,
+            "key": build.BuildKey("fingerprint", "/soulmap-ai").as_dict(),
+            "files": {},
+        },
+        {
+            "version": build.MANIFEST_VERSION,
+            "key": build.BuildKey("fingerprint", "/soulmap-ai").as_dict(),
+            "files": [1],
+        },
+        {
+            "version": build.MANIFEST_VERSION,
+            "key": build.BuildKey("fingerprint", "/soulmap-ai").as_dict(),
+            "files": ["missing.txt"],
+        },
+    ],
+)
+def test_load_reusable_output_rejects_invalid_manifests(
+    tmp_path: Path, manifest: object
+) -> None:
+    output = tmp_path / "site"
+    cache = tmp_path / "cache"
+    output.mkdir()
+    cache.mkdir()
+    key = build.BuildKey("fingerprint", "/soulmap-ai")
+    raw = manifest if isinstance(manifest, str) else json.dumps(manifest)
+    (cache / build.MANIFEST_FILENAME).write_text(raw, encoding="utf-8")
+
+    assert build.load_reusable_output(cache, output, key) is None
+
+
+def test_iter_files_filters_missing_roots_and_generated_python_files(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "valid.txt").write_text("valid", encoding="utf-8")
+    (source / "ignored.pyc").write_bytes(b"ignored")
+    (source / "__pycache__").mkdir()
+    (source / "__pycache__" / "cached.py").write_text("ignored", encoding="utf-8")
+
+    assert build._iter_files(tmp_path / "missing") == []
+    assert build._iter_files(source) == [source / "valid.txt"]
+    assert build.build_inputs(tmp_path) == ()
 
 
 def test_web_cli_forwards_incremental_export_options(
