@@ -12,6 +12,7 @@ from werkzeug.test import Client
 from werkzeug.wrappers import Response
 
 from soulmap.cli import _command_table
+from soulmap.web import server as web_server
 from soulmap.web.catalog import CATALOG
 from soulmap.web.server import application, export_static
 
@@ -457,6 +458,55 @@ def test_htmx_skill_filter_returns_fragment_and_full_page_fallback() -> None:
     assert "Core orchestration" not in full_page
 
 
+def test_api_error_and_fallback_routes_are_deterministic(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    invalid_limit_headers, invalid_limit_body = _request(
+        "/api/skills/search.json", "q=spiritual&limit=not-a-number"
+    )
+    invalid_limit = json.loads(invalid_limit_body)
+    assert invalid_limit_headers["status"] == "200 OK"
+    assert invalid_limit["limit"] == 50
+
+    monkeypatch.setattr("soulmap.web.routes.read_text_asset", lambda _name: None)
+    missing_asset_headers, _ = _request("/static/site.js")
+    assert missing_asset_headers["status"] == "404 Not Found"
+
+    for path in (
+        "/api/skills/not-real.json",
+        "/api/skills/not-real/prompts.json",
+        "/api/skills/meta/prompts.fr.json",
+        "/api/skills/meta/prompts-broken.json",
+    ):
+        headers, body = _request(path)
+        assert headers["status"] == "404 Not Found"
+        assert json.loads(body)["error"] == "skill_not_found"
+
+    raw_headers, raw_body = _request("/api/raw/not-real.md")
+    assert raw_headers["status"] == "404 Not Found"
+    assert "not found" in raw_body.decode("utf-8").lower()
+
+    partial_headers, partial_body = _request("/partials/skill/meta.fr.html")
+    assert partial_headers["status"] == "200 OK"
+    assert "Core orchestration" in partial_body.decode("utf-8")
+
+    fallback_partial_headers, fallback_partial_body = _request(
+        "/partials/skill/meta.html"
+    )
+    assert fallback_partial_headers["status"] == "200 OK"
+    assert "Core orchestration" in fallback_partial_body.decode("utf-8")
+
+    skill_headers, skill_body = _request("/skills/not-real")
+    assert skill_headers["status"] == "404 Not Found"
+    assert "not found" in skill_body.decode("utf-8").lower()
+
+    skill_json_headers, skill_json_body = _request("/api/skills/meta.json")
+    skill_json = json.loads(skill_json_body)
+    assert skill_json_headers["status"] == "200 OK"
+    assert skill_json["slug"] == "meta"
+    assert skill_json["raw_url"].endswith("/api/raw/meta.md")
+
+
 def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
     captured, body = _request("/api/skills/search.json", "q=spiritual&limit=1")
     payload = json.loads(body)
@@ -489,6 +539,88 @@ def test_advanced_skill_search_api_localizes_ranks_filters_and_limits() -> None:
     group_body = _request("/api/skills/search.json", "group=Safety")[1]
     group_payload = json.loads(group_body)
     assert [result["slug"] for result in group_payload["results"]] == ["safety"]
+
+
+def test_server_main_export_and_serve_modes_forward_arguments(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    exported: dict[str, object] = {}
+
+    def fake_export(
+        output: Path,
+        base_path: str = "",
+        *,
+        incremental: bool = False,
+        cache_dir: Path | None = None,
+    ) -> list[Path]:
+        exported.update(
+            output=output,
+            base_path=base_path,
+            incremental=incremental,
+            cache_dir=cache_dir,
+        )
+        return [output / "index.html"]
+
+    monkeypatch.setattr(web_server, "export_static", fake_export)
+    assert (
+        web_server.main(
+            [
+                "--export-static",
+                "--output",
+                str(tmp_path / "site"),
+                "--base-path",
+                "/soulmap-ai",
+                "--incremental",
+                "--cache-dir",
+                str(tmp_path / "cache"),
+            ]
+        )
+        == 0
+    )
+    assert exported == {
+        "output": tmp_path / "site",
+        "base_path": "/soulmap-ai",
+        "incremental": True,
+        "cache_dir": tmp_path / "cache",
+    }
+
+    served: dict[str, object] = {}
+    monkeypatch.setattr(
+        web_server,
+        "serve",
+        lambda host, port: served.update(host=host, port=port),
+    )
+    assert web_server.main(["--host", "127.0.0.1", "--port", "4321"]) == 0
+    assert served == {"host": "127.0.0.1", "port": 4321}
+
+
+def test_server_serve_mode_handles_shutdown_and_quiet_logging(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, Any] = {}
+
+    class FakeServer:
+        def __enter__(self) -> "FakeServer":
+            return self
+
+        def __exit__(self, *_args: object) -> None:
+            captured["closed"] = True
+
+        def serve_forever(self) -> None:
+            raise KeyboardInterrupt
+
+    def fake_make_server(*args: object, **kwargs: object) -> FakeServer:
+        captured["args"] = args
+        captured["kwargs"] = kwargs
+        return FakeServer()
+
+    monkeypatch.setattr(web_server, "make_server", fake_make_server)
+    web_server.serve("127.0.0.1", 4321)
+
+    assert captured["args"][:2] == ("127.0.0.1", 4321)
+    assert captured["closed"] is True
+    handler_class = captured["kwargs"]["handler_class"]
+    handler_class.log_message(object(), "%s", "request")
 
 
 def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
