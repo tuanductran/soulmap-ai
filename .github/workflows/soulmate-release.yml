@@ -1,0 +1,94 @@
+name: Soulmate package release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Soulmate package version to build"
+        required: true
+        default: "0.1.0"
+        type: string
+      publish_release:
+        description: "Create the GitHub Release after all gates pass"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soulmate-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SOULMAP_REPO_ROOT: ${{ github.workspace }}
+  SOULMATE_VERSION: ${{ inputs.version }}
+
+jobs:
+  build-and-verify:
+    name: Build and verify Soulmate package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: "3.11"
+
+      - name: Install locked development environment
+        run: uv sync --locked --python 3.11
+
+      - name: Verify repository dependency direction
+        run: uv run soulmap check-dependencies --root .
+
+      - name: Verify requested package version
+        run: test "$(uv run python scripts/build_soulmate.py --print-version)" = "${SOULMATE_VERSION}"
+
+      - name: Build isolated Soulmate distributions
+        run: uv run python scripts/build_soulmate.py --output-dir dist/soulmate
+
+      - name: Verify Soulmate package boundary
+        run: |
+          uv run python scripts/verify_soulmate_package.py \
+            --wheel "dist/soulmate/soulmate_ai-${SOULMATE_VERSION}-py3-none-any.whl" \
+            --sdist "dist/soulmate/soulmate_ai-${SOULMATE_VERSION}.tar.gz" \
+            --version "${SOULMATE_VERSION}"
+
+      - name: Record package checksums
+        working-directory: dist/soulmate
+        run: sha256sum soulmate_ai-* > SHA256SUMS
+
+      - name: Upload verified Soulmate package
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmate-package-${{ github.sha }}
+          path: dist/soulmate/
+          if-no-files-found: error
+
+  publish-github-release:
+    name: Publish Soulmate GitHub Release
+    if: inputs.publish_release == true
+    needs: build-and-verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified Soulmate package
+        uses: actions/download-artifact@v8
+        with:
+          name: soulmate-package-${{ github.sha }}
+          path: dist/soulmate
+
+      - name: Publish release artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "soulmate-v${SOULMATE_VERSION}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "Soulmate AI v${SOULMATE_VERSION}" \
+            --target "${GITHUB_SHA}" \
+            --notes "Soulmate foundation library release ${SOULMATE_VERSION}." \
+            dist/soulmate/*
