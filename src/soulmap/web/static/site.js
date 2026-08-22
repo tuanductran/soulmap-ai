@@ -1,27 +1,37 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("languageMenu", () => ({
     open: false,
-    toggle() {
+    toggle(event) {
       if (this.open) {
         this.close(true);
       } else {
-        this.openMenu();
+        this.openMenu(event?.detail === 0);
       }
     },
-    openMenu() {
+    openMenu(focusFirst = false) {
       this.open = true;
-      this.$nextTick(() => this.focusFirst());
+      if (focusFirst) {
+        this.$nextTick(() => this.focusFirst());
+      }
     },
     close(returnFocus = true) {
       this.open = false;
       if (returnFocus) {
         this.$nextTick(() => {
-          this.$root.querySelector(".locale-trigger")?.focus();
+          this.focusWithoutScroll(this.$root.querySelector(".locale-trigger"));
         });
       }
     },
+    focusWithoutScroll(element) {
+      if (!element || typeof element.focus !== "function") return;
+      try {
+        element.focus({ preventScroll: true });
+      } catch (error) {
+        element.focus();
+      }
+    },
     focusFirst() {
-      this.$root.querySelector('[role="menuitem"]')?.focus();
+      this.focusWithoutScroll(this.$root.querySelector('[role="menuitem"]'));
     },
     onKeydown(event) {
       const items = Array.from(this.$root.querySelectorAll('[role="menuitem"]'));
@@ -33,7 +43,7 @@ document.addEventListener("alpine:init", () => {
       if (!items.length || !["ArrowDown", "ArrowUp"].includes(event.key)) return;
       event.preventDefault();
       if (!this.open) {
-        this.openMenu();
+        this.openMenu(true);
         return;
       }
       const currentIndex = items.indexOf(document.activeElement);
@@ -124,6 +134,8 @@ document.addEventListener("alpine:init", () => {
     providerPrompt: "",
     providerRawUrl: "",
     providerReturnFocus: null,
+    bodyScrollLock: null,
+    bodyScrollUnlockTimer: null,
     init() {
       this.$nextTick(() => {
         const form = this.$root.querySelector("form[data-search-api]");
@@ -322,6 +334,7 @@ document.addEventListener("alpine:init", () => {
       this.providerPrompt = scenario.prompt || "";
       this.providerRawUrl = entry.raw_url || "";
       this.providerReturnFocus = trigger || document.activeElement;
+      this.lockBodyScroll();
       this.providerOpen = true;
       this.$nextTick(() => this.focusProvider());
     },
@@ -339,17 +352,16 @@ document.addEventListener("alpine:init", () => {
     },
     closeProviderChooser(returnFocus = true) {
       this.providerOpen = false;
+      this.scheduleBodyScrollUnlock();
       if (returnFocus) {
         this.$nextTick(() => {
-          if (this.providerReturnFocus && typeof this.providerReturnFocus.focus === "function") {
-            this.providerReturnFocus.focus();
-          }
+          this.focusWithoutScroll(this.providerReturnFocus);
         });
       }
     },
     focusProvider() {
-      const dialog = this.$root.querySelector("#provider-chooser-dialog:not([hidden])");
-      if (dialog) dialog.focus();
+      const dialog = this.$root.querySelector("#provider-chooser-dialog");
+      this.focusWithoutScroll(dialog);
     },
     providerTrap(event) {
       if (!this.providerOpen) return;
@@ -375,28 +387,79 @@ document.addEventListener("alpine:init", () => {
         first.focus();
       }
     },
-    open(slug, trigger) {
+    lockBodyScroll() {
+      if (this.bodyScrollUnlockTimer !== null) {
+        window.clearTimeout(this.bodyScrollUnlockTimer);
+        this.bodyScrollUnlockTimer = null;
+      }
+      if (this.bodyScrollLock) return;
+      const body = document.body;
+      this.bodyScrollLock = {
+        scrollX: window.scrollX,
+        scrollY: window.scrollY,
+        position: body.style.position,
+        top: body.style.top,
+        width: body.style.width,
+        overflow: body.style.overflow,
+      };
+      body.classList.add("modal-open");
+      body.style.position = "fixed";
+      body.style.top = `-${this.bodyScrollLock.scrollY}px`;
+      body.style.width = "100%";
+      body.style.overflow = "hidden";
+    },
+    scheduleBodyScrollUnlock() {
+      if (!this.bodyScrollLock || this.bodyScrollUnlockTimer !== null) return;
+      this.bodyScrollUnlockTimer = window.setTimeout(() => {
+        this.bodyScrollUnlockTimer = null;
+        if (this.openSlug || this.providerOpen) return;
+        const lock = this.bodyScrollLock;
+        this.bodyScrollLock = null;
+        const body = document.body;
+        body.classList.remove("modal-open");
+        body.style.position = lock.position;
+        body.style.top = lock.top;
+        body.style.width = lock.width;
+        body.style.overflow = lock.overflow;
+        window.scrollTo({ top: lock.scrollY, left: lock.scrollX, behavior: "auto" });
+      }, 220);
+    },
+    open(slug, trigger, detailUrl) {
       this.returnFocus = trigger || document.activeElement;
-      document.body.classList.add("modal-open");
+      this.lockBodyScroll();
       this.openSlug = slug;
-      this.$nextTick(() => this.focusDialog());
+      this.$nextTick(() => {
+        this.focusDialog();
+        if (!detailUrl || !this.openSlug) return;
+        if (!window.htmx) return;
+        window.htmx.ajax("GET", detailUrl, {
+          target: "#skill-modal-content",
+          indicator: "#skill-loading",
+        });
+      });
     },
     close() {
       this.openSlug = "";
-      document.body.classList.remove("modal-open");
+      this.scheduleBodyScrollUnlock();
       this.$nextTick(() => {
-        if (this.returnFocus && typeof this.returnFocus.focus === "function") {
-          this.returnFocus.focus();
-        }
+        this.focusWithoutScroll(this.returnFocus);
       });
     },
+    focusWithoutScroll(element) {
+      if (!element || typeof element.focus !== "function") return;
+      try {
+        element.focus({ preventScroll: true });
+      } catch (error) {
+        element.focus();
+      }
+    },
     focusDialog() {
-      const dialog = this.$root.querySelector("[role=dialog]:not([hidden])");
-      if (dialog) dialog.focus();
+      const dialog = this.$root.querySelector("#skill-modal [role=dialog]");
+      this.focusWithoutScroll(dialog);
     },
     trap(event) {
       if (!this.openSlug) return;
-      const dialog = this.$root.querySelector('[role="dialog"]');
+      const dialog = this.$root.querySelector('#skill-modal [role="dialog"]');
       if (!dialog || !dialog.contains(document.activeElement)) return;
       if (event.key === "Escape") {
         event.preventDefault();

@@ -8,7 +8,7 @@
         <span>SoulMap AI</span>
       </a>
       <div class="locale-switcher" x-data="languageMenu" x-on:keydown="onKeydown($$event)" x-on:click.outside="close(false)">
-        <button class="locale-trigger" type="button" x-on:click="toggle" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
+        <button class="locale-trigger" type="button" x-on:click="toggle($$event)" x-bind:aria-expanded="open" aria-haspopup="menu" aria-controls="language-menu">
           <span>$language_label</span>
           <span class="locale-code" aria-hidden="true">$current_locale_upper</span>
           <svg class="icon locale-chevron" viewBox="0 0 16 16" focusable="false"><path d="m3 6 5 5 5-5"/></svg>

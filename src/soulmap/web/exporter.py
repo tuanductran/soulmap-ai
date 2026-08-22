@@ -50,6 +50,7 @@ def _apply_base_path(content: str, base_path: str) -> str:
         "action",
         "data-search-api",
         "data-skill-root",
+        "data-detail-url",
     ):
         content = content.replace(f'{attribute}="/', f'{attribute}="{base_path}/')
     return content.replace('url("/', f'url("{base_path}/')

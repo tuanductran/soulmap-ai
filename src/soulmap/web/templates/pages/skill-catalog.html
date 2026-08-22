@@ -53,34 +53,36 @@
       <p class="ask-browse"><a class="link-button secondary" href="$catalog_action">$ask_browse_label</a></p>
     </div>
   </div>
-  <div class="modal-shell" id="skill-modal" x-show="openSlug" x-cloak x-transition:enter="modal-shell-enter" x-transition:enter-start="modal-shell-enter-start" x-transition:enter-end="modal-shell-enter-end" x-transition:leave="modal-shell-leave" x-transition:leave-start="modal-shell-leave-start" x-transition:leave-end="modal-shell-leave-end" x-on:keydown.window="trap($$event)" role="presentation">
-    <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
-    <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title" x-show="openSlug"
-      x-transition:enter="modal-dialog-enter" x-transition:enter-start="modal-dialog-enter-start" x-transition:enter-end="modal-dialog-enter-end" x-transition:leave="modal-dialog-leave" x-transition:leave-start="modal-dialog-leave-start" x-transition:leave-end="modal-dialog-leave-end">
-      <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">
-        <svg class="icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16"/></svg>
-      </button>
-      <h2 class="sr-only" id="skill-modal-title">$modal_title</h2>
-      <p id="skill-loading" class="htmx-indicator modal-loading" role="status">$loading_label</p>
-      <div id="skill-modal-content"><p>$details_label</p></div>
-    </div>
-  </div>
-  <div class="modal-shell" id="provider-chooser" x-show="providerOpen" x-cloak x-transition:enter="modal-shell-enter" x-transition:enter-start="modal-shell-enter-start" x-transition:enter-end="modal-shell-enter-end" x-transition:leave="modal-shell-leave" x-transition:leave-start="modal-shell-leave-start" x-transition:leave-end="modal-shell-leave-end" x-on:keydown.window="providerTrap($$event)" role="presentation">
-    <div class="modal-backdrop" x-on:click="closeProviderChooser" aria-hidden="true"></div>
-    <div class="modal-dialog provider-chooser" id="provider-chooser-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="provider-chooser-title" x-show="providerOpen"
-      x-transition:enter="modal-dialog-enter" x-transition:enter-start="modal-dialog-enter-start" x-transition:enter-end="modal-dialog-enter-end" x-transition:leave="modal-dialog-leave" x-transition:leave-start="modal-dialog-leave-start" x-transition:leave-end="modal-dialog-leave-end">
-      <button class="modal-close" type="button" x-on:click="closeProviderChooser" aria-label="$close_label">
-        <svg class="icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16"/></svg>
-      </button>
-      <h2 id="provider-chooser-title">$ask_provider_title</h2>
-      <p class="modal-note">$ask_provider_intro</p>
-      <p class="provider-chooser__label">$ask_provider_question</p>
-      <blockquote class="provider-chooser__question" x-text="providerQuestion"></blockquote>
-      <div class="provider-grid provider-chooser__actions">
-        <a class="button secondary" x-bind:href="providerUrl('chatgpt')" target="_blank" rel="noopener" x-on:click="closeProviderChooser(false)"><span>$open_chatgpt</span><svg class="icon provider-icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M11 4h5v5M16 4 9 11"/><path d="M15 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg></a>
-        <a class="button secondary" x-bind:href="providerUrl('claude')" target="_blank" rel="noopener" x-on:click="closeProviderChooser(false)"><span>$open_claude</span><svg class="icon provider-icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M11 4h5v5M16 4 9 11"/><path d="M15 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1 1V6a1 1 0 0 1 1-1h4"/></svg></a>
+  <template x-if="openSlug">
+    <div class="modal-shell" id="skill-modal" x-transition:enter="modal-shell-enter" x-transition:enter-start="modal-shell-enter-start" x-transition:enter-end="modal-shell-enter-end" x-transition:leave="modal-shell-leave" x-transition:leave-start="modal-shell-leave-start" x-transition:leave-end="modal-shell-leave-end" x-on:keydown.window="trap($$event)" role="presentation">
+      <div class="modal-backdrop" x-on:click="close" aria-hidden="true"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="skill-modal-title">
+        <button class="modal-close" type="button" x-on:click="close" aria-label="$close_label">
+          <svg class="icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16"/></svg>
+        </button>
+        <h2 class="sr-only" id="skill-modal-title">$modal_title</h2>
+        <p id="skill-loading" class="htmx-indicator modal-loading" role="status">$loading_label</p>
+        <div id="skill-modal-content"><p>$details_label</p></div>
       </div>
-      <p class="provider-chooser__raw"><a class="link-button secondary" x-bind:href="providerRawUrl" target="_blank" rel="noopener">$ask_provider_raw</a></p>
     </div>
-  </div>
+  </template>
+  <template x-if="providerOpen">
+    <div class="modal-shell" id="provider-chooser" x-transition:enter="modal-shell-enter" x-transition:enter-start="modal-shell-enter-start" x-transition:enter-end="modal-shell-enter-end" x-transition:leave="modal-shell-leave" x-transition:leave-start="modal-shell-leave-start" x-transition:leave-end="modal-shell-leave-end" x-on:keydown.window="providerTrap($$event)" role="presentation">
+      <div class="modal-backdrop" x-on:click="closeProviderChooser" aria-hidden="true"></div>
+      <div class="modal-dialog provider-chooser" id="provider-chooser-dialog" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="provider-chooser-title">
+        <button class="modal-close" type="button" x-on:click="closeProviderChooser" aria-label="$close_label">
+          <svg class="icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="m4 4 12 12M16 4 4 16"/></svg>
+        </button>
+        <h2 id="provider-chooser-title">$ask_provider_title</h2>
+        <p class="modal-note">$ask_provider_intro</p>
+        <p class="provider-chooser__label">$ask_provider_question</p>
+        <blockquote class="provider-chooser__question" x-text="providerQuestion"></blockquote>
+        <div class="provider-grid provider-chooser__actions">
+          <a class="button secondary" x-bind:href="providerUrl('chatgpt')" target="_blank" rel="noopener" x-on:click="closeProviderChooser(false)"><span>$open_chatgpt</span><svg class="icon provider-icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M11 4h5v5M16 4 9 11"/><path d="M15 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg></a>
+          <a class="button secondary" x-bind:href="providerUrl('claude')" target="_blank" rel="noopener" x-on:click="closeProviderChooser(false)"><span>$open_claude</span><svg class="icon provider-icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M11 4h5v5M16 4 9 11"/><path d="M15 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1 1-1V6a1 1 0 0 1 1-1h4"/></svg></a>
+        </div>
+        <p class="provider-chooser__raw"><a class="link-button secondary" x-bind:href="providerRawUrl" target="_blank" rel="noopener">$ask_provider_raw</a></p>
+      </div>
+    </div>
+  </template>
 </section>
