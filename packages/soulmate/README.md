@@ -18,6 +18,8 @@ capability lifecycle, skill-manifest semantics, composition ownership, compatibi
 artifact provenance, and reproducibility. These skills are framework-neutral references; they
 do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual behavior.
 
+Developers creating custom Soulmate foundation skills should follow [`CONTRIBUTING.md`](CONTRIBUTING.md). It defines ownership, neutral content rules, manifest registration, tests, artifact boundaries, and the PR review checklist.
+
 SoulMap consumes these capabilities through public namespaces. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
 
 ## Release status
