@@ -11,17 +11,17 @@ import json
 import os
 import sys
 
-from soulmate.data.json import (
+from soulmate.data import (
     JsonValue,
     require_dict_field,
     require_list_field,
     require_non_empty_str_field,
     require_str_field,
 )
-from soulmate.data.json import (
+from soulmate.data import (
     parse_json_object as _parse_json_object,
 )
-from soulmate.data.json import (
+from soulmate.data import (
     parse_json_value as _parse_json_value,
 )
 

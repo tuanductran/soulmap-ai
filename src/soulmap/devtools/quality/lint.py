@@ -49,6 +49,12 @@ def main(argv: list[str] | None = None) -> int:
 
         python_module("ruff", "check", *python_paths, cwd=repo_root)
         python_module("ruff", "format", "--check", *python_paths, cwd=repo_root)
+        python_module(
+            "soulmap.devtools.checks.dependency_direction",
+            "--root",
+            str(repo_root),
+            cwd=repo_root,
+        )
 
         if _pyright_available(repo_root):
             python_module("pyright", cwd=repo_root)

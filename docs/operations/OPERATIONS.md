@@ -75,6 +75,7 @@ If Markdown structure or packaging rules changed, also run:
 
 ```bash
 uv run soulmap format
+uv run soulmap check-dependencies
 uv run soulmap lint
 ```
 

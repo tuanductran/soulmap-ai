@@ -5,7 +5,7 @@ The framework-neutral implementation lives in :mod:`soulmate.text`.
 
 from __future__ import annotations
 
-from soulmate.text.normalization import RIGHT_SINGLE_QUOTE, normalize_text
+from soulmate.text import RIGHT_SINGLE_QUOTE, normalize_text
 
 __all__ = ["RIGHT_SINGLE_QUOTE", "normalize_message_text"]
 
