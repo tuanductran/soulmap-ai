@@ -27,8 +27,13 @@ LOCALES: Final[dict[str, dict[str, str]]] = {
     locale: _load_locale(locale) for locale in SUPPORTED_LOCALES
 }
 
-if any(set(messages) != set(LOCALES["en"]) for messages in LOCALES.values()):
-    raise ValueError("Locale catalogs must expose the same translation keys")
+
+def _validate_locale_parity(locales: dict[str, dict[str, str]]) -> None:
+    if any(set(messages) != set(locales["en"]) for messages in locales.values()):
+        raise ValueError("Locale catalogs must expose the same translation keys")
+
+
+_validate_locale_parity(LOCALES)
 
 
 def messages_for(locale: str) -> dict[str, str]:

@@ -5,8 +5,15 @@ from importlib.resources import files
 
 import pytest
 
+from soulmap.web import i18n
 from soulmap.web.http import translate
-from soulmap.web.i18n import LOCALES, SUPPORTED_LOCALES, messages_for, messages_json
+from soulmap.web.i18n import (
+    LOCALES,
+    SUPPORTED_LOCALES,
+    _validate_locale_parity,
+    messages_for,
+    messages_json,
+)
 
 
 def test_json_catalogs_are_loaded_for_every_supported_locale() -> None:
@@ -28,6 +35,28 @@ def test_json_catalog_files_match_loaded_registry_and_have_exact_key_parity() ->
     assert catalogs == LOCALES
     assert all(set(catalogs[locale]) == english_keys for locale in SUPPORTED_LOCALES)
     assert len(english_keys) == 223
+
+
+def test_invalid_locale_payload_is_rejected_before_registration(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class InvalidResource:
+        def joinpath(self, _name: str) -> InvalidResource:
+            return self
+
+        def read_text(self, encoding: str) -> str:
+            assert encoding == "utf-8"
+            return json.dumps(["not", "a", "mapping"])
+
+    monkeypatch.setattr(i18n, "files", lambda _package: InvalidResource())
+
+    with pytest.raises(ValueError, match="Invalid locale catalog"):
+        i18n._load_locale("broken")
+
+
+def test_locale_parity_rejects_mismatched_translation_keys() -> None:
+    with pytest.raises(ValueError, match="same translation keys"):
+        _validate_locale_parity({"en": {"title": "Title"}, "vi": {}})
 
 
 def test_messages_for_preserves_english_fallback_contract() -> None:
