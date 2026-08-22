@@ -354,9 +354,13 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert 'src="/static/search.js"' in html
     assert 'src="/static/site.js"' in html
     assert 'id="page-shell"' in html
-    assert 'hx-boost="true"' in html
-    assert 'hx-history-elt="body"' in html
-    assert 'hx-swap="innerHTML transition:true show:top"' in html
+    assert "hx-boost" not in html
+    assert "hx-history-elt" not in html
+    assert 'hx-swap="innerHTML transition:true show:top"' not in html
+    search_form_attributes = html.split('<form class="field search-form"', 1)[1].split(
+        ">", 1
+    )[0]
+    assert "hx-boost" not in search_form_attributes
     assert 'id="page-progress"' in html
     assert 'url("/static/fonts/InterVariable.woff2")' in _request("/static/site.css")[
         1
