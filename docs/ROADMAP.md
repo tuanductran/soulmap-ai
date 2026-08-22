@@ -148,7 +148,13 @@ soulmap-ai/
 │   ├── pyproject.toml    Release-only package metadata
 │   ├── README.md         Package identity and release boundary
 │   ├── LICENSE           Package license copy
-│   └── skills/           Soulmate-only foundation skill source and manifest
+│   └── skills/           Soulmate-only foundation skill source, contract, and manifest
+│
+├── scripts/
+│   ├── build_soulmate_skills.py     Deterministic pre-release AI skills builder
+│   └── verify_soulmate_skills.py    Fail-closed artifact/provenance verifier
+│
+├── dist/soulmate-skills/            Generated pre-release review output only
 │
 ├── src/soulmap/
 │   ├── runtime/
