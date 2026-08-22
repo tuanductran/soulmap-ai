@@ -22,6 +22,7 @@ Use it to answer four questions for every major repo surface:
 | `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
+| `src/soulmate/` | Framework-neutral foundation library for future consumers such as SoulMap | Local source boundary; not shipped by current SoulMap AI artifacts | Public contracts and generic primitives only; no SoulMap doctrine, routing state, or protected safety policy | Dedicated import/dependency-direction tests, Pyright, Ruff, and package-boundary review |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
 | `src/soulmap/web/` | Public SoulMap website surface | Local public surface, not shipped Skills content | Standard-library WSGI server, public pages, responsive stylesheet, route smoke tests, and download guidance | Website unit/route tests, lint/type checks, and local browser smoke |
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, runtime/tooling source, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
@@ -38,6 +39,7 @@ Use it to answer four questions for every major repo surface:
 - `.claude-plugin/` holds local skill-package metadata only.
 - Shipped knowledge truth lives in `skills/` and is canonical English. Packaged locale evidence lives in `reference/` and must not define doctrine or response content. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
+- Framework-neutral foundation implementation truth lives in `src/soulmate/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Public website implementation truth lives in `src/soulmap/web/`; it is not part of the
   shipped Skill knowledge surface or custom `.skill`/`.zip` artifacts.

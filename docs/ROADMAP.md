@@ -136,6 +136,12 @@ soulmap-ai/
 │   ├── safety/           Boundaries, whitelist/blacklist doctrine
 │   └── meta/             Master prompt, orchestration, response/redirect templates
 │
+├── src/soulmate/
+│   ├── contracts/        Framework-neutral public contracts
+│   ├── knowledge/        Foundation knowledge interfaces
+│   ├── pipeline/         Framework-neutral lifecycle primitives
+│   └── resources/        Explicit resource resolution boundary
+│
 ├── src/soulmap/
 │   ├── runtime/
 │   │   ├── detectors/    Per-signal detection modules (anger, crisis, pattern, ...)
