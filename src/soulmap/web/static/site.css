@@ -102,65 +102,8 @@ body.modal-open {
   overflow: hidden;
 }
 
-.page-progress {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 40;
-  height: 3px;
-  pointer-events: none;
-  background: linear-gradient(90deg, var(--teal), var(--gold), var(--teal));
-  transform-origin: left center;
-  animation: page-progress-pulse 1.1s var(--ease-out) infinite;
-}
-
-@keyframes page-progress-pulse {
-  0% {
-    opacity: 0.45;
-    transform: scaleX(0.08);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scaleX(0.72);
-  }
-
-  100% {
-    opacity: 0.45;
-    transform: scaleX(0.96);
-  }
-}
-
-.htmx-swapping #main-content {
-  opacity: 0.72;
-  transform: translateY(0.35rem);
-  transition:
-    opacity 0.18s var(--ease-out),
-    transform 0.18s var(--ease-out);
-}
-
-.htmx-settling #main-content {
-  animation: page-content-enter 0.24s var(--ease-out) both;
-}
-
-@keyframes page-content-enter {
-  from {
-    opacity: 0.72;
-    transform: translateY(0.35rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .page-progress,
-  .htmx-settling #main-content {
-    animation: none;
-  }
-
-  .htmx-swapping #main-content,
   .dropdown-enter,
   .dropdown-leave,
   .modal-shell-enter,

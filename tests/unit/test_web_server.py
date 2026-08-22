@@ -361,10 +361,11 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
         ">", 1
     )[0]
     assert "hx-boost" not in search_form_attributes
-    assert 'id="page-progress"' in html
-    assert 'url("/static/fonts/InterVariable.woff2")' in _request("/static/site.css")[
-        1
-    ].decode("utf-8")
+    assert "page-progress" not in html
+    site_css = _request("/static/site.css")[1].decode("utf-8")
+    assert 'url("/static/fonts/InterVariable.woff2")' in site_css
+    assert ".page-progress" not in site_css
+    assert ".htmx-swapping #main-content" not in site_css
     _, search_body = _request("/static/search.js")
     search_js = search_body.decode("utf-8")
     assert "SoulMapSearch" in search_js
