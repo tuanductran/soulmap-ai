@@ -184,7 +184,7 @@ def test_language_dropdown_exposes_all_locales_and_current_state() -> None:
     _, body = _request("/ko/faq")
     html = body.decode("utf-8")
     assert 'x-data="languageMenu"' in html
-    assert 'x-on:click="toggle"' in html
+    assert 'x-on:click="toggle($event)"' in html
     assert 'x-on:keydown="onKeydown($event)"' in html
     assert 'x-transition:enter="dropdown-enter"' in html
     assert 'x-transition:leave="dropdown-leave"' in html
@@ -371,11 +371,15 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert "SoulMapSearch" in search_js
     _, js_body = _request("/static/site.js")
     js = js_body.decode("utf-8")
-    assert 'document.body.classList.add("modal-open")' in js
-    assert 'document.body.classList.remove("modal-open")' in js
+    assert 'body.classList.add("modal-open")' in js
+    assert 'body.classList.remove("modal-open")' in js
+    assert "preventScroll: true" in js
+    assert 'window.htmx.ajax("GET", detailUrl' in js
     assert "copyFailed: false" in js
     assert "this.copyFailed = !success" in js
-    assert 'hx-get="/partials/skill/meta.en.html?lang=en"' in html
+    assert 'data-detail-url="/partials/skill/meta.en.html?lang=en"' in html
+    assert "x-on:click.prevent=\"open('meta'," in html
+    assert 'hx-get="/partials/skill/meta.en.html?lang=en"' not in html
     assert 'hx-get="/partials/skills-grid.html?lang=en"' not in html
     assert 'method="get"' in html
     assert 'x-on:submit="preventSubmit($event)"' in html
@@ -415,8 +419,10 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert "x-cloak" in html
     assert 'x-transition:enter="modal-shell-enter"' in html
     assert 'x-transition:leave="modal-shell-leave"' in html
-    assert 'x-transition:enter="modal-dialog-enter"' in html
-    assert 'x-transition:leave="modal-dialog-leave"' in html
+    assert 'x-if="openSlug"' in html
+    assert 'x-if="providerOpen"' in html
+    assert 'x-transition:enter="modal-dialog-enter"' not in html
+    assert 'x-transition:leave="modal-dialog-leave"' not in html
     assert 'rel="canonical"' in html
     assert 'hreflang="x-default"' in html
     assert "application/ld+json" in html
@@ -867,7 +873,11 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'src="/soulmap-ai/static/site.js"' in html
     assert 'src="/soulmap-ai/static/search.js"' in html
     skills_html = (output / "skills/index.html").read_text(encoding="utf-8")
-    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in skills_html
+    assert (
+        'data-detail-url="/soulmap-ai/partials/skill/meta.en.html?lang=en"'
+        in skills_html
+    )
+    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' not in skills_html
     assert 'action="/soulmap-ai/skills"' in skills_html
     assert 'data-skill-root="/soulmap-ai/skills"' in skills_html
     assert 'data-search-api="/soulmap-ai/api/skills/search.json"' in skills_html
@@ -877,7 +887,10 @@ def test_static_export_writes_localized_pages_and_api(tmp_path: Path) -> None:
     assert 'id="ask-panel"' in skills_html
     assert 'hx-get="/soulmap-ai/partials/skills-grid.html?lang=en"' not in skills_html
     grid_html = (output / "partials/skills-grid.html").read_text(encoding="utf-8")
-    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
+    assert (
+        'data-detail-url="/soulmap-ai/partials/skill/meta.en.html?lang=en"' in grid_html
+    )
+    assert 'hx-get="/soulmap-ai/partials/skill/meta.en.html?lang=en"' not in grid_html
     detail_html = (output / "partials/skill/meta.en.html").read_text(encoding="utf-8")
     assert 'href="/soulmap-ai/api/raw/meta.md"' in detail_html
     vi_detail_html = (output / "partials/skill/meta.vi.html").read_text(

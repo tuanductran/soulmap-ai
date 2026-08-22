@@ -83,6 +83,37 @@ def test_locale_switch_roundtrip_preserves_route_and_context(
     expect(page.locator("#language-menu")).to_be_hidden()
 
 
+@pytest.mark.parametrize("locale", LOCALES)
+def test_locale_menu_repeated_toggle_preserves_page_scroll(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    page.set_viewport_size({"width": 1280, "height": 720})
+    _open(page, browser_origin, locale, "/faq")
+    target_scroll = page.evaluate(
+        "Math.max(1, Math.min(Math.round(document.documentElement.scrollHeight / 2), document.documentElement.scrollHeight - window.innerHeight))"
+    )
+    page.evaluate(
+        "target => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, target); }",
+        target_scroll,
+    )
+    page.wait_for_function(
+        "target => Math.abs(window.scrollY - target) <= 1", arg=target_scroll
+    )
+    scroll_before = page.evaluate("window.scrollY")
+    assert scroll_before > 0
+    trigger = page.locator(".locale-trigger")
+    menu = page.locator("#language-menu")
+
+    for _ in range(3):
+        trigger.dispatch_event("click")
+        expect(menu).to_be_visible()
+        trigger.dispatch_event("click")
+        expect(menu).to_be_hidden()
+
+    scroll_after = page.evaluate("window.scrollY")
+    assert abs(scroll_after - scroll_before) <= 1
+
+
 def test_locale_menu_keyboard_open_and_focus_return(
     page: Page, browser_origin: str
 ) -> None:
@@ -258,6 +289,7 @@ def test_search_ask_toggle_and_use_question_flow(
     expect(chooser).to_be_visible()
     chooser.locator(".modal-backdrop").click(position={"x": 2, "y": 2})
     expect(chooser).to_be_hidden()
+    expect(chooser).to_have_count(0)
     expect(use_button).to_be_focused()
     expect(questions.locator("article")).not_to_have_count(0)
     page.locator('label.mode-option:has(input[value="search"])').click()
@@ -319,5 +351,6 @@ def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
     )
     page.locator("#skill-modal > .modal-backdrop").click(position={"x": 2, "y": 2})
     expect(dialog).to_be_hidden()
+    expect(page.locator("#skill-modal")).to_have_count(0)
     expect(trigger).to_be_focused()
     expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
