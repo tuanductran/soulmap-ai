@@ -12,10 +12,11 @@ The first release-preparation package exposes:
 - `soulmate.text`: deterministic text normalization.
 
 The pre-release AI-facing foundation skill set is maintained separately under
-`packages/soulmate/skills/`. It documents contracts, resource boundaries, Markdown
-knowledge resolution, text normalization, and bounded data validation. These skills are
-framework-neutral references; they do not contain SoulMap routing, safety doctrine, voice,
-brand, or spiritual behavior.
+`packages/soulmate/skills/`. Its current foundation entries document contracts, resource
+boundaries, Markdown knowledge resolution, text normalization, bounded data validation,
+capability lifecycle, and skill-manifest semantics. These skills are framework-neutral
+references; they do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual
+behavior.
 
 SoulMap consumes these capabilities through public namespaces. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
 

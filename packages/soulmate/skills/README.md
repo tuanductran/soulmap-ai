@@ -21,6 +21,8 @@ These skills are written for a future Soulmate skill artifact. They are not part
 | `knowledge-resolution.md` | Deterministic extraction from selected Markdown sections | Use when structured neutral knowledge is stored as Markdown |
 | `text-normalization.md` | Conservative lexical normalization | Use before an explicitly lexical comparison or lookup |
 | `data-validation.md` | Bounded JSON parsing and basic field checks | Use at the first boundary for raw JSON input |
+| `lifecycle.md` | Ordered validation, resolution, execution, result validation, and finalization | Use when a shared capability has multiple explicit stages |
+| `skill-manifest.md` | Skill identity, ownership, compatibility, consumer scope, and artifact eligibility | Use before adding or packaging a skill entry |
 
 ## Use this group when
 
@@ -32,7 +34,7 @@ Do not use these skills to select a product framework, activate a route, generat
 
 ## Reading workflow
 
-Read `contracts.md` first to establish the shared contract vocabulary. Then read the skill that matches the boundary being designed. A resource-backed Markdown capability will normally use `resource-boundaries.md` followed by `knowledge-resolution.md`. A raw JSON capability will use `data-validation.md`. A lexical lookup may use `text-normalization.md`, while retaining the original text for display and audit.
+Read `contracts.md` first to establish the shared contract vocabulary. Then read `skill-manifest.md` before adding or packaging an entry, and use `lifecycle.md` when the capability has multiple explicit stages. A resource-backed Markdown capability will normally use `resource-boundaries.md` followed by `knowledge-resolution.md`. A raw JSON capability will use `data-validation.md`. A lexical lookup may use `text-normalization.md`, while retaining the original text for display and audit.
 
 The skills are complementary, not a mandatory response pipeline. A consuming framework must not treat this directory as an implicit plugin registry or assume that reading every file activates behavior.
 

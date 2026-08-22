@@ -62,6 +62,26 @@
       "consumers": ["soulmate-only"],
       "compatibility": ">=0.1.0,<0.2.0",
       "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.lifecycle",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/lifecycle.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.skill-manifest",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/skill-manifest.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
     }
   ]
 }
