@@ -1,0 +1,83 @@
+name: Soulmate skills artifact CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/soulmate-skills-ci.yml"
+      - "packages/soulmate/**"
+      - "scripts/build_soulmate_skills.py"
+      - "scripts/verify_soulmate_skills.py"
+      - "scripts/README.md"
+      - "tests/unit/test_soulmate_skills_artifacts.py"
+      - "tests/contract/test_soulmate_foundation_skills_contract.py"
+      - "tests/contract/test_soulmate_skills_artifact_workflow_contract.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soulmate-skills-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOULMAP_REPO_ROOT: ${{ github.workspace }}
+
+jobs:
+  build-and-verify:
+    name: Build and verify Soulmate skills artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: "3.11"
+
+      - name: Install locked development environment
+        run: uv sync --locked --python 3.11
+
+      - name: Verify repository dependency direction
+        run: uv run soulmap check-dependencies --root .
+
+      - name: Validate Markdown and manifest contracts
+        run: uv run soulmap markdown-contract --root .
+
+      - name: Build Soulmate skills artifacts
+        run: |
+          uv run python scripts/build_soulmate_skills.py \
+            --output-dir dist/soulmate-skills \
+            --source-commit "${{ github.event.pull_request.head.sha }}"
+
+      - name: Verify Soulmate skills artifacts
+        run: |
+          uv run python scripts/verify_soulmate_skills.py \
+            --zip dist/soulmate-skills/soulmate-ai.zip \
+            --skill dist/soulmate-skills/soulmate-ai.skill \
+            --checksums dist/soulmate-skills/SHA256SUMS
+
+      - name: Rebuild for deterministic parity
+        run: |
+          uv run python scripts/build_soulmate_skills.py \
+            --output-dir dist/soulmate-skills-repeat \
+            --source-commit "${{ github.event.pull_request.head.sha }}"
+          cmp dist/soulmate-skills/soulmate-ai.zip \
+            dist/soulmate-skills-repeat/soulmate-ai.zip
+          cmp dist/soulmate-skills/soulmate-ai.skill \
+            dist/soulmate-skills-repeat/soulmate-ai.skill
+
+      - name: Run artifact contract and security tests
+        run: |
+          uv run pytest \
+            tests/unit/test_soulmate_skills_artifacts.py \
+            tests/contract/test_soulmate_foundation_skills_contract.py \
+            tests/contract/test_soulmate_skills_artifact_workflow_contract.py \
+            -q
+
+      - name: Upload verified review artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmate-skills-artifacts-${{ github.event.pull_request.head.sha }}
+          path: dist/soulmate-skills/
+          if-no-files-found: error

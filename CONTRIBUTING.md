@@ -65,6 +65,13 @@ This repo intentionally does not run a heavy `pre-push` hook. Before pushing, ru
 `uv run soulmap lint --skip-tests` and
 `uv run soulmap test -n auto -q` yourself.
 
+## Soulmate custom skills
+
+Developers building framework-neutral foundation skills should follow
+[`packages/soulmate/CONTRIBUTING.md`](packages/soulmate/CONTRIBUTING.md). It is separate from
+root SoulMap Skills and covers Soulmate ownership, manifest registration, artifact boundaries,
+security tests, deterministic build/verify commands, and the review checklist.
+
 ## Versioning
 
 - `pyproject.toml` (`[project].version`) is the canonical version for this repo.
