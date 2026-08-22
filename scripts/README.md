@@ -74,6 +74,23 @@ uv run python scripts/verify_soulmate_package.py \
   --version 0.1.0
 ```
 
+For the independent Soulmate AI foundation-skill artifact, build and verify the two
+byte-identical ZIP projections locally:
+
+```bash
+uv run python scripts/build_soulmate_skills.py --output-dir dist/soulmate-skills
+uv run python scripts/verify_soulmate_skills.py \
+  --zip dist/soulmate-skills/soulmate-ai.zip \
+  --skill dist/soulmate-skills/soulmate-ai.skill \
+  --checksums dist/soulmate-skills/SHA256SUMS
+```
+
+The skills builder is manifest-driven and does not reuse the root SoulMap skills builder.
+It includes only `packages/soulmate/skills/manifest.json` entries, writes a clean deterministic
+archive, and emits checksum records for the two distributable artifacts. The verifier extracts
+and checks both projections, rejects unsafe or unexpected members, checks provenance and
+manifest parity, and fails closed on checksum or version mismatches.
+
 The GitHub release workflow is manual and does not publish by default. A maintainer
 must explicitly enable the release input after reviewing the generated artifacts.
 
