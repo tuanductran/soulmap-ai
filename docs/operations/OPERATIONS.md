@@ -41,6 +41,24 @@ any wrapper around the knowledge base in this repo.
 - **SEV-2**: Dependency escalation, abusive scope drift, or repeated prohibited outputs.
 - **SEV-3**: Tone drift or contract violations without direct harm.
 
+## Soulmate release references
+
+For the independent Soulmate package and AI foundation-skill artifacts, use:
+
+- [`SOULMATE-RELEASE-CHECKLIST.md`](SOULMATE-RELEASE-CHECKLIST.md) for pre-release, artifact, GitHub Release, PyPI, post-release, and rollback gates.
+- [`SOULMATE-OIDC-TRUSTED-PUBLISHING.md`](SOULMATE-OIDC-TRUSTED-PUBLISHING.md) for the future PyPI/TestPyPI OIDC configuration. This guide is preparatory only and does not enable publication.
+- [`../../packages/soulmate/CONTRIBUTING.md`](../../packages/soulmate/CONTRIBUTING.md) for custom foundation skill ownership, manifest, tests, and review rules.
+
+The AI skill artifact is verified independently from the Python wheel and sdist:
+
+```bash
+uv run python scripts/build_soulmate_skills.py --output-dir dist/soulmate-skills
+uv run python scripts/verify_soulmate_skills.py \
+  --zip dist/soulmate-skills/soulmate-ai.zip \
+  --skill dist/soulmate-skills/soulmate-ai.skill \
+  --checksums dist/soulmate-skills/SHA256SUMS
+```
+
 ## Release checklist for behavior changes
 
 Before shipping prompt, framework, detector, or policy updates:
