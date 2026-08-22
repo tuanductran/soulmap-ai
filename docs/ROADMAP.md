@@ -138,9 +138,10 @@ soulmap-ai/
 │
 ├── src/soulmate/
 │   ├── contracts/        Framework-neutral public contracts
-│   ├── knowledge/        Foundation knowledge interfaces
+│   ├── knowledge/        Foundation knowledge interfaces and Markdown parser
 │   ├── pipeline/         Framework-neutral lifecycle primitives
-│   └── resources/        Explicit resource resolution boundary
+│   ├── resources/        Explicit resource resolution boundary
+│   └── text/             Framework-neutral text normalization utilities
 │
 ├── src/soulmap/
 │   ├── runtime/

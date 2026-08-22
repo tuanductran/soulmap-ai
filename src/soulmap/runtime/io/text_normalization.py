@@ -1,14 +1,16 @@
-"""Shared text normalization helpers for detector input handling."""
+"""SoulMap compatibility boundary for text normalization.
+
+The framework-neutral implementation lives in :mod:`soulmate.text`.
+"""
 
 from __future__ import annotations
 
-import re
+from soulmate.text.normalization import RIGHT_SINGLE_QUOTE, normalize_text
 
-RIGHT_SINGLE_QUOTE = "\u2019"
+__all__ = ["RIGHT_SINGLE_QUOTE", "normalize_message_text"]
 
 
 def normalize_message_text(message: str, *, strip: bool = True) -> str:
-    """Normalize smart punctuation and collapse internal whitespace."""
-    normalized = message.lower().replace(RIGHT_SINGLE_QUOTE, "'").replace("`", "'")
-    normalized = re.sub(r"\s+", " ", normalized)
-    return normalized.strip() if strip else normalized
+    """Preserve SoulMap's established message-normalization API."""
+
+    return normalize_text(message, strip=strip)
