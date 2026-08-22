@@ -27,7 +27,10 @@ def test_soulmate_manifest_has_an_independent_package_identity() -> None:
 def test_soulmate_package_metadata_is_complete() -> None:
     assert (PACKAGE_ROOT / "README.md").is_file()
     assert (PACKAGE_ROOT / "LICENSE").is_file()
-    assert (PACKAGE_ROOT / "src" / "soulmate").is_dir()
+    assert not (PACKAGE_ROOT / "src").exists()
+
+    builder = (REPO_ROOT / "scripts" / "build_soulmate.py").read_text(encoding="utf-8")
+    assert 'REPO_ROOT / "src" / "soulmate"' in builder
 
 
 def test_soulmate_workflow_has_manual_publish_gate() -> None:
