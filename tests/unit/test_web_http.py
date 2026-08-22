@@ -102,6 +102,18 @@ def test_response_has_shared_security_headers_and_byte_length() -> None:
     assert headers["Cache-Control"] == "no-store"
 
 
+def test_resource_hints_skips_preconnect_when_critical_origin_is_invalid(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr("soulmap.web.http.HTMX_URL", "javascript:alert(1)")
+    monkeypatch.setattr("soulmap.web.http.ALPINE_URL", "https://cdn.example/alpine.js")
+
+    hints = resource_hints()
+
+    assert 'rel="preconnect"' not in hints
+    assert '<link rel="dns-prefetch" href="https://cdn.example/">' in hints
+
+
 def test_resource_hints_preconnect_and_dns_prefetch_are_deduplicated() -> None:
     hints = resource_hints()
 
