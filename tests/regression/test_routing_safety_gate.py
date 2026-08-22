@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 
 from soulmap.runtime.routing import framework_selector
@@ -142,6 +144,90 @@ def test_every_routing_path_calls_safety_gate(monkeypatch, expected_primary, ove
     assert result.get("safety_status") == "ok"
     # primary framework should match expected (some scenarios share primary)
     assert result.get("primary_framework") == expected_primary
+
+
+def test_async_detector_records_success_debug_event() -> None:
+    events: list[dict] = []
+
+    result = asyncio.run(
+        framework_selector._run_detector_async(
+            "test_detector", lambda: {"ok": True}, debug_events=events
+        )
+    )
+
+    assert result == {"ok": True}
+    assert events[0]["module"] == "test_detector"
+    assert events[0]["execution"] == "in_process"
+
+
+def test_async_detector_fails_closed_for_non_dict_and_exceptions() -> None:
+    for detector in (lambda: [], lambda: (_ for _ in ()).throw(RuntimeError("boom"))):
+        events: list[dict] = []
+        result = asyncio.run(
+            framework_selector._run_detector_async(
+                "broken_detector", detector, debug_events=events
+            )
+        )
+
+        assert result == {}
+        assert events[0]["module"] == "broken_detector"
+        assert events[0]["error"]
+
+
+def test_async_selector_attaches_debug_events_and_safety_event(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_defaults(monkeypatch)
+    monkeypatch.setenv("SOULMAP_DEBUG", "true")
+
+    result = asyncio.run(framework_selector.select_framework_async("hi", [], {}))
+
+    assert result["primary_framework"] == "MIRROR"
+    assert result["debug"]
+    assert any(
+        event.get("module") == "response_safety_gate" for event in result["debug"]
+    )
+
+
+@pytest.mark.parametrize(
+    ("detector_name", "detector_result", "expected_secondary"),
+    [
+        ("detect_grief", {"grief_detected": True}, "grief"),
+        ("detect_inner_conflict", {"conflict_detected": True}, "inner_parts"),
+    ],
+)
+def test_moderate_intensity_preserves_secondary_framework_priority(
+    monkeypatch: pytest.MonkeyPatch,
+    detector_name: str,
+    detector_result: dict[str, object],
+    expected_secondary: str,
+) -> None:
+    _install_defaults(monkeypatch)
+    monkeypatch.setattr(
+        framework_selector,
+        "detect_intensity",
+        lambda *_args, **_kwargs: {"level": "MODERATE"},
+    )
+    monkeypatch.setattr(
+        framework_selector,
+        detector_name,
+        lambda *_args, _result=detector_result, **_kwargs: _result,
+    )
+
+    result = framework_selector.select_framework("hi", [])
+
+    assert result["primary_framework"] == "DE_ESCALATION"
+    assert result["secondary_layer"] == expected_secondary
+
+
+def test_async_detector_suppresses_error_without_debug_metadata() -> None:
+    result = asyncio.run(
+        framework_selector._run_detector_async(
+            "broken_detector", lambda: (_ for _ in ()).throw(RuntimeError("boom"))
+        )
+    )
+
+    assert result == {}
 
 
 def test_safety_gate_overrides_tier1_crisis_when_selector_misses_it(
