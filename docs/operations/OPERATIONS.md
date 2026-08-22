@@ -122,3 +122,15 @@ Treat both as opt-in features that require product-level privacy review.
 - `src/soulmap/runtime/guards/response_contract.py`: response-level contract checks
 - `tests/eval_regression/test_safety_evals.py`: detector and scope safety regression suite
 - `evals/datasets/safety_test_cases.json`: red-team cases used by the safety eval script
+- `src/soulmate/` and `packages/soulmate/`: Soulmate foundation library and independent
+  package/AI-skill boundary
+- `scripts/build_soulmate.py` and `scripts/verify_soulmate_package.py`: Soulmate Python
+  package build and strict boundary verification
+- `scripts/build_soulmate_skills.py` and `scripts/verify_soulmate_skills.py`: Soulmate
+  AI foundation-skill artifact build, provenance, checksum, and security verification
+- `src/soulmap/web/` and `.github/workflows/website-pages.yml`: Python-only website,
+  static export, and Pages publication surface
+- `.github/workflows/ci.yml`, `codeql.yml`, and `soulmate-skills-ci.yml`: repository
+  quality, security, and pre-release artifact gates
+- `.github/workflows/release.yml` and `soulmate-release.yml`: manually operated release
+  workflows; final release review remains a maintainer responsibility

@@ -1,10 +1,22 @@
 from pathlib import Path
 
-from scripts.build_soulmate import DEFAULT_STAGE, REPO_ROOT, stage_package
+import pytest
+
+from scripts.build_soulmate import (
+    DEFAULT_STAGE,
+    REPO_ROOT,
+    SoulmateBuildError,
+    stage_package,
+)
 
 
 def test_default_soulmate_stage_is_outside_repository() -> None:
     assert REPO_ROOT not in DEFAULT_STAGE.parents
+
+
+def test_stage_package_rejects_a_stage_inside_the_repository() -> None:
+    with pytest.raises(SoulmateBuildError, match="outside the repository"):
+        stage_package(REPO_ROOT / "dist" / ".soulmate-build")
 
 
 def test_stage_package_uses_only_explicit_package_inputs(tmp_path: Path) -> None:

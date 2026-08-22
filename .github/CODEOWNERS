@@ -11,6 +11,8 @@
 
 # Runtime, packaging and release controls
 /src/soulmap/runtime/ @tuanductran
+/src/soulmate/ @tuanductran
+/packages/soulmate/ @tuanductran
 /src/soulmap/devtools/ @tuanductran
 /scripts/ @tuanductran
 /.github/ @tuanductran

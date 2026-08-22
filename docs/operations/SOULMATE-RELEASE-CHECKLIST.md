@@ -33,7 +33,7 @@ The following actions require explicit maintainer approval and must never be tri
 
 ### Baseline and review
 
-- [ ] PRs #245, #246, #248, #249, and #250 are reviewed and merged in dependency order, or their final merged equivalents are recorded.
+- [ ] PRs #245, #246, #248, #249, #250, #251, and #252 are reviewed and merged in dependency order, or their final merged equivalents are recorded.
 - [ ] `main` is the release baseline and the checkout has no unexplained local changes.
 - [ ] The intended release commit is identified and recorded.
 - [ ] The Soulmate package version in `packages/soulmate/pyproject.toml` is the intended version.

@@ -36,8 +36,28 @@ It contains:
 - the canonical local tooling in [src/soulmap/devtools/](src/soulmap/devtools/) and
   convenience wrappers in [scripts/](scripts/)
 - the operational and maintainer docs in [docs/](docs/)
+- the framework-neutral Soulmate foundation library in [src/soulmate/](src/soulmate/)
+- the standalone Soulmate package and AI foundation-skill source in
+  [packages/soulmate/](packages/soulmate/)
 
 The repo is designed to keep brand, safety, packaging, and implementation aligned.
+Soulmate is the reusable foundation layer; SoulMap remains the opinionated reflective
+framework built on top of it.
+
+## Soulmate foundation library
+
+Soulmate is an independent, framework-neutral foundation for future consumers such as
+SoulMap. Its public Python source lives in `src/soulmate/`, while standalone package
+metadata and Soulmate-only AI foundation skills live under `packages/soulmate/`.
+SoulMap may import approved public Soulmate APIs, but Soulmate never imports SoulMap or
+its product doctrine, routing state, safety policy, voice, brand, or spiritual content.
+
+The standalone `soulmate-ai` Python wheel and source distribution, currently marked
+`Private :: Do Not Upload`, are local pre-release developer and review surfaces. The
+Soulmate AI skill archive is built separately from the package-owned allow-list and is
+not part of the root `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` artifacts. See the
+[repository contract](docs/engineering/repo-contract.md) and [Soulmate release
+checklist](docs/operations/SOULMATE-RELEASE-CHECKLIST.md) for the exact boundaries.
 
 ## Core stance
 

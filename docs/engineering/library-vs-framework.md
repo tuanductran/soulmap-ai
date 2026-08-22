@@ -5,30 +5,46 @@ description: "Defines which runtime modules are the reusable Library layer and w
 
 # Library vs Framework boundary
 
-This document names a distinction that already exists implicitly in
-`src/soulmap/runtime/` and makes it explicit, the same way
-[`repo-contract.md`](repo-contract.md) makes the top-level repo shape explicit.
+This document defines the current relationship between the independent Soulmate
+foundation library and the opinionated SoulMap Framework. It complements
+[`repo-contract.md`](repo-contract.md), which is the structural source of truth for all
+repository surfaces.
 
-It does not move, rename, or restructure anything. It is a naming and
-authoring-rule document layered on top of the existing structure defined in
-[`repo-contract.md`](repo-contract.md).
+The repository also contains reusable layers inside `src/soulmap/runtime/`. Those are
+SoulMap-owned implementation layers and must not be confused with the public,
+framework-neutral Soulmate boundary described below. This document does not move or
+rename either source tree; it records the ownership and authoring rules that keep them
+separate.
 
 ## The analogy
 
-The same relationship that exists between a UI library (React) and an
-application framework built on it (Next.js) already exists inside SoulMap:
+The intended relationship is the same as a UI library such as React and an
+application framework such as Next.js:
 
-- **Library** - the reusable substrate every framework depends on. Stable,
-  domain-agnostic, changes rarely.
-- **Framework** - one reflective knowledge module (grief, anger, existential,
-  pattern-mapper, ...) plus its detector. New ones ship often, each one is
-  swappable/removable without touching the Library.
+- **Soulmate library** - the reusable, framework-neutral substrate in `src/soulmate/`
+  with independent package metadata and AI foundation skills under
+  `packages/soulmate/`. It owns public contracts, resource resolution, Markdown
+  parsing, text normalization, lifecycle primitives, and generic data validation.
+- **SoulMap Framework** - the opinionated product layer in `src/soulmap/` and `skills/`.
+  It owns reflective doctrine, safety policy, routing, detectors, voice, brand,
+  spiritual content, website behavior, and distribution of SoulMap artifacts.
 
-A new framework should never need to duplicate Markdown-loading, scoring
-plumbing, or safety-gate wiring. If it does, that logic belongs in the
-Library, not copy-pasted into the new detector.
+SoulMap may depend on approved public Soulmate APIs. Soulmate must never import SoulMap,
+its doctrine, routing state, protected safety policy, voice, brand, or spiritual content.
+A new SoulMap framework should not duplicate generic Soulmate capabilities; a genuinely
+generic capability should first be proposed and contract-tested at the Soulmate boundary.
 
-## What is Library (do not duplicate, only extend carefully)
+## What is Soulmate library (do not duplicate, only extend carefully)
+
+| Boundary | Canonical surface | Does not own |
+| --- | --- | --- |
+| Python foundation | `src/soulmate/` | SoulMap doctrine, routing, product policy, or protected safety state |
+| Standalone release metadata | `packages/soulmate/pyproject.toml` and `packages/soulmate/README.md` | Root SoulMap package metadata or website content |
+| AI foundation skills | `packages/soulmate/skills/` | Root `skills/` doctrine, safety, voice, brand, spiritual, or framework files |
+
+The Soulmate Python package and Soulmate AI foundation-skill artifacts are separate
+surfaces and are verified independently. Neither is the import surface for the root
+SoulMap AI skill artifact.
 
 | Module | Role |
 | --- | --- |
@@ -56,10 +72,15 @@ src/soulmap/runtime/detectors/<framework>_detector.py
                                           scores them, returns a typed result
 ```
 
-Current frameworks: grief, life-direction, shadow-patterns, inner-parts, anger,
-existential-companion, perfectionism-paralysis, empath-boundary,
-creative-drought, somatic-wellbeing, emotional-deescalation, pattern-mapper,
-and the spiritual-discernment layer under `skills/spiritual/`.
+Current routed reflective frameworks include grief, existential-companion,
+inner-parts, life-direction, creative-drought, perfectionism-paralysis,
+shadow-patterns, ancestral-patterns, fear-of-visibility, empath-boundary,
+dark-night-of-soul, soul-nourishment, divine-guidance, sacred-polarity,
+spiritual-purpose, integration-celebration, meaning-integration, synthesis,
+pattern-mapper, and the spiritual-discernment layer under `skills/spiritual/`.
+Crisis, dependency, de-escalation, and intensity are protected or orchestration
+paths rather than ordinary swappable frameworks; their priority and safety behavior
+remain governed by the runtime safety architecture.
 
 ## The authoring rule for new frameworks
 

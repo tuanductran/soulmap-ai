@@ -5,6 +5,31 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## Unreleased
+
+### Added
+
+- **soulmate**: add the framework-neutral foundation library, standalone package
+  metadata, and Soulmate-only foundation skill boundary
+- **soulmate**: add lifecycle, manifest, composition, compatibility, provenance, and
+  reproducibility foundation skills
+- **soulmate**: add deterministic AI skill artifacts with manifest, provenance, and
+  SHA-256 verification
+- **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
+
+### Changed
+
+- **architecture**: document the one-way SoulMap Framework to Soulmate Library boundary
+- **ci**: add PR-only Soulmate artifact build, verification, and review uploads
+
+### Fixed
+
+- **soulmate**: isolate Python package staging outside the repository so source
+  distributions cannot inherit repository `.gitignore` metadata
+
+The Soulmate package and AI foundation-skill artifacts remain pre-release and are not
+published to a package registry or public release channel.
+
 ## v0.9.0 (2026-08-19)
 
 ### Feat

@@ -32,6 +32,17 @@ def package_version() -> str:
     return version
 
 
+def _validate_stage_dir(stage_dir: Path) -> Path:
+    resolved = stage_dir.resolve()
+    try:
+        resolved.relative_to(REPO_ROOT)
+    except ValueError:
+        return resolved
+    raise SoulmateBuildError(
+        f"Soulmate stage directory must be outside the repository: {resolved}"
+    )
+
+
 def _copy_required_file(name: str, destination: Path) -> None:
     source = PACKAGE_ROOT / name
     if not source.is_file():
@@ -42,6 +53,7 @@ def _copy_required_file(name: str, destination: Path) -> None:
 def stage_package(stage_dir: Path) -> Path:
     """Create a clean, explicitly allow-listed build directory."""
 
+    stage_dir = _validate_stage_dir(stage_dir)
     if not SOURCE_ROOT.is_dir():
         raise SoulmateBuildError(f"Missing Soulmate source directory: {SOURCE_ROOT}")
 
@@ -104,7 +116,7 @@ def main(argv: list[str] | None = None) -> int:
         print(package_version())
         return 0
 
-    wheel, sdist = build_package(args.stage_dir.resolve(), args.output_dir.resolve())
+    wheel, sdist = build_package(args.stage_dir, args.output_dir.resolve())
     print(f"OK (wheel): {wheel}")
     print(f"OK (sdist): {sdist}")
     return 0
