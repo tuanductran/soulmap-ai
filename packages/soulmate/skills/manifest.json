@@ -82,6 +82,46 @@
       "consumers": ["soulmate-only"],
       "compatibility": ">=0.1.0,<0.2.0",
       "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.composition-and-consumers",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/composition-and-consumers.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.compatibility-and-versioning",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/compatibility-and-versioning.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.artifact-provenance",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/artifact-provenance.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.determinism-and-reproducibility",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/determinism-and-reproducibility.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
     }
   ]
 }
