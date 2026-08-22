@@ -33,7 +33,7 @@ Issues = "https://github.com/tuanductran/soulmap-ai/issues"
 soulmap = "soulmap.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/soulmap"]
+packages = ["src/soulmap", "src/soulmate"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -141,7 +141,7 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 
 [tool.deptry]
-known_first_party = ["soulmap"]
+known_first_party = ["soulmap", "soulmate"]
 
 [tool.vulture]
 paths = ["src", "tests"]

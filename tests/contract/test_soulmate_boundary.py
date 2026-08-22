@@ -8,7 +8,9 @@ from pathlib import Path
 import pytest
 
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge import keyword_lists as soulmap_keyword_lists
 from soulmate.contracts import ResourceContractError, ResourceReference
+from soulmate.knowledge import extract_keyword_section, load_keyword_section
 
 SOULMATE_ROOT = REPO_ROOT / "src/soulmate"
 
@@ -47,8 +49,26 @@ def test_soulmate_contract_rejects_invalid_resource_references() -> None:
         ResourceReference("example", Path("/tmp/example.md"))
 
 
-def test_current_soulmap_wheel_boundary_stays_unchanged() -> None:
+def test_soulmap_wheel_includes_the_soulmate_foundation() -> None:
     pyproject = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
 
-    assert 'packages = ["src/soulmap"]' in pyproject
-    assert "src/soulmate" not in pyproject
+    assert 'packages = ["src/soulmap", "src/soulmate"]' in pyproject
+
+
+def test_soulmap_keyword_imports_delegate_to_soulmate(tmp_path: Path) -> None:
+    markdown = """## Detection signals
+
+    - \"First phrase\"
+    - \"Second phrase\"
+
+    ## Other section
+    """
+    path = tmp_path / "signals.md"
+    path.write_text(markdown, encoding="utf-8")
+
+    assert soulmap_keyword_lists.extract_keyword_section is extract_keyword_section
+    assert soulmap_keyword_lists.load_keyword_section is load_keyword_section
+    assert load_keyword_section(path, "Detection signals") == (
+        "first phrase",
+        "second phrase",
+    )
