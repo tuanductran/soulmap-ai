@@ -114,7 +114,6 @@ def _layout(title: str, description: str, path: str, content: str, locale: str) 
         title=escape(seo_title),
         site_name=escape(SITE_NAME),
         skip_label=_text(locale, "skip"),
-        loading_label=_text(locale, "loading"),
         nav=_nav(path, locale),
         content=content,
         footer=footer,

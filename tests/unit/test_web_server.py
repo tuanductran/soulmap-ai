@@ -354,10 +354,10 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert 'src="/static/search.js"' in html
     assert 'src="/static/site.js"' in html
     assert 'id="page-shell"' in html
-    assert 'hx-boost="true"' in html
-    assert 'hx-history-elt="body"' in html
-    assert 'hx-swap="innerHTML transition:true show:top"' in html
-    assert 'id="page-progress"' in html
+    assert "hx-boost" not in html
+    assert "hx-history-elt" not in html
+    assert 'hx-swap="innerHTML transition:true show:top"' not in html
+    assert 'id="page-progress"' not in html
     assert 'url("/static/fonts/InterVariable.woff2")' in _request("/static/site.css")[
         1
     ].decode("utf-8")
