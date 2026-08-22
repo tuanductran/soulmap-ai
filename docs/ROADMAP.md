@@ -562,6 +562,13 @@ Non-goals for this surface:
 
 This section is the execution roadmap after the v0.9.0 baseline. It is intentionally ordered by risk and dependency rather than by feature novelty. Each phase should be delivered through one or more small pull requests, with characterization tests added before boundary changes and no automatic merge.
 
+**Execution snapshot (22 August 2026):** the previously reviewed Soulmate PR train and
+post-merge sdist staging fix are merged into `main`. The repository is now at the
+release-readiness hardening stage: the clean release-candidate dry-run passes locally,
+while documentation truth-sync and the Phase 14 coverage/tooling review remain active
+maintenance work. No GitHub Release, tag, package-registry publication, OIDC trust
+configuration, or provider activation has been performed.
+
 ### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
 
 **Priority:** P0 - immediate after the current web/tooling PR train.
@@ -821,4 +828,4 @@ platform adapters and connectors.
 
 ---
 
-Last updated: August 21, 2026
+Last updated: August 22, 2026

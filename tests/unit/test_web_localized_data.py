@@ -72,6 +72,20 @@ def test_catalog_and_prompt_runtime_expose_localized_korean_safe_values(
     )
 
 
+def test_prompt_scenario_properties_and_unknown_locale_fallback() -> None:
+    scenario = next(iter(next(iter(PROMPT_PACKS.values()))))
+
+    assert scenario.localized("fr") == scenario.localized("en")
+    assert scenario.title_en
+    assert scenario.title_vi
+    assert scenario.when_en
+    assert scenario.when_vi
+    assert scenario.prompt_en
+    assert scenario.prompt_vi
+    assert scenario.question_en
+    assert scenario.question_vi
+
+
 def test_raw_markdown_uses_localized_catalog_and_prompt_labels() -> None:
     korean = raw_markdown(CATALOG[0], "ko")
     vietnamese = raw_markdown(CATALOG[0], "vi")
