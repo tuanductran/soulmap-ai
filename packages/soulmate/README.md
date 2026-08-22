@@ -14,9 +14,9 @@ The first release-preparation package exposes:
 The pre-release AI-facing foundation skill set is maintained separately under
 `packages/soulmate/skills/`. Its current foundation entries document contracts, resource
 boundaries, Markdown knowledge resolution, text normalization, bounded data validation,
-capability lifecycle, and skill-manifest semantics. These skills are framework-neutral
-references; they do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual
-behavior.
+capability lifecycle, skill-manifest semantics, composition ownership, compatibility,
+artifact provenance, and reproducibility. These skills are framework-neutral references; they
+do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual behavior.
 
 SoulMap consumes these capabilities through public namespaces. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
 

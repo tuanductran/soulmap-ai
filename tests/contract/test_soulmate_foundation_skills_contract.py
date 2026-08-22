@@ -15,10 +15,14 @@ EXPECTED_FILES = {
     "data-validation.md",
     "lifecycle.md",
     "skill-manifest.md",
+    "composition-and-consumers.md",
+    "compatibility-and-versioning.md",
+    "artifact-provenance.md",
+    "determinism-and-reproducibility.md",
 }
 
 
-def test_foundation_skill_set_has_exact_p0_p1_entries() -> None:
+def test_foundation_skill_set_has_exact_p0_p1_p2_entries() -> None:
     assert {path.name for path in FOUNDATION_ROOT.glob("*.md")} == EXPECTED_FILES
 
 
