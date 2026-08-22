@@ -6,13 +6,14 @@ import argparse
 import shutil
 import subprocess
 import sys
+import tempfile
 import tomllib
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ROOT = REPO_ROOT / "packages" / "soulmate"
 SOURCE_ROOT = REPO_ROOT / "src" / "soulmate"
-DEFAULT_STAGE = REPO_ROOT / "dist" / ".soulmate-build"
+DEFAULT_STAGE = Path(tempfile.gettempdir()) / "soulmap-soulmate-build"
 DEFAULT_OUTPUT = REPO_ROOT / "dist" / "soulmate"
 
 
