@@ -60,8 +60,9 @@ def detect_patterns(conversation_messages: list) -> dict:
         for phrase in data.cycle_phrases:
             if phrase in full_text:
                 scores[pattern_id] += 3
-                if phrase not in signals_found[pattern_id]:
-                    signals_found[pattern_id].append(f"[cycle] {phrase}")
+                cycle_signal = f"[cycle] {phrase}"
+                if cycle_signal not in signals_found[pattern_id]:
+                    signals_found[pattern_id].append(cycle_signal)
 
     detected = [
         {
