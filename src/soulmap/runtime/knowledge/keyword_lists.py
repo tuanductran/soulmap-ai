@@ -10,7 +10,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from soulmate.knowledge.markdown import (
+from soulmate.knowledge import (
     extract_keyword_section,
     extract_labeled_groups,
     load_keyword_section,

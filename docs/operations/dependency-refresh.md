@@ -59,6 +59,7 @@ uv run soulmap format
 uv run soulmap markdown-contract --root .
 uv run soulmap check-links --root .
 uv run soulmap check-case --root .
+uv run soulmap check-dependencies --root .
 uv run soulmap lint
 uv run soulmap test -n auto -q
 uv run soulmap audit-knowledge
