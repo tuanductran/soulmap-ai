@@ -10,6 +10,7 @@ import pytest
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge import keyword_lists as soulmap_keyword_lists
 from soulmate.contracts import ResourceContractError, ResourceReference
+from soulmate.data import parse_json_object, parse_json_value, require_str_field
 from soulmate.knowledge import extract_keyword_section, load_keyword_section
 from soulmate.text import normalize_text
 
@@ -54,6 +55,12 @@ def test_soulmap_wheel_includes_the_soulmate_foundation() -> None:
     pyproject = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
 
     assert 'packages = ["src/soulmap", "src/soulmate"]' in pyproject
+
+
+def test_soulmate_json_utilities_are_framework_neutral() -> None:
+    assert parse_json_object('{"message": "hello"}') == {"message": "hello"}
+    assert parse_json_value('[1, "two"]') == [1, "two"]
+    assert require_str_field({"locale": "en"}, "locale") == "en"
 
 
 def test_soulmap_text_api_delegates_to_soulmate() -> None:
