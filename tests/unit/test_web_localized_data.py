@@ -6,6 +6,7 @@ from typing import cast
 
 import pytest
 
+from soulmap.web import prompt_pack
 from soulmap.web.catalog import CATALOG, raw_markdown
 from soulmap.web.i18n import SUPPORTED_LOCALES
 from soulmap.web.prompt_pack import PROMPT_PACKS
@@ -84,6 +85,98 @@ def test_prompt_scenario_properties_and_unknown_locale_fallback() -> None:
     assert scenario.prompt_vi
     assert scenario.question_en
     assert scenario.question_vi
+
+
+@pytest.mark.parametrize(
+    ("payload", "message"),
+    [
+        ({"packs": []}, "Prompt packs must be an object"),
+        (
+            {"packs": {"broken": {"scenarios": "not-a-list"}}},
+            "Invalid prompt pack",
+        ),
+        (
+            {"packs": {"broken": {"scenarios": [None]}}},
+            "Invalid prompt scenario",
+        ),
+        (
+            {
+                "packs": {
+                    "broken": {
+                        "scenarios": [
+                            {
+                                "id": "scenario",
+                                "locales": {
+                                    "en": {
+                                        "title": "title",
+                                        "when": "when",
+                                        "prompt": "prompt",
+                                        "question": "question",
+                                    }
+                                },
+                            }
+                        ]
+                    }
+                }
+            },
+            "Prompt locale parity failed",
+        ),
+        (
+            {
+                "packs": {
+                    "broken": {
+                        "scenarios": [
+                            {
+                                "id": "scenario",
+                                "locales": {
+                                    locale: {
+                                        "title": "title",
+                                        "when": "when",
+                                        "prompt": "prompt",
+                                    }
+                                    for locale in SUPPORTED_LOCALES
+                                },
+                            }
+                        ]
+                    }
+                }
+            },
+            "Prompt field parity failed",
+        ),
+        (
+            {
+                "packs": {
+                    "broken": {
+                        "scenarios": [
+                            {
+                                "id": "scenario",
+                                "locales": {
+                                    locale: {
+                                        "title": "title",
+                                        "when": "when",
+                                        "prompt": "prompt",
+                                        "question": 1,
+                                    }
+                                    for locale in SUPPORTED_LOCALES
+                                },
+                            }
+                        ]
+                    }
+                }
+            },
+            "Prompt values must be strings",
+        ),
+    ],
+)
+def test_prompt_pack_validation_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+    payload: dict[str, object],
+    message: str,
+) -> None:
+    monkeypatch.setattr(prompt_pack, "_DATA", payload)
+
+    with pytest.raises(ValueError, match=message):
+        prompt_pack._build_prompt_packs()
 
 
 def test_raw_markdown_uses_localized_catalog_and_prompt_labels() -> None:
