@@ -357,10 +357,15 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert "hx-boost" not in html
     assert "hx-history-elt" not in html
     assert 'hx-swap="innerHTML transition:true show:top"' not in html
-    assert 'id="page-progress"' not in html
-    assert 'url("/static/fonts/InterVariable.woff2")' in _request("/static/site.css")[
-        1
-    ].decode("utf-8")
+    search_form_attributes = html.split('<form class="field search-form"', 1)[1].split(
+        ">", 1
+    )[0]
+    assert "hx-boost" not in search_form_attributes
+    assert "page-progress" not in html
+    site_css = _request("/static/site.css")[1].decode("utf-8")
+    assert 'url("/static/fonts/InterVariable.woff2")' in site_css
+    assert ".page-progress" not in site_css
+    assert ".htmx-swapping #main-content" not in site_css
     _, search_body = _request("/static/search.js")
     search_js = search_body.decode("utf-8")
     assert "SoulMapSearch" in search_js
@@ -404,6 +409,8 @@ def test_layout_uses_local_fonts_and_pinned_script_assets() -> None:
     assert 'aria-controls="skill-modal"' in html
     assert 'id="skill-modal"' in html
     assert 'id="skill-loading"' in html
+    assert 'id="provider-chooser"' in html
+    assert 'id="provider-chooser-dialog"' in html
     assert 'role="status"' in html
     assert "x-cloak" in html
     assert 'x-transition:enter="modal-shell-enter"' in html
@@ -484,7 +491,14 @@ def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
     assert '<p class="ask-intro">Chế độ Hỏi giúp bạn chọn một Skill công khai' in html
     assert 'data-ask-result-label="Câu hỏi mở đầu"' in html
     assert 'data-ask-use-label="Dùng câu hỏi này"' in html
+    assert (
+        'data-provider-source-instruction="Hãy đọc gói Skill SoulMap công khai trước khi phản hồi:'
+        in html
+    )
     assert 'id="question-results"' in html
+    assert 'id="provider-chooser"' in html
+    assert 'id="provider-chooser-dialog"' in html
+    assert 'x-text="providerQuestion"' in html
 
     _, search_body = _request("/static/search.js")
     search_js = search_body.decode("utf-8")
@@ -496,6 +510,9 @@ def test_ask_mode_uses_json_scenarios_and_safe_dom_rendering() -> None:
     site_js = site_body.decode("utf-8")
     assert "renderAskResults" in site_js
     assert "renderSearchError" in site_js
+    assert "providerUrl" in site_js
+    assert "closeProviderChooser" in site_js
+    assert "input.value = question" not in site_js
     assert 'role", "alert"' in site_js
     assert "document.createElement" in site_js
     assert "innerHTML" not in site_js

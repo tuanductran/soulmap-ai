@@ -15,9 +15,9 @@ The public SoulMap website uses a small WSGI application with a deliberately nar
 
 ## Interaction boundaries
 
-AlpineJS owns local UI state such as dropdowns, modal focus, keyboard navigation, clipboard feedback and Skills search mode. htmx owns server-backed fragment requests for Skill details and other partial updates; full page navigation remains native so direct links and browser history keep their predictable behavior. Normal anchors remain valid fallbacks when JavaScript is unavailable. A new page-level interaction should first be evaluated against these existing boundaries rather than adding another router or client-side framework.
+AlpineJS owns local UI state such as dropdowns, modal focus, keyboard navigation, clipboard feedback and Skills search mode. htmx is limited to server-backed fragment requests such as loading Skill details into the existing modal. Native same-origin anchors own full-page navigation and remain valid when JavaScript is unavailable. A new page-level interaction should first be evaluated against these existing boundaries rather than adding another router or client-side framework.
 
-The layout intentionally does not use page-level htmx boost or a client-side router. Search forms and Skill detail modal triggers keep their own client-side or fragment behavior. External provider links, raw Markdown links and downloads remain normal links. The WSGI server continues to return complete HTML documents, so direct requests and static export remain first-class paths.
+The layout deliberately does not use htmx boost, htmx history replacement or page-level htmx swaps. Search and Ask modes are handled by AlpineJS and the local search client, while Skill detail triggers use htmx only for fragment loading with a native-link fallback. External provider links, raw Markdown links, downloads and same-origin navigation remain normal links. The WSGI server continues to return complete HTML documents, so direct requests and static export remain first-class paths.
 
 ## Asset policy
 

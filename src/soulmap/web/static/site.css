@@ -102,6 +102,7 @@ body.modal-open {
   overflow: hidden;
 }
 
+
 @media (prefers-reduced-motion: reduce) {
   .dropdown-enter,
   .dropdown-leave,
@@ -1083,13 +1084,38 @@ p {
   font-weight: 750;
 }
 
-.question-card blockquote {
+.question-card blockquote,
+.provider-chooser__question {
   margin: 0.45rem 0 0;
   padding: 0.85rem 1rem;
   border-left: 3px solid var(--teal);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   color: var(--ink);
   background: var(--paper);
+}
+
+.provider-chooser__label {
+  margin: 1.1rem 0 0;
+  color: var(--teal-dark);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.provider-chooser__actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1.2rem;
+}
+
+.provider-chooser__actions a {
+  min-width: 0;
+  text-align: center;
+}
+
+.provider-chooser__raw {
+  margin: 1rem 0 0;
+  text-align: center;
 }
 
 .question-label {
@@ -1425,7 +1451,8 @@ p {
 }
 
 @media (max-width: 720px) {
-  .skill-card__actions {
+  .skill-card__actions,
+  .provider-chooser__actions {
     grid-template-columns: 1fr;
   }
 

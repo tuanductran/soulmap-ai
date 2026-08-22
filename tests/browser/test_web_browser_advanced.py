@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from urllib.parse import parse_qs, unquote, urlparse
 
 import pytest
 from playwright.sync_api import Page, expect
@@ -220,11 +221,44 @@ def test_search_ask_toggle_and_use_question_flow(
     expect(questions.locator("article")).not_to_have_count(0)
     first_question = questions.locator("article").first
     use_button = first_question.locator("button").first
+    original_query = query.input_value()
     use_button.click()
+    chooser = page.locator("#provider-chooser")
+    dialog = page.locator("#provider-chooser-dialog")
     expect(questions).to_have_attribute("aria-busy", "false")
-    expect(query).not_to_be_focused()
-    expect(query).not_to_have_value(ask_query)
-    expect(query).not_to_have_value("")
+    expect(chooser).to_be_visible()
+    expect(dialog).to_be_focused()
+    expect(query).to_have_value(original_query)
+    expect(dialog.locator(".provider-chooser__question")).not_to_be_empty()
+    provider_links = dialog.locator(".provider-chooser__actions a")
+    expect(provider_links).to_have_count(2)
+    expect(provider_links.nth(0)).to_have_attribute(
+        "href", re.compile(r"^https://chatgpt\.com/\?q=")
+    )
+    expect(provider_links.nth(1)).to_have_attribute(
+        "href", re.compile(r"^https://claude\.ai/new\?q=")
+    )
+    chatgpt_href = provider_links.nth(0).get_attribute("href")
+    assert chatgpt_href is not None
+    decoded_prompt = unquote(parse_qs(urlparse(chatgpt_href).query)["q"][0])
+    assert re.search(
+        r"https://tuanductran\.github\.io/soulmap-ai/(?:[a-z]{2}/)?api/raw/",
+        decoded_prompt,
+    )
+    expect(dialog.locator(".provider-chooser__raw a")).to_have_attribute(
+        "href",
+        re.compile(
+            r"^https://tuanductran\.github\.io/soulmap-ai/(?:[a-z]{2}/)?api/raw/"
+        ),
+    )
+    page.keyboard.press("Escape")
+    expect(chooser).to_be_hidden()
+    expect(use_button).to_be_focused()
+    use_button.click()
+    expect(chooser).to_be_visible()
+    chooser.locator(".modal-backdrop").click(position={"x": 2, "y": 2})
+    expect(chooser).to_be_hidden()
+    expect(use_button).to_be_focused()
     expect(questions.locator("article")).not_to_have_count(0)
     page.locator('label.mode-option:has(input[value="search"])').click()
     expect(page.locator("#search-panel")).to_be_visible()
@@ -259,7 +293,7 @@ def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
     _open(page, browser_origin, locale, "/skills")
     trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
     trigger.click()
-    dialog = page.locator('[role="dialog"]')
+    dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     expect(page.locator("body")).to_have_class(re.compile(r"\bmodal-open\b"))
     source_links = dialog.locator(".prompt-scenario__source a")
@@ -283,7 +317,7 @@ def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
     assert page.evaluate("document.documentElement.scrollWidth") <= page.evaluate(
         "document.documentElement.clientWidth"
     )
-    page.locator(".modal-backdrop").click(position={"x": 2, "y": 2})
+    page.locator("#skill-modal > .modal-backdrop").click(position={"x": 2, "y": 2})
     expect(dialog).to_be_hidden()
     expect(trigger).to_be_focused()
     expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))

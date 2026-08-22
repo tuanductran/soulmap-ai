@@ -85,17 +85,10 @@ def test_language_menu_opens_switches_locale_and_closes_with_escape(
     expect(menu).to_be_visible()
     expect(menu.get_by_role("menuitem")).to_have_count(3)
 
-    menu.get_by_role("menuitem", name=re.compile("English")).evaluate(
-        "element => element.click()"
-    )
-    for _ in range(100):
-        if page.url.rstrip("/") == f"{browser_origin}/faq":
-            break
-        page.wait_for_timeout(100)
-    else:
-        raise AssertionError(
-            f"locale navigation did not reach /faq; current URL: {page.url}"
-        )
+    english_option = menu.get_by_role("menuitem", name=re.compile("English"))
+    expect(english_option).to_have_attribute("href", "/faq")
+    english_option.click(no_wait_after=True)
+    page.wait_for_url(f"{browser_origin}/faq", wait_until="commit")
     page.wait_for_function(
         "() => window.location.pathname === '/faq' "
         "&& document.documentElement.lang === 'en'"
@@ -128,6 +121,38 @@ def test_language_menu_supports_arrow_navigation_and_focus_restore(
     page.keyboard.press("Escape")
     expect(menu).to_be_hidden()
     expect(trigger).to_be_focused()
+
+
+def test_internal_links_use_native_navigation_and_history(
+    page: Page,
+    browser_origin: str,
+) -> None:
+    _open(page, f"{browser_origin}/")
+    initial_navigation_entries = page.evaluate(
+        "() => performance.getEntriesByType('navigation').length"
+    )
+
+    page.locator('nav.nav-links a[href="/faq"]').click(no_wait_after=True)
+    page.wait_for_url(f"{browser_origin}/faq", wait_until="domcontentloaded")
+    page.wait_for_function(
+        "() => document.documentElement.lang === 'en' "
+        "&& document.querySelector('main#main-content h1')"
+    )
+    expect(page.locator("#main-content h1")).to_be_visible()
+    expect(page.locator("#page-shell")).not_to_have_attribute("hx-boost")
+    expect(page.locator("html")).not_to_have_attribute("aria-busy")
+    assert (
+        page.evaluate("() => performance.getEntriesByType('navigation')[0].type")
+        == "navigate"
+    )
+    assert (
+        page.evaluate("() => performance.getEntriesByType('navigation').length")
+        == initial_navigation_entries
+    )
+
+    page.go_back(wait_until="commit")
+    page.wait_for_function("() => window.location.pathname === '/' ")
+    expect(page.locator("main#main-content")).to_be_visible()
 
 
 def test_skills_search_ask_mode_and_enter_do_not_navigate(
@@ -174,6 +199,7 @@ def test_localized_skills_controls_do_not_leak_ui_english(
 ) -> None:
     _open(page, f"{browser_origin}{_path(locale, '/skills')}")
     form = page.locator("form[data-search-api]")
+    assert form.get_attribute("hx-boost") is None
     expect(form).to_have_attribute("data-ask-query-hint", re.compile(ask_hint))
     if locale == "ko":
         expect(form).not_to_have_attribute(
@@ -200,7 +226,7 @@ def test_skill_detail_htmx_modal_focus_and_provider_links(
     trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
     trigger.click()
 
-    dialog = page.locator('[role="dialog"]')
+    dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     expect(dialog.locator(".modal-dialog__header h2")).to_be_visible()
     expect(dialog.locator(".prompt-scenario")).not_to_have_count(0)
@@ -271,7 +297,7 @@ def test_skills_mobile_layout_has_touch_targets_and_no_modal_overflow(
             assert box["height"] >= 44
 
     page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first.click()
-    dialog = page.locator('[role="dialog"]')
+    dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     assert page.evaluate("document.documentElement.scrollWidth") <= page.evaluate(
         "document.documentElement.clientWidth"
