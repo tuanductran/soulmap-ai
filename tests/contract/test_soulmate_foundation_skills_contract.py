@@ -1,0 +1,51 @@
+from __future__ import annotations
+
+import json
+
+from soulmap.devtools.support.repo import REPO_ROOT
+
+SKILLS_ROOT = REPO_ROOT / "packages" / "soulmate" / "skills"
+FOUNDATION_ROOT = SKILLS_ROOT / "foundation"
+MANIFEST_PATH = SKILLS_ROOT / "manifest.json"
+EXPECTED_FILES = {
+    "contracts.md",
+    "resource-boundaries.md",
+    "knowledge-resolution.md",
+    "text-normalization.md",
+    "data-validation.md",
+}
+
+
+def test_foundation_skill_set_has_exact_p0_entries() -> None:
+    assert {path.name for path in FOUNDATION_ROOT.glob("*.md")} == EXPECTED_FILES
+
+
+def test_foundation_manifest_matches_canonical_markdown() -> None:
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+    assert manifest["schema_version"] == "1.0"
+    assert manifest["library_id"] == "soulmate-ai"
+    assert manifest["distribution"]["public_registry"] is False
+
+    entries = manifest["entries"]
+    assert len(entries) == len(EXPECTED_FILES)
+    assert {entry["source"] for entry in entries} == {
+        f"foundation/{filename}" for filename in EXPECTED_FILES
+    }
+    assert len({entry["id"] for entry in entries}) == len(entries)
+
+    for entry in entries:
+        assert entry["owner"] == "Soulmate"
+        assert entry["kind"] == "foundation"
+        assert entry["consumers"] == ["soulmate-only"]
+        assert entry["artifact"] == "soulmate-ai"
+        assert (SKILLS_ROOT / entry["source"]).is_file()
+
+
+def test_foundation_skill_files_use_neutral_skill_front_matter() -> None:
+    for path in sorted(FOUNDATION_ROOT.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        assert text.startswith("---\n")
+        assert 'license: "MIT"' in text
+        assert "# " in text
+        assert "SoulMap-specific response frameworks" not in text

@@ -80,7 +80,9 @@ packages/
             └── resource-boundaries.md
 ```
 
-This is the target layout for a later implementation phase. The `skills/` subtree under `packages/soulmate/` does not yet exist and must not be created by this ADR alone.
+This is the package-owned target layout. The initial P0 foundation entries now live in
+this subtree as a separate implementation change; the layout must still grow only through
+manifested, reviewed entries and must not be inferred from this ADR alone.
 
 Root `skills/` remains SoulMap-owned:
 

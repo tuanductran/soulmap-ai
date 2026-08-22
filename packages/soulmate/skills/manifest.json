@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "library_id": "soulmate-ai",
+  "display_name": "Soulmate Foundation Skills",
+  "source_of_truth": "packages/soulmate/skills",
+  "distribution": {
+    "artifact_family": "soulmate-ai",
+    "status": "pre-release",
+    "public_registry": false
+  },
+  "compatibility": {
+    "python": ">=3.11",
+    "soulmate_package": ">=0.1.0,<0.2.0"
+  },
+  "entries": [
+    {
+      "id": "soulmate.foundation.contracts",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/contracts.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.resource-boundaries",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/resource-boundaries.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.knowledge-resolution",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/knowledge-resolution.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.text-normalization",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/text-normalization.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.foundation.data-validation",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "foundation",
+      "source": "foundation/data-validation.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    }
+  ]
+}

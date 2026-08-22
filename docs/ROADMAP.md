@@ -147,7 +147,8 @@ soulmap-ai/
 ├── packages/soulmate/
 │   ├── pyproject.toml    Release-only package metadata
 │   ├── README.md         Package identity and release boundary
-│   └── LICENSE           Package license copy
+│   ├── LICENSE           Package license copy
+│   └── skills/           Soulmate-only foundation skill source and manifest
 │
 ├── src/soulmap/
 │   ├── runtime/
