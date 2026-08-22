@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.31.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "soulmate-ai"
+version = "0.1.0"
+description = "Framework-neutral foundation library for SoulMap and future AI frameworks."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Tuan Duc Tran" }]
+keywords = ["AI library", "framework foundation", "text utilities", "knowledge tooling"]
+classifiers = [
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/tuanductran/soulmap-ai"
+Repository = "https://github.com/tuanductran/soulmap-ai"
+Documentation = "https://github.com/tuanductran/soulmap-ai/tree/main/docs"
+Issues = "https://github.com/tuanductran/soulmap-ai/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/soulmate"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/LICENSE",
+  "/README.md",
+  "/pyproject.toml",
+  "/src/soulmate",
+]

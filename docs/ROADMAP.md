@@ -144,6 +144,11 @@ soulmap-ai/
 │   ├── resources/        Explicit resource resolution boundary
 │   └── text/             Framework-neutral text normalization utilities
 │
+├── packages/soulmate/
+│   ├── pyproject.toml    Release-only package metadata
+│   ├── README.md         Package identity and release boundary
+│   └── LICENSE           Package license copy
+│
 ├── src/soulmap/
 │   ├── runtime/
 │   │   ├── detectors/    Per-signal detection modules (anger, crisis, pattern, ...)

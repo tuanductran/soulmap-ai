@@ -48,7 +48,7 @@ def test_soulmate_contract_rejects_invalid_resource_references() -> None:
         ResourceReference("", Path("skills/example.md"))
 
     with pytest.raises(ResourceContractError, match="repository-relative"):
-        ResourceReference("example", Path("/tmp/example.md"))
+        ResourceReference("example", Path.cwd() / "tmp" / "example.md")
 
 
 def test_soulmap_wheel_includes_the_soulmate_foundation() -> None:

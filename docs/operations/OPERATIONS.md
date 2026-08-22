@@ -75,8 +75,14 @@ If Markdown structure or packaging rules changed, also run:
 
 ```bash
 uv run soulmap format
-uv run soulmap check-dependencies
+uv run soulmap check-dependencies --root .
 uv run soulmap lint
+SOULMATE_VERSION="$(uv run python scripts/build_soulmate.py --print-version)"
+uv run python scripts/build_soulmate.py --output-dir dist/soulmate
+uv run python scripts/verify_soulmate_package.py \
+  --wheel "dist/soulmate/soulmate_ai-${SOULMATE_VERSION}-py3-none-any.whl" \
+  --sdist "dist/soulmate/soulmate_ai-${SOULMATE_VERSION}.tar.gz" \
+  --version "${SOULMATE_VERSION}"
 ```
 
 ## Experimental modules
