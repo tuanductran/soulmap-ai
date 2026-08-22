@@ -39,3 +39,4 @@ Number ADRs sequentially, zero-padded to four digits:
 | [0001](0001-layered-crisis-detection.md) | Layered Crisis Detection as Intentional Defense-in-Depth | Accepted |
 | [0002](0002-deterministic-response-safety-enforcement.md) | Deterministic Response Safety Enforcement | Accepted |
 | [0003](0003-soulmate-library-soulmap-framework.md) | Soulmate Library as the Foundation for the SoulMap Framework | Accepted |
+| [0004](0004-soulmate-only-skills-library-framework.md) | Soulmate-only Skills as a Separate Library Layer | Accepted |
