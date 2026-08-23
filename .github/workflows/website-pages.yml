@@ -34,15 +34,17 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v7
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+
       - name: Install Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
           cache-dependency-path: web/pnpm-lock.yaml
-
-      - name: Enable pnpm
-        run: corepack enable
 
       - name: Install locked web dependencies
         run: pnpm --dir web install --frozen-lockfile
@@ -69,6 +71,11 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v7
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+
       - name: Install Node
         uses: actions/setup-node@v6
         with:
@@ -76,9 +83,8 @@ jobs:
           cache: pnpm
           cache-dependency-path: web/pnpm-lock.yaml
 
-      - name: Enable pnpm and install dependencies
+      - name: Install dependencies and browser
         run: |
-          corepack enable
           pnpm --dir web install --frozen-lockfile
           pnpm --dir web exec playwright install --with-deps chromium
 
