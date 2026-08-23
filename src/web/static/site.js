@@ -401,28 +401,95 @@ document.addEventListener("alpine:init", () => {
         top: body.style.top,
         width: body.style.width,
         overflow: body.style.overflow,
+        paddingRight: body.style.paddingRight,
+        scrollbarWidth: Math.max(0, window.innerWidth - document.documentElement.clientWidth),
       };
       body.classList.add("modal-open");
       body.style.position = "fixed";
       body.style.top = `-${this.bodyScrollLock.scrollY}px`;
       body.style.width = "100%";
       body.style.overflow = "hidden";
+      this.updateBodyScrollCompensation();
+      const resizeHandler = () => this.updateBodyScrollCompensation();
+      this.bodyScrollLock.resizeHandler = resizeHandler;
+      window.addEventListener("resize", resizeHandler, { passive: true });
+      window.visualViewport?.addEventListener("resize", resizeHandler, { passive: true });
+    },
+    measureScrollbarWidth() {
+      const probe = document.createElement("div");
+      probe.style.position = "absolute";
+      probe.style.inset = "-9999px auto auto -9999px";
+      probe.style.width = "100px";
+      probe.style.height = "100px";
+      probe.style.overflow = "scroll";
+      probe.style.visibility = "hidden";
+      document.body.appendChild(probe);
+      const width = Math.max(0, probe.offsetWidth - probe.clientWidth);
+      probe.remove();
+      return width;
+    },
+    updateBodyScrollCompensation() {
+      const lock = this.bodyScrollLock;
+      if (!lock) return;
+      const viewportWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      lock.scrollbarWidth = viewportWidth || this.measureScrollbarWidth();
+      const originalPaddingRight = Number.parseFloat(lock.paddingRight) || 0;
+      document.body.style.paddingRight = lock.scrollbarWidth > 0
+        ? `${originalPaddingRight + lock.scrollbarWidth}px`
+        : lock.paddingRight;
+    },
+    getModalUnlockDelay() {
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return 0;
+      const rootStyles = getComputedStyle(document.documentElement);
+      const configuredDuration = rootStyles.getPropertyValue("--modal-transition-duration").trim();
+      if (configuredDuration) {
+        const number = Number.parseFloat(configuredDuration) || 0;
+        const milliseconds = configuredDuration.endsWith("ms") ? number : number * 1000;
+        if (milliseconds > 0) return Math.ceil(milliseconds) + 16;
+      }
+      const shell = this.$root.querySelector(".modal-shell");
+      if (!shell) return 220;
+      const styles = getComputedStyle(shell);
+      const toMilliseconds = (value) => {
+        const number = Number.parseFloat(value) || 0;
+        return value.trim().endsWith("ms") ? number : number * 1000;
+      };
+      const durations = styles.transitionDuration.split(",").map(toMilliseconds);
+      const delays = styles.transitionDelay.split(",").map(toMilliseconds);
+      const longest = durations.reduce(
+        (max, duration, index) => Math.max(max, duration + (delays[index] ?? delays[0] ?? 0)),
+        0,
+      );
+      return longest > 0 ? Math.ceil(longest) + 16 : 220;
+    },
+    unlockBodyScroll() {
+      if (!this.bodyScrollLock || this.openSlug || this.providerOpen) return;
+      const lock = this.bodyScrollLock;
+      this.bodyScrollLock = null;
+      const body = document.body;
+      if (lock.resizeHandler) {
+        window.removeEventListener("resize", lock.resizeHandler);
+        window.visualViewport?.removeEventListener("resize", lock.resizeHandler);
+      }
+      body.classList.remove("modal-open");
+      body.style.position = lock.position;
+      body.style.top = lock.top;
+      body.style.width = lock.width;
+      body.style.overflow = lock.overflow;
+      body.style.paddingRight = lock.paddingRight;
+      window.scrollTo({ top: lock.scrollY, left: lock.scrollX, behavior: "auto" });
     },
     scheduleBodyScrollUnlock() {
       if (!this.bodyScrollLock || this.bodyScrollUnlockTimer !== null) return;
+      const delay = this.getModalUnlockDelay();
+      if (delay === 0) {
+        this.unlockBodyScroll();
+        return;
+      }
       this.bodyScrollUnlockTimer = window.setTimeout(() => {
         this.bodyScrollUnlockTimer = null;
-        if (this.openSlug || this.providerOpen) return;
-        const lock = this.bodyScrollLock;
-        this.bodyScrollLock = null;
-        const body = document.body;
-        body.classList.remove("modal-open");
-        body.style.position = lock.position;
-        body.style.top = lock.top;
-        body.style.width = lock.width;
-        body.style.overflow = lock.overflow;
-        window.scrollTo({ top: lock.scrollY, left: lock.scrollX, behavior: "auto" });
-      }, 220);
+        this.unlockBodyScroll();
+      }, delay);
     },
     open(slug, trigger, detailUrl) {
       this.returnFocus = trigger || document.activeElement;

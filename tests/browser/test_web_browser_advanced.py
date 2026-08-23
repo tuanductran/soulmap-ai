@@ -354,3 +354,190 @@ def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
     expect(page.locator("#skill-modal")).to_have_count(0)
     expect(trigger).to_be_focused()
     expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+@pytest.mark.parametrize(
+    "viewport", [(1280, 720), (320, 720)], ids=["desktop", "mobile"]
+)
+def test_modal_scroll_lock_preserves_position_and_layout(
+    page: Page, browser_origin: str, locale: str, viewport: tuple[int, int]
+) -> None:
+    page.set_viewport_size({"width": viewport[0], "height": viewport[1]})
+    _open(page, browser_origin, locale, "/skills")
+    page.evaluate(
+        """() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            const target = Math.max(
+                1,
+                Math.min(
+                    Math.round(document.documentElement.scrollHeight / 2),
+                    document.documentElement.scrollHeight - window.innerHeight,
+                ),
+            );
+            window.scrollTo(0, target);
+        }"""
+    )
+    page.wait_for_function("() => window.scrollY > 0")
+    trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
+    before = page.evaluate(
+        """() => ({
+            scrollX: window.scrollX,
+            scrollY: window.scrollY,
+            styles: {
+                position: document.body.style.position,
+                top: document.body.style.top,
+                width: document.body.style.width,
+                overflow: document.body.style.overflow,
+                paddingRight: document.body.style.paddingRight,
+            },
+            toolbar: document.querySelector('.catalog-toolbar')?.getBoundingClientRect().toJSON(),
+            scrollbarWidth: Math.max(0, window.innerWidth - document.documentElement.clientWidth),
+        })"""
+    )
+    assert before["scrollY"] > 0
+
+    trigger.dispatch_event("click")
+    dialog = page.locator('#skill-modal [role="dialog"]')
+    expect(dialog).to_be_visible()
+    open_state = page.evaluate(
+        """() => ({
+            scrollY: window.scrollY,
+            bodyPaddingRight: getComputedStyle(document.body).paddingRight,
+            toolbar: document.querySelector('.catalog-toolbar')?.getBoundingClientRect().toJSON(),
+            overscroll: getComputedStyle(document.querySelector('.modal-dialog')).overscrollBehavior,
+        })"""
+    )
+    assert open_state["scrollY"] == 0
+    if before["scrollbarWidth"]:
+        assert open_state["bodyPaddingRight"] == f"{before['scrollbarWidth']}px"
+    for key in ("left", "right", "top", "width"):
+        assert abs(open_state["toolbar"][key] - before["toolbar"][key]) <= 1
+    assert open_state["overscroll"] == "contain"
+
+    page.keyboard.press("Escape")
+    expect(page.locator("#skill-modal")).to_have_count(0)
+    expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+    after = page.evaluate(
+        """() => ({
+            scrollX: window.scrollX,
+            scrollY: window.scrollY,
+            styles: {
+                position: document.body.style.position,
+                top: document.body.style.top,
+                width: document.body.style.width,
+                overflow: document.body.style.overflow,
+                paddingRight: document.body.style.paddingRight,
+            },
+            toolbar: document.querySelector('.catalog-toolbar')?.getBoundingClientRect().toJSON(),
+        })"""
+    )
+    assert abs(after["scrollX"] - before["scrollX"]) <= 1
+    assert abs(after["scrollY"] - before["scrollY"]) <= 1
+    assert after["styles"] == before["styles"]
+    for key in ("left", "right", "top", "width"):
+        assert abs(after["toolbar"][key] - before["toolbar"][key]) <= 1
+
+    for _ in range(2):
+        trigger.dispatch_event("click")
+        expect(dialog).to_be_visible()
+        page.keyboard.press("Escape")
+        trigger.dispatch_event("click")
+        expect(dialog).to_be_visible()
+        page.locator("#skill-modal .modal-close").click()
+        expect(page.locator("#skill-modal")).to_have_count(0)
+        expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+        assert abs(page.evaluate("window.scrollY") - before["scrollY"]) <= 1
+
+
+@pytest.mark.parametrize("locale", LOCALES)
+def test_provider_chooser_scroll_lock_restores_position(
+    page: Page, browser_origin: str, locale: str
+) -> None:
+    page.set_viewport_size({"width": 1280, "height": 720})
+    _open(page, browser_origin, locale, "/skills")
+    page.locator('label.mode-option:has(input[value="ask"])').click()
+    query = page.locator("#skill-search")
+    query.fill("sad" if locale == "en" else "buồn bã" if locale == "vi" else "불안")
+    questions = page.locator("#question-results")
+    expect(questions.locator("article")).not_to_have_count(0)
+    page.evaluate(
+        """() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, Math.max(1, document.documentElement.scrollHeight / 3));
+        }"""
+    )
+    page.wait_for_function("() => window.scrollY > 0")
+    before_y = page.evaluate("window.scrollY")
+    use_button = questions.locator("article").first.locator("button").first
+    use_button.dispatch_event("click")
+    chooser = page.locator("#provider-chooser")
+    expect(chooser).to_be_visible()
+    assert page.evaluate("window.scrollY") == 0
+    assert (
+        page.locator(".modal-dialog").last.evaluate(
+            "element => getComputedStyle(element).overscrollBehavior"
+        )
+        == "contain"
+    )
+    page.keyboard.press("Escape")
+    expect(chooser).to_have_count(0)
+    expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+    assert abs(page.evaluate("window.scrollY") - before_y) <= 1
+    expect(use_button).to_be_focused()
+
+
+def test_modal_scroll_lock_updates_after_viewport_resize(
+    page: Page, browser_origin: str
+) -> None:
+    page.set_viewport_size({"width": 320, "height": 720})
+    _open(page, browser_origin, "en", "/skills")
+    page.evaluate(
+        """() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, Math.max(1, document.documentElement.scrollHeight / 3));
+        }"""
+    )
+    page.wait_for_function("() => window.scrollY > 0")
+    before_y = page.evaluate("window.scrollY")
+    trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
+    trigger.dispatch_event("click")
+    expect(page.locator("#skill-modal")).to_be_visible()
+    expected_scrollbar_width = page.evaluate(
+        """() => {
+            const probe = document.createElement('div');
+            probe.style.cssText = 'position:absolute;left:-9999px;width:100px;height:100px;overflow:scroll;visibility:hidden';
+            document.body.appendChild(probe);
+            const width = Math.max(0, probe.offsetWidth - probe.clientWidth);
+            probe.remove();
+            return width;
+        }"""
+    )
+    page.set_viewport_size({"width": 1280, "height": 720})
+    page.wait_for_function(
+        "width => Math.abs(parseFloat(getComputedStyle(document.body).paddingRight) - width) < 0.1",
+        arg=expected_scrollbar_width,
+    )
+    page.locator("#skill-modal .modal-close").click()
+    expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+    assert abs(page.evaluate("window.scrollY") - before_y) <= 1
+    assert page.evaluate("document.body.style.paddingRight") == ""
+
+
+def test_modal_unlock_respects_reduced_motion(page: Page, browser_origin: str) -> None:
+    page.emulate_media(reduced_motion="reduce")
+    page.set_viewport_size({"width": 1280, "height": 720})
+    _open(page, browser_origin, "en", "/skills")
+    page.evaluate(
+        """() => {
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 300);
+        }"""
+    )
+    page.wait_for_function("() => window.scrollY === 300")
+    trigger = page.locator('#skill-grid .skill-card a[aria-haspopup="dialog"]').first
+    trigger.dispatch_event("click")
+    page.locator("#skill-modal .modal-close").click()
+    expect(page.locator("#skill-modal")).to_have_count(0)
+    expect(page.locator("body")).not_to_have_class(re.compile(r"\bmodal-open\b"))
+    assert page.evaluate("window.scrollY") == 300
