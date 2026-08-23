@@ -1,0 +1,176 @@
+name: Soulmate TestPyPI release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the verified Soulmate Python package to TestPyPI"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soulmate-testpypi-release
+  cancel-in-progress: false
+
+env:
+  SOULMAP_REPO_ROOT: ${{ github.workspace }}
+
+jobs:
+  build:
+    name: Build and verify Soulmate Python distributions
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout approved source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: "3.11"
+
+      - name: Install locked development environment
+        run: uv sync --locked --python 3.11
+
+      - name: Verify repository contracts and tests
+        run: |
+          uv run soulmap markdown-contract --root .
+          uv run soulmap check-links --root .
+          uv run soulmap check-case --root .
+          uv run soulmap check-dependencies --root .
+          uv run soulmap audit-knowledge
+          uv run soulmap catalog-parity
+          uv run soulmap lint --skip-tests
+          uv run soulmap test -n auto -q
+          uv run soulmap eval-groups
+          uv run soulmap eval-responses
+          uv run soulmap eval-markdown-contracts
+          uv run python tests/eval_regression/test_safety_evals.py
+          uv run python scripts/verify_soulmate_consumer_sync.py --check
+
+      - name: Resolve package version
+        id: version
+        run: echo "version=$(uv run python scripts/build_soulmate.py --print-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Build isolated Soulmate distributions
+        run: uv run python scripts/build_soulmate.py --output-dir dist/soulmate
+
+      - name: Verify Soulmate package boundary
+        run: |
+          uv run python scripts/verify_soulmate_package.py \
+            --wheel "dist/soulmate/soulmate_ai-${{ steps.version.outputs.version }}-py3-none-any.whl" \
+            --sdist "dist/soulmate/soulmate_ai-${{ steps.version.outputs.version }}.tar.gz" \
+            --version "${{ steps.version.outputs.version }}"
+
+      - name: Record distribution checksums
+        working-directory: dist/soulmate
+        run: sha256sum soulmate_ai-* > SHA256SUMS
+
+      - name: Upload exact verified distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmate-python-dists-${{ github.sha }}
+          path: dist/soulmate/
+          if-no-files-found: error
+
+  publication-gate:
+    name: Check explicit publication gate
+    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout approved source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+
+      - name: Require explicit repository enablement
+        env:
+          PUBLICATION_ENABLED: ${{ vars.SOULMATE_PUBLICATION_ENABLED }}
+          PUBLICATION_TARGET: ${{ vars.SOULMATE_PUBLICATION_TARGET }}
+        run: |
+          test "$PUBLICATION_ENABLED" = "true" || {
+            echo "SOULMATE_PUBLICATION_ENABLED must be true before publication" >&2
+            exit 1
+          }
+          test "$PUBLICATION_TARGET" = "testpypi" || {
+            echo "SOULMATE_PUBLICATION_TARGET must be testpypi" >&2
+            exit 1
+          }
+
+      - name: Reject private package metadata
+        run: |
+          if grep -Fq 'Private :: Do Not Upload' packages/soulmate/pyproject.toml; then
+            echo "Soulmate package is still marked Private :: Do Not Upload" >&2
+            exit 1
+          fi
+
+  verify-publish-input:
+    name: Re-verify TestPyPI publication input
+    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    needs:
+      - build
+      - publication-gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout approved source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+
+      - name: Download exact verified distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: soulmate-python-dists-${{ github.sha }}
+          path: dist/soulmate
+
+      - name: Verify downloaded distributions again
+        run: |
+          python3 scripts/verify_soulmate_package.py \
+            --wheel "dist/soulmate/soulmate_ai-${{ needs.build.outputs.version }}-py3-none-any.whl" \
+            --sdist "dist/soulmate/soulmate_ai-${{ needs.build.outputs.version }}.tar.gz" \
+            --version "${{ needs.build.outputs.version }}"
+
+  publish:
+    name: Publish Soulmate package to TestPyPI
+    if: inputs.publish == true && github.ref == 'refs/heads/main'
+    needs:
+      - build
+      - publication-gate
+      - verify-publish-input
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/soulmate-ai
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download exact verified distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: soulmate-python-dists-${{ github.sha }}
+          path: dist/soulmate
+
+      - name: Publish to TestPyPI with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          packages-dir: dist/soulmate/
+          repository-url: https://test.pypi.org/legacy/
