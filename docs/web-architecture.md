@@ -1,28 +1,24 @@
-# SoulMap web architecture
+# Website architecture
 
-The public SoulMap website uses a small WSGI application with a deliberately narrow entry point. `src/web/server.py` keeps the CLI-facing WSGI facade and delegates request work to focused modules. It should not become a page renderer, template engine, asset loader, or catalog implementation.
+## Boundary
 
-| Area | Module or directory | Responsibility |
-| --- | --- | --- |
-| Request dispatch | `src/web/routes.py` | Normalize paths, route requests, choose response status and headers. |
-| Shared HTTP | `src/web/http.py` | Translation lookup, navigation paths, resource hints and secure WSGI responses. |
-| Page rendering | `src/web/pages.py` | Render localized page content and the shared layout. |
-| Skill rendering | `src/web/skill_views.py` | Render catalog cards, Skill pages and modal fragments. |
-| Asset serving | `src/web/assets.py` | Allow-listed text and font assets with safe readers and MIME types. |
-| Static export | `src/web/exporter.py` | Build localized HTML, API artifacts and static assets for GitHub Pages. |
-| Templates | `src/web/templates/` | Keep layout, page templates and partials separate from Python rendering logic. |
-| Browser assets | `src/web/static/` | CSS, JavaScript, favicon and local font files only. |
+The public site is a self-contained React/Vite static workspace in [`web/`](../web). It consumes public catalog metadata and canonical Markdown at build time, but it is not imported by `soulmap` or `soulmate`. Python runtime/tooling can build and verify artifacts without a browser or Node runtime, while the website deploys as static files without a Python web server.
 
-## Interaction boundaries
+| Layer | Responsibility |
+| --- | --- |
+| `web/src/` | React routes, Headless UI interactions, Tailwind visual system, client i18n and local catalog filtering. |
+| `web/content/` | Versioned public catalog/prompt metadata used by the static raw-bundle generator. |
+| `web/scripts/postbuild.mjs` | Builds locale-specific public Markdown from root `skills/`, sanitizing repository-only references. |
+| `web/scripts/verify-static.mjs` | Fail-closed check for routes, raw bundles, assets and banned preview/legacy references. |
+| `web/tests/` | Playwright regression coverage for route loading, i18n, provider dialog and raw-bundle handoff. |
+| `.github/workflows/website-pages.yml` | Locked Node build, static verification, PR browser audit and `gh-pages` artifact publication. |
 
-AlpineJS owns local UI state such as dropdowns, modal focus, keyboard navigation, clipboard feedback and Skills search mode. htmx is limited to server-backed fragment requests such as loading Skill details into the existing modal. Native same-origin anchors own full-page navigation and remain valid when JavaScript is unavailable. A new page-level interaction should first be evaluated against these existing boundaries rather than adding another router or client-side framework.
+## Interaction contract
 
-The layout deliberately does not use htmx boost, htmx history replacement or page-level htmx swaps. Search and Ask modes are handled by AlpineJS and the local search client, while Skill detail triggers use htmx only for fragment loading with a native-link fallback. External provider links, raw Markdown links, downloads and same-origin navigation remain normal links. The WSGI server continues to return complete HTML documents, so direct requests and static export remain first-class paths.
+TanStack Router owns root and locale-prefixed client routes. Headless UI owns focus management and keyboard semantics for menus, disclosure and dialogs. The provider dialog only copies its context-specific prompt and links to the canonical raw bundle; it does not use fragile query-prefill behavior or call a provider API.
 
-## Asset policy
-
-Typography is local and served from the allow-listed `/static/fonts/` route. Inter and Manrope files are accompanied by a source notice under `src/web/static/fonts/NOTICE.md`. No page template should add a font CDN link or hard-code a third-party font origin. Static export copies the font files and rewrites absolute asset URLs for a GitHub Pages base path.
+The app builds with `SITE_BASE_PATH=/<repository>/` for GitHub Pages. `postbuild.mjs` copies `index.html` to `404.html` so direct static-host routes recover. Asset paths derive from Vite `BASE_URL`, allowing the same source to run at local `/` and production `/soulmap-ai/`.
 
 ## Change checklist
 
-When adding a page, add its renderer to `pages.py`, its route contract to `routes.py`, its localized messages to the JSON locale files, and its browser coverage to `tests/browser/`. When adding a browser asset, register it in `assets.py`, serve it through the allow-listed route, include it in `exporter.py`, and add a unit test for its content type and artifact output. Keep `server.py` as a compatibility facade and avoid importing template or asset internals directly into the CLI layer.
+When adding a page, update `web/src/router.tsx`, locale-aware navigation if appropriate, English/Vietnamese/Korean content, and browser coverage for interaction changes. When adding a public Skill surface, update both `web/src/content/skills.ts` and the build-time contract in `web/content/`. Run `pnpm --dir web check`, the base-path build, static verifier and browser audit before review.

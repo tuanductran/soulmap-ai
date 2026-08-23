@@ -4,28 +4,16 @@ on:
   pull_request:
     paths:
       - ".github/workflows/website-pages.yml"
-      - ".github/actions/setup-uv/**"
-      - "src/web/**"
-      - "src/soulmap/cli.py"
-      - "scripts/verify_static_site.py"
+      - "web/**"
       - "docs/product/WEBSITE.md"
       - "README.md"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "tests/browser/**"
   push:
     branches: ["main"]
     paths:
       - ".github/workflows/website-pages.yml"
-      - ".github/actions/setup-uv/**"
-      - "src/web/**"
-      - "src/soulmap/cli.py"
-      - "scripts/verify_static_site.py"
+      - "web/**"
       - "docs/product/WEBSITE.md"
       - "README.md"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "tests/browser/**"
   workflow_dispatch:
 
 permissions:
@@ -36,7 +24,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  PYTHON_VERSION: "3.11"
   STATIC_OUTPUT: site
   STATIC_ARTIFACT: soulmap-static-site-${{ github.sha }}
 
@@ -47,43 +34,25 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v7
 
-      - name: Install uv
-        uses: ./.github/actions/setup-uv
+      - name: Install Node
+        uses: actions/setup-node@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
 
-      - name: Locate uv cache
-        id: uv-cache
-        shell: bash
-        run: echo "dir=$(uv cache dir)" >> "$GITHUB_OUTPUT"
+      - name: Enable pnpm
+        run: corepack enable
 
-      - name: Restore uv cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ steps.uv-cache.outputs.dir }}
-          key: uv-${{ runner.os }}-${{ hashFiles('pyproject.toml', 'uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}-
+      - name: Install locked web dependencies
+        run: pnpm --dir web install --frozen-lockfile
 
-      - name: Install locked development environment
-        run: uv sync --locked --python "${PYTHON_VERSION}"
-
-      - name: Build project-site static output
-        env:
-          SITE_BASE_PATH: /${{ github.event.repository.name }}
+      - name: Build and verify project-site static output
         run: |
           rm -rf "${STATIC_OUTPUT}"
-          uv run soulmap web \
-            --export-static \
-            --output "${STATIC_OUTPUT}" \
-            --base-path "${SITE_BASE_PATH}"
-          uv run python scripts/verify_static_site.py \
-            "${STATIC_OUTPUT}" \
-            --base-path "${SITE_BASE_PATH}"
-
-      - name: Prune uv cache for CI
-        if: always()
-        run: uv cache prune --ci
+          SITE_BASE_PATH=/${{ github.event.repository.name }}/ pnpm --dir web build
+          pnpm --dir web verify
+          cp -R web/dist "${STATIC_OUTPUT}"
 
       - name: Upload static output for inspection
         uses: actions/upload-artifact@v7
@@ -100,33 +69,30 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v7
 
-      - name: Install uv
-        uses: ./.github/actions/setup-uv
+      - name: Install Node
+        uses: actions/setup-node@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
 
-      - name: Install locked development environment
-        run: uv sync --locked --python "${PYTHON_VERSION}"
+      - name: Enable pnpm and install dependencies
+        run: |
+          corepack enable
+          pnpm --dir web install --frozen-lockfile
+          pnpm --dir web exec playwright install --with-deps chromium
 
-      - name: Install Chromium and system dependencies
-        run: uv run playwright install --with-deps chromium
-
-      - name: Run opt-in browser audit
-        run: >-
-          uv run pytest tests/browser
-          --run-browser
-          --browser chromium
-          --screenshot=only-on-failure
-          --full-page-screenshot
-          --tracing=retain-on-failure
-          --output=test-results
+      - name: Run browser audit
+        run: |
+          SITE_BASE_PATH=/${{ github.event.repository.name }}/ pnpm --dir web build
+          pnpm --dir web test:browser
 
       - name: Upload browser test results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: browser-test-results-${{ github.sha }}
-          path: test-results/
+          path: web/test-results/
           if-no-files-found: warn
 
   publish-gh-pages:

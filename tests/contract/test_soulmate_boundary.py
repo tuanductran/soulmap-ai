@@ -54,7 +54,7 @@ def test_soulmate_contract_rejects_invalid_resource_references() -> None:
 def test_soulmap_wheel_includes_the_soulmate_foundation() -> None:
     pyproject = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
 
-    assert 'packages = ["src/soulmap", "src/soulmate", "src/web"]' in pyproject
+    assert 'packages = ["src/soulmap", "src/soulmate"]' in pyproject
 
 
 def test_soulmate_json_utilities_are_framework_neutral() -> None:

@@ -1,0 +1,5 @@
+# React/Vite output is generated locally or in GitHub Actions.
+dist/
+node_modules/
+test-results/
+playwright-report/

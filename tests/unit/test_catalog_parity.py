@@ -20,7 +20,7 @@ def test_catalog_parity_reports_library_only_entry(monkeypatch) -> None:
 
     errors = catalog_parity.verify_catalog_parity(REPO_ROOT)
 
-    assert errors == ["Library entry has no web catalog slug: voice"]
+    assert errors == ["Library entry has no public catalog slug: voice"]
 
 
 def test_catalog_parity_is_a_public_maintainer_command() -> None:

@@ -9,6 +9,8 @@
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
 
+> **Current website architecture (August 2026):** the historical Python WSGI website has been retired. The public GitHub Pages surface is now the React/TanStack/Tailwind static workspace under `web/`; references to `src/web/` in completed historical phases describe the implementation at that time, not the current contract.
+
 SoulMap AI is a content-first knowledge base - a reflective-companion AI system - with a
 small Python enforcement and tooling layer on top. The repository's discipline is stated
 in [AGENTS.md](../AGENTS.md) and [README.md](../README.md): brand, safety, packaging, and

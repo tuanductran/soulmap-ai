@@ -23,7 +23,6 @@ from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.devtools.support.run import python_module
 from soulmap.runtime.experimental import soulmap_demo
 from soulmap.runtime.guards import markdown_contract
-from web import server as web_server
 
 CommandHandler = Callable[[list[str]], int]
 
@@ -56,7 +55,6 @@ def _command_table() -> dict[str, CommandHandler]:
         "library-manifest": library.main,
         "markdown-contract": markdown_contract.main,
         "test": _run_pytest,
-        "web": web_server.main,
     }
 
 

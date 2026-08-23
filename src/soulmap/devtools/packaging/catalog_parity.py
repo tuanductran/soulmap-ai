@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import json
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from soulmap.devtools.support.repo import REPO_ROOT
-from web.catalog import CATALOG, raw_markdown
 
 LIBRARY_CATALOG = Path("library/catalog.json")
+PUBLIC_CATALOG = Path("web/content/catalog_data.json")
 _INTERNAL_MARKERS = (
     "AGENTS.md",
     ".claude/",
@@ -20,6 +21,58 @@ _INTERNAL_MARKERS = (
     "src/",
     "tests/",
 )
+
+
+@dataclass(frozen=True)
+class PublicCatalogEntry:
+    slug: str
+    directory: str
+    featured_file: str
+
+
+def _read_public_catalog(repo_root: Path) -> tuple[PublicCatalogEntry, ...]:
+    path = repo_root / PUBLIC_CATALOG
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValueError(f"missing public catalog: {path}") from exc
+    if not isinstance(payload, dict) or not isinstance(payload.get("entries"), list):
+        raise ValueError("public catalog entries must be a list")
+    entries: list[PublicCatalogEntry] = []
+    for raw_entry in payload["entries"]:
+        if not isinstance(raw_entry, dict):
+            raise ValueError("public catalog entries must be objects")
+        slug = raw_entry.get("slug")
+        directory = raw_entry.get("directory")
+        featured_file = raw_entry.get("featured_file")
+        if (
+            not isinstance(slug, str)
+            or not slug
+            or not isinstance(directory, str)
+            or not directory
+            or not isinstance(featured_file, str)
+            or not featured_file
+        ):
+            raise ValueError("public catalog entry fields must be non-empty strings")
+        entries.append(PublicCatalogEntry(slug, directory, featured_file))
+    return tuple(entries)
+
+
+def _sanitize_public_markdown(markdown: str) -> str:
+    for marker in _INTERNAL_MARKERS:
+        markdown = markdown.replace(marker, "repository internals")
+    return markdown
+
+
+def _public_bundle(repo_root: Path, entry: PublicCatalogEntry) -> str:
+    directory = repo_root / "skills" / entry.directory
+    return "\n".join(
+        _sanitize_public_markdown(path.read_text(encoding="utf-8"))
+        for path in sorted(directory.glob("*.md"))
+    )
+
+
+CATALOG = _read_public_catalog(REPO_ROOT)
 
 
 def _read_library_catalog(repo_root: Path) -> dict[str, Any]:
@@ -61,9 +114,9 @@ def verify_catalog_parity(repo_root: Path = REPO_ROOT) -> list[str]:
     library_slugs = set(library_entries)
 
     for slug in sorted(catalog_slugs - library_slugs):
-        errors.append(f"missing Library entry for web catalog slug: {slug}")
+        errors.append(f"missing Library entry for public catalog slug: {slug}")
     for slug in sorted(library_slugs - catalog_slugs):
-        errors.append(f"Library entry has no web catalog slug: {slug}")
+        errors.append(f"Library entry has no public catalog slug: {slug}")
 
     for entry in CATALOG:
         library_entry = library_entries.get(entry.slug)
@@ -90,7 +143,7 @@ def verify_catalog_parity(repo_root: Path = REPO_ROOT) -> list[str]:
         if not markdown_files:
             errors.append(f"{entry.slug}: Skill directory contains no Markdown files")
 
-        public_bundle = raw_markdown(entry)
+        public_bundle = _public_bundle(repo_root, entry)
         for marker in _INTERNAL_MARKERS:
             if marker in public_bundle:
                 errors.append(

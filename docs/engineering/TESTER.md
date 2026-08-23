@@ -97,15 +97,17 @@ Verify:
 - `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/` as-is.
 - `dist/soulmap-ai-library.json` exists and contains the current project version, release URL,
   both artifact paths, byte sizes, and SHA-256 digests matching the generated files.
-- Static website output passes the project-site export and verifier:
+- Static website output passes the React project-site build and verifier:
 
   ```bash
-  uv run soulmap web --export-static --output site --base-path /soulmap-ai
-  uv run python scripts/verify_static_site.py site --base-path /soulmap-ai
+  pnpm --dir web install --frozen-lockfile
+  SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web build
+  pnpm --dir web verify
+  SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web test:browser
   ```
 
-  The generated site must contain only HTML/CSS/robots output and must not contain source,
-  repository-only, Skills, or AI artifact files.
+  The generated site must contain only bundled static output, public raw Markdown bundles and
+  reviewed public assets; it must not contain source, repository-only or preview-storage references.
 - The CI `build` job and release workflow both run
   `scripts/verify_artifact_hashes.py`, `scripts/verify_extracted_artifacts.py`, and
   `scripts/verify_artifact_security.py` before uploading or publishing artifacts.
@@ -117,9 +119,8 @@ Verify:
   `.skill` contain the expected shipped files, keep their plugin boundary, and contain no
   repository-only paths or implementation references inside packaged core files
   (`AGENTS.md` and `SKILL.md`) or the `skills/` and `reference/` trees.
-- `tests/contract/test_website_pages_workflow_contract.py` passes and confirms the Pages
-  workflow builds from `src/web/`, verifies output, and publishes only generated
-  files to `gh-pages` after a `main` push.
+- The `website-pages.yml` browser-audit job passes and confirms locale routes, Headless UI
+  interactions and raw bundle handoff before the verified static output can be published to `gh-pages`.
 
 ## Orchestration layer checks
 
@@ -223,7 +224,7 @@ contracts:
 - workflow validation via `actionlint`
 - `uv run soulmap lint --skip-tests`
 - `uv run soulmap test -n auto -q`
-- coverage for `src/soulmap/runtime` and `src/web` with the configured 95% floor
+- coverage for `src/soulmap/runtime` with the configured 95% floor
 - the `soulmap-coverage` JSON artifact on Ubuntu CI
 - `uv run python tests/eval_regression/test_safety_evals.py`
 - `uv run soulmap eval-responses`
@@ -241,9 +242,9 @@ contracts:
 - `uv run soulmap check-case --root .`
 
 Inspect `.github/workflows/release.yml` and confirm it still verifies the repo before
-release and rebuilds both distribution artifacts. Web/static tests that write output should
-use pytest's `tmp_path` or an equivalent isolated directory; never use a shared fixed path
-when xdist can run tests concurrently.
+release and rebuilds both distribution artifacts. React static tests use isolated Playwright
+output under `web/test-results`; never commit generated output or use the Python test suite to
+cover browser behavior.
 
 If PR autofix is expected, also confirm the `autofix.ci` GitHub App is installed for the
 repository. Without the app, the workflow step can exist but cannot push fix commits.
