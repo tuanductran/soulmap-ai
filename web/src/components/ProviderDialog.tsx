@@ -27,7 +27,7 @@ export function ProviderDialog({ open, skill, locale, onClose }: ProviderDialogP
         <DialogPanel className="w-full max-w-xl rounded-[1.75rem] border border-white/70 bg-[#fbfaf5] p-6 shadow-[0_28px_80px_rgba(18,43,44,0.28)] sm:p-8">
           <div className="flex items-start justify-between gap-6">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#327d75]">{copy.group}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#1d5f58]">{copy.group}</p>
               <DialogTitle className="mt-3 font-serif text-3xl leading-none tracking-[-0.045em] text-[#122b2c]">{t("skills.dialogTitle")}</DialogTitle>
             </div>
             <button onClick={onClose} className="grid size-10 place-items-center rounded-full border border-[#d8dfd8] text-[#305a58] transition hover:bg-[#eaf0eb]" aria-label={t("common.close")}><X className="size-4" /></button>
