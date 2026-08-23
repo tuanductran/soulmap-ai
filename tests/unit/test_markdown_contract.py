@@ -192,3 +192,42 @@ def test_markdown_contract_flags_integration_doctrine_and_version_drift(
         "Integration soulmap_version must match pyproject.toml version "
         "(expected 0.8.0, got 0.7.0)"
     ) in messages
+
+
+def test_markdown_contract_handles_missing_package_version(tmp_path: Path) -> None:
+    (tmp_path / "pyproject.toml").write_text(
+        "[project]\nname = 'fixture'\n", encoding="utf-8"
+    )
+    source = _write_integration_guide(tmp_path, soulmap_version="0.0.0")
+
+    assert markdown_contract.check_markdown_file(source, tmp_path) == []
+
+
+def test_markdown_contract_flags_numbered_heading_and_missing_spacing(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "README.md"
+    source.write_text("# Title\n## 1. Numbered\nBody\n", encoding="utf-8")
+
+    messages = _messages(markdown_contract.check_markdown_file(source, tmp_path))
+
+    assert "Heading should be preceded by a blank line" in messages
+    assert "Heading should be followed by a blank line" in messages
+    assert "Heading should not start with numeric prefix like '1)' or '1.'" in messages
+
+
+def test_markdown_contract_accepts_external_fragment_links_and_cli_success(
+    tmp_path: Path,
+    capsys,
+) -> None:
+    source = tmp_path / "README.md"
+    (tmp_path / "guide.md").write_text("# Guide\n\n## Details\n", encoding="utf-8")
+    source.write_text(
+        "# Source\n\n[External](https://example.com)\n\n"
+        "[Self](#source)\n\n[Guide](guide.md#details)\n",
+        encoding="utf-8",
+    )
+
+    assert markdown_contract.check_markdown_file(source, tmp_path) == []
+    assert markdown_contract.main(["--root", str(tmp_path)]) == 0
+    assert capsys.readouterr().out == ""

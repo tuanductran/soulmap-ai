@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge import consistency
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
     find_python_markdown_duplicates,
@@ -453,3 +454,124 @@ def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> Non
     )
 
     assert markdown_consumers(tmp_path, markdown) == (detector,)
+
+
+def test_find_config_usage_ignores_non_string_container_assignments(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "meaning.py").write_text(
+        '"""Configuration fixture."""\n'
+        'SCALAR = "not a phrase list"\n'
+        "MIXED: tuple[str, ...] = (1,)\n"
+        "EMPTY: tuple[str, ...] = ()\n"
+        "ANNOTATED: tuple[str, ...]\n"
+        'VALID: tuple[str, ...] = ("valid",)\n'
+        '__all__ = ["VALID"]\n',
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert [item.constant for item in usage] == ["VALID"]
+    assert usage[0].is_orphaned
+
+
+def test_find_config_usage_does_not_infer_star_or_missing_reexports(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "meaning.py").write_text(
+        'ACTIVE: tuple[str, ...] = ("active",)\n',
+        encoding="utf-8",
+    )
+    (config / "__init__.py").write_text(
+        "from .meaning import *\nfrom .missing import UNKNOWN\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert usage[0].constant == "ACTIVE"
+    assert usage[0].is_orphaned
+
+
+def test_find_config_usage_ignores_unaliased_config_modules_and_other_imports(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "meaning.py").write_text(
+        'ACTIVE: tuple[str, ...] = ("active",)\n',
+        encoding="utf-8",
+    )
+
+    detector = tmp_path / "src/soulmap/runtime/detectors/example.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text(
+        "from unrelated import ACTIVE\n"
+        "from soulmap.runtime.config.meaning import *\n"
+        "import soulmap.runtime.config.meaning as meaning\n"
+        "import soulmap.runtime.config.meaning\n"
+        "import unrelated\n\n"
+        "VALUE = unrelated.ACTIVE\n"
+        "OTHER = meaning.UNKNOWN\n",
+        encoding="utf-8",
+    )
+
+    usage = find_config_usage(tmp_path)
+
+    assert usage[0].constant == "ACTIVE"
+    assert usage[0].is_orphaned
+
+
+def test_add_markdown_phrases_ignores_blank_values() -> None:
+    knowledge: dict[str, tuple[str, str, str]] = {}
+
+    consistency._add_markdown_phrases(
+        knowledge,
+        ("  kept phrase  ", "   "),
+        section="Detection signals",
+        group="Example",
+        source_kind="markdown",
+    )
+
+    assert knowledge == {"kept phrase": ("Detection signals", "Example", "markdown")}
+
+
+def test_markdown_consumers_returns_empty_without_runtime_loader(
+    tmp_path: Path,
+) -> None:
+    markdown = tmp_path / "skills/frameworks/example.md"
+    markdown.parent.mkdir(parents=True)
+    markdown.write_text("## Detection signals\n", encoding="utf-8")
+
+    detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text('TEXT = "skills/frameworks/example.md"\n', encoding="utf-8")
+
+    assert markdown_consumers(tmp_path, markdown) == ()
+
+
+def test_safety_non_special_overlap_is_classified_as_knowledge_duplicate(
+    tmp_path: Path,
+) -> None:
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety.py").write_text(
+        'OTHER_SIGNALS: tuple[str, ...] = ("ordinary phrase",)\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills"
+    skills.mkdir(parents=True)
+    (skills / "example.md").write_text(
+        '## Detection signals\n\nSignals:\n\n- "ordinary phrase"\n',
+        encoding="utf-8",
+    )
+
+    duplicates = find_python_markdown_duplicates(tmp_path)
+
+    assert duplicates[0].classification == "knowledge_duplicate"
