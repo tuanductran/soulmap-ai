@@ -17,7 +17,7 @@ def test_ci_builds_and_verifies_composed_artifacts() -> None:
     for marker in (
         "uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai",
         "scripts/verify_soulmap_with_soulmate.py",
-        "scripts/verify_artifact_security.py \\",
+        "scripts/verify_artifact_security.py",
         "dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip",
         "dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill",
     ):
