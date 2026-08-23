@@ -4,7 +4,7 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
 > **Status:** Actively maintained, v0.9.0 baseline; post-v0.9.0 roadmap in execution
-> **Last updated:** 21 August 2026
+> **Last updated:** 23 August 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -151,8 +151,9 @@ soulmap-ai/
 │   └── skills/           Soulmate-only foundation skill source, contract, and manifest
 │
 ├── scripts/
-│   ├── build_soulmate_skills.py     Deterministic pre-release AI skills builder
-│   └── verify_soulmate_skills.py    Fail-closed artifact/provenance verifier
+│   ├── build_soulmate_skills.py          Deterministic pre-release AI skills builder
+│   ├── verify_soulmate_skills.py         Fail-closed artifact/provenance verifier
+│   └── verify_soulmate_consumer_sync.py  Manifest/approval projection sync gate
 │
 ├── dist/soulmate-skills/            Generated pre-release review output only
 │
@@ -161,7 +162,7 @@ soulmap-ai/
 │   │   ├── detectors/    Per-signal detection modules (anger, crisis, pattern, ...)
 │   │   ├── routing/      Framework selector
 │   │   ├── guards/       Response/markdown/resource contract validation
-│   │   ├── knowledge/    Markdown-backed loaders (protected-module policy)
+│   │   ├── knowledge/    Markdown-backed loaders, Soulmate approval projection
 │   │   ├── config/       Static safety config (multilingual crisis packs)
 │   │   ├── memory/       Experimental memory ledger
 │   │   └── experimental/ Experimental modules (biometric ingest, demo)
@@ -562,12 +563,12 @@ Non-goals for this surface:
 
 This section is the execution roadmap after the v0.9.0 baseline. It is intentionally ordered by risk and dependency rather than by feature novelty. Each phase should be delivered through one or more small pull requests, with characterization tests added before boundary changes and no automatic merge.
 
-**Execution snapshot (22 August 2026):** the previously reviewed Soulmate PR train and
-post-merge sdist staging fix are merged into `main`. The repository is now at the
-release-readiness hardening stage: the clean release-candidate dry-run passes locally,
-while documentation truth-sync and the Phase 14 coverage/tooling review remain active
-maintenance work. No GitHub Release, tag, package-registry publication, OIDC trust
-configuration, or provider activation has been performed.
+**Execution snapshot (23 August 2026):** the Soulmate explicit adapter from PR #260 is
+merged into `main`; the Phase 21 foundation-bundle PR #261 is open with its required checks
+green; and Phase 22 manifest sync/consumer approval work is being developed on a separate
+branch based on that reviewed PR head. The clean release-candidate dry-run passes locally.
+No GitHub Release, tag, package-registry publication, OIDC trust configuration, or provider
+activation has been performed.
 
 ### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
 
@@ -650,6 +651,26 @@ This phase is not a commitment to add provider connectors or runtime APIs. It ma
 
 **Entry gate:** named owner, active deployment target, test account or documented takeover procedure, privacy review, rollback plan, and a separate PR scope. Without these prerequisites, the work remains blocked and should not be represented as incomplete implementation.
 
+### Phase 22 - Soulmate Manifest Sync and Consumer Approval Contract
+
+**Priority:** P0 for the Soulmate integration track.
+
+**Goal:** Keep Soulmate capability declarations, SoulMap's reviewed consumer scope, runtime
+approval projection, tests, and independent artifacts synchronized without implicit discovery
+or automatic activation.
+
+The Soulmate manifest remains the Library-owned capability declaration. SoulMap owns a
+separate ordered approval manifest under `src/soulmap/runtime/knowledge/`, and a deterministic
+Python projection is generated from that JSON for runtime use. The sync verifier fails closed
+on missing, extra, revoked, reordered, malformed, unsupported, or metadata-mismatched entries;
+it never silently grants `soulmap-compatible`. The approval manifest and projection remain
+outside the Soulmate `.zip`/`.skill` allow-list, and the Soulmate-specific CI runs the check
+before artifact build and verification.
+
+**Exit criteria:** the verifier, projection, runtime adapter, artifact isolation checks,
+contract tests, docs, and CI path triggers agree; full local validation passes; the PR checks
+are green; and no release/version mutation occurs without a separate explicit approval.
+
 ### Phase Order and Pull Request Strategy
 
 | Order | Phase | Depends on | Recommended PR boundary |
@@ -661,6 +682,7 @@ This phase is not a commitment to add provider connectors or runtime APIs. It ma
 | 5 | 17 | Phase 14 and Phase 16 build contracts | Packaging/provenance changes separate from content changes |
 | 6 | 18 | Phase 13 release ownership map | Operations documentation and automation changes separately reviewed |
 | 7 | 19 | Explicit entry gate above | One provider or one documentation acceptance surface per PR |
+| 8 | 22 | Reviewed Soulmate adapter/bundle work | Manifest sync, approval contract, projection, and artifact isolation |
 
 ### Global Definition of Done for Every Future Phase
 
@@ -746,6 +768,7 @@ Responsibilities:
 | autofix.yml   | Automated formatting fixes on PRs                  |
 | codeql.yml    | Static security analysis                           |
 | release.yml   | Changelog and versioned release automation          |
+| soulmate-skills-ci.yml | PR-only Soulmate skill artifact build, sync, and verification |
 | website-pages.yml | Verified static website export and GitHub Pages publication |
 
 ### Release System
@@ -828,4 +851,4 @@ platform adapters and connectors.
 
 ---
 
-Last updated: August 22, 2026
+Last updated: August 23, 2026

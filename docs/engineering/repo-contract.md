@@ -22,6 +22,8 @@ Use it to answer four questions for every major repo surface:
 | `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
+| `src/soulmap/runtime/knowledge/soulmate_consumer_scope.json` | Explicit reviewed approval contract for SoulMap consumption of Soulmate skills | Local SoulMap consumer metadata; not Soulmate content | Consumer identity, library compatibility, ordered approved IDs, versions, ranges, and canonical source paths | `scripts/verify_soulmate_consumer_sync.py` and contract tests |
+| `src/soulmap/runtime/knowledge/_soulmate_consumer_scope.py` | Deterministic runtime projection of the SoulMap approval contract | Generated local SoulMap metadata; not shipped in Soulmate artifacts | Generated approved skill tuples only; never hand-authored policy or content | Sync verifier parity check, Pyright, and contract tests |
 | `src/soulmate/` | Framework-neutral foundation library for future consumers such as SoulMap | Local source boundary; not shipped by current SoulMap AI artifacts | Public contracts, Markdown parsing, text utilities and generic JSON validation only; no SoulMap doctrine, routing state, or protected safety policy | Dedicated import/dependency-direction tests, Pyright, Ruff, and package-boundary review |
 | `packages/soulmate/` | Release metadata and Soulmate-only AI skill source boundary | Local Soulmate release/knowledge boundary; not a second Python source tree | Independent package manifest, README, license, foundation skill Markdown, artifact contract, and skill manifest; canonical Python source remains in `src/soulmate/` and is staged explicitly by the Python package builder | Skill manifest/content contracts, deterministic builder, artifact verifier and manual workflow review |
 | `dist/soulmate-skills/` | Generated pre-release Soulmate AI foundation-skill output | Generated review artifact; not public by default | `soulmate-ai.zip`, byte-identical `soulmate-ai.skill`, projected manifest, provenance, and SHA-256 sidecar produced from the package-owned allow-list | `scripts/build_soulmate_skills.py`, `scripts/verify_soulmate_skills.py`, extraction checks, and release review |
@@ -41,6 +43,9 @@ Use it to answer four questions for every major repo surface:
 - `.claude-plugin/` holds local skill-package metadata only.
 - Shipped knowledge truth lives in `skills/` and is canonical English. Packaged locale evidence lives in `reference/` and must not define doctrine or response content. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
+- SoulMap's explicit Soulmate consumer approval truth lives in
+  `src/soulmap/runtime/knowledge/soulmate_consumer_scope.json`; the checked-in Python
+  projection is generated from it and must not be edited manually.
 - Framework-neutral foundation implementation truth lives in `src/soulmate/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Public website implementation truth lives in `src/soulmap/web/`; it is not part of the
@@ -48,6 +53,10 @@ Use it to answer four questions for every major repo surface:
 - `gh-pages` is a generated publication branch containing static website output only; it is
   never a source of doctrine, runtime code, or repository documentation.
 - Explanatory and operational truth lives in `docs/`.
+- The Soulmate manifest's consumer capability declaration is not automatic activation.
+  Any SoulMap approval change must be explicit, reviewed, synchronized, and contract-tested;
+  the approval JSON and generated projection must remain outside the Soulmate artifact
+  allow-list.
 - Release artifact truth lives in `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`,
   `dist/soulmap-ai-library.json`, and the tests that verify them. Soulmate pre-release AI
   artifact truth lives in `dist/soulmate-skills/` and its builder/verifier tests; it is not

@@ -3,7 +3,7 @@
 This module is a SoulMap consumer seam. It never discovers or activates every file
 under the Soulmate skill directory. A caller must provide the canonical Soulmate
 skills directory or an already-built Soulmate ZIP/SKILL artifact, and the adapter
-only permits the stable IDs explicitly approved below.
+only permits the stable IDs explicitly approved by SoulMap's generated consumer projection.
 """
 
 from __future__ import annotations
@@ -16,6 +16,8 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+from ._soulmate_consumer_scope import APPROVED_SOULMATE_SKILLS
+
 SOULMATE_MANIFEST_NAME = "manifest.json"
 SOULMATE_ARTIFACT_ROOT = "skills"
 MAX_MANIFEST_BYTES = 64 * 1024
@@ -23,15 +25,11 @@ MAX_SKILL_BYTES = 512 * 1024
 MAX_ARCHIVE_MEMBERS = 128
 MAX_ARCHIVE_TOTAL_SIZE = 4 * 1024 * 1024
 
-# These are the neutral P0 capabilities already consumed by SoulMap's public
-# Python facades. Every ID must also explicitly declare ``soulmap-compatible``
-# in the canonical Soulmate manifest. P1/P2 entries remain Soulmate-only.
-SOULMAP_COMPATIBLE_SKILL_IDS: tuple[str, ...] = (
-    "soulmate.foundation.contracts",
-    "soulmate.foundation.resource-boundaries",
-    "soulmate.foundation.knowledge-resolution",
-    "soulmate.foundation.text-normalization",
-    "soulmate.foundation.data-validation",
+# These are the neutral capabilities approved by SoulMap's generated consumer
+# projection. Every ID must also explicitly declare ``soulmap-compatible`` in
+# the canonical Soulmate manifest. P1/P2 entries remain Soulmate-only.
+SOULMAP_COMPATIBLE_SKILL_IDS: tuple[str, ...] = tuple(
+    entry[0] for entry in APPROVED_SOULMATE_SKILLS
 )
 
 
