@@ -7,7 +7,7 @@
     "path": "artifact-contract.md",
     "formats": ["zip", "skill"],
     "content_root": "skills",
-    "required_files": ["README.md", "LICENSE", "artifact-contract.md", "manifest.json", "PROVENANCE.json"]
+    "required_files": ["SKILL.md", "README.md", "LICENSE", "artifact-contract.md", "manifest.json", "PROVENANCE.json"]
   },
   "distribution": {
     "artifact_family": "soulmate-ai",

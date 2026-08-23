@@ -23,6 +23,14 @@ PROVENANCE_NAME = "PROVENANCE.json"
 CHECKSUMS_NAME = "SHA256SUMS"
 SCHEMA_VERSION = "1.0"
 MAX_MANIFEST_ENTRIES = 64
+REQUIRED_FILES = (
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "artifact-contract.md",
+    "manifest.json",
+    "PROVENANCE.json",
+)
 
 
 class SoulmateSkillsBuildError(RuntimeError):
@@ -216,6 +224,10 @@ def validate_manifest(
         raise SoulmateSkillsBuildError(
             "Manifest artifact contract content_root is invalid"
         )
+    if artifact_contract.get("required_files") != list(REQUIRED_FILES):
+        raise SoulmateSkillsBuildError(
+            "Manifest artifact contract required_files are invalid"
+        )
     entries = manifest["entries"]
     if (
         not isinstance(entries, list)
@@ -345,16 +357,20 @@ def build_artifacts(
     readme = package_root / "README.md"
     license_path = package_root / "LICENSE"
     contract_path = skills_root / manifest["artifact_contract"]["path"]
+    skill_entrypoint = skills_root / "SKILL.md"
     if (
         not readme.is_file()
         or not license_path.is_file()
         or not contract_path.is_file()
+        or not skill_entrypoint.is_file()
     ):
         raise SoulmateSkillsBuildError(
-            "Soulmate package README.md, LICENSE, and artifact contract are required"
+            "Soulmate package README.md, LICENSE, artifact contract, and SKILL.md are required"
         )
+    _validate_skill_markdown(skill_entrypoint)
 
     files: dict[str, bytes] = {
+        "SKILL.md": skill_entrypoint.read_bytes(),
         "README.md": readme.read_bytes(),
         "LICENSE": license_path.read_bytes(),
         "artifact-contract.md": contract_path.read_bytes(),

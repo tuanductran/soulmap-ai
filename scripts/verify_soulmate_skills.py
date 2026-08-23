@@ -33,6 +33,7 @@ FORBIDDEN_CONTENT_MARKERS = (
 )
 DRIVE_PATH = re.compile(r"^[A-Za-z]:")
 REQUIRED_FILES = {
+    "SKILL.md",
     "README.md",
     "LICENSE",
     "artifact-contract.md",
@@ -269,7 +270,7 @@ def verify_archive(
             f"artifact file set mismatch; missing={missing}, unexpected={unexpected}"
         )
     for name, content in contents.items():
-        if name == "artifact-contract.md" or name.startswith("skills/"):
+        if name in {"SKILL.md", "artifact-contract.md"} or name.startswith("skills/"):
             if b"\x00" in content:
                 raise SoulmateSkillsVerificationError(
                     f"skill contains a NUL byte: {name}"

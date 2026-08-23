@@ -24,6 +24,16 @@ MAX_MANIFEST_BYTES = 64 * 1024
 MAX_SKILL_BYTES = 512 * 1024
 MAX_ARCHIVE_MEMBERS = 128
 MAX_ARCHIVE_TOTAL_SIZE = 4 * 1024 * 1024
+SOULMATE_REQUIRED_ARTIFACT_FILES = frozenset(
+    {
+        "SKILL.md",
+        "README.md",
+        "LICENSE",
+        "artifact-contract.md",
+        "manifest.json",
+        "PROVENANCE.json",
+    }
+)
 
 # These are the neutral capabilities approved by SoulMap's generated consumer
 # projection. Every ID must also explicitly declare ``soulmap-compatible`` in
@@ -219,16 +229,9 @@ def _load_from_archive(path: Path, skill_id: str) -> LoadedSoulmateSkill:
                 raise SoulmateSkillLoadError("Soulmate manifest is too large")
             manifest_bytes = archive.read(manifest_info)
             manifest = _validate_manifest(json.loads(manifest_bytes.decode("utf-8")))
-            expected_names = {
-                "README.md",
-                "LICENSE",
-                "artifact-contract.md",
-                "manifest.json",
-                "PROVENANCE.json",
-                *{
-                    f"{SOULMATE_ARTIFACT_ROOT}/{entry['source']}"
-                    for entry in manifest["entries"]
-                },
+            expected_names = set(SOULMATE_REQUIRED_ARTIFACT_FILES) | {
+                f"{SOULMATE_ARTIFACT_ROOT}/{entry['source']}"
+                for entry in manifest["entries"]
             }
             if set(info_by_name) != expected_names:
                 raise SoulmateSkillLoadError(
@@ -329,6 +332,13 @@ def _validate_manifest(value: Any) -> dict[str, Any]:
     if (
         artifact_contract.get("formats") != ["zip", "skill"]
         or artifact_contract.get("content_root") != "skills"
+    ):
+        raise SoulmateSkillLoadError("Invalid Soulmate artifact contract")
+    required_files = artifact_contract.get("required_files")
+    if (
+        not isinstance(required_files, list)
+        or set(required_files) != SOULMATE_REQUIRED_ARTIFACT_FILES
+        or len(required_files) != len(SOULMATE_REQUIRED_ARTIFACT_FILES)
     ):
         raise SoulmateSkillLoadError("Invalid Soulmate artifact contract")
     entries = value.get("entries")

@@ -1,6 +1,6 @@
 ---
-name: "soulmate-foundation-artifact-contract"
-description: "The canonical contract for independently built Soulmate AI foundation-skill ZIP and SKILL artifacts."
+name: "soulmate-ai-skills-artifact-contract"
+description: "The canonical contract for independently built Soulmate AI foundation and companion ZIP and SKILL artifacts."
 license: "MIT"
 ---
 
@@ -24,9 +24,10 @@ The package README and license are sourced from the package boundary. Generated 
 
 ## Allowed artifact file set
 
-The initial artifact has this layout:
+The initial artifact has this layout. `SKILL.md` is the top-level AI-facing entrypoint; the remaining `skills/` files are explicit companion and foundation references selected by the manifest:
 
 ```text
+SKILL.md
 README.md
 LICENSE
 artifact-contract.md
@@ -38,7 +39,7 @@ skills/companion/<manifest-selected Markdown files>
 
 The exact `skills/foundation/` and `skills/companion/` sets are the manifest's ordered entry set. No file is included merely because it exists below the source directory.
 
-Allowed file types are UTF-8 Markdown for skills and the explicitly named UTF-8 metadata files. The artifact contains no Python source, package build metadata, lockfile, test, website, private configuration, or generated repository state.
+Allowed file types are UTF-8 Markdown for skills and the explicitly named UTF-8 metadata files. The artifact contains no Python source, package build metadata, lockfile, test, website, private configuration, or generated repository state. `SKILL.md` is the only top-level behavioral entrypoint; the nested skills remain explicit references and are not dynamically activated.
 
 ## Formats
 

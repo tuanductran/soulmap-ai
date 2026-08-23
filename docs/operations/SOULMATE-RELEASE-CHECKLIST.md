@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This checklist governs an official release of Soulmate after the P0, P1, P2, P3-A, and PR-CI changes have been reviewed and merged. It separates the executable `soulmate-ai` Python package from the AI-facing foundation-skill artifacts. They may share a release decision, but they are different distribution surfaces and must be verified independently.
+This checklist governs an official release of Soulmate after the P0, P1, P2, P3-A, and PR-CI changes have been reviewed and merged. It separates the executable `soulmate-ai` Python package from the AI-facing foundation-and-companion skill artifacts. They may share a release decision, but they are different distribution surfaces and must be verified independently.
 
 > A successful CI build is evidence that an artifact passed the repository contract. It is not permission to create a release, publish to PyPI, or activate an AI-tool distribution.
 
@@ -11,7 +11,7 @@ This checklist governs an official release of Soulmate after the P0, P1, P2, P3-
 | Surface | Output | Distribution method | Current state |
 | --- | --- | --- | --- |
 | Python library | `soulmate_ai-<version>-py3-none-any.whl`, `soulmate_ai-<version>.tar.gz` | Future PyPI/TestPyPI Trusted Publishing | Pre-release; no registry publication authorized |
-| AI foundation skills | `soulmate-ai.zip`, `soulmate-ai.skill` | Manual GitHub Release or reviewed artifact handoff | Built and verified in PR CI; no public release authorized |
+| AI foundation and companion skills | `soulmate-ai.zip`, `soulmate-ai.skill` | Manual GitHub Release or reviewed artifact handoff | Built and verified in PR CI; no public release authorized |
 | Review metadata | `manifest.json`, `PROVENANCE.json`, `SHA256SUMS` | CI artifact and release attachment | Generated for review; must match final bytes |
 
 Do not describe the AI `.zip` or `.skill` as a Python package. Do not place Python source in the AI skill artifact. Do not use the SoulMap root artifact builder for Soulmate artifacts.
@@ -75,7 +75,7 @@ uv run python scripts/verify_soulmate_package.py \
   --version <version>
 ```
 
-Build and verify the AI foundation-skill artifacts separately:
+Build and verify the AI foundation-and-companion skill artifacts separately:
 
 ```bash
 rm -rf dist/soulmate-skills
@@ -93,7 +93,7 @@ uv run python scripts/verify_soulmate_skills.py \
 
 - [ ] Both AI projections are byte-identical.
 - [ ] A second clean build produces identical `.zip` and `.skill` bytes.
-- [ ] The archive contains only `README.md`, `LICENSE`, `artifact-contract.md`, `manifest.json`, `PROVENANCE.json`, and manifest-selected `skills/foundation/*.md` files.
+- [ ] The archive contains only `SKILL.md`, `README.md`, `LICENSE`, `artifact-contract.md`, `manifest.json`, `PROVENANCE.json`, and manifest-selected `skills/foundation/*.md` and `skills/companion/*.md` files.
 - [ ] The archive contains no `src/`, `src/soulmap/`, root SoulMap `skills/`, `reference/`, `.claude/`, `.github/`, tests, website output, Python source, lockfile, or local build state.
 - [ ] Manifest entries, provenance file list, manifest digest, artifact version, and selected IDs agree.
 - [ ] `SHA256SUMS` matches the final `.zip` and `.skill` bytes.
