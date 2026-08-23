@@ -20,7 +20,7 @@ do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual beha
 
 Developers creating custom Soulmate foundation skills should follow [`CONTRIBUTING.md`](CONTRIBUTING.md). It defines ownership, neutral content rules, manifest registration, tests, artifact boundaries, and the PR review checklist.
 
-SoulMap consumes these capabilities through public namespaces. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
+SoulMap consumes these capabilities through public namespaces and an explicit adapter at `soulmap.runtime.knowledge`. The adapter may load only the five manifest entries that declare `soulmap-compatible`: contracts, resource boundaries, knowledge resolution, text normalization, and data validation. It accepts the canonical package-owned skill directory or a verified Soulmate ZIP/SKILL artifact, and it never discovers or activates undocumented files. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
 
 ## Release status
 

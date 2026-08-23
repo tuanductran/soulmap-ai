@@ -20,6 +20,13 @@ EXPECTED_FILES = {
     "artifact-provenance.md",
     "determinism-and-reproducibility.md",
 }
+SOULMAP_COMPATIBLE_SOURCES = {
+    "foundation/contracts.md",
+    "foundation/resource-boundaries.md",
+    "foundation/knowledge-resolution.md",
+    "foundation/text-normalization.md",
+    "foundation/data-validation.md",
+}
 
 
 def test_foundation_skill_set_has_exact_p0_p1_p2_entries() -> None:
@@ -43,7 +50,12 @@ def test_foundation_manifest_matches_canonical_markdown() -> None:
     for entry in entries:
         assert entry["owner"] == "Soulmate"
         assert entry["kind"] == "foundation"
-        assert entry["consumers"] == ["soulmate-only"]
+        expected_consumers = (
+            ["soulmate-only", "soulmap-compatible"]
+            if entry["source"] in SOULMAP_COMPATIBLE_SOURCES
+            else ["soulmate-only"]
+        )
+        assert entry["consumers"] == expected_consumers
         assert entry["artifact"] == "soulmate-ai"
         assert (SKILLS_ROOT / entry["source"]).is_file()
 

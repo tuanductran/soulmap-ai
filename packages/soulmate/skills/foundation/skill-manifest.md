@@ -69,7 +69,7 @@ Every distributable skill entry must declare:
 | `compatibility` | Required | Soulmate API/package compatibility range |
 | `artifact` | Required | Artifact family allowed to include the entry |
 
-The initial P0/P1 foundation entries use `kind: "foundation"`, `consumers: ["soulmate-only"]`, and the `soulmate-ai` artifact family. A future shared entry must be reviewed separately and must name every allowed consumer rather than relying on a broad wildcard.
+The foundation entries may use `kind: "foundation"`, the `soulmate-ai` artifact family, and an explicit consumer list. The current neutral P0 entries approved for SoulMap use declare `consumers: ["soulmate-only", "soulmap-compatible"]`; the remaining P1/P2 entries remain `consumers: ["soulmate-only"]`. A shared entry must be reviewed separately and must name every allowed consumer rather than relying on a broad wildcard.
 
 ## Source and path rules
 
@@ -123,7 +123,7 @@ Validation should fail before packaging begins. A builder must not repair a malf
 
 A manifest can describe a skill available to a consumer, but it does not decide when the skill is used. Activation requires an explicit consumer contract, loader, or integration adapter.
 
-A consumer may select an entry by its stable ID after validating compatibility. It must not scan the directory and treat every Markdown file as active behavior. A new file should be inert until it is intentionally added to the manifest and reviewed.
+A consumer may select an entry by its stable ID after validating compatibility and confirming that its own adapter approves the consumer scope. SoulMap's adapter uses a fixed allow-list of approved IDs. A consumer must not scan the directory and treat every Markdown file as active behavior. A new file should be inert until it is intentionally added to the manifest, reviewed, and explicitly selected by the consumer adapter.
 
 The manifest also does not override a consumer's policy. A skill marked compatible with a consumer still must be interpreted within that consumer's documented boundary. Compatibility means the entry can be consumed according to the declared contract; it does not mean the skill inherits the consumer's identity or policy.
 
