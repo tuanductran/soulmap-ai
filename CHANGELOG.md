@@ -17,6 +17,7 @@ stability and breaking changes in behavior.
   SHA-256 verification
 - **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
 - **integration**: add an explicit SoulMap adapter for five approved Soulmate foundation skills
+- **integration**: expose an immutable approved foundation bundle with compatibility parity checks
 
 ### Changed
 

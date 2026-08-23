@@ -45,8 +45,36 @@ class LoadedSoulmateSkill:
 
     id: str
     version: str
+    compatibility: str
     source: str
     content: str
+
+
+@dataclass(frozen=True)
+class SoulmateFoundationBundle:
+    """An immutable, explicitly approved set of Soulmate foundation skills."""
+
+    skills: tuple[LoadedSoulmateSkill, ...]
+
+    @property
+    def skill_ids(self) -> tuple[str, ...]:
+        return tuple(skill.id for skill in self.skills)
+
+    @property
+    def version(self) -> str:
+        return self.skills[0].version
+
+    @property
+    def compatibility(self) -> str:
+        return self.skills[0].compatibility
+
+    def get(self, skill_id: str) -> LoadedSoulmateSkill:
+        for skill in self.skills:
+            if skill.id == skill_id:
+                return skill
+        raise SoulmateSkillLoadError(
+            f"Soulmate foundation skill is absent from bundle: {skill_id}"
+        )
 
 
 class SoulmateSkillLoader:
@@ -96,6 +124,24 @@ class SoulMapSoulmateAdapter:
         """Return only the five foundation skills approved for SoulMap."""
 
         return self._loader.load_approved()
+
+    def load_foundation_bundle(self) -> SoulmateFoundationBundle:
+        """Compose the fixed approved foundation set without adding policy."""
+
+        skills = self._loader.load_approved()
+        if tuple(skill.id for skill in skills) != SOULMAP_COMPATIBLE_SKILL_IDS:
+            raise SoulmateSkillLoadError(
+                "Soulmate foundation bundle does not match the approved set"
+            )
+        if len({skill.version for skill in skills}) != 1:
+            raise SoulmateSkillLoadError(
+                "Soulmate foundation bundle has incompatible versions"
+            )
+        if len({skill.compatibility for skill in skills}) != 1:
+            raise SoulmateSkillLoadError(
+                "Soulmate foundation bundle has incompatible ranges"
+            )
+        return SoulmateFoundationBundle(skills=skills)
 
 
 class _DirectoryContentReader:
@@ -398,6 +444,7 @@ def _build_loaded_skill(entry: dict[str, Any], content: str) -> LoadedSoulmateSk
     return LoadedSoulmateSkill(
         id=entry["id"],
         version=entry["version"],
+        compatibility=entry["compatibility"],
         source=entry["source"],
         content=content,
     )
@@ -407,6 +454,7 @@ __all__ = [
     "SOULMAP_COMPATIBLE_SKILL_IDS",
     "LoadedSoulmateSkill",
     "SoulMapSoulmateAdapter",
+    "SoulmateFoundationBundle",
     "SoulmateSkillLoadError",
     "SoulmateSkillLoader",
 ]

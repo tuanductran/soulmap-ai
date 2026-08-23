@@ -61,7 +61,18 @@ skill = adapter.load_foundation_skill(
 )
 ```
 
-The returned value contains the stable ID, content version, canonical source path, and UTF-8 Markdown content. The adapter returns knowledge; SoulMap owns interpretation, composition, routing, policy, and presentation.
+The returned value contains the stable ID, content version, compatibility range, canonical source path, and UTF-8 Markdown content. The adapter returns knowledge; SoulMap owns interpretation, composition, routing, policy, and presentation.
+
+### Foundation bundle composition
+
+When SoulMap needs the reviewed foundation set rather than one skill, it may use the explicit bundle seam:
+
+```python
+bundle = adapter.load_foundation_bundle()
+contracts = bundle.get("soulmate.foundation.contracts")
+```
+
+The bundle is immutable, contains exactly the five approved IDs in the adapter's fixed reviewable order, and exposes one shared content version and compatibility range. Bundle construction fails closed if a loader returns an incomplete set or if approved entries disagree on version or compatibility. The bundle does not select a framework, route a message, apply safety policy, or activate AI-tool behavior.
 
 ## Fail-closed rules
 

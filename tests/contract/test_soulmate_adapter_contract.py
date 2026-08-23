@@ -4,7 +4,9 @@ import json
 import shutil
 import stat
 import zipfile
+from dataclasses import replace
 from pathlib import Path
+from typing import cast
 
 import pytest
 
@@ -16,6 +18,7 @@ from soulmap.runtime.knowledge import (
     MAX_MANIFEST_BYTES,
     MAX_SKILL_BYTES,
     SOULMAP_COMPATIBLE_SKILL_IDS,
+    LoadedSoulmateSkill,
     SoulMapSoulmateAdapter,
     SoulmateSkillLoader,
     SoulmateSkillLoadError,
@@ -115,6 +118,7 @@ def test_adapter_facade_delegates_explicit_selection_and_batch_loading() -> None
     approved = adapter.load_approved_foundation_skills()
 
     assert selected.id == CONTRACT_ID
+    assert selected.compatibility == ">=0.1.0,<0.2.0"
     assert tuple(skill.id for skill in approved) == SOULMAP_COMPATIBLE_SKILL_IDS
 
 
@@ -554,3 +558,58 @@ def test_adapter_rejects_approved_id_absent_from_manifest(tmp_path: Path) -> Non
 
     with pytest.raises(SoulmateSkillLoadError, match="absent from the manifest"):
         SoulmateSkillLoader(source).load(CONTRACT_ID)
+
+
+def test_adapter_builds_an_immutable_foundation_bundle() -> None:
+    adapter = SoulMapSoulmateAdapter(SoulmateSkillLoader(SKILLS_ROOT))
+
+    bundle = adapter.load_foundation_bundle()
+
+    assert bundle.skill_ids == SOULMAP_COMPATIBLE_SKILL_IDS
+    assert bundle.get(CONTRACT_ID).compatibility == ">=0.1.0,<0.2.0"
+    with pytest.raises(SoulmateSkillLoadError, match="absent from bundle"):
+        bundle.get("soulmate.foundation.lifecycle")
+
+
+class _IncompleteLoader:
+    def load_approved(self) -> tuple[LoadedSoulmateSkill, ...]:
+        return ()
+
+
+def test_adapter_rejects_an_incomplete_foundation_bundle() -> None:
+    adapter = SoulMapSoulmateAdapter(cast(SoulmateSkillLoader, _IncompleteLoader()))
+
+    with pytest.raises(SoulmateSkillLoadError, match="does not match the approved set"):
+        adapter.load_foundation_bundle()
+
+
+class _VersionMismatchLoader(SoulmateSkillLoader):
+    def __init__(self) -> None:
+        super().__init__(SKILLS_ROOT)
+
+    def load_approved(self) -> tuple[LoadedSoulmateSkill, ...]:
+        skills = super().load_approved()
+        return (replace(skills[0], version="9.9.9"), *skills[1:])
+
+
+class _CompatibilityMismatchLoader(SoulmateSkillLoader):
+    def __init__(self) -> None:
+        super().__init__(SKILLS_ROOT)
+
+    def load_approved(self) -> tuple[LoadedSoulmateSkill, ...]:
+        skills = super().load_approved()
+        return (replace(skills[0], compatibility=">=9.0.0,<10.0.0"), *skills[1:])
+
+
+def test_adapter_rejects_incompatible_bundle_versions() -> None:
+    adapter = SoulMapSoulmateAdapter(_VersionMismatchLoader())
+
+    with pytest.raises(SoulmateSkillLoadError, match="incompatible versions"):
+        adapter.load_foundation_bundle()
+
+
+def test_adapter_rejects_incompatible_bundle_ranges() -> None:
+    adapter = SoulMapSoulmateAdapter(_CompatibilityMismatchLoader())
+
+    with pytest.raises(SoulmateSkillLoadError, match="incompatible ranges"):
+        adapter.load_foundation_bundle()
