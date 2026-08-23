@@ -128,8 +128,8 @@ Treat both as opt-in features that require product-level privacy review.
   package build and strict boundary verification
 - `scripts/build_soulmate_skills.py` and `scripts/verify_soulmate_skills.py`: Soulmate
   AI foundation-skill artifact build, provenance, checksum, and security verification
-- `src/web/` and `.github/workflows/website-pages.yml`: Python-only website,
-  static export, and Pages publication surface
+- `web/` and `.github/workflows/website-pages.yml`: React static website, build-time
+  public raw bundles, browser audit, and Pages publication surface
 - `.github/workflows/ci.yml`, `codeql.yml`, and `soulmate-skills-ci.yml`: repository
   quality, security, and pre-release artifact gates
 - `.github/workflows/release.yml` and `soulmate-release.yml`: manually operated release

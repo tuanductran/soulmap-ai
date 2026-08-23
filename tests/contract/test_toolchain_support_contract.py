@@ -31,7 +31,6 @@ DIRECT_DEV_PACKAGES = {
     "deptry",
     "vulture",
     "werkzeug",
-    "pytest-playwright",
 }
 RESEARCH_LABELS = {
     "hypothesis": "Hypothesis",
@@ -48,7 +47,6 @@ RESEARCH_LABELS = {
     "deptry": "Deptry",
     "vulture": "Vulture",
     "werkzeug": "Werkzeug",
-    "pytest-playwright": "pytest-playwright",
 }
 
 
@@ -81,9 +79,8 @@ def test_coverage_gate_is_enforced_without_masking_failures() -> None:
     ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
 
     assert "fail_under = 95" in project_text
-    assert 'source = ["src/soulmap/runtime", "src/web"]' in project_text
+    assert 'source = ["src/soulmap/runtime"]' in project_text
     assert "--cov-fail-under=95" in ci_text
-    assert "--cov=src/web" in ci_text
     assert "--cov-report=json:coverage.json" in ci_text
     assert "name: soulmap-coverage" in ci_text
     assert "--cov-report=term-missing -q 2>&1 | tail" not in ci_text
@@ -113,7 +110,11 @@ def test_workflows_use_local_resilient_tool_installers() -> None:
         workflow_text = workflow_path.read_text(encoding="utf-8")
         assert "astral-sh/setup-uv" not in workflow_text
         assert "raven-actions/actionlint" not in workflow_text
-        assert "uses: ./.github/actions/setup-uv" in workflow_text
+        if workflow_path.name == "website-pages.yml":
+            assert "uses: actions/setup-node@v6" in workflow_text
+            assert "pnpm --dir web install --frozen-lockfile" in workflow_text
+        else:
+            assert "uses: ./.github/actions/setup-uv" in workflow_text
 
     assert "uses: ./.github/actions/actionlint" in (
         REPO_ROOT / ".github" / "workflows" / "ci.yml"

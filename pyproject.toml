@@ -33,7 +33,7 @@ Issues = "https://github.com/tuanductran/soulmap-ai/issues"
 soulmap = "soulmap.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/soulmap", "src/soulmate", "src/web"]
+packages = ["src/soulmap", "src/soulmate"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -68,8 +68,6 @@ dev = [
   "deptry>=0.25.1",
   "vulture>=2.16",
   "werkzeug>=3.1.8",
-  "pytest-playwright==0.9.0",
-  "playwright==1.62.0",
 ]
 
 [tool.ruff]
@@ -103,7 +101,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["src/soulmap/runtime", "src/web"]
+source = ["src/soulmap/runtime"]
 branch = true
 omit = [
   "src/soulmap/runtime/experimental/soulmap_demo.py",
@@ -142,7 +140,7 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 
 [tool.deptry]
-known_first_party = ["soulmap", "soulmate", "web"]
+known_first_party = ["soulmap", "soulmate"]
 
 [tool.vulture]
 paths = ["src", "tests"]

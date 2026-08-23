@@ -109,11 +109,6 @@ autolinks, images, and fenced-code boundaries more reliable than a regex-only sc
 keeping SoulMap-specific rules (unsafe schemes, repo-root boundaries, anchor policy,
 accessibility, and canonical wording) in local code. It is not a runtime HTML renderer.
 
-`Werkzeug` is a dev-only WSGI test utility used by
-`tests/unit/test_web_server.py` to exercise the public JSON route through a real
-request/response client. It is deliberately not imported by the website runtime,
-so the stdlib WSGI server and GitHub Pages static export remain dependency-free.
-
 `mdformat`, `python-frontmatter`, Pydantic, `jsonschema`, and HTML sanitizers remain
 evaluated alternatives rather than dependencies: each needs a separate compatibility
 contract or a concrete consumer before it should be added. See
@@ -128,20 +123,19 @@ for the package comparison and decision boundary.
   same `skills/` and `reference/` content.
 - `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
   SHA-256 digests when `uv run soulmap library-manifest` is used.
-- `site/`: generated static website output for GitHub Pages; it is not part of the AI
-  Skill artifact set.
+- `web/dist/`: generated React static output for GitHub Pages; it is not part of the AI
+  Skill artifact set and is never committed.
 
 To export and verify the website locally:
 
 ```bash
-uv run soulmap web --export-static --output site --base-path /soulmap-ai
-uv run python scripts/verify_static_site.py site --base-path /soulmap-ai
-
-# For repeated local edits, reuse the verified export when inputs are unchanged.
-uv run soulmap web --export-static --output site --base-path /soulmap-ai --incremental
+pnpm --dir web install --frozen-lockfile
+SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web build
+pnpm --dir web verify
+SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web test:browser
 ```
 
-The `website-pages.yml` workflow repeats these checks on website changes. It publishes
+The `website-pages.yml` workflow repeats these locked Node checks on website changes. It publishes
 only generated files to `gh-pages` after a `main` push; `main` remains the source of truth.
 For route and boundary details, see [`../product/WEBSITE.md`](../product/WEBSITE.md).
 

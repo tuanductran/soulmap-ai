@@ -1,0 +1,19 @@
+/* Atlas Nội Tâm: Token Tailwind cho giấy khoáng, ink, Moss Teal và nhịp typography biên tập; component styling ưu tiên utility class. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  * { @apply border-[#dfe5dc]; }
+  html { @apply bg-[#f7f6ef] font-sans antialiased; }
+  body { @apply m-0 min-w-80 bg-[#f7f6ef]; }
+  button, a, input { -webkit-tap-highlight-color: transparent; }
+  ::selection { background: #bfe1d5; color: #122b2c; }
+}
+
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }

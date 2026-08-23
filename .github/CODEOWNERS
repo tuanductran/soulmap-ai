@@ -18,6 +18,6 @@
 /.github/ @tuanductran
 
 # Public website and operational contracts
-/src/web/ @tuanductran
+/web/ @tuanductran
 /docs/ @tuanductran
 /tests/ @tuanductran

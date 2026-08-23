@@ -39,6 +39,7 @@ It contains:
 - the framework-neutral Soulmate foundation library in [src/soulmate/](src/soulmate/)
 - the standalone Soulmate package and AI foundation-skill source in
   [packages/soulmate/](packages/soulmate/)
+- the static React public website in [web/](web/)
 
 The repo is designed to keep brand, safety, packaging, and implementation aligned.
 Soulmate is the reusable foundation layer; SoulMap remains the opinionated reflective
@@ -87,6 +88,7 @@ The most important surfaces are:
   the shipped response and redirect templates in skills/meta/)
 - [src/soulmap/runtime/](src/soulmap/runtime/), selectors, detectors, guards, and runtime support
 - [src/soulmap/devtools/](src/soulmap/devtools/), canonical format, lint, eval, and packaging entry points
+- [web/](web/), React/TanStack/Tailwind public site and GitHub Pages static build
 - [docs/](docs/), developer, tester, privacy, operations, and upload guidance
 
 ## Quick start
@@ -105,13 +107,15 @@ targets Python 3.11 explicitly.
 ## Run the website
 
 ```bash
-uv run soulmap web
+pnpm --dir web install --frozen-lockfile
+pnpm --dir web dev
+SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web build
+pnpm --dir web verify
 ```
 
-The local Python website defaults to `http://127.0.0.1:8765`. To export static files
-for GitHub Pages, use `uv run soulmap web --export-static --output site --base-path /soulmap-ai`.
-For repeated local edits, add `--incremental` to reuse a verified export when the web,
-public Skill, lockfile and exporter inputs are unchanged.
+The public surface is a React static application. `SITE_BASE_PATH` must match the project
+path when building for GitHub Pages; the build writes a verified deployable artifact to
+`web/dist/`. The Python SoulMap/Soulmate packages do not serve web pages or host an AI model.
 See [docs/product/WEBSITE.md](docs/product/WEBSITE.md) for routes, responsive behavior,
 workflow boundaries, and its deliberate separation from the shipped AI artifacts.
 

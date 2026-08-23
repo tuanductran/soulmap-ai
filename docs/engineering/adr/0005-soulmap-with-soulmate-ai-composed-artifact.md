@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-08-23
 - **Decision owners:** SoulMap maintainers
-- **Scope:** AI-facing Markdown artifacts and Python web package layout
+- **Scope:** AI-facing Markdown artifacts and public website layout
 
 ## Context
 
@@ -27,7 +27,7 @@ The composed artifact is built only through `soulmap build-composed`. It reads t
 
 The composed root `SKILL.md` establishes precedence. Soulmate supplies transparent companion presence and reusable foundation mechanics. SoulMap remains authoritative for orchestration, crisis and dependency safety, routing, epistemic guardrails, response shape, voice, brand, spiritual policy, and Framework doctrine. If layers conflict, the stricter safety boundary and SoulMap pipeline win.
 
-Move the Python web application to `src/web/` as a peer of `src/soulmap/` and `src/soulmate/`. Its WSGI routes, locale data, templates, static assets, and static export behavior remain unchanged. The package is included explicitly in the Python wheel configuration and is not included in AI Markdown artifacts.
+The historical Python web namespace was moved to `src/web/` during the initial repository split. In the subsequent React static migration, that WSGI package was retired and replaced by the independent `web/` workspace. The React workspace is not included in the Python wheel or AI Markdown artifacts and must not be imported by SoulMap or Soulmate runtime code.
 
 ## Consequences
 
@@ -35,7 +35,7 @@ The existing SoulMap artifact remains stable for users who already import it. Us
 
 The composed build introduces a third generated artifact family and therefore requires its own verifier and contract tests. It must pass generic archive security checks in addition to exact byte/content parity. The composition scope is not the same as the Python runtime's five-entry SoulMap approval projection: it is an AI-facing import composition, not permission to load companion entries through the runtime adapter.
 
-The web namespace move requires import/resource parity tests, wheel package inclusion, coverage source updates, documentation path updates, and browser/static-export checks. It does not grant web code ownership of SoulMap doctrine or Soulmate Library content.
+The website migration requires static build/browser checks, documentation path updates and a GitHub Pages artifact verifier. It does not grant web code ownership of SoulMap doctrine or Soulmate Library content.
 
 ## Non-goals
 
@@ -50,5 +50,5 @@ The implementation is protected by:
 - `scripts/verify_soulmap_with_soulmate.py`
 - `tests/contract/test_soulmap_soulmate_composition_contract.py`
 - `tests/contract/test_soulmap_soulmate_workflow_contract.py`
-- web unit/route/static-export tests under `tests/unit/test_web_*.py`
+- React static verifier and Playwright checks under `web/scripts/` and `web/tests/`
 - root and Soulmate artifact security and extraction verifiers

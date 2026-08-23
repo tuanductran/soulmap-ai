@@ -28,7 +28,7 @@ Use it to answer four questions for every major repo surface:
 | `packages/soulmate/` | Release metadata and Soulmate-only AI skill source boundary | Local Soulmate release/knowledge boundary; not a second Python source tree | Independent package manifest, README, license, foundation and companion skill Markdown, artifact contract, and skill manifest; canonical Python source remains in `src/soulmate/` and is staged explicitly by the Python package builder | Skill manifest/content contracts, deterministic builder, artifact verifier and manual workflow review |
 | `dist/soulmate-skills/` | Generated pre-release Soulmate AI skill output | Generated review artifact; not public by default | `soulmate-ai.zip`, byte-identical `soulmate-ai.skill`, projected manifest, provenance, and SHA-256 sidecar produced from the package-owned allow-list | `scripts/build_soulmate_skills.py`, `scripts/verify_soulmate_skills.py`, extraction checks, and release review |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
-| `src/web/` | Public SoulMap website surface | Local public surface, not shipped Skills content | Standard-library WSGI server, public pages, responsive stylesheet, route smoke tests, and download guidance | Website unit/route tests, lint/type checks, and local browser smoke |
+| `web/` | Public SoulMap website surface | Local static frontend, not shipped Skills content | React/TanStack routes, Tailwind design system, i18n copy, build-time raw-bundle inputs, Playwright checks and GitHub Pages configuration | Locked pnpm install, TypeScript, Vite base-path build, static verifier and browser audit |
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, `soulmap` runtime/tooling source, the `soulmate` foundation library, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
@@ -49,8 +49,8 @@ Use it to answer four questions for every major repo surface:
   projection is generated from it and must not be edited manually.
 - Framework-neutral foundation implementation truth lives in `src/soulmate/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
-- Public website implementation truth lives in `src/web/`; it is not part of the
-  shipped Skill knowledge surface or custom `.skill`/`.zip` artifacts.
+- Public website implementation truth lives in `web/`; it is not imported by Python and
+  is not part of the shipped Skill knowledge surface or custom `.skill`/`.zip` artifacts.
 - `gh-pages` is a generated publication branch containing static website output only; it is
   never a source of doctrine, runtime code, or repository documentation.
 - Explanatory and operational truth lives in `docs/`.
