@@ -1,21 +1,25 @@
-// Atlas Nội Tâm: Catalog ưu tiên mô tả scope/boundary và thao tác tại chỗ, thay vì biến skill thành card marketing đồng nhất.
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { ArrowRight, Compass, Search, X } from "lucide-react";
-import { useMemo, useState } from "react";
+// Atlas Nội Tâm: Catalog tải card/search trước, còn dialog detail/provider chỉ tải sau một thao tác chủ động.
+import { ArrowRight, Search } from "lucide-react";
+import { lazy, Suspense, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ProviderDialog } from "@/components/ProviderDialog";
 import { skills, type Skill } from "@/content/skills";
 import type { Locale } from "@/i18n";
 
 const accentClass: Record<string, string> = { Moss: "bg-[#dcebe2] text-[#1f655e]", Clay: "bg-[#f1e0d2] text-[#9b583b]", Ink: "bg-[#dce5e6] text-[#234a50]" };
+const SkillDetailDialog = lazy(() => import("@/components/SkillDetailDialog").then((module) => ({ default: module.SkillDetailDialog })));
+const ProviderDialog = lazy(() => import("@/components/ProviderDialog").then((module) => ({ default: module.ProviderDialog })));
 
 export function SkillPanel({ locale }: { locale: Locale }) {
   const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Skill | null>(null);
   const [providerSkill, setProviderSkill] = useState<Skill | null>(null);
+  const triggers = useRef<Record<string, HTMLButtonElement | null>>({});
   const filtered = useMemo(() => skills.filter((skill) => Object.values(skill.copy[locale]).join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase())), [locale, query]);
   const openProvider = (skill: Skill) => { setSelected(null); window.setTimeout(() => setProviderSkill(skill), 0); };
+  const restoreTrigger = (slug: string | undefined) => { if (slug) window.requestAnimationFrame(() => triggers.current[slug]?.focus()); };
+  const closeDetail = () => { const slug = selected?.slug; setSelected(null); restoreTrigger(slug); };
+  const closeProvider = () => { const slug = providerSkill?.slug; setProviderSkill(null); restoreTrigger(slug); };
   return (
     <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
       <div className="grid gap-10 lg:grid-cols-[0.72fr_1.6fr] lg:gap-20">
@@ -33,22 +37,16 @@ export function SkillPanel({ locale }: { locale: Locale }) {
               <div className="flex items-start justify-between gap-3"><span className={`rounded-full px-3 py-1 text-[0.68rem] font-extrabold uppercase tracking-[0.16em] ${accentClass[skill.accent]}`}>{copy.group}</span><span className="font-serif text-sm text-[#95a39c]">0{index + 1}</span></div>
               <h2 className="mt-6 font-serif text-3xl leading-[0.98] tracking-[-0.045em] text-[#163736]">{copy.title}</h2>
               <p className="mt-4 text-sm leading-6 text-[#5a6d68]">{copy.summary}</p>
-              <button onClick={() => setSelected(skill)} className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-extrabold text-[#1e655e] transition group-hover:gap-3">{t("common.inspect")} <ArrowRight className="size-4" /></button>
+              <button ref={(element) => { triggers.current[skill.slug] = element; }} onClick={() => setSelected(skill)} className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-extrabold text-[#1e655e] transition group-hover:gap-3">{t("common.inspect")} <ArrowRight className="size-4" /></button>
             </article>;
           })}
           {!filtered.length && <div className="rounded-[1.5rem] border border-dashed border-[#bdcbc0] p-8 text-sm leading-6 text-[#5a6d68]">{t("skills.noResults")}</div>}
         </div>
       </div>
-      <Dialog open={Boolean(selected)} onClose={() => setSelected(null)} className="relative z-40">
-        <div className="fixed inset-0 bg-[#122b2c]/45 backdrop-blur-sm" />
-        <div className="fixed inset-0 overflow-y-auto p-3 sm:p-6"><div className="grid min-h-full place-items-end sm:place-items-center"><DialogPanel className="w-full max-w-2xl rounded-[1.75rem] border border-white/70 bg-[#fbfaf5] p-6 shadow-2xl sm:p-9">{selected && <>
-          <div className="flex items-start justify-between gap-6"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#327d75]">{selected.copy[locale].group}</p><DialogTitle className="mt-3 font-serif text-4xl leading-none tracking-[-0.055em] text-[#122b2c]">{selected.copy[locale].title}</DialogTitle></div><button onClick={() => setSelected(null)} className="grid size-10 place-items-center rounded-full border border-[#d8dfd8] hover:bg-[#eaf0eb]" aria-label={t("common.close")}><X className="size-4" /></button></div>
-          <div className="mt-8 grid gap-6 border-t border-[#dfe5dc] pt-7 sm:grid-cols-2"><div><p className="text-xs font-bold uppercase tracking-[0.15em] text-[#327d75]">{t("skills.useWhen")}</p><p className="mt-3 text-sm leading-6 text-[#445a56]">{selected.copy[locale].useWhen}</p></div><div><p className="text-xs font-bold uppercase tracking-[0.15em] text-[#9b583b]">{t("skills.boundary")}</p><p className="mt-3 text-sm leading-6 text-[#445a56]">{selected.copy[locale].boundary}</p></div></div>
-          <div className="mt-6 rounded-2xl bg-[#e8f0ea] p-5"><p className="text-xs font-bold uppercase tracking-[0.15em] text-[#327d75]">{t("skills.bestFor")}</p><p className="mt-2 text-sm leading-6 text-[#35544f]">{selected.copy[locale].bestFor}</p></div>
-          <button onClick={() => openProvider(selected)} className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-[#267b72] px-5 text-sm font-bold text-white transition hover:bg-[#1c625b] active:scale-[0.98]"><Compass className="size-4" />{t("skills.openPrompt")}</button>
-        </>}</DialogPanel></div></div>
-      </Dialog>
-      <ProviderDialog open={Boolean(providerSkill)} skill={providerSkill} locale={locale} onClose={() => setProviderSkill(null)} />
+      <Suspense fallback={null}>
+        {selected && <SkillDetailDialog skill={selected} locale={locale} onClose={closeDetail} onOpenProvider={openProvider} />}
+        {providerSkill && <ProviderDialog open skill={providerSkill} locale={locale} onClose={closeProvider} />}
+      </Suspense>
     </section>
   );
 }

@@ -18,7 +18,6 @@ export default defineConfig({
           "react-runtime": ["react", "react-dom"],
           "router-runtime": ["@tanstack/react-router"],
           "i18n-runtime": ["i18next", "react-i18next"],
-          "headless-runtime": ["@headlessui/react"],
           icons: ["lucide-react"],
         },
       },
