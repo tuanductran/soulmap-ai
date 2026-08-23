@@ -7,9 +7,9 @@ import shutil
 from collections.abc import Callable
 from pathlib import Path
 
-from soulmap.web.assets import STATIC_DIR
-from soulmap.web.build import build_key, load_reusable_output, write_manifest
-from soulmap.web.catalog import (
+from web.assets import STATIC_DIR
+from web.build import build_key, load_reusable_output, write_manifest
+from web.catalog import (
     CATALOG,
     catalog_json,
     catalog_search_json,
@@ -18,9 +18,9 @@ from soulmap.web.catalog import (
     raw_path,
     raw_url,
 )
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.prompt_pack import scenarios_for
-from soulmap.web.seo import robots_txt, sitemap_xml
+from web.i18n import SUPPORTED_LOCALES
+from web.prompt_pack import scenarios_for
+from web.seo import robots_txt, sitemap_xml
 
 PUBLIC_SITE_URL = "https://tuanductran.github.io/soulmap-ai"
 PageRenderer = Callable[[str], str]

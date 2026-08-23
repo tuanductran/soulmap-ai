@@ -50,7 +50,7 @@ def build_inputs(root: Path | None = None) -> tuple[Path, ...]:
     """Return source files that can change a public static export."""
     checkout = (root or repository_root()).resolve()
     candidates = [
-        *_iter_files(checkout / "src" / "soulmap" / "web"),
+        *_iter_files(checkout / "src" / "web"),
         *_iter_files(checkout / "skills"),
     ]
     for filename in ("pyproject.toml", "uv.lock"):

@@ -6,14 +6,14 @@ import json
 from dataclasses import dataclass
 from importlib.resources import files
 
-from soulmap.web.i18n import SUPPORTED_LOCALES
+from web.i18n import SUPPORTED_LOCALES
 
 _PROMPT_FIELDS = ("title", "when", "prompt", "question")
 
 
 def _load_prompt_data() -> dict[str, object]:
     payload = json.loads(
-        files("soulmap.web").joinpath("prompt_data.json").read_text(encoding="utf-8")
+        files("web").joinpath("prompt_data.json").read_text(encoding="utf-8")
     )
     if not isinstance(payload, dict) or payload.get("version") != 1:
         raise ValueError("Invalid prompt data version")

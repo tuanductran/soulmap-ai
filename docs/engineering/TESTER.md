@@ -118,7 +118,7 @@ Verify:
   repository-only paths or implementation references inside packaged core files
   (`AGENTS.md` and `SKILL.md`) or the `skills/` and `reference/` trees.
 - `tests/contract/test_website_pages_workflow_contract.py` passes and confirms the Pages
-  workflow builds from `src/soulmap/web/`, verifies output, and publishes only generated
+  workflow builds from `src/web/`, verifies output, and publishes only generated
   files to `gh-pages` after a `main` push.
 
 ## Orchestration layer checks
@@ -223,7 +223,7 @@ contracts:
 - workflow validation via `actionlint`
 - `uv run soulmap lint --skip-tests`
 - `uv run soulmap test -n auto -q`
-- coverage for `src/soulmap/runtime` and `src/soulmap/web` with the configured 95% floor
+- coverage for `src/soulmap/runtime` and `src/web` with the configured 95% floor
 - the `soulmap-coverage` JSON artifact on Ubuntu CI
 - `uv run python tests/eval_regression/test_safety_evals.py`
 - `uv run soulmap eval-responses`

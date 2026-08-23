@@ -23,6 +23,8 @@ stability and breaking changes in behavior.
 - **integration**: expose an immutable approved foundation bundle with compatibility parity checks
 - **integration**: add a SoulMap-owned consumer approval manifest and generated projection
 - **release**: stage a fail-closed Soulmate TestPyPI OIDC workflow with verified artifact handoff
+- **integration**: add an explicit SoulMap-with-Soulmate AI artifact composition with verified namespace and precedence
+- **web**: move the public Python web package to the peer `src/web/` namespace without changing routes or static export behavior
 
 ### Changed
 
@@ -38,6 +40,7 @@ stability and breaking changes in behavior.
 - **security**: validate Soulmate archive provenance and bounded size in the explicit adapter
 - **sync**: fail closed on approval drift, stale projections, unsupported consumers, and artifact-boundary violations
 - **release**: keep OIDC publication behind main-only dispatch, protected environment, explicit variables, and private-metadata checks
+- **packaging**: keep standalone SoulMap and Soulmate artifacts separate while verifying the composed artifact independently
 
 The Soulmate package and AI skill artifacts remain pre-release and are not published to a
 package registry or public release channel. Companion skills remain `soulmate-only` and are

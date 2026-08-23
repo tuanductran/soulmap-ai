@@ -5,9 +5,9 @@ from importlib.resources import files
 
 import pytest
 
-from soulmap.web import i18n
-from soulmap.web.http import translate
-from soulmap.web.i18n import (
+from web import i18n
+from web.http import translate
+from web.i18n import (
     LOCALES,
     SUPPORTED_LOCALES,
     _validate_locale_parity,
@@ -24,9 +24,7 @@ def test_json_catalogs_are_loaded_for_every_supported_locale() -> None:
 def test_json_catalog_files_match_loaded_registry_and_have_exact_key_parity() -> None:
     catalogs = {
         locale: json.loads(
-            files("soulmap.web.locales")
-            .joinpath(f"{locale}.json")
-            .read_text(encoding="utf-8")
+            files("web.locales").joinpath(f"{locale}.json").read_text(encoding="utf-8")
         )
         for locale in SUPPORTED_LOCALES
     }

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from html import escape
 
-from soulmap.web.config import (
+from web.config import (
     ALPINE_SRI,
     ALPINE_URL,
     HTMX_SRI,
@@ -14,10 +14,10 @@ from soulmap.web.config import (
     REPOSITORY_URL,
     SITE_NAME,
 )
-from soulmap.web.http import _nav_path, _resource_hints, _text, tr
-from soulmap.web.i18n import SUPPORTED_LOCALES, messages_json
-from soulmap.web.seo import metadata
-from soulmap.web.templates import render_template
+from web.http import _nav_path, _resource_hints, _text, tr
+from web.i18n import SUPPORTED_LOCALES, messages_json
+from web.seo import metadata
+from web.templates import render_template
 
 _SEO_COPY_KEYS: dict[str, tuple[str, str]] = {
     "/": ("home_h1", "home_lede"),

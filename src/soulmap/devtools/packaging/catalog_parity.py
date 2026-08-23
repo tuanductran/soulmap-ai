@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from soulmap.devtools.support.repo import REPO_ROOT
-from soulmap.web.catalog import CATALOG, raw_markdown
+from web.catalog import CATALOG, raw_markdown
 
 LIBRARY_CATALOG = Path("library/catalog.json")
 _INTERNAL_MARKERS = (

@@ -3,8 +3,8 @@ from typing import Any
 
 import pytest
 
-from soulmap.web import prompt_pack
-from soulmap.web.prompt_pack import PromptScenario, scenarios_for
+from web import prompt_pack
+from web.prompt_pack import PromptScenario, scenarios_for
 
 
 class _Resource:

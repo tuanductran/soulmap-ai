@@ -105,14 +105,18 @@ The approval JSON and generated projection are excluded from Soulmate artifacts.
 
 The canonical source remains `packages/soulmate/skills/`. The independent Soulmate skills builder continues to use an explicit manifest allow-list and produces the private pre-release `soulmate-ai.zip` and `soulmate-ai.skill` artifacts. The adapter consumes those artifacts for review or local framework composition; it does not authorize a release, registry publication, automatic AI-tool activation, or a GitHub Release.
 
-The root SoulMap artifact builder remains separate. It must not absorb the Soulmate package-owned skill tree merely because an adapter exists. Any future shared entry requires a manifest change, contract tests, artifact review, and confirmation that the entry is genuinely framework-neutral.
+The root SoulMap artifact builder remains separate. It must not absorb the Soulmate package-owned skill tree merely because a Python adapter exists. For AI-facing use, the explicit `soulmap-with-soulmate-ai` composition builder creates a third artifact that materializes the reviewed Soulmate skills under `soulmate/` and adds a top-level precedence contract. This composed artifact is separate from both `soulmap-ai` and `soulmate-ai`; it is the import surface for an external AI tool when SoulMap should run on top of Soulmate. Any future change to its scope requires a composition manifest change, contract tests, artifact review, and confirmation that the content remains appropriately owned. The standalone root SoulMap artifact remains backward-compatible and does not include Soulmate content.
 
 ## Validation
 
-The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_consumer_sync_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, `tests/contract/test_soulmate_companion_skills_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
+The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_consumer_sync_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, `tests/contract/test_soulmate_companion_skills_contract.py`, `tests/contract/test_soulmap_soulmate_composition_contract.py`, `tests/contract/test_soulmap_soulmate_workflow_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
 
 ```bash
 uv run python scripts/verify_soulmate_consumer_sync.py --check
+uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
+uv run python scripts/verify_soulmap_with_soulmate.py \\
+  --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \\
+  --skill dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
 uv run pytest -q tests/contract/test_soulmate_adapter_contract.py
 uv run pytest -q tests/contract/test_soulmate_consumer_sync_contract.py
 uv run pytest -q tests/contract/test_soulmate_foundation_skills_contract.py

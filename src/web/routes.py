@@ -8,8 +8,8 @@ from pathlib import Path
 from urllib.parse import parse_qs
 from wsgiref.types import StartResponse
 
-from soulmap.web.assets import read_font_asset, read_text_asset, static_asset_type
-from soulmap.web.catalog import (
+from web.assets import read_font_asset, read_text_asset, static_asset_type
+from web.catalog import (
     CATALOG,
     catalog_json,
     catalog_search_json,
@@ -18,13 +18,13 @@ from soulmap.web.catalog import (
     raw_markdown,
     raw_url,
 )
-from soulmap.web.catalog import (
+from web.catalog import (
     raw_path as localized_raw_path,
 )
-from soulmap.web.config import PUBLIC_SITE_URL
-from soulmap.web.http import _normalise_request_path, _response, _text
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.pages import (
+from web.config import PUBLIC_SITE_URL
+from web.http import _normalise_request_path, _response, _text
+from web.i18n import SUPPORTED_LOCALES
+from web.pages import (
     _about,
     _boundaries,
     _download,
@@ -36,9 +36,9 @@ from soulmap.web.pages import (
     _notes,
     _privacy,
 )
-from soulmap.web.prompt_pack import scenarios_for
-from soulmap.web.seo import robots_txt, sitemap_xml
-from soulmap.web.skill_views import (
+from web.prompt_pack import scenarios_for
+from web.seo import robots_txt, sitemap_xml
+from web.skill_views import (
     _skill_catalog,
     _skill_detail_fragment,
     _skill_grid_fragment,

@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from soulmap.web.exporter import _apply_base_path, _normalise_base_path
-from soulmap.web.server import export_static
+from web.exporter import _apply_base_path, _normalise_base_path
+from web.server import export_static
 
 
 def test_normalise_base_path_handles_empty_root_and_project_prefixes() -> None:

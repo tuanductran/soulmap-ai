@@ -11,12 +11,12 @@ from pathlib import Path
 from wsgiref.simple_server import WSGIRequestHandler, WSGIServer, make_server
 from wsgiref.types import StartResponse
 
-from soulmap.web import config as _config
-from soulmap.web import http as _http
-from soulmap.web import pages as _page_views
-from soulmap.web import routes as _routes
-from soulmap.web import skill_views as _skill_views
-from soulmap.web.exporter import export_static as _export_static
+from web import config as _config
+from web import http as _http
+from web import pages as _page_views
+from web import routes as _routes
+from web import skill_views as _skill_views
+from web.exporter import export_static as _export_static
 
 # Compatibility facade: existing imports remain stable while implementation boundaries
 # move into focused modules.

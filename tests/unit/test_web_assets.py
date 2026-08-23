@@ -1,4 +1,4 @@
-from soulmap.web.assets import (
+from web.assets import (
     read_font_asset,
     read_text_asset,
     static_asset_type,

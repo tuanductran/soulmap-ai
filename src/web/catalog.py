@@ -10,8 +10,8 @@ from importlib.resources import files
 from pathlib import Path
 from typing import cast
 
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.prompt_pack import scenarios_for
+from web.i18n import SUPPORTED_LOCALES
+from web.prompt_pack import scenarios_for
 
 PUBLIC_RAW_BASE_URL = "https://tuanductran.github.io/soulmap-ai"
 _CATALOG_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundary")
@@ -19,7 +19,7 @@ _CATALOG_FIELDS = ("group", "title", "summary", "use_when", "best_for", "boundar
 
 def _load_catalog_data() -> dict[str, object]:
     payload = json.loads(
-        files("soulmap.web").joinpath("catalog_data.json").read_text(encoding="utf-8")
+        files("web").joinpath("catalog_data.json").read_text(encoding="utf-8")
     )
     if not isinstance(payload, dict) or payload.get("version") != 1:
         raise ValueError("Invalid catalog data version")
@@ -287,7 +287,7 @@ def get_skill(slug: str) -> SkillEntry | None:
 
 def _repo_root() -> Path:
     candidates = (
-        Path(__file__).resolve().parents[3],
+        Path(__file__).resolve().parents[2],
         Path.cwd(),
     )
     for candidate in candidates:

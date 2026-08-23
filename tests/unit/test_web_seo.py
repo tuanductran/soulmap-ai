@@ -1,6 +1,6 @@
 import json
 
-from soulmap.web.seo import alternate_links, json_ld, public_url, sitemap_xml
+from web.seo import alternate_links, json_ld, public_url, sitemap_xml
 
 SITE = "https://tuanductran.github.io/soulmap-ai"
 REPOSITORY = "https://github.com/tuanductran/soulmap-ai"

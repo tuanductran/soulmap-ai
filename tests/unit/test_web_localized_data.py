@@ -6,23 +6,23 @@ from typing import cast
 
 import pytest
 
-from soulmap.web import prompt_pack
-from soulmap.web.catalog import CATALOG, raw_markdown
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.prompt_pack import PROMPT_PACKS
+from web import prompt_pack
+from web.catalog import CATALOG, raw_markdown
+from web.i18n import SUPPORTED_LOCALES
+from web.prompt_pack import PROMPT_PACKS
 
 
 @pytest.fixture(scope="module")
 def catalog_data() -> dict[str, object]:
     return json.loads(
-        files("soulmap.web").joinpath("catalog_data.json").read_text(encoding="utf-8")
+        files("web").joinpath("catalog_data.json").read_text(encoding="utf-8")
     )
 
 
 @pytest.fixture(scope="module")
 def prompt_data() -> dict[str, object]:
     return json.loads(
-        files("soulmap.web").joinpath("prompt_data.json").read_text(encoding="utf-8")
+        files("web").joinpath("prompt_data.json").read_text(encoding="utf-8")
     )
 
 

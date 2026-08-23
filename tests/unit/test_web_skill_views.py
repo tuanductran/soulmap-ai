@@ -4,11 +4,11 @@ from urllib.parse import unquote
 
 import pytest
 
-from soulmap.web.catalog import CATALOG, raw_url
-from soulmap.web.http import _nav_path
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.prompt_pack import scenarios_for
-from soulmap.web.skill_views import (
+from web.catalog import CATALOG, raw_url
+from web.http import _nav_path
+from web.i18n import SUPPORTED_LOCALES
+from web.prompt_pack import scenarios_for
+from web.skill_views import (
     _provider_url,
     _skill_catalog,
     _skill_detail_fragment,

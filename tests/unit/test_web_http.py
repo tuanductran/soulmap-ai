@@ -5,8 +5,8 @@ from wsgiref.types import StartResponse
 
 import pytest
 
-from soulmap.web.config import ALPINE_URL, HTMX_URL
-from soulmap.web.http import (
+from web.config import ALPINE_URL, HTMX_URL
+from web.http import (
     nav_path,
     normalise_request_path,
     origin,
@@ -105,8 +105,8 @@ def test_response_has_shared_security_headers_and_byte_length() -> None:
 def test_resource_hints_skips_preconnect_when_critical_origin_is_invalid(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr("soulmap.web.http.HTMX_URL", "javascript:alert(1)")
-    monkeypatch.setattr("soulmap.web.http.ALPINE_URL", "https://cdn.example/alpine.js")
+    monkeypatch.setattr("web.http.HTMX_URL", "javascript:alert(1)")
+    monkeypatch.setattr("web.http.ALPINE_URL", "https://cdn.example/alpine.js")
 
     hints = resource_hints()
 

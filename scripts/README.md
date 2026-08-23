@@ -98,6 +98,23 @@ archive, and emits checksum records for the two distributable artifacts. The ver
 and checks both projections, rejects unsafe or unexpected members, checks provenance and
 manifest parity, and fails closed on checksum or version mismatches.
 
+For the composed AI-facing artifact, use the explicit SoulMap-on-Soulmate builder. It keeps
+`dist/soulmap-ai.*` and `dist/soulmate-skills/soulmate-ai.*` independent, then materializes the
+reviewed Soulmate skills under `soulmate/` in a third import surface:
+
+```bash
+uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
+uv run python scripts/verify_soulmap_with_soulmate.py \\
+  --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \\
+  --skill dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
+```
+
+Import `soulmap-with-soulmate-ai.skill` when an external AI tool should receive both the
+SoulMap Framework and Soulmate Library in one artifact. Import `soulmap-ai.skill` for the
+backward-compatible SoulMap-only surface, or `soulmate-ai.skill` for the standalone Library.
+The composed builder is explicit and deterministic; it does not change the source tree or
+activate a runtime API.
+
 The GitHub release workflow is manual and does not publish by default. A maintainer
 must explicitly enable the release input after reviewing the generated artifacts.
 

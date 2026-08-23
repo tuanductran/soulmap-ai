@@ -1,17 +1,17 @@
 # SoulMap web architecture
 
-The public SoulMap website uses a small WSGI application with a deliberately narrow entry point. `src/soulmap/web/server.py` keeps the CLI-facing WSGI facade and delegates request work to focused modules. It should not become a page renderer, template engine, asset loader, or catalog implementation.
+The public SoulMap website uses a small WSGI application with a deliberately narrow entry point. `src/web/server.py` keeps the CLI-facing WSGI facade and delegates request work to focused modules. It should not become a page renderer, template engine, asset loader, or catalog implementation.
 
 | Area | Module or directory | Responsibility |
 | --- | --- | --- |
-| Request dispatch | `src/soulmap/web/routes.py` | Normalize paths, route requests, choose response status and headers. |
-| Shared HTTP | `src/soulmap/web/http.py` | Translation lookup, navigation paths, resource hints and secure WSGI responses. |
-| Page rendering | `src/soulmap/web/pages.py` | Render localized page content and the shared layout. |
-| Skill rendering | `src/soulmap/web/skill_views.py` | Render catalog cards, Skill pages and modal fragments. |
-| Asset serving | `src/soulmap/web/assets.py` | Allow-listed text and font assets with safe readers and MIME types. |
-| Static export | `src/soulmap/web/exporter.py` | Build localized HTML, API artifacts and static assets for GitHub Pages. |
-| Templates | `src/soulmap/web/templates/` | Keep layout, page templates and partials separate from Python rendering logic. |
-| Browser assets | `src/soulmap/web/static/` | CSS, JavaScript, favicon and local font files only. |
+| Request dispatch | `src/web/routes.py` | Normalize paths, route requests, choose response status and headers. |
+| Shared HTTP | `src/web/http.py` | Translation lookup, navigation paths, resource hints and secure WSGI responses. |
+| Page rendering | `src/web/pages.py` | Render localized page content and the shared layout. |
+| Skill rendering | `src/web/skill_views.py` | Render catalog cards, Skill pages and modal fragments. |
+| Asset serving | `src/web/assets.py` | Allow-listed text and font assets with safe readers and MIME types. |
+| Static export | `src/web/exporter.py` | Build localized HTML, API artifacts and static assets for GitHub Pages. |
+| Templates | `src/web/templates/` | Keep layout, page templates and partials separate from Python rendering logic. |
+| Browser assets | `src/web/static/` | CSS, JavaScript, favicon and local font files only. |
 
 ## Interaction boundaries
 
@@ -21,7 +21,7 @@ The layout deliberately does not use htmx boost, htmx history replacement or pag
 
 ## Asset policy
 
-Typography is local and served from the allow-listed `/static/fonts/` route. Inter and Manrope files are accompanied by a source notice under `src/soulmap/web/static/fonts/NOTICE.md`. No page template should add a font CDN link or hard-code a third-party font origin. Static export copies the font files and rewrites absolute asset URLs for a GitHub Pages base path.
+Typography is local and served from the allow-listed `/static/fonts/` route. Inter and Manrope files are accompanied by a source notice under `src/web/static/fonts/NOTICE.md`. No page template should add a font CDN link or hard-code a third-party font origin. Static export copies the font files and rewrites absolute asset URLs for a GitHub Pages base path.
 
 ## Change checklist
 

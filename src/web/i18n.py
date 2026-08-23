@@ -11,9 +11,7 @@ SUPPORTED_LOCALES: Final[tuple[str, ...]] = ("en", "vi", "ko")
 
 def _load_locale(locale: str) -> dict[str, str]:
     payload = json.loads(
-        files("soulmap.web.locales")
-        .joinpath(f"{locale}.json")
-        .read_text(encoding="utf-8")
+        files("web.locales").joinpath(f"{locale}.json").read_text(encoding="utf-8")
     )
     if not isinstance(payload, dict) or not all(
         isinstance(key, str) and isinstance(value, str)

@@ -12,9 +12,9 @@ from werkzeug.test import Client
 from werkzeug.wrappers import Response
 
 from soulmap.cli import _command_table
-from soulmap.web import server as web_server
-from soulmap.web.catalog import CATALOG
-from soulmap.web.server import application, export_static
+from web import server as web_server
+from web.catalog import CATALOG
+from web.server import application, export_static
 
 
 def _request(path: str, query: str = "") -> tuple[dict[str, Any], bytes]:
@@ -468,7 +468,7 @@ def test_api_error_and_fallback_routes_are_deterministic(
     assert invalid_limit_headers["status"] == "200 OK"
     assert invalid_limit["limit"] == 50
 
-    monkeypatch.setattr("soulmap.web.routes.read_text_asset", lambda _name: None)
+    monkeypatch.setattr("web.routes.read_text_asset", lambda _name: None)
     missing_asset_headers, _ = _request("/static/site.js")
     assert missing_asset_headers["status"] == "404 Not Found"
 

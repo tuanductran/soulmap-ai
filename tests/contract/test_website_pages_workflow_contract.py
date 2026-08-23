@@ -9,7 +9,7 @@ def test_pages_workflow_builds_and_verifies_static_site() -> None:
     content = WORKFLOW.read_text(encoding="utf-8")
 
     for marker in (
-        "src/soulmap/web/**",
+        "src/web/**",
         "uv run soulmap web",
         "--export-static",
         "--base-path",

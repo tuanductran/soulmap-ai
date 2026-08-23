@@ -16,14 +16,14 @@ from soulmap.devtools.evals import (
     eval_markdown_contracts,
     eval_responses,
 )
-from soulmap.devtools.packaging import build_skill, catalog_parity, library
+from soulmap.devtools.packaging import build_skill, catalog_parity, composition, library
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.devtools.support.run import python_module
 from soulmap.runtime.experimental import soulmap_demo
 from soulmap.runtime.guards import markdown_contract
-from soulmap.web import server as web_server
+from web import server as web_server
 
 CommandHandler = Callable[[list[str]], int]
 
@@ -42,6 +42,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "audit-knowledge": audit_knowledge.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
+        "build-composed": composition.main,
         "catalog-parity": catalog_parity.main,
         "check-case": check_markdown_case.main,
         "check-dependencies": dependency_direction.main,
