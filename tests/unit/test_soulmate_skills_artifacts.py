@@ -311,3 +311,28 @@ def test_builder_source_constants_remain_isolated() -> None:
     assert PACKAGE_ROOT.name == "soulmate"
     assert SKILLS_ROOT == PACKAGE_ROOT / "skills"
     assert MANIFEST_PATH == SKILLS_ROOT / "manifest.json"
+
+
+def test_manifest_validation_accepts_explicit_soulmap_consumer_scope() -> None:
+    manifest, _ = load_manifest()
+
+    entries = validate_manifest(manifest, source_root=None)
+
+    assert entries[0]["consumers"] == ["soulmate-only", "soulmap-compatible"]
+    assert entries[5]["consumers"] == ["soulmate-only"]
+
+
+def test_manifest_validation_rejects_unknown_consumer_scope() -> None:
+    manifest, _ = load_manifest()
+    manifest["entries"][0]["consumers"] = ["soulmate-only", "unknown"]
+
+    with pytest.raises(SoulmateSkillsBuildError, match="invalid consumer scope"):
+        validate_manifest(manifest, source_root=None)
+
+
+def test_manifest_validation_rejects_duplicate_consumer_scope() -> None:
+    manifest, _ = load_manifest()
+    manifest["entries"][0]["consumers"] = ["soulmate-only", "soulmate-only"]
+
+    with pytest.raises(SoulmateSkillsBuildError, match="invalid consumer scope"):
+        validate_manifest(manifest, source_root=None)

@@ -95,9 +95,17 @@ def _validate_entry(entry: Any, *, source_root: Path | None) -> dict[str, Any]:
         raise SoulmateSkillsBuildError(
             f"Manifest entry has an invalid kind: {entry['id']}"
         )
-    if not isinstance(entry["consumers"], list) or entry["consumers"] != [
-        "soulmate-only"
-    ]:
+    consumers = entry["consumers"]
+    if (
+        not isinstance(consumers, list)
+        or not consumers
+        or any(
+            not isinstance(consumer, str)
+            or consumer not in {"soulmate-only", "soulmap-compatible"}
+            for consumer in consumers
+        )
+        or len(consumers) != len(set(consumers))
+    ):
         raise SoulmateSkillsBuildError(
             f"Manifest entry has an invalid consumer scope: {entry['id']}"
         )

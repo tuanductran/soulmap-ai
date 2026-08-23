@@ -16,11 +16,13 @@ stability and breaking changes in behavior.
 - **soulmate**: add deterministic AI skill artifacts with manifest, provenance, and
   SHA-256 verification
 - **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
+- **integration**: add an explicit SoulMap adapter for five approved Soulmate foundation skills
 
 ### Changed
 
 - **architecture**: document the one-way SoulMap Framework to Soulmate Library boundary
 - **ci**: add PR-only Soulmate artifact build, verification, and review uploads
+- **manifest**: approve `soulmap-compatible` only for the five neutral P0 foundation entries
 
 ### Fixed
 

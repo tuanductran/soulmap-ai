@@ -156,11 +156,19 @@ def _validate_manifest(
             "manifest contains duplicate ids or sources"
         )
     for entry in entries:
+        consumers = entry.get("consumers") if isinstance(entry, dict) else None
         if (
             not isinstance(entry, dict)
             or entry.get("owner") != "Soulmate"
             or entry.get("kind") != "foundation"
-            or entry.get("consumers") != ["soulmate-only"]
+            or not isinstance(consumers, list)
+            or not consumers
+            or any(
+                not isinstance(consumer, str)
+                or consumer not in {"soulmate-only", "soulmap-compatible"}
+                for consumer in consumers
+            )
+            or len(consumers) != len(set(consumers))
             or entry.get("artifact") != "soulmate-ai"
             or entry.get("version") != version
         ):
