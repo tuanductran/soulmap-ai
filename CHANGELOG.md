@@ -5,46 +5,101 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
+## v0.10.0 (2026-08-23)
 
-### Added
+### Feat
 
-- **soulmate**: add the framework-neutral foundation library, standalone package
-  metadata, and Soulmate-only foundation skill boundary
-- **soulmate**: add lifecycle, manifest, composition, compatibility, provenance, and
-  reproducibility foundation skills
-- **soulmate**: add ten explicit AI-facing companion skills for identity, presence,
-  reflective listening, attunement, gentle inquiry, consent, grounding, human connection,
-  repair, and non-dependent session closure
-- **soulmate**: add deterministic AI skill artifacts with manifest, provenance, and
-  SHA-256 verification
-- **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
-- **integration**: add an explicit SoulMap adapter for five approved Soulmate foundation skills
-- **integration**: expose an immutable approved foundation bundle with compatibility parity checks
-- **integration**: add a SoulMap-owned consumer approval manifest and generated projection
-- **release**: stage a fail-closed Soulmate TestPyPI OIDC workflow with verified artifact handoff
-- **integration**: add an explicit SoulMap-with-Soulmate AI artifact composition with verified namespace and precedence
-- **web**: move the public Python web package to the peer `src/web/` namespace without changing routes or static export behavior
+- add SoulMap with Soulmate composed artifact
+- **soulmate**: add companion AI skill family
+- stage soulmate oidc publishing
+- sync soulmate consumer approval manifest
+- add Soulmate foundation bundle composition
+- add explicit Soulmate skill adapter
+- **soulmate**: build deterministic AI skills artifacts
+- **soulmate**: add deterministic skills artifacts
+- **soulmate**: add P2 foundation skills
+- **soulmate**: add p2 foundation skills
+- **soulmate**: add lifecycle and skill manifest foundations
+- **soulmate**: add lifecycle and skill manifest foundations
+- **soulmate**: add P0 foundation skills
+- **soulmate**: add p0 foundation skills
+- **soulmate**: extract generic JSON utilities
+- **soulmate**: extract generic text normalization
+- **soulmate**: extract generic markdown parser
+- **soulmate**: add isolated foundation package skeleton
+- **web**: open provider chooser from Use this question
+- **web**: add local fonts and Alpine interaction primitives
+- **runtime**: expand spiritual bypass locale evidence
+- **web**: add CSS-only responsive design primitives
+- **site**: unify visual system across pages
+- **site**: redesign header and landing typography
+- **site**: redesign header and landing typography
+- **site**: add Korean locale and language menu
+- **site**: add safe Skills search and ask modes
+- **site**: add advanced skills search API
+- **site**: polish Alpine modal transitions
+- **site**: add technical SEO foundations
+- **site**: add FAQ and privacy pages with i18n contract
+- **site**: use htmx for catalog filtering
+- **site**: add context-specific skill prompts
+- **site**: add Skill catalog, i18n, and AI handoff
+- **site**: publish static website to gh-pages
+- **web**: add responsive Python public site
 
-### Changed
+### Fix
 
-- **architecture**: document the one-way SoulMap Framework to Soulmate Library boundary
-- **ci**: add PR-only Soulmate artifact build, verification, and review uploads
-- **manifest**: approve `soulmap-compatible` only for the five neutral P0 foundation entries
-- **ci**: verify manifest and consumer approval synchronization before Soulmate artifact builds
+- **security**: remediate code scanning findings
+- harden Soulmate adapter integrity checks
+- **soulmate**: reject repository staging paths
+- **soulmate**: keep package staging outside repository
+- **web**: preserve scroll and unmount modal content
+- **web**: restore native page navigation
+- **web**: remove boost opt-out from skill search form
+- **web**: remove remaining htmx boost attributes
+- **web**: balance skill actions and preserve ask focus
+- **skills**: remove implementation references from packaged markdown
+- **skills**: use portable locale reference wording
+- **web**: stabilize mobile nav scroll measurement
+- **web**: complete localized raw bundle routing
+- **web**: tighten localized catalog copy and browser coverage
+- **site**: align svg affordances and web test tooling
+- **site**: keep language menu inside mobile viewport
+- **site**: make language menu touch-safe
+- **site**: remove redundant catalog count
+- **i18n**: remove unused raw heading key
+- **site**: remove redundant UI copy and hints
+- **claude**: wire eval hooks and add web audit workflow
+- **site**: separate Skill search and Ask result surfaces
+- **site**: localize shared nav and catalog labels
+- **site**: surface search errors and localize modal
+- **site**: harden runtime and static interactions
+- **site**: normalize Vietnamese i18n copy
+- **site**: add favicon asset
+- **site**: keep English pages at canonical root
+- **security**: harden static script URL validation
+- **site**: suppress htmx inline indicator styles to satisfy CSP
+- **site**: soften mirror card shape
+- **site**: complete accessibility and responsive UX audit
 
-### Fixed
+### Refactor
 
-- **soulmate**: isolate Python package staging outside the repository so source
-  distributions cannot inherit repository `.gitignore` metadata
-- **security**: validate Soulmate archive provenance and bounded size in the explicit adapter
-- **sync**: fail closed on approval drift, stale projections, unsupported consumers, and artifact-boundary violations
-- **release**: keep OIDC publication behind main-only dispatch, protected environment, explicit variables, and private-metadata checks
-- **packaging**: keep standalone SoulMap and Soulmate artifacts separate while verifying the composed artifact independently
+- **skills**: package markdown language references
+- **runtime**: separate canonical English skills from locale evidence
+- **web**: normalize CSS and expose nav scroll state
+- **web**: centralize localized catalog copy
+- **web**: move i18n catalogs to JSON
+- **web**: isolate ordered route dispatcher
+- **web**: extract skill catalog views
+- **web**: extract localized page renderers
+- **web**: extract HTTP helpers and site config
+- **web**: add catalog parity and exporter boundary
+- **web**: add incremental build boundary
+- **site**: move markup into file-based templates
+- **site**: remove redundant UI and CSS details
 
-The Soulmate package and AI skill artifacts remain pre-release and are not published to a
-package registry or public release channel. Companion skills remain `soulmate-only` and are
-not automatically consumed by the SoulMap Framework.
+### Perf
+
+- **site**: generate conservative resource hints
 
 ## v0.9.0 (2026-08-19)
 
