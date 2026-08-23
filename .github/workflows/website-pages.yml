@@ -86,7 +86,7 @@ jobs:
       - name: Install dependencies and browser
         run: |
           pnpm --dir web install --frozen-lockfile
-          pnpm --dir web exec playwright install --with-deps chromium webkit
+          pnpm --dir web exec playwright install --with-deps chromium firefox webkit
 
       - name: Run browser audit
         run: |
