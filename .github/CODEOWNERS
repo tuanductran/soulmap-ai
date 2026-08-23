@@ -18,6 +18,6 @@
 /.github/ @tuanductran
 
 # Public website and operational contracts
-/src/soulmap/web/ @tuanductran
+/src/web/ @tuanductran
 /docs/ @tuanductran
 /tests/ @tuanductran

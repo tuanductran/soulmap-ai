@@ -81,9 +81,9 @@ def test_coverage_gate_is_enforced_without_masking_failures() -> None:
     ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
 
     assert "fail_under = 95" in project_text
-    assert 'source = ["src/soulmap/runtime", "src/soulmap/web"]' in project_text
+    assert 'source = ["src/soulmap/runtime", "src/web"]' in project_text
     assert "--cov-fail-under=95" in ci_text
-    assert "--cov=src/soulmap/web" in ci_text
+    assert "--cov=src/web" in ci_text
     assert "--cov-report=json:coverage.json" in ci_text
     assert "name: soulmap-coverage" in ci_text
     assert "--cov-report=term-missing -q 2>&1 | tail" not in ci_text

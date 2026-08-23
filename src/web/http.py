@@ -6,9 +6,9 @@ from html import escape
 from urllib.parse import urlparse
 from wsgiref.types import StartResponse
 
-from soulmap.web.config import ALPINE_URL, HTMX_URL
-from soulmap.web.i18n import LOCALES as TEXT
-from soulmap.web.i18n import SUPPORTED_LOCALES
+from web.config import ALPINE_URL, HTMX_URL
+from web.i18n import LOCALES as TEXT
+from web.i18n import SUPPORTED_LOCALES
 
 
 def origin(url: str) -> str | None:

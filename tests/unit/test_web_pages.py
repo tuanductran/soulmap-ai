@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pytest
 
-from soulmap.web import pages
-from soulmap.web.i18n import SUPPORTED_LOCALES
-from soulmap.web.server import (
+from web import pages
+from web.i18n import SUPPORTED_LOCALES
+from web.server import (
     _about,
     _boundaries,
     _download,
@@ -72,7 +72,7 @@ def test_server_keeps_page_renderer_compatibility_aliases() -> None:
 
 
 def test_server_page_registry_remains_ordered_and_english_is_unprefixed() -> None:
-    from soulmap.web.server import _pages
+    from web.server import _pages
 
     registry = _pages()
     assert list(registry) == [

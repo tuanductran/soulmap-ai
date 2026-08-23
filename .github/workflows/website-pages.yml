@@ -5,7 +5,7 @@ on:
     paths:
       - ".github/workflows/website-pages.yml"
       - ".github/actions/setup-uv/**"
-      - "src/soulmap/web/**"
+      - "src/web/**"
       - "src/soulmap/cli.py"
       - "scripts/verify_static_site.py"
       - "docs/product/WEBSITE.md"
@@ -18,7 +18,7 @@ on:
     paths:
       - ".github/workflows/website-pages.yml"
       - ".github/actions/setup-uv/**"
-      - "src/soulmap/web/**"
+      - "src/web/**"
       - "src/soulmap/cli.py"
       - "scripts/verify_static_site.py"
       - "docs/product/WEBSITE.md"

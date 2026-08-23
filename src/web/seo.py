@@ -6,8 +6,8 @@ import json
 from html import escape
 from typing import Any
 
-from soulmap.web.catalog import get_skill, locale_fields
-from soulmap.web.i18n import SUPPORTED_LOCALES, messages_for
+from web.catalog import get_skill, locale_fields
+from web.i18n import SUPPORTED_LOCALES, messages_for
 
 _LOCALE_PREFIXES = {
     locale: "" if locale == "en" else f"/{locale}" for locale in SUPPORTED_LOCALES

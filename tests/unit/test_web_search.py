@@ -7,8 +7,8 @@ from typing import cast
 
 import pytest
 
-from soulmap.web import catalog
-from soulmap.web.catalog import (
+from web import catalog
+from web.catalog import (
     _normalise_search_text,
     _search_tokens,
     catalog_search_json,

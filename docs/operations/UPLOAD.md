@@ -3,9 +3,10 @@
 ## Build commands
 
 ```bash
-uv run soulmap build             # standard zip
-uv run soulmap build --skill     # skill package
-uv run soulmap library-manifest  # both archives + Library manifest
+uv run soulmap build             # standard SoulMap-only zip
+uv run soulmap build --skill     # standard SoulMap-only skill package
+uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
+uv run soulmap library-manifest  # both root archives + Library manifest
 ```
 
 ## Output formats
@@ -47,12 +48,30 @@ The Python wheel and source distribution are for local development, testing, and
 CLI tooling only. They are not standalone SoulMap knowledge runtimes and are not the
 artifacts to import into an AI tool.
 
-For AI-tool use, import one of the generated archives below:
+For AI-tool use, choose the generated archive that matches the intended layer:
 
-- `dist/soulmap-ai.skill` for skill-oriented tools that preserve `.claude-plugin/` metadata.
-- `dist/soulmap-ai.zip` for clean extraction, project knowledge, or document-oriented AI workflows.
+- `dist/soulmap-ai.skill` for the backward-compatible SoulMap-only surface.
+- `dist/soulmap-ai.zip` for clean extraction, project knowledge, or document-oriented SoulMap-only workflows.
+- `dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill` when the external AI tool must receive both SoulMap Framework and Soulmate Library in one import.
+- `dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip` for the composed clean-extraction workflow.
+- `dist/soulmate-skills/soulmate-ai.skill` when the external AI tool should use Soulmate as a standalone Library without SoulMap Framework.
 
 ## AI tool compatibility
+
+### Composed SoulMap + Soulmate artifact
+
+Use the composed artifact when the goal is for one external AI tool to load SoulMap's Framework and Soulmate's companion Library together:
+
+```bash
+uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
+uv run python scripts/verify_soulmap_with_soulmate.py \\
+  --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \\
+  --skill dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
+```
+
+The composed archive has root `SKILL.md` as its entry point. That file establishes precedence: Soulmate supplies the companion layer; SoulMap remains authoritative for orchestration, crisis/dependency safety, routing, epistemic guardrails, voice, brand, and Framework doctrine. The `soulmate/` directory is materialized in the artifact only; it is not a new root source directory and does not change the standalone artifacts.
+
+For ChatGPT conversations that accept ZIP uploads, upload the composed `.zip` and ask the tool to load root `SKILL.md` first. For Claude Custom Skills or another Agent Skills-compatible tool, upload the composed `.skill` archive, preserving all paths. For Project knowledge systems that do not accept archives, extract the artifact and upload root `SKILL.md` plus the relevant `soulmate/` and `skills/` Markdown files.
 
 ### ChatGPT
 

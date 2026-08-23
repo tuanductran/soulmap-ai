@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from soulmap.web import templates
-from soulmap.web.templates import render_template
+from web import templates
+from web.templates import render_template
 
 
 def test_render_template_loads_checked_in_layout() -> None:

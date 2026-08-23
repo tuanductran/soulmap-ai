@@ -39,7 +39,8 @@ def test_ci_build_job_verifies_and_uploads_library_manifest() -> None:
     assert EXTRACT_COMMAND in content
     assert SECURITY_COMMAND in content
     assert MANIFEST_PATH in content
-    _assert_verify_before_final_manifest_upload(content)
+    build_job = content.split("\n  build:\n", maxsplit=1)[1]
+    _assert_verify_before_final_manifest_upload(build_job)
 
 
 def test_release_workflow_verifies_before_uploading_library_manifest() -> None:

@@ -5,19 +5,19 @@ from __future__ import annotations
 from html import escape
 from urllib.parse import quote
 
-from soulmap.web.catalog import (
+from web.catalog import (
     CATALOG,
     get_skill,
     locale_fields,
     raw_path,
 )
-from soulmap.web.catalog import (
+from web.catalog import (
     raw_url as raw_bundle_url,
 )
-from soulmap.web.http import _nav_path, _text, tr
-from soulmap.web.pages import _not_found
-from soulmap.web.prompt_pack import PromptScenario, scenarios_for
-from soulmap.web.templates import render_template
+from web.http import _nav_path, _text, tr
+from web.pages import _not_found
+from web.prompt_pack import PromptScenario, scenarios_for
+from web.templates import render_template
 
 
 def _provider_url(

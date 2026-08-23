@@ -55,7 +55,7 @@ jobs:
         run: uv run python scripts/pytest_diagnostics.py
       - name: Coverage report (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
-        run: uv run pytest -n auto --randomly-seed="${PYTEST_RANDOMLY_SEED}" --cov=src/soulmap/runtime --cov=src/soulmap/web --cov-report=term-missing --cov-report=json:coverage.json --cov-fail-under=95 -q
+        run: uv run pytest -n auto --randomly-seed="${PYTEST_RANDOMLY_SEED}" --cov=src/soulmap/runtime --cov=src/web --cov-report=term-missing --cov-report=json:coverage.json --cov-fail-under=95 -q
       - name: Upload coverage report
         if: always() && matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v7
@@ -75,7 +75,18 @@ jobs:
         run: |
           uv run soulmap build
           uv run soulmap build --skill
+          uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
           uv run soulmap markdown-contract --root .
+      - name: Verify composed SoulMap-Soulmate artifacts
+        run: >-
+          uv run python scripts/verify_soulmap_with_soulmate.py
+          --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip
+          --skill dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
+      - name: Audit composed artifact security
+        run: >-
+          uv run python scripts/verify_artifact_security.py
+          dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip
+          dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
 
   knowledge-audit:
     env:
@@ -112,7 +123,9 @@ jobs:
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
       - name: Build Library distribution artifacts
-        run: uv run soulmap library-manifest
+        run: |
+          uv run soulmap library-manifest
+          uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
       - name: Verify build outputs and SHA-256 integrity
         run: |
           test -f dist/soulmap-ai.zip
@@ -131,4 +144,6 @@ jobs:
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
+            dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip
+            dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
           if-no-files-found: error

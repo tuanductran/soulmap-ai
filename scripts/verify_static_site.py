@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from urllib.parse import urlparse, urlsplit
 
-from soulmap.web.i18n import SUPPORTED_LOCALES
+from web.i18n import SUPPORTED_LOCALES
 
 REQUIRED_FILES = {
     "index.html",

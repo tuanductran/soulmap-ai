@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from soulmap.web import build, server
-from soulmap.web.server import export_static
+from web import build, server
+from web.server import export_static
 
 
 def test_source_fingerprint_changes_when_input_bytes_change(tmp_path: Path) -> None:
@@ -98,6 +98,20 @@ def test_load_reusable_output_rejects_invalid_manifests(
     assert build.load_reusable_output(cache, output, key) is None
 
 
+def test_build_inputs_tracks_peer_web_package(tmp_path: Path) -> None:
+    current = tmp_path / "src" / "web" / "site.html"
+    current.parent.mkdir(parents=True)
+    current.write_text("current", encoding="utf-8")
+    stale = tmp_path / "src" / "soulmap" / "web" / "site.html"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("stale", encoding="utf-8")
+
+    inputs = build.build_inputs(tmp_path)
+
+    assert current in inputs
+    assert stale not in inputs
+
+
 def test_iter_files_filters_missing_roots_and_generated_python_files(
     tmp_path: Path,
 ) -> None:
@@ -170,7 +184,7 @@ def test_incremental_export_reuses_verified_output(
     assert len(first) > 50
 
     monkeypatch.setattr(
-        "soulmap.web.server._pages",
+        "web.server._pages",
         lambda: pytest.fail("incremental export rendered pages again"),
     )
     second = export_static(output, "/soulmap-ai", incremental=True, cache_dir=cache)

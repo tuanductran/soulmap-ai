@@ -521,7 +521,7 @@ semantic safety classification, or platform adapter.
 ### Public Website Surface - Python-only, non-AI
 
 The repository now includes a deliberately small public website surface under
-`src/soulmap/web/`. It is served by Python's standard-library WSGI server and exists to
+`src/web/`. It is served by Python's standard-library WSGI server and exists to
 explain SoulMap, publish boundaries, and direct users to the generated `.skill` and `.zip`
 artifacts.
 
@@ -568,9 +568,10 @@ This section is the execution roadmap after the v0.9.0 baseline. It is intention
 `main`. SoulMap now has an explicit Soulmate adapter and foundation bundle, a fail-closed
 manifest-sync/consumer-approval contract, and a gated TestPyPI OIDC workflow. The OIDC
 workflow has passed a `publish=false` dry-run on `main`, including Soulmate package and
-artifact verification. The Soulmate package remains private/pre-release; no Trusted Publisher,
-`testpypi` environment, package-registry publication, GitHub Release, tag, or provider
-activation has been performed.
+artifact verification. PR #264 adds the reviewed Soulmate companion skill family and is
+currently under review; the current composition/web work is being developed separately.
+The Soulmate package remains private/pre-release; no Trusted Publisher, `testpypi` environment,
+package-registry publication, GitHub Release, tag, or provider activation has been performed.
 
 ### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
 
@@ -710,9 +711,34 @@ coverage, runtime rejection outside the explicit SoulMap projection, determinist
 build and verification, documentation truth-sync, and full repository validation. No version
 bump, registry publication, or provider activation is implied by this phase.
 
+### Phase 24 - SoulMap-on-Soulmate AI Composition and Web Package Boundary
+
+**Priority:** P0 for AI-facing integration and repository maintainability.
+
+**Goal:** Provide a third, explicit import artifact that contains SoulMap Framework plus the
+reviewed Soulmate Library, while moving the Python web package to the root `src/web/` namespace
+as a peer of `src/soulmap/` and `src/soulmate/`.
+
+The standalone `soulmap-ai.*` and `soulmate-ai.*` artifacts remain unchanged in identity and
+purpose. `soulmap-with-soulmate-ai.zip` and `.skill` are composed at build time from root
+SoulMap inputs plus the exact reviewed Soulmate manifest entries under an artifact-only
+`soulmate/` namespace. The composed top-level skill defines precedence: Soulmate supplies
+companion presence and reusable mechanics; SoulMap remains authoritative for orchestration,
+safety, routing, epistemic guardrails, voice, brand, and Framework doctrine. No source tree is
+copied into `skills/library/`, and no runtime discovery is introduced.
+
+The web application is an independent `src/web/` Python package with unchanged WSGI routes,
+static export, locale resources, templates, and browser behavior. SoulMap and Soulmate remain
+free of a reverse dependency on web behavior.
+
+**Exit criteria:** deterministic composed artifact build and verifier, standalone artifact
+isolation, exact composition-scope parity, web import/resource/browser parity, CI build and
+contract coverage, documentation truth-sync, and full validation. This phase does not imply
+version bump, registry publication, provider activation, or automatic merge.
+
 ### Global Definition of Done for Every Future Phase
 
-A phase is complete only when its source-of-truth documents are updated, characterization tests precede boundary changes, the relevant unit/contract/eval tests pass, Pyright and Ruff are clean, the full validation gates pass, static artifacts are verified when applicable, and the PR is reviewable without an automatic merge. Changes must preserve Python 3.11 support, the no-runtime-API boundary, canonical English Markdown ownership, explicitly reviewed runtime locale evidence, deterministic safety enforcement, EN/VI/KO website parity, and the two-artifact packaging contract.
+A phase is complete only when its source-of-truth documents are updated, characterization tests precede boundary changes, the relevant unit/contract/eval tests pass, Pyright and Ruff are clean, the full validation gates pass, static artifacts are verified when applicable, and the PR is reviewable without an automatic merge. Changes must preserve Python 3.11 support, the no-runtime-API boundary, canonical English Markdown ownership, explicitly reviewed runtime locale evidence, deterministic safety enforcement, EN/VI/KO website parity, and the separate standalone and composed AI artifact contracts.
 
 ---
 

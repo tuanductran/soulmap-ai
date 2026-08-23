@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "consumer_id": "soulmap-with-soulmate-ai",
+  "consumer_display_name": "SoulMap AI with Soulmate Library",
+  "library_id": "soulmate-ai",
+  "library_version": "0.1.0",
+  "library_compatibility": ">=0.1.0,<0.2.0",
+  "source_of_truth": "packages/soulmate/skills",
+  "distribution": {
+    "artifact_family": "soulmap-with-soulmate-ai",
+    "formats": [
+      "zip",
+      "skill"
+    ],
+    "status": "pre-release"
+  },
+  "entries": [
+    {
+      "id": "soulmate.foundation.contracts",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/contracts.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.resource-boundaries",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/resource-boundaries.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.knowledge-resolution",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/knowledge-resolution.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.text-normalization",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/text-normalization.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.data-validation",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/data-validation.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.lifecycle",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/lifecycle.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.skill-manifest",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/skill-manifest.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.composition-and-consumers",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/composition-and-consumers.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.compatibility-and-versioning",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/compatibility-and-versioning.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.artifact-provenance",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/artifact-provenance.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.foundation.determinism-and-reproducibility",
+      "version": "0.1.0",
+      "kind": "foundation",
+      "source": "foundation/determinism-and-reproducibility.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.identity",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/identity.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.presence",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/presence.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.reflective-listening",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/reflective-listening.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.emotional-attunement",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/emotional-attunement.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.gentle-inquiry",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/gentle-inquiry.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.boundaries-and-consent",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/boundaries-and-consent.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.grounded-companionship",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/grounded-companionship.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.human-connection-bridge",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/human-connection-bridge.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.repair-and-misattunement",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/repair-and-misattunement.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    },
+    {
+      "id": "soulmate.companion.session-closure",
+      "version": "0.1.0",
+      "kind": "companion",
+      "source": "companion/session-closure.md",
+      "compatibility": ">=0.1.0,<0.2.0"
+    }
+  ]
+}
