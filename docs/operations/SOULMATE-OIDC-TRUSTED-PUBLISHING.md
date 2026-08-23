@@ -2,11 +2,11 @@
 
 ## Scope and status
 
-This guide describes a future, maintainer-approved path for publishing the executable `soulmate-ai` Python package to TestPyPI or PyPI through GitHub Actions OpenID Connect (OIDC). It does not authorize publication and does not apply to the AI-facing `soulmate-ai.zip` or `soulmate-ai.skill` files.
+This guide describes the maintainer-approved preparation path for publishing the executable `soulmate-ai` Python package to TestPyPI or PyPI through GitHub Actions OpenID Connect (OIDC). The repository now contains a dedicated, manual-only TestPyPI workflow, but its publication gate remains closed while the package is marked private and no Trusted Publisher or protected `testpypi` environment has been configured. This guide does not apply to the AI-facing `soulmate-ai.zip` or `soulmate-ai.skill` files.
 
 PyPI Trusted Publishing uses OIDC to exchange a short-lived CI identity for a project-scoped upload token. PyPI documents that the resulting token expires automatically after a short period, which avoids storing a long-lived API token in GitHub repository secrets.[1]
 
-The repository must keep this path disabled until the package name, owner, workflow filename, environment, version strategy, and publication approval are recorded in the release evidence.
+The repository must keep the publication gate disabled until the package name, owner, workflow filename, environment, version strategy, Trusted Publisher mapping, and publication approval are recorded in the release evidence. The current workflow also requires `SOULMATE_PUBLICATION_ENABLED=true`, `SOULMATE_PUBLICATION_TARGET=testpypi`, and removal of the private-package classifier through a separate release decision.
 
 ## Distribution surfaces
 
@@ -105,7 +105,22 @@ Create a `pypi` environment in the repository settings before enabling the publi
 
 OIDC Trusted Publishing itself should not require a PyPI password or repository secret. The environment is a human approval and branch restriction boundary, not a place to store an API token.
 
-## Recommended future workflow shape
+## Staged repository workflow
+
+The repository now stages this design in `.github/workflows/soulmate-pypi-release.yml`. It is a `workflow_dispatch` workflow that accepts `publish=false` by default, runs only from `main`, builds and verifies the isolated wheel/sdist in a low-privilege job, transfers the exact verified files through an artifact, and requires a separate publication-gate job before the `testpypi` environment is reached. The publish job alone has `id-token: write`; it has no PyPI username, password, or long-lived token.
+
+The publication gate is intentionally fail-closed while `packages/soulmate/pyproject.toml` contains `Private :: Do Not Upload`. This allows the workflow and its contracts to be reviewed without making the package public or creating a registry project. The workflow uses the exact PyPA action commit `dc37677b2e1c63e2034f94d8a5b11f265b73ba33` (v1.14.2), and its TestPyPI target is explicit.
+
+After the package visibility decision, Trusted Publisher setup, and protected environment review are complete, the maintainer may set these repository variables in GitHub Settings; they are not secrets and they must not be set before that review:
+
+| Variable | Required value |
+| --- | --- |
+| `SOULMATE_PUBLICATION_ENABLED` | `true` |
+| `SOULMATE_PUBLICATION_TARGET` | `testpypi` |
+
+The workflow still requires a manual `workflow_dispatch` run with `publish=true`, and the `testpypi` environment approval remains a separate deployment gate. Setting the variables alone does not publish anything.
+
+## Reference workflow shape
 
 The following is a preparation example. It is not enabled by this guide. The publishing action reference must be replaced with a reviewed, full commit SHA before the workflow is committed. Do not copy a floating third-party action tag into a production release workflow without a pin review.
 
@@ -179,7 +194,7 @@ jobs:
 
 The build job must produce the exact files consumed by the publish job. The publish job must not rebuild from a different checkout or accept arbitrary paths. The final workflow should also run the package verifier after downloading the artifact and before the publishing action.
 
-The repository's current `soulmate-release.yml` workflow is a manual package/release preparation workflow and does not by itself establish PyPI Trusted Publishing. Do not add `id-token: write` to that workflow casually. Prefer a separately reviewed workflow whose filename, environment, and permissions are dedicated to PyPI publication.
+The existing `soulmate-release.yml` workflow remains a manual GitHub Release preparation path and does not establish PyPI Trusted Publishing. The dedicated `soulmate-pypi-release.yml` workflow owns the TestPyPI OIDC path. Do not add `id-token: write` to unrelated release, build, test, or artifact workflows.
 
 ## TestPyPI trial sequence
 
@@ -187,8 +202,8 @@ Use the following sequence for the first external trial:
 
 1. Merge the reviewed builder, verifier, manifest, CI, contribution guide, and release documentation changes.
 2. Confirm the package version, distribution names, and final source commit.
-3. Configure the TestPyPI Trusted Publisher with the exact repository, workflow filename, and protected `testpypi` environment.
-4. Run the workflow with the explicit publish input enabled only after a maintainer approves the deployment.
+3. Configure the TestPyPI Trusted Publisher with the exact repository, workflow filename, and protected `testpypi` environment; create the project only through the registry's documented trusted-publisher flow.
+4. After a separate release decision removes the private-package classifier and sets the two repository variables, manually dispatch `.github/workflows/soulmate-pypi-release.yml` from `main` with `publish=true`; approve the protected `testpypi` deployment only after the build and verifier evidence is reviewed.
 5. Verify the TestPyPI project page and install the uploaded wheel in a clean Python 3.11 environment.
 6. Confirm metadata, imports, version, and package boundary independently from the AI skill artifact.
 7. Record the workflow run, TestPyPI project URL, package version, files, sizes, and hashes.
@@ -241,11 +256,10 @@ If a token or secret is exposed, stop all publication activity and rotate or rev
 
 This guide does not:
 
-- enable OIDC in the repository;
+- register the PyPI or TestPyPI Trusted Publisher;
 - create a PyPI or TestPyPI project;
-- create GitHub environments;
-- add `id-token: write` to a workflow;
-- add a PyPI publishing action to the current release workflow;
+- create or protect GitHub environments;
+- enable the repository publication variables;
 - publish the Python package;
 - publish the AI `.zip` or `.skill` artifact;
 - define a public registry namespace without maintainer approval.

@@ -113,7 +113,7 @@ Before a release workflow is run, record one of the following decisions:
 | PyPI package release | Complete TestPyPI or equivalent acceptance, configure PyPI Trusted Publishing, publish the exact verified wheel/sdist once, and record the resulting project URL. |
 | Combined release | Complete the GitHub Release and PyPI gates independently. One successful surface does not waive the other surface's checks. |
 
-The existing manual Soulmate package workflow is not a public registry authorization. It must remain non-publishing until the package name, trusted publisher, workflow, environment, and approval are confirmed.
+The existing manual Soulmate package workflow is not a public registry authorization. It must remain non-publishing until the package name, trusted publisher, workflow, environment, and approval are confirmed. The dedicated `.github/workflows/soulmate-pypi-release.yml` workflow is the staged TestPyPI OIDC path; it remains fail-closed until its explicit repository variables and package-visibility decision are approved.
 
 ## D. GitHub Release gate for AI skills
 
@@ -138,8 +138,11 @@ Complete the separate [Soulmate OIDC Trusted Publishing guide](SOULMATE-OIDC-TRU
 - [ ] The publishing action is pinned to a reviewed full commit SHA.
 - [ ] No `PYPI_TOKEN`, password, or manually generated API token is stored in repository secrets for the Trusted Publishing path.
 - [ ] The workflow does not publish from `pull_request`, forks, arbitrary branches, or unreviewed tags.
+- [ ] `soulmate-pypi-release.yml` is manually dispatched from `main` and the publication gate requires `SOULMATE_PUBLICATION_ENABLED=true` and `SOULMATE_PUBLICATION_TARGET=testpypi`.
+- [ ] The `testpypi` environment has required reviewers and deployment restrictions before the publish job is enabled.
 - [ ] The uploaded distributions are the same files that passed package verification.
 - [ ] The release log does not print tokens or private configuration.
+- [ ] The current `Private :: Do Not Upload` classifier has been deliberately removed in a separate release decision before the first package publication.
 
 ## F. Post-release verification
 

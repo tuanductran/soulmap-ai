@@ -19,6 +19,7 @@ stability and breaking changes in behavior.
 - **integration**: add an explicit SoulMap adapter for five approved Soulmate foundation skills
 - **integration**: expose an immutable approved foundation bundle with compatibility parity checks
 - **integration**: add a SoulMap-owned consumer approval manifest and generated projection
+- **release**: stage a fail-closed Soulmate TestPyPI OIDC workflow with verified artifact handoff
 
 ### Changed
 
@@ -33,6 +34,7 @@ stability and breaking changes in behavior.
   distributions cannot inherit repository `.gitignore` metadata
 - **security**: validate Soulmate archive provenance and bounded size in the explicit adapter
 - **sync**: fail closed on approval drift, stale projections, unsupported consumers, and artifact-boundary violations
+- **release**: keep OIDC publication behind main-only dispatch, protected environment, explicit variables, and private-metadata checks
 
 The Soulmate package and AI foundation-skill artifacts remain pre-release and are not
 published to a package registry or public release channel.

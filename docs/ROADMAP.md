@@ -191,6 +191,7 @@ soulmap-ai/
 │   ├── actions/          Pinned local CI helper actions
 │   ├── dependabot.yml    uv and GitHub Actions update policy
 │   └── workflows/        ci.yml, autofix.yml, codeql.yml, release.yml,
+│                         soulmate-pypi-release.yml, soulmate-skills-ci.yml,
 │                         website-pages.yml
 ```
 
@@ -769,6 +770,7 @@ Responsibilities:
 | codeql.yml    | Static security analysis                           |
 | release.yml   | Changelog and versioned release automation          |
 | soulmate-skills-ci.yml | PR-only Soulmate skill artifact build, sync, and verification |
+| soulmate-pypi-release.yml | Manual, fail-closed TestPyPI OIDC preparation; publication requires separate approval |
 | website-pages.yml | Verified static website export and GitHub Pages publication |
 
 ### Release System
