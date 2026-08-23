@@ -8,6 +8,9 @@ LOCKFILE = REPO_ROOT / "uv.lock"
 PYPROJECT = REPO_ROOT / "pyproject.toml"
 README = REPO_ROOT / "README.md"
 UPLOAD = REPO_ROOT / "docs" / "operations" / "UPLOAD.md"
+LIBRARY = REPO_ROOT / "docs" / "operations" / "LIBRARY.md"
+KNOWN_LIMITATIONS = REPO_ROOT / "docs" / "engineering" / "known-limitations.md"
+ROADMAP = REPO_ROOT / "docs" / "ROADMAP.md"
 REPO_CONTRACT = REPO_ROOT / "docs" / "engineering" / "repo-contract.md"
 
 
@@ -47,7 +50,7 @@ def test_sdist_excludes_local_only_layers() -> None:
 
 
 def test_docs_direct_ai_imports_to_custom_artifacts() -> None:
-    for path in (README, UPLOAD, REPO_CONTRACT):
+    for path in (README, UPLOAD, LIBRARY, REPO_CONTRACT):
         text = path.read_text(encoding="utf-8")
         assert "dist/soulmap-ai.skill" in text
         assert "dist/soulmap-ai.zip" in text
@@ -56,5 +59,22 @@ def test_docs_direct_ai_imports_to_custom_artifacts() -> None:
     upload = UPLOAD.read_text(encoding="utf-8")
     assert "local developer/test tooling" in readme
     assert "not standalone" in readme
+    assert "soulmap-with-soulmate-ai" in readme
+    assert "soulmate-ai" in readme
+    assert "uv run soulmap build-composed" in readme
+    assert "scripts/build_soulmate_skills.py" in readme
+    assert "dist/soulmate-ai/soulmate-ai.skill" in readme
     assert "Python wheel and source distribution are for local development" in upload
     assert "artifacts to import into an AI tool" in upload.replace("\n", " ")
+    library = LIBRARY.read_text(encoding="utf-8")
+    assert "standalone SoulMap Framework" in library
+    assert "not silently added to the standalone Library manifest" in library
+
+
+def test_active_packaging_truth_surfaces_describe_composition() -> None:
+    for path in (README, LIBRARY, KNOWN_LIMITATIONS, ROADMAP, REPO_CONTRACT):
+        text = path.read_text(encoding="utf-8")
+        assert "soulmap-with-soulmate-ai" in text
+        assert "soulmate-ai" in text
+        assert "exactly two" not in text.lower()
+        assert "two-artifact model" not in text.lower()

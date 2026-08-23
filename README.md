@@ -120,14 +120,19 @@ workflow boundaries, and its deliberate separation from the shipped AI artifacts
 ```bash
 uv run soulmap build
 uv run soulmap build --skill
+uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
+uv run python scripts/build_soulmate_skills.py --output-dir dist/soulmate-ai
 ```
 
 Outputs:
 
-- `dist/soulmap-ai.zip`, standard knowledge archive without `.claude-plugin/`
-- `dist/soulmap-ai.skill`, skill package with `.claude-plugin/` preserved
+- `dist/soulmap-ai.zip`, the standalone SoulMap Framework archive without `.claude-plugin/`
+- `dist/soulmap-ai.skill`, the standalone SoulMap Framework skill package with `.claude-plugin/` preserved
+- `dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip`, the composed Framework plus Soulmate archive
+- `dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill`, the composed Framework plus Soulmate skill package
+- `dist/soulmate-ai/soulmate-ai.zip` and `dist/soulmate-ai/soulmate-ai.skill`, the standalone Soulmate Library artifacts
 
-For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
+The composed builder is separate from the standalone builders. It materializes the reviewed Soulmate entries under an artifact-local `soulmate/` namespace and keeps SoulMap's root `SKILL.md` authoritative. For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
 ## Distribution boundary
 
@@ -135,9 +140,13 @@ The Python wheel and source distribution are local developer/test tooling surfac
 provide the `soulmap` CLI and repository validation code, but they are not standalone
 knowledge-base runtimes and do not replace the repository's `skills/` source tree.
 
-For use in AI tools, import the generated `dist/soulmap-ai.skill` or
-`dist/soulmap-ai.zip` artifact. Those artifacts are the supported distribution surface for
-SoulMap doctrine and package knowledge; the Python distribution is not an AI Skill installer.
+For use in AI tools, choose the artifact that matches the intended scope. Import
+`dist/soulmap-ai.skill` or `dist/soulmap-ai.zip` for the standalone SoulMap Framework;
+import the standalone `soulmate-ai` artifact for the Soulmate Library alone; and import
+`dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill` or its ZIP counterpart when
+an external AI host must use SoulMap on top of Soulmate. In the composed artifact, the root
+`SKILL.md` is loaded first and defines Framework precedence. The Python distribution is not
+an AI Skill installer and the repository does not host an AI model or provider API.
 
 ## Where to start
 

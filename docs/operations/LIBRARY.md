@@ -1,6 +1,6 @@
 # SoulMap AI Library
 
-SoulMap AI Library v1 is the repository's versioned catalog and distribution index for the SoulMap knowledge skills. It gives every release a stable identity, compatibility description, release URL, and cryptographic record for the two shipped archives.
+SoulMap AI Library v1 is the repository's versioned catalog and distribution index for the standalone SoulMap Framework knowledge skills. It gives every release a stable identity, compatibility description, release URL, and cryptographic record for the two standalone release archives.
 
 > The Library is a **versioned catalog and distribution contract**, not an automatic installer or a public marketplace registration.
 
@@ -52,13 +52,13 @@ The manifest is generated after the archives, so its hashes describe the exact f
 
 Library v1 supports **manual upload** to compatible tools. The manifest does not claim automatic installation, background synchronization, or platform acceptance. Use [`UPLOAD.md`](UPLOAD.md) for platform-specific instructions.
 
-For a compatible Skills runtime, upload or unpack `dist/soulmap-ai.skill` without changing internal paths. For document-based project knowledge, use `dist/soulmap-ai.zip` or extract it and upload the supported Markdown files. Keep `.claude-plugin/marketplace.json` opaque during packaging and upload.
+For a compatible Skills runtime, upload or unpack `dist/soulmap-ai.skill` without changing internal paths. For document-based project knowledge, use `dist/soulmap-ai.zip` or extract it and upload the supported Markdown files. When the external AI host must run SoulMap on top of Soulmate, use the separately built `soulmap-with-soulmate-ai` artifact described in [`UPLOAD.md`](UPLOAD.md); it is not silently added to the standalone Library manifest. Keep `.claude-plugin/marketplace.json` opaque during packaging and upload.
 
 Platform behavior must be recorded separately in the internal launch checklist. Repository tests verify package structure and metadata; they do not claim to prove a third-party platform's live behavior.
 
 ## Release procedure
 
-Before a release, run the repository workflow described in [`../../docs/engineering/DEV.md`](../engineering/DEV.md), then run `uv run soulmap library-manifest`. The release workflow should publish all three files under the matching Git tag:
+Before a standalone SoulMap release, run the repository workflow described in [`../../docs/engineering/DEV.md`](../engineering/DEV.md), then run `uv run soulmap library-manifest`. The release workflow should publish the three standard release files (the Library manifest plus the two standalone SoulMap archives) under the matching Git tag. The composed `soulmap-with-soulmate-ai` artifact remains an explicit pre-release import surface and is not implied to be a GitHub Release asset by this document:
 
 ```text
 https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}

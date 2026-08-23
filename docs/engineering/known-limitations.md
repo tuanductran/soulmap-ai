@@ -373,14 +373,19 @@ to fall through to multiple frameworks simultaneously.
 
 ### What it is
 
-The SoulMap build system produces exactly two distribution artifacts:
-`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. The content of each is
-fixed by [`docs/engineering/repo-contract.md`](repo-contract.md).
+The repository produces two standalone SoulMap Framework artifacts and one explicit
+composed import artifact. The standalone pair is `dist/soulmap-ai.zip` and
+`dist/soulmap-ai.skill`; the composed pair is built under
+`dist/soulmap-with-soulmate-ai/` as `soulmap-with-soulmate-ai.zip` and
+`soulmap-with-soulmate-ai.skill`. Their content is fixed by
+[`docs/engineering/repo-contract.md`](repo-contract.md) and the composed artifact contract.
 
-`templates/` is excluded from both artifacts. It is internal-only. The
-`.claude/` local workflow layer is excluded from both artifacts.
-`.claude-plugin/` is included only in `dist/soulmap-ai.skill`, not in
-`dist/soulmap-ai.zip`.
+`templates/` and the `.claude/` local workflow layer are excluded from all AI-facing
+artifacts. The standalone SoulMap `.claude-plugin/` directory is included only in
+`dist/soulmap-ai.skill`, not in `dist/soulmap-ai.zip`; the composed `.skill` retains the
+plugin metadata while its ZIP omits it. Soulmate source remains under
+`packages/soulmate/skills/` and is materialized only under the composed artifact's
+artifact-local `soulmate/` namespace.
 
 ### Why it exists
 
@@ -391,24 +396,29 @@ against.
 
 ### Why it is intentional
 
-The two-artifact model separates standard knowledge extraction (zip) from
-skill-package tooling (skill). A consumer using document-style AI tooling
-does not receive the `.claude-plugin/` metadata, which is relevant only to
-skill-oriented environments.
+The standalone pair separates standard knowledge extraction (ZIP) from skill-package
+tooling (SKILL). The composed pair adds an explicit external-tool import surface for the
+case where SoulMap Framework must run on top of the Soulmate Library. The composed root
+`SKILL.md` establishes precedence; it is not dynamic discovery and does not change the
+standalone artifacts.
 
 ### Benefits
 
-- Packaging is verifiable in CI.
-- Internal-only content (`templates/`, `.claude/`) cannot accidentally ship.
-- Skill-package consumers receive the `.claude-plugin/` metadata they need;
-  standard consumers do not receive noise.
+- Each artifact family is allow-listed and verifiable in CI.
+- Internal-only content (`templates/`, `.claude/`, and source-only approval metadata) cannot accidentally ship.
+- Skill-package consumers receive `.claude-plugin/` metadata only in `.skill` outputs;
+  standard ZIP consumers do not receive it.
+- Composed consumers receive an explicit, reviewed Soulmate projection without changing
+  runtime SoulMap approval or enabling dynamic discovery.
 
 ### Implementation boundary
 
 | Artifact | Includes | Excludes |
 | --- | --- | --- |
-| `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `AGENTS.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
-| `dist/soulmap-ai.skill` | zip contents plus `.claude-plugin/` | `templates/`, `.claude/` |
+| `dist/soulmap-ai.zip` | SoulMap `skills/`, `SKILL.md`, `AGENTS.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/`, Soulmate content |
+| `dist/soulmap-ai.skill` | standalone ZIP contents plus `.claude-plugin/` | `templates/`, `.claude/`, Soulmate content |
+| `dist/soulmap-with-soulmate-ai.zip` | standalone SoulMap content plus reviewed `soulmate/` projection | `.claude/`, source trees, `.claude-plugin/` |
+| `dist/soulmap-with-soulmate-ai.skill` | composed ZIP contents plus `.claude-plugin/` | `templates/`, `.claude/`, source trees |
 
 ### Related documentation
 
@@ -417,9 +427,11 @@ skill-oriented environments.
 
 ### Related implementation
 
-- `src/soulmap/devtools/` - build CLI entry points
-- `.distignore` - exclusion list for build packaging
-- `.github/workflows/release.yml` - release packaging steps
+- `src/soulmap/devtools/packaging/build_skill.py` - standalone SoulMap builder
+- `src/soulmap/devtools/packaging/composition.py` - composed SoulMap/Soulmate builder
+- `.distignore` - exclusion list for standalone packaging
+- `.github/workflows/ci.yml` - build, verification, and upload contracts
+- `.github/workflows/release.yml` - release packaging steps for the standalone release flow
 
 ---
 

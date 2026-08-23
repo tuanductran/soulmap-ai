@@ -166,7 +166,7 @@ A sibling bounded context is safer than copying or renaming the current package.
 
 A dedicated `skills/library/` namespace gives reusable Markdown a clear home, but the packaging constraint makes it important to distinguish shared knowledge from Soulmate-only knowledge. The namespace is therefore intentionally non-routing and contract-driven. This prevents a new directory from silently changing the current framework selector or expanding the SoulMap artifact without review.
 
-Separate artifacts are a later consequence of identity and packaging isolation, not a prerequisite for the first skeleton. Keeping that decision explicit avoids leaking Python internals into AI-facing packages and avoids turning the current two-artifact release contract into an accidental multi-product bundle.
+Separate artifacts are a later consequence of identity and packaging isolation, not a prerequisite for the first skeleton. Keeping that decision explicit avoids leaking Python internals into AI-facing packages and avoids turning the then-current standalone two-artifact release contract into an accidental multi-product bundle. The later composed SoulMap-with-Soulmate surface is governed separately by [ADR #0005](0005-soulmap-with-soulmate-ai-composed-artifact.md) and does not alter the standalone contract.
 
 The staged extraction strategy protects the most sensitive parts of the repository. In particular, crisis detection, response-safety enforcement, SoulMap routing priority, and canonical framework content are not generic merely because another package might want to call them. Their ownership must be demonstrated before any migration is considered.
 
