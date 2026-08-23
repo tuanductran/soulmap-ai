@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Soulmate is the framework-neutral foundation library. SoulMap is the opinionated consumer framework. This document defines the explicit seam by which SoulMap may consume a reviewed subset of Soulmate AI foundation skills without turning the Soulmate directory into an implicit plugin registry.
+Soulmate is the independent library with two AI-facing layers: reusable foundation skills and a Soulmate-owned companion skill family. SoulMap is the opinionated consumer framework. This document defines the explicit seam by which SoulMap may consume a reviewed subset of Soulmate foundation skills without turning the Soulmate directory into an implicit plugin registry.
 
 The adapter is consumer-owned and lives at `soulmap.runtime.knowledge`. Soulmate does not import SoulMap, read SoulMap configuration, or decide routing, safety, voice, brand, spiritual, or presentation policy.
 
@@ -18,7 +18,13 @@ Only the following five neutral foundation entries are currently approved for So
 | `soulmate.foundation.text-normalization` | Conservative lexical normalization | `soulmate-only`, `soulmap-compatible` |
 | `soulmate.foundation.data-validation` | Bounded JSON parsing and basic field validation | `soulmate-only`, `soulmap-compatible` |
 
-Lifecycle, manifest, composition, compatibility, provenance, and reproducibility entries remain `soulmate-only` until a separate ownership and integration review approves them. SoulMap crisis policy, response safety, routing, voice, brand, spiritual content, and framework behavior remain SoulMap-owned.
+Lifecycle, manifest, composition, compatibility, provenance, and reproducibility entries remain `soulmate-only` until a separate ownership and integration review approves them. The new `companion/` entries are also `soulmate-only`: they define Soulmate's transparent, warm, non-exclusive companion posture and are not part of the SoulMap approval projection. SoulMap crisis policy, response safety, routing, voice, brand, spiritual content, and framework behavior remain SoulMap-owned.
+
+## Soulmate companion skill family
+
+The independent Soulmate AI artifact now contains an explicit `companion/` family alongside the generic `foundation/` family. Companion entries cover identity, presence, reflective listening, emotional attunement, gentle inquiry, boundaries and consent, grounded companionship, human connection, repair, and session closure. They are written for Soulmate users and are not generic clinical advice, spiritual authority, or a replacement for the host tool's safety policy.
+
+The companion family must remain transparent about being AI, avoid exclusivity and emotional manipulation, preserve human relationships and user agency, accept correction, and make it easy to pause or leave. Its manifest entries use `kind: companion` and `consumers: ["soulmate-only"]`. SoulMap's adapter does not load these entries because its generated projection contains only the five explicitly approved neutral foundation IDs.
 
 ## Explicit loading API
 
@@ -93,7 +99,7 @@ uv run python scripts/verify_soulmate_consumer_sync.py --check
 
 The verifier rejects malformed or unknown fields, unsupported consumer values, duplicate IDs or sources, unsafe paths, missing or extra approvals, ID/source/version/compatibility mismatches, order drift, package compatibility drift, stale projections, and non-Soulmate foundation entries. It never silently grants `soulmap-compatible`; the approval JSON remains the explicit human-reviewed decision. The Soulmate skills CI runs `--check` before building or verifying the `.zip` and `.skill` artifacts.
 
-The approval JSON and generated projection are excluded from Soulmate artifacts. They are SoulMap consumer metadata, not generic Soulmate foundation content, and must never be copied into `packages/soulmate/skills/` or the Soulmate artifact allow-list.
+The approval JSON and generated projection are excluded from Soulmate artifacts. They are SoulMap consumer metadata, not generic Soulmate or companion content, and must never be copied into `packages/soulmate/skills/` or the Soulmate artifact allow-list.
 
 ## Artifact and release boundary
 
@@ -103,13 +109,14 @@ The root SoulMap artifact builder remains separate. It must not absorb the Soulm
 
 ## Validation
 
-The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_consumer_sync_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
+The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_consumer_sync_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, `tests/contract/test_soulmate_companion_skills_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
 
 ```bash
 uv run python scripts/verify_soulmate_consumer_sync.py --check
 uv run pytest -q tests/contract/test_soulmate_adapter_contract.py
 uv run pytest -q tests/contract/test_soulmate_consumer_sync_contract.py
 uv run pytest -q tests/contract/test_soulmate_foundation_skills_contract.py
+uv run pytest -q tests/contract/test_soulmate_companion_skills_contract.py
 uv run python scripts/build_soulmate_skills.py
 uv run python scripts/verify_soulmate_skills.py \
   --zip dist/soulmate-skills/soulmate-ai.zip \

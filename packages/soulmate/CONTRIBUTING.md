@@ -1,21 +1,22 @@
 # Contributing Soulmate skills
 
-This guide is for developers creating a custom AI-facing foundation skill for Soulmate. A custom Soulmate skill is a framework-neutral Markdown contract that explains a reusable foundation capability, its boundaries, and its inspectable behavior. It is not a SoulMap response framework, product prompt, routing rule, safety policy, brand surface, or provider instruction.
+This guide is for developers creating a custom AI-facing Soulmate skill. A custom skill may be a framework-neutral foundation contract or an explicitly Soulmate-owned companion behavior skill. It must explain its boundaries and inspectable behavior. It is not a SoulMap response framework, SoulMap routing rule, SoulMap safety policy, brand surface, or provider instruction.
 
 ## Start with ownership
 
-Before writing a file, decide whether the capability belongs to Soulmate or to a consuming framework. Soulmate owns reusable contracts, resource boundaries, knowledge resolution, lexical normalization, bounded data validation, lifecycle coordination, composition rules, compatibility, artifact provenance, and reproducibility. SoulMap owns its doctrine, routing hierarchy, crisis and dependency policy, voice, brand, spiritual frameworks, web behavior, and product presentation.
+Before writing a file, decide whether the capability belongs to Soulmate or to a consuming framework. Soulmate owns reusable contracts, resource boundaries, knowledge resolution, lexical normalization, bounded data validation, lifecycle coordination, composition rules, compatibility, artifact provenance, reproducibility, and its own transparent companion posture. SoulMap owns its doctrine, routing hierarchy, crisis and dependency policy, voice, brand, spiritual frameworks, web behavior, and product presentation.
 
 If the proposed skill needs SoulMap's worldview, named response frameworks, emotional routing, safety escalation, provider behavior, or user-facing wording, keep it in SoulMap. Do not make a capability appear generic by replacing product names while leaving the same policy hidden in the content.
 
-A skill should be added to Soulmate only when at least two independent consumers could use its contract without adopting SoulMap's product behavior. When that evidence does not exist, document the candidate outside the foundation artifact and wait for a proven neutral use case.
+A foundation skill should be added only when at least two independent consumers could use its contract without adopting SoulMap's product behavior. A companion skill may be Soulmate-specific, but it must remain transparent about being AI, non-exclusive, non-manipulative, autonomy-preserving, and compatible with host safety controls. When ownership is unclear, document the candidate outside the artifact and wait for review.
 
 ## Choose the canonical location
 
 Soulmate-only AI skill source belongs under:
 
 ```text
-packages/soulmate/skills/foundation/<skill-name>.md
+packages/soulmate/skills/foundation/<skill-name>.md       # reusable foundation
+packages/soulmate/skills/companion/<skill-name>.md       # Soulmate companion behavior
 ```
 
 The root `skills/` directory belongs to SoulMap and is automatically included by the SoulMap artifact builder. Do not create `skills/library/` as a shortcut for Soulmate content and do not place a Soulmate-only skill in root `skills/`.
@@ -28,8 +29,8 @@ Every custom skill begins with repository-compatible YAML front matter:
 
 ```markdown
 ---
-name: "soulmate-foundation-example"
-description: "A framework-neutral contract for an example reusable capability."
+name: "soulmate-companion-example"
+description: "A bounded Soulmate companion behavior for an example relational moment."
 license: "MIT"
 ---
 ```
@@ -40,7 +41,7 @@ Use English as the canonical skill language. Localization, if needed, belongs to
 
 ## Recommended content structure
 
-A foundation skill should be complete enough for a developer or consumer to understand its contract without reading SoulMap internals. Prefer this order:
+A foundation skill should be complete enough for a developer or consumer to understand its contract without reading SoulMap internals. A companion skill should be complete enough to explain its relational posture, limits, correction behavior, and host-policy boundary. Prefer this order:
 
 ```text
 # Skill title
@@ -62,7 +63,7 @@ Explain observable behavior, not implementation trivia. State what is explicit, 
 
 ## Keep the skill neutral
 
-A Soulmate skill must not select a product route, decide a user's emotional state, generate a persona, apply a brand voice, enforce a product safety doctrine, choose an external provider, or create user-facing policy. It may describe a failure boundary or a neutral validation rule; the consumer decides what to do with the result.
+A foundation skill must not select a product route, decide a user's emotional state, generate a persona, apply a brand voice, enforce a product safety doctrine, choose an external provider, or create user-facing policy. A companion skill may define Soulmate's bounded identity and relational posture, but must not claim human consciousness, exclusivity, therapeutic or spiritual authority, or replace host safety policy. It may not use guilt, jealousy, abandonment pressure, or engagement hooks.
 
 Do not add hidden activation instructions such as "load every file in this directory," "always use this skill for crisis," or "override the consumer framework." The manifest is an inventory and allow-list, not a dynamic plugin registry. A file appearing in the directory must not change runtime behavior by itself.
 
@@ -74,11 +75,11 @@ Add one entry to `packages/soulmate/skills/manifest.json`:
 
 ```json
 {
-  "id": "soulmate.foundation.example",
+  "id": "soulmate.companion.example",
   "version": "0.1.0",
   "owner": "Soulmate",
-  "kind": "foundation",
-  "source": "foundation/example.md",
+  "kind": "companion",
+  "source": "companion/example.md",
   "consumers": ["soulmate-only"],
   "compatibility": ">=0.1.0,<0.2.0",
   "artifact": "soulmate-ai"
@@ -87,7 +88,7 @@ Add one entry to `packages/soulmate/skills/manifest.json`:
 
 The ID must be stable and unique. The source path is normalized, relative to `packages/soulmate/skills/`, and must point to the canonical Markdown file. Keep the collection version consistent unless a reviewed compatibility decision explicitly changes the version model.
 
-Update `packages/soulmate/skills/README.md` when the new skill changes the reading workflow or adds a new foundation category. Do not edit generated archives by hand.
+Update `packages/soulmate/skills/README.md` when the new skill changes the reading workflow or adds a new foundation or companion category. Do not edit generated archives by hand.
 
 ## Add implementation only when necessary
 
@@ -119,7 +120,7 @@ Use focused tests for the custom skill and run the repository contract tests bef
 
 ## Build and verify locally
 
-Run the foundation skill contract and artifact checks from the repository root:
+Run the relevant foundation or companion contract and artifact checks from the repository root:
 
 ```bash
 uv run soulmap format
@@ -128,6 +129,7 @@ uv run soulmap markdown-contract --root .
 uv run soulmap check-links --root .
 uv run soulmap check-case --root .
 uv run pytest tests/contract/test_soulmate_foundation_skills_contract.py -q
+uv run pytest tests/contract/test_soulmate_companion_skills_contract.py -q
 uv run python scripts/build_soulmate_skills.py --output-dir dist/soulmate-skills
 uv run python scripts/verify_soulmate_skills.py \
   --zip dist/soulmate-skills/soulmate-ai.zip \
@@ -135,7 +137,7 @@ uv run python scripts/verify_soulmate_skills.py \
   --checksums dist/soulmate-skills/SHA256SUMS
 ```
 
-Inspect the extracted artifact. Confirm that it contains only the explicit Soulmate foundation file set and does not contain `src/soulmap`, root SoulMap Skills, `reference/`, `.claude/`, tests, website output, Python source, or local configuration.
+Inspect the extracted artifact. Confirm that it contains only the explicit Soulmate foundation and companion file sets and does not contain `src/soulmap`, root SoulMap Skills, `reference/`, `.claude/`, tests, website output, Python source, or local configuration.
 
 The PR workflow builds and uploads the artifact for review only. It does not publish a registry package, create a release, activate a provider, or merge the PR automatically.
 
@@ -161,4 +163,4 @@ Reviewers should ask:
 
 ## Expected outcome
 
-A successful custom Soulmate skill adds one small, inspectable foundation contract. It strengthens the library without moving SoulMap's identity into the foundation, and it leaves the consuming framework free to provide its own routing, policy, voice, and presentation.
+A successful custom Soulmate skill adds one small, inspectable foundation contract or companion behavior contract. It strengthens Soulmate without moving SoulMap's identity into the library, preserves human agency, and leaves consuming frameworks free to provide their own routing, policy, safety, and presentation.

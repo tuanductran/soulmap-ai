@@ -1,4 +1,4 @@
-"""Build the isolated, deterministic Soulmate AI foundation-skill artifacts."""
+"""Build isolated, deterministic Soulmate AI skill artifacts."""
 
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ def _validate_entry(entry: Any, *, source_root: Path | None) -> dict[str, Any]:
         raise SoulmateSkillsBuildError(
             f"Manifest entry has an invalid owner: {entry['id']}"
         )
-    if entry["kind"] != "foundation":
+    if entry["kind"] not in {"foundation", "companion"}:
         raise SoulmateSkillsBuildError(
             f"Manifest entry has an invalid kind: {entry['id']}"
         )
@@ -235,7 +235,7 @@ def validate_manifest(
     versions = {entry["version"] for entry in normalized}
     if len(versions) != 1:
         raise SoulmateSkillsBuildError(
-            "All current foundation skills must share one collection version"
+            "All current Soulmate skills must share one collection version"
         )
     return normalized
 

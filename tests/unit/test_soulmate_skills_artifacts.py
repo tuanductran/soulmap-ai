@@ -66,12 +66,13 @@ def test_builder_creates_verified_zip_and_skill_projections(tmp_path: Path) -> N
         checksum_path=checksums,
     )
 
-    assert len(manifest["entries"]) == 11
+    assert len(manifest["entries"]) == 21
     assert zip_path.read_bytes() == skill_path.read_bytes()
     with zipfile.ZipFile(zip_path) as archive:
         names = set(archive.namelist())
     assert "artifact-contract.md" in names
     assert "skills/foundation/contracts.md" in names
+    assert "skills/companion/identity.md" in names
     assert not any(name.startswith("src/") for name in names)
     assert not any("soulmap" in name.casefold() for name in names)
 
@@ -99,7 +100,9 @@ def test_projection_contains_artifact_contract_and_normalized_entries() -> None:
             "PROVENANCE.json",
         ],
     }
-    assert all(entry["source"].startswith("foundation/") for entry in entries)
+    assert all(
+        entry["source"].startswith(("foundation/", "companion/")) for entry in entries
+    )
 
 
 def test_manifest_validation_rejects_missing_artifact_contract() -> None:

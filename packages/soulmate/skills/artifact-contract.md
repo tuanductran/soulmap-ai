@@ -8,11 +8,11 @@ license: "MIT"
 
 ## Status
 
-This contract defines the pre-release `soulmate-ai` AI-facing artifact. It is a build and verification contract, not a public registry or release authorization. The current distribution remains private until a maintainer approves a namespace, release policy, and publication mechanism.
+This contract defines the pre-release `soulmate-ai` AI-facing artifact containing explicit foundation and companion skill entries. It is a build and verification contract, not a public registry or release authorization. The current distribution remains private until a maintainer approves a namespace, release policy, and publication mechanism.
 
 ## Artifact identity
 
-The artifact family is `soulmate-ai`. Its content is framework-neutral foundation knowledge for the Soulmate library. It is separate from the executable Soulmate Python package and separate from every SoulMap Framework artifact.
+The artifact family is `soulmate-ai`. Its content may contain framework-neutral foundation knowledge and explicitly Soulmate-owned companion behavior. Companion behavior must remain transparent, non-exclusive, non-manipulative, and compatible with host safety controls. The artifact is separate from the executable Soulmate Python package and separate from every SoulMap Framework artifact.
 
 The artifact version is the shared version declared by the selected foundation skill entries. A future release may introduce a collection-level version, but the builder must not silently combine entries with different content versions.
 
@@ -33,9 +33,10 @@ artifact-contract.md
 manifest.json
 PROVENANCE.json
 skills/foundation/<manifest-selected Markdown files>
+skills/companion/<manifest-selected Markdown files>
 ```
 
-The exact `skills/foundation/` set is the manifest's ordered entry set. No file is included merely because it exists below the source directory.
+The exact `skills/foundation/` and `skills/companion/` sets are the manifest's ordered entry set. No file is included merely because it exists below the source directory.
 
 Allowed file types are UTF-8 Markdown for skills and the explicitly named UTF-8 metadata files. The artifact contains no Python source, package build metadata, lockfile, test, website, private configuration, or generated repository state.
 
@@ -74,7 +75,7 @@ An error must not be converted into an empty artifact or a successful partial bu
 
 ## Boundary exclusions
 
-The Soulmate AI artifact must not contain the root SoulMap `skills/` tree, `src/soulmap/`, executable Python source, `reference/`, `.claude/`, `.github/`, tests, website exports, package lockfiles, or local build state. SoulMap-specific routing, crisis policy, safety doctrine, voice, brand, spiritual content, and provider behavior remain outside this artifact.
+The Soulmate AI artifact must not contain the root SoulMap `skills/` tree, `src/soulmap/`, executable Python source, `reference/`, `.claude/`, `.github/`, tests, website exports, package lockfiles, or local build state. SoulMap-specific routing, crisis policy, safety doctrine, voice, brand, spiritual content, and provider behavior remain outside this artifact. Soulmate companion behavior must not be treated as a replacement for a host's safety or domain policy.
 
 A boundary exclusion applies even when a file appears useful to a consumer. Inclusion requires a separate contract and explicit manifest entry; similarity of subject matter is not permission to cross ownership boundaries.
 
@@ -104,7 +105,7 @@ Local build and CI artifact upload are permitted for review. Creating a GitHub R
 
 ## Review checklist
 
-A P3-A artifact is ready for review only when:
+A Soulmate AI skills artifact is ready for review only when:
 
 1. the canonical manifest and artifact contract validate;
 2. the builder uses the explicit allow-list and clean output directory;

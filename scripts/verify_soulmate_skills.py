@@ -1,4 +1,4 @@
-"""Verify isolated Soulmate AI foundation-skill artifacts fail-closed."""
+"""Verify isolated Soulmate AI skill artifacts fail-closed."""
 
 from __future__ import annotations
 
@@ -89,11 +89,11 @@ def _expected_files(manifest: dict[str, Any]) -> set[str]:
         source = entry.get("source")
         if (
             not isinstance(source, str)
-            or not source.startswith("foundation/")
+            or not (source.startswith("foundation/") or source.startswith("companion/"))
             or not source.endswith(".md")
         ):
             raise SoulmateSkillsVerificationError(
-                "manifest contains an invalid foundation source"
+                "manifest contains an invalid skill source"
             )
         expected.add(f"skills/{source}")
     return expected
@@ -160,7 +160,7 @@ def _validate_manifest(
         if (
             not isinstance(entry, dict)
             or entry.get("owner") != "Soulmate"
-            or entry.get("kind") != "foundation"
+            or entry.get("kind") not in {"foundation", "companion"}
             or not isinstance(consumers, list)
             or not consumers
             or any(

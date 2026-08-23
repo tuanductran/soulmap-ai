@@ -111,6 +111,11 @@ def test_adapter_rejects_unapproved_ids_before_loading() -> None:
         SoulmateSkillLoader(SKILLS_ROOT).load("soulmate.foundation.lifecycle")
 
 
+def test_adapter_rejects_soulmate_companion_ids_before_loading() -> None:
+    with pytest.raises(SoulmateSkillLoadError, match="does not approve"):
+        SoulmateSkillLoader(SKILLS_ROOT).load("soulmate.companion.identity")
+
+
 def test_adapter_facade_delegates_explicit_selection_and_batch_loading() -> None:
     adapter = SoulMapSoulmateAdapter(SoulmateSkillLoader(SKILLS_ROOT))
 

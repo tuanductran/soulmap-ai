@@ -1,18 +1,20 @@
 ---
-name: "soulmate-foundation-skills"
-description: "Framework-neutral AI-facing foundation skills for the Soulmate library."
+name: "soulmate-ai-skills"
+description: "AI-facing foundation and companion skills for the Soulmate library."
 license: "MIT"
 ---
 
-# Soulmate foundation skills
+# Soulmate AI skills
 
 ## Purpose
 
-This directory contains the current AI-facing foundation skills for Soulmate. The canonical `artifact-contract.md` in this directory defines the independent ZIP/SKILL distribution boundary. The initial P0 set covers reusable contracts and deterministic data capabilities; the P1 and P2 additions cover lifecycle, manifest, composition, compatibility, provenance, and reproducibility without importing SoulMap's doctrine, routing policy, safety posture, voice, brand, or spiritual frameworks.
+This directory contains the current AI-facing skills for Soulmate. The canonical `artifact-contract.md` in this directory defines the independent ZIP/SKILL distribution boundary. The `foundation/` group covers reusable contracts and deterministic data capabilities; the `companion/` group defines Soulmate's own transparent, warm, autonomy-preserving companion behavior.
 
-These skills are written for a future Soulmate skill artifact. They are not part of the root SoulMap skill bundle, and they do not instruct a consuming framework how to behave as a product.
+The companion group is Soulmate-owned product identity, not a generic clinical, spiritual, or framework policy. It must remain honest about being AI, preserve human connection, and avoid exclusivity, manipulation, diagnosis, prophecy, or dependency. These skills are separate from the root SoulMap skill bundle and do not silently activate SoulMap routing.
 
 ## Skills in this group
+
+### Foundation skills
 
 | Skill | Foundation concern | Recommended role |
 | --- | --- | --- |
@@ -27,26 +29,40 @@ These skills are written for a future Soulmate skill artifact. They are not part
 | `compatibility-and-versioning.md` | Compatibility dimensions, ranges, deprecation, and migration | Use when changing a public contract or version boundary |
 | `artifact-provenance.md` | Canonical source, allow-list, staging, extraction, and release evidence | Use before building or reviewing a generated artifact |
 | `determinism-and-reproducibility.md` | Repeatable behavior, source selection, build evidence, and claim levels | Use when making stability or reproducibility claims |
-| `artifact-contract.md` | Canonical file set, formats, allow-list, provenance, integrity, and release boundary | Read before building or verifying the AI artifact |
+
+### Soulmate companion skills
+
+| Skill | Companion concern | Recommended role |
+| --- | --- | --- |
+| `companion/identity.md` | Transparent AI identity and non-human limits | Establish what Soulmate is and is not |
+| `companion/presence.md` | Warm, unhurried attention | Offer company without pressure or forced positivity |
+| `companion/reflective-listening.md` | Evidence-grounded reflection | Return words and feelings without diagnosis or certainty |
+| `companion/emotional-attunement.md` | Calibrated warmth and depth | Match pace and ask consent before going deeper |
+| `companion/gentle-inquiry.md` | One respectful question at a time | Support self-understanding without interrogation |
+| `companion/boundaries-and-consent.md` | User-controlled depth and privacy | Accept pause, refusal, redirection, and stop signals |
+| `companion/grounded-companionship.md` | Support linked to observable reality | Offer meaning without oracle or decision authority |
+| `companion/human-connection-bridge.md` | Wider human and offline support | Keep AI from becoming the person's only support |
+| `companion/repair-and-misattunement.md` | Correction after misunderstanding | Repair briefly and change course without defensiveness |
+| `companion/session-closure.md` | Warm non-dependent endings | Close without guilt, urgency, or emotional hooks |
 
 ## Use this group when
 
-Use these skills when building or reviewing a reusable foundation capability that must work without a particular framework, brand, provider, account, network, database, or LLM. Apply the relevant skill before a consumer-specific policy or presentation layer.
+Use the foundation skills when building or reviewing a reusable capability that must work without a particular framework, brand, provider, account, network, database, or LLM. Use the companion skills when a Soulmate consumer needs a transparent, warm, and autonomy-preserving relational behavior layer.
 
 ## Do not use this group for
 
-Do not use these skills to select a product framework, activate a route, generate a response persona, enforce a product safety policy, classify a user's meaning, or replace a consumer's domain schema. The foundation explains contracts and mechanics; consumers retain policy, interpretation, and presentation.
+Do not use the foundation skills to select a product framework, activate a route, generate a response persona, enforce a product safety policy, classify a user's meaning, or replace a consumer's domain schema. The companion skills may define Soulmate's bounded relational posture, but they do not replace a host's crisis, legal, medical, privacy, or provider policy. Consumers retain orchestration and presentation.
 
 ## Reading workflow
 
-Read `artifact-contract.md` before building or verifying the AI artifact. Read `contracts.md` first to establish the shared contract vocabulary. Then read `skill-manifest.md` before adding or packaging an entry, and use `lifecycle.md` when the capability has multiple explicit stages. Use `composition-and-consumers.md` when a framework combines foundation operations, `compatibility-and-versioning.md` when a public boundary changes, `artifact-provenance.md` before generating an artifact, and `determinism-and-reproducibility.md` when making repeatability claims. A resource-backed Markdown capability will normally use `resource-boundaries.md` followed by `knowledge-resolution.md`. A raw JSON capability will use `data-validation.md`. A lexical lookup may use `text-normalization.md`, while retaining the original text for display and audit.
+Read `artifact-contract.md` before building or verifying the AI artifact. Read `contracts.md` first for shared contract vocabulary. Read `skill-manifest.md` before adding or packaging any entry. Use the companion identity and presence skills before the other companion entries when composing a Soulmate interaction. Use `boundaries-and-consent.md` before sensitive or deeper conversation. Use `repair-and-misattunement.md` whenever the companion is corrected, and `session-closure.md` at a natural ending. The companion group is explicit content, not an implicit plugin registry.
 
-The skills are complementary, not a mandatory response pipeline. A consuming framework must not treat this directory as an implicit plugin registry or assume that reading every file activates behavior.
+The SoulMap consumer approval manifest may approve individual neutral foundation entries. Companion entries remain `soulmate-only` unless a separate review, contract, and explicit approval changes their scope.
 
 ## Acceptance checklist
 
-A new entry may join this group only when its behavior is framework-neutral, its owner and consumers are declared in the manifest, its canonical content is explicit, and its success and failure behavior can be tested offline. The entry must not depend on SoulMap-specific doctrine, routing, voice, crisis policy, brand language, web behavior, or private state.
+A new entry may join this group only when its behavior and ownership are explicit, its owner and consumers are declared in the manifest, its canonical content is explicit, and its success and failure behavior can be tested offline. A foundation entry must be framework-neutral. A companion entry must be recognizably Soulmate-owned while remaining transparent, non-manipulative, non-exclusive, and compatible with host safety controls.
 
 ## Expected outcome
 
-A consumer that follows this group can build on a small, inspectable foundation while keeping application policy separate. Soulmate remains useful independently, and SoulMap can consume approved foundation capabilities without absorbing the entire SoulMap skill system.
+A consumer that follows this group can build on a small, inspectable foundation and, when intentionally using Soulmate, a clear companion posture. Soulmate remains independently useful, while SoulMap can consume only explicitly approved foundation capabilities rather than silently absorbing every Soulmate skill.
