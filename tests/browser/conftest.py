@@ -12,7 +12,6 @@ from urllib.request import urlopen
 import pytest
 
 _BROWSER_HOST = "127.0.0.1"
-_BROWSER_PORT = 8816
 _BROWSER_START_TIMEOUT = 20.0
 
 

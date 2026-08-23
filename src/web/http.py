@@ -102,3 +102,25 @@ _nav_path = nav_path
 _text = text
 _response = response
 _normalise_request_path = normalise_request_path
+
+# Compatibility aliases are part of the server facade's supported import surface.
+__all__ = (
+    "ALPINE_URL",
+    "HTMX_URL",
+    "SUPPORTED_LOCALES",
+    "TEXT",
+    "_nav_path",
+    "_normalise_request_path",
+    "_origin",
+    "_resource_hints",
+    "_response",
+    "_text",
+    "nav_path",
+    "normalise_request_path",
+    "origin",
+    "resource_hints",
+    "response",
+    "text",
+    "tr",
+    "translate",
+)

@@ -15,7 +15,7 @@ class ResourceLoader(Protocol):
 
     def load(self, reference: ResourceReference) -> str:
         """Return the UTF-8 content for a validated resource reference."""
-        ...
+        raise NotImplementedError
 
 
 class ResourceReference:
