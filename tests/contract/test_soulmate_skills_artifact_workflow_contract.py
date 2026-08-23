@@ -57,8 +57,10 @@ def test_soulmate_skills_workflow_paths_cover_canonical_inputs() -> None:
         "scripts/verify_soulmate_consumer_sync.py",
         "src/soulmap/runtime/knowledge/soulmate_consumer_scope.json",
         "src/soulmap/runtime/knowledge/_soulmate_consumer_scope.py",
+        "src/soulmap/runtime/knowledge/soulmate_skills.py",
         "tests/contract/test_soulmate_skills_artifact_workflow_contract.py",
         "tests/contract/test_soulmate_consumer_sync_contract.py",
+        "tests/contract/test_soulmate_adapter_contract.py",
     ):
         assert path in content
 
