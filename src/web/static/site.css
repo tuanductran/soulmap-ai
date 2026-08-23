@@ -48,6 +48,7 @@
   --container: 1160px;
   --section-space: clamp(4.5rem, 8vw, 7rem);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --modal-transition-duration: 200ms;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
@@ -1178,7 +1179,7 @@ p {
 /* Modal, prompt packs and utility primitives */
 .modal-shell-enter,
 .modal-shell-leave {
-  transition: opacity 0.2s var(--ease-out);
+  transition: opacity var(--modal-transition-duration) var(--ease-out);
 }
 
 .modal-shell-enter-start,
@@ -1209,6 +1210,7 @@ p {
   display: grid;
   place-items: center;
   padding: 1rem;
+  overscroll-behavior: contain;
 }
 
 .modal-backdrop {
@@ -1220,16 +1222,29 @@ p {
 
 .modal-dialog {
   position: relative;
-  animation: modal-dialog-in 0.22s var(--ease-out) both;
   width: min(720px, 100%);
   max-height: min(760px, calc(100dvh - 2rem));
   overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: clamp(1.25rem, 4vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   color: var(--ink);
   background: var(--surface-strong);
   box-shadow: var(--shadow);
+}
+
+#skill-modal .modal-dialog {
+  display: flex;
+  height: min(760px, calc(100dvh - 2rem));
+  flex-direction: column;
+}
+
+#skill-modal-content {
+  min-height: 0;
+  flex: 1 1 0%;
+  overflow: auto;
 }
 
 .modal-close {
@@ -1331,6 +1346,16 @@ p {
   display: none;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.modal-loading {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  left: 1.25rem;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
 }
 
 .htmx-request .htmx-indicator,
