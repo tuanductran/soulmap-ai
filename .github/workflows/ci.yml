@@ -78,12 +78,12 @@ jobs:
           uv run soulmap build-composed --output-dir dist/soulmap-with-soulmate-ai
           uv run soulmap markdown-contract --root .
       - name: Verify composed SoulMap-Soulmate artifacts
-        run: uv run python scripts/verify_soulmap_with_soulmate.py \\
-          --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \\
+        run: uv run python scripts/verify_soulmap_with_soulmate.py \
+          --zip dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \
           --skill dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
       - name: Audit composed artifact security
-        run: uv run python scripts/verify_artifact_security.py \\
-          dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \\
+        run: uv run python scripts/verify_artifact_security.py \
+          dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.zip \
           dist/soulmap-with-soulmate-ai/soulmap-with-soulmate-ai.skill
 
   knowledge-audit:
