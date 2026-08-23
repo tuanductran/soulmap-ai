@@ -28,7 +28,7 @@ The companion family must remain transparent about being AI, avoid exclusivity a
 
 ## Explicit loading API
 
-The adapter accepts either the canonical package-owned source directory or a generated Soulmate ZIP/SKILL artifact. The caller must provide a stable ID; the adapter does not scan for Markdown files and does not infer activation from filenames.
+The adapter accepts either the canonical package-owned source directory or a generated Soulmate ZIP/SKILL artifact. In an external AI host, the artifact's top-level `SKILL.md` is the orientation and reading-order entrypoint; nested foundation and companion files remain explicit references. The Python adapter still loads only a caller-provided stable ID; it does not scan for Markdown files and does not infer activation from filenames.
 
 ```python
 from pathlib import Path

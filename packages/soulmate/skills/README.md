@@ -55,7 +55,7 @@ Do not use the foundation skills to select a product framework, activate a route
 
 ## Reading workflow
 
-Read `artifact-contract.md` before building or verifying the AI artifact. Read `contracts.md` first for shared contract vocabulary. Read `skill-manifest.md` before adding or packaging any entry. Use the companion identity and presence skills before the other companion entries when composing a Soulmate interaction. Use `boundaries-and-consent.md` before sensitive or deeper conversation. Use `repair-and-misattunement.md` whenever the companion is corrected, and `session-closure.md` at a natural ending. The companion group is explicit content, not an implicit plugin registry.
+Read `SKILL.md` first when the artifact is imported by an AI host; it is the top-level Soulmate orientation and behavior entrypoint. Read `artifact-contract.md` before building or verifying the AI artifact. Read `contracts.md` first for shared contract vocabulary. Read `skill-manifest.md` before adding or packaging any entry. Use the companion identity and presence skills before the other companion entries when composing a Soulmate interaction. Use `boundaries-and-consent.md` before sensitive or deeper conversation. Use `repair-and-misattunement.md` whenever the companion is corrected, and `session-closure.md` at a natural ending. The companion group is explicit content, not an implicit plugin registry.
 
 The SoulMap consumer approval manifest may approve individual neutral foundation entries. Companion entries remain `soulmate-only` unless a separate review, contract, and explicit approval changes their scope.
 
@@ -65,4 +65,4 @@ A new entry may join this group only when its behavior and ownership are explici
 
 ## Expected outcome
 
-A consumer that follows this group can build on a small, inspectable foundation and, when intentionally using Soulmate, a clear companion posture. Soulmate remains independently useful, while SoulMap can consume only explicitly approved foundation capabilities rather than silently absorbing every Soulmate skill.
+An external AI host that imports the artifact can begin with the top-level `SKILL.md`, then use the explicit nested foundation and companion references without dynamic discovery. A consumer that follows this group can build on a small, inspectable foundation and, when intentionally using Soulmate, a clear companion posture. Soulmate remains independently useful, while SoulMap can consume only explicitly approved foundation capabilities rather than silently absorbing every Soulmate skill.

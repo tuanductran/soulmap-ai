@@ -105,3 +105,30 @@ def test_companion_skill_family_has_identity_and_non_dependency_contracts() -> N
         "person's agency",
     ):
         assert marker in text
+
+
+def test_top_level_skill_is_an_explicit_soulmate_entrypoint() -> None:
+    path = SKILLS_ROOT / "SKILL.md"
+    text = path.read_text(encoding="utf-8")
+
+    assert text.startswith("---\n")
+    assert 'name: "soulmate-ai"' in text
+    assert 'license: "MIT"' in text
+    assert "# Soulmate" in text
+    for marker in (
+        "transparent",
+        "AI companion",
+        "human relationships",
+        "person's agency",
+        "host's safety",
+        "not a hosted service",
+    ):
+        assert marker in text
+    for forbidden in (
+        "skills/meta/",
+        "skills/frameworks/",
+        "skills/safety/",
+        "src/soulmap/",
+        "soulmap.runtime",
+    ):
+        assert forbidden not in text

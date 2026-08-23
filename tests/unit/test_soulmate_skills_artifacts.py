@@ -70,6 +70,7 @@ def test_builder_creates_verified_zip_and_skill_projections(tmp_path: Path) -> N
     assert zip_path.read_bytes() == skill_path.read_bytes()
     with zipfile.ZipFile(zip_path) as archive:
         names = set(archive.namelist())
+    assert "SKILL.md" in names
     assert "artifact-contract.md" in names
     assert "skills/foundation/contracts.md" in names
     assert "skills/companion/identity.md" in names
@@ -93,6 +94,7 @@ def test_projection_contains_artifact_contract_and_normalized_entries() -> None:
         "formats": ["zip", "skill"],
         "content_root": "skills",
         "required_files": [
+            "SKILL.md",
             "README.md",
             "LICENSE",
             "artifact-contract.md",
@@ -230,6 +232,16 @@ def test_verifier_rejects_unexpected_python_file(tmp_path: Path) -> None:
     with pytest.raises(
         SoulmateSkillsVerificationError, match="forbidden artifact file type"
     ):
+        verify_archive(unsafe)
+
+
+def test_verifier_rejects_missing_top_level_skill_entrypoint(tmp_path: Path) -> None:
+    zip_path, _, _ = _build(tmp_path / "valid")
+    members = _read_members(zip_path)
+    members.pop("SKILL.md")
+    unsafe = _write_archive(tmp_path / "missing-skill.zip", members)
+
+    with pytest.raises(SoulmateSkillsVerificationError, match="file set mismatch"):
         verify_archive(unsafe)
 
 
