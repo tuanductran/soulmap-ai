@@ -13,6 +13,7 @@ from .soulmate_skills import (
     SOULMAP_COMPATIBLE_SKILL_IDS,
     LoadedSoulmateSkill,
     SoulMapSoulmateAdapter,
+    SoulmateFoundationBundle,
     SoulmateSkillLoader,
     SoulmateSkillLoadError,
 )
@@ -25,6 +26,7 @@ __all__ = [
     "SOULMAP_COMPATIBLE_SKILL_IDS",
     "LoadedSoulmateSkill",
     "SoulMapSoulmateAdapter",
+    "SoulmateFoundationBundle",
     "SoulmateSkillLoadError",
     "SoulmateSkillLoader",
 ]
