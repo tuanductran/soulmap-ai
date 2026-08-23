@@ -26,6 +26,7 @@ uv run soulmap build
 uv run soulmap build --skill
 uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
+uv run python scripts/verify_soulmate_consumer_sync.py --check
 uv run python scripts/build_soulmate.py --output-dir dist/soulmate
 uv run python scripts/verify_soulmate_package.py \
   --wheel dist/soulmate/soulmate_ai-0.1.0-py3-none-any.whl \
@@ -84,6 +85,12 @@ uv run python scripts/verify_soulmate_skills.py \
   --skill dist/soulmate-skills/soulmate-ai.skill \
   --checksums dist/soulmate-skills/SHA256SUMS
 ```
+
+The Soulmate/SoulMap consumer sync verifier must pass before the independent skills artifact
+build. Its source of truth is the SoulMap-owned
+`src/soulmap/runtime/knowledge/soulmate_consumer_scope.json`; the generated projection beside
+it is checked for deterministic parity. The verifier never mutates approval sources during
+`--check` and never silently grants `soulmap-compatible`.
 
 The skills builder is manifest-driven and does not reuse the root SoulMap skills builder.
 It includes only `packages/soulmate/skills/manifest.json` entries, writes a clean deterministic

@@ -18,18 +18,21 @@ stability and breaking changes in behavior.
 - **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
 - **integration**: add an explicit SoulMap adapter for five approved Soulmate foundation skills
 - **integration**: expose an immutable approved foundation bundle with compatibility parity checks
+- **integration**: add a SoulMap-owned consumer approval manifest and generated projection
 
 ### Changed
 
 - **architecture**: document the one-way SoulMap Framework to Soulmate Library boundary
 - **ci**: add PR-only Soulmate artifact build, verification, and review uploads
 - **manifest**: approve `soulmap-compatible` only for the five neutral P0 foundation entries
+- **ci**: verify manifest and consumer approval synchronization before Soulmate artifact builds
 
 ### Fixed
 
 - **soulmate**: isolate Python package staging outside the repository so source
   distributions cannot inherit repository `.gitignore` metadata
 - **security**: validate Soulmate archive provenance and bounded size in the explicit adapter
+- **sync**: fail closed on approval drift, stale projections, unsupported consumers, and artifact-boundary violations
 
 The Soulmate package and AI foundation-skill artifacts remain pre-release and are not
 published to a package registry or public release channel.

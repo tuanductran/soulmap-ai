@@ -80,6 +80,21 @@ Before returning a skill, the loader validates the manifest identity, schema, so
 
 A request for an unapproved ID, including a valid Soulmate-only entry, fails with `SoulmateSkillLoadError`. An undocumented Markdown file remains inert. A malformed manifest or artifact is never converted into an empty or partial success.
 
+## Manifest sync and consumer approval contract
+
+The canonical Soulmate manifest declares which consumers may use an entry, but that capability metadata is not an activation signal. SoulMap's reviewed consumer decision is a separate, SoulMap-owned contract at `src/soulmap/runtime/knowledge/soulmate_consumer_scope.json`. It records the consumer identity, library identity, required package compatibility, and the exact ordered approval entries with their IDs, versions, compatibility ranges, and source paths.
+
+The committed `_soulmate_consumer_scope.py` file in the same SoulMap-owned directory is a deterministic generated projection of that approval JSON. Runtime code imports the projection rather than scanning the Soulmate package or deriving approval from the library manifest at runtime. To update the approved set, a maintainer must edit the JSON approval file explicitly, review the diff, regenerate the projection, and run the fail-closed verifier:
+
+```bash
+uv run python scripts/verify_soulmate_consumer_sync.py --write-projection --report
+uv run python scripts/verify_soulmate_consumer_sync.py --check
+```
+
+The verifier rejects malformed or unknown fields, unsupported consumer values, duplicate IDs or sources, unsafe paths, missing or extra approvals, ID/source/version/compatibility mismatches, order drift, package compatibility drift, stale projections, and non-Soulmate foundation entries. It never silently grants `soulmap-compatible`; the approval JSON remains the explicit human-reviewed decision. The Soulmate skills CI runs `--check` before building or verifying the `.zip` and `.skill` artifacts.
+
+The approval JSON and generated projection are excluded from Soulmate artifacts. They are SoulMap consumer metadata, not generic Soulmate foundation content, and must never be copied into `packages/soulmate/skills/` or the Soulmate artifact allow-list.
+
 ## Artifact and release boundary
 
 The canonical source remains `packages/soulmate/skills/`. The independent Soulmate skills builder continues to use an explicit manifest allow-list and produces the private pre-release `soulmate-ai.zip` and `soulmate-ai.skill` artifacts. The adapter consumes those artifacts for review or local framework composition; it does not authorize a release, registry publication, automatic AI-tool activation, or a GitHub Release.
@@ -88,10 +103,12 @@ The root SoulMap artifact builder remains separate. It must not absorb the Soulm
 
 ## Validation
 
-The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
+The integration contract is protected by `tests/contract/test_soulmate_adapter_contract.py`, `tests/contract/test_soulmate_consumer_sync_contract.py`, `tests/contract/test_soulmate_foundation_skills_contract.py`, the Soulmate artifact verifier tests, the one-way dependency contract, and the normal repository static and artifact checks. The recommended local commands are:
 
 ```bash
+uv run python scripts/verify_soulmate_consumer_sync.py --check
 uv run pytest -q tests/contract/test_soulmate_adapter_contract.py
+uv run pytest -q tests/contract/test_soulmate_consumer_sync_contract.py
 uv run pytest -q tests/contract/test_soulmate_foundation_skills_contract.py
 uv run python scripts/build_soulmate_skills.py
 uv run python scripts/verify_soulmate_skills.py \

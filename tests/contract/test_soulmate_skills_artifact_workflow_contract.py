@@ -30,6 +30,7 @@ def test_soulmate_skills_workflow_is_pr_only_and_read_only() -> None:
     assert "uv sync --locked --python 3.11" in content
     assert "scripts/build_soulmate_skills.py" in content
     assert "scripts/verify_soulmate_skills.py" in content
+    assert "scripts/verify_soulmate_consumer_sync.py --check" in content
     assert "tests/unit/test_soulmate_skills_artifacts.py" in content
     assert "actions/upload-artifact@v7" in content
     assert "dist/soulmate-skills/" in content
@@ -37,6 +38,7 @@ def test_soulmate_skills_workflow_is_pr_only_and_read_only() -> None:
     _assert_order(
         content,
         "uv run soulmap markdown-contract --root .",
+        "uv run python scripts/verify_soulmate_consumer_sync.py --check",
         "uv run python scripts/build_soulmate_skills.py",
         "uv run python scripts/verify_soulmate_skills.py",
         "Rebuild for deterministic parity",
@@ -52,7 +54,13 @@ def test_soulmate_skills_workflow_paths_cover_canonical_inputs() -> None:
         "packages/soulmate/**",
         "scripts/build_soulmate_skills.py",
         "scripts/verify_soulmate_skills.py",
+        "scripts/verify_soulmate_consumer_sync.py",
+        "src/soulmap/runtime/knowledge/soulmate_consumer_scope.json",
+        "src/soulmap/runtime/knowledge/_soulmate_consumer_scope.py",
+        "src/soulmap/runtime/knowledge/soulmate_skills.py",
         "tests/contract/test_soulmate_skills_artifact_workflow_contract.py",
+        "tests/contract/test_soulmate_consumer_sync_contract.py",
+        "tests/contract/test_soulmate_adapter_contract.py",
     ):
         assert path in content
 

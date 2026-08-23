@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "consumer": "soulmap-framework",
+  "library_id": "soulmate-ai",
+  "source_of_truth": "packages/soulmate/skills",
+  "required_package_compatibility": ">=0.1.0,<0.2.0",
+  "approved_order": [
+    {
+      "id": "soulmate.foundation.contracts",
+      "version": "0.1.0",
+      "compatibility": ">=0.1.0,<0.2.0",
+      "source": "foundation/contracts.md"
+    },
+    {
+      "id": "soulmate.foundation.resource-boundaries",
+      "version": "0.1.0",
+      "compatibility": ">=0.1.0,<0.2.0",
+      "source": "foundation/resource-boundaries.md"
+    },
+    {
+      "id": "soulmate.foundation.knowledge-resolution",
+      "version": "0.1.0",
+      "compatibility": ">=0.1.0,<0.2.0",
+      "source": "foundation/knowledge-resolution.md"
+    },
+    {
+      "id": "soulmate.foundation.text-normalization",
+      "version": "0.1.0",
+      "compatibility": ">=0.1.0,<0.2.0",
+      "source": "foundation/text-normalization.md"
+    },
+    {
+      "id": "soulmate.foundation.data-validation",
+      "version": "0.1.0",
+      "compatibility": ">=0.1.0,<0.2.0",
+      "source": "foundation/data-validation.md"
+    }
+  ]
+}
