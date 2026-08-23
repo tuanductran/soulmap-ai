@@ -148,7 +148,7 @@ soulmap-ai/
 │   ├── pyproject.toml    Release-only package metadata
 │   ├── README.md         Package identity and release boundary
 │   ├── LICENSE           Package license copy
-│   └── skills/           Soulmate-only foundation skill source, contract, and manifest
+│   └── skills/           Soulmate foundation + companion skill source, contract, and manifest
 │
 ├── scripts/
 │   ├── build_soulmate_skills.py          Deterministic pre-release AI skills builder
@@ -564,11 +564,12 @@ Non-goals for this surface:
 
 This section is the execution roadmap after the v0.9.0 baseline. It is intentionally ordered by risk and dependency rather than by feature novelty. Each phase should be delivered through one or more small pull requests, with characterization tests added before boundary changes and no automatic merge.
 
-**Execution snapshot (23 August 2026):** the Soulmate explicit adapter from PR #260 is
-merged into `main`; the Phase 21 foundation-bundle PR #261 is open with its required checks
-green; and Phase 22 manifest sync/consumer approval work is being developed on a separate
-branch based on that reviewed PR head. The clean release-candidate dry-run passes locally.
-No GitHub Release, tag, package-registry publication, OIDC trust configuration, or provider
+**Execution snapshot (23 August 2026):** PRs #260, #261, #262, and #263 are merged into
+`main`. SoulMap now has an explicit Soulmate adapter and foundation bundle, a fail-closed
+manifest-sync/consumer-approval contract, and a gated TestPyPI OIDC workflow. The OIDC
+workflow has passed a `publish=false` dry-run on `main`, including Soulmate package and
+artifact verification. The Soulmate package remains private/pre-release; no Trusted Publisher,
+`testpypi` environment, package-registry publication, GitHub Release, tag, or provider
 activation has been performed.
 
 ### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
@@ -684,6 +685,30 @@ are green; and no release/version mutation occurs without a separate explicit ap
 | 6 | 18 | Phase 13 release ownership map | Operations documentation and automation changes separately reviewed |
 | 7 | 19 | Explicit entry gate above | One provider or one documentation acceptance surface per PR |
 | 8 | 22 | Reviewed Soulmate adapter/bundle work | Manifest sync, approval contract, projection, and artifact isolation |
+
+### Phase 23 - Soulmate AI-facing Companion Skills
+
+**Priority:** P0 for the Soulmate identity track.
+
+**Goal:** Make Soulmate a genuine AI-facing companion library, not only a Python foundation,
+while keeping SoulMap as the opinionated Framework built on top of it.
+
+The package-owned `packages/soulmate/skills/companion/` family contains explicit Markdown
+skills for transparent AI identity, warm presence, reflective listening, emotional attunement,
+gentle inquiry, boundaries and consent, grounded companionship, human-connection bridging,
+repair after misattunement, and non-dependent session closure. These entries use
+`kind: companion` and `consumers: ["soulmate-only"]`; they are included in the Soulmate
+skill artifact but are not automatically consumed by SoulMap's five-entry approval projection.
+
+The personal numerology PDF informed only broad authoring themes such as reflection, meaning,
+connection, and life transitions. Name/date-specific numerology, predictions, and spiritual
+claims are not generic Soulmate content. External research informed relational-safety guardrails,
+not copied prose.
+
+**Exit criteria:** exact companion source/manifest parity, Markdown and artifact contract
+coverage, runtime rejection outside the explicit SoulMap projection, deterministic `.zip`/`.skill`
+build and verification, documentation truth-sync, and full repository validation. No version
+bump, registry publication, or provider activation is implied by this phase.
 
 ### Global Definition of Done for Every Future Phase
 

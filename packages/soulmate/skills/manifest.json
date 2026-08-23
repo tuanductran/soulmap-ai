@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "library_id": "soulmate-ai",
-  "display_name": "Soulmate Foundation Skills",
+  "display_name": "Soulmate AI Skills",
   "source_of_truth": "packages/soulmate/skills",
   "artifact_contract": {
     "path": "artifact-contract.md",
@@ -125,6 +125,106 @@
       "owner": "Soulmate",
       "kind": "foundation",
       "source": "foundation/determinism-and-reproducibility.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.identity",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/identity.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.presence",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/presence.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.reflective-listening",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/reflective-listening.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.emotional-attunement",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/emotional-attunement.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.gentle-inquiry",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/gentle-inquiry.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.boundaries-and-consent",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/boundaries-and-consent.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.grounded-companionship",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/grounded-companionship.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.human-connection-bridge",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/human-connection-bridge.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.repair-and-misattunement",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/repair-and-misattunement.md",
+      "consumers": ["soulmate-only"],
+      "compatibility": ">=0.1.0,<0.2.0",
+      "artifact": "soulmate-ai"
+    },
+    {
+      "id": "soulmate.companion.session-closure",
+      "version": "0.1.0",
+      "owner": "Soulmate",
+      "kind": "companion",
+      "source": "companion/session-closure.md",
       "consumers": ["soulmate-only"],
       "compatibility": ">=0.1.0,<0.2.0",
       "artifact": "soulmate-ai"

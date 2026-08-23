@@ -21,10 +21,11 @@ separate.
 The intended relationship is the same as a UI library such as React and an
 application framework such as Next.js:
 
-- **Soulmate library** - the reusable, framework-neutral substrate in `src/soulmate/`
-  with independent package metadata and AI foundation skills under
-  `packages/soulmate/`. It owns public contracts, resource resolution, Markdown
-  parsing, text normalization, lifecycle primitives, and generic data validation.
+- **Soulmate library** - the reusable substrate in `src/soulmate/` with independent
+  package metadata and AI-facing skills under `packages/soulmate/`. Its
+  `foundation/` group owns public contracts, resource resolution, Markdown parsing,
+  text normalization, lifecycle primitives, and generic data validation. Its
+  `companion/` group owns Soulmate's transparent, warm, non-exclusive companion posture.
 - **SoulMap Framework** - the opinionated product layer in `src/soulmap/` and `skills/`.
   It owns reflective doctrine, safety policy, routing, detectors, voice, brand,
   spiritual content, website behavior, and distribution of SoulMap artifacts.
@@ -40,9 +41,9 @@ generic capability should first be proposed and contract-tested at the Soulmate 
 | --- | --- | --- |
 | Python foundation | `src/soulmate/` | SoulMap doctrine, routing, product policy, or protected safety state |
 | Standalone release metadata | `packages/soulmate/pyproject.toml` and `packages/soulmate/README.md` | Root SoulMap package metadata or website content |
-| AI foundation skills | `packages/soulmate/skills/` | Root `skills/` doctrine, safety, voice, brand, spiritual, or framework files |
+| AI foundation and companion skills | `packages/soulmate/skills/` | Root `skills/` doctrine, safety, voice, brand, spiritual, or framework files |
 
-The Soulmate Python package and Soulmate AI foundation-skill artifacts are separate
+The Soulmate Python package and Soulmate AI skills artifacts are separate
 surfaces and are verified independently. Neither is the import surface for the root
 SoulMap AI skill artifact.
 

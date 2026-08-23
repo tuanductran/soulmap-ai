@@ -71,7 +71,7 @@ def test_custom_soulmate_skill_contribution_guide_is_package_owned() -> None:
     assert "# Contributing Soulmate skills" in content
     assert "packages/soulmate/skills/foundation/<skill-name>.md" in content
     assert "packages/soulmate/skills/manifest.json" in content
-    assert "soulmate.foundation.example" in content
+    assert "soulmate.companion.example" in content
     assert "uv run python scripts/build_soulmate_skills.py" in content
     assert "uv run python scripts/verify_soulmate_skills.py" in content
     assert "root `skills/`" in content

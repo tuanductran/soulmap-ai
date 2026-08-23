@@ -11,14 +11,16 @@ The first release-preparation package exposes:
 - `soulmate.knowledge`: Markdown keyword and labeled-group parsing.
 - `soulmate.text`: deterministic text normalization.
 
-The pre-release AI-facing foundation skill set is maintained separately under
-`packages/soulmate/skills/`. Its current foundation entries document contracts, resource
-boundaries, Markdown knowledge resolution, text normalization, bounded data validation,
-capability lifecycle, skill-manifest semantics, composition ownership, compatibility,
-artifact provenance, and reproducibility. These skills are framework-neutral references; they
-do not contain SoulMap routing, safety doctrine, voice, brand, or spiritual behavior.
+The pre-release AI-facing Soulmate skill artifact is maintained separately under
+`packages/soulmate/skills/`. It contains two explicit groups: `foundation/` entries for
+contracts, resource boundaries, Markdown knowledge resolution, text normalization, bounded
+data validation, lifecycle, composition, compatibility, provenance, and reproducibility; and
+`companion/` entries for Soulmate's transparent, warm, autonomy-preserving companion posture.
+The companion entries are Soulmate-owned and `soulmate-only`; they are not SoulMap routing,
+crisis policy, voice, brand, or spiritual doctrine, and they must not replace a host tool's
+safety or domain policy.
 
-Developers creating custom Soulmate foundation skills should follow [`CONTRIBUTING.md`](CONTRIBUTING.md). It defines ownership, neutral content rules, manifest registration, tests, artifact boundaries, and the PR review checklist.
+Developers creating custom Soulmate foundation or companion skills should follow [`CONTRIBUTING.md`](CONTRIBUTING.md). It defines ownership, companion boundaries, manifest registration, tests, artifact boundaries, and the PR review checklist.
 
 SoulMap consumes these capabilities through public namespaces and an explicit adapter at `soulmap.runtime.knowledge`. The adapter may load only the five manifest entries that declare `soulmap-compatible`: contracts, resource boundaries, knowledge resolution, text normalization, and data validation. It accepts the canonical package-owned skill directory or a verified Soulmate ZIP/SKILL artifact, and it never discovers or activates undocumented files. Soulmate must never import `soulmap`, and SoulMap-specific framework behavior remains in the main SoulMap package.
 

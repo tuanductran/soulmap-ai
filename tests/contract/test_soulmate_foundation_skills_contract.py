@@ -41,13 +41,16 @@ def test_foundation_manifest_matches_canonical_markdown() -> None:
     assert manifest["distribution"]["public_registry"] is False
 
     entries = manifest["entries"]
-    assert len(entries) == len(EXPECTED_FILES)
-    assert {entry["source"] for entry in entries} == {
+    foundation_entries = [
+        entry for entry in entries if entry["source"].startswith("foundation/")
+    ]
+    assert len(foundation_entries) == len(EXPECTED_FILES)
+    assert {entry["source"] for entry in foundation_entries} == {
         f"foundation/{filename}" for filename in EXPECTED_FILES
     }
-    assert len({entry["id"] for entry in entries}) == len(entries)
+    assert len({entry["id"] for entry in foundation_entries}) == len(foundation_entries)
 
-    for entry in entries:
+    for entry in foundation_entries:
         assert entry["owner"] == "Soulmate"
         assert entry["kind"] == "foundation"
         expected_consumers = (

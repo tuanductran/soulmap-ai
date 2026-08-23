@@ -13,6 +13,9 @@ stability and breaking changes in behavior.
   metadata, and Soulmate-only foundation skill boundary
 - **soulmate**: add lifecycle, manifest, composition, compatibility, provenance, and
   reproducibility foundation skills
+- **soulmate**: add ten explicit AI-facing companion skills for identity, presence,
+  reflective listening, attunement, gentle inquiry, consent, grounding, human connection,
+  repair, and non-dependent session closure
 - **soulmate**: add deterministic AI skill artifacts with manifest, provenance, and
   SHA-256 verification
 - **docs**: add Soulmate contribution, release checklist, and OIDC preparation guides
@@ -36,8 +39,9 @@ stability and breaking changes in behavior.
 - **sync**: fail closed on approval drift, stale projections, unsupported consumers, and artifact-boundary violations
 - **release**: keep OIDC publication behind main-only dispatch, protected environment, explicit variables, and private-metadata checks
 
-The Soulmate package and AI foundation-skill artifacts remain pre-release and are not
-published to a package registry or public release channel.
+The Soulmate package and AI skill artifacts remain pre-release and are not published to a
+package registry or public release channel. Companion skills remain `soulmate-only` and are
+not automatically consumed by the SoulMap Framework.
 
 ## v0.9.0 (2026-08-19)
 

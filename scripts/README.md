@@ -75,8 +75,8 @@ uv run python scripts/verify_soulmate_package.py \
   --version 0.1.0
 ```
 
-For the independent Soulmate AI foundation-skill artifact, build and verify the two
-byte-identical ZIP projections locally:
+For the independent Soulmate AI skill artifact, containing explicit foundation and
+companion entries, build and verify the two byte-identical ZIP projections locally:
 
 ```bash
 uv run python scripts/build_soulmate_skills.py --output-dir dist/soulmate-skills

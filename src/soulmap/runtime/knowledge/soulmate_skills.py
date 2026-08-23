@@ -381,7 +381,10 @@ def _validate_manifest(value: Any) -> dict[str, Any]:
             or not entry["compatibility"]
         ):
             raise SoulmateSkillLoadError("Soulmate manifest entry has invalid version")
-        if entry["owner"] != "Soulmate" or entry["kind"] != "foundation":
+        if entry["owner"] != "Soulmate" or entry["kind"] not in {
+            "foundation",
+            "companion",
+        }:
             raise SoulmateSkillLoadError(
                 "Soulmate manifest entry has invalid ownership"
             )
