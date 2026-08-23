@@ -8,6 +8,7 @@ only permits the stable IDs explicitly approved below.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import stat
 import zipfile
@@ -19,6 +20,8 @@ SOULMATE_MANIFEST_NAME = "manifest.json"
 SOULMATE_ARTIFACT_ROOT = "skills"
 MAX_MANIFEST_BYTES = 64 * 1024
 MAX_SKILL_BYTES = 512 * 1024
+MAX_ARCHIVE_MEMBERS = 128
+MAX_ARCHIVE_TOTAL_SIZE = 4 * 1024 * 1024
 
 # These are the neutral P0 capabilities already consumed by SoulMap's public
 # Python facades. Every ID must also explicitly declare ``soulmap-compatible``
@@ -95,12 +98,7 @@ class SoulMapSoulmateAdapter:
         return self._loader.load_approved()
 
 
-class _ContentReader:
-    def read(self, source: str) -> str:
-        raise NotImplementedError
-
-
-class _DirectoryContentReader(_ContentReader):
+class _DirectoryContentReader:
     def __init__(self, root: Path) -> None:
         self.root = root
 
@@ -150,6 +148,15 @@ def _load_from_archive(path: Path, skill_id: str) -> LoadedSoulmateSkill:
     try:
         with zipfile.ZipFile(path) as archive:
             infos = archive.infolist()
+            if len(infos) > MAX_ARCHIVE_MEMBERS:
+                raise SoulmateSkillLoadError(
+                    "Soulmate artifact has too many archive members"
+                )
+            total_size = sum(info.file_size for info in infos)
+            if total_size > MAX_ARCHIVE_TOTAL_SIZE:
+                raise SoulmateSkillLoadError(
+                    "Soulmate artifact uncompressed size is too large"
+                )
             names = [info.filename for info in infos]
             if len(names) != len(set(names)):
                 raise SoulmateSkillLoadError(
@@ -166,9 +173,8 @@ def _load_from_archive(path: Path, skill_id: str) -> LoadedSoulmateSkill:
                 )
             if manifest_info.file_size > MAX_MANIFEST_BYTES:
                 raise SoulmateSkillLoadError("Soulmate manifest is too large")
-            manifest = _validate_manifest(
-                json.loads(archive.read(manifest_info).decode("utf-8"))
-            )
+            manifest_bytes = archive.read(manifest_info)
+            manifest = _validate_manifest(json.loads(manifest_bytes.decode("utf-8")))
             expected_names = {
                 "README.md",
                 "LICENSE",
@@ -184,15 +190,18 @@ def _load_from_archive(path: Path, skill_id: str) -> LoadedSoulmateSkill:
                 raise SoulmateSkillLoadError(
                     "Soulmate artifact file set does not match its manifest"
                 )
+            provenance_info = info_by_name["PROVENANCE.json"]
+            if provenance_info.file_size > MAX_MANIFEST_BYTES:
+                raise SoulmateSkillLoadError("Soulmate provenance is too large")
+            _validate_provenance(
+                json.loads(archive.read(provenance_info).decode("utf-8")),
+                manifest,
+                manifest_bytes,
+                expected_names,
+            )
             entry = _select_entry(manifest, skill_id)
             member = f"{SOULMATE_ARTIFACT_ROOT}/{entry['source']}"
-            skill_info = info_by_name.get(member)
-            if skill_info is None:
-                raise SoulmateSkillLoadError(
-                    f"Soulmate artifact is missing selected skill: {member}"
-                )
-            if skill_info.file_size > MAX_SKILL_BYTES:
-                raise SoulmateSkillLoadError(f"Soulmate skill is too large: {member}")
+            skill_info = info_by_name[member]
             content = archive.read(skill_info).decode("utf-8")
             return _validate_skill_content(entry, content)
     except SoulmateSkillLoadError:
@@ -216,6 +225,34 @@ def _validate_archive_member(info: zipfile.ZipInfo) -> None:
     mode = (info.external_attr >> 16) & 0o170000
     if mode == stat.S_IFLNK:
         raise SoulmateSkillLoadError(f"Symlink-like Soulmate artifact member: {name}")
+
+
+def _validate_provenance(
+    provenance: Any,
+    manifest: dict[str, Any],
+    manifest_bytes: bytes,
+    expected_names: set[str],
+) -> None:
+    if not isinstance(provenance, dict):
+        raise SoulmateSkillLoadError("Soulmate provenance must be an object")
+    if provenance.get("schema_version") != "1.0":
+        raise SoulmateSkillLoadError("Unsupported Soulmate provenance schema")
+    if provenance.get("library_id") != manifest.get("library_id"):
+        raise SoulmateSkillLoadError("Soulmate provenance library identity mismatch")
+    if provenance.get("artifact_family") != manifest.get("artifact_family"):
+        raise SoulmateSkillLoadError("Soulmate provenance artifact family mismatch")
+    if provenance.get("artifact_version") != manifest.get("artifact_version"):
+        raise SoulmateSkillLoadError("Soulmate provenance version mismatch")
+    if provenance.get("manifest_sha256") != hashlib.sha256(manifest_bytes).hexdigest():
+        raise SoulmateSkillLoadError("Soulmate provenance manifest digest mismatch")
+    if provenance.get("file_list") != sorted(expected_names):
+        raise SoulmateSkillLoadError("Soulmate provenance file list mismatch")
+    manifest_ids = [entry["id"] for entry in manifest["entries"]]
+    if provenance.get("selected_entries") != manifest_ids:
+        raise SoulmateSkillLoadError("Soulmate provenance entry list mismatch")
+    build = provenance.get("build")
+    if not isinstance(build, dict) or build.get("deterministic") is not True:
+        raise SoulmateSkillLoadError("Soulmate provenance is not deterministic")
 
 
 def _validate_manifest(value: Any) -> dict[str, Any]:
@@ -338,15 +375,10 @@ def _select_entry(manifest: dict[str, Any], skill_id: str) -> dict[str, Any]:
 
 
 def _load_selected_skill(
-    manifest: dict[str, Any], reader: _ContentReader, skill_id: str
+    manifest: dict[str, Any], reader: _DirectoryContentReader, skill_id: str
 ) -> LoadedSoulmateSkill:
     entry = _select_entry(manifest, skill_id)
-    try:
-        content = reader.read(entry["source"])
-    except UnicodeDecodeError as error:
-        raise SoulmateSkillLoadError(
-            f"Soulmate skill is not valid UTF-8: {entry['source']}"
-        ) from error
+    content = reader.read(entry["source"])
     return _validate_skill_content(entry, content)
 
 

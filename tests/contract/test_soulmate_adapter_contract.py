@@ -11,6 +11,8 @@ import pytest
 from scripts.build_soulmate_skills import build_artifacts
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge import (
+    MAX_ARCHIVE_MEMBERS,
+    MAX_ARCHIVE_TOTAL_SIZE,
     MAX_MANIFEST_BYTES,
     MAX_SKILL_BYTES,
     SOULMAP_COMPATIBLE_SKILL_IDS,
@@ -298,3 +300,257 @@ def test_adapter_rejects_oversized_zip_manifest(tmp_path: Path) -> None:
 
     with pytest.raises(SoulmateSkillLoadError, match="manifest is too large"):
         SoulmateSkillLoader(oversized_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_archive_with_too_many_members(tmp_path: Path) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    oversized_path = tmp_path / "too-many-members.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            oversized_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            destination.writestr(info, source.read(info))
+        for index in range(MAX_ARCHIVE_MEMBERS):
+            destination.writestr(f"extra/{index}.txt", b"x")
+
+    with pytest.raises(SoulmateSkillLoadError, match="too many archive members"):
+        SoulmateSkillLoader(oversized_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_archive_with_excessive_total_size(tmp_path: Path) -> None:
+    source = tmp_path / "too-large.zip"
+    with zipfile.ZipFile(source, "w", compression=zipfile.ZIP_STORED) as archive:
+        archive.writestr("large.bin", b"x" * (MAX_ARCHIVE_TOTAL_SIZE + 1))
+
+    with pytest.raises(SoulmateSkillLoadError, match="uncompressed size is too large"):
+        SoulmateSkillLoader(source).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_manifest_digest_mismatch_in_provenance(tmp_path: Path) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    broken_path = tmp_path / "bad-provenance-digest.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            broken_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            content = source.read(info)
+            if info.filename == "PROVENANCE.json":
+                provenance = json.loads(content.decode("utf-8"))
+                provenance["manifest_sha256"] = "0" * 64
+                content = (json.dumps(provenance, indent=2) + "\n").encode("utf-8")
+            destination.writestr(info, content)
+
+    with pytest.raises(SoulmateSkillLoadError, match="manifest digest mismatch"):
+        SoulmateSkillLoader(broken_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_non_deterministic_provenance(tmp_path: Path) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    broken_path = tmp_path / "non-deterministic.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            broken_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            content = source.read(info)
+            if info.filename == "PROVENANCE.json":
+                provenance = json.loads(content.decode("utf-8"))
+                provenance["build"]["deterministic"] = False
+                content = (json.dumps(provenance, indent=2) + "\n").encode("utf-8")
+            destination.writestr(info, content)
+
+    with pytest.raises(SoulmateSkillLoadError, match="not deterministic"):
+        SoulmateSkillLoader(broken_path).load(CONTRACT_ID)
+
+
+@pytest.mark.parametrize(
+    ("variant", "expected"),
+    [
+        ("not-object", "manifest must be an object"),
+        ("schema", "Unsupported Soulmate manifest schema"),
+        ("library", "Invalid Soulmate library identity"),
+        ("distribution-family", "Invalid Soulmate artifact family"),
+        ("distribution-public", "must remain pre-release"),
+        ("artifact-family", "Invalid Soulmate artifact family"),
+        ("source-of-truth", "Invalid Soulmate manifest source of truth"),
+        ("contract-path", "Invalid Soulmate artifact contract"),
+        ("contract-formats", "Invalid Soulmate artifact contract"),
+        ("empty-entries", "entries must be non-empty"),
+        ("entry-object", "entry must be an object"),
+        ("entry-required", "entry is incomplete"),
+        ("entry-id", "invalid or duplicate ID"),
+        ("entry-source", "invalid or duplicate source"),
+        ("entry-version", "invalid version"),
+        ("entry-owner", "invalid ownership"),
+        ("entry-artifact", "invalid artifact"),
+        ("entry-consumers", "invalid consumers"),
+    ],
+)
+def test_adapter_rejects_invalid_manifest_variants(
+    tmp_path: Path, variant: str, expected: str
+) -> None:
+    source = tmp_path / "skills"
+    shutil.copytree(SKILLS_ROOT, source)
+    manifest_path = source / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    entry = manifest["entries"][0]
+
+    if variant == "not-object":
+        manifest_path.write_text("[]", encoding="utf-8")
+    elif variant == "schema":
+        manifest["schema_version"] = "2.0"
+    elif variant == "library":
+        manifest["library_id"] = "other-library"
+    elif variant == "distribution-family":
+        manifest["distribution"]["artifact_family"] = "other-artifact"
+    elif variant == "distribution-public":
+        manifest["distribution"]["public_registry"] = True
+    elif variant == "artifact-family":
+        manifest["distribution"] = None
+        manifest["artifact_family"] = "other-artifact"
+    elif variant == "source-of-truth":
+        manifest["source_of_truth"] = "other/path"
+    elif variant == "contract-path":
+        manifest["artifact_contract"]["path"] = "wrong.md"
+    elif variant == "contract-formats":
+        manifest["artifact_contract"]["formats"] = ["zip"]
+    elif variant == "empty-entries":
+        manifest["entries"] = []
+    elif variant == "entry-object":
+        manifest["entries"][0] = "not-an-entry"
+    elif variant == "entry-required":
+        entry.pop("artifact")
+    elif variant == "entry-id":
+        entry["id"] = "not-soulmate"
+    elif variant == "entry-source":
+        entry["source"] = "../escape.md"
+    elif variant == "entry-version":
+        entry["version"] = ""
+    elif variant == "entry-owner":
+        entry["owner"] = "SoulMap"
+    elif variant == "entry-artifact":
+        entry["artifact"] = "soulmap-ai"
+    elif variant == "entry-consumers":
+        entry["consumers"] = ["unknown-consumer"]
+    else:
+        raise AssertionError(f"Unhandled manifest test variant: {variant}")
+
+    if variant != "not-object":
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    with pytest.raises(SoulmateSkillLoadError, match=expected):
+        SoulmateSkillLoader(source).load(CONTRACT_ID)
+
+
+@pytest.mark.parametrize(
+    ("field", "expected"),
+    [
+        ("schema_version", "Unsupported Soulmate provenance schema"),
+        ("library_id", "library identity mismatch"),
+        ("artifact_family", "artifact family mismatch"),
+        ("artifact_version", "version mismatch"),
+        ("file_list", "file list mismatch"),
+        ("selected_entries", "entry list mismatch"),
+    ],
+)
+def test_adapter_rejects_provenance_metadata_mismatches(
+    tmp_path: Path, field: str, expected: str
+) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    broken_path = tmp_path / f"bad-provenance-{field}.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            broken_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            content = source.read(info)
+            if info.filename == "PROVENANCE.json":
+                provenance = json.loads(content.decode("utf-8"))
+                if field == "schema_version":
+                    provenance[field] = "2.0"
+                elif field == "library_id" or field == "artifact_family":
+                    provenance[field] = "other"
+                elif field == "artifact_version":
+                    provenance[field] = "9.9.9"
+                elif field == "file_list" or field == "selected_entries":
+                    provenance[field] = []
+                content = (json.dumps(provenance, indent=2) + "\n").encode("utf-8")
+            destination.writestr(info, content)
+
+    with pytest.raises(SoulmateSkillLoadError, match=expected):
+        SoulmateSkillLoader(broken_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_invalid_utf8_skill_content(tmp_path: Path) -> None:
+    source = tmp_path / "skills"
+    shutil.copytree(SKILLS_ROOT, source)
+    (source / "foundation" / "contracts.md").write_bytes(b"\xff")
+
+    with pytest.raises(SoulmateSkillLoadError, match="Could not read Soulmate skill"):
+        SoulmateSkillLoader(source).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_oversized_provenance(tmp_path: Path) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    broken_path = tmp_path / "oversized-provenance.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            broken_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            content = source.read(info)
+            if info.filename == "PROVENANCE.json":
+                content = b"x" * (MAX_MANIFEST_BYTES + 1)
+            destination.writestr(info, content)
+
+    with pytest.raises(SoulmateSkillLoadError, match="provenance is too large"):
+        SoulmateSkillLoader(broken_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_non_object_provenance(tmp_path: Path) -> None:
+    zip_path, _, _, _, _ = build_artifacts(tmp_path / "artifacts")
+    broken_path = tmp_path / "non-object-provenance.zip"
+    with (
+        zipfile.ZipFile(zip_path) as source,
+        zipfile.ZipFile(
+            broken_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as destination,
+    ):
+        for info in source.infolist():
+            content = source.read(info)
+            if info.filename == "PROVENANCE.json":
+                content = b"[]"
+            destination.writestr(info, content)
+
+    with pytest.raises(SoulmateSkillLoadError, match="provenance must be an object"):
+        SoulmateSkillLoader(broken_path).load(CONTRACT_ID)
+
+
+def test_adapter_rejects_approved_id_absent_from_manifest(tmp_path: Path) -> None:
+    source = tmp_path / "skills"
+    shutil.copytree(SKILLS_ROOT, source)
+    manifest_path = source / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["entries"].pop(0)
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(SoulmateSkillLoadError, match="absent from the manifest"):
+        SoulmateSkillLoader(source).load(CONTRACT_ID)

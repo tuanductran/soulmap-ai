@@ -65,7 +65,7 @@ The returned value contains the stable ID, content version, canonical source pat
 
 ## Fail-closed rules
 
-Before returning a skill, the loader validates the manifest identity, schema, source-of-truth path, artifact contract, entry ownership, compatibility metadata, consumer vocabulary, source path, Markdown front matter, UTF-8 content, NUL-byte absence, and selected file size. For ZIP/SKILL sources it also rejects unsafe paths, symlink-like members, duplicate members, missing selected files, extra archive members, malformed archives, and an archive file set that disagrees with its manifest.
+Before returning a skill, the loader validates the manifest identity, schema, source-of-truth path, artifact contract, entry ownership, compatibility metadata, consumer vocabulary, source path, Markdown front matter, UTF-8 content, NUL-byte absence, and selected file size. For ZIP/SKILL sources it also enforces archive member and uncompressed-size bounds, verifies deterministic provenance, manifest digest, file list, and selected-entry list, and rejects unsafe paths, symlink-like members, duplicate members, missing selected files, extra archive members, malformed archives, and an archive file set that disagrees with its manifest.
 
 A request for an unapproved ID, including a valid Soulmate-only entry, fails with `SoulmateSkillLoadError`. An undocumented Markdown file remains inert. A malformed manifest or artifact is never converted into an empty or partial success.
 

@@ -28,6 +28,7 @@ stability and breaking changes in behavior.
 
 - **soulmate**: isolate Python package staging outside the repository so source
   distributions cannot inherit repository `.gitignore` metadata
+- **security**: validate Soulmate archive provenance and bounded size in the explicit adapter
 
 The Soulmate package and AI foundation-skill artifacts remain pre-release and are not
 published to a package registry or public release channel.
