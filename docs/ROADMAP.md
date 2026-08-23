@@ -564,18 +564,23 @@ Non-goals for this surface:
 
 This section is the execution roadmap after the v0.9.0 baseline. It is intentionally ordered by risk and dependency rather than by feature novelty. Each phase should be delivered through one or more small pull requests, with characterization tests added before boundary changes and no automatic merge.
 
-**Execution snapshot (23 August 2026):** PRs #260, #261, #262, and #263 are merged into
-`main`. SoulMap now has an explicit Soulmate adapter and foundation bundle, a fail-closed
-manifest-sync/consumer-approval contract, and a gated TestPyPI OIDC workflow. The OIDC
-workflow has passed a `publish=false` dry-run on `main`, including Soulmate package and
-artifact verification. PR #264 adds the reviewed Soulmate companion skill family and is
-currently under review; the current composition/web work is being developed separately.
-The Soulmate package remains private/pre-release; no Trusted Publisher, `testpypi` environment,
-package-registry publication, GitHub Release, tag, or provider activation has been performed.
+**Execution snapshot (24 August 2026):** PRs #260 through #265 are merged into `main`.
+SoulMap now has an explicit Soulmate adapter, foundation and companion AI-facing skills,
+manifest-sync/consumer-approval contracts, a gated TestPyPI OIDC workflow, and a composed
+`soulmap-with-soulmate-ai` import artifact. PR #265 also moved the public website to the peer
+package `src/web/`. The immediate next work is the Phase 13 repository-truth follow-up:
+reconcile high-visibility README, packaging-limitations, release, and roadmap wording with
+the three artifact surfaces before any release decision. The Soulmate package remains
+private/pre-release; no Trusted Publisher, `testpypi` environment, package-registry
+publication, GitHub Release, tag, or provider activation has been performed.
 
 ### Phase 13 - Post-v0.9.0 Repository Truth and Release Hygiene
 
-**Priority:** P0 - immediate after the current web/tooling PR train.
+**Priority:** P0 - immediate follow-up after the web/composition PR train.
+
+**Current status:** Follow-up reconciliation is active after PR #265. The original phase
+was deferred while the Soulmate and composed-artifact boundaries were implemented; this
+pass now updates the high-visibility truth surfaces and their contract tests.
 
 **Goal:** Make `main`, release metadata, documentation, generated artifacts, and repository contracts describe the same shipped state.
 
@@ -630,7 +635,7 @@ Each change must begin with `soulmap audit-knowledge`, identify the canonical Ma
 
 **Goal:** Make every release artifact reproducible, inspectable, and safe to import into supported AI tools without claiming live provider behavior that has not been tested.
 
-The phase covers artifact manifest generation, SHA-256 verification, wheel/sdist resource checks, ZIP and `.skill` content contracts, catalog parity, release provenance attestations, clean-environment extraction tests, and release rollback documentation. The standard distribution remains the two-artifact model defined by `known-limitations.md`. Any new artifact format requires an ADR and a contract test before implementation.
+The phase covers artifact manifest generation, SHA-256 verification, wheel/sdist resource checks, ZIP and `.skill` content contracts, catalog parity, release provenance attestations, clean-environment extraction tests, and release rollback documentation. The standalone SoulMap release remains a two-artifact pair, while the separately governed composed SoulMap-with-Soulmate import surface follows its own ADR and contract. Any new artifact format requires an ADR and a contract test before implementation.
 
 **Exit criteria:** A clean checkout can build the standard artifacts twice with explainable deterministic differences; hashes and manifest metadata agree; internal files do not leak into public Skill bundles; release CI verifies provenance; and upload/import instructions match the actual artifacts.
 
