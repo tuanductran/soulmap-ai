@@ -1235,6 +1235,18 @@ p {
   box-shadow: var(--shadow);
 }
 
+#skill-modal .modal-dialog {
+  display: flex;
+  height: min(760px, calc(100dvh - 2rem));
+  flex-direction: column;
+}
+
+#skill-modal-content {
+  min-height: 0;
+  flex: 1 1 0%;
+  overflow: auto;
+}
+
 .modal-close {
   position: absolute;
   top: 0.8rem;
@@ -1334,6 +1346,16 @@ p {
   display: none;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.modal-loading {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  left: 1.25rem;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
 }
 
 .htmx-request .htmx-indicator,

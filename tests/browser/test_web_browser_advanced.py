@@ -328,6 +328,12 @@ def test_modal_focus_trap_backdrop_close_resize_and_localized_raw_links(
     dialog = page.locator('#skill-modal [role="dialog"]')
     expect(dialog).to_be_visible()
     expect(page.locator("body")).to_have_class(re.compile(r"\bmodal-open\b"))
+    assert (
+        page.locator("#skill-loading").evaluate(
+            "element => getComputedStyle(element).position"
+        )
+        == "absolute"
+    )
     source_links = dialog.locator(".prompt-scenario__source a")
     expect(source_links).to_have_count(3)
     expected_raw = (
