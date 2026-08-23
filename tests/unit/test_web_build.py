@@ -25,7 +25,8 @@ def test_repository_root_falls_back_to_current_working_directory(
     real_path = Path
 
     class PathShim:
-        def __new__(_cls, value: str) -> Path:
+        def __new__(cls, value: str) -> Path:
+            assert cls is PathShim
             if value == str(build.__file__):
                 return real_path(tmp_path / "module.py")
             return real_path(value)

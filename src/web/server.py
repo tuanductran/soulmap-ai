@@ -65,6 +65,54 @@ _sitemap_routes = _routes._sitemap_routes
 _pages = _routes._pages
 _dispatch = _routes.dispatch
 
+# These names intentionally remain public for the pre-refactor server facade.
+__all__ = (
+    "ALPINE_SRI",
+    "ALPINE_URL",
+    "HOST",
+    "HTMX_SRI",
+    "HTMX_URL",
+    "PORT",
+    "PUBLIC_SITE_URL",
+    "RELEASE_URL",
+    "REPOSITORY_URL",
+    "SITE_NAME",
+    "_about",
+    "_boundaries",
+    "_dispatch",
+    "_download",
+    "_faq",
+    "_home",
+    "_how_it_works",
+    "_layout",
+    "_nav",
+    "_nav_path",
+    "_normalise_request_path",
+    "_not_found",
+    "_notes",
+    "_origin",
+    "_pages",
+    "_privacy",
+    "_provider_url",
+    "_read_static_css",
+    "_render_prompt_scenario",
+    "_resource_hints",
+    "_response",
+    "_seo_copy",
+    "_sitemap_routes",
+    "_skill_cards",
+    "_skill_catalog",
+    "_skill_detail_fragment",
+    "_skill_grid_fragment",
+    "_skill_page",
+    "_text",
+    "application",
+    "export_static",
+    "main",
+    "serve",
+    "tr",
+)
+
 
 def application(
     environ: dict[str, object], start_response: StartResponse
