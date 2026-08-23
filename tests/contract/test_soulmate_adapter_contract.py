@@ -6,6 +6,7 @@ import stat
 import zipfile
 from dataclasses import replace
 from pathlib import Path
+from typing import cast
 
 import pytest
 
@@ -570,16 +571,13 @@ def test_adapter_builds_an_immutable_foundation_bundle() -> None:
         bundle.get("soulmate.foundation.lifecycle")
 
 
-class _IncompleteLoader(SoulmateSkillLoader):
-    def __init__(self) -> None:
-        pass
-
+class _IncompleteLoader:
     def load_approved(self) -> tuple[LoadedSoulmateSkill, ...]:
         return ()
 
 
 def test_adapter_rejects_an_incomplete_foundation_bundle() -> None:
-    adapter = SoulMapSoulmateAdapter(_IncompleteLoader())
+    adapter = SoulMapSoulmateAdapter(cast(SoulmateSkillLoader, _IncompleteLoader()))
 
     with pytest.raises(SoulmateSkillLoadError, match="does not match the approved set"):
         adapter.load_foundation_bundle()
