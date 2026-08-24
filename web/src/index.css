@@ -1,4 +1,4 @@
-/* Atlas Nội Tâm: Token Tailwind cho giấy khoáng, ink, Moss Teal và nhịp typography biên tập; component styling ưu tiên utility class. */
+/* Bản đồ Biên Độ: Một field-guide editorial dùng chung trục, measure đọc, type scale và surface nhẹ cho mọi public template. */
 @import "tailwindcss";
 
 @font-face {
@@ -45,6 +45,60 @@
   ::selection {
     background: #bfe1d5;
     color: #122b2c;
+  }
+}
+
+@layer components {
+  .site-frame {
+    @apply mx-auto w-full max-w-[80rem] px-5 sm:px-8 lg:px-12;
+  }
+
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply text-[0.6875rem] font-extrabold uppercase tracking-[0.18em] text-[#1d6a62];
+  }
+
+  .survey-rule {
+    @apply mt-5 h-px w-16 bg-[#9b5540];
+  }
+
+  .page-layout {
+    @apply grid gap-10 lg:grid-cols-12 lg:gap-12;
+  }
+
+  .page-rail {
+    @apply lg:col-span-3 lg:pt-3;
+  }
+
+  .page-field {
+    @apply lg:col-span-8 lg:col-start-5;
+  }
+
+  .page-title {
+    @apply font-serif text-[clamp(3.25rem,6vw,6.25rem)] leading-[0.9] tracking-[-0.065em] text-[#173837];
+  }
+
+  .section-title {
+    @apply font-serif text-[clamp(2.5rem,4vw,4.5rem)] leading-[0.94] tracking-[-0.055em] text-[#173837];
+  }
+
+  .reading-lede {
+    @apply mt-7 max-w-2xl text-[1.0625rem] leading-8 text-[#506863] sm:text-lg;
+  }
+
+  .surface-card {
+    @apply border border-[#d6ded7] bg-[#fcfbf7] shadow-[0_10px_26px_rgba(20,49,45,0.045)];
+  }
+
+  .action-primary {
+    @apply inline-flex min-h-12 items-center gap-2 rounded-full bg-[#1d6a62] px-5 text-sm font-extrabold text-white transition duration-200 hover:bg-[#15564f] active:scale-[0.98];
+  }
+
+  .action-secondary {
+    @apply inline-flex min-h-12 items-center gap-2 rounded-full border border-[#b8c8bc] px-5 text-sm font-extrabold text-[#1d615a] transition duration-200 hover:border-[#8eaba0] hover:bg-[#edf3ee] active:scale-[0.98];
   }
 }
 

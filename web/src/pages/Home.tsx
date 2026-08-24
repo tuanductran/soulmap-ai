@@ -1,4 +1,4 @@
-// Atlas Nội Tâm: Home page dùng hero có trọng tâm lệch và các coordinate block thay cho landing-page card grid mặc định.
+// Bản đồ Biên Độ: Home dùng editorial split-field, coordinate rail và nhịp section cố định thay vì hero/card system riêng lẻ.
 
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowDownRight, ArrowRight, MapPinned } from "lucide-react";
@@ -16,109 +16,100 @@ export default function HomePage() {
   const locale = localeFromPath(pathname);
   return (
     <>
-      <section className="relative isolate overflow-hidden border-b border-[#d7dfd5] bg-[#e8eee8]">
-        <img
-          src={heroImage}
-          alt=""
-          className="absolute inset-0 -z-10 h-full w-full object-cover object-right opacity-80"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#f8f7f0] via-[#f8f7f0]/85 to-transparent" />
-        <div className="mx-auto grid min-h-[620px] max-w-7xl items-end px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:px-12 lg:py-24">
-          <div className="max-w-3xl">
-            <p className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[#1d5f58]">
+      <section className="border-b border-[#d6ded7] bg-[#fbfaf5]">
+        <div className="site-frame grid lg:min-h-[41rem] lg:grid-cols-12">
+          <div className="flex flex-col justify-end py-16 sm:py-20 lg:col-span-7 lg:py-24 lg:pr-12">
+            <p className="eyebrow flex items-center gap-2">
               <MapPinned className="size-4" /> {t("home.eyebrow")}
             </p>
-            <h1 className="mt-6 font-serif text-[clamp(3.5rem,8vw,7.75rem)] leading-[0.84] tracking-[-0.075em] text-[#112f30]">
+            <h1 className="mt-6 max-w-3xl font-serif text-[clamp(3.5rem,6.7vw,7.25rem)] leading-[0.87] tracking-[-0.075em] text-[#173837]">
               {t("home.title")}
             </h1>
-            <p className="mt-8 max-w-xl text-lg leading-8 text-[#405c58]">{t("home.body")}</p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                to={localizedPath("/skills", locale)}
-                className="inline-flex min-h-13 items-center gap-2 rounded-full bg-[#23786f] px-6 text-sm font-extrabold text-white transition hover:bg-[#195b55] active:scale-[0.98]"
-              >
+            <p className="mt-7 max-w-xl text-[1.0625rem] leading-8 text-[#506863]">
+              {t("home.body")}
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to={localizedPath("/skills", locale)} className="action-primary">
                 {t("home.primary")} <ArrowRight className="size-4" />
               </Link>
-              <Link
-                to={localizedPath("/about", locale)}
-                className="inline-flex min-h-13 items-center gap-2 rounded-full border border-[#b7c9bd] bg-[#f8f7f0]/80 px-6 text-sm font-extrabold text-[#225b55] transition hover:bg-white active:scale-[0.98]"
-              >
+              <Link to={localizedPath("/about", locale)} className="action-secondary">
                 {t("home.secondary")}
               </Link>
             </div>
           </div>
-          <div className="hidden justify-self-end lg:block">
-            <div className="w-52 border-l border-[#5a877d] pl-5 text-sm leading-6 text-[#3e6660]">
-              <span className="block text-xs font-bold uppercase tracking-[0.18em] text-[#1d5f58]">
+          <div className="relative min-h-72 overflow-hidden border-t border-[#d6ded7] lg:col-span-5 lg:min-h-0 lg:border-l lg:border-t-0">
+            <img
+              src={heroImage}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-right"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#173837]/75 via-[#173837]/20 to-transparent p-6 sm:p-8 lg:p-10">
+              <span className="block text-[0.6875rem] font-extrabold uppercase tracking-[0.18em] text-[#d7eee2]">
                 {t("home.fieldNoteLabel")}
               </span>
-              <p className="mt-3">{t("home.fieldNoteBody")}</p>
+              <p className="mt-3 max-w-xs text-sm leading-6 text-white/90">
+                {t("home.fieldNoteBody")}
+              </p>
             </div>
           </div>
         </div>
       </section>
-      <section className="relative overflow-hidden bg-[#fbfaf5] py-20 sm:py-28">
+      <section className="relative overflow-hidden border-b border-[#d6ded7] bg-[#f7f6ef]">
         <img
           src={textureImage}
           alt=""
           className="pointer-events-none absolute right-[-5%] top-0 h-full w-1/2 object-cover opacity-35"
         />
-        <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#7f3e29]">
-                01 — Orientation
-              </p>
-              <h2 className="mt-5 max-w-md font-serif text-5xl leading-[0.92] tracking-[-0.055em] text-[#173837]">
-                {t("home.mapTitle")}
-              </h2>
-              <p className="mt-6 max-w-md text-base leading-7 text-[#59706b]">
-                {t("home.mapBody")}
-              </p>
+        <div className="site-frame relative section-pad">
+          <div className="page-layout">
+            <div className="page-rail">
+              <p className="eyebrow text-[#9b5540]">01 / Orientation</p>
+              <div className="survey-rule" />
             </div>
-            <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-[#dfe5dc] bg-[#dfe5dc] sm:grid-cols-3">
-              {(t("home.steps", { returnObjects: true }) as string[]).map((step, index) => (
-                <div key={step} className="min-h-48 bg-[#fbfaf5] p-6">
-                  <span className="font-serif text-4xl text-[#5d756b]">0{index + 1}</span>
-                  <p className="mt-12 text-lg font-bold tracking-[-0.025em] text-[#244a47]">
-                    {step}
-                  </p>
-                </div>
-              ))}
+            <div className="page-field">
+              <h2 className="section-title max-w-2xl">{t("home.mapTitle")}</h2>
+              <p className="reading-lede max-w-xl">{t("home.mapBody")}</p>
+              <div className="mt-10 grid overflow-hidden rounded-xl border border-[#d6ded7] bg-[#d6ded7] sm:grid-cols-3">
+                {(t("home.steps", { returnObjects: true }) as string[]).map((step, index) => (
+                  <div key={step} className="min-h-36 bg-[#fbfaf5] p-5 sm:min-h-44 sm:p-6">
+                    <span className="font-serif text-3xl text-[#6a8178]">0{index + 1}</span>
+                    <p className="mt-7 text-base font-extrabold tracking-[-0.02em] text-[#244a47] sm:mt-9">
+                      {step}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <section className="bg-[#e7eee8] py-20 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-12">
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#cad8cf] bg-[#f7f6ef] shadow-[0_26px_70px_rgba(20,49,45,0.13)]">
-            <img
-              src={fieldImage}
-              alt={t("home.fieldImageAlt")}
-              className="aspect-[3/2] w-full object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#123433]/80 to-transparent p-7 text-white">
-              <p className="text-xs font-bold uppercase tracking-[0.18em]">
-                {t("home.evidenceLabel")}
-              </p>
+      <section className="border-b border-[#d6ded7] bg-[#e7efe8]">
+        <div className="site-frame section-pad">
+          <div className="page-layout">
+            <div className="page-rail">
+              <p className="eyebrow">{t("home.evidenceLabel")}</p>
+              <div className="survey-rule bg-[#1d6a62]" />
             </div>
-          </div>
-          <div className="lg:pl-10">
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#1d5f58]">
-              {t("home.workingSurface")}
-            </p>
-            <h2 className="mt-5 max-w-lg font-serif text-5xl leading-[0.92] tracking-[-0.055em] text-[#173837]">
-              {t("home.fieldTitle")}
-            </h2>
-            <p className="mt-6 max-w-xl text-base leading-7 text-[#526965]">
-              {t("home.fieldBody")}
-            </p>
-            <Link
-              to={localizedPath("/skills", locale)}
-              className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-[#1d655d] hover:gap-3"
-            >
-              {t("common.explore")} <ArrowDownRight className="size-4" />
-            </Link>
+            <div className="page-field grid gap-10 lg:grid-cols-2 lg:items-center">
+              <div>
+                <p className="eyebrow">{t("home.workingSurface")}</p>
+                <h2 className="section-title mt-5">{t("home.fieldTitle")}</h2>
+                <p className="reading-lede mt-6 text-[#526965]">{t("home.fieldBody")}</p>
+                <Link
+                  to={localizedPath("/skills", locale)}
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-[#1d655d] transition hover:gap-3"
+                >
+                  {t("common.explore")} <ArrowDownRight className="size-4" />
+                </Link>
+              </div>
+              <div className="relative overflow-hidden rounded-xl border border-[#c7d7ca] bg-[#f7f6ef] shadow-[0_18px_46px_rgba(20,49,45,0.1)]">
+                <img
+                  src={fieldImage}
+                  alt={t("home.fieldImageAlt")}
+                  className="aspect-[3/2] w-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

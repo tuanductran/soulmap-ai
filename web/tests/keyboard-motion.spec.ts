@@ -78,7 +78,7 @@ test("reduced-motion contract: navigation cue avoids smooth scrolling and focus 
   await expect(cue).toHaveCSS("outline-style", "solid");
   await expect(cue).toHaveCSS("outline-width", "3px");
   await page.evaluate(() => {
-    const navigation = document.querySelector("nav");
+    const navigation = document.querySelector("[data-navigation-rail]");
     if (!(navigation instanceof HTMLElement)) throw new Error("Expected a navigation rail.");
     const calls: ScrollToOptions[] = [];
     navigation.scrollBy = (options?: ScrollToOptions | number, y?: number) => {
