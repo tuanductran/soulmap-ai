@@ -7,6 +7,7 @@ import { localeFromPath, localizedPath } from "@/lib/locale";
 
 const asset = (file: string) => `${import.meta.env.BASE_URL}images/${file}`;
 const heroImage = asset("hero.webp");
+const heroImageMobile = asset("hero-1280.webp");
 const fieldImage = asset("field-notes.webp");
 const textureImage = asset("contours.webp");
 
@@ -19,6 +20,8 @@ export default function HomePage() {
       <section className="relative isolate overflow-hidden border-b border-[#d7dfd5] bg-[#e8eee8]">
         <img
           src={heroImage}
+          srcSet={`${heroImageMobile} 1280w, ${heroImage} 1920w`}
+          sizes="100vw"
           alt=""
           className="absolute inset-0 -z-10 h-full w-full object-cover object-right opacity-80"
         />

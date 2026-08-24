@@ -13,7 +13,8 @@
     "format": "biome format --write",
     "format:check": "biome format",
     "lint": "biome lint",
-    "quality": "biome ci && pnpm check"
+    "quality": "biome ci && pnpm check",
+    "benchmark:performance": "node scripts/benchmark-web-vitals.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
@@ -33,6 +34,7 @@
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.1",
     "@vitejs/plugin-react": "^5.0.4",
+    "lighthouse": "13.4.1",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.6.3",
     "vite": "^7.1.9"

@@ -134,12 +134,19 @@ pnpm --dir web quality
 SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web build
 pnpm --dir web verify
 SITE_BASE_PATH=/soulmap-ai/ pnpm --dir web test:browser
+pnpm --dir web benchmark:performance
 ```
 
 `pnpm --dir web quality` runs Biome's pinned formatter, import organizer, recommended linter, and
 TypeScript check without writing changes. The `website-pages.yml` workflow repeats these locked Node
 checks on website changes. It publishes only generated files to `gh-pages` after a `main` push;
 `main` remains the source of truth.
+
+`pnpm --dir web benchmark:performance` makes a fresh GitHub Pages-base-path build, serves it locally,
+and runs Lighthouse against Home, Skills, and the Vietnamese FAQ with both mobile and desktop presets.
+It writes raw JSON reports and a median summary for three samples to `/tmp/soulmap-lighthouse` by
+default; set `PERFORMANCE_RUNS` or `PERFORMANCE_OUTPUT_DIR` to change those values. These are
+repeatable **lab** measurements for comparison, not Core Web Vitals field data or real-device proof.
 For route and boundary details, see [`../product/WEBSITE.md`](../product/WEBSITE.md).
 
 For the catalog and manual distribution boundary, see [`operations/LIBRARY.md`](../operations/LIBRARY.md).
