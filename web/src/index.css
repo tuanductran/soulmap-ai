@@ -28,6 +28,7 @@
   html { @apply bg-[#f7f6ef] font-sans antialiased; }
   body { @apply m-0 min-w-80 bg-[#f7f6ef]; }
   button, a, input { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid #1d5f58; outline-offset: 3px; }
   ::selection { background: #bfe1d5; color: #122b2c; }
 }
 

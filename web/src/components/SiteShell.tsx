@@ -25,6 +25,12 @@ export function SiteShell() {
     window.addEventListener("resize", updateScrollCue);
     return () => { window.cancelAnimationFrame(frame); window.removeEventListener("resize", updateScrollCue); };
   }, [locale]);
+  const scrollNavigation = () => {
+    const navigation = navigationRef.current;
+    if (!navigation) return;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    navigation.scrollBy({ left: navigation.clientWidth * 0.75, behavior });
+  };
   const links = [
     { key: "home", to: localizedPath("/", locale) },
     { key: "how", to: localizedPath("/how-it-works", locale) },
@@ -62,7 +68,7 @@ export function SiteShell() {
               </Menu>
             </div>
           </nav>
-          {canScrollNavigation && <button type="button" onClick={() => navigationRef.current?.scrollBy({ left: navigationRef.current.clientWidth * 0.75, behavior: "smooth" })} className="absolute right-2 top-0 inline-flex size-9 items-center justify-center rounded-full border border-[#cfd9d0] bg-[#f7f6ef]/95 text-[#1e655e] shadow-sm backdrop-blur sm:hidden" aria-label={t("nav.scrollMore")}><ChevronRight className="size-4" /></button>}
+          {canScrollNavigation && <button type="button" onClick={scrollNavigation} className="absolute right-2 top-0 inline-flex size-9 items-center justify-center rounded-full border border-[#cfd9d0] bg-[#f7f6ef]/95 text-[#1e655e] shadow-sm backdrop-blur sm:hidden" aria-label={t("nav.scrollMore")}><ChevronRight className="size-4" /></button>}
         </div>
       </header>
       <main><Outlet /></main>
