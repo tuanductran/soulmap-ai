@@ -1,6 +1,6 @@
 # Dependency refresh and advisory review
 
-This checklist is the operational boundary for Phase 12. It covers development-tool dependencies, the `uv.lock` baseline, CI/release pins and transitive package changes. It does not authorize a new runtime dependency, a Python-version expansion, a semantic safety classifier or a platform adapter.
+This checklist is the operational boundary for Phase 12. It covers development-tool dependencies, the `uv.lock` baseline, CI/release pins and transitive package changes. It does not authorize a new runtime dependency, a Python-version expansion, a semantic safety classifier or a platform adapter. For the next bounded P1 cycle, use the implementation-ready [P1 dependency/advisory refresh plan](p1-dependency-advisory-refresh-plan.md) together with this checklist.
 
 ## Trigger policy
 

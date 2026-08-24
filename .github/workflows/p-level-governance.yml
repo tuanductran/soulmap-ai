@@ -1,0 +1,23 @@
+name: P-level safety governance
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  p-level-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: "3.11"
+      - name: Install locked dependencies
+        run: uv sync --locked --python 3.11
+      - name: Validate P-level safety governance
+        run: uv run python scripts/check_p_level_pr.py --event-path "$GITHUB_EVENT_PATH"
