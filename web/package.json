@@ -19,7 +19,7 @@
     "@headlessui/react": "^2.2.10",
     "@tanstack/react-router": "^1.170.32",
     "i18next": "^26.4.0",
-    "lucide-react": "^0.468.0",
+    "lucide-react": "^1.0.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-i18next": "^17.0.12"
