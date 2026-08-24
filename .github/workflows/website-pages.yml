@@ -49,6 +49,9 @@ jobs:
       - name: Install locked web dependencies
         run: pnpm --dir web install --frozen-lockfile
 
+      - name: Check web formatting, imports, lint, and types
+        run: pnpm --dir web quality
+
       - name: Build and verify project-site static output
         run: |
           rm -rf "${STATIC_OUTPUT}"

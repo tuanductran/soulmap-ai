@@ -24,11 +24,39 @@
 }
 
 @layer base {
-  * { @apply border-[#dfe5dc]; }
-  html { @apply bg-[#f7f6ef] font-sans antialiased; }
-  body { @apply m-0 min-w-80 bg-[#f7f6ef]; }
-  button, a, input { -webkit-tap-highlight-color: transparent; }
-  ::selection { background: #bfe1d5; color: #122b2c; }
+  * {
+    @apply border-[#dfe5dc];
+  }
+  html {
+    @apply bg-[#f7f6ef] font-sans antialiased;
+  }
+  body {
+    @apply m-0 min-w-80 bg-[#f7f6ef];
+  }
+  button,
+  a,
+  input {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 3px solid #1d5f58;
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: #bfe1d5;
+    color: #122b2c;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) { *, ::before, ::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    /* biome-ignore lint/complexity/noImportantStyles: Reduced-motion must override component-level transitions and animations. */
+    scroll-behavior: auto !important;
+    /* biome-ignore lint/complexity/noImportantStyles: Reduced-motion must override component-level transitions and animations. */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: Reduced-motion must override component-level transitions and animations. */
+    animation-duration: 0.01ms !important;
+  }
+}

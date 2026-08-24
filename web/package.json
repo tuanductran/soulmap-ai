@@ -9,7 +9,11 @@
     "verify": "node scripts/verify-static.mjs",
     "test:browser": "playwright test",
     "preview": "vite preview --host 0.0.0.0",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "format": "biome format --write",
+    "format:check": "biome format",
+    "lint": "biome lint",
+    "quality": "biome ci && pnpm check"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
@@ -22,6 +26,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@biomejs/biome": "2.5.10",
     "@playwright/test": "^1.57.0",
     "@tailwindcss/vite": "^4.1.14",
     "@types/node": "^24.7.0",
