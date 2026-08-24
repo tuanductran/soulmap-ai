@@ -16,14 +16,20 @@ type ProviderDialogProps = {
 
 export function ProviderDialog({ open, skill, locale, onClose }: ProviderDialogProps) {
   const { t } = useTranslation();
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "unavailable">("idle");
   if (!skill) return null;
   const copy = skill.copy[locale];
   const prompt = `Use the SoulMap ${copy.title} layer as a careful reference. Context: ${copy.useWhen}\n\nPlease reflect what I share without diagnosing, predicting, or taking over the meaning.`;
   const copyPrompt = async () => {
-    await navigator.clipboard?.writeText(prompt);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1600);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+      await navigator.clipboard.writeText(prompt);
+      setCopyState("copied");
+      window.setTimeout(() => setCopyState("idle"), 1600);
+    } catch {
+      setCopyState("unavailable");
+      window.setTimeout(() => setCopyState("idle"), 2400);
+    }
   };
   return (
     <Dialog open={open} onClose={onClose} className="relative z-50">
@@ -61,8 +67,12 @@ export function ProviderDialog({ open, skill, locale, onClose }: ProviderDialogP
               onClick={copyPrompt}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#267b72] px-5 text-sm font-bold text-white transition hover:bg-[#1c625b] active:scale-[0.98]"
             >
-              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-              {copied ? t("common.copied") : t("common.copy")}
+              {copyState === "copied" ? <Check className="size-4" /> : <Copy className="size-4" />}
+              {copyState === "copied"
+                ? t("common.copied")
+                : copyState === "unavailable"
+                  ? t("common.copyUnavailable")
+                  : t("common.copy")}
             </button>
             <a
               href={rawBundleUrl(skill, locale)}

@@ -35,6 +35,30 @@ test("localized catalog opens an accessible provider dialog and exposes a raw bu
   await expect(inspect).toBeFocused();
 });
 
+test("provider dialog handles clipboard denial without leaving an exception state", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText: async () => Promise.reject(new Error("Permission denied")) },
+    });
+  });
+  await page.goto("vi/skills");
+  await page
+    .getByRole("button", { name: /Xem kỹ/ })
+    .first()
+    .click();
+  await page
+    .getByRole("button", { name: /Dùng prompt bắt đầu/ })
+    .first()
+    .click();
+  await page.getByRole("button", { name: /Sao chép prompt/ }).click();
+  await expect(page.getByRole("button", { name: /Không thể sao chép/ })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("link", { name: /Đọc nguồn chuẩn/ })).not.toBeVisible();
+});
+
 test("direct route, language switch and FAQ disclosure preserve a usable static surface", async ({
   page,
 }) => {
