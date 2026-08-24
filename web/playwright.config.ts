@@ -10,7 +10,9 @@ export default defineConfig({
   // static-site regression suite stable on constrained CI runners.
   workers: 1,
   use: { baseURL: "http://127.0.0.1:4173/soulmap-ai/", trace: "retain-on-failure", screenshot: "only-on-failure" },
-  webServer: { command: "SITE_BASE_PATH=/soulmap-ai/ pnpm build && SITE_BASE_PATH=/soulmap-ai/ pnpm vite preview --host 127.0.0.1 --port 4173", port: 4173, reuseExistingServer: !process.env.CI },
+  // A browser audit must fail rather than silently reuse a stale preview from a
+  // different branch or build. This keeps local evidence aligned with CI.
+  webServer: { command: "SITE_BASE_PATH=/soulmap-ai/ pnpm build && SITE_BASE_PATH=/soulmap-ai/ pnpm vite preview --host 127.0.0.1 --port 4173", port: 4173, reuseExistingServer: false },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },

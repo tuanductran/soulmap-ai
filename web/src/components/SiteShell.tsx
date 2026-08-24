@@ -62,7 +62,7 @@ export function SiteShell() {
               {links.map((link) => <Link key={link.key} to={link.to} className="rounded-full px-4 py-2 text-sm font-medium text-[#526565] transition hover:bg-[#e6eee8] hover:text-[#1b5550] active:scale-[0.98]" activeProps={{ className: "bg-[#dcebe2] text-[#1b5550]" }}>{t(`nav.${link.key}`)}</Link>)}
               <Menu as="div" className="relative">
                 <MenuButton className="inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-[#526565] transition hover:bg-[#e6eee8] hover:text-[#1b5550]">{t("nav.more")} <ChevronDown className="size-3" /></MenuButton>
-                <MenuItems className="absolute left-0 z-40 mt-2 w-44 origin-top-left rounded-2xl border border-[#d8dfd8] bg-[#fbfaf5] p-1.5 shadow-xl focus:outline-none">
+                <MenuItems anchor="bottom start" portal className="z-40 w-44 origin-top-left rounded-2xl border border-[#d8dfd8] bg-[#fbfaf5] p-1.5 shadow-xl [--anchor-gap:8px] focus:outline-none">
                   {moreLinks.map((link) => <MenuItem key={link.key}>{({ focus }) => <Link to={link.to} className={`block rounded-xl px-3 py-2 text-sm font-semibold ${focus ? "bg-[#e5efe8] text-[#1c625b]" : "text-[#284543]"}`}>{t(`nav.${link.key}`)}</Link>}</MenuItem>)}
                 </MenuItems>
               </Menu>
