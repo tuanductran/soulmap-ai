@@ -27,12 +27,13 @@ export function ProviderDialog({ open, skill, locale, onClose }: ProviderDialogP
         <DialogPanel className="w-full max-w-xl rounded-[1.75rem] border border-white/70 bg-[#fbfaf5] p-6 shadow-[0_28px_80px_rgba(18,43,44,0.28)] sm:p-8">
           <div className="flex items-start justify-between gap-6">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#327d75]">{copy.group}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#1d5f58]">{copy.group}</p>
               <DialogTitle className="mt-3 font-serif text-3xl leading-none tracking-[-0.045em] text-[#122b2c]">{t("skills.dialogTitle")}</DialogTitle>
             </div>
             <button onClick={onClose} className="grid size-10 place-items-center rounded-full border border-[#d8dfd8] text-[#305a58] transition hover:bg-[#eaf0eb]" aria-label={t("common.close")}><X className="size-4" /></button>
           </div>
           <p className="mt-5 max-w-lg text-sm leading-6 text-[#526565]">{t("skills.dialogBody")}</p>
+          <p className="mt-4 text-xs font-semibold leading-5 text-[#52706b]">{t("skills.promptLanguage")}</p>
           <div className="mt-6 rounded-2xl border border-[#dce5de] bg-white/70 p-4 text-sm leading-6 text-[#294242]">{prompt}</div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <button onClick={copyPrompt} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#267b72] px-5 text-sm font-bold text-white transition hover:bg-[#1c625b] active:scale-[0.98]">{copied ? <Check className="size-4" /> : <Copy className="size-4" />}{copied ? t("common.copied") : t("common.copy")}</button>

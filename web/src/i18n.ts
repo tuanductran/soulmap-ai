@@ -8,7 +8,7 @@ export type Locale = (typeof supportedLocales)[number];
 const resources = {
   en: {
     translation: {
-      nav: { home: "Atlas", how: "How it works", boundaries: "Boundaries", notes: "Notes", skills: "Skill layers", more: "More", about: "About", faq: "FAQ", download: "Download", privacy: "Privacy" },
+      nav: { home: "Atlas", how: "How it works", boundaries: "Boundaries", notes: "Notes", skills: "Skill layers", more: "More", primaryLabel: "Primary navigation", scrollMore: "Scroll navigation right", about: "About", faq: "FAQ", download: "Download", privacy: "Privacy" },
       common: { language: "Language", explore: "Explore layers", inspect: "Inspect", close: "Close", source: "Open source", copy: "Copy prompt", copied: "Copied", coordinates: "Coordinates", repository: "Repository" },
       home: {
         eyebrow: "A reflective field guide",
@@ -36,6 +36,7 @@ const resources = {
         dialogBody: "Copy the prompt first, then open the AI tool you use. Provider pages may require sign-in and do not rely on fragile prefilled links.",
         chooseProvider: "Open after copying",
         raw: "Read the canonical source",
+        promptLanguage: "This starter prompt stays in English so AI tools receive the canonical wording.",
         noResults: "No layers match this coordinate. Try a broader word or clear the search.",
       },
       info: {
@@ -48,7 +49,7 @@ const resources = {
   },
   vi: {
     translation: {
-      nav: { home: "Bản đồ", how: "Cách hoạt động", boundaries: "Ranh giới", notes: "Ghi chú", skills: "Các lớp Skill", more: "Thêm", about: "Giới thiệu", faq: "FAQ", download: "Tải về", privacy: "Quyền riêng tư" },
+      nav: { home: "Bản đồ", how: "Cách hoạt động", boundaries: "Ranh giới", notes: "Ghi chú", skills: "Các lớp Skill", more: "Thêm", primaryLabel: "Điều hướng chính", scrollMore: "Cuộn sang phải để xem thêm mục", about: "Giới thiệu", faq: "FAQ", download: "Tải về", privacy: "Quyền riêng tư" },
       common: { language: "Ngôn ngữ", explore: "Khám phá các lớp", inspect: "Xem kỹ", close: "Đóng", source: "Mở nguồn", copy: "Sao chép prompt", copied: "Đã sao chép", coordinates: "Tọa độ", repository: "Kho mã nguồn" },
       home: {
         eyebrow: "Field guide để phản chiếu",
@@ -76,6 +77,7 @@ const resources = {
         dialogBody: "Hãy sao chép prompt trước, rồi mở công cụ AI bạn dùng. Trang nhà cung cấp có thể cần đăng nhập; giao diện không dựa vào link prefill dễ hỏng.",
         chooseProvider: "Mở sau khi sao chép",
         raw: "Đọc nguồn chuẩn",
+        promptLanguage: "Prompt khởi đầu được giữ bằng tiếng Anh để công cụ AI nhận đúng wording chuẩn.",
         noResults: "Không có lớp phù hợp với tọa độ này. Hãy thử từ rộng hơn hoặc xóa nội dung tìm kiếm.",
       },
       info: {
@@ -88,7 +90,7 @@ const resources = {
   },
   ko: {
     translation: {
-      nav: { home: "아틀라스", how: "작동 방식", boundaries: "경계", notes: "노트", skills: "Skill 계층", more: "더 보기", about: "소개", faq: "FAQ", download: "다운로드", privacy: "개인정보" },
+      nav: { home: "아틀라스", how: "작동 방식", boundaries: "경계", notes: "노트", skills: "Skill 계층", more: "더 보기", primaryLabel: "주요 탐색", scrollMore: "더 많은 탐색 항목을 보려면 오른쪽으로 스크롤", about: "소개", faq: "FAQ", download: "다운로드", privacy: "개인정보" },
       common: { language: "언어", explore: "계층 살펴보기", inspect: "자세히 보기", close: "닫기", source: "원문 열기", copy: "프롬프트 복사", copied: "복사됨", coordinates: "좌표", repository: "저장소" },
       home: {
         eyebrow: "성찰을 위한 필드 가이드",
@@ -116,6 +118,7 @@ const resources = {
         dialogBody: "먼저 프롬프트를 복사한 다음 사용하는 AI 도구를 여세요. 공급자 페이지에는 로그인이 필요할 수 있으며, 깨지기 쉬운 prefill 링크에 의존하지 않습니다.",
         chooseProvider: "복사 후 열기",
         raw: "정식 원문 읽기",
+        promptLanguage: "AI 도구에 canonical wording을 전달하기 위해 시작 프롬프트는 영어로 유지됩니다.",
         noResults: "이 좌표와 일치하는 계층이 없습니다. 더 넓은 단어를 사용하거나 검색어를 지워 보세요.",
       },
       info: {

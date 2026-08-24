@@ -9,5 +9,6 @@ const required = ["index.html", "404.html", "api/raw/meta.md", "vi/api/raw/frame
 for (const entry of required) await access(path.join(dist, entry));
 const html = await readFile(path.join(dist, "index.html"), "utf8");
 if (html.includes("/manus-storage/") || html.includes("src/web")) throw new Error("Static output contains a preview-only or legacy Python web reference.");
+if (html.includes("fonts.googleapis.com") || html.includes("fonts.gstatic.com")) throw new Error("Static output must use self-hosted fonts rather than a remote font CDN.");
 const assets = await readdir(path.join(dist, "assets"));
 if (!assets.some((name) => name.endsWith(".js")) || !assets.some((name) => name.endsWith(".css"))) throw new Error("Static output is missing bundled JS or CSS.");
