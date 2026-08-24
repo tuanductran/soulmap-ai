@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!**/dist", "!!**/playwright-report", "!!**/test-results"]
+    "includes": ["**", "!!**/dist", "!!**/playwright-report", "!!**/test-results"],
+    "ignoreUnknown": true
   },
   "formatter": {
     "enabled": true,
@@ -28,6 +29,11 @@
   "css": {
     "parser": {
       "tailwindDirectives": true
+    }
+  },
+  "html": {
+    "formatter": {
+      "enabled": true
     }
   },
   "assist": {
