@@ -32,7 +32,7 @@ venv.bak/
 .uv-cache/
 
 # Build and packaging artifacts
-.eggs/
+eggs/
 .coverage
 .coverage.*
 *.egg
@@ -43,6 +43,10 @@ coverage.xml
 dist/
 htmlcov/
 pip-wheel-metadata/
+
+# Generated browser-test output
+web/playwright-report/
+web/test-results/
 
 # Vendored or extracted JS dependencies for local tooling
 .bun-cache/

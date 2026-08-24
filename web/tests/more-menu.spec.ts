@@ -8,7 +8,9 @@ const locales = [
 
 test("More menu pointer flow: every locale opens, routes and closes", async ({ page }) => {
   for (const locale of locales) {
-    await page.goto(locale.prefix ? `${locale.prefix.slice(1)}/faq` : "faq", { waitUntil: "domcontentloaded" });
+    await page.goto(locale.prefix ? `${locale.prefix.slice(1)}/faq` : "faq", {
+      waitUntil: "domcontentloaded",
+    });
     const trigger = page.getByRole("button", { name: locale.trigger, exact: true });
     await trigger.click();
     const menu = page.getByRole("menu");
@@ -29,8 +31,13 @@ test("More menu pointer flow: outside activation closes the open panel", async (
   await expect(page.getByRole("menu")).toHaveCount(0);
 });
 
-test("More menu mobile geometry: panel remains visible and item hit targets stay inside the viewport", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "mobile", "Geometry is specific to the mobile navigation rail.");
+test("More menu mobile geometry: panel remains visible and item hit targets stay inside the viewport", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "mobile",
+    "Geometry is specific to the mobile navigation rail.",
+  );
   await page.goto("vi/faq", { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: "Thêm", exact: true }).click();
   const menu = page.getByRole("menu");
@@ -41,7 +48,10 @@ test("More menu mobile geometry: panel remains visible and item hit targets stay
     const rect = menu.getBoundingClientRect();
     const items = [...menu.querySelectorAll<HTMLElement>('[role="menuitem"]')].map((item) => {
       const itemRect = item.getBoundingClientRect();
-      const midpoint = document.elementFromPoint(itemRect.left + itemRect.width / 2, itemRect.top + itemRect.height / 2);
+      const midpoint = document.elementFromPoint(
+        itemRect.left + itemRect.width / 2,
+        itemRect.top + itemRect.height / 2,
+      );
       return {
         bottom: itemRect.bottom,
         top: itemRect.top,
@@ -58,5 +68,8 @@ test("More menu mobile geometry: panel remains visible and item hit targets stay
   expect(result.top).toBeGreaterThanOrEqual(0);
   expect(result.bottom).toBeLessThanOrEqual(result.viewportHeight);
   expect(result.items).toHaveLength(4);
-  expect(result.items.every((item) => item.top >= 0 && item.bottom <= result.viewportHeight && item.hit), JSON.stringify(result)).toBe(true);
+  expect(
+    result.items.every((item) => item.top >= 0 && item.bottom <= result.viewportHeight && item.hit),
+    JSON.stringify(result),
+  ).toBe(true);
 });
