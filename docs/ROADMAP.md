@@ -168,7 +168,6 @@ soulmap-ai/
 │   │   ├── config/       Static safety config (multilingual crisis packs)
 │   │   ├── memory/       Experimental memory ledger
 │   │   └── experimental/ Experimental modules (biometric ingest, demo)
-│   ├── web/              Python-only public website and static export surface
 │   └── devtools/
 │       ├── audit/        Knowledge-usage audit (audit-knowledge)
 │       ├── evals/        eval-groups, eval-markdown-contracts, eval-responses
@@ -187,6 +186,12 @@ soulmap-ai/
 │   ├── operations/       Privacy, operations, regulatory, upload
 │   ├── product/          User-facing product doc
 │   └── integrations/      Per-platform deployment guides
+│
+├── web/                    React/TanStack/Tailwind static public website workspace
+│   ├── src/                Client routes, i18n resources and accessible UI
+│   ├── content/            Build-time catalog and prompt inputs
+│   ├── scripts/            Raw bundle generation and static verification
+│   └── tests/              Playwright browser regression
 │
 ├── .github/
 │   ├── CODEOWNERS        Maintainer ownership and review map
@@ -520,35 +525,29 @@ semantic safety classification, or platform adapter.
 
 ---
 
-### Public Website Surface - Python-only, non-AI
+### Public Website Surface - React static, non-AI
 
-The repository now includes a deliberately small public website surface under
-`src/web/`. It is served by Python's standard-library WSGI server and exists to
-explain SoulMap, publish boundaries, and direct users to the generated `.skill` and `.zip`
-artifacts.
+The public website is an independent React/TanStack/Tailwind static workspace under
+`web/`. It explains SoulMap, publishes boundaries, and directs users to generated
+`.skill` and `.zip` artifacts without introducing a server-side web process, hosted AI,
+accounts, database, or runtime dependency from SoulMap/Soulmate into the browser layer.
 
 Completed foundation:
 
 * Responsive public pages for Home, How it works, Boundaries, Download, Notes, About,
   FAQ, Privacy, Skills catalog, and Skill detail routes in EN/VI/KO.
-* `uv run soulmap web` with configurable local host and port.
-* In-process route tests, security headers, skip-link/accessibility markers, responsive CSS,
-  reduced-motion support, and local browser smoke validation.
+* TanStack routes keep English unprefixed while Vietnamese and Korean use `/vi/` and `/ko/`;
+  i18next owns public UI labels and Headless UI owns menus, disclosures, and dialogs.
+* The static application exposes localized raw Markdown bundles at `/api/raw/<slug>.md`,
+  `/vi/api/raw/<slug>.md`, and `/ko/api/raw/<slug>.md` without provider query-prefill claims.
+* Production builds use `SITE_BASE_PATH=/soulmap-ai/`, generate `404.html` as the GitHub Pages
+  SPA fallback, and run fail-closed `web verify` checks for routes, raw bundles, assets and
+  legacy/preview references.
+* Playwright browser regression covers desktop Chromium, desktop Firefox and mobile WebKit;
+  it validates direct routes, locale switching, raw bundle URLs, search, dialogs and focus
+  return without claiming live third-party AI provider behavior.
 * Explicit separation from `skills/`, `.claude/`, runtime knowledge loaders, and custom AI
   artifacts.
-* `uv run soulmap web --export-static` generates a project-site-safe static tree with an
-  optional base path, and `scripts/verify_static_site.py` rejects source leakage, scripts,
-  symlinks, local hosts, missing routes, and unsafe links.
-* The Skills catalog has localized EN/VI/KO metadata and prompt scenarios, JSON-backed
-  locale catalogs with exact parity tests, deterministic Search/Ask modes, safe question
-  starters, localized error states, compact Ask results, raw Markdown/API bundles, htmx
-  detail loading, Alpine transitions, and a static-export contract.
-* Shared HTML head generation includes conservative `preload`, `preconnect`, and
-  `dns-prefetch` hints derived from the actual external stylesheet/script origins, without
-  adding runtime dependencies or speculative platform integrations.
-* The original `server.py` boundary is now split into HTTP/config, page renderers, Skill
-  views, and ordered route dispatch modules with compatibility aliases and characterization
-  tests preserved throughout the migration.
 * `.github/workflows/website-pages.yml` rebuilds on website-source changes, uploads the
   verified output for inspection, and publishes only generated files to `gh-pages` after a
   successful `main` build.
@@ -569,8 +568,9 @@ This section is the execution roadmap after the v0.9.0 baseline. It is intention
 **Execution snapshot (24 August 2026):** PRs #260 through #265 are merged into `main`.
 SoulMap now has an explicit Soulmate adapter, foundation and companion AI-facing skills,
 manifest-sync/consumer-approval contracts, a gated TestPyPI OIDC workflow, and a composed
-`soulmap-with-soulmate-ai` import artifact. PR #265 also moved the public website to the peer
-package `src/web/`. The immediate next work is the Phase 13 repository-truth follow-up:
+`soulmap-with-soulmate-ai` import artifact. The historical Python WSGI website was later retired
+in favor of the independent React static workspace under `web/`. The immediate next work is the
+Phase 13 repository-truth follow-up:
 reconcile high-visibility README, packaging-limitations, release, and roadmap wording with
 the three artifact surfaces before any release decision. The Soulmate package remains
 private/pre-release; no Trusted Publisher, `testpypi` environment, package-registry
@@ -601,9 +601,9 @@ The phase must not introduce a new runtime API, platform connector, or semantic 
 
 **Goal:** Keep the Python layer small, typed, reproducible, and free of accidental dead code while preserving the knowledge-first boundary.
 
-The work includes a full Pyright pass over `src`, `tests`, and `scripts`; coverage configuration aligned with CI; branch-coverage review for routing, guards, packaging, Markdown support, and devtools; dead-code classification with Vulture; and focused performance measurements for import, build, static export, and detector loading. Any deletion must be preceded by a usage audit and a regression test where behavior is public.
+The work includes a full Pyright pass over `src`, `tests`, and `scripts`; coverage configuration aligned with CI; branch-coverage review for routing, guards, packaging, Markdown support, and devtools; dead-code classification with Vulture; and focused performance measurements for import, build, artifact generation, and detector loading. Any deletion must be preceded by a usage audit and a regression test where behavior is public.
 
-**Exit criteria:** Pyright is clean under the repository configuration; Deptry, Vulture, Ruff, and the full test suite pass; the combined runtime/web coverage floor remains at least 95%; benchmark results are recorded for any claimed performance improvement; and no content is moved from Markdown into Python.
+**Exit criteria:** Pyright is clean under the repository configuration; Deptry, Vulture, Ruff, and the full test suite pass; the runtime coverage floor remains at least 95%; benchmark results are recorded for any claimed performance improvement; and no content is moved from Markdown into Python.
 
 ### Phase 15 - Safety and Knowledge Maintenance Without Semantic Expansion
 
@@ -619,17 +619,17 @@ Each change must begin with `soulmap audit-knowledge`, identify the canonical Ma
 
 **Priority:** P1 - next product-facing track.
 
-**Goal:** Make the Python-only website reliable, accessible, localized, and reproducible across mobile, tablet, desktop, and GitHub Pages.
+**Goal:** Make the React static website reliable, accessible, localized, and reproducible across mobile, tablet, desktop, and GitHub Pages while preserving the SoulMap/Soulmate runtime boundary.
 
 | Area | Planned work |
 | --- | --- |
-| Localization | Maintain EN/VI/KO JSON parity, fallback tests, localized metadata, and a documented workflow for adding keys without hard-coded web copy |
-| Accessibility | Add keyboard and screen-reader regression checks for navigation, language menu, search/ask mode, modal fragments, focus return, and reduced motion |
-| Static correctness | Verify every localized route, canonical URL, hreflang, raw bundle, hash, asset path, and base-path variant in clean and incremental builds |
-| Performance | Track export time, incremental-build savings, HTML size, asset hints, and critical route response time without adding a JavaScript framework or runtime API |
-| Visual QA | Maintain browser smoke evidence at representative viewport sizes and check typography, spacing, contrast, radius, overflow, and touch targets |
+| Localization | Maintain EN/VI/KO i18n parity, direct-route fallback tests, localized metadata, and a documented workflow for adding keys without hard-coded public UI copy |
+| Accessibility | Maintain keyboard, focus-return, mobile-navigation, reduced-motion and automated WCAG A/AA regression checks; record manual screen-reader assessment separately from automation |
+| Static correctness | Verify every localized route, canonical URL, hreflang, raw bundle, asset path, `404.html` fallback and `/soulmap-ai/` base-path variant in clean builds |
+| Performance | Track Vite build time, route payload, critical route lab metrics and asset loading without adding a hosted backend or runtime API |
+| Visual QA | Maintain browser evidence at representative viewport sizes and check typography, spacing, contrast, overflow, touch targets and dialog scroll behavior |
 
-**Exit criteria:** Static verifier passes for EN/VI/KO and `/soulmap-ai`; browser smoke passes on desktop and narrow mobile viewports; accessibility checks cover the interactive controls; and the website remains independent from shipped Skill doctrine unless content is intentionally promoted.
+**Exit criteria:** Static verifier passes for EN/VI/KO and `/soulmap-ai`; browser regression passes on Chromium, Firefox and narrow mobile WebKit; automated accessibility checks cover public routes and interactive controls; and the website remains independent from shipped Skill doctrine unless content is intentionally promoted.
 
 ### Phase 17 - Packaging, Library, and Release Provenance
 
@@ -688,7 +688,7 @@ are green; and no release/version mutation occurs without a separate explicit ap
 | 1 | 13 | Current PR train and merged `main` | Repository truth, release metadata, and roadmap cleanup |
 | 2 | 14 | Phase 13 | Pyright/coverage/tooling alignment, then focused dead-code or performance fixes |
 | 3 | 15 | Phase 13; independent of website work | One safety gap or one documented maintenance cluster per PR |
-| 4 | 16 | Phase 13 and current static export contracts | Accessibility, localization, static verifier, and visual QA as separate PRs |
+| 4 | 16 | Phase 13 and current React static contracts | Accessibility, localization, static verifier, and visual QA as separate PRs |
 | 5 | 17 | Phase 14 and Phase 16 build contracts | Packaging/provenance changes separate from content changes |
 | 6 | 18 | Phase 13 release ownership map | Operations documentation and automation changes separately reviewed |
 | 7 | 19 | Explicit entry gate above | One provider or one documentation acceptance surface per PR |
@@ -723,8 +723,8 @@ bump, registry publication, or provider activation is implied by this phase.
 **Priority:** P0 for AI-facing integration and repository maintainability.
 
 **Goal:** Provide a third, explicit import artifact that contains SoulMap Framework plus the
-reviewed Soulmate Library, while moving the Python web package to the root `src/web/` namespace
-as a peer of `src/soulmap/` and `src/soulmate/`.
+reviewed Soulmate Library, while keeping the independent React static website workspace under
+`web/` separate from both `src/soulmap/` and `src/soulmate/`.
 
 The standalone `soulmap-ai.*` and `soulmate-ai.*` artifacts remain unchanged in identity and
 purpose. `soulmap-with-soulmate-ai.zip` and `.skill` are composed at build time from root
@@ -734,12 +734,13 @@ companion presence and reusable mechanics; SoulMap remains authoritative for orc
 safety, routing, epistemic guardrails, voice, brand, and Framework doctrine. No source tree is
 copied into `skills/library/`, and no runtime discovery is introduced.
 
-The web application is an independent `src/web/` Python package with unchanged WSGI routes,
-static export, locale resources, templates, and browser behavior. SoulMap and Soulmate remain
-free of a reverse dependency on web behavior.
+The public website is an independent React static workspace with TanStack routes, i18n resources,
+Headless UI primitives, static raw bundles and GitHub Pages fallback. SoulMap and Soulmate remain
+free of a reverse dependency on browser behavior, and the website is excluded from Python and AI
+artifact inputs.
 
 **Exit criteria:** deterministic composed artifact build and verifier, standalone artifact
-isolation, exact composition-scope parity, web import/resource/browser parity, CI build and
+isolation, exact composition-scope parity, web route/raw-bundle/browser parity, CI build and
 contract coverage, documentation truth-sync, and full validation. This phase does not imply
 version bump, registry publication, provider activation, or automatic merge.
 

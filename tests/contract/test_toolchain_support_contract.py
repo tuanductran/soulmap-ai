@@ -30,7 +30,6 @@ DIRECT_DEV_PACKAGES = {
     "commitizen",
     "deptry",
     "vulture",
-    "werkzeug",
 }
 RESEARCH_LABELS = {
     "hypothesis": "Hypothesis",
@@ -46,7 +45,6 @@ RESEARCH_LABELS = {
     "commitizen": "Commitizen",
     "deptry": "Deptry",
     "vulture": "Vulture",
-    "werkzeug": "Werkzeug",
 }
 
 
