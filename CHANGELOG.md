@@ -5,6 +5,36 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## Unreleased
+
+### Fix
+
+- **safety**: correct wrong Vietnam crisis number and Rule 1 violation
+- **knowledge**: sync framework priority tables with routed spiritual frameworks
+- **knowledge**: close mirror-intellectual length contradiction
+- **routing**: close scope-classifier blacklist coverage gap
+- **knowledge**: correct stale cross-references and dead defaults found in a
+  repo-wide audit
+
+### Docs
+
+- **knowledge**: close doctrine sync gaps found in repo-wide audit
+- **tester**: add exploratory charter for real-world spiritual media pressure
+- **roadmap**: close completed non-ai maintenance items
+- **release**: document dependency-bot authority
+- **tester/dev**: document `audit-knowledge`, `eval-markdown-contracts`, and `demo`
+  commands
+
+### CI
+
+- **governance**: enforce P-level safety metadata
+- **maintenance**: add weekly governance review
+
+### Chore
+
+- **packaging**: define Python tooling distribution boundary
+- **tooling**: wire eval validation into the post-edit hook chain
+
 ## v0.9.0 (2026-08-19)
 
 ### Feat
