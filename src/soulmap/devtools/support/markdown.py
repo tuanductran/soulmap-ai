@@ -20,7 +20,7 @@ _EXCLUDED_DIRS = {
     ".pnpm-store",
 }
 
-_FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
+_FENCE_RE = re.compile(r"^(\s*)(`{3,}|~{3,})")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 _MD_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
@@ -45,6 +45,46 @@ class MarkdownHeadingAnchor:
     slug: str
     title: str
     line: int
+
+
+class FenceTracker:
+    """Track fenced-code-block state across lines using CommonMark fence rules.
+
+    A fence only closes on a line whose marker uses the same character as the
+    opening fence and a run length greater than or equal to it. A naive
+    "any 3+ backtick or tilde run toggles the state" check would desync on a
+    four-backtick fence wrapping a three-backtick example, so this tracks the
+    opening marker's character and length instead of a bare boolean toggle.
+    """
+
+    def __init__(self) -> None:
+        self._marker_char: str | None = None
+        self._marker_len = 0
+
+    @property
+    def in_fence(self) -> bool:
+        return self._marker_char is not None
+
+    def consume(self, raw: str) -> bool:
+        """Update state for one line. Return True if callers should treat
+        this line as fence delimiter/content and skip other line checks."""
+        match = _FENCE_RE.match(raw)
+        if self._marker_char is None:
+            if not match:
+                return False
+            run = match.group(2)
+            self._marker_char = run[0]
+            self._marker_len = len(run)
+            return True
+        if (
+            match
+            and match.group(2)[0] == self._marker_char
+            and len(match.group(2)) >= self._marker_len
+        ):
+            self._marker_char = None
+            self._marker_len = 0
+            return True
+        return True
 
 
 def iter_markdown_files(repo_root: Path) -> list[Path]:
@@ -150,13 +190,10 @@ def slugify_github_anchor(text: str) -> str:
 def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
     anchors: list[MarkdownHeadingAnchor] = []
     counts: dict[str, int] = {}
-    in_fence = False
+    fence = FenceTracker()
 
     for line_no, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
 
         match = _ATX_HEADING_RE.match(raw)
@@ -249,13 +286,10 @@ def iter_disallowed_markdown_references(
 ) -> list[MarkdownReference]:
     """Find unsafe Markdown destinations that parsers intentionally discard."""
     references: list[MarkdownReference] = []
-    in_fence = False
+    fence = FenceTracker()
 
     for line_no, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         for label, target in _UNSAFE_MD_LINK_RE.findall(raw):
             references.append(
@@ -344,12 +378,9 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
                 open_link["label"] += _inline_token_label(token)
 
     known = {(ref.line, ref.label, ref.target, ref.is_image) for ref in references}
-    in_fence = False
+    fence = FenceTracker()
     for line_no, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         for label, target in _MD_IMAGE_RE.findall(raw):
             if label.strip():

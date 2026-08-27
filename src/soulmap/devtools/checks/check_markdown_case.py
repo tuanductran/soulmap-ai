@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from soulmap.devtools.support.markdown import resolve_markdown_inputs
+from soulmap.devtools.support.markdown import FenceTracker, resolve_markdown_inputs
 
 _CASE_RULES: tuple[tuple[str, str], ...] = (
     ("SoulMap AI", "SoulMap AI"),
@@ -24,7 +24,6 @@ _PATH_EXEMPTIONS = {
     Path("CHANGELOG.md"),
     Path("CLAUDE.md"),
 }
-_FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
 _INLINE_CODE_RE = re.compile(r"`[^`]+`")
 
 
@@ -57,14 +56,11 @@ def check_file(path: Path, repo_root: Path) -> list[Issue]:
         return []
 
     issues: list[Issue] = []
-    in_fence = False
+    fence = FenceTracker()
     for line_no, raw in enumerate(
         path.read_text(encoding="utf-8").splitlines(), start=1
     ):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
 
         searchable = _INLINE_CODE_RE.sub(" ", raw)
