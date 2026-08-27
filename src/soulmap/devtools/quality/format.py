@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import subprocess
 
 from soulmap.devtools.support.markdown import iter_markdown_files
@@ -13,7 +14,10 @@ from soulmap.devtools.support.run import (
 
 
 def main(argv: list[str] | None = None) -> int:
-    _ = argv
+    parser = argparse.ArgumentParser(
+        description="Format Python and Markdown files across the repo."
+    )
+    parser.parse_args(argv)
     repo_root = REPO_ROOT
     python = python_executable(repo_root)
     python_paths = [

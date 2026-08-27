@@ -308,7 +308,7 @@ def test_response_eval_main_records_pass_and_failure(monkeypatch, capsys) -> Non
         lambda _response: {"status": "PASS"},
     )
 
-    assert eval_responses.main() == 1
+    assert eval_responses.main([]) == 1
     result = json.loads(capsys.readouterr().out)
     assert result["ok"] is False
     assert [item["ok"] for item in result["results"]] == [True, False]

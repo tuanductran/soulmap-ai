@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import re
 from pathlib import Path
@@ -291,7 +292,11 @@ def _compose_response(
 
 
 def main(argv: list[str] | None = None) -> int:
-    _ = argv
+    parser = argparse.ArgumentParser(
+        description="Run the response-generation harness from "
+        "evals/datasets/response_generation_cases.json."
+    )
+    parser.parse_args(argv)
     cases = _load_json(
         REPO_ROOT / "evals" / "datasets" / "response_generation_cases.json"
     )
