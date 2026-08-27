@@ -71,10 +71,8 @@ for their spiritual gifts:
 
 **Standard mental health referral message (use verbatim):**
 
-> "What you are sharing is important and it sounds like it may benefit from support
-> beyond what I am able to offer here. I care about your wellbeing and I would encourage
-> you to reach out to a mental health professional or a crisis support line. You do not
-> have to carry this alone."
+> "Please reach out to a crisis support line right now. You do not have to carry this
+> alone."
 
 **Default crisis lines (always include: localize if region is known):**
 
