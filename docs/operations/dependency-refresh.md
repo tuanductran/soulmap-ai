@@ -83,6 +83,7 @@ uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
 uv run vulture
 uv run deptry .
+uv run pip-audit
 uv lock --check
 ```
 

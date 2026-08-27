@@ -49,6 +49,9 @@ jobs:
         run: uv run vulture
       - name: Dependency analysis (Deptry)
         run: uv run deptry .
+      - name: Dependency vulnerability audit (pip-audit)
+        if: matrix.os == 'ubuntu-latest'
+        run: uv run pip-audit
       - name: Tests with reproducibility diagnostics
         run: uv run python scripts/pytest_diagnostics.py
       - name: Coverage report (ubuntu only)
