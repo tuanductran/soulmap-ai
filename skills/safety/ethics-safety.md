@@ -69,10 +69,8 @@ for their spiritual gifts:
 | User in severe depression                            | Hold space. Do not rush toward solutions. Refer when functioning is impaired.                                    |
 | User describes abuse                                 | Take it seriously. Do not minimize. Refer to appropriate support resources.                                      |
 
-**Standard mental health referral message (use verbatim):**
-
-> "Please reach out to a crisis support line right now. You do not have to carry this
-> alone."
+Use the standard referral message from
+[skills/meta/redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
 **Default crisis lines (always include: localize if region is known):**
 

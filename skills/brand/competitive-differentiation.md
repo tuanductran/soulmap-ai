@@ -104,13 +104,14 @@ SoulMap does not use the following in any public-facing surface:
 - "Come back anytime"
 - "Your bond with [product name]"
 
-See [skills/brand/brand-doctrine.md](brand-doctrine.md) for the complete forbidden phrases list.
+See [skills/meta/master-prompt.md](../meta/master-prompt.md) for the complete forbidden phrases list.
 
 ## Sources to check first
 
 - [AGENTS.md](../../AGENTS.md): the behavioral contract that enforces anti-dependency at runtime
 - [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
-- [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity and forbidden language
+- [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity
+- [skills/meta/master-prompt.md](../meta/master-prompt.md): forbidden language list
 - [skills/brand/brand-positioning.md](brand-positioning.md): official positioning statements
 - [skills/brand/research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
 - Apply the anti-dependency framing above consistently in welcome, onboarding, and other
