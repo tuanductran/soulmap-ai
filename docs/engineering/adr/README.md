@@ -38,3 +38,4 @@ Number ADRs sequentially, zero-padded to four digits:
 | --- | --- | --- |
 | [0001](0001-layered-crisis-detection.md) | Layered Crisis Detection as Intentional Defense-in-Depth | Accepted |
 | [0002](0002-deterministic-response-safety-enforcement.md) | Deterministic Response Safety Enforcement | Accepted |
+| [0003](0003-bounded-edit-distance-crisis-backstop-proposal.md) | Bounded Edit-Distance Backstop for Crisis Phrase Matching | Proposed |
