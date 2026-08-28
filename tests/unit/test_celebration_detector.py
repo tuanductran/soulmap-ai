@@ -192,7 +192,9 @@ class TestFrameworkSelectorP9b:
         msg = "I finally did it."
         r = select_framework(msg, _msg(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
-        assert "integration-celebration.md" in r.get("instruction", "")
+        instruction = r.get("instruction", "")
+        assert isinstance(instruction, str)
+        assert "integration-celebration.md" in instruction
 
     def test_mode_is_mirror(self) -> None:
         msg = "I finally did it."

@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
+from urllib.request import Request
+
+import pytest
 
 from soulmap.devtools.checks import check_markdown_case, check_markdown_links
 from soulmap.devtools.support.markdown import MarkdownReference
@@ -27,7 +30,9 @@ def test_case_checker_skips_code_and_prevents_overlapping_term_reports(
     )
 
 
-def test_case_checker_repo_filter_and_cli_failure(tmp_path: Path, capsys) -> None:
+def test_case_checker_repo_filter_and_cli_failure(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     source = tmp_path / "guide.md"
     source.write_text("github is not canonical.\n", encoding="utf-8")
     (tmp_path / "README.md").write_text("SoulMap AI\n", encoding="utf-8")
@@ -82,7 +87,7 @@ def test_link_checker_flags_all_local_target_failures(tmp_path: Path) -> None:
 
 def test_link_checker_external_checks_handle_fallback_statuses_and_errors(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text("[External](https://example.com)\n", encoding="utf-8")
@@ -124,7 +129,7 @@ def test_link_checker_external_checks_handle_fallback_statuses_and_errors(
 
 
 def test_link_checker_response_status_and_warning_cli_behavior(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     class _Response:
         status = None
@@ -165,7 +170,7 @@ def test_link_checker_response_status_and_warning_cli_behavior(
 
 
 def test_link_checker_request_wrapper_handles_response_and_transport_errors(
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     from email.message import Message
     from urllib.error import HTTPError, URLError
@@ -181,7 +186,7 @@ def test_link_checker_request_wrapper_handles_response_and_transport_errors(
         def __exit__(self, *_args: object) -> None:
             return None
 
-    def successful_urlopen(request, *, timeout: float) -> _Response:
+    def successful_urlopen(request: Request, *, timeout: float) -> _Response:
         requests.append((request.full_url, request.get_method(), timeout))
         return _Response()
 
@@ -229,7 +234,7 @@ def test_link_checker_request_wrapper_handles_response_and_transport_errors(
 
 
 def test_link_checker_handles_non_http_and_unknown_network_failure(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text("# Source\n", encoding="utf-8")
@@ -263,7 +268,7 @@ def test_link_checker_handles_non_http_and_unknown_network_failure(
 
 def test_link_checker_skips_empty_reference_and_non_integer_response_code(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text("# Source\n", encoding="utf-8")
@@ -296,7 +301,7 @@ def test_link_checker_skips_empty_reference_and_non_integer_response_code(
 
 def test_link_checker_wrapper_and_cli_cover_clean_and_error_results(
     tmp_path: Path,
-    capsys,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     clean = tmp_path / "clean.md"
     clean.write_text("# Clean\n", encoding="utf-8")

@@ -59,8 +59,10 @@ def test_dependency_regex_pattern_is_detected() -> None:
 
 
 def test_duplicate_keyword_across_messages_is_not_double_counted() -> None:
-    """The same signal string should only be added to signals_found once,
-    per the `if signal not in signals_found` guard."""
+    """A repeated signal must be recorded only once.
+
+    The detector guards each append on the signal not already being present.
+    """
     result = analyze_dependency(
         [
             _user("You are all I have."),
@@ -95,8 +97,11 @@ def test_high_message_volume_adds_a_signal() -> None:
 
 
 def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
-    """A lone decision-seeking phrase adds only +1, landing exactly on the
-    MODERATE_DEPENDENCY threshold (1) without crossing into HIGH (2)."""
+    """A lone decision-seeking phrase must land on moderate, not high.
+
+    It adds a single point, which reaches the moderate threshold exactly
+    without crossing into high dependency.
+    """
     result = analyze_dependency([_user("Should I do this or not?")])
 
     assert result["level"] == "MODERATE_DEPENDENCY"

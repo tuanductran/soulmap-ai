@@ -45,8 +45,7 @@ HistoryMessage = dict[str, str]
 def detect_shadow_patterns(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect shadow pattern signals in the current message and recent history.
+    """Detect shadow pattern signals in the current message and recent history.
 
     Returns:
         Dict with: shadow_detected (bool), patterns_found (list),

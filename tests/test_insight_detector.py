@@ -6,8 +6,11 @@ from soulmap.runtime.detectors.insight_detector import detect_insight
 
 
 def test_explicit_insight_is_detected() -> None:
-    """A single explicit-insight phrase alone reaches 'emerging' strength
-    (score 3); 'strong' requires stacking a second signal group (score >= 4)."""
+    """One explicit-insight phrase reaches emerging, not strong.
+
+    A single phrase scores three, which is emerging strength. Strong requires
+    stacking a second signal group.
+    """
     result = detect_insight("I finally understand why I do this.")
 
     assert result["insight_detected"] is True
@@ -120,8 +123,11 @@ def test_short_validation_after_assistant_reflection_is_detected_via_history() -
 
 
 def test_long_validation_message_after_reflection_does_not_get_history_bonus() -> None:
-    """The history-driven validation bonus only applies to short confirmations
-    (under 30 words); a long, unrelated reply should not trigger it."""
+    """The validation bonus applies only to short confirmations.
+
+    The history-driven bonus is limited to replies under thirty words, so a
+    long unrelated reply must not trigger it.
+    """
     history = [
         {"role": "user", "content": "I keep pulling away from people."},
         {
@@ -167,11 +173,12 @@ def test_very_long_message_with_insight_signal_buried_inside_is_detected() -> No
 
 
 def test_recommendation_explicitly_forbids_prescriptive_should_language() -> None:
-    """Non-negotiable framework rule: meaning integration never prescribes.
-    The recommendation legitimately names the banned word as an instruction
-    to the model ("Do not use the word 'should'"), so this checks that the
-    instruction is present rather than checking for total absence of the
-    substring."""
+    """Meaning integration must never prescribe.
+
+    A non-negotiable framework rule. The recommendation legitimately names
+    the banned word inside an instruction to the model, so this checks that
+    the instruction is present rather than that the substring is absent.
+    """
     result = detect_insight("I finally understand why I do this.")
 
     assert result["insight_detected"] is True

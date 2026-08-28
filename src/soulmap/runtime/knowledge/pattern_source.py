@@ -28,6 +28,19 @@ _KNOWN_LABELS = (
 
 @dataclass(frozen=True)
 class PatternSignal:
+    """One recurring pattern authored in the pattern-mapper knowledge file.
+
+    Attributes:
+        slug: Stable identifier derived from the name, used for lookups.
+        name: Pattern name as written in the heading.
+        description: Prose description of what the pattern looks like.
+        keywords: Phrases that suggest the pattern is present.
+        cycle_phrases: Phrases naming the loop the pattern repeats through.
+        soulmap_role: What SoulMap does when the pattern appears, as authored.
+        reflection_language: Phrasings for reflecting the pattern back as a
+            possibility rather than a conclusion.
+    """
+
     slug: str
     name: str
     description: str
@@ -49,7 +62,6 @@ def _split_sections(block_lines: list[str]) -> dict[str, list[str]]:
     Bullets that wrap onto a following indented line are joined back into one
     logical line so multi-line quoted phrases parse correctly.
     """
-
     sections: dict[str, list[str]] = {}
     current: str | None = None
 
@@ -98,6 +110,18 @@ def _quoted_phrases(bullet_lines: list[str]) -> tuple[str, ...]:
 
 
 def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
+    """Parse the pattern-mapper knowledge file into structured signals.
+
+    Each heading starts a pattern, and the bullet lists under it supply the
+    keywords, cycle phrases, role, and reflection language.
+
+    Args:
+        text: Full Markdown source of the pattern-mapper file.
+
+    Returns:
+        A mapping of slug to pattern. Empty when the text holds no pattern
+        heading.
+    """
     lines = text.splitlines()
     heading_indices: list[tuple[int, str]] = []
     for idx, line in enumerate(lines):
@@ -148,6 +172,17 @@ def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
 
 
 def load_pattern_signals(markdown_path: Path) -> dict[str, PatternSignal]:
+    """Read and parse the pattern-mapper knowledge file.
+
+    Args:
+        markdown_path: Path to the pattern-mapper Markdown file.
+
+    Returns:
+        A mapping of slug to pattern.
+
+    Raises:
+        OSError: If the file cannot be read.
+    """
     text = markdown_path.read_text(encoding="utf-8")
     return parse_pattern_mapper(text)
 
@@ -163,7 +198,6 @@ def default_pattern_mapper_path() -> Path:
     file, then from the current working directory, looking for the shipped
     Markdown skill.
     """
-
     import os
 
     env_root = os.environ.get("SOULMAP_REPO_ROOT")

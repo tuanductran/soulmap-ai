@@ -1,3 +1,10 @@
+"""Repository-wide linting and type checking.
+
+Runs Ruff, Pyright, the Markdown linter, the tracked-file hygiene check, and
+by default pytest. This is the local mirror of the CI gate, so a clean run
+here should mean a clean run there.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -18,6 +25,16 @@ from soulmap.devtools.support.run import (
 
 
 def _pyright_available(repo_root: Path) -> bool:
+    """Report whether Pyright can run in this environment.
+
+    Args:
+        repo_root: Repository root, used to resolve the interpreter.
+
+    Returns:
+        True when Pyright reports a version. False on any failure, so a
+        checkout without the development dependencies still lints instead of
+        crashing.
+    """
     python = python_executable(repo_root)
     try:
         run([python, "-m", "pyright", "--version"], cwd=repo_root, check=True)
@@ -27,6 +44,14 @@ def _pyright_available(repo_root: Path) -> bool:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Lint and type-check the repository.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every check passes, non-zero on the first failure.
+    """
     parser = argparse.ArgumentParser(prog="soulmap lint")
     parser.add_argument(
         "--skip-tests",

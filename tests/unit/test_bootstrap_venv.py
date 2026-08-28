@@ -9,7 +9,7 @@ from soulmap.devtools.cli import bootstrap_venv
 
 
 def test_venv_executable_covers_posix_and_windows_layouts(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     venv_dir = tmp_path / ".venv"
 
@@ -26,7 +26,7 @@ def test_venv_executable_covers_posix_and_windows_layouts(
 
 def test_uv_executable_and_run_wrapper_handle_success_and_missing_uv(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     calls: list[tuple[list[str], dict[str, object]]] = []
     monkeypatch.setattr(bootstrap_venv.shutil, "which", lambda _name: "/usr/bin/uv")
@@ -47,8 +47,8 @@ def test_uv_executable_and_run_wrapper_handle_success_and_missing_uv(
 
 def test_bootstrap_main_reports_windows_activation_and_git_hooks(
     tmp_path: Path,
-    monkeypatch,
-    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     (tmp_path / ".git").mkdir()
     calls: list[list[str]] = []

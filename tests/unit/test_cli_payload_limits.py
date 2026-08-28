@@ -90,9 +90,12 @@ def test_require_message_history_fields_returns_common_detector_payload() -> Non
 
 
 def test_require_list_field_normalizes_malformed_history_items() -> None:
-    """A non-dict item, or a dict item missing "content"/"role" or with a
-    non-string value there, must never crash a caller that indexes
-    ``m["content"]`` directly, which every detector does."""
+    """A malformed history item must never crash a caller.
+
+    Every detector indexes history items as ``m["content"]`` directly, so a
+    non-dict item, or a dict missing "content" or "role" or holding a
+    non-string there, has to be normalized rather than passed through.
+    """
     history = require_list_field(
         {
             "history": [

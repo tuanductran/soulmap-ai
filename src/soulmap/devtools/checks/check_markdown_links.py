@@ -1,3 +1,10 @@
+"""Markdown link checker.
+
+Verifies that local links resolve to a real file and that anchors match a real
+heading. External links are checked only when explicitly requested, since that
+mode depends on live network responses.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -20,6 +27,17 @@ from soulmap.devtools.support.markdown import (
 
 @dataclass(frozen=True)
 class Issue:
+    """One link problem.
+
+    Attributes:
+        path: File the link was found in.
+        line: 1-indexed line the link is on.
+        message: Description naming the destination and what is wrong.
+        severity: ``"error"`` for a broken local link, or ``"warning"`` for an
+            external response that may be bot protection or rate limiting
+            rather than a genuinely dead link.
+    """
+
     path: Path
     line: int
     message: str
@@ -205,6 +223,18 @@ def _check_local_target(
 
 
 def check_file(path: Path, repo_root: Path) -> list[Issue]:
+    """Check one Markdown file's local links.
+
+    External links are skipped. Call :func:`check_file_with_options` to
+    include them.
+
+    Args:
+        path: Markdown file to check.
+        repo_root: Repository root, which root-relative links resolve against.
+
+    Returns:
+        Every link problem found, in line order.
+    """
     return check_file_with_options(
         path,
         repo_root,
@@ -220,6 +250,19 @@ def check_file_with_options(
     check_external: bool,
     timeout: float,
 ) -> list[Issue]:
+    """Check one Markdown file's links, with external checking optional.
+
+    Args:
+        path: Markdown file to check.
+        repo_root: Repository root, which root-relative links resolve against.
+        check_external: Whether to make network requests for external links.
+        timeout: Seconds to wait per external request.
+
+    Returns:
+        Every link problem found, in line order. External responses that
+        commonly indicate bot protection or rate limiting are reported as
+        warnings rather than errors.
+    """
     issues: list[Issue] = []
     lines = path.read_text(encoding="utf-8").splitlines()
 
@@ -264,6 +307,18 @@ def check_repo(
     check_external: bool = False,
     timeout: float = 5.0,
 ) -> list[Issue]:
+    """Check Markdown files for link problems.
+
+    Args:
+        repo_root: Repository root.
+        inputs: Files or directories to check, or None for the whole
+            repository.
+        check_external: Whether to make network requests for external links.
+        timeout: Seconds to wait per external request.
+
+    Returns:
+        Every link problem found across the checked files.
+    """
     issues: list[Issue] = []
     for path in resolve_markdown_inputs(repo_root, inputs):
         issues.extend(
@@ -278,6 +333,15 @@ def check_repo(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the link check from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when no error-severity problem is found, 1 otherwise. Warnings alone
+        fail the run only when the caller passes the fail-on-warning flag.
+    """
     parser = argparse.ArgumentParser(prog="soulmap check-links")
     parser.add_argument(
         "--root",

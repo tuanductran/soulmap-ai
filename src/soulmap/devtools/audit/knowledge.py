@@ -1,3 +1,11 @@
+"""Knowledge-inventory audit.
+
+Traces which Markdown knowledge files the runtime actually loads and reports
+configuration constants no runtime module references any more. An orphaned
+constant is a drift signal: either its consumer was removed, or the constant
+should have been.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -89,6 +97,14 @@ def _format_usage(usage: tuple[ConfigUsage, ...], root: Path) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the knowledge audit from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when the inventory is clean, 1 when an orphaned constant is found.
+    """
     parser = argparse.ArgumentParser(prog="soulmap audit-knowledge")
     parser.add_argument(
         "--root",

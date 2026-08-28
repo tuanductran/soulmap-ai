@@ -128,8 +128,7 @@ STAGE_SIGNALS = {
 
 
 def detect_stage(conversation_messages: list[ConversationMessage]) -> dict[str, object]:
-    """
-    Analyze conversation to estimate user's current journey stage.
+    """Analyze conversation to estimate user's current journey stage.
 
     Args:
         conversation_messages: List of dicts with 'role' and 'content' keys.

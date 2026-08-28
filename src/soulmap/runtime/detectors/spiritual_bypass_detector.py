@@ -39,8 +39,7 @@ HistoryMessage = dict[str, str]
 def detect_bypass(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect spiritual bypass patterns.
+    """Detect spiritual bypass patterns.
 
     Key distinction:
     - Genuine spirituality supports emotional processing

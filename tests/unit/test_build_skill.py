@@ -3,6 +3,8 @@ from __future__ import annotations
 import zipfile
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.packaging import build_skill as build_tool
 
 
@@ -66,7 +68,9 @@ def test_build_zip_replaces_an_existing_archive(tmp_path: Path) -> None:
     assert _archive_names(rebuilt_archive) == {"LICENSE"}
 
 
-def test_build_cli_selects_requested_artifact(tmp_path: Path, monkeypatch) -> None:
+def test_build_cli_selects_requested_artifact(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     calls: list[tuple[str, Path]] = []
 
     monkeypatch.setattr(build_tool, "REPO_ROOT", tmp_path)

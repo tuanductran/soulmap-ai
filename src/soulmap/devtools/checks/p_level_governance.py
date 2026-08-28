@@ -1,3 +1,12 @@
+"""Safety-governance metadata check for P-level pull requests.
+
+A pull request whose title carries a P-level tag must declare its priority,
+whether it preserves or changes a safety boundary, the validation evidence
+behind it, and how to roll it back. A pull request that changes a safety
+boundary must additionally carry the full evidence section, so an ADR and
+regression evidence exist before the change merges.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -25,11 +34,29 @@ CHANGE_EVIDENCE_MARKERS = (
 
 
 def p_level_from_title(title: str) -> str | None:
+    """Read the P-level tag from a pull-request title.
+
+    Args:
+        title: Pull-request title.
+
+    Returns:
+        The P-level, such as ``"P1"``, or None when the title carries no tag.
+        An untagged pull request is outside this check rather than a failure.
+    """
     match = P_LEVEL_TITLE.match(title)
     return match.group(1) if match else None
 
 
 def metadata_from_body(body: str) -> dict[str, str]:
+    """Extract the governance metadata fields from a pull-request body.
+
+    Args:
+        body: Pull-request body in Markdown.
+
+    Returns:
+        A mapping of field name to value for every recognized field present.
+        Missing fields are simply absent rather than empty.
+    """
     return {field: value.strip() for field, value in METADATA_FIELD.findall(body)}
 
 
@@ -78,6 +105,20 @@ def validate_pull_request(title: str, body: str) -> list[str]:
 
 
 def pull_request_from_event(payload: Mapping[str, Any]) -> tuple[str, str]:
+    """Pull the title and body out of a GitHub event payload.
+
+    Args:
+        payload: Parsed GitHub webhook event.
+
+    Returns:
+        A ``(title, body)`` pair. A pull request with no body yields an empty
+        string, which then fails the metadata check with a specific error
+        rather than a parse failure.
+
+    Raises:
+        ValueError: If the payload carries no pull request, or its title or
+            body has an unexpected type.
+    """
     pull_request = payload.get("pull_request")
     if not isinstance(pull_request, Mapping):
         raise ValueError("GitHub event does not contain a pull_request payload.")
@@ -94,6 +135,16 @@ def pull_request_from_event(payload: Mapping[str, Any]) -> tuple[str, str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Validate a pull request's governance metadata from an event file.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when the metadata is valid or the pull request carries no P-level
+        tag, 1 when a governance rule fails, and 2 when the event file cannot
+        be read or parsed.
+    """
     parser = argparse.ArgumentParser(
         description="Validate P-level pull-request safety governance metadata."
     )

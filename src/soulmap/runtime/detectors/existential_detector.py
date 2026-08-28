@@ -48,8 +48,7 @@ def _classify_territory(_msg: str, scores: dict[str, int]) -> str:
 def detect_existential(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect existential territory in the user's message.
+    """Detect existential territory in the user's message.
 
     Returns:
         Dict with: existential_detected (bool), territory (str), score (int),

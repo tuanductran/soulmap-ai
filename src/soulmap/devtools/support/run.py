@@ -1,9 +1,16 @@
+"""Subprocess execution helpers for the developer tooling.
+
+Centralizes interpreter selection and the cross-process lock that keeps two
+repo-wide tooling runs from rewriting the same files at once.
+"""
+
 from __future__ import annotations
 
 import os
 import subprocess
 import sys
 import time
+from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, cast
@@ -15,11 +22,21 @@ else:
 
 
 def python_executable(repo_root: Path) -> str:
-    """
-    Prefer the repository's local `.venv` Python when not already running inside a venv.
+    """Pick the Python interpreter to run repository tooling with.
 
-    This avoids confusing "missing dependency" errors when users run the repo's Python
-    tooling without activating the virtual environment first.
+    Prefers the repository's local ``.venv`` interpreter when the caller is not
+    already inside an activated virtual environment. This avoids confusing
+    "missing dependency" errors when someone runs the tooling without
+    activating the environment first. The first call that falls back, or that
+    switches interpreters, prints a one-time notice to standard error.
+
+    Args:
+        repo_root: Repository root to look for a ``.venv`` under.
+
+    Returns:
+        Path to the interpreter to use. Falls back to the running interpreter
+        inside an active virtual environment and in CI, where a local ``.venv``
+        is not expected.
     """
     # Store "printed already" state on the function object, but keep type checkers happy.
     func_any = cast(Any, python_executable)
@@ -67,6 +84,22 @@ def run(
     env: dict[str, str] | None = None,
     check: bool = True,
 ) -> subprocess.CompletedProcess[str]:
+    """Run a subprocess with the current environment plus any overrides.
+
+    Args:
+        args: Full command line to execute.
+        cwd: Working directory for the subprocess.
+        env: Variables layered on top of the inherited environment, or None to
+            inherit it unchanged.
+        check: Whether a non-zero exit raises.
+
+    Returns:
+        The completed process, with text-mode output.
+
+    Raises:
+        subprocess.CalledProcessError: If the command exits non-zero and
+            ``check`` is True.
+    """
     merged_env = os.environ.copy()
     if env:
         merged_env.update(env)
@@ -80,6 +113,18 @@ def run(
 
 
 def python_module(module: str, *extra_args: str, cwd: Path, check: bool = True) -> None:
+    """Run a Python module as a subprocess with the repository interpreter.
+
+    Args:
+        module: Module name to run, as passed to ``python -m``.
+        *extra_args: Arguments forwarded to the module.
+        cwd: Working directory, also used to resolve the interpreter.
+        check: Whether a non-zero exit raises.
+
+    Raises:
+        subprocess.CalledProcessError: If the module exits non-zero and
+            ``check`` is True.
+    """
     python = python_executable(cwd)
     run([python, "-m", module, *extra_args], cwd=cwd, check=check)
 
@@ -90,8 +135,24 @@ def repo_tooling_lock(
     *,
     name: str = "format-lint",
     poll_interval_s: float = 0.1,
-) -> Any:
-    """Serialize repo-wide tooling that mutates or checks the same files."""
+) -> Iterator[None]:
+    """Serialize repo-wide tooling that mutates or checks the same files.
+
+    Holds an exclusive file lock for the duration of the block, so a second
+    format or lint run waits instead of racing the first over the same files.
+    A caller waiting longer than half a second gets one notice on standard
+    error.
+
+    Args:
+        repo_root: Repository root. The lock file goes in its ``.venv`` when
+            one exists, to keep the repository root uncluttered.
+        name: Lock name, which distinguishes independent tooling locks.
+        poll_interval_s: Seconds to sleep between attempts to take the lock.
+
+    Yields:
+        None. The lock is held for the body of the ``with`` block and released
+        on exit, including when the body raises.
+    """
     # Prefer putting the lock file in the .venv to avoid cluttering the root.
     # The .venv is usually gitignored and hidden from casual view.
     venv_dir = repo_root / ".venv"

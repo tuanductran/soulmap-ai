@@ -58,8 +58,11 @@ def test_life_transition_is_detected() -> None:
 
 
 def test_career_confusion_reads_as_lostness_or_transition() -> None:
-    """Career-confusion inputs should route into direction, even without a
-    dedicated career-specific signal group in the underlying skill."""
+    """Career confusion must route into direction.
+
+    The underlying skill has no dedicated career-specific signal group, so
+    this confirms the general groups still cover it.
+    """
     result = detect_direction_need(
         "I have no idea what direction my career should take and I feel completely lost."
     )
@@ -78,9 +81,11 @@ def test_decision_paralysis_phrasing_is_detected() -> None:
 
 
 def test_mixed_emotional_context_still_surfaces_direction() -> None:
-    """Direction signals mixed with unrelated emotional venting should still
-    register direction need, since the framework selector (not this detector)
-    is responsible for resolving cross-detector priority."""
+    """Direction must still register when mixed with emotional venting.
+
+    Resolving priority across detectors is the framework selector's job, not
+    this detector's, so it reports its own signal either way.
+    """
     result = detect_direction_need(
         "I'm exhausted and irritable lately, and on top of that I feel "
         "completely lost about what I want in life."
@@ -91,9 +96,11 @@ def test_mixed_emotional_context_still_surfaces_direction() -> None:
 
 
 def test_first_matching_group_wins_when_multiple_types_present() -> None:
-    """Signal groups are checked in a fixed order (lostness, meaning_void,
-    should_vs_want, comparison, transition, misalignment); the first group
-    that matches sets the primary type."""
+    """The first matching signal group sets the primary type.
+
+    Groups are checked in a fixed order: lostness, meaning void, should
+    versus want, comparison, transition, then misalignment.
+    """
     result = detect_direction_need(
         "I feel completely lost, and also everyone else seems to know what "
         "they're doing while I'm falling behind."
@@ -110,9 +117,11 @@ def test_ambiguous_short_message_without_signals_is_not_direction() -> None:
 
 
 def test_single_weak_signal_below_threshold_is_not_direction() -> None:
-    """A single 2-point signal group alone reaches the score>=2 floor, so this
-    documents that even one clear phrase is enough - there is no dedicated
-    'weak signal' tier in this detector."""
+    """One clear phrase is enough to reach the detection floor.
+
+    A single two-point signal group meets the threshold on its own. This
+    detector has no separate weak-signal tier.
+    """
     result = detect_direction_need("I compare myself to my old classmates sometimes.")
 
     assert result["direction_detected"] is True
@@ -158,8 +167,11 @@ def test_suggested_lens_defaults_to_meaning_when_no_lens_keywords_present() -> N
 
 
 def test_recommendation_never_prescribes_a_direction() -> None:
-    """Non-negotiable framework rule: direction guidance explores values, it
-    never validates or suggests a specific path."""
+    """Direction guidance must never suggest a specific path.
+
+    A non-negotiable framework rule: it explores values rather than
+    validating or recommending a direction.
+    """
     result = detect_direction_need("I feel completely lost and don't know what I want.")
 
     assert result["direction_detected"] is True

@@ -71,13 +71,19 @@ def _classify_insight_type(msg: str) -> str:
 def detect_insight(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect whether the user has reached a moment of insight or realization
-    that calls for the Meaning Integration framework.
+    """Score signals that the user has reached a moment of realization.
+
+    A genuine insight routes to the Meaning Integration framework, whose job
+    is to return authorship of the insight to the user rather than to build on
+    it.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns, each a dict with ``role`` and ``content``.
 
     Returns:
-        Dict with: insight_detected (bool), strength (str), insight_type (str),
-                   signals (list), recommendation (str)
+        A dict with ``insight_detected``, ``strength``, ``insight_type``,
+        ``signals``, and ``recommendation``.
     """
     msg = message.lower().strip()
     signals_found = []

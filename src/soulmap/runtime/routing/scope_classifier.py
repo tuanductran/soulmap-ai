@@ -459,8 +459,7 @@ def _contains_keyword(message: str, keyword: str) -> bool:
 
 
 def classify_message(message: str) -> dict:
-    """
-    Classify an incoming user message against the SoulMap scope system.
+    """Classify an incoming user message against the SoulMap scope system.
 
     Returns:
         dict with keys: tier, category, action, explanation

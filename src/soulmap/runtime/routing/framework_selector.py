@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import time
+from collections.abc import Callable
 from typing import cast
 
 from soulmap.runtime.detectors.ancestral_detector import detect_ancestral
@@ -70,12 +71,29 @@ def _analyze_synthesis(
 
 async def _run_detector_async(
     detector_name: str,
-    detector_fn,
-    *args,
-    debug_events: list[dict] | None = None,
-    **kwargs,
-) -> dict:
-    """Run one detector in-process and capture optional debug metadata."""
+    detector_fn: Callable[..., dict[str, object]],
+    *args: object,
+    debug_events: list[dict[str, object]] | None = None,
+    **kwargs: object,
+) -> dict[str, object]:
+    """Run one detector off the event loop and capture debug metadata.
+
+    Args:
+        detector_name: Detector name, used in debug events and error messages.
+        detector_fn: The detector callable. Detectors are synchronous, so this
+            runs in a worker thread.
+        *args: Positional arguments forwarded to the detector.
+        debug_events: List to append this run's timing and outcome to, or None
+            to skip recording.
+        **kwargs: Keyword arguments forwarded to the detector.
+
+    Returns:
+        The detector's result dict.
+
+    Raises:
+        TypeError: If the detector returns anything other than a dict, which
+            would otherwise fail later as a confusing routing error.
+    """
     start = time.perf_counter()
     try:
         result = await asyncio.to_thread(detector_fn, *args, **kwargs)
@@ -483,7 +501,11 @@ async def select_framework_async(
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
-    current_stage = res["stage"].get("stage", 1)
+    _raw_stage = res["stage"].get("stage", 1)
+    # Detector results are dicts of object, so narrow the stage here rather
+    # than at each comparison. A non-integer stage falls back to 1, the most
+    # conservative journey stage, instead of raising mid-routing.
+    current_stage = _raw_stage if isinstance(_raw_stage, int) else 1
     pattern = {}
     if user_count >= 1:
         # Include current message so single-turn pattern signals are captured
@@ -843,13 +865,29 @@ def select_framework(
     message: str,
     history: list[dict[str, str]],
     memory: dict[str, object] | None = None,
-) -> dict:
+) -> dict[str, object]:
+    """Select the framework for a message from synchronous code.
+
+    A blocking wrapper over :func:`select_framework_async`. Call the async
+    form directly from an existing event loop, since ``asyncio.run`` cannot
+    nest.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns, each a dict with ``role`` and ``content``.
+        memory: Prior-session context, or None when there is none.
+
+    Returns:
+        The selector result, including exactly one ``primary_framework``, the
+        ``mode``, and the safety gate's verdict.
+    """
     return asyncio.run(select_framework_async(message, history, memory))
 
 
 if __name__ == "__main__":
 
     async def main() -> None:
+        """Route a JSON payload from standard input and print the result."""
         try:
             data = read_stdin_json(strip=True)
             message, history, memory = require_message_history_memory_fields(data)

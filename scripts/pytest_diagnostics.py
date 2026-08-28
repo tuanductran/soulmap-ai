@@ -1,3 +1,11 @@
+"""Reproducible test runs with recorded diagnostic context.
+
+Runs the suite with an explicit pytest-randomly seed and, on failure, records
+the seed, worker mode, Python version, and operating system in the GitHub step
+summary, then prints a serial reproduction command. Test-ordering and
+parallelism failures are only diagnosable when that context survives the run.
+"""
+
 from __future__ import annotations
 
 import os

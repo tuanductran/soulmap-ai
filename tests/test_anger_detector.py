@@ -32,8 +32,11 @@ def test_residual_anger_is_detected_and_typed_correctly() -> None:
 
 
 def test_active_anger_takes_priority_when_multiple_types_present() -> None:
-    """Active anger is checked first and should win when phrasing overlaps
-    with self-directed anger in the same message."""
+    """Active anger must win when phrasing overlaps with self-directed anger.
+
+    Active anger is checked first, so it sets the type for a message carrying
+    both.
+    """
     result = detect_anger("I'm so angry, and I hate myself for letting it happen.")
 
     assert result["anger_detected"] is True
@@ -62,8 +65,11 @@ def test_sustained_active_anger_across_history_boosts_score() -> None:
 
 
 def test_history_boost_does_not_apply_to_non_active_anger_types() -> None:
-    """The sustained-anger history boost only fires for anger_type == active,
-    per the detector's own branch condition."""
+    """The sustained-anger history boost applies only to active anger.
+
+    The detector's own branch condition restricts the boost to the active
+    type.
+    """
     history = [
         {"role": "user", "content": "I'm so angry about how they treated me."},
         {"role": "user", "content": "I'm still furious, honestly."},

@@ -4,6 +4,7 @@ import importlib
 import runpy
 import subprocess
 import sys
+from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
@@ -22,7 +23,7 @@ from soulmap.devtools.support.repo import (
 
 
 @contextmanager
-def _noop_lock(_repo_root: Path):
+def _noop_lock(_repo_root: Path) -> Iterator[None]:
     yield
 
 
@@ -39,7 +40,7 @@ def test_python_source_paths_follow_repo_order(tmp_path: Path) -> None:
 
 
 def test_resolve_repo_root_prefers_cwd_checkout_when_package_path_is_elsewhere(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     repo_root = tmp_path / "repo"
     repo_root.mkdir()
@@ -72,7 +73,9 @@ def test_resolve_repo_root_prefers_cwd_checkout_when_package_path_is_elsewhere(
     assert repo_support.resolve_repo_root() == repo_root
 
 
-def test_format_relies_on_ruff_for_python_rewrites(tmp_path: Path, monkeypatch) -> None:
+def test_format_relies_on_ruff_for_python_rewrites(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     for name in ["src", "tests", "scripts"]:
         (tmp_path / name).mkdir()
 
@@ -116,7 +119,7 @@ def test_format_relies_on_ruff_for_python_rewrites(tmp_path: Path, monkeypatch) 
 
 
 def test_format_runs_markdown_fix_for_existing_files(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     (tmp_path / "src").mkdir()
     markdown_file = tmp_path / "docs" / "guide.md"
@@ -138,7 +141,7 @@ def test_format_runs_markdown_fix_for_existing_files(
         _ = cwd, check
         module_calls.append((module, extra_args))
 
-    def fake_run(args: list[str], *, cwd: Path, check: bool):
+    def fake_run(args: list[str], *, cwd: Path, check: bool) -> SimpleNamespace:
         _ = cwd
         run_calls.append((args, check))
         return SimpleNamespace(returncode=0, args=args)
@@ -173,7 +176,7 @@ def test_format_runs_markdown_fix_for_existing_files(
 
 @pytest.mark.parametrize("returncode", [0, 3])
 def test_format_accepts_pymarkdown_fix_statuses(
-    tmp_path: Path, monkeypatch, returncode: int
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, returncode: int
 ) -> None:
     (tmp_path / "src").mkdir()
     markdown_file = tmp_path / "README.md"
@@ -196,7 +199,7 @@ def test_format_accepts_pymarkdown_fix_statuses(
 
 
 def test_format_propagates_unexpected_pymarkdown_fix_status(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     (tmp_path / "src").mkdir()
     markdown_file = tmp_path / "README.md"
@@ -223,7 +226,9 @@ def test_format_propagates_unexpected_pymarkdown_fix_status(
     assert exc_info.value.cmd == command
 
 
-def test_format_skips_missing_python_source_paths(tmp_path: Path, monkeypatch) -> None:
+def test_format_skips_missing_python_source_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     src = tmp_path / "src"
     src.mkdir()
     calls: list[tuple[str, tuple[str, ...]]] = []
@@ -246,7 +251,9 @@ def test_format_skips_missing_python_source_paths(tmp_path: Path, monkeypatch) -
     ]
 
 
-def test_lint_checks_all_python_source_paths(tmp_path: Path, monkeypatch) -> None:
+def test_lint_checks_all_python_source_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     for name in ["src", "tests", "scripts"]:
         (tmp_path / name).mkdir()
 
@@ -308,7 +315,7 @@ def test_lint_checks_all_python_source_paths(tmp_path: Path, monkeypatch) -> Non
 
 
 def test_bootstrap_venv_installs_lefthook_in_git_repo(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     (tmp_path / ".venv").mkdir()
     (tmp_path / ".git").mkdir()
@@ -340,7 +347,7 @@ def test_bootstrap_venv_installs_lefthook_in_git_repo(
 
 
 def test_bootstrap_venv_skips_lefthook_outside_git_repo(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     (tmp_path / ".venv").mkdir()
 
@@ -389,7 +396,7 @@ def test_lefthook_config_replaces_pre_commit_manifest() -> None:
     assert "pre-push:" not in config
 
 
-def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch) -> None:
+def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch: pytest.MonkeyPatch) -> None:
     calls: list[tuple[str, tuple[str, ...]]] = []
 
     def fake_python_module(
@@ -421,12 +428,12 @@ def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch) -> None:
     ],
 )
 def test_thin_cli_wrapper_forwards_to_implementation_main(
-    monkeypatch, wrapper: str, implementation: str
+    monkeypatch: pytest.MonkeyPatch, wrapper: str, implementation: str
 ) -> None:
     implementation_module = importlib.import_module(implementation)
     calls: list[object] = []
 
-    def fake_main(argv=None) -> int:
+    def fake_main(argv: list[str] | None = None) -> int:
         calls.append(argv)
         return 0
 
@@ -444,7 +451,7 @@ def test_thin_cli_wrapper_forwards_to_implementation_main(
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     (tmp_path / ".git").mkdir()
 
@@ -468,7 +475,9 @@ def test_tracked_hygiene_violations_flags_generated_paths(
     ]
 
 
-def test_lint_fails_on_tracked_hygiene_violations(tmp_path: Path, monkeypatch) -> None:
+def test_lint_fails_on_tracked_hygiene_violations(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     for name in ["src", "tests", "scripts"]:
         (tmp_path / name).mkdir()
 

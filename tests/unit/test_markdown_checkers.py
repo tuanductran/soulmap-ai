@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.checks import check_markdown_case, check_markdown_links
 
 
@@ -91,7 +93,7 @@ def test_markdown_link_checker_ignores_external_links_by_default(
 
 def test_markdown_link_checker_can_fail_on_external_error(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text("[Site](https://example.com)\n", encoding="utf-8")
@@ -117,7 +119,7 @@ def test_markdown_link_checker_can_fail_on_external_error(
 
 def test_markdown_link_checker_warning_exit_is_opt_in(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text("[Site](https://example.com)\n", encoding="utf-8")

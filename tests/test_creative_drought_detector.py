@@ -34,8 +34,10 @@ def test_secondary_creative_identity_plus_absence_is_detected() -> None:
 
 
 def test_primary_signal_takes_priority_over_secondary_check() -> None:
-    """The secondary check is guarded by `score == 0`, so it should not
-    fire once a primary phrase has already matched."""
+    """The secondary check must not fire after a primary phrase matched.
+
+    That check is guarded on the score still being zero.
+    """
     result = detect_creative_drought(
         "I've lost my voice, and my writing feels completely empty."
     )

@@ -20,8 +20,8 @@ def _reset_venv_notice() -> None:
 
 def test_python_executable_prefers_local_venv_and_prints_one_notice(
     tmp_path: Path,
-    monkeypatch,
-    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     local_python = tmp_path / ".venv" / "bin" / "python"
     local_python.parent.mkdir(parents=True)
@@ -40,7 +40,7 @@ def test_python_executable_prefers_local_venv_and_prints_one_notice(
 
 
 def test_python_executable_respects_active_venv_and_ci(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     _reset_venv_notice()
     monkeypatch.setattr(run_support.sys, "executable", "/active/python")
@@ -57,7 +57,7 @@ def test_python_executable_respects_active_venv_and_ci(
 
 def test_run_merges_environment_and_python_module_delegates(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     calls: list[tuple[list[str], dict[str, object]]] = []
 
@@ -233,7 +233,7 @@ def test_markdown_target_helpers_handle_fragments_external_and_local_paths(
 
 
 def test_python_executable_warns_once_without_venv_or_ci(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     _reset_venv_notice()
     monkeypatch.delenv("VIRTUAL_ENV", raising=False)
@@ -249,7 +249,7 @@ def test_python_executable_warns_once_without_venv_or_ci(
 
 @pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
 def test_repo_tooling_lock_waits_then_cleans_root_lock(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     fcntl = importlib.import_module("fcntl")
     attempts = 0
@@ -281,7 +281,7 @@ def test_repo_tooling_lock_waits_then_cleans_root_lock(
 
 def test_repo_tooling_lock_uses_windows_venv_lock_and_unlocks(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     (tmp_path / ".venv").mkdir()
     lock_modes: list[int] = []
@@ -306,8 +306,8 @@ def test_repo_tooling_lock_uses_windows_venv_lock_and_unlocks(
 
 def test_repo_tooling_lock_tolerates_missing_or_unremovable_cleanup_file(
     tmp_path: Path,
-    monkeypatch,
-    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     original_unlink = Path.unlink
 
@@ -334,8 +334,8 @@ def test_repo_tooling_lock_tolerates_missing_or_unremovable_cleanup_file(
 @pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
 def test_repo_tooling_lock_retries_before_waiting_notice(
     tmp_path: Path,
-    monkeypatch,
-    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     fcntl = importlib.import_module("fcntl")
     attempts = 0

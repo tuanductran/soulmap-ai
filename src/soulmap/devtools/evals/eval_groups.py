@@ -1,3 +1,11 @@
+"""Routing-group evaluation runner.
+
+Runs every case in ``evals/datasets/groups.json`` through the framework
+selector and the scope classifier, and compares the result against the
+case's expectations. This is a deterministic regression gate: it checks which
+framework a message routes to, never the quality of any response text.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -12,6 +20,23 @@ from soulmap.runtime.routing.scope_classifier import classify_message
 
 
 class GroupItem(TypedDict):
+    """One routing case and what it must produce.
+
+    Every expectation is optional, so a case asserts only what it is about.
+
+    Attributes:
+        t: The message text to route.
+        note: What this case is testing, for the failure report.
+        expect_primary_framework: The framework the message must route to.
+        expect_secondary_layer: The annotated secondary layer, or None when
+            the case asserts there is none.
+        expect_mode: The response mode the route must select.
+        expect_scope_tier: The scope classifier's tier.
+        expect_scope_category: The scope classifier's category.
+        expect_safety_status: The safety gate's status.
+        expect_safety_reason: The safety gate's reason code.
+    """
+
     t: str
     note: str
     expect_primary_framework: NotRequired[str]
@@ -24,6 +49,17 @@ class GroupItem(TypedDict):
 
 
 class GroupEntry(TypedDict):
+    """A named group of routing cases that share a rationale.
+
+    Attributes:
+        g: Human-readable group name.
+        cat: Short category code used to filter runs.
+        items: The cases in this group.
+        sources: Knowledge files that justify the group's existence.
+        source_markers: Quoted text from those files backing specific cases,
+            so a reviewer can trace a case to the doctrine behind it.
+    """
+
     g: str
     cat: str
     items: list[GroupItem]
@@ -84,6 +120,16 @@ def run_groups_eval(
     category: str | None = None,
     group_name: str | None = None,
 ) -> dict[str, object]:
+    """Run the routing-group evaluation.
+
+    Args:
+        category: Only run groups with this category code, or None for all.
+        group_name: Only run the group with this name, or None for all.
+
+    Returns:
+        A summary dict carrying the totals, the per-group results, and the
+        source-marker checks. A run is clean when ``failed_checks`` is 0.
+    """
     groups = _load_groups()
     if category:
         groups = [group for group in groups if group["cat"] == category]
@@ -211,6 +257,14 @@ def run_groups_eval(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the routing-group evaluation from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every check passes, 1 when any case fails.
+    """
     if isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8")
 

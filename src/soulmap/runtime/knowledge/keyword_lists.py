@@ -28,7 +28,6 @@ def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
     Stops at the next heading whose level is <= the target heading's level.
     Returns an empty tuple if the heading is not found.
     """
-
     lines = text.splitlines()
     target_level: int | None = None
     start = None
@@ -71,6 +70,21 @@ def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
 
 
 def load_keyword_section(markdown_path: Path, heading: str) -> tuple[str, ...]:
+    """Read a Markdown file and extract one section's quoted phrases.
+
+    Args:
+        markdown_path: Path to the knowledge file that owns the phrases.
+        heading: Heading text of the section to read, without leading hashes.
+
+    Returns:
+        The quoted phrases in document order, deduplicated. Empty when the
+        heading is absent or holds no quoted phrase.
+
+    Raises:
+        OSError: If the file cannot be read. The phrase list is authored
+            content, so a missing file is a repository error rather than a
+            condition to absorb.
+    """
     text = markdown_path.read_text(encoding="utf-8")
     return extract_keyword_section(text, heading)
 
@@ -94,7 +108,6 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
     Returns a dict keyed by the lowercased text before the first comma (or the
     whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...)}``.
     """
-
     lines = text.splitlines()
     target_level: int | None = None
     start = None
@@ -136,6 +149,19 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
 def load_labeled_groups(
     markdown_path: Path, heading: str
 ) -> dict[str, tuple[str, ...]]:
+    """Read a Markdown file and extract one section's labeled phrase groups.
+
+    Args:
+        markdown_path: Path to the knowledge file that owns the phrases.
+        heading: Heading text of the section to read, without leading hashes.
+
+    Returns:
+        A mapping of lowercased category label to that label's phrases,
+        deduplicated and in document order. Empty when the heading is absent.
+
+    Raises:
+        OSError: If the file cannot be read.
+    """
     text = markdown_path.read_text(encoding="utf-8")
     return extract_labeled_groups(text, heading)
 
@@ -146,7 +172,6 @@ def default_skill_path(relative_path: str) -> Path:
     Mirrors ``pattern_source.default_pattern_mapper_path`` — runtime modules
     ship and run standalone, so this does not import ``soulmap.devtools``.
     """
-
     import os
 
     rel = Path(relative_path)

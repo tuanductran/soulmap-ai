@@ -31,6 +31,22 @@ HistoryMessage = dict[str, str]
 def detect_grief(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
+    """Score grief signals in the current message.
+
+    Matches the phrase groups authored in
+    ``skills/frameworks/grief-companion.md``: acute grief, anticipatory grief,
+    ambiguous loss, and complicated grief. Acute grief is checked first, since
+    it routes to the shortest and most held response.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns. Accepted for a uniform detector signature and
+            not used, since grief is read from the current message.
+
+    Returns:
+        A dict with ``grief_detected``, ``grief_type``, ``score``,
+        ``signals``, and ``recommendation``.
+    """
     msg = message.lower().strip()
     signals = []
     score = 0

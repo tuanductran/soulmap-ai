@@ -156,6 +156,15 @@ def check_response_safety_contract(response_text: str) -> dict[str, object]:
 
 
 def main() -> int:
+    """Check a response for content-safety violations from standard input.
+
+    Returns:
+        The process exit code, 0 on success.
+
+    Raises:
+        ValueError: If the payload is not a JSON object or is missing a
+            required field.
+    """
     data = parse_json_object(sys.stdin.read())
     response_text = require_str_field(data, "response_text")
     result = check_response_safety_contract(response_text)

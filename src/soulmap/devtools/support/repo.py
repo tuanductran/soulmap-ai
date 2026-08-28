@@ -1,3 +1,10 @@
+"""Repository-root discovery and tracked-file hygiene checks.
+
+Every developer tool resolves the repository root through this module so a tool
+behaves the same whether it runs from the repository root, a subdirectory, or a
+CI checkout workspace.
+"""
+
 from __future__ import annotations
 
 import os
@@ -6,6 +13,15 @@ from pathlib import Path
 
 
 def _looks_like_repo_root(path: Path) -> bool:
+    """Report whether a directory has the marker files of the repository root.
+
+    Args:
+        path: Directory to test.
+
+    Returns:
+        True when the directory holds ``pyproject.toml``, ``src``, and
+        ``AGENTS.md`` together, which no subdirectory of this repository does.
+    """
     return (
         path.is_dir()
         and (path / "pyproject.toml").exists()
@@ -15,6 +31,16 @@ def _looks_like_repo_root(path: Path) -> bool:
 
 
 def resolve_repo_root() -> Path:
+    """Find the repository root for the current process.
+
+    Checks the environment variables set by CI and agent runners first, then
+    walks up from the working directory, then up from this file.
+
+    Returns:
+        The repository root. When no candidate carries the marker files, falls
+        back to this file's expected ancestor rather than raising, so tooling
+        still reports a path in an unusual checkout.
+    """
     env_candidates = [
         os.environ.get("SOULMAP_REPO_ROOT"),
         os.environ.get("GITHUB_WORKSPACE"),
@@ -45,6 +71,15 @@ PYTHON_SOURCE_DIR_NAMES = ("src", "tests", "scripts")
 
 
 def python_source_paths(repo_root: Path) -> list[Path]:
+    """List the Python source directories that exist in a checkout.
+
+    Args:
+        repo_root: Repository root to inspect.
+
+    Returns:
+        The existing directories among ``src``, ``tests``, and ``scripts``, so
+        a tool never passes a missing path to Ruff or Pyright.
+    """
     return [
         repo_root / name
         for name in PYTHON_SOURCE_DIR_NAMES
@@ -53,6 +88,16 @@ def python_source_paths(repo_root: Path) -> list[Path]:
 
 
 def tracked_hygiene_violations(repo_root: Path) -> list[str]:
+    """Find build or cache artifacts that git is tracking by mistake.
+
+    Args:
+        repo_root: Repository root to inspect.
+
+    Returns:
+        Repository-relative paths of tracked files that belong to a cache or
+        build directory. Empty when the directory is not a git checkout, since
+        there is nothing tracked to check.
+    """
     git_dir = repo_root / ".git"
     if not git_dir.exists():
         return []

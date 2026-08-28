@@ -42,8 +42,11 @@ def test_bypassing_accountability_is_detected_and_typed_correctly() -> None:
 
 
 def test_dismissing_pain_takes_priority_when_multiple_types_present() -> None:
-    """Dismissing-pain phrases are checked first and should win when
-    phrasing overlaps with another bypass category in one message."""
+    """Dismissing-pain phrases win when categories overlap.
+
+    They are checked first, so they set the category for a message carrying
+    more than one.
+    """
     result = detect_bypass(
         "Everything happens for a reason, and as an empath I feel it deeply."
     )
@@ -53,8 +56,11 @@ def test_dismissing_pain_takes_priority_when_multiple_types_present() -> None:
 
 
 def test_genuine_integration_signals_reduce_score_below_threshold() -> None:
-    """Two or more genuine-integration phrases should reduce the score by 2,
-    which can drop a single weak bypass signal below the detection threshold."""
+    """Genuine-integration phrases reduce the bypass score.
+
+    Two or more subtract two points, which can drop a single weak bypass
+    signal below the detection threshold.
+    """
     result = detect_bypass(
         "It made me stronger, but I'm still processing it and still feeling "
         "it, even though i know it's complicated."
@@ -84,8 +90,10 @@ def test_case_and_punctuation_do_not_prevent_detection() -> None:
 
 
 def test_note_marks_result_as_secondary_layer_not_primary_framework() -> None:
-    """Per the module docstring, spiritual bypass is always a secondary
-    layer flag and must never be returned as a primary framework."""
+    """Spiritual bypass must never be a primary framework.
+
+    Per the module docstring it is always a secondary layer flag.
+    """
     result = detect_bypass("I need to raise my vibration and let go.")
 
     assert result["bypass_detected"] is True

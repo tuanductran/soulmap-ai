@@ -1,3 +1,11 @@
+"""Cross-file Markdown contract evaluation runner.
+
+Runs the cases in ``evals/datasets/markdown_contract_cases.json``, each of
+which asserts that wording stays synchronized between doctrine, shipped
+knowledge files, and the runtime. This is what catches a rule being changed in
+one file and left stale in another.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -8,6 +16,15 @@ from soulmap.devtools.support.repo import REPO_ROOT
 
 
 class FileRule(TypedDict):
+    """What one file must and must not contain.
+
+    Attributes:
+        path: Repository-relative path to the file.
+        must_include_all: Strings that must all be present.
+        must_include_any: Strings of which at least one must be present.
+        must_not_include_any: Strings that must all be absent.
+    """
+
     path: str
     must_include_all: NotRequired[list[str]]
     must_include_any: NotRequired[list[str]]
@@ -15,6 +32,16 @@ class FileRule(TypedDict):
 
 
 class ContractCase(TypedDict):
+    """One cross-file wording contract.
+
+    Attributes:
+        id: Stable case identifier, used to run a single case.
+        summary: What synchronization this case protects.
+        markdown_targets: Rules over shipped Markdown knowledge files.
+        runtime_targets: Rules over runtime Python files, which is how a
+            doctrine phrase is tied to the code that enforces it.
+    """
+
     id: str
     summary: str
     markdown_targets: NotRequired[list[FileRule]]
@@ -60,6 +87,15 @@ def _evaluate_rule(rule: FileRule) -> dict[str, object]:
 
 
 def run_markdown_contract_eval(*, case_id: str | None = None) -> dict[str, object]:
+    """Run the Markdown contract evaluation.
+
+    Args:
+        case_id: Only run the case with this identifier, or None for all.
+
+    Returns:
+        A summary dict carrying the totals and per-case results. A run is
+        clean when ``failed_checks`` is 0.
+    """
     cases = _load_cases()
     if case_id is not None:
         cases = [case for case in cases if case["id"] == case_id]
@@ -102,6 +138,14 @@ def run_markdown_contract_eval(*, case_id: str | None = None) -> dict[str, objec
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the Markdown contract evaluation from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every check passes, 1 when any case fails.
+    """
     parser = argparse.ArgumentParser(
         description=(
             "Run markdown contract sync checks from "

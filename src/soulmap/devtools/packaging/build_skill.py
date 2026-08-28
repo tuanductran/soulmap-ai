@@ -5,7 +5,7 @@ Flags
 default   Build dist/soulmap-ai.zip   (when no flag is given)
 --skill   Build dist/soulmap-ai.skill
 
-Examples
+Examples:
 --------
 uv run soulmap build                  # zip build
 uv run soulmap build --skill          # .skill build
@@ -148,6 +148,15 @@ def build_skill(repo_root: Path) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Build the distribution artifacts from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+            Selects the standard zip, the skill package, or both.
+
+    Returns:
+        0 when every requested artifact builds, non-zero on failure.
+    """
     parser = argparse.ArgumentParser(
         prog="soulmap build",
         description="Build SoulMap AI distribution artifacts.",

@@ -1,3 +1,10 @@
+"""Repository-wide formatting.
+
+Runs the Ruff formatter and import sorter over the Python sources and the
+Markdown formatter over the Markdown files, under the shared tooling lock so
+two concurrent runs cannot rewrite the same files.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -14,6 +21,14 @@ from soulmap.devtools.support.run import (
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Format every Python and Markdown file in the repository.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when formatting succeeds, non-zero when a formatter reports failure.
+    """
     parser = argparse.ArgumentParser(
         description="Format Python and Markdown files across the repo."
     )

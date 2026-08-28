@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+
+import pytest
 
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support import repo as repo_support
 
 
 @contextmanager
-def _noop_lock(_repo_root: Path):
+def _noop_lock(_repo_root: Path) -> Iterator[None]:
     yield
 
 
@@ -22,7 +25,7 @@ def _make_repo_root(path: Path) -> Path:
 
 def test_repo_root_detection_prefers_valid_environment_candidate(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     repo_root = _make_repo_root(tmp_path / "repo")
     invalid = tmp_path / "invalid"
@@ -37,7 +40,7 @@ def test_repo_root_detection_prefers_valid_environment_candidate(
 
 def test_tracked_hygiene_returns_empty_without_git_and_flags_all_generated_paths(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     assert repo_support.tracked_hygiene_violations(tmp_path) == []
 
@@ -71,7 +74,7 @@ def test_tracked_hygiene_returns_empty_without_git_and_flags_all_generated_paths
 
 
 def test_pyright_availability_reports_success_and_failure(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     calls: list[list[str]] = []
     monkeypatch.setattr(lint_tool, "python_executable", lambda _root: "python")
@@ -93,7 +96,7 @@ def test_pyright_availability_reports_success_and_failure(
 
 def test_lint_runs_pyright_markdown_and_pytest_when_available(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     for name in ["src", "tests", "scripts", "docs"]:
         (tmp_path / name).mkdir()

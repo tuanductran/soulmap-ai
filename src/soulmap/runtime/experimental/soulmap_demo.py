@@ -10,6 +10,19 @@ from soulmap.runtime.routing.framework_selector import select_framework
 
 
 def run_selector(payload: dict[str, object]) -> dict[str, object]:
+    """Validate a demo payload and route it through the framework selector.
+
+    Args:
+        payload: Object holding ``message``, ``history``, and ``memory``.
+
+    Returns:
+        The selector result.
+
+    Raises:
+        RuntimeError: If a field is missing or has the wrong type. This is a
+            local demo entry point, so it reports the problem in plain terms
+            rather than raising a parse error from deeper in the stack.
+    """
     try:
         message = payload["message"]
         history = payload["history"]
@@ -28,6 +41,17 @@ def run_selector(payload: dict[str, object]) -> dict[str, object]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the framework selector from the command line.
+
+    Accepts either a single message argument or a JSON payload on standard
+    input.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 on success, 1 when the payload is invalid.
+    """
     parser = argparse.ArgumentParser(description="Run SoulMap AI framework selector.")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--message", type=str, help="Single user message.")

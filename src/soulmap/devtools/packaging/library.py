@@ -101,6 +101,14 @@ def build_library(repo_root: Path) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Build the Library distribution manifest from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 on success.
+    """
     parser = argparse.ArgumentParser(
         description="Build the versioned dist/soulmap-ai-library.json manifest."
     )
