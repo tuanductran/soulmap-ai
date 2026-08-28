@@ -19,7 +19,12 @@ from typing import Any
 
 P_LEVEL_TITLE = re.compile(r"^\[(P[0-3])\]\s+")
 METADATA_FIELD = re.compile(
-    r"^- \*\*(Priority|Safety boundary|Evidence|Rollback):\*\*\s*(.+?)\s*$",
+    # The leading gap must not cross a newline. A plain `\s*` matches the line
+    # break too, so a field left blank swallows the following line and its
+    # value, making the check report the *next* field as missing instead of
+    # the blank one. The pull request was still blocked, but the author was
+    # pointed at the wrong field.
+    r"^- \*\*(Priority|Safety boundary|Evidence|Rollback):\*\*[^\S\n]*(.+?)\s*$",
     re.MULTILINE,
 )
 REQUIRED_FIELDS = frozenset({"Priority", "Safety boundary", "Evidence", "Rollback"})

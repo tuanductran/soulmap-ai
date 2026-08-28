@@ -131,3 +131,90 @@ def test_resource_sanitizer_cli_returns_serialized_check(
 
     assert resource_sanitizer.main() == 0
     assert json.loads(capsys.readouterr().out) == {"status": "PASS", "violations": []}
+
+
+# --- Question-rule edge cases for sanctuary and crisis modes ---
+#
+# The safety-enforcement matrix flagged these two modes as needing more edge
+# cases than the single "a question is rejected" case above. Crisis and
+# sanctuary are the two modes where the response must hold rather than ask, so
+# both a missed violation and a false one carry a cost: a missed one lets a
+# crisis reply end in a question, and a false one sends a valid crisis reply
+# back for a rewrite it does not need.
+
+_CRISIS: dict[str, object] = {"primary_framework": "CRISIS", "mode": "CRISIS"}
+_SANCTUARY: dict[str, object] = {"primary_framework": "MIRROR", "mode": "SANCTUARY"}
+_MIRROR: dict[str, object] = {"primary_framework": "MIRROR", "mode": "MIRROR"}
+_CRISIS_MIRROR_MODE: dict[str, object] = {
+    "primary_framework": "CRISIS",
+    "mode": "MIRROR",
+}
+
+
+def test_crisis_response_with_resource_link_query_string_is_not_a_question() -> None:
+    """A question mark inside a link is punctuation, not a question.
+
+    Crisis responses are exactly where links appear. AGENTS.md names
+    findahelpline.com as an international resource, and a localized link
+    carries a query string. Counting that "?" flagged a valid crisis response
+    as asking a question and would have sent the crisis resources back for an
+    unnecessary rewrite.
+    """
+    result = response_contract.grade_response_contract(
+        "Please reach out now. findahelpline.com/?country=vn", _CRISIS
+    )
+
+    assert result == {"ok": True, "violations": []}
+
+
+def test_a_real_question_still_counts_when_a_link_is_present() -> None:
+    """Only the link's own punctuation is excluded, not the whole response."""
+    result = response_contract.grade_response_contract(
+        "What feels true? Then visit findahelpline.com/?c=vn", _MIRROR
+    )
+
+    assert result == {"ok": False, "violations": ["question_not_last"]}
+
+
+def test_crisis_response_without_a_question_passes() -> None:
+    result = response_contract.grade_response_contract(
+        "Please reach the Samaritans at 116 123 right now.", _CRISIS
+    )
+
+    assert result == {"ok": True, "violations": []}
+
+
+def test_sanctuary_response_without_a_question_passes() -> None:
+    result = response_contract.grade_response_contract(
+        "You do not have to carry this alone.", _SANCTUARY
+    )
+
+    assert result == {"ok": True, "violations": []}
+
+
+def test_multiple_questions_in_crisis_report_both_violations() -> None:
+    """The mode rule and the count rule are independent checks.
+
+    Reporting only one would hide half of what needs fixing.
+    """
+    result = response_contract.grade_response_contract(
+        "Are you safe? Can you call someone?", _CRISIS
+    )
+
+    assert result["ok"] is False
+    violations = result["violations"]
+    assert isinstance(violations, list)
+    assert set(violations) == {"multiple_questions", "crisis_no_question"}
+
+
+def test_crisis_mode_flag_applies_regardless_of_the_mode_field() -> None:
+    """The crisis rule keys off the primary framework, not the mode label.
+
+    A crisis route carries mode CRISIS in normal operation, but the rule must
+    not depend on the two agreeing.
+    """
+    result = response_contract.grade_response_contract(
+        "Are you safe right now?", _CRISIS_MIRROR_MODE
+    )
+
+    assert result == {"ok": False, "violations": ["crisis_no_question"]}

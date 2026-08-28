@@ -9,6 +9,17 @@ stability and breaking changes in behavior.
 
 ### Fix
 
+- **safety**: stop a resource link's query string from counting as a question in
+  the response contract. `findahelpline.com/?country=vn` made a valid crisis
+  response fail the no-question rule, which would have sent the crisis
+  resources back for a rewrite they did not need. Only punctuation inside the
+  matched link is excluded, so a real question before or after a link still
+  counts
+- **governance**: stop a blank P-level metadata field from swallowing the next
+  line. The field pattern's leading gap crossed the newline, so a blank
+  `Safety boundary` captured the `Evidence` line as its value and the check
+  reported `Evidence` as the missing field, pointing the author at the wrong
+  line. The pull request was still blocked either way
 - **safety**: block guilt/FOMO-based farewell language ("you'll lose
   everything," "the love we shared," "please don't leave me") in generated
   responses, curated from a real Character.AI account-deletion backlash and
@@ -56,8 +67,28 @@ stability and breaking changes in behavior.
   fix a nested-fence (four-backtick-wrapping-three-backtick) desync bug; remove
   the orphaned `scripts/soulmap_demo.sh` wrapper
 
+### Test
+
+- **governance**: cover the P-level safety-governance check's event-reading and
+  exit-code paths (79% to 100%). This is the CI gate that keeps a pull request
+  from changing a safety boundary without naming its ADR, regression evidence,
+  and rollback, and it had no coverage of an unusable event, a governance
+  failure, or a malformed P-level tag
+- **packaging**: cover the Library catalog validation guards (79% to 100%), so
+  an unsupported schema version, a foreign library id, or a malformed entry
+  cannot silently produce a manifest that misdescribes the artifacts
+- **safety**: add the sanctuary and crisis question-rule edge cases the
+  safety-enforcement matrix asked for: passing responses in both modes, a
+  crisis reply carrying two questions reporting both violations, and the crisis
+  rule keying off the primary framework rather than the mode label
+
 ### Docs
 
+- **roadmap**: record the package coverage target as met (97%) and name the
+  ADR 0003 decision as open tracked work, with what moving it to Accepted
+  actually requires
+- **safety**: replace the question-rule gap note in the safety-enforcement
+  matrix with the edge cases now covered
 - **brand**: add a 2026 Stanford sycophancy-study citation to
   `research-backing.md` supporting the mirror principle's refusal to
   validate the user's leaning direction, plus the HBS farewell-manipulation
