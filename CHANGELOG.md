@@ -9,6 +9,11 @@ stability and breaking changes in behavior.
 
 ### Fix
 
+- **safety**: block guilt/FOMO-based farewell language ("you'll lose
+  everything," "the love we shared," "please don't leave me") in generated
+  responses, curated from a real Character.AI account-deletion backlash and
+  Harvard Business School research on farewell-moment manipulation across
+  AI companion products
 - **detectors**: fix self-criticism scoring order in the shadow-pattern
   detector so it enriches an already-triggered result instead of being
   silently dropped from the recommendation text or wrongly promoted to a
@@ -43,6 +48,10 @@ stability and breaking changes in behavior.
 
 ### Docs
 
+- **brand**: add a 2026 Stanford sycophancy-study citation to
+  `research-backing.md` supporting the mirror principle's refusal to
+  validate the user's leaning direction, plus the HBS farewell-manipulation
+  and Character.AI deletion-screen findings backing the new banned phrases
 - **knowledge**: close doctrine sync gaps found in repo-wide audit
 - **tester**: add exploratory charter for real-world spiritual media pressure
 - **roadmap**: close completed non-ai maintenance items
