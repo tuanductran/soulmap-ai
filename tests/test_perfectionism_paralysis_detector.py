@@ -23,12 +23,45 @@ def test_paralysis_signal_is_detected() -> None:
     assert any("paralysis:" in s for s in signals)
 
 
-def test_general_perfectionism_signal_is_detected_as_secondary() -> None:
+def test_general_perfectionism_signal_alone_does_not_trigger_detection() -> None:
+    """Doctrine (perfectionism-paralysis.md, "Distinguish from genuine
+    discernment"): "Perfectionism paralysis is a pattern, not a single
+    instance." A bare generic signal with no repetition evidence must stay
+    below threshold, not promote to primary_framework on one message."""
     result = detect_perfectionism_paralysis("People never meet my standards.")
+
+    assert result["perfectionism_paralysis_detected"] is False
+    signals = cast(list[str], result["signals"])
+    assert signals == ["perfectionism: 'people never meet my standards.'"]
+
+
+def test_general_perfectionism_signal_with_history_repetition_is_detected() -> None:
+    """The generic signal only crosses the threshold once combined with the
+    history repetition bonus - the actual "pattern, not a single instance"
+    check the doctrine asks for."""
+    history = [
+        {"role": "user", "content": "I'm still not ready to share this."},
+    ]
+    result = detect_perfectionism_paralysis("People never meet my standards.", history)
 
     assert result["perfectionism_paralysis_detected"] is True
     signals = cast(list[str], result["signals"])
-    assert signals == ["perfectionism: 'people never meet my standards.'"]
+    assert "perfectionism: 'people never meet my standards.'" in signals
+    assert "pattern_persistence_in_history" in signals
+
+
+def test_general_perfectionism_signal_with_self_reported_repetition_is_detected() -> (
+    None
+):
+    """Repetition evidence can also come from the current message itself
+    naming its own repetition, not only from prior history turns."""
+    result = detect_perfectionism_paralysis(
+        "I almost sent it a hundred times. It is never good enough to send."
+    )
+
+    assert result["perfectionism_paralysis_detected"] is True
+    signals = cast(list[str], result["signals"])
+    assert "pattern_persistence_in_message" in signals
 
 
 def test_paralysis_signal_takes_priority_over_general_signal() -> None:

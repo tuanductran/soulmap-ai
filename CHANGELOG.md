@@ -9,6 +9,19 @@ stability and breaking changes in behavior.
 
 ### Fix
 
+- **detectors**: fix self-criticism scoring order in the shadow-pattern
+  detector so it enriches an already-triggered result instead of being
+  silently dropped from the recommendation text or wrongly promoted to a
+  standalone shadow trigger
+- **io**: normalize malformed conversation-history items in
+  `require_list_field` instead of letting every detector crash on a
+  missing "content" key
+- **scripts**: make `build-skill.sh` actually build the `.skill` archive
+  it is named for, instead of the plain zip
+- **detectors**: stop a single generic phrase from triggering perfectionism
+  paralysis alone, contradicting its own "pattern, not a single instance"
+  doctrine; repetition evidence can now come from the current message or
+  prior history
 - **safety**: correct wrong Vietnam crisis number and Rule 1 violation
 - **knowledge**: sync framework priority tables with routed spiritual frameworks
 - **knowledge**: close mirror-intellectual length contradiction
@@ -40,6 +53,13 @@ stability and breaking changes in behavior.
   (ADR 0003, Status: Proposed, no runtime change)
 - **regulatory**: add Connecticut SB 5, Washington's Chatbot Disclosure Act, and
   the APA's 2025 health advisory to the companion-AI regulatory landscape
+- **knowledge**: complete doctrine wiring for the 5 spiritual frameworks (Dark
+  Night of the Soul, Soul Nourishment, Divine Guidance, Sacred Polarity,
+  Spiritual Purpose) - add each one's own "Paired template" section, a
+  detailed Structure/Opening-constraint/Forbidden-structure/Word-range entry
+  in `framework-template-map.md`, and a dedicated question bank section in
+  `deep-inquiry-bank.md`; fix `safety-enforcement-matrix.md`'s semicolon/bullet
+  row to cite the test file with the actual assertion
 
 ### CI
 

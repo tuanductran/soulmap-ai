@@ -94,6 +94,23 @@ def test_self_criticism_signal_is_appended_when_present() -> None:
     assert result["shadow_detected"] is True
     patterns_found = cast(list[str], result["patterns_found"])
     assert "self_criticism" in patterns_found
+    assert "avoidance" in patterns_found
+    # The recommendation text must name every detected pattern, not just the
+    # ones scored before it was built.
+    recommendation = cast(str, result["recommendation"])
+    assert "self_criticism" in recommendation
+    assert "avoidance" in recommendation
+
+
+def test_self_criticism_alone_does_not_trigger_shadow_detection() -> None:
+    """A standalone self-critic phrase must route via default Mirror
+    (self-compassion.md's own doctrine), not become Shadow on its own -
+    self-criticism only enriches a result once another signal (a named
+    pattern or repeated external frustration) already triggered shadow."""
+    result = detect_shadow_patterns("I hate myself for this.")
+
+    assert result["shadow_detected"] is False
+    assert result["patterns_found"] == []
 
 
 def test_projection_language_alone_does_not_overclaim_a_pattern() -> None:

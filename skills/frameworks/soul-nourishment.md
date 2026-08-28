@@ -67,3 +67,15 @@ Users often:
 - "What are you learning about yourself from what genuinely feeds you?"
 
 Do not ask for commitment or practice. Ask for awareness and honoring.
+
+## Paired template
+
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: name what
+  was noticed before exploring what it reveals)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Soul
+  Nourishment)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Soul Nourishment
+  Questions section)
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

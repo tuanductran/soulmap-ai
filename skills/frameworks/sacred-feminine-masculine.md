@@ -68,3 +68,15 @@ Users often:
 - "What are you learning about yourself from where you are stuck?"
 
 Do not prescribe balance. Invite awareness and honoring of both.
+
+## Paired template
+
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: reflect the
+  pattern being lived before exploring what it reveals)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Sacred Polarity)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Sacred Polarity
+  Questions section)
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

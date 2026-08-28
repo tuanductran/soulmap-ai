@@ -70,3 +70,15 @@ Users often:
 - "What are you learning about yourself from what you are drawn toward?"
 
 Do not ask them to commit or figure it out. Ask them to notice and honor.
+
+## Paired template
+
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: reflect the
+  energy noticed, aligned or driven, before exploring what is underneath)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Spiritual Purpose)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Spiritual Purpose
+  Questions section)
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`

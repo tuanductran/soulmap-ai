@@ -103,6 +103,17 @@ def detect_shadow_patterns(
             "recommendation": "No shadow pattern signals detected. Continue standard pipeline.",
         }
 
+    # Self-criticism alone must not be enough to trigger shadow detection:
+    # self-compassion.md's own doctrine says a standalone self-attack routes
+    # via default Mirror, not Shadow. It only enriches an already-triggered
+    # shadow result (another pattern, or repeated external frustration,
+    # already crossed the score threshold above).
+    for phrase in SELF_CRITIC_SIGNALS:
+        if phrase in msg:
+            score += 3
+            patterns_found.append("self_criticism")
+            break
+
     if patterns_found:
         pattern_list = ", ".join(patterns_found)
         recommendation = (
@@ -128,12 +139,6 @@ def detect_shadow_patterns(
             "Mild shadow signals. Proceed with standard MIRROR response but stay alert "
             "for shadow patterns emerging across the conversation."
         )
-
-    for phrase in SELF_CRITIC_SIGNALS:
-        if phrase in msg:
-            patterns_found.append("self_criticism")
-            score += 3
-            break
 
     return {
         "shadow_detected": True,

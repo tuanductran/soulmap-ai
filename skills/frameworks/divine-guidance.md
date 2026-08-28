@@ -70,3 +70,15 @@ Users often:
 - "How does your body respond when you imagine following this knowing?"
 
 Do not ask them to commit or act. Ask them to notice and discern.
+
+## Paired template
+
+- **Primary structure:** `skills/meta/response-structure.md` (Mirror: reflect the
+  qualities of the sensing before exploring discernment)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section:
+  Divine Guidance)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Divine Guidance
+  Questions section)
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`
