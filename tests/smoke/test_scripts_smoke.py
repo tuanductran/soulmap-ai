@@ -601,3 +601,59 @@ def test_object_based_cli_modules_reject_non_object_payloads() -> None:
         assert json.loads(result.stdout) == {"error": "Input must be a JSON object."}, (
             module
         )
+
+
+# --- The sourced activation helper ---
+#
+# scripts/activate_venv.sh is the one script here that must NOT set
+# `-euo pipefail`. It runs in the caller's shell, so those options would stay
+# set after it returns and the developer's next failing command would kill
+# their interactive shell. These cover that contract, because the repo's own
+# shell rule otherwise says to set them everywhere.
+#
+# Both gate on _bash_runtime_available() like every other shell test here. A
+# bare `shutil.which("bash")` is not enough: on a Windows runner that resolves
+# to the WSL stub, which only prints "no installed distributions" and exits 1,
+# so the tests ran against something that is not bash at all.
+
+ACTIVATE_SCRIPT = ROOT / "scripts" / "activate_venv.sh"
+
+
+def test_activate_helper_refuses_to_be_executed_directly() -> None:
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
+    result = subprocess.run(
+        ["bash", str(ACTIVATE_SCRIPT)], capture_output=True, text=True, check=False
+    )
+
+    assert result.returncode == 1
+    assert "must be sourced" in result.stderr
+
+
+def test_sourcing_the_activate_helper_does_not_leak_shell_options() -> None:
+    """Sourcing must not leave errexit set in the caller's shell.
+
+    With `set -euo pipefail` in the script, the `false` below ended the shell
+    and the final marker never printed. That would end an interactive session
+    on the developer's next failing command.
+    """
+    if not _bash_runtime_available():
+        pytest.skip("bash runtime is not available on this platform")
+
+    script = (
+        f"source {ACTIVATE_SCRIPT}\n"
+        "false\n"
+        "echo SURVIVED\n"
+        'echo "leftover=${_soulmap_root:-none}"\n'
+    )
+    result = subprocess.run(
+        ["bash", "-c", script],
+        capture_output=True,
+        text=True,
+        check=False,
+        cwd=ROOT,
+    )
+
+    assert "SURVIVED" in result.stdout, result.stderr
+    assert "leftover=none" in result.stdout

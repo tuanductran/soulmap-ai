@@ -32,7 +32,12 @@ uv sync --locked --python 3.11
 
 `uv sync` installs the project in editable mode for local development, so contributor
 workflows stay aligned with `pyproject.toml` and `uv.lock`. Activating `.venv` is
-optional when you use `uv run ...`.
+optional when you use `uv run ...`. To activate it in the current shell, source the
+helper rather than running it:
+
+```bash
+source scripts/activate_venv.sh
+```
 
 ### Windows (PowerShell)
 

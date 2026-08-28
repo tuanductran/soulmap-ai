@@ -13,6 +13,13 @@ bash scripts/format.sh
 bash scripts/lint.sh
 ```
 
+Activating `.venv` is optional when you use `uv run ...`. To activate it in the
+current shell, source this helper rather than running it:
+
+```bash
+source scripts/activate_venv.sh
+```
+
 Cross-platform equivalents are the canonical Python entrypoints:
 
 ```bash
