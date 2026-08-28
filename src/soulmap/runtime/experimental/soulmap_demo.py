@@ -5,7 +5,11 @@ from __future__ import annotations
 import argparse
 import json
 
-from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json
+from soulmap.runtime.io.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_list_field,
+)
 from soulmap.runtime.routing.framework_selector import select_framework
 
 
@@ -37,7 +41,14 @@ def run_selector(payload: dict[str, object]) -> dict[str, object]:
     if not isinstance(memory, dict):
         raise RuntimeError("Field 'memory' must be an object.")
 
-    return select_framework(message, history, memory)
+    # Checking that history is a list is not enough. The detectors and the
+    # safety gate index each entry as m["content"], so a malformed item
+    # crashed the gate with a KeyError rather than being reported here. Every
+    # other entry point normalizes through this shared helper, which is what
+    # kept them safe.
+    normalized_history = require_list_field({"history": history}, "history")
+
+    return select_framework(message, normalized_history, memory)
 
 
 def main(argv: list[str] | None = None) -> int:

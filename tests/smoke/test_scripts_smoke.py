@@ -238,6 +238,37 @@ def test_soulmap_demo_rejects_empty_stdin() -> None:
     assert json.loads(result.stdout) == {"error": "No input provided."}
 
 
+def test_soulmap_demo_survives_malformed_history_items() -> None:
+    """A malformed history entry must not crash the safety gate.
+
+    The demo checked that history was a list but not that its items were well
+    formed, then called the selector in process. The detectors and
+    `apply_safety_gate` index each entry as `m["content"]`, so an entry
+    missing that key raised a KeyError from inside the gate. Every other entry
+    point normalizes through the shared payload helper, which is what kept
+    them safe.
+    """
+    payload = json.dumps(
+        {
+            "message": "i feel lost and do not know which direction to go",
+            "history": [
+                {"role": "user"},
+                {"role": "user", "content": 123},
+                "not a dict",
+            ],
+            "memory": {},
+        }
+    )
+    result = run_process(
+        [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"],
+        payload,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "Traceback" not in result.stderr
+    assert json.loads(result.stdout)["primary_framework"] == "DIRECTION"
+
+
 def test_soulmap_demo_surfaces_framework_selector_payload_errors() -> None:
     result = run_process(
         [sys.executable, "-m", "soulmap.runtime.experimental.soulmap_demo", "--stdin"],
