@@ -20,6 +20,24 @@ def grade_response_contract(
     response: str,
     selection: dict[str, object],
 ) -> dict[str, object]:
+    """Check generated response text against the structural response rules.
+
+    Enforces the structure rules in ``AGENTS.md``: at most one question, and
+    that question last, never first; no semicolons; no bullet points; and no
+    question at all in crisis or sanctuary mode, where the response must hold
+    rather than ask.
+
+    This detects violations only. It never rewrites the response.
+
+    Args:
+        response: The generated response text.
+        selection: The framework selector's output. Its ``primary_framework``
+            and ``mode`` decide whether the no-question rules apply.
+
+    Returns:
+        A dict with ``ok`` and a ``violations`` list of rule names. The list is
+        empty when ``ok`` is True.
+    """
     violations: list[str] = []
     stripped = response.strip()
 
@@ -46,6 +64,15 @@ def grade_response_contract(
 
 
 def main() -> int:
+    """Grade a response from a JSON payload on standard input.
+
+    Returns:
+        The process exit code, 0 on success.
+
+    Raises:
+        ValueError: If the payload is not a JSON object or is missing a
+            required field.
+    """
     data = parse_json_object(sys.stdin.read())
     response = require_str_field(data, "response")
     selection = require_dict_field(data, "selection")

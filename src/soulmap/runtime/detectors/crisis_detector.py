@@ -101,8 +101,7 @@ def _is_literal_tier1_near_miss(signal: str, message: str) -> bool:
 
 
 def detect_crisis(message: str) -> dict:
-    """
-    Scan a single user message for crisis signals.
+    """Scan a single user message for crisis signals.
 
     Returns:
         Dict with: level (str), action (str), signals (list), response_guidance (str)

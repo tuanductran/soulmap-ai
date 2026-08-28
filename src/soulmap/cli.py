@@ -1,3 +1,10 @@
+"""The ``soulmap`` command-line entry point.
+
+Dispatches every developer command (format, lint, test, build, the evaluation
+runs, and the repository checkers) to its implementation module, so
+contributors and CI share one command surface.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -52,6 +59,12 @@ def _command_table() -> dict[str, CommandHandler]:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Build the top-level argument parser.
+
+    Returns:
+        A parser accepting a command name and the remaining arguments, which
+        are forwarded verbatim to that command's own parser.
+    """
     parser = argparse.ArgumentParser(
         prog="soulmap",
         description="SoulMap developer and runtime command-line tools.",
@@ -62,6 +75,18 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Dispatch a command and return its exit code.
+
+    A leading ``--`` in the forwarded arguments is dropped, so both
+    ``soulmap lint --skip-tests`` and ``soulmap lint -- --skip-tests`` reach
+    the command the same way.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        The dispatched command's exit code.
+    """
     parser = build_parser()
     parsed = parser.parse_args(argv)
     command = _command_table()[parsed.command]

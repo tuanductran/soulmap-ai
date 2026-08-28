@@ -181,8 +181,11 @@ def test_framework_selector_surfaces_scope_block_metadata() -> None:
 
 
 def test_framework_selector_prioritizes_grief_over_shadow() -> None:
-    """Grief explicitly blocks shadow (see selection['blocked']); when both
-    signal groups fire in the same message, grief must still win."""
+    """Grief must win over shadow when both signal groups fire.
+
+    Grief explicitly blocks shadow through the selection's blocked list, so a
+    message carrying both routes to grief.
+    """
     message = (
         "My mother died yesterday and honestly I never confront anything, "
         "I just avoid it."
@@ -200,8 +203,11 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
 
 
 def test_framework_selector_prioritizes_existential_over_direction() -> None:
-    """Existential explicitly blocks direction; when both signal groups fire,
-    existential must win."""
+    """Existential must win over direction when both signal groups fire.
+
+    Existential explicitly blocks direction, so a message carrying both routes
+    to existential.
+    """
     message = (
         "I keep thinking about what happens when we die, and I feel "
         "completely lost about what I want in life."
@@ -219,8 +225,11 @@ def test_framework_selector_prioritizes_existential_over_direction() -> None:
 
 
 def test_framework_selector_prioritizes_direction_over_shadow() -> None:
-    """Direction is checked before shadow in the priority chain; when both
-    fire in the same message, direction should win."""
+    """Direction must win over shadow when both signal groups fire.
+
+    Direction sits earlier in the priority chain, so a message carrying both
+    routes to direction.
+    """
     message = (
         "I feel completely lost about my life, and I never confront "
         "anything, I just avoid it."
@@ -239,9 +248,12 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
 def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when_insight_present() -> (
     None
 ):
-    """Inner-parts conflict resolution is explicitly skipped when insight is
-    also detected, so a message carrying both should surface meaning
-    integration instead of inner-parts work."""
+    """Insight must win over inner parts when both are detected.
+
+    Inner-parts conflict resolution is explicitly skipped once insight is
+    present, so a message carrying both surfaces meaning integration rather
+    than inner-parts work.
+    """
     message = (
         "Part of me wants to leave but part of me is scared. I finally "
         "understand why I keep doing this."
@@ -260,8 +272,11 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
 def test_framework_selector_attaches_meaning_integration_as_secondary_for_direction() -> (
     None
 ):
-    """Direction carries a meaning_integration secondary layer when insight
-    is also present, without losing its own primary framework."""
+    """Direction keeps its primary framework while annotating insight.
+
+    When insight is also present, direction carries meaning integration as a
+    secondary layer rather than yielding the primary route.
+    """
     message = (
         "I feel completely lost, and I finally understand why I keep "
         "avoiding making a decision."
@@ -281,8 +296,11 @@ def test_framework_selector_attaches_meaning_integration_as_secondary_for_direct
 def test_framework_selector_uses_meaning_integration_instead_of_celebration_when_insight_present() -> (
     None
 ):
-    """Celebration is explicitly skipped when insight is also detected, so a
-    message carrying both should surface meaning integration instead."""
+    """Insight must win over celebration when both are detected.
+
+    Celebration is explicitly skipped once insight is present, so a message
+    carrying both surfaces meaning integration instead.
+    """
     message = "I did it, and I finally understand why this took so long."
     payload = {
         "message": message,

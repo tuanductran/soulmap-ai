@@ -42,8 +42,11 @@ def test_single_keyword_across_two_messages_is_detected() -> None:
 
 
 def test_cycle_phrase_scores_higher_than_a_single_keyword() -> None:
-    """Cycle phrases add +3 vs +2 for a plain keyword, so a message using
-    only a cycle phrase should still cross the detection threshold."""
+    """A cycle phrase alone crosses the detection threshold.
+
+    Cycle phrases score three against two for a plain keyword, so one is
+    enough on its own.
+    """
     result = detect_patterns(
         [_user("It always ends the same."), _user("Every relationship is the same.")]
     )

@@ -91,7 +91,7 @@ SCENARIOS = [
 ]
 
 
-def _install_defaults(monkeypatch):
+def _install_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     # Patch every detector import in framework_selector to safe defaults
     for name, value in DEFAULTS.items():
         if hasattr(framework_selector, name):
@@ -107,7 +107,11 @@ def _install_defaults(monkeypatch):
 
 
 @pytest.mark.parametrize("expected_primary,overrides", SCENARIOS)
-def test_every_routing_path_calls_safety_gate(monkeypatch, expected_primary, overrides):
+def test_every_routing_path_calls_safety_gate(
+    monkeypatch: pytest.MonkeyPatch,
+    expected_primary: str,
+    overrides: dict[str, object],
+) -> None:
     """For each selector outcome, ensure the Safety Gate is invoked and its status surfaces."""
     _install_defaults(monkeypatch)
 
@@ -122,7 +126,12 @@ def test_every_routing_path_calls_safety_gate(monkeypatch, expected_primary, ove
 
     called = {"count": 0, "args": None}
 
-    def fake_apply_safety_gate(message, history, memory, selection):
+    def fake_apply_safety_gate(
+        message: str,
+        history: list[dict[str, str]],
+        memory: dict[str, object] | None,
+        selection: dict[str, object],
+    ) -> dict[str, object]:
         called["count"] += 1
         called["args"] = (message, history, memory, selection)
         # return a simple pass-through gated result

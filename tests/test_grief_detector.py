@@ -78,9 +78,11 @@ def test_grief_mixed_with_spiritual_questions_still_registers_as_grief() -> None
 
 
 def test_grief_plus_direction_seeking_still_registers_as_grief() -> None:
-    """Grief language plus life-direction language: grief must still surface;
-    routing priority (grief blocks direction) is verified separately at the
-    framework-selector level."""
+    """Grief must still surface alongside life-direction language.
+
+    Routing priority, where grief blocks direction, is verified separately at
+    the framework-selector level.
+    """
     result = detect_grief(
         "My mother died last month and now I have no idea what direction my "
         "life is going in without her."
@@ -130,11 +132,13 @@ def test_case_and_punctuation_do_not_prevent_detection() -> None:
 
 
 def test_bare_word_grief_is_classified_acute_not_by_context() -> None:
-    """Detector boundary finding: 'grief' itself is in the acute-signal list
-    and acute is checked first, so any mention of the bare word 'grief' is
-    classified as acute regardless of the surrounding context describing a
-    more ambiguous or complicated loss. This is documented existing behavior,
-    not something this test suite changes."""
+    """The bare word "grief" always classifies as acute.
+
+    A detector boundary finding: "grief" is itself in the acute-signal list
+    and acute is checked first, so the word alone reads as acute regardless
+    of surrounding context describing a more ambiguous or complicated loss.
+    This documents existing behavior rather than asserting it is ideal.
+    """
     result = detect_grief(
         "I don't know if this counts as real grief since it was just a "
         "friendship that ended, not a death."
@@ -145,8 +149,10 @@ def test_bare_word_grief_is_classified_acute_not_by_context() -> None:
 
 
 def test_near_miss_phrasing_without_loss_language_is_not_grief() -> None:
-    """Adjacent-but-different wording (e.g. general worry about a pet) should
-    not falsely trigger grief detection."""
+    """Adjacent wording must not falsely trigger grief.
+
+    General worry about a pet, for example, is not a loss signal.
+    """
     result = detect_grief("I'm worried my dog might be getting sick soon.")
 
     assert result["grief_detected"] is False

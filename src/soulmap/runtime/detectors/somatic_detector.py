@@ -26,6 +26,21 @@ BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
 
 
 def detect_somatic(message: str) -> dict[str, object]:
+    """Score body-oriented signals in the current message.
+
+    Matches the phrase groups authored in
+    ``skills/frameworks/somatic-wellbeing.md``: biometric context, body
+    sensation language, and somatic invitation. Biometric context is checked
+    first and sets the mode, since it names an external reading rather than a
+    felt sense.
+
+    Args:
+        message: The user's current message.
+
+    Returns:
+        A dict with ``somatic_detected``, ``mode``, ``score``, ``signals``,
+        and ``recommendation``.
+    """
     msg = message.lower().strip()
     signals = []
     score = 0

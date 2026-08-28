@@ -42,6 +42,16 @@ stability and breaking changes in behavior.
 
 ### Refactor
 
+- **python**: document and fully annotate every Python surface. Ruff now enforces
+  `D` (pydocstyle, Google convention) and `ANN` (annotations) across `src/`,
+  `tests/`, and `scripts/`, so the convention is a checked contract rather than a
+  one-time cleanup. Adds 13 package docstrings, 24 module docstrings, and Google-style
+  `Args`/`Returns`/`Raises` sections across the runtime, guards, detectors, and
+  developer tooling, and annotates every previously untyped argument. Tightening the
+  types surfaced 4 real typing gaps that are fixed here: `repo_tooling_lock` returned
+  `Any` instead of `Iterator[None]`, the framework selector compared an `object`-typed
+  journey stage against an integer, a celebration test asserted a substring against an
+  `object`, and a lock test forwarded untyped arguments into `Path.unlink`
 - **markdown**: unify fence tracking across 3 files into one `FenceTracker` and
   fix a nested-fence (four-backtick-wrapping-three-backtick) desync bug; remove
   the orphaned `scripts/soulmap_demo.sh` wrapper

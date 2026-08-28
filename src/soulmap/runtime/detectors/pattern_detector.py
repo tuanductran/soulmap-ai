@@ -20,8 +20,7 @@ PATTERN_SIGNALS = load_pattern_signals(default_pattern_mapper_path())
 
 
 def detect_patterns(conversation_messages: list) -> dict:
-    """
-    Analyze conversation history to detect psychological/behavioral patterns.
+    """Analyze conversation history to detect psychological/behavioral patterns.
 
     Args:
         conversation_messages: List of dicts with 'role' and 'content' keys.

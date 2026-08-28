@@ -76,15 +76,21 @@ def detect_celebration(
     message: str,
     history: list[HistoryMessage] | None = None,
 ) -> dict[str, object]:
-    """
-    Detect whether the user's primary state is positive (win, relief,
-    gratitude, recognized progress) and calls for the Integration and
-    Celebration framework (P9b).
+    """Score positive primary states that call for the celebration framework.
+
+    Detects a win, relief, gratitude, or recognized progress as the message's
+    primary state, which routes to Integration and Celebration. A negative
+    signal in the same message sets the override flag, since a positive phrase
+    wrapped around real distress is not a celebration.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns, each a dict with ``role`` and ``content``.
 
     Returns:
-        Dict with: celebration_detected (bool), strength (str),
-                   celebration_type (str), score (int), signals (list),
-                   has_negative_override (bool), recommendation (str)
+        A dict with ``celebration_detected``, ``strength``,
+        ``celebration_type``, ``score``, ``signals``,
+        ``has_negative_override``, and ``recommendation``.
     """
     msg = message.lower().strip()
     signals_found: list[str] = []

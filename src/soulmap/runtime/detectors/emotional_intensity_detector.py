@@ -33,9 +33,18 @@ HistoryMessage = dict[str, str]
 
 
 def check_escalation(history: list[HistoryMessage]) -> bool:
-    """
-    Returns True if the last 3 user messages show increasing intensity.
-    Simple heuristic: message length growing + at least one flooding signal.
+    """Report whether the recent user messages show rising intensity.
+
+    A deliberately simple heuristic: message length not shrinking across the
+    last three user turns, plus at least one intensity modifier in the most
+    recent one.
+
+    Args:
+        history: Prior turns, each a dict with ``role`` and ``content``.
+
+    Returns:
+        True when both conditions hold. False when fewer than two user
+        messages are available to compare.
     """
     user_msgs = [
         m["content"] for m in history if isinstance(m, dict) and m.get("role") == "user"
@@ -58,12 +67,19 @@ def check_escalation(history: list[HistoryMessage]) -> bool:
 def detect_intensity(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect emotional overwhelm in the current message.
-    Run AFTER crisis_detector  -  only call this if crisis screen returned NONE.
+    """Score emotional overwhelm in the current message.
+
+    Run this only after the crisis screen returns no crisis. Intensity is a
+    lower-priority route than crisis, so calling it first would let a crisis
+    message be handled as overwhelm.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns, used to check whether intensity is escalating
+            across turns rather than spiking in one.
 
     Returns:
-        Dict with: level (str), signals (list), action (str), guidance (str)
+        A dict with ``level``, ``signals``, ``action``, and ``guidance``.
     """
     msg = message.lower().strip()
     signals_found = []

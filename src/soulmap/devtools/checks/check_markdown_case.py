@@ -1,3 +1,10 @@
+"""Canonical product and tool name casing checker.
+
+Flags Markdown prose that writes a known product or tool name with the wrong
+capitalization, such as "Soulmap" for "SoulMap". Code spans and fenced blocks
+are skipped, since they quote literal identifiers rather than prose.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -29,6 +36,14 @@ _INLINE_CODE_RE = re.compile(r"`[^`]+`")
 
 @dataclass(frozen=True)
 class Issue:
+    """One casing violation.
+
+    Attributes:
+        path: File the violation was found in.
+        line: 1-indexed line the violation is on.
+        message: Description naming the term found and the canonical form.
+    """
+
     path: Path
     line: int
     message: str
@@ -52,6 +67,17 @@ def _is_exempt(path: Path, repo_root: Path) -> bool:
 
 
 def check_file(path: Path, repo_root: Path) -> list[Issue]:
+    """Check one Markdown file for canonical-casing violations.
+
+    Args:
+        path: Markdown file to check.
+        repo_root: Repository root, used to test the file against the
+            exemption list.
+
+    Returns:
+        Every violation found, in line order. Empty for an exempt file or one
+        that conforms.
+    """
     if _is_exempt(path, repo_root):
         return []
 
@@ -89,6 +115,16 @@ def check_file(path: Path, repo_root: Path) -> list[Issue]:
 
 
 def check_repo(repo_root: Path, inputs: list[str] | None = None) -> list[Issue]:
+    """Check Markdown files for canonical-casing violations.
+
+    Args:
+        repo_root: Repository root.
+        inputs: Files or directories to check, or None for the whole
+            repository.
+
+    Returns:
+        Every violation found across the checked files.
+    """
     issues: list[Issue] = []
     for path in resolve_markdown_inputs(repo_root, inputs):
         issues.extend(check_file(path, repo_root))
@@ -96,6 +132,14 @@ def check_repo(repo_root: Path, inputs: list[str] | None = None) -> list[Issue]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the canonical-casing check from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every file conforms, 1 when any violation is found.
+    """
     parser = argparse.ArgumentParser(prog="soulmap check-case")
     parser.add_argument(
         "--root",

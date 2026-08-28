@@ -1,3 +1,10 @@
+"""Markdown parsing helpers shared by the repository checkers.
+
+Centralizes file discovery, front-matter parsing, GitHub anchor slugging, and
+reference extraction so the link checker, case checker, and contract validators
+all read Markdown the same way.
+"""
+
 from __future__ import annotations
 
 import re
@@ -34,6 +41,16 @@ _MARKDOWN_PARSER = MarkdownIt("commonmark")
 
 @dataclass(frozen=True)
 class MarkdownReference:
+    """One Markdown link or image found in a file.
+
+    Attributes:
+        line: 1-indexed line the reference was found on.
+        label: Link text, or alt text for an image.
+        target: Destination exactly as written in the source, before any
+            resolution, so an error message can quote what the author typed.
+        is_image: True for an image reference, False for a link.
+    """
+
     line: int
     label: str
     target: str
@@ -42,6 +59,15 @@ class MarkdownReference:
 
 @dataclass(frozen=True)
 class MarkdownHeadingAnchor:
+    """One heading and the anchor GitHub will generate for it.
+
+    Attributes:
+        slug: Anchor slug, with GitHub's numeric suffix already applied when an
+            earlier heading in the file produced the same slug.
+        title: Heading text as written, including any inline markup.
+        line: 1-indexed line the heading is on.
+    """
+
     slug: str
     title: str
     line: int
@@ -58,16 +84,26 @@ class FenceTracker:
     """
 
     def __init__(self) -> None:
+        """Start outside any fence."""
         self._marker_char: str | None = None
         self._marker_len = 0
 
     @property
     def in_fence(self) -> bool:
+        """bool: Whether the tracker is currently inside a fenced block."""
         return self._marker_char is not None
 
     def consume(self, raw: str) -> bool:
-        """Update state for one line. Return True if callers should treat
-        this line as fence delimiter/content and skip other line checks."""
+        """Update fence state for one line.
+
+        Args:
+            raw: The line exactly as it appears in the file.
+
+        Returns:
+            True when the caller should treat this line as fence delimiter or
+            fenced content and skip its other line checks. False only for a
+            line outside any fence.
+        """
         match = _FENCE_RE.match(raw)
         if self._marker_char is None:
             if not match:
@@ -88,6 +124,18 @@ class FenceTracker:
 
 
 def iter_markdown_files(repo_root: Path) -> list[Path]:
+    """Collect every Markdown file under a directory.
+
+    Skips version-control, virtual-environment, build, and package-cache
+    directories, and deduplicates paths that resolve to the same file through
+    a symlink.
+
+    Args:
+        repo_root: Directory to search recursively.
+
+    Returns:
+        Sorted Markdown file paths, as found rather than resolved.
+    """
     md_files: list[Path] = []
     seen_resolved: set[Path] = set()
     for path in repo_root.rglob("*.md"):
@@ -105,6 +153,19 @@ def iter_markdown_files(repo_root: Path) -> list[Path]:
 def resolve_markdown_inputs(
     repo_root: Path, inputs: list[str] | None = None
 ) -> list[Path]:
+    """Turn command-line path arguments into a Markdown file list.
+
+    Args:
+        repo_root: Repository root, used to resolve relative inputs and as the
+            search root when no inputs are given.
+        inputs: Files or directories to check. Empty or None means the whole
+            repository.
+
+    Returns:
+        Sorted Markdown file paths. Directory inputs expand recursively, and
+        non-Markdown or missing paths are dropped rather than raising, so a
+        caller can pass a mixed changed-file list straight through.
+    """
     if not inputs:
         return iter_markdown_files(repo_root)
 
@@ -137,14 +198,21 @@ def resolve_markdown_inputs(
 
 
 def parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
-    """Parse a minimal YAML front matter block.
+    """Parse a minimal YAML front-matter block.
 
-    We intentionally avoid external YAML deps. This is a strict subset:
-    - Must start at BOF with '---'
-    - Must end with the next line that is exactly '---'
-    - Only supports simple 'key: value' pairs (value may be quoted)
+    Deliberately avoids an external YAML dependency and supports only the
+    strict subset the repository's front matter uses: the block must open on
+    the first line with ``---``, close on the next line that is exactly
+    ``---``, and hold simple ``key: value`` pairs whose value may be quoted.
+    Blank lines and comment lines inside the block are skipped.
+
+    Args:
+        lines: The file's lines, in order, starting at the first line.
+
+    Returns:
+        The parsed key-value pairs, or None when the file has no front-matter
+        block. An empty dict means the block is present but held no pairs.
     """
-
     if not lines or lines[0].strip() != "---":
         return None
 
@@ -170,6 +238,17 @@ def parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
 
 
 def strip_inline_markup(text: str) -> str:
+    """Reduce a line of Markdown to its visible text.
+
+    Replaces links with their label, drops HTML tags, removes code, emphasis,
+    and strikethrough markers, and collapses runs of whitespace.
+
+    Args:
+        text: Markdown source text.
+
+    Returns:
+        The text a reader would see, without inline markup.
+    """
     text = _MD_LINK_RE.sub(r"\1", text)
     text = _HTML_TAG_RE.sub("", text)
     text = text.replace("`", "")
@@ -180,6 +259,20 @@ def strip_inline_markup(text: str) -> str:
 
 
 def slugify_github_anchor(text: str) -> str:
+    """Build the anchor slug GitHub generates for a heading.
+
+    Lowercases the visible text, drops characters that are neither word
+    characters, whitespace, nor hyphens, and joins the rest with single
+    hyphens.
+
+    Args:
+        text: Heading text, which may still contain inline markup.
+
+    Returns:
+        The anchor slug, without a leading ``#``. Falls back to ``"section"``
+        when the heading has no sluggable characters, matching what an
+        anchor-less heading would otherwise collide on.
+    """
     text = strip_inline_markup(text).strip().lower()
     text = re.sub(r"[^\w\s-]", "", text, flags=re.UNICODE)
     text = re.sub(r"\s+", "-", text)
@@ -188,6 +281,18 @@ def slugify_github_anchor(text: str) -> str:
 
 
 def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
+    """List every ATX heading in a file with its generated anchor.
+
+    Headings inside fenced code blocks are skipped. Repeated slugs get
+    GitHub's numeric suffix, so the second heading slugging to ``notes``
+    becomes ``notes-1``.
+
+    Args:
+        lines: The file's lines, in order.
+
+    Returns:
+        Anchors in document order.
+    """
     anchors: list[MarkdownHeadingAnchor] = []
     counts: dict[str, int] = {}
     fence = FenceTracker()
@@ -211,6 +316,17 @@ def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
 
 
 def split_markdown_link_target(target: str) -> tuple[str, str | None]:
+    """Split a link destination into its path and fragment.
+
+    Args:
+        target: Link destination as written, optionally wrapped in angle
+            brackets.
+
+    Returns:
+        A ``(path, fragment)`` pair. The path is empty for a same-file anchor
+        such as ``#section``, and the fragment is None when the destination
+        carries no anchor or an empty one.
+    """
     cleaned = target.strip().strip("<>").strip()
     if "#" in cleaned and not cleaned.startswith("#"):
         path, frag = cleaned.split("#", 1)
@@ -221,6 +337,15 @@ def split_markdown_link_target(target: str) -> tuple[str, str | None]:
 
 
 def is_external_markdown_target(target: str) -> bool:
+    """Report whether a link destination points outside the repository.
+
+    Args:
+        target: Link destination as written.
+
+    Returns:
+        True for an ``http``, ``https``, ``mailto``, or ``tel`` destination,
+        which the local link checker cannot resolve on disk.
+    """
     lower = target.strip().strip("<>").lower()
     return lower.startswith(("http://", "https://", "mailto:", "tel:"))
 
@@ -410,6 +535,19 @@ def resolve_local_markdown_target(
     current_file: Path,
     target_path: str,
 ) -> Path:
+    """Resolve a local link destination to a filesystem path.
+
+    Args:
+        repo_root: Repository root, which root-relative destinations resolve
+            against.
+        current_file: File holding the link, which relative destinations
+            resolve against.
+        target_path: Link destination as written, percent-encoding included.
+
+    Returns:
+        The resolved path. An empty destination, meaning a same-file anchor,
+        resolves to ``current_file``. The path is not checked for existence.
+    """
     raw = unquote(target_path.strip().strip("<>").strip())
     if not raw:
         return current_file.resolve()

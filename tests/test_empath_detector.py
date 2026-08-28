@@ -29,8 +29,11 @@ def test_secondary_drain_plus_people_context_is_detected() -> None:
 
 
 def test_primary_signal_takes_priority_over_secondary_check() -> None:
-    """The secondary drain+people check is guarded by `score == 0`, so it
-    should not fire once a primary phrase has already matched."""
+    """The secondary check must not fire after a primary phrase matched.
+
+    The combined drain-and-people check is guarded on the score still being
+    zero.
+    """
     result = detect_empath_overwhelm(
         "I absorb everyone's emotions and feel drained after being around people."
     )

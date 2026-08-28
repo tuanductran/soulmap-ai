@@ -29,8 +29,7 @@ DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
-    """
-    Analyze conversation history to detect AI dependency signals.
+    """Analyze conversation history to detect AI dependency signals.
 
     Args:
         conversation_messages: List of dicts with 'role' and 'content' keys.

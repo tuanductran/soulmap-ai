@@ -19,17 +19,46 @@ Message = dict[str, str]
 
 
 class ThemeScore(TypedDict):
+    """Score for one theme within a conversation.
+
+    Attributes:
+        score: Weighted count of matches for this theme.
+        anchors: Indices of the messages the matches came from, so a synthesis
+            can point back to what the user actually said.
+    """
+
     score: int
     anchors: list[int]
 
 
 class RankedTheme(TypedDict):
+    """A scored theme carrying its own name, ready for ranking.
+
+    Attributes:
+        theme: Theme name.
+        score: Weighted count of matches for this theme.
+        anchors: Indices of the messages the matches came from.
+    """
+
     theme: str
     score: int
     anchors: list[int]
 
 
 class ExtractedThemes(TypedDict, total=False):
+    """Themes found across a conversation, grouped by kind.
+
+    Every field is optional, so a caller must not assume a key is present.
+
+    Attributes:
+        emotional: Emotional themes, highest scoring first.
+        values: Value themes, highest scoring first.
+        conflicts: Inner-conflict themes, highest scoring first.
+        longitudinal: Theme names that prior sessions also carried, present
+            only when memory was supplied and overlapped this session.
+        session_count: Number of prior sessions memory reported.
+    """
+
     emotional: list[RankedTheme]
     values: list[RankedTheme]
     conflicts: list[RankedTheme]
@@ -273,9 +302,18 @@ def _new_theme_score() -> ThemeScore:
 
 
 def extract_themes(messages: list[Message]) -> ExtractedThemes:
-    """
-    Scan all user messages and score emotional themes, values, and conflicts.
-    Returns themes with scores and example anchors (message indices).
+    """Score emotional themes, values, and conflicts across user messages.
+
+    Only user messages are scanned. A synthesis reflects what the user
+    explored, never what SoulMap said back.
+
+    Args:
+        messages: The conversation, each message a dict with ``role`` and
+            ``content``.
+
+    Returns:
+        The themes found, each group ranked highest score first and carrying
+        the message indices its matches came from.
     """
     user_messages = [
         (i, m["content"].lower())
@@ -343,9 +381,20 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
 def merge_memory_themes(
     extracted: ExtractedThemes, memory: dict[str, object]
 ) -> ExtractedThemes:
-    """
-    Enrich extracted themes with longitudinal memory data.
-    Only add memory themes that also appear in current session.
+    """Add prior-session context to themes found in this session.
+
+    Only a memory theme that also appears in the current session is added. A
+    theme the user is not currently touching stays out, so the synthesis
+    cannot reintroduce material they did not raise.
+
+    Args:
+        extracted: Themes found in the current session.
+        memory: Prior-session context, read for ``recurring_themes`` and the
+            session count.
+
+    Returns:
+        The themes, with longitudinal fields added when memory overlapped.
+        Returned unchanged when memory holds no usable recurring themes.
     """
     memory_themes = memory.get("recurring_themes", [])
     if not isinstance(memory_themes, list):
@@ -375,9 +424,18 @@ def merge_memory_themes(
 
 
 def should_synthesize(message: str, history: list[Message]) -> dict[str, str | bool]:
-    """
-    Determine whether synthesis is appropriate for this message.
-    Returns: { should: bool, reason: str }
+    """Decide whether this message calls for a synthesis.
+
+    Synthesis fires on an explicit request from the user, or once a
+    conversation is long enough that gathering its threads is useful.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns, each a dict with ``role`` and ``content``.
+
+    Returns:
+        A dict with ``should`` and a ``reason`` code naming which condition
+        fired.
     """
     msg_lower = message.lower().strip()
     user_count = sum(
@@ -410,8 +468,7 @@ def should_synthesize(message: str, history: list[Message]) -> dict[str, str | b
 def synthesize(
     message: str, history: list[Message], memory: dict[str, object] | None = None
 ) -> dict[str, object]:
-    """
-    Full synthesis analysis. Call this when should_synthesize returns True.
+    """Full synthesis analysis. Call this when should_synthesize returns True.
 
     Returns:
         Dict with: themes, synthesis_ready (bool), synthesis_frame (str),

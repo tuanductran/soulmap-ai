@@ -1,3 +1,11 @@
+"""Response-generation evaluation runner.
+
+Runs the cases in ``evals/datasets/response_generation_cases.json``, which
+check that a reference response for a scenario satisfies the structural and
+content safety contracts. This validates the contracts and the reference
+wording, not a live language model.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -292,6 +300,14 @@ def _compose_response(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the response-generation evaluation from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every case passes, 1 when any case fails.
+    """
     parser = argparse.ArgumentParser(
         description="Run the response-generation harness from "
         "evals/datasets/response_generation_cases.json."

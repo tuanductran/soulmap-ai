@@ -24,10 +24,13 @@ def test_paralysis_signal_is_detected() -> None:
 
 
 def test_general_perfectionism_signal_alone_does_not_trigger_detection() -> None:
-    """Doctrine (perfectionism-paralysis.md, "Distinguish from genuine
-    discernment"): "Perfectionism paralysis is a pattern, not a single
-    instance." A bare generic signal with no repetition evidence must stay
-    below threshold, not promote to primary_framework on one message."""
+    """A bare generic signal alone must stay below threshold.
+
+    Doctrine, from perfectionism-paralysis.md under "Distinguish from genuine
+    discernment": "Perfectionism paralysis is a pattern, not a single
+    instance." With no repetition evidence, one message must not promote to a
+    primary framework.
+    """
     result = detect_perfectionism_paralysis("People never meet my standards.")
 
     assert result["perfectionism_paralysis_detected"] is False
@@ -36,9 +39,11 @@ def test_general_perfectionism_signal_alone_does_not_trigger_detection() -> None
 
 
 def test_general_perfectionism_signal_with_history_repetition_is_detected() -> None:
-    """The generic signal only crosses the threshold once combined with the
-    history repetition bonus - the actual "pattern, not a single instance"
-    check the doctrine asks for."""
+    """The generic signal crosses threshold only with repetition evidence.
+
+    The history repetition bonus is the actual "pattern, not a single
+    instance" check the doctrine asks for.
+    """
     history = [
         {"role": "user", "content": "I'm still not ready to share this."},
     ]
@@ -53,8 +58,10 @@ def test_general_perfectionism_signal_with_history_repetition_is_detected() -> N
 def test_general_perfectionism_signal_with_self_reported_repetition_is_detected() -> (
     None
 ):
-    """Repetition evidence can also come from the current message itself
-    naming its own repetition, not only from prior history turns."""
+    """Repetition evidence can come from the current message.
+
+    A message naming its own repetition counts, not only prior history turns.
+    """
     result = detect_perfectionism_paralysis(
         "I almost sent it a hundred times. It is never good enough to send."
     )
@@ -65,8 +72,11 @@ def test_general_perfectionism_signal_with_self_reported_repetition_is_detected(
 
 
 def test_paralysis_signal_takes_priority_over_general_signal() -> None:
-    """The paralysis loop runs first and sets score > 0, so the general
-    perfectionism loop (guarded by `score == 0`) should not also fire."""
+    """A paralysis signal suppresses the general perfectionism loop.
+
+    The paralysis loop runs first and raises the score, and the general loop
+    is guarded on the score still being zero.
+    """
     result = detect_perfectionism_paralysis(
         "It's never ready, and honestly nothing is ever good enough."
     )

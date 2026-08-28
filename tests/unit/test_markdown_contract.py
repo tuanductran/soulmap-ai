@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from soulmap.runtime.guards import markdown_contract
 
 
@@ -108,7 +110,7 @@ def test_markdown_contract_flags_unsafe_and_unresolvable_links(tmp_path: Path) -
 
 def test_markdown_contract_check_repo_and_cli_report_relative_path(
     tmp_path: Path,
-    capsys,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     source = tmp_path / "bad.md"
     source.write_text("# Title\n\n```python\n", encoding="utf-8")

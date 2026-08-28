@@ -83,8 +83,19 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "UP", "B", "I", "C4", "SIM", "RUF"]
+select = ["E", "F", "W", "UP", "B", "I", "C4", "SIM", "RUF", "D", "ANN"]
 ignore = ["E501"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+# Test functions carry their meaning in the test name. Requiring a docstring on
+# every one produces churn without adding information, so only the module-level
+# docstring and the annotations are enforced there. Docstrings that explain a
+# doctrine rule behind a test are still expected where the rule is not obvious.
+"tests/**/*.py" = ["D100", "D101", "D102", "D103", "D104"]
+"scripts/**/*.py" = ["D103"]
 
 [tool.ruff.format]
 quote-style = "double"

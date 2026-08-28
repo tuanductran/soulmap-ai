@@ -49,8 +49,7 @@ def _suggest_lens(msg: str) -> str:
 def detect_direction_need(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect whether the user needs the Life Direction Clarifier framework.
+    """Detect whether the user needs the Life Direction Clarifier framework.
 
     Returns:
         Dict with: direction_detected (bool), type (str), score (int),

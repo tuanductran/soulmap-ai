@@ -11,9 +11,24 @@ from soulmap.runtime.io.cli_payload import parse_json_object, require_str_field
 def process_insight(
     user_response: str, last_insight: str, session_id: str
 ) -> dict[str, object]:
-    """If the user wants to retain an insight from a P9 stage, save it securely.
-    This creates an explicit user-owned memory model rather than silent continuous memory."""
+    """Record an insight the user explicitly chose to keep.
 
+    Retention is opt-in per insight. This is deliberately not silent
+    continuous memory: the user decides what is kept, and declining is a
+    first-class outcome rather than a failure.
+
+    Args:
+        user_response: The user's answer about keeping the insight. A refusal
+            word discards it.
+        last_insight: The insight text under consideration.
+        session_id: Identifier the entry is filed against.
+
+    Returns:
+        A dict with ``status`` (``"SAVED"`` or ``"FORGOTTEN"``),
+        ``ledger_entry``, and ``session_ref``. A saved entry also carries an
+        ``instruction`` for acknowledging the choice without making the
+        ledger feel like a reason to return.
+    """
     if user_response.lower() in ("no", "discard", "forget"):
         return {"status": "FORGOTTEN", "ledger_entry": None, "session_ref": session_id}
 
@@ -28,6 +43,15 @@ def process_insight(
 
 
 def main() -> int:
+    """Process one ledger decision from a JSON payload on standard input.
+
+    Returns:
+        The process exit code, 0 on success.
+
+    Raises:
+        ValueError: If the payload is not a JSON object or is missing a
+            required field.
+    """
     data = parse_json_object(sys.stdin.read())
     user_response = require_str_field(data, "user_response")
     last_insight = require_str_field(data, "last_insight")

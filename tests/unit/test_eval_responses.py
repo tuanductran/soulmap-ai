@@ -10,7 +10,7 @@ from soulmap.devtools.evals import eval_responses
 
 def test_json_and_source_loaders_use_repo_relative_paths(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     dataset = tmp_path / "cases.json"
     dataset.write_text('[{"id": "case"}]', encoding="utf-8")
@@ -247,7 +247,9 @@ def test_compose_response_covers_defined_response_paths(
     assert expected in response
 
 
-def test_response_eval_main_records_pass_and_failure(monkeypatch, capsys) -> None:
+def test_response_eval_main_records_pass_and_failure(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     cases = [
         {
             "id": "pass",

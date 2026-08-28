@@ -490,11 +490,14 @@ def test_scope_classifier_blocks_seo_optimization_request() -> None:
 def test_scope_classifier_blocks_documented_keyword_variants(
     message: str, category: str, matched_keyword: str
 ) -> None:
-    """Every keyword in this table is a literal example phrase from
+    """Every documented blacklist phrase must actually be blocked.
+
+    Each keyword in this table is a literal example phrase from
     skills/safety/whitelist-blacklist-system.md. Word-boundary matching means a
     documented keyword's plural or inflected form needs its own explicit entry
-    in BLACKLIST_LAYER1, or the documented topic silently falls through to
-    AMBIGUOUS instead of being blocked."""
+    in the layer-1 blacklist, or the documented topic silently falls through
+    to ambiguous instead of being blocked.
+    """
     data = run_module("scope_classifier", {"message": message})
     assert data["tier"] == "BLACKLIST_LAYER1"
     assert data["category"] == category

@@ -30,6 +30,22 @@ HistoryMessage = dict[str, str]
 def detect_anger(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
+    """Score anger signals in the current message.
+
+    Matches the phrase groups authored in
+    ``skills/frameworks/anger-companion.md``: active anger, self-directed
+    anger, and residual anger. The first group to match sets the type, so a
+    message carrying more than one reports the strongest.
+
+    Args:
+        message: The user's current message.
+        history: Prior turns. Accepted for a uniform detector signature and
+            not used, since anger is read from the current message.
+
+    Returns:
+        A dict with ``anger_detected``, ``anger_type``, ``score``,
+        ``signals``, and ``recommendation``.
+    """
     msg = message.lower().strip()
     signals = []
     score = 0

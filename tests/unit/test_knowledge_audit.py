@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.audit import knowledge as audit
 from soulmap.runtime.knowledge.consistency import ConfigUsage, KnowledgeDuplicate
 
@@ -23,7 +25,7 @@ def _duplicate(
 
 def test_format_inventory_groups_entries_and_reports_runtime_loader(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     duplicate = _duplicate(tmp_path)
     loader = tmp_path / "src" / "loader.py"
@@ -43,7 +45,7 @@ def test_format_inventory_groups_entries_and_reports_runtime_loader(
 
 
 def test_format_inventory_reports_missing_runtime_loader(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(audit, "markdown_consumers", lambda _root, _path: ())
 
@@ -77,7 +79,7 @@ def test_format_usage_separates_active_and_orphaned_constants(tmp_path: Path) ->
 
 
 def test_audit_cli_honors_duplicate_threshold(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     duplicate = _duplicate(tmp_path)
     active = ConfigUsage(
@@ -96,7 +98,9 @@ def test_audit_cli_honors_duplicate_threshold(
     assert "1 knowledge duplicates exceed 0" in capsys.readouterr().out
 
 
-def test_audit_cli_passes_without_a_threshold(tmp_path: Path, monkeypatch) -> None:
+def test_audit_cli_passes_without_a_threshold(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     monkeypatch.setattr(audit, "find_python_markdown_duplicates", lambda _root: ())
     monkeypatch.setattr(audit, "find_config_usage", lambda _root: ())
 

@@ -5,12 +5,14 @@ import json
 from pathlib import Path
 from typing import cast
 
+import pytest
+
 from soulmap.devtools.evals import eval_groups
 
 
 def test_validate_sources_reports_markers_and_missing_files(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     (tmp_path / "present.md").write_text("required marker\n", encoding="utf-8")
     monkeypatch.setattr(eval_groups, "REPO_ROOT", tmp_path)
@@ -30,7 +32,7 @@ def test_validate_sources_reports_markers_and_missing_files(
 
 def test_run_groups_eval_filters_and_counts_assertions(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     (tmp_path / "source.md").write_text("source marker\n", encoding="utf-8")
     groups = [
@@ -99,7 +101,7 @@ def test_run_groups_eval_filters_and_counts_assertions(
 
 def test_run_groups_eval_reports_failed_source_and_assertion(
     tmp_path: Path,
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     groups = [
         {
@@ -141,7 +143,7 @@ def test_run_groups_eval_reports_failed_source_and_assertion(
 
 
 def test_run_groups_eval_returns_empty_summary_for_no_matching_filter(
-    monkeypatch,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
         eval_groups,
@@ -166,7 +168,9 @@ def test_run_groups_eval_returns_empty_summary_for_no_matching_filter(
     }
 
 
-def test_groups_eval_cli_serializes_filtered_result(monkeypatch) -> None:
+def test_groups_eval_cli_serializes_filtered_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     output = io.StringIO()
     calls: list[tuple[str | None, str | None]] = []
 

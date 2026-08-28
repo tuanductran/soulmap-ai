@@ -330,10 +330,12 @@ def test_find_config_usage_tracks_package_level_reexport_import(
 def test_find_config_usage_package_reexport_requires_actual_import(
     tmp_path: Path,
 ) -> None:
-    """A name only defined in a submodule, and never imported by
-    ``__init__.py``, must not resolve via the package name -- the package
-    genuinely does not export it, so a hypothetical
-    ``from soulmap.runtime.config import X`` would fail at runtime too."""
+    """A submodule-only name must not resolve through the package.
+
+    A name the package's ``__init__.py`` never imports is genuinely not
+    exported, so importing it from the package would fail at runtime too. The
+    audit must reflect that rather than assume re-export.
+    """
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
     (config / "safety.py").write_text(
@@ -411,9 +413,11 @@ def test_real_repository_dependency_constants_are_not_orphaned() -> None:
 def test_local_variable_same_name_as_config_constant_is_still_orphaned(
     tmp_path: Path,
 ) -> None:
-    """A detector that creates a local variable with the same name as a config
-    constant — without importing the constant — must still be reported as
-    orphaned. This guards the audit against false-active false positives.
+    """A shadowing local variable must not mark a constant as used.
+
+    A detector that creates a local with the same name as a config constant,
+    without importing it, leaves that constant orphaned. This guards the
+    audit against reporting an unused constant as active.
     """
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)

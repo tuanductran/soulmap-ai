@@ -61,9 +61,11 @@ def test_repeated_unhealthy_external_pattern_is_flagged() -> None:
 
 
 def test_external_frustration_without_named_pattern_gives_gentle_exploration() -> None:
-    """When only the external-repeat signal fires (no specific protective
-    pattern), the detector should not name a pattern - it should stay in
-    exploratory projection-principle territory."""
+    """An external-repeat signal alone must not name a pattern.
+
+    With no specific protective pattern present, the detector stays in
+    exploratory projection territory rather than naming one.
+    """
     result = detect_shadow_patterns("They always do this to me, every single time.")
 
     assert result["shadow_detected"] is True
@@ -103,10 +105,12 @@ def test_self_criticism_signal_is_appended_when_present() -> None:
 
 
 def test_self_criticism_alone_does_not_trigger_shadow_detection() -> None:
-    """A standalone self-critic phrase must route via default Mirror
-    (self-compassion.md's own doctrine), not become Shadow on its own -
-    self-criticism only enriches a result once another signal (a named
-    pattern or repeated external frustration) already triggered shadow."""
+    """A standalone self-critic phrase must not trigger shadow.
+
+    Per self-compassion.md's own doctrine it routes via default Mirror.
+    Self-criticism only enriches a result once another signal, a named
+    pattern or repeated external frustration, already triggered shadow.
+    """
     result = detect_shadow_patterns("I hate myself for this.")
 
     assert result["shadow_detected"] is False
@@ -114,9 +118,11 @@ def test_self_criticism_alone_does_not_trigger_shadow_detection() -> None:
 
 
 def test_projection_language_alone_does_not_overclaim_a_pattern() -> None:
-    """Inner-conflict-adjacent venting about other people, without any of the
-    detector's specific protective-pattern phrases, should not fabricate a
-    named pattern."""
+    """Venting about other people must not fabricate a named pattern.
+
+    Without any of the detector's specific protective-pattern phrases, there
+    is no pattern to name.
+    """
     result = detect_shadow_patterns("My coworker really annoyed me today.")
 
     assert result["shadow_detected"] is False
@@ -137,8 +143,10 @@ def test_ambiguous_short_message_is_not_shadow() -> None:
 
 
 def test_recommendation_uses_possibility_language_not_accusation() -> None:
-    """Non-negotiable framework rule: shadow reflections are framed as
-    possibility only, never as fact or accusation."""
+    """Shadow reflections must be framed as possibility only.
+
+    A non-negotiable framework rule: never as fact, never as accusation.
+    """
     result = detect_shadow_patterns("I never confront anything, I just avoid it.")
 
     assert result["shadow_detected"] is True

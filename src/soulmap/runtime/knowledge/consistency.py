@@ -41,6 +41,12 @@ class ConfigUsage:
 
     @property
     def is_orphaned(self) -> bool:
+        """bool: Whether no runtime module references this constant.
+
+        An orphaned constant is a drift signal: the knowledge it holds is no
+        longer reachable from the runtime, so either a consumer was removed or
+        the constant was.
+        """
         return not self.referenced_from
 
 

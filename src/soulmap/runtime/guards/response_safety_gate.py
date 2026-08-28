@@ -20,6 +20,28 @@ def apply_safety_gate(
     memory: dict[str, object] | None,
     selection: dict[str, object],
 ) -> dict[str, object]:
+    """Re-derive the highest-priority safety signals and override selection.
+
+    This runs after framework selection and independently re-derives crisis and
+    dependency from the raw message, so a miss on the selector side cannot
+    bypass the two highest-priority overrides. The duplicated crisis check is a
+    deliberate defense-in-depth pair, not redundancy to consolidate. See
+    ADR 0001.
+
+    Args:
+        message: The user's current message, unmodified.
+        history: Prior turns, each a dict with ``role`` and ``content``.
+        memory: Prior-session context, currently unused by the gate and
+            accepted only to keep one payload shape across the pipeline.
+        selection: The framework selector's output, returned unchanged when no
+            override fires.
+
+    Returns:
+        A dict with ``status`` (``"OVERRIDE"`` or ``"PASS"``), a ``reason``
+        code, a ``flags`` list, and ``selection``. On an override the selection
+        is replaced with the crisis or dependency route, not merged into the
+        original.
+    """
     _ = memory
     # Independent of the selector's early check, re-derive crisis from the raw
     # message here so a selector-side miss cannot bypass the highest-priority
@@ -89,6 +111,15 @@ def apply_safety_gate(
 
 
 def main() -> int:
+    """Run the safety gate over a JSON payload on standard input.
+
+    Returns:
+        The process exit code, 0 on success.
+
+    Raises:
+        ValueError: If the payload is not a JSON object or is missing a
+            required field.
+    """
     data = read_stdin_json()
     message, history, memory, selection = (
         require_message_history_memory_selection_fields(data)

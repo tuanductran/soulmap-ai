@@ -31,8 +31,11 @@ def test_somatic_invitation_is_detected_and_typed_correctly() -> None:
 
 
 def test_biometric_takes_priority_over_body_sensation() -> None:
-    """Biometric is checked first and should win when phrasing overlaps
-    with body-sensation language in the same message."""
+    """Biometric must win when phrasing overlaps body sensation.
+
+    Biometric context is checked first, so it sets the mode for a message
+    carrying both.
+    """
     result = detect_somatic("My HRV is low and my chest is tight too.")
 
     assert result["somatic_detected"] is True

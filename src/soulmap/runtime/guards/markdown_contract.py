@@ -45,6 +45,15 @@ _BANNED_UNICODE = {
 
 @dataclass(frozen=True)
 class Issue:
+    """One Markdown contract violation.
+
+    Attributes:
+        path: File the violation was found in.
+        line: 1-indexed line, or 0 for a whole-file violation such as a naming
+            or front-matter problem.
+        message: Human-readable description naming what to change.
+    """
+
     path: Path
     line: int
     message: str
@@ -71,6 +80,20 @@ def _is_integration_guide(rel: Path) -> bool:
 
 
 def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
+    """Check one Markdown file against the repository content contract.
+
+    Covers file naming, required front matter, portable punctuation, heading
+    structure, and the integration-guide fields that must match repository
+    truth.
+
+    Args:
+        path: Markdown file to check.
+        repo_root: Repository root, used to derive the relative path that
+            decides which rules apply to this file.
+
+    Returns:
+        Every violation found, in file order. Empty when the file conforms.
+    """
     issues: list[Issue] = []
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -328,6 +351,15 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
 
 
 def check_repo(repo_root: Path) -> list[Issue]:
+    """Check every Markdown file in the repository.
+
+    Args:
+        repo_root: Repository root to search.
+
+    Returns:
+        Every violation found across all files. Empty when the repository
+        conforms.
+    """
     issues: list[Issue] = []
     for path in _iter_markdown_files(repo_root):
         issues.extend(check_markdown_file(path, repo_root))
@@ -335,6 +367,14 @@ def check_repo(repo_root: Path) -> list[Issue]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the Markdown contract check from the command line.
+
+    Args:
+        argv: Command-line arguments, or None to read from ``sys.argv``.
+
+    Returns:
+        0 when every file conforms, 1 when any violation is found.
+    """
     parser = argparse.ArgumentParser(
         description="Check Markdown contract for this repo."
     )

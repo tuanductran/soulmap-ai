@@ -31,8 +31,7 @@ HistoryMessage = dict[str, str]
 def detect_inner_conflict(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
-    """
-    Detect inner conflict signals in the current message and recent history.
+    """Detect inner conflict signals in the current message and recent history.
 
     Args:
         message: The current user message.
@@ -135,9 +134,18 @@ def detect_inner_conflict(
 
 
 def _suggest_parts(msg: str) -> list[str]:
-    """
-    Suggest which part archetypes are likely visible in the message.
-    Based on keyword proximity to part signals.
+    """Suggest which part archetypes may be visible in the message.
+
+    Matches keywords associated with each archetype. These are possibilities
+    offered to the reflective layer, never a fixed identity assigned to the
+    user.
+
+    Args:
+        msg: The user's current message, already lowercased and stripped.
+
+    Returns:
+        Archetype names that have at least one keyword present. Empty when
+        none match.
     """
     suggestions = []
 

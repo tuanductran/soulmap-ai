@@ -4,6 +4,8 @@ import io
 import json
 from typing import cast
 
+import pytest
+
 from soulmap.runtime.guards import resource_sanitizer, response_contract
 
 
@@ -56,7 +58,9 @@ def test_response_contract_rejects_questions_in_crisis_and_sanctuary() -> None:
     assert sanctuary == {"ok": False, "violations": ["sanctuary_no_question"]}
 
 
-def test_response_contract_cli_returns_serialized_grade(monkeypatch, capsys) -> None:
+def test_response_contract_cli_returns_serialized_grade(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     monkeypatch.setattr(
         response_contract.sys,
         "stdin",
@@ -116,7 +120,9 @@ def test_resource_sanitizer_rejects_a_nonfinal_single_question() -> None:
     assert result["violations"] == ["question_not_last_sentence"]
 
 
-def test_resource_sanitizer_cli_returns_serialized_check(monkeypatch, capsys) -> None:
+def test_resource_sanitizer_cli_returns_serialized_check(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     monkeypatch.setattr(
         resource_sanitizer.sys,
         "stdin",

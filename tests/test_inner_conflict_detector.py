@@ -29,8 +29,11 @@ def test_internal_dialogue_is_detected_and_typed_correctly() -> None:
 
 
 def test_part_naming_is_detected_and_typed_correctly() -> None:
-    """'the part of me that' and 'something in me keeps' are part-naming
-    phrases that do not overlap with the explicit-conflict phrase list."""
+    """Part-naming phrases register without an explicit conflict phrase.
+
+    "The part of me that" and "something in me keeps" name a part without
+    overlapping the explicit-conflict phrase list.
+    """
     result = detect_inner_conflict(
         "The part of me that stays quiet is the same part something in me keeps protecting."
     )

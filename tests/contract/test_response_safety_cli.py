@@ -3,11 +3,13 @@ from __future__ import annotations
 import io
 import json
 
+import pytest
+
 from soulmap.runtime.guards import response_safety_contract, response_safety_gate
 
 
 def test_response_safety_contract_cli_serializes_a_pass_result(
-    monkeypatch, capsys
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     monkeypatch.setattr(
         response_safety_contract.sys,
@@ -23,7 +25,9 @@ def test_response_safety_contract_cli_serializes_a_pass_result(
     }
 
 
-def test_response_safety_gate_cli_preserves_safe_selection(monkeypatch, capsys) -> None:
+def test_response_safety_gate_cli_preserves_safe_selection(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     payload = {
         "message": "I keep noticing something I want to understand more clearly.",
         "history": [

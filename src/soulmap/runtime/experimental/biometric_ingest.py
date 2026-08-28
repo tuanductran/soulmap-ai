@@ -12,7 +12,6 @@ def map_biometrics_to_somatic_prompt(
     biometrics: dict[str, object],
 ) -> dict[str, object]:
     """Translates wearable numbers to a neutral, mirror-ready somatic reflection."""
-
     hrv = biometrics.get("hrv")
     sleep = biometrics.get("sleep_score")
 
@@ -39,6 +38,15 @@ def map_biometrics_to_somatic_prompt(
 
 
 def main() -> int:
+    """Map a biometric payload from standard input to a somatic prompt.
+
+    Returns:
+        The process exit code, 0 on success.
+
+    Raises:
+        ValueError: If the payload is not a JSON object or is missing a
+            required field.
+    """
     data = parse_json_object(sys.stdin.read())
     biometrics = require_dict_field(data, "biometrics")
 
