@@ -89,6 +89,35 @@ def test_require_message_history_fields_returns_common_detector_payload() -> Non
     )
 
 
+def test_require_list_field_normalizes_malformed_history_items() -> None:
+    """A non-dict item, or a dict item missing "content"/"role" or with a
+    non-string value there, must never crash a caller that indexes
+    ``m["content"]`` directly, which every detector does."""
+    history = require_list_field(
+        {
+            "history": [
+                {"role": "user"},  # missing content
+                "not-a-dict",  # dropped entirely
+                {"role": "assistant", "content": 42},  # wrong type
+                {"content": "no role"},  # missing role
+                {"role": "user", "content": "hello"},  # well-formed
+            ]
+        },
+        "history",
+    )
+
+    assert history == [
+        {"role": "user", "content": ""},
+        {"role": "assistant", "content": ""},
+        {"role": "", "content": "no role"},
+        {"role": "user", "content": "hello"},
+    ]
+    # Every surviving item must be safely indexable without a KeyError.
+    for item in history:
+        assert isinstance(item["content"], str)
+        assert isinstance(item["role"], str)
+
+
 def test_require_message_history_memory_fields_returns_common_selector_payload() -> (
     None
 ):

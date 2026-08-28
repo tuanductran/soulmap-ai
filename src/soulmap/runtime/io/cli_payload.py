@@ -96,11 +96,32 @@ def require_non_empty_str_field(payload: dict[str, object], name: str) -> str:
 
 
 def require_list_field(payload: dict[str, object], name: str) -> list[dict[str, str]]:
-    """Return a message-list field or an empty default when omitted."""
+    """Return a message-list field or an empty default when omitted.
+
+    Every item is normalized to a dict with string "role" and "content" keys.
+    A non-dict item is dropped, and a missing or non-string "role"/"content"
+    on a dict item is coerced to "". Every detector indexes history items as
+    ``m["content"]`` without a fallback, so this guarantees that never raises
+    a KeyError on a malformed history entry (a truncated or partial message
+    record) instead of crashing the whole request.
+    """
     value = payload.get(name, [])
     if not isinstance(value, list):
         raise ValueError(f"Field '{name}' must be a list.")
-    return value
+
+    normalized: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        role = item.get("role", "")
+        content = item.get("content", "")
+        normalized.append(
+            {
+                "role": role if isinstance(role, str) else "",
+                "content": content if isinstance(content, str) else "",
+            }
+        )
+    return normalized
 
 
 def require_dict_field(payload: dict[str, object], name: str) -> dict[str, object]:
