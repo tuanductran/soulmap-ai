@@ -14,6 +14,16 @@ from soulmap.runtime.io.cli_payload import (
 
 BULLET_RE = re.compile(r"^\s*[-*]\s", re.MULTILINE)
 QUESTION_RE = re.compile(r"\?")
+# A question mark inside a link is punctuation, not a question. Crisis
+# responses are exactly where links appear (findahelpline.com is one of the two
+# international resources in AGENTS.md), and a localized one carries a query
+# string. Counting that "?" flagged a valid crisis response as asking a
+# question, which would send the response back for a rewrite it does not need.
+# Only the "?" inside the matched link is removed, so a real question before or
+# after a link still counts.
+_URL_RE = re.compile(
+    r"\b(?:https?://|www\.)\S+|\b[\w.-]+\.[a-z]{2,}/\S*", re.IGNORECASE
+)
 
 
 def grade_response_contract(
@@ -41,7 +51,8 @@ def grade_response_contract(
     violations: list[str] = []
     stripped = response.strip()
 
-    question_count = len(QUESTION_RE.findall(stripped))
+    countable = _URL_RE.sub("", stripped)
+    question_count = len(QUESTION_RE.findall(countable))
     if question_count > 1:
         violations.append("multiple_questions")
     if question_count == 1 and not stripped.endswith("?"):

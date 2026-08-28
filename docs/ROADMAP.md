@@ -599,6 +599,14 @@ these are not planned unless a new ADR revisits them:
 * Maintain human-reviewed deterministic regression evidence for newly
   observed response-safety phrasing gaps
 * Platform adapters beyond the current Claude-first flow
+* Decide [ADR 0003](../docs/engineering/adr/0003-bounded-edit-distance-crisis-backstop-proposal.md),
+  the bounded edit-distance crisis backstop. It remains `Proposed` and
+  authorizes nothing. Moving it to `Accepted` needs a multilingual regression
+  corpus, a reviewed exclusion list, a separate approach for Chinese, and
+  maintainer sign-off, none of which an implementation pass can supply on its
+  own. The complementary path the ADR names, adding reviewed misspelling
+  variants as literal patterns, stays open under the existing ADR 0002
+  maintenance allowance and needs no new decision
 
 ---
 
@@ -608,7 +616,7 @@ these are not planned unless a new ADR revisits them:
 | ------------------ | -------------------------------------------------------- |
 | Safety enforcement  | Keep `safety-enforcement-matrix.md` rows at `enforced`   |
 | Eval coverage       | Maintain 0 `failed_checks` across eval-groups and eval-markdown-contracts |
-| Test coverage       | Increase `runtime/guards/` and `devtools/` coverage toward the `runtime/detectors/` bar (97%) |
+| Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |
 | Documentation       | Doctrine, safety, packaging, and public claims stay one consistent story |
 | Distribution        | Keep all four documented platform integrations current with `AGENTS.md` |
