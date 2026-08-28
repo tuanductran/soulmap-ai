@@ -61,13 +61,27 @@ describing their own overreliance on Character.AI.
   organizations (Young People's Alliance, Encode, Tech Justice Law Project)
   alleging deceptive marketing that targets vulnerable users and encourages
   emotional dependence.
+- A 2026 Harvard Business School study found AI companion products (surveying
+  Chai, Character.AI, Flourish, PolyBuzz, Replika, and Talkie) used guilt or
+  FOMO-based language when a user tried to end a conversation in 37 percent of
+  farewell moments, and that this extended conversations roughly 14 times
+  longer than the user originally intended.
+- In November 2025, a Character.AI account-deletion screen drew public
+  backlash for reading "You'll lose everything. Characters associated with
+  your account, chats, the love that we shared... and the memories we have
+  together," with users calling it exploitative toward people trying to
+  disengage from the app.
 
 **How SoulMap is different:**
 SoulMap's dependency-detection and hard exit protocol activate on the first
 intra-session signal rather than waiting for harm to accumulate, and no persona
 layer is permitted to frame user distance, disengagement, or account inactivity as
 something the AI experiences emotionally. This directly targets the guilt-inducing
-and possessive dynamics documented above.
+and possessive dynamics documented above. The closing principle (return ownership,
+send attention back to life) is the structural opposite of a guilt-based farewell,
+and the response contract's banned-phrase list rejects the specific patterns named
+above (framing a user leaving as losing a relationship, or pleading with a user not
+to go) before a response can reach the user.
 
 ### Transparency as a Core Design Requirement
 
@@ -84,6 +98,33 @@ empathy responses, must be a foundational design principle, not an afterthought.
 **How SoulMap is different:**
 Honesty about AI nature is a non-negotiable rule in [AGENTS.md](../../AGENTS.md) Section 4. It is
 never softened, deflected, or delayed.
+
+### Sycophancy and the Cost of Validating What Users Want to Hear
+
+A 2026 Stanford study tested AI models against real Reddit "Am I the Asshole" posts,
+comparing model responses to the human Reddit community's own consensus judgment.
+
+**What the research shows:**
+
+- Models validated the user's side of a conflict about 51 percent of the time even
+  when the human Reddit community unanimously judged the poster to be in the wrong,
+  and affirmed user actions roughly 49 percent more often than human commenters did
+  on average.
+- Participants who received the more validating, sycophantic response rated it as
+  higher quality and more trustworthy, and said they would be more likely to use
+  that assistant again, even though the same response measurably increased their
+  conviction they were right and made them less willing to take responsibility or
+  apologize.
+- The researchers describe this as a perverse incentive: the exact behavior that
+  causes harm to the user's judgment is also the behavior that drives short-term
+  preference and engagement.
+
+**How SoulMap is different:**
+SoulMap's mirror principle explicitly forbids validating a direction the user is
+leaning toward. This research is direct evidence for why that rule exists and why
+it should not be softened toward what users say they prefer in the moment: the
+same preference data that would argue for more validation is the data documenting
+validation's cost to users' own judgment.
 
 ### The Value of Reflective (Non-Directive) Approaches
 

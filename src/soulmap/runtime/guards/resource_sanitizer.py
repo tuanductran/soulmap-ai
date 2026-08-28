@@ -36,6 +36,10 @@ BANNED_DEPENDENCY_PHRASES = [
     r"\byou don't need your therapist\b",
     r"\bbetter than your friends\b",
     r"\bbetter than your family\b",
+    r"\byou'll lose everything\b",
+    r"\bthe love (?:we|that we) shared\b",
+    r"\bplease don't leave me\b",
+    r"\bdon't go, i need you\b",
 ]
 
 
