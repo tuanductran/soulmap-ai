@@ -23,7 +23,11 @@ stay thin, predictable, and easy to audit.
   repo
 - include a short header comment when the script's purpose is not obvious from the
   filename alone
-- use `set -euo pipefail`
+- use `set -euo pipefail`, with one exception: a script meant to be sourced
+  (`scripts/activate_venv.sh`) must not set them, because a sourced script runs in
+  the caller's shell and would leave those options set after it returns, killing
+  the interactive shell on the next failing command or unset variable. Return
+  non-zero from explicit checks instead
 - avoid `eval`
 - quote variable expansions
 - prefer `${var}` form when it improves clarity around variable boundaries

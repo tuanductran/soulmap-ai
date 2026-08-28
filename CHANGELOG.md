@@ -37,6 +37,12 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **scripts**: stop `activate_venv.sh` from leaving `errexit`, `nounset`, and
+  `pipefail` set in the caller's shell. It is the one script here meant to be
+  sourced, so `set -euo pipefail` persisted after it returned and the
+  developer's next failing command or unset variable would have ended their
+  interactive session. The shell rule now records the exception so the options
+  are not restored to satisfy it, and two smoke tests cover the contract
 
 - **safety**: stop a resource link's query string from counting as a question in
   the response contract. `findahelpline.com/?country=vn` made a valid crisis
@@ -133,6 +139,11 @@ stability and breaking changes in behavior.
 - **knowledge**: close doctrine sync gaps found in repo-wide audit
 - **tester**: add exploratory charter for real-world spiritual media pressure
 - **roadmap**: close completed non-ai maintenance items
+- **scripts**: index `activate_venv.sh` in `scripts/README.md` and `DEV.md`. It
+  was referenced nowhere and no document described how to activate the
+  environment, so the only working helper for it was undiscoverable
+- **claude**: correct two rule and skill examples that cited a
+  `runtime/config` affect module that does not exist
 - **release**: document dependency-bot authority
 - **tester/dev**: document `audit-knowledge`, `eval-markdown-contracts`, and `demo`
   commands

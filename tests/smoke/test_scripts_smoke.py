@@ -601,3 +601,50 @@ def test_object_based_cli_modules_reject_non_object_payloads() -> None:
         assert json.loads(result.stdout) == {"error": "Input must be a JSON object."}, (
             module
         )
+
+
+# --- The sourced activation helper ---
+#
+# scripts/activate_venv.sh is the one script here that must NOT set
+# `-euo pipefail`. It runs in the caller's shell, so those options would stay
+# set after it returns and the developer's next failing command would kill
+# their interactive shell. These cover that contract, because the repo's own
+# shell rule otherwise says to set them everywhere.
+
+ACTIVATE_SCRIPT = ROOT / "scripts" / "activate_venv.sh"
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="bash is not available")
+def test_activate_helper_refuses_to_be_executed_directly() -> None:
+    result = subprocess.run(
+        ["bash", str(ACTIVATE_SCRIPT)], capture_output=True, text=True, check=False
+    )
+
+    assert result.returncode == 1
+    assert "must be sourced" in result.stderr
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="bash is not available")
+def test_sourcing_the_activate_helper_does_not_leak_shell_options() -> None:
+    """Sourcing must not leave errexit set in the caller's shell.
+
+    With `set -euo pipefail` in the script, the `false` below ended the shell
+    and the final marker never printed. That would end an interactive session
+    on the developer's next failing command.
+    """
+    script = (
+        f"source {ACTIVATE_SCRIPT}\n"
+        "false\n"
+        "echo SURVIVED\n"
+        'echo "leftover=${_soulmap_root:-none}"\n'
+    )
+    result = subprocess.run(
+        ["bash", "-c", script],
+        capture_output=True,
+        text=True,
+        check=False,
+        cwd=ROOT,
+    )
+
+    assert "SURVIVED" in result.stdout, result.stderr
+    assert "leftover=none" in result.stdout

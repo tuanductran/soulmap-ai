@@ -21,7 +21,7 @@ Keep Markdown compatible across AI tools and OS editors.
   inside `skills/` or `templates/` files, write in plain language instead
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
-`src/soulmap/runtime/config/affect.py` belong in Python source files, not in Markdown knowledge
+`src/soulmap/runtime/config/safety.py` belong in Python source files, not in Markdown knowledge
 files. Readers of skill and template files are AI tools and humans, not Python
 interpreters. Describe what a signal means in plain language. If a cross-reference
 to the implementation is genuinely needed, use a sentence like "detected by the
