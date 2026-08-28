@@ -9,6 +9,15 @@ stability and breaking changes in behavior.
 
 ### Fix
 
+- **detectors**: fix self-criticism scoring order in the shadow-pattern
+  detector so it enriches an already-triggered result instead of being
+  silently dropped from the recommendation text or wrongly promoted to a
+  standalone shadow trigger
+- **io**: normalize malformed conversation-history items in
+  `require_list_field` instead of letting every detector crash on a
+  missing "content" key
+- **scripts**: make `build-skill.sh` actually build the `.skill` archive
+  it is named for, instead of the plain zip
 - **safety**: correct wrong Vietnam crisis number and Rule 1 violation
 - **knowledge**: sync framework priority tables with routed spiritual frameworks
 - **knowledge**: close mirror-intellectual length contradiction
