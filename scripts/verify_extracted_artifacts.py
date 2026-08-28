@@ -177,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--root",
         type=Path,
-        default=Path("."),
+        default=Path(),
         help="Repository root containing dist/ and skills/ (default: current directory)",
     )
     args = parser.parse_args(argv)

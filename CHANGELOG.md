@@ -7,7 +7,36 @@ stability and breaking changes in behavior.
 
 ## Unreleased
 
+### Build
+
+- **deps**: refresh the development toolchain to the latest Python 3.11
+  compatible releases: ruff 0.16.3 to 0.16.5, hypothesis 6.165.9 to 6.165.10,
+  lefthook 2.1.10 to 2.1.11, commitizen 4.17.0 to 4.18.0, plus transitive
+  updates. `pip-audit` reports no known vulnerabilities before or after, so
+  this is planned maintenance rather than a security response. Supersedes the
+  four open Dependabot bump pull requests and reaches a newer ruff than any of
+  them
+
 ### Fix
+
+- **tooling**: configure pytest-timeout, which had never run. It was installed
+  and documented as the hang and deadlock signal, but its own documentation is
+  explicit that it "will not time out any tests" until a value is set, and no
+  value was set anywhere. Now 60 seconds, against a slowest test of about 2.5
+  seconds, so it fires only on a genuine hang
+- **tooling**: measure the whole package in coverage. The source was
+  `src/soulmap/runtime`, so a bare `pytest --cov` silently measured none of the
+  31 devtools modules, even though ROADMAP and the Phase 8 and 12 notes quote
+  coverage numbers for them
+- **tests**: turn a typo'd pytest marker into a collection error rather than a
+  decorator that silently does nothing, and fail an xfail that starts passing
+  instead of reporting it green as "xpassed"
+- **tests**: surface upstream deprecation warnings as failures. The
+  dependency-refresh trigger policy treats a deprecation warning as a reason to
+  start a refresh, which only worked if someone noticed it in the output
+- **runtime**: replace the two relative imports in the runtime config package
+  with absolute ones. The runtime ships and runs standalone, where a relative
+  import would break an extracted copy
 
 - **safety**: stop a resource link's query string from counting as a question in
   the response contract. `findahelpline.com/?country=vn` made a valid crisis
@@ -53,6 +82,14 @@ stability and breaking changes in behavior.
 
 ### Refactor
 
+- **tooling**: extend the Ruff rule set after auditing it against this
+  repository, adding A, DTZ, FURB, ISC, LOG, N, PIE, PT, PTH, RET, and TID with
+  relative imports banned outright. Each was already clean or nearly so, so
+  these lock in conventions the code already follows. S (flake8-bandit) is
+  deliberately excluded: it reports 1300+ hits that are almost entirely
+  `assert` inside tests plus the subprocess calls that are the point of the
+  developer tooling, CodeQL already runs here, and the dependency-refresh
+  policy says not to add a scanner merely because an alternative exists
 - **python**: document and fully annotate every Python surface. Ruff now enforces
   `D` (pydocstyle, Google convention) and `ANN` (annotations) across `src/`,
   `tests/`, and `scripts/`, so the convention is a checked contract rather than a

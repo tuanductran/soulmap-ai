@@ -106,7 +106,7 @@ def _install_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
         )
 
 
-@pytest.mark.parametrize("expected_primary,overrides", SCENARIOS)
+@pytest.mark.parametrize(("expected_primary", "overrides"), SCENARIOS)
 def test_every_routing_path_calls_safety_gate(
     monkeypatch: pytest.MonkeyPatch,
     expected_primary: str,

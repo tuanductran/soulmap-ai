@@ -493,9 +493,5 @@ def test_lint_fails_on_tracked_hygiene_violations(
     )
     monkeypatch.setattr(lint_tool, "python_module", lambda *args, **kwargs: None)
 
-    try:
+    with pytest.raises(RuntimeError, match="tracked hygiene violations found"):
         lint_tool.main(["--skip-tests"])
-    except RuntimeError as exc:
-        assert "tracked hygiene violations found" in str(exc)
-    else:
-        raise AssertionError("Expected lint to fail on tracked hygiene violations")

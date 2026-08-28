@@ -78,12 +78,8 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
 def test_read_catalog_rejects_missing_entry_directory(tmp_path: Path) -> None:
     _write(tmp_path, "library/catalog.json", _catalog())
 
-    try:
+    with pytest.raises(ValueError, match="Library entry path is not a directory"):
         library._read_catalog(tmp_path)
-    except ValueError as exc:
-        assert "Library entry path is not a directory" in str(exc)
-    else:
-        raise AssertionError("missing Library entry directory was accepted")
 
 
 def _catalog_with(**overrides: object) -> str:

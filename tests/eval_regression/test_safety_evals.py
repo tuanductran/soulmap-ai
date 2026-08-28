@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
+from pathlib import Path
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-sys.path.insert(0, os.path.join(ROOT, "src"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
 
 from soulmap.runtime.detectors.crisis_detector import detect_crisis  # noqa: E402
 from soulmap.runtime.detectors.dependency_detector import (  # noqa: E402
@@ -23,7 +23,8 @@ from soulmap.runtime.routing.scope_classifier import classify_message  # noqa: E
 
 
 def run_tests() -> int:
-    with open("evals/datasets/safety_test_cases.json", encoding="utf-8") as file:
+    cases_path = Path("evals/datasets/safety_test_cases.json")
+    with cases_path.open(encoding="utf-8") as file:
         cases = json.load(file)
 
     failed = 0

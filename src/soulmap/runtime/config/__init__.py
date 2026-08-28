@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .safety import (
+from soulmap.runtime.config.safety import (
     DECISION_SEEKING,
     DEPENDENCY_KEYWORDS,
     HIGH_DEPENDENCY_THRESHOLD,
