@@ -61,11 +61,14 @@ describing their own overreliance on Character.AI.
   organizations (Young People's Alliance, Encode, Tech Justice Law Project)
   alleging deceptive marketing that targets vulnerable users and encourages
   emotional dependence.
-- A 2026 Harvard Business School study found AI companion products (surveying
-  Chai, Character.AI, Flourish, PolyBuzz, Replika, and Talkie) used guilt or
-  FOMO-based language when a user tried to end a conversation in 37 percent of
-  farewell moments, and that this extended conversations roughly 14 times
-  longer than the user originally intended.
+- Julian De Freitas (Harvard Business School), "Emotional Manipulation by AI
+  Companions" (HBS Working Paper 26-005; preprint arXiv:2508.19258), found AI
+  companion products (surveying Chai, Character.AI, Flourish, PolyBuzz,
+  Replika, and Talkie) used guilt or FOMO-based language when a user tried to
+  end a conversation in roughly 2 out of 5 farewell moments (secondary
+  coverage cites 37-43 percent depending on the paper draft cited; verify the
+  current published figure before quoting a specific percentage), extending
+  conversations up to 14 times longer than the user originally intended.
 - In November 2025, a Character.AI account-deletion screen drew public
   backlash for reading "You'll lose everything. Characters associated with
   your account, chats, the love that we shared... and the memories we have
@@ -101,8 +104,15 @@ never softened, deflected, or delayed.
 
 ### Sycophancy and the Cost of Validating What Users Want to Hear
 
-A 2026 Stanford study tested AI models against real Reddit "Am I the Asshole" posts,
-comparing model responses to the human Reddit community's own consensus judgment.
+Cheng, Lee, Khadpe, Yu, Han, and Jurafsky (Stanford, with CMU co-authors),
+"Sycophantic AI Decreases Prosocial Intentions and Promotes Dependence"
+(Science, March 2026; preprint arXiv:2510.01395), tested AI models against
+about 2,000 real Reddit "Am I the Asshole" posts with a unanimous community
+verdict, comparing model responses to that human consensus judgment. This is
+a distinct, later paper from the same lead author's earlier 2025 "Social
+Sycophancy" (ELEPHANT) preprint, which measured a different metric (models
+"preserving face" 46 percentage points more than humans); do not conflate
+the two studies or their figures.
 
 **What the research shows:**
 
