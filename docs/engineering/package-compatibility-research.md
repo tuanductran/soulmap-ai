@@ -1,6 +1,6 @@
 # Python 3.11 package compatibility research
 
-**Research date:** 2026-08-19
+**Research date:** 2026-08-19. **Last refreshed:** 2026-08-28.
 
 This note records official package evidence for the development toolchain used by SoulMap AI. It is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
@@ -8,20 +8,20 @@ This note records official package evidence for the development toolchain used b
 
 | Package | Locked version on v0.9.0 | Official source | Relevant finding for SoulMap |
 | --- | --- | --- | --- |
-| Ruff | 0.16.3 | [Ruff documentation](https://docs.astral.sh/ruff/) | Current docs advertise Python 3.14 compatibility, `pyproject.toml` support, caching and active development. Python 3.11 is below the documented compatibility ceiling; upgrades still require repository CI evidence. |
+| Ruff | 0.16.5 | [Ruff documentation](https://docs.astral.sh/ruff/) | Current docs advertise Python 3.14 compatibility, `pyproject.toml` support, caching and active development. Python 3.11 is below the documented compatibility ceiling; upgrades still require repository CI evidence. |
 | pytest | 9.1.1 | [pytest compatibility policy](https://docs.pytest.org/en/stable/backwards-compatibility.html) | pytest 9.0+ supports Python 3.10+, so Python 3.11 is supported. Its deprecation policy makes warnings an upgrade signal rather than something to ignore silently. |
-| Hypothesis | 6.165.9 | [Hypothesis compatibility](https://hypothesis.readthedocs.io/en/latest/compatibility.html) | Hypothesis supports and tests CPython/PyPy 3.10+. It officially supports only the latest patch release of each supported Python version; documented APIs generally do not break except at major versions. |
+| Hypothesis | 6.165.10 | [Hypothesis compatibility](https://hypothesis.readthedocs.io/en/latest/compatibility.html) | Hypothesis supports and tests CPython/PyPy 3.10+. It officially supports only the latest patch release of each supported Python version; documented APIs generally do not break except at major versions. |
 | PyMarkdownLnt | 0.9.39 | [PyPI project metadata](https://pypi.org/project/pymarkdownlnt/) | Requires Python >=3.10 and classifies Python 3.10 through 3.13. Python 3.11 is a declared supported interpreter, matching the Markdown contract role. |
 | pytest-cov | 7.1.0 | [PyPI project metadata](https://pypi.org/project/pytest-cov/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14. It supports coverage contexts and xdist integration; coverage data must remain reproducible under parallel workers. |
 | pytest-xdist | 3.8.0 | [pytest-xdist documentation](https://pytest-xdist.readthedocs.io/en/latest/) | `pytest -n auto` starts workers based on available CPUs and distributes tests randomly. Test order/count must remain consistent; a serial diagnostic path is still required for failures. |
 | pytest-timeout | 2.4.0 | [PyPI project metadata](https://pypi.org/project/pytest-timeout/) | Requires Python >=3.10 and classifies Python 3.10 through 3.14. It is for catching hangs/deadlocks, not precise timing or performance measurement. |
 | pytest-randomly | 4.1.0 | [pytest-randomly project metadata](https://pypi.org/project/pytest-randomly/) | Upstream states Python 3.10 through 3.15 support. It randomizes test order and controls `random.seed`; failures must preserve the seed and support an explicit serial rerun. |
 | Pyright | 1.1.411 | [Pyright project metadata](https://pypi.org/project/pyright/) | Pyright is a standards-compliant static type checker with CLI and editor integration. Its configured Python target and CI invocation are the source of truth for type semantics. |
-| Commitizen | 4.17.0 | [Commitizen project metadata](https://pypi.org/project/commitizen/) | Requires Python 3.10+. `cz bump` changes version, creates a tag and can update the changelog, so release validation must run before the mutation steps. |
+| Commitizen | 4.18.0 | [Commitizen project metadata](https://pypi.org/project/commitizen/) | Requires Python 3.10+. `cz bump` changes version, creates a tag and can update the changelog, so release validation must run before the mutation steps. |
 | Deptry | 0.25.1 | [Deptry documentation](https://deptry.com/) | Scans imports against dependency declarations and explicitly supports uv and PEP 621. It must run inside the project's dedicated virtual environment. |
 | Vulture | 2.16 | [PyPI project metadata](https://pypi.org/project/vulture/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14 for CPython/PyPy. Its findings remain subject to the repository confidence threshold and human review. |
 | Hatchling | transitive build backend | [Hatch documentation](https://hatch.pypa.io/latest/) | Hatch documents reproducible builds, uv-supported environments and PEP 517 build workflows. SoulMap's explicit ZIP/skill builders remain the product artifact source. |
-| lefthook | 2.1.10 | [lefthook documentation](https://lefthook.dev/) | lefthook is a Git hooks manager, not a Python runtime package. Python 3.11 compatibility does not apply to the binary; the relevant contract is that hooks invoke `uv run` commands consistently. |
+| lefthook | 2.1.11 | [lefthook documentation](https://lefthook.dev/) | lefthook is a Git hooks manager, not a Python runtime package. Python 3.11 compatibility does not apply to the binary; the relevant contract is that hooks invoke `uv run` commands consistently. |
 | uv | 0.12.5 (CI installer pin) | [uv installer documentation](https://docs.astral.sh/uv/reference/installer/) | CI installs uv through the official unmanaged standalone installer into the ephemeral runner. It is a toolchain executable, not a SoulMap runtime or locked project dependency. |
 | actionlint | 1.7.12 (CI binary pin) | [actionlint installation documentation](https://github.com/rhysd/actionlint/blob/main/docs/install.md) | CI downloads the Linux amd64 release archive from the official release URL and verifies a repository-pinned SHA-256 before checking workflows. It replaces a third-party action archive dependency and is CI-only. |
 

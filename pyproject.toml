@@ -83,11 +83,38 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "UP", "B", "I", "C4", "SIM", "RUF", "D", "ANN"]
+select = [
+  "E", "F", "W", "UP", "B", "I", "C4", "SIM", "RUF", "D", "ANN",
+  # Added after auditing the Ruff rule set against this repository. Every one
+  # below was already clean or nearly clean, so these lock in conventions the
+  # code already follows instead of forcing a rewrite.
+  "A",    # a local must not shadow a builtin
+  "DTZ",  # no naive datetime
+  "FURB", # modern equivalents for older idioms
+  "ISC",  # no implicit string concatenation across lines
+  "LOG",  # correct logging calls
+  "N",    # PEP 8 naming
+  "PIE",  # no unnecessary passes, dict-key duplication, or dead branches
+  "PT",   # pytest idioms, including raises over assert-in-except
+  "PTH",  # pathlib over os.path, which the repo already prefers
+  "RET",  # no redundant return branches
+  "TID",  # no relative imports, which the package-first layout forbids
+]
+# Deliberately not selected: S (flake8-bandit) reports 1300+ hits that are
+# almost entirely `assert` inside tests, plus subprocess calls that are the
+# point of the developer tooling. CodeQL already runs on this repository, and
+# docs/operations/dependency-refresh.md says not to add a scanner merely
+# because an alternative exists. ARG conflicts with the deliberate uniform
+# detector signatures, where an unused history argument is intentional.
 ignore = ["E501"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.lint.flake8-tidy-imports]
+# The runtime ships and runs standalone, so every import is absolute from the
+# package root. A relative import would break an extracted copy.
+ban-relative-imports = "all"
 
 [tool.ruff.lint.per-file-ignores]
 # Test functions carry their meaning in the test name. Requiring a docstring on
@@ -105,10 +132,33 @@ indent-style = "space"
 minversion = "9.0"
 testpaths = ["tests"]
 pythonpath = ["src", "."]
-addopts = "-q"
+# --strict-markers turns a typo'd marker into a collection error instead of a
+# decorator that silently does nothing. --strict-config does the same for a
+# typo in this section.
+addopts = "-q --strict-markers --strict-config"
+# An xfail that starts passing means the underlying bug is fixed. Without this
+# it reports as "xpassed" and the run still goes green, so nobody notices.
+xfail_strict = true
+# pytest-timeout is a hang/deadlock signal, not a performance benchmark
+# (docs/operations/dependency-refresh.md). Its own documentation is explicit
+# that it "will not time out any tests" until a value is set, so without this
+# the installed plugin does nothing. The slowest test in the suite runs in
+# about 2.5 seconds, so 60 fires only on a genuine hang.
+timeout = 60
+# The dependency-refresh trigger policy treats an upstream deprecation warning
+# as a reason to start a refresh, which only works if the warning is visible.
+# Scoped to deprecations rather than all warnings so an unrelated
+# platform-specific warning cannot turn CI red on its own.
+filterwarnings = [
+  "error::DeprecationWarning",
+  "error::PendingDeprecationWarning",
+]
 
 [tool.coverage.run]
-source = ["src/soulmap/runtime"]
+# The whole package, not just the runtime. ROADMAP and the Phase 8 and 12
+# notes quote coverage numbers for devtools, which a runtime-only source
+# cannot produce: a bare `pytest --cov` silently measured none of it.
+source = ["src/soulmap"]
 branch = true
 omit = [
   "src/soulmap/runtime/experimental/soulmap_demo.py",
