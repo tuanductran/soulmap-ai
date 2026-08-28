@@ -45,30 +45,46 @@ def detect_perfectionism_paralysis(
             signals.append(f"paralysis: '{phrase}'")
             break
 
-    # General perfectionism signals add secondary score
+    # General perfectionism signals add secondary score only. Doctrine
+    # (perfectionism-paralysis.md, "Distinguish from genuine discernment"):
+    # "Perfectionism paralysis is a pattern, not a single instance." A bare
+    # generic phrase must not reach _THRESHOLD alone; it only crosses the
+    # threshold combined with the history repetition bonus below, which is
+    # the check for "does the pattern appear repeatedly."
     for phrase in PERFECTIONISM_SIGNALS:
         if phrase in msg and score == 0:
-            score += 2
+            score += 1
             signals.append(f"perfectionism: '{phrase}'")
             break
 
-    # Check for pattern persistence in history (paralysis appears repeatedly)
-    if history and score > 0:
-        hist_text = " ".join(
-            m.get("content", "").lower()
-            for m in history[-4:]
-            if isinstance(m, dict) and m.get("role") == "user"
-        )
-        repeat_signals = (
-            "still not ready",
-            "still not finished",
-            "still can't",
-            "again",
-            "still working on",
-        )
-        if any(r in hist_text for r in repeat_signals):
+    # Repetition evidence crosses the "pattern, not a single instance" bar
+    # (perfectionism-paralysis.md) either from the current message explicitly
+    # naming its own repetition ("a hundred times", "over and over"), or from
+    # prior turns naming it.
+    repeat_signals = (
+        "still not ready",
+        "still not finished",
+        "still can't",
+        "again",
+        "still working on",
+        "over and over",
+        "so many times",
+        "every time",
+        "a hundred times",
+    )
+    if score > 0:
+        if any(r in msg for r in repeat_signals):
             score += 1
-            signals.append("pattern_persistence_in_history")
+            signals.append("pattern_persistence_in_message")
+        elif history:
+            hist_text = " ".join(
+                m.get("content", "").lower()
+                for m in history[-4:]
+                if isinstance(m, dict) and m.get("role") == "user"
+            )
+            if any(r in hist_text for r in repeat_signals):
+                score += 1
+                signals.append("pattern_persistence_in_history")
 
     if score < _THRESHOLD:
         return {
