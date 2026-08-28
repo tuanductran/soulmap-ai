@@ -66,7 +66,7 @@ def test_bootstrap_main_reports_windows_activation_and_git_hooks(
         lambda args, *, cwd: calls.append(args),
     )
 
-    assert bootstrap_venv.main() == 0
+    assert bootstrap_venv.main([]) == 0
 
     assert calls[0] == [
         "uv",

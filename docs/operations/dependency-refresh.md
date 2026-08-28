@@ -2,6 +2,18 @@
 
 This checklist is the operational boundary for Phase 12. It covers development-tool dependencies, the `uv.lock` baseline, CI/release pins and transitive package changes. It does not authorize a new runtime dependency, a Python-version expansion, a semantic safety classifier or a platform adapter. For the next bounded P1 cycle, use the implementation-ready [P1 dependency/advisory refresh plan](p1-dependency-advisory-refresh-plan.md) together with this checklist.
 
+## Automation tooling
+
+Two dependency-update bots are currently configured: `.github/dependabot.yml` (uv and
+github-actions ecosystems, weekly) and `renovate.json` (repo root, `config:recommended`).
+As of the last review, Dependabot is the actively used tool: it has open pull requests
+for routine dev-dependency bumps, while Renovate's merged history is limited to a
+github-actions pin that Dependabot's own `github-actions` ecosystem entry already
+covers. This overlap has not caused a confirmed duplicate-PR conflict, but the two
+tools are not tracking a documented division of labor. Do not add a third tool or
+expand either config to resolve this; if you decide to keep only one, that decision
+belongs to the repository owner, not to routine dependency-refresh work.
+
 ## Trigger policy
 
 Start this process only when there is a concrete trigger: a security advisory, an upstream deprecation warning, a documented incompatibility, a meaningful bugfix release, lockfile drift, a CI/release failure or a deliberate maintenance window. A newly published package version alone is not proof that the lockfile is stale; `uv` checks project metadata and requires an explicit refresh when maintainers decide to upgrade.[1]
@@ -71,6 +83,7 @@ uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
 uv run vulture
 uv run deptry .
+uv run pip-audit
 uv lock --check
 ```
 

@@ -78,6 +78,11 @@ First match wins. Never combine two primary frameworks.
 | Medium | Ancestral Patterns | "My mother was the same way", inherited wound |
 | Medium | Fear of Visibility | Shrinking, hiding, afraid to be seen publicly |
 | Medium | Empath Boundary | Absorbing others' emotions, boundary dissolution |
+| Medium | Dark Night of the Soul | Spiritual emptiness, loss of faith |
+| Medium | Soul Nourishment | What genuinely feeds the spirit vs. distraction |
+| Medium | Divine Guidance | Discerning intuition from fear or projection |
+| Medium | Sacred Polarity | Balance of receptivity and action in relationships |
+| Medium | Spiritual Purpose | Authentic calling vs. ego ambition or avoidance |
 | Medium | Meaning Integration | Breakthrough, "I finally see it" |
 | Medium | Integration and Celebration | Win, relief, gratitude, recognized progress |
 | Lower | Synthesis | Longer thread or explicit synthesis request |

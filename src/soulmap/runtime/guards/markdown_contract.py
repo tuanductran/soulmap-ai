@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from soulmap.devtools.support.markdown import (
+    FenceTracker,
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
@@ -21,7 +22,6 @@ from soulmap.devtools.support.markdown import (
     split_markdown_link_target,
 )
 
-_FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 # Flags headings like `##Title` (missing required whitespace after the heading marker).
 _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
@@ -140,12 +140,9 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                 issues.append(Issue(path, i, f"Banned Unicode character: {desc}"))
 
     # 1) Heading correctness: require a space after ATX heading marker.
-    in_fence = False
+    fence = FenceTracker()
     for i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         if _BAD_ATX_HEADING_RE.match(raw):
             issues.append(Issue(path, i, "ATX heading missing a space after '#'"))
@@ -153,12 +150,9 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     # 1a) Heading numbering: disallow numeric prefixes like `1)` / `1.` in headings.
     #     Guard against false positives inside fenced code blocks (e.g. bash comments
     #     like `# 1. do something` would otherwise be flagged as headings).
-    in_fence = False
+    fence = FenceTracker()
     for i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         match = _ATX_HEADING_RE.match(raw)
         if not match:
@@ -174,12 +168,9 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             )
 
     # 1b) Heading spacing: require a blank line before/after headings (outside fences).
-    in_fence = False
+    fence = FenceTracker()
     for idx, raw in enumerate(lines):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         if not raw.startswith("#"):
             continue
@@ -197,22 +188,18 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             )
 
     # 2) Fenced code blocks must be balanced.
-    in_fence = False
-    for _i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-    if in_fence:
+    fence = FenceTracker()
+    for raw in lines:
+        fence.consume(raw)
+    if fence.in_fence:
         issues.append(Issue(path, len(lines) or 1, "Unclosed fenced code block"))
 
     # 2c) HTML comments must be balanced (skip inside fenced code blocks).
-    in_fence = False
+    fence = FenceTracker()
     opens = 0
     closes = 0
     for raw in lines:
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
         opens += raw.count("<!--")
         closes += raw.count("-->")
@@ -240,15 +227,12 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     # and rendered Markdown stay aligned. Repeated `1.` markers are intentionally
     # rejected in this project.
     ordered_re = re.compile(r"^(\s*)(\d+)\.\s+\S")
-    in_fence = False
+    fence = FenceTracker()
     prev_indent: str | None = None
     prev_num: int | None = None
     prev_line_was_item = False
     for i, raw in enumerate(lines, start=1):
-        if _FENCE_RE.match(raw):
-            in_fence = not in_fence
-            continue
-        if in_fence:
+        if fence.consume(raw):
             continue
 
         match = ordered_re.match(raw)

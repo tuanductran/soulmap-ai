@@ -152,6 +152,41 @@ def test_markdown_parsing_slug_anchor_and_reference_helpers() -> None:
     ]
 
 
+def test_fence_tracker_requires_matching_marker_and_length_to_close() -> None:
+    lines = [
+        "# Title\n",
+        "\n",
+        "````markdown\n",
+        "Nested example fence:\n",
+        "\n",
+        "```python\n",
+        "x = 1\n",
+        "```\n",
+        "\n",
+        "The inner triple-backtick fence must not close the outer one.\n",
+        "````\n",
+        "\n",
+        "## Real heading after\n",
+    ]
+
+    assert markdown_support.extract_heading_anchors(lines) == [
+        markdown_support.MarkdownHeadingAnchor("title", "Title", 1),
+        markdown_support.MarkdownHeadingAnchor(
+            "real-heading-after", "Real heading after", 13
+        ),
+    ]
+
+    tracker = markdown_support.FenceTracker()
+    assert tracker.consume("plain text\n") is False
+    assert tracker.consume("```\n") is True
+    assert tracker.in_fence is True
+    # A mismatched marker char does not close the fence, only content inside it.
+    assert tracker.consume("~~~\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("```\n") is True
+    assert tracker.in_fence is False
+
+
 def test_markdown_target_helpers_handle_fragments_external_and_local_paths(
     tmp_path: Path,
 ) -> None:

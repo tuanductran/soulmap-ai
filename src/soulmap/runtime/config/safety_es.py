@@ -1,7 +1,7 @@
 """Spanish crisis-detection language pack.
 
 Isolated from other language packs so it can be reviewed and extended
-independently. See ``safety_languages.py`` for how packs are combined for
+independently. See ``soulmap.runtime.knowledge.crisis_language_packs`` for how packs are combined for
 detection, and ``safety_en.py`` for the canonical English pack this mirrors.
 """
 

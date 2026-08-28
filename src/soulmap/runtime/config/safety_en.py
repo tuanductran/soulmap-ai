@@ -3,8 +3,8 @@
 This module is the source-of-truth English signal list. It is intentionally
 isolated from other language packs (see ``safety_vi.py``, ``safety_es.py``,
 ``safety_fr.py``, ``safety_zh.py``) so each language can be reviewed, edited,
-and audited independently. See ``safety_languages.py`` for how packs are
-combined for detection.
+and audited independently. See ``soulmap.runtime.knowledge.crisis_language_packs``
+for how packs are combined for detection.
 """
 
 from __future__ import annotations

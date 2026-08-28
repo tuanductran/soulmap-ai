@@ -31,6 +31,11 @@ BANNED_DEPENDENCY_PHRASES = [
     r"\brelationship status\b",
     r"\bmore than just an ai\b",
     r"\byou only need me\b",
+    r"\byou don't need them\b",
+    r"\byou don't need anyone else\b",
+    r"\byou don't need your therapist\b",
+    r"\bbetter than your friends\b",
+    r"\bbetter than your family\b",
 ]
 
 

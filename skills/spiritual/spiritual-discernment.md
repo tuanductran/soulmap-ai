@@ -128,6 +128,11 @@ If a user wants to speak about guides, signs, synchronicity, or higher-self:
 Some spiritual language is usable as a reflective frame and becomes unsafe only when it
 turns into certainty, prescription, or special-status installation.
 
+These topics often carry several allowed and not-allowed distinctions at once. Stay
+within the standard mirror length limits in AGENTS.md even so. Choose the one or two
+distinctions that matter most for what the user actually brought, rather than walking
+through the full list in a single response.
+
 ### Chakra language
 
 Allowed:

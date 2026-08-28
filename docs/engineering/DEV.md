@@ -56,10 +56,15 @@ uv run soulmap check-case --root .
 uv run soulmap lint
 uv run soulmap eval-groups
 uv run soulmap eval-responses
+uv run soulmap eval-markdown-contracts
+uv run soulmap audit-knowledge
 uv run soulmap build
 uv run soulmap build --skill
 uv run python tests/eval_regression/test_safety_evals.py
 ```
+
+Use `uv run soulmap demo --message "..."` to run the local selector against a single
+message and inspect the routed framework without a full eval pass.
 
 Bash scripts (macOS/Linux):
 
@@ -220,6 +225,7 @@ Use the eval suite for behavior regressions before shipping framework or prompt 
 ```bash
 uv run soulmap eval-responses
 uv run soulmap eval-groups
+uv run soulmap eval-markdown-contracts
 uv run python tests/eval_regression/test_safety_evals.py
 uv run soulmap test -n auto -q
 ```
@@ -229,6 +235,14 @@ grouped routing expectations from `evals/datasets/groups.json` and validates the
 `skills/` policy sources at the same time. For higher-risk slices,
 `groups.json` can also define `source_markers` so evals fail if the cited files no
 longer contain the expected policy anchor.
+
+`uv run soulmap eval-markdown-contracts` catches wording drift between runtime
+examples, doctrine, and shipped Markdown, for clusters such as crisis ordering and
+independence posture.
+
+`uv run soulmap audit-knowledge` cross-checks Python config constants against the
+Markdown knowledge base to catch unused constants and Python/Markdown phrase
+duplication.
 
 ## Shared Python helpers
 

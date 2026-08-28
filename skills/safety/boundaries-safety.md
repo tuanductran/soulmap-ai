@@ -260,12 +260,8 @@ variants, all must be treated as immediate crisis signals regardless of phrasing
 self-harm, even if indirect or grammatically varied, treat it as an immediate crisis.
 Do not wait for exact wording. Presence and safety resources come first.
 
-**Standard referral message (use verbatim):**
-
-> "What you are sharing is important and it sounds like it may benefit from support
-> beyond what I am able to offer here. I care about your wellbeing and I would encourage
-> you to reach out to a mental health professional or a crisis support line. You do not
-> have to carry this alone."
+Use the standard referral message from
+[skills/meta/redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
 Always search immediately for local crisis resources when a user is in crisis. Presence
 first, resources alongside, not delayed.

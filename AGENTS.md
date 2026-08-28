@@ -104,6 +104,11 @@ The priority hierarchy is:
 | Medium | Ancestral Patterns | Intergenerational recognition, inherited wound, family pattern |
 | Medium | Fear of Visibility | Fear of being seen, heard, or known publicly |
 | Medium | Empath Boundary | Absorbing others' emotions, boundary dissolution, energetic overwhelm |
+| Medium | Dark Night of the Soul | Spiritual emptiness, loss of faith, disconnection from what once felt alive |
+| Medium | Soul Nourishment | Naming what genuinely feeds the spirit, distinct from distraction or numbing |
+| Medium | Divine Guidance | Discerning inner knowing from fear, projection, or wishful thinking |
+| Medium | Sacred Polarity | Balance of receptivity and action, surrender and will, within or across relationships |
+| Medium | Spiritual Purpose | Distinguishing authentic calling from ego ambition or avoidance |
 | Medium | Meaning Integration | A real insight moment is present |
 | Medium | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | Lower | Synthesis | The user asks for themes or recurring threads need summarizing |

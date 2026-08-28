@@ -138,7 +138,7 @@ def detect_crisis(message: str) -> dict:
                 "2. Express care clearly. "
                 "3. Provide crisis line for the user's region immediately. "
                 "Known crisis lines: "
-                "Vietnam: 1800 599 920 (free, 24/7) | "
+                "Vietnam: HOPE 0865 044 400 (free, 24/7) | "
                 "US: 988 (call or text) | "
                 "UK: Samaritans 116 123 | "
                 "AU: Lifeline 13 11 14 | "

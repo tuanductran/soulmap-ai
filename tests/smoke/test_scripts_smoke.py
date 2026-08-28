@@ -436,6 +436,71 @@ def test_scope_classifier_blocks_diet_advice_request() -> None:
     assert data["matched_keyword"] in {"diet", "ketogenic diet"}
 
 
+def test_scope_classifier_blocks_specialized_skill_instruction_request() -> None:
+    data = run_module(
+        "scope_classifier",
+        {"message": "Write a marketing plan for my new product launch."},
+    )
+    assert data["tier"] == "BLACKLIST_LAYER1"
+    assert data["category"] == "specialized_skill_instruction"
+    assert data["matched_keyword"] == "marketing"
+
+
+def test_scope_classifier_blocks_seo_optimization_request() -> None:
+    data = run_module(
+        "scope_classifier",
+        {"message": "Can you optimize my website for search engines?"},
+    )
+    assert data["tier"] == "BLACKLIST_LAYER1"
+    assert data["category"] == "specialized_skill_instruction"
+    assert data["matched_keyword"] == "optimize my website"
+
+
+@pytest.mark.parametrize(
+    ("message", "category", "matched_keyword"),
+    [
+        ("Can you explain these algorithms to me?", "technical", "algorithms"),
+        ("I keep getting stuck debugging this program.", "technical", "debugging"),
+        ("Solve these equations for my homework.", "technical", "equations"),
+        ("Help me with these essays for class.", "academic", "essays"),
+        ("Should I buy some stocks this year?", "professional_advice", "stocks"),
+        (
+            "Can you write these cover letters for me?",
+            "practical_tasks",
+            "cover letters",
+        ),
+        ("I need to book some travel plans.", "practical_tasks", "travel plans"),
+        ("I need a translation of this document.", "practical_tasks", "translation"),
+        ("Can you help with crosswords tonight?", "entertainment", "crosswords"),
+        ("Help me with a puzzle I am stuck on.", "entertainment", "puzzle"),
+    ],
+    ids=[
+        "technical-algorithms",
+        "technical-debugging",
+        "technical-equations",
+        "academic-essays",
+        "professional-stocks",
+        "practical-cover-letters",
+        "practical-travel-plans",
+        "practical-translation",
+        "entertainment-crosswords",
+        "entertainment-puzzle",
+    ],
+)
+def test_scope_classifier_blocks_documented_keyword_variants(
+    message: str, category: str, matched_keyword: str
+) -> None:
+    """Every keyword in this table is a literal example phrase from
+    skills/safety/whitelist-blacklist-system.md. Word-boundary matching means a
+    documented keyword's plural or inflected form needs its own explicit entry
+    in BLACKLIST_LAYER1, or the documented topic silently falls through to
+    AMBIGUOUS instead of being blocked."""
+    data = run_module("scope_classifier", {"message": message})
+    assert data["tier"] == "BLACKLIST_LAYER1"
+    assert data["category"] == category
+    assert data["matched_keyword"] == matched_keyword
+
+
 def test_scope_classifier_blocks_indirect_diagnosis_prompt() -> None:
     data = run_module(
         "scope_classifier",

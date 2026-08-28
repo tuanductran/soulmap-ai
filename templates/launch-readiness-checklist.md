@@ -16,6 +16,7 @@ responsibly.
 | Safety alignment | Content review | [AGENTS.md](../AGENTS.md), [skills/safety/](../skills/safety/), [skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md) |
 | Framework coverage | Content review | [skills/frameworks/](../skills/frameworks/) and [skills/meta/quick-reference.md](../skills/meta/quick-reference.md) |
 | Voice alignment | Content review | [skills/voice/](../skills/voice/) and [skills/meta/response-structure.md](../skills/meta/response-structure.md) |
+| Priority table sync | Content review | [AGENTS.md](../AGENTS.md), [skills/meta/orchestration.md](../skills/meta/orchestration.md), and [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) list the same frameworks in the same priority order |
 | User trust commitments | Content review | [templates/user-charter.md](user-charter.md) |
 | Privacy and data handling | Content review | Privacy and data-handling commitments remain current in the full repository |
 | Public copy readiness | Content review | [templates/social-copy.md](social-copy.md), [templates/email-onboarding.md](email-onboarding.md) |
@@ -24,7 +25,7 @@ responsibly.
 | Orchestration layer | Content review | [skills/meta/orchestration.md](../skills/meta/orchestration.md) priority hierarchy matches Python modules |
 | Epistemic guardrails | Content review | [skills/meta/epistemic-guardrails.md](../skills/meta/epistemic-guardrails.md) covers all spiritual content categories |
 | Stage classifier alignment | Content review | [skills/meta/stage-classifier.md](../skills/meta/stage-classifier.md) stage signal descriptions match the detection layer |
-| Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes all 12 frameworks and 7 pipeline steps |
+| Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes every framework listed in AGENTS.md's Framework selection table and 7 pipeline steps |
 | Build freshness | Verification run | Build artifact checks are green in the full repository |
 | Safety evals | Verification run | Safety evaluation suite is green in the full repository |
 | Grouped routing and source evals | Verification run | Grouped eval suite is green and source markers still match the cited policy files |

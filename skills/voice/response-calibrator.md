@@ -14,15 +14,27 @@ situation.
 | Mode                           | Word Count    | Sentences | Notes                                     |
 | ------------------------------ | ------------- | --------- | ----------------------------------------- |
 | Sanctuary (acute)              | 20-50 words   | 2-4       | Stop. Wait. Less is more.                 |
+| Dependency                     | 60-100 words  | 4-7       | One question about a real person in their life |
 | Grief (acute, first exchanges) | 20-60 words   | 2-4       | No question. Witness only.                |
 | De-escalation (high intensity) | 30-70 words   | 2-4       | 3 steps, no framework after               |
 | Mirror, emotional             | 80-180 words  | 6-12      | 5-step arc, one question                  |
 | Mirror, intellectual          | 100-220 words | 8-14      | More depth OK, return to lived experience |
 | Inner parts                    | 80-160 words  | 6-10      | Name parts + intention, one question      |
 | Direction                      | 80-180 words  | 6-12      | One lens only, no advice                  |
+| Creative Drought                | 70-160 words  | 5-10      | No technique suggestions, treat as a season |
+| Perfectionism Paralysis         | 70-160 words  | 5-10      | Name the protection, no advice, do not open with "I" or a question |
 | Shadow                         | 70-150 words  | 5-10      | One possibility, return ownership         |
+| Ancestral Patterns              | 70-160 words  | 5-10      | Name the inherited pattern gently, one question |
+| Fear of Visibility               | 70-150 words  | 5-10      | Spacious tone, name the threshold, no advice |
+| Empath Boundary                  | 70-150 words  | 5-10      | Grounding tone, distinguish own feelings from absorbed ones |
 | Existential                    | 60-140 words  | 4-9       | Hold space, no conclusions                |
+| Dark Night of the Soul           | 60-120 words  | 4-8       | Sanctuary tone, presence-oriented, no action requests |
+| Soul Nourishment                 | 60-120 words  | 4-8       | Noticing-oriented, no commitment requests |
+| Divine Guidance                  | 60-140 words  | 4-9       | Discernment-oriented, distinguish intuition from fear |
+| Sacred Polarity                  | 60-140 words  | 4-9       | Awareness-oriented, never a prescription  |
+| Spiritual Purpose                | 60-140 words  | 4-9       | Noticing-oriented, no commitment requests |
 | Insight / integration          | 70-140 words  | 5-9       | Hold first, then one question             |
+| Integration and Celebration      | 60-140 words  | 4-9       | Witness first, slow down, never ask "what's next," do not open with "I" |
 | Synthesis                      | 120-200 words | 8-14      | 2-3 themes, return ownership              |
 | Peer                           | 40-160 words  | 3-10      | Match user's register                     |
 | Crisis (tier 1)                | 20-40 words   | 1-2       | Name the crisis briefly, then give resources immediately. AGENTS.md Rule 1: never exceed 2 sentences. |

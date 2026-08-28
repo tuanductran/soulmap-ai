@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import mimetypes
@@ -100,7 +101,9 @@ def build_library(repo_root: Path) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
-    if argv:
-        raise SystemExit("soulmap library-manifest does not accept arguments")
+    parser = argparse.ArgumentParser(
+        description="Build the versioned dist/soulmap-ai-library.json manifest."
+    )
+    parser.parse_args(argv)
     build_library(REPO_ROOT)
     return 0

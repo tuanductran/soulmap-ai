@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import os
 import shutil
 import subprocess
@@ -31,7 +32,10 @@ def _run(args: list[str], *, cwd: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    _ = argv
+    parser = argparse.ArgumentParser(
+        description="Bootstrap the local .venv and install git hooks."
+    )
+    parser.parse_args(argv)
     repo_root = REPO_ROOT
     venv_dir = repo_root / ".venv"
 

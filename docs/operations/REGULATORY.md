@@ -20,11 +20,22 @@ Consult qualified legal counsel for jurisdiction-specific compliance decisions.
 safeguards for detecting suicidal ideation and disclosing to users that they are
 not speaking with a human.
 
-**California SB 243** requires AI companions targeting minors to monitor chat and
-remind users every three hours that the chatbot is an AI.
+**California SB 243** (effective January 2026) requires AI companions targeting
+minors to monitor chat and remind users every three hours that the chatbot is an AI.
+It is also the first state law giving users a private right of action for
+companion-chatbot harms.
+
+**Connecticut SB 5** and **Washington's Chatbot Disclosure Act** (both taking effect
+2027) restrict "manipulative techniques intended to extend interaction" and
+responses that isolate users from real-world relationships or support networks.
 
 **Federal** activity is increasing. Several proposals focus on transparency, crisis
 detection, and dependency prevention in consumer AI products.
+
+**Clinical guidance:** the American Psychological Association issued a 2025 Health
+Advisory on generative-AI chatbots used for mental health support, recommending
+active crisis-detection protocols and clear limits on chatbots substituting for
+professional care.
 
 ### European Union
 
@@ -43,7 +54,8 @@ to vulnerable individuals.
 
 | Regulatory Requirement | SoulMap AI Status |
 | :--- | :--- |
-| AI identity disclosure when sincerely asked | PARTIAL, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `src/soulmap/devtools/evals/eval_responses.py`: wording is not fully runtime-enforced |
+| AI identity disclosure when sincerely asked | PARTIAL, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `src/soulmap/devtools/evals/eval_responses.py`: wording is not fully runtime-enforced. AGENTS.md Rule 2 is reactive (disclose when asked), while the EU AI Act's August 2026 transparency obligation trends toward proactive AI disclosure, a gap this table tracks but does not resolve |
+| Dependency detector covers "isolating from real relationships" and "manipulative techniques to extend interaction" (Connecticut SB 5 / Washington Chatbot Disclosure Act framing) | CROSS-CHECKED, split across two layers: `dependency_detector.py` scores the user's own isolation language (input side), while `resource_sanitizer.py`'s `BANNED_DEPENDENCY_PHRASES` blocks SoulMap's own re-engagement-pressure wording ("come back anytime," "you only need me") from generated responses (output side, ADR 0002). The output-side list had no coverage for SoulMap discouraging real-world relationships specifically ("you don't need them," "better than your friends"), the statutes' more direct concern; closed with 5 new curated phrases and regression cases T076-T077 |
 | Crisis detection and escalation to human help | BUILT IN, `src/soulmap/runtime/detectors/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
 | Anti-dependency safeguards | BUILT IN, `src/soulmap/runtime/detectors/dependency_detector.py` fires on first signal: hard redirect |
 | No diagnosis or clinical claims | PARTIAL, doctrine plus runtime blocking and eval coverage: refusal wording is not fully production-enforced |
