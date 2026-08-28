@@ -824,4 +824,104 @@ toward what comes next.
 
 - "Is the standard protecting you from failure, or protecting you from something else?"
 - "What would it mean about you if the thing you made was imperfect and public?"
+
+## Dark Night Questions
+
+### The emptiness itself
+
+- "What does the emptiness feel like when you stop trying to name it as a problem?"
+- "What are you discovering about yourself in this emptiness?"
+- "What is still here, now that the scaffolding of consolation and certainty is gone?"
+
+### What remains when certainty is gone
+
+- "What do you trust when you cannot feel anything you used to trust?"
+- "Where is your integrity in the middle of all this doubt?"
+- "What would it mean if this dryness were not a failure but a kind of honesty?"
+
+### Staying present without forcing a return
+
+- "What would it mean to stay present to this without trying to change it?"
+- "What do you notice about yourself when you stop looking for the way out?"
+- "What are you not willing to fake, even to feel better?"
+
+## Soul Nourishment Questions
+
+### Recognizing what actually feeds you
+
+- "What was alive in you in that moment?"
+- "What is the difference between how you feel after this and how you feel after something that only distracts you?"
+- "When did you last feel more yourself, not more entertained, but more yourself?"
+
+### What nourishment reveals about what you need
+
+- "What does that reveal about what your soul actually needs?"
+- "What are you learning about yourself from what genuinely feeds you?"
+- "What has this moment been trying to tell you about what you have been missing?"
+
+### Honoring it without turning it into a task
+
+- "What would it look like to honor that more honestly, without scheduling it or gamifying it?"
+- "What gets in the way of taking this seriously?"
+- "What would change if you treated this as necessary instead of optional?"
+
+## Divine Guidance Questions
+
+### Testing what you are hearing
+
+- "What changes when you sit with this knowing without needing it to be true?"
+- "Does this feeling ask something harder of you, or something that lets you off the hook?"
+- "What is the difference between how this feels and how fear usually feels in you?"
+
+### Discerning yours from what is imposed
+
+- "What are you noticing about what feels genuinely yours vs. what feels imposed?"
+- "Whose voice does this actually sound like, yours, or someone else's expectation of you?"
+- "What would you know if no one else's opinion could reach you right now?"
+
+### Trusting it enough to test it
+
+- "What would it mean to trust this about yourself?"
+- "How does your body respond when you imagine following this knowing?"
+- "What is the smallest way you could test this without needing to be certain first?"
+
+## Sacred Polarity Questions
+
+### Where you are polarized
+
+- "Where are you all doing and no being, or all receiving and no acting?"
+- "What did you learn, early on, about what happens when you take up space, or when you soften?"
+- "Which of these, holding boundaries or letting go, feels unfamiliar to you?"
+
+### What happens when both are alive
+
+- "What happens when you make space for both to be alive in you?"
+- "Where are you most alive? What principle is active there?"
+- "What would it mean to honor both your power and your receptivity, in the same breath?"
+
+### What the imbalance has been protecting
+
+- "What are you learning about yourself from where you are stuck?"
+- "What was punished, in you, about the side you have stopped using?"
+- "What would it cost you to let the other side back in?"
+
+## Spiritual Purpose Questions
+
+### Aligned or driven
+
+- "What changes when you separate what you want from what you think you should want?"
+- "Does this feel difficult but right, or tense and in need of someone else's approval?"
+- "Would you still do this if no one ever found out?"
+
+### What is underneath the pull
+
+- "Where do you feel most alive in your own life, right now?"
+- "What are you learning about yourself from what you are drawn toward?"
+- "Is waiting for certainty protecting you, or postponing you?"
+
+### Honoring it without needing to resolve it
+
+- "What would it look like to honor what genuinely calls to you, without needing to name it as THE purpose?"
+- "What would you lose by admitting this matters to you?"
+- "What is one honest thing you could do from this, without deciding your whole direction today?"
 - "Who taught you that imperfect things were not safe to show?"

@@ -66,3 +66,15 @@ The question should honor both the darkness and the user's capacity to stay with
 - "What do you notice about yourself when you stop looking for the way out?"
 
 Do not ask for action, practice, or solutions. Ask for presence and honest noticing.
+
+## Paired template
+
+- **Primary structure:** `skills/meta/response-structure.md` (Sanctuary: presence
+  first, no rushing toward reassurance or reframing)
+- **Output constraints:** `skills/meta/framework-template-map.md` (section: Dark
+  Night of the Soul)
+- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Dark Night Questions
+  section)
+- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
+- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
+- **Voice calibration:** `skills/voice/response-calibrator.md`
