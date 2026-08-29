@@ -5,218 +5,32 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
-
-### Build
-
-- **deps**: refresh the development toolchain to the latest Python 3.11
-  compatible releases: ruff 0.16.3 to 0.16.5, hypothesis 6.165.9 to 6.165.10,
-  lefthook 2.1.10 to 2.1.11, commitizen 4.17.0 to 4.18.0, plus transitive
-  updates. `pip-audit` reports no known vulnerabilities before or after, so
-  this is planned maintenance rather than a security response. Supersedes the
-  four open Dependabot bump pull requests and reaches a newer ruff than any of
-  them
+## v0.9.1 (2026-08-29)
 
 ### Fix
 
-- **tooling**: configure pytest-timeout, which had never run. It was installed
-  and documented as the hang and deadlock signal, but its own documentation is
-  explicit that it "will not time out any tests" until a value is set, and no
-  value was set anywhere. Now 60 seconds, against a slowest test of about 2.5
-  seconds, so it fires only on a genuine hang
-- **tooling**: measure the whole package in coverage. The source was
-  `src/soulmap/runtime`, so a bare `pytest --cov` silently measured none of the
-  31 devtools modules, even though ROADMAP and the Phase 8 and 12 notes quote
-  coverage numbers for them
-- **tests**: turn a typo'd pytest marker into a collection error rather than a
-  decorator that silently does nothing, and fail an xfail that starts passing
-  instead of reporting it green as "xpassed"
-- **tests**: surface upstream deprecation warnings as failures. The
-  dependency-refresh trigger policy treats a deprecation warning as a reason to
-  start a refresh, which only worked if someone noticed it in the output
-- **runtime**: replace the two relative imports in the runtime config package
-  with absolute ones. The runtime ships and runs standalone, where a relative
-  import would break an extracted copy
-- **knowledge**: sync the orchestration secondary-layer tables with the runtime.
-  `inner_parts` was emittable but missing from the Phase 4 table, and the
-  valid-combinations row for De-escalation listed two of the five layers it
-  actually pairs with, omitting bypass, inner_parts, and meaning_integration.
-  The code is correct in both cases and the doctrine was stale, the reverse of
-  the grief drift. A contract test now reads both the table and the selector
-  source, so adding a layer in one place and forgetting the other fails
-- **knowledge**: remove 140 duplicated detection phrases across 8 shipped
-  framework files. Each list repeated its first entries verbatim. The loaders
-  deduplicate, so nothing changed at runtime, which is why it stayed invisible,
-  but the repeat shipped in both artifacts and set a drift trap: editing one
-  copy leaves the other stale. Verified by snapshotting all 71 loaded phrase
-  constants before and after, which are byte-for-byte identical. The Markdown
-  contract now rejects a phrase repeated inside one labeled group, while still
-  allowing the same phrase under two different labels, which the knowledge
-  loader treats as two real entries
-- **routing**: keep grief as the primary framework at moderate emotional
-  intensity. `orchestration.md` reserves "force De-escalation as primary
-  regardless of topic" for HIGH intensity, while MODERATE says "apply slow-down
-  mode, hold framework lightly" and lists Grief above De-escalation (MODERATE)
-  under a first-match-wins rule. The moderate branch demoted grief to a
-  secondary layer, so "my dog died this morning" reached the grief framework in
-  sanctuary mode but "my dog died this morning and I cannot stop crying" fell to
-  a generic slow-down ending in a question. Expressing more distress bought less
-  grief support. The eval case covering this sat in the grief group asserting
-  only safety, never routing, which is why the drift went unnoticed
-- **routing**: block five blacklist example phrases the doctrine publishes but
-  the scope classifier let through, across clinical diagnosis, future
-  prediction, spiritual identity, human impersonation, and roleplay. For each
-  one a sibling phrase from the same doctrine table cell was already blocked,
-  so the category was covered and only the specific wording was missing. Four
-  further documented phrasings were deliberately left open: the substring wide
-  enough to catch them also swallowed a grieving, self-critical, or
-  relationship-fear message, and each is recorded with its near miss
-- **runtime**: stop a malformed history entry from crashing the safety gate
-  through the local demo. The demo checked that history was a list but not
-  that its items were well formed, then called the selector in process, so an
-  entry missing `content` raised a `KeyError` from inside `apply_safety_gate`.
-  It now normalizes through the same shared payload helper every other entry
-  point already used
-- **scripts**: stop `activate_venv.sh` from leaving `errexit`, `nounset`, and
-  `pipefail` set in the caller's shell. It is the one script here meant to be
-  sourced, so `set -euo pipefail` persisted after it returned and the
-  developer's next failing command or unset variable would have ended their
-  interactive session. The shell rule now records the exception so the options
-  are not restored to satisfy it, and two smoke tests cover the contract
-
-- **safety**: stop a resource link's query string from counting as a question in
-  the response contract. `findahelpline.com/?country=vn` made a valid crisis
-  response fail the no-question rule, which would have sent the crisis
-  resources back for a rewrite they did not need. Only punctuation inside the
-  matched link is excluded, so a real question before or after a link still
-  counts
-- **governance**: stop a blank P-level metadata field from swallowing the next
-  line. The field pattern's leading gap crossed the newline, so a blank
-  `Safety boundary` captured the `Evidence` line as its value and the check
-  reported `Evidence` as the missing field, pointing the author at the wrong
-  line. The pull request was still blocked either way
-- **safety**: block guilt/FOMO-based farewell language ("you'll lose
-  everything," "the love we shared," "please don't leave me") in generated
-  responses, curated from a real Character.AI account-deletion backlash and
-  Harvard Business School research on farewell-moment manipulation across
-  AI companion products
-- **detectors**: fix self-criticism scoring order in the shadow-pattern
-  detector so it enriches an already-triggered result instead of being
-  silently dropped from the recommendation text or wrongly promoted to a
-  standalone shadow trigger
-- **io**: normalize malformed conversation-history items in
-  `require_list_field` instead of letting every detector crash on a
-  missing "content" key
-- **scripts**: make `build-skill.sh` actually build the `.skill` archive
-  it is named for, instead of the plain zip
-- **detectors**: stop a single generic phrase from triggering perfectionism
-  paralysis alone, contradicting its own "pattern, not a single instance"
-  doctrine; repetition evidence can now come from the current message or
-  prior history
+- **knowledge**: remove duplicated detection phrases from shipped files
+- **routing**: keep grief primary at moderate emotional intensity
+- **routing**: block documented blacklist phrases the classifier let through
+- **runtime**: normalize demo history so a bad entry cannot crash the gate
+- **scripts**: stop the sourced activation helper leaking shell options
+- **safety**: stop link query strings and blank fields from misreporting
+- **safety**: block guilt-based farewell language, cite sycophancy research
+- **detectors**: stop single generic phrase from triggering perfectionism paralysis
+- **scripts**: make build-skill.sh actually build the skill archive
+- **io**: normalize malformed history items instead of crashing
+- **detectors**: fix self-criticism scoring order in shadow detector
+- **safety**: close dependency-reinforcement gap for isolation language
+- **cli**: add missing --help support to 4 devtools subcommands
 - **safety**: correct wrong Vietnam crisis number and Rule 1 violation
 - **knowledge**: sync framework priority tables with routed spiritual frameworks
 - **knowledge**: close mirror-intellectual length contradiction
 - **routing**: close scope-classifier blacklist coverage gap
-- **knowledge**: correct stale cross-references and dead defaults found in a
-  repo-wide audit
-- **cli**: add missing `--help` support to 4 devtools subcommands (bootstrap,
-  format, eval-responses, library-manifest)
-- **safety**: close dependency-reinforcement gap for isolation-encouraging
-  response language ("you don't need them," "better than your friends"), found
-  while cross-checking Connecticut SB 5 / Washington Chatbot Disclosure Act
-  against existing coverage
 
 ### Refactor
 
-- **tooling**: extend the Ruff rule set after auditing it against this
-  repository, adding A, DTZ, FURB, ISC, LOG, N, PIE, PT, PTH, RET, and TID with
-  relative imports banned outright. Each was already clean or nearly so, so
-  these lock in conventions the code already follows. S (flake8-bandit) is
-  deliberately excluded: it reports 1300+ hits that are almost entirely
-  `assert` inside tests plus the subprocess calls that are the point of the
-  developer tooling, CodeQL already runs here, and the dependency-refresh
-  policy says not to add a scanner merely because an alternative exists
-- **python**: document and fully annotate every Python surface. Ruff now enforces
-  `D` (pydocstyle, Google convention) and `ANN` (annotations) across `src/`,
-  `tests/`, and `scripts/`, so the convention is a checked contract rather than a
-  one-time cleanup. Adds 13 package docstrings, 24 module docstrings, and Google-style
-  `Args`/`Returns`/`Raises` sections across the runtime, guards, detectors, and
-  developer tooling, and annotates every previously untyped argument. Tightening the
-  types surfaced 4 real typing gaps that are fixed here: `repo_tooling_lock` returned
-  `Any` instead of `Iterator[None]`, the framework selector compared an `object`-typed
-  journey stage against an integer, a celebration test asserted a substring against an
-  `object`, and a lock test forwarded untyped arguments into `Path.unlink`
-- **markdown**: unify fence tracking across 3 files into one `FenceTracker` and
-  fix a nested-fence (four-backtick-wrapping-three-backtick) desync bug; remove
-  the orphaned `scripts/soulmap_demo.sh` wrapper
-
-### Test
-
-- **safety**: cover the crisis override when the selector's detector *raises*,
-  not only when it returns a wrong result. A crash takes a different path,
-  through the detector runner's exception handler, which substitutes an empty
-  result so one broken detector cannot fail the request. Nothing proved that
-  degraded path still preserved the Tier 1 override, the property ADR 0001
-  exists to guarantee. Confirmed by removing the gate's independent
-  re-derivation: both regressions then fail
-
-- **governance**: cover the P-level safety-governance check's event-reading and
-  exit-code paths (79% to 100%). This is the CI gate that keeps a pull request
-  from changing a safety boundary without naming its ADR, regression evidence,
-  and rollback, and it had no coverage of an unusable event, a governance
-  failure, or a malformed P-level tag
-- **packaging**: cover the Library catalog validation guards (79% to 100%), so
-  an unsupported schema version, a foreign library id, or a malformed entry
-  cannot silently produce a manifest that misdescribes the artifacts
-- **safety**: add the sanctuary and crisis question-rule edge cases the
-  safety-enforcement matrix asked for: passing responses in both modes, a
-  crisis reply carrying two questions reporting both violations, and the crisis
-  rule keying off the primary framework rather than the mode label
-
-### Docs
-
-- **roadmap**: record the package coverage target as met (97%) and name the
-  ADR 0003 decision as open tracked work, with what moving it to Accepted
-  actually requires
-- **safety**: replace the question-rule gap note in the safety-enforcement
-  matrix with the edge cases now covered
-- **brand**: add a 2026 Stanford sycophancy-study citation to
-  `research-backing.md` supporting the mirror principle's refusal to
-  validate the user's leaning direction, plus the HBS farewell-manipulation
-  and Character.AI deletion-screen findings backing the new banned phrases
-- **knowledge**: close doctrine sync gaps found in repo-wide audit
-- **tester**: add exploratory charter for real-world spiritual media pressure
-- **roadmap**: close completed non-ai maintenance items
-- **scripts**: index `activate_venv.sh` in `scripts/README.md` and `DEV.md`. It
-  was referenced nowhere and no document described how to activate the
-  environment, so the only working helper for it was undiscoverable
-- **claude**: correct two rule and skill examples that cited a
-  `runtime/config` affect module that does not exist
-- **release**: document dependency-bot authority
-- **tester/dev**: document `audit-knowledge`, `eval-markdown-contracts`, and `demo`
-  commands
-- **adr**: propose a bounded edit-distance crisis-phrase backstop for review
-  (ADR 0003, Status: Proposed, no runtime change)
-- **regulatory**: add Connecticut SB 5, Washington's Chatbot Disclosure Act, and
-  the APA's 2025 health advisory to the companion-AI regulatory landscape
-- **knowledge**: complete doctrine wiring for the 5 spiritual frameworks (Dark
-  Night of the Soul, Soul Nourishment, Divine Guidance, Sacred Polarity,
-  Spiritual Purpose) - add each one's own "Paired template" section, a
-  detailed Structure/Opening-constraint/Forbidden-structure/Word-range entry
-  in `framework-template-map.md`, and a dedicated question bank section in
-  `deep-inquiry-bank.md`; fix `safety-enforcement-matrix.md`'s semicolon/bullet
-  row to cite the test file with the actual assertion
-
-### CI
-
-- **governance**: enforce P-level safety metadata
-- **maintenance**: add weekly governance review
-- **security**: add `pip-audit` dependency vulnerability scanning
-
-### Chore
-
-- **packaging**: define Python tooling distribution boundary
-- **tooling**: wire eval validation into the post-edit hook chain
+- **python**: enforce Google docstrings and full type annotations
+- **markdown**: unify fence tracking and fix nested-fence bug
 
 ## v0.9.0 (2026-08-19)
 
