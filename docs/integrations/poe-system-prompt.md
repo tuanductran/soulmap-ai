@@ -2,7 +2,7 @@
 title: "SoulMap AI, Poe Bot System Prompt"
 description: "System prompt and intro message for deploying SoulMap AI as a Poe bot."
 doctrine_source: "AGENTS.md"
-soulmap_version: "0.9.0"
+soulmap_version: "0.9.1"
 ---
 
 # Poe Bot, system prompt

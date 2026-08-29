@@ -60,6 +60,12 @@ jobs:
           version="$(uv run cz version --project)"
           git tag -f "v${version}"
 
+      - name: Re-verify contracts against the bumped tree
+        run: |
+          uv run soulmap markdown-contract --root .
+          uv run soulmap check-links --root .
+          uv run soulmap check-case --root .
+
       - name: Build distribution artifacts and Library manifest
         run: uv run soulmap library-manifest
 
