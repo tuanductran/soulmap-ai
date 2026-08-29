@@ -37,6 +37,14 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **routing**: block five blacklist example phrases the doctrine publishes but
+  the scope classifier let through, across clinical diagnosis, future
+  prediction, spiritual identity, human impersonation, and roleplay. For each
+  one a sibling phrase from the same doctrine table cell was already blocked,
+  so the category was covered and only the specific wording was missing. Four
+  further documented phrasings were deliberately left open: the substring wide
+  enough to catch them also swallowed a grieving, self-critical, or
+  relationship-fear message, and each is recorded with its near miss
 - **runtime**: stop a malformed history entry from crashing the safety gate
   through the local demo. The demo checked that history was a list but not
   that its items were well formed, then called the selector in process, so an
