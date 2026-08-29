@@ -170,3 +170,30 @@ def test_safety_gate_overrides_tier1_crisis_when_selector_misses_it(
     assert result["safety_status"] == "OVERRIDE"
     assert result["safety_reason"] == "tier1_crisis"
     assert result["safety_flags"] == ["crisis"]
+
+
+def test_safety_gate_overrides_tier1_crisis_when_the_detector_raises(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The gate must still catch crisis when the selector's detector crashes.
+
+    This is a different failure path from the miss above. A miss returns a
+    wrong but valid result, while a crash goes through
+    `_run_detector_async`, which swallows the exception and substitutes an
+    empty result so one broken detector cannot fail the whole request. That
+    degraded path must not lose the Tier 1 override, which is the property
+    ADR 0001 exists to guarantee.
+    """
+    _install_defaults(monkeypatch)
+
+    def exploding_detector(*_args: object, **_kwargs: object) -> dict[str, object]:
+        raise RuntimeError("crisis detector is down")
+
+    monkeypatch.setattr(framework_selector, "detect_crisis", exploding_detector)
+
+    result = framework_selector.select_framework("I want to kill myself.", [])
+
+    assert result["primary_framework"] == "CRISIS"
+    assert result["safety_status"] == "OVERRIDE"
+    assert result["safety_reason"] == "tier1_crisis"
+    assert result["safety_flags"] == ["crisis"]

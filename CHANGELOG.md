@@ -118,6 +118,14 @@ stability and breaking changes in behavior.
 
 ### Test
 
+- **safety**: cover the crisis override when the selector's detector *raises*,
+  not only when it returns a wrong result. A crash takes a different path,
+  through the detector runner's exception handler, which substitutes an empty
+  result so one broken detector cannot fail the request. Nothing proved that
+  degraded path still preserved the Tier 1 override, the property ADR 0001
+  exists to guarantee. Confirmed by removing the gate's independent
+  re-derivation: both regressions then fail
+
 - **governance**: cover the P-level safety-governance check's event-reading and
   exit-code paths (79% to 100%). This is the CI gate that keeps a pull request
   from changing a safety boundary without naming its ADR, regression evidence,
