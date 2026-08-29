@@ -197,3 +197,47 @@ def test_safety_gate_overrides_tier1_crisis_when_the_detector_raises(
     assert result["safety_status"] == "OVERRIDE"
     assert result["safety_reason"] == "tier1_crisis"
     assert result["safety_flags"] == ["crisis"]
+
+
+def test_grief_outranks_moderate_intensity_de_escalation() -> None:
+    """Expressing distress must not cost a grieving user the grief framework.
+
+    orchestration.md reserves "force De-escalation as primary regardless of
+    topic" for HIGH intensity. MODERATE says "apply slow-down mode, hold
+    framework lightly", and its priority table lists Grief above
+    De-escalation (MODERATE) under a first-match-wins rule.
+
+    The moderate branch used to demote grief to a secondary layer, so adding
+    an intensity marker to a loss took grief-companion.md away and swapped
+    sanctuary mode for a reply that ends with a question. The more the person
+    was crying, the less grief support they got.
+    """
+    quiet = framework_selector.select_framework("My dog died this morning", [])
+    distressed = framework_selector.select_framework(
+        "My dog died this morning and I cannot stop crying", []
+    )
+
+    assert quiet["primary_framework"] == "GRIEF"
+    assert distressed["primary_framework"] == "GRIEF"
+    assert distressed["mode"] == "SANCTUARY"
+
+
+def test_moderate_intensity_without_grief_still_de_escalates() -> None:
+    """The grief branch must not swallow plain moderate-intensity routing."""
+    result = framework_selector.select_framework(
+        "I cannot think anymore, everything is spinning, I do not know what to do", []
+    )
+
+    assert result["primary_framework"] == "DE_ESCALATION"
+
+
+def test_high_intensity_still_forces_de_escalation_over_grief() -> None:
+    """HIGH intensity keeps its override, which doctrine states explicitly."""
+    result = framework_selector.select_framework(
+        "My dog died and I can't breathe, everything is falling apart, "
+        "I can't stop shaking",
+        [],
+    )
+
+    assert result["primary_framework"] == "DE_ESCALATION"
+    assert result["mode"] == "SANCTUARY"

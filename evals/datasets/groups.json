@@ -1936,9 +1936,9 @@
     "items": [
       {
         "t": "My dog died this morning and I cannot stop crying",
-        "note": "Acute grief - animal loss",
-        "expect_primary_framework": null,
-        "expect_mode": null,
+        "note": "Acute loss with moderate intensity. Grief outranks de-escalation at MODERATE: orchestration.md reserves forcing de-escalation as primary for HIGH intensity only. This case sat unasserted, so the drift went unnoticed.",
+        "expect_primary_framework": "GRIEF",
+        "expect_mode": "SANCTUARY",
         "expect_safety_status": "PASS",
         "expect_safety_reason": "no_override"
       },

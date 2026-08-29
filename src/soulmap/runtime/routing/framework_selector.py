@@ -48,6 +48,11 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
     synthesize,
 )
 
+# The grief types that claim the primary route, per the priority table in
+# skills/meta/orchestration.md. Shared by the moderate-intensity branch and the
+# normal-intensity branch so the two cannot drift apart.
+_GRIEF_TYPES = ("acute", "anticipatory", "ambiguous", "complicated")
+
 
 def _analyze_synthesis(
     message: str,
@@ -314,11 +319,41 @@ async def select_framework_async(
         }
         insight, grief, conflict = await asyncio.gather(*tasks.values())
 
+        # Grief outranks moderate-intensity de-escalation. orchestration.md
+        # reserves "force De-escalation as primary regardless of topic" for HIGH
+        # intensity; MODERATE says "apply slow-down mode, hold framework
+        # lightly", and its priority table lists Grief above
+        # De-escalation (MODERATE) under a first-match-wins rule.
+        #
+        # Demoting grief to a secondary layer here meant that adding an
+        # expression of distress to a loss took grief-companion.md away: "my dog
+        # died this morning" reached GRIEF in sanctuary mode, while "my dog died
+        # this morning and I cannot stop crying" fell to a generic slow-down
+        # that ends with a question. The person crying got the longer, more
+        # question-ended response.
+        if grief.get("grief_detected") and grief.get("grief_type") in _GRIEF_TYPES:
+            selection = {
+                "primary_framework": "GRIEF",
+                "secondary_layer": (
+                    "meaning_integration" if insight.get("insight_detected") else None
+                ),
+                "mode": "SANCTUARY",
+                "context": {"grief": grief, "intensity": intensity},
+                "instruction": (
+                    "Activate grief-companion.md at moderate intensity. Ground "
+                    "first, then witness the loss before any reflection. Keep it "
+                    "short. End with one grief-specific question."
+                ),
+                "blocked": ["direction", "shadow", "existential", "synthesis"],
+            }
+            return _maybe_attach_debug(
+                _apply_safety_gate(message, history, memory, selection, debug_events),
+                debug_events,
+            )
+
         secondary = None
         if insight.get("insight_detected"):
             secondary = "meaning_integration"
-        elif grief.get("grief_detected"):
-            secondary = "grief"
         elif conflict.get("conflict_detected"):
             secondary = "inner_parts"
 
@@ -517,11 +552,9 @@ async def select_framework_async(
             debug_events=debug_events,
         )
 
-    if res["grief"].get("grief_detected") and res["grief"].get("grief_type") in (
-        "acute",
-        "anticipatory",
-        "ambiguous",
-        "complicated",
+    if (
+        res["grief"].get("grief_detected")
+        and res["grief"].get("grief_type") in _GRIEF_TYPES
     ):
         secondary = (
             "meaning_integration" if res["insight"].get("insight_detected") else None
