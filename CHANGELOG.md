@@ -37,6 +37,16 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **routing**: keep grief as the primary framework at moderate emotional
+  intensity. `orchestration.md` reserves "force De-escalation as primary
+  regardless of topic" for HIGH intensity, while MODERATE says "apply slow-down
+  mode, hold framework lightly" and lists Grief above De-escalation (MODERATE)
+  under a first-match-wins rule. The moderate branch demoted grief to a
+  secondary layer, so "my dog died this morning" reached the grief framework in
+  sanctuary mode but "my dog died this morning and I cannot stop crying" fell to
+  a generic slow-down ending in a question. Expressing more distress bought less
+  grief support. The eval case covering this sat in the grief group asserting
+  only safety, never routing, which is why the drift went unnoticed
 - **routing**: block five blacklist example phrases the doctrine publishes but
   the scope classifier let through, across clinical diagnosis, future
   prediction, spiritual identity, human impersonation, and roleplay. For each
