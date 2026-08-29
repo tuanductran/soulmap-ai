@@ -347,6 +347,61 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     Issue(path, i, f"Broken cross-file anchor: {file_part}#{frag}")
                 )
 
+    issues.extend(_duplicate_detection_phrases(path, lines))
+
+    return issues
+
+
+def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
+    """Report a detection phrase listed twice inside the same labeled group.
+
+    The knowledge loaders deduplicate, so a repeat changes nothing at runtime
+    and stays invisible. It still ships in the extracted package, and it sets a
+    trap: a maintainer editing one copy leaves the other stale, which is how a
+    phrase list starts disagreeing with itself.
+
+    Each labeled group owns its own phrase namespace, because
+    ``extract_labeled_groups`` keys results by label. The same phrase appearing
+    under two different labels is legitimate and is not reported.
+
+    Args:
+        path: File being checked, used for the issue location.
+        lines: The file's lines, in order.
+
+    Returns:
+        One issue per repeated phrase, at the line of the repeat.
+    """
+    issues: list[Issue] = []
+    in_section = False
+    seen: set[str] = set()
+
+    for line_no, raw in enumerate(lines, start=1):
+        if raw.startswith("## "):
+            in_section = raw.strip() == "## Detection signals"
+            seen = set()
+            continue
+        if not in_section:
+            continue
+
+        match = re.match(r'^- "([^"]+)"\s*$', raw)
+        if match is None:
+            # A label line opens the next group and its own phrase namespace.
+            if raw.strip() and not raw.startswith("- "):
+                seen = set()
+            continue
+
+        phrase = match.group(1)
+        if phrase in seen:
+            issues.append(
+                Issue(
+                    path,
+                    line_no,
+                    f'Duplicate detection phrase in the same group: "{phrase}"',
+                )
+            )
+            continue
+        seen.add(phrase)
+
     return issues
 
 
