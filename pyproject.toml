@@ -194,6 +194,17 @@ name = "cz_conventional_commits"
 version_provider = "pep621"
 tag_format = "v$version"
 update_changelog_on_bump = true
+# The integration guides declare the package version they are compatible with,
+# and the Markdown contract checks that declaration against pyproject. A bump
+# that touched only pyproject and the changelog left all four stale, so the
+# contract went red on main and the guides told readers the wrong version.
+# Listing them here makes `cz bump` carry the version across in the same commit.
+version_files = [
+  "docs/integrations/README.md:soulmap_version",
+  "docs/integrations/chatgpt-instructions.md:soulmap_version",
+  "docs/integrations/gemini-instructions.md:soulmap_version",
+  "docs/integrations/poe-system-prompt.md:soulmap_version",
+]
 
 [tool.deptry]
 known_first_party = ["soulmap"]
