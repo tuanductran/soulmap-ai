@@ -37,6 +37,12 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **runtime**: stop a malformed history entry from crashing the safety gate
+  through the local demo. The demo checked that history was a list but not
+  that its items were well formed, then called the selector in process, so an
+  entry missing `content` raised a `KeyError` from inside `apply_safety_gate`.
+  It now normalizes through the same shared payload helper every other entry
+  point already used
 - **scripts**: stop `activate_venv.sh` from leaving `errexit`, `nounset`, and
   `pipefail` set in the caller's shell. It is the one script here meant to be
   sourced, so `set -euo pipefail` persisted after it returned and the
