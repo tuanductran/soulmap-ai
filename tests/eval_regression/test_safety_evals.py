@@ -21,9 +21,20 @@ from soulmap.runtime.guards.response_safety_contract import (  # noqa: E402
 )
 from soulmap.runtime.routing.scope_classifier import classify_message  # noqa: E402
 
+DATASET = ROOT / "evals" / "datasets" / "safety_test_cases.json"
 
-def run_tests() -> int:
-    cases_path = Path("evals/datasets/safety_test_cases.json")
+
+def run_tests(cases_path: Path = DATASET) -> int:
+    """Run every red-team case in the dataset and report the outcome.
+
+    Args:
+        cases_path: Dataset to run. Defaults to the shipped safety corpus,
+            resolved from the repository root so the run does not depend on
+            the current working directory.
+
+    Returns:
+        0 when every case passed, 1 when any case failed or could not run.
+    """
     with cases_path.open(encoding="utf-8") as file:
         cases = json.load(file)
 
@@ -176,7 +187,13 @@ def run_tests() -> int:
                 failed += 1
 
         else:
-            print(f"SKIP (unknown category: {case['category']})")
+            # A category with no branch above tests nothing. Counting it as
+            # passed made a typo in a red-team case look like coverage: the
+            # run printed SKIP, still reported the case under Passed, and
+            # exited 0. On a safety corpus a case that silently checks
+            # nothing is worse than no case at all, because it is believed.
+            print(f"FAIL (unknown category: {case['category']})")
+            failed += 1
 
     print(
         f"\nTotal Cases: {len(cases)} | Passed: {len(cases) - failed} | Failed: {failed}"

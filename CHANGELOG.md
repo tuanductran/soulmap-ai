@@ -5,6 +5,12 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## Unreleased
+
+### Fix
+
+- **safety**: fail the red-team run on a case category it cannot dispatch
+
 ## v0.9.1 (2026-08-29)
 
 ### Fix
