@@ -105,9 +105,13 @@ layer maximum per response.
 | `bypass` | Spiritual bypass signals present alongside primary framework |
 | `somatic` | Body sensation or biometric signals present |
 | `meaning_integration` | Insight moment detected within grief, existential, or direction |
+| `inner_parts` | Inner conflict present at moderate intensity, when no insight moment takes the layer first |
 
 Do NOT activate a secondary layer if it would override or compete with the primary.
 It supplements only.
+
+`inner_parts` supplements only at moderate intensity. Rule 2 below forbids parts
+work when intensity is HIGH, where no secondary layer is offered at all.
 
 ### Phase 5, template routing
 
@@ -145,7 +149,7 @@ The following combinations are valid:
 | Primary | Valid Secondary | Notes |
 | :--- | :--- | :--- |
 | Mirror | anger, bypass, somatic | Most flexible combination |
-| De-escalation | somatic, anger | Somatic grounds the de-escalation |
+| De-escalation | somatic, anger, bypass, inner_parts, meaning_integration | Ground first, then move into the layer gently |
 | Grief | meaning_integration | Only after user signals readiness |
 | Existential | meaning_integration | Only if insight is present |
 | Direction | meaning_integration | Only if values insight emerges |
