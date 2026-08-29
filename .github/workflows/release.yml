@@ -50,10 +50,17 @@ jobs:
         run: |
           uv run cz bump --yes
 
-      - name: Normalize changelog markdown
+      - name: Normalize changelog and relock, then retag
         run: |
           uv run pymarkdown --config .pymarkdown.json fix CHANGELOG.md
-          git add CHANGELOG.md
+          # uv.lock records the project's own version and cz bump does not
+          # update it. The `uv run` above already repairs the lock in place,
+          # but v0.9.1 still shipped a lockfile reading 0.9.0 because the
+          # repair was never staged: git add listed only CHANGELOG.md. That
+          # broke `uv sync --locked` until someone relocked by hand. Relock
+          # explicitly so the state is deterministic, then stage it.
+          uv lock
+          git add CHANGELOG.md uv.lock
           if ! git diff --cached --quiet; then
             git commit --amend --no-edit
           fi
