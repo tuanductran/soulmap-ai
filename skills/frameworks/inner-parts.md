@@ -283,12 +283,6 @@ Explicit inner conflict, two forces pulling in opposite directions:
 - "part of me feels"
 - "part of me is"
 - "part of me says"
-- "part of me wants"
-- "part of me knows"
-- "part of me thinks"
-- "part of me feels"
-- "part of me is"
-- "part of me says"
 - "part of me hopes"
 - "part of me believes"
 - "part of me needs"
@@ -318,10 +312,6 @@ Part-naming, user identifies a distinct internal voice or part:
 - "that part of me"
 - "this part of me"
 - "the part that"
-- "a part of me"
-- "that part of me"
-- "this part of me"
-- "the part that"
 - "the part of me that"
 - "a side of me"
 - "the side that"
@@ -334,10 +324,6 @@ Part-naming, user identifies a distinct internal voice or part:
 
 Behavioral confusion, acting in ways that don't match stated values:
 
-- "i don't understand why i"
-- "don't know why i did"
-- "i surprised myself"
-- "i don't recognize myself"
 - "i don't understand why i"
 - "don't know why i did"
 - "i surprised myself"
@@ -355,10 +341,6 @@ Behavioral confusion, acting in ways that don't match stated values:
 
 Internal dialogue, user reports conversations happening inside:
 
-- "i keep telling myself"
-- "i tell myself"
-- "i say to myself"
-- "i remind myself"
 - "i keep telling myself"
 - "i tell myself"
 - "i say to myself"

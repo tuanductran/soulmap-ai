@@ -37,6 +37,15 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **knowledge**: remove 140 duplicated detection phrases across 8 shipped
+  framework files. Each list repeated its first entries verbatim. The loaders
+  deduplicate, so nothing changed at runtime, which is why it stayed invisible,
+  but the repeat shipped in both artifacts and set a drift trap: editing one
+  copy leaves the other stale. Verified by snapshotting all 71 loaded phrase
+  constants before and after, which are byte-for-byte identical. The Markdown
+  contract now rejects a phrase repeated inside one labeled group, while still
+  allowing the same phrase under two different labels, which the knowledge
+  loader treats as two real entries
 - **routing**: keep grief as the primary framework at moderate emotional
   intensity. `orchestration.md` reserves "force De-escalation as primary
   regardless of topic" for HIGH intensity, while MODERATE says "apply slow-down

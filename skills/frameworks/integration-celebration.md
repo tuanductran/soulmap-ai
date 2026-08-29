@@ -133,12 +133,6 @@ Win or completion, something was achieved or finished:
 - "i said it"
 - "i got the job"
 - "we made it"
-- "i finally did it"
-- "i did it"
-- "i finally said it"
-- "i said it"
-- "i got the job"
-- "we made it"
 - "i got through it"
 - "i passed"
 - "i finished"
@@ -155,10 +149,6 @@ Win or completion, something was achieved or finished:
 
 Relief after difficulty, the hard part is over:
 
-- "i can breathe again"
-- "feel lighter"
-- "feeling lighter"
-- "i feel lighter"
 - "i can breathe again"
 - "feel lighter"
 - "feeling lighter"
@@ -186,10 +176,6 @@ Gratitude, inward or outward appreciation:
 - "i am so grateful"
 - "so grateful"
 - "i feel grateful"
-- "i'm so grateful"
-- "i am so grateful"
-- "so grateful"
-- "i feel grateful"
 - "feeling grateful"
 - "i want to say thank you"
 - "i'm thankful"
@@ -201,10 +187,6 @@ Gratitude, inward or outward appreciation:
 
 Recognized progress, catching an old pattern and responding differently:
 
-- "i noticed i didn't react"
-- "i noticed i did not react"
-- "i caught myself this time"
-- "i caught myself"
 - "i noticed i didn't react"
 - "i noticed i did not react"
 - "i caught myself this time"

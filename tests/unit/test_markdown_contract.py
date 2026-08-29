@@ -194,3 +194,57 @@ def test_markdown_contract_flags_integration_doctrine_and_version_drift(
         "Integration soulmap_version must match pyproject.toml version "
         "(expected 0.8.0, got 0.7.0)"
     ) in messages
+
+
+def test_markdown_contract_flags_duplicate_phrase_within_one_group(
+    tmp_path: Path,
+) -> None:
+    """A phrase repeated inside one labeled group is a content defect.
+
+    The loaders deduplicate, so the repeat is invisible at runtime while it
+    still ships in the extracted package. It also sets a trap: a maintainer
+    editing one copy leaves the other stale.
+    """
+    doc = tmp_path / "anger-companion.md"
+    doc.write_text(
+        "---\nname: anger\ndescription: test\n---\n\n"
+        "# Anger\n\n"
+        "## Detection signals\n\n"
+        "Active anger:\n\n"
+        '- "i am so angry"\n'
+        '- "i am furious"\n'
+        '- "i am so angry"\n',
+        encoding="utf-8",
+    )
+
+    issues = markdown_contract.check_markdown_file(doc, tmp_path)
+
+    duplicates = [i for i in issues if "Duplicate detection phrase" in i.message]
+    assert len(duplicates) == 1
+    assert "i am so angry" in duplicates[0].message
+
+
+def test_markdown_contract_allows_the_same_phrase_in_two_groups(
+    tmp_path: Path,
+) -> None:
+    """Each labeled group owns its own phrase namespace.
+
+    The knowledge loader keys results by label, so a phrase under two labels
+    is two real entries, not a duplicate. Flagging it would push a maintainer
+    into deleting one and silently changing what that group matches.
+    """
+    doc = tmp_path / "emotional-deescalation.md"
+    doc.write_text(
+        "---\nname: deescalation\ndescription: test\n---\n\n"
+        "# De-escalation\n\n"
+        "## Detection signals\n\n"
+        "Flooding:\n\n"
+        '- "head is spinning"\n\n'
+        "Overwhelm:\n\n"
+        '- "head is spinning"\n',
+        encoding="utf-8",
+    )
+
+    issues = markdown_contract.check_markdown_file(doc, tmp_path)
+
+    assert not [i for i in issues if "Duplicate detection phrase" in i.message]
