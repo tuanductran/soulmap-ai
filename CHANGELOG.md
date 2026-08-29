@@ -37,6 +37,13 @@ stability and breaking changes in behavior.
 - **runtime**: replace the two relative imports in the runtime config package
   with absolute ones. The runtime ships and runs standalone, where a relative
   import would break an extracted copy
+- **knowledge**: sync the orchestration secondary-layer tables with the runtime.
+  `inner_parts` was emittable but missing from the Phase 4 table, and the
+  valid-combinations row for De-escalation listed two of the five layers it
+  actually pairs with, omitting bypass, inner_parts, and meaning_integration.
+  The code is correct in both cases and the doctrine was stale, the reverse of
+  the grief drift. A contract test now reads both the table and the selector
+  source, so adding a layer in one place and forgetting the other fails
 - **knowledge**: remove 140 duplicated detection phrases across 8 shipped
   framework files. Each list repeated its first entries verbatim. The loaders
   deduplicate, so nothing changed at runtime, which is why it stayed invisible,
