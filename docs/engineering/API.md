@@ -25,7 +25,7 @@ Output: a JSON object to stdout:
 
 ```json
 {
-  "primary_framework": "CRISIS|DEPENDENCY|DE_ESCALATION|EXISTENTIAL|GRIEF|DIRECTION|INNER_PARTS|SHADOW|MEANING_INTEGRATION|SYNTHESIS|PATTERN|MIRROR",
+  "primary_framework": "CRISIS|DEPENDENCY|DE_ESCALATION|EXISTENTIAL|GRIEF|DIRECTION|INNER_PARTS|SHADOW|CREATIVE_DROUGHT|PERFECTIONISM_PARALYSIS|ANCESTRAL_PATTERNS|FEAR_OF_VISIBILITY|EMPATH_BOUNDARY|DARK_NIGHT_OF_SOUL|SOUL_NOURISHMENT|DIVINE_GUIDANCE|SACRED_POLARITY|SPIRITUAL_PURPOSE|SOULMATE_LONGING|PARTNERSHIP_PATTERNS|MEANING_INTEGRATION|INTEGRATION_CELEBRATION|SYNTHESIS|PATTERN|MIRROR",
   "secondary_layer": "anger|bypass|somatic|null",
   "mode": "CRISIS|SANCTUARY|MIRROR|PEER",
   "safety_status": "PASS|BLOCK|OVERRIDE",
@@ -67,7 +67,20 @@ Error output:
 | `INNER_PARTS` | `skills/frameworks/inner-parts.md` | medium |
 | `DIRECTION` | `skills/frameworks/life-direction.md` | medium |
 | `SHADOW` | `skills/frameworks/shadow-patterns.md` | medium |
+| `CREATIVE_DROUGHT` | `skills/frameworks/creative-drought.md` | medium |
+| `PERFECTIONISM_PARALYSIS` | `skills/frameworks/perfectionism-paralysis.md` | medium |
+| `ANCESTRAL_PATTERNS` | `skills/frameworks/ancestral-patterns.md` | medium |
+| `FEAR_OF_VISIBILITY` | `skills/frameworks/fear-of-visibility.md` | medium |
+| `EMPATH_BOUNDARY` | `skills/frameworks/empath-boundary.md` | medium |
+| `DARK_NIGHT_OF_SOUL` | `skills/frameworks/dark-night-of-soul.md` | medium |
+| `SOUL_NOURISHMENT` | `skills/frameworks/soul-nourishment.md` | medium |
+| `DIVINE_GUIDANCE` | `skills/frameworks/divine-guidance.md` | medium |
+| `SACRED_POLARITY` | `skills/frameworks/sacred-feminine-masculine.md` | medium |
+| `SPIRITUAL_PURPOSE` | `skills/frameworks/spiritual-purpose.md` | medium |
+| `SOULMATE_LONGING` | `skills/soulmate/soulmate-longing.md` | medium |
+| `PARTNERSHIP_PATTERNS` | `skills/soulmate/partnership-patterns.md` | medium |
 | `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration.md` | medium |
+| `INTEGRATION_CELEBRATION` | `skills/frameworks/integration-celebration.md` | medium |
 | `SYNTHESIS` | `skills/frameworks/conversation-synthesis.md` | lower |
 | `PATTERN` | `skills/frameworks/pattern-mapper.md` | lower |
 | `MIRROR` | `skills/meta/response-structure.md` | default |

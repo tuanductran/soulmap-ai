@@ -12,7 +12,11 @@ import subprocess
 from collections.abc import Callable
 
 from soulmap.devtools.audit import knowledge as audit_knowledge
-from soulmap.devtools.checks import check_markdown_case, check_markdown_links
+from soulmap.devtools.checks import (
+    check_api_docs,
+    check_markdown_case,
+    check_markdown_links,
+)
 from soulmap.devtools.cli import bootstrap_venv
 from soulmap.devtools.evals import (
     eval_groups,
@@ -44,6 +48,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "audit-knowledge": audit_knowledge.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
+        "check-api-docs": check_api_docs.main,
         "check-case": check_markdown_case.main,
         "check-links": check_markdown_links.main,
         "demo": soulmap_demo.main,
