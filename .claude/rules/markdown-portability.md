@@ -19,6 +19,8 @@ Keep Markdown compatible across AI tools and OS editors.
   `docs/engineering/content-contract.md`
 - do not use Python constant names, module paths, or code identifiers in prose
   inside `skills/` or `templates/` files, write in plain language instead
+- do not reference a repository-only path from `skills/` content, since `skills/`
+  ships standalone and the reference will resolve to nothing once extracted
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
 `src/soulmap/runtime/config/safety.py` belong in Python source files, not in Markdown knowledge
@@ -26,6 +28,23 @@ files. Readers of skill and template files are AI tools and humans, not Python
 interpreters. Describe what a signal means in plain language. If a cross-reference
 to the implementation is genuinely needed, use a sentence like "detected by the
 grief routing layer" rather than a constant name.
+
+**Shipped-package boundary rule:** `skills/` content ships standalone inside
+`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. Neither archive includes `docs/`,
+`tests/`, `.claude/`, `.github/`, `scripts/`, `library/`, `src/soulmap/`,
+`pyproject.toml`, `uv.lock`, or any other repository-only path (see
+`docs/engineering/repo-contract.md`'s packaged-contents row for the exact list). A
+reference from `skills/` content to one of those paths resolves to nothing once the
+archive is extracted, even when it is a plain mention rather than a clickable
+Markdown link. Before adding a cross-reference inside `skills/`, check whether the
+target actually ships in the same archive. If it does not, state the underlying fact
+directly instead of pointing to the file, or link to another `skills/` file that
+already covers it.
+`tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
+enforces this at CI time, but treat it as a safety net, not a substitute for checking
+before you write the reference: its forbidden-path list is necessarily finite, and a
+past gap in that list (a narrower pattern than the one now in place) let one
+reference through undetected.
 
 ## Markdownlint Compliance (`.pymarkdown.json`)
 
