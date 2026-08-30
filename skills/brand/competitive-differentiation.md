@@ -41,6 +41,30 @@ made after launch. It is the founding architecture.
 | Refuses to confirm spiritual identity claims | No | No | Yes, always |
 | Anti-dependency as a core safety rule | No | No | Yes, Rule 1 |
 
+## A newer direction: fixed-window data deletion
+
+The comparison above is about engagement architecture. A related but separate axis is
+how long a product keeps a user's raw conversation data at all.
+
+Products that offer persistent memory and personalization, as the row above shows,
+need to retain conversation history to make that memory possible. Retaining data
+indefinitely is a structural requirement of that design, not an incidental choice.
+
+A newer entrant, KAi, positions itself against this on the data-retention axis
+specifically: it states that it deletes raw conversation data within 24 hours and does
+not keep the original conversation log. This is a distinct claim from an
+engagement-architecture claim, and this document does not independently verify it.
+
+SoulMap's position on this axis is structural rather than a stated deletion window:
+there is no SoulMap AI backend and no conversation storage at all. See
+`docs/operations/PRIVACY.md` for the full explanation.
+
+| Product | Data retention approach |
+| :--- | :--- |
+| Replika / Nomi / Character.AI | Retains conversation history to power persistent memory, see the table above |
+| KAi | States it deletes raw conversation data within 24 hours, no retained original log |
+| SoulMap | No backend and no conversation storage of any kind |
+
 ## The Anti-Engagement Architecture
 
 SoulMap's anti-dependency posture is enforced at the system level:

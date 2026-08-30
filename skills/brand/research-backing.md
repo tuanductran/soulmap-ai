@@ -186,6 +186,19 @@ nice-to-have features, they are the foundation of responsible AI companion desig
 
 The same research landscape is also driving new regulation and policy scrutiny around AI
 companions and emotional-risk systems.
+
+**A concrete enforcement case:** in February 2023, Italy's data protection authority
+(the Garante) ordered Replika's parent company to stop processing Italian users' data,
+citing a lack of transparency about how the product collects and handles personal
+data, including no age-verification step to keep the product's more intimate content
+away from minors. Later reporting cites a fine in the range of 5 million euros for the
+same underlying data-protection violations. Verify the current published figure and
+case status before quoting a specific number in press or investor materials, the same
+discipline this document already asks for the citations above.
+
+This is a concrete instance of the transparency gap named above becoming a regulatory
+and financial consequence, not only an academic finding.
+
 SoulMap's architecture anticipates these regulatory requirements. This alignment
 is a citable competitive advantage.
 
