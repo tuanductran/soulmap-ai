@@ -610,6 +610,57 @@ response-generation layer. It tests the tests.
 
 ---
 
+### Phase 16 - Soulmate skill layer (v0.9.1, complete)
+
+`docs/engineering/library-vs-framework.md` already names the pattern this phase
+follows: the same relationship between a UI library and an application framework
+built on it (React, Next.js) already exists inside SoulMap, where each individual
+framework is built on the shared runtime without duplicating it. This phase applies
+that same pattern one level up: `skills/soulmate/` is a new, more specialized skill
+category built on top of SoulMap's existing frameworks and spiritual doctrine, the
+way a framework built on Next.js still depends on and never bypasses Next.js itself.
+
+Completed:
+
+* `skills/soulmate/`, a new shipped skill category (`SKILL.md` plus 3 content files)
+  for soulmate longing, partner-seeking patterns, and connection numerology. Every
+  file states an explicit "Inherits from" list citing the existing skills it
+  specializes rather than duplicates:
+  [`relationship-reflection.md`](../skills/frameworks/relationship-reflection.md),
+  [`spiritual-discernment.md`](../skills/spiritual/spiritual-discernment.md),
+  [`numerology-chakra-policy.md`](../skills/spiritual/numerology-chakra-policy.md),
+  [`symbolic-report-handling.md`](../skills/spiritual/symbolic-report-handling.md),
+  [`epistemic-guardrails.md`](../skills/meta/epistemic-guardrails.md), and
+  [`whitelist-blacklist-system.md`](../skills/safety/whitelist-blacklist-system.md).
+  None of it ships as a routable Python framework: it is pure Markdown content,
+  packaged automatically by the existing `skills/` build step with no code change.
+* Closed a real gap the new content exposed: the scope classifier's
+  `identity_confirmation` blacklist already blocked "am I a twin flame" and "am I a
+  starseed" but had no equivalent for "soulmate" phrasing. Added positive coverage
+  in both question and statement word order, verified with curated near-miss cases
+  so ordinary soulmate longing (`I'm looking for my soulmate`) is not swallowed by
+  the block meant for identity-confirmation requests (`is he my soulmate`).
+* `library/catalog.json` and `.claude-plugin/marketplace.json` both gained a
+  seventh entry, kept in sync by
+  `tests/contract/test_library_catalog_contract.py`; `SOULMAP.md`'s package-shape
+  tree, the root `SKILL.md` table, and `docs/operations/LIBRARY.md`'s entry count
+  were updated to match.
+* Personal numerology reports the maintainer supplied as background were used only
+  to confirm general Vietnamese numerology report structure (a report describes
+  several named indices, not one single number). No personal identifier, birth
+  date, or individual reading from those reports was carried into any shipped
+  file. `skills/soulmate/numerology-connection-lens.md` never computes or confirms
+  compatibility between two specific people's numbers, matching the same
+  discipline `founder-numerology.md` already applies to numbers-only, no personal
+  identifiers.
+
+This track added no new Python detector, no new priority-hierarchy entry, and no
+change to any existing framework's routing. It is a Framework-layer addition in the
+`library-vs-framework.md` sense: new Markdown content, governed entirely by rules
+that already existed.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

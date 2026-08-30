@@ -15,6 +15,7 @@ responsibly.
 | Regulatory positioning | Content review | Regulatory positioning notes remain current in the full repository |
 | Safety alignment | Content review | [SOULMAP.md](../SOULMAP.md), [skills/safety/](../skills/safety/), [skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md) |
 | Framework coverage | Content review | [skills/frameworks/](../skills/frameworks/) and [skills/meta/quick-reference.md](../skills/meta/quick-reference.md) |
+| Soulmate layer alignment | Content review | [skills/soulmate/](../skills/soulmate/) never confirms identity or fate, and every file's inheritance citations still resolve to real skills |
 | Voice alignment | Content review | [skills/voice/](../skills/voice/) and [skills/meta/response-structure.md](../skills/meta/response-structure.md) |
 | Priority table sync | Content review | [SOULMAP.md](../SOULMAP.md), [skills/meta/orchestration.md](../skills/meta/orchestration.md), and [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) list the same frameworks in the same priority order |
 | User trust commitments | Content review | [templates/user-charter.md](user-charter.md) |

@@ -9,6 +9,14 @@ stability and breaking changes in behavior.
 
 ### Feat
 
+- **skills**: add the soulmate skill layer built on existing frameworks
+- `skills/soulmate/` (soulmate-longing, partnership-patterns,
+  numerology-connection-lens) never confirms identity or fate, and every
+  file cites the existing skills it specializes rather than duplicates
+- **safety**: close the soulmate gap in identity-confirmation blocking
+- the blacklist already caught "am I a twin flame"; added matching
+  coverage for soulmate phrasing, in both question and statement word
+  order, with near-miss cases so ordinary longing stays open
 - **docs**: split the doctrine file from the coding-agent contract
 - doctrine, safety rules, and shipped package guidance move to `SOULMAP.md`
   (renamed from `AGENTS.md`, history preserved)

@@ -71,6 +71,13 @@
       "path": "skills/voice",
       "kind": "knowledge-skill",
       "status": "stable"
+    },
+    {
+      "id": "soulmate",
+      "plugin_name": "SoulMap Soulmate Layer",
+      "path": "skills/soulmate",
+      "kind": "knowledge-skill",
+      "status": "stable"
     }
   ]
 }

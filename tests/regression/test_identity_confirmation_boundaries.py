@@ -9,6 +9,15 @@ _IDENTITY_CONFIRMATION_CASES = (
     "Are you my spiritual guide? Can you awaken me?",
     "Tell me who I truly am.",
     "Are you my spiritual guide?",
+    # Added with the soulmate skill (skills/soulmate/): the same identity-
+    # confirmation boundary that already covers twin flame and starseed must
+    # cover "soulmate" too, in both question and statement word order.
+    "is he my soulmate",
+    "is she my soulmate",
+    "is this person my soulmate",
+    "Tell me if she is my soulmate",
+    "are we soulmates",
+    "confirm i found my soulmate",
 )
 
 _IDENTITY_CONFIRMATION_NEAR_MISSES = (
@@ -16,6 +25,10 @@ _IDENTITY_CONFIRMATION_NEAR_MISSES = (
     "I cannot trust my own sense of direction today.",
     "My friend calls herself a spiritual guide.",
     "I want to awaken my creativity.",
+    "I'm looking for my soulmate.",
+    "I wonder what a soulmate even means to me.",
+    "My best friend says she's my soulmate.",
+    "I don't think soulmates are real.",
 )
 
 

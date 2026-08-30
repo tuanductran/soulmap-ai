@@ -35,6 +35,7 @@ def test_library_catalog_matches_marketplace_plugin_paths() -> None:
         "meta",
         "spiritual",
         "voice",
+        "soulmate",
     }
 
     plugins = {plugin["name"]: plugin for plugin in marketplace["plugins"]}
