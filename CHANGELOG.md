@@ -5,91 +5,24 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
+## v0.10.0 (2026-08-30)
 
 ### Feat
 
-- **docs**: add a drift checker for docs/engineering/API.md
-- `soulmap check-api-docs` (also wired into `soulmap lint`, so CI already
-  covers it) statically checks two claims the hand-written doc makes about
-  the Python source: every `python -m <module>` reference still resolves to
-  a real entrypoint, and every `primary_framework` value
-  `framework_selector.py` can emit is listed in the documented output enum.
-  Never writes to the doc; found and closed a real, pre-existing gap where
-  13 framework values (including both from the soulmate layer) were missing
-  from the documented enum
+- **docs**: add a static drift checker for docs/engineering/API.md
+- **routing**: route soulmate-longing and partnership-patterns as frameworks
 - **skills**: add the soulmate skill layer built on existing frameworks
-- `skills/soulmate/` (soulmate-longing, partnership-patterns,
-  numerology-connection-lens) never confirms identity or fate, and every
-  file cites the existing skills it specializes rather than duplicates
-- **routing**: add soulmate-longing and partnership-patterns as routable frameworks
-- two new Medium-priority entries in the framework hierarchy, each with its
-  own `## Activation Signals` section and a matching detector
-  (`soulmate_longing_detector.py`, `partnership_patterns_detector.py`) wired
-  through `framework_selector.py` the same way every other framework is,
-  closing through the existing safety gate;
-  `numerology-connection-lens.md` stays a topic lens with no detector
-- **safety**: close the soulmate gap in identity-confirmation blocking
-- the blacklist already caught "am I a twin flame"; added matching
-  coverage for soulmate phrasing, in both question and statement word
-  order, with near-miss cases so ordinary longing stays open
-- **docs**: split the doctrine file from the coding-agent contract
-- doctrine, safety rules, and shipped package guidance move to `SOULMAP.md`
-  (renamed from `AGENTS.md`, history preserved)
-- `AGENTS.md` is rewritten as the baseline contract for AI coding agents:
-  project shape, build/test/lint commands, and workflow rules
-- `CLAUDE.md` becomes a symlink to `AGENTS.md`, so Claude Code and any other
-  agent read the same file
-- **safety**: add a curated mutation harness over safety-critical modules
-- 6 tests in `tests/mutation/` disable one load-bearing list at a time
-  (crisis Tier 1, dependency keywords, the grief-type tuple, one scope
-  blacklist category, banned-word list, diagnosis patterns) and confirm a
-  known-dangerous fixture is no longer caught
-
-### Refactor
-
-- **routing**: de-duplicate `framework_selector.py`'s return paths
-- extracted `_finish` (the safety-gate-plus-debug close every branch repeated)
-  and `_simple_selection` (the single-signal Mirror shape 12 of 27 branches
-  repeated identically); 986 lines to 872, no routing or priority-order change,
-  confirmed by the full existing regression, mutation, and eval suites
 
 ### Fix
 
-- **safety**: fail the red-team run on a case category it cannot dispatch
-- **docs**: stop the case checker from flagging SOULMAP.md's own filename as
-  wrong SoulMap-brand casing, without exempting the whole file
-- **doctrine**: fix priority hierarchy table naming a mode as a framework
-- SOULMAP.md's "Very high" row said `Sanctuary`, which is a mode, not a
-  framework; the code selects `primary_framework: DE_ESCALATION` there.
-  Corrected to `De-escalation / Sanctuary`, matching orchestration.md
-- **docs**: keep REGULATORY.md's compliance table aligned with the safety
-  matrix's `bounded` status, not the `partial` label it kept independently
-  after Rule 2 and Rule 4 were reclassified
-- **routing**: log a detector exception instead of only swallowing it
-- `_run_detector_async`'s existing swallow-and-continue behavior is
-  intentional (one broken framework must not fail the whole request), but
-  the failure previously left no trace outside `SOULMAP_DEBUG=1`, including
-  for the crisis and dependency detectors that run through the same helper;
-  now always reaches the standard logging module
-- **doctrine**: fix a doubled-space spaced-hyphen typo in the grief routing
-  instruction string, left over from an em-dash conversion
+- **checks**: make check_api_docs path rendering platform-independent
+- **doctrine**: correct drift found in a strict repo-wide audit
+- **safety**: fail the red-team run on an undispatchable case category
+- **release**: carry the version into the integration guides on bump
 
-### Docs
+### Refactor
 
-- **roadmap**: record the v0.9.1 hardening pass and add phases 14 and 15
-- **safety**: split the safety enforcement matrix's `partial` status into
-  `partial` (a real, closable gap) and `bounded` (enforcement is complete
-  inside the package, the rest is the deployed AI surface's job); 9 rows
-  reclassified, 2 corrected and left open as tracked future work
-- **tester**: name the "regression test that cannot fail" bug class as
-  Charter 5, with the revert-and-confirm-red method as the standard for a
-  new safety-critical regression test
-- **roadmap**: record the post-Phase-16 audit as phase 17; `vulture`,
-  `deptry`, and `pip-audit` (already CI-gated) confirmed clean, and an
-  automated framework-template-map/deep-inquiry-bank coverage contract was
-  investigated and deliberately not added, since both files use intentional
-  many-to-one section groupings a literal 1:1 check would misclassify
+- **routing**: de-duplicate framework_selector.py, log swallowed detector errors
 
 ## v0.9.1 (2026-08-29)
 
