@@ -925,6 +925,43 @@ version bump.
 
 ---
 
+### Phase 21 - Competitive intelligence and controlled evolution audit (complete)
+
+A requested benchmark of SoulMap against other personal-AI, AI-knowledge,
+AI-agent, and AI-memory systems, with an explicit mandate to distinguish a
+real, evidenced gap from a competitor feature that would make SoulMap more
+generic rather than more itself.
+
+Completed:
+
+* `docs/research/competitive-evolution-audit-2026.md` records primary-source
+  research (Anthropic's Agent Skills documentation, Mem0, Letta/MemGPT,
+  AnythingLLM, Open WebUI, digital-twin/second-brain projects, and the Model
+  Context Protocol) against SoulMap's actual, repo-derived architecture and
+  invariants, with a competitive capability matrix and an explicit
+  classification of every candidate improvement.
+* No candidate reached "missing and should add". Persistent memory,
+  open-corpus RAG retrieval, MCP-style tool discovery, and digital-twin
+  personalization all classify as intentionally absent or not applicable:
+  each one conflicts with a documented rule (the anti-dependency response
+  contract, the no-memory-bonding boundary, or `maintenance-boundary.md`'s
+  scope limits), not with a gap in execution.
+* One documentation clarity gap did surface and was closed:
+  `docs/engineering/library-vs-framework.md` now names SoulMap's existing
+  Skill-loading behavior as progressive disclosure and cites Anthropic's own
+  Agent Skills documentation. The behavior itself was already correct and
+  unchanged; only the cross-reference to the now-standard term was missing.
+* The audit's required final decision is recorded as three lists (KEEP,
+  IMPROVE, DO NOT ADD) at the end of the research document.
+
+This track added no Python, no new Skill, and no dependency. It is a
+research and documentation deliverable that confirms SoulMap's no-memory,
+no-RAG, deterministic-routing architecture is a deliberate, evidence-backed
+differentiator rather than a gap relative to the researched competitive
+landscape.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.
