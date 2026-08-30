@@ -11,6 +11,10 @@ stability and breaking changes in behavior.
 
 - **safety**: fail the red-team run on a case category it cannot dispatch
 
+### Docs
+
+- **roadmap**: record the v0.9.1 hardening pass and add phases 14 and 15
+
 ## v0.9.1 (2026-08-29)
 
 ### Fix
