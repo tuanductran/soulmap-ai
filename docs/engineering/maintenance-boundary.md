@@ -64,6 +64,9 @@ The website may not:
 If a future change needs any of the second list, it is a new decision requiring
 its own trigger and its own ADR, not an extension of this exception.
 
+The full reasoning, alternatives, and consequences are recorded in
+[`adr/0004-static-public-website-boundary.md`](adr/0004-static-public-website-boundary.md).
+
 ## What not to add by default
 
 Do not add these unless there is a real, current need:
