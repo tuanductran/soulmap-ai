@@ -52,6 +52,13 @@ include = [
 ]
 
 [dependency-groups]
+# The website generator's only extra requirement. Kept out of
+# project.dependencies on purpose: the shipped soulmap-ai package must not gain
+# a templating dependency because a build-time tool needs one. deptry verifies
+# the separation.
+web = [
+  "jinja2>=3.1.6",
+]
 dev = [
   "hypothesis>=6.165.3",
   "ruff>=0.16.2",
@@ -67,6 +74,8 @@ dev = [
   "deptry>=0.25.1",
   "vulture>=2.16",
   "pip-audit>=2.9.0",
+  # The website tests import the generator, which imports Jinja2.
+  { include-group = "web" },
 ]
 
 [tool.ruff]
@@ -208,6 +217,17 @@ version_files = [
 
 [tool.deptry]
 known_first_party = ["soulmap"]
+
+[tool.deptry.per_rule_ignores]
+# DEP004 is "imported but declared as a dev dependency". Jinja2 is exactly
+# that, on purpose: only the website generator in
+# `src/soulmap/devtools/web/` imports it, and the shipped soulmap-ai package
+# must not gain a templating dependency because a build-time tool needs one.
+# The generator is developer tooling that happens to live under `src/` so Ruff,
+# Pyright, Vulture, and coverage cover it. Keep this ignore narrow: it names
+# one package, so any other dev dependency leaking into runtime code still
+# fails.
+DEP004 = ["jinja2"]
 
 [tool.vulture]
 # Matches PYTHON_SOURCE_DIR_NAMES in src/soulmap/devtools/support/repo.py, the

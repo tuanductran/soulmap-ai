@@ -1349,6 +1349,7 @@ dev = [
     { name = "commitizen" },
     { name = "deptry" },
     { name = "hypothesis" },
+    { name = "jinja2" },
     { name = "lefthook" },
     { name = "pip-audit" },
     { name = "pymarkdownlnt" },
@@ -1361,6 +1362,9 @@ dev = [
     { name = "ruff" },
     { name = "vulture" },
 ]
+web = [
+    { name = "jinja2" },
+]
 
 [package.metadata]
 requires-dist = [{ name = "markdown-it-py", specifier = ">=4.2.0" }]
@@ -1370,6 +1374,7 @@ dev = [
     { name = "commitizen", specifier = ">=4.17.0" },
     { name = "deptry", specifier = ">=0.25.1" },
     { name = "hypothesis", specifier = ">=6.165.3" },
+    { name = "jinja2", specifier = ">=3.1.6" },
     { name = "lefthook", specifier = ">=2.1.10" },
     { name = "pip-audit", specifier = ">=2.9.0" },
     { name = "pymarkdownlnt", specifier = ">=0.9.39" },
@@ -1382,6 +1387,7 @@ dev = [
     { name = "ruff", specifier = ">=0.16.2" },
     { name = "vulture", specifier = ">=2.16" },
 ]
+web = [{ name = "jinja2", specifier = ">=3.1.6" }]
 
 [[package]]
 name = "termcolor"

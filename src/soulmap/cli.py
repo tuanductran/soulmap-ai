@@ -28,6 +28,7 @@ from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.devtools.support.run import python_module
+from soulmap.devtools.web import build as build_site
 from soulmap.runtime.experimental import soulmap_demo
 from soulmap.runtime.guards import markdown_contract
 
@@ -48,6 +49,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "audit-knowledge": audit_knowledge.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
+        "build-site": build_site.main,
         "check-api-docs": check_api_docs.main,
         "check-case": check_markdown_case.main,
         "check-links": check_markdown_links.main,

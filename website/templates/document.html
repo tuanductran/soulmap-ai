@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="wrap doc">
+
+  <p class="crumb"><a href="/{{ parent_path }}/">{{ parent_label }}</a> <span>/</span> {{ page.name }}</p>
+
+  <header class="doc-head">
+    <h1>{{ page.name }}</h1>
+    {% if page.description %}<p class="desc">{{ page.description }}</p>{% endif %}
+  </header>
+
+  <div class="prose">
+    {% for section in page.sections %}
+      {% if section.heading and section.anchor %}
+      <h2 id="{{ section.anchor }}">{{ section.heading }}</h2>
+      {% endif %}
+      {{ section.html }}
+    {% endfor %}
+  </div>
+
+  <footer class="doc-foot">
+    <p>This page is generated from
+      <a href="{{ repo_blob }}/{{ page.source_path }}"><code>{{ page.source_path }}</code></a>
+      in the SoulMap repository.</p>
+  </footer>
+
+</article>
+{% endblock %}

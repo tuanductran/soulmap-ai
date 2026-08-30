@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap doc">
+
+  <header class="doc-head">
+    <p class="kicker">How it works</p>
+    <h1>Architecture</h1>
+    <p class="desc">SoulMap's routing is deterministic. No model decides which framework
+    applies. A message is scored against phrase lists authored in Markdown, routed by a
+    priority order written in doctrine, and the resulting response is validated before it
+    reaches the reader.</p>
+  </header>
+
+  <section>
+    <h2>The request path</h2>
+    <ol class="flow">
+      <li><strong>Message and history</strong><span>What the person wrote, plus the conversation so far.</span></li>
+      <li><strong>Safety detection</strong><span>Crisis and dependency are checked first, as protected modules separate from ordinary framework routing.</span></li>
+      <li><strong>Framework selection</strong><span>Detectors score the message against phrases owned by Markdown knowledge files. The highest-priority match wins. Exactly one primary framework is selected.</span></li>
+      <li><strong>Knowledge lookup</strong><span>The selected framework's Markdown file supplies the reflective guidance and response shape.</span></li>
+      <li><strong>Response safety gate</strong><span>The gate re-derives crisis and dependency status independently, so a routing miss cannot silently produce an unsafe response.</span></li>
+      <li><strong>Response contract validation</strong><span>Generated wording is checked for diagnosis, prediction stated as fact, dependency reinforcement, guru positioning, and loss of user independence.</span></li>
+      <li><strong>Response</strong><span>One framework, one question at most, and that question last.</span></li>
+    </ol>
+  </section>
+
+  <section class="split">
+    <div>
+      <h2>Markdown owns the knowledge</h2>
+      <p>Reflective content lives in Markdown, not in code. Python loads phrase lists and
+      guidance from those files rather than hardcoding them, so the knowledge stays
+      reviewable by people who do not read Python.</p>
+    </div>
+    <div>
+      <h2>Python owns enforcement only</h2>
+      <p>The runtime routes, detects, and validates. It does not generate response
+      wording. That boundary is deliberate and documented as an architectural limit
+      rather than a gap to close later.</p>
+    </div>
+  </section>
+
+  <section class="principle">
+    <h2>What this site does not do</h2>
+    <p>This website explains the architecture. It does not run it. There is no API here,
+    no session, and no reflective interface. SoulMap belongs inside a conversation a
+    person has chosen to have, not inside a page visit.</p>
+  </section>
+
+  <section>
+    <h2>Priority order</h2>
+    <p>The order below is the actual routing hierarchy, read from doctrine. A
+    higher-priority mode is never skipped when its trigger is present.</p>
+    <ol class="priority">
+      {% for tier in tiers %}
+      <li><span class="tag">{{ tier.label }}</span> {{ tier.note }}</li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <footer class="doc-foot">
+    <p>Generated from <a href="{{ repo_blob }}/SOULMAP.md"><code>SOULMAP.md</code></a>
+    and the engineering documentation in the repository.</p>
+  </footer>
+
+</div>
+{% endblock %}

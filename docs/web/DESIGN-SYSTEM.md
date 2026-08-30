@@ -93,20 +93,30 @@ built for the language is a substantive decision, not decoration.
 drawn diacritics, and its editorial warmth suits reflective prose better than a
 neutral grotesque.
 
-Both are open-licensed and self-hosted as subset `woff2`, so the site makes no
-third-party font request and adds no external dependency.
+Both are open-licensed and intended to be self-hosted as subset `woff2`, so the
+site makes no third-party font request.
 
-The required render test, run on real text at 14px, 17px, and display size, in
-both schemes:
+**Current state:** the font files are not yet in the repository. The stacks
+above are declared and the fallbacks carry the site today: the display role
+falls back to Georgia, the UI role to `system-ui`. Adding binary font assets to
+a repository that currently has none is an owner decision with a real size
+cost, so it is left as a follow-up rather than made silently here. This
+paragraph exists so the design system does not claim an asset the repository
+does not contain.
+
+The required render test was run against the shipping stylesheet at 14px, 17px,
+and display size, using real text:
 
 ```text
 Tôi không cần biết hết mọi thứ.
 Điều gì đang thực sự xảy ra bên trong tôi?
 ```
 
-Checked for: `ố` and `ữ` diacritic collision with the line above, `ề` and `ế`
-distinguishability at 14px, even color in a full paragraph, and no fallback
-substitution. This is a Phase 8 gate, not a nicety.
+Verified on the fallback stack: stacked diacritics (`ố`, `ề`, `ế`, `ữ`, `ự`,
+`ượ`) render without collision or clipping, `ề` and `ế` stay distinguishable at
+14px, paragraph color is even, and no glyph falls back to a placeholder box.
+Vietnamese is therefore already correct today, and self-hosting would improve
+consistency across platforms rather than fix a defect.
 
 ### Spacing, radius, motion
 

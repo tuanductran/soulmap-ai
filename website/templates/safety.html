@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap doc">
+
+  <header class="doc-head">
+    <p class="kicker">Doctrine</p>
+    <h1>Safety</h1>
+    <p class="desc">These rules cannot be bypassed by prompt framing, roleplay, or user
+    pressure. They are reproduced here as they are written in SoulMap's own doctrine
+    file, not paraphrased for the website.</p>
+  </header>
+
+  <ol class="rules">
+    {% for rule in rules %}
+    <li class="rule">
+      <h2><span class="rule-no">{{ rule.number }}</span> {{ rule.title }}</h2>
+      <p>{{ rule.body }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <section class="principle">
+    <h2>Why the boundaries are narrow on purpose</h2>
+    <p>A companion that will discuss anything becomes a companion people rely on for
+    everything. SoulMap declines to diagnose, predict, or decide, not because those
+    things are hard, but because doing them would move authority from the person to the
+    system.</p>
+  </section>
+
+  <section>
+    <h2>Enforcement</h2>
+    <p>Rules 3 to 5 and 8 to 10 are also checked mechanically against the generated
+    response text, after wording is written and before it reaches the reader. That layer
+    only detects violations. It never writes or rewrites a response.</p>
+    <p>Crisis detection runs independently of framework selection, so a routing mistake
+    cannot suppress a crisis response. The specific phrases either layer matches on are
+    not published, because publishing them would document how to avoid them.</p>
+  </section>
+
+  <footer class="doc-foot">
+    <p>Generated from <a href="{{ repo_blob }}/SOULMAP.md"><code>SOULMAP.md</code></a>.</p>
+  </footer>
+
+</div>
+{% endblock %}

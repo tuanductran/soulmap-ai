@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SoulMap">
+  <rect width="32" height="32" rx="7" fill="#1f5f5b"/>
+  <!-- A mirror line: the reflected half is lighter, never identical. -->
+  <path d="M16 7v18" stroke="#faf9f6" stroke-width="2" stroke-linecap="round"/>
+  <path d="M11 12c3 0 5 1.8 5 4s-2 4-5 4" fill="none" stroke="#faf9f6"
+        stroke-width="2" stroke-linecap="round"/>
+  <path d="M21 12c-3 0-5 1.8-5 4s2 4 5 4" fill="none" stroke="#faf9f6"
+        stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+</svg>

@@ -221,6 +221,27 @@ filtering over a prebuilt index, with the page working without it.
 - The website must not alter `dist/` semantics, ship `.claude/`, publish
   `templates/`, or change what the wheel means.
 
+## Discrepancy found while building
+
+Generating the frameworks index from the `SOULMAP.md` priority table surfaced a
+real doctrine gap, recorded here rather than fixed, because doctrine must not be
+edited to make a website tidier.
+
+Six of the 26 framework documents have no row in the priority table:
+`anger-companion`, `feminine-masculine-dynamics`, `money-self-worth`,
+`relationship-reflection`, `self-compassion`, and `somatic-wellbeing`.
+
+Two of those are not merely unlisted lenses. `anger-companion.md` and
+`somatic-wellbeing.md` each have a live detector in
+`src/soulmap/runtime/detectors/` (`anger_detector.py` and `somatic_detector.py`)
+that loads them, so the runtime can route to a framework the doctrine table does
+not rank. `relationship-reflection` is documented as a topic lens in
+`library-vs-framework.md`, so its absence is correct.
+
+The site reports these as a "Supporting" group rather than dropping them, and
+`soulmap build-site` prints them on every run. Deciding whether the table or the
+detectors are wrong is a doctrine question for the owner.
+
 ## Risks
 
 | Risk | Severity | Mitigation |

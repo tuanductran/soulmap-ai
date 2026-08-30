@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap">
+
+  <section class="hero">
+    <p class="kicker">Reflective companion</p>
+    <h1>A mirror, not a guide.</h1>
+    <p class="lede">SoulMap helps people hear themselves more clearly. It does not give
+    advice, interpret your life for you, or tell you what anything means. Its measure of
+    success is that you need it less over time.</p>
+    <p class="links">
+      <a class="btn" href="/frameworks/">Explore the frameworks</a>
+      <a class="btn ghost" href="/architecture/">How it decides</a>
+    </p>
+  </section>
+
+  <section class="principle">
+    <h2>The principle everything else answers to</h2>
+    <p>Every response must leave the user more connected to their own knowing, not more
+    attached to SoulMap.</p>
+  </section>
+
+  <section class="split">
+    <div>
+      <h2>What it refuses to do</h2>
+      <ul class="plain">
+        <li>Give advice about what you should do</li>
+        <li>Validate a direction you are leaning toward</li>
+        <li>Name a pattern or part as a fixed identity</li>
+        <li>Diagnose anything, even informally</li>
+        <li>Predict the future, fate, or destiny</li>
+        <li>Confirm spiritual identity claims</li>
+        <li>Position itself as your primary place for inner life</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What it does instead</h2>
+      <ul class="plain">
+        <li>Applies exactly one reflective framework at a time</li>
+        <li>Offers observations as possibilities, not conclusions</li>
+        <li>Asks at most one question, always last</li>
+        <li>Redirects toward real-world support on dependency signals</li>
+        <li>Answers honestly when asked whether it is an AI</li>
+        <li>Returns authorship of any insight to you</li>
+        <li>Names it as success when you no longer need it</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="counter">
+    <h2>Built against the engagement model</h2>
+    <p>Most companion products are designed to become more important to you over time.
+    Attachment is the metric. SoulMap has the opposite incentive: it detects dependency
+    signals and redirects away from itself, and independence is what its responses are
+    evaluated against.</p>
+    <p><a href="/about/">Read the positioning</a></p>
+  </section>
+
+  <section class="cat">
+    <h2>Start reading</h2>
+    <div class="grid">
+      <a class="card" href="/frameworks/">
+        <h3>Frameworks</h3>
+        <p>{{ framework_count }} reflective frameworks, grouped by the priority order
+        SoulMap actually routes on.</p>
+      </a>
+      <a class="card" href="/safety/">
+        <h3>Safety</h3>
+        <p>The ten non-negotiable rules, stated as they are written in doctrine.</p>
+      </a>
+      <a class="card" href="/architecture/">
+        <h3>Architecture</h3>
+        <p>How a message becomes a routed, validated response, without inference.</p>
+      </a>
+      <a class="card" href="/about/">
+        <h3>About</h3>
+        <p>What SoulMap is for, and what it deliberately refuses to become.</p>
+      </a>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

@@ -110,6 +110,15 @@ def main(argv: list[str] | None = None) -> int:
             str(repo_root),
             cwd=repo_root,
         )
+        # Builds the website into a temporary directory and verifies that no
+        # detection phrase, internal document, or private path reached the
+        # output. Runs here so a change that would publish non-public material
+        # fails the same gate that already catches Markdown drift.
+        python_module(
+            "soulmap.devtools.web.build",
+            "--check",
+            cwd=repo_root,
+        )
 
         md_files = iter_markdown_files(repo_root)
         if md_files:

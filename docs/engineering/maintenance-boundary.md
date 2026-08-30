@@ -39,11 +39,35 @@ These areas can exist, but must remain clearly secondary to the core:
 
 Optional layers must never make the repo harder to understand than the core itself.
 
+## The public website exception
+
+A statically generated public website is permitted, as a scoped exception
+approved by the repository owner on 2026-08-30 under the "Valid triggers for
+expansion" rule below: it serves a distribution need and has a named owner.
+
+The exception is bounded. The website may:
+
+- generate static HTML at build time from canonical repository files
+- publish only documents named in the website allowlist, see
+  [`../web/CONTENT-MODEL.md`](../web/CONTENT-MODEL.md)
+- explain routing, safety, and architecture in public prose
+
+The website may not:
+
+- run a server, expose an HTTP API, or execute any part of
+  `src/soulmap/runtime/` at request time
+- store user data, set tracking cookies, or add analytics
+- introduce accounts, authentication, or any account-shaped state
+- publish detection phrases, internal prompts, or refusal templates
+- become a conversational or reflective interface
+
+If a future change needs any of the second list, it is a new decision requiring
+its own trigger and its own ADR, not an extension of this exception.
+
 ## What not to add by default
 
 Do not add these unless there is a real, current need:
 
-- a web app or full website
 - a public API service
 - a database layer
 - authentication or user account systems

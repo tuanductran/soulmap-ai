@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap doc">
+
+  <header class="doc-head">
+    <p class="kicker">Positioning</p>
+    <h1>About</h1>
+    <p class="desc">SoulMap is a content-first reflective companion: a curated Markdown
+    knowledge base with a small deterministic routing and safety layer on top.</p>
+  </header>
+
+  {% for page in pages %}
+  <section class="about-doc">
+    <h2>{{ page.name }}</h2>
+    {% if page.description %}<p class="desc">{{ page.description }}</p>{% endif %}
+    <p><a href="/about/{{ page.slug }}/">Read {{ page.name }}</a></p>
+  </section>
+  {% endfor %}
+
+  <section class="principle">
+    <h2>The north star</h2>
+    <p>The ultimate success of SoulMap is a user who no longer needs it.</p>
+  </section>
+
+  <footer class="doc-foot">
+    <p>Generated from the brand and voice documents in the
+    <a href="{{ repo_url }}">SoulMap repository</a>.</p>
+  </footer>
+
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap">
+
+  <section class="index-head">
+    <p class="kicker">Knowledge base</p>
+    <h1>Frameworks</h1>
+    <p class="lede">SoulMap applies exactly one primary framework to a message, chosen by
+    deterministic priority. Safety modes outrank everything. Below, frameworks appear in
+    the order they are actually considered.</p>
+    <label class="search-field" for="q">
+      <span>Filter frameworks</span>
+      <input id="q" type="search" autocomplete="off"
+             placeholder="Search by name or description" data-search>
+    </label>
+    <p class="count" data-count role="status" aria-live="polite"></p>
+  </section>
+
+  {% for tier in tiers %}
+  <section class="tier" id="tier-{{ tier.slug }}" data-tier>
+    <header class="tier-head">
+      <h2>{{ tier.label }}</h2>
+      <span>{{ tier.note }}</span>
+    </header>
+    <div class="grid">
+      {% for page in tier.pages %}
+      <a class="card" href="/frameworks/{{ page.slug }}/"
+         data-entry
+         data-text="{{ page.name|lower }} {{ page.description|lower }}">
+        <h3>{{ page.name }}</h3>
+        <p>{{ page.description }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+
+  <p class="empty" data-empty hidden>No framework matches that filter.</p>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/search.js" defer></script>
+{% endblock %}

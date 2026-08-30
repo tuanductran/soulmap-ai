@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page_description }}">
+<link rel="canonical" href="{{ site_url }}{{ page_path }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description }}">
+<meta property="og:url" content="{{ site_url }}{{ page_path }}">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/">SoulMap<span> AI</span></a>
+    <nav aria-label="Primary">
+      <a href="/frameworks/"{% if section == 'frameworks' %} aria-current="page"{% endif %}>Frameworks</a>
+      <a href="/safety/"{% if section == 'safety' %} aria-current="page"{% endif %}>Safety</a>
+      <a href="/architecture/"{% if section == 'architecture' %} aria-current="page"{% endif %}>Architecture</a>
+      <a href="/about/"{% if section == 'about' %} aria-current="page"{% endif %}>About</a>
+      <a href="{{ repo_url }}">Repository</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>SoulMap is a reflective companion. It is not a therapist, a diagnosis tool, or a
+    substitute for professional care.</p>
+    <p class="muted">If you are in crisis, contact a local helpline.
+    Vietnam: HOPE 0865 044 400. US: 988. UK: Samaritans 116 123. AU: Lifeline 13 11 14.
+    International: <a href="https://findahelpline.com">findahelpline.com</a>.</p>
+    <p class="muted">Every page here is generated from the
+    <a href="{{ repo_url }}">SoulMap repository</a>. Nothing on this site stores or
+    records anything about you.</p>
+  </div>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>
