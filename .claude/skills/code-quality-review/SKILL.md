@@ -35,6 +35,9 @@ tooling contract.
 - weak typing or type drift against repo conventions
 - broad exception handling or hidden failure paths
 - dead branches, unused fields, or wrappers that add no value
+- speculative validation, sanitization, or fallback logic for a scenario that
+  cannot actually occur at that call site; if you cannot name the concrete
+  input or state that triggers it, it does not belong in the diff
 - local code that should use shared helpers in
   `src/soulmap/runtime/io/cli_payload.py` or
   `src/soulmap/runtime/io/text_normalization.py`
