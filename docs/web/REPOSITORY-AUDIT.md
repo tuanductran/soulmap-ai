@@ -221,26 +221,36 @@ filtering over a prebuilt index, with the page working without it.
 - The website must not alter `dist/` semantics, ship `.claude/`, publish
   `templates/`, or change what the wheel means.
 
-## Discrepancy found while building
+## Doctrine and code correspondence, checked
 
-Generating the frameworks index from the `SOULMAP.md` priority table surfaced a
-real doctrine gap, recorded here rather than fixed, because doctrine must not be
-edited to make a website tidier.
+Generating the frameworks index from the `SOULMAP.md` priority table raised the
+question of whether every routed framework is ranked in doctrine. Checking it
+properly found **no gap**.
 
-Six of the 26 framework documents have no row in the priority table:
-`anger-companion`, `feminine-masculine-dynamics`, `money-self-worth`,
-`relationship-reflection`, `self-compassion`, and `somatic-wellbeing`.
+The priority table ranks *primary* frameworks. `framework_selector.py` can emit
+25 distinct `primary_framework` values, and the table holds 26 rows. The counts
+differ by one because "De-escalation / Sanctuary" (Very high) and
+"De-escalation" (High) are two doctrine rows describing two intensity levels
+that share the single `DE_ESCALATION` constant. Every other value corresponds
+one-to-one.
 
-Two of those are not merely unlisted lenses. `anger-companion.md` and
-`somatic-wellbeing.md` each have a live detector in
-`src/soulmap/runtime/detectors/` (`anger_detector.py` and `somatic_detector.py`)
-that loads them, so the runtime can route to a framework the doctrine table does
-not rank. `relationship-reflection` is documented as a topic lens in
-`library-vs-framework.md`, so its absence is correct.
+Six framework documents carry no row in that table: `anger-companion`,
+`feminine-masculine-dynamics`, `money-self-worth`, `relationship-reflection`,
+`self-compassion`, and `somatic-wellbeing`. Their absence is correct, not a
+gap. `anger_detector` and `somatic_detector` are real and do run, but the
+selector uses their results only to set `secondary_layer` on a `DE_ESCALATION`
+selection. Neither ever sets `primary_framework`, so neither belongs in a table
+that ranks primaries. `relationship-reflection` is documented as a topic lens in
+`library-vs-framework.md` for the same reason.
 
-The site reports these as a "Supporting" group rather than dropping them, and
-`soulmap build-site` prints them on every run. Deciding whether the table or the
-detectors are wrong is a doctrine question for the owner.
+An earlier draft of this audit recorded these as a doctrine discrepancy needing
+an owner decision. That reading was wrong: it inferred "routed as a primary"
+from "has a detector", and the two are different. The correction is kept visible
+here rather than quietly deleted, because the mistaken version reached a pull
+request.
+
+The site groups these six as "Supporting", which is the accurate description:
+applied alongside a primary framework rather than routed on their own.
 
 ## Risks
 

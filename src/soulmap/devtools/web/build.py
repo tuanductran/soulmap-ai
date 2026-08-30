@@ -49,6 +49,11 @@ class BuildReport:
         pages_written: Number of HTML files written.
         frameworks: Number of public framework pages.
         untiered: Framework slugs with no row in the doctrine priority table.
+            Not a defect. The table ranks primary frameworks, and these are
+            applied alongside one (anger and somatic are secondary layers on a
+            de-escalation selection; others are topic lenses). See
+            `tests/contract/test_priority_hierarchy_contract.py`, which fails if
+            a genuinely primary-routed framework ever goes unranked.
     """
 
     pages_written: int
@@ -99,8 +104,9 @@ def _group_by_tier(
     """Group framework pages under their doctrine priority tier.
 
     A framework with no doctrine row is not dropped. It is collected into a
-    trailing "supporting" group, because silently omitting it would hide a real
-    doctrine gap behind a tidy page.
+    trailing "supporting" group, which is the accurate description: the
+    priority table ranks primary frameworks, and these are applied alongside
+    one rather than routed on their own.
 
     Args:
         pages: Public framework pages.
@@ -373,7 +379,9 @@ def main(argv: list[str] | None = None) -> int:
                 f"{report.frameworks} frameworks"
             )
             if report.untiered:
-                print("  no doctrine priority row: " + ", ".join(report.untiered))
+                print(
+                    "  supporting (not primary-routed): " + ", ".join(report.untiered)
+                )
             if leaks:
                 return _report_leaks(leaks)
             print("  public-content boundary: clean")
@@ -389,7 +397,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"Wrote {report.pages_written} pages to {args.output}")
     if report.untiered:
-        print("  no doctrine priority row: " + ", ".join(report.untiered))
+        print("  supporting (not primary-routed): " + ", ".join(report.untiered))
     return 0
 
 
