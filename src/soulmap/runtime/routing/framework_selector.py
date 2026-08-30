@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import logging
 import os
 import sys
 import time
@@ -58,6 +59,8 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
 # skills/meta/orchestration.md. Shared by the moderate-intensity branch and the
 # normal-intensity branch so the two cannot drift apart.
 _GRIEF_TYPES = ("acute", "anticipatory", "ambiguous", "complicated")
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def _analyze_synthesis(
@@ -122,6 +125,12 @@ async def _run_detector_async(
             )
         return result
     except Exception as error:
+        # A broken detector must not fail the whole request (one bad
+        # framework should not cost the user a response), so this returns an
+        # empty result rather than re-raising. That degrades silently unless
+        # logged here: debug_events only exists when SOULMAP_DEBUG is set, so
+        # without this call a production detector failure leaves no trace.
+        _LOGGER.warning("%s raised during routing: %s", detector_name, error)
         if debug_events is not None:
             debug_events.append(
                 {
@@ -166,6 +175,46 @@ def _apply_safety_gate(
     return out
 
 
+def _finish(
+    message: str,
+    history: list[dict[str, str]],
+    memory: dict[str, object],
+    selection: dict[str, object],
+    debug_events: list[dict] | None,
+) -> dict[str, object]:
+    """Close out a selection: apply the safety gate, then attach debug data.
+
+    Every branch below ends by calling this with its own ``selection`` dict,
+    so the safety gate and the debug-event contract stay identical across all
+    of them by construction rather than by each branch repeating the call.
+    """
+    return _maybe_attach_debug(
+        _apply_safety_gate(message, history, memory, selection, debug_events),
+        debug_events,
+    )
+
+
+def _simple_selection(
+    framework: str, detector_result: dict[str, object]
+) -> dict[str, object]:
+    """Build the selection dict shared by single-signal Mirror frameworks.
+
+    Several frameworks (creative drought, perfectionism paralysis, shadow,
+    ancestral patterns, and others below) need nothing beyond Mirror mode, no
+    secondary layer, and the detector's own recommendation as the
+    instruction. This is that shared shape, so a new framework of this kind
+    only needs its detector, not another copy of the same five-key dict.
+    """
+    return {
+        "primary_framework": framework,
+        "secondary_layer": None,
+        "mode": "MIRROR",
+        "context": detector_result,
+        "instruction": detector_result.get("recommendation", ""),
+        "blocked": [],
+    }
+
+
 async def select_framework_async(
     message: str,
     history: list[dict[str, str]],
@@ -204,10 +253,7 @@ async def select_framework_async(
             ),
             "blocked": ["ALL"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     dep_task = _run_detector_async(
         "dependency_detector",
@@ -239,10 +285,7 @@ async def select_framework_async(
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "HIGH" or crisis_tier == 2:
         tasks = {
@@ -294,10 +337,7 @@ async def select_framework_async(
             ),
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "MODERATE":
         tasks = {
@@ -352,10 +392,7 @@ async def select_framework_async(
                 ),
                 "blocked": ["direction", "shadow", "existential", "synthesis"],
             }
-            return _maybe_attach_debug(
-                _apply_safety_gate(message, history, memory, selection, debug_events),
-                debug_events,
-            )
+            return _finish(message, history, memory, selection, debug_events)
 
         secondary = None
         if insight.get("insight_detected"):
@@ -375,10 +412,7 @@ async def select_framework_async(
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     tasks = {
         "grief": _run_detector_async(
@@ -585,15 +619,12 @@ async def select_framework_async(
             "mode": "SANCTUARY",
             "context": res["grief"],
             "instruction": (
-                "Activate grief-companion.md. Presence first  -  witness the loss "
+                "Activate grief-companion.md. Presence first, witness the loss "
                 "before any reflection. End with one grief-specific question."
             ),
             "blocked": ["direction", "shadow", "existential", "synthesis"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["existential"].get("existential_detected"):
         secondary = (
@@ -611,10 +642,7 @@ async def select_framework_async(
             ),
             "blocked": ["direction", "shadow"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["conflict"].get("conflict_detected") and not res["insight"].get(
         "insight_detected"
@@ -630,10 +658,7 @@ async def select_framework_async(
             ),
             "blocked": ["direction", "shadow"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["direction"].get("direction_detected"):
         selection = {
@@ -652,38 +677,15 @@ async def select_framework_async(
             ),
             "blocked": ["shadow"],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["creative_drought"].get("creative_drought_detected"):
-        selection = {
-            "primary_framework": "CREATIVE_DROUGHT",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["creative_drought"],
-            "instruction": res["creative_drought"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("CREATIVE_DROUGHT", res["creative_drought"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["perfectionism"].get("perfectionism_paralysis_detected"):
-        selection = {
-            "primary_framework": "PERFECTIONISM_PARALYSIS",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["perfectionism"],
-            "instruction": res["perfectionism"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("PERFECTIONISM_PARALYSIS", res["perfectionism"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["shadow"].get("shadow_detected"):
         selection = {
@@ -697,150 +699,49 @@ async def select_framework_async(
             ),
             "blocked": [],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["ancestral"].get("ancestral_detected"):
-        selection = {
-            "primary_framework": "ANCESTRAL_PATTERNS",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["ancestral"],
-            "instruction": res["ancestral"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("ANCESTRAL_PATTERNS", res["ancestral"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["visibility_fear"].get("visibility_fear_detected"):
-        selection = {
-            "primary_framework": "FEAR_OF_VISIBILITY",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["visibility_fear"],
-            "instruction": res["visibility_fear"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("FEAR_OF_VISIBILITY", res["visibility_fear"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["empath"].get("empath_detected"):
-        selection = {
-            "primary_framework": "EMPATH_BOUNDARY",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["empath"],
-            "instruction": res["empath"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("EMPATH_BOUNDARY", res["empath"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["dark_night"].get("dark_night_detected"):
-        selection = {
-            "primary_framework": "DARK_NIGHT_OF_SOUL",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["dark_night"],
-            "instruction": res["dark_night"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("DARK_NIGHT_OF_SOUL", res["dark_night"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["soul_nourishment"].get("soul_nourishment_detected"):
-        selection = {
-            "primary_framework": "SOUL_NOURISHMENT",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["soul_nourishment"],
-            "instruction": res["soul_nourishment"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("SOUL_NOURISHMENT", res["soul_nourishment"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["divine_guidance"].get("divine_guidance_detected"):
-        selection = {
-            "primary_framework": "DIVINE_GUIDANCE",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["divine_guidance"],
-            "instruction": res["divine_guidance"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("DIVINE_GUIDANCE", res["divine_guidance"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["sacred_polarity"].get("sacred_polarity_detected"):
-        selection = {
-            "primary_framework": "SACRED_POLARITY",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["sacred_polarity"],
-            "instruction": res["sacred_polarity"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("SACRED_POLARITY", res["sacred_polarity"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["spiritual_purpose"].get("spiritual_purpose_detected"):
-        selection = {
-            "primary_framework": "SPIRITUAL_PURPOSE",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["spiritual_purpose"],
-            "instruction": res["spiritual_purpose"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("SPIRITUAL_PURPOSE", res["spiritual_purpose"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["soulmate_longing"].get("soulmate_longing_detected"):
-        selection = {
-            "primary_framework": "SOULMATE_LONGING",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["soulmate_longing"],
-            "instruction": res["soulmate_longing"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        selection = _simple_selection("SOULMATE_LONGING", res["soulmate_longing"])
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["partnership_patterns"].get("partnership_pattern_detected"):
-        selection = {
-            "primary_framework": "PARTNERSHIP_PATTERNS",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["partnership_patterns"],
-            "instruction": res["partnership_patterns"].get("recommendation", ""),
-            "blocked": [],
-        }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
+        selection = _simple_selection(
+            "PARTNERSHIP_PATTERNS", res["partnership_patterns"]
         )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["celebration"].get("celebration_detected") and not res["insight"].get(
         "insight_detected"
@@ -854,10 +755,7 @@ async def select_framework_async(
             "instruction": celebration_ctx.get("recommendation", ""),
             "blocked": [],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["insight"].get("insight_detected"):
         selection = {
@@ -871,10 +769,7 @@ async def select_framework_async(
             ),
             "blocked": [],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if res["synthesis"].get("synthesis_triggered") and res["synthesis"].get(
         "synthesis_ready"
@@ -890,10 +785,7 @@ async def select_framework_async(
             ),
             "blocked": [],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     if pattern and pattern.get("primary_pattern") and not pattern.get("wait_for_more"):
         selection = {
@@ -908,10 +800,7 @@ async def select_framework_async(
             ),
             "blocked": [],
         }
-        return _maybe_attach_debug(
-            _apply_safety_gate(message, history, memory, selection, debug_events),
-            debug_events,
-        )
+        return _finish(message, history, memory, selection, debug_events)
 
     mode = "PEER" if current_stage >= 5 else "MIRROR"
     somatic_active = res["somatic"].get("somatic_detected", False)
@@ -936,10 +825,7 @@ async def select_framework_async(
         ),
         "blocked": [],
     }
-    return _maybe_attach_debug(
-        _apply_safety_gate(message, history, memory, selection, debug_events),
-        debug_events,
-    )
+    return _finish(message, history, memory, selection, debug_events)
 
 
 def select_framework(

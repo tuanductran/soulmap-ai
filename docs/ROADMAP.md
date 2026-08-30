@@ -681,6 +681,87 @@ rules that already existed, with no change to `runtime/knowledge/`,
 
 ---
 
+### Phase 17 - Post-Phase-16 audit: routing duplication and a silent failure mode (complete)
+
+A requested strict full-repository audit, run after Phase 16 merged. Phases 13-15
+already covered the runtime, tooling, knowledge files, and release workflow in
+depth, and this pass confirmed that work held: `uv run vulture`, `uv run deptry .`,
+and `uv run pip-audit` (all three already gated in CI) came back clean, no
+`# type: ignore`, `# noqa`, `TODO`, `FIXME`, mutable default argument, or unsafe
+`subprocess`/`eval`/`pickle`/unguarded `yaml.load` call exists anywhere in
+`src/soulmap/`, and `parse_yaml_front_matter` already avoids a full YAML
+dependency by design rather than by omission. The audit's real findings were
+narrower and specific to `framework_selector.py`, the file Phase 16 had just
+extended:
+
+* `framework_selector.py` had grown to 986 lines, almost entirely from 27 return
+  paths that each repeated the same 4-line `_apply_safety_gate` plus
+  `_maybe_attach_debug` close, and 12 of those 27 branches (creative drought,
+  perfectionism paralysis, ancestral patterns, fear of visibility, empath
+  boundary, dark night, soul nourishment, divine guidance, sacred polarity,
+  spiritual purpose, soulmate longing, partnership patterns) additionally
+  repeated an identical 7-line "Mirror mode, no secondary, blocked: [], instruction
+  from the detector's own recommendation" selection dict. Extracted as `_finish`
+  (the shared close) and `_simple_selection` (the shared single-signal Mirror
+  shape), used only where the existing branch was already byte-for-byte that
+  shape. The priority-ordered `if`/`elif` chain itself, and every branch with
+  real distinguishing logic (secondary layers, interpolated instructions, custom
+  blocked lists), was left untouched, since that ordering is what lets the file
+  be audited line-by-line against the priority table in `SOULMAP.md`. Net: 986
+  lines to 872, zero behavior change, confirmed by the full existing regression
+  suite (`tests/regression/test_routing_safety_gate.py`,
+  `tests/integration/test_framework_selector_priorities.py`, every detector test,
+  the mutation suite, 79/79 safety evals, and `eval-groups`) passing unmodified.
+* `_run_detector_async` swallows any exception from any detector so one broken
+  framework cannot fail the whole request, an intentional degrade-to-Mirror
+  design, not a bug. Before this pass, that swallow was total: the failure was
+  recorded to `debug_events` only when a caller had already set
+  `SOULMAP_DEBUG=1`, so a detector regression in production would leave no trace
+  anywhere, including in the crisis and dependency detectors that run through
+  the same helper. `response_safety_gate.py`'s independent crisis re-derivation
+  (ADR 0001) means a broken `detect_crisis` cannot silently produce an unsafe
+  response, since the gate's own unwrapped call to the same function would raise
+  and fail loudly instead, but "loud, unmonitored crash" is still a worse outcome
+  than "logged and diagnosable." Added a single `_LOGGER.warning` call inside the
+  existing `except` block, additive only, no control-flow change.
+  `tests/regression/test_routing_safety_gate.py::test_a_detector_exception_is_logged_not_only_silently_swallowed`
+  covers it and was confirmed red against the pre-fix code before being confirmed
+  green, per the Phase 15 revert-and-confirm-red standard.
+* Fixed one cosmetic instruction-string typo in the grief branch (a doubled-space
+  spaced hyphen, "Presence first  -  witness the loss", left over from an em-dash
+  conversion) that `language-and-grammar.md` already forbids in prose; harmless to
+  behavior, since it never reaches shipped Markdown, but confusing to a future
+  reader of the routing code.
+* Investigated, and deliberately did not add, an automated contract test
+  asserting that every priority-hierarchy framework has a matching
+  `framework-template-map.md` detailed-structure section and
+  `deep-inquiry-bank.md` question section (the pattern this session used by hand
+  for Soulmate Longing and Partnership Patterns in Phase 16). Both files already
+  use intentional many-to-one groupings that predate this audit: grief's 4
+  subtypes share 2 template sections, Mirror's 3 variants share 1, and
+  `deep-inquiry-bank.md` mixes per-framework sections with shared banks
+  ("Post-Grounding Questions", "Session-Opening Questions") that do not
+  correspond to any single framework. A literal 1:1 contract test would need to
+  hand-encode those exceptions to avoid false failures, which moves the
+  maintenance burden without removing it. Verified by hand instead: every
+  `framework-template-map.md` Core mapping table `Source File` entry resolves to
+  a real file under `skills/`.
+
+Everything else the audit checked came back clean and is not listed as a finding:
+Skill front matter (`license:` lives only on each category's `SKILL.md` by
+design, not per content file, which `markdown-contract` already enforces
+correctly), `default_skill_path`'s path resolution (every call site passes a
+source-level string literal, never user or message-derived input, so path
+traversal does not apply), and every `subprocess.run` call in
+`src/soulmap/devtools/` (list-form arguments only, no `shell=True` anywhere in
+the package).
+
+This track added no new detector, no new framework, and no priority-hierarchy
+change. It reduced one file's size by roughly 12 percent through duplication
+removal, closed one production-observability gap, and fixed one string typo.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.
