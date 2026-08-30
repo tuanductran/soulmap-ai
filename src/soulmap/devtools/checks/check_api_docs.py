@@ -92,7 +92,7 @@ def _check_module_references(repo_root: Path, doc_text: str) -> list[Issue]:
                 Issue(
                     _API_DOC_RELATIVE_PATH,
                     f"references 'python -m {dotted}', but "
-                    f"src/{source_path.relative_to(repo_root / 'src')} does not exist. "
+                    f"src/{dotted.replace('.', '/')}.py does not exist. "
                     "The module was likely renamed or removed; update the doc.",
                 )
             )

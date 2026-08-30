@@ -172,4 +172,7 @@ def test_main_returns_one_and_prints_issues_when_drifted(
     exit_code = check_api_docs.main(["--root", str(tmp_path)])
 
     assert exit_code == 1
-    assert "docs/engineering/API.md" in capsys.readouterr().out
+    # str(Path(...)) renders native separators (docs\engineering\API.md on
+    # Windows), so compare against the same rendering rather than a
+    # hardcoded forward-slash literal.
+    assert str(_DOC_RELATIVE_PATH) in capsys.readouterr().out
