@@ -475,6 +475,110 @@ semantic safety classification, or platform adapter.
 
 ---
 
+### Phase 13 - Repo-wide hardening pass (v0.9.1, complete)
+
+This track came out of a full audit of the runtime, the developer tooling, the
+knowledge files and the release workflow. It shipped 43 commits after v0.9.0, of
+which 19 were defect fixes, and added 6 test files.
+
+Completed:
+
+* Routing: grief stayed primary at moderate emotional intensity. A bereaved user
+  who expressed more distress previously received less grief support, because the
+  moderate-intensity branch handed the response to de-escalation and dropped the
+  grief framework.
+* Safety: the scope classifier now blocks five documented blacklist phrases it had
+  let through across Rules 2, 4, 5, 7 and 8, and crisis resource links no longer
+  count their query string as the response's one allowed question.
+* Runtime: a malformed history entry reaching the demo entrypoint no longer raises
+  inside the safety gate.
+* Knowledge: 140 duplicated detection phrases were removed from 8 shipped files,
+  with per-label deduplication so a phrase authored under two labels survives.
+* Test infrastructure: pytest gained strict markers, strict config, strict xfail
+  and a hang timeout, and coverage was widened from the runtime alone to the whole
+  package. Each of these had been silently inert.
+* Release: `cz bump` now carries the version into the four integration guides,
+  the bump commit stages the relocked `uv.lock`, and the Markdown contracts are
+  re-verified against the bumped tree.
+* Python surfaces moved to enforced Google-style docstrings and full annotations
+  through the Ruff `D` and `ANN` rule sets, alongside 11 further rule sets that
+  the code already satisfied.
+
+---
+
+### Phase 14 - Enforcement ceiling clarity (proposed)
+
+`docs/engineering/safety-enforcement-matrix.md` currently holds 10 rows at
+`enforced` and 11 at `partial`, and instructs readers to "treat `partial` rows as
+active hardening targets". All 11 name the same gap: there is no production
+response generator inside the package. Ten say so in those words, and the
+eleventh asks for a runtime scan of every spiritual line.
+
+That gap is not a backlog item. `docs/engineering/known-limitations.md` records
+"Python does not generate AI responses" as intentional design, and the non-goals
+table below lists Python-generated response content as a non-goal. The success
+metric "keep `safety-enforcement-matrix.md` rows at `enforced`" therefore asks
+for work the architecture forbids, and a maintainer following the matrix would
+open it.
+
+The rows are not weak. They are at their ceiling, because generation belongs to
+the host surface that reads the shipped Markdown.
+
+Proposed work:
+
+* Separate the two meanings currently sharing the `partial` label: work that
+  remains inside the package, and coverage bounded at the package edge by design.
+* Have every bounded row name the host surface that completes it and the eval
+  that covers the wording, so the row still reads as evidence rather than as an
+  excuse.
+* Restate the success metric as a reachable one: no row sits at `partial` for a
+  reason inside the package's own scope.
+* Contract-test the matrix so every status token is one of the documented values
+  and every bounded row cites the document section recording that boundary.
+
+This track adds no runtime behavior and changes no safety enforcement. It changes
+what the matrix claims, so the claim matches the architecture.
+
+---
+
+### Phase 15 - Regression-strength verification (proposed)
+
+The v0.9.1 pass kept finding the same bug class: a check that cannot fail. The
+check exists, runs, and reports success, so it is trusted, but no input makes it
+red.
+
+Confirmed instances, each now fixed and each verifiable in the repository:
+
+* A safety red-team case whose category the runner could not dispatch printed
+  `SKIP`, was still counted under `Passed`, and left the exit code at 0. A typo in
+  a case name read as coverage.
+* A typo in a pytest marker silently did nothing, before `--strict-markers`.
+* An `xfail` that started passing reported `xpassed` and kept the run green,
+  before `xfail_strict`.
+* `pytest-timeout` was installed but never given a value, so it timed nothing out.
+* Coverage measured the runtime only, so 31 developer-tooling modules were
+  reported as if absent.
+
+Every fix in that pass was verified the same way: revert the fix, confirm the
+test goes red. That method is mutation testing done by hand, it is fully
+deterministic, and nothing in the repository automates or names it.
+
+Proposed work:
+
+* Name the bug class in the engineering documentation, with the reverting method
+  as the standard for accepting a new regression test.
+* Add a small curated mutation harness over the safety-critical detectors and
+  guards: a fixed list of deterministic mutations, each asserting that the gate
+  goes red.
+* Keep the list curated rather than generated. A full mutation-testing tool in CI
+  would cost far more runtime than the repository's performance rules allow, and
+  the value is concentrated in the safety modules.
+
+This track adds no runtime dependency, no semantic classification, and no
+response-generation layer. It tests the tests.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.
@@ -599,6 +703,11 @@ these are not planned unless a new ADR revisits them:
 * Maintain human-reviewed deterministic regression evidence for newly
   observed response-safety phrasing gaps
 * Platform adapters beyond the current Claude-first flow
+* Separate the two meanings currently sharing the `partial` status in the safety
+  enforcement matrix, so a row bounded by the absent response generator does not
+  read as a hardening target (Phase 14)
+* Add the curated mutation harness over safety-critical detectors and guards, and
+  name the check-that-cannot-fail bug class in the engineering docs (Phase 15)
 * Decide [ADR 0003](../docs/engineering/adr/0003-bounded-edit-distance-crisis-backstop-proposal.md),
   the bounded edit-distance crisis backstop. It remains `Proposed` and
   authorizes nothing. Moving it to `Accepted` needs a multilingual regression
@@ -614,7 +723,7 @@ these are not planned unless a new ADR revisits them:
 
 | Area              | Direction                                              |
 | ------------------ | -------------------------------------------------------- |
-| Safety enforcement  | Keep `safety-enforcement-matrix.md` rows at `enforced`   |
+| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. Rows bounded by the absent response generator are at their ceiling, not in backlog (Phase 14) |
 | Eval coverage       | Maintain 0 `failed_checks` across eval-groups and eval-markdown-contracts |
 | Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |
@@ -638,4 +747,4 @@ these are not planned unless a new ADR revisits them:
 
 ---
 
-Last updated: August 19, 2026
+Last updated: August 30, 2026
