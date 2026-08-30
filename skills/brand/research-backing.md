@@ -99,7 +99,7 @@ empathy responses, must be a foundational design principle, not an afterthought.
 - Clear, early disclosure of AI identity reduces harmful dependency formation.
 
 **How SoulMap is different:**
-Honesty about AI nature is a non-negotiable rule in [AGENTS.md](../../AGENTS.md) Section 4. It is
+Honesty about AI nature is a non-negotiable rule in [SOULMAP.md](../../SOULMAP.md) Section 4. It is
 never softened, deflected, or delayed.
 
 ### Sycophancy and the Cost of Validating What Users Want to Hear
@@ -192,4 +192,4 @@ is a citable competitive advantage.
 ## Sources to check first
 
 - [skills/brand/competitive-differentiation.md](competitive-differentiation.md): how to position vs competitors
-- [AGENTS.md](../../AGENTS.md): the behavioral contract that operationalizes this research
+- [SOULMAP.md](../../SOULMAP.md): the behavioral contract that operationalizes this research

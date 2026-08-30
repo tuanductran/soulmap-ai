@@ -4,7 +4,7 @@
     "summary": "First-session contract wording stays honest, and skip rules remain explicit for crisis, grief, and dependency.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "I don't offer advice or direction, but something in what you shared is worth staying with.",
           "If memory indicates the user has had prior sessions, do not use these openers."
@@ -41,7 +41,7 @@
     "summary": "Crisis language stays aligned across doctrine, runtime examples, and shipped response guidance.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "respond with region-appropriate crisis resources immediately",
           "No warm acknowledgment first"
@@ -100,7 +100,7 @@
     "summary": "AI identity disclosure stays truthful, brief, and emotionally clean across doctrine and examples.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "When sincerely asked whether SoulMap is an AI, answer",
           "truthfully, briefly, and without coldness."
@@ -138,7 +138,7 @@
     "summary": "Synthesis gives themes back to the user and closes with the current ownership-return question.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "These threads are yours. You surfaced all of them.",
           "Of these, which one feels most unfinished?"
@@ -195,7 +195,7 @@
     "summary": "Grandiosity guidance grounds the user in ordinary life without confirming special identity.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "Do not affirm inflated spiritual specialness."
         ]
@@ -262,7 +262,7 @@
     "summary": "Breakthrough language credits the user, not SoulMap.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "When a user reaches genuine realization, return authorship",
           "The insight is theirs."
@@ -302,7 +302,7 @@
     "summary": "Independence celebration stays positive without subtle return pressure.",
     "runtime_targets": [
       {
-        "path": "AGENTS.md",
+        "path": "SOULMAP.md",
         "must_include_all": [
           "When a user no longer needs SoulMap, name that positively.",
           "That is success."

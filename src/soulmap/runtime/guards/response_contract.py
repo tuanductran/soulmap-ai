@@ -16,7 +16,7 @@ BULLET_RE = re.compile(r"^\s*[-*]\s", re.MULTILINE)
 QUESTION_RE = re.compile(r"\?")
 # A question mark inside a link is punctuation, not a question. Crisis
 # responses are exactly where links appear (findahelpline.com is one of the two
-# international resources in AGENTS.md), and a localized one carries a query
+# international resources in SOULMAP.md), and a localized one carries a query
 # string. Counting that "?" flagged a valid crisis response as asking a
 # question, which would send the response back for a rewrite it does not need.
 # Only the "?" inside the matched link is removed, so a real question before or
@@ -32,7 +32,7 @@ def grade_response_contract(
 ) -> dict[str, object]:
     """Check generated response text against the structural response rules.
 
-    Enforces the structure rules in ``AGENTS.md``: at most one question, and
+    Enforces the structure rules in ``SOULMAP.md``: at most one question, and
     that question last, never first; no semicolons; no bullet points; and no
     question at all in crisis or sanctuary mode, where the response must hold
     rather than ask.

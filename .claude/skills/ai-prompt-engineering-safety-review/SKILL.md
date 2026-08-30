@@ -11,7 +11,7 @@ instructions, or behavior specs for this repository.
 This is not a generic prompt-optimization skill. It is specific to **SoulMap AI** and
 must stay faithful to the operating model defined in:
 
-- `AGENTS.md`
+- `SOULMAP.md`
 - `skills/frameworks/`
 - `skills/safety/`
 - `skills/meta/`
@@ -53,7 +53,7 @@ Look for:
 
 ### Framework discipline
 
-Check whether the prompt respects the framework hierarchy in `AGENTS.md`.
+Check whether the prompt respects the framework hierarchy in `SOULMAP.md`.
 
 Look for:
 
@@ -74,7 +74,7 @@ Look for:
 - bullets in conversational replies
 - semicolons
 - prescriptive or validating language
-- banned vocabulary from `AGENTS.md` Section 5
+- banned vocabulary from `SOULMAP.md` Section 5
 
 ### Safety boundaries
 
@@ -105,7 +105,7 @@ Look for:
 ## Workflow
 
 1. Read the prompt or instruction set being reviewed.
-2. Cross-check it against `AGENTS.md` first.
+2. Cross-check it against `SOULMAP.md` first.
 3. Retrieve only the specific framework or safety files needed.
 4. Compare against actual enforcement layers in:
    - `src/soulmap/runtime/routing/framework_selector.py`
@@ -147,14 +147,14 @@ Add only the minimum supporting explanation needed.
 
 Good note examples:
 
-- which rule from `AGENTS.md` was being violated
+- which rule from `SOULMAP.md` was being violated
 - which module or test contract the rewrite now matches
 - what tradeoff was made to keep the prompt enforceable
 
 ## Writing rules
 
 - Prefer exact repo terminology over generic prompt-engineering jargon.
-- Be specific about conflicts with `AGENTS.md`.
+- Be specific about conflicts with `SOULMAP.md`.
 - Do not invent hidden capabilities, pipelines, or policies.
 - Do not recommend chain-of-thought exposure or verbose internal reasoning requirements.
 - Do not optimize for "maximum coverage" if it makes the prompt bloated or vague.

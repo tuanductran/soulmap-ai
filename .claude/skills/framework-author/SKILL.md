@@ -270,7 +270,7 @@ If the framework should appear in `skills/meta/quick-reference.md`, add an entry
 ### Auditability
 
 - Each framework should be testable through `evals/datasets/groups.json`
-- Concepts should trace back to SoulMap's brand doctrine (`AGENTS.md`)
+- Concepts should trace back to SoulMap's brand doctrine (`SOULMAP.md`)
 - Language examples should be realistic and gender/culture-neutral
 
 ## Example framework template
@@ -375,7 +375,7 @@ Examples:
 
 ## Workflow
 
-1. Read `AGENTS.md` Section 2 (Framework Selection) to verify priority placement.
+1. Read `SOULMAP.md` Section 2 (Framework Selection) to verify priority placement.
 2. Read an existing framework file in `skills/frameworks/` for structural reference.
 3. Create the new file under `skills/frameworks/` with the required sections.
 4. Add the framework to the priority hierarchy in `skills/meta/orchestration.md`.

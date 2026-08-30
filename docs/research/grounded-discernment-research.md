@@ -36,4 +36,4 @@ Prescriptive recommendations must not be converted into conversational action pl
 
 ## Provenance boundary
 
-This report is an internal design record, not a source transcript or attribution record. No raw article text, image, translation, crawl corpus, external URL, author name, or source-specific claim is retained in the current repository tree. The implementation is reviewed as original SoulMap-authored behavior against `AGENTS.md`, the existing skill architecture, and the repository's safety contracts.
+This report is an internal design record, not a source transcript or attribution record. No raw article text, image, translation, crawl corpus, external URL, author name, or source-specific claim is retained in the current repository tree. The implementation is reviewed as original SoulMap-authored behavior against `SOULMAP.md`, the existing skill architecture, and the repository's safety contracts.

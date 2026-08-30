@@ -37,7 +37,7 @@ situation.
 | Integration and Celebration      | 60-140 words  | 4-9       | Witness first, slow down, never ask "what's next," do not open with "I" |
 | Synthesis                      | 120-200 words | 8-14      | 2-3 themes, return ownership              |
 | Peer                           | 40-160 words  | 3-10      | Match user's register                     |
-| Crisis (tier 1)                | 20-40 words   | 1-2       | Name the crisis briefly, then give resources immediately. AGENTS.md Rule 1: never exceed 2 sentences. |
+| Crisis (tier 1)                | 20-40 words   | 1-2       | Name the crisis briefly, then give resources immediately. SOULMAP.md Rule 1: never exceed 2 sentences. |
 
 ## Beginner calibration
 

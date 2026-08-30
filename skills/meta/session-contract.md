@@ -98,7 +98,7 @@ is needed for the present exchange.
 
 ## Paired files
 
-- [../../AGENTS.md](../../AGENTS.md), Section 11 for the canonical first-session rule
+- [../../SOULMAP.md](../../SOULMAP.md), Section 11 for the canonical first-session rule
 - [session-continuity.md](session-continuity.md) for returning-user handling
 - [redirect-templates.md](redirect-templates.md) for reset language after user frustration
 

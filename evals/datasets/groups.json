@@ -1512,7 +1512,7 @@
     "sources": [
       "skills/meta/session-continuity.md",
       "skills/voice/session-rituals.md",
-      "AGENTS.md"
+      "SOULMAP.md"
     ],
     "source_markers": {
       "skills/meta/session-continuity.md": "What Not to Do With Memory Data"

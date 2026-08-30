@@ -20,13 +20,13 @@ def _looks_like_repo_root(path: Path) -> bool:
 
     Returns:
         True when the directory holds ``pyproject.toml``, ``src``, and
-        ``AGENTS.md`` together, which no subdirectory of this repository does.
+        ``SOULMAP.md`` together, which no subdirectory of this repository does.
     """
     return (
         path.is_dir()
         and (path / "pyproject.toml").exists()
         and (path / "src").exists()
-        and (path / "AGENTS.md").exists()
+        and (path / "SOULMAP.md").exists()
     )
 
 

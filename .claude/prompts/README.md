@@ -3,7 +3,7 @@
 This folder contains small reusable prompts for recurring maintenance passes in the
 SoulMap AI repository.
 
-These prompts are convenience tools only. They do not replace `AGENTS.md`, `docs/`,
+These prompts are convenience tools only. They do not replace `SOULMAP.md`, `docs/`,
 or the shipped knowledge base.
 
 ## Prompt guide

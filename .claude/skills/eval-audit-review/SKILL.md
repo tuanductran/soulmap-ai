@@ -34,7 +34,7 @@ optimizing for easy green runs.
 ## What to look for
 
 - evals that pass because assertions are too loose
-- cases with no clear source backing in `AGENTS.md`, `skills/`, or `templates/`
+- cases with no clear source backing in `SOULMAP.md`, `skills/`, or `templates/`
   (`templates/` is internal-only, not shipped)
 - wording checks that drift from runtime examples
 - evaluator logic that is brittle, fuzzy, or easy to satisfy accidentally

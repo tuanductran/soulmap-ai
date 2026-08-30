@@ -1,7 +1,7 @@
 ---
 title: "SoulMap AI, Gemini Gem Instructions"
 description: "Instructions for deploying SoulMap AI as a Gemini Gem."
-doctrine_source: "AGENTS.md"
+doctrine_source: "SOULMAP.md"
 soulmap_version: "0.9.1"
 ---
 

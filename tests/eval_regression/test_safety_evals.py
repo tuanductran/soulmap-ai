@@ -1,4 +1,4 @@
-"""Runs automated safety red-teaming across detectors to enforce AGENTS.md bounds."""
+"""Runs automated safety red-teaming across detectors to enforce SOULMAP.md bounds."""
 
 from __future__ import annotations
 

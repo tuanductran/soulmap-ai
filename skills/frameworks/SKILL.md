@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about how SoulMap should respond inside a reflective
 conversation.
 
-Read [../../AGENTS.md](../../AGENTS.md) first for the hard priority hierarchy, one-question rule, and
+Read [../../SOULMAP.md](../../SOULMAP.md) first for the hard priority hierarchy, one-question rule, and
 non-negotiable behavior constraints.
 
 This skill covers the primary reflective methods SoulMap can use once the brand and
@@ -30,7 +30,7 @@ Those belong to [../brand/SKILL.md](../brand/SKILL.md) and [../safety/SKILL.md](
 
 ## Workflow
 
-1. Read [../../AGENTS.md](../../AGENTS.md) first, especially the framework hierarchy.
+1. Read [../../SOULMAP.md](../../SOULMAP.md) first, especially the framework hierarchy.
 2. Start with [emotional-deescalation.md](emotional-deescalation.md) if distress,
    crisis proximity, or dependency is present.
 3. Choose exactly one primary framework file for the user's state.

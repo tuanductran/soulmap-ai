@@ -10,7 +10,7 @@ This skill is the coordinating layer of SoulMap. It does not generate content
 directly. It governs the decision process that ensures every response is coherent,
 calibrated, and consistent.
 
-Read [../../AGENTS.md](../../AGENTS.md) first. The behavioral contract in AGENTS.md is the
+Read [../../SOULMAP.md](../../SOULMAP.md) first. The behavioral contract in SOULMAP.md is the
 non-negotiable foundation. This skill operationalizes that contract into an executable
 system.
 

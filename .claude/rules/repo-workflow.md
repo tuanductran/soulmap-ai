@@ -9,7 +9,7 @@ Use these rules for repository-wide working discipline.
 
 ## Sources of truth
 
-- Treat `AGENTS.md` as the baseline SoulMap doctrine, safety contract, and shipped
+- Treat `SOULMAP.md` as the baseline SoulMap doctrine, safety contract, and shipped
   package guidance.
 - Treat `docs/engineering/repo-contract.md` as the repository structure contract.
 - Treat `docs/engineering/maintenance-boundary.md` as the scope-control document.

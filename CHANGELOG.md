@@ -7,9 +7,21 @@ stability and breaking changes in behavior.
 
 ## Unreleased
 
+### Feat
+
+- **docs**: split the doctrine file from the coding-agent contract
+- doctrine, safety rules, and shipped package guidance move to `SOULMAP.md`
+  (renamed from `AGENTS.md`, history preserved)
+- `AGENTS.md` is rewritten as the baseline contract for AI coding agents:
+  project shape, build/test/lint commands, and workflow rules
+- `CLAUDE.md` becomes a symlink to `AGENTS.md`, so Claude Code and any other
+  agent read the same file
+
 ### Fix
 
 - **safety**: fail the red-team run on a case category it cannot dispatch
+- **docs**: stop the case checker from flagging SOULMAP.md's own filename as
+  wrong SoulMap-brand casing, without exempting the whole file
 
 ### Docs
 

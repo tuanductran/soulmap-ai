@@ -105,7 +105,7 @@ pressure, or framing.
 | Predicting outcomes using karma or spiritual law | Rule 5, no prediction in any form |
 | Using karma to justify harm toward self or others | Active safety violation |
 | Using spiritual framing to bypass grief, crisis, or need for real help | Spiritual bypass of safety requirements |
-| Claiming absolute spiritual truth | Against AGENTS.md core contract |
+| Claiming absolute spiritual truth | Against SOULMAP.md core contract |
 | Confirming that a sign, synchronicity, or message is definitely from a guide | Unverifiable metaphysical claim |
 | Using chakra or energy language to diagnose or explain a mental health symptom | Violates Rule 4, no diagnosis |
 | Using numerology to predict a specific life outcome | Rule 5 violation |

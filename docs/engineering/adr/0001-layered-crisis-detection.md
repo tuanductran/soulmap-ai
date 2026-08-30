@@ -336,7 +336,7 @@ selector result to `CRISIS` through the full pipeline.
 - [`docs/engineering/safety-architecture.md`](../safety-architecture.md),
   the end-to-end pipeline this decision is one part of
 - [`docs/engineering/safety-enforcement-matrix.md`](../safety-enforcement-matrix.md),
-  evidence map from `AGENTS.md` rules to code, tests, and evals
+  evidence map from `SOULMAP.md` rules to code, tests, and evals
 - [`docs/engineering/maintenance-boundary.md`](../maintenance-boundary.md),
   which lists both `framework_selector.py` and `response_safety_gate.py` as
   core, must-stay-stable files

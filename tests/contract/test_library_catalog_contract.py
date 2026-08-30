@@ -55,4 +55,4 @@ def test_library_documentation_and_source_of_truth_paths_exist() -> None:
     assert (REPO_ROOT / "docs/operations/LIBRARY.md").is_file()
     assert (REPO_ROOT / "docs/operations/UPLOAD.md").is_file()
     assert (REPO_ROOT / "SKILL.md").is_file()
-    assert (REPO_ROOT / "AGENTS.md").is_file()
+    assert (REPO_ROOT / "SOULMAP.md").is_file()

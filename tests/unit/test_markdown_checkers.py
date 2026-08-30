@@ -190,3 +190,34 @@ def test_markdown_case_checker_skips_claude_entrypoint(tmp_path: Path) -> None:
     )
 
     assert check_markdown_case.check_repo(tmp_path) == []
+
+
+def test_markdown_case_checker_skips_uppercase_md_filenames(tmp_path: Path) -> None:
+    """SOULMAP.md's own uppercase name must not read as bad SoulMap casing.
+
+    Filenames like SOULMAP.md, AGENTS.md, or README.md are literal identifiers,
+    not prose, whether they appear bare or as a Markdown link target. A wrong
+    case inside an actual link target is check-links' job, not this checker's.
+    """
+    source = tmp_path / "README.md"
+    source.write_text(
+        "# SOULMAP.md\n\n"
+        "See [SOULMAP.md](SOULMAP.md) for doctrine and AGENTS.md for workflow.\n",
+        encoding="utf-8",
+    )
+
+    assert check_markdown_case.check_repo(tmp_path) == []
+
+
+def test_markdown_case_checker_still_flags_wrong_case_near_a_filename(
+    tmp_path: Path,
+) -> None:
+    """Stripping filename tokens must not swallow a genuine casing mistake."""
+    source = tmp_path / "README.md"
+    source.write_text(
+        "soulmap ai ships the doctrine in SOULMAP.md.\n", encoding="utf-8"
+    )
+
+    issues = check_markdown_case.check_repo(tmp_path)
+
+    assert any("expected 'SoulMap AI'" in issue.message for issue in issues)

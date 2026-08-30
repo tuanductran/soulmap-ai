@@ -2,7 +2,7 @@
 
 Use this prompt for practical security and operational-hardening passes in SoulMap AI.
 
-- Start from `AGENTS.md`, `docs/operations/OPERATIONS.md`, `docs/operations/PRIVACY.md`, and `SECURITY.md`.
+- Start from `SOULMAP.md`, `docs/operations/OPERATIONS.md`, `docs/operations/PRIVACY.md`, and `SECURITY.md`.
 - Audit `src/`, `scripts/`, and `.github/workflows/` for shell safety, path safety, and least-privilege permissions.
 - Check docs for overclaims about privacy, disclosure, incident handling, or runtime safeguards.
 - Focus on concrete risks such as secrets exposure, unsafe subprocess patterns, and packaging leaks.

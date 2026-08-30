@@ -126,7 +126,7 @@ def test_markdown_contract_check_repo_and_cli_report_relative_path(
 def _write_integration_guide(
     root: Path,
     *,
-    doctrine_source: str = "AGENTS.md",
+    doctrine_source: str = "SOULMAP.md",
     soulmap_version: str = "0.8.0",
 ) -> Path:
     guide_dir = root / "docs" / "integrations"
@@ -189,7 +189,7 @@ def test_markdown_contract_flags_integration_doctrine_and_version_drift(
 
     messages = _messages(markdown_contract.check_markdown_file(source, tmp_path))
 
-    assert "Integration doctrine_source must be AGENTS.md" in messages
+    assert "Integration doctrine_source must be SOULMAP.md" in messages
     assert (
         "Integration soulmap_version must match pyproject.toml version "
         "(expected 0.8.0, got 0.7.0)"

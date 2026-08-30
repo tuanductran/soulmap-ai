@@ -1,7 +1,7 @@
 ---
 title: "SoulMap AI, platform integration guide"
 description: "Step-by-step instructions for deploying SoulMap AI on ChatGPT, Gemini, Poe, and Claude."
-doctrine_source: "AGENTS.md"
+doctrine_source: "SOULMAP.md"
 soulmap_version: "0.9.1"
 ---
 
@@ -49,7 +49,7 @@ Upload these files from `dist/soulmap-ai.zip` (extract first):
 
 Priority files (upload these):
 
-- [`../AGENTS.md`](../../AGENTS.md)
+- [`../SOULMAP.md`](../../SOULMAP.md)
 - [`../SKILL.md`](../../SKILL.md)
 - [`../skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
 - [`../skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
@@ -93,7 +93,7 @@ and paste it into the instructions field.
 
 Upload these files (extract from `dist/soulmap-ai.zip` first):
 
-1. [`../AGENTS.md`](../../AGENTS.md)
+1. [`../SOULMAP.md`](../../SOULMAP.md)
 2. [`../SKILL.md`](../../SKILL.md)
 3. [`../skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
 4. [`../skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
@@ -135,7 +135,7 @@ Set visibility to **Public** to allow discovery.
 
 ## Compatibility policy
 
-Treat `AGENTS.md` as the canonical doctrine and `soulmap_version` front matter
+Treat `SOULMAP.md` as the canonical doctrine and `soulmap_version` front matter
 as the exact package compatibility marker. The Markdown contract checks both;
 this policy defines the required human review after a change passes that static
 check.

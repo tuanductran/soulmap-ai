@@ -13,7 +13,7 @@ class ExtractedArtifactError(ValueError):
     """Raised when an archive violates the shipped package contract."""
 
 
-CORE_FILES = {"LICENSE", "AGENTS.md", "SKILL.md"}
+CORE_FILES = {"LICENSE", "SOULMAP.md", "SKILL.md"}
 PLUGIN_PREFIX = ".claude-plugin/"
 FORBIDDEN_MEMBER_PREFIXES = (
     ".claude/",

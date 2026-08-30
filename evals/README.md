@@ -47,7 +47,7 @@ Cross-surface sync cases for doctrine, runtime examples, and shipped Markdown.
 These cases keep wording-level contracts aligned across:
 
 - runtime examples in `src/`
-- doctrine files such as `AGENTS.md`
+- doctrine files such as `SOULMAP.md`
 - shipped files in `skills/` (`templates/` is internal-only and is not shipped)
 
 Use this dataset when a behavior change must stay synchronized across multiple files,

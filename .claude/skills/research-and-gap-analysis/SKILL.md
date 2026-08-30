@@ -57,7 +57,7 @@ Examples:
 
 Always start with these before forming any opinion about what is missing:
 
-- `AGENTS.md`, baseline SoulMap doctrine, safety contract, and shipped package guide
+- `SOULMAP.md`, baseline SoulMap doctrine, safety contract, and shipped package guide
 - `docs/engineering/repo-contract.md`, structural source of truth for all repo surfaces
 - `docs/engineering/safety-enforcement-matrix.md`, evidence map for safety claims
 - `docs/engineering/maintenance-boundary.md`, scope-control document

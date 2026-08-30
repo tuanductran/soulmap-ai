@@ -17,7 +17,7 @@ whether a proposed change is consistent with the project's design.
 
 **Related documents:**
 
-- [`AGENTS.md`](../../AGENTS.md) - baseline doctrine, safety law, and
+- [`SOULMAP.md`](../../SOULMAP.md) - baseline doctrine, safety law, and
   shipped package contract
 - [`docs/engineering/repo-contract.md`](repo-contract.md) - structural
   source of truth for every top-level repository surface
@@ -39,7 +39,7 @@ whether a proposed change is consistent with the project's design.
 | Safety enforcement is deterministic only | Intentional design | [Safety enforcement boundaries](#safety-enforcement-boundaries) |
 | Exactly one primary framework per request | Intentional design | [Routing boundaries](#routing-boundaries) |
 | Only two shipping artifact formats | Implementation boundary | [Packaging boundaries](#packaging-boundaries) |
-| `AGENTS.md` is the only doctrine source | Intentional design | [Documentation ownership](#documentation-ownership) |
+| `SOULMAP.md` is the only doctrine source | Intentional design | [Documentation ownership](#documentation-ownership) |
 | Architecture decisions are recorded in ADRs | Intentional design | [Architecture ownership](#architecture-ownership) |
 | Crisis detection supports five languages only | Current limitation | [Language limitations](#language-limitations) |
 | Evals do not score LLM response quality | Intentional design | [Evaluation limitations](#evaluation-limitations) |
@@ -60,7 +60,7 @@ returns.
 
 SoulMap follows a knowledge-first architecture. The content of a response -
 its wording, tone, and emotional register - belongs to Markdown under `skills/`
-and `AGENTS.md`, not to executable Python. Generating responses in Python would
+and `SOULMAP.md`, not to executable Python. Generating responses in Python would
 couple content decisions to code changes, making it impossible to update
 SoulMap's voice or doctrine without modifying and re-testing the runtime.
 
@@ -114,7 +114,7 @@ text; they never produce it.
 ### What it is
 
 Detection phrases, framework response structures, voice rules, safety
-doctrine, and brand guidance all live in `skills/` or `AGENTS.md` as
+doctrine, and brand guidance all live in `skills/` or `SOULMAP.md` as
 Markdown. Python reads these files at import time but never originates their
 content.
 
@@ -163,7 +163,7 @@ below.
   - authoritative description of how the runtime loads Markdown, which
   modules are the protected exception, and the guidelines for changing the
   knowledge layer
-- [`AGENTS.md`](../../AGENTS.md), "Knowledge file usage" section
+- [`SOULMAP.md`](../../SOULMAP.md), "Knowledge file usage" section
 
 ### Related implementation
 
@@ -195,7 +195,7 @@ environment-dependent.
 The split also enforces a contribution discipline: if a contributor finds
 themselves editing Python to change what SoulMap says or believes rather than
 how it routes or validates, that is a signal the change belongs in Markdown
-instead. `AGENTS.md` names this boundary explicitly under "Knowledge file
+instead. `SOULMAP.md` names this boundary explicitly under "Knowledge file
 usage."
 
 ### Benefits
@@ -285,7 +285,7 @@ deterministic detection approach for routing decisions.
 - [`docs/engineering/safety-architecture.md`](safety-architecture.md),
   "Layer 4" and "Why safety is layered instead of centralized" sections
 - [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-  - the rule-by-rule mapping of `AGENTS.md` safety rules to code, tests,
+  - the rule-by-rule mapping of `SOULMAP.md` safety rules to code, tests,
   and evals with current enforcement status
 - [`docs/engineering/API.md`](API.md#response-safety-contract-validator)
 
@@ -310,7 +310,7 @@ second primary framework simultaneously.
 
 ### Why it exists
 
-`AGENTS.md`'s framework-selection rules require exactly one primary framework
+`SOULMAP.md`'s framework-selection rules require exactly one primary framework
 at a time: "apply exactly one primary framework at a time" and "never combine
 two primary frameworks in one response." Implementing combination at the
 routing layer would violate the core doctrine.
@@ -333,7 +333,7 @@ precisely because there is one selection to compare against.
 
 - Selection is deterministic and fully testable.
 - The safety gate's override logic is unambiguous.
-- `AGENTS.md` priority rules map directly to framework-selector code.
+- `SOULMAP.md` priority rules map directly to framework-selector code.
 
 ### Implementation boundary
 
@@ -354,7 +354,7 @@ to fall through to multiple frameworks simultaneously.
 
 - [`docs/engineering/safety-architecture.md`](safety-architecture.md),
   "Layer 2, framework selector" and "Priority order and override behavior" sections
-- [`AGENTS.md`](../../AGENTS.md), "Framework selection" section
+- [`SOULMAP.md`](../../SOULMAP.md), "Framework selection" section
 - [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
   - doctrine-level decision tree that mirrors the Python selector's ordering
 - [`docs/engineering/API.md`](API.md#framework-selector)
@@ -404,7 +404,7 @@ skill-oriented environments.
 
 | Artifact | Includes | Excludes |
 | --- | --- | --- |
-| `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `AGENTS.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
+| `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `SOULMAP.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
 | `dist/soulmap-ai.skill` | zip contents plus `.claude-plugin/` | `templates/`, `.claude/` |
 
 ### Related documentation
@@ -426,8 +426,11 @@ skill-oriented environments.
 
 SoulMap has exactly one source of truth for each documentation concern:
 
-- `AGENTS.md` owns baseline doctrine, safety rules, framework hierarchy,
+- `SOULMAP.md` owns baseline doctrine, safety rules, framework hierarchy,
   response behavior, and shipped package guidance.
+- `AGENTS.md` owns the baseline contract for AI coding agents working in this
+  repository: project shape, build and test commands, and workflow rules. It
+  is not shipped and does not restate SoulMap doctrine.
 - `docs/engineering/repo-contract.md` owns the structural source of truth
   for every repository surface.
 - `docs/` owns explanatory and operational documentation for contributors,
@@ -441,7 +444,7 @@ Cross-references are acceptable; duplication of authoritative content is not.
 
 ### Why it exists
 
-Duplicated documentation creates drift. If `AGENTS.md` and a `docs/` file
+Duplicated documentation creates drift. If `SOULMAP.md` and a `docs/` file
 both claim to define the framework priority hierarchy, they will eventually
 disagree. The `repo-contract.md` drift rules enforce that each important repo
 surface is documented once as the primary source of truth.
@@ -462,13 +465,13 @@ rule means one place to get it wrong, but also one place to audit.
 ### Implementation boundary
 
 When this document or any `docs/` file mentions a rule that is already
-authoritative in `AGENTS.md` or `repo-contract.md`, it links to that source
-rather than restating the rule. `AGENTS.md` is never overridden by `docs/`.
+authoritative in `SOULMAP.md` or `repo-contract.md`, it links to that source
+rather than restating the rule. `SOULMAP.md` is never overridden by `docs/`.
 
 ### Related documentation
 
 - [`docs/engineering/repo-contract.md`](repo-contract.md), "Drift rules" section
-- [`AGENTS.md`](../../AGENTS.md), "Working rules for AI agents" section
+- [`SOULMAP.md`](../../SOULMAP.md), "Working rules for AI agents" section
 
 ---
 
@@ -587,7 +590,7 @@ calls the combined pack; it has no knowledge of which language matched.
 
 - [`docs/engineering/knowledge-architecture.md`](knowledge-architecture.md#protected-modules)
   - the authoritative rationale for the protected-module exception
-- [`AGENTS.md`](../../AGENTS.md), "Non-negotiable safety rules", Rule 1
+- [`SOULMAP.md`](../../SOULMAP.md), "Non-negotiable safety rules", Rule 1
 
 ### Related implementation
 
@@ -648,7 +651,7 @@ framework-grouping drift before they reach a release.
 
 - [`docs/engineering/TESTER.md`](TESTER.md) - full testing and evaluation workflow
 - [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-  - current enforcement status per `AGENTS.md` rule
+  - current enforcement status per `SOULMAP.md` rule
 
 ### Related implementation
 
@@ -670,7 +673,7 @@ they are the operational expression of the architectural boundaries.
 
 If a change modifies what SoulMap says, how it detects a signal, what phrases
 trigger a framework, or what voice rules apply, the change belongs in
-`skills/` or `AGENTS.md`. It does not belong in Python.
+`skills/` or `SOULMAP.md`. It does not belong in Python.
 
 If a contributor finds themselves editing runtime Python to change what
 SoulMap says or believes rather than how it routes or validates, that is a
@@ -698,7 +701,7 @@ The default answer to that migration is no.
 ### Routing changes require re-verification of priority order
 
 Any change to `framework_selector.py` must preserve the priority ordering
-documented in `AGENTS.md`'s "Framework selection" table and in
+documented in `SOULMAP.md`'s "Framework selection" table and in
 `skills/meta/orchestration.md`. After a routing change, verify that the
 "every branch reaches the safety gate" property holds: there must be no
 branch that returns without calling `apply_safety_gate`.
@@ -713,13 +716,13 @@ no longer applies.
 ### Documentation changes must preserve single-source ownership
 
 When adding to `docs/`, cross-reference authoritative sources rather than
-restating their content. If a rule lives in `AGENTS.md`, link to it. Do not
+restating their content. If a rule lives in `SOULMAP.md`, link to it. Do not
 copy it into a `docs/` file. Duplication creates drift.
 
 ### Related documentation
 
 - [`CONTRIBUTING.md`](../../CONTRIBUTING.md)
-- [`AGENTS.md`](../../AGENTS.md), "Working rules for AI agents" section
+- [`SOULMAP.md`](../../SOULMAP.md), "Working rules for AI agents" section
 - [`docs/engineering/knowledge-architecture.md`](knowledge-architecture.md#knowledge-layer-guidelines)
 
 ---
@@ -734,7 +737,7 @@ but no implementation plan exists for any of them at this time.
 | --- | --- |
 | Semantic safety classification | Adds LLM dependency to safety enforcement; deterministic detection is sufficient for the current scope |
 | LLM response quality evaluation in CI | Requires LLM inference and non-deterministic scoring; outside the regression gate purpose of the eval suite |
-| Framework combination (two active primary frameworks) | Violates `AGENTS.md` doctrine; makes routing and testing ambiguous |
+| Framework combination (two active primary frameworks) | Violates `SOULMAP.md` doctrine; makes routing and testing ambiguous |
 | Dynamic language expansion without static phrase review | Crisis detection requires human authorship; automated translation is not a substitute |
 | Python-generated response content | Violates the knowledge-first architecture; all content belongs in Markdown |
 | Per-language framework routing | Framework selection is language-unaware by design; safety detection provides the multilingual layer |
@@ -760,4 +763,4 @@ full implementation detail. For full detail, follow the links in each section:
   [`adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md).
 - For the CLI and JSON contracts, see [`API.md`](API.md).
 - For the baseline doctrine and safety rules, see
-  [`AGENTS.md`](../../AGENTS.md).
+  [`SOULMAP.md`](../../SOULMAP.md).

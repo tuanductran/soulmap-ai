@@ -95,7 +95,7 @@ def test_knowledge_paths_follow_safety_scope_and_framework(
 ) -> None:
     paths = eval_responses._knowledge_paths_for(selection, scope)
 
-    assert paths[:2] == ["AGENTS.md", "skills/voice/response-calibrator.md"]
+    assert paths[:2] == ["SOULMAP.md", "skills/voice/response-calibrator.md"]
     assert required_path in paths
 
 
@@ -284,12 +284,12 @@ def test_response_eval_main_records_pass_and_failure(
         lambda _message: {"tier": "ALLOW", "category": "inner_work"},
     )
     monkeypatch.setattr(
-        eval_responses, "_knowledge_paths_for", lambda *_args: ["AGENTS.md"]
+        eval_responses, "_knowledge_paths_for", lambda *_args: ["SOULMAP.md"]
     )
     monkeypatch.setattr(
         eval_responses,
         "_load_sources",
-        lambda _paths: [{"path": "AGENTS.md", "chars": 1}],
+        lambda _paths: [{"path": "SOULMAP.md", "chars": 1}],
     )
     monkeypatch.setattr(
         eval_responses,

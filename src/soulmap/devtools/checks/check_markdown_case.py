@@ -1,8 +1,11 @@
 """Canonical product and tool name casing checker.
 
 Flags Markdown prose that writes a known product or tool name with the wrong
-capitalization, such as "Soulmap" for "SoulMap". Code spans and fenced blocks
-are skipped, since they quote literal identifiers rather than prose.
+capitalization, such as "Soulmap" for "SoulMap". Code spans, fenced blocks, and
+literal ``.md`` filename references (for example ``SOULMAP.md``, whose own
+uppercase name would otherwise collide with the "SoulMap" rule) are skipped,
+since they quote literal identifiers rather than prose. A wrong-case filename
+inside a link target is check-links' job, not this checker's.
 """
 
 from __future__ import annotations
@@ -32,6 +35,7 @@ _PATH_EXEMPTIONS = {
     Path("CLAUDE.md"),
 }
 _INLINE_CODE_RE = re.compile(r"`[^`]+`")
+_MARKDOWN_FILENAME_RE = re.compile(r"\b[A-Za-z][A-Za-z0-9_-]*\.md\b")
 
 
 @dataclass(frozen=True)
@@ -90,6 +94,7 @@ def check_file(path: Path, repo_root: Path) -> list[Issue]:
             continue
 
         searchable = _INLINE_CODE_RE.sub(" ", raw)
+        searchable = _MARKDOWN_FILENAME_RE.sub(" ", searchable)
         matched_spans: list[tuple[int, int]] = []
         for pattern, canonical in _COMPILED_RULES:
             for match in pattern.finditer(searchable):

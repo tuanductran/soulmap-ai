@@ -15,7 +15,7 @@ Use these rules when editing GitHub Actions workflows or related automation.
   `.github/workflows/` so trigger, permission, and artifact patterns stay consistent.
 - Prefer the repository's canonical Python tooling commands in `src/soulmap/devtools/`
   and the checked-in `scripts/` wrappers over duplicating shell logic inside workflows.
-- Keep local workflow rules aligned with `AGENTS.md`, `repo-workflow.md`,
+- Keep local workflow rules aligned with `SOULMAP.md`, `repo-workflow.md`,
   and the current CI shape.
 
 ## Workflow design rules

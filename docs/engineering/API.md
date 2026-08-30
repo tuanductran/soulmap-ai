@@ -129,7 +129,7 @@ Input:
 ```
 
 Use this contract when validating conversational outputs against banned vocabulary and
-one-question structure rules from `AGENTS.md`.
+one-question structure rules from `SOULMAP.md`.
 
 ## Response safety contract validator
 

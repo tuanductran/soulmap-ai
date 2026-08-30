@@ -274,7 +274,7 @@ Use these when automated checks are green but you want to probe human-risk defec
 
 - Risk: the shipped artifact claims or implies repo-only files that are not present after
   extraction
-- Files or flows: [`../AGENTS.md`](../../AGENTS.md), [`../SKILL.md`](../../SKILL.md),
+- Files or flows: [`../SOULMAP.md`](../../SOULMAP.md), [`../SKILL.md`](../../SKILL.md),
   [`../skills/`](../../skills/),
   [`../operations/UPLOAD.md`](../operations/UPLOAD.md), and distribution artifacts under `dist/`
   (`templates/` is intentionally excluded, since it is internal-only and not shipped)

@@ -45,7 +45,7 @@ def _catalog() -> str:
 def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) -> None:
     _write(tmp_path, "pyproject.toml", '[project]\nversion = "1.2.3"\n')
     _write(tmp_path, "LICENSE")
-    _write(tmp_path, "AGENTS.md")
+    _write(tmp_path, "SOULMAP.md")
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/brand/brand-doctrine.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", "{}\n")

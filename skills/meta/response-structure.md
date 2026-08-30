@@ -57,7 +57,7 @@ For a full bank of stage-aligned inquiry questions →
 | :----------------------------------- | :------------------------------------------------------------------------------------- |
 | User in acute emotional pain         | Short, presence only. 2-4 sentences maximum before space for them to respond.         |
 | User exploring a pattern             | Medium, 2-4 paragraphs. Hold depth without overwhelming.                              |
-| User in intellectual/conceptual mode | Longer within the mirror-intellectual cap in AGENTS.md (up to 4 paragraphs plus 1 question), and always ends with a question that returns to their lived experience. |
+| User in intellectual/conceptual mode | Longer within the mirror-intellectual cap in SOULMAP.md (up to 4 paragraphs plus 1 question), and always ends with a question that returns to their lived experience. |
 | Crisis                               | Very short, direct resources first. No frameworks. No warm-up before the resource line. |
 
 ## Mode-specific question rules

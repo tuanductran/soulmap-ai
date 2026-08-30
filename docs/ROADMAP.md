@@ -11,7 +11,7 @@ priorities of SoulMap AI.
 
 SoulMap AI is a content-first knowledge base - a reflective-companion AI system - with a
 small Python enforcement and tooling layer on top. The repository's discipline is stated
-in [AGENTS.md](../AGENTS.md) and [README.md](../README.md): brand, safety, packaging, and
+in [SOULMAP.md](../SOULMAP.md) and [README.md](../README.md): brand, safety, packaging, and
 implementation must always tell one consistent story.
 
 For the current rule-by-rule enforcement status, always refer to:
@@ -110,7 +110,7 @@ Content is distributed through:
 ```text
 soulmap-ai/
 │
-├── AGENTS.md
+├── SOULMAP.md
 │   └── Baseline doctrine, safety law, response behavior, package contract
 │
 ├── SKILL.md
@@ -186,7 +186,7 @@ docs/engineering/safety-enforcement-matrix.md
 
 Completed:
 
-* Initial doctrine and package contract (`AGENTS.md`)
+* Initial doctrine and package contract (`SOULMAP.md`)
 * First shipped skill package structure
 * Core safety templates - crisis and dependency hotlines embedded in
   boundaries-safety, ethics-safety, and redirect templates
@@ -394,7 +394,7 @@ a superseding ADR revisits it.
 
 Completed foundation:
 
-* `docs/integrations/*.md` now declare `AGENTS.md` as their canonical doctrine
+* `docs/integrations/*.md` now declare `SOULMAP.md` as their canonical doctrine
   source and the exact compatible package version in front matter. The Markdown
   contract validates both fields against repository truth, so release drift in
   any of the Claude, ChatGPT, Gemini, or Poe guides fails local CI.
@@ -611,7 +611,7 @@ Responsibilities:
 
 * Orphaned config constant detection
 * Config dependency and import-provenance mapping
-* Doctrine ↔ Markdown contract consistency (AGENTS.md vs skills/)
+* Doctrine ↔ Markdown contract consistency (SOULMAP.md vs skills/)
 * Markdown duplicate-consistency checks
 
 ---
@@ -692,7 +692,7 @@ these are not planned unless a new ADR revisits them:
 | --- | --- |
 | Semantic safety classification | Adds LLM dependency to safety enforcement; deterministic detection is sufficient for current scope |
 | LLM response quality evaluation in CI | Requires non-deterministic scoring; outside the regression gate's purpose |
-| Framework combination (two active primary frameworks) | Violates `AGENTS.md` doctrine; makes routing and testing ambiguous |
+| Framework combination (two active primary frameworks) | Violates `SOULMAP.md` doctrine; makes routing and testing ambiguous |
 | Dynamic language expansion without static phrase review | Crisis detection requires human authorship, not automated translation |
 | Python-generated response content | Violates the knowledge-first architecture; content belongs in Markdown |
 | Per-language framework routing | Framework selection is language-unaware by design |
@@ -728,7 +728,7 @@ these are not planned unless a new ADR revisits them:
 | Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |
 | Documentation       | Doctrine, safety, packaging, and public claims stay one consistent story |
-| Distribution        | Keep all four documented platform integrations current with `AGENTS.md` |
+| Distribution        | Keep all four documented platform integrations current with `SOULMAP.md` |
 
 ---
 

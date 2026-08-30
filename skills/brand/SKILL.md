@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about SoulMap's identity, positioning, public
 messaging, or strategic coherence as a reflective companion.
 
-Read [../../AGENTS.md](../../AGENTS.md) first for the non-negotiable operating principles that govern the
+Read [../../SOULMAP.md](../../SOULMAP.md) first for the non-negotiable operating principles that govern the
 entire system.
 
 This skill protects the brand layer of SoulMap. It defines what SoulMap is, what it
@@ -33,7 +33,7 @@ Those belong to [../frameworks/SKILL.md](../frameworks/SKILL.md) and [../safety/
 
 ## Workflow
 
-1. Read [../../AGENTS.md](../../AGENTS.md) to anchor the non-negotiable SoulMap doctrine.
+1. Read [../../SOULMAP.md](../../SOULMAP.md) to anchor the non-negotiable SoulMap doctrine.
 2. Read [brand-doctrine.md](brand-doctrine.md) and
    [brand-positioning.md](brand-positioning.md) to confirm core identity.
 3. Read [message-hierarchy.md](message-hierarchy.md) for public wording and claim order.
@@ -44,7 +44,7 @@ Those belong to [../frameworks/SKILL.md](../frameworks/SKILL.md) and [../safety/
 6. Treat [founder-personal-brand.md](founder-personal-brand.md) as a founder
    calibration layer, not as doctrine. It may shape emphasis, rhythm, and aesthetic
    fit, but it must never override
-   [AGENTS.md](../../AGENTS.md), safety rules, or brand guardrails.
+   [SOULMAP.md](../../SOULMAP.md), safety rules, or brand guardrails.
 
 ## Files in this skill
 

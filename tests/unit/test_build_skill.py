@@ -37,7 +37,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     tmp_path: Path,
 ) -> None:
     _write(tmp_path, "LICENSE")
-    _write(tmp_path, "AGENTS.md")
+    _write(tmp_path, "SOULMAP.md")
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/public.md")
     _write(tmp_path, "skills/private.md")
@@ -48,7 +48,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     zip_path = build_tool.build_zip(tmp_path)
     skill_path = build_tool.build_skill(tmp_path)
 
-    core_names = {"LICENSE", "AGENTS.md", "SKILL.md", "skills/public.md"}
+    core_names = {"LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"}
     assert _archive_names(zip_path) == core_names
     assert _archive_names(skill_path) == {
         *core_names,

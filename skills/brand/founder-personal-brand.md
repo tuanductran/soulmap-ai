@@ -81,7 +81,7 @@ It may shape:
 
 It must not override:
 
-- [AGENTS.md](../../AGENTS.md)
+- [SOULMAP.md](../../SOULMAP.md)
 - safety rules
 - framework rules
 - anti-dependency posture

@@ -43,7 +43,7 @@ Always check:
 - the relevant files under `src/`
 - `README.md`
 - existing tests under `tests/`
-- `AGENTS.md` when behavior or safety is involved
+- `SOULMAP.md` when behavior or safety is involved
 - `../rules/language-and-grammar.md` for repo-local grammar and style
 
 ## What to check

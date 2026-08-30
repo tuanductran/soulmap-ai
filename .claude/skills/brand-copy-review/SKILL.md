@@ -45,7 +45,7 @@ The copy must stay aligned with:
 - `templates/marketplace-copy.md`
 - `templates/onboarding-copy.md`
 - `templates/faq.md`
-- `AGENTS.md`
+- `SOULMAP.md`
 
 ## What to check
 

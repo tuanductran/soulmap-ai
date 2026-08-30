@@ -8,7 +8,7 @@ It is a narrative companion to two documents that already carry the
 authoritative detail and must not be duplicated here:
 
 - [`docs/engineering/safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
-  is the evidence map: which `AGENTS.md` rule maps to which code path, test,
+  is the evidence map: which `SOULMAP.md` rule maps to which code path, test,
   or eval, and its current enforcement status.
 - [`docs/engineering/crisis-detection-layering-review.md`](crisis-detection-layering-review.md)
   is a focused review of why crisis detection specifically runs twice per
@@ -26,7 +26,7 @@ its parts run, and who owns what.
 
 This is a reviewer- and contributor-facing document. It describes the current
 implementation as read from `src/soulmap/runtime/` and the shipped doctrine in
-[`AGENTS.md`](../../AGENTS.md). It introduces no new components, changes no
+[`SOULMAP.md`](../../SOULMAP.md). It introduces no new components, changes no
 runtime behavior, and documents nothing that is not already backed by code,
 tests, or evals. Where a claim needs evidence, it links to the enforcement
 matrix rather than repeating the evidence inline.
@@ -94,13 +94,13 @@ Ordering notes, all confirmed against
 - Emotional intensity (HIGH, then MODERATE) is checked before any
   topic-specific framework, which is what implements the "Sanctuary and
   De-escalation outrank most topic frameworks" priority band from
-  `AGENTS.md`.
+  `SOULMAP.md`.
 - The remaining topic detectors (grief, inner parts, direction, creative
   drought, perfectionism paralysis, shadow, ancestral patterns, fear of
   visibility, empath boundary, celebration, insight, synthesis, pattern) are
   evaluated in the order they appear in the file, and the first one whose
   condition is true wins. This order matches the priority table published in
-  `AGENTS.md`'s "Framework selection" section and in
+  `SOULMAP.md`'s "Framework selection" section and in
   [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)'s
   Phase 3 table.
 - Every return branch in the selector, all of them, calls the safety gate
@@ -152,7 +152,7 @@ maps to which Markdown file) lives in
 [`API.md`](API.md#framework-name-reference) and is not duplicated here.
 
 The selector's decision order corresponds directly to the priority hierarchy
-table in `AGENTS.md`'s "Framework selection" section and to Phase 3 of
+table in `SOULMAP.md`'s "Framework selection" section and to Phase 3 of
 [`orchestration.md`](../../skills/meta/orchestration.md), which describes the
 same ordering in doctrine language for anyone reading the shipped knowledge
 base rather than the Python source.
@@ -197,7 +197,7 @@ Priority order is expressed in three places that must agree, and do:
 
 | Where | What it captures |
 | --- | --- |
-| `AGENTS.md`, "Framework selection" table | Doctrine-level priority hierarchy, the version contributors and shipped AI tooling read |
+| `SOULMAP.md`, "Framework selection" table | Doctrine-level priority hierarchy, the version contributors and shipped AI tooling read |
 | [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md), Phase 1-3 | The same hierarchy expressed as a decision tree, plus explicit priority-override rules (for example, "grief overrides direction", "sanctuary overrides parts") |
 | [`framework_selector.py`](../../src/soulmap/runtime/routing/framework_selector.py) | The executable version of the same ordering |
 
@@ -291,17 +291,17 @@ summarized here:
 
 The short version, for orientation: a detection phrase, a framework's
 response structure, and SoulMap's brand and safety doctrine all live in
-`skills/` or `AGENTS.md` as Markdown. The runtime's job is to read that
+`skills/` or `SOULMAP.md` as Markdown. The runtime's job is to read that
 Markdown at import time, use it to make a routing decision, validate a
 generated response against it, and package it for distribution. If a
 contributor finds themselves editing runtime Python to change what SoulMap
 says or believes, rather than how it routes or validates, that is a signal
-the change belongs in Markdown instead. `AGENTS.md` describes the same
+the change belongs in Markdown instead. `SOULMAP.md` describes the same
 boundary from the doctrine side, under "Knowledge file usage."
 
-## How this maps to AGENTS.md's safety rules
+## How this maps to SOULMAP.md's safety rules
 
-`AGENTS.md`'s ten non-negotiable safety rules are the contract this
+`SOULMAP.md`'s ten non-negotiable safety rules are the contract this
 architecture exists to enforce. The full rule-by-rule mapping to code, tests,
 and evals, including current enforcement status (`enforced`, `partial`, or
 `guidance-only`), is maintained as the single source of truth in
@@ -312,7 +312,7 @@ implementation status.
 ## Related documents
 
 - [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md), evidence
-  map from `AGENTS.md` rules to code, tests, and evals
+  map from `SOULMAP.md` rules to code, tests, and evals
 - [`crisis-detection-layering-review.md`](crisis-detection-layering-review.md),
   focused review of the two-call crisis detection duplication
 - [`adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md),
@@ -324,7 +324,7 @@ implementation status.
   `src/soulmap/runtime/`
 - [`API.md`](API.md), CLI/JSON contracts for the selector, safety gate, and
   response validators
-- [`AGENTS.md`](../../AGENTS.md), baseline doctrine and the ten
+- [`SOULMAP.md`](../../SOULMAP.md), baseline doctrine and the ten
   non-negotiable safety rules
 - [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md), the
   doctrine-level decision tree that mirrors the Python selector's ordering
