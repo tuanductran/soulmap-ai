@@ -18,6 +18,9 @@ pre-commit:
     markdown-case:
       glob: "*.md"
       run: uv run soulmap check-case --root . {staged_files}
+    api-docs:
+      glob: "*.md"
+      run: uv run soulmap check-api-docs --root .
     pymarkdown:
       glob: "*.md"
       run: uv run pymarkdown --config .pymarkdown.json scan {staged_files}

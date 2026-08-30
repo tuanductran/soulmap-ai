@@ -37,6 +37,7 @@ new function needs its docstring and its annotations before it lands.
 Test functions are exempt from the missing-docstring rules (`D100` to `D104`) because
 the test name carries the meaning. Keep writing a docstring when a test encodes a
 doctrine rule that the name alone cannot explain, and quote the rule it protects.
+
 - update tests when a tooling or contract change affects observable behavior
 - prefer shared helpers in `src/soulmap/runtime/io/cli_payload.py` for stdin parsing, JSON error output, and common payload extraction
 - prefer shared helpers in `src/soulmap/runtime/io/text_normalization.py` for message cleanup instead of re-implementing quote and whitespace normalization per detector

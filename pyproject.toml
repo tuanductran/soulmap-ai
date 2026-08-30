@@ -210,7 +210,11 @@ version_files = [
 known_first_party = ["soulmap"]
 
 [tool.vulture]
-paths = ["src", "tests"]
+# Matches PYTHON_SOURCE_DIR_NAMES in src/soulmap/devtools/support/repo.py, the
+# set of directories Ruff and Pyright already treat as Python source. Vulture
+# had quietly excluded scripts/ from dead-code detection while the other two
+# tools covered it.
+paths = ["src", "tests", "scripts"]
 
 min_confidence = 80
 

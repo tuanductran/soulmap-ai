@@ -5,6 +5,29 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## Unreleased
+
+### Fix
+
+- **ci**: remove unused pull-requests:read permission from p-level-governance
+- `scripts/check_p_level_pr.py` reads the pull request title and body from the
+  local event file GitHub Actions already provides and never calls the API,
+  so the permission was granted but never used
+- **markdown**: enable MD032 and fix the 2 violations it found
+- `.claude/rules/markdown-portability.md` documented MD032 as enforced while
+  `.pymarkdown.json` had it disabled with no recorded reason; tested first,
+  found only 2 genuine formatting slips across the whole tracked tree, fixed
+  both, then enabled the rule for real
+- **tooling**: scan scripts/ for dead code with Vulture
+- `[tool.vulture]` covered `src` and `tests` but not `scripts`, unlike Ruff
+  and Pyright, which already use the same three-directory definition
+
+### Chore
+
+- **tooling**: add check-api-docs to lefthook and scripts/README.md
+- both had kept the pre-Phase-18 markdown-QA command list and had not picked
+  up the API-docs drift checker the other 4 command references already had
+
 ## v0.10.0 (2026-08-30)
 
 ### Feat

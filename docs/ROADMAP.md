@@ -825,6 +825,69 @@ extend.
 
 ---
 
+### Phase 19 - Forensic repository audit: config, permissions, tooling gaps (complete)
+
+A requested forensic audit of the whole repository, not only `src/`: root dotfiles,
+`.github/`, `.claude/`, `scripts/`, the lockfile, and dependency configuration.
+Phases 13-18 already covered the runtime, tooling, knowledge files, and API docs in
+depth and this pass confirmed that held (`uv lock --check`, `deptry`, `vulture`,
+`pip-audit` all clean, `lefthook validate` clean, no secrets found in tracked files,
+no orphaned or near-duplicate files, no empty directories). New territory this pass
+actually covered: full read of all 6 workflow files and both composite actions,
+`.claude/settings.json` and its hook wiring, every root dotfile, and `pyproject.toml`
+in full.
+
+Completed:
+
+* `p-level-governance.yml` granted `pull-requests: read` for a job that never
+  calls the GitHub API: `scripts/check_p_level_pr.py` reads the pull request's
+  title and body entirely from the local `$GITHUB_EVENT_PATH` file GitHub Actions
+  already writes to disk. Removed the unused permission grant, `contents: read`
+  (needed by `actions/checkout`) is enough.
+* `.claude/rules/markdown-portability.md` documents MD032 (blank lines around
+  lists) as an enforced `pymarkdownlnt` rule, but `.pymarkdown.json` had it
+  disabled, with no comment recording why. Tested first: enabling it against
+  every tracked Markdown file surfaced exactly 2 violations, both genuine
+  formatting slips, not a systemic incompatibility. Fixed both (one missing
+  blank line, one spaced-hyphen line break that pymarkdown was parsing as an
+  unintended list item) and enabled the rule for real, closing the gap between
+  what the rule file claims and what actually runs.
+* `[tool.vulture]` in `pyproject.toml` scanned only `src` and `tests`, while
+  `PYTHON_SOURCE_DIR_NAMES` in `src/soulmap/devtools/support/repo.py`, the
+  definition Ruff and Pyright both already use, also includes `scripts`.
+  Vulture had quietly never scanned `scripts/*.py` for dead code. Added
+  `scripts` to close the gap; a full run against all three directories found
+  nothing, so this was a blind spot, not a backlog of unreported findings.
+* `lefthook.yml`'s pre-commit hooks and `scripts/README.md`'s command list both
+  still reflected the pre-Phase-18 markdown-QA trio (`markdown-contract`,
+  `check-links`, `check-case`) and had not picked up `check-api-docs` from
+  Phase 18, even though the 4 prose docs updated in that phase had. Added it to
+  both, closing a cross-layer gap this pass's own predecessor left behind.
+* Investigated, and confirmed already correctly handled: `.claude/skills/README.md`'s
+  index lists exactly the 22 skill directories present on disk, no drift.
+  `renovate.json` and `.github/dependabot.yml` configure two overlapping
+  dependency-update tools; `docs/operations/dependency-refresh.md` already
+  documents this as a known, deliberately unresolved overlap that is the
+  repository owner's call, not routine maintenance, so this pass did not
+  reopen it. `autofix.yml`'s `contents: read` permission alongside a job that
+  pushes commits is correct, not a misconfiguration: `autofix-ci/action` pushes
+  through its own GitHub App installation, not the workflow's own token.
+* Flagged, not removed: `.whitesource` (Mend/WhiteSource scanning configuration)
+  has no mention anywhere in the repository's documentation and no matching
+  check has appeared on any pull request observed across this session, while
+  Socket Security's checks appear on every one, suggesting the app behind this
+  config may no longer be installed. This is circumstantial, not confirmed, an
+  installed-GitHub-App state this pass has no tool to query directly. Left in
+  place; the repository owner can confirm and remove it if the app is
+  genuinely gone.
+
+This track added no new dependency, no new workflow, and no architectural
+change. It closed 4 small, evidence-backed drift and permission gaps and
+converted one previously-undocumented "why is this disabled" config question
+into either a fix or a recorded, deliberate non-finding.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.
