@@ -888,6 +888,43 @@ into either a fix or a recorded, deliberate non-finding.
 
 ---
 
+### Phase 20 - Close a shipped-skills reference gap the boundary test missed (complete)
+
+`tests/contract/test_epistemic_guardrail_boundary_contract.py`'s
+`test_shipped_skills_do_not_reference_repository_only_surfaces` already existed to
+catch exactly this class of bug, but its forbidden-path list only matched
+`docs/engineering/`, not bare `docs/`. Phase 16's `competitive-differentiation.md`
+addition pointed a reader to `docs/operations/PRIVACY.md`, a file that does not exist
+in either shipped archive, and the narrower pattern let it through every lint run
+since.
+
+Completed:
+
+* Removed the dead reference. The sentence already stated the underlying fact
+  inline ("there is no SoulMap AI backend and no conversation storage at all"), so
+  the pointer was extra, not load-bearing, and simply came out.
+* Widened `FORBIDDEN_SHIPPED_REFERENCES` from `docs/engineering/` to bare `docs/`,
+  since no subdirectory of `docs/` ships in either archive. Confirmed the widened
+  test fails on the original bug (reintroduced it temporarily, watched the test
+  go red, restored the fix, watched it pass) before trusting it.
+* Rebuilt both `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill` and grepped the
+  actual extracted contents, not just the source tree, for every
+  repository-only path pattern. Zero hits inside `skills/`. The only remaining
+  hits are in `SOULMAP.md` itself, naming `.claude/` and `templates/` as
+  optional, explicitly conditional local files ("if the current checkout also
+  includes...", "some working copies may also include..."), which is that
+  file's documented job, not a defect.
+* Checked whether `SOULMAP.md` needed a sync fix, per the request. It does not:
+  its package-shape tree already lists exactly the 7 shipped `skills/`
+  categories with no drift, and it has no reference to any unshipped file.
+  No change made there.
+
+CHANGELOG.md was deliberately not touched in this pass, at the maintainer's
+request: `cz bump` owns it, and a manual edit would conflict with the next
+version bump.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

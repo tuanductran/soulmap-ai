@@ -10,7 +10,7 @@ SYMBOLIC_REPORT = SKILLS_ROOT / "spiritual" / "symbolic-report-handling.md"
 # depend on implementation, test, engineering, or maintainer files.
 FORBIDDEN_SHIPPED_REFERENCES = (
     "src/soulmap/",
-    "docs/engineering/",
+    "docs/",
     "tests/",
     ".claude/",
     ".github/",

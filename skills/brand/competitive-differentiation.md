@@ -56,8 +56,7 @@ not keep the original conversation log. This is a distinct claim from an
 engagement-architecture claim, and this document does not independently verify it.
 
 SoulMap's position on this axis is structural rather than a stated deletion window:
-there is no SoulMap AI backend and no conversation storage at all. See
-`docs/operations/PRIVACY.md` for the full explanation.
+there is no SoulMap AI backend and no conversation storage at all.
 
 | Product | Data retention approach |
 | :--- | :--- |
