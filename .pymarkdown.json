@@ -11,7 +11,7 @@
       "enabled": false
     },
     "md032": {
-      "enabled": false
+      "enabled": true
     },
     "md046": {
       "style": "fenced"

@@ -42,8 +42,8 @@ identical input, with no caching between the two calls.
 
 A contributor reading this code for the first time, without this ADR, is
 likely to see two calls to the same deterministic function on the same
-input and conclude it is redundant, dead weight, or leftover from a refactor
-- and simplify it down to one call. [Issue #134](https://github.com/tuanductran/soulmap-ai/issues/134)
+input and conclude it is redundant, dead weight, or leftover from a refactor,
+and simplify it down to one call. [Issue #134](https://github.com/tuanductran/soulmap-ai/issues/134)
 was opened specifically to answer whether that instinct is correct. It
 concluded, based on code inspection, test behavior, and documentation
 evidence (not assumption), that the duplication is intentional. That

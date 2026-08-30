@@ -28,6 +28,7 @@ uv run soulmap lint
 uv run soulmap markdown-contract --root .
 uv run soulmap check-links --root .
 uv run soulmap check-case --root .
+uv run soulmap check-api-docs --root .
 uv run soulmap build
 uv run soulmap build --skill
 uv run soulmap library-manifest
