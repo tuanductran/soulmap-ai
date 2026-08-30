@@ -18,7 +18,7 @@ Prefer the smallest correct change that makes the system more coherent.
 
 When files appear to overlap, resolve them in this order:
 
-1. `AGENTS.md`, baseline SoulMap doctrine and shipped package contract
+1. `SOULMAP.md`, baseline SoulMap doctrine and shipped package contract
 2. `skills/`, shipped product knowledge (`templates/` is internal-only, not shipped)
 3. `docs/engineering/`, repository structure and maintenance contract
 4. `src/soulmap/runtime/` and `src/soulmap/devtools/`, executable behavior and tooling

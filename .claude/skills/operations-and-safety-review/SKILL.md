@@ -12,7 +12,7 @@ boundaries, or consent-sensitive features.
 Relevant files include:
 
 - `docs/operations/OPERATIONS.md`
-- `AGENTS.md`
+- `SOULMAP.md`
 - `skills/safety/`
 - `src/soulmap/runtime/guards/response_safety_gate.py`
 - `src/soulmap/runtime/experimental/biometric_ingest.py`
@@ -58,7 +58,7 @@ implements.
 ## Workflow
 
 1. Read the operations or safety doc.
-2. Compare it against the actual modules and `AGENTS.md`.
+2. Compare it against the actual modules and `SOULMAP.md`.
 3. Identify operational gaps or overclaims.
 4. Tighten the guidance with concrete, minimal corrections.
 

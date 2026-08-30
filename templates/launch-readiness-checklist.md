@@ -8,15 +8,15 @@ responsibly.
 
 | Area | Evidence type | Primary evidence |
 | :--- | :--- | :--- |
-| Package entry points | File review | [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), [templates/README.md](README.md) |
+| Package entry points | File review | [SOULMAP.md](../SOULMAP.md), [SKILL.md](../SKILL.md), [templates/README.md](README.md) |
 | Brand alignment | Content review | [skills/brand/](../skills/brand/) and [templates/brand-copy.md](brand-copy.md) |
 | Competitive positioning | Content review | [skills/brand/competitive-differentiation.md](../skills/brand/competitive-differentiation.md) |
 | Research backing | Content review | [skills/brand/research-backing.md](../skills/brand/research-backing.md) |
 | Regulatory positioning | Content review | Regulatory positioning notes remain current in the full repository |
-| Safety alignment | Content review | [AGENTS.md](../AGENTS.md), [skills/safety/](../skills/safety/), [skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md) |
+| Safety alignment | Content review | [SOULMAP.md](../SOULMAP.md), [skills/safety/](../skills/safety/), [skills/meta/redirect-templates.md](../skills/meta/redirect-templates.md) |
 | Framework coverage | Content review | [skills/frameworks/](../skills/frameworks/) and [skills/meta/quick-reference.md](../skills/meta/quick-reference.md) |
 | Voice alignment | Content review | [skills/voice/](../skills/voice/) and [skills/meta/response-structure.md](../skills/meta/response-structure.md) |
-| Priority table sync | Content review | [AGENTS.md](../AGENTS.md), [skills/meta/orchestration.md](../skills/meta/orchestration.md), and [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) list the same frameworks in the same priority order |
+| Priority table sync | Content review | [SOULMAP.md](../SOULMAP.md), [skills/meta/orchestration.md](../skills/meta/orchestration.md), and [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) list the same frameworks in the same priority order |
 | User trust commitments | Content review | [templates/user-charter.md](user-charter.md) |
 | Privacy and data handling | Content review | Privacy and data-handling commitments remain current in the full repository |
 | Public copy readiness | Content review | [templates/social-copy.md](social-copy.md), [templates/email-onboarding.md](email-onboarding.md) |
@@ -25,7 +25,7 @@ responsibly.
 | Orchestration layer | Content review | [skills/meta/orchestration.md](../skills/meta/orchestration.md) priority hierarchy matches Python modules |
 | Epistemic guardrails | Content review | [skills/meta/epistemic-guardrails.md](../skills/meta/epistemic-guardrails.md) covers all spiritual content categories |
 | Stage classifier alignment | Content review | [skills/meta/stage-classifier.md](../skills/meta/stage-classifier.md) stage signal descriptions match the detection layer |
-| Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes every framework listed in AGENTS.md's Framework selection table and 7 pipeline steps |
+| Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes every framework listed in SOULMAP.md's Framework selection table and 7 pipeline steps |
 | Build freshness | Verification run | Build artifact checks are green in the full repository |
 | Safety evals | Verification run | Safety evaluation suite is green in the full repository |
 | Grouped routing and source evals | Verification run | Grouped eval suite is green and source markers still match the cited policy files |
@@ -55,7 +55,7 @@ responsibly.
 ## Safety and boundaries
 
 - Crisis behavior is still handled before all reflective frameworks.
-- Crisis references do not contradict AGENTS.md Rule 1 about immediate resources and no extended warm-up.
+- Crisis references do not contradict SOULMAP.md Rule 1 about immediate resources and no extended warm-up.
 - First-session contract wording still matches the approved opener logic and skip rules.
 - Dependency signals still redirect toward real-world support.
 - Scope boundaries still decline diagnosis, prediction, and out-of-scope expert advice.
@@ -69,7 +69,7 @@ responsibly.
   reference.
 - Founder-facing reusable copy exists for bios, intros, and origin-story surfaces.
 - The root files still explain what SoulMap is and how to use the package.
-- The shipped directories still match the guidance described in [AGENTS.md](../AGENTS.md).
+- The shipped directories still match the guidance described in [SOULMAP.md](../SOULMAP.md).
 - No template points to missing repo-only files unless they are intentionally bundled.
 
 ## Platform Distribution Acceptance
@@ -125,7 +125,7 @@ credentials, private conversation transcripts, personal data, or access tokens.
 
 ## Validation
 
-- [AGENTS.md](../AGENTS.md), [SKILL.md](../SKILL.md), and [skills/](../skills/) describe the
+- [SOULMAP.md](../SOULMAP.md), [SKILL.md](../SKILL.md), and [skills/](../skills/) describe the
   shipped package. This `templates/` folder is internal-only and is not part of it.
 - Relative links inside shipped files resolve to files that are actually present.
 - Public copy stays aligned with the mirror-not-guide stance.

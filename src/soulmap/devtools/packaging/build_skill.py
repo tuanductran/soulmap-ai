@@ -14,7 +14,7 @@ Formats
 -------
 soulmap-ai.zip
     Standard distribution zip for manual extraction and document-based tools.
-    Includes root SKILL.md, AGENTS.md, LICENSE, and skills/.
+    Includes root SKILL.md, SOULMAP.md, LICENSE, and skills/.
     Excludes .claude-plugin/ and templates/ (internal-only, not shipped).
 
 soulmap-ai.skill
@@ -58,7 +58,7 @@ def _is_ignored(rel: str, patterns: list[str]) -> bool:
 def _iter_inputs(repo_root: Path) -> list[Path]:
     """Return files shared by the zip and .skill archives."""
     paths: list[Path] = []
-    for name in ["LICENSE", "AGENTS.md", "SKILL.md"]:
+    for name in ["LICENSE", "SOULMAP.md", "SKILL.md"]:
         candidate = repo_root / name
         if candidate.is_file():
             paths.append(candidate)

@@ -43,7 +43,7 @@ def _load_sources(paths: list[str]) -> list[dict[str, object]]:
 def _knowledge_paths_for(
     selection: dict[str, object], scope: dict[str, object]
 ) -> list[str]:
-    base = ["AGENTS.md", "skills/voice/response-calibrator.md"]
+    base = ["SOULMAP.md", "skills/voice/response-calibrator.md"]
     scope_tier = str(scope.get("tier", ""))
     scope_category = str(scope.get("category", ""))
     primary = str(selection.get("primary_framework", ""))

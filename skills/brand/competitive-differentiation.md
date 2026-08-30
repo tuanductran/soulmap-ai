@@ -47,7 +47,7 @@ SoulMap's anti-dependency posture is enforced at the system level:
 
 - dependency handling activates on the first intra-session dependency signal
 - [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
-- The response contract in [AGENTS.md](../../AGENTS.md) requires every response to leave the user
+- The response contract in [SOULMAP.md](../../SOULMAP.md) requires every response to leave the user
   less dependent than before
 - Session closings explicitly return ownership to the user and point toward real-world
   relationships
@@ -108,7 +108,7 @@ See [skills/meta/master-prompt.md](../meta/master-prompt.md) for the complete fo
 
 ## Sources to check first
 
-- [AGENTS.md](../../AGENTS.md): the behavioral contract that enforces anti-dependency at runtime
+- [SOULMAP.md](../../SOULMAP.md): the behavioral contract that enforces anti-dependency at runtime
 - [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
 - [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity
 - [skills/meta/master-prompt.md](../meta/master-prompt.md): forbidden language list

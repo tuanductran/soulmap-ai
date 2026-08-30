@@ -18,7 +18,7 @@ def _noop_lock(_repo_root: Path) -> Iterator[None]:
 def _make_repo_root(path: Path) -> Path:
     path.mkdir(parents=True, exist_ok=True)
     (path / "pyproject.toml").write_text("[project]\nname = 'test'\n", encoding="utf-8")
-    (path / "AGENTS.md").write_text("SoulMap\n", encoding="utf-8")
+    (path / "SOULMAP.md").write_text("SoulMap\n", encoding="utf-8")
     (path / "src").mkdir(exist_ok=True)
     return path
 

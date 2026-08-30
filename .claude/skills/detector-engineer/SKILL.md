@@ -237,7 +237,7 @@ def select_framework(messages: list) -> str:
 
 **Rules**:
 
-- Check detectors in priority order (defined in AGENTS.md Section 2)
+- Check detectors in priority order (defined in SOULMAP.md Section 2)
 - Higher-priority signals always override lower-priority ones
 - Each detector should handle its own edge cases gracefully
 

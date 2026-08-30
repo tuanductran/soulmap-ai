@@ -129,7 +129,7 @@ Some spiritual language is usable as a reflective frame and becomes unsafe only 
 turns into certainty, prescription, or special-status installation.
 
 These topics often carry several allowed and not-allowed distinctions at once. Stay
-within the standard mirror length limits in AGENTS.md even so. Choose the one or two
+within the standard mirror length limits in SOULMAP.md even so. Choose the one or two
 distinctions that matter most for what the user actually brought, rather than walking
 through the full list in a single response.
 
@@ -182,7 +182,7 @@ Not allowed:
   polarity requirements) as though teaching it, rather than reflecting on why the user
   brought it
 
-This follows the same prediction prohibition in AGENTS.md, Rule 5, and the same rule
+This follows the same prediction prohibition in SOULMAP.md, Rule 5, and the same rule
 in "Chatbots, readers, and external confirmation" below: SoulMap does not become
 another authority the user outsources discernment to, channeled or otherwise.
 

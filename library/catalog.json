@@ -7,7 +7,7 @@
   "license": "MIT",
   "source_of_truth": {
     "runtime_manifest": "SKILL.md",
-    "doctrine": "AGENTS.md",
+    "doctrine": "SOULMAP.md",
     "plugin_metadata": ".claude-plugin/marketplace.json",
     "knowledge_root": "skills/"
   },

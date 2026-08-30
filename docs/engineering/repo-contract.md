@@ -13,8 +13,9 @@ Use it to answer four questions for every major repo surface:
 
 | Surface | Purpose | Scope | Allowed content | Validation |
 | --- | --- | --- | --- | --- |
-| `AGENTS.md` | Baseline SoulMap doctrine, safety law, response behavior, framework priority, and shipped package guidance | Shipped source text for behavior and package use | SoulMap role, safety rules, framework hierarchy, response doctrine, package structure, and optional-local-file guidance | Indirectly verified by `src/soulmap/runtime/`, tests, evals, and docs alignment |
-| `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `AGENTS.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
+| `SOULMAP.md` | Baseline SoulMap doctrine, safety law, response behavior, framework priority, and shipped package guidance | Shipped source text for behavior and package use | SoulMap role, safety rules, framework hierarchy, response doctrine, package structure, and optional-local-file guidance | Indirectly verified by `src/soulmap/runtime/`, tests, evals, and docs alignment |
+| `AGENTS.md` | Baseline contract for AI coding agents working in this repository | Local-only, dev/workflow surface, not shipped | Project shape, build/test/lint/packaging commands, workflow rules, and pointers to `SOULMAP.md` for doctrine and to this document for structure | Manual stale-reference review; `CLAUDE.md` symlink integrity is checked alongside it |
+| `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `SOULMAP.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
 | `skills/` | Shipped knowledge base content | Shipped | Frameworks, brand doctrine, safety knowledge, voice and meta references | Markdown contract checks, eval source checks, build smoke, and release review |
@@ -24,13 +25,14 @@ Use it to answer four questions for every major repo surface:
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, runtime/tooling source, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
-| `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `AGENTS.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
+| `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
 | `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Catalog metadata, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
 
 ## Ownership Boundaries
 
-- Baseline doctrine and shipped package guidance live in [../AGENTS.md](../../AGENTS.md).
+- Baseline doctrine and shipped package guidance live in [../SOULMAP.md](../../SOULMAP.md).
+- The baseline contract for AI coding agents lives in [../AGENTS.md](../../AGENTS.md); `CLAUDE.md` is a symlink to it so Claude Code reads the same file as any other agent.
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
@@ -52,7 +54,7 @@ Use it to answer four questions for every major repo surface:
   explicit manual-review note.
 - Integration guides must declare their canonical doctrine source and exact package
   compatibility in front matter; `markdown-contract` verifies those fields against
-  `AGENTS.md` and `pyproject.toml`.
+  `SOULMAP.md` and `pyproject.toml`.
 - `.claude/` is the canonical local workflow layer. It is not part of the shipped archive, but it must still be documented and structurally validated.
 - `.github/` is an operational layer, not product doctrine, and should stay aligned
   with the repo's actual checks, release flow, and local hook wiring.
@@ -64,7 +66,7 @@ Use it to answer four questions for every major repo surface:
 The repo is release-ready only when all of the following are true:
 
 - important behavior, safety, and operations modules are reflected in docs
-- major [../AGENTS.md](../../AGENTS.md) safety rules map to code, tests, evals, or
+- major [../SOULMAP.md](../../SOULMAP.md) safety rules map to code, tests, evals, or
   explicit guidance-only notes
 - `.claude/` files are intentional, current, and contract-checked
 - `.github/` workflows and hook wiring, if present, match the repo's actual tooling and

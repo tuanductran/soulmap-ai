@@ -1,4 +1,4 @@
-"""Sanitizes LLM outputs to enforce AGENTS.md language boundaries."""
+"""Sanitizes LLM outputs to enforce SOULMAP.md language boundaries."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 
 from soulmap.runtime.io.cli_payload import parse_json_object, require_str_field
 
-# Banned vocabulary defined in AGENTS.md (language rules section)
+# Banned vocabulary defined in SOULMAP.md (language rules section)
 BANNED_WORDS = [
     r"\baction step[s]?\b",
     r"\bgoal[s]?\b",
@@ -44,7 +44,7 @@ BANNED_DEPENDENCY_PHRASES = [
 
 
 def check_banned_language(response_text: str) -> dict[str, object]:
-    """Check text against AGENTS.md restricted words and formatting rules."""
+    """Check text against SOULMAP.md restricted words and formatting rules."""
     violations = []
 
     response_lower = response_text.lower()
@@ -78,7 +78,7 @@ def check_banned_language(response_text: str) -> dict[str, object]:
     return {
         "status": "FAIL_REWRITE_REQUIRED",
         "violations": violations,
-        "instruction": "Output violated AGENTS.md language rules. Rewrite response without using banned vocabulary, maintaining exactly 1 question, and no prescriptive advice.",
+        "instruction": "Output violated SOULMAP.md language rules. Rewrite response without using banned vocabulary, maintaining exactly 1 question, and no prescriptive advice.",
     }
 
 

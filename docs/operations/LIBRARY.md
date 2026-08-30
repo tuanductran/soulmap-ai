@@ -8,7 +8,7 @@ SoulMap AI Library v1 is the repository's versioned catalog and distribution ind
 
 The source catalog is [`../../library/catalog.json`](../../library/catalog.json). It is intentionally small and human-reviewable. The catalog owns Library identity, skill entries, source-of-truth paths, compatibility surfaces, and the manual-upload boundary. It does not duplicate the runtime phrase lists owned by Python or rewrite `.claude-plugin/marketplace.json`.
 
-The catalog has six entries: Brand, Core Frameworks, Safety Guardrails, Meta Guidance, Spiritual Layer, and Voice System. Each entry points to one directory under `skills/`, while [`SKILL.md`](../../SKILL.md) and [`AGENTS.md`](../../AGENTS.md) remain the governing root documents.
+The catalog has six entries: Brand, Core Frameworks, Safety Guardrails, Meta Guidance, Spiritual Layer, and Voice System. Each entry points to one directory under `skills/`, while [`SKILL.md`](../../SKILL.md) and [`SOULMAP.md`](../../SOULMAP.md) remain the governing root documents.
 
 ## Generate a release manifest
 

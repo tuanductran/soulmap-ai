@@ -4,13 +4,13 @@ This is the response contract validation layer requested in Issue #132. It is
 a lightweight, deterministic, regex/substring-based validator run on
 LLM-generated response text before it is returned to the user. It does not
 generate, rewrite, or regenerate the response — Python remains routing,
-safety enforcement, validation, and packaging only, per AGENTS.md and the
+safety enforcement, validation, and packaging only, per SOULMAP.md and the
 SoulMap architecture constraints. Wording generation stays the LLM's job.
 
 This sits alongside the existing response-level guards
 (``response_contract.py`` for structural/style rules, ``resource_sanitizer.py``
 for banned vocabulary) as a third, independent check focused specifically on
-the safety-boundary categories from AGENTS.md's non-negotiable safety rules:
+the safety-boundary categories from SOULMAP.md's non-negotiable safety rules:
 
 - ``diagnosis``: presenting a clinical diagnosis or mental health label to the
   user (Rule 4, diagnosis prohibition)

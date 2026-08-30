@@ -154,7 +154,7 @@ _CRISIS_MIRROR_MODE: dict[str, object] = {
 def test_crisis_response_with_resource_link_query_string_is_not_a_question() -> None:
     """A question mark inside a link is punctuation, not a question.
 
-    Crisis responses are exactly where links appear. AGENTS.md names
+    Crisis responses are exactly where links appear. SOULMAP.md names
     findahelpline.com as an international resource, and a localized link
     carries a query string. Counting that "?" flagged a valid crisis response
     as asking a question and would have sent the crisis resources back for an

@@ -30,7 +30,7 @@ _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
 _NUMBERED_HEADING_PREFIX_RE = re.compile(r"^\(?\d+\)?\s*[.)]\s+")
 _PACKAGE_VERSION_RE = re.compile(r'^version\s*=\s*["\']([^"\']+)["\']\s*$')
 _INTEGRATION_METADATA = ("title", "description", "doctrine_source", "soulmap_version")
-_INTEGRATION_DOCTRINE_SOURCE = "AGENTS.md"
+_INTEGRATION_DOCTRINE_SOURCE = "SOULMAP.md"
 _BANNED_UNICODE = {
     "\u2019": "U+2019 RIGHT SINGLE QUOTATION MARK (use ASCII apostrophe ')",
     "\u2018": "U+2018 LEFT SINGLE QUOTATION MARK (use ASCII apostrophe ')",
@@ -137,7 +137,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     Issue(
                         path,
                         1,
-                        "Integration doctrine_source must be AGENTS.md",
+                        "Integration doctrine_source must be SOULMAP.md",
                     )
                 )
             expected_version = _package_version(repo_root)

@@ -10,7 +10,7 @@ that review metadata declares the task's safety boundary, evidence and rollback 
 This policy applies only to P-level pull requests. Other repository changes keep the
 existing branch, test, Markdown-contract and release rules. The check does not classify
 content or replace human review. It protects the decision boundary stated in
-`AGENTS.md`, the safety-enforcement matrix and the maintenance boundary.
+`SOULMAP.md`, the safety-enforcement matrix and the maintenance boundary.
 
 ## Required metadata
 

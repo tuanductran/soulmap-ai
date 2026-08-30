@@ -276,7 +276,7 @@ Use these helper layers only as local workflow support:
 - `.claude/` for the local Claude workflow layer, see
   [../.claude/README.md](../../.claude/README.md)
 
-This layer does not replace [`../AGENTS.md`](../../AGENTS.md), which remains the baseline
+This layer does not replace [`../SOULMAP.md`](../../SOULMAP.md), which remains the baseline
 SoulMap doctrine and
 shipped package contract.
 

@@ -179,7 +179,7 @@ the repo's normal review process.
 
 ## References
 
-- [AGENTS.md](../../../AGENTS.md#non-negotiable-safety-rules)
+- [SOULMAP.md](../../../SOULMAP.md#non-negotiable-safety-rules)
 - [ADR 0001](0001-layered-crisis-detection.md)
 - [ADR 0002](0002-deterministic-response-safety-enforcement.md)
 - [Known architecture limitations](../known-limitations.md#safety-enforcement-boundaries)

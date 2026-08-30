@@ -17,9 +17,9 @@ copy, FAQ, demo scenarios, and the launch readiness checklist. Contributors use
 these as reference and drafting material; they are not read by SoulMap at
 runtime and are not part of the skill system.
 
-Read [../AGENTS.md](../AGENTS.md) first so anything you draft here stays aligned
+Read [../SOULMAP.md](../SOULMAP.md) first so anything you draft here stays aligned
 with SoulMap's core constraints, even though this folder itself is out of scope
-for AGENTS.md's "shipped knowledge base" definition.
+for SOULMAP.md's "shipped knowledge base" definition.
 
 ## Files in this folder
 

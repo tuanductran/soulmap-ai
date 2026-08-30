@@ -23,7 +23,7 @@ SoulMap is a Markdown-and-Python project, so accessibility here means:
 
 If this rule conflicts with a stronger repo-local contract, follow the stronger source:
 
-1. `AGENTS.md`
+1. `SOULMAP.md`
 2. `docs/engineering/content-contract.md`
 3. `language-and-grammar.md`
 4. this file

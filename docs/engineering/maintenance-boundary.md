@@ -11,7 +11,7 @@ maintenance load that exceeds the project's real use case.
 These parts are the heart of the project and should remain the primary maintenance
 focus:
 
-- `AGENTS.md` as the baseline behavioral, safety, and shipped-package contract
+- `SOULMAP.md` as the baseline behavioral, safety, and shipped-package contract
 - `skills/` as the core shipped knowledge base
 - `src/soulmap/runtime/routing/framework_selector.py` and the existing detector stack
 - `src/soulmap/runtime/guards/response_safety_gate.py` (both files' independent

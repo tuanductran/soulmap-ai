@@ -37,7 +37,7 @@ packages = ["src/soulmap"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-  "/AGENTS.md",
+  "/SOULMAP.md",
   "/SKILL.md",
   "/LICENSE",
   "/README.md",

@@ -3,7 +3,7 @@
 Use this prompt for a focused audit of `docs/`, `skills/`, and `templates/` as one
 connected knowledge graph.
 
-- Start from `AGENTS.md`, `docs/engineering/repo-contract.md`, `docs/engineering/content-contract.md`, and
+- Start from `SOULMAP.md`, `docs/engineering/repo-contract.md`, `docs/engineering/content-contract.md`, and
   `README.md`.
 - Treat `skills/` as shipped source of truth. `templates/` is internal-only and is
   not shipped.

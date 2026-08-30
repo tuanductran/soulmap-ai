@@ -44,7 +44,7 @@ After routing through meta, load from the relevant group:
 | When you need...                              | Load from...                |
 | :-------------------------------------------- | :-------------------------- |
 | Orchestration and pipeline rules              | [skills/meta/](skills/meta/) |
-| Behavioral contract and safety rules          | [AGENTS.md](AGENTS.md) |
+| Behavioral contract and safety rules          | [SOULMAP.md](SOULMAP.md) |
 | Response frameworks (grief, crisis, and so on) | [skills/frameworks/](skills/frameworks/) |
 | Safety boundaries and scope control           | [skills/safety/](skills/safety/) |
 | Brand, positioning, and public copy           | [skills/brand/](skills/brand/) |
@@ -58,5 +58,5 @@ After routing through meta, load from the relevant group:
 | Competitive differentiation language          | [skills/brand/competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [skills/brand/research-backing.md](skills/brand/research-backing.md) |
 
-See [AGENTS.md](AGENTS.md) for the full behavioral contract and non-negotiable safety
+See [SOULMAP.md](SOULMAP.md) for the full behavioral contract and non-negotiable safety
 rules that govern every response.

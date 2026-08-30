@@ -28,7 +28,7 @@ def _run(root: Path) -> subprocess.CompletedProcess[str]:
 
 
 def _build_valid_repo(root: Path) -> None:
-    for name in ("LICENSE", "AGENTS.md", "SKILL.md"):
+    for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
         _write(root, name)
     _write(root, "skills/public.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")

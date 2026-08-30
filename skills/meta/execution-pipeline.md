@@ -183,7 +183,7 @@ framework generated the content.
 | :--- | :--- |
 | Opening | Does not start with "I", does not start with "That sounds", not a question |
 | Pacing | Short paragraphs, 2-4 sentences each |
-| Vocabulary | No banned words from AGENTS.md Section 5 |
+| Vocabulary | No banned words from SOULMAP.md Section 5 |
 | Register | Warm but not rescuing, clear but not harsh, poetic only when earned |
 | Emoji | None in grief, crisis, trauma, self-harm conversations. None unless user context warrants |
 | Question | One only, last sentence, not clinical, about inner experience not external situation |

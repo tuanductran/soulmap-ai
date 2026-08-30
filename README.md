@@ -30,7 +30,7 @@ This repository is the working source for the SoulMap AI system.
 
 It contains:
 
-- the baseline doctrine and package contract in [AGENTS.md](AGENTS.md)
+- the baseline doctrine and package contract in [SOULMAP.md](SOULMAP.md)
 - the shipped knowledge base in [skills/](skills/)
 - the canonical Python runtime and safety logic in [src/soulmap/runtime/](src/soulmap/runtime/)
 - the canonical local tooling in [src/soulmap/devtools/](src/soulmap/devtools/) and
@@ -61,7 +61,7 @@ to know better than they do.
 
 The most important surfaces are:
 
-- [AGENTS.md](AGENTS.md), baseline doctrine, safety law, response behavior, and shipped package guide
+- [SOULMAP.md](SOULMAP.md), baseline doctrine, safety law, response behavior, and shipped package guide
 - [SKILL.md](SKILL.md), top-level package entry point
 - [skills/](skills/), frameworks, brand doctrine, safety guidance, voice, and meta layers (including
   the shipped response and redirect templates in skills/meta/)
@@ -108,7 +108,7 @@ SoulMap doctrine and package knowledge; the Python distribution is not an AI Ski
 
 ## Where to start
 
-- doctrine and package truth: [AGENTS.md](AGENTS.md)
+- doctrine and package truth: [SOULMAP.md](SOULMAP.md)
 - structural source of truth: [docs/engineering/repo-contract.md](docs/engineering/repo-contract.md)
 - safety architecture, end to end: [docs/engineering/safety-architecture.md](docs/engineering/safety-architecture.md)
 - intentional architecture limitations: [docs/engineering/known-limitations.md](docs/engineering/known-limitations.md)
@@ -120,7 +120,11 @@ SoulMap doctrine and package knowledge; the Python distribution is not an AI Ski
 
 ## For AI tools and local maintainer layers
 
-Use [AGENTS.md](AGENTS.md) first.
+Use [AGENTS.md](AGENTS.md) first. It is the baseline contract for AI coding agents
+working in this repository, covering project shape, build and test commands, and
+workflow rules, and it points to [SOULMAP.md](SOULMAP.md) for SoulMap's own doctrine.
+`CLAUDE.md` is a symlink to `AGENTS.md`, so Claude Code reads the same file as any
+other coding agent.
 
 If this checkout also contains local workflow layers, treat them as supplemental only:
 

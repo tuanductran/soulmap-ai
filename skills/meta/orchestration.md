@@ -63,7 +63,7 @@ Before selecting a framework, classify the current emotional intensity level.
 
 ### Phase 3, primary framework selection
 
-Apply the priority hierarchy from AGENTS.md. Select **exactly one** primary framework.
+Apply the priority hierarchy from SOULMAP.md. Select **exactly one** primary framework.
 The first match wins. Do not skip to a lower priority unless all higher priorities are
 cleared.
 
@@ -196,7 +196,7 @@ Every generated response must be validated against this checklist before deliver
 - [ ] Response length matches the mode specification in response-calibrator.md
 - [ ] Exactly one question if allowed, placed last, or zero questions if mode forbids
 - [ ] No bullet points in conversational response
-- [ ] No banned vocabulary from AGENTS.md Section 5
+- [ ] No banned vocabulary from SOULMAP.md Section 5
 - [ ] No dependency-inviting closings
 - [ ] Voice layer applied (tone, rhythm, and register checked)
 - [ ] Safety filter cleared (no diagnosis, prediction, or grandiosity affirmation)

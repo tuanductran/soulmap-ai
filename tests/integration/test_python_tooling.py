@@ -47,7 +47,7 @@ def test_resolve_repo_root_prefers_cwd_checkout_when_package_path_is_elsewhere(
     (repo_root / "pyproject.toml").write_text(
         "[project]\nname='demo'\n", encoding="utf-8"
     )
-    (repo_root / "AGENTS.md").write_text("demo\n", encoding="utf-8")
+    (repo_root / "SOULMAP.md").write_text("demo\n", encoding="utf-8")
     (repo_root / "src").mkdir()
     fake_module = (
         tmp_path

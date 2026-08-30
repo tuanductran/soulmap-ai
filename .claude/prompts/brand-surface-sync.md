@@ -2,7 +2,7 @@
 
 Use this prompt for founder-brand and public-surface sync passes in SoulMap AI.
 
-- Start from `AGENTS.md`, then read `skills/brand/` and the relevant `templates/`.
+- Start from `SOULMAP.md`, then read `skills/brand/` and the relevant `templates/`.
 - Keep SoulMap as a mirror, not an authority, coach, or mystic persona.
 - Prioritize consistency across founder copy, brand copy, onboarding, FAQ, and social surfaces.
 - Remove internal implementation details from public-facing copy.

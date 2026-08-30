@@ -10,7 +10,7 @@ This folder contains repo-aware local skills for working on SoulMap AI.
 
 Repository workflow rules live in [`../rules/`](../rules/). Use those files for edit
 discipline, quality checks, path-specific conventions, and scope control. Use
-`AGENTS.md` for the baseline SoulMap doctrine, safety rules, and shipped package
+`SOULMAP.md` for the baseline SoulMap doctrine, safety rules, and shipped package
 contract.
 
 ## Core review skills
@@ -48,7 +48,7 @@ contract.
 
 - use one or two skills that match the task
 - prefer the smallest correct combination
-- treat `AGENTS.md` as the baseline source of truth for SoulMap doctrine and shipped
+- treat `SOULMAP.md` as the baseline source of truth for SoulMap doctrine and shipped
   package behavior
 - for SoulMap conversational behavior, load files from `skills/` (shipped knowledge
   base) and, for internal-only copy, `templates/`, not from this folder
@@ -80,4 +80,4 @@ Current examples:
 | Meta guidance and inquiry questions | `skills/meta/` |
 | Reusable response and redirect templates (shipped) | `skills/meta/` |
 | Internal-only brand and product copy (not shipped) | `templates/` |
-| Baseline behavioral contract | `AGENTS.md` |
+| Baseline behavioral contract | `SOULMAP.md` |

@@ -20,7 +20,7 @@ pattern set cannot infer every paraphrase or implied violation.
 Issue #132 named semantic validation as future work. Without a recorded decision,
 that note can be read as permission to add an LLM-based classifier to a safety
 path or to CI. Such a change would conflict with the existing architecture:
-`AGENTS.md` defines Python as an enforcement and validation layer, and
+`SOULMAP.md` defines Python as an enforcement and validation layer, and
 [`known-limitations.md`](../known-limitations.md#safety-enforcement-boundaries)
 defines safety enforcement and regression evaluation as deterministic.
 
@@ -111,7 +111,7 @@ detection decision in ADR 0001.
 
 ## References
 
-- [AGENTS.md](../../../AGENTS.md#non-negotiable-safety-rules)
+- [SOULMAP.md](../../../SOULMAP.md#non-negotiable-safety-rules)
 - [Known architecture limitations](../known-limitations.md#safety-enforcement-boundaries)
 - [Safety enforcement matrix](../safety-enforcement-matrix.md)
 - [Issue #132](https://github.com/tuanductran/soulmap-ai/issues/132)

@@ -1,6 +1,6 @@
 ---
 paths:
-  - AGENTS.md
+  - SOULMAP.md
   - SKILL.md
   - README.md
   - docs/**/*.md
@@ -24,7 +24,7 @@ Reference:
 
 If this rule conflicts with a stronger repo-local contract, follow the stronger source:
 
-1. `AGENTS.md`
+1. `SOULMAP.md`
 2. `docs/engineering/content-contract.md`
 3. `markdown-portability.md`
 4. `source-character-safety.md`
@@ -81,11 +81,11 @@ Avoid:
 
 Preferred:
 
-- `For example, upload AGENTS.md and SKILL.md.`
+- `For example, upload SOULMAP.md and SKILL.md.`
 
 Avoid:
 
-- `Upload AGENTS.md, SKILL.md, etc.`
+- `Upload SOULMAP.md, SKILL.md, etc.`
 
 ## Grammar
 
