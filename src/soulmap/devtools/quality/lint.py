@@ -104,6 +104,12 @@ def main(argv: list[str] | None = None) -> int:
             str(repo_root),
             cwd=repo_root,
         )
+        python_module(
+            "soulmap.devtools.checks.check_api_docs",
+            "--root",
+            str(repo_root),
+            cwd=repo_root,
+        )
 
         md_files = iter_markdown_files(repo_root)
         if md_files:

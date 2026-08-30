@@ -9,6 +9,15 @@ stability and breaking changes in behavior.
 
 ### Feat
 
+- **docs**: add a drift checker for docs/engineering/API.md
+- `soulmap check-api-docs` (also wired into `soulmap lint`, so CI already
+  covers it) statically checks two claims the hand-written doc makes about
+  the Python source: every `python -m <module>` reference still resolves to
+  a real entrypoint, and every `primary_framework` value
+  `framework_selector.py` can emit is listed in the documented output enum.
+  Never writes to the doc; found and closed a real, pre-existing gap where
+  13 framework values (including both from the soulmate layer) were missing
+  from the documented enum
 - **skills**: add the soulmate skill layer built on existing frameworks
 - `skills/soulmate/` (soulmate-longing, partnership-patterns,
   numerology-connection-lens) never confirms identity or fate, and every

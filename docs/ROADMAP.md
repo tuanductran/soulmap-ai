@@ -762,6 +762,69 @@ removal, closed one production-observability gap, and fixed one string typo.
 
 ---
 
+### Phase 18 - API documentation drift detection (complete)
+
+A requested automatic API-documentation generation system. Reconnaissance found
+`docs/engineering/API.md` already exists, and is hand-written: it explains
+SoulMap's local CLI/JSON contracts in prose, with policy notes ("use only when
+the product has explicit user consent") and historical corrections ("previously
+labelled `INSIGHT` in older documentation") a generator cannot reconstruct. A
+mechanical AST-based rewrite of that file would have destroyed real information,
+exactly the failure case a strict audit is supposed to catch, not cause. Given
+the choice, the narrower and safer path was chosen: detect drift against the
+existing hand-written doc rather than regenerate it.
+
+Completed:
+
+* `src/soulmap/devtools/checks/check_api_docs.py`, a new checker in the same
+  package and shape as `check_markdown_links.py` and `check_markdown_case.py`.
+  It never writes to `API.md`. It statically checks two narrow, mechanical
+  claims the doc makes about the Python source, both parsed from the AST, the
+  module is never imported:
+  * every `python -m <module>` command the doc references still exists and
+    still has a `__main__` entrypoint (catches a documented module being
+    renamed, moved, or losing its entrypoint)
+  * every `primary_framework` value `framework_selector.py` can emit, across
+    both shapes the selector uses (a literal `{"primary_framework": "X"}` dict
+    and the `_simple_selection("X", ...)` helper Phase 17 introduced), is
+    listed in the doc's documented output enum, and vice versa
+* Deliberately did not check whether every module with a `__main__` block has
+  its own doc section in `API.md`. The doc already covers the detector modules
+  under `src/soulmap/runtime/detectors/` with one blanket paragraph plus a
+  single example, by design, and several internal modules
+  (`scope_classifier.py`, `stage_detector.py`, `conversation_synthesizer.py`,
+  `markdown_contract.py`, `soulmap_demo.py`) are intentionally documented
+  elsewhere or not documented individually. A literal "every entrypoint needs
+  its own section" rule would have flagged all of that pre-existing, correct
+  structure as broken, the same false-positive risk Phase 17 already declined
+  for `framework-template-map.md` and `deep-inquiry-bank.md`.
+* Running the new checker against the real repository, before any doc fix,
+  found real, pre-existing drift: `API.md`'s documented `primary_framework`
+  enum and "Framework name reference" table were missing 13 of the frameworks
+  the router can actually emit, including both frameworks Phase 16 added.
+  Fixed by updating both the enum and the table, confirmed the checker then
+  passes clean. This is the revert-and-confirm-red standard applied in the
+  direction that matters here: the check was proven to fire on a real,
+  present-day bug, not just on synthetic fixtures.
+* Wired into `soulmap check-api-docs` (a new command, `_command_table()` in
+  `cli.py`) and into `soulmap lint`, so CI's existing lint job covers it with
+  no new CI workflow step. Documented in `docs/engineering/DEV.md`'s new "API
+  documentation drift check" section, and added to the `markdown-contract` /
+  `check-links` / `check-case` command list in `AGENTS.md`, `CONTRIBUTING.md`,
+  `docs/engineering/DEV.md`, and `.claude/rules/repo-workflow.md`.
+* `tests/unit/test_check_api_docs.py`, 9 tests covering a clean pass, a missing
+  doc, a stale module reference, a module that lost its `__main__` block, a new
+  framework missing from the documented enum, a removed framework still
+  documented, non-`soulmap` `python -m` references being ignored, and both CLI
+  exit codes.
+
+No Skill was added. This is a maintainer-tooling capability, not shipped
+product knowledge, and no existing `.claude/skills/` workflow already covers
+repository-specific drift checking in a way a new Skill would meaningfully
+extend.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

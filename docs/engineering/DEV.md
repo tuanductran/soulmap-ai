@@ -58,6 +58,7 @@ uv run soulmap format
 uv run soulmap markdown-contract --root .
 uv run soulmap check-links --root .
 uv run soulmap check-case --root .
+uv run soulmap check-api-docs --root .
 uv run soulmap lint
 uv run soulmap eval-groups
 uv run soulmap eval-responses
@@ -102,6 +103,24 @@ access. The case checker enforces a small SoulMap-specific canonical term table 
 
 `uv run soulmap lint` runs all three checks as part of the standard
 quality gate.
+
+## API documentation drift check
+
+[`../API.md`](API.md) documents SoulMap's local CLI/JSON contracts by hand: it is prose,
+not generated output, and includes policy notes and historical corrections a generator
+cannot reconstruct. `uv run soulmap check-api-docs --root .` does not write to that file.
+It only checks two narrow, mechanical claims the doc makes about the Python source:
+
+- every `python -m <module>` command the doc references still exists and still has a
+  `__main__` entrypoint
+- every `primary_framework` value `framework_selector.py` can emit is listed in the
+  doc's documented output enum, and vice versa
+
+Both are parsed statically from the AST, the module is never imported.
+`uv run soulmap lint` runs this check too. It does not check whether every module with
+a `__main__` block has its own doc section, since `API.md` already covers the detector
+modules under `src/soulmap/runtime/detectors/` with one blanket paragraph by design,
+and several internal modules are intentionally documented elsewhere.
 
 For live external URL validation, use the link checker in opt-in mode:
 
