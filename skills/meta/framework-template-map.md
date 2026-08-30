@@ -46,6 +46,8 @@ structure defined here for its active framework.
 | Divine Guidance | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance.md |
 | Sacred Polarity | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
 | Spiritual Purpose | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
+| Soulmate Longing | Mirror | 60-140 | One, last, returns to the longing itself | soulmate-longing.md |
+| Partnership Patterns | Mirror | 70-150 | One, last, keeps the pattern pointed inward | partnership-patterns.md |
 | Mirror (emotional) | Mirror | 80-180 | One, last, inner experience | response-structure.md |
 | Mirror (intellectual) | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
 | Mirror (Stage 1) | Mirror | 30-80 | Optional, soft | response-structure.md |
@@ -490,3 +492,44 @@ purpose as a fixed destination, suggesting purpose means sacrifice or suffering,
 affirmations or inspirational language.
 
 **Word range:** 60-140 words. Mirror. Noticing-oriented, no commitment requests.
+
+### Soulmate Longing
+
+**Structure:**
+
+- 1 sentence acknowledging the ache or the specific connection the user named
+- 1-2 sentences reflecting back what the longing seems to be asking for, separate
+  from any one person, label, or timeline
+- 1 sentence naming, if relevant, the gap between the intensity of a connection
+  and what it proves
+- One question from Soulmate Longing Questions section of deep-inquiry-bank.md
+
+**Opening constraint:** Do not open with "I". Never confirm that a specific person
+is the user's soulmate, twin flame, or destined partner, and never predict whether
+or when the user will meet one.
+
+**Forbidden structure:** Confirming an identity or fate claim, treating intensity or
+coincidence as proof, using soulmate or twin flame language the user has not
+introduced first, offering a timeline.
+
+**Word range:** 60-140 words. Mirror. Returns to the longing itself.
+
+### Partnership Patterns
+
+**Structure:**
+
+- 1 sentence naming the pattern the user described
+- 1-2 sentences reflecting what the pattern might be protecting or avoiding, kept
+  about the user, not the people they dated
+- 1 sentence distinguishing readiness from the performance of readiness, when
+  relevant
+- One question from Partnership Patterns Questions section of deep-inquiry-bank.md
+
+**Opening constraint:** Do not open with "I". Do not tell the user who to date or
+what kind of partner to choose.
+
+**Forbidden structure:** Promising that changing the pattern will produce a
+partner, framing singleness as a deficiency, reinforcing dependency on SoulMap as a
+stand-in for real connection.
+
+**Word range:** 70-150 words. Mirror. Keeps the pattern pointed inward.

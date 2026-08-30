@@ -925,3 +925,31 @@ toward what comes next.
 - "What would you lose by admitting this matters to you?"
 - "What is one honest thing you could do from this, without deciding your whole direction today?"
 - "Who taught you that imperfect things were not safe to show?"
+
+## Soulmate Longing Questions
+
+### What the longing is naming
+
+- "If you separate this longing from any one person, what is it actually asking for?"
+- "What does the intensity itself tell you, apart from what it might mean about fate?"
+- "What are you grieving, the person, the future you imagined, or both?"
+
+### The story versus the person
+
+- "What do you know about this person from the ordinary, unremarkable moments, not only the meaningful ones?"
+- "What would this longing be asking of you if no one ever arrived to answer it?"
+- "What are you giving yourself credit for wanting, regardless of how it turns out?"
+
+## Partnership Patterns Questions
+
+### What the pattern is protecting
+
+- "What does this type of person let you avoid feeling, or avoid risking?"
+- "If a steady, available partner appeared tomorrow, what in you might still hesitate?"
+- "What are you usually doing in the first few dates, giving more than feels natural, or holding back more than you want to?"
+
+### Aloneness versus loneliness
+
+- "Right now, without a partner, where in your life do you feel most supported, and where do you feel most alone?"
+- "What would you want a partner to give you that you have not yet learned to give yourself?"
+- "What does this pattern cost you, and what has it protected you from?"

@@ -610,6 +610,77 @@ response-generation layer. It tests the tests.
 
 ---
 
+### Phase 16 - Soulmate skill layer (v0.9.1, complete)
+
+`docs/engineering/library-vs-framework.md` already names the pattern this phase
+follows: the same relationship between a UI library and an application framework
+built on it (React, Next.js) already exists inside SoulMap, where each individual
+framework is built on the shared runtime without duplicating it. This phase applies
+that same pattern one level up: `skills/soulmate/` is a new, more specialized skill
+category built on top of SoulMap's existing frameworks and spiritual doctrine, the
+way a framework built on Next.js still depends on and never bypasses Next.js itself.
+
+Completed:
+
+* `skills/soulmate/`, a new shipped skill category (`SKILL.md` plus 3 content files)
+  for soulmate longing, partner-seeking patterns, and connection numerology. Every
+  file states an explicit "Inherits from" list citing the existing skills it
+  specializes rather than duplicates:
+  [`relationship-reflection.md`](../skills/frameworks/relationship-reflection.md),
+  [`spiritual-discernment.md`](../skills/spiritual/spiritual-discernment.md),
+  [`numerology-chakra-policy.md`](../skills/spiritual/numerology-chakra-policy.md),
+  [`symbolic-report-handling.md`](../skills/spiritual/symbolic-report-handling.md),
+  [`epistemic-guardrails.md`](../skills/meta/epistemic-guardrails.md), and
+  [`whitelist-blacklist-system.md`](../skills/safety/whitelist-blacklist-system.md).
+* `soulmate-longing.md` and `partnership-patterns.md` are routable Python
+  frameworks, wired the same way commit `beba57e` wired the five previously
+  unrouted spiritual frameworks: each file gained an "## Activation Signals"
+  section, each section is loaded by a matching detector
+  (`soulmate_longing_detector.py`, `partnership_patterns_detector.py`) through
+  the existing `load_keyword_section` loader, and `framework_selector.py` gained
+  two new Medium-priority branches, right after Spiritual Purpose, each closing
+  through the existing `_apply_safety_gate`. `SOULMAP.md`,
+  `skills/meta/orchestration.md`, `skills/meta/framework-template-map.md`, and
+  `skills/meta/deep-inquiry-bank.md` all gained matching entries, keeping the
+  doctrine tables, the routing code, and the detailed structure and question
+  banks in sync by the same contract every other framework already follows.
+  Before finalizing the new signal phrases, both lists were checked against
+  every higher-priority framework's existing signals (grief, shadow, existential,
+  life direction) to confirm none of the new phrasing was already claimed and
+  silently unreachable, the same collision check the `beba57e` precedent used.
+  `numerology-connection-lens.md` stays a topic lens with no detector, the same
+  category `relationship-reflection.md` belongs to in
+  [`skills/frameworks/SKILL.md`](../skills/frameworks/SKILL.md): applied only
+  after a primary framework, one of the two new ones included, is already active.
+* Closed a real gap the new content exposed: the scope classifier's
+  `identity_confirmation` blacklist already blocked "am I a twin flame" and "am I a
+  starseed" but had no equivalent for "soulmate" phrasing. Added positive coverage
+  in both question and statement word order, verified with curated near-miss cases
+  so ordinary soulmate longing (`I'm looking for my soulmate`) is not swallowed by
+  the block meant for identity-confirmation requests (`is he my soulmate`).
+* `library/catalog.json` and `.claude-plugin/marketplace.json` both gained a
+  seventh entry, kept in sync by
+  `tests/contract/test_library_catalog_contract.py`; `SOULMAP.md`'s package-shape
+  tree, the root `SKILL.md` table, and `docs/operations/LIBRARY.md`'s entry count
+  were updated to match.
+* Personal numerology reports the maintainer supplied as background were used only
+  to confirm general Vietnamese numerology report structure (a report describes
+  several named indices, not one single number). No personal identifier, birth
+  date, or individual reading from those reports was carried into any shipped
+  file. `skills/soulmate/numerology-connection-lens.md` never computes or confirms
+  compatibility between two specific people's numbers, matching the same
+  discipline `founder-numerology.md` already applies to numbers-only, no personal
+  identifiers.
+
+This track added two new Python detectors and two new priority-hierarchy entries,
+and no change to any existing framework's routing or priority order. It is a
+Framework-layer addition in the `library-vs-framework.md` sense: new Markdown
+content plus the matching detector pair, governed entirely by the Library-layer
+rules that already existed, with no change to `runtime/knowledge/`,
+`runtime/guards/`, or the shared safety gate.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

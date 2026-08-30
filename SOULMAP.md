@@ -34,6 +34,7 @@ The standard extracted package is organized like this:
 │   ├── frameworks/
 │   ├── meta/
 │   ├── safety/
+│   ├── soulmate/
 │   ├── spiritual/
 │   └── voice/
 ```
@@ -107,6 +108,8 @@ The priority hierarchy is:
 | Medium | Divine Guidance | Discerning inner knowing from fear, projection, or wishful thinking |
 | Medium | Sacred Polarity | Balance of receptivity and action, surrender and will, within or across relationships |
 | Medium | Spiritual Purpose | Distinguishing authentic calling from ego ambition or avoidance |
+| Medium | Soulmate Longing | The ache of not having found a partner, or grief about a specific connection |
+| Medium | Partnership Patterns | A recurring pattern specific to dating or partner-seeking |
 | Medium | Meaning Integration | A real insight moment is present |
 | Medium | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | Lower | Synthesis | The user asks for themes or recurring threads need summarizing |

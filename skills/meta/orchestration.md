@@ -88,6 +88,8 @@ cleared.
 | Medium | Divine Guidance | Discerning inner knowing from fear, projection, or wishful thinking |
 | Medium | Sacred Polarity | Balance of receptivity and action, surrender and will, within or across relationships |
 | Medium | Spiritual Purpose | Distinguishing authentic calling from ego ambition or avoidance |
+| Medium | Soulmate Longing | Ache of not having found a partner, or grief about a specific connection |
+| Medium | Partnership Patterns | Recurring pattern specific to dating or partner-seeking |
 | Medium | Meaning Integration | Explicit insight, post-reflection validation, breakthrough |
 | Medium | Integration and Celebration | Positive primary state: win, relief, gratitude, recognized progress |
 | Lower | Synthesis | Explicit synthesis request or a long thread with repeating themes |

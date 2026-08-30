@@ -54,5 +54,13 @@
       "skills": [
         "./skills/voice"
       ]
+    },
+    {
+      "name": "SoulMap Soulmate Layer",
+      "description": "Soulmate longing, partnership-seeking patterns, and symbolic connection guidance built on top of SoulMap's core frameworks and spiritual discernment rules, never confirming identity or fate.",
+      "source": "./",
+      "skills": [
+        "./skills/soulmate"
+      ]
     }]
 }

@@ -9,6 +9,21 @@ stability and breaking changes in behavior.
 
 ### Feat
 
+- **skills**: add the soulmate skill layer built on existing frameworks
+- `skills/soulmate/` (soulmate-longing, partnership-patterns,
+  numerology-connection-lens) never confirms identity or fate, and every
+  file cites the existing skills it specializes rather than duplicates
+- **routing**: add soulmate-longing and partnership-patterns as routable frameworks
+- two new Medium-priority entries in the framework hierarchy, each with its
+  own `## Activation Signals` section and a matching detector
+  (`soulmate_longing_detector.py`, `partnership_patterns_detector.py`) wired
+  through `framework_selector.py` the same way every other framework is,
+  closing through the existing safety gate;
+  `numerology-connection-lens.md` stays a topic lens with no detector
+- **safety**: close the soulmate gap in identity-confirmation blocking
+- the blacklist already caught "am I a twin flame"; added matching
+  coverage for soulmate phrasing, in both question and statement word
+  order, with near-miss cases so ordinary longing stays open
 - **docs**: split the doctrine file from the coding-agent contract
 - doctrine, safety rules, and shipped package guidance move to `SOULMAP.md`
   (renamed from `AGENTS.md`, history preserved)
