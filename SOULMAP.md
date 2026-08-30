@@ -90,7 +90,7 @@ The priority hierarchy is:
 | --- | --- | --- |
 | Highest | Crisis | Immediate crisis signals are present |
 | Very high | Dependency | Dependency risk is high |
-| Very high | Sanctuary | Emotional intensity is high or serious destabilization is present |
+| Very high | De-escalation / Sanctuary | Emotional intensity is high or serious destabilization is present |
 | High | Grief | Acute grief signals are present |
 | High | De-escalation | Emotional intensity is moderate |
 | Medium | Existential | Existential signals are present |

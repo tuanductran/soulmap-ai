@@ -27,6 +27,13 @@ stability and breaking changes in behavior.
 - **safety**: fail the red-team run on a case category it cannot dispatch
 - **docs**: stop the case checker from flagging SOULMAP.md's own filename as
   wrong SoulMap-brand casing, without exempting the whole file
+- **doctrine**: fix priority hierarchy table naming a mode as a framework
+- SOULMAP.md's "Very high" row said `Sanctuary`, which is a mode, not a
+  framework; the code selects `primary_framework: DE_ESCALATION` there.
+  Corrected to `De-escalation / Sanctuary`, matching orchestration.md
+- **docs**: keep REGULATORY.md's compliance table aligned with the safety
+  matrix's `bounded` status, not the `partial` label it kept independently
+  after Rule 2 and Rule 4 were reclassified
 
 ### Docs
 
