@@ -28,6 +28,20 @@ A new framework should never need to duplicate Markdown-loading, scoring
 plumbing, or safety-gate wiring. If it does, that logic belongs in the
 Library, not copy-pasted into the new detector.
 
+## Skill loading already follows progressive disclosure
+
+Every `skills/*/SKILL.md` and `.claude/skills/*/SKILL.md` in this repository
+already loads in the shape Anthropic's Agent Skills documentation calls
+progressive disclosure: front matter `name` and `description` are always
+loaded, the full `SKILL.md` body loads only once a skill activates, and a
+referenced content file (a specific `skills/frameworks/<name>.md`, for
+example) loads only when its detector fires. This was arrived at
+independently, as a consequence of the Library-vs-Framework split above, not
+copied from that documentation. It is worth naming here so a contributor
+coming from the wider Claude Skills ecosystem recognizes the pattern
+immediately, without implying any change to how skills are authored or
+loaded. See the [Agent Skills overview](https://platform.Claude.com/docs/en/agents-and-tools/agent-skills/overview).
+
 ## What is Library (do not duplicate, only extend carefully)
 
 | Module | Role |
