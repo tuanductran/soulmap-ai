@@ -1058,6 +1058,46 @@ this phase documents is a workflow practice, not a permanent gate change.
 
 ---
 
+### Phase 24 - External tooling scan: QwenPaw, jscpd, codex-security (complete)
+
+A requested scan of three external repositories for maturity gaps in
+capabilities SoulMap already has, not new features.
+
+Completed:
+
+* `docs/research/external-tooling-scan-2026-08.md` records the findings.
+  QwenPaw (a full personal-AI-assistant product with persistent memory,
+  agentic tool-use, and multi-channel deployment) is not applicable: every
+  interesting part of it is a documented SoulMap non-goal.
+  `openai/codex-security` (a cloud, LLM-agent-driven, paid-API security
+  scanner) is not applicable as a tool: CodeQL, `pip-audit`, and Socket
+  Security already cover this repository, and the dependency-refresh policy
+  already says not to add a scanner merely because an alternative exists.
+* `kucherenko/jscpd` (a copy/paste detector) was run diagnostically against
+  SoulMap's actual `src/` and `skills/` trees rather than judged from its
+  README: 4.38% Python duplication and 0.35% Markdown duplication. Reading
+  the clone pairs found almost all of the Python figure is two already
+  intentional, repo-wide templates (the detector module header, the
+  `devtools/checks/` `main()` wrapper), one small 11-line genuine candidate
+  worth noting but not urgent enough to refactor same-day, and confirmed the
+  Markdown figure is low because `extract_keyword_section` and
+  `extract_labeled_groups` in `knowledge/keyword_lists.py` already
+  deduplicate every phrase list at parse time, the structural fix behind
+  Phase 13's 140-duplicate-phrase cleanup. No dependency was added.
+* Two ideas from `codex-security`'s own `AGENTS.md` process documentation,
+  not its product, were folded into existing skills as small, well-justified
+  additions: `code-quality-review/SKILL.md` gained "avoid speculative
+  defenses" (already true of this session's own working discipline via the
+  outer system prompt, but not previously written down anywhere inside the
+  repository), and `cli-tooling-maintainer/SKILL.md` gained a bullet
+  treating the `soulmap` command surface as a stability contract.
+
+This track added no Python, no new Skill, no CI change, and no dependency.
+It is a research deliverable plus two small documentation additions that
+close a real "not written down anywhere in `.claude/`" gap.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

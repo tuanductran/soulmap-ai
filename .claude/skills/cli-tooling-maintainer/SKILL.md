@@ -38,6 +38,11 @@ enough for local development workflows.
 - inconsistent stdin payload parsing across tooling modules
 - missing or misleading docs for CLI behavior
 - exit-code or stderr behavior that would confuse automation
+- unjustified changes to the `soulmap` command surface: treat every entry in
+  `_command_table()` (`cli.py`), its flags, and its defaults as a stability
+  contract. A new command or flag needs a real, current need stated in the
+  change, not implementation convenience; a removed one needs every doc,
+  script, and workflow that invokes it updated in the same change
 
 ## Workflow
 
