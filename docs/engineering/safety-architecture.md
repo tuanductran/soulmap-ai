@@ -303,8 +303,8 @@ boundary from the doctrine side, under "Knowledge file usage."
 
 `SOULMAP.md`'s ten non-negotiable safety rules are the contract this
 architecture exists to enforce. The full rule-by-rule mapping to code, tests,
-and evals, including current enforcement status (`enforced`, `partial`, or
-`guidance-only`), is maintained as the single source of truth in
+and evals, including current enforcement status (`enforced`, `bounded`,
+`partial`, or `guidance-only`), is maintained as the single source of truth in
 [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md). This document
 does not duplicate that table; use it to verify any specific rule's
 implementation status.
