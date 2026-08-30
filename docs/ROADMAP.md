@@ -962,6 +962,47 @@ landscape.
 
 ---
 
+### Phase 22 - Shipped-package boundary rule, closing the gap Phase 20 fixed only in Python (complete)
+
+Phase 20 fixed one dead `docs/` reference inside a shipped skill file and widened
+the Python contract test that should have caught it. That closed the specific bug,
+but left the underlying gap open: nothing outside `src/soulmap/` told a human or an
+agent, before they wrote the reference, that `skills/` content ships standalone and
+a repository-only path resolves to nothing once extracted. The only guardrail was a
+regression test discovered after the fact, and `docs/engineering/repo-contract.md`
+itself, the repository's own structural source of truth, called `docs/`'s scope
+"Shipped docs" in the same table where the `dist/soulmap-ai.zip` row lists exactly
+what ships and does not include `docs/` at all. That contradiction inside the
+canonical document was a plausible contributor to the original mistake, not just a
+missing warning.
+
+Completed:
+
+* `docs/engineering/repo-contract.md`: reworded the `docs/` row's scope from
+  "Shipped docs" to "Published in the repository, not packaged in
+  `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill`", removing the internal
+  contradiction with its own `dist/soulmap-ai.zip` row. Added a Drift rules bullet
+  stating the boundary explicitly and naming the enforcing test.
+* `.claude/rules/markdown-portability.md`: added a "Shipped-package boundary rule"
+  callout, in the same style as the file's existing Python-identifier-rule callout,
+  naming every repository-only path prefix `skills/` content must not reference and
+  pointing to the enforcing contract test, framed as a safety net rather than a
+  substitute for checking before writing the reference.
+* `.claude/skills/knowledge-base-maintainer/SKILL.md`: added the same check to the
+  "Content accuracy" list this skill already uses when editing `skills/` content,
+  so the workflow that produces this class of edit carries the check proactively
+  instead of relying only on a later test run.
+* `.claude/prompts/docs-skills-templates-sync.md`: fixed a parenthetical that read
+  as grouping `docs/` into "the shipped package" alongside `skills/`, the same
+  ambiguity found in `repo-contract.md`.
+
+This track added no Python, no new Skill, and no dependency. It moves one class of
+mistake from "caught by a Python test after the fact" to "documented at the point a
+human or an agent would write it", matching the discipline Ruff and Pyright already
+enforce on the Python side.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

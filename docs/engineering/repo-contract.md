@@ -24,7 +24,7 @@ Use it to answer four questions for every major repo surface:
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, memory, synthesis, and experimental modules | Unit tests, evals, compile/lint checks |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, runtime/tooling source, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
-| `docs/` | Audience-facing explanation of how the system works and how to operate it | Shipped docs | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
+| `docs/` | Audience-facing explanation of how the system works and how to operate it | Published in the repository, not packaged in `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
 | `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Catalog metadata, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
@@ -60,6 +60,14 @@ Use it to answer four questions for every major repo surface:
   with the repo's actual checks, release flow, and local hook wiring.
 - `.claude-plugin/` is packaging metadata, not product doctrine, and it should only be
   described as part of `.skill` artifacts.
+- `skills/` content must never reference a path that does not ship inside
+  `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` (row 28 above lists exactly what
+  those archives contain). Extracted standalone, a reference to `docs/`, `tests/`,
+  `.claude/`, `.github/`, `scripts/`, `library/`, `src/soulmap/`, or any other
+  repository-only path resolves to nothing, whether or not it is a clickable link.
+  `tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
+  enforces this; see `.claude/rules/markdown-portability.md`'s shipped-package
+  boundary rule for the authoring-time guidance.
 
 ## Release-readiness contract
 

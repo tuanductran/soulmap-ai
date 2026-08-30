@@ -1,8 +1,9 @@
 # Docs skills templates sync prompt
 
-Use this prompt when you need to verify that `docs/` and `skills/` (the shipped
-package) still describe one coherent SoulMap package, and that internal-only
-`templates/` content stays consistent with it.
+Use this prompt when you need to verify that `docs/` (audience-facing documentation,
+not packaged in the dist archives) and `skills/` (the shipped package) still
+describe one coherent SoulMap package, and that internal-only `templates/` content
+stays consistent with it.
 
 - Read `SOULMAP.md` first.
 - Read `docs/engineering/repo-contract.md`, `docs/engineering/content-contract.md`,
