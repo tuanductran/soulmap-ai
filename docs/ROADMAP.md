@@ -3,8 +3,8 @@
 > **Repository:** [soulmap-ai](https://github.com/tuanductran/soulmap-ai)
 > **Maintainer:** Tuan Duc Tran
 > **License:** see [LICENSE](../LICENSE)
-> **Status:** Actively maintained, current release v0.9.0
-> **Last updated:** 19 August 2026
+> **Status:** Actively maintained, current release v0.9.1
+> **Last updated:** August 30, 2026
 
 This roadmap describes the long-term direction, architecture evolution, and engineering
 priorities of SoulMap AI.
@@ -506,48 +506,67 @@ Completed:
 
 ---
 
-### Phase 14 - Enforcement ceiling clarity (proposed)
+### Phase 14 - Enforcement ceiling clarity (complete)
 
-`docs/engineering/safety-enforcement-matrix.md` currently holds 10 rows at
-`enforced` and 11 at `partial`, and instructs readers to "treat `partial` rows as
-active hardening targets". All 11 name the same gap: there is no production
-response generator inside the package. Ten say so in those words, and the
-eleventh asks for a runtime scan of every spiritual line.
+`docs/engineering/safety-enforcement-matrix.md` held 10 rows at `enforced` and
+11 at `partial`, and instructed readers to "treat `partial` rows as active
+hardening targets". Auditing all 11 by hand found two different gaps sharing
+one label, not one.
 
-That gap is not a backlog item. `docs/engineering/known-limitations.md` records
-"Python does not generate AI responses" as intentional design, and the non-goals
-table below lists Python-generated response content as a non-goal. The success
-metric "keep `safety-enforcement-matrix.md` rows at `enforced`" therefore asks
-for work the architecture forbids, and a maintainer following the matrix would
-open it.
+Nine name a gap no amount of new Python code closes: the row's own text asked
+for a "production response generator", a "dedicated runtime grandiosity
+responder", or a "full runtime independence policy engine". `docs/engineering/known-limitations.md`
+records "Python does not generate AI responses" as intentional design, and the
+non-goals table below lists Python-generated response content as a non-goal.
+Those 9 rows are now `bounded`, a new status distinct from `partial`: each
+names the deployed AI surface that completes the wording and the eval that
+verifies it there.
 
-The rows are not weak. They are at their ceiling, because generation belongs to
-the host surface that reads the shipped Markdown.
+The remaining 2 did not fit that pattern on inspection, so they were not
+reclassified. "Epistemic guardrails for spiritual content" asked for a Python
+*scan*, not a generator, the same shape as the `response_safety_contract.py`
+validator that already exists for other rules; nothing dedicated to
+numerology, chakra, or karma framing has been built yet. "Stage-appropriate
+response depth" asked for enforcement that `response_contract.py` already has
+the shape for (grading structural properties of generated text against the
+same `selection` metadata it already reads); a hard length ceiling per mode
+is buildable, only the emotional-versus-intellectual register distinction is
+genuinely bounded. Both stayed `partial`, with gap notes that say so, and both
+are now open work below instead of buried inside a "ceiling" narrative that
+did not actually apply to them.
 
-Proposed work:
+Completed:
 
-* Separate the two meanings currently sharing the `partial` label: work that
-  remains inside the package, and coverage bounded at the package edge by design.
-* Have every bounded row name the host surface that completes it and the eval
-  that covers the wording, so the row still reads as evidence rather than as an
-  excuse.
-* Restate the success metric as a reachable one: no row sits at `partial` for a
-  reason inside the package's own scope.
-* Contract-test the matrix so every status token is one of the documented values
-  and every bounded row cites the document section recording that boundary.
+* `bounded` added to the status legend, defined as enforcement and eval
+  coverage complete inside the package, with the remaining gap being
+  generated wording that belongs to the deployed AI surface.
+* The 9 rows above moved to `bounded`, each citing
+  `docs/engineering/known-limitations.md`, "AI response generation", and
+  naming the eval that verifies the wording at the host layer.
+* The 2 rows above kept `partial`, with gap notes rewritten to say why they
+  are real, closable gaps rather than the same ceiling as the other 9.
+* The success metric below was restated as reachable: no row sits at
+  `partial` for a reason inside the package's own scope. It now holds, since
+  the only 2 `partial` rows are exactly that: real, scoped, open work.
+* `tests/contract/test_safety_enforcement_matrix.py` checks every status
+  token against the legend and every `bounded` row's citation against
+  `known-limitations.md`, so a status this matrix cannot back is a test
+  failure, not a stale claim.
 
-This track adds no runtime behavior and changes no safety enforcement. It changes
-what the matrix claims, so the claim matches the architecture.
+This track added no runtime behavior and changed no safety enforcement. It
+changed what the matrix claims, so the claim matches the architecture, and it
+surfaced 2 real gaps the original "all 11" framing had mislabeled as
+unreachable.
 
 ---
 
-### Phase 15 - Regression-strength verification (proposed)
+### Phase 15 - Regression-strength verification (complete)
 
 The v0.9.1 pass kept finding the same bug class: a check that cannot fail. The
 check exists, runs, and reports success, so it is trusted, but no input makes it
 red.
 
-Confirmed instances, each now fixed and each verifiable in the repository:
+Confirmed instances, each fixed earlier and each verifiable in the repository:
 
 * A safety red-team case whose category the runner could not dispatch printed
   `SKIP`, was still counted under `Passed`, and left the exit code at 0. A typo in
@@ -561,20 +580,32 @@ Confirmed instances, each now fixed and each verifiable in the repository:
 
 Every fix in that pass was verified the same way: revert the fix, confirm the
 test goes red. That method is mutation testing done by hand, it is fully
-deterministic, and nothing in the repository automates or names it.
+deterministic.
 
-Proposed work:
+Completed:
 
-* Name the bug class in the engineering documentation, with the reverting method
-  as the standard for accepting a new regression test.
-* Add a small curated mutation harness over the safety-critical detectors and
-  guards: a fixed list of deterministic mutations, each asserting that the gate
-  goes red.
-* Keep the list curated rather than generated. A full mutation-testing tool in CI
-  would cost far more runtime than the repository's performance rules allow, and
-  the value is concentrated in the safety modules.
+* Named the bug class as "Charter 5, a regression test that cannot fail" in
+  `docs/engineering/TESTER.md`, alongside the existing exploratory testing
+  charters, with the revert-and-confirm-red method stated as the standard a
+  new safety-critical regression test should meet before merge, and the 5
+  confirmed instances above recorded as evidence.
+* Added `tests/mutation/test_safety_critical_mutations.py`: 6 curated
+  mutations over the crisis detector's Tier 1 lists, the dependency
+  keyword list, the grief-type tuple this session's own headline routing fix
+  depends on, one scope-classifier blacklist category, the resource
+  sanitizer's banned-word list, and the response-safety-contract's diagnosis
+  patterns. Each test disables exactly one list with `monkeypatch` (which
+  restores it automatically) and asserts a known-dangerous fixture, several
+  reused verbatim from existing tests or the shipped red-team corpus, is no
+  longer caught. Every fixture was independently confirmed dangerous before
+  mutation and safe after, so the harness cannot pass vacuously in either
+  direction.
+* Kept the list curated rather than generated, as planned: 6 tests add
+  negligible runtime next to a suite that already runs in seconds, where a
+  general mutation-testing tool re-running the full suite per mutated branch
+  would not.
 
-This track adds no runtime dependency, no semantic classification, and no
+This track added no runtime dependency, no semantic classification, and no
 response-generation layer. It tests the tests.
 
 ---
@@ -703,11 +734,17 @@ these are not planned unless a new ADR revisits them:
 * Maintain human-reviewed deterministic regression evidence for newly
   observed response-safety phrasing gaps
 * Platform adapters beyond the current Claude-first flow
-* Separate the two meanings currently sharing the `partial` status in the safety
-  enforcement matrix, so a row bounded by the absent response generator does not
-  read as a hardening target (Phase 14)
-* Add the curated mutation harness over safety-critical detectors and guards, and
-  name the check-that-cannot-fail bug class in the engineering docs (Phase 15)
+* Close the 2 `partial` rows Phase 14 found were real, closable gaps rather
+  than bounded by the missing response generator:
+  * a Python scanner for the "Epistemic guardrails" row, shaped like
+    `response_safety_contract.py`, flagging numerology, chakra, or karma
+    language that presents certainty, identity, or destiny as fact, backed by
+    curated positive and near-miss evidence the same way every other detector
+    in the matrix was
+  * a hard per-mode length ceiling in `response_contract.py` for the "Stage-
+    appropriate response depth" row (the emotional-versus-intellectual
+    register distinction within a mode stays genuinely bounded, since telling
+    those apart is a content judgment)
 * Decide [ADR 0003](../docs/engineering/adr/0003-bounded-edit-distance-crisis-backstop-proposal.md),
   the bounded edit-distance crisis backstop. It remains `Proposed` and
   authorizes nothing. Moving it to `Accepted` needs a multilingual regression
@@ -723,7 +760,7 @@ these are not planned unless a new ADR revisits them:
 
 | Area              | Direction                                              |
 | ------------------ | -------------------------------------------------------- |
-| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. Rows bounded by the absent response generator are at their ceiling, not in backlog (Phase 14) |
+| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. `bounded` rows are at their ceiling by design, not backlog; the 2 `partial` rows are real, tracked, open work |
 | Eval coverage       | Maintain 0 `failed_checks` across eval-groups and eval-markdown-contracts |
 | Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |

@@ -321,3 +321,40 @@ Use these when automated checks are green but you want to probe human-risk defec
 - Regression target:
   - if a real user message reveals a phrasing these files do not yet cover, add it as
     a positive or near-miss example in the relevant existing file, not a new file
+
+### Charter 5, a regression test that cannot fail
+
+- Risk: a test or eval case runs, prints a result, and is counted toward the suite's
+  pass total, but no input to the code it claims to cover would ever make it fail.
+  It is trusted because it is green, and the gap it should have caught ships anyway.
+- Files or flows: any new pytest test, `evals/datasets/*.json` case, or CI step,
+  especially ones added for a safety, routing, or packaging fix
+- Probe: this charter is not a fixed file list, it is a method applied to every new
+  regression test before it is trusted:
+  1. Revert the fix the test was written to guard, in a scratch copy or a stash
+  2. Run the test. If it does not go red, the test is not testing what it claims to
+  3. Restore the fix, confirm the test is green again
+- Confirmed instances of this exact bug class, found and fixed in v0.9.1:
+  - a red-team case whose `category` had no matching branch in the runner printed
+    `SKIP`, but the summary counted it toward `Passed` and the exit code stayed 0,
+    so a typo'd category name read as coverage
+  - a typo'd pytest marker did nothing before `--strict-markers` was set
+  - an `xfail` that started passing reported `xpassed` and stayed green before
+    `xfail_strict` was set
+  - `pytest-timeout` was installed but never given a value, so it timed nothing out
+  - coverage measured `src/soulmap/runtime/` only, so 31 developer-tooling modules
+    under `src/soulmap/devtools/` were reported as if they did not exist
+- Failure looks like:
+  - a test with no assertion that can go false given real code behavior, only given
+    a malformed test itself
+  - an eval case whose `category` or `id` does not match anything the runner
+    dispatches on, so it silently no-ops
+  - a suite-level count (`Passed: N`) computed as `total - failed` instead of
+    incrementing on an actual pass, so an unrun case is indistinguishable from a
+    passed one
+- Regression target:
+  - before merging a new safety-critical test, run the revert-and-confirm-red step
+    above at least once and say so in the PR
+  - `tests/regression/test_safety_eval_runner.py` and
+    `tests/mutation/` (below) apply this method to the modules where it matters
+    most, so a maintainer does not have to remember to do it by hand every time

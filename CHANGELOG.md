@@ -16,6 +16,11 @@ stability and breaking changes in behavior.
   project shape, build/test/lint commands, and workflow rules
 - `CLAUDE.md` becomes a symlink to `AGENTS.md`, so Claude Code and any other
   agent read the same file
+- **safety**: add a curated mutation harness over safety-critical modules
+- 6 tests in `tests/mutation/` disable one load-bearing list at a time
+  (crisis Tier 1, dependency keywords, the grief-type tuple, one scope
+  blacklist category, banned-word list, diagnosis patterns) and confirm a
+  known-dangerous fixture is no longer caught
 
 ### Fix
 
@@ -26,6 +31,13 @@ stability and breaking changes in behavior.
 ### Docs
 
 - **roadmap**: record the v0.9.1 hardening pass and add phases 14 and 15
+- **safety**: split the safety enforcement matrix's `partial` status into
+  `partial` (a real, closable gap) and `bounded` (enforcement is complete
+  inside the package, the rest is the deployed AI surface's job); 9 rows
+  reclassified, 2 corrected and left open as tracked future work
+- **tester**: name the "regression test that cannot fail" bug class as
+  Charter 5, with the revert-and-confirm-red method as the standard for a
+  new safety-critical regression test
 
 ## v0.9.1 (2026-08-29)
 
