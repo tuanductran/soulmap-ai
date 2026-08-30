@@ -10,7 +10,6 @@ for how packs are combined for detection.
 from __future__ import annotations
 
 LANGUAGE_CODE = "en"
-LANGUAGE_NAME = "English"
 
 CRISIS_TIER1: tuple[str, ...] = (
     "want to die",
