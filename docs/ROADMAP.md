@@ -1003,6 +1003,61 @@ enforce on the Python side.
 
 ---
 
+### Phase 23 - Dead-code audit below the vulture confidence floor (complete)
+
+CI runs `uv run vulture` at `min_confidence = 80`, the level vulture's own
+documentation recommends as a false-positive floor for automated gating, not a
+claim that nothing real hides below it. A manual pass at
+`--min-confidence 60` across `src`, `tests`, and `scripts` surfaced 21 hits;
+triaging each against the actual codebase (not just vulture's confidence
+score) found 2 genuine dead-code classes CI had never caught, and confirmed
+the rest were `TypedDict` field false positives (flagged because vulture
+cannot see `case["field"]` string-key access, verified real by grepping each
+field name for that access elsewhere in the same file).
+
+Completed:
+
+* Removed `LANGUAGE_NAME`, defined once in each of the five crisis-detection
+  language pack modules (`safety_en.py`, `safety_es.py`, `safety_fr.py`,
+  `safety_vi.py`, `safety_zh.py`) and never read anywhere: not imported by
+  `crisis_language_packs.py` (which does import the sibling `LANGUAGE_CODE`
+  constant from every pack), not tracked by `audit-knowledge` (which only
+  watches a fixed set of known phrase-list and threshold constant names), and
+  below vulture's CI confidence floor.
+* Removed `_assert_order`, a private test helper in
+  `tests/contract/test_artifact_hash_workflow_contract.py` defined once and
+  called by neither test in the 48-line file.
+* Audited `src/soulmap/runtime/experimental/` and `src/soulmap/runtime/memory/`
+  against `docs/engineering/maintenance-boundary.md`'s "What counts as
+  optional" list and the dedicated
+  `tests/contract/test_experimental_module_boundaries.py` boundary test.
+  Neither is dead code: both are documented across 6 files (maintenance
+  boundary, `OPERATIONS.md`, `PRIVACY.md`, `API.md`, this roadmap, and the
+  `operations-and-safety-review` skill), deliberately isolated from the core
+  by design ("nothing in the core may depend on it"), and boundary-tested to
+  stay opt-in and off the public CLI surface. No change made there.
+* Checked the `soulmap` CLI's `_command_table()` in `cli.py`, `deptry`, and
+  every `__init__.py` re-export under `src/soulmap/` for orphaned dynamic
+  dispatch and dead re-exports vulture cannot see by construction. All clean:
+  every command-table entry, dependency, and re-export has a live caller.
+* `.claude/skills/code-quality-review/SKILL.md`: added a "Dead code and
+  unused-import audits" section recording the exact workflow above: when to
+  run the low-confidence sweep, how to tell a `TypedDict` false positive from
+  a real finding, why the committed CI threshold should not simply drop to
+  catch more (whitelist confirmed false positives instead, per vulture's own
+  guidance), and to check `maintenance-boundary.md` before treating an
+  intentionally optional module as dead.
+* `.claude/rules/python-tooling.md`: added a pointer bullet to the same
+  section, so the practice is discoverable from the stable rule surface, not
+  only from the skill.
+
+This track removed 6 lines of genuinely dead code and added no new
+dependency, no CI configuration change, and no new Skill. Vulture's
+`min_confidence` stays at 80 in `pyproject.toml`; the periodic manual sweep
+this phase documents is a workflow practice, not a permanent gate change.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.

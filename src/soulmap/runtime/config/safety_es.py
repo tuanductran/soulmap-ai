@@ -8,7 +8,6 @@ detection, and ``safety_en.py`` for the canonical English pack this mirrors.
 from __future__ import annotations
 
 LANGUAGE_CODE = "es"
-LANGUAGE_NAME = "Spanish"
 
 CRISIS_TIER1: tuple[str, ...] = (
     "quiero morir",

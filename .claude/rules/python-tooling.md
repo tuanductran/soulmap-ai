@@ -46,3 +46,7 @@ doctrine rule that the name alone cannot explain, and quote the rule it protects
 - if subprocess tests need repo-local imports, pass `PYTHONPATH=src` explicitly rather than reviving root-level shim packages
 - for pure helpers such as text normalization, JSON parsing, and small contract utilities, prefer adding compact property-based tests when that catches more edge cases than example-only tests
 - do not create a new helper when a call site has a materially different contract or would become less clear than the local explicit code
+- `vulture` runs in CI at `min_confidence = 80`; that is a false-positive floor for
+  automated gating, not proof nothing real hides below it. For a focused dead-code
+  pass, see `../skills/code-quality-review/SKILL.md`'s "Dead code and unused-import
+  audits" section for the manual low-confidence sweep and how to triage it

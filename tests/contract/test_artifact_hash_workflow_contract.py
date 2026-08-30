@@ -16,11 +16,6 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def _assert_order(content: str, *markers: str) -> None:
-    positions = [content.index(marker) for marker in markers]
-    assert positions == sorted(positions)
-
-
 def _assert_verify_before_final_manifest_upload(content: str) -> None:
     assert content.index(LIBRARY_COMMAND) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)
