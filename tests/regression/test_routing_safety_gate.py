@@ -199,6 +199,39 @@ def test_safety_gate_overrides_tier1_crisis_when_the_detector_raises(
     assert result["safety_flags"] == ["crisis"]
 
 
+def test_a_detector_exception_is_logged_not_only_silently_swallowed(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """A broken detector must leave a trace even when SOULMAP_DEBUG is unset.
+
+    `_run_detector_async` swallows a detector's exception so one broken
+    framework cannot fail the whole request, substituting an empty result
+    (see the test above for why that must not cost the crisis override).
+    Before this test, that swallow was total: nothing surfaced that a
+    detector failed at all unless a caller had set SOULMAP_DEBUG=1 and
+    inspected the ``debug`` field on every response. A production failure
+    would have left no trace anywhere. This asserts the same failure now
+    reaches the standard logging module regardless of that flag.
+    """
+    _install_defaults(monkeypatch)
+
+    def exploding_detector(*_args: object, **_kwargs: object) -> dict[str, object]:
+        raise RuntimeError("shadow detector is down")
+
+    monkeypatch.setattr(
+        framework_selector, "detect_shadow_patterns", exploding_detector
+    )
+
+    with caplog.at_level(
+        "WARNING", logger="soulmap.runtime.routing.framework_selector"
+    ):
+        framework_selector.select_framework("something ordinary", [])
+
+    assert "shadow_pattern_detector" in caplog.text
+    assert "shadow detector is down" in caplog.text
+
+
 def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     """Expressing distress must not cost a grieving user the grief framework.
 

@@ -37,6 +37,14 @@ stability and breaking changes in behavior.
   blacklist category, banned-word list, diagnosis patterns) and confirm a
   known-dangerous fixture is no longer caught
 
+### Refactor
+
+- **routing**: de-duplicate `framework_selector.py`'s return paths
+- extracted `_finish` (the safety-gate-plus-debug close every branch repeated)
+  and `_simple_selection` (the single-signal Mirror shape 12 of 27 branches
+  repeated identically); 986 lines to 872, no routing or priority-order change,
+  confirmed by the full existing regression, mutation, and eval suites
+
 ### Fix
 
 - **safety**: fail the red-team run on a case category it cannot dispatch
@@ -49,6 +57,14 @@ stability and breaking changes in behavior.
 - **docs**: keep REGULATORY.md's compliance table aligned with the safety
   matrix's `bounded` status, not the `partial` label it kept independently
   after Rule 2 and Rule 4 were reclassified
+- **routing**: log a detector exception instead of only swallowing it
+- `_run_detector_async`'s existing swallow-and-continue behavior is
+  intentional (one broken framework must not fail the whole request), but
+  the failure previously left no trace outside `SOULMAP_DEBUG=1`, including
+  for the crisis and dependency detectors that run through the same helper;
+  now always reaches the standard logging module
+- **doctrine**: fix a doubled-space spaced-hyphen typo in the grief routing
+  instruction string, left over from an em-dash conversion
 
 ### Docs
 
@@ -60,6 +76,11 @@ stability and breaking changes in behavior.
 - **tester**: name the "regression test that cannot fail" bug class as
   Charter 5, with the revert-and-confirm-red method as the standard for a
   new safety-critical regression test
+- **roadmap**: record the post-Phase-16 audit as phase 17; `vulture`,
+  `deptry`, and `pip-audit` (already CI-gated) confirmed clean, and an
+  automated framework-template-map/deep-inquiry-bank coverage contract was
+  investigated and deliberately not added, since both files use intentional
+  many-to-one section groupings a literal 1:1 check would misclassify
 
 ## v0.9.1 (2026-08-29)
 
