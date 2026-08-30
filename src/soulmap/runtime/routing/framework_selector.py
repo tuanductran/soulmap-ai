@@ -23,6 +23,9 @@ from soulmap.runtime.detectors.existential_detector import detect_existential
 from soulmap.runtime.detectors.grief_detector import detect_grief
 from soulmap.runtime.detectors.inner_conflict_detector import detect_inner_conflict
 from soulmap.runtime.detectors.insight_detector import detect_insight
+from soulmap.runtime.detectors.partnership_patterns_detector import (
+    detect_partnership_patterns,
+)
 from soulmap.runtime.detectors.pattern_detector import detect_patterns
 from soulmap.runtime.detectors.perfectionism_paralysis_detector import (
     detect_perfectionism_paralysis,
@@ -31,6 +34,9 @@ from soulmap.runtime.detectors.sacred_polarity_detector import detect_sacred_pol
 from soulmap.runtime.detectors.shadow_pattern_detector import detect_shadow_patterns
 from soulmap.runtime.detectors.somatic_detector import detect_somatic
 from soulmap.runtime.detectors.soul_nourishment_detector import detect_soul_nourishment
+from soulmap.runtime.detectors.soulmate_longing_detector import (
+    detect_soulmate_longing,
+)
 from soulmap.runtime.detectors.spiritual_bypass_detector import detect_bypass
 from soulmap.runtime.detectors.spiritual_purpose_detector import (
     detect_spiritual_purpose,
@@ -528,6 +534,20 @@ async def select_framework_async(
             history,
             debug_events=debug_events,
         ),
+        "soulmate_longing": _run_detector_async(
+            "soulmate_longing_detector",
+            detect_soulmate_longing,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
+        "partnership_patterns": _run_detector_async(
+            "partnership_patterns_detector",
+            detect_partnership_patterns,
+            message,
+            history,
+            debug_events=debug_events,
+        ),
     }
 
     results = await asyncio.gather(*tasks.values())
@@ -787,6 +807,34 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": res["spiritual_purpose"],
             "instruction": res["spiritual_purpose"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["soulmate_longing"].get("soulmate_longing_detected"):
+        selection = {
+            "primary_framework": "SOULMATE_LONGING",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["soulmate_longing"],
+            "instruction": res["soulmate_longing"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
+
+    if res["partnership_patterns"].get("partnership_pattern_detected"):
+        selection = {
+            "primary_framework": "PARTNERSHIP_PATTERNS",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["partnership_patterns"],
+            "instruction": res["partnership_patterns"].get("recommendation", ""),
             "blocked": [],
         }
         return _maybe_attach_debug(

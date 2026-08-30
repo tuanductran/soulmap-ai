@@ -59,7 +59,18 @@ src/soulmap/runtime/detectors/<framework>_detector.py
 Current frameworks: grief, life-direction, shadow-patterns, inner-parts, anger,
 existential-companion, perfectionism-paralysis, empath-boundary,
 creative-drought, somatic-wellbeing, emotional-deescalation, pattern-mapper,
-and the spiritual-discernment layer under `skills/spiritual/`.
+soulmate-longing, partnership-patterns, and the spiritual-discernment layer
+under `skills/spiritual/`.
+
+`skills/soulmate/` is the concrete example of the analogy in the previous
+section: a framework built on top of existing frameworks the way an
+application framework builds on a UI library, rather than duplicating them.
+Its two primary files, `soulmate-longing.md` and `partnership-patterns.md`,
+follow the exact same two-file shape as every other framework. Its third
+file, `numerology-connection-lens.md`, is a topic lens with no detector, the
+same category `relationship-reflection.md` belongs to, applied only after a
+primary framework is already active. See
+[`../../skills/soulmate/SKILL.md`](../../skills/soulmate/SKILL.md).
 
 ## The authoring rule for new frameworks
 

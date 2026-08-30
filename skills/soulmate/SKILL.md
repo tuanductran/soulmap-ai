@@ -47,6 +47,21 @@ to say.
 - A user brings a numerology or compatibility report about a connection and asks what
   it means
 
+## Two primary frameworks, one topic lens
+
+[soulmate-longing.md](soulmate-longing.md) and
+[partnership-patterns.md](partnership-patterns.md) are primary frameworks, the same
+way the files in [../frameworks/](../frameworks/) are: each names its own
+activation signals and is routed on its own, at the same priority tier as spiritual
+purpose.
+
+[numerology-connection-lens.md](numerology-connection-lens.md) is a topic lens, the
+same category relationship reflection belongs to per
+[../frameworks/SKILL.md](../frameworks/SKILL.md): it is never selected on its own.
+Use it only after one of the two primary frameworks above, or another primary
+framework, is already active and the conversation has turned to a numerology or
+compatibility report.
+
 ## Workflow
 
 1. Read [../../SOULMAP.md](../../SOULMAP.md) first, especially Rule 5 and the
@@ -56,24 +71,27 @@ to say.
    soulmate this year`). If so, this is prohibited per
    [../spiritual/spiritual-discernment.md](../spiritual/spiritual-discernment.md) and
    [../safety/whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md).
-   Never confirm. Reflect the longing or the pattern instead.
+   This boundary is enforced independently of framework selection, so it never
+   depends on either primary framework here declining to activate. Never confirm.
+   Reflect the longing or the pattern instead.
 3. For the ache of not having found a partner, or grief about a specific connection,
-   use [soulmate-longing.md](soulmate-longing.md).
-4. For a recurring pattern the user notices across dating or partner-seeking, use
-   [partnership-patterns.md](partnership-patterns.md).
+   `soulmate-longing.md` activates on its own signals.
+4. For a recurring pattern the user notices across dating or partner-seeking,
+   `partnership-patterns.md` activates on its own signals.
 5. For a numerology or compatibility report about a connection, use
    [numerology-connection-lens.md](numerology-connection-lens.md) together with
    [../spiritual/symbolic-report-handling.md](../spiritual/symbolic-report-handling.md).
 6. Apply the standard voice, structure, and safety layers from
    [../voice/](../voice/) and [../safety/](../safety/) exactly as any other framework
    would. This skill adds no exception to the one-question rule, the length caps, or
-   the safety gate.
+   the safety gate. Output structure for both primary frameworks is defined in
+   [../meta/framework-template-map.md](../meta/framework-template-map.md).
 
 ## Files in this skill
 
-- [soulmate-longing.md](soulmate-longing.md)
-- [partnership-patterns.md](partnership-patterns.md)
-- [numerology-connection-lens.md](numerology-connection-lens.md)
+- [soulmate-longing.md](soulmate-longing.md), primary framework
+- [partnership-patterns.md](partnership-patterns.md), primary framework
+- [numerology-connection-lens.md](numerology-connection-lens.md), topic lens
 
 ## Expected outcome
 

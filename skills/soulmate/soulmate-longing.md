@@ -22,6 +22,19 @@ soulmate is or when they will meet one.
 **One question often under soulmate longing:** *What is this longing asking you to
 give yourself, whether or not another person arrives to give it to you?*
 
+## Activation Signals
+
+Activate when the user names the ache of not having found a partner, or wonders
+whether a specific connection was, or is, "the one":
+
+- "i'll never find my soulmate", "i will never find my soulmate"
+- "wonder if i'll ever meet my soulmate", "wonder if i will ever meet my soulmate"
+- "afraid i'll be alone forever", "afraid i will be alone forever"
+- "everyone else has found their soulmate"
+- "i keep hoping to meet my soulmate"
+- "i thought he was the one", "i thought she was the one"
+- "worried i already missed my chance at love"
+
 ## What this may show up as
 
 - Wondering aloud whether a specific person is "the one"

@@ -21,6 +21,22 @@ not the current search for a partner succeeds.
 **One question often under partner-seeking patterns:** *What do the people you keep
 choosing, or keep being chosen by, have in common that involves you?*
 
+## Activation Signals
+
+Activate when the user names a recurring pattern specific to dating or
+partner-seeking, not a general external-frustration pattern (that territory belongs
+to [../frameworks/shadow-patterns.md](../frameworks/shadow-patterns.md), checked
+first):
+
+- "i keep dating the same type of person"
+- "i keep choosing people who aren't ready for a relationship"
+- "i keep picking people who can't commit"
+- "i sabotage relationships before they get serious"
+- "i keep getting hurt the same way when i date"
+- "i keep picking the wrong people to date"
+- "i rush into relationships too fast"
+- "i pull away right when things start going well"
+
 ## What this may show up as
 
 - Choosing partners who are unavailable, distant, or inconsistent, then feeling

@@ -632,8 +632,26 @@ Completed:
   [`symbolic-report-handling.md`](../skills/spiritual/symbolic-report-handling.md),
   [`epistemic-guardrails.md`](../skills/meta/epistemic-guardrails.md), and
   [`whitelist-blacklist-system.md`](../skills/safety/whitelist-blacklist-system.md).
-  None of it ships as a routable Python framework: it is pure Markdown content,
-  packaged automatically by the existing `skills/` build step with no code change.
+* `soulmate-longing.md` and `partnership-patterns.md` are routable Python
+  frameworks, wired the same way commit `beba57e` wired the five previously
+  unrouted spiritual frameworks: each file gained an "## Activation Signals"
+  section, each section is loaded by a matching detector
+  (`soulmate_longing_detector.py`, `partnership_patterns_detector.py`) through
+  the existing `load_keyword_section` loader, and `framework_selector.py` gained
+  two new Medium-priority branches, right after Spiritual Purpose, each closing
+  through the existing `_apply_safety_gate`. `SOULMAP.md`,
+  `skills/meta/orchestration.md`, `skills/meta/framework-template-map.md`, and
+  `skills/meta/deep-inquiry-bank.md` all gained matching entries, keeping the
+  doctrine tables, the routing code, and the detailed structure and question
+  banks in sync by the same contract every other framework already follows.
+  Before finalizing the new signal phrases, both lists were checked against
+  every higher-priority framework's existing signals (grief, shadow, existential,
+  life direction) to confirm none of the new phrasing was already claimed and
+  silently unreachable, the same collision check the `beba57e` precedent used.
+  `numerology-connection-lens.md` stays a topic lens with no detector, the same
+  category `relationship-reflection.md` belongs to in
+  [`skills/frameworks/SKILL.md`](../skills/frameworks/SKILL.md): applied only
+  after a primary framework, one of the two new ones included, is already active.
 * Closed a real gap the new content exposed: the scope classifier's
   `identity_confirmation` blacklist already blocked "am I a twin flame" and "am I a
   starseed" but had no equivalent for "soulmate" phrasing. Added positive coverage
@@ -654,10 +672,12 @@ Completed:
   discipline `founder-numerology.md` already applies to numbers-only, no personal
   identifiers.
 
-This track added no new Python detector, no new priority-hierarchy entry, and no
-change to any existing framework's routing. It is a Framework-layer addition in the
-`library-vs-framework.md` sense: new Markdown content, governed entirely by rules
-that already existed.
+This track added two new Python detectors and two new priority-hierarchy entries,
+and no change to any existing framework's routing or priority order. It is a
+Framework-layer addition in the `library-vs-framework.md` sense: new Markdown
+content plus the matching detector pair, governed entirely by the Library-layer
+rules that already existed, with no change to `runtime/knowledge/`,
+`runtime/guards/`, or the shared safety gate.
 
 ---
 
