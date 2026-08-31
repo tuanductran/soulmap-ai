@@ -25,6 +25,50 @@ _URL_RE = re.compile(
     r"\b(?:https?://|www\.)\S+|\b[\w.-]+\.[a-z]{2,}/\S*", re.IGNORECASE
 )
 
+# SOULMAP.md's length rules, as ceilings only. The emotional-versus-intellectual
+# register split inside Mirror mode is a content judgment this layer cannot
+# make, so Mirror is held to the higher of the two doctrine bounds (4
+# paragraphs) rather than guessed at. Sanctuary covers acute grief, which the
+# selector already routes to Sanctuary mode.
+_SENTENCE_CEILINGS: dict[str, int] = {"CRISIS": 2, "SANCTUARY": 4}
+_PARAGRAPH_CEILINGS: dict[str, int] = {"MIRROR": 4}
+
+_SENTENCE_SPLIT_RE = re.compile(r"[.!?]+(?:\s|$)")
+_PARAGRAPH_SPLIT_RE = re.compile(r"\n\s*\n")
+
+# A crisis response must carry helpline resources, and doctrine's "1-2
+# sentences" counts SoulMap's own prose, not the resource block it is required
+# to deliver first. Every listed line ("988", "0865 044 400", "13 11 14")
+# carries at least three digits, and reflective prose effectively never does, so
+# digit-bearing fragments are excluded before counting. Without this the
+# canonical correct crisis response would be flagged for rewrite, which is the
+# most damaging false positive this guard could produce.
+_RESOURCE_FRAGMENT_RE = re.compile(r"(?:\D*\d){3}")
+
+
+def _count_sentences(text: str, *, drop_resources: bool) -> int:
+    """Count prose sentences, optionally excluding resource listings.
+
+    Args:
+        text: Response text with URLs already removed.
+        drop_resources: When True, skip fragments carrying three or more
+            digits, which are helpline listings rather than prose.
+
+    Returns:
+        The number of non-empty sentence fragments.
+    """
+    fragments = [part.strip() for part in _SENTENCE_SPLIT_RE.split(text)]
+    return sum(
+        1
+        for fragment in fragments
+        if fragment and not (drop_resources and _RESOURCE_FRAGMENT_RE.search(fragment))
+    )
+
+
+def _count_paragraphs(text: str) -> int:
+    """Count non-empty blank-line-separated blocks."""
+    return sum(1 for block in _PARAGRAPH_SPLIT_RE.split(text) if block.strip())
+
 
 def grade_response_contract(
     response: str,
@@ -70,6 +114,19 @@ def grade_response_contract(
         violations.append("crisis_no_question")
     if mode == "SANCTUARY" and question_count:
         violations.append("sanctuary_no_question")
+
+    sentence_ceiling = _SENTENCE_CEILINGS.get(mode)
+    if sentence_ceiling is not None:
+        sentences = _count_sentences(countable, drop_resources=mode == "CRISIS")
+        if sentences > sentence_ceiling:
+            violations.append("exceeds_sentence_ceiling")
+
+    paragraph_ceiling = _PARAGRAPH_CEILINGS.get(mode)
+    if (
+        paragraph_ceiling is not None
+        and _count_paragraphs(stripped) > paragraph_ceiling
+    ):
+        violations.append("exceeds_paragraph_ceiling")
 
     return {"ok": not violations, "violations": violations}
 

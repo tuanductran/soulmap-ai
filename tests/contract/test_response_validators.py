@@ -218,3 +218,104 @@ def test_crisis_mode_flag_applies_regardless_of_the_mode_field() -> None:
     )
 
     assert result == {"ok": False, "violations": ["crisis_no_question"]}
+
+
+# SOULMAP.md length rules, enforced as ceilings. The emotional-versus-
+# intellectual split inside Mirror mode is a content judgment the deterministic
+# layer cannot make, so Mirror is held to the higher doctrine bound.
+def test_canonical_crisis_response_with_resources_is_not_flagged() -> None:
+    """The correct crisis response must pass, resource block and all.
+
+    Doctrine's "1-2 sentences" counts SoulMap's own prose, while the same rule
+    requires the helpline block to come first. Counting those listings as
+    sentences would flag the one response the product most needs to get right,
+    so this is the load-bearing near miss for the ceiling check.
+    """
+    response = (
+        "Please reach out right now, you deserve support. "
+        "Vietnam: HOPE 0865 044 400. US: 988. UK: Samaritans 116 123. "
+        "AU: Lifeline 13 11 14. International: findahelpline.com."
+    )
+    result = response_contract.grade_response_contract(
+        response, {"primary_framework": "CRISIS", "mode": "CRISIS"}
+    )
+
+    assert result["ok"] is True
+
+
+def test_crisis_response_with_too_much_prose_exceeds_the_ceiling() -> None:
+    response = (
+        "I hear how much pain you are in. That sounds unbearable. "
+        "I want you to know you matter. Please contact 988."
+    )
+    result = response_contract.grade_response_contract(
+        response, {"primary_framework": "CRISIS", "mode": "CRISIS"}
+    )
+
+    assert "exceeds_sentence_ceiling" in cast(list[str], result["violations"])
+
+
+@pytest.mark.parametrize(
+    ("response", "expected_ok"),
+    [
+        (
+            (
+                "That is a real loss. You do not have to carry it neatly. "
+                "Nothing needs solving tonight. I am here."
+            ),
+            True,
+        ),
+        (
+            (
+                "That is a real loss. You do not have to carry it neatly. "
+                "Nothing needs solving tonight. I am here. Take your time."
+            ),
+            False,
+        ),
+    ],
+    ids=["four-sentences-at-ceiling", "five-sentences-over-ceiling"],
+)
+def test_sanctuary_holds_the_four_sentence_ceiling(
+    response: str, expected_ok: bool
+) -> None:
+    result = response_contract.grade_response_contract(
+        response, {"primary_framework": "GRIEF", "mode": "SANCTUARY"}
+    )
+
+    assert result["ok"] is expected_ok
+
+
+@pytest.mark.parametrize(
+    ("response", "expected_ok"),
+    [
+        ("One.\n\nTwo.\n\nThree.\n\nWhat feels most alive in that?", True),
+        ("One.\n\nTwo.\n\nThree.\n\nFour.\n\nWhat feels most alive in that?", False),
+    ],
+    ids=["four-paragraphs-at-ceiling", "five-paragraphs-over-ceiling"],
+)
+def test_mirror_holds_the_four_paragraph_ceiling(
+    response: str, expected_ok: bool
+) -> None:
+    result = response_contract.grade_response_contract(
+        response, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+    )
+
+    assert result["ok"] is expected_ok
+
+
+def test_mirror_ceiling_counts_paragraphs_not_length() -> None:
+    """A long single paragraph is not a ceiling violation.
+
+    Doctrine bounds paragraph count, not word count, and inventing a word limit
+    here would enforce a rule SOULMAP.md does not state.
+    """
+    response = (
+        "A long reflective paragraph that runs on and on but stays a single "
+        "block, which the paragraph ceiling deliberately does not police. "
+        "What sits underneath that?"
+    )
+    result = response_contract.grade_response_contract(
+        response, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+    )
+
+    assert result["ok"] is True
