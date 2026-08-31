@@ -43,7 +43,33 @@ _PARAGRAPH_SPLIT_RE = re.compile(r"\n\s*\n")
 # digit-bearing fragments are excluded before counting. Without this the
 # canonical correct crisis response would be flagged for rewrite, which is the
 # most damaging false positive this guard could produce.
-_RESOURCE_FRAGMENT_RE = re.compile(r"(?:\D*\d){3}")
+#
+# Counted rather than pattern-matched. This was `(?:\D*\d){3}`, whose nested
+# quantifier backtracks polynomially: given a long run of non-digits it retries
+# every split point, which measured 2.9 seconds at 20,000 characters and 45
+# seconds at 80,000. That is reachable from generated response text and from
+# whatever `main()` reads on stdin, so it was a denial-of-service path rather
+# than a style problem. A bare `\d` has nothing to backtrack over, and counting
+# its matches is exactly what the old pattern asked: are there three or more
+# digits anywhere in this fragment.
+#
+# `str.isdigit()` is deliberately not used. It accepts characters `\d` rejects,
+# such as the superscript "2", so it would silently widen what counts as a
+# resource listing.
+_MIN_RESOURCE_DIGITS = 3
+_DIGIT_RE = re.compile(r"\d")
+
+
+def _is_resource_fragment(fragment: str) -> bool:
+    """Report whether a fragment is a helpline listing rather than prose.
+
+    Args:
+        fragment: One sentence fragment, already stripped.
+
+    Returns:
+        True when the fragment carries at least three digits.
+    """
+    return len(_DIGIT_RE.findall(fragment)) >= _MIN_RESOURCE_DIGITS
 
 
 def _count_sentences(text: str, *, drop_resources: bool) -> int:
@@ -61,7 +87,7 @@ def _count_sentences(text: str, *, drop_resources: bool) -> int:
     return sum(
         1
         for fragment in fragments
-        if fragment and not (drop_resources and _RESOURCE_FRAGMENT_RE.search(fragment))
+        if fragment and not (drop_resources and _is_resource_fragment(fragment))
     )
 
 
