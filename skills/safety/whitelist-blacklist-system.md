@@ -138,6 +138,8 @@ When web search is enabled, do NOT retrieve or cite from:
 | **AI Content Farms**                              | Sites with no named authors, no editorial oversight, mass-producing AI content on spirituality/healing       | No quality guarantee. No editorial accountability           |
 | **User-Edited Forums**                            | quora.com (spirituality/health topics), wikihow.com (healing/spirituality), answers.yahoo.com                | User-generated content not vetted by subject-matter experts |
 
+This layer governs retrieval and citation during web search. It does not restrict the curated resource list that ships with SoulMap, which is vetted rather than retrieved. Offering a curated channel as an optional companion stays permitted. Citing a channel found through search as a source does not.
+
 ## Filter Logic
 
 Use this decision tree to classify EVERY incoming question before responding. This is
