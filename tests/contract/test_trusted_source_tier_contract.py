@@ -16,7 +16,6 @@ Category 3 of `skills/meta/epistemic-guardrails.md` and the
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -26,13 +25,12 @@ _TIER_1_HEADING = "**Trusted sources, tier 1, citable as evidence:**"
 _TIER_2_HEADING = "**Trusted sources, tier 2, citable as perspective only:**"
 _CLAIM_LIMIT_HEADING = "**A listed domain does not make a claim citable.**"
 
-# The Markdown formatter pads table cells to align columns, so the gaps around
-# the separators vary from row to row. Matching a single space silently dropped
-# the `Peer-reviewed science` row and left the parse looking two-thirds
-# complete, which the anti-vacuous test below is what caught.
-_ROW_RE = re.compile(
-    r"^\|\s*\*\*(?P<category>[^*]+)\*\*\s*\|\s*(?P<domains>.+?)\s*\|$", re.MULTILINE
-)
+# Rows are split on the pipe rather than matched with a regex. The Markdown
+# formatter pads table cells to align columns, so the gaps around the
+# separators vary from row to row, and the obvious regex for that
+# (`\s*` around a lazy `.+?`) is a polynomial-backtracking pattern: `.` matches
+# whitespace too, so the two quantifiers overlap and CodeQL flags it. Splitting
+# is linear, and it is simpler than the regex it replaces.
 
 # Organizations that report their own research. Doctrine may cite them, but
 # never from a category that implies peer review.
@@ -63,14 +61,22 @@ def _tier_table(text: str, heading: str, *, until: str) -> dict[str, set[str]]:
     """
     start = text.index(heading) + len(heading)
     section = text[start : text.index(until, start)]
-    return {
-        match.group("category").strip(): {
-            domain.strip()
-            for domain in match.group("domains").split(",")
-            if domain.strip()
+
+    table: dict[str, set[str]] = {}
+    for line in section.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+        if len(cells) != 2:
+            continue
+        category, domains = cells
+        if not (category.startswith("**") and category.endswith("**")):
+            continue
+        table[category.strip("*").strip()] = {
+            domain.strip() for domain in domains.split(",") if domain.strip()
         }
-        for match in _ROW_RE.finditer(section)
-    }
+    return table
 
 
 def _tier_1(text: str) -> dict[str, set[str]]:
