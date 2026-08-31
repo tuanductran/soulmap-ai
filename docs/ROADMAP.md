@@ -1143,8 +1143,60 @@ Completed:
   distinct statuses, which keeps the anti-vacuous guard the docstring describes.
 
 Both additions were verified able to fail per the revert-and-confirm-red
-standard. The matrix now reads 12 `enforced` and 9 `bounded`, with 0 `partial`.
-No detector, router, or doctrine file changed.
+standard. At the close of this phase the matrix read 12 `enforced` and 9
+`bounded`, with 0 `partial`. No detector, router, or doctrine file changed.
+
+---
+
+### Phase 26 - Tier the trusted-source list against doctrine (complete)
+
+`skills/safety/whitelist-blacklist-system.md` carried one flat list of trusted
+web-search domains. Auditing it against the file's own Layer 3 absolute limits,
+its Layer 4 blocked-source reasons, and `skills/meta/epistemic-guardrails.md`
+found the list pointing the opposite way from everything the package enforces.
+
+Completed:
+
+* **A category named "Science" that was not science.** The list grouped
+  heartmath.org and noetic.org with nature.com, sciencedirect.com, nih.gov, and
+  frontiersin.org. The Institute of Noetic Sciences is a parapsychological
+  research institute studying psychic abilities and mind-matter interaction, and
+  HeartMath's own research director has described using alternative terminology
+  to pass peer review. A heading named "Science" lends both the weight of peer
+  review, which is what Category 3 of the epistemic guardrails exists to
+  prevent. Split into `Peer-reviewed science` and
+  `Consciousness and energy research organizations`.
+* **The citation rule modelled the failure.** Its worked example was "According
+  to the HeartMath Institute...", the exact framing the `spiritual_claim_as_fact`
+  guard was added to catch in Phase 25. Replaced, with a separate rule for
+  advocacy-organization sources.
+* **Two tiers instead of one.** Tier 1 is citable as evidence: clinical bodies,
+  peer-reviewed publishers, crisis organizations. Tier 2 is citable as
+  perspective only: traditions, teachers, publishers, and organizations
+  reporting their own research. The single list gave a Buddhist teacher's talk
+  and a peer-reviewed trial the same standing.
+* **Claim-level limits that override the domain list.** The policy was
+  domain-based, so a harmful claim on a listed domain passed. Hay House, listed
+  twice, publishes the position that resentment causes cancer and that self-love
+  heals it, which is what the Layer 4 anti-medicine row calls life-threatening.
+  brianweiss.com is listed while "past-life certainty" is a documented red flag.
+  Neither domain is removed, because both are legitimate for what the user is
+  reading. Instead the doctrine now states that a listed domain does not make a
+  claim citable, and names the three claims that stay blocked wherever they
+  appear.
+* **Crisis search names a country.** findahelpline.com was already listed and
+  already carries country pages, so the Vietnamese crisis path worked; nothing
+  said so. The policy now points at it explicitly, since Vietnam is the first
+  crisis line SoulMap lists.
+* **The matrix had no row for any of this.** 21 rows covered crisis, diagnosis,
+  prediction, dependency, and scope, and none covered which sources may be
+  cited. Added as the matrix's first `guidance-only` row, a status the legend
+  defined and no row had used: Python performs no web search, so nothing in this
+  package can observe a citation. The gap note records what the response-level
+  `spiritual_claim_as_fact` guard does and does not catch downstream.
+
+No domain was removed and no Python changed. The matrix now reads 12 `enforced`,
+9 `bounded`, 1 `guidance-only`, and 0 `partial`.
 
 ---
 
@@ -1287,7 +1339,7 @@ these are not planned unless a new ADR revisits them:
 
 | Area              | Direction                                              |
 | ------------------ | -------------------------------------------------------- |
-| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. `bounded` rows are at their ceiling by design, not backlog. As of Phase 25 no row sits at `partial`: the last 2 are closed, leaving 12 `enforced` and 9 `bounded` |
+| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. `bounded` rows are at their ceiling by design, not backlog. As of Phase 26 no row sits at `partial`: the last 2 were closed in Phase 25, leaving 12 `enforced`, 9 `bounded`, and 1 `guidance-only` |
 | Eval coverage       | Maintain 0 `failed_checks` across eval-groups and eval-markdown-contracts |
 | Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |
