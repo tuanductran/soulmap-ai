@@ -27,6 +27,12 @@ the safety-boundary categories from SOULMAP.md's non-negotiable safety rules:
   life or situation
 - ``loss_of_independence``: language that discourages the user from thinking,
   deciding, or acting for themselves
+- ``spiritual_claim_as_fact``: spiritual language that assigns certainty,
+  identity, or destiny, which is Category 3 of
+  ``skills/meta/epistemic-guardrails.md``. Targets the assertion rather than
+  the vocabulary: the doctrine permits chakra, numerology, and karma language
+  freely as a reflective lens, so "what you might call a throat theme" stays
+  safe while "your throat chakra is blocked" does not
 
 Adding a new category is a two-step change: add a `_PATTERNS` tuple of plain
 regexes, then add it to `_CATEGORY_PATTERNS` below. No other file needs to
@@ -96,6 +102,51 @@ EXCESSIVE_CERTAINTY_PATTERNS: tuple[str, ...] = (
     r"\bthere can be no doubt\b",
 )
 
+# Category 3 of `skills/meta/epistemic-guardrails.md`: spiritual language that
+# assigns certainty, identity, or destiny. The doctrine permits this vocabulary
+# freely as a reflective lens, so these patterns target the assertion, not the
+# subject matter. "What you might call a throat theme" is safe and must stay
+# safe; "your throat chakra is blocked" is not.
+#
+# `PREDICTION_AS_FACT_PATTERNS` already covers `your destiny is` and
+# `your karma means`. These add what the safety matrix recorded as missing:
+# numerology, chakra, guide, and spiritual-identity framing.
+#
+# Identity confirmation is the highest-consequence item here. `scope_classifier`
+# already blocks a user *asking* "am i a starseed"; this blocks SoulMap
+# *answering* that they are. Reported harms from companion systems affirming a
+# chosen-one or messianic self-image are the reason this category exists.
+SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
+    # Identity installation, doctrine Check 5
+    (
+        r"\byou(?:'re| are) (?:definitely |truly |clearly )?(?:a |an )?"
+        r"(?:starseed|lightworker|twin flame|chosen one|old soul)\b"
+    ),
+    r"\byou(?:'re| are) (?:one of the )?chosen\b",
+    r"\byour soul(?:'s)? (?:purpose|mission|contract) is\b",
+    r"\byou were (?:chosen|sent here|put here) to\b",
+    r"\byou have a special (?:purpose|mission|calling|gift)\b",
+    # Numerology as destiny, doctrine numerology-specific rule
+    r"\byour \d+ means you\b",
+    r"\byour (?:life path |destiny |soul )?number means\b",
+    r"\byou(?:'re| are) destined to\b",
+    # Chakra as diagnosis, doctrine chakra-specific rule
+    r"\byour \w+ chakra is (?:blocked|closed|imbalanced|misaligned|weak|open)\b",
+    r"\bchakra (?:blockage|imbalance) is (?:causing|why)\b",
+    # Metaphysical agency confirmed as fact
+    (
+        r"\byour (?:spirit )?guides are (?:clearly |definitely )?"
+        r"(?:communicating|telling|guiding|speaking)\b"
+    ),
+    r"\bthat(?:'s| is) (?:definitely|clearly|certainly) a sign\b",
+    r"\bthe universe is (?:telling|showing|sending) you\b",
+    r"\byour past life\b",
+    # Karma and spiritual truth asserted as fact
+    r"\bthis is your karma\b",
+    r"\byour karmic debt\b",
+    r"\bthis is (?:a |an )?(?:absolute |universal )?spiritual truth\b",
+)
+
 LOSS_OF_INDEPENDENCE_PATTERNS: tuple[str, ...] = (
     r"\byou don'?t need to think for yourself\b",
     r"\byou don'?t need anyone else'?s opinion\b",
@@ -117,6 +168,7 @@ _CATEGORY_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("guru_positioning", GURU_POSITIONING_PATTERNS),
     ("excessive_certainty", EXCESSIVE_CERTAINTY_PATTERNS),
     ("loss_of_independence", LOSS_OF_INDEPENDENCE_PATTERNS),
+    ("spiritual_claim_as_fact", SPIRITUAL_CLAIM_AS_FACT_PATTERNS),
 )
 
 
@@ -150,7 +202,8 @@ def check_response_safety_contract(response_text: str) -> dict[str, object]:
             f"{', '.join(categories)}. Rewrite the response so it neither "
             "diagnoses, presents prediction as fact, reinforces dependency on "
             "SoulMap, positions SoulMap as a guru/authority, states excessive "
-            "certainty, nor discourages the user's own independent thinking."
+            "certainty, discourages the user's own independent thinking, nor "
+            "presents a spiritual claim as certainty, identity, or destiny."
         ),
     }
 
