@@ -205,6 +205,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "This is your karma working itself out.",
         "You have a special purpose that others do not.",
         "Your soul's mission is to teach.",
+        "The cards say you will lose your job soon.",
+        "I pulled a card for you and it means heartbreak is coming.",
     ],
     ids=[
         "numerology-destiny",
@@ -217,6 +219,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "karma-as-cause",
         "special-purpose",
         "soul-mission",
+        "tarot-prediction",
+        "tarot-card-drawn-for-user",
     ],
 )
 def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
@@ -244,6 +248,7 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "If you hold that frame, what does it reveal about how you relate to this now?",
         "What does receiving that guidance feel like from the inside?",
         "What does identifying that way give you, what does it name?",
+        "If a tarot card names a theme you already brought up, that's fine to reflect.",
     ],
     ids=[
         "chakra-as-somatic-metaphor",
@@ -255,6 +260,7 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "user-led-frame-followed",
         "guidance-explored-not-confirmed",
         "identity-explored-not-installed",
+        "tarot-as-reflective-theme",
     ],
 )
 def test_metaphor_safe_spiritual_language_is_not_flagged(response: str) -> None:
