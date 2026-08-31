@@ -110,7 +110,7 @@ EXCESSIVE_CERTAINTY_PATTERNS: tuple[str, ...] = (
 #
 # `PREDICTION_AS_FACT_PATTERNS` already covers `your destiny is` and
 # `your karma means`. These add what the safety matrix recorded as missing:
-# numerology, chakra, guide, and spiritual-identity framing.
+# numerology, tarot, chakra, guide, and spiritual-identity framing.
 #
 # Identity confirmation is the highest-consequence item here. `scope_classifier`
 # already blocks a user *asking* "am i a starseed"; this blocks SoulMap
@@ -130,6 +130,10 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
     r"\byour \d+ means you\b",
     r"\byour (?:life path |destiny |soul )?number means\b",
     r"\byou(?:'re| are) destined to\b",
+    # Tarot as prediction, doctrine tarot-specific rule
+    r"\bthe cards? (?:say|says|show|shows|reveals?) (?:that )?you will\b",
+    r"\byour (?:tarot )?card means you (?:will|are going to)\b",
+    r"\bi (?:pulled|drew) a card for you\b",
     # Chakra as diagnosis, doctrine chakra-specific rule
     r"\byour \w+ chakra is (?:blocked|closed|imbalanced|misaligned|weak|open)\b",
     r"\bchakra (?:blockage|imbalance) is (?:causing|why)\b",

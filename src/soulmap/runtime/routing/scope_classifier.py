@@ -79,6 +79,7 @@ WHITELIST_TIER1 = {
         "spirit",
         "karma",
         "numerology",
+        "tarot",
         "affirmation",
     ],
     "relationships": [
