@@ -102,4 +102,14 @@ def test_the_row_parser_is_not_silently_matching_nothing() -> None:
 
     assert len(rows) >= 20, f"expected the full matrix, parsed only {len(rows)} rows"
     statuses = {_ROW_STATUS_RE.match(row).group(1) for row in rows}  # type: ignore[union-attr]
-    assert statuses == {"enforced", "partial", "bounded"}
+
+    # Membership, not exhaustion. This previously asserted the set equalled
+    # {enforced, partial, bounded}, which quietly required a `partial` row to
+    # exist forever and so made the roadmap's own goal, no row left at
+    # `partial`, impossible to reach without a test failure. Closing the last
+    # two partial rows is what surfaced it.
+    assert statuses <= _legend_statuses(text)
+
+    # The anti-vacuous guard the docstring describes: a parser returning one
+    # constant, or nothing, still fails here.
+    assert len(statuses) >= 2, f"expected a mix of statuses, found {statuses}"

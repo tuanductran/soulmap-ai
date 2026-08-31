@@ -1098,6 +1098,56 @@ close a real "not written down anywhere in `.claude/`" gap.
 
 ---
 
+### Phase 25 - Close the last two partial safety-matrix rows (complete)
+
+Phase 14 split `partial` into two meanings and found that 2 of the 11 rows so
+labelled were not bounded by the missing response generator at all. Both were
+real, closable validator work, and both are now closed. No row sits at
+`partial`, which is the Success Metric below stated as reachable.
+
+Completed:
+
+* **Epistemic guardrails.** `skills/meta/epistemic-guardrails.md` Category 3
+  prohibits spiritual language that assigns certainty, identity, or destiny,
+  but nothing checked generated text for it.
+  `PREDICTION_AS_FACT_PATTERNS` already covered "your destiny is" and "your
+  karma means"; numerology, chakra, guide, and spiritual-identity framing had
+  no coverage. Added `spiritual_claim_as_fact` to
+  `response_safety_contract.py`, which is the extension path that file's own
+  docstring prescribes. The patterns target the assertion, not the vocabulary,
+  so "what you might call a throat theme" stays permitted while "your throat
+  chakra is blocked" does not. Verified against the doctrine's own worked
+  examples: 10 prohibited phrasings caught, 10 permitted ones untouched, with
+  the near misses carried as parametrized tests and eval cases `T084`-`T086`.
+  `scope_classifier` already blocked a user asking to be confirmed as a
+  starseed; this blocks SoulMap answering that they are.
+* **Per-mode length ceilings.** `SOULMAP.md`'s length rules key off mode, and
+  `response_contract.py` now holds each as a ceiling: crisis at 2 sentences,
+  sanctuary at 4 (covering acute grief, which the selector routes to sanctuary
+  mode), mirror at 4 paragraphs. Mirror takes the higher of the two doctrine
+  bounds deliberately, because the emotional-versus-intellectual register
+  distinction is a content judgment this layer cannot make and guessing at 3
+  would reject valid responses.
+* **The crisis false positive that check would have caused.** A correct crisis
+  response must deliver the helpline block first, and those listings end in
+  periods. Counting them as sentences would have flagged the one response the
+  product most needs to get right. Crisis now counts SoulMap's own prose only,
+  excluding digit-bearing fragments, held by
+  `test_canonical_crisis_response_with_resources_is_not_flagged`. Removing that
+  exclusion turns the test red, so the protection cannot be dropped silently.
+* **An over-lock in the matrix's own test.**
+  `test_the_row_parser_is_not_silently_matching_nothing` asserted the status set
+  equalled `{enforced, partial, bounded}`, which quietly required a `partial`
+  row to exist forever and made this phase's goal impossible to reach without a
+  failure. It now checks membership against the legend plus a minimum of 2
+  distinct statuses, which keeps the anti-vacuous guard the docstring describes.
+
+Both additions were verified able to fail per the revert-and-confirm-red
+standard. The matrix now reads 12 `enforced` and 9 `bounded`, with 0 `partial`.
+No detector, router, or doctrine file changed.
+
+---
+
 ## Validation and Quality System
 
 SoulMap AI uses a multi-layer validation architecture.
@@ -1222,17 +1272,6 @@ these are not planned unless a new ADR revisits them:
 * Maintain human-reviewed deterministic regression evidence for newly
   observed response-safety phrasing gaps
 * Platform adapters beyond the current Claude-first flow
-* Close the 2 `partial` rows Phase 14 found were real, closable gaps rather
-  than bounded by the missing response generator:
-  * a Python scanner for the "Epistemic guardrails" row, shaped like
-    `response_safety_contract.py`, flagging numerology, chakra, or karma
-    language that presents certainty, identity, or destiny as fact, backed by
-    curated positive and near-miss evidence the same way every other detector
-    in the matrix was
-  * a hard per-mode length ceiling in `response_contract.py` for the "Stage-
-    appropriate response depth" row (the emotional-versus-intellectual
-    register distinction within a mode stays genuinely bounded, since telling
-    those apart is a content judgment)
 * Decide [ADR 0003](../docs/engineering/adr/0003-bounded-edit-distance-crisis-backstop-proposal.md),
   the bounded edit-distance crisis backstop. It remains `Proposed` and
   authorizes nothing. Moving it to `Accepted` needs a multilingual regression
@@ -1248,7 +1287,7 @@ these are not planned unless a new ADR revisits them:
 
 | Area              | Direction                                              |
 | ------------------ | -------------------------------------------------------- |
-| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. `bounded` rows are at their ceiling by design, not backlog; the 2 `partial` rows are real, tracked, open work |
+| Safety enforcement  | Keep every `safety-enforcement-matrix.md` row backed by its stated evidence, and keep no row at `partial` for a reason inside the package's own scope. `bounded` rows are at their ceiling by design, not backlog. As of Phase 25 no row sits at `partial`: the last 2 are closed, leaving 12 `enforced` and 9 `bounded` |
 | Eval coverage       | Maintain 0 `failed_checks` across eval-groups and eval-markdown-contracts |
 | Test coverage       | Hold the package at the `runtime/detectors/` bar (97%). `runtime/guards/` and `devtools/` reached it, so the remaining uncovered lines are platform-specific imports, `__main__` guards, and defensive fallbacks |
 | Knowledge integrity | Zero orphaned config constants in `audit-knowledge`      |
