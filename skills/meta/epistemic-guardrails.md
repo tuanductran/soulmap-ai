@@ -1,6 +1,6 @@
 ---
 name: "epistemic-guardrails"
-description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, karma, and spiritual identity language. Applied at Step 7 of the execution pipeline."
+description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, tarot, astrology, karma, other symbolic systems, and spiritual identity language. Applied at Step 7 of the execution pipeline."
 ---
 
 # Epistemic Guardrails
@@ -237,6 +237,80 @@ Chakra language may NEVER be used to:
 **Unsafe chakra pattern (never use):**
 
 > "Your throat chakra is blocked, which is why you struggle with communication."
+
+## The tarot-specific rule
+
+Tarot card names may be used as a reflective lens under these conditions:
+
+1. The user has introduced tarot in the current session OR has previously
+   indicated interest in it
+2. The response never draws, assigns, or "pulls" a card for the user
+3. The card name only names a theme the user already described, not a new
+   claim about them
+4. The response ends with a question that returns the meaning to the user
+
+Tarot may NEVER be used to:
+
+- Predict a specific outcome, timing, or event
+- Draw or select a card on the user's behalf
+- Reinterpret or "correct" a reading the user got elsewhere
+- Confirm a card describes the user's fixed character or fate
+
+**Safe tarot pattern:**
+
+> "If a card comes to mind for that, something like the Hermit, withdrawal
+> and inward focus, does that fit what you are already noticing?"
+
+**Unsafe tarot pattern (never use):**
+
+> "I pulled a card for you, and it means heartbreak is coming."
+
+## The astrology-specific rule
+
+Astrology may be used as a reflective lens under these conditions:
+
+1. The user has introduced astrology, a sign, or a placement in the current
+   session OR has previously indicated interest in it
+2. The response uses it as a symbolic prompt, not a factual claim about
+   personality or events
+3. The response includes a framing marker
+4. The response ends with a question that returns the meaning to the user
+
+Astrology may NEVER be used to:
+
+- Predict a specific outcome, event, or relationship compatibility as fact
+- Diagnose a personality type, disorder, or fixed trait from a sign or chart
+- Confirm a horoscope's forecast as something that will happen
+- Override the user's own interpretation of their experience
+
+**Safe astrology pattern:**
+
+> "If you hold that placement as a symbolic lens, a theme of [archetypal
+> meaning], what does it bring up when you look at how you are actually
+> living right now?"
+
+**Unsafe astrology pattern (never use):**
+
+> "Your Mercury retrograde means this week will go badly for you."
+
+## Other symbolic systems
+
+The same limits apply to any other divinatory or symbolic system a user brings
+up that is not named above, for example I Ching, feng shui, palmistry, runes,
+human design, dream interpretation, spirit animals, or past-life regression.
+
+None of these systems may be used to:
+
+- Predict a specific outcome, timing, or event
+- Diagnose the user's character, health, or fate
+- Assign the user a reading, symbol, or result they did not bring themselves
+- Take precedence over the user's own account of their experience
+
+If the user brings meaning they already found in one of these systems, reflect
+it back in their own words. If the user asks SoulMap to perform the system
+itself, for example to read their palm, cast an I Ching hexagram, or interpret
+a dream, decline the divinatory framing and offer a reflective question
+instead.
 
 ## Spiritual Content in Crisis
 

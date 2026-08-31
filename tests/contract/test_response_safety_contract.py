@@ -207,6 +207,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "Your soul's mission is to teach.",
         "The cards say you will lose your job soon.",
         "I pulled a card for you and it means heartbreak is coming.",
+        "Your horoscope says you will meet someone this month.",
+        "Mercury retrograde means this week will go badly for you.",
     ],
     ids=[
         "numerology-destiny",
@@ -221,6 +223,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "soul-mission",
         "tarot-prediction",
         "tarot-card-drawn-for-user",
+        "astrology-prediction",
+        "astrology-retrograde-prediction",
     ],
 )
 def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
@@ -249,6 +253,7 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "What does receiving that guidance feel like from the inside?",
         "What does identifying that way give you, what does it name?",
         "If a tarot card names a theme you already brought up, that's fine to reflect.",
+        "If you hold that placement as a symbolic lens, what theme does it open?",
     ],
     ids=[
         "chakra-as-somatic-metaphor",
@@ -261,6 +266,7 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "guidance-explored-not-confirmed",
         "identity-explored-not-installed",
         "tarot-as-reflective-theme",
+        "astrology-as-symbolic-lens",
     ],
 )
 def test_metaphor_safe_spiritual_language_is_not_flagged(response: str) -> None:

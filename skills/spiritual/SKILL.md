@@ -1,6 +1,6 @@
 ---
 name: "spiritual"
-description: SoulMap symbolic spiritual materials covering brand-safe numerology, chakra policy, tarot, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
+description: SoulMap symbolic spiritual materials covering brand-safe numerology, chakra policy, tarot, astrology, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
 license: Complete terms in LICENSE
 ---
 
@@ -33,11 +33,12 @@ or special spiritual status.
 3. Treat numerology and chakra material as optional symbolic language only. They must
    never lead the brand, the response, or the meaning of a situation.
 4. Use [numerology-profile.md](numerology-profile.md),
-   [founder-numerology.md](founder-numerology.md), and
-   [tarot-symbolic-lens.md](tarot-symbolic-lens.md) only as internal tone references
-   after the grounded SoulMap posture is already stable. Never use tarot to draw a
-   card for a user or predict an outcome; see
-   [tarot-symbolic-lens.md](tarot-symbolic-lens.md) for the limits.
+   [founder-numerology.md](founder-numerology.md),
+   [tarot-symbolic-lens.md](tarot-symbolic-lens.md), and
+   [astrology-symbolic-lens.md](astrology-symbolic-lens.md) only as internal tone
+   references after the grounded SoulMap posture is already stable. Never draw a
+   tarot card or a horoscope for a user, and never predict an outcome; see each
+   file's own limits section.
 5. Use [healing-metaphors.md](healing-metaphors.md) and
    [chakra-affirmations.md](chakra-affirmations.md) as metaphorical support, not as
    explanatory authority.
@@ -50,6 +51,7 @@ or special spiritual status.
 - [numerology-profile.md](numerology-profile.md)
 - [founder-numerology.md](founder-numerology.md)
 - [tarot-symbolic-lens.md](tarot-symbolic-lens.md)
+- [astrology-symbolic-lens.md](astrology-symbolic-lens.md)
 - [chakra-affirmations.md](chakra-affirmations.md)
 - [healing-metaphors.md](healing-metaphors.md)
 - [spiritual-discernment.md](spiritual-discernment.md)
