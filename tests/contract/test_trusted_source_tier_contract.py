@@ -176,7 +176,8 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
     crisis_hosts = {
         parsed.hostname.lower()
         for parsed in (
-            urlparse(match.group(0)) for match in re.finditer(r"https?://[^\s)>\]]+", crisis)
+            urlparse(match.group(0))
+            for match in re.finditer(r"https?://[^\s)>\]]+", crisis)
         )
         if parsed.hostname
     }
