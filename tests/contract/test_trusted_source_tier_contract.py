@@ -173,17 +173,14 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
     text = _doctrine_text()
     crisis = text[text.index("**Crisis search:**") :]
 
-    crisis_hosts = {
-        parsed.hostname.lower()
-        for parsed in (
-            urlparse(match.group(0))
-            for match in re.finditer(r"https?://[^\s)>\]]+", crisis)
-        )
-        if parsed.hostname
-    }
-    assert any(
-        host == "findahelpline.com" or host.endswith(".findahelpline.com")
-        for host in crisis_hosts
+    # The doctrine text names this domain as prose, deliberately without a
+    # scheme ("spoken as a number, not as a link"), so there is no URL for
+    # urlparse to parse. A plain substring check would accept an attacker
+    # string like "evilfindahelpline.com.example" as if it named the real
+    # domain, so the boundary anchors pin the match to the exact hostname
+    # token instead.
+    assert re.search(r"(?<![\w.-])findahelpline\.com(?![\w.-])", crisis), (
+        "the crisis-search doctrine no longer names findahelpline.com"
     )
     assert "Vietnam" in crisis, "the first crisis line SoulMap lists is unnamed"
 
