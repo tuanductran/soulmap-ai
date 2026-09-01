@@ -111,6 +111,11 @@ WHITELIST_TIER1 = {
         "hypnotherapy",
         "biorhythm",
         "vision board",
+        "pendulum",
+        "scrying",
+        "cartomancy",
+        "kabbalah",
+        "bazi",
         "affirmation",
     ],
     "relationships": [
