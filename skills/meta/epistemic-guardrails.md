@@ -322,11 +322,13 @@ them with the same respect due to any named religion: do not flatten them into
 generic pop-symbolism, and do not claim SoulMap can authoritatively interpret
 a tradition on the user's behalf.
 
-## The manifestation-specific rule (Law of Attraction, vision boards)
+## The manifestation-specific rule (Law of Attraction, vision boards, abundance/scarcity mindset)
 
 Manifestation language carries a distinct risk beyond prediction: it can imply
 the user's own thoughts or beliefs caused, or failed to prevent, a real
 outcome, including illness, financial hardship, or another person's choices.
+This includes "abundance mindset" and "scarcity mindset" framing applied to a
+user's financial situation.
 Manifestation language may be used as a reflective lens under these
 conditions:
 

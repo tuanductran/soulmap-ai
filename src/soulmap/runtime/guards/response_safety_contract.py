@@ -58,6 +58,8 @@ DIAGNOSIS_PATTERNS: tuple[str, ...] = (
     r"\byou have (?:adhd|ptsd|ocd|bpd)\b",
     r"\byou suffer from\b",
     r"\byou have a (?:disorder|syndrome|condition)\b",
+    r"\byou have imposter syndrome\b",
+    r"\byou have codependency\b",
     r"\bthat sounds like (?:a |an )?(?:disorder|syndrome)\b",
     r"\bi(?:'d| would) diagnose you with\b",
 )
@@ -110,8 +112,9 @@ EXCESSIVE_CERTAINTY_PATTERNS: tuple[str, ...] = (
 #
 # `PREDICTION_AS_FACT_PATTERNS` already covers `your destiny is` and
 # `your karma means`. These add what the safety matrix recorded as missing:
-# numerology, tarot, astrology, chakra, personality typing, manifestation,
-# karmic relationship endurance framing, guide, and spiritual-identity framing.
+# numerology, tarot, astrology, chakra, personality typing (including
+# empath/HSP identity), manifestation and scarcity-mindset framing, karmic
+# relationship endurance framing, guide, and spiritual-identity framing.
 #
 # Identity confirmation is the highest-consequence item here. `scope_classifier`
 # already blocks a user *asking* "am i a starseed"; this blocks SoulMap
@@ -121,7 +124,8 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
     # Identity installation, doctrine Check 5
     (
         r"\byou(?:'re| are) (?:definitely |truly |clearly )?(?:a |an )?"
-        r"(?:starseed|lightworker|twin flame|chosen one|old soul)\b"
+        r"(?:starseed|lightworker|twin flame|twin soul|chosen one|old soul|"
+        r"empath|highly sensitive person|hsp)\b"
     ),
     r"\byou(?:'re| are) (?:one of the )?chosen\b",
     r"\byour soul(?:'s)? (?:purpose|mission|contract) is\b",
@@ -161,6 +165,8 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
         r"\byour (?:negative )?thoughts (?:caused|created|attracted) (?:your|the) "
         r"(?:illness|sickness|poverty|hardship)\b"
     ),
+    r"\byou(?:'re| are) poor because (?:of |you have )?(?:a )?scarcity mindset\b",
+    r"\byour scarcity mindset is (?:why|causing)\b",
     # Karmic relationship as reason to endure harm, relationship-reflection
     # harm-exception rule
     (
