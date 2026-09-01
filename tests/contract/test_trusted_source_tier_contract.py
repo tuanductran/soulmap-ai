@@ -185,4 +185,12 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
         for host in crisis_hosts
     )
     assert "Vietnam" in crisis, "the first crisis line SoulMap lists is unnamed"
-    assert "findahelpline.com" in set().union(*_tier_1(text).values())
+
+    tier_1_hosts = set()
+    for value in set().union(*_tier_1(text).values()):
+        candidate = value if "://" in value else f"https://{value}"
+        parsed = urlparse(candidate)
+        if parsed.hostname:
+            tier_1_hosts.add(parsed.hostname.lower())
+
+    assert "findahelpline.com" in tier_1_hosts
