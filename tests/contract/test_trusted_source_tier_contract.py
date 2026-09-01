@@ -16,7 +16,9 @@ Category 3 of `skills/meta/epistemic-guardrails.md` and the
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
+from urllib.parse import urlparse
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DOCTRINE = REPO_ROOT / "skills" / "safety" / "whitelist-blacklist-system.md"
@@ -171,6 +173,16 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
     text = _doctrine_text()
     crisis = text[text.index("**Crisis search:**") :]
 
-    assert "findahelpline.com" in crisis
+    crisis_hosts = {
+        parsed.hostname.lower()
+        for parsed in (
+            urlparse(match.group(0)) for match in re.finditer(r"https?://[^\s)>\]]+", crisis)
+        )
+        if parsed.hostname
+    }
+    assert any(
+        host == "findahelpline.com" or host.endswith(".findahelpline.com")
+        for host in crisis_hosts
+    )
     assert "Vietnam" in crisis, "the first crisis line SoulMap lists is unnamed"
     assert "findahelpline.com" in set().union(*_tier_1(text).values())
