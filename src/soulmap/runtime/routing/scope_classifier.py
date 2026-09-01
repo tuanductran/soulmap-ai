@@ -84,6 +84,7 @@ WHITELIST_TIER1 = {
         "zodiac",
         "horoscope",
         "birth chart",
+        "star sign",
         "i ching",
         "feng shui",
         "palmistry",
