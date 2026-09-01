@@ -193,4 +193,7 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
         if parsed.hostname:
             tier_1_hosts.add(parsed.hostname.lower())
 
-    assert "findahelpline.com" in tier_1_hosts
+    assert any(
+        host == "findahelpline.com" or host.endswith(".findahelpline.com")
+        for host in tier_1_hosts
+    )
