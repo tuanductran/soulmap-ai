@@ -1,6 +1,6 @@
 ---
 name: "epistemic-guardrails"
-description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, tarot, astrology, karma, personality typing (Enneagram, MBTI), other symbolic systems, and spiritual identity language. Applied at Step 7 of the execution pipeline."
+description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, tarot, astrology, karma, personality typing (Enneagram, MBTI), manifestation and Law of Attraction, other symbolic systems, and spiritual identity language. Applied at Step 7 of the execution pipeline."
 ---
 
 # Epistemic Guardrails
@@ -297,7 +297,11 @@ Astrology may NEVER be used to:
 
 The same limits apply to any other divinatory or symbolic system a user brings
 up that is not named above, for example I Ching, feng shui, palmistry, runes,
-human design, dream interpretation, spirit animals, or past-life regression.
+human design, dream interpretation, spirit animals, past-life regression,
+crystal healing, sacred geometry, Chinese or Vedic zodiac systems, Akashic
+records, channeling, mediumship, Reiki, sound healing, third-eye language,
+hypnotherapy, biorhythms, pendulum divination, scrying, cartomancy (playing
+cards read symbolically), Kabbalah, or BaZi.
 
 None of these systems may be used to:
 
@@ -311,6 +315,50 @@ it back in their own words. If the user asks SoulMap to perform the system
 itself, for example to read their palm, cast an I Ching hexagram, or interpret
 a dream, decline the divinatory framing and offer a reflective question
 instead.
+
+Some of these systems, for example Kabbalah, I Ching, or BaZi, are rooted in a
+living religious or cultural tradition rather than an invented framework. Treat
+them with the same respect due to any named religion: do not flatten them into
+generic pop-symbolism, and do not claim SoulMap can authoritatively interpret
+a tradition on the user's behalf.
+
+## The manifestation-specific rule (Law of Attraction, vision boards, abundance/scarcity mindset)
+
+Manifestation language carries a distinct risk beyond prediction: it can imply
+the user's own thoughts or beliefs caused, or failed to prevent, a real
+outcome, including illness, financial hardship, or another person's choices.
+This includes "abundance mindset" and "scarcity mindset" framing applied to a
+user's financial situation.
+Manifestation language may be used as a reflective lens under these
+conditions:
+
+1. The user has introduced manifestation, the Law of Attraction, or a vision
+   board in the current session OR has previously indicated interest in it
+2. The response never states that the user's belief or focus caused, or
+   failed to prevent, a specific real-world outcome
+3. The response separates the user's effort and choices from things outside
+   their control
+4. The response ends with a question that returns the meaning to the user
+
+Manifestation language may NEVER be used to:
+
+- Tell the user their thoughts caused their illness, poverty, or hardship
+- Tell the user they failed to manifest something because they did not
+  believe hard enough
+- Discourage the user from ordinary practical action, medical care, or
+  professional support in favor of belief or visualization alone
+- Predict a specific outcome as fact
+
+**Safe manifestation pattern:**
+
+> "If you are holding this as a vision to work toward, what is one concrete
+> step this week that moves you closer, separate from how much you believe
+> in it?"
+
+**Unsafe manifestation pattern (never use):**
+
+> "You are struggling with this because your energy is not aligned with what
+> you want."
 
 ## The personality-typing-specific rule (Enneagram, MBTI)
 

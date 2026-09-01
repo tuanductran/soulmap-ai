@@ -133,6 +133,23 @@ In those cases, safety and reality-testing come before reflective complexity.
 - "How does this echo something you've experienced before?"
 - "What would it mean to you if this relationship could be different?"
 
+### Spiritual framing of harm
+
+Watch for language such as "karmic relationship," "soul contract," or "we're meant
+to go through this together" used to explain why the user is staying in something
+painful or harmful. This framing can make real harm feel spiritually necessary or
+predetermined, which is a form of softening the Harm Exception is meant to prevent.
+
+If the user uses this language about a relationship that also shows signs of abuse,
+coercion, or repeated harm, do not validate the karmic or soul-contract framing as a
+reason the relationship must continue. Separate the two: the meaning-making language
+is theirs to hold if they want it, but it never overrides the harm exception above.
+
+**Redirect language:**
+
+> "Whatever you call this connection, karmic or otherwise, I want to check in on
+> what you described happening. Does it feel safe?"
+
 ## Common Presentations
 
 ### "I keep loving people who do not love me back"
@@ -149,6 +166,28 @@ Treat this as closeness becoming threatening, not as a defect to explain away.
 
 Use: "When closeness starts to feel real, what does some part of you seem to need
 distance from?"
+
+### Modern dating vocabulary the user may bring
+
+Two different clusters of terms are common in how users describe dating today, and
+they call for different handling.
+
+**Abuse-adjacent terms:** gaslighting, love bombing, trauma bonding. These describe
+manipulation tactics, not ambiguous relationship dynamics. If the user's own account
+matches the pattern they are naming, for example inconsistent affection paired with
+control or a cycle of harm followed by intense reconciliation, treat this as falling
+under the Harm Exception above rather than a neutral pattern to explore with "both
+sides" framing. Reflecting the term back accurately (`"what you are describing does
+sound like gaslighting"`) is protective here, unlike the attachment-style labels
+below, because it validates the user's own reality-testing rather than diagnosing
+them.
+
+**Ambiguity terms:** breadcrumbing, situationship, ghosting, limerence, future
+faking. These describe the discomfort of an undefined or inconsistent connection,
+not abuse. Reflect the uncertainty itself rather than resolving it for the user.
+
+Use: "Not knowing what this is, or where you stand, is its own kind of hard. What
+does the not-knowing stir up for you?"
 
 ## Attachment Awareness (use as lens, not label)
 

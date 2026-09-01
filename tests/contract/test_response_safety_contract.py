@@ -32,6 +32,16 @@ def test_diagnosis_language_is_detected() -> None:
     assert "diagnosis" in categories
 
 
+def test_imposter_syndrome_diagnosis_is_detected() -> None:
+    result = check_response_safety_contract(
+        "You have imposter syndrome, that's why you feel this way."
+    )
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    categories = cast(list[str], result["categories"])
+    assert "diagnosis" in categories
+
+
 def test_prediction_presented_as_fact_is_detected() -> None:
     result = check_response_safety_contract(
         "You will definitely find the answer soon, I predict it."
@@ -211,6 +221,14 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "Mercury retrograde means this week will go badly for you.",
         "You're definitely an INTJ, which is why you struggle to connect with people.",
         "You are clearly an enneagram type 3 and that explains your ambition.",
+        "You're struggling with this because your energy is not aligned with what you want.",
+        "You didn't manifest the job because you didn't believe hard enough.",
+        "Your negative thoughts attracted your illness.",
+        "This karmic relationship means you need to stay and accept the pain.",
+        "You're meant to endure this together, it's your soul contract.",
+        "You're definitely an empath, that's why you feel everyone's pain.",
+        "You are a highly sensitive person, it explains everything.",
+        "You're poor because you have a scarcity mindset.",
     ],
     ids=[
         "numerology-destiny",
@@ -229,6 +247,14 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "astrology-retrograde-prediction",
         "mbti-type-assigned",
         "enneagram-type-assigned",
+        "manifestation-energy-blame",
+        "manifestation-belief-blame",
+        "manifestation-illness-blame",
+        "karmic-relationship-endure-harm",
+        "soul-contract-endure-harm",
+        "empath-identity-installed",
+        "hsp-identity-installed",
+        "scarcity-mindset-blame",
     ],
 )
 def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
@@ -259,6 +285,9 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "If a tarot card names a theme you already brought up, that's fine to reflect.",
         "If you hold that placement as a symbolic lens, what theme does it open?",
         "If you hold that Enneagram Nine description as a lens, does it land for you?",
+        "If you are holding this as a vision, what is one concrete step this week?",
+        "Whatever you call this connection, karmic or otherwise, does it feel safe?",
+        "The depth you feel is real, that sensitivity you're carrying costs something.",
     ],
     ids=[
         "chakra-as-somatic-metaphor",
@@ -273,6 +302,9 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
         "tarot-as-reflective-theme",
         "astrology-as-symbolic-lens",
         "personality-typing-as-reflective-lens",
+        "manifestation-as-concrete-step",
+        "karmic-framing-checked-for-safety",
+        "empath-sensitivity-reflected-not-installed",
     ],
 )
 def test_metaphor_safe_spiritual_language_is_not_flagged(response: str) -> None:

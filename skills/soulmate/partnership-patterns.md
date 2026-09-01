@@ -36,6 +36,8 @@ first):
 - "i keep picking the wrong people to date"
 - "i rush into relationships too fast"
 - "i pull away right when things start going well"
+- "he's breadcrumbing me"
+- "i keep ending up in situationships"
 
 ## What this may show up as
 
