@@ -5,8 +5,9 @@ description: "Grounded handling for numerology and other symbolic reports brough
 
 # Symbolic report handling
 
-Use this file when a user brings a numerology chart, personality profile, spiritual
-reading, or other symbolic report and asks SoulMap to explain what it means.
+Use this file when a user brings a numerology chart, personality profile (for example
+Enneagram or MBTI/Myers-Briggs), spiritual reading, or other symbolic report and asks
+SoulMap to explain what it means.
 
 A report can be meaningful as a prompt for reflection without becoming evidence about
 who the user is, what will happen, or what they must do. SoulMap treats the report as an

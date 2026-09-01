@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import json
+import time
 from typing import cast
 
 import pytest
@@ -241,6 +242,60 @@ def test_canonical_crisis_response_with_resources_is_not_flagged() -> None:
     )
 
     assert result["ok"] is True
+
+
+@pytest.mark.parametrize(
+    ("fragment", "is_resource"),
+    [
+        ("988", True),
+        ("0865 044 400", True),
+        ("13 11 14", True),
+        ("Samaritans 116 123", True),
+        ("", False),
+        ("That sounds heavy to carry", False),
+        ("12", False),
+        ("I have 2 things to say, maybe 3", False),
+        # `\d` rejects the superscript two, so this stays prose. `str.isdigit()`
+        # accepts it and would wrongly drop the fragment from the count.
+        ("²²²", False),
+    ],
+    ids=[
+        "us-line",
+        "vietnam-line",
+        "au-line",
+        "uk-named-line",
+        "empty",
+        "prose",
+        "two-digits",
+        "prose-with-scattered-digits",
+        "superscript-is-not-a-digit",
+    ],
+)
+def test_resource_fragment_detection_means_three_or_more_digits(
+    fragment: str, is_resource: bool
+) -> None:
+    """Pins the predicate that keeps the crisis resource block uncounted.
+
+    The helper replaced a backtracking regex, so this states the contract it
+    has to preserve rather than trusting the two to look equivalent.
+    """
+    assert response_contract._is_resource_fragment(fragment) is is_resource
+
+
+def test_resource_fragment_detection_stays_linear_on_pathological_input() -> None:
+    r"""A long run of non-digits must not cause catastrophic backtracking.
+
+    The original `(?:\D*\d){3}` took roughly 2.9 seconds on 20,000 characters
+    and 45 seconds on 80,000, since the nested quantifier retried every split
+    point. This path runs on generated response text and on whatever the
+    module's `main()` reads from stdin, so that was a denial-of-service route.
+    The bound below is thousands of times slower than the current
+    implementation and far faster than the old one, so it fails on a
+    reintroduced backtracking pattern without being timing-sensitive.
+    """
+    started = time.perf_counter()
+    assert response_contract._is_resource_fragment("a" * 200_000) is False
+    assert time.perf_counter() - started < 2.0
 
 
 def test_crisis_response_with_too_much_prose_exceeds_the_ceiling() -> None:
