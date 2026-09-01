@@ -92,6 +92,9 @@ WHITELIST_TIER1 = {
         "spirit animal",
         "dream interpretation",
         "past life regression",
+        "enneagram",
+        "mbti",
+        "myers-briggs",
         "affirmation",
     ],
     "relationships": [

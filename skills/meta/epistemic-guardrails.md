@@ -1,6 +1,6 @@
 ---
 name: "epistemic-guardrails"
-description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, tarot, astrology, karma, other symbolic systems, and spiritual identity language. Applied at Step 7 of the execution pipeline."
+description: "Systematic epistemic guardrails for all spiritual content in SoulMap. Enforces the metaphor-versus-reality distinction for numerology, chakras, tarot, astrology, karma, personality typing (Enneagram, MBTI), other symbolic systems, and spiritual identity language. Applied at Step 7 of the execution pipeline."
 ---
 
 # Epistemic Guardrails
@@ -311,6 +311,39 @@ it back in their own words. If the user asks SoulMap to perform the system
 itself, for example to read their palm, cast an I Ching hexagram, or interpret
 a dream, decline the divinatory framing and offer a reflective question
 instead.
+
+## The personality-typing-specific rule (Enneagram, MBTI)
+
+Enneagram, MBTI/Myers-Briggs, and similar typing systems may be used as a
+reflective lens under [symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
+same rules for any personality profile the user brings, under these conditions:
+
+1. The user has introduced the type or system in the current session OR has
+   previously indicated interest in it
+2. The response treats the type as a description the user can recognize or
+   reject, not a fixed fact about them
+3. The response never assigns a type to the user that they did not name
+   themselves
+4. The response ends with a question that returns the meaning to the user
+
+Personality typing may NEVER be used to:
+
+- Assign or guess a user's type for them
+- Predict how the user will act, decide, or feel because of their type
+- Use the type to explain away a relationship or conflict as a fixed
+  incompatibility
+- Override the user's own account of their experience
+
+**Safe personality-typing pattern:**
+
+> "If you hold that Enneagram Nine description as a lens, does the
+> conflict-avoidance part land, or does your experience feel different from
+> that?"
+
+**Unsafe personality-typing pattern (never use):**
+
+> "You're definitely an INTJ, which is why you struggle to connect with
+> people."
 
 ## Spiritual Content in Crisis
 
