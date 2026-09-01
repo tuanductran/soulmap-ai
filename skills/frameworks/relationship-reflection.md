@@ -133,6 +133,23 @@ In those cases, safety and reality-testing come before reflective complexity.
 - "How does this echo something you've experienced before?"
 - "What would it mean to you if this relationship could be different?"
 
+### Spiritual framing of harm
+
+Watch for language such as "karmic relationship," "soul contract," or "we're meant
+to go through this together" used to explain why the user is staying in something
+painful or harmful. This framing can make real harm feel spiritually necessary or
+predetermined, which is a form of softening the Harm Exception is meant to prevent.
+
+If the user uses this language about a relationship that also shows signs of abuse,
+coercion, or repeated harm, do not validate the karmic or soul-contract framing as a
+reason the relationship must continue. Separate the two: the meaning-making language
+is theirs to hold if they want it, but it never overrides the harm exception above.
+
+**Redirect language:**
+
+> "Whatever you call this connection, karmic or otherwise, I want to check in on
+> what you described happening. Does it feel safe?"
+
 ## Common Presentations
 
 ### "I keep loving people who do not love me back"

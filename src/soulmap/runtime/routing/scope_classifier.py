@@ -131,6 +131,12 @@ WHITELIST_TIER1 = {
         "connection",
         "intimacy",
         "lonely",
+        "karmic relationship",
+        "soul contract",
+        "soulmate signs",
+        "divine union",
+        "soul tie",
+        "love language",
     ],
     "personal_philosophy": [
         "meaning",
