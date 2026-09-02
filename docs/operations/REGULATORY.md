@@ -76,7 +76,7 @@ sincerely asked. However, if SoulMap AI is deployed in a context where minors ar
 likely users, a periodic reminder should be considered.
 
 This is flagged as an aspirational product feature in
-`skills/brand/strategic-direction-2026.md`.
+`templates/strategic-direction-2026.md`.
 
 ## What this means for brand positioning
 
