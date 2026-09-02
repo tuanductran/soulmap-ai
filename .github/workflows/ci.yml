@@ -94,6 +94,22 @@ jobs:
           path: knowledge-inventory.txt
           if-no-files-found: error
 
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Install site dependencies
+        working-directory: site
+        run: npm ci
+      - name: Typecheck, test, build, and validate the site
+        working-directory: site
+        run: npm run check
+
   build:
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}

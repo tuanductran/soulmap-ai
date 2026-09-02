@@ -1,0 +1,17 @@
+# Static publish only. This site has no serverless functions on purpose: the
+# maintenance boundary treats a public API service as out of scope, and every
+# page here is generated at build time from files already in the repository.
+[build]
+  base    = "site"
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
