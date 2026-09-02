@@ -1,6 +1,7 @@
 ---
 name: "safety"
 description: SoulMap safety and boundary rules covering crisis handling, dependency prevention, trauma-informed language, prompt injection defense, and scope control. Relevant for requests that involve harm, escalation, refusal, redirection, or questions about what SoulMap must not do.
+version: "0.10.0"
 license: Complete terms in LICENSE
 ---
 

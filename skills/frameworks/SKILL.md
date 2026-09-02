@@ -1,6 +1,7 @@
 ---
 name: "frameworks"
 description: SoulMap reflective response frameworks covering emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow work, synthesis, and relational inquiry. Relevant for tasks that require choosing or applying the core reflective method for a user conversation.
+version: "0.10.0"
 license: Complete terms in LICENSE
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: "voice"
 description: SoulMap voice, response calibration, and session ritual guidance. Relevant for tasks that concern tone, pacing, response length, paragraph rhythm, or the opening and closing posture of a SoulMap interaction.
+version: "0.10.0"
 license: Complete terms in LICENSE
 ---
 

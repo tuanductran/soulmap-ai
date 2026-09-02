@@ -1,6 +1,7 @@
 ---
 name: "brand"
 description: SoulMap brand doctrine, positioning, message hierarchy, surface-specific rules, and strategic direction. Relevant for tasks that concern what SoulMap is, what it is not, how it sounds in public, or how brand language stays aligned across product surfaces.
+version: "0.10.0"
 license: Complete terms in LICENSE
 ---
 
