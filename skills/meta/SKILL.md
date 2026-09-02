@@ -11,7 +11,7 @@ This skill is the coordinating layer of SoulMap. It does not generate content
 directly. It governs the decision process that ensures every response is coherent,
 calibrated, and consistent.
 
-Read [../../SOULMAP.md](../../SOULMAP.md) first. The behavioral contract in SOULMAP.md is the
+Read [SOULMAP.md](../../SOULMAP.md) first. The behavioral contract in SOULMAP.md is the
 non-negotiable foundation. This skill operationalizes that contract into an executable
 system.
 
@@ -57,9 +57,9 @@ Steps 5 and 6 are mandatory and cannot be skipped for any response type.
 This skill coordinates other skills. It does not replace them.
 
 After orchestration selects a framework, load the corresponding framework file from
-[../frameworks/SKILL.md](../frameworks/SKILL.md). After generating content, apply
-the voice layer from [../voice/SKILL.md](../voice/SKILL.md). After applying voice,
-run the safety filter from [../safety/SKILL.md](../safety/SKILL.md).
+[SKILL.md](../frameworks/SKILL.md). After generating content, apply
+the voice layer from [SKILL.md](../voice/SKILL.md). After applying voice,
+run the safety filter from [SKILL.md](../safety/SKILL.md).
 
 ## Workflow
 
@@ -112,8 +112,8 @@ Apply stage calibration from Step 2.
 
 Load:
 
-- [../voice/persona-voice.md](../voice/persona-voice.md)
-- [../voice/response-calibrator.md](../voice/response-calibrator.md)
+- [persona-voice.md](../voice/persona-voice.md)
+- [response-calibrator.md](../voice/response-calibrator.md)
 
 Apply all voice checks. Rewrite if any check fails.
 
@@ -121,8 +121,8 @@ Apply all voice checks. Rewrite if any check fails.
 
 Load:
 
-- [../safety/ethics-safety.md](../safety/ethics-safety.md)
-- [../safety/boundaries-safety.md](../safety/boundaries-safety.md)
+- [ethics-safety.md](../safety/ethics-safety.md)
+- [boundaries-safety.md](../safety/boundaries-safety.md)
 
 For any response containing spiritual content, also load:
 

@@ -149,6 +149,81 @@ def _check_external_target(
     return issues
 
 
+def _is_shipped_markdown(repo_root: Path, path: Path) -> bool:
+    """Report whether a Markdown file is part of the shipped knowledge package.
+
+    Args:
+        repo_root: Repository root.
+        path: File being checked.
+
+    Returns:
+        True for the root manifests and anything under ``skills/``.
+    """
+    try:
+        relative = path.resolve().relative_to(repo_root.resolve()).as_posix()
+    except ValueError:
+        return False
+    return relative in {"SKILL.md", "SOULMAP.md"} or relative.startswith("skills/")
+
+
+def _check_link_label(
+    *,
+    repo_root: Path,
+    current_file: Path,
+    label: str,
+    target: str,
+    line: int,
+) -> list[Issue]:
+    """Flag shipped link text that spells a path instead of naming a file.
+
+    ``[../safety/ethics-safety.md](../safety/ethics-safety.md)`` reads as a
+    path, but the ``../`` prefix describes where the link starts from. That
+    means nothing to a reader and changes with whichever file does the linking.
+    Written as ``[ethics-safety.md](../safety/ethics-safety.md)`` the text names
+    the destination and stays correct wherever it is quoted.
+
+    Scoped to shipped content on purpose. Inside ``docs/`` a label like
+    ``skills/meta/master-prompt.md`` tells a maintainer where the file lives in
+    the repository, which is useful and true. The same label inside ``skills/``
+    describes a layout the reader of an extracted package does not have.
+
+    Only labels that are themselves a path form are flagged, so a prose label
+    such as ``[the safety rules](../safety/ethics-safety.md)`` stays untouched.
+
+    Args:
+        repo_root: Repository root, used to decide whether the file ships.
+        current_file: File the link was found in.
+        label: Link text exactly as written.
+        target: Link destination exactly as written.
+        line: 1-indexed source line.
+
+    Returns:
+        One issue when a shipped label spells a path, otherwise an empty list.
+    """
+    if not _is_shipped_markdown(repo_root, current_file):
+        return []
+
+    stripped = label.strip()
+    if not stripped.startswith(("../", "./", "skills/")):
+        return []
+
+    file_part, _ = split_markdown_link_target(target)
+    expected = file_part.rstrip("/").rsplit("/", 1)[-1]
+    if file_part.endswith("/"):
+        expected += "/"
+    if not expected or stripped == expected:
+        return []
+
+    return [
+        Issue(
+            current_file,
+            line,
+            f"Link text should name the file, not the path: "
+            f"use [{expected}] instead of [{stripped}]",
+        )
+    ]
+
+
 def _check_local_target(
     *,
     repo_root: Path,
@@ -296,6 +371,16 @@ def check_file_with_options(
                 line=reference.line,
             )
         )
+        if not reference.is_image:
+            issues.extend(
+                _check_link_label(
+                    repo_root=repo_root,
+                    current_file=path,
+                    label=reference.label,
+                    target=target,
+                    line=reference.line,
+                )
+            )
 
     return issues
 

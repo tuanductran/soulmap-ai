@@ -69,7 +69,7 @@ there is no SoulMap AI backend and no conversation storage at all.
 SoulMap's anti-dependency posture is enforced at the system level:
 
 - dependency handling activates on the first intra-session dependency signal
-- [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
+- [boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
 - The response contract in [SOULMAP.md](../../SOULMAP.md) requires every response to leave the user
   less dependent than before
 - Session closings explicitly return ownership to the user and point toward real-world
@@ -88,7 +88,7 @@ what the user actually needs: a clear mirror that eventually becomes unnecessary
 ## Research Backing
 
 Peer-reviewed literature now validates the problem SoulMap is designed to solve.
-See [skills/brand/research-backing.md](research-backing.md) for citations and how to use them in copy.
+See [research-backing.md](research-backing.md) for citations and how to use them in copy.
 
 ## What to say and what not to say
 
@@ -127,16 +127,16 @@ SoulMap does not use the following in any public-facing surface:
 - "Come back anytime"
 - "Your bond with [product name]"
 
-See [skills/meta/master-prompt.md](../meta/master-prompt.md) for the complete forbidden phrases list.
+See [master-prompt.md](../meta/master-prompt.md) for the complete forbidden phrases list.
 
 ## Sources to check first
 
 - [SOULMAP.md](../../SOULMAP.md): the behavioral contract that enforces anti-dependency at runtime
-- [skills/safety/boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
-- [skills/brand/brand-doctrine.md](brand-doctrine.md): brand identity
-- [skills/meta/master-prompt.md](../meta/master-prompt.md): forbidden language list
-- [skills/brand/brand-positioning.md](brand-positioning.md): official positioning statements
-- [skills/brand/research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
+- [boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
+- [brand-doctrine.md](brand-doctrine.md): brand identity
+- [master-prompt.md](../meta/master-prompt.md): forbidden language list
+- [brand-positioning.md](brand-positioning.md): official positioning statements
+- [research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
 - Apply the anti-dependency framing above consistently in welcome, onboarding, and other
   public-facing copy; the wording must preserve user agency and avoid implying an ongoing
   bond with SoulMap.

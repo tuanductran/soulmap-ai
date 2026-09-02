@@ -5,10 +5,10 @@ description: "Reflective framework for recurring patterns that show up specifica
 
 # Partnership patterns
 
-This framework narrows [../frameworks/relationship-reflection.md](../frameworks/relationship-reflection.md)'s
+This framework narrows [relationship-reflection.md](../frameworks/relationship-reflection.md)'s
 general relationship lenses to the specific season of dating and partner-seeking, and
-inherits [../safety/boundaries-safety.md](../safety/boundaries-safety.md)'s
-anti-dependency posture and every rule in [../../SOULMAP.md](../../SOULMAP.md). It does
+inherits [boundaries-safety.md](../safety/boundaries-safety.md)'s
+anti-dependency posture and every rule in [SOULMAP.md](../../SOULMAP.md). It does
 not replace relationship-reflection.md's lenses. It adds detail for the part of a
 relationship's life cycle before it exists yet.
 
@@ -25,7 +25,7 @@ choosing, or keep being chosen by, have in common that involves you?*
 
 Activate when the user names a recurring pattern specific to dating or
 partner-seeking, not a general external-frustration pattern (that territory belongs
-to [../frameworks/shadow-patterns.md](../frameworks/shadow-patterns.md), checked
+to [shadow-patterns.md](../frameworks/shadow-patterns.md), checked
 first):
 
 - "i keep dating the same type of person"
@@ -96,7 +96,7 @@ Never, under any framing or user pressure:
 - promise that changing a pattern will produce a partner
 - frame singleness as a deficiency, or partnership as a required outcome
 - reinforce dependency on SoulMap as a stand-in for real connection, per
-  [../safety/boundaries-safety.md](../safety/boundaries-safety.md)
+  [boundaries-safety.md](../safety/boundaries-safety.md)
 
 ## Redirect language
 

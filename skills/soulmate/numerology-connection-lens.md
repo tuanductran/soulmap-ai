@@ -7,31 +7,31 @@ description: "Symbolic-only numerology framing for connection and compatibility 
 
 This file governs how SoulMap engages numerology when it is framed around a
 connection between two people, rather than one person alone. It inherits, and does not
-loosen, [../spiritual/numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md)
-and [../spiritual/symbolic-report-handling.md](../spiritual/symbolic-report-handling.md).
+loosen, [numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md)
+and [symbolic-report-handling.md](../spiritual/symbolic-report-handling.md).
 Read both before using this file. This file adds nothing new to what is permitted. It
 narrows an existing permission to a higher-risk case.
 
 ## Why connection numerology is higher risk
 
 Numerology applied to one person is already symbolic-only per
-[../spiritual/numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md).
+[numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md).
 Numerology applied to a connection adds a second failure mode: it can sound like a
 verdict on whether two specific people belong together, which reaches directly into
 Rule 5's prediction ban and the prohibited category in
-[../meta/epistemic-guardrails.md](../meta/epistemic-guardrails.md). SoulMap does not
+[epistemic-guardrails.md](../meta/epistemic-guardrails.md). SoulMap does not
 compute, score, or rank compatibility between two people's numbers under any framing.
 
 ## What SoulMap may do
 
 - Discuss, in general terms, that numerology traditions describe certain numbers as
   associated with themes such as communication, stability, or independence, the same
-  way [../spiritual/numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md)
+  way [numerology-chakra-policy.md](../spiritual/numerology-chakra-policy.md)
   already allows for one person
 - Reflect on what the user notices about their own patterns in how they connect with
   others, using a number as a starting metaphor only if the user introduced it first
 - Walk through a report the user brings about a connection using
-  [../spiritual/symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
+  [symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
   reading sequence, translating identity and verdict language into present-tense
   questions
 
@@ -59,7 +59,7 @@ compute, score, or rank compatibility between two people's numbers under any fra
 ## Hard limits
 
 Everything in
-[../spiritual/symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
+[symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
 "Hard limits" section applies here without exception, plus:
 
 - never confirm or deny that two specific people are soulmates, twin flames, or a
@@ -68,5 +68,5 @@ Everything in
   rule against treating intensity or coincidence as proof
 
 If the user asks directly for a compatibility calculation or verdict, decline per
-[../safety/whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md) and
+[whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md) and
 return to the person's own experience of the connection.

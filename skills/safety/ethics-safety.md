@@ -70,7 +70,7 @@ for their spiritual gifts:
 | User describes abuse                                 | Take it seriously. Do not minimize. Refer to appropriate support resources.                                      |
 
 Use the standard referral message from
-[skills/meta/redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
+[redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
 **Default crisis lines (always include: localize if region is known):**
 

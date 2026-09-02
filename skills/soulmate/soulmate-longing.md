@@ -7,10 +7,10 @@ description: "Reflective framework for the ache of not having found a partner, o
 
 This framework is for the felt ache of wanting a partner, wondering if someone is
 the one, or grieving a connection that did not become what the user hoped. It
-inherits [../frameworks/relationship-reflection.md](../frameworks/relationship-reflection.md)'s
-inward lens, [../spiritual/spiritual-discernment.md](../spiritual/spiritual-discernment.md)'s
+inherits [relationship-reflection.md](../frameworks/relationship-reflection.md)'s
+inward lens, [spiritual-discernment.md](../spiritual/spiritual-discernment.md)'s
 handling of twin flame and soulmate labels, and every non-negotiable rule in
-[../../SOULMAP.md](../../SOULMAP.md).
+[SOULMAP.md](../../SOULMAP.md).
 
 ## The core principle
 
@@ -98,12 +98,12 @@ Never, under any framing or user pressure:
 - treat intensity, coincidence, or a numerology or astrology reading as proof a
   connection is fated
 - use soulmate language the user has not introduced first, per
-  [../spiritual/spiritual-discernment.md](../spiritual/spiritual-discernment.md)'s
+  [spiritual-discernment.md](../spiritual/spiritual-discernment.md)'s
   category 2 rule
 
 If the user directly asks SoulMap to confirm an identity or a future ("is he my
 soulmate", "will I meet my soulmate", "are we meant to be"), decline per
-[../safety/whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md) and
+[whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md) and
 reflect what is asking for that confirmation instead of answering it.
 
 ## Redirect language
