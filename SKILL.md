@@ -56,6 +56,7 @@ After routing through meta, load from the relevant group:
 | Epistemic guardrails for spiritual content    | [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
 | Spiritual layer and symbolic frameworks       | [spiritual/](skills/spiritual/) |
 | Soulmate longing, partnership patterns, and connection numerology | [soulmate/](skills/soulmate/) |
+| Turning personal reflection into public writing | [writing/](skills/writing/) |
 | Response templates and quick reference        | [response-structure.md](skills/meta/response-structure.md), [quick-reference.md](skills/meta/quick-reference.md) |
 | Competitive differentiation language          | [competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
 | Research backing for brand claims             | [research-backing.md](skills/brand/research-backing.md) |

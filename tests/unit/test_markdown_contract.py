@@ -337,12 +337,22 @@ def test_the_root_manifest_keeps_the_package_name(tmp_path: Path) -> None:
         (
             (
                 'name: "demo"\ndescription: "d"\nversion: "0.10.0"\nlicense: "x"\n'
-                'disable-model-invocation: true\ntime_scope: "2026"'
+                'disable-model-invocation: true\ntime_scope: "2026"\n'
+                'reviewed: "2026-09-02"'
             ),
             "every optional key the repo uses",
         ),
+        (
+            'name: "demo"\ndescription: "d"\nreviewed: "2026-09-02"',
+            "the freshness re-check date on its own",
+        ),
     ],
-    ids=["at-the-limit", "comment-and-blank", "all-optional-keys"],
+    ids=[
+        "at-the-limit",
+        "comment-and-blank",
+        "all-optional-keys",
+        "reviewed-alone",
+    ],
 )
 def test_valid_front_matter_stays_clean(tmp_path: Path, body: str, label: str) -> None:
     """Boundaries and legal shapes must not be flagged.
