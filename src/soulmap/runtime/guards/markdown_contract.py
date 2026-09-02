@@ -59,6 +59,16 @@ class Issue:
     message: str
 
 
+# Filenames GitHub only recognizes with underscores. Each is a fixed external
+# contract, not a style choice, so the kebab-case rule above skips them.
+_GITHUB_RESERVED_FILENAMES = frozenset(
+    {
+        ".github/pull_request_template.md",
+        ".github/issue_template.md",
+    }
+)
+
+
 def _iter_markdown_files(root: Path) -> list[Path]:
     return iter_markdown_files(root)
 
@@ -101,7 +111,10 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     rel = path.resolve().relative_to(repo_root.resolve())
 
     # - File naming: prefer kebab-case for Markdown files (no underscores).
-    if "_" in path.name:
+    #   GitHub reserves a few exact filenames and only recognizes those spellings,
+    #   so the repository's kebab-case preference cannot apply to them. Renaming
+    #   `pull_request_template.md` would silently stop GitHub from using it.
+    if "_" in path.name and rel.as_posix() not in _GITHUB_RESERVED_FILENAMES:
         issues.append(
             Issue(path, 1, "Markdown filename should not contain '_' (use '-')")
         )
