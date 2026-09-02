@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
@@ -119,11 +120,20 @@ def test_lint_runs_pyright_markdown_and_pytest_when_available(
         calls.append((module, extra_args))
 
     monkeypatch.setattr(lint_tool, "python_module", fake_python_module)
-    monkeypatch.setattr(
-        lint_tool,
-        "run",
-        lambda args, **_kwargs: run_calls.append(args),
-    )
+
+    def fake_run(
+        args: list[str], **_kwargs: object
+    ) -> subprocess.CompletedProcess[str]:
+        """Record the call and answer like a successful subprocess.
+
+        The Markdown scan reads ``returncode`` to decide whether a chunk
+        failed, so the stub has to return a completed process rather than
+        None. Returning None here made the scan raise instead of reporting.
+        """
+        run_calls.append(args)
+        return subprocess.CompletedProcess(args, 0)
+
+    monkeypatch.setattr(lint_tool, "run", fake_run)
 
     assert lint_tool.main([]) == 0
 
