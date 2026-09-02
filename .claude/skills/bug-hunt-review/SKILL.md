@@ -1,6 +1,6 @@
 ---
 name: bug-hunt-review
-description: Find real bugs and silent regressions in SoulMap AI across Python, shell, workflows, and repo contracts, with findings-first review and fix-focused follow-through.
+description: Find real bugs and silent regressions in SoulMap AI across Python, shell, workflows, and repo contracts, with findings-first review and fix-focused follow-through. Relevant for hunting a regression, investigating a silent failure, or reviewing a diff for defects that pass casual inspection and green CI.
 ---
 
 # Bug hunt review

@@ -1,6 +1,6 @@
 ---
 name: packaging-maintainer
-description: Maintain SoulMap AI packaging and build artifacts so pyproject metadata, dist outputs, build scripts, and shipped-package claims stay in sync.
+description: Maintain SoulMap AI packaging and build artifacts so pyproject metadata, dist outputs, build scripts, and shipped-package claims stay in sync. Relevant for changing build outputs, pyproject metadata, or any claim about what ships in the distribution artifacts.
 ---
 
 # Packaging maintainer

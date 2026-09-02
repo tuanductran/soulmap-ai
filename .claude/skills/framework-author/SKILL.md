@@ -1,6 +1,6 @@
 ---
 name: framework-author
-description: Write and maintain framework skill files that define activation signals and response structures for SoulMap's framework system.
+description: Write and maintain framework skill files that define activation signals and response structures for SoulMap's framework system. Relevant for writing or revising a framework file in skills/frameworks/, including its activation signals and response structure.
 ---
 
 # Framework author

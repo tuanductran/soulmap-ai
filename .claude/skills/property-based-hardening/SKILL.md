@@ -1,6 +1,6 @@
 ---
 name: property-based-hardening
-description: Use Hypothesis and invariant-driven tests to harden SoulMap AI parsers, normalizers, and small deterministic helpers without creating flaky or slow suites.
+description: Use Hypothesis and invariant-driven tests to harden SoulMap AI parsers, normalizers, and small deterministic helpers without creating flaky or slow suites. Relevant for hardening a parser, normalizer, or small deterministic helper where example-based tests miss edge cases.
 ---
 
 # Property-based hardening

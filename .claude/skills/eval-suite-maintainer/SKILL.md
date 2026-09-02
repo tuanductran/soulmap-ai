@@ -1,6 +1,6 @@
 ---
 name: eval-suite-maintainer
-description: Maintain the evaluation suite by managing routing groups, response cases, and Markdown contract sync checks across evals/datasets/.
+description: Maintain the evaluation suite by managing routing groups, response cases, and Markdown contract sync checks across evals/datasets/. Relevant for adding or changing routing groups, response cases, and Markdown contract sync checks under evals/datasets/.
 ---
 
 # Eval suite maintainer

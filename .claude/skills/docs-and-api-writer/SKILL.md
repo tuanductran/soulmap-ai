@@ -1,6 +1,6 @@
 ---
 name: docs-and-api-writer
-description: Write and update technical docs for SoulMap AI so README, API docs, developer guides, and tester guides stay aligned with the actual repo behavior.
+description: Write and update technical docs for SoulMap AI so README, API docs, developer guides, and tester guides stay aligned with the actual repo behavior. Relevant for updating README, API docs, developer or tester guides, and for fixing documentation that has drifted from the implementation.
 ---
 
 # Docs and API writer

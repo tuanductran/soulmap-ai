@@ -1,6 +1,6 @@
 ---
 name: tooling-performance-review
-description: Review and improve SoulMap's repo performance where it actually matters, such as lint speed, eval cost, packaging flow, subprocess-heavy tests, and shell-wrapper overhead.
+description: Review and improve SoulMap's repo performance where it actually matters, such as lint speed, eval cost, packaging flow, subprocess-heavy tests, and shell-wrapper overhead. Relevant for slow lint, eval, packaging, or subprocess-heavy runs, where the cost should be measured before anything is rewritten.
 ---
 
 # Tooling performance review

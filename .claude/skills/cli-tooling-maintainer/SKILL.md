@@ -1,6 +1,6 @@
 ---
 name: cli-tooling-maintainer
-description: Maintain SoulMap AI command-line tooling so Python entry points, shell wrappers, stdin payload handling, and local automation scripts stay consistent.
+description: Maintain SoulMap AI command-line tooling so Python entry points, shell wrappers, stdin payload handling, and local automation scripts stay consistent. Relevant for adding or changing a command-line subcommand, a shell wrapper, stdin payload handling, or anything about the command surface being cross-platform.
 ---
 
 # CLI tooling maintainer
