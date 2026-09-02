@@ -14,6 +14,7 @@ from collections.abc import Callable
 from soulmap.devtools.audit import knowledge as audit_knowledge
 from soulmap.devtools.checks import (
     check_api_docs,
+    check_freshness,
     check_markdown_case,
     check_markdown_links,
 )
@@ -50,6 +51,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "build": build_skill.main,
         "check-api-docs": check_api_docs.main,
         "check-case": check_markdown_case.main,
+        "check-freshness": check_freshness.main,
         "check-links": check_markdown_links.main,
         "demo": soulmap_demo.main,
         "eval-groups": eval_groups.main,
