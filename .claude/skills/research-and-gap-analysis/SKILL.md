@@ -1,6 +1,6 @@
 ---
 name: research-and-gap-analysis
-description: Analyze the SoulMap AI repository to identify missing pieces, inconsistencies, and next highest-value improvements without inventing work the repo does not need.
+description: Analyze the SoulMap AI repository to identify missing pieces, inconsistencies, and next highest-value improvements without inventing work the repo does not need. Relevant for auditing what is missing, incomplete, or out of sync, and for planning the next implementation pass.
 ---
 
 # Research and gap analysis

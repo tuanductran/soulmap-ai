@@ -1,6 +1,6 @@
 ---
 name: eval-audit-review
-description: Audit SoulMap AI evals so datasets, assertions, source markers, and golden responses stay source-backed, failure-oriented, and hard to game.
+description: Audit SoulMap AI evals so datasets, assertions, source markers, and golden responses stay source-backed, failure-oriented, and hard to game. Relevant for judging whether an eval actually tests a failure mode, and for finding assertions that pass without proving anything.
 ---
 
 # Eval audit review

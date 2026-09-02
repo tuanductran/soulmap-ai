@@ -1,6 +1,6 @@
 ---
 name: detector-engineer
-description: Build and maintain Python detector modules that identify framework selection signals in conversation history.
+description: Build and maintain Python detector modules that identify framework selection signals in conversation history. Relevant for building or tuning a detector that scores conversation signals, and for debugging why a message routed to the wrong framework.
 ---
 
 # Detector Engineer

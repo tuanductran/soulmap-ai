@@ -1,6 +1,6 @@
 ---
 name: knowledge-base-maintainer
-description: Add, update, and normalize Markdown knowledge files in this repository so they stay structurally correct, discoverable, and aligned with SoulMap AI conventions.
+description: Add, update, and normalize Markdown knowledge files in this repository so they stay structurally correct, discoverable, and aligned with SoulMap AI conventions. Relevant for adding, moving, or normalizing Markdown under skills/, and for keeping front matter, structure, and discoverability correct.
 ---
 
 # Knowledge base maintainer

@@ -1,6 +1,6 @@
 ---
 name: ai-prompt-engineering-safety-review
-description: Review and improve prompts or behavior specs so they align with SoulMap AI's operating principles, safety boundaries, framework selection model, and response contract.
+description: Review and improve prompts or behavior specs so they align with SoulMap AI's operating principles, safety boundaries, framework selection model, and response contract. Relevant for reviewing a prompt, system message, or behavior spec, and for checking whether wording invites dependency or crosses a safety boundary.
 ---
 
 # AI prompt engineering safety review

@@ -1,6 +1,6 @@
 ---
 name: code-quality-review
-description: Review and improve Python code quality in SoulMap AI so typing, helper usage, exception handling, and repo tooling conventions stay consistent.
+description: Review and improve Python code quality in SoulMap AI so typing, helper usage, exception handling, and repo tooling conventions stay consistent. Relevant for reviewing Python for typing, helper reuse, exception handling, and consistency with repo conventions, including dead-code sweeps.
 ---
 
 # Code quality review

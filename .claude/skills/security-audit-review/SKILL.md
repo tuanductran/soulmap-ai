@@ -1,6 +1,6 @@
 ---
 name: security-audit-review
-description: Review SoulMap AI code and workflow changes for practical security risks such as unsafe shell usage, path handling, secrets exposure, and over-broad automation permissions.
+description: Review SoulMap AI code and workflow changes for practical security risks such as unsafe shell usage, path handling, secrets exposure, and over-broad automation permissions. Relevant for reviewing shell usage, path handling, secrets exposure, and workflow permissions on this repo's real automation surfaces.
 ---
 
 # Security audit review

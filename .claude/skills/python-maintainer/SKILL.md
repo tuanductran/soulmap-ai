@@ -1,6 +1,6 @@
 ---
 name: python-maintainer
-description: Maintain SoulMap's Python surfaces so src packages, tests, scripts, and pyproject-based tooling stay aligned, typed, and easy to validate.
+description: Maintain SoulMap's Python surfaces so src packages, tests, scripts, and pyproject-based tooling stay aligned, typed, and easy to validate. Relevant for changes across src, tests, scripts, and pyproject tooling that need to stay typed, tested, and aligned.
 ---
 
 # Python maintainer

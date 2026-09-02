@@ -1,6 +1,6 @@
 ---
 name: brand-copy-review
-description: Review and rewrite public-facing SoulMap AI copy so it stays consistent with the brand doctrine, message hierarchy, and safety boundaries in this repository.
+description: Review and rewrite public-facing SoulMap AI copy so it stays consistent with the brand doctrine, message hierarchy, and safety boundaries in this repository. Relevant for writing or revising public copy, onboarding text, launch material, or any wording that speaks as SoulMap.
 ---
 
 # Brand copy review
