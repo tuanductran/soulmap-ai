@@ -29,6 +29,31 @@ _BAD_ATX_HEADING_RE = re.compile(r"^#{1,6}(?![ \t#])")
 # tool-specific numbering conventions in the knowledge base.
 _NUMBERED_HEADING_PREFIX_RE = re.compile(r"^\(?\d+\)?\s*[.)]\s+")
 _PACKAGE_VERSION_RE = re.compile(r'^version\s*=\s*["\']([^"\']+)["\']\s*$')
+# Agent Skills front-matter constraints. The `name` pattern folds four rules into
+# one expression: the allowed character set, no leading or trailing hyphen, and no
+# doubled hyphen. A name must also match its directory so the skill resolves by the
+# name it advertises.
+_SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+_SKILL_NAME_MAX = 64
+_SKILL_DESCRIPTION_MAX = 1024
+_RESERVED_NAME_WORDS = ("anthropic", "claude")
+
+# Keys the repository actually uses. An allowlist is what catches a typo such as
+# `licence` or `verison`, which the presence check alone reads as simply absent.
+_ALLOWED_FRONT_MATTER_KEYS = frozenset(
+    {
+        "name",
+        "description",
+        "version",
+        "license",
+        "disable-model-invocation",
+        "time_scope",
+        "title",
+        "doctrine_source",
+        "soulmap_version",
+    }
+)
+
 _INTEGRATION_METADATA = ("title", "description", "doctrine_source", "soulmap_version")
 _INTEGRATION_DOCTRINE_SOURCE = "SOULMAP.md"
 _BANNED_UNICODE = {
@@ -85,6 +110,115 @@ def _package_version(repo_root: Path) -> str | None:
     return None
 
 
+def _front_matter_block(lines: list[str]) -> list[str]:
+    """Return the raw lines inside the front-matter block, excluding delimiters.
+
+    Args:
+        lines: The file's lines, in order, starting at the first line.
+
+    Returns:
+        The lines between the opening and closing ``---``, or an empty list when
+        the file has no complete block.
+    """
+    if not lines or lines[0].strip() != "---":
+        return []
+    try:
+        end = lines[1:].index("---") + 1
+    except ValueError:
+        return []
+    return lines[1:end]
+
+
+def _front_matter_issues(
+    path: Path,
+    rel: Path,
+    meta: dict[str, str],
+    lines: list[str],
+    *,
+    is_skill_manifest: bool,
+) -> list[Issue]:
+    """Check front matter against the Agent Skills constraints.
+
+    The presence check elsewhere only asks whether ``name`` and ``description``
+    exist. These are the rules a consumer of the skill actually depends on: a
+    name it can resolve, a description short enough to load, and no key that
+    looks right but is spelled wrong.
+
+    Args:
+        path: File being checked, used for issue reporting.
+        rel: Repository-relative path of that file.
+        meta: Parsed front-matter pairs.
+        lines: The file's lines, for inspecting the raw block.
+        is_skill_manifest: True for a ``SKILL.md`` inside a skill directory,
+            which must additionally match its directory name.
+
+    Returns:
+        Every front-matter violation found, in rule order.
+    """
+    issues: list[Issue] = []
+
+    unknown = sorted(set(meta) - _ALLOWED_FRONT_MATTER_KEYS)
+    if unknown:
+        issues.append(
+            Issue(path, 1, f"Unknown front matter key(s): {', '.join(unknown)}")
+        )
+
+    # The parser drops any line without a colon, so a typo would otherwise be
+    # invisible. Report it here, where the raw block is still available.
+    for offset, raw in enumerate(_front_matter_block(lines), start=2):
+        stripped = raw.strip()
+        if stripped and not stripped.startswith("#") and ":" not in stripped:
+            issues.append(
+                Issue(
+                    path, offset, f"Front matter line is not `key: value`: {stripped}"
+                )
+            )
+
+    name = meta.get("name", "")
+    if name:
+        if len(name) > _SKILL_NAME_MAX:
+            issues.append(
+                Issue(
+                    path, 1, f"Front matter name exceeds {_SKILL_NAME_MAX} characters"
+                )
+            )
+        if not _SKILL_NAME_RE.match(name):
+            issues.append(
+                Issue(
+                    path,
+                    1,
+                    f"Front matter name must be lowercase letters, digits, and single "
+                    f"hyphens: {name!r}",
+                )
+            )
+        if any(word in name.lower() for word in _RESERVED_NAME_WORDS):
+            issues.append(
+                Issue(path, 1, f"Front matter name uses a reserved word: {name!r}")
+            )
+        if is_skill_manifest and name != rel.parent.name:
+            issues.append(
+                Issue(
+                    path,
+                    1,
+                    f"Front matter name {name!r} must match its directory "
+                    f"{rel.parent.name!r}",
+                )
+            )
+
+    description = meta.get("description", "")
+    if len(description) > _SKILL_DESCRIPTION_MAX:
+        issues.append(
+            Issue(
+                path,
+                1,
+                f"Front matter description is {len(description)} characters, "
+                f"over the {_SKILL_DESCRIPTION_MAX} limit",
+            )
+        )
+
+    return issues
+
+
 def _is_integration_guide(rel: Path) -> bool:
     return rel.parts[:2] == ("docs", "integrations")
 
@@ -137,6 +271,20 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     path,
                     1,
                     "Missing YAML front matter metadata (--- name: ... description: ... ---)",
+                )
+            )
+        if meta:
+            # A SKILL.md inside a skill directory must match that directory. The
+            # root SKILL.md is exempt: its name is the package name and, once the
+            # archive is extracted, the root itself is the skill directory.
+            is_skill_manifest = path.name == "SKILL.md" and rel.as_posix() != "SKILL.md"
+            issues.extend(
+                _front_matter_issues(
+                    path,
+                    rel,
+                    meta,
+                    lines,
+                    is_skill_manifest=is_skill_manifest,
                 )
             )
         if is_integration_guide:
