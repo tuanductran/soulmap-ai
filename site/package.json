@@ -6,8 +6,9 @@
   "description": "Static site for SoulMap AI, generated from the shipped knowledge package.",
   "scripts": {
     "build": "tsx src/build.ts",
-    "check": "tsc --noEmit && node --test --import tsx tests/*.test.ts && npm run build && tsx src/validate.ts",
-    "dev": "tsx src/build.ts && npx --yes serve dist"
+    "check": "tsc --noEmit && vitest run && npm run build && tsx src/validate.ts",
+    "dev": "tsx src/build.ts && npx --yes serve dist",
+    "test": "vitest run"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.10.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.11"
   }
 }

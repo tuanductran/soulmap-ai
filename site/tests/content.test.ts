@@ -6,17 +6,16 @@
  * through a full build.
  */
 
-import assert from "node:assert/strict";
-import { test } from "node:test";
+import { expect, test } from "vitest";
 
 import { isPublishable } from "../src/content.js";
 import { esc, firstSentence, renderMarkdown } from "../src/templates.js";
 
 test("the shipped knowledge package is publishable", () => {
-  assert.equal(isPublishable("SOULMAP.md"), true);
-  assert.equal(isPublishable("SKILL.md"), true);
-  assert.equal(isPublishable("skills/safety/SKILL.md"), true);
-  assert.equal(isPublishable("skills/meta/quick-reference.md"), true);
+  expect(isPublishable("SOULMAP.md")).toBe(true);
+  expect(isPublishable("SKILL.md")).toBe(true);
+  expect(isPublishable("skills/safety/SKILL.md")).toBe(true);
+  expect(isPublishable("skills/meta/quick-reference.md")).toBe(true);
 });
 
 test("repository-only paths are refused", () => {
@@ -31,51 +30,48 @@ test("repository-only paths are refused", () => {
     "evals/datasets/groups.json",
     "library/catalog.json",
   ]) {
-    assert.equal(isPublishable(path), false, `${path} must not be publishable`);
+    expect(isPublishable(path), `${path} must not be publishable`).toBe(false);
   }
 });
 
 test("traversal cannot escape the repository", () => {
-  assert.equal(isPublishable("../secrets.md"), false);
-  assert.equal(isPublishable("skills/../docs/ROADMAP.md"), false);
+  expect(isPublishable("../secrets.md")).toBe(false);
+  expect(isPublishable("skills/../docs/ROADMAP.md")).toBe(false);
 });
 
 test("a link into an internal directory is unwrapped, not left dead", () => {
   const html = renderMarkdown("See [the roadmap](../../docs/ROADMAP.md) for more.", "skills/voice");
 
-  assert.ok(!html.includes("docs/ROADMAP.md"), "internal path must not survive");
-  assert.ok(html.includes("the roadmap"), "the words must survive");
+  expect(html, "internal path must not survive").not.toContain("docs/ROADMAP.md");
+  expect(html, "the words must survive").toContain("the roadmap");
 });
 
 test("a link to a sibling skill document becomes a site route", () => {
   const html = renderMarkdown("Read [ethics-safety.md](../safety/ethics-safety.md) first.", "skills/voice");
 
-  assert.ok(html.includes('href="/skills/safety/ethics-safety/"'), html);
+  expect(html).toContain('href="/skills/safety/ethics-safety/"');
 });
 
 test("a link to the doctrine resolves to the doctrine page", () => {
   const html = renderMarkdown("Read [SOULMAP.md](../../SOULMAP.md) first.", "skills/voice");
 
-  assert.ok(html.includes('href="/doctrine/"'), html);
+  expect(html).toContain('href="/doctrine/"');
 });
 
 test("external links are left alone", () => {
   const html = renderMarkdown("See [findahelpline](https://findahelpline.com).");
 
-  assert.ok(html.includes('href="https://findahelpline.com"'), html);
+  expect(html).toContain('href="https://findahelpline.com"');
 });
 
 test("HTML in content is escaped", () => {
-  assert.equal(esc('<script>"x"</script>'), "&lt;script&gt;&quot;x&quot;&lt;/script&gt;");
+  expect(esc('<script>"x"</script>')).toBe("&lt;script&gt;&quot;x&quot;&lt;/script&gt;");
 });
 
 test("a card summary stops at the first sentence", () => {
-  assert.equal(
-    firstSentence("SoulMap safety rules. Relevant for requests involving harm."),
-    "SoulMap safety rules.",
-  );
-  assert.equal(firstSentence("No terminal punctuation here"), "No terminal punctuation here");
-  assert.equal(firstSentence(""), "");
+  expect(firstSentence("SoulMap safety rules. Relevant for requests involving harm.")).toBe("SoulMap safety rules.");
+  expect(firstSentence("No terminal punctuation here")).toBe("No terminal punctuation here");
+  expect(firstSentence("")).toBe("");
 });
 
 test("a sibling link resolves inside its own skill", () => {
@@ -84,11 +80,22 @@ test("a sibling link resolves inside its own skill", () => {
   // 140 of these, so it is pinned here.
   const html = renderMarkdown("Start with [spiritual-discernment.md](spiritual-discernment.md).", "skills/spiritual");
 
-  assert.ok(html.includes('href="/skills/spiritual/spiritual-discernment/"'), html);
+  expect(html).toContain('href="/skills/spiritual/spiritual-discernment/"');
 });
 
 test("a link to another skill's manifest resolves to that skill page", () => {
   const html = renderMarkdown("See [SKILL.md](../voice/SKILL.md).", "skills/safety");
 
-  assert.ok(html.includes('href="/skills/voice/"'), html);
+  expect(html).toContain('href="/skills/voice/"');
+});
+
+test("a root in neither list is refused, so a new directory is not published by default", () => {
+  // The denylist names today's internal directories. A directory added later
+  // will be in neither list, and the allowlist is what refuses it. Mutation
+  // testing showed the two gates are independent: removing `docs` from the
+  // denylist leaves it refused, because `skills` is still the only allowed
+  // root. This pins the case the allowlist alone has to carry.
+  expect(isPublishable("benchmarks/results.md")).toBe(false);
+  expect(isPublishable("node_modules/pkg/readme.md")).toBe(false);
+  expect(isPublishable("SECURITY.md")).toBe(false);
 });
