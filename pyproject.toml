@@ -204,6 +204,15 @@ version_files = [
   "docs/integrations/chatgpt-instructions.md:soulmap_version",
   "docs/integrations/gemini-instructions.md:soulmap_version",
   "docs/integrations/poe-system-prompt.md:soulmap_version",
+  # Every shipped skill and every marketplace plugin declares the package
+  # version it belongs to, and a contract test pins both to pyproject. Listing
+  # them here is what keeps that true: `cz bump` rewrites them in the same
+  # commit, so a release cannot leave a skill or a plugin claiming an older
+  # version. Commitizen expands these globs, so new skill directories are
+  # picked up without editing this list.
+  "SKILL.md:version",
+  "skills/*/SKILL.md:version",
+  ".claude-plugin/marketplace.json:version",
 ]
 
 [tool.deptry]

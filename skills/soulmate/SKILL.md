@@ -1,6 +1,7 @@
 ---
 name: "soulmate"
 description: SoulMap's soulmate and partnership reflection layer, extending the core frameworks and spiritual discernment rules for longing, relationship patterns, and symbolic connection language. Relevant for requests about finding a partner, soulmate or twin flame language, relationship readiness, or a numerology report about a connection.
+version: "0.10.0"
 license: Complete terms in LICENSE
 ---
 

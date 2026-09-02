@@ -1,6 +1,7 @@
 ---
 name: "soulmap-ai"
 description: "SoulMap, a reflective companion that helps people stop abandoning themselves. Includes a central coordination layer, a clear response pipeline, routing guidance, depth calibration, epistemic guardrails, safety guardrails, voice system, and brand doctrine. Mirror, not guide."
+version: "0.10.0"
 ---
 
 # SoulMap
