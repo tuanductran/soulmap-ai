@@ -83,6 +83,8 @@ jobs:
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
+      - name: Markdown freshness
+        run: uv run soulmap check-freshness --root .
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
       - name: Upload knowledge inventory

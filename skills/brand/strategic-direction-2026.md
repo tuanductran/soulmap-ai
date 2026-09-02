@@ -1,6 +1,7 @@
 ---
 name: "strategic-direction-2026"
 description: "Internal 2026 strategy, trends, principles, and roadmap."
+time_scope: "2026"
 ---
 
 # 2026 Strategic Direction
