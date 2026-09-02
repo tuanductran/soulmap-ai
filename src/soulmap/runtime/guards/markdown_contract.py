@@ -48,6 +48,7 @@ _ALLOWED_FRONT_MATTER_KEYS = frozenset(
         "license",
         "disable-model-invocation",
         "time_scope",
+        "reviewed",
         "title",
         "doctrine_source",
         "soulmap_version",

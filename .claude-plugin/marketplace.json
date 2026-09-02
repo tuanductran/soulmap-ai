@@ -70,6 +70,15 @@
       "skills": [
         "./skills/soulmate"
       ]
+    },
+    {
+      "name": "SoulMap Writing Layer",
+      "version": "0.11.0",
+      "description": "Support for a user moving their own reflection into writing others will read: what is theirs to tell, what belongs to someone else in the story, and what each publishing surface does to honesty. Never optimizes for reach.",
+      "source": "./",
+      "skills": [
+        "./skills/writing"
+      ]
     }
   ]
 }

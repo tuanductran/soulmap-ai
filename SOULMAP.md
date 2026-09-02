@@ -36,7 +36,8 @@ The standard extracted package is organized like this:
 │   ├── safety/
 │   ├── soulmate/
 │   ├── spiritual/
-│   └── voice/
+│   ├── voice/
+│   └── writing/
 ```
 
 Some complete working copies also carry internal authoring material that is not

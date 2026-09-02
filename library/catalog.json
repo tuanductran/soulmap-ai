@@ -78,6 +78,13 @@
       "path": "skills/soulmate",
       "kind": "knowledge-skill",
       "status": "stable"
+    },
+    {
+      "id": "writing",
+      "plugin_name": "SoulMap Writing Layer",
+      "path": "skills/writing",
+      "kind": "knowledge-skill",
+      "status": "stable"
     }
   ]
 }
