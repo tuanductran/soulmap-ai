@@ -221,3 +221,101 @@ def test_markdown_case_checker_still_flags_wrong_case_near_a_filename(
     issues = check_markdown_case.check_repo(tmp_path)
 
     assert any("expected 'SoulMap AI'" in issue.message for issue in issues)
+
+
+def _shipped_pair(root: Path) -> Path:
+    """Build a minimal shipped layout and return the linking file."""
+    (root / "skills" / "safety").mkdir(parents=True)
+    (root / "skills" / "voice").mkdir(parents=True)
+    (root / "skills" / "safety" / "ethics-safety.md").write_text(
+        "# Ethics\n", encoding="utf-8"
+    )
+    return root / "skills" / "voice" / "SKILL.md"
+
+
+def test_shipped_link_text_naming_a_path_is_flagged(tmp_path: Path) -> None:
+    """`../` in link text describes the source, not the destination.
+
+    It means nothing to someone reading the extracted package, and it changes
+    depending on which file happens to do the linking.
+    """
+    source = _shipped_pair(tmp_path)
+    source.write_text(
+        "[../safety/ethics-safety.md](../safety/ethics-safety.md)\n", encoding="utf-8"
+    )
+
+    issues = check_markdown_links.check_repo(tmp_path)
+
+    assert len(issues) == 1
+    assert "should name the file" in issues[0].message
+    assert "[ethics-safety.md]" in issues[0].message
+
+
+def test_shipped_link_text_naming_the_file_passes(tmp_path: Path) -> None:
+    source = _shipped_pair(tmp_path)
+    source.write_text(
+        "[ethics-safety.md](../safety/ethics-safety.md)\n", encoding="utf-8"
+    )
+
+    assert check_markdown_links.check_repo(tmp_path) == []
+
+
+def test_shipped_prose_link_text_is_left_alone(tmp_path: Path) -> None:
+    """The rule targets path-shaped labels, not descriptive ones.
+
+    Flagging prose would make the check unusable for ordinary writing, which
+    is the near miss that matters most here.
+    """
+    source = _shipped_pair(tmp_path)
+    source.write_text(
+        "[the safety rules](../safety/ethics-safety.md)\n", encoding="utf-8"
+    )
+
+    assert check_markdown_links.check_repo(tmp_path) == []
+
+
+def test_a_skills_prefixed_label_is_flagged_in_shipped_content(
+    tmp_path: Path,
+) -> None:
+    """A reader of the extracted package has no `skills/` above the file."""
+    source = _shipped_pair(tmp_path)
+    source.write_text(
+        "[skills/safety/ethics-safety.md](../safety/ethics-safety.md)\n",
+        encoding="utf-8",
+    )
+
+    issues = check_markdown_links.check_repo(tmp_path)
+
+    assert len(issues) == 1
+    assert "[ethics-safety.md]" in issues[0].message
+
+
+def test_documentation_may_keep_a_repository_path_as_link_text(
+    tmp_path: Path,
+) -> None:
+    """Scoping is the point: `docs/` does not ship.
+
+    There a label like `skills/safety/ethics-safety.md` tells a maintainer
+    where the file actually lives, which is useful and true.
+    """
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "skills" / "safety").mkdir(parents=True)
+    (tmp_path / "skills" / "safety" / "ethics-safety.md").write_text(
+        "# Ethics\n", encoding="utf-8"
+    )
+    (tmp_path / "docs" / "guide.md").write_text(
+        "[skills/safety/ethics-safety.md](../skills/safety/ethics-safety.md)\n",
+        encoding="utf-8",
+    )
+
+    assert check_markdown_links.check_repo(tmp_path) == []
+
+
+def test_a_directory_link_expects_the_directory_name(tmp_path: Path) -> None:
+    source = _shipped_pair(tmp_path)
+    source.write_text("[../safety/](../safety/)\n", encoding="utf-8")
+
+    issues = check_markdown_links.check_repo(tmp_path)
+
+    assert len(issues) == 1
+    assert "[safety/]" in issues[0].message

@@ -5,9 +5,9 @@ how it stays safe, and the shape of the shipped knowledge package.
 
 It ships as-is in every extracted knowledge bundle and stands on its own there.
 
-If the current checkout also includes local workflow files such as `.claude/`
-or other tool-specific config, treat those as supplemental
-local instructions. If they are not present, this file must still stand on its own.
+If the current working copy also includes tool-specific workflow or config files,
+treat those as supplemental local instructions. If they are not present, this file
+must still stand on its own.
 
 ## Package overview
 
@@ -39,9 +39,8 @@ The standard extracted package is organized like this:
 │   └── voice/
 ```
 
-Some complete working copies may also include a `templates/` directory used for
-internal product and brand authoring. It is not part of the standard knowledge
-package described by this file.
+Some complete working copies also carry internal authoring material that is not
+part of the standard knowledge package described by this file.
 
 Some working copies may also include package metadata or tool-specific workflow
 files. Use them only when they are actually present in the current package.
@@ -239,17 +238,17 @@ exists.
 
 Use the shipped knowledge files by purpose:
 
-- [skills/frameworks/](skills/frameworks/) for response frameworks, including
+- [frameworks/](skills/frameworks/) for response frameworks, including
   [integration-celebration.md](skills/frameworks/integration-celebration.md) for
   positive emotional states
-- [skills/safety/](skills/safety/) for boundaries, trauma language, and refusal posture
-- [skills/voice/](skills/voice/) for tone, pacing, and response rhythm
-- [skills/meta/](skills/meta/) for inquiry support, journey-stage guidance, and
+- [safety/](skills/safety/) for boundaries, trauma language, and refusal posture
+- [voice/](skills/voice/) for tone, pacing, and response rhythm
+- [meta/](skills/meta/) for inquiry support, journey-stage guidance, and
   [session-continuity.md](skills/meta/session-continuity.md) for memory and prior-session
   handling
-- [skills/brand/](skills/brand/) for public positioning and message boundaries
-- [skills/spiritual/](skills/spiritual/) for symbolic or spiritual material within guardrails
-- [skills/meta/](skills/meta/) for reusable response and redirect patterns
+- [brand/](skills/brand/) for public positioning and message boundaries
+- [spiritual/](skills/spiritual/) for symbolic or spiritual material within guardrails
+- [meta/](skills/meta/) for reusable response and redirect patterns
 
 ## SKILL.md expectations
 
@@ -273,7 +272,7 @@ correct subdirectories.
 - do not describe implementation files, tooling, or local workflow resources that
   are not present in the current package
 - do not assume every skill includes executable components or tooling
-- treat [skills/](skills/) as the primary shipped knowledge base; `templates/` is internal-only and is not shipped
+- treat [skills/](skills/) as the primary shipped knowledge base
 - treat this file as the baseline doctrine source when `CLAUDE.md`, `AGENTS.md`,
   or another entry file points to it
 - if optional local workflow files are present, follow them as additional repo-specific
@@ -306,9 +305,7 @@ every knowledge package.
 If files such as these are present in the current working copy, treat them as
 supplemental repo-local instructions:
 
-- `.claude/rules/`
-- `.claude/hooks/`
-- `.claude/settings.json`
+- repository-local rule, hook, or settings files used by a coding agent
 - other local tool-specific config files at the repository root
 
 Use them only when they actually exist in the current checkout.
@@ -362,7 +359,7 @@ reflective-eligible.
 If memory indicates the user has had prior sessions, do not use these openers. The
 contract is already established. For returning user handling, prior-session references,
 and memory boundary rules, follow
-[skills/meta/session-continuity.md](skills/meta/session-continuity.md).
+[session-continuity.md](skills/meta/session-continuity.md).
 
 ## Shift markers
 
@@ -448,7 +445,7 @@ Examples:
 - Never use the seed to signal "see you next time" or create an obligation to return.
 
 For the full seed library by framework, see
-[skills/meta/observation-seed.md](skills/meta/observation-seed.md).
+[observation-seed.md](skills/meta/observation-seed.md).
 
 ## The life mirror
 

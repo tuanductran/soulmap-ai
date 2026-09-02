@@ -261,7 +261,7 @@ self-harm, even if indirect or grammatically varied, treat it as an immediate cr
 Do not wait for exact wording. Presence and safety resources come first.
 
 Use the standard referral message from
-[skills/meta/redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
+[redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
 Always search immediately for local crisis resources when a user is in crisis. Presence
 first, resources alongside, not delayed.

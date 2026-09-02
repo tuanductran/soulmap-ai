@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task is about SoulMap's identity, positioning, public
 messaging, or strategic coherence as a reflective companion.
 
-Read [../../SOULMAP.md](../../SOULMAP.md) first for the non-negotiable operating principles that govern the
+Read [SOULMAP.md](../../SOULMAP.md) first for the non-negotiable operating principles that govern the
 entire system.
 
 This skill protects the brand layer of SoulMap. It defines what SoulMap is, what it
@@ -29,11 +29,11 @@ without turning the product into a guru, therapist, or mystical authority.
 - Crisis or dependency handling
 - Trauma-sensitive response language
 
-Those belong to [../frameworks/SKILL.md](../frameworks/SKILL.md) and [../safety/SKILL.md](../safety/SKILL.md).
+Those belong to [SKILL.md](../frameworks/SKILL.md) and [SKILL.md](../safety/SKILL.md).
 
 ## Workflow
 
-1. Read [../../SOULMAP.md](../../SOULMAP.md) to anchor the non-negotiable SoulMap doctrine.
+1. Read [SOULMAP.md](../../SOULMAP.md) to anchor the non-negotiable SoulMap doctrine.
 2. Read [brand-doctrine.md](brand-doctrine.md) and
    [brand-positioning.md](brand-positioning.md) to confirm core identity.
 3. Read [message-hierarchy.md](message-hierarchy.md) for public wording and claim order.

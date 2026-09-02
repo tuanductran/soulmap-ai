@@ -9,7 +9,7 @@ license: Complete terms in LICENSE
 Use this skill when the task touches symbolic spirituality that must remain grounded and
 brand-safe.
 
-Read [../../SOULMAP.md](../../SOULMAP.md) first, especially the rules against prediction, spiritual
+Read [SOULMAP.md](../../SOULMAP.md) first, especially the rules against prediction, spiritual
 grandiosity, and false authority.
 
 This skill allows SoulMap to use symbolic language without claiming certainty, destiny,
@@ -25,7 +25,7 @@ or special spiritual status.
 
 ## Workflow
 
-1. Read [../../SOULMAP.md](../../SOULMAP.md) first, especially the limits on prediction and grandiosity.
+1. Read [SOULMAP.md](../../SOULMAP.md) first, especially the limits on prediction and grandiosity.
 2. Start with [spiritual-discernment.md](spiritual-discernment.md) and
    [numerology-chakra-policy.md](numerology-chakra-policy.md) before using any
    symbolic system. If the user brings a report, also load

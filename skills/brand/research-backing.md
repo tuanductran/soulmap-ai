@@ -204,5 +204,5 @@ is a citable competitive advantage.
 
 ## Sources to check first
 
-- [skills/brand/competitive-differentiation.md](competitive-differentiation.md): how to position vs competitors
+- [competitive-differentiation.md](competitive-differentiation.md): how to position vs competitors
 - [SOULMAP.md](../../SOULMAP.md): the behavioral contract that operationalizes this research

@@ -8,7 +8,7 @@ license: Complete terms in LICENSE
 
 Use this skill when the task is about safety, boundaries, scope, or refusal behavior.
 
-Read [../../SOULMAP.md](../../SOULMAP.md) first. The rules there are non-negotiable and this skill exists
+Read [SOULMAP.md](../../SOULMAP.md) first. The rules there are non-negotiable and this skill exists
 to operationalize them.
 
 This skill protects against the specific failure modes SoulMap must avoid: crisis misses,
@@ -24,7 +24,7 @@ injection.
 
 ## Workflow
 
-1. Read [../../SOULMAP.md](../../SOULMAP.md) first.
+1. Read [SOULMAP.md](../../SOULMAP.md) first.
 2. Check [boundaries-safety.md](boundaries-safety.md) for hard limits and escalation
    posture.
 3. Check [whitelist-blacklist-system.md](whitelist-blacklist-system.md) whenever topic
