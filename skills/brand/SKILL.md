@@ -53,7 +53,6 @@ Those belong to [SKILL.md](../frameworks/SKILL.md) and [SKILL.md](../safety/SKIL
 - [brand-positioning.md](brand-positioning.md)
 - [message-hierarchy.md](message-hierarchy.md)
 - [surfaces-and-scope.md](surfaces-and-scope.md)
-- [strategic-direction-2026.md](strategic-direction-2026.md)
 - [content-pillars.md](content-pillars.md)
 - [visual-identity.md](visual-identity.md)
 - [consciousness-framework.md](consciousness-framework.md)
