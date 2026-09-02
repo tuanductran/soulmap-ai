@@ -248,3 +248,113 @@ def test_markdown_contract_allows_the_same_phrase_in_two_groups(
     issues = markdown_contract.check_markdown_file(doc, tmp_path)
 
     assert not [i for i in issues if "Duplicate detection phrase" in i.message]
+
+
+# --- Agent Skills front-matter constraints ---
+#
+# The presence check above only asks whether `name` and `description` exist.
+# These cover what a consumer of the skill actually depends on: a name it can
+# resolve, a description short enough to load, and no key that looks right but
+# is spelled wrong.
+
+
+def _manifest(body: str) -> str:
+    return f"---\n{body}\n---\n\n# Demo\n\nText\n"
+
+
+def _check(tmp_path: Path, rel: str, body: str) -> list[str]:
+    path = tmp_path / rel
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(_manifest(body), encoding="utf-8")
+    return _messages(markdown_contract.check_markdown_file(path, tmp_path))
+
+
+@pytest.mark.parametrize(
+    ("body", "expected"),
+    [
+        ('name: "wrong"\ndescription: "d"', "must match its directory"),
+        ('name: "Demo"\ndescription: "d"', "lowercase letters, digits"),
+        ('name: "de--mo"\ndescription: "d"', "lowercase letters, digits"),
+        ('name: "-demo"\ndescription: "d"', "lowercase letters, digits"),
+        ('name: "claude-demo"\ndescription: "d"', "reserved word"),
+        (f'name: "{"a" * 65}"\ndescription: "d"', "exceeds 64"),
+        (f'name: "demo"\ndescription: "{"x" * 1025}"', "over the 1024 limit"),
+        ('name: "demo"\ndescription: "d"\nlicence: "x"', "Unknown front matter key"),
+        ('name: "demo"\nno-colon-here\ndescription: "d"', "not `key: value`"),
+    ],
+    ids=[
+        "name-directory-mismatch",
+        "name-uppercase",
+        "name-doubled-hyphen",
+        "name-leading-hyphen",
+        "name-reserved-word",
+        "name-too-long",
+        "description-too-long",
+        "misspelled-key",
+        "malformed-line",
+    ],
+)
+def test_front_matter_violations_are_reported(
+    tmp_path: Path, body: str, expected: str
+) -> None:
+    messages = _check(tmp_path, "skills/demo/SKILL.md", body)
+
+    assert any(expected in message for message in messages), messages
+
+
+def test_a_content_file_may_differ_from_its_directory_name(tmp_path: Path) -> None:
+    """Only a SKILL.md manifest names its directory.
+
+    `skills/meta/quick-reference.md` is content inside the meta skill, not a
+    skill of its own, so its name legitimately differs from `meta`. Applying
+    the directory rule to every file would fail most of the knowledge base.
+    """
+    messages = _check(
+        tmp_path,
+        "skills/meta/quick-reference.md",
+        'name: "quick-reference"\ndescription: "d"',
+    )
+
+    assert not any("must match its directory" in message for message in messages)
+
+
+def test_the_root_manifest_keeps_the_package_name(tmp_path: Path) -> None:
+    """The root SKILL.md is exempt from the directory rule.
+
+    Its name is the package name, and once the archive is extracted the root
+    itself is the skill directory, so there is no parent to match.
+    """
+    messages = _check(tmp_path, "SKILL.md", 'name: "soulmap-ai"\ndescription: "d"')
+
+    assert not any("must match its directory" in message for message in messages)
+
+
+@pytest.mark.parametrize(
+    ("body", "label"),
+    [
+        (f'name: "demo"\ndescription: "{"x" * 1024}"', "description exactly at limit"),
+        ('name: "demo"\ndescription: "d"\n\n# comment', "blank line and comment"),
+        (
+            (
+                'name: "demo"\ndescription: "d"\nversion: "0.10.0"\nlicense: "x"\n'
+                'disable-model-invocation: true\ntime_scope: "2026"'
+            ),
+            "every optional key the repo uses",
+        ),
+    ],
+    ids=["at-the-limit", "comment-and-blank", "all-optional-keys"],
+)
+def test_valid_front_matter_stays_clean(tmp_path: Path, body: str, label: str) -> None:
+    """Boundaries and legal shapes must not be flagged.
+
+    A rule that fires one character early, or on a comment, would make the
+    contract untrustworthy for the files it already passes.
+    """
+    messages = _check(tmp_path, "skills/demo/SKILL.md", body)
+
+    front_matter = [
+        message
+        for message in messages
+        if "front matter" in message.lower() or "directory" in message
+    ]
+    assert not front_matter, f"{label}: {front_matter}"
