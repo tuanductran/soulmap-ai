@@ -1,7 +1,7 @@
 ---
 name: "meta"
 description: "SoulMap central orchestration layer. Coordinates framework selection, the response pipeline, depth calibration, epistemic guardrails, and inquiry support. Every SoulMap response must route through this skill. This is the coordinating layer, not a reference directory."
-version: "0.10.0"
+version: "0.11.0"
 license: Complete terms in LICENSE
 ---
 

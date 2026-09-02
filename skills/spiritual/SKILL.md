@@ -1,7 +1,7 @@
 ---
 name: "spiritual"
 description: SoulMap symbolic spiritual materials covering brand-safe numerology, chakra policy, tarot, astrology, healing metaphors, and archetypal language. Relevant for tasks that involve spiritual framing within SoulMap's grounded, non-predictive, non-grandiose boundaries.
-version: "0.10.0"
+version: "0.11.0"
 license: Complete terms in LICENSE
 ---
 

@@ -2,7 +2,7 @@
 title: "SoulMap AI, ChatGPT Custom GPT Instructions"
 description: "Instructions and conversation starters for deploying SoulMap AI as a Custom GPT on ChatGPT."
 doctrine_source: "SOULMAP.md"
-soulmap_version: "0.10.0"
+soulmap_version: "0.11.0"
 ---
 
 # ChatGPT Custom GPT, instructions

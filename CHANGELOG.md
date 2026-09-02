@@ -5,28 +5,36 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
-## Unreleased
+## v0.11.0 (2026-09-02)
+
+### Feat
+
+- **contract**: validate front matter against the Agent Skills constraints
+- **safety**: guidance for a user who challenges SoulMap's value
+- **checks**: add a Markdown freshness gate and fix a stale decision rule
+- **packaging**: declare the package version in every skill and plugin
+- **relationships**: add modern dating vocabulary coverage
+- **relationships**: guard against karmic framing excusing relationship harm
+- **spiritual**: add web-verified remaining divination systems
+- **spiritual**: add manifestation rule and remaining symbolic-topic coverage
+- **spiritual**: add personality-typing coverage (Enneagram, MBTI)
+- **spiritual**: add astrology symbolic lens and broaden scope coverage
+- **spiritual**: add grounded tarot symbolic lens and safety coverage
 
 ### Fix
 
-- **ci**: remove unused pull-requests:read permission from p-level-governance
-- `scripts/check_p_level_pr.py` reads the pull request title and body from the
-  local event file GitHub Actions already provides and never calls the API,
-  so the permission was granted but never used
-- **markdown**: enable MD032 and fix the 2 violations it found
-- `.claude/rules/markdown-portability.md` documented MD032 as enforced while
-  `.pymarkdown.json` had it disabled with no recorded reason; tested first,
-  found only 2 genuine formatting slips across the whole tracked tree, fixed
-  both, then enabled the rule for real
-- **tooling**: scan scripts/ for dead code with Vulture
-- `[tool.vulture]` covered `src` and `tests` but not `scripts`, unlike Ruff
-  and Pyright, which already use the same three-directory definition
+- **test**: repair CodeQL URL-sanitization autofix that broke the crisis-search doctrine check
+- **guards**: remove polynomial backtracking from crisis resource detection
+- **safety**: close identity-installation and diagnosis-pattern gaps
+- **spiritual**: add missing 'star sign' scope keyword
+- **test**: remove polynomial backtracking from the tier-table parser
+- **safety**: tier the trusted-source list and add claim-level limits
+- **safety**: separate peer-reviewed science from advocacy-organization sources
+- **skills**: remove a dead docs/ reference from a shipped skill file (#319)
 
-### Chore
+### Perf
 
-- **tooling**: add check-api-docs to lefthook and scripts/README.md
-- both had kept the pre-Phase-18 markdown-QA command list and had not picked
-  up the API-docs drift checker the other 4 command references already had
+- **lint**: scan Markdown in parallel, cutting the gate from 20s to 13s
 
 ## v0.10.0 (2026-08-30)
 

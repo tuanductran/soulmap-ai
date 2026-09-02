@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "soulmap-ai",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Reflective companion skills, safety guardrails, and voice systems for SoulMap AI.",
   "owner": {
     "name": "Tuan Duc Tran",
@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "SoulMap Brand System",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Brand doctrine, positioning, message hierarchy, strategic direction, and surface-specific rules that define SoulMap AI's identity and boundaries.",
       "source": "./",
       "skills": [
@@ -19,7 +19,7 @@
     },
     {
       "name": "SoulMap Core Frameworks",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "source": "./",
       "description": "Reflective frameworks for emotional de-escalation, grief, existential reflection, inner parts, life direction, shadow patterns, anger, self-compassion, relationship inquiry, and positive-state integration and celebration. Each framework file includes a Paired template block pointing to its required output structure, inquiry questions, redirect, and closing ritual.",
       "skills": [
@@ -28,7 +28,7 @@
     },
     {
       "name": "SoulMap Safety Guardrails",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Safety, ethics, trauma language, whitelist-blacklist scope control, prompt injection defense, and dependency boundary rules.",
       "source": "./",
       "skills": [
@@ -37,7 +37,7 @@
     },
     {
       "name": "SoulMap Meta Guidance",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Deep inquiry prompts, user journey stages, orchestration rules, execution pipeline, and meta-level guidance for selecting the right reflective posture. Includes session-continuity protocol for memory-enabled environments and prior-session reference handling.",
       "source": "./",
       "skills": [
@@ -46,7 +46,7 @@
     },
     {
       "name": "SoulMap Spiritual Layer",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Spiritual policies, symbolic numerology guidance, healing metaphors, and chakra-related support content used within SoulMap's guardrails.",
       "source": "./",
       "skills": [
@@ -55,7 +55,7 @@
     },
     {
       "name": "SoulMap Voice System",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Persona, response calibration, and session ritual guidance for keeping SoulMap's tone consistent across interactions.",
       "source": "./",
       "skills": [
@@ -64,7 +64,7 @@
     },
     {
       "name": "SoulMap Soulmate Layer",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "description": "Soulmate longing, partnership-seeking patterns, and symbolic connection guidance built on top of SoulMap's core frameworks and spiritual discernment rules, never confirming identity or fate.",
       "source": "./",
       "skills": [
