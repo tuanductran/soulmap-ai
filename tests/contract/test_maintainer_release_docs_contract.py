@@ -9,9 +9,7 @@ RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release.yml"
 
 
 REQUIRED_ARTIFACT_COMMANDS = (
-    "uv run soulmap library-manifest",
-    "uv run python scripts/verify_artifact_hashes.py",
-    "uv run python scripts/verify_extracted_artifacts.py",
+    "uv run soulmap release-verify --root . --output dist/release-verification.json",
 )
 
 
@@ -21,13 +19,15 @@ def test_release_docs_describe_all_current_artifact_steps() -> None:
     workflow_text = RELEASE_WORKFLOW.read_text(encoding="utf-8")
 
     for command in REQUIRED_ARTIFACT_COMMANDS:
-        assert command in tester_text
         assert command in workflow_text
 
     assert "versioned Library manifest" in dev_text
     assert "Verifying artifact SHA-256 integrity" in dev_text
     assert "Verifying extracted ZIP and `.skill` boundaries" in dev_text
     assert "uploading all three artifacts" in dev_text
+
+    assert "dist/soulmap-ai-library.json" in tester_text
+    assert "SHA-256" in tester_text
 
 
 def test_release_docs_name_the_manifest_artifact() -> None:

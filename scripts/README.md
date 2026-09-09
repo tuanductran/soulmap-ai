@@ -33,10 +33,18 @@ uv run soulmap build
 uv run soulmap build --skill
 uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
+uv run python scripts/verify_extracted_artifacts.py
+uv run soulmap release-verify --root .
 uv run soulmap eval-groups
 uv run soulmap eval-responses
 uv run soulmap eval-markdown-contracts
 ```
+
+`release-verify` is the canonical release gate. It performs a clean artifact build,
+checks package and integration versions against `pyproject.toml`, verifies every
+supported integration guide uses `SOULMAP.md`, checks the exact shipped archive
+members, and validates the Library manifest's artifact sizes and SHA-256 values.
+It also writes `dist/release-verification.json` as a machine-readable summary.
 
 If you edit public URLs in Markdown and want live external validation, run:
 
