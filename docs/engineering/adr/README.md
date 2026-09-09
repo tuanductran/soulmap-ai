@@ -40,3 +40,4 @@ Number ADRs sequentially, zero-padded to four digits:
 | [0002](0002-deterministic-response-safety-enforcement.md) | Deterministic Response Safety Enforcement | Accepted |
 | [0003](0003-bounded-edit-distance-crisis-backstop-proposal.md) | Bounded Edit-Distance Backstop for Crisis Phrase Matching | Proposed |
 | [0004](0004-tiered-trusted-sources.md) | Tiered Trusted Sources and Claim-Level Citation Limits | Accepted |
+| [0005](0005-generated-static-site.md) | The Website Is Generated From the Shipped Package | Accepted |
