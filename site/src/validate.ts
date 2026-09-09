@@ -30,6 +30,11 @@ const INTERNAL_LINK_ROOTS = [
   "/library/",
 ];
 
+function basePath(): string {
+  const value = process.env["SOULMAP_BASE_PATH"]?.trim() || "/";
+  return `/${value.replace(/^\/+|\/+$/g, "")}/`.replace(/^\/\/+/g, "/");
+}
+
 function htmlFilesIn(directory: string): string[] {
   const found: string[] = [];
   for (const entry of readdirSync(directory)) {
@@ -46,6 +51,7 @@ function htmlFilesIn(directory: string): string[] {
 function main(): number {
   const pages = htmlFilesIn(DIST);
   const problems: string[] = [];
+  const prefix = basePath().replace(/\/$/, "");
 
   if (pages.length === 0) {
     process.stderr.write("no pages found in dist, did the build run?\n");
@@ -56,7 +62,8 @@ function main(): number {
   const routes = new Set(
     pages.map((page) => {
       const rel = relative(DIST, page).split("\\").join("/");
-      return "/" + rel.replace(/index\.html$/, "").replace(/\.html$/, "");
+      const route = "/" + rel.replace(/index\.html$/, "").replace(/\.html$/, "");
+      return prefix && route !== "/" ? `${prefix}${route}` : prefix || route;
     }),
   );
 
@@ -65,7 +72,7 @@ function main(): number {
     const html = readFileSync(page, "utf8");
 
     for (const root of INTERNAL_LINK_ROOTS) {
-      if (html.includes(`href="${root}`)) {
+      if (html.includes(`href="${root}`) || html.includes(`href="${prefix}${root}`)) {
         problems.push(`${rel}: links to internal path ${root}`);
       }
     }
@@ -73,8 +80,10 @@ function main(): number {
     for (const [, href] of html.matchAll(/href="(\/[^"#]*)"/g)) {
       if (href === undefined) continue;
       if (href.endsWith(".css") || href.endsWith(".js")) continue;
+      if (href === `${prefix}/` || href === `${prefix}/sitemap.xml` || href === `${prefix}/favicon.svg`) continue;
       const normalised = href.endsWith("/") ? href : `${href}/`;
       if (!routes.has(href) && !routes.has(normalised)) {
+        process.stderr.write(`${rel}: unresolved internal link ${href}\n`);
         problems.push(`${rel}: dead internal link ${href}`);
       }
     }
