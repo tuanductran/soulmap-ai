@@ -6,7 +6,7 @@
  * page means correcting the doctrine or the skill it came from.
  */
 
-import { cpSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -69,7 +69,7 @@ function finalisePublicMetadata(): void {
   for (const file of pages) {
     const route = routeForFile(file);
     const canonical = `${siteOrigin}${root.replace(/\/$/, "")}${route}`.replace(/([^:]\/)\/{2,}/g, "$1");
-    let html = requireHtml(file);
+    let html = readFileSync(file, "utf8");
 
     html = html.replace(/href="\//g, `href="${root}`);
     html = html.replace(/src="\//g, `src="${root}`);
@@ -106,17 +106,6 @@ function finalisePublicMetadata(): void {
     "utf8",
   );
 }
-
-function requireHtml(file: string): string {
-  return BunShim.read(file);
-}
-
-const BunShim = {
-  read(file: string): string {
-    // Keep the site portable to Node without adding another runtime dependency.
-    return require("node:fs").readFileSync(file, "utf8") as string;
-  },
-};
 
 export function build(): { pages: number } {
   rmSync(DIST, { recursive: true, force: true });
