@@ -15,10 +15,7 @@ def _write_guides(root: Path, *, version: str = "0.11.0") -> None:
     guide_dir = root / "docs" / "integrations"
     guide_dir.mkdir(parents=True)
     front_matter = (
-        "---\n"
-        'doctrine_source: "SOULMAP.md"\n'
-        f'soulmap_version: "{version}"\n'
-        "---\n\n"
+        f'---\ndoctrine_source: "SOULMAP.md"\nsoulmap_version: "{version}"\n---\n\n'
     )
     for relative_path in INTEGRATION_GUIDES:
         path = root / relative_path

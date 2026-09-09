@@ -9,7 +9,9 @@ RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release.yml"
 LIBRARY_COMMAND = "uv run soulmap library-manifest"
 VERIFY_COMMAND = "uv run python scripts/verify_artifact_hashes.py"
 EXTRACT_COMMAND = "uv run python scripts/verify_extracted_artifacts.py"
-RELEASE_VERIFY_COMMAND = "uv run soulmap release-verify --root . --output dist/release-verification.json"
+RELEASE_VERIFY_COMMAND = (
+    "uv run soulmap release-verify --root . --output dist/release-verification.json"
+)
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
 
 
@@ -40,5 +42,9 @@ def test_release_workflow_uses_unified_release_verification_gate() -> None:
     assert RELEASE_VERIFY_COMMAND in content
     assert "uses: actions/upload-artifact@v4" in content
     assert "release-verification.json" in content
-    assert content.index(RELEASE_VERIFY_COMMAND) < content.index("git push --follow-tags")
-    assert content.index(RELEASE_VERIFY_COMMAND) < content.index("softprops/action-gh-release@v3.0.3")
+    assert content.index(RELEASE_VERIFY_COMMAND) < content.index(
+        "git push --follow-tags"
+    )
+    assert content.index(RELEASE_VERIFY_COMMAND) < content.index(
+        "softprops/action-gh-release@v3.0.3"
+    )

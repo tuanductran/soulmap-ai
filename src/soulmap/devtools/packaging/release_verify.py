@@ -56,7 +56,9 @@ def _verify_integrations(repo_root: Path, version: str) -> list[dict[str, str]]:
     for relative_path in INTEGRATION_GUIDES:
         path = repo_root / relative_path
         if not path.is_file():
-            raise ReleaseVerificationError(f"integration guide is missing: {relative_path}")
+            raise ReleaseVerificationError(
+                f"integration guide is missing: {relative_path}"
+            )
         front_matter = _front_matter(path.read_text(encoding="utf-8"), relative_path)
         if front_matter.get("doctrine_source") != "SOULMAP.md":
             actual = front_matter.get("doctrine_source", "<missing>")
@@ -90,8 +92,12 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
     checked: list[str] = []
     for path in _version_markers(repo_root):
         if not path.is_file():
-            raise ReleaseVerificationError(f"version marker is missing: {path.relative_to(repo_root)}")
-        front_matter = _front_matter(path.read_text(encoding="utf-8"), path.relative_to(repo_root))
+            raise ReleaseVerificationError(
+                f"version marker is missing: {path.relative_to(repo_root)}"
+            )
+        front_matter = _front_matter(
+            path.read_text(encoding="utf-8"), path.relative_to(repo_root)
+        )
         actual = front_matter.get("version")
         if actual != version:
             raise ReleaseVerificationError(
@@ -101,7 +107,9 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
 
     marketplace = repo_root / ".claude-plugin" / "marketplace.json"
     if not marketplace.is_file():
-        raise ReleaseVerificationError(f"version marker is missing: {marketplace.relative_to(repo_root)}")
+        raise ReleaseVerificationError(
+            f"version marker is missing: {marketplace.relative_to(repo_root)}"
+        )
     payload = json.loads(marketplace.read_text(encoding="utf-8"))
     if payload.get("version") != version:
         raise ReleaseVerificationError(
@@ -109,7 +117,9 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
         )
     plugins = payload.get("plugins")
     if not isinstance(plugins, list):
-        raise ReleaseVerificationError(".claude-plugin/marketplace.json: plugins must be a list")
+        raise ReleaseVerificationError(
+            ".claude-plugin/marketplace.json: plugins must be a list"
+        )
     for plugin in plugins:
         if not isinstance(plugin, dict) or plugin.get("version") != version:
             raise ReleaseVerificationError(
@@ -148,12 +158,16 @@ def _verify_archive(
     repo_root: Path, path: Path, *, include_plugin: bool
 ) -> dict[str, Any]:
     if not path.is_file():
-        raise ReleaseVerificationError(f"artifact is missing: {path.relative_to(repo_root)}")
+        raise ReleaseVerificationError(
+            f"artifact is missing: {path.relative_to(repo_root)}"
+        )
     try:
         with zipfile.ZipFile(path) as archive:
             actual = set(archive.namelist())
             if any(name.startswith("/") or ".." in Path(name).parts for name in actual):
-                raise ReleaseVerificationError(f"{path.name}: unsafe archive member path")
+                raise ReleaseVerificationError(
+                    f"{path.name}: unsafe archive member path"
+                )
             expected = _source_members(repo_root, include_plugin=include_plugin)
             missing = sorted(expected - actual)
             unexpected = sorted(actual - expected)
@@ -221,7 +235,11 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
         raise ReleaseVerificationError("library manifest must contain artifacts")
     for artifact in artifacts:
         matching = next(
-            (entry for entry in manifest_artifacts if entry.get("filename") == artifact["filename"]),
+            (
+                entry
+                for entry in manifest_artifacts
+                if entry.get("filename") == artifact["filename"]
+            ),
             None,
         )
         if matching is None:
