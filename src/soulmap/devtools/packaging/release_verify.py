@@ -12,7 +12,6 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from soulmap.devtools.packaging.build_skill import build_skill, build_zip
 from soulmap.devtools.packaging.library import build_library
 from soulmap.devtools.support.repo import REPO_ROOT
 
@@ -77,6 +76,48 @@ def _verify_integrations(repo_root: Path, version: str) -> list[dict[str, str]]:
             }
         )
     return results
+
+
+def _version_markers(repo_root: Path) -> list[Path]:
+    paths = [repo_root / "SKILL.md"]
+    skills_root = repo_root / "skills"
+    if skills_root.is_dir():
+        paths.extend(sorted(skills_root.glob("*/SKILL.md")))
+    return paths
+
+
+def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
+    checked: list[str] = []
+    for path in _version_markers(repo_root):
+        if not path.is_file():
+            raise ReleaseVerificationError(f"version marker is missing: {path.relative_to(repo_root)}")
+        front_matter = _front_matter(path.read_text(encoding="utf-8"), path.relative_to(repo_root))
+        actual = front_matter.get("version")
+        if actual != version:
+            raise ReleaseVerificationError(
+                f"{path.relative_to(repo_root)}: version must be {version}, got {actual or '<missing>'}"
+            )
+        checked.append(path.relative_to(repo_root).as_posix())
+
+    marketplace = repo_root / ".claude-plugin" / "marketplace.json"
+    if not marketplace.is_file():
+        raise ReleaseVerificationError(f"version marker is missing: {marketplace.relative_to(repo_root)}")
+    payload = json.loads(marketplace.read_text(encoding="utf-8"))
+    if payload.get("version") != version:
+        raise ReleaseVerificationError(
+            f".claude-plugin/marketplace.json: version must be {version}, got {payload.get('version', '<missing>')}"
+        )
+    plugins = payload.get("plugins")
+    if not isinstance(plugins, list):
+        raise ReleaseVerificationError(".claude-plugin/marketplace.json: plugins must be a list")
+    for plugin in plugins:
+        if not isinstance(plugin, dict) or plugin.get("version") != version:
+            raise ReleaseVerificationError(
+                ".claude-plugin/marketplace.json: every plugin version must match "
+                f"{version}"
+            )
+    checked.append(marketplace.relative_to(repo_root).as_posix())
+    return checked
 
 
 def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
@@ -149,6 +190,7 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
     """Build and verify release artifacts and integration contracts."""
     version = _project_version(repo_root)
     integrations = _verify_integrations(repo_root, version)
+    version_markers = _verify_version_markers(repo_root, version)
 
     dist = repo_root / "dist"
     for filename in (
@@ -161,10 +203,9 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
         if path.exists():
             path.unlink()
 
-    zip_path = build_zip(repo_root)
-    skill_path = build_skill(repo_root)
     manifest_path = build_library(repo_root)
-
+    zip_path = dist / "soulmap-ai.zip"
+    skill_path = dist / "soulmap-ai.skill"
     artifacts = [
         _verify_archive(repo_root, zip_path, include_plugin=False),
         _verify_archive(repo_root, skill_path, include_plugin=True),
@@ -200,6 +241,7 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
         "status": "pass",
         "version": version,
         "doctrine_source": "SOULMAP.md",
+        "version_markers": version_markers,
         "integrations": integrations,
         "artifacts": artifacts,
         "manifest": manifest_path.relative_to(repo_root).as_posix(),
