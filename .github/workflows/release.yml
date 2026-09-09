@@ -73,14 +73,16 @@ jobs:
           uv run soulmap check-links --root .
           uv run soulmap check-case --root .
 
-      - name: Build distribution artifacts and Library manifest
-        run: uv run soulmap library-manifest
+      - name: Verify release artifacts and integration contracts
+        run: uv run soulmap release-verify --root . --output dist/release-verification.json
 
-      - name: Verify artifact SHA-256 integrity
-        run: uv run python scripts/verify_artifact_hashes.py
-
-      - name: Verify extracted artifact boundaries
-        run: uv run python scripts/verify_extracted_artifacts.py
+      - name: Upload release verification summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-verification-${{ github.run_id }}
+          path: dist/release-verification.json
+          if-no-files-found: error
+          retention-days: 14
 
       - name: Push bump commit + tag
         run: |
