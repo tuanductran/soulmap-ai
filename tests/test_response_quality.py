@@ -49,10 +49,7 @@ def test_quality_can_pass_while_safety_fails() -> None:
     )
 
     assert quality["status"] == "PASS"
-    assert (
-        check_response_safety_contract(response)["status"]
-        == "FAIL_REWRITE_REQUIRED"
-    )
+    assert check_response_safety_contract(response)["status"] == "FAIL_REWRITE_REQUIRED"
 
 
 def test_quality_fixture_declares_all_primary_frameworks() -> None:
