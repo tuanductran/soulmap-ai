@@ -26,7 +26,7 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 ## Current Roadmap
 
-### 1. Platform & Distribution Expansion
+### Platform & Distribution Expansion
 
 **Status:** Conditional / blocked by external platform readiness.
 
@@ -48,7 +48,7 @@ external prerequisites exist.
 
 ---
 
-### 2. Safety & Governance Maintenance
+### Safety & Governance Maintenance
 
 **Status:** Ongoing maintenance, not a feature backlog.
 
@@ -60,7 +60,7 @@ external prerequisites exist.
 
 ---
 
-### 3. Toolchain & Dependency Maintenance
+### Toolchain & Dependency Maintenance
 
 **Status:** Ongoing maintenance.
 
@@ -72,7 +72,7 @@ external prerequisites exist.
 
 ---
 
-### 4. Knowledge & Framework Evolution
+### Knowledge & Framework Evolution
 
 **Status:** Demand-driven.
 
@@ -86,7 +86,7 @@ architecture.
 
 ---
 
-### 5. Architecture Reassessment
+### Architecture Reassessment
 
 **Status:** Deferred until a concrete requirement appears.
 
@@ -108,9 +108,9 @@ document rather than remaining in this file.
 
 ## Related Documents
 
-- [`MILESTONES.md`](MILESTONES.md) — completed phases and historical outcomes
-- [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md) — current rule-level safety enforcement
-- [`engineering/known-limitations.md`](engineering/known-limitations.md) — intentional boundaries and non-goals
-- [`engineering/adr/`](engineering/adr/) — architectural decisions
-- [`research/`](research/) — research and audit evidence
-- GitHub Issues — active implementation and execution tracking
+- [`MILESTONES.md`](MILESTONES.md) - completed phases and historical outcomes
+- [`engineering/safety-enforcement-matrix.md`](engineering/safety-enforcement-matrix.md) - current rule-level safety enforcement
+- [`engineering/known-limitations.md`](engineering/known-limitations.md) - intentional boundaries and non-goals
+- [`engineering/adr/`](engineering/adr/) - architectural decisions
+- [`research/`](research/) - research and audit evidence
+- GitHub Issues - active implementation and execution tracking
