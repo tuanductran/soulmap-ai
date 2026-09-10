@@ -40,7 +40,7 @@ def test_release_workflow_uses_unified_release_verification_gate() -> None:
     content = _read(RELEASE_WORKFLOW)
 
     assert RELEASE_VERIFY_COMMAND in content
-    assert "uses: actions/upload-artifact@v4" in content
+    assert "uses: actions/upload-artifact@v7" in content
     assert "release-verification.json" in content
     assert content.index(RELEASE_VERIFY_COMMAND) < content.index(
         "git push --follow-tags"
