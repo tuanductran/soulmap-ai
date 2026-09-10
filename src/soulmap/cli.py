@@ -22,6 +22,7 @@ from soulmap.devtools.cli import bootstrap_venv
 from soulmap.devtools.evals import (
     eval_groups,
     eval_markdown_contracts,
+    eval_response_quality,
     eval_responses,
 )
 from soulmap.devtools.packaging import build_skill, library, release_ops, release_verify
@@ -56,6 +57,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "demo": soulmap_demo.main,
         "eval-groups": eval_groups.main,
         "eval-markdown-contracts": eval_markdown_contracts.main,
+        "eval-response-quality": eval_response_quality.main,
         "eval-responses": eval_responses.main,
         "format": format_tool.main,
         "lint": lint_tool.main,
