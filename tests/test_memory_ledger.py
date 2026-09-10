@@ -8,7 +8,6 @@ from soulmap.runtime.memory.memory_ledger import (
     process_insight,
 )
 
-
 NOW = datetime(2026, 1, 1, tzinfo=UTC)
 
 
