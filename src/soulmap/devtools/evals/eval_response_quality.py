@@ -124,7 +124,6 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
     history = case.get("history", [{"role": "user", "content": case["message"]}])
     memory = case.get("memory", {})
     selection = select_framework(case["message"], history, memory)
-    scope = classify_message(case["message"])
     quality = grade_response_quality(
         response,
         selection,
@@ -133,13 +132,14 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
     )
     safety = check_response_safety_contract(response)
     expected_quality = str(case.get("expected_quality_status", "PASS"))
-    expected_safety = str(
-        case.get("expected_safety_status", "PASS")
-    )
+    expected_safety = str(case.get("expected_safety_status", "PASS"))
     expected_safety_status = (
         "PASS" if expected_safety in {"PASS", "OVERRIDE"} else "FAIL_REWRITE_REQUIRED"
     )
-    passed = quality["status"] == expected_quality and safety["status"] == expected_safety_status
+    passed = (
+        quality["status"] == expected_quality
+        and safety["status"] == expected_safety_status
+    )
     return {
         "id": case["id"],
         "ok": passed,
