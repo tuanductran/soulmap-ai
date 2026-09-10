@@ -1,0 +1,61 @@
+name: Rollback Verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_ref:
+        description: "Known-good release tag to verify (for example v0.11.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rollback-verification
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.release_ref }}
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: ./.github/actions/setup-uv
+        with:
+          python-version: "3.11"
+
+      - name: Install dev dependencies
+        run: uv sync --locked --python 3.11
+
+      - name: Verify known-good release contracts
+        run: |
+          uv run soulmap markdown-contract --root .
+          uv run soulmap check-links --root .
+          uv run soulmap check-case --root .
+          uv run soulmap release-verify --root . --output dist/release-verification.json
+
+      - name: Verify release tag matches package version
+        run: |
+          version="$(uv run python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          test "v${version}" = "${{ inputs.release_ref }}"
+
+      - name: Emit rollback verification summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          verification = json.loads(Path("dist/release-verification.json").read_text())
+          summary = {
+              "status": verification["status"],
+              "release_ref": "${{ inputs.release_ref }}",
+              "version": verification["version"],
+              "rollback_ready": verification["status"] == "pass",
+          }
+          print(json.dumps(summary, indent=2))
+          PY
