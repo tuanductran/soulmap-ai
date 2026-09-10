@@ -61,6 +61,15 @@ jobs:
         run: uv run python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals
         run: uv run soulmap eval-responses
+      - name: Response quality evals (advisory)
+        continue-on-error: true
+        run: uv run soulmap eval-response-quality > response-quality-eval.json
+      - name: Upload response quality evaluation
+        uses: actions/upload-artifact@v7
+        with:
+          name: soulmap-response-quality-evaluation-${{ matrix.os }}
+          path: response-quality-eval.json
+          if-no-files-found: error
       - name: Grouped routing and source evals
         run: uv run soulmap eval-groups
       - name: Markdown contract sync evals
