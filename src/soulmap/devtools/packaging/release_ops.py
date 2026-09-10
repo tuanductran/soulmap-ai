@@ -8,6 +8,7 @@ import json
 import os
 import subprocess
 import sys
+import tomllib
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -46,13 +47,12 @@ def _git(repo_root: Path, *args: str) -> str:
 
 
 def _version(repo_root: Path) -> str:
-    result = subprocess.run(
-        [sys.executable, "-c", "import tomllib,sys; print(tomllib.load(open(sys.argv[1],'rb'))['project']['version'])", str(repo_root / "pyproject.toml")],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout.strip()
+    with (repo_root / "pyproject.toml").open("rb") as handle:
+        payload = tomllib.load(handle)
+    version = payload.get("project", {}).get("version")
+    if not isinstance(version, str) or not version:
+        raise ReleaseOperationsError("pyproject.toml must define project.version")
+    return version
 
 
 def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str, Any]:
@@ -60,7 +60,7 @@ def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str
     version = verification.get("version")
     if not isinstance(version, str) or not version:
         raise ReleaseOperationsError("release verification has no version")
-    commit = os.environ.get("GITHUB_SHA") or _git(repo_root, "rev-parse", "HEAD")
+    commit = _git(repo_root, "rev-parse", "HEAD")
     timestamp = os.environ.get("RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat()
     artifacts: list[dict[str, Any]] = []
     for name in ARTIFACT_NAMES:
@@ -101,13 +101,25 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     source_commit = payload.get("source_commit")
     if not isinstance(source_commit, str) or len(source_commit) != 40:
         raise ReleaseOperationsError("provenance source_commit must be a full Git SHA")
+    if source_commit != _git(repo_root, "rev-parse", "HEAD"):
+        raise ReleaseOperationsError(
+            "provenance source_commit does not match checked-out commit"
+        )
     artifacts = payload.get("artifacts")
-    if not isinstance(artifacts, list) or {item.get("filename") for item in artifacts if isinstance(item, dict)} != set(ARTIFACT_NAMES):
+    if not isinstance(artifacts, list):
+        raise ReleaseOperationsError("provenance artifacts must be a list")
+    filenames = {
+        item.get("filename") for item in artifacts if isinstance(item, dict)
+    }
+    if filenames != set(ARTIFACT_NAMES):
         raise ReleaseOperationsError("provenance artifact set is invalid")
     for item in artifacts:
         if not isinstance(item, dict):
             raise ReleaseOperationsError("provenance artifact entry is invalid")
-        artifact = repo_root / "dist" / str(item.get("filename"))
+        filename = item.get("filename")
+        if not isinstance(filename, str):
+            raise ReleaseOperationsError("provenance artifact filename is invalid")
+        artifact = repo_root / "dist" / filename
         if not artifact.is_file():
             raise ReleaseOperationsError(f"artifact is missing: {artifact.name}")
         if item.get("size_bytes") != artifact.stat().st_size:
@@ -119,7 +131,9 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     """Create or verify release operational metadata."""
-    parser = argparse.ArgumentParser(description="Create or verify SoulMap release operational metadata.")
+    parser = argparse.ArgumentParser(
+        description="Create or verify SoulMap release operational metadata."
+    )
     parser.add_argument("action", choices=("provenance", "health"))
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     parser.add_argument("--verification", type=Path, default=None)
@@ -128,7 +142,9 @@ def main(argv: list[str] | None = None) -> int:
     root = args.root.resolve()
     try:
         if args.action == "provenance":
-            verification_path = args.verification or root / "dist" / "release-verification.json"
+            verification_path = (
+                args.verification or root / "dist" / "release-verification.json"
+            )
             verification = json.loads(verification_path.read_text(encoding="utf-8"))
             payload = create_provenance(root, verification)
             output = args.provenance or root / "dist" / "release-provenance.json"
@@ -138,7 +154,11 @@ def main(argv: list[str] | None = None) -> int:
             verification = verify_release(root)
             provenance_path = args.provenance or root / "dist" / "release-provenance.json"
             provenance = verify_provenance(root, provenance_path)
-            payload = {"status": "pass", "version": verification["version"], "provenance": provenance}
+            payload = {
+                "status": "pass",
+                "version": verification["version"],
+                "provenance": provenance,
+            }
         print(json.dumps(payload, indent=2))
         return 0
     except (OSError, ReleaseOperationsError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
