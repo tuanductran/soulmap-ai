@@ -24,7 +24,7 @@ notes, tests, and release records.
 | 8 | Test Coverage Hardening | Raised detector, guard, synthesis, audit, eval, packaging, and tooling coverage to the project targets. |
 | 9 | Knowledge, Routing & Synthesis Alignment | Routed the remaining spiritual frameworks and aligned synthesis, activation targets, session guidance, and release-time coverage. |
 | 10 | Deterministic Response-Safety Governance | Established the deterministic safety-gate regression model, multilingual morphology coverage, and identity-boundary enforcement. |
-| 11 | Platform & Distribution Expansion — foundation | Established versioned platform integration contracts, distribution manifests, and release metadata; remaining platform work is conditional. |
+| 11 | Platform & Distribution Expansion - foundation | Established versioned platform integration contracts, distribution manifests, and release metadata; remaining platform work is conditional. |
 | 12 | Toolchain Support & Test Reproducibility | Completed toolchain compatibility research, deterministic diagnostics, local CI installers, and CLI wrapper coverage. |
 | 13 | Repo-wide Hardening Pass | Closed runtime, safety, knowledge, testing, release, and documentation gaps identified by the full v0.9.1 audit. |
 | 14 | Enforcement Ceiling Clarity | Distinguished package-enforceable rules from intentional host-layer boundaries and formalized `bounded` enforcement. |
