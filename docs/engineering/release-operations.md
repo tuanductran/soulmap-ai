@@ -6,8 +6,8 @@ This document defines the operational contract for SoulMap releases. It is delib
 
 The release workflow creates two machine-readable summaries:
 
-- `dist/release-verification.json` — artifact and integration contract results.
-- `dist/release-provenance.json` — release version, exact source commit, UTC timestamp, and SHA-256 hashes for every published artifact.
+- `dist/release-verification.json` - artifact and integration contract results.
+- `dist/release-provenance.json` - release version, exact source commit, UTC timestamp, and SHA-256 hashes for every published artifact.
 
 The provenance source commit is the exact commit produced by the version bump step, not the workflow's original dispatch SHA. The provenance file is retained as a workflow artifact and published with the GitHub Release.
 
