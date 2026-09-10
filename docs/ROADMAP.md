@@ -65,7 +65,8 @@ external prerequisites exist.
 **Status:** Ongoing maintenance.
 
 - Apply the dependency-refresh and advisory-review process when upstream changes create a
-  concrete maintenance trigger.
+  concrete maintenance trigger. Follow the [dependency refresh checklist](operations/dependency-refresh.md)
+  for the operational sequence and evidence requirements.
 - Keep lockfile, CI, compatibility research, and repository contracts synchronized.
 - Preserve reproducible pytest diagnostics and the full repository validation gate.
 - Avoid adding dependencies or scanners without a documented problem they solve.
