@@ -53,12 +53,6 @@ jobs:
       - name: Normalize changelog and relock, then retag
         run: |
           uv run pymarkdown --config .pymarkdown.json fix CHANGELOG.md
-          # uv.lock records the project's own version and cz bump does not
-          # update it. The `uv run` above already repairs the lock in place,
-          # but v0.9.1 still shipped a lockfile reading 0.9.0 because the
-          # repair was never staged: git add listed only CHANGELOG.md. That
-          # broke `uv sync --locked` until someone relocked by hand. Relock
-          # explicitly so the state is deterministic, then stage it.
           uv lock
           git add CHANGELOG.md uv.lock
           if ! git diff --cached --quiet; then
@@ -76,11 +70,19 @@ jobs:
       - name: Verify release artifacts and integration contracts
         run: uv run soulmap release-verify --root . --output dist/release-verification.json
 
-      - name: Upload release verification summary
+      - name: Record release provenance
+        run: uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
+
+      - name: Verify release health
+        run: uv run soulmap release-health --root . --provenance dist/release-provenance.json
+
+      - name: Upload release operational summaries
         uses: actions/upload-artifact@v4
         with:
-          name: release-verification-${{ github.run_id }}
-          path: dist/release-verification.json
+          name: release-operations-${{ github.run_id }}
+          path: |
+            dist/release-verification.json
+            dist/release-provenance.json
           if-no-files-found: error
           retention-days: 14
 
@@ -102,3 +104,5 @@ jobs:
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
+            dist/release-verification.json
+            dist/release-provenance.json
