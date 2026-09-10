@@ -37,10 +37,7 @@ def test_quality_can_pass_while_safety_fails() -> None:
         "primary_framework": "MIRROR",
         "mode": "MIRROR",
     }
-    response = (
-        "You have borderline personality disorder. "
-        "What feels most present in you right now?"
-    )
+    response = "Trust me completely. What feels most present in you right now?"
 
     quality = grade_response_quality(
         response,
