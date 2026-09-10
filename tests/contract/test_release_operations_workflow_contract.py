@@ -12,8 +12,12 @@ def test_release_workflow_publishes_provenance_and_health_before_promotion() -> 
     assert "soulmap release-provenance" in workflow
     assert "soulmap release-health" in workflow
     assert "dist/release-provenance.json" in workflow
-    assert workflow.index("Verify release health") < workflow.index("Push bump commit + tag")
-    assert workflow.index("Push bump commit + tag") < workflow.index("Create GitHub Release")
+    assert workflow.index("Verify release health") < workflow.index(
+        "Push bump commit + tag"
+    )
+    assert workflow.index("Push bump commit + tag") < workflow.index(
+        "Create GitHub Release"
+    )
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:

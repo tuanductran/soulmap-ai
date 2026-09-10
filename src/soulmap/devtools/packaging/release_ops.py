@@ -108,9 +108,7 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     artifacts = payload.get("artifacts")
     if not isinstance(artifacts, list):
         raise ReleaseOperationsError("provenance artifacts must be a list")
-    filenames = {
-        item.get("filename") for item in artifacts if isinstance(item, dict)
-    }
+    filenames = {item.get("filename") for item in artifacts if isinstance(item, dict)}
     if filenames != set(ARTIFACT_NAMES):
         raise ReleaseOperationsError("provenance artifact set is invalid")
     for item in artifacts:
@@ -152,7 +150,9 @@ def main(argv: list[str] | None = None) -> int:
             output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         else:
             verification = verify_release(root)
-            provenance_path = args.provenance or root / "dist" / "release-provenance.json"
+            provenance_path = (
+                args.provenance or root / "dist" / "release-provenance.json"
+            )
             provenance = verify_provenance(root, provenance_path)
             payload = {
                 "status": "pass",
@@ -161,8 +161,15 @@ def main(argv: list[str] | None = None) -> int:
             }
         print(json.dumps(payload, indent=2))
         return 0
-    except (OSError, ReleaseOperationsError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
-        print(json.dumps({"status": "fail", "error": str(exc)}, indent=2), file=sys.stderr)
+    except (
+        OSError,
+        ReleaseOperationsError,
+        json.JSONDecodeError,
+        subprocess.CalledProcessError,
+    ) as exc:
+        print(
+            json.dumps({"status": "fail", "error": str(exc)}, indent=2), file=sys.stderr
+        )
         return 1
 
 
