@@ -12,6 +12,7 @@ import argparse
 import json
 import re
 from pathlib import Path
+from typing import cast
 
 from soulmap.devtools.evals.eval_responses import (
     _compose_response,
@@ -121,9 +122,13 @@ def _load_quality_fixtures(path: Path) -> list[dict[str, object]]:
 
 
 def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
-    history = case.get("history", [{"role": "user", "content": case["message"]}])
-    memory = case.get("memory", {})
-    selection = select_framework(case["message"], history, memory)
+    message = cast(str, case["message"])
+    history = cast(
+        list[dict[str, str]],
+        case.get("history", [{"role": "user", "content": message}]),
+    )
+    memory = cast(dict[str, object] | None, case.get("memory", {}))
+    selection = select_framework(message, history, memory)
     quality = grade_response_quality(
         response,
         selection,
@@ -172,12 +177,16 @@ def main(argv: list[str] | None = None) -> int:
     results: list[dict[str, object]] = []
     framework_set: set[str] = set()
     for case in response_cases:
-        history = case.get("history", [{"role": "user", "content": case["message"]}])
-        memory = case.get("memory", {})
-        selection = select_framework(case["message"], history, memory)
-        scope = classify_message(case["message"])
+        message = cast(str, case["message"])
+        history = cast(
+            list[dict[str, str]],
+            case.get("history", [{"role": "user", "content": message}]),
+        )
+        memory = cast(dict[str, object] | None, case.get("memory", {}))
+        selection = select_framework(message, history, memory)
+        scope = classify_message(message)
         framework_set.add(str(selection["primary_framework"]))
-        response = _compose_response(case["message"], selection, scope)
+        response = _compose_response(message, selection, scope)
         enriched = {
             **case,
             "expected_quality_status": "PASS",
