@@ -23,6 +23,7 @@ class MemoryItem:
     expires_at: datetime
 
     def __post_init__(self) -> None:
+        """Validate the immutable memory item's structural boundaries."""
         if self.kind not in ALLOWED_MEMORY_KINDS:
             raise ValueError(f"unsupported memory kind: {self.kind}")
         if not self.value.strip():
@@ -37,6 +38,7 @@ class MemoryLedger:
     """In-process bounded ledger; persistence belongs to the host platform."""
 
     def __init__(self, entries: tuple[MemoryItem, ...] = ()) -> None:
+        """Initialize the ledger with validated entries."""
         self._entries = tuple(entries)
 
     @property
@@ -108,7 +110,11 @@ def process_insight(
     memory content.
     """
     if user_response.lower() in ("no", "discard", "forget"):
-        return {"status": "FORGOTTEN", "ledger_entry": None, "session_ref": session_id}
+        return {
+            "status": "FORGOTTEN",
+            "ledger_entry": None,
+            "session_ref": session_id,
+        }
 
     if sensitive is not False or identifying:
         return {
