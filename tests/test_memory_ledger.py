@@ -2,7 +2,11 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from soulmap.runtime.memory.memory_ledger import MemoryLedger, MemoryItem, process_insight
+from soulmap.runtime.memory.memory_ledger import (
+    MemoryItem,
+    MemoryLedger,
+    process_insight,
+)
 
 
 NOW = datetime(2026, 1, 1, tzinfo=UTC)
