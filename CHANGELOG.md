@@ -5,6 +5,16 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.12.0 (2026-09-11)
+
+### Feat
+
+- **memory**: harden session continuity and memory boundaries (#367)
+- **release**: add unified cross-platform artifact verification (#364)
+- **site**: restore generated public site foundation (#359)
+- **site**: restore generated public site on current main
+- **writing**: add a layer for turning personal reflection into public writing (#348)
+
 ## v0.11.0 (2026-09-02)
 
 ### Feat

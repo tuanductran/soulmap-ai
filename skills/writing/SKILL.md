@@ -1,7 +1,7 @@
 ---
 name: "writing"
 description: SoulMap's layer for a user moving their own reflection into writing other people will read, covering what is theirs to tell, what belongs to someone else in the story, and what each publishing surface does to honesty. Relevant when a user wants to turn journaling into an essay or post, asks whether something is ready to publish, worries about how much to disclose, or asks where to publish reflective writing.
-version: "0.11.0"
+version: "0.12.0"
 license: Complete terms in LICENSE
 ---
 
