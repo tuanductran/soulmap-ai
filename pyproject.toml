@@ -212,8 +212,7 @@ version_files = [
   # picked up without editing this list.
   "SKILL.md:version",
   "skills/*/SKILL.md:version",
-  ".claude-plugin/marketplace.json:version",
-  "docs/ROADMAP.md:version",
+  ".claude-plugin/marketplace.json:version"
 ]
 
 [tool.deptry]
