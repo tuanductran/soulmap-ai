@@ -2,9 +2,8 @@
 
 > **Repository:** [soulmap-ai](https://github.com/tuanductran/soulmap-ai)
 > **Maintainer:** Tuan Duc Tran
-> **License:** see [LICENSE](../LICENSE)
-> **Current release:** v0.11.0
-> **Last updated:** September 10, 2026
+> **License:** MIT
+> **Status:** Actively maintained
 
 This document is the **living roadmap** for SoulMap AI. It describes work that is still
 planned, conditional, or intentionally deferred. Completed phases and historical outcomes
