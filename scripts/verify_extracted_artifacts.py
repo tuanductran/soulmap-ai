@@ -8,6 +8,11 @@ import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 
+from soulmap.devtools.packaging.artifact_integrity import (
+    ArtifactContentError,
+    verify_member_content,
+)
+
 
 class ExtractedArtifactError(ValueError):
     """Raised when an archive violates the shipped package contract."""
@@ -120,6 +125,11 @@ def _assert_expected_members(
             raise ExtractedArtifactError(
                 f"{archive_path.name} must contain {sorted(CORE_FILES)}"
             )
+
+        try:
+            verify_member_content(archive, repo_root, expected)
+        except ArtifactContentError as exc:
+            raise ExtractedArtifactError(f"{archive_path.name}: {exc}") from exc
 
         if include_plugin:
             if ".claude-plugin/marketplace.json" not in actual:

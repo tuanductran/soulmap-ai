@@ -12,6 +12,10 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from soulmap.devtools.packaging.artifact_integrity import (
+    ArtifactContentError,
+    verify_member_content,
+)
 from soulmap.devtools.packaging.library import build_library
 from soulmap.devtools.support.repo import REPO_ROOT
 
@@ -189,6 +193,11 @@ def _verify_archive(
                 raise ReleaseVerificationError(
                     f"{path.name}: must {expectation} .claude-plugin/"
                 )
+
+            try:
+                verify_member_content(archive, repo_root, expected)
+            except ArtifactContentError as exc:
+                raise ReleaseVerificationError(f"{path.name}: {exc}") from exc
     except zipfile.BadZipFile as exc:
         raise ReleaseVerificationError(f"{path.name}: invalid ZIP archive") from exc
 
