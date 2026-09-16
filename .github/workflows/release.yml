@@ -20,7 +20,17 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          persist-credentials: false
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          persist-credentials: true
+
+      - name: Verify release token is configured
+        env:
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_TOKEN" ]; then
+            echo "SOULMAP_RELEASE_TOKEN must be configured so the automated release PR triggers normal pull_request CI."
+            exit 1
+          fi
 
       - name: Install uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
@@ -78,14 +88,12 @@ jobs:
           uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
       - name: Push release branch
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           git push --set-upstream origin "${{ steps.bump.outputs.branch }}"
 
       - name: Open release pull request
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           gh pr create \
             --base main \
