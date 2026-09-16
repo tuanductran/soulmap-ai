@@ -15,7 +15,7 @@ RELEASE_VERIFY_COMMAND = (
 )
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
 UPLOAD_ARTIFACT_SHA = "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
-RELEASE_ACTION_SHA = "efb35369e0ad2af669f228072c1b0d510eae64"
+RELEASE_ACTION_SHA = "efb35369e0ad2afab669f228072c1b0d510eae64"
 
 
 def _read(path: Path) -> str:
