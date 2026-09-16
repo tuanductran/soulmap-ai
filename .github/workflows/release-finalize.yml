@@ -23,9 +23,16 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: main
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
+
+      - name: Verify checkout is the merged release commit
+        env:
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          test -n "$MERGE_SHA"
+          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
 
       - name: Install uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
@@ -75,12 +82,14 @@ jobs:
       - name: Create immutable release tag
         env:
           TAG: v${{ steps.version.outputs.version }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
         run: |
+          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Release tag $TAG already exists; refusing to move it."
             exit 1
           fi
-          git tag -a "$TAG" -m "Release $TAG" HEAD
+          git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
           git push origin "$TAG"
 
       - name: Upload release operational summaries
