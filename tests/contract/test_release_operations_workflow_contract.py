@@ -10,6 +10,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
 
     assert "name: Release Prep" in workflow
     assert "workflow_dispatch" in workflow
+    assert "if: github.ref == 'refs/heads/main'" in workflow
     assert "contents: write" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
@@ -36,6 +37,8 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-health" in workflow
     assert "dist/release-provenance.json" in workflow
     assert "Create immutable release tag" in workflow
+    assert 'existing_commit="$(git rev-parse "$TAG^{commit}")"' in workflow
+    assert "reusing it without moving it" in workflow
     assert "git tag -a" in workflow
     assert 'git push origin "$TAG"' in workflow
     assert "Create GitHub Release" in workflow
