@@ -40,8 +40,10 @@ jobs:
         id: version
         run: |
           version="$(uv run cz version --project)"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          {
+            echo "version=$version"
+            echo "tag=v$version"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Verify merged release tree
         run: |
