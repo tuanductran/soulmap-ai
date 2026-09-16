@@ -2,5 +2,28 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "platformAutomerge": true,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "description": "Automerge safe dependency updates after required checks pass",
+      "matchUpdateTypes": [
+        "patch",
+        "minor",
+        "pinDigest",
+        "digest"
+      ],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Keep major updates manual",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    }
   ]
 }
