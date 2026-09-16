@@ -3,23 +3,33 @@
   "extends": [
     "config:recommended"
   ],
+  "enabledManagers": [
+    "github-actions",
+    "pep621",
+    "pip_requirements",
+    "dockerfile"
+  ],
   "platformAutomerge": true,
   "automergeType": "pr",
+  "automergeStrategy": "squash",
+  "rebaseWhen": "conflicted",
   "packageRules": [
     {
-      "description": "Automerge safe dependency updates after required checks pass",
+      "description": "Automerge safe dependency updates",
       "matchUpdateTypes": [
         "patch",
         "minor",
+        "pin",
         "pinDigest",
         "digest"
       ],
       "automerge": true,
+      "platformAutomerge": true,
       "automergeType": "pr",
-      "platformAutomerge": true
+      "automergeStrategy": "squash"
     },
     {
-      "description": "Keep major updates manual",
+      "description": "Keep major dependency updates manual",
       "matchUpdateTypes": [
         "major"
       ],
