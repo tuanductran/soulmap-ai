@@ -19,7 +19,7 @@ Do not treat an AI-companion safety rule, a transparency obligation, and a high-
 
 ## United States
 
-### California — SB 243 / Business and Professions Code §§ 22601–22606
+### California - SB 243 / Business and Professions Code §§ 22601-22606
 
 California SB 243 (Chapter 677, Statutes of 2025) became effective January 1, 2026. It regulates defined "companion chatbots" and requires, among other things:
 
@@ -34,15 +34,15 @@ Primary source: California Legislature, SB 243 bill history and chaptered text: 
 
 ### New York
 
-New York Assembly Bill A06767 (2025–2026) proposed requirements for AI companions, including crisis protocols and notices concerning the non-human nature of the system. The bill **died in the Senate on January 7, 2026**; it should therefore not be described as an enacted New York companion-chatbot requirement in this document.
+New York Assembly Bill A06767 (2025-2026) proposed requirements for AI companions, including crisis protocols and notices concerning the non-human nature of the system. The bill **died in the Senate on January 7, 2026**; it should therefore not be described as an enacted New York companion-chatbot requirement in this document.
 
 **SoulMap relevance:** retain New York as a legislative-watch item rather than an active compliance requirement unless a later enacted measure is identified and verified.
 
 Primary source: New York State Assembly bill status: https://assembly.ny.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=A06767&term=
 
-### Connecticut — Public Act 26-15
+### Connecticut - Public Act 26-15
 
-Connecticut's 2026 Public Act 26-15, "An Act Concerning Online Safety," was enacted in May 2026. Sections 4–6 create AI-companion requirements effective January 1, 2027. Among other provisions, the act addresses evidence-based detection and response for suicide, self-harm, and imminent physical violence; requires a public description of the relevant protocol; restricts an AI companion from presenting itself as human; and establishes disclosure cadences and additional safeguards for users under 18.
+Connecticut's 2026 Public Act 26-15, "An Act Concerning Online Safety," was enacted in May 2026. Sections 4-6 create AI-companion requirements effective January 1, 2027. Among other provisions, the act addresses evidence-based detection and response for suicide, self-harm, and imminent physical violence; requires a public description of the relevant protocol; restricts an AI companion from presenting itself as human; and establishes disclosure cadences and additional safeguards for users under 18.
 
 Other sections of the same act have different effective dates and cover subjects such as AI subscriptions, automated employment-related decision technologies, and provenance data. Those provisions should not be treated as companion-chatbot requirements unless their scope actually covers the deployed product.
 
@@ -50,7 +50,7 @@ Other sections of the same act have different effective dates and cover subjects
 
 Primary source: Connecticut General Assembly, Public Act 26-15: https://www.cga.ct.gov/2026/act/pa/pdf/2026PA-00015-R00SB-00005-PA.pdf
 
-## European Union — AI Act
+## European Union - AI Act
 
 The EU AI Act entered into application on August 2, 2026, with different provisions taking effect on different dates. The Commission states that transparency obligations under Article 50 apply from August 2, 2026, including requirements for certain interactive AI systems to inform people when they are interacting with AI.
 
@@ -62,9 +62,9 @@ The Commission currently states that the rules for high-risk AI systems in Annex
 
 Primary sources:
 
-- European Commission — AI Act framework and application timeline: https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
-- European Commission — Article 50 transparency guidance: https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems
-- European Commission — high-risk classification guidance: https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems
+- European Commission - AI Act framework and application timeline: https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
+- European Commission - Article 50 transparency guidance: https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems
+- European Commission - high-risk classification guidance: https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems
 
 ## SoulMap architecture and regulatory mapping
 
