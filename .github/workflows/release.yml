@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   prepare:
+    if: github.ref == 'refs/heads/main'
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
