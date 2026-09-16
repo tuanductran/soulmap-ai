@@ -5,6 +5,12 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.12.1 (2026-09-16)
+
+### Fix
+
+- **packaging**: verify shipped archive member content matches source
+
 ## v0.12.0 (2026-09-11)
 
 ### Feat
