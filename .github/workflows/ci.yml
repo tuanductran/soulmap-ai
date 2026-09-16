@@ -23,7 +23,9 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Install actionlint
         if: matrix.os == 'ubuntu-latest'
@@ -34,8 +36,9 @@ jobs:
         run: actionlint
 
       - name: Install uv
-        uses: ./.github/actions/setup-uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
+          version: "0.12.5"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
@@ -65,7 +68,7 @@ jobs:
         continue-on-error: true
         run: uv run soulmap eval-response-quality > response-quality-eval.json
       - name: Upload response quality evaluation
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: soulmap-response-quality-evaluation-${{ matrix.os }}
           path: response-quality-eval.json
@@ -85,10 +88,13 @@ jobs:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - name: Install uv
-        uses: ./.github/actions/setup-uv
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
+      - name: Install uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.5"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
@@ -97,7 +103,7 @@ jobs:
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
       - name: Upload knowledge inventory
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: soulmap-knowledge-inventory
           path: knowledge-inventory.txt
@@ -109,10 +115,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v7
-      - name: Install uv
-        uses: ./.github/actions/setup-uv
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
+      - name: Install uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.5"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
@@ -127,7 +136,7 @@ jobs:
       - name: Verify extracted artifact boundaries
         run: uv run python scripts/verify_extracted_artifacts.py
       - name: Upload skill artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: soulmap-ai-artifacts
           path: |
