@@ -48,6 +48,7 @@ RESEARCH_LABELS = {
 
 
 SETUP_UV_SHA = "bec219d24cd3e171d82865faccec33120bb574f4"
+RELEASE_ACTION_SHA = "efb35369e0ad2af669f228072c1b0d510eae64"
 
 
 def test_python_floor_and_ci_baseline_are_aligned() -> None:
@@ -91,13 +92,16 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
         assert "@v7" not in workflow_text
         assert "@v4" not in workflow_text
 
-    release_text = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(
+    release_prep_text = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(
         encoding="utf-8"
     )
-    assert (
-        "softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64"
-        in release_text
-    )
+    release_finalize_text = (
+        REPO_ROOT / ".github" / "workflows" / "release-finalize.yml"
+    ).read_text(encoding="utf-8")
+    assert f"softprops/action-gh-release@{RELEASE_ACTION_SHA}" in release_finalize_text
+    assert "softprops/action-gh-release@" not in release_prep_text
+    assert "actions/upload-artifact@" in release_finalize_text
+    assert "git push --follow-tags" not in release_prep_text
 
 
 def test_direct_dev_packages_are_locked() -> None:
