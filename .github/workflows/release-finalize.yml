@@ -154,7 +154,8 @@ jobs:
             echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
           else
             git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
-            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$TAG"
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "$TAG"
           fi
 
       - name: Create GitHub Release
