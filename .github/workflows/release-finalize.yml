@@ -1,0 +1,120 @@
+name: Release Finalize
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["main"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-finalize
+  cancel-in-progress: false
+
+jobs:
+  finalize:
+    if: >-
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'release/prep-')
+    runs-on: ubuntu-latest
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Verify checkout is the merged release commit
+        env:
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          test -n "$MERGE_SHA"
+          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+          python-version: "3.11"
+
+      - name: Install dev dependencies
+        run: uv sync --locked --python 3.11
+
+      - name: Resolve release version
+        id: version
+        run: |
+          version="$(uv run cz version --project)"
+          {
+            echo "version=$version"
+            echo "tag=v$version"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Verify merged release tree
+        run: |
+          uv run soulmap markdown-contract --root .
+          uv run soulmap check-links --root .
+          uv run soulmap check-case --root .
+          uv run soulmap audit-knowledge
+          uv run soulmap lint --skip-tests
+          uv run python scripts/pytest_diagnostics.py
+          uv run soulmap eval-groups
+          uv run python tests/eval_regression/test_safety_evals.py
+          uv run soulmap eval-responses
+          uv run soulmap eval-markdown-contracts
+          uv run soulmap release-verify --root . --output dist/release-verification.json
+          uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
+          uv run soulmap release-health --root . --provenance dist/release-provenance.json
+
+      - name: Build release artifacts
+        run: uv run soulmap library-manifest
+
+      - name: Verify release artifacts
+        run: |
+          test -f dist/soulmap-ai.zip
+          test -f dist/soulmap-ai.skill
+          test -f dist/soulmap-ai-library.json
+          uv run python scripts/verify_artifact_hashes.py
+          uv run python scripts/verify_extracted_artifacts.py
+
+      - name: Create immutable release tag
+        env:
+          TAG: v${{ steps.version.outputs.version }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            existing_commit="$(git rev-parse "$TAG^{commit}")"
+            if [ "$existing_commit" != "$MERGE_SHA" ]; then
+              echo "Release tag $TAG exists but points to $existing_commit, expected $MERGE_SHA."
+              exit 1
+            fi
+            echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
+          else
+            git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
+            git push origin "$TAG"
+          fi
+
+      - name: Upload release operational summaries
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-operations-${{ github.run_id }}
+          path: |
+            dist/release-verification.json
+            dist/release-provenance.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@efb35369e0ad2af669f228072c1b0d510eae64 # v3.0.3
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json
+            dist/release-verification.json
+            dist/release-provenance.json

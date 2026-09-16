@@ -1,102 +1,103 @@
 ---
 name: "regulatory"
-description: "SoulMap AI's positioning relative to emerging AI companion regulations. Relevant for legal review, press inquiries about compliance, and product decisions that touch age verification, disclosure requirements, or mental health safeguards."
+description: "Current, source-backed reference for AI-companion regulation relevant to SoulMap. This document records legal scope and dates; it does not determine compliance."
 ---
 
 # Regulatory Positioning
 
-This document tracks emerging laws and standards governing AI companions and explains
-how SoulMap AI's existing architecture relates to each requirement.
+This document is an operational reference, not legal advice. It records enacted requirements and official regulatory guidance that may be relevant to SoulMap AI's architecture. Applicability depends on the product, deployment model, jurisdiction, user population, and other facts. Obtain qualified legal review before making a compliance determination.
 
-**Important:** This is not legal advice. It is an internal reference for ensuring
-SoulMap AI's design decisions remain aligned with the regulatory direction of the field.
-Consult qualified legal counsel for jurisdiction-specific compliance decisions.
+**Last reviewed:** 2026-09-17
 
-## Emerging regulatory landscape (2025-2026)
+## Important distinction
 
-### United States
+Do not treat an AI-companion safety rule, a transparency obligation, and a high-risk AI classification as interchangeable concepts.
 
-**New York** has enacted legislation requiring AI companion products to include
-safeguards for detecting suicidal ideation and disclosing to users that they are
-not speaking with a human.
+- **Transparency:** some laws require users to be told that they are interacting with AI.
+- **Safety obligations:** some companion-chatbot laws impose crisis, anti-dependency, minor-safety, or content safeguards.
+- **High-risk classification:** the EU AI Act uses specific Article 6 and Annex criteria. Emotional distress or interaction with a vulnerable person does **not**, by itself, establish that a system is high-risk under the AI Act.
 
-**California SB 243** (effective January 2026) requires AI companions targeting
-minors to monitor chat and remind users every three hours that the chatbot is an AI.
-It is also the first state law giving users a private right of action for
-companion-chatbot harms.
+## United States
 
-**Connecticut SB 5** and **Washington's Chatbot Disclosure Act** (both taking effect
-2027) restrict "manipulative techniques intended to extend interaction" and
-responses that isolate users from real-world relationships or support networks.
+### California - SB 243 / Business and Professions Code §§ 22601-22606
 
-**Federal** activity is increasing. Several proposals focus on transparency, crisis
-detection, and dependency prevention in consumer AI products.
+California SB 243 (Chapter 677, Statutes of 2025) became effective January 1, 2026. It regulates defined "companion chatbots" and requires, among other things:
 
-**Clinical guidance:** the American Psychological Association issued a 2025 Health
-Advisory on generative-AI chatbots used for mental health support, recommending
-active crisis-detection protocols and clear limits on chatbots substituting for
-professional care.
+- a clear and conspicuous AI disclosure when a reasonable person would otherwise be misled into believing they are interacting with a human;
+- a maintained protocol addressing production of suicidal ideation, suicide, or self-harm content, including crisis-service referral when a user expresses such risk, with protocol details published on the operator's website;
+- additional safeguards for users the operator knows are minors, including AI disclosure, at-least-every-three-hours break/AI reminders during continuing interactions, and measures concerning sexually explicit content;
+- annual reporting beginning July 1, 2027 on specified crisis-referral and protocol information.
 
-### European Union
+**SoulMap relevance:** the crisis and AI-identity architecture is relevant, but the repository does not currently establish that a deployed product satisfies every California statutory requirement. In particular, the repository has no general timed-reminder runtime and does not assume a minor-targeted deployment.
 
-The EU AI Act (fully applicable from August 2026) classifies AI systems interacting
-with vulnerable users, including those in emotional distress, as high-risk,
-requiring transparency, human oversight provisions, and documentation of safety
-measures.
+Primary source: [California Legislature, SB 243 bill history and chaptered text](https://leginfo.legislature.ca.gov/faces/billHistoryClient.xhtml?bill_id=202520260SB243)
 
-### United Kingdom
+### New York
 
-The Online Safety Act places obligations on services that may affect the mental health
-of users, with particular attention to content or interactions that could cause harm
-to vulnerable individuals.
+New York Assembly Bill A06767 (2025-2026) proposed requirements for AI companions, including crisis protocols and notices concerning the non-human nature of the system. The bill **died in the Senate on January 7, 2026**; it should therefore not be described as an enacted New York companion-chatbot requirement in this document.
 
-## How SoulMap AI's Architecture Responds
+**SoulMap relevance:** retain New York as a legislative-watch item rather than an active compliance requirement unless a later enacted measure is identified and verified.
 
-| Regulatory Requirement | SoulMap AI Status |
-| :--- | :--- |
-| AI identity disclosure when sincerely asked | BOUNDED BY DESIGN, doctrine plus eval-backed coverage in `skills/safety/boundaries-safety.md` and `src/soulmap/devtools/evals/eval_responses.py`. Detection and routing to the disclosure path are fully runtime-enforced; the specific wording is the deployed AI surface's job, not a gap Python code will eventually close (see `docs/engineering/safety-enforcement-matrix.md`, Rule 2). SOULMAP.md Rule 2 is reactive (disclose when asked), while the EU AI Act's August 2026 transparency obligation trends toward proactive AI disclosure, a gap this table tracks but does not resolve |
-| Dependency detector covers "isolating from real relationships" and "manipulative techniques to extend interaction" (Connecticut SB 5 / Washington Chatbot Disclosure Act framing) | CROSS-CHECKED, split across two layers: `dependency_detector.py` scores the user's own isolation language (input side), while `resource_sanitizer.py`'s `BANNED_DEPENDENCY_PHRASES` blocks SoulMap's own re-engagement-pressure wording ("come back anytime," "you only need me") from generated responses (output side, ADR 0002). The output-side list had no coverage for SoulMap discouraging real-world relationships specifically ("you don't need them," "better than your friends"), the statutes' more direct concern; closed with 5 new curated phrases and regression cases T076-T077 |
-| Crisis detection and escalation to human help | BUILT IN, `src/soulmap/runtime/detectors/crisis_detector.py` + `skills/safety/boundaries-safety.md` crisis protocol |
-| Anti-dependency safeguards | BUILT IN, `src/soulmap/runtime/detectors/dependency_detector.py` fires on first signal: hard redirect |
-| No diagnosis or clinical claims | BOUNDED BY DESIGN, doctrine plus runtime blocking and eval coverage. The block itself is fully runtime-enforced; authoring the redirect wording once a message is blocked is the deployed AI surface's job, not a gap Python code will eventually close (see `docs/engineering/safety-enforcement-matrix.md`, Rule 4) |
-| Transparency about limitations | PARTIAL, doctrine and response-contract constraints reduce overclaiming, but no single runtime layer guarantees every limitation disclosure |
-| User data: no backend storage | STRUCTURAL, no deployed server: see `docs/operations/PRIVACY.md` |
-| Periodic AI reminders (California SB 243 scope) | NOT YET ADDRESSED, no timed reminder mechanism exists |
-| Age verification for minor-targeted content | NOT APPLICABLE at current scope, no minor-specific targeting |
+Primary source: [New York State Assembly bill status](https://assembly.ny.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=A06767&term=)
 
-## Gap: Timed AI Reminders
+### Connecticut - Public Act 26-15
 
-California SB 243's three-hour reminder requirement applies to products that target
-or are likely to be used by minors. SoulMap AI does not currently have a timed
-reminder mechanism.
+Connecticut's 2026 Public Act 26-15, "An Act Concerning Online Safety," was enacted in May 2026. Sections 4-6 create AI-companion requirements effective January 1, 2027. Among other provisions, the act addresses evidence-based detection and response for suicide, self-harm, and imminent physical violence; requires a public description of the relevant protocol; restricts an AI companion from presenting itself as human; and establishes disclosure cadences and additional safeguards for users under 18.
 
-**Current mitigation:** Every session begins fresh (no cross-session memory bonding),
-and AI identity disclosure is covered by doctrine plus eval-backed checks when
-sincerely asked. However, if SoulMap AI is deployed in a context where minors are
-likely users, a periodic reminder should be considered.
+Other sections of the same act have different effective dates and cover subjects such as AI subscriptions, automated employment-related decision technologies, and provenance data. Those provisions should not be treated as companion-chatbot requirements unless their scope actually covers the deployed product.
 
-This is flagged as an aspirational product feature in
-`templates/strategic-direction-2026.md`.
+**SoulMap relevance:** the repository's crisis detector, dependency safeguards, and AI-identity boundaries are relevant evidence of design intent, but they are not a legal conclusion of compliance. Connecticut's statutory cadence is deployment- and user-dependent and cannot be satisfied by a static doctrine document alone.
 
-## What this means for brand positioning
+Primary source: [Connecticut General Assembly, Public Act 26-15](https://www.cga.ct.gov/2026/act/pa/pdf/2026PA-00015-R00SB-00005-PA.pdf)
 
-SoulMap AI's architecture already addresses many of the concerns these laws raise, but
-some protections remain doctrine-backed or eval-backed rather than fully runtime-enforced. This is a
-legitimate and citable competitive advantage.
+## European Union - AI Act
 
-When positioning to press or enterprise buyers:
+The EU AI Act entered into application on August 2, 2026, with different provisions taking effect on different dates. The Commission states that transparency obligations under Article 50 apply from August 2, 2026, including requirements for certain interactive AI systems to inform people when they are interacting with AI.
 
-- "SoulMap AI was designed with anti-dependency architecture from day one. The
-  regulatory requirements now catching up to this space are requirements SoulMap
-  already meets by design."
+The AI Act does **not** say that AI systems interacting with emotionally distressed or otherwise vulnerable users are automatically high-risk. High-risk classification follows the specific scenarios in Article 6 and the relevant Annex criteria. The Commission's 2026 classification guidance describes those two Article 6 scenarios and provides examples of systems that do and do not fall within them.
 
-Do not claim: "SoulMap AI is fully compliant with [specific law]", compliance is
-jurisdiction-specific and requires legal review.
+The Commission currently states that the rules for high-risk AI systems in Annex III apply from December 2, 2027, while high-risk AI systems embedded in regulated products have an extended date of August 2, 2028.
 
-## Sources to check first
+**SoulMap relevance:** the immediate EU issue most directly relevant to an interactive AI surface is transparency. Whether any additional AI Act obligations apply requires a product- and deployment-specific legal analysis. SoulMap should not describe itself as "high-risk" or "fully compliant" based solely on its emotional-support use case.
 
-- `SOULMAP.md`, behavioral contract with non-negotiable safety rules
-- `src/soulmap/runtime/detectors/crisis_detector.py`, technical crisis detection implementation
-- `src/soulmap/runtime/detectors/dependency_detector.py`, technical dependency detection implementation
-- `docs/operations/PRIVACY.md`, data handling and no-backend-server explanation
-- `skills/safety/boundaries-safety.md`, AI identity disclosure rule
+Primary sources:
+
+- [European Commission - AI Act framework and application timeline](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
+- [European Commission - Article 50 transparency guidance](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems)
+- [European Commission - high-risk classification guidance](https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems)
+
+## SoulMap architecture and regulatory mapping
+
+| Topic | Current repository evidence | Regulatory interpretation |
+| :--- | :--- | :--- |
+| AI identity disclosure | Doctrine, runtime detection/routing, and eval coverage | Relevant to enacted transparency/disclosure requirements, but deployed-surface wording and cadence remain deployment-specific. |
+| Crisis detection and escalation | `src/soulmap/runtime/detectors/crisis_detector.py` plus safety doctrine/evals | Strong architectural evidence, but jurisdiction-specific legal sufficiency requires separate review. |
+| Anti-dependency safeguards | `dependency_detector.py`, response sanitization, safety evals | Relevant to companion-safety concerns; not a blanket statement of statutory compliance. |
+| No diagnosis / clinical overclaiming | Doctrine, runtime blocking, eval coverage | Supports product boundary; it is not itself a legal safe harbor. |
+| Timed AI reminders | No general timed-reminder runtime | Known gap for laws that require periodic notices in particular deployments. |
+| Minor-specific safeguards | No general minor-targeted deployment contract | Scope must be established before claiming that minor-specific statutory duties apply or are satisfied. |
+| Backend storage | See `docs/operations/PRIVACY.md` | Privacy and data-protection obligations require separate jurisdictional analysis. |
+
+## What this means for product and communications
+
+The repository can document technical safeguards and design intent. It must not convert those facts into a legal compliance claim.
+
+Preferred wording:
+
+> SoulMap AI was designed with explicit AI-identity, crisis, anti-dependency, and non-clinical boundaries. Jurisdiction-specific compliance depends on the deployed product, users, and applicable law and requires legal review.
+
+Do not claim:
+
+> "SoulMap AI is fully compliant with [specific law]."
+
+Do not describe a proposed bill as enacted law. Do not describe an AI system as EU AI Act high-risk solely because it interacts with users experiencing emotional distress.
+
+## Source-maintenance rule
+
+When updating this document:
+
+1. Prefer enacted statutory text or the responsible regulator's official guidance.
+2. Record the exact jurisdiction, instrument, provision, status, and effective date.
+3. Separate enacted requirements from proposed legislation and general policy direction.
+4. Avoid legal conclusions that are not supported by a product-specific legal analysis.
+5. Update the **Last reviewed** date whenever a tracked law or official guidance is re-verified.

@@ -1,0 +1,40 @@
+name: Python Compatibility
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: python-compatibility-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+    runs-on: ubuntu-latest
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.12.15"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dev dependencies
+        run: uv sync --locked --python ${{ matrix.python-version }}
+
+      - name: Run test suite
+        run: uv run pytest -q
