@@ -94,7 +94,10 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     release_text = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(
         encoding="utf-8"
     )
-    assert "softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64" in release_text
+    assert (
+        "softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64"
+        in release_text
+    )
 
 
 def test_direct_dev_packages_are_locked() -> None:
