@@ -62,9 +62,11 @@ jobs:
             git commit --amend --no-edit
           fi
           version="$(uv run cz version --project)"
-          echo "branch=$branch" >> "$GITHUB_OUTPUT"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          {
+            echo "branch=$branch"
+            echo "version=$version"
+            echo "tag=v$version"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Verify bumped release tree
         run: |
