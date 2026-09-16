@@ -1,7 +1,6 @@
-from soulmap.runtime.routing import framework_selector
-
 import pytest
 
+from soulmap.runtime.routing import framework_selector
 
 _DETECTOR_DEFAULTS = {
     "detect_crisis": {"tier": 0},
@@ -91,7 +90,9 @@ def test_stage_one_second_message_forces_mirror_even_with_framework_signal(
     )
 
     history = [{"role": "user", "content": "I have been thinking a lot."}]
-    result = framework_selector.select_framework("What is the point of all this?", history)
+    result = framework_selector.select_framework(
+        "What is the point of all this?", history
+    )
 
     assert result["primary_framework"] == "MIRROR"
     assert result["mode"] == "MIRROR"
