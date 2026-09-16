@@ -39,9 +39,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "git tag -a" in workflow
     assert 'git push origin "$TAG"' in workflow
     assert "Create GitHub Release" in workflow
-    assert workflow.index("Verify checkout is the merged release commit") < workflow.index(
-        "Verify merged release tree"
-    )
+    assert workflow.index(
+        "Verify checkout is the merged release commit"
+    ) < workflow.index("Verify merged release tree")
     assert workflow.index("Verify merged release tree") < workflow.index(
         "Create immutable release tag"
     )
