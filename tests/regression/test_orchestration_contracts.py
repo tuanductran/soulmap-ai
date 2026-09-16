@@ -1,6 +1,6 @@
-import pytest
-
 from soulmap.runtime.routing import framework_selector
+
+import pytest
 
 
 _DETECTOR_DEFAULTS = {
