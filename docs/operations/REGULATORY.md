@@ -30,7 +30,7 @@ California SB 243 (Chapter 677, Statutes of 2025) became effective January 1, 20
 
 **SoulMap relevance:** the crisis and AI-identity architecture is relevant, but the repository does not currently establish that a deployed product satisfies every California statutory requirement. In particular, the repository has no general timed-reminder runtime and does not assume a minor-targeted deployment.
 
-Primary source: California Legislature, SB 243 bill history and chaptered text: https://leginfo.legislature.ca.gov/faces/billHistoryClient.xhtml?bill_id=202520260SB243
+Primary source: [California Legislature, SB 243 bill history and chaptered text](https://leginfo.legislature.ca.gov/faces/billHistoryClient.xhtml?bill_id=202520260SB243)
 
 ### New York
 
@@ -38,7 +38,7 @@ New York Assembly Bill A06767 (2025-2026) proposed requirements for AI companion
 
 **SoulMap relevance:** retain New York as a legislative-watch item rather than an active compliance requirement unless a later enacted measure is identified and verified.
 
-Primary source: New York State Assembly bill status: https://assembly.ny.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=A06767&term=
+Primary source: [New York State Assembly bill status](https://assembly.ny.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=A06767&term=)
 
 ### Connecticut - Public Act 26-15
 
@@ -48,7 +48,7 @@ Other sections of the same act have different effective dates and cover subjects
 
 **SoulMap relevance:** the repository's crisis detector, dependency safeguards, and AI-identity boundaries are relevant evidence of design intent, but they are not a legal conclusion of compliance. Connecticut's statutory cadence is deployment- and user-dependent and cannot be satisfied by a static doctrine document alone.
 
-Primary source: Connecticut General Assembly, Public Act 26-15: https://www.cga.ct.gov/2026/act/pa/pdf/2026PA-00015-R00SB-00005-PA.pdf
+Primary source: [Connecticut General Assembly, Public Act 26-15](https://www.cga.ct.gov/2026/act/pa/pdf/2026PA-00015-R00SB-00005-PA.pdf)
 
 ## European Union - AI Act
 
@@ -62,9 +62,9 @@ The Commission currently states that the rules for high-risk AI systems in Annex
 
 Primary sources:
 
-- European Commission - AI Act framework and application timeline: https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
-- European Commission - Article 50 transparency guidance: https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems
-- European Commission - high-risk classification guidance: https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems
+- [European Commission - AI Act framework and application timeline](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
+- [European Commission - Article 50 transparency guidance](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems)
+- [European Commission - high-risk classification guidance](https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems)
 
 ## SoulMap architecture and regulatory mapping
 
