@@ -16,13 +16,14 @@ jobs:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Install uv
-        uses: ./.github/actions/setup-uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
+          version: "0.12.5"
           python-version: "3.11"
 
       - name: Install dev dependencies
@@ -77,7 +78,7 @@ jobs:
         run: uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
       - name: Upload release operational summaries
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-operations-${{ github.run_id }}
           path: |
@@ -96,7 +97,7 @@ jobs:
           echo "version=$(uv run cz version --project)" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release + upload artifacts
-        uses: softprops/action-gh-release@v3.0.3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}

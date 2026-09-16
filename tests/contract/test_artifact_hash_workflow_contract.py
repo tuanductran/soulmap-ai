@@ -13,6 +13,8 @@ RELEASE_VERIFY_COMMAND = (
     "uv run soulmap release-verify --root . --output dist/release-verification.json"
 )
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
+UPLOAD_ARTIFACT_SHA = "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+RELEASE_ACTION_SHA = "efb35369e0ad2afab669f228072c1b0d510eae64"
 
 
 def _read(path: Path) -> str:
@@ -40,11 +42,11 @@ def test_release_workflow_uses_unified_release_verification_gate() -> None:
     content = _read(RELEASE_WORKFLOW)
 
     assert RELEASE_VERIFY_COMMAND in content
-    assert "uses: actions/upload-artifact@v7" in content
+    assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
     assert "release-verification.json" in content
     assert content.index(RELEASE_VERIFY_COMMAND) < content.index(
         "git push --follow-tags"
     )
     assert content.index(RELEASE_VERIFY_COMMAND) < content.index(
-        "softprops/action-gh-release@v3.0.3"
+        f"softprops/action-gh-release@{RELEASE_ACTION_SHA}"
     )

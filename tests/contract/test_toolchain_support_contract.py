@@ -13,7 +13,6 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
 CI_WORKFLOWS = tuple((REPO_ROOT / ".github" / "workflows").glob("*.yml"))
-SETUP_UV_ACTION = REPO_ROOT / ".github" / "actions" / "setup-uv" / "action.yml"
 ACTIONLINT_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "action.yml"
 
 DIRECT_DEV_PACKAGES = {
@@ -48,6 +47,9 @@ RESEARCH_LABELS = {
 }
 
 
+SETUP_UV_SHA = "bec219d24cd3e171d82865faccec33120bb574f4"
+
+
 def test_python_floor_and_ci_baseline_are_aligned() -> None:
     project_text = PYPROJECT.read_text(encoding="utf-8")
     assert 'requires-python = ">=3.11"' in project_text
@@ -72,13 +74,8 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     assert '--randomly-seed="${PYTEST_RANDOMLY_SEED}"' in ci_text
 
 
-def test_workflows_use_local_resilient_tool_installers() -> None:
-    setup_uv_text = SETUP_UV_ACTION.read_text(encoding="utf-8")
+def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     actionlint_text = ACTIONLINT_ACTION.read_text(encoding="utf-8")
-
-    assert 'UV_VERSION: "0.12.5"' in setup_uv_text
-    assert "UV_UNMANAGED_INSTALL" in setup_uv_text
-    assert "https://astral.sh/uv/${UV_VERSION}/install.sh" in setup_uv_text
     assert 'default: "1.7.12"' in actionlint_text
     assert (
         "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
@@ -88,13 +85,19 @@ def test_workflows_use_local_resilient_tool_installers() -> None:
 
     for workflow_path in CI_WORKFLOWS:
         workflow_text = workflow_path.read_text(encoding="utf-8")
-        assert "astral-sh/setup-uv" not in workflow_text
+        assert f"astral-sh/setup-uv@{SETUP_UV_SHA}" in workflow_text
+        assert "./.github/actions/setup-uv" not in workflow_text
         assert "raven-actions/actionlint" not in workflow_text
-        assert "uses: ./.github/actions/setup-uv" in workflow_text
+        assert "@v7" not in workflow_text
+        assert "@v4" not in workflow_text
 
-    assert "uses: ./.github/actions/actionlint" in (
-        REPO_ROOT / ".github" / "workflows" / "ci.yml"
-    ).read_text(encoding="utf-8")
+    release_text = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(
+        encoding="utf-8"
+    )
+    assert (
+        "softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64"
+        in release_text
+    )
 
 
 def test_direct_dev_packages_are_locked() -> None:
