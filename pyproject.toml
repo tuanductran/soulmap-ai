@@ -16,6 +16,9 @@ classifiers = [
   "Private :: Do Not Upload",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Testing",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -85,42 +88,17 @@ extend-exclude = [
 [tool.ruff.lint]
 select = [
   "E", "F", "W", "UP", "B", "I", "C4", "SIM", "RUF", "D", "ANN",
-  # Added after auditing the Ruff rule set against this repository. Every one
-  # below was already clean or nearly clean, so these lock in conventions the
-  # code already follows instead of forcing a rewrite.
-  "A",    # a local must not shadow a builtin
-  "DTZ",  # no naive datetime
-  "FURB", # modern equivalents for older idioms
-  "ISC",  # no implicit string concatenation across lines
-  "LOG",  # correct logging calls
-  "N",    # PEP 8 naming
-  "PIE",  # no unnecessary passes, dict-key duplication, or dead branches
-  "PT",   # pytest idioms, including raises over assert-in-except
-  "PTH",  # pathlib over os.path, which the repo already prefers
-  "RET",  # no redundant return branches
-  "TID",  # no relative imports, which the package-first layout forbids
+  "A", "DTZ", "FURB", "ISC", "LOG", "N", "PIE", "PT", "PTH", "RET", "TID",
 ]
-# Deliberately not selected: S (flake8-bandit) reports 1300+ hits that are
-# almost entirely `assert` inside tests, plus subprocess calls that are the
-# point of the developer tooling. CodeQL already runs on this repository, and
-# docs/operations/dependency-refresh.md says not to add a scanner merely
-# because an alternative exists. ARG conflicts with the deliberate uniform
-# detector signatures, where an unused history argument is intentional.
 ignore = ["E501"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.ruff.lint.flake8-tidy-imports]
-# The runtime ships and runs standalone, so every import is absolute from the
-# package root. A relative import would break an extracted copy.
 ban-relative-imports = "all"
 
 [tool.ruff.lint.per-file-ignores]
-# Test functions carry their meaning in the test name. Requiring a docstring on
-# every one produces churn without adding information, so only the module-level
-# docstring and the annotations are enforced there. Docstrings that explain a
-# doctrine rule behind a test are still expected where the rule is not obvious.
 "tests/**/*.py" = ["D100", "D101", "D102", "D103", "D104"]
 "scripts/**/*.py" = ["D103"]
 
@@ -132,32 +110,15 @@ indent-style = "space"
 minversion = "9.0"
 testpaths = ["tests"]
 pythonpath = ["src", "."]
-# --strict-markers turns a typo'd marker into a collection error instead of a
-# decorator that silently does nothing. --strict-config does the same for a
-# typo in this section.
 addopts = "-q --strict-markers --strict-config"
-# An xfail that starts passing means the underlying bug is fixed. Without this
-# it reports as "xpassed" and the run still goes green, so nobody notices.
 xfail_strict = true
-# pytest-timeout is a hang/deadlock signal, not a performance benchmark
-# (docs/operations/dependency-refresh.md). Its own documentation is explicit
-# that it "will not time out any tests" until a value is set, so without this
-# the installed plugin does nothing. The slowest test in the suite runs in
-# about 2.5 seconds, so 60 fires only on a genuine hang.
 timeout = 60
-# The dependency-refresh trigger policy treats an upstream deprecation warning
-# as a reason to start a refresh, which only works if the warning is visible.
-# Scoped to deprecations rather than all warnings so an unrelated
-# platform-specific warning cannot turn CI red on its own.
 filterwarnings = [
   "error::DeprecationWarning",
   "error::PendingDeprecationWarning",
 ]
 
 [tool.coverage.run]
-# The whole package, not just the runtime. ROADMAP and the Phase 8 and 12
-# notes quote coverage numbers for devtools, which a runtime-only source
-# cannot produce: a bare `pytest --cov` silently measured none of it.
 source = ["src/soulmap"]
 branch = true
 omit = [
@@ -194,22 +155,11 @@ name = "cz_conventional_commits"
 version_provider = "pep621"
 tag_format = "v$version"
 update_changelog_on_bump = true
-# The integration guides declare the package version they are compatible with,
-# and the Markdown contract checks that declaration against pyproject. A bump
-# that touched only pyproject and the changelog left all four stale, so the
-# contract went red on main and the guides told readers the wrong version.
-# Listing them here makes `cz bump` carry the version across in the same commit.
 version_files = [
   "docs/integrations/README.md:soulmap_version",
   "docs/integrations/chatgpt-instructions.md:soulmap_version",
   "docs/integrations/gemini-instructions.md:soulmap_version",
   "docs/integrations/poe-system-prompt.md:soulmap_version",
-  # Every shipped skill and every marketplace plugin declares the package
-  # version it belongs to, and a contract test pins both to pyproject. Listing
-  # them here is what keeps that true: `cz bump` rewrites them in the same
-  # commit, so a release cannot leave a skill or a plugin claiming an older
-  # version. Commitizen expands these globs, so new skill directories are
-  # picked up without editing this list.
   "SKILL.md:version",
   "skills/*/SKILL.md:version",
   ".claude-plugin/marketplace.json:version"
@@ -219,14 +169,8 @@ version_files = [
 known_first_party = ["soulmap"]
 
 [tool.vulture]
-# Matches PYTHON_SOURCE_DIR_NAMES in src/soulmap/devtools/support/repo.py, the
-# set of directories Ruff and Pyright already treat as Python source. Vulture
-# had quietly excluded scripts/ from dead-code detection while the other two
-# tools covered it.
 paths = ["src", "tests", "scripts"]
-
 min_confidence = 80
-
 exclude = [
   ".venv/",
   ".git/",
@@ -237,7 +181,6 @@ exclude = [
   ".ruff_cache/",
   ".mypy_cache/",
 ]
-
 ignore_names = [
   "main",
 ]
