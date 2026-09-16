@@ -22,7 +22,7 @@ jobs:
       contents: read
     outputs:
       version: ${{ steps.version.outputs.version }}
-      artifact_name: ${{ steps.artifacts.outputs.artifact_name }}
+      artifact_name: ${{ steps.artifact_name.outputs.artifact_name }}
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     steps:
@@ -85,7 +85,6 @@ jobs:
           uv run python scripts/verify_extracted_artifacts.py
 
       - name: Upload release artifacts for publish
-        id: artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-finalize-${{ github.run_id }}
@@ -97,7 +96,7 @@ jobs:
             dist/release-provenance.json
           if-no-files-found: error
           retention-days: 14
-        
+
       - name: Export artifact name
         id: artifact_name
         run: echo "artifact_name=release-finalize-${{ github.run_id }}" >> "$GITHUB_OUTPUT"
