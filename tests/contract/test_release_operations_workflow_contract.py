@@ -23,7 +23,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
 def test_release_finalize_publishes_only_after_merged_main_verification() -> None:
     workflow = (ROOT / ".github" / "workflows" / "release-finalize.yml").read_text()
 
-    assert 'types: [closed]' in workflow
+    assert "types: [closed]" in workflow
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
