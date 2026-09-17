@@ -137,11 +137,71 @@ def test_run_groups_eval_uses_post_stage1_history_for_topic_routing(
     result = eval_groups.run_groups_eval()
 
     assert result["ok"] is True
-    assert captured_history == [
-        {"role": "user", "content": "Earlier reflection."},
-        {"role": "user", "content": "Continuing the reflection."},
-        {"role": "user", "content": "message"},
+    # Two prior turns (so Stage 1's override does not fire), then the
+    # message itself as the last turn (the production contract locked by
+    # tests/integration/test_framework_selector_priorities.py: detectors
+    # such as dependency_detector score `history` alone and expect the
+    # current turn already included as its last entry).
+    assert len(captured_history) == 3
+    assert captured_history[-1] == {"role": "user", "content": "message"}
+    assert all(item["role"] == "user" for item in captured_history)
+    # The two filler turns must not read as "escalating" into the message:
+    # they need to be longer than any real dataset message and
+    # non-increasing between themselves, or emotional_intensity_detector's
+    # escalation heuristic (non-decreasing length + a common word like
+    # "everything"/"never" in the latest turn) fires on nearly any real test
+    # message regardless of its actual content. See eval_groups.py's
+    # run_groups_eval for the incident this guards against. 128 is the
+    # longest message currently in evals/datasets/groups.json.
+    longest_dataset_message = 128
+    filler_lengths = [len(item["content"]) for item in captured_history[:2]]
+    assert all(length > longest_dataset_message for length in filler_lengths)
+    assert filler_lengths[0] >= filler_lengths[1]
+
+
+def test_run_groups_eval_filler_history_does_not_force_false_escalation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Lock the incident: short filler turns falsely read as "escalating".
+
+    A message that is merely longer than two short filler lines, and that
+    contains a common word from emotional-deescalation.md's intensity
+    modifiers (e.g. "everything", "never"), is not evidence of rising
+    distress. With short single-line fillers ("Earlier reflection.",
+    "Continuing the reflection."), the fillers' lengths were non-decreasing
+    into nearly any real message, and the message almost always supplied a
+    matching word, so check_escalation's heuristic fired on messages with no
+    genuine intensity signal at all. That pushed unrelated topic messages
+    (direction, shadow, creative drought, and others) into MODERATE or HIGH
+    intensity, where framework_selector's real, correctly-tested overrides
+    then masked their true routing behind DE_ESCALATION. This runs the real
+    selector end to end (no detector mocking) against one representative
+    case from that incident.
+    """
+    groups = [
+        {
+            "g": "Regression",
+            "cat": "target",
+            "items": [
+                {
+                    "t": (
+                        "I used to be able to write. Now I stare at the blank "
+                        "page and nothing comes out."
+                    ),
+                    "note": "Creative drought must not be masked by false escalation.",
+                    "expect_primary_framework": "CREATIVE_DROUGHT",
+                    "expect_mode": "MIRROR",
+                }
+            ],
+        }
     ]
+    monkeypatch.setattr(eval_groups, "_load_groups", lambda: groups)
+
+    result = eval_groups.run_groups_eval()
+    summary = cast(dict[str, object], result["summary"])
+
+    assert result["ok"] is True
+    assert summary["failed_items"] == 0
 
 
 def test_run_groups_eval_reports_failed_source_and_assertion(
