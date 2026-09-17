@@ -99,6 +99,51 @@ def test_run_groups_eval_filters_and_counts_assertions(
     assert results[1]["ok"] is None
 
 
+def test_run_groups_eval_uses_post_stage1_history_for_topic_routing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    groups = [
+        {
+            "g": "Routing",
+            "cat": "target",
+            "items": [{"t": "message", "note": "topic routing"}],
+        }
+    ]
+    captured_history: list[dict[str, str]] = []
+
+    monkeypatch.setattr(eval_groups, "_load_groups", lambda: groups)
+    monkeypatch.setattr(
+        eval_groups,
+        "classify_message",
+        lambda _message: {"tier": "ALLOW", "category": "inner_work"},
+    )
+
+    def fake_select_framework(
+        _message: str,
+        history: list[dict[str, str]],
+        _context: dict[str, object],
+    ) -> dict[str, object]:
+        captured_history.extend(history)
+        return {
+            "primary_framework": "MIRROR",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "safety_status": "PASS",
+            "safety_reason": "no_override",
+        }
+
+    monkeypatch.setattr(eval_groups, "select_framework", fake_select_framework)
+
+    result = eval_groups.run_groups_eval()
+
+    assert result["ok"] is True
+    assert captured_history == [
+        {"role": "user", "content": "Earlier reflection."},
+        {"role": "user", "content": "Continuing the reflection."},
+        {"role": "user", "content": "message"},
+    ]
+
+
 def test_run_groups_eval_reports_failed_source_and_assertion(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
