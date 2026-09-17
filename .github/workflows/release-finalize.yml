@@ -105,7 +105,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: release-finalize-failure-${{ github.run_id }}
+          name: release-finalize-failure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             dist/release-verification.json
             dist/release-provenance.json
@@ -170,7 +170,7 @@ jobs:
           fi
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        uses: softprops/action-gh-release@efb35369e0ad2af669f228072c1b0d510eae64 # v3.0.3
         with:
           tag_name: v${{ needs.verify.outputs.version }}
           name: v${{ needs.verify.outputs.version }}
