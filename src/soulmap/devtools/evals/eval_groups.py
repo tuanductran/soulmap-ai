@@ -156,7 +156,15 @@ def run_groups_eval(
 
         for item in group["items"]:
             message = item["t"]
-            history = [{"role": "user", "content": message}]
+            # Grouped routing cases are standalone topic-routing regressions,
+            # not Stage 1 conversation tests. Give them a completed
+            # pre-existing conversation context so the Stage 1 contract is
+            # exercised separately by the dedicated routing-priority suite.
+            history = [
+                {"role": "user", "content": "Earlier reflection."},
+                {"role": "user", "content": "Continuing the reflection."},
+                {"role": "user", "content": message},
+            ]
             scope = classify_message(message)
             selection = select_framework(
                 message,
@@ -272,13 +280,9 @@ def main(argv: list[str] | None = None) -> int:
         description="Run framework-routing QA checks from evals/datasets/groups.json."
     )
     parser.add_argument("--category", help="Only evaluate one GROUPS category.")
-    parser.add_argument("--group", dest="group_name", help="Only evaluate one group.")
+    parser.add_argument("--group", dest="group_name", help="Only evaluate the group with this name.")
     args = parser.parse_args(argv)
 
     result = run_groups_eval(category=args.category, group_name=args.group_name)
     print(json.dumps(result, ensure_ascii=False))
     return 0 if result["ok"] else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
