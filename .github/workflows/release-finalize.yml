@@ -101,6 +101,17 @@ jobs:
         id: artifact_name
         run: echo "artifact_name=release-finalize-${{ github.run_id }}" >> "$GITHUB_OUTPUT"
 
+      - name: Preserve verification diagnostics on failure
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-finalize-failure-${{ github.run_id }}
+          path: |
+            dist/release-verification.json
+            dist/release-provenance.json
+          if-no-files-found: warn
+          retention-days: 14
+
   publish:
     needs: verify
     if: >-
