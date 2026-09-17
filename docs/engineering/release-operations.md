@@ -9,7 +9,7 @@ The release workflow creates two machine-readable summaries:
 - `dist/release-verification.json` - artifact and integration contract results.
 - `dist/release-provenance.json` - release version, exact source commit, UTC timestamp, and SHA-256 hashes for every published artifact.
 
-The provenance source commit is the exact commit produced by the version bump step, not the workflow's original dispatch SHA. The provenance file is retained as a workflow artifact and published with the GitHub Release.
+The provenance source commit is the exact merge commit checked out by Release Finalize, not the workflow's original dispatch SHA or the version-bump commit. The provenance file is retained as a workflow artifact and published with the GitHub Release.
 
 Manual verification:
 
@@ -20,6 +20,18 @@ uv run soulmap release-health --root . --provenance dist/release-provenance.json
 ```
 
 A release must not be promoted if either verification or health fails.
+
+## Workflow trust boundary
+
+Release publication is intentionally split across two workflows/jobs with different trust levels:
+
+1. **Release Prep** runs only from `main` through manual `workflow_dispatch`. It has the write permissions needed to create the release-preparation branch and pull request using the dedicated `SOULMAP_RELEASE_TOKEN`.
+2. **Release Finalize / verify** runs after a release-preparation pull request is merged into `main`. It checks out the exact merge commit with persisted credentials disabled and runs repository-controlled verification with `contents: read` only. It produces the release verification, provenance, health result, and release artifacts.
+3. **Release Finalize / publish** runs only after the verification job succeeds. It checks out the same exact merge commit, downloads the verified run-scoped artifacts, confirms their required files exist, and is the only finalization job granted `contents: write` so it can create an immutable release tag and GitHub Release.
+
+The publish job must not run repository-controlled tests, evals, builds, or other verification commands. Verification happens before the write-capable boundary, and the publish job consumes the artifacts produced by that verified run.
+
+The workflows therefore do not use a write-capable `pull_request` job to execute untrusted PR code, and the verification job does not receive release-mutation credentials.
 
 ## Health check
 
