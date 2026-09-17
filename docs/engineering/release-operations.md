@@ -9,7 +9,7 @@ The release workflow creates two machine-readable summaries:
 - `dist/release-verification.json` - artifact and integration contract results.
 - `dist/release-provenance.json` - release version, exact source commit, UTC timestamp, and SHA-256 hashes for every published artifact.
 
-The provenance source commit is the exact commit produced by the version bump step, not the workflow's original dispatch SHA. The provenance file is retained as a workflow artifact and published with the GitHub Release.
+The provenance source commit is the exact merge commit checked out by Release Finalize, not the workflow's original dispatch SHA or the version-bump commit. The provenance file is retained as a workflow artifact and published with the GitHub Release.
 
 Manual verification:
 
