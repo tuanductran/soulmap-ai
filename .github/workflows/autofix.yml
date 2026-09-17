@@ -4,7 +4,7 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   autofix:
@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Install uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
@@ -23,10 +25,7 @@ jobs:
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
 
-      - name: Apply repo formatter
-        run: uv run soulmap format
-
-      - name: Push autofix changes
-        uses: autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8
-        with:
-          commit-message: "style(ci): auto-apply repo formatting"
+      - name: Check repo formatter
+        run: |
+          uv run soulmap format
+          git diff --exit-code -- .

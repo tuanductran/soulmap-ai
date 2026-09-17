@@ -195,8 +195,9 @@ independence posture.
 
 ## CI workflow checks
 
-Inspect `.github/workflows/autofix.yml` and confirm it still runs PR autofix via
-`autofix-ci/action`.
+Inspect `.github/workflows/autofix.yml` and confirm the PR formatting workflow is
+**check-only**: it runs `uv run soulmap format` and fails when formatting changes would
+be required, but it does not push commits back to the pull request.
 
 Inspect `.github/workflows/ci.yml` and confirm it still covers the repo's critical
 contracts:
@@ -221,8 +222,8 @@ contracts:
 Inspect `.github/workflows/release.yml` and confirm it still verifies the repo before
 release and rebuilds both distribution artifacts.
 
-If PR autofix is expected, also confirm the `autofix.ci` GitHub App is installed for the
-repository. Without the app, the workflow step can exist but cannot push fix commits.
+The PR formatting check does not require an `autofix.ci` GitHub App because it has no
+write-back capability and does not persist GitHub credentials.
 
 ## Exploratory testing charters
 
@@ -319,14 +320,12 @@ Use these when automated checks are green but you want to probe human-risk defec
   - a hedge that still reads as agreement, for example "it could be true for you"
   - skipping the one-question close or the return to the user's lived experience
 - Regression target:
-  - if a real user message reveals a phrasing these files do not yet cover, add it as
-    a positive or near-miss example in the relevant existing file, not a new file
+  - if a real user message reveals a phrasing these files do not yet cover, add it as a
+    positive or near-miss example in the relevant existing file, not a new file
 
 ### Charter 5, a regression test that cannot fail
 
-- Risk: a test or eval case runs, prints a result, and is counted toward the suite's
-  pass total, but no input to the code it claims to cover would ever make it fail.
-  It is trusted because it is green, and the gap it should have caught ships anyway.
+- Risk: a test or eval case runs, prints a result, and is counted toward the suite's pass total, but no input to the code it claims to cover would ever make it fail.
 - Files or flows: any new pytest test, `evals/datasets/*.json` case, or CI step,
   especially ones added for a safety, routing, or packaging fix
 - Probe: this charter is not a fixed file list, it is a method applied to every new

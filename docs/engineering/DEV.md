@@ -183,14 +183,19 @@ uv run soulmap test -n auto -q
 If you use the repo bootstrap commands above, the commit-time hooks are installed
 automatically.
 
-## Pull request autofix
+## Pull request formatting
 
-This repo also uses `autofix.ci` in `.github/workflows/ci.yml` to push formatting fixes
-back to pull requests after `uv run soulmap format` runs on GitHub Actions.
+The PR formatting workflow is **check-only**. It runs the canonical formatter on GitHub
+Actions and fails when formatting would change the pull request, but it does not push
+formatting commits back to the branch.
 
-This requires the `autofix.ci` GitHub App to be installed for the repository. It is a
-pull-request convenience layer, not a replacement for local `lefthook` checks or the
-main CI quality gates.
+Run the formatter locally before pushing:
+
+```bash
+uv run soulmap format
+```
+
+No GitHub App or persisted GitHub credentials are required for this check-only workflow.
 
 ## Adding new knowledge files
 
