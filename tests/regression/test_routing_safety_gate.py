@@ -26,6 +26,8 @@ DEFAULTS = {
     "detect_divine_guidance": {"divine_guidance_detected": False},
     "detect_sacred_polarity": {"sacred_polarity_detected": False},
     "detect_spiritual_purpose": {"spiritual_purpose_detected": False},
+    "detect_soulmate_longing": {"soulmate_longing_detected": False},
+    "detect_partnership_patterns": {"partnership_patterns_detected": False},
     "detect_patterns": {},
     "detect_stage": {"stage": 1},
 }
