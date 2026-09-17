@@ -141,10 +141,15 @@ def test_every_routing_path_calls_safety_gate(
 
     monkeypatch.setattr(framework_selector, "apply_safety_gate", fake_apply_safety_gate)
 
-    # Run selection
-    history = (
-        [{"role": "user", "content": "hi"}] if "detect_patterns" in overrides else []
-    )
+    # Run selection. Two prior user turns puts this past the Stage 1
+    # early-conversation override (orchestration.md Rule 4, enforced in
+    # production as of the routing-priority-contracts fix), so each mocked
+    # detector's outcome is what actually reaches primary_framework instead
+    # of being forced to MIRROR.
+    history = [
+        {"role": "user", "content": "hi"},
+        {"role": "user", "content": "hi"},
+    ]
     result = framework_selector.select_framework("hi", history)
 
     assert called["count"] == 1, (
@@ -247,9 +252,18 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     sanctuary mode for a reply that ends with a question. The more the person
     was crying, the less grief support they got.
     """
-    quiet = framework_selector.select_framework("My dog died this morning", [])
+    # Two prior user turns puts this past the Stage 1 early-conversation
+    # override (orchestration.md Rule 4), isolating the moderate-intensity
+    # grief behavior this test actually targets.
+    prior_history = [
+        {"role": "user", "content": "I wanted to talk about something that happened."},
+        {"role": "user", "content": "It has been sitting with me since this morning."},
+    ]
+    quiet = framework_selector.select_framework(
+        "My dog died this morning", prior_history
+    )
     distressed = framework_selector.select_framework(
-        "My dog died this morning and I cannot stop crying", []
+        "My dog died this morning and I cannot stop crying", prior_history
     )
 
     assert quiet["primary_framework"] == "GRIEF"

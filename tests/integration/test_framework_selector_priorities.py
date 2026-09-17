@@ -192,7 +192,16 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -214,7 +223,16 @@ def test_framework_selector_prioritizes_existential_over_direction() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -236,7 +254,16 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -260,7 +287,16 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -283,7 +319,16 @@ def test_framework_selector_attaches_meaning_integration_as_secondary_for_direct
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -304,7 +349,16 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     message = "I did it, and I finally understand why this took so long."
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
