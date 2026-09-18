@@ -183,11 +183,15 @@ abandon synthesis and apply the safety response immediately.
 
 **Rule 4, stage 1 overrides frameworks**: If the user is classified as Stage 1 and
 the message is their first or second, use Mirror with minimal depth regardless of what
-the detector selects. Presence before architecture.
+the detector selects. Presence before architecture. Exception: Rule 5 still applies -
+see below.
 
 **Rule 5, breakthrough overrides continuation**: If a genuine breakthrough signal
 appears mid-session, switch to Meaning Integration immediately. The insight must be
-honored before the conversation continues.
+honored before the conversation continues. This takes precedence over Rule 4: a
+strong breakthrough on the person's first or second message is honored immediately
+rather than flattened to Mirror. A real breakthrough is rare that early, but when one
+occurs it should not be lost.
 
 ## Output validation contract
 
