@@ -377,7 +377,7 @@ def test_framework_selector_high_intensity_has_no_secondary_with_real_detectors(
     genuine message that trips detect_intensity to HIGH *and* trips
     detect_anger and detect_somatic for real (not mocked) must still come out
     with primary_framework DE_ESCALATION, mode SANCTUARY, and no secondary
-    layer at all — HIGH intensity forces grounding only, with nothing layered
+    layer at all - HIGH intensity forces grounding only, with nothing layered
     on top of it, even when anger and somatic signals are genuinely present
     together.
     """
@@ -416,7 +416,7 @@ def test_framework_selector_strong_breakthrough_outranks_stage_one_with_real_det
     actual first message (empty history, so Stage 1 genuinely applies).
     """
     message = (
-        "I finally understand — that's my pattern, and I see it clearly "
+        "I finally understand, that's my pattern, and I see it clearly "
         "for the first time."
     )
     payload = {
