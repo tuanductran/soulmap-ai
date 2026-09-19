@@ -399,6 +399,11 @@ def test_soulmap_demo_prediction_case_surfaces_scope_block() -> None:
 
 
 def test_soulmap_demo_existential_case_selects_existential() -> None:
+    # This is a genuine first user message (no history), so
+    # skills/meta/orchestration.md Rule 4 forces Stage 1 Mirror here
+    # regardless of the existential topic signal. This assertion previously
+    # expected EXISTENTIAL, which predates the production Stage 1
+    # early-conversation override.
     result = run_process(
         [
             sys.executable,
@@ -412,7 +417,8 @@ def test_soulmap_demo_existential_case_selects_existential() -> None:
 
     assert result.returncode == 0, result.stderr
     data = json.loads(result.stdout)
-    assert data["primary_framework"] == "EXISTENTIAL"
+    assert data["primary_framework"] == "MIRROR"
+    assert data["mode"] == "MIRROR"
 
 
 def test_scope_classifier_does_not_blacklist_replaying_as_entertainment() -> None:

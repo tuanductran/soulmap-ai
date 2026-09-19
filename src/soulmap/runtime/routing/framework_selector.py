@@ -313,23 +313,22 @@ async def select_framework_async(
         results = await asyncio.gather(*tasks.values())
         res = dict(zip(tasks.keys(), results, strict=True))
 
-        somatic_active = res["somatic"].get("somatic_detected", False)
-        anger_active = res["anger"].get("anger_detected", False)
-        bypass_active = res["bypass"].get("bypass_detected", False)
-
+        # somatic/anger/bypass are still run here because their results feed
+        # safety/debug context (see debug_events above), but per
+        # skills/meta/orchestration.md HIGH intensity forces De-escalation /
+        # Sanctuary with NO secondary layer: at this intensity the person
+        # needs grounding only, not a framework layered on top of it.
         selection = {
             "primary_framework": "DE_ESCALATION",
-            "secondary_layer": (
-                "anger"
-                if anger_active
-                else (
-                    "bypass"
-                    if bypass_active
-                    else ("somatic" if somatic_active else None)
-                )
-            ),
+            "secondary_layer": None,
             "mode": "SANCTUARY",
-            "context": {"intensity": intensity, "crisis": crisis},
+            "context": {
+                "intensity": intensity,
+                "crisis": crisis,
+                "somatic": res["somatic"],
+                "anger": res["anger"],
+                "bypass": res["bypass"],
+            },
             "instruction": (
                 "SANCTUARY MODE. Activate emotional-deescalation.md 3-step "
                 "protocol: acknowledge → ground → normalize. NO 5-step framework. "
@@ -605,6 +604,55 @@ async def select_framework_async(
             pattern_history,
             debug_events=debug_events,
         )
+
+    # Rule 5 (breakthrough overrides continuation) and Rule 4 (stage 1
+    # overrides frameworks) in skills/meta/orchestration.md both fire before
+    # ordinary NORMAL topic routing, in that order: a genuine strong
+    # breakthrough must be honored immediately even in the first or second
+    # message of a session, so it is checked ahead of the Stage 1 override.
+    # Neither check runs above this point in the function: crisis, dependency,
+    # and HIGH intensity are all still evaluated first, so safety always
+    # outranks both.
+    if res["insight"].get("strength") == "strong":
+        selection = {
+            "primary_framework": "MEANING_INTEGRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["insight"],
+            "instruction": (
+                "Activate meaning-integration.md. Hold the insight first. Do NOT "
+                "prescribe change. End with conscious-noticing question."
+            ),
+            "blocked": [],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
+    if user_count <= 1 and current_stage == 1:
+        somatic_active = res["somatic"].get("somatic_detected", False)
+        anger_active = res["anger"].get("anger_detected", False)
+        bypass_active = res["bypass"].get("bypass_detected", False)
+        selection = {
+            "primary_framework": "MIRROR",
+            "secondary_layer": (
+                "anger"
+                if anger_active
+                else (
+                    "bypass"
+                    if bypass_active
+                    else ("somatic" if somatic_active else None)
+                )
+            ),
+            "mode": "MIRROR",
+            "context": {"stage": current_stage},
+            "instruction": (
+                "Stage 1 early-conversation override: this is the user's first "
+                "or second message. Presence before architecture. Use MIRROR "
+                "mode with minimal depth regardless of any topic detected. End "
+                "with one gentle question from deep-inquiry-bank.md."
+            ),
+            "blocked": [],
+        }
+        return _finish(message, history, memory, selection, debug_events)
 
     if (
         res["grief"].get("grief_detected")

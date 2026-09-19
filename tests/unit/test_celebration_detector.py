@@ -14,6 +14,25 @@ def _msg(text: str) -> list[dict[str, str]]:
     return [{"role": "user", "content": text}]
 
 
+def _later_turn(text: str) -> list[dict[str, str]]:
+    """Build history for a message past the Stage 1 early-conversation window.
+
+    Two prior user turns puts the call past the orchestration.md Rule 4
+    Stage 1 override, so the assertions using this helper exercise
+    celebration-vs-other-framework routing rather than Stage 1 behavior.
+    """
+    return [
+        {
+            "role": "user",
+            "content": (
+                "I have been sitting with a lot of different thoughts and "
+                "feelings over the past few days."
+            ),
+        },
+        {"role": "user", "content": text},
+    ]
+
+
 # ---------------------------------------------------------------------------
 # detect_celebration - positive cases
 # ---------------------------------------------------------------------------
@@ -152,17 +171,17 @@ class TestDetectCelebrationNegativeOverride:
 class TestFrameworkSelectorP9b:
     def test_win_routes_to_integration_celebration(self) -> None:
         msg = "I finally did it. I said the thing I had been afraid to say."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _later_turn(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_relief_routes_to_integration_celebration(self) -> None:
         msg = "I feel lighter than I have in months. The worst is over."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _later_turn(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_gratitude_routes_to_integration_celebration(self) -> None:
         msg = "I am so grateful for everything that happened."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _later_turn(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_recognized_progress_routes_to_integration_celebration(self) -> None:
@@ -190,7 +209,7 @@ class TestFrameworkSelectorP9b:
 
     def test_instruction_field_references_framework_file(self) -> None:
         msg = "I finally did it."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _later_turn(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
         instruction = r.get("instruction", "")
         assert isinstance(instruction, str)
@@ -198,7 +217,7 @@ class TestFrameworkSelectorP9b:
 
     def test_mode_is_mirror(self) -> None:
         msg = "I finally did it."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _later_turn(msg), {})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
         assert r["mode"] == "MIRROR"
 

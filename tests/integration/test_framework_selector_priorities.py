@@ -192,7 +192,16 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -214,7 +223,16 @@ def test_framework_selector_prioritizes_existential_over_direction() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -236,7 +254,16 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -260,7 +287,16 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -283,7 +319,16 @@ def test_framework_selector_attaches_meaning_integration_as_secondary_for_direct
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
@@ -304,10 +349,88 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     message = "I did it, and I finally understand why this took so long."
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        # Two prior user turns puts this past the Stage 1 early-conversation
+        # override (orchestration.md Rule 4), so the assertion below is
+        # exercising topic-priority routing rather than Stage 1 behavior.
+        "history": [
+            {
+                "role": "user",
+                "content": "I have been sitting with a lot of different thoughts and feelings over the past few days and wanted to talk through where things stand for me right now.",
+            },
+            {"role": "user", "content": message},
+        ],
         "memory": {},
     }
 
     data = run_framework_selector(payload)
 
     assert data["primary_framework"] == "MEANING_INTEGRATION"
+
+
+def test_framework_selector_high_intensity_has_no_secondary_with_real_detectors() -> (
+    None
+):
+    """Rule 2 (sanctuary overrides parts), exercised end to end.
+
+    tests/regression/test_routing_priority_contracts.py locks this with every
+    detector mocked. This is the same contract against the real pipeline: a
+    genuine message that trips detect_intensity to HIGH *and* trips
+    detect_anger and detect_somatic for real (not mocked) must still come out
+    with primary_framework DE_ESCALATION, mode SANCTUARY, and no secondary
+    layer at all - HIGH intensity forces grounding only, with nothing layered
+    on top of it, even when anger and somatic signals are genuinely present
+    together.
+    """
+    message = "I'm so angry I can't think straight and my heart is racing right now."
+    payload = {
+        "message": message,
+        "history": [],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "DE_ESCALATION"
+    assert data["mode"] == "SANCTUARY"
+    assert data["secondary_layer"] is None
+    # Confirm the real detectors actually fired, so this is proving the
+    # priority rule and not just a message that happened to be quiet.
+    context = data["context"]
+    assert context["intensity"]["level"] == "HIGH"
+    assert context["anger"]["anger_detected"] is True
+    assert context["somatic"]["somatic_detected"] is True
+
+
+def test_framework_selector_strong_breakthrough_outranks_stage_one_with_real_detectors() -> (
+    None
+):
+    """Rule 5 vs Rule 4, exercised end to end on a genuine first message.
+
+    orchestration.md's Rule 4 ("stage 1 overrides frameworks") and Rule 5
+    ("breakthrough overrides continuation") do not state which wins when a
+    genuine first message itself carries a strong breakthrough signal.
+    Production deliberately checks Rule 5 before Rule 4 (see the comment in
+    framework_selector.select_framework_async), so a strong insight is
+    honored even on the very first message rather than being flattened to
+    Mirror. This locks that decision with real detectors, not mocks, on an
+    actual first message (empty history, so Stage 1 genuinely applies).
+    """
+    message = (
+        "I finally understand, that's my pattern, and I see it clearly "
+        "for the first time."
+    )
+    payload = {
+        "message": message,
+        "history": [],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "MEANING_INTEGRATION"
+    assert data["secondary_layer"] is None
+    # Confirm this genuinely is a first message and a genuinely strong
+    # insight, so the assertion above is proving the Rule 5 vs Rule 4
+    # tie-break rather than something else routing here by coincidence.
+    context = data["context"]
+    assert context["strength"] == "strong"

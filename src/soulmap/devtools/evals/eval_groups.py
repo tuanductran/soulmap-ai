@@ -156,7 +156,55 @@ def run_groups_eval(
 
         for item in group["items"]:
             message = item["t"]
-            history = [{"role": "user", "content": message}]
+            # Grouped routing cases are standalone topic-routing regressions,
+            # not Stage 1 conversation tests. Give them a completed
+            # pre-existing conversation context so the Stage 1 contract is
+            # exercised separately by the dedicated routing-priority suite.
+            #
+            # `history`'s last turn intentionally repeats `message`:
+            # tests/integration/test_framework_selector_priorities.py locks
+            # that as the real production contract (dependency_detector
+            # scores `history` alone, with no separate `message` argument,
+            # so the current turn must already be its last entry).
+            #
+            # The two filler turns before it stand in for "a completed
+            # pre-existing conversation" so Stage 1's override does not fire.
+            # They used to be single short placeholder lines ("Earlier
+            # reflection." / "Continuing the reflection."). That
+            # inadvertently gamed emotional_intensity_detector's escalation
+            # heuristic, which flags rising intensity when the last three
+            # user turns are non-decreasing in length and the latest one
+            # contains a common word such as "everything" or "never": two
+            # short filler lines followed by any real, longer test message
+            # satisfied both conditions almost by construction, regardless
+            # of the message's actual content. That gave a false escalation
+            # bonus that pushed NORMAL-intensity messages into MODERATE, and
+            # MODERATE ones into HIGH, which is what produced the
+            # grouped-routing failures this history construction was
+            # mistakenly blamed for. Sizing the filler turns in line with
+            # this dataset's real message lengths (see
+            # tests/unit/test_eval_groups.py for the bound this relies on)
+            # keeps them from trivially reading as "shorter than whatever
+            # comes next."
+            history = [
+                {
+                    "role": "user",
+                    "content": (
+                        "I have been sitting with a lot lately, turning things over "
+                        "in my head slowly without landing anywhere in particular, "
+                        "just letting the different threads sit there for a while."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        "Still turning it over the same way, unhurried. There is "
+                        "more I want to get into, so I am going to keep going with "
+                        "wherever this next part of it ends up leading me today."
+                    ),
+                },
+                {"role": "user", "content": message},
+            ]
             scope = classify_message(message)
             selection = select_framework(
                 message,
@@ -272,13 +320,11 @@ def main(argv: list[str] | None = None) -> int:
         description="Run framework-routing QA checks from evals/datasets/groups.json."
     )
     parser.add_argument("--category", help="Only evaluate one GROUPS category.")
-    parser.add_argument("--group", dest="group_name", help="Only evaluate one group.")
+    parser.add_argument(
+        "--group", dest="group_name", help="Only evaluate the group with this name."
+    )
     args = parser.parse_args(argv)
 
     result = run_groups_eval(category=args.category, group_name=args.group_name)
     print(json.dumps(result, ensure_ascii=False))
     return 0 if result["ok"] else 1
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
