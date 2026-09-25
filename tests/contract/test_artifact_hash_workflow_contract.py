@@ -79,4 +79,4 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     )
     assert content.index(
         f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}"
-    ) < content.index(f"uses: softprops/action-gh-release@{RELEASE_ACTION_SHA}")
+    ) < content.index("python .github/python/release/publish.py")
