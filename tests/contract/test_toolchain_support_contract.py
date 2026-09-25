@@ -48,7 +48,6 @@ RESEARCH_LABELS = {
 
 
 SETUP_UV_SHA = "c18668ad3cf93ea998bef934396af7bb5c839dc7"
-RELEASE_ACTION_SHA = "efb35369e0ad2afab669f228072c1b0d510eae64"
 
 
 def test_python_floor_and_ci_baseline_are_aligned() -> None:
@@ -99,8 +98,7 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     release_finalize_text = (
         REPO_ROOT / ".github" / "workflows" / "release-finalize.yml"
     ).read_text(encoding="utf-8")
-    assert f"softprops/action-gh-release@{RELEASE_ACTION_SHA}" in release_finalize_text
-    assert "softprops/action-gh-release@" not in release_prep_text
+    assert "python .github/python/release/publish.py" in release_finalize_text
     assert "actions/upload-artifact@" in release_finalize_text
     assert "git push --follow-tags" not in release_prep_text
 

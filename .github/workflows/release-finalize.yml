@@ -24,7 +24,8 @@ jobs:
       (github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha != '') ||
       (github.event.pull_request.merged == true &&
       startsWith(github.event.pull_request.head.ref, 'release/prep-'))
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     permissions:
       contents: read
     outputs:
@@ -143,7 +144,8 @@ jobs:
       github.event.pull_request.merged == true &&
       startsWith(github.event.pull_request.head.ref, 'release/prep-')) &&
       needs.verify.result == 'success'
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     permissions:
       contents: write
       id-token: write
@@ -184,36 +186,14 @@ jobs:
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
 
-      - name: Configure git author for release tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Checkout release tooling
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.sha }}
-          path: .release-tools
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Create immutable release tag
+      - name: Create immutable release tag and publish GitHub Release
         env:
           SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           RELEASE_TAG: v${{ needs.verify.outputs.version }}
           RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_ARTIFACT_DIR: dist
         run: |
           test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
-          python .release-tools/.github/python/release_tag.py
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
-        with:
-          tag_name: v${{ needs.verify.outputs.version }}
-          name: v${{ needs.verify.outputs.version }}
-          files: |
-            dist/soulmap-ai.zip
-            dist/soulmap-ai.skill
-            dist/soulmap-ai-library.json
-            dist/release-verification.json
-            dist/release-provenance.json
+          python .github/python/release_tag.py
+          python .github/python/release/publish.py
