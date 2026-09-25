@@ -16,11 +16,11 @@ def diagnostics_module() -> dict[str, object]:
     return runpy.run_path(str(SCRIPT), run_name="pytest_diagnostics_test")
 
 
-def test_build_test_command_preserves_seed_and_worker_mode(
+def test_build_test_command_supports_full_and_focused_scopes(
     diagnostics_module: dict[str, object],
 ) -> None:
     build_test_command = cast(
-        Callable[[int, str], list[str]], diagnostics_module["build_test_command"]
+        Callable[..., list[str]], diagnostics_module["build_test_command"]
     )
     assert build_test_command(12345, "auto") == [
         "uv",
@@ -33,7 +33,19 @@ def test_build_test_command_preserves_seed_and_worker_mode(
         "--",
         "--randomly-seed=12345",
     ]
-    assert build_test_command(12345, "0")[-3:] == ["-q", "--", "--randomly-seed=12345"]
+    focused = build_test_command(12345, "auto", scope="focused")
+    assert focused[:9] == [
+        "uv",
+        "run",
+        "soulmap",
+        "test",
+        "-n",
+        "auto",
+        "-q",
+        "tests/contract",
+        "tests/integration",
+    ]
+    assert focused[-2:] == ["--", "--randomly-seed=12345"]
 
 
 def test_persist_seed_writes_github_env(
@@ -61,12 +73,14 @@ def test_failure_summary_contains_serial_reproduction(
     write_failure_summary = cast(
         Callable[[int, str, int], None], diagnostics_module["_write_failure_summary"]
     )
-    write_failure_summary(2468, "auto", 1)
+    write_failure_summary(2468, "auto", 1, "focused")
 
     summary = summary_file.read_text(encoding="utf-8")
+    assert "Test scope: `focused`" in summary
     assert "pytest-randomly seed: `2468`" in summary
     assert "pytest-xdist workers: `auto`" in summary
-    assert "uv run soulmap test -n 0 -q -- --randomly-seed=2468" in summary
+    assert "tests/contract" in summary
+    assert "--randomly-seed=2468" in summary
 
 
 def test_main_returns_test_failure_and_writes_diagnostics(
@@ -80,6 +94,7 @@ def test_main_returns_test_failure_and_writes_diagnostics(
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary_file))
     monkeypatch.setenv("PYTEST_RANDOMLY_SEED", "1357")
     monkeypatch.setenv("SOULMAP_PYTEST_WORKERS", "auto")
+    monkeypatch.setenv("SOULMAP_PYTEST_SCOPE", "focused")
     monkeypatch.setattr(diagnostics_module["platform"], "platform", lambda: "test-os")
 
     calls: list[list[str]] = []
@@ -93,9 +108,9 @@ def test_main_returns_test_failure_and_writes_diagnostics(
 
     main = cast(Callable[[], int], diagnostics_module["main"])
     build_test_command = cast(
-        Callable[[int, str], list[str]], diagnostics_module["build_test_command"]
+        Callable[..., list[str]], diagnostics_module["build_test_command"]
     )
     assert main() == 1
-    assert calls == [build_test_command(1357, "auto")]
+    assert calls == [build_test_command(1357, "auto", scope="focused")]
     assert env_file.read_text(encoding="utf-8") == "PYTEST_RANDOMLY_SEED=1357\n"
     assert "seed: `1357`" in summary_file.read_text(encoding="utf-8")
