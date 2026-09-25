@@ -12,7 +12,6 @@ import json
 import os
 import sys
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 API_VERSION = "2022-11-28"
@@ -124,6 +123,11 @@ def main() -> int:
             file=sys.stderr,
         )
         return 2
+
+    assert token is not None
+    assert repository is not None
+    assert branch is not None
+    assert tag is not None
 
     try:
         url = create_release_pr(
