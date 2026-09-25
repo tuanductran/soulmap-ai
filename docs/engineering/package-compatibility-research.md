@@ -1,6 +1,6 @@
 # Python 3.11 package compatibility research
 
-**Research date:** 2026-08-19. **Last refreshed:** 2026-09-16.
+**Research date:** 2026-08-19. **Last refreshed:** 2026-09-25.
 
 This note records official package evidence for the development toolchain used by SoulMap AI. It is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
@@ -11,7 +11,7 @@ This note records official package evidence for the development toolchain used b
 | Ruff | 0.16.5 | [Ruff documentation](https://docs.astral.sh/ruff/) | Current docs advertise Python 3.14 compatibility, `pyproject.toml` support, caching and active development. Python 3.11 is below the documented compatibility ceiling; upgrades still require repository CI evidence. |
 | pytest | 9.1.1 | [pytest compatibility policy](https://docs.pytest.org/en/stable/backwards-compatibility.html) | pytest 9.0+ supports Python 3.10+, so Python 3.11 is supported. Its deprecation policy makes warnings an upgrade signal rather than something to ignore silently. |
 | Hypothesis | 6.165.10 | [Hypothesis compatibility](https://hypothesis.readthedocs.io/en/latest/compatibility.html) | Hypothesis supports and tests CPython/PyPy 3.10+. It officially supports only the latest patch release of each supported Python version; documented APIs generally do not break except at major versions. |
-| PyMarkdownLnt | 0.9.39 | [PyPI project metadata](https://pypi.org/project/pymarkdownlnt/) | Requires Python >=3.10 and classifies Python 3.10 through 3.13. Python 3.11 is a declared supported interpreter, matching the Markdown contract role. |
+| PyMarkdownLnt | 0.9.40 | [PyPI project metadata](https://pypi.org/project/pymarkdownlnt/) | Requires Python >=3.10 and classifies Python 3.10 through 3.13. Python 3.11 is a declared supported interpreter, matching the Markdown contract role. |
 | pytest-cov | 7.1.0 | [PyPI project metadata](https://pypi.org/project/pytest-cov/) | Requires Python >=3.9 and classifies Python 3.9 through 3.14. It supports coverage contexts and xdist integration; coverage data must remain reproducible under parallel workers. |
 | pytest-xdist | 3.8.0 | [pytest-xdist documentation](https://pytest-xdist.readthedocs.io/en/latest/) | `pytest -n auto` starts workers based on available CPUs and distributes tests randomly. Test order/count must remain consistent; a serial diagnostic path is still required for failures. |
 | pytest-timeout | 2.4.0 | [PyPI project metadata](https://pypi.org/project/pytest-timeout/) | Requires Python >=3.10 and classifies Python 3.10 through 3.14. It is for catching hangs/deadlocks, not precise timing or performance measurement. |
@@ -48,20 +48,4 @@ This document does not introduce a new runtime dependency, package migration, Py
 
 ## References
 
-[1]: https://docs.astral.sh/ruff/ "Ruff documentation"
-[2]: https://docs.pytest.org/en/stable/backwards-compatibility.html "pytest backwards compatibility policy"
-[3]: https://hypothesis.readthedocs.io/en/latest/compatibility.html "Hypothesis compatibility"
-[4]: https://pypi.org/project/pymarkdownlnt/ "PyMarkdownLnt on PyPI"
-[5]: https://pypi.org/project/pytest-cov/ "pytest-cov on PyPI"
-[6]: https://pytest-xdist.readthedocs.io/en/latest/ "pytest-xdist documentation"
-[7]: https://pypi.org/project/pytest-timeout/ "pytest-timeout on PyPI"
-[8]: https://pypi.org/project/pytest-randomly/ "pytest-randomly on PyPI"
-[9]: https://pypi.org/project/pyright/ "Pyright on PyPI"
-[10]: https://pypi.org/project/commitizen/ "Commitizen on PyPI"
-[11]: https://deptry.com/ "Deptry documentation"
-[12]: https://pypi.org/project/vulture/ "Vulture on PyPI"
-[13]: https://hatch.pypa.io/latest/ "Hatch documentation"
-[14]: https://lefthook.dev/ "lefthook documentation"
 [15]: https://www.python.org/downloads/release/python-31116/ "Python 3.11.16 release notes"
-[16]: https://docs.astral.sh/uv/reference/installer/ "uv installer options"
-[17]: https://github.com/rhysd/actionlint/blob/main/docs/install.md "actionlint installation documentation"
