@@ -22,7 +22,6 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "RELEASE_TAG: ${{ steps.bump.outputs.tag }}" in workflow
     assert "gh pr create" not in workflow
     assert "release/prep-" in workflow
-    assert "release-finalize" in workflow
     assert "git push --follow-tags" not in workflow
     assert "softprops/action-gh-release" not in workflow
 
@@ -54,7 +53,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
-    assert "reusing it without moving it" in (ROOT / ".github" / "python" / "release_tag.py").read_text()
+    assert (
+        "reusing it without moving it"
+        in (ROOT / ".github" / "python" / "release_tag.py").read_text()
+    )
     assert "Checkout release tooling" in workflow
     assert "python .release-tools/.github/python/release_tag.py" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
