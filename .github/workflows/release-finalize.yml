@@ -76,18 +76,26 @@ jobs:
           uv run python tests/eval_regression/test_safety_evals.py
           uv run soulmap eval-responses
           uv run soulmap eval-markdown-contracts
-          uv run soulmap release-verify --root . --output dist/release-verification.json
-          uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
-          uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
       - name: Build release artifacts
         run: uv run soulmap library-manifest
+
+      - name: Generate release verification
+        run: uv run soulmap release-verify --root . --output dist/release-verification.json
+
+      - name: Generate release provenance
+        run: uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
+
+      - name: Run release health checks
+        run: uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
       - name: Verify release artifacts
         run: |
           test -f dist/soulmap-ai.zip
           test -f dist/soulmap-ai.skill
           test -f dist/soulmap-ai-library.json
+          test -f dist/release-verification.json
+          test -f dist/release-provenance.json
           uv run python scripts/verify_artifact_hashes.py
           uv run python scripts/verify_extracted_artifacts.py
 
