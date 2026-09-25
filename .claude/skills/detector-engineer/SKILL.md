@@ -145,7 +145,8 @@ Thresholds define when a detector's score triggers a framework override.
 # src/soulmap/runtime/config/safety.py
 HIGH_DEPENDENCY_THRESHOLD = 2       # Score >= 2 triggers high dependency
 MODERATE_DEPENDENCY_THRESHOLD = 1   # Score >= 1 warrants dependency caution
-CRISIS_SEVERITY_THRESHOLD = 80      # Immediate-crisis score
+
+# Crisis tiers are defined by language-specific knowledge packs, not a numeric threshold.
 ```
 
 ### Use thresholds consistently
@@ -155,7 +156,7 @@ from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
 
 if score >= HIGH_DEPENDENCY_THRESHOLD:
     level = "HIGH_DEPENDENCY"
-elif score > 0:
+elif score >= MODERATE_DEPENDENCY_THRESHOLD:
     level = "MODERATE_DEPENDENCY"
 else:
     level = "LOW_DEPENDENCY"
