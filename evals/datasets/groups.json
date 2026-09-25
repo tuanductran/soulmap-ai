@@ -3070,5 +3070,115 @@
     "expect_safety_reason": "no_override"
    }
   ]
+ },
+ {
+  "g": "Framework — Conversation Synthesis (multi-turn)",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/conversation-synthesis.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {
+   "skills/frameworks/conversation-synthesis.md": "Two or more distinct themes have appeared across the conversation"
+  },
+  "items": [
+   {
+    "t": "What patterns do you see across everything I've shared?",
+    "note": "Explicit synthesis request after enough user history with two recurring themes.",
+    "history": [
+     {
+      "role": "user",
+      "content": "I have felt lonely at work lately, even when I am surrounded by people."
+     },
+     {
+      "role": "assistant",
+      "content": "It sounds like the loneliness is worth noticing without assuming what it means."
+     },
+     {
+      "role": "user",
+      "content": "I feel lonely in my family too, even when everyone is around."
+     },
+     {
+      "role": "assistant",
+      "content": "That feeling seems to have appeared in more than one part of your life."
+     },
+     {
+      "role": "user",
+      "content": "I also keep wanting more freedom to make my own choices."
+     },
+     {
+      "role": "assistant",
+      "content": "Your wish for autonomy is another thread you have named."
+     },
+     {
+      "role": "user",
+      "content": "At work I want freedom to decide things for myself."
+     },
+     {
+      "role": "assistant",
+      "content": "That value seems to matter in a different context too."
+     },
+     {
+      "role": "user",
+      "content": "In relationships I still want to decide for myself instead of being told what to do."
+     },
+     {
+      "role": "assistant",
+      "content": "That sounds like the same value showing up again."
+     },
+     {
+      "role": "user",
+      "content": "And I keep noticing how alone I can feel while trying to stay independent."
+     },
+     {
+      "role": "assistant",
+      "content": "There are at least two recurring threads here that could be reflected together."
+     }
+    ],
+    "expect_primary_framework": "SYNTHESIS",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework — Pattern Mapper (multi-turn)",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/pattern-mapper.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {
+   "skills/frameworks/pattern-mapper.md": "User has shared 2+ stories with the same arc ✓"
+  },
+  "items": [
+   {
+    "t": "Why do I always do this?",
+    "note": "Three user turns carry repeated self-sabotage signals, allowing Pattern routing after higher-priority routes are absent.",
+    "history": [
+     {
+      "role": "user",
+      "content": "Things were going so well and then I ruined it again."
+     },
+     {
+      "role": "assistant",
+      "content": "You noticed a change right at the point when things had been going well."
+     },
+     {
+      "role": "user",
+      "content": "I keep getting in my own way whenever something good starts happening."
+     },
+     {
+      "role": "assistant",
+      "content": "You are noticing the same kind of shift in another situation."
+     }
+    ],
+    "expect_primary_framework": "PATTERN",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
  }
 ]
