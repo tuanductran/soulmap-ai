@@ -76,7 +76,7 @@ Detectors commonly expose a dict containing fields such as `level`, `score`, `si
 | Key | Type | Description |
 |-----|------|-------------|
 | `level` | str | Detector-specific classification; do not assume a repo-wide enum |
-| `score` | int | Numeric score (0-100 for consistency, or match threshold convention) |
+| `score` | int | Detector-specific numeric score; preserve the existing detector's scoring convention |
 | `signals` | list | List of signal descriptions found, for example `["only_you_understand_me"]` |
 | `recommendation` | str | Plain English recommendation for the framework or action |
 
@@ -85,9 +85,9 @@ Example return value:
 ```python
 {
     "level": "HIGH_DEPENDENCY",
-    "score": 75,
-    "signals": ["unhealthy_comparison", "isolation_language"],
-    "recommendation": "User shows dependency signals. Use Dependency framework. Check for isolation."
+    "score": 2,
+    "signals": ["dependency_keyword"],
+    "recommendation": "User shows dependency signals. Use the detector-specific dependency response contract."
 }
 ```
 
@@ -112,8 +112,8 @@ Example:
 
 ```python
 # src/soulmap/runtime/config/safety.py
-HIGH_DEPENDENCY_THRESHOLD = 2  # Score >= 50 triggers Dependency framework
-MODERATE_DEPENDENCY_THRESHOLD = 1  # Score >= 25 warrants dependency caution
+HIGH_DEPENDENCY_THRESHOLD = 2  # Score >= 2 triggers high dependency
+MODERATE_DEPENDENCY_THRESHOLD = 1  # Score >= 1 warrants dependency caution
 ```
 
 ## Secondary scoring patterns
