@@ -121,6 +121,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -148,6 +150,14 @@ jobs:
           test -f dist/soulmap-ai-library.json
           test -f dist/release-verification.json
           test -f dist/release-provenance.json
+
+      - name: Generate release artifact attestations
+        uses: actions/attest@cddc1b3b2fbdc5b8a9f7f2c9b2a7d9d1f8b2a4c # v4
+        with:
+          subject-path: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json
 
       - name: Create immutable release tag
         env:
