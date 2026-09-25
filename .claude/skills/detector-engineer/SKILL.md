@@ -143,8 +143,8 @@ Thresholds define when a detector's score triggers a framework override.
 
 ```python
 # src/soulmap/runtime/config/safety.py
-HIGH_DEPENDENCY_THRESHOLD = 50      # Score >= 50 triggers Dependency framework
-MODERATE_DEPENDENCY_THRESHOLD = 25  # Score >= 25 warrants caution
+HIGH_DEPENDENCY_THRESHOLD = 2       # Score >= 2 triggers high dependency
+MODERATE_DEPENDENCY_THRESHOLD = 1   # Score >= 1 warrants dependency caution
 CRISIS_SEVERITY_THRESHOLD = 80      # Immediate-crisis score
 ```
 
@@ -172,9 +172,9 @@ Example adjustment:
 
 ```python
 # Before: threshold too high, missing moderate dependency cases
-HIGH_DEPENDENCY_THRESHOLD = 75  # Changed from 75 to 50
+HIGH_DEPENDENCY_THRESHOLD = 2
 # Now: threshold captures high-confidence dependency signals
-HIGH_DEPENDENCY_THRESHOLD = 50
+HIGH_DEPENDENCY_THRESHOLD = 2
 ```
 
 ## Scoring best practices
