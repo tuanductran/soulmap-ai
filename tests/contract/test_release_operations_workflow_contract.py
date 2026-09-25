@@ -63,10 +63,12 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert "Checkout release tooling" in workflow
     assert "python .release-tools/.github/python/release_tag.py" in workflow
-    assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
-    assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
+    assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
+    assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" not in workflow
     assert "git push origin" not in workflow
     assert "Create GitHub Release" in workflow
+    assert "python .release-tools/.github/python/release/create_release.py" in workflow
+    assert "softprops/action-gh-release" not in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
     ) < workflow.index("Verify merged release tree")
@@ -120,7 +122,7 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
 def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
     script = (ROOT / ".github" / "python" / "release_tag.py").read_text()
 
-    assert 'os.environ.get("SOULMAP_RELEASE_TOKEN")' in script
+    assert 'os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")' in script
     assert "POST" in script
     assert "/git/tags" in script
     assert "/git/refs" in script
@@ -139,3 +141,16 @@ def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
     assert '"RELEASE_TAG"' in script
     assert "gh pr create" not in script
     assert "API_ROOT" in script
+
+
+
+def test_release_publish_tool_uses_github_rest_api_without_third_party_action() -> None:
+    script = (
+        ROOT / ".github" / "python" / "release" / "create_release.py"
+    ).read_text()
+
+    assert "/releases" in script
+    assert "/assets" in script
+    assert 'os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")' in script
+    assert "urllib.request" in script
+    assert "softprops" not in script
