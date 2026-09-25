@@ -51,11 +51,11 @@ def test_two_dependency_keywords_across_messages_reach_high_dependency() -> None
     assert result["level"] == "HIGH_DEPENDENCY"
 
 
-def test_dependency_keyword_variant_is_detected() -> None:
+def test_dependency_regex_pattern_is_detected() -> None:
     result = analyze_dependency([_user("Only you truly understand me.")])
 
     assert result["level"] == "HIGH_DEPENDENCY"
-    assert any("dependency_keyword" in s for s in result["signals"])
+    assert any("dependency_pattern" in s for s in result["signals"])
 
 
 def test_duplicate_keyword_across_messages_is_not_double_counted() -> None:
