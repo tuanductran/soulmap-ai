@@ -375,8 +375,9 @@ async def select_framework_async(
         # expression of distress to a loss took grief-companion.md away: "my dog
         # died this morning" reached GRIEF in sanctuary mode, while "my dog died
         # this morning and I cannot stop crying" fell to a generic slow-down
-        # that ends with a question. The person crying got the longer, more
-        # question-ended response.
+        # that did not honor the grief-specific route. Sanctuary must remain
+        # presence-first and question-free, so the grief route stays aligned
+        # with the response contract.
         if grief.get("grief_detected") and grief.get("grief_type") in _GRIEF_TYPES:
             selection = {
                 "primary_framework": "GRIEF",
@@ -388,7 +389,7 @@ async def select_framework_async(
                 "instruction": (
                     "Activate grief-companion.md at moderate intensity. Ground "
                     "first, then witness the loss before any reflection. Keep it "
-                    "short. End with one grief-specific question."
+                    "short. Do not ask a question in Sanctuary mode."
                 ),
                 "blocked": ["direction", "shadow", "existential", "synthesis"],
             }
