@@ -255,6 +255,7 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     assert quiet["primary_framework"] == "GRIEF"
     assert distressed["primary_framework"] == "GRIEF"
     assert distressed["mode"] == "SANCTUARY"
+    assert "question" not in distressed["instruction"].lower()
 
 
 def test_moderate_intensity_without_grief_still_de_escalates() -> None:
