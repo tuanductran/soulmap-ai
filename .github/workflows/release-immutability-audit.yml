@@ -1,0 +1,32 @@
+name: Release Immutability Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Optional release tag to verify (for example v0.13.0). Leave empty for latest."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+          python-version: "3.11"
+
+      - name: Verify published release immutability
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/python/verify_release_immutability.py
