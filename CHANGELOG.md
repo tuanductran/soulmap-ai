@@ -167,7 +167,7 @@ stability and breaking changes in behavior.
 - **knowledge**: use actual pattern mapper heading format
 - **knowledge**: simplify runtime usage condition
 - **knowledge**: satisfy strict AST typing
-- **knowledge**: exclude __all__ from config usage audit
+- **knowledge**: exclude `__all__` from config usage audit
 - **audit**: make audit tools an explicit package
 - **knowledge**: parse semantic Markdown signal units
 - **knowledge**: keep grandiosity overlap reviewable
@@ -307,7 +307,7 @@ stability and breaking changes in behavior.
 - **markdown_contract**: skip numeric-prefix check inside fenced code blocks
 - **ci**: resolve 4 workflow issues from SQA audit
 - **ci**: add explicit 'Safety evals' step so T001-T007 run in CI
-- test_safety_evals.py used __main__ guard: pytest silently skipped it
+- test_safety_evals.py used `__main__` guard: pytest silently skipped it
 - all 7 red-team cases now validated on every push/PR
 - **deps**: add mdformat==0.7.21 to dev deps
 - release.yml calls 'python -m mdformat CHANGELOG.md'
