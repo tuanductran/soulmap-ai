@@ -54,9 +54,10 @@ complete:
   gating, not a claim that nothing real hides below it. A whole-function or
   module-level constant with no caller anywhere in the repo can still score
   60% and pass CI silently.
-- `uv run soulmap audit-knowledge` only tracks a fixed set of known
-  phrase-list and threshold constant names. A new constant that is not one of
-  those is invisible to it even when genuinely orphaned.
+- `uv run soulmap audit-knowledge` inventories literal string-valued
+  constants across `src/soulmap/runtime/config/` and resolves their runtime
+  import provenance. It is broader than a fixed allowlist, but it is still a
+  focused knowledge/config audit rather than a general dead-code detector.
 
 When doing a focused dead-code pass (not routine review of a small diff), run:
 
