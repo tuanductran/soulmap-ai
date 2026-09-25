@@ -93,6 +93,33 @@ SCENARIOS = [
 ]
 
 
+def test_dark_night_routes_to_sanctuary_mode(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Dark Night is a presence-first Sanctuary framework, not generic Mirror."""
+    _install_defaults(monkeypatch)
+    monkeypatch.setattr(
+        framework_selector,
+        "detect_dark_night",
+        lambda *a, **k: {"dark_night_detected": True},
+    )
+    monkeypatch.setattr(
+        framework_selector,
+        "apply_safety_gate",
+        lambda message, history, memory, selection: {
+            "selection": selection,
+            "status": "PASS",
+            "reason": "no_override",
+            "flags": [],
+        },
+    )
+
+    result = framework_selector.select_framework("I feel spiritually empty", [])
+
+    assert result["primary_framework"] == "DARK_NIGHT_OF_SOUL"
+    assert result["mode"] == "SANCTUARY"
+
+
 def _install_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     # Patch every detector import in framework_selector to safe defaults
     for name, value in DEFAULTS.items():
