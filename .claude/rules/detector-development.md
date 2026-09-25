@@ -96,9 +96,8 @@ Example return value:
 Thresholds are defined in `src/soulmap/runtime/config/` as named constants:
 
 ```python
-HIGH_DEPENDENCY_THRESHOLD = 50
-MODERATE_DEPENDENCY_THRESHOLD = 25
-CRISIS_SEVERITY_THRESHOLD = 80
+HIGH_DEPENDENCY_THRESHOLD = 2
+MODERATE_DEPENDENCY_THRESHOLD = 1
 ```
 
 **Rules for thresholds**:
@@ -113,8 +112,8 @@ Example:
 
 ```python
 # src/soulmap/runtime/config/safety.py
-HIGH_DEPENDENCY_THRESHOLD = 50  # Score >= 50 triggers Dependency framework
-MODERATE_DEPENDENCY_THRESHOLD = 25  # Score >= 25 warrants dependency caution
+HIGH_DEPENDENCY_THRESHOLD = 2  # Score >= 50 triggers Dependency framework
+MODERATE_DEPENDENCY_THRESHOLD = 1  # Score >= 25 warrants dependency caution
 ```
 
 ## Secondary scoring patterns
@@ -164,8 +163,8 @@ def select_framework(conversation_messages: list) -> str:
     # ... existing priority checks ...
 
     # Your detector here
-    crisis_result = crisis_detector.analyze_crisis(conversation_messages)
-    if crisis_result["level"] == "TIER_1":
+    crisis_result = crisis_detector.<crisis_detector_callable>(conversation_messages)
+    if <crisis-tier-1-condition>:
         return "CRISIS"
 
     # Continue with other detectors
@@ -249,8 +248,8 @@ def test_high_threshold():
 def test_no_signal():
     # Input with no relevant signal
     messages = [{"role": "user", "content": "What's the weather?"}]
-    result = analyze_signal(messages)
-    assert result["level"] == "NONE"
+    result = <detector_callable>(messages)
+    assert result["level"] == "<detector-specific-no-signal-level>"
 ```
 
 ### Integration tests
