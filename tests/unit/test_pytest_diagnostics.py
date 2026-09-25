@@ -33,7 +33,7 @@ def test_build_test_command_supports_full_and_focused_scopes(
         "--randomly-seed=12345",
     ]
     focused = build_test_command(12345, "auto", scope="focused")
-    assert focused[:9] == [
+    assert focused[:8] == [
         "uv",
         "run",
         "soulmap",
@@ -41,8 +41,7 @@ def test_build_test_command_supports_full_and_focused_scopes(
         "-n",
         "auto",
         "-q",
-        "tests/contract",
-        "tests/integration",
+        "--randomly-seed=12345",
     ]
     assert focused[-4:] == [
         "tests/regression",
