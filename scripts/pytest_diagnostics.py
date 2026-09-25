@@ -15,7 +15,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 FOCUSED_TEST_TARGETS = (
     "tests/contract",
     "tests/integration",
@@ -100,8 +99,7 @@ def main() -> int:
         _write_failure_summary(seed, workers, result.returncode, scope)
         serial = build_test_command(seed, "0", scope=scope)
         print(
-            "Pytest failed. Reproduce serially with: "
-            + " ".join(serial),
+            "Pytest failed. Reproduce serially with: " + " ".join(serial),
             file=sys.stderr,
         )
     return result.returncode
