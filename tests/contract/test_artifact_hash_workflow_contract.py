@@ -15,7 +15,6 @@ RELEASE_VERIFY_COMMAND = (
 )
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
 UPLOAD_ARTIFACT_SHA = "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
-RELEASE_ACTION_SHA = "efb35369e0ad2afab669f228072c1b0d510eae64"
 
 
 def _read(path: Path) -> str:
@@ -58,7 +57,7 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
 
     assert RELEASE_VERIFY_COMMAND in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert f"uses: softprops/action-gh-release@{RELEASE_ACTION_SHA}" in content
+    assert "python .github/python/release/publish.py" in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
     health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"

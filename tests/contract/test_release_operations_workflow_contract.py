@@ -56,17 +56,16 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
-    assert "Create immutable release tag" in workflow
+    assert "Create immutable release tag and publish GitHub Release" in workflow
     assert (
         "reusing it without moving it"
         in (ROOT / ".github" / "python" / "release_tag.py").read_text()
     )
-    assert "Checkout release tooling" in workflow
-    assert "python .release-tools/.github/python/release_tag.py" in workflow
+    assert "python .github/python/release_tag.py" in workflow
+    assert "python .github/python/release/publish.py" in workflow
     assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
     assert "git push origin" not in workflow
-    assert "Create GitHub Release" in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
     ) < workflow.index("Verify merged release tree")
