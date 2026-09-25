@@ -716,6 +716,7 @@ async def select_framework_async(
 
     if res["dark_night"].get("dark_night_detected"):
         selection = _simple_selection("DARK_NIGHT_OF_SOUL", res["dark_night"])
+        selection["mode"] = "SANCTUARY"
         return _finish(message, history, memory, selection, debug_events)
 
     if res["soul_nourishment"].get("soul_nourishment_detected"):
