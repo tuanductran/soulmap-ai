@@ -120,6 +120,7 @@ def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
     assert "refs/tags/" in script
     assert "reusing it without moving it" in script
 
+
 def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
     script = (ROOT / ".github" / "python" / "release" / "create_pr.py").read_text()
 
