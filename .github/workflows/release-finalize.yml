@@ -193,7 +193,7 @@ jobs:
         env:
           TAG: v${{ needs.verify.outputs.version }}
           MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           test "$(git rev-parse HEAD)" = "$MERGE_SHA"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -204,25 +204,9 @@ jobs:
             fi
             echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
           else
-            # Push the tag through the GitHub Git Database API rather than `git push`.
-            # A normal Git push is rejected when the tagged commit contains a workflow
-            # file unless the token also has the separate Workflows repository permission.
-            # The Git Database API can create the immutable annotated tag with Contents: write.
-            tag_sha="$(gh api \
-              --method POST \
-              "repos/$GITHUB_REPOSITORY/git/tags" \
-              --field "tag=$TAG" \
-              --field "message=Release $TAG" \
-              --field "object=$MERGE_SHA" \
-              --field "type=commit" \
-              --field "tagger[name]=github-actions[bot]" \
-              --field "tagger[email]=github-actions[bot]@users.noreply.github.com" \
-              --jq '.sha')"
-            gh api \
-              --method POST \
-              "repos/$GITHUB_REPOSITORY/git/refs" \
-              --field "ref=refs/tags/$TAG" \
-              --field "sha=$tag_sha"
+            git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
+            git remote set-url origin "https://x-access-token:${RELEASE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "$TAG"
           fi
 
       - name: Create GitHub Release
