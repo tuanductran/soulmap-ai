@@ -21,6 +21,27 @@ uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
 A release must not be promoted if either verification or health fails.
 
+## Artifact attestations
+
+Release Finalize generates a GitHub artifact attestation for the three consumer-facing package artifacts:
+
+- `dist/soulmap-ai.zip`
+- `dist/soulmap-ai.skill`
+- `dist/soulmap-ai-library.json`
+
+The attestation is generated only in the write-capable publish job, after the verified artifacts are downloaded and checked. The verification job remains `contents: read` only, and routine CI/test artifacts are not attested.
+
+Consumers can verify a published artifact with GitHub CLI:
+
+```bash
+gh attestation verify dist/soulmap-ai.zip -R tuanductran/soulmap-ai
+gh attestation verify dist/soulmap-ai.skill -R tuanductran/soulmap-ai
+gh attestation verify dist/soulmap-ai-library.json -R tuanductran/soulmap-ai
+```
+
+Verification checks the signed provenance binding between the artifact and the GitHub Actions build that produced it. The attestation is an additional provenance signal; it does not by itself establish that the software is safe or correct.
+
+
 ## Workflow trust boundary
 
 Release publication is intentionally split across two workflows/jobs with different trust levels:
