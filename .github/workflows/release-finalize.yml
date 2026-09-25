@@ -189,25 +189,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Checkout release tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          path: .release-tools
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Create immutable release tag
         env:
-          TAG: v${{ needs.verify.outputs.version }}
-          MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
-          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          RELEASE_TAG: v${{ needs.verify.outputs.version }}
+          RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
-          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
-          if git rev-parse "$TAG" >/dev/null 2>&1; then
-            existing_commit="$(git rev-parse "$TAG^{commit}")"
-            if [ "$existing_commit" != "$MERGE_SHA" ]; then
-              echo "Release tag $TAG exists but points to $existing_commit, expected $MERGE_SHA."
-              exit 1
-            fi
-            echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
-          else
-            git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
-            git remote set-url origin "https://x-access-token:${RELEASE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "$TAG"
-          fi
+          test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
+          python .release-tools/.github/python/release_tag.py
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3

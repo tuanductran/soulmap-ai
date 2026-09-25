@@ -44,8 +44,10 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
 
     assert "workflow_dispatch" in content
     assert "git push --set-upstream origin" in content
-    assert "gh pr create" in content
-    assert "release-finalize" in content
+    assert "python .github/python/release/create_pr.py" in content
+    assert "SOULMAP_RELEASE_TOKEN" in content
+    assert "release/prep-" in content
+    assert "gh pr create" not in content
     assert "softprops/action-gh-release" not in content
     assert "actions/upload-artifact" not in content
     assert "git push --follow-tags" not in content
@@ -60,22 +62,18 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
     health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"
-    assert content.count(RELEASE_VERIFY_COMMAND) == 2
-    assert (
-        content.count(
-            "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
-        )
-        == 2
+    provenance_command = (
+        "uv run soulmap release-provenance --root . "
+        "--verification dist/release-verification.json "
+        "--provenance dist/release-provenance.json"
     )
+    assert content.count(RELEASE_VERIFY_COMMAND) == 2
+    assert content.count(provenance_command) == 2
     assert content.index(LIBRARY_COMMAND) < content.index(RELEASE_VERIFY_COMMAND)
     assert content.index(RELEASE_VERIFY_COMMAND) < content.index(health_command)
     assert content.index(health_command) < content.rindex(RELEASE_VERIFY_COMMAND)
-    assert content.index(health_command) < content.rindex(
-        "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
-    )
-    assert content.rindex(
-        "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
-    ) < content.index(VERIFY_COMMAND)
+    assert content.index(health_command) < content.rindex(provenance_command)
+    assert content.rindex(provenance_command) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)
     assert content.index(EXTRACT_COMMAND) < content.index(
         f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}"

@@ -94,10 +94,7 @@ jobs:
 
       - name: Open release pull request
         env:
-          GH_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-        run: |
-          gh pr create \
-            --base main \
-            --head "${{ steps.bump.outputs.branch }}" \
-            --title "chore(release): ${{ steps.bump.outputs.tag }}" \
-            --body "Automated release preparation for ${{ steps.bump.outputs.tag }}. Merge this PR only after all required CI checks pass. The merge commit will be tagged and published by the release-finalize workflow; this workflow never writes directly to main or force-moves tags."
+          SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}
+          RELEASE_TAG: ${{ steps.bump.outputs.tag }}
+        run: python .github/python/release/create_pr.py
