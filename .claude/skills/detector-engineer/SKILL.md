@@ -319,22 +319,23 @@ Test your detector from the command line:
 echo '{"messages": [{"role": "user", "content": "test input"}]}' | python -m soulmap.runtime.detectors.your_detector
 ```
 
-Expected output:
+Expected output shape is detector-specific. For a detector that exposes these fields, it may look like:
 
 ```json
 {
-  "level": "<detector-specific-high-level>",
-  "score": 75,
+  "level": "<detector-specific-level>",
   "signals": ["signal_name"],
   "recommendation": "..."
 }
 ```
 
+Do not assume every detector exposes a score or recommendation.
+
 ## Performance Considerations
 
 - Pre-compile regex patterns (do not recompile in loops)
 - Use efficient string operations (`.lower()` once, not per pattern)
-- Limit history analysis to recent messages (last 10, not entire history)
+- Bound history analysis only when the detector's existing contract permits it; preserve detectors that intentionally inspect full conversation history
 - Avoid expensive operations in scoring loops
 
 Example:
