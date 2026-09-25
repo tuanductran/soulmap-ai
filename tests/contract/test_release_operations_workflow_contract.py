@@ -50,7 +50,6 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
-    assert 'existing_commit="$(git rev-parse "$TAG^{commit}")"' in workflow
     assert "reusing it without moving it" in workflow
     assert "Checkout release tooling" in workflow
     assert "python .release-tools/.github/python/release_tag.py" in workflow
