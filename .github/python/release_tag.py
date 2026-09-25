@@ -201,12 +201,12 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = _parse_args()
-    token = os.environ.get("GITHUB_TOKEN")
+    token = os.environ.get("SOULMAP_RELEASE_TOKEN")
 
     missing = [
         name
         for name, value in (
-            ("GITHUB_TOKEN", token),
+            ("SOULMAP_RELEASE_TOKEN", token),
             ("GITHUB_REPOSITORY", args.repository),
             ("RELEASE_TAG", args.tag),
             ("RELEASE_COMMIT", args.commit),
