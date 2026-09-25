@@ -199,7 +199,7 @@ jobs:
 
       - name: Create immutable release tag
         env:
-          SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           RELEASE_TAG: v${{ needs.verify.outputs.version }}
           RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
@@ -207,13 +207,9 @@ jobs:
           python .release-tools/.github/python/release_tag.py
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
-        with:
-          tag_name: v${{ needs.verify.outputs.version }}
-          name: v${{ needs.verify.outputs.version }}
-          files: |
-            dist/soulmap-ai.zip
-            dist/soulmap-ai.skill
-            dist/soulmap-ai-library.json
-            dist/release-verification.json
-            dist/release-provenance.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          RELEASE_TAG: v${{ needs.verify.outputs.version }}
+          RELEASE_NAME: v${{ needs.verify.outputs.version }}
+          RELEASE_ASSET_DIR: dist
+        run: python .release-tools/.github/python/release/create_release.py
