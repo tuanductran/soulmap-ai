@@ -41,8 +41,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "attestations: write" in workflow
     assert "Generate release artifact attestations" in workflow
     assert (
-        "actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1"
-        in workflow
+        "actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1" in workflow
     )
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
