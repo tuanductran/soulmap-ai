@@ -184,6 +184,11 @@ jobs:
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
 
+      - name: Configure git author for release tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Create immutable release tag
         env:
           TAG: v${{ needs.verify.outputs.version }}
