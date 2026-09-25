@@ -61,12 +61,21 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "dist/release-provenance.json" in content
     health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"
     assert content.count(RELEASE_VERIFY_COMMAND) == 2
-    assert content.count("uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json") == 2
+    assert (
+        content.count(
+            "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
+        )
+        == 2
+    )
     assert content.index(LIBRARY_COMMAND) < content.index(RELEASE_VERIFY_COMMAND)
     assert content.index(RELEASE_VERIFY_COMMAND) < content.index(health_command)
     assert content.index(health_command) < content.rindex(RELEASE_VERIFY_COMMAND)
-    assert content.index(health_command) < content.rindex("uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json")
-    assert content.rindex("uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json") < content.index(VERIFY_COMMAND)
+    assert content.index(health_command) < content.rindex(
+        "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
+    )
+    assert content.rindex(
+        "uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json"
+    ) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)
     assert content.index(EXTRACT_COMMAND) < content.index(
         f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}"
