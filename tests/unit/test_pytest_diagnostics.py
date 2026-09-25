@@ -71,7 +71,8 @@ def test_failure_summary_contains_serial_reproduction(
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary_file))
 
     write_failure_summary = cast(
-        Callable[[int, str, int, str], None], diagnostics_module["_write_failure_summary"]
+        Callable[[int, str, int, str], None],
+        diagnostics_module["_write_failure_summary"],
     )
     write_failure_summary(2468, "auto", 1, "focused")
 
