@@ -204,9 +204,25 @@ jobs:
             fi
             echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
           else
-            git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
-            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "$TAG"
+            # Push the tag through the GitHub Git Database API rather than `git push`.
+            # A normal Git push is rejected when the tagged commit contains a workflow
+            # file unless the token also has the separate Workflows repository permission.
+            # The Git Database API can create the immutable annotated tag with Contents: write.
+            tag_sha="$(gh api \
+              --method POST \
+              "repos/$GITHUB_REPOSITORY/git/tags" \
+              --field "tag=$TAG" \
+              --field "message=Release $TAG" \
+              --field "object=$MERGE_SHA" \
+              --field "type=commit" \
+              --field "tagger[name]=github-actions[bot]" \
+              --field "tagger[email]=github-actions[bot]@users.noreply.github.com" \
+              --jq '.sha')"
+            gh api \
+              --method POST \
+              "repos/$GITHUB_REPOSITORY/git/refs" \
+              --field "ref=refs/tags/$TAG" \
+              --field "sha=$tag_sha"
           fi
 
       - name: Create GitHub Release
