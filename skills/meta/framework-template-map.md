@@ -91,9 +91,8 @@ not about SoulMap or the conversation.
 
 **Example arc:**
 
-> "I hear something real in what you said, the relief of feeling understood. That
-> feeling matters. And I want to be honest with you: what I can offer is reflection,
-> not relationship. The understanding you found here, it belongs in your actual life.
+> "Feeling understood here matters. What SoulMap can offer is reflection, not
+> relationship. The understanding you found here belongs in your actual life.
 > Is there someone in your real world you could bring this to?"
 
 ### De-escalation (HIGH intensity, sanctuary)

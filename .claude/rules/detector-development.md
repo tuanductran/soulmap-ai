@@ -11,7 +11,7 @@ Use these conventions when writing or extending Python detector modules.
 
 ## Module structure
 
-Every detector module follows this structure:
+Detector modules should follow the established local pattern, but the public callable and result semantics are detector-specific. Use the closest existing detector as the template rather than imposing a universal interface.\n\nFor example, dependency detection exposes `analyze_dependency()` and returns dependency-specific levels. Crisis detection has its own safety contract.\n\nA common CLI shape is:
 
 ```python
 """Brief description of what this detector scores."""
@@ -35,7 +35,7 @@ from soulmap.runtime.config import (
 HistoryMessage = dict[str, str]
 
 
-def analyze_signal(conversation_messages: list) -> dict:
+def analyze_dependency(conversation_messages: list) -> dict:
     """
     Main detection function.
 
@@ -52,7 +52,7 @@ def analyze_signal(conversation_messages: list) -> dict:
 if __name__ == "__main__":
     try:
         payload = read_stdin_json()
-        result = analyze_signal(payload.get("messages", []))
+        result = analyze_dependency(payload.get("messages", []))
         print(json.dumps(result))
     except Exception as e:
         print_json_error(str(e))
@@ -71,11 +71,11 @@ if __name__ == "__main__":
 
 ## Scoring methods
 
-Detectors return a standardized dict with four keys:
+Detectors commonly expose a dict containing fields such as `level`, `score`, `signals`, and `recommendation`, but these are not a universal enum or schema. Preserve the existing detector's output contract and tests when extending it.
 
 | Key | Type | Description |
 |-----|------|-------------|
-| `level` | str | Signal level: `"TIER_1"`, `"HIGH"`, `"MODERATE"`, `"LOW"`, `"NONE"`, `"NO_DATA"` |
+| `level` | str | Detector-specific classification; do not assume a repo-wide enum |
 | `score` | int | Numeric score (0-100 for consistency, or match threshold convention) |
 | `signals` | list | List of signal descriptions found, for example `["only_you_understand_me"]` |
 | `recommendation` | str | Plain English recommendation for the framework or action |
@@ -84,7 +84,7 @@ Example return value:
 
 ```python
 {
-    "level": "HIGH",
+    "level": "HIGH_DEPENDENCY",
     "score": 75,
     "signals": ["unhealthy_comparison", "isolation_language"],
     "recommendation": "User shows dependency signals. Use Dependency framework. Check for isolation."
@@ -189,7 +189,7 @@ Write unit tests in `tests/unit/test_YOUR_detector.py`:
 def test_analyzer_detects_signal():
     messages = [{"role": "user", "content": "only you understand me"}]
     result = analyze_dependency(messages)
-    assert result["level"] == "HIGH"
+    assert result["level"] == "HIGH_DEPENDENCY"
     assert "only_you_understand_me" in result["signals"]
 ```
 
@@ -243,7 +243,7 @@ Write focused tests for each detector:
 def test_high_threshold():
     # Input that should exceed high threshold
     messages = [{"role": "user", "content": "..."}]
-    result = analyze_signal(messages)
+    result = <detector_callable>(messages)
     assert result["score"] >= HIGH_THRESHOLD
 
 def test_no_signal():
@@ -290,7 +290,7 @@ if not user_messages:
 
 **Rules**:
 
-- Always return a valid result dict, never raise uncaught exceptions
+- Preserve the detector's established result contract and handle malformed input gracefully
 - Use `print_json_error()` for error messages to stdout
 - Return "NO_DATA" level when input is insufficient
 - Test edge cases: empty lists, malformed objects, missing fields

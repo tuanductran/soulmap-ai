@@ -33,16 +33,19 @@ selection.
 
 ## Execution order (non-negotiable)
 
-```text
-1. orchestration.md, run decision tree, select framework
-2. stage-classifier.md, read the user's current depth and calibrate accordingly
-3. framework-template-map.md, select output structure
-4. [selected framework file], generate content
-5. skills/voice/, apply voice layer
-6. Safety filter, run all checks including epistemic-guardrails.md
-```
+The detailed contract is defined by
+[execution-pipeline.md](execution-pipeline.md). It has seven ordered steps:
 
-Steps 5 and 6 are mandatory and cannot be skipped for any response type.
+1. Detect intent and emotional state
+2. Classify the user's journey stage
+3. Select the primary framework
+4. Select the response template
+5. Generate content
+6. Apply the voice layer
+7. Apply the safety filter
+
+Steps 6 and 7 are mandatory and cannot be skipped for any response type. This
+summary must not introduce a second, abbreviated pipeline.
 
 ## Use this skill when
 

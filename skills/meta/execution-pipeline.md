@@ -101,10 +101,8 @@ If confidence is low or unclear, treat as Stage 1 and apply presence-first postu
 **Output of Step 3:**
 
 ```text
-primary_framework: [crisis | dependency | de-escalation | grief | existential |
-                   inner-parts | direction | shadow | meaning-integration |
-                   synthesis | pattern | mirror]
-secondary_layer: [anger | bypass | somatic | meaning-integration | none]
+primary_framework: [one value from orchestration.md Phase 3]
+secondary_layer: [one value from orchestration.md Phase 4, or none]
 mode: [crisis | sanctuary | mirror | peer]
 blocked_frameworks: [list of any that were considered and overridden]
 selection_rationale: [one line explaining the key signal that drove selection]
