@@ -260,11 +260,11 @@ def test_detects_signal():
 
 def test_no_false_positives():
     messages = [{"role": "user", "content": "What's the weather?"}]
-    result = your_detector.analyze_signal(messages)
+    result = your_detector.<detector_callable>(messages)
     assert result["level"] == "<detector-specific-no-signal-level>"
 
 def test_no_data():
-    result = your_detector.analyze_signal([])
+    result = your_detector.<detector_callable>([])
     assert result["level"] == "NO_DATA"
 ```
 
