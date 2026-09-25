@@ -102,7 +102,7 @@ MODERATE_DEPENDENCY_THRESHOLD = 1
 
 **Rules for thresholds**:
 
-- Define all numeric thresholds as module-level constants in `config.py`
+- Define shared numeric thresholds as module-level constants in `src/soulmap/runtime/config/` (or the appropriate domain config)
 - Use semantic names, for example `HIGH_`, `MODERATE_`, or `CRITICAL_`
 - Document the threshold purpose with a comment
 - Use thresholds consistently across detectors
