@@ -38,7 +38,7 @@ Every detector has this structure:
 import json
 import sys
 from soulmap.runtime.io.cli_payload import read_stdin_json, print_json_error
-from soulmap.runtime.config import THRESHOLD_CONSTANTS
+from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
 
 def analyze_signal(conversation_messages: list) -> dict:
     """Main scoring function."""
