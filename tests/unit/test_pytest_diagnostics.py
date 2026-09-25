@@ -21,33 +21,18 @@ def test_build_test_command_supports_full_and_focused_scopes(
 ) -> None:
     build_test_command = cast(
         Callable[..., list[str]], diagnostics_module["build_test_command"]
+)
     )
     assert build_test_command(12345, "auto") == [
-        "uv",
-        "run",
-        "soulmap",
-        "test",
-        "-n",
-        "auto",
-        "-q",
+        "uv", "run", "soulmap", "test", "-n", "auto", "-q",
         "--randomly-seed=12345",
     ]
     focused = build_test_command(12345, "auto", scope="focused")
-    assert focused[:8] == [
-        "uv",
-        "run",
-        "soulmap",
-        "test",
-        "-n",
-        "auto",
-        "-q",
+    assert focused == [
+        "uv", "run", "soulmap", "test", "-n", "auto", "-q",
         "--randomly-seed=12345",
+        "tests/contract", "tests/integration", "tests/regression", "tests/unit",
     ]
-    assert focused[-4:] == [
-        "tests/regression",
-        "tests/unit",
-    ]
-    assert focused[7] == "--randomly-seed=12345"
 
 
 def test_persist_seed_writes_github_env(
@@ -75,7 +60,7 @@ def test_failure_summary_contains_serial_reproduction(
     write_failure_summary = cast(
         Callable[[int, str, int, str], None],
         diagnostics_module["_write_failure_summary"],
-    )
+)
     write_failure_summary(2468, "auto", 1, "focused")
 
     summary = summary_file.read_text(encoding="utf-8")
@@ -112,6 +97,7 @@ def test_main_returns_test_failure_and_writes_diagnostics(
     main = cast(Callable[[], int], diagnostics_module["main"])
     build_test_command = cast(
         Callable[..., list[str]], diagnostics_module["build_test_command"]
+)
     )
     assert main() == 1
     assert calls == [build_test_command(1357, "auto", scope="focused")]
