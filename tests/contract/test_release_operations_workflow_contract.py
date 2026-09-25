@@ -52,8 +52,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "Create immutable release tag" in workflow
     assert 'existing_commit="$(git rev-parse "$TAG^{commit}")"' in workflow
     assert "reusing it without moving it" in workflow
-    assert "git tag -a" in workflow
-    assert 'git push origin "$TAG"' in workflow
+    assert "Checkout release tooling" in workflow
+    assert "python .release-tools/scripts/release_tag.py" in workflow
+    assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
+    assert "git push origin" not in workflow
+    assert "SOULMAP_RELEASE_TOKEN" not in workflow
     assert "Create GitHub Release" in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
@@ -101,3 +104,15 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
 """
     assert cleanup_block in release_verify
     assert '"release-verification.json"' not in cleanup_block
+
+
+def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
+    script = (ROOT / "scripts" / "release_tag.py").read_text()
+
+    assert "POST" in script
+    assert "/git/tags" in script
+    assert "/git/refs" in script
+    assert '"Contents: write"' not in script
+    assert "git push" not in script
+    assert "refs/tags/" in script
+    assert "reusing it without moving it" in script
