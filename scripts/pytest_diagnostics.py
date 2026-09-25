@@ -31,9 +31,9 @@ def build_test_command(
     scope: str = "full",
 ) -> list[str]:
     """Build a reproducible pytest command for the selected repository scope."""
-    targets = [] if scope == "full" else list(FOCUSED_TEST_TARGETS)
     if scope not in {"full", "focused"}:
         raise ValueError(f"Unknown test scope: {scope}")
+    targets = [] if scope == "full" else list(FOCUSED_TEST_TARGETS)
     return [
         "uv",
         "run",
@@ -78,7 +78,7 @@ def _write_failure_summary(
         "- Serial reproduction:",
         "",
         "  ```bash",
-        f"  {"uv run soulmap test -n 0 -q " + " ".join(FOCUSED_TEST_TARGETS) + " --" if scope == "focused" else "uv run soulmap test -n 0 -q --"} --randomly-seed={seed}",
+        "  " + " ".join(build_test_command(seed, "0", scope=scope)),
         "  ```",
         "",
         "The serial command preserves the seed while removing xdist parallelism.",
