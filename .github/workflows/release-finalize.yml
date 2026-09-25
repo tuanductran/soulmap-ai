@@ -193,7 +193,7 @@ jobs:
         env:
           TAG: v${{ needs.verify.outputs.version }}
           MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           test "$(git rev-parse HEAD)" = "$MERGE_SHA"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -205,7 +205,7 @@ jobs:
             echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
           else
             git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
-            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git remote set-url origin "https://x-access-token:${RELEASE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin "$TAG"
           fi
 
