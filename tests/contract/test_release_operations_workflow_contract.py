@@ -93,11 +93,11 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
     release_verify = (
         ROOT / "src" / "soulmap" / "devtools" / "packaging" / "release_verify.py"
     ).read_text()
-    cleanup_block = '''    for filename in (
+    cleanup_block = """    for filename in (
         "soulmap-ai.zip",
         "soulmap-ai.skill",
         "soulmap-ai-library.json",
     ):
-'''
+"""
     assert cleanup_block in release_verify
     assert '"release-verification.json"' not in cleanup_block
