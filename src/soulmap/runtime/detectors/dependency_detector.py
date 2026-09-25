@@ -1,6 +1,7 @@
 """Score conversation history for signs of unhealthy AI dependency."""
 
 import json
+import re
 import sys
 
 from soulmap.runtime.config import (
@@ -11,6 +12,20 @@ from soulmap.runtime.config import (
     MODERATE_DEPENDENCY_THRESHOLD,
 )
 from soulmap.runtime.io.text_normalization import normalize_message_text
+
+DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "only you understand me",
+        re.compile(r"\bonly you\s+(?:really\s+|truly\s+)?understand(?:s)?\s+me\b"),
+    ),
+    (
+        "you are the only one who understands me",
+        re.compile(
+            r"\byou(?:'re| are)\s+the\s+only\s+one\s+who\s+"
+            r"(?:really\s+|truly\s+)?understands\s+me\b"
+        ),
+    ),
+]
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -51,6 +66,14 @@ def analyze_dependency(conversation_messages: list) -> dict:
                 score += 2
                 signals_found.append(signal)
             continue
+
+        for label, pattern in DEPENDENCY_PATTERNS:
+            if pattern.search(msg):
+                signal = f"dependency_pattern: '{label}'"
+                if signal not in signals_found:
+                    score += 2
+                    signals_found.append(signal)
+                break
 
     decision_count = 0
     for msg in user_messages:
