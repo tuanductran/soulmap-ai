@@ -41,9 +41,8 @@ def build_test_command(
         "-n",
         workers,
         "-q",
-        *targets,
-        "--",
         f"--randomly-seed={seed}",
+        *targets,
     ]
 
 
