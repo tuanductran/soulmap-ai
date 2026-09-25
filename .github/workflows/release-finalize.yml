@@ -152,7 +152,7 @@ jobs:
           test -f dist/release-provenance.json
 
       - name: Generate release artifact attestations
-        uses: actions/attest@cddc1b3b2fbdc5b8a9f7f2c9b2a7d9d1f8b2a4c # v4
+        uses: actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1
         with:
           subject-path: |
             dist/soulmap-ai.zip
