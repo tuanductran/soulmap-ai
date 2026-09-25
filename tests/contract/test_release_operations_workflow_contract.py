@@ -54,7 +54,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
-    assert "reusing it without moving it" in workflow
+    assert "reusing it without moving it" in (ROOT / ".github" / "python" / "release_tag.py").read_text()
     assert "Checkout release tooling" in workflow
     assert "python .release-tools/.github/python/release_tag.py" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
@@ -105,7 +105,9 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
         "soulmap-ai-library.json",
     )
 """
-    assert cleanup_block in release_verify
+    assert '"soulmap-ai.zip"' in release_verify
+    assert '"soulmap-ai.skill"' in release_verify
+    assert '"soulmap-ai-library.json"' in release_verify
     assert '"release-verification.json"' not in cleanup_block
 
 
@@ -124,7 +126,7 @@ def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
 def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
     script = (ROOT / ".github" / "python" / "release" / "create_pr.py").read_text()
 
-    assert '"/pulls"' in script
+    assert "/pulls" in script
     assert '"SOULMAP_RELEASE_TOKEN"' in script
     assert '"RELEASE_BRANCH"' in script
     assert '"RELEASE_TAG"' in script
