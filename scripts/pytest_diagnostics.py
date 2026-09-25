@@ -8,12 +8,13 @@ parallelism failures are only diagnosable when that context survives the run.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import os
 import platform
 import secrets
 import subprocess
 import sys
-from pathlib import Path
 
 
 FOCUSED_TEST_TARGETS = (
