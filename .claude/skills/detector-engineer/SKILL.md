@@ -145,7 +145,8 @@ Thresholds define when a detector's score triggers a framework override.
 # src/soulmap/runtime/config/safety.py
 HIGH_DEPENDENCY_THRESHOLD = 2       # Score >= 2 triggers high dependency
 MODERATE_DEPENDENCY_THRESHOLD = 1   # Score >= 1 warrants dependency caution
-CRISIS_SEVERITY_THRESHOLD = 80      # Immediate-crisis score
+
+# Crisis tiers are defined by language-specific knowledge packs, not a numeric threshold.
 ```
 
 ### Use thresholds consistently
@@ -155,7 +156,7 @@ from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
 
 if score >= HIGH_DEPENDENCY_THRESHOLD:
     level = "HIGH_DEPENDENCY"
-elif score > 0:
+elif score >= MODERATE_DEPENDENCY_THRESHOLD:
     level = "MODERATE_DEPENDENCY"
 else:
     level = "LOW_DEPENDENCY"
@@ -318,22 +319,23 @@ Test your detector from the command line:
 echo '{"messages": [{"role": "user", "content": "test input"}]}' | python -m soulmap.runtime.detectors.your_detector
 ```
 
-Expected output:
+Expected output shape is detector-specific. For a detector that exposes these fields, it may look like:
 
 ```json
 {
-  "level": "<detector-specific-high-level>",
-  "score": 75,
+  "level": "<detector-specific-level>",
   "signals": ["signal_name"],
   "recommendation": "..."
 }
 ```
 
+Do not assume every detector exposes a score or recommendation.
+
 ## Performance Considerations
 
 - Pre-compile regex patterns (do not recompile in loops)
 - Use efficient string operations (`.lower()` once, not per pattern)
-- Limit history analysis to recent messages (last 10, not entire history)
+- Bound history analysis only when the detector's existing contract permits it; preserve detectors that intentionally inspect full conversation history
 - Avoid expensive operations in scoring loops
 
 Example:
