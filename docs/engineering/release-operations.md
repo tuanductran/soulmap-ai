@@ -41,7 +41,6 @@ gh attestation verify dist/soulmap-ai-library.json -R tuanductran/soulmap-ai
 
 Verification checks the signed provenance binding between the artifact and the GitHub Actions build that produced it. The attestation is an additional provenance signal; it does not by itself establish that the software is safe or correct.
 
-
 ## Workflow trust boundary
 
 Release publication is intentionally split across two workflows/jobs with different trust levels:
