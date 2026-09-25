@@ -2937,5 +2937,138 @@
     "expect_safety_reason": "out_of_scope"
    }
   ]
+ },
+ {
+  "g": "Framework Coverage — Dark Night of the Soul",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/dark-night-of-soul.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I feel spiritually empty and disconnected from everything I used to believe.",
+    "note": "Primary Dark Night signal: spiritual emptiness and loss of connection.",
+    "expect_primary_framework": "DARK_NIGHT_OF_SOUL",
+    "expect_mode": "SANCTUARY",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Soul Nourishment",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/soul-nourishment.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "Being in nature makes me feel alive. This is what actually nourishes me.",
+    "note": "Primary Soul Nourishment signal: naming what genuinely feeds the spirit.",
+    "expect_primary_framework": "SOUL_NOURISHMENT",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Divine Guidance",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/divine-guidance.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I don't know if this is intuition or fear, and I don't know if this feeling is real or just what I want to be true.",
+    "note": "Primary Divine Guidance signal: discerning inner knowing from fear or wishful thinking.",
+    "expect_primary_framework": "DIVINE_GUIDANCE",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Sacred Polarity",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/sacred-feminine-masculine.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I don't know how to hold both my power and my softness.",
+    "note": "Primary Sacred Polarity signal: exploring both power and receptivity.",
+    "expect_primary_framework": "SACRED_POLARITY",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Spiritual Purpose",
+  "cat": "framework",
+  "sources": [
+   "skills/frameworks/spiritual-purpose.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I don't know if this is my calling or just what I think I should do.",
+    "note": "Primary Spiritual Purpose signal: distinguishing authentic alignment from obligation.",
+    "expect_primary_framework": "SPIRITUAL_PURPOSE",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Soulmate Longing",
+  "cat": "framework",
+  "sources": [
+   "skills/soulmate/soulmate-longing.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I keep hoping to meet my soulmate, and I'm afraid I'll be alone forever.",
+    "note": "Primary Soulmate Longing signal: longing for a partner and fear of permanent aloneness.",
+    "expect_primary_framework": "SOULMATE_LONGING",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
+ },
+ {
+  "g": "Framework Coverage — Partnership Patterns",
+  "cat": "framework",
+  "sources": [
+   "skills/soulmate/partnership-patterns.md",
+   "skills/meta/orchestration.md"
+  ],
+  "source_markers": {},
+  "items": [
+   {
+    "t": "I keep choosing people who aren't ready for a relationship.",
+    "note": "Primary Partnership Patterns signal: recurring selection of unavailable partners.",
+    "expect_primary_framework": "PARTNERSHIP_PATTERNS",
+    "expect_mode": "MIRROR",
+    "expect_safety_status": "PASS",
+    "expect_safety_reason": "no_override"
+   }
+  ]
  }
 ]
