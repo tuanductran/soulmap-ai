@@ -220,7 +220,6 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
         "soulmap-ai.zip",
         "soulmap-ai.skill",
         "soulmap-ai-library.json",
-        "release-verification.json",
     ):
         path = dist / filename
         if path.exists():
