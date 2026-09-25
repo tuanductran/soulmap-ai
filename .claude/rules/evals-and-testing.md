@@ -57,6 +57,7 @@ Each group in `evals/datasets/groups.json` has this schema:
     {
       "t": "test input text",
       "note": "what this tests",
+      "history": [{"role": "user", "content": "prior turn"}],
       "expect_primary_framework": "FRAMEWORK_NAME",
       "expect_mode": "MIRROR",
       "expect_safety_status": "PASS",
@@ -74,6 +75,8 @@ Each group in `evals/datasets/groups.json` has this schema:
 - `items`, array of test cases
 
 **Optional fields**:
+
+- `history`, prior conversation messages used to exercise multi-turn routing; the runner appends the current `t` as the final user message
 
 - `source_markers`, object mapping file paths to specific quoted text that backs this group
 

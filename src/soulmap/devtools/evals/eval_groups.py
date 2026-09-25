@@ -39,6 +39,7 @@ class GroupItem(TypedDict):
 
     t: str
     note: str
+    history: NotRequired[list[dict[str, str]]]
     expect_primary_framework: NotRequired[str]
     expect_secondary_layer: NotRequired[str | None]
     expect_mode: NotRequired[str]
@@ -156,7 +157,11 @@ def run_groups_eval(
 
         for item in group["items"]:
             message = item["t"]
-            history = [{"role": "user", "content": message}]
+            history = [
+                {"role": entry["role"], "content": entry["content"]}
+                for entry in item.get("history", [])
+            ]
+            history.append({"role": "user", "content": message})
             scope = classify_message(message)
             selection = select_framework(
                 message,

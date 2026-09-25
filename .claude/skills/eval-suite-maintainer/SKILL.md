@@ -80,6 +80,7 @@ Do NOT add a group just to test code-use `tests/` for that.
     {
       "t": "test input text",
       "note": "what this tests and why",
+      "history": [{"role": "user", "content": "prior turn"}],
       "expect_primary_framework": "MIRROR",
       "expect_mode": "MIRROR",
       "expect_safety_status": "PASS",
@@ -99,6 +100,7 @@ Do NOT add a group just to test code-use `tests/` for that.
 **Optional fields**:
 
 - `source_markers`, object mapping file paths to specific quoted text
+- `history`, optional prior conversation messages; the eval runner appends the current `t` as the final user message for multi-turn routing cases
 
 ## Writing expect_primary_framework assertions
 
