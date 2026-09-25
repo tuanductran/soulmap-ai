@@ -388,7 +388,7 @@ async def select_framework_async(
                 "instruction": (
                     "Activate grief-companion.md at moderate intensity. Ground "
                     "first, then witness the loss before any reflection. Keep it "
-                    "short. End with one grief-specific question."
+                    "short. Do not ask a question in Sanctuary mode."
                 ),
                 "blocked": ["direction", "shadow", "existential", "synthesis"],
             }
