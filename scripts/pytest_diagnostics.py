@@ -16,8 +16,24 @@ import sys
 from pathlib import Path
 
 
-def build_test_command(seed: int, workers: str = "auto") -> list[str]:
-    """Build the repository test command with an explicit reproducibility seed."""
+FOCUSED_TEST_TARGETS = (
+    "tests/contract",
+    "tests/integration",
+    "tests/regression",
+    "tests/unit",
+)
+
+
+def build_test_command(
+    seed: int,
+    workers: str = "auto",
+    *,
+    scope: str = "full",
+) -> list[str]:
+    """Build a reproducible pytest command for the selected repository scope."""
+    targets = [] if scope == "full" else list(FOCUSED_TEST_TARGETS)
+    if scope not in {"full", "focused"}:
+        raise ValueError(f"Unknown test scope: {scope}")
     return [
         "uv",
         "run",
@@ -26,6 +42,7 @@ def build_test_command(seed: int, workers: str = "auto") -> list[str]:
         "-n",
         workers,
         "-q",
+        *targets,
         "--",
         f"--randomly-seed={seed}",
     ]
@@ -43,7 +60,12 @@ def _persist_seed(seed: int) -> None:
             handle.write(f"PYTEST_RANDOMLY_SEED={seed}\n")
 
 
-def _write_failure_summary(seed: int, workers: str, exit_code: int) -> None:
+def _write_failure_summary(
+    seed: int,
+    workers: str,
+    exit_code: int,
+    scope: str,
+) -> None:
     lines = [
         "## Pytest reproducibility diagnostics",
         "",
@@ -51,11 +73,12 @@ def _write_failure_summary(seed: int, workers: str, exit_code: int) -> None:
         f"- Python: `{platform.python_version()}`",
         f"- Operating system: `{platform.platform()}`",
         f"- pytest-xdist workers: `{workers}`",
+        f"- Test scope: `{scope}`",
         f"- pytest-randomly seed: `{seed}`",
         "- Serial reproduction:",
         "",
         "  ```bash",
-        f"  uv run soulmap test -n 0 -q -- --randomly-seed={seed}",
+        f"  {"uv run soulmap test -n 0 -q " + " ".join(FOCUSED_TEST_TARGETS) + " --" if scope == "focused" else "uv run soulmap test -n 0 -q --"} --randomly-seed={seed}",
         "  ```",
         "",
         "The serial command preserves the seed while removing xdist parallelism.",
@@ -67,16 +90,18 @@ def _write_failure_summary(seed: int, workers: str, exit_code: int) -> None:
 
 
 def main() -> int:
+    scope = os.environ.get("SOULMAP_PYTEST_SCOPE", "full")
     workers = os.environ.get("SOULMAP_PYTEST_WORKERS", "auto")
     seed = int(os.environ.get("PYTEST_RANDOMLY_SEED", secrets.randbits(32)))
     _persist_seed(seed)
-    command = build_test_command(seed, workers)
+    command = build_test_command(seed, workers, scope=scope)
     result = subprocess.run(command, check=False)
     if result.returncode:
-        _write_failure_summary(seed, workers, result.returncode)
+        _write_failure_summary(seed, workers, result.returncode, scope)
+        serial = build_test_command(seed, "0", scope=scope)
         print(
             "Pytest failed. Reproduce serially with: "
-            f"uv run soulmap test -n 0 -q -- --randomly-seed={seed}",
+            + " ".join(serial),
             file=sys.stderr,
         )
     return result.returncode
