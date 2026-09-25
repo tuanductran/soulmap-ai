@@ -27,6 +27,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     workflow = (ROOT / ".github" / "workflows" / "release-finalize.yml").read_text()
 
     assert "types: [closed]" in workflow
+    assert "workflow_dispatch:" in workflow
+    assert "merge_commit_sha:" in workflow
+    assert "inputs.merge_commit_sha" in workflow
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
@@ -39,7 +42,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "contents: write" in workflow
     assert "id-token: write" in workflow
     assert "attestations: write" in workflow
-    assert "Generate release artifact attestations" in workflow
+    assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
         "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2" in workflow
     )
