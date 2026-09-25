@@ -37,12 +37,17 @@ Every detector has this structure:
 
 import json
 import sys
-from soulmap.runtime.io.cli_payload import read_stdin_json, print_json_error
-from soulmap.runtime.config import THRESHOLD_CONSTANTS
+from soulmap.runtime.io.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_fields,
+)
+from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
 
-def analyze_signal(conversation_messages: list) -> dict:
-    """Main scoring function."""
-    # Implementation
+
+def analyze_dependency(conversation_messages: list) -> dict:
+    """Example of a detector-specific scoring function."""
+    # Follow the existing detector's callable and output contract.
     pass
 
 if __name__ == "__main__":
@@ -57,25 +62,22 @@ if __name__ == "__main__":
 
 ## Return value contract
 
-Every detector returns a standardized dict:
+Detectors share a common result shape, but the exact callable, level values, scoring scale,
+and framework-specific fields are detector-owned contracts. Do not assume every detector
+uses the same level enum. For example, the dependency detector currently returns
+`HIGH_DEPENDENCY`, `MODERATE_DEPENDENCY`, or `LOW_DEPENDENCY`, while crisis detection
+uses its own safety levels.
 
-```python
-{
-    "level": "HIGH",              # Signal level: TIER_1, HIGH, MODERATE, LOW, NONE, NO_DATA
-    "score": 75,                  # Numeric score (0-100 for consistency)
-    "signals": ["signal_name"],   # List of signal descriptions found
-    "recommendation": "..."       # Plain English recommendation
-}
-```
+Before adding or changing a detector, inspect the closest existing detector and its tests.
+Preserve that detector's public callable and output semantics unless the change explicitly
+updates the selector and tests together.
 
-**Levels**:
+Common fields where applicable:
 
-- `TIER_1`, Highest severity (crisis, immediate danger)
-- `HIGH`, Strong signals requiring framework override
-- `MODERATE`, Notable signals worth attention
-- `LOW`, Weak signals, may be context-dependent
-- `NONE`, No signals found
-- `NO_DATA`, Insufficient input to analyze
+- `level`, detector-specific classification
+- `score`, numeric score when the detector uses scoring
+- `signals`, detected signal descriptions
+- `recommendation`, detector guidance when part of its contract
 
 ## Signal detection patterns
 
@@ -228,8 +230,9 @@ def select_framework(messages: list) -> str:
     # ... crisis check first (highest priority) ...
 
     # Your detector
-    result = your_detector.analyze_signal(messages)
-    if result["level"] == "HIGH":
+    result = your_detector.<detector_callable>(messages)
+    # Match the level values defined by that detector, not a generic enum.
+    if <detector-specific-high-signal>:
         return "YOUR_FRAMEWORK"
 
     # ... continue with other detectors ...
@@ -252,13 +255,13 @@ from soulmap.runtime.detectors import your_detector
 def test_detects_signal():
     messages = [{"role": "user", "content": "[signal text here]"}]
     result = your_detector.analyze_signal(messages)
-    assert result["level"] == "HIGH"
+    assert result["level"] == "<detector-specific-high-level>"
     assert "expected_signal_name" in result["signals"]
 
 def test_no_false_positives():
     messages = [{"role": "user", "content": "What's the weather?"}]
     result = your_detector.analyze_signal(messages)
-    assert result["level"] == "NONE"
+    assert result["level"] == "<detector-specific-no-signal-level>"
 
 def test_no_data():
     result = your_detector.analyze_signal([])
@@ -348,7 +351,7 @@ for norm_msg in normalized_messages:
 
 1. Read `../rules/detector-development.md` before writing any code.
 2. Check `src/soulmap/runtime/config/` for existing signal phrase constants to extend rather than duplicate.
-3. Write the detector following the anatomy and return value contract defined in this skill.
+3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
 4. Add threshold constants to `src/soulmap/runtime/config/safety.py` or the appropriate domain config.
 5. Integrate the detector call into `src/soulmap/runtime/routing/framework_selector.py` at the correct priority.
 6. Add eval cases to `evals/datasets/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
