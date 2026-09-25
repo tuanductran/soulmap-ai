@@ -24,7 +24,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "release/prep-" in workflow
     assert "git push --follow-tags" not in workflow
     assert "softprops/action-gh-release" not in workflow
-    release_pr_tool = (ROOT / ".github" / "python" / "release" / "create_pr.py").read_text()
+    release_pr_tool = (\n        ROOT / ".github" / "python" / "release" / "create_pr.py"\n    ).read_text()
     assert "release-finalize workflow" in release_pr_tool
 
 
