@@ -16,7 +16,11 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: true" in workflow
     assert "git push --set-upstream origin" in workflow
-    assert "gh pr create" in workflow
+    assert "python .github/python/release/create_pr.py" in workflow
+    assert "SOULMAP_RELEASE_TOKEN: \${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert "RELEASE_BRANCH: \${{ steps.bump.outputs.branch }}" in workflow
+    assert "RELEASE_TAG: \${{ steps.bump.outputs.tag }}" in workflow
+    assert "gh pr create" not in workflow
     assert "release/prep-" in workflow
     assert "release-finalize" in workflow
     assert "git push --follow-tags" not in workflow
