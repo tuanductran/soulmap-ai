@@ -7,6 +7,21 @@
 - Safety ordering holds (crisis and dependency take priority).
 - Python runtime code and maintainer tooling stay green under the repo test suite.
 
+## Test scope
+
+Pull-request CI uses a focused Python test gate rather than collecting every test file. The
+focused gate covers `tests/contract`, `tests/integration`, `tests/regression`, and `tests/unit`.
+The three-platform matrix runs only the script smoke test outside Ubuntu, while safety and
+response evals remain explicit CI steps.
+
+The full pytest suite remains available for deliberate repository-wide validation and runs in
+weekly governance. Use `SOULMAP_PYTEST_SCOPE=full uv run python scripts/pytest_diagnostics.py` when
+a change genuinely affects shared behavior across the whole repository.
+
+Pytest supports explicit directory/file selection on the command line, so CI can make its
+intent visible instead of relying on implicit collection. See the pytest documentation for
+path and node-id selection.
+
 ## Run the full test suite
 
 ```bash

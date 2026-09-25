@@ -64,7 +64,8 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     script_text = PYTEST_DIAGNOSTICS.read_text(encoding="utf-8")
     assert "uv" in script_text
     assert "--randomly-seed=" in script_text
-    assert "-n 0 -q" in script_text
+    assert "scope=scope" in script_text
+    assert '"0", scope=scope' in script_text
 
     ci_text = WORKFLOWS[0].read_text(encoding="utf-8")
     release_text = WORKFLOWS[1].read_text(encoding="utf-8")
