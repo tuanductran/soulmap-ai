@@ -204,7 +204,7 @@ jobs:
           RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
           test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
-          python .release-tools/scripts/release_tag.py
+          python .release-tools/.github/python/release_tag.py
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
