@@ -1,0 +1,5 @@
+# actionlint does not yet include the GitHub-hosted Ubuntu 26.04 label in its built-in runner list.
+# Keep the production runner migration explicit while teaching the pinned linter about it.
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
