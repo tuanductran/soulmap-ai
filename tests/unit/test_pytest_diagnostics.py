@@ -30,7 +30,6 @@ def test_build_test_command_supports_full_and_focused_scopes(
         "-n",
         "auto",
         "-q",
-        "--",
         "--randomly-seed=12345",
     ]
     focused = build_test_command(12345, "auto", scope="focused")
@@ -45,7 +44,11 @@ def test_build_test_command_supports_full_and_focused_scopes(
         "tests/contract",
         "tests/integration",
     ]
-    assert focused[-2:] == ["--", "--randomly-seed=12345"]
+    assert focused[-4:] == [
+        "tests/regression",
+        "tests/unit",
+    ]
+    assert focused[7] == "--randomly-seed=12345"
 
 
 def test_persist_seed_writes_github_env(
