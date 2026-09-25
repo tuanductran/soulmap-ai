@@ -36,6 +36,14 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-provenance" in workflow
     assert "soulmap release-health" in workflow
     assert "dist/release-provenance.json" in workflow
+    assert "contents: write" in workflow
+    assert "id-token: write" in workflow
+    assert "attestations: write" in workflow
+    assert "Generate release artifact attestations" in workflow
+    assert "actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d # v4.2.1" in workflow
+    assert "dist/soulmap-ai.zip" in workflow
+    assert "dist/soulmap-ai.skill" in workflow
+    assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
     assert 'existing_commit="$(git rev-parse "$TAG^{commit}")"' in workflow
     assert "reusing it without moving it" in workflow
@@ -46,6 +54,12 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         "Verify checkout is the merged release commit"
     ) < workflow.index("Verify merged release tree")
     assert workflow.index("Verify merged release tree") < workflow.index(
+        "Create immutable release tag"
+    )
+    assert workflow.index("Verify downloaded release artifacts") < workflow.index(
+        "Generate release artifact attestations"
+    )
+    assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
     assert workflow.index("Create immutable release tag") < workflow.index(
