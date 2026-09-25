@@ -134,13 +134,13 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
           persist-credentials: false
 
       - name: Verify checkout is the merged release commit
         env:
-          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
           test -n "$MERGE_SHA"
           test "$(git rev-parse HEAD)" = "$MERGE_SHA"
@@ -170,7 +170,7 @@ jobs:
       - name: Create immutable release tag
         env:
           TAG: v${{ needs.verify.outputs.version }}
-          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+          MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           test "$(git rev-parse HEAD)" = "$MERGE_SHA"
