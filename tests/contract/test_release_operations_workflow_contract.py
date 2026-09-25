@@ -137,4 +137,4 @@ def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
     assert '"RELEASE_BRANCH"' in script
     assert '"RELEASE_TAG"' in script
     assert "gh pr create" not in script
-    assert "https://api.github.com" in script
+    assert "API_ROOT" in script
