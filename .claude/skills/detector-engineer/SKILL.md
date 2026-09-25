@@ -53,7 +53,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
 if __name__ == "__main__":
     try:
         payload = read_stdin_json()
-        result = analyze_signal(payload.get("messages", []))
+        result = analyze_dependency(payload.get("messages", []))
         print(json.dumps(result))
     except Exception as e:
         print_json_error(str(e))
@@ -154,11 +154,11 @@ CRISIS_SEVERITY_THRESHOLD = 80      # Immediate-crisis score
 from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
 
 if score >= HIGH_DEPENDENCY_THRESHOLD:
-    level = "HIGH"
+    level = "HIGH_DEPENDENCY"
 elif score > 0:
-    level = "MODERATE"
+    level = "MODERATE_DEPENDENCY"
 else:
-    level = "NONE"
+    level = "LOW_DEPENDENCY"
 ```
 
 ### Tune thresholds based on evals
@@ -254,7 +254,7 @@ from soulmap.runtime.detectors import your_detector
 
 def test_detects_signal():
     messages = [{"role": "user", "content": "[signal text here]"}]
-    result = your_detector.analyze_signal(messages)
+    result = your_detector.<detector_callable>(messages)
     assert result["level"] == "<detector-specific-high-level>"
     assert "expected_signal_name" in result["signals"]
 
@@ -322,7 +322,7 @@ Expected output:
 
 ```json
 {
-  "level": "HIGH",
+  "level": "<detector-specific-high-level>",
   "score": 75,
   "signals": ["signal_name"],
   "recommendation": "..."
@@ -361,8 +361,8 @@ for norm_msg in normalized_messages:
 
 A detector is done when:
 
-- It returns a dict matching the standard return value contract above
-- All signal constants live in `src/soulmap/runtime/config/` not inline in the function
+- It preserves the detector-specific return contract established by the implementation and tests
+- Shared signal and threshold constants are reused from `src/soulmap/runtime/config/` when an existing constant applies
 - It is called at the correct priority in `src/soulmap/runtime/routing/framework_selector.py`
 - At least one eval case in `evals/datasets/groups.json` covers its primary signal
 - `uv run soulmap test -n auto -q` passes with no regressions
