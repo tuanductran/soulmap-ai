@@ -199,7 +199,7 @@ jobs:
 
       - name: Create immutable release tag
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           RELEASE_TAG: v${{ needs.verify.outputs.version }}
           RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
