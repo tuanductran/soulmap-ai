@@ -15,12 +15,19 @@ concurrency:
 
 jobs:
   lint:
+    name: lint (${{ matrix.check_name }})
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-24.04
+            check_name: ubuntu-latest
+          - os: macos-latest
+            check_name: macos-latest
+          - os: windows-latest
+            check_name: windows-latest
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
@@ -33,7 +40,7 @@ jobs:
         uses: ./.github/actions/actionlint
 
       - name: Validate GitHub Actions workflows
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04'
         run: actionlint
 
       - name: Install uv
@@ -54,17 +61,17 @@ jobs:
       - name: Dependency analysis (Deptry)
         run: uv run deptry .
       - name: Dependency vulnerability audit (pip-audit)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run pip-audit
       - name: Focused Python behavior tests (Ubuntu only)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04'
         env:
           SOULMAP_PYTEST_SCOPE: focused
         run: uv run python scripts/pytest_diagnostics.py
       - name: Cross-platform smoke tests
         run: uv run pytest -q tests/smoke/test_scripts_smoke.py
       - name: Coverage report (Ubuntu only)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04'
         run: |
           set -o pipefail
           uv run pytest -n auto \
