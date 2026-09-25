@@ -87,3 +87,17 @@ def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
     assert 'test "v${version}" = "${{ inputs.release_ref }}"' in workflow
     assert "rollback_ready" in workflow
     assert "contents: write" not in workflow
+
+
+def test_release_health_preserves_verification_summary_for_publication() -> None:
+    release_verify = (
+        ROOT / "src" / "soulmap" / "devtools" / "packaging" / "release_verify.py"
+    ).read_text()
+    cleanup_block = """    for filename in (
+        "soulmap-ai.zip",
+        "soulmap-ai.skill",
+        "soulmap-ai-library.json",
+    ):
+"""
+    assert cleanup_block in release_verify
+    assert '"release-verification.json"' not in cleanup_block
