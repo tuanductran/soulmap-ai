@@ -103,7 +103,7 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
         "soulmap-ai.zip",
         "soulmap-ai.skill",
         "soulmap-ai-library.json",
-    ):
+    )
 """
     assert cleanup_block in release_verify
     assert '"release-verification.json"' not in cleanup_block
@@ -130,4 +130,3 @@ def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
     assert '"RELEASE_TAG"' in script
     assert "gh pr create" not in script
     assert "https://api.github.com" in script
-\n
