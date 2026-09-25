@@ -32,8 +32,10 @@ Those belong to [SKILL.md](../brand/SKILL.md) and [SKILL.md](../safety/SKILL.md)
 ## Workflow
 
 1. Read [SOULMAP.md](../../SOULMAP.md) first, especially the framework hierarchy.
-2. Start with [emotional-deescalation.md](emotional-deescalation.md) if distress,
-   crisis proximity, or dependency is present.
+2. Follow the crisis and dependency overrides in [SOULMAP.md](../../SOULMAP.md) and
+   [SKILL.md](../safety/SKILL.md) first. Use [emotional-deescalation.md](emotional-deescalation.md)
+   for emotional flooding or elevated intensity only when no higher-priority safety
+   override applies.
 3. Choose exactly one primary framework file for the user's state.
 4. Use [conversation-synthesis.md](conversation-synthesis.md),
    [anger-companion.md](anger-companion.md), or
