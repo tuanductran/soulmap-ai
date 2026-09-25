@@ -11,6 +11,16 @@ The release workflow creates two machine-readable summaries:
 
 The provenance source commit is the exact merge commit checked out by Release Finalize, not the workflow's original dispatch SHA or the version-bump commit. The provenance file is retained as a workflow artifact and published with the GitHub Release.
 
+GitHub artifact attestations are generated for the three release-consumed package artifacts after they are downloaded and verified, but before the immutable tag and GitHub Release are created. Consumers can verify each attestation with the GitHub CLI:
+
+```bash
+gh attestation verify soulmap-ai.zip -R tuanductran/soulmap-ai
+gh attestation verify soulmap-ai.skill -R tuanductran/soulmap-ai
+gh attestation verify soulmap-ai-library.json -R tuanductran/soulmap-ai
+```
+
+These attestations complement, rather than replace, the repository's existing SHA-256 provenance and release verification.
+
 Manual verification:
 
 ```bash
@@ -47,9 +57,9 @@ Release publication is intentionally split across two workflows/jobs with differ
 
 1. **Release Prep** runs only from `main` through manual `workflow_dispatch`. It has the write permissions needed to create the release-preparation branch and pull request using the dedicated `SOULMAP_RELEASE_TOKEN`.
 2. **Release Finalize / verify** runs after a release-preparation pull request is merged into `main`. It checks out the exact merge commit with persisted credentials disabled and runs repository-controlled verification with `contents: read` only. It produces the release verification, provenance, health result, and release artifacts.
-3. **Release Finalize / publish** runs only after the verification job succeeds. It checks out the same exact merge commit, downloads the verified run-scoped artifacts, confirms their required files exist, and is the only finalization job granted `contents: write` so it can create an immutable release tag and GitHub Release.
+3. **Release Finalize / publish** runs only after the verification job succeeds. It checks out the same exact merge commit, downloads the verified run-scoped artifacts, confirms their required files exist, generates GitHub artifact attestations for the three consumer-facing package artifacts, and is the only finalization job granted release-mutation permissions. Its `contents: write`, `id-token: write`, and `attestations: write` permissions are limited to this write-capable boundary so it can attest the release artifacts, create an immutable release tag, and create the GitHub Release.
 
-The publish job must not run repository-controlled tests, evals, builds, or other verification commands. Verification happens before the write-capable boundary, and the publish job consumes the artifacts produced by that verified run.
+The publish job must not run repository-controlled tests, evals, builds, or other verification commands. Verification happens before the write-capable boundary, and the publish job consumes the artifacts produced by that verified run. Artifact attestation is applied only to the three release-consumed package artifacts (`soulmap-ai.zip`, `soulmap-ai.skill`, and `soulmap-ai-library.json`), not routine test artifacts or repository source files.
 
 The workflows therefore do not use a write-capable `pull_request` job to execute untrusted PR code, and the verification job does not receive release-mutation credentials.
 
