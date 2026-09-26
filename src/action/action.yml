@@ -3,17 +3,17 @@ author: Tuan Duc Tran
 description: Python GitHub Action for idempotent release publication and release pull-request creation.
 inputs:
   operation:
-    description: Operation to perform: release or pull-request.
+    description: "Operation to perform: release or pull-request."
     required: true
   token:
     description: GitHub token with the permissions required by the selected operation.
     required: true
   repository:
-    description: GitHub repository in owner/name form.
+    description: "GitHub repository in owner/name form."
     required: false
     default: ${{ github.repository }}
   tag:
-    description: Existing Git tag for release publication or release PR metadata.
+    description: "Existing Git tag for release publication or release PR metadata."
     required: false
   release-name:
     description: GitHub Release name.
@@ -28,7 +28,7 @@ inputs:
     description: Newline-separated release asset paths.
     required: false
   draft:
-    description: Publish the release when false; keep it draft when true.
+    description: "Publish the release when false; keep it draft when true."
     required: false
     default: "false"
   prerelease:
