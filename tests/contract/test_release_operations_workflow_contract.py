@@ -56,16 +56,12 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
-    assert "Create immutable release tag and publish GitHub Release" in workflow
-    assert (
-        "reusing it without moving it"
-        in (ROOT / ".github" / "python" / "release_tag.py").read_text()
-    )
-    assert "python .github/python/release_tag.py" in workflow
-    assert "python .github/python/release/publish.py" in workflow
-    assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
+    assert "Create immutable release tag" in workflow
+    assert 'git push origin "$TAG"' in workflow
+    assert "softprops/action-gh-release@" in workflow
+    assert "tag_name: v${{ needs.verify.outputs.version }}" in workflow
+    assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
     assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" not in workflow
-    assert "git push origin" not in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
     ) < workflow.index("Verify merged release tree")
@@ -84,9 +80,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
-    assert workflow.index(
-        "Create immutable release tag and publish GitHub Release"
-    ) < workflow.index("python .github/python/release/publish.py")
+    assert workflow.index("Create immutable release tag") < workflow.index(
+        "Publish GitHub Release"
+    )
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
@@ -114,22 +110,6 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
     assert '"soulmap-ai.skill"' in release_verify
     assert '"soulmap-ai-library.json"' in release_verify
     assert '"release-verification.json"' not in cleanup_block
-
-
-def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
-    script = (ROOT / ".github" / "python" / "release_tag.py").read_text()
-
-    assert (
-        'os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")'
-        in script
-    )
-    assert "POST" in script
-    assert "/git/tags" in script
-    assert "/git/refs" in script
-    assert '"Contents: write"' not in script
-    assert "git push" not in script
-    assert "refs/tags/" in script
-    assert "reusing it without moving it" in script
 
 
 def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
