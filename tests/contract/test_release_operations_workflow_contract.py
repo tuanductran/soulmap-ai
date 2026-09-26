@@ -46,7 +46,13 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/release-provenance.json" in workflow
     assert "contents: write" in workflow
     assert "id-token: write" in workflow
-    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" not in workflow.split("jobs:", 1)[1].split("publish:", 1)[1].split("steps:", 1)[1].split("Verify checkout is the merged release commit", 1)[0]
+    assert (
+        "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}"
+        not in workflow.split("jobs:", 1)[1]
+        .split("publish:", 1)[1]
+        .split("steps:", 1)[1]
+        .split("Verify checkout is the merged release commit", 1)[0]
+    )
     assert "persist-credentials: false" in workflow
     assert (
         "SOULMAP_RELEASE_TOKEN must be configured for release tag publication."
