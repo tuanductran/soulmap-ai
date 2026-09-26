@@ -1,3 +1,4 @@
+# ruff: noqa: D
 """GitHub operations used by SoulMap workflows."""
 from __future__ import annotations
 import json, mimetypes, os, sys
