@@ -86,15 +86,17 @@ def _literal_config(body: str) -> dict[str, object]:
         "STRENGTH_THRESHOLD",
         "CONFIRMATION_SCORE",
     ):
-        if not isinstance(values[key], int):
+        value = values[key]
+        if not isinstance(value, int):
             raise ValueError(f"Celebration setting {key} is invalid.")
     for key in (
         "NEGATIVE_OVERRIDES",
         "CONFIRMATION_SIGNALS",
         "CONFIRMATION_ASSISTANT_ANCHORS",
     ):
-        if not isinstance(values[key], tuple) or not all(
-            isinstance(item, str) and item for item in values[key]
+        value = values[key]
+        if not isinstance(value, tuple) or not all(
+            isinstance(item, str) and item for item in value
         ):
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
@@ -109,10 +111,10 @@ def load_celebration_rules() -> CelebrationRules:
     groups = load_labeled_groups(path, "Detection signals")
     return CelebrationRules(
         score_weights=cast(dict[str, int], values["SCORE_WEIGHTS"]),
-        threshold=values["THRESHOLD"],
-        negative_override_penalty=values["NEGATIVE_OVERRIDE_PENALTY"],
-        strength_threshold=values["STRENGTH_THRESHOLD"],
-        confirmation_score=values["CONFIRMATION_SCORE"],
+        threshold=cast(int, values["THRESHOLD"]),
+        negative_override_penalty=cast(int, values["NEGATIVE_OVERRIDE_PENALTY"]),
+        strength_threshold=cast(int, values["STRENGTH_THRESHOLD"]),
+        confirmation_score=cast(int, values["CONFIRMATION_SCORE"]),
         negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
         confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
         confirmation_assistant_anchors=cast(
