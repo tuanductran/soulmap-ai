@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import importlib.util
 import io
-from email.message import Message
 import json
+from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
 from urllib.error import HTTPError
