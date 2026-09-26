@@ -134,7 +134,9 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
     top_emotional = sorted(
         recurring_emotional.items(), key=lambda x: -x[1]["score"]
     )[: _rules().max_themes]
-    top_values = sorted(recurring_values.items(), key=lambda x: -x[1]["score"])[:_rules().max_themes]
+    top_values = sorted(recurring_values.items(), key=lambda x: -x[1]["score"])[
+        : _rules().max_themes
+    ]
     top_conflicts = sorted(
         recurring_conflicts.items(), key=lambda x: -x[1]["score"]
     )[: _rules().max_themes]
