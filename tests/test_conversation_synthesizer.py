@@ -92,22 +92,22 @@ def test_merge_memory_themes_handles_invalid_or_empty_memory_values() -> None:
 
 def test_should_synthesize_covers_explicit_natural_threshold_and_no_trigger() -> None:
     short_history = _user_messages(["one", "two"])
-    reflective_history = _user_messages([f"message {index}" for index in range(10)])
-    long_history = _user_messages([f"message {index}" for index in range(12)])
+    reflective_history = _user_messages([f"I feel lonely in message {index}." for index in range(9)])
+    long_history = _user_messages([f"I feel lonely and want connection in message {index}." for index in range(9)])
 
     assert synthesizer.should_synthesize("Can you synthesize this?", short_history) == {
         "should": True,
         "reason": "explicit_request",
     }
     assert synthesizer.should_synthesize(
-        "I wonder why this repeats.", reflective_history
+        "I wonder why this repeats. I feel lonely.", reflective_history
     ) == {
         "should": True,
-        "reason": "natural_pause_long_session",
+        "reason": "recurring_themes_long_session",
     }
     assert synthesizer.should_synthesize("I am still here.", long_history) == {
         "should": True,
-        "reason": "long_session_threshold",
+        "reason": "recurring_themes_long_session",
     }
     assert synthesizer.should_synthesize("I am still here.", short_history) == {
         "should": False,
