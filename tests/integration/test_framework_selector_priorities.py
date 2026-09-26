@@ -15,6 +15,8 @@ TEST_ENV = {
 }
 
 
+from soulmap.runtime.routing.stage_detector import detect_stage
+
 def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
     env = os.environ.copy()
     if debug:
@@ -322,6 +324,12 @@ def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
         "history": [{"role": "user", "content": "This feels quiet now."}],
         "memory": {"session_count": 2},
     }
+
+    direct = detect_stage(
+        [*payload["history"], {"role": "user", "content": payload["message"]}],
+        payload["memory"],
+    )
+    assert direct["stage"] == 6
 
     data = run_framework_selector(payload)
 
