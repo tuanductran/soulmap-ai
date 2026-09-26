@@ -9,30 +9,45 @@
     "pip_requirements",
     "dockerfile"
   ],
-  "platformAutomerge": true,
-  "automergeType": "pr",
-  "automergeStrategy": "squash",
+  "dependencyDashboardApproval": true,
+  "platformAutomerge": false,
+  "automerge": false,
+  "prConcurrentLimit": 2,
+  "prHourlyLimit": 1,
+  "commitHourlyLimit": 1,
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
   "rebaseWhen": "conflicted",
   "packageRules": [
     {
-      "description": "Automerge safe dependency updates",
-      "matchUpdateTypes": [
-        "patch",
-        "minor",
-        "pin",
-        "pinDigest",
-        "digest"
+      "description": "Keep the custom GitHub Action on the Python 3.11 runtime contract",
+      "matchDatasources": [
+        "docker"
       ],
-      "automerge": true,
-      "platformAutomerge": true,
-      "automergeType": "pr",
-      "automergeStrategy": "squash"
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchPackageNames": [
+        "python"
+      ],
+      "versioning": "pep440",
+      "allowedVersions": "<3.12"
     },
     {
-      "description": "Keep major dependency updates manual",
+      "description": "Require explicit approval for CI and release tooling updates",
+      "matchManagers": [
+        "github-actions",
+        "dockerfile"
+      ],
+      "dependencyDashboardApproval": true,
+      "automerge": false
+    },
+    {
+      "description": "Require explicit approval for major dependency updates",
       "matchUpdateTypes": [
         "major"
       ],
+      "dependencyDashboardApproval": true,
       "automerge": false
     }
   ]
