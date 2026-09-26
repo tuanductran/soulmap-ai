@@ -107,7 +107,18 @@ class GitHubClient:
                 detail = exc.read().decode("utf-8", errors="replace")
                 retryable = method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
                 if exc.code in RETRYABLE_STATUS_CODES and retryable and attempt < MAX_RETRIES:
-                    time.sleep(self._retry_delay(attempt, self.last_response_headers))
+                    rate_limited = exc.code in {403, 429} and (
+                        self.last_response_headers.get("Retry-After")
+                        or self.last_response_headers.get("X-RateLimit-Remaining") == "0"
+                        or "rate limit" in detail.lower()
+                    )
+                    time.sleep(
+                        self._retry_delay(
+                            attempt,
+                            self.last_response_headers,
+                            rate_limited=bool(rate_limited),
+                        )
+                    )
                     continue
                 raise GitHubAPIError(
                     method,
@@ -203,21 +214,28 @@ class GitHubClient:
         if response is not None:
             raise GitHubActionError("GitHub returned content for asset deletion.")
 
-    def _retry_delay(self, attempt: int, headers: dict[str, str]) -> float:
+    def _retry_delay(
+        self,
+        attempt: int,
+        headers: dict[str, str],
+        *,
+        rate_limited: bool = False,
+    ) -> float:
         retry_after = headers.get("Retry-After")
         if retry_after:
             try:
-                return min(max(float(retry_after), 0.0), 30.0)
+                return max(float(retry_after), 0.0)
             except ValueError:
                 pass
-        remaining = headers.get("X-RateLimit-Remaining")
-        if remaining == "0":
+        if headers.get("X-RateLimit-Remaining") == "0":
             reset = headers.get("X-RateLimit-Reset")
             if reset:
                 try:
-                    return min(max(float(reset) - time.time(), 0.0), 30.0)
+                    return max(float(reset) - time.time(), 0.0)
                 except ValueError:
                     pass
+        if rate_limited:
+            return 60.0 * (2**attempt)
         return min(30.0, (2**attempt) + random.uniform(0.0, 0.25))
 
     def _safe_error_detail(self, detail: str) -> str:
