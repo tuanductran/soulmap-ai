@@ -218,7 +218,6 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
     )
 
 
-
 @lru_cache(maxsize=1)
 def load_stage_classifier() -> StageClassifierRules:
     """Load and validate the shipped stage-classifier knowledge once per process."""
