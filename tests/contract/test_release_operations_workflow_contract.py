@@ -46,6 +46,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/release-provenance.json" in workflow
     assert "contents: write" in workflow
     assert "id-token: write" in workflow
+    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "attestations: write" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
