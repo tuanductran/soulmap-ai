@@ -80,7 +80,10 @@ def _select_stage(
         return minimum_stage, scores[minimum_stage]
     ranked = sorted(eligible, key=lambda stage: (-scores[stage], stage))
     best = ranked[0]
-    if len(ranked) > 1 and abs(scores[best] - scores[ranked[1]]) <= rules.close_score_delta:
+    if (
+        len(ranked) > 1
+        and abs(scores[best] - scores[ranked[1]]) <= rules.close_score_delta
+    ):
         best = min(best, ranked[1])
     return best, scores[best]
 
@@ -120,9 +123,7 @@ def detect_stage(
                 scores, rules, _memory_minimum_stage(memory, rules)
             )
             if not memory:
-                selected_stage = min(
-                    selected_stage, rules.first_session_max_stage
-                )
+                selected_stage = min(selected_stage, rules.first_session_max_stage)
                 score = scores[selected_stage]
             prior_stage = memory.get("prior_stage")
             if (
