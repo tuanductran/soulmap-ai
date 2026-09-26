@@ -5,9 +5,9 @@ import io
 import json
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 import pytest
-from urllib.error import HTTPError
 
 
 ROOT = Path(__file__).parents[2]
