@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path, extract_labeled_groups
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime detection contract"
 _THRESHOLD_RE = re.compile(r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<value>\d+)\s*\|\s*$", re.MULTILINE)
@@ -75,13 +75,12 @@ def _quoted_bullets(section: str, heading: str) -> tuple[str, ...]:
     )
     if match is None:
         raise ValueError(f"Synthesis section {heading!r} is missing.")
-    return tuple(
-        dict.fromkeys(
-            phrase.lower()
-            for line in match.group("body").splitlines()
-            if (phrase := (re.match(r'^- "([^"]+)"\s*$', line.strip()) or [None, None])[1])
-        )
-    )
+    phrases: list[str] = []
+    for line in match.group("body").splitlines():
+        bullet = re.fullmatch(r'- "([^"]+)"\s*', line.strip())
+        if bullet:
+            phrases.append(bullet.group(1).lower())
+    return tuple(dict.fromkeys(phrases))
 
 
 def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
