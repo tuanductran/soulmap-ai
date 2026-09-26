@@ -13,7 +13,6 @@ from soulmap.runtime.io.cli_payload import (
     require_dict_field,
     require_list_field,
     require_str_field,
-
 )
 from soulmap.runtime.knowledge.synthesis_source import (
     SynthesisRules,
