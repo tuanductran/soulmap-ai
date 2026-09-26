@@ -142,6 +142,8 @@ def upload_assets(client: GitHubClient, release: dict[str, object], paths: list[
     if not isinstance(upload_url, str):
         raise GitHubActionError("Release response lacks upload metadata.")
     assets = release.get("assets", [])
+    if not isinstance(assets, list):
+        raise GitHubActionError("Release response contains invalid asset metadata.")
     existing = {asset.get("name") for asset in assets if isinstance(asset, dict)}
     missing = [path.name for path in paths if path.name not in existing]
     if not release.get("draft", False) and missing:
