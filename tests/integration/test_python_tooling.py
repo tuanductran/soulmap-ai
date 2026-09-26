@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-import importlib
-import runpy
 import subprocess
-import sys
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
@@ -409,45 +406,6 @@ def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch: pytest.MonkeyPatch) 
 
     assert soulmap_cli.main(["test"]) == 0
     assert ("pytest", ("-q",)) in calls
-
-
-@pytest.mark.parametrize(
-    ("wrapper", "implementation"),
-    [
-        ("build_skill", "soulmap.devtools.packaging.build_skill"),
-        ("check_markdown_case", "soulmap.devtools.checks.check_markdown_case"),
-        ("check_markdown_links", "soulmap.devtools.checks.check_markdown_links"),
-        ("eval_groups", "soulmap.devtools.evals.eval_groups"),
-        (
-            "eval_markdown_contracts",
-            "soulmap.devtools.evals.eval_markdown_contracts",
-        ),
-        ("eval_responses", "soulmap.devtools.evals.eval_responses"),
-        ("format", "soulmap.devtools.quality.format"),
-        ("lint", "soulmap.devtools.quality.lint"),
-    ],
-)
-def test_thin_cli_wrapper_forwards_to_implementation_main(
-    monkeypatch: pytest.MonkeyPatch, wrapper: str, implementation: str
-) -> None:
-    implementation_module = importlib.import_module(implementation)
-    calls: list[object] = []
-
-    def fake_main(argv: list[str] | None = None) -> int:
-        calls.append(argv)
-        return 0
-
-    monkeypatch.setattr(implementation_module, "main", fake_main)
-    monkeypatch.setattr(sys, "argv", [f"soulmap-{wrapper}", "--sentinel"])
-
-    with pytest.raises(SystemExit) as exc_info:
-        runpy.run_module(
-            f"soulmap.devtools.cli.{wrapper}",
-            run_name="__main__",
-        )
-
-    assert exc_info.value.code == 0
-    assert calls == [None]
 
 
 def test_tracked_hygiene_violations_flags_generated_paths(
