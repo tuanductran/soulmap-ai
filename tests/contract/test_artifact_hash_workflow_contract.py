@@ -66,7 +66,10 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     )
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
-    health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"
+    health_command = (
+        "uv run soulmap release-health --root . "
+        "--provenance dist/release-provenance.json"
+    )
     provenance_command = (
         "uv run soulmap release-provenance --root . "
         "--verification dist/release-verification.json "
