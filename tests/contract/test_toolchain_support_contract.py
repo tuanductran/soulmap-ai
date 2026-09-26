@@ -97,7 +97,7 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     release_finalize_text = (
         REPO_ROOT / ".github" / "workflows" / "release-finalize.yml"
     ).read_text(encoding="utf-8")
-    assert "uses: $/src/action" in release_finalize_text
+    assert "uses: ./src/action" in release_finalize_text
     assert "operation: release" in release_finalize_text
     assert (
         'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
