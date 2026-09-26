@@ -16,11 +16,5 @@ clearly. It is built to avoid prediction, diagnosis, and dependency.
 The knowledge base lives under [../skills/](../../skills/). Most AI tools can ingest multiple files directly, or
 you can upload the packaged archive built into `dist/`.
 
-## Quick demo (local)
-
-```bash
-uv run soulmap demo --message "I feel lost and numb lately."
-```
-
 If you do not want to run code locally, you can still read the knowledge base directly
 under [../skills/](../../skills/).
