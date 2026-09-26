@@ -97,19 +97,69 @@ def test_transient_http_error_is_retried() -> None:
         assert sleep.call_count == 1
 
 
-def test_paginated_requests_continue_until_short_page() -> None:
+def test_paginated_requests_follow_link_header() -> None:
     client = action.GitHubClient("token")
-    first_page = [{"number": number} for number in range(100)]
-    second_page = [{"number": 100}]
+    first_page = [{"number": 1}]
+    second_page = [{"number": 2}]
     responses = iter([first_page, second_page])
 
-    with patch.object(
-        client, "api", side_effect=lambda *_args, **_kwargs: next(responses)
-    ):
+    def request(_method: str, url: str) -> list[object]:
+        client.last_response_headers = (
+            {"Link": "<https://api.github.com/next>; rel="next""}
+            if "page=1" in url
+            else {}
+        )
+        return next(responses)
+
+    with patch.object(client, "request", side_effect=request):
         assert client.paginated("/repos/a/b/pulls", params={"state": "open"}) == [
             *first_page,
             *second_page,
         ]
+
+
+def test_non_idempotent_requests_do_not_retry_by_default() -> None:
+    error = HTTPError(
+        "https://api.github.com/repos/a/b",
+        503,
+        "Unavailable",
+        Message(),
+        io.BytesIO(b'{"message":"try again"}'),
+    )
+    client = action.GitHubClient("token")
+
+    with (
+        patch.object(action, "urlopen", side_effect=error) as urlopen,
+        patch.object(action.time, "sleep") as sleep,
+        pytest.raises(action.GitHubAPIError),
+    ):
+        client.api("POST", "/repos/a/b/releases")
+
+    assert urlopen.call_count == 1
+    sleep.assert_not_called()
+
+
+def test_rate_limit_retry_uses_reset_window() -> None:
+    headers = Message()
+    headers["X-RateLimit-Remaining"] = "0"
+    headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
+    error = HTTPError(
+        "https://api.github.com/repos/a/b",
+        429,
+        "Too Many Requests",
+        headers,
+        io.BytesIO(b'{"message":"rate limit"}'),
+    )
+    client = action.GitHubClient("token")
+
+    with (
+        patch.object(action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]),
+        patch.object(action.time, "sleep") as sleep,
+    ):
+        assert client.api("GET", "/repos/a/b") == {"ok": True}
+
+    assert sleep.call_count == 1
+    assert sleep.call_args.args[0] >= 119
 
 
 def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
