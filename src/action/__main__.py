@@ -38,6 +38,7 @@ class GitHubAPIError(GitHubActionError):
         *,
         headers: object | None = None,
     ) -> None:
+        """Initialize a structured GitHub API error."""
         self.method = method
         self.url = url
         self.status = status
