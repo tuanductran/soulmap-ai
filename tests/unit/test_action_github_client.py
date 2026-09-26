@@ -153,7 +153,9 @@ def test_rate_limit_retry_uses_reset_window() -> None:
     client = action.GitHubClient("token")
 
     with (
-        patch.object(action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]),
+        patch.object(
+            action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+        ),
         patch.object(action.time, "sleep") as sleep,
     ):
         assert client.api("GET", "/repos/a/b") == {"ok": True}
