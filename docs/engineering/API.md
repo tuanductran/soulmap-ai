@@ -181,53 +181,6 @@ Output:
 }
 ```
 
-## Experimental integration modules
-
-These modules are available for local experimentation and wrapper products, but they are
-not part of the default CLI flow.
-
-### Biometric ingest
-
-Entrypoint:
-
-```bash
-python -m soulmap.runtime.experimental.biometric_ingest
-```
-
-Input:
-
-```json
-{
-  "biometrics": {
-    "hrv": 25,
-    "sleep_score": 48
-  }
-}
-```
-
-Use only when the product has explicit user consent for health-context ingestion.
-
-### Memory ledger
-
-Entrypoint:
-
-```bash
-python -m soulmap.runtime.memory.memory_ledger
-```
-
-Input:
-
-```json
-{
-  "user_response": "save this",
-  "last_insight": "I keep trying to earn what I most want to receive.",
-  "session_id": "abc123"
-}
-```
-
-Use only for explicit, user-confirmed insight capture. This repo does not assume silent
-cross-session memory.
-
 ## Distribution builds
 
 Cross-platform:
