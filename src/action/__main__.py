@@ -465,12 +465,21 @@ def upload_assets(
         asset = existing.get(path.name)
         if asset is not None:
             state = asset.get("state")
-            size = asset.get("size")
-            if state not in {None, "uploaded"}:
+            if state == "starter":
+                asset_url = asset.get("url")
+                if not isinstance(asset_url, str):
+                    raise GitHubActionError(
+                        f"GitHub returned an invalid starter asset for {path.name!r}."
+                    )
+                client.delete_release_asset(asset_url)
+                asset = None
+            elif state not in {None, "uploaded"}:
                 raise GitHubActionError(
                     f"Existing release asset {path.name!r} is not uploaded "
                     f"(state={state!r})."
                 )
+        if asset is not None:
+            size = asset.get("size")
             file_size = path.stat().st_size
             digest = asset.get("digest")
             if isinstance(size, int) and size != file_size:
@@ -485,7 +494,7 @@ def upload_assets(
                         f"Release asset {path.name!r} digest does not match "
                         "the local artifact."
                     )
-            elif state == "uploaded":
+            elif asset.get("state") == "uploaded":
                 raise GitHubActionError(
                     f"Release asset {path.name!r} has no verifiable SHA-256 digest."
                 )
