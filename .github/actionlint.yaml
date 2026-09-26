@@ -5,3 +5,6 @@ paths:
   .github/workflows/release-finalize.yml:
     ignore:
       - 'specifying action "\$/src/action" in invalid format because ref is missing\.'
+  .github/workflows/historical-action-smoke.yml:
+    ignore:
+      - 'specifying action "\$/src/action" in invalid format because ref is missing\.'
