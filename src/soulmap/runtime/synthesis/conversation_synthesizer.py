@@ -15,7 +15,10 @@ from soulmap.runtime.io.cli_payload import (
     require_str_field,
 
 )
-from soulmap.runtime.knowledge.synthesis_source import SynthesisRules, load_synthesis_rules
+from soulmap.runtime.knowledge.synthesis_source import (
+    SynthesisRules,
+    load_synthesis_rules,
+)
 
 Message = dict[str, str]
 
