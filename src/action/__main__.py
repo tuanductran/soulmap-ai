@@ -195,6 +195,18 @@ def run_release(client: GitHubClient) -> None:
     write_output("tag-name", tag)
     summary(f"## SoulMap release published\n\n- Tag: {tag}\n- URL: {release_url}")
 
+def run_probe(client: GitHubClient) -> None:
+    owner, repo = repository_parts(env("INPUT_REPOSITORY"))
+    response = client.api("GET", f"/repos/{quote(owner)}/{quote(repo)}")
+    if not isinstance(response, dict):
+        raise GitHubActionError("GitHub did not return a repository object.")
+    full_name = response.get("full_name")
+    if full_name != f"{owner}/{repo}":
+        raise GitHubActionError("GitHub returned an unexpected repository identity.")
+    write_output("repository", full_name)
+    summary(f"## SoulMap action runtime probe\\n\\n- Repository: {full_name}\\n- Operation: probe")
+
+
 def run_pull_request(client: GitHubClient) -> None:
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
     branch = env("INPUT_BRANCH")
@@ -225,9 +237,11 @@ def main() -> int:
             run_release(client)
         elif operation == "pull-request":
             run_pull_request(client)
+        elif operation == "probe":
+            run_probe(client)
         else:
             raise GitHubActionError(
-                f"Unsupported operation {operation!r}; expected release or pull-request."
+                f"Unsupported operation {operation!r}; expected release, pull-request, or probe."
             )
     except GitHubActionError as exc:
         print(f"::error::{exc}", file=sys.stderr)
