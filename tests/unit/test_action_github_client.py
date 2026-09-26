@@ -8,7 +8,6 @@ from unittest.mock import patch
 
 import pytest
 from urllib.error import HTTPError
-from urllib.request import Request
 
 
 ROOT = Path(__file__).parents[2]
@@ -163,7 +162,9 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
         raise AssertionError("expected asset size mismatch")
 
 
-def test_pull_request_contract_requires_complete_metadata(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_pull_request_contract_requires_complete_metadata(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     client = action.GitHubClient("token")
     monkeypatch.setenv("INPUT_REPOSITORY", "tuanductran/soulmap-ai")
     monkeypatch.setenv("INPUT_BRANCH", "release/prep-1")
