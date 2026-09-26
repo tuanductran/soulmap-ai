@@ -43,7 +43,7 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
 
     assert "workflow_dispatch" in content
     assert "git push --set-upstream origin" in content
-    assert "uses: ./src/action" in content
+    assert "uses: $/src/action" in content
     assert "operation: pull-request" in content
     assert "SOULMAP_RELEASE_TOKEN" in content
     assert "release/prep-" in content
