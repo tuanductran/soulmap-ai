@@ -11,6 +11,7 @@ import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
+from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
@@ -200,16 +201,17 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
             multipliers["previous"],
             multipliers["current"],
         ),
-        memory_minimums=contract["MEMORY_MINIMUMS"],
+        memory_minimums=cast(dict[str, int], contract["MEMORY_MINIMUMS"]),
         close_score_delta=float(contract["CLOSE_SCORE_DELTA"]),
         first_session_default_stage=int(contract["FIRST_SESSION_DEFAULT_STAGE"]),
         first_session_max_stage=int(contract["FIRST_SESSION_MAX_STAGE"]),
         anti_regression_min_lower_stage_messages=int(
             contract["ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES"]
         ),
-        stage_roles={int(k): v for k, v in contract["STAGE_ROLES"].items()},
+        stage_roles={int(k): v for k, v in cast(dict[int, str], contract["STAGE_ROLES"]).items()},
         stage_recommendations={
-            int(k): v for k, v in contract["STAGE_RECOMMENDATIONS"].items()
+            int(k): v
+            for k, v in cast(dict[int, str], contract["STAGE_RECOMMENDATIONS"]).items()
         },
     )
 
