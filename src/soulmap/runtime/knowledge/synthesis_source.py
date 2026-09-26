@@ -59,7 +59,9 @@ def _table_values(body: str) -> dict[str, int]:
     aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
     normalized_values: dict[str, int] = {}
     for key, value in values.items():
-        canonical_key = aliases.get(key) or key
+        canonical_key = aliases.get(key)
+        if canonical_key is None:
+            canonical_key = key
         normalized_values[canonical_key] = value
     values = normalized_values
     required = {
