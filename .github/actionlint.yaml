@@ -1,7 +1,7 @@
 paths:
   .github/workflows/release.yml:
     ignore:
-      - 'specifying action "\\$/src/action" in invalid format because ref is missing\\.'
+      - 'specifying action "\$/src/action" in invalid format because ref is missing\.'
   .github/workflows/release-finalize.yml:
     ignore:
-      - 'specifying action "\\$/src/action" in invalid format because ref is missing\\.'
+      - 'specifying action "\$/src/action" in invalid format because ref is missing\.'
