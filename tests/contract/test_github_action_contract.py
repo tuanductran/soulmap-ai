@@ -18,9 +18,9 @@ def test_python_github_action_is_self_contained() -> None:
     assert "INPUT_OPERATION" in metadata
     assert "INPUT_TOKEN" in metadata
     assert "FROM python:3.11-slim" in dockerfile
-    assert "ENTRYPOINT [\"python\", \"/__main__.py\"]" in dockerfile
+    assert 'ENTRYPOINT ["python", "/__main__.py"]' in dockerfile
     assert "urllib.request" in source
-    assert "API_VERSION = \"2026-03-10\"" in source
+    assert 'API_VERSION = "2026-03-10"' in source
     assert "softprops" not in source
     assert "requests" not in source
     assert "PyGithub" not in source
