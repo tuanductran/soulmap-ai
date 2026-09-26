@@ -219,7 +219,7 @@ class GitHubClient:
             response = self.request("GET", next_url)
             if not isinstance(response, list):
                 raise GitHubActionError(
-                    "GitHub returned invalid release asset metadata." ,
+                    "GitHub returned invalid release asset metadata.",
                 )
             results.extend(response)
             next_url = self._next_link(self.last_response_headers.get("Link"))
@@ -275,8 +275,8 @@ def boolean(name: str, default: bool = False) -> bool:
             required=False,
             default="true" if default else "false",
         )
-.strip()
-.lower()
+        .strip()
+        .lower()
     )
     if value not in {"true", "false"}:
         raise GitHubActionError(f"Input {name!r} must be true or false.")
