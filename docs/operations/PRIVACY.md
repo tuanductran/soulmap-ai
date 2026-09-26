@@ -23,18 +23,12 @@ practices.
 
 ## What this repository does handle
 
-If you run SoulMap AI's local Python tooling (`uv run soulmap demo`),
-any input you provide is processed locally on your machine. Nothing is transmitted to
-any SoulMap AI server, because there is none.
+If you run SoulMap AI's local Python tooling, any input you provide is processed
+locally on your machine. Nothing is transmitted to any SoulMap AI server, because
+there is none.
 
 Evaluation tooling (`uv run soulmap eval-responses`) uses synthetic test cases defined
 in `evals/`. It does not use real user data.
-
-## Biometric and Wearable Data
-
-`src/soulmap/runtime/experimental/biometric_ingest.py` contains logic for parsing wearable data if you choose
-to provide it. Any such data is processed locally within a single session and is not
-stored or transmitted by the SoulMap AI codebase.
 
 ## Dependencies
 
