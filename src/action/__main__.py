@@ -3,6 +3,7 @@
 """GitHub operations used by SoulMap workflows."""
 from __future__ import annotations
 
+import hashlib
 import json
 import mimetypes
 import os
@@ -336,6 +337,10 @@ def update_release_metadata(
         payload["prerelease"] = desired_prerelease
     if not payload:
         return release
+    if release.get("immutable") is True:
+        raise GitHubActionError(
+            "GitHub release is immutable and cannot be updated by this action."
+        )
     response = client.api(
         "PATCH",
         f"/repos/{quote(owner)}/{quote(repo)}/releases/{release_id}",
@@ -372,26 +377,43 @@ def upload_assets(
                     f"Existing release asset {path.name!r} is not uploaded "
                     f"(state={state!r})."
                 )
-            if isinstance(size, int) and size != path.stat().st_size:
+            file_size = path.stat().st_size
+            if isinstance(size, int) and size != file_size:
                 raise GitHubActionError(
                     f"Release asset {path.name!r} already exists with size "
-                    f"{size}, expected {path.stat().st_size}; refusing to "
-                    "silently publish a different artifact under the same name."
+                    f"{size}, expected {file_size}; refusing to silently "
+                    "publish a different artifact under the same name."
                 )
+            digest = asset.get("digest")
+            if isinstance(digest, str) and digest.startswith("sha256:"):
+                local_digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                if digest.removeprefix("sha256:") != local_digest:
+                    raise GitHubActionError(
+                        f"Release asset {path.name!r} digest does not match "
+                        "the local artifact."
+                    )
             print(f"Release asset already present and verified: {path.name}")
             continue
         content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+        content = path.read_bytes()
         print(f"Uploading release asset: {path}")
         response = client.upload(
             upload_url,
             name=path.name,
-            content=path.read_bytes(),
+            content=content,
             content_type=content_type,
         )
         if not isinstance(response, dict) or response.get("name") != path.name:
             raise GitHubActionError(
                 f"GitHub did not confirm upload of release asset {path.name!r}."
             )
+        response_digest = response.get("digest")
+        if isinstance(response_digest, str) and response_digest.startswith("sha256:"):
+            expected_digest = hashlib.sha256(content).hexdigest()
+            if response_digest.removeprefix("sha256:") != expected_digest:
+                raise GitHubActionError(
+                    f"GitHub reported a digest mismatch for release asset {path.name!r}."
+                )
 
 
 def finalize_release(
