@@ -1,0 +1,46 @@
+name: Historical Action Runtime Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      historical_commit_sha:
+        description: "Historical commit that predates src/action."
+        required: true
+        type: string
+        default: "2b2028484e3c40b50096a85a6b3ff0c86b99dbcd"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out historical commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.historical_commit_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Verify historical workspace predates the action
+        env:
+          EXPECTED_SHA: ${{ inputs.historical_commit_sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test ! -e src/action/action.yml
+
+      - name: Load current repository action against historical workspace
+        id: probe
+        uses: $/src/action
+        with:
+          operation: probe
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+
+      - name: Verify probe output
+        env:
+          REPOSITORY: ${{ steps.probe.outputs.repository }}
+          EXPECTED_REPOSITORY: ${{ github.repository }}
+        run: test "$REPOSITORY" = "$EXPECTED_REPOSITORY"
