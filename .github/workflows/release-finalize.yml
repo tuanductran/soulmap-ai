@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     permissions:
-      contents: write
+      contents: read
       id-token: write
       attestations: write
     steps:
@@ -220,11 +220,20 @@ jobs:
             git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"
           fi
 
+      - name: Verify release token is configured
+        env:
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_TOKEN" ]; then
+            echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
+            exit 1
+          fi
+
       - name: Publish GitHub Release
         uses: ./src/action
         with:
           operation: release
-          token: ${{ github.token }}
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           tag: v${{ needs.verify.outputs.version }}
           release-name: v${{ needs.verify.outputs.version }}
           files: |
