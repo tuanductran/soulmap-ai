@@ -212,7 +212,7 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
                 uploaded,
             ],
         ),
-        patch.object(client, "list_release_assets", side_effect=[[starter], []]),
+        patch.object(client, "list_release_assets", side_effect=[[], [starter]]),
         patch.object(client, "delete_release_asset") as delete_asset,
     ):
         action.upload_assets(client, release, [asset])
