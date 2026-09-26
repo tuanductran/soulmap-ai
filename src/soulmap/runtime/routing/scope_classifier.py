@@ -13,7 +13,6 @@ from soulmap.runtime.io.cli_payload import (
     require_non_empty_str_field,
 )
 from soulmap.runtime.io.text_normalization import normalize_message_text
-
 from soulmap.runtime.knowledge.scope_source import load_scope_rules
 
 _RULES = load_scope_rules()
