@@ -1,7 +1,10 @@
 # ruff: noqa: D
 """GitHub operations used by SoulMap workflows."""
 from __future__ import annotations
-import json, mimetypes, os, sys
+import json
+import mimetypes
+import os
+import sys
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
