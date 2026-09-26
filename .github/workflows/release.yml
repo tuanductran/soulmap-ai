@@ -94,7 +94,7 @@ jobs:
           git push --set-upstream origin "${{ steps.bump.outputs.branch }}"
 
       - name: Open release pull request
-        uses: ./src/action
+        uses: $/src/action
         with:
           operation: pull-request
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}

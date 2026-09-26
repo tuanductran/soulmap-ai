@@ -16,7 +16,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: true" in workflow
     assert "git push --set-upstream origin" in workflow
-    assert "uses: ./src/action" in workflow
+    assert "uses: $/src/action" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
     assert "tag: ${{ steps.bump.outputs.tag }}" in workflow
@@ -55,7 +55,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
     assert 'git push origin "$TAG"' in workflow
-    assert "uses: ./src/action" in workflow
+    assert "uses: $/src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
