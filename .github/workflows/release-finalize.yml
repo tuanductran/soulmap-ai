@@ -40,15 +40,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Verify release token is configured
-        env:
-          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-        run: |
-          if [ -z "$RELEASE_TOKEN" ]; then
-            echo "SOULMAP_RELEASE_TOKEN must be configured so release tag publication can update workflow files when required."
-            exit 1
-          fi
-
       - name: Verify checkout is the merged release commit
         env:
           MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
