@@ -105,6 +105,7 @@ def test_memory_can_raise_the_minimum_stage() -> None:
         {"session_count": 10},
     )
 
+    assert isinstance(result["stage"], int)
     assert result["stage"] >= 2
 
 
