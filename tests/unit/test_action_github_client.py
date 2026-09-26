@@ -57,9 +57,7 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
         403,
         "Forbidden",
         {"X-RateLimit-Remaining": "0"},
-        io.BytesIO(
-            json.dumps({"message": f"token={token}"}).encode()
-        ),
+        io.BytesIO(json.dumps({"message": f"token={token}"}).encode()),
     )
     client = action.GitHubClient(token)
 
@@ -85,7 +83,9 @@ def test_transient_http_error_is_retried() -> None:
     calls = iter([error, FakeResponse({"ok": True})])
     client = action.GitHubClient("token")
 
-    with patch.object(action, "urlopen", side_effect=lambda _request: next(calls)):
+    with patch.object(
+        action, "urlopen", side_effect=lambda _request: next(calls)
+    ):
         with patch.object(action.time, "sleep") as sleep:
             assert client.api("GET", "/repos/a/b") == {"ok": True}
             assert sleep.call_count == 1
@@ -95,7 +95,9 @@ def test_paginated_requests_continue_until_short_page() -> None:
     client = action.GitHubClient("token")
     responses = iter([[{"number": 1}, {"number": 2}], [{"number": 3}]])
 
-    with patch.object(client, "api", side_effect=lambda *_args, **_kwargs: next(responses)):
+    with patch.object(
+        client, "api", side_effect=lambda *_args, **_kwargs: next(responses)
+    ):
         assert client.paginated("/repos/a/b/pulls", params={"state": "open"}) == [
             {"number": 1},
             {"number": 2},
