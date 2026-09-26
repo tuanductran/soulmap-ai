@@ -38,7 +38,7 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Verify checkout is the merged release commit
         env:
@@ -155,7 +155,7 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Verify checkout is the merged release commit
         env:
@@ -185,20 +185,6 @@ jobs:
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
-
-      - name: Checkout release tooling
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: 3003a4223d64dbdc1fa40128a5149d550d2b4dbe
-          path: .release-tools
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Stage release tooling from verified release-tool commit
-        run: |
-          mkdir -p .github/python/release
-          cp .release-tools/.github/python/release_tag.py .github/python/release_tag.py
-          cp .release-tools/.github/python/release/publish.py .github/python/release/publish.py
 
       - name: Create immutable release tag
         env:
