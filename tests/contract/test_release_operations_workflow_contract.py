@@ -54,6 +54,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
+    assert "Configure git author" in workflow
+    assert 'git config user.name "github-actions[bot]"' in workflow
+    assert 'git config user.email "github-actions[bot]@users.noreply.github.com"' in workflow
     assert 'git push origin "$TAG"' in workflow
     assert "uses: $/src/action" in workflow
     assert "operation: release" in workflow
