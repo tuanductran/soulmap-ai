@@ -93,10 +93,7 @@ def detect_celebration(
             if isinstance(m, dict) and m.get("role") == "assistant"
         ]
         if any(conf in msg for conf in _RULES.confirmation_signals) and any(
-            any(
-                sig in am
-                for sig in _RULES.confirmation_assistant_anchors
-            )
+            any(sig in am for sig in _RULES.confirmation_assistant_anchors)
             for am in recent_assistant
         ):
             score += _RULES.confirmation_score
