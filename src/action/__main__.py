@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 """GitHub operations used by SoulMap workflows."""
 from __future__ import annotations
 
@@ -15,6 +14,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
+# fmt: off
 API_ROOT = "https://api.github.com"
 API_VERSION = "2026-03-10"
 USER_AGENT = "soulmap-github-action"
