@@ -57,7 +57,8 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
 
     assert RELEASE_VERIFY_COMMAND in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert "python .github/python/release/publish.py" in content
+    assert "softprops/action-gh-release@" in content
+    assert 'git push origin "$TAG"' in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
     health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"
