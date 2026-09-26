@@ -115,6 +115,8 @@ def load_celebration_rules() -> CelebrationRules:
         confirmation_score=values["CONFIRMATION_SCORE"],
         negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
         confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
-        confirmation_assistant_anchors=cast(tuple[str, ...], values["CONFIRMATION_ASSISTANT_ANCHORS"]),
+        confirmation_assistant_anchors=cast(
+            tuple[str, ...], values["CONFIRMATION_ASSISTANT_ANCHORS"]
+        ),
         signal_groups=groups,
     )
