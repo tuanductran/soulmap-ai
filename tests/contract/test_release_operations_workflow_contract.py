@@ -119,7 +119,10 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
 def test_release_tag_tool_uses_git_database_api_without_git_push() -> None:
     script = (ROOT / ".github" / "python" / "release_tag.py").read_text()
 
-    assert 'os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")' in script
+    assert (
+        'os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")'
+        in script
+    )
     assert "POST" in script
     assert "/git/tags" in script
     assert "/git/refs" in script
