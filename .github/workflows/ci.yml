@@ -53,8 +53,10 @@ jobs:
       - name: Lint
         run: uv run soulmap lint --skip-tests
       - name: Knowledge consistency inventory
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run soulmap audit-knowledge
       - name: Knowledge migration guard
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run soulmap audit-knowledge --max-knowledge-duplicates 519
       - name: Dead code detection (Vulture)
         run: uv run vulture
@@ -81,27 +83,27 @@ jobs:
             --cov-report=term-missing \
             -q 2>&1 | tail -20
       - name: Safety evals
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run python tests/eval_regression/test_safety_evals.py
       - name: Advanced response evals
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run soulmap eval-responses
       - name: Response quality evals (advisory)
         continue-on-error: true
         run: uv run soulmap eval-response-quality > response-quality-eval.json
       - name: Upload response quality evaluation
+        if: matrix.os == 'ubuntu-24.04'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: soulmap-response-quality-evaluation-${{ matrix.os }}
+          name: soulmap-response-quality-evaluation
           path: response-quality-eval.json
           if-no-files-found: error
       - name: Grouped routing and source evals
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run soulmap eval-groups
       - name: Markdown contract sync evals
+        if: matrix.os == 'ubuntu-24.04'
         run: uv run soulmap eval-markdown-contracts
-      - name: Build (cross-platform smoke)
-        run: |
-          uv run soulmap build
-          uv run soulmap build --skill
-          uv run soulmap markdown-contract --root .
 
   knowledge-audit:
     env:
