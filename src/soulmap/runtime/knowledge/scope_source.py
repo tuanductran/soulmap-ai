@@ -86,6 +86,10 @@ def load_scope_rules() -> ScopeRules:
     return ScopeRules(
         whitelist_tier1=_freeze(cast(dict[str, list[str]], values["WHITELIST_TIER1"])),
         whitelist_tier2=_freeze(cast(dict[str, list[str]], values["WHITELIST_TIER2"])),
-        blacklist_layer1=_freeze(cast(dict[str, list[str]], values["BLACKLIST_LAYER1"])),
-        blacklist_prohibited=_freeze(cast(dict[str, list[str]], values["BLACKLIST_PROHIBITED"])),
+        blacklist_layer1=_freeze(
+            cast(dict[str, list[str]], values["BLACKLIST_LAYER1"])
+        ),
+        blacklist_prohibited=_freeze(
+            cast(dict[str, list[str]], values["BLACKLIST_PROHIBITED"])
+        ),
     )
