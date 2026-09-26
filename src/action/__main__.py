@@ -305,6 +305,25 @@ def asset_paths() -> list[Path]:
     return paths
 
 
+def ensure_tag_exists(
+    client: GitHubClient,
+    owner: str,
+    repo: str,
+    tag: str,
+) -> None:
+    path = f"/repos/{quote(owner)}/{quote(repo)}/git/ref/tags/{quote(tag, safe='')}"
+    try:
+        response = client.api("GET", path)
+    except GitHubAPIError as exc:
+        if exc.status == 404:
+            raise GitHubActionError(
+                f"Git tag {tag!r} does not exist; refusing to create a release from an implicit tag."
+            ) from exc
+        raise
+    if not isinstance(response, dict) or response.get("ref") != f"refs/tags/{tag}":
+        raise GitHubActionError(f"GitHub returned invalid tag metadata for {tag!r}.")
+
+
 def get_release(
     client: GitHubClient,
     owner: str,
@@ -405,6 +424,10 @@ def upload_assets(
     assets_url = release.get("assets_url")
     if not isinstance(upload_url, str) or not isinstance(assets_url, str):
         raise GitHubActionError("Release response lacks upload metadata.")
+    if release.get("immutable") is True and paths:
+        raise GitHubActionError(
+            "GitHub release is immutable and cannot accept new release assets."
+        )
     seen_names: set[str] = set()
     for path in paths:
         if path.name in seen_names:
@@ -541,6 +564,7 @@ def finalize_release(
 def run_release(client: GitHubClient) -> None:
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
     tag = env("INPUT_TAG")
+    ensure_tag_exists(client, owner, repo, tag)
     release = get_release(client, owner, repo, tag)
     if release is None:
         release = create_release(
