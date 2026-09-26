@@ -15,9 +15,7 @@ from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
-_STAGE_RE = re.compile(
-    r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE
-)
+_STAGE_RE = re.compile(r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE)
 _KEYWORDS_RE = re.compile(
     r"\*\*Keyword signals \(weight: (?P<weight>\d+) each\):\*\*"
     r"(?P<body>.*?)(?=\n\*\*Classification signals:\*\*|\Z)",
@@ -29,7 +27,9 @@ _THRESHOLD_RE = re.compile(
     re.MULTILINE,
 )
 _CONTRACT_HEADING = "Runtime enforcement contract"
-_BLOCK_RE = re.compile(r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60", re.MULTILINE | re.DOTALL)
+_BLOCK_RE = re.compile(
+    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60", re.MULTILINE | re.DOTALL
+)
 _MULTIPLIER_RE = re.compile(
     r"^\|\s*Current message\s*\|\s*(?P<current>[0-9.]+)x\s*\|\s*$"
     r"|^\|\s*Previous message\s*\|\s*(?P<previous>[0-9.]+)x\s*\|\s*$"
@@ -208,7 +208,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         anti_regression_min_lower_stage_messages=int(
             contract["ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES"]
         ),
-        stage_roles={int(k): v for k, v in cast(dict[int, str], contract["STAGE_ROLES"]).items()},
+        stage_roles={
+            int(k): v for k, v in cast(dict[int, str], contract["STAGE_ROLES"]).items()
+        },
         stage_recommendations={
             int(k): v
             for k, v in cast(dict[int, str], contract["STAGE_RECOMMENDATIONS"]).items()
