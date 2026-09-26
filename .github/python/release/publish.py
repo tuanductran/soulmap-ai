@@ -137,7 +137,7 @@ def publish_release(
 
 
 def main() -> int:
-    token = os.environ.get("SOULMAP_RELEASE_TOKEN")
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("SOULMAP_RELEASE_TOKEN")
     repository = os.environ.get("GITHUB_REPOSITORY")
     tag = os.environ.get("RELEASE_TAG")
     commit_sha = os.environ.get("RELEASE_COMMIT")
@@ -146,7 +146,7 @@ def main() -> int:
     missing = [
         name
         for name, value in (
-            ("SOULMAP_RELEASE_TOKEN", token),
+            ("GITHUB_TOKEN or SOULMAP_RELEASE_TOKEN", token),
             ("GITHUB_REPOSITORY", repository),
             ("RELEASE_TAG", tag),
             ("RELEASE_COMMIT", commit_sha),
