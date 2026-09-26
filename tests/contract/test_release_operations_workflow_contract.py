@@ -11,7 +11,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "name: Release Prep" in workflow
     assert "workflow_dispatch" in workflow
     assert "if: github.ref == 'refs/heads/main'" in workflow
-    assert "contents: write" in workflow
+    assert "contents: read" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
