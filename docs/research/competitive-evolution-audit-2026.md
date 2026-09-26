@@ -43,10 +43,9 @@ Already established doctrine, not re-derived here at length. Summarized from
 * **Knowledge model:** a small, hand-authored, safety-reviewed Markdown corpus
   under `skills/`, functioning as deterministic routing targets for a
   rule-based Python selector, not an embedded corpus for open-ended retrieval.
-* **Memory model:** none, by design. No cross-session memory bonding
-  (`src/soulmap/runtime/memory/__init__.py`: "exists for bounded experiments
-  only and is not part of the core product promise"). Every session starts
-  fresh.
+* **Memory model:** none, by design. No cross-session memory bonding.
+  The former experimental memory layer was removed because it was not part of
+  the core product promise. Every session starts fresh.
 * **Agent model:** not an agent in the tool-calling sense. `framework_selector.py`
   is a deterministic dispatcher over ~27 named outcomes; it does not plan, does
   not call external tools, and does not decide its own next action.

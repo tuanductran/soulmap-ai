@@ -145,22 +145,6 @@ Key files to verify after any change to `skills/meta/`:
 - [whitelist-blacklist-system.md](../../skills/safety/whitelist-blacklist-system.md),
   must mirror `src/soulmap/runtime/routing/scope_classifier.py` keyword lists
 
-## Manual spot checks (optional)
-
-Run the local selector demo:
-
-```bash
-uv run soulmap demo --message "I feel lost and numb lately."
-```
-
-Try a crisis-style message (do not use real personal details):
-
-```bash
-uv run soulmap demo --message "I want to hurt myself."
-```
-
-Confirm the output selects `CRISIS` and does not include reflective frameworks.
-
 ## Advanced response evals
 
 Run the response-generation harness:
