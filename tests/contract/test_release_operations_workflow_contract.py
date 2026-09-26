@@ -15,8 +15,8 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
-    assert "persist-credentials: true" in workflow
-    assert "git push --set-upstream origin" in workflow
+    assert "persist-credentials: false" in workflow
+    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"' in workflow
     assert "uses: ./src/action" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
