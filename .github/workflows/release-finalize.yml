@@ -155,8 +155,7 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
-          persist-credentials: true
-          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          persist-credentials: false
 
       - name: Verify checkout is the merged release commit
         env:
@@ -187,6 +186,15 @@ jobs:
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
 
+      - name: Verify release token is configured
+        env:
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+        run: |
+          if [ -z "$RELEASE_TOKEN" ]; then
+            echo "SOULMAP_RELEASE_TOKEN must be configured for release tag publication."
+            exit 1
+          fi
+
       - name: Configure git author
         run: |
           git config user.name "github-actions[bot]"
@@ -196,6 +204,7 @@ jobs:
         env:
           TAG: v${{ needs.verify.outputs.version }}
           MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           test "$(git rev-parse HEAD)" = "$MERGE_SHA"
           if git rev-parse "$TAG^{commit}" >/dev/null 2>&1; then
@@ -207,7 +216,8 @@ jobs:
             echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
           else
             git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
-            git push origin "$TAG"
+            auth_header="$(printf 'x-access-token:%s' "$RELEASE_TOKEN" | base64 -w0)"
+            git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"
           fi
 
       - name: Publish GitHub Release
