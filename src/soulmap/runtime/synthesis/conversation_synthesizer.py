@@ -15,7 +15,7 @@ from soulmap.runtime.io.cli_payload import (
     require_str_field,
 
 )
-from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
+from soulmap.runtime.knowledge.synthesis_source import SynthesisRules, load_synthesis_rules
 
 Message = dict[str, str]
 
@@ -68,7 +68,7 @@ class ExtractedThemes(TypedDict, total=False):
     session_count: int
 
 
-def _rules() -> object:
+def _rules() -> SynthesisRules:
     return load_synthesis_rules()
 
 
