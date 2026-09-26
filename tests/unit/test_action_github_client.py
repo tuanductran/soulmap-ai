@@ -99,8 +99,8 @@ def test_transient_http_error_is_retried() -> None:
 
 def test_paginated_requests_follow_link_header() -> None:
     client = action.GitHubClient("token")
-    first_page = [{"number": 1}]
-    second_page = [{"number": 2}]
+    first_page: list[object] = [{"number": 1}]
+    second_page: list[object] = [{"number": 2}]
     responses = iter([first_page, second_page])
 
     def request(_method: str, url: str) -> list[object]:
