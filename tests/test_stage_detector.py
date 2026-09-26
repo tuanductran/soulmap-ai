@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from soulmap.runtime.knowledge.stage_classifier import (
     load_stage_classifier,
     parse_stage_classifier,
@@ -25,12 +27,8 @@ def test_stage_classifier_rejects_missing_stage() -> None:
         f"### Stage {stage.number}, {stage.name.lower()}" for stage in rules.stages[:-1]
     )
 
-    try:
+    with pytest.raises(ValueError, match="Expected 6 stage definitions"):
         parse_stage_classifier(source)
-    except ValueError as error:
-        assert "Expected 6 stage definitions" in str(error)
-    else:
-        raise AssertionError("Incomplete stage classifier should be rejected")
 
 
 def test_stage_defaults_to_arrival_without_user_history() -> None:
