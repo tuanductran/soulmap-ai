@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import io
+from email.message import Message
 import json
 from pathlib import Path
 from unittest.mock import patch
@@ -54,11 +55,13 @@ def test_repository_parts_rejects_malformed_repositories() -> None:
 
 def test_api_error_preserves_status_and_redacts_token() -> None:
     token = "secret-token"
+    headers = Message()
+    headers["X-RateLimit-Remaining"] = "0"
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         403,
         "Forbidden",
-        {"X-RateLimit-Remaining": "0"},
+        headers,
         io.BytesIO(json.dumps({"message": f"token={token}"}).encode()),
     )
     client = action.GitHubClient(token)
@@ -80,7 +83,7 @@ def test_transient_http_error_is_retried() -> None:
         "https://api.github.com/repos/a/b",
         503,
         "Unavailable",
-        {},
+        Message(),
         __import__("io").BytesIO(b'{"message":"try again"}'),
     )
     responses = [error, FakeResponse({"ok": True})]
