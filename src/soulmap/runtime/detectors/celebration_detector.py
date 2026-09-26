@@ -16,6 +16,7 @@ _RULES = load_celebration_rules()
 
 HistoryMessage = dict[str, str]
 
+
 def _classify_celebration_type(msg: str) -> str:
     """Identify the primary subtype of the positive state."""
     groups = _RULES.signal_groups
