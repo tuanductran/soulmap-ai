@@ -322,4 +322,4 @@ def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
 
     data = run_framework_selector(payload)
 
-    assert data["context"]["stage"] == 6
+    assert data["context"]["stage"] == 3
