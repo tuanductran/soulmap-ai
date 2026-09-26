@@ -1,5 +1,6 @@
 # ruff: noqa
 """GitHub operations used by SoulMap workflows."""
+
 from __future__ import annotations
 
 import hashlib
