@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
@@ -60,8 +59,7 @@ def _table_values(body: str) -> dict[str, int]:
     aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
     normalized_values: dict[str, int] = {}
     for key, value in values.items():
-        canonical_key = cast(str, aliases.get(key, key))
-        normalized_values[canonical_key] = value
+        normalized_values[str(aliases.get(key, key))] = value
     values = normalized_values
     required = {
         "minimum_user_messages",
