@@ -6,6 +6,7 @@ import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
+from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
@@ -83,8 +84,8 @@ def load_scope_rules() -> ScopeRules:
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
     return ScopeRules(
-        whitelist_tier1=_freeze(values["WHITELIST_TIER1"]),
-        whitelist_tier2=_freeze(values["WHITELIST_TIER2"]),
-        blacklist_layer1=_freeze(values["BLACKLIST_LAYER1"]),
-        blacklist_prohibited=_freeze(values["BLACKLIST_PROHIBITED"]),
+        whitelist_tier1=_freeze(cast(dict[str, list[str]], values["WHITELIST_TIER1"])),
+        whitelist_tier2=_freeze(cast(dict[str, list[str]], values["WHITELIST_TIER2"])),
+        blacklist_layer1=_freeze(cast(dict[str, list[str]], values["BLACKLIST_LAYER1"])),
+        blacklist_prohibited=_freeze(cast(dict[str, list[str]], values["BLACKLIST_PROHIBITED"])),
     )
