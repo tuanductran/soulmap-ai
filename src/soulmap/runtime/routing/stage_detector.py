@@ -14,6 +14,7 @@ from soulmap.runtime.knowledge.stage_classifier import (
 
 ConversationMessage = dict[str, str]
 
+
 def _memory_minimum_stage(
     memory: dict[str, object], rules: StageClassifierRules
 ) -> int:
@@ -47,6 +48,7 @@ def _lower_stage_message_count(
             count += 1
     return count
 
+
 def _score_stages(
     user_messages: list[str], rules: StageClassifierRules
 ) -> tuple[dict[int, float], dict[int, list[str]]]:
@@ -64,26 +66,30 @@ def _score_stages(
                         signals[stage.number].append(keyword)
     return scores, signals
 
+
 def _select_stage(
     scores: dict[int, float], rules: StageClassifierRules, minimum_stage: int
 ) -> tuple[int, float]:
     """Select the highest eligible stage and resolve close scores conservatively."""
     eligible = [
-        stage for stage in scores
+        stage
+        for stage in scores
         if stage >= minimum_stage and scores[stage] >= rules.thresholds[stage]
     ]
     if not eligible:
-        return 1, scores[1]
+        return minimum_stage, scores[minimum_stage]
     ranked = sorted(eligible, key=lambda stage: (-scores[stage], stage))
     best = ranked[0]
-    if len(ranked) > 1 and abs(scores[best] - scores[ranked[1]] ) <= rules.close_score_delta:
+    if len(ranked) > 1 and abs(scores[best] - scores[ranked[1]]) <= rules.close_score_delta:
         best = min(best, ranked[1])
     return best, scores[best]
+
 
 def _confidence(stage: int, score: float, rules: StageClassifierRules) -> str:
     if stage == 1 and score == 0:
         return "LOW"
     return "HIGH" if score >= rules.thresholds[stage] * 1.5 else "MODERATE"
+
 
 def detect_stage(
     conversation_messages: list[ConversationMessage],
@@ -146,6 +152,7 @@ def detect_stage(
         "score": score,
         "recommendation": rules.stage_recommendations[selected_stage],
     }
+
 
 if __name__ == "__main__":
     try:
