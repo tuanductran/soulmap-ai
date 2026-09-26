@@ -17,7 +17,6 @@ TEST_ENV = {
 }
 
 
-from soulmap.runtime.routing.stage_detector import detect_stage
 
 def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
     env = os.environ.copy()
