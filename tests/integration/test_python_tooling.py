@@ -408,7 +408,6 @@ def test_soulmap_cli_dispatches_test_to_pytest(monkeypatch: pytest.MonkeyPatch) 
     assert ("pytest", ("-q",)) in calls
 
 
-
 def test_tracked_hygiene_violations_flags_generated_paths(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
