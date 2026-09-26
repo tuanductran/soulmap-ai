@@ -122,6 +122,30 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
             raise AssertionError("expected upload confirmation failure")
 
 
+def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> None:
+    asset = tmp_path / "artifact.zip"
+    asset.write_bytes(b"new")
+    client = action.GitHubClient("token")
+    release = {
+        "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets": [
+            {
+                "name": "artifact.zip",
+                "size": 3,
+                "state": "uploaded",
+                "digest": "sha256:" + ("0" * 64),
+            }
+        ],
+    }
+
+    try:
+        action.upload_assets(client, release, [asset])
+    except action.GitHubActionError as exc:
+        assert "digest does not match" in str(exc)
+    else:
+        raise AssertionError("expected asset digest mismatch")
+
+
 def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"new")
