@@ -168,6 +168,7 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     client = action.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets": [],
     }
 
@@ -185,6 +186,7 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
     client = action.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets": [],
     }
@@ -224,6 +226,7 @@ def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> Non
     client = action.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets": [
             {
                 "name": "artifact.zip",
@@ -245,6 +248,7 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
     client = action.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets": [{"name": "artifact.zip", "size": 99, "state": "uploaded"}],
     }
 
