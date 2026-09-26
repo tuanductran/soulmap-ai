@@ -57,6 +57,7 @@ class GitHubClient:
     """
 
     def __init__(self, token: str) -> None:
+        """Initialize the client with a GitHub API token."""
         if not token.strip():
             raise GitHubActionError("GitHub token must not be empty.")
         self.token = token
@@ -72,6 +73,7 @@ class GitHubClient:
         content_type: str | None = None,
         retry_non_idempotent: bool = False,
     ) -> dict[str, object] | list[object] | None:
+        """Send an authenticated REST request and decode its JSON response."""
         body = data if payload is None else json.dumps(payload).encode("utf-8")
         headers = {
             "Accept": "application/vnd.github+json",
@@ -144,6 +146,7 @@ class GitHubClient:
         *,
         payload: dict[str, object] | None = None,
     ) -> dict[str, object] | list[object] | None:
+        """Send a request to the GitHub REST API root."""
         if not path.startswith("/"):
             raise GitHubActionError(f"GitHub API path must start with '/': {path!r}")
         return self.request(method, f"{API_ROOT}{path}", payload=payload)
@@ -154,6 +157,7 @@ class GitHubClient:
         *,
         params: dict[str, str | int] | None = None,
     ) -> list[object]:
+        """Collect all list items by following GitHub Link headers."""
         query = dict(params or {})
         query.setdefault("per_page", 100)
         next_url = f"{API_ROOT}{path}?{urlencode(query)}"
@@ -189,6 +193,7 @@ class GitHubClient:
         content: bytes,
         content_type: str,
     ) -> dict[str, object] | list[object] | None:
+        """Upload raw release-asset bytes to GitHub's hypermedia URL."""
         base = upload_url.split("{", 1)[0]
         query = urlencode({"name": name})
         return self.request(
@@ -199,6 +204,7 @@ class GitHubClient:
         )
 
     def list_release_assets(self, assets_url: str) -> list[object]:
+        """List all assets for a release using its hypermedia URL."""
         next_url = f"{assets_url}?per_page=100"
         results: list[object] = []
         while next_url:
@@ -210,6 +216,7 @@ class GitHubClient:
         return results
 
     def delete_release_asset(self, asset_url: str) -> None:
+        """Delete a release asset, including a failed starter upload."""
         response = self.request("DELETE", asset_url)
         if response is not None:
             raise GitHubActionError("GitHub returned content for asset deletion.")
@@ -243,6 +250,7 @@ class GitHubClient:
 
 
 def env(name: str, *, required: bool = True, default: str = "") -> str:
+    """Read and validate an action environment input."""
     value = os.environ.get(name, default)
     if required and not value:
         raise GitHubActionError(f"Missing required action input: {name}")
@@ -250,6 +258,7 @@ def env(name: str, *, required: bool = True, default: str = "") -> str:
 
 
 def boolean(name: str, default: bool = False) -> bool:
+    """Read an action input that must contain a boolean value."""
     value = env(
         name,
         required=False,
@@ -261,6 +270,7 @@ def boolean(name: str, default: bool = False) -> bool:
 
 
 def repository_parts(repository: str) -> tuple[str, str]:
+    """Split and validate a GitHub owner/repository identifier."""
     owner, separator, name = repository.partition("/")
     if not separator or not owner or not name or "/" in name:
         raise GitHubActionError(f"Invalid GitHub repository: {repository!r}")
@@ -268,6 +278,7 @@ def repository_parts(repository: str) -> tuple[str, str]:
 
 
 def write_output(name: str, value: object) -> None:
+    """Write an action output using GitHub's multiline protocol."""
     output_file = os.environ.get("GITHUB_OUTPUT")
     if not output_file:
         return
@@ -276,6 +287,7 @@ def write_output(name: str, value: object) -> None:
 
 
 def summary(message: str) -> None:
+    """Append a message to the GitHub Actions step summary."""
     summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_file:
         with Path(summary_file).open("a", encoding="utf-8") as handle:
@@ -283,6 +295,7 @@ def summary(message: str) -> None:
 
 
 def read_body() -> str:
+    """Read the release or pull-request body from input or a file."""
     body = env("INPUT_BODY", required=False)
     body_path = env("INPUT_BODY_PATH", required=False)
     if body_path:
@@ -294,6 +307,7 @@ def read_body() -> str:
 
 
 def asset_paths() -> list[Path]:
+    """Resolve and validate newline-separated release asset paths."""
     paths: list[Path] = []
     for item in env("INPUT_FILES", required=False).splitlines():
         item = item.strip()
@@ -420,6 +434,7 @@ def upload_assets(
     release: dict[str, object],
     paths: list[Path],
 ) -> None:
+    """Upload and cryptographically verify each requested release asset."""
     upload_url = release.get("upload_url")
     assets_url = release.get("assets_url")
     if not isinstance(upload_url, str) or not isinstance(assets_url, str):
@@ -562,6 +577,7 @@ def finalize_release(
 
 
 def run_release(client: GitHubClient) -> None:
+    """Execute the complete release publication workflow."""
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
     tag = env("INPUT_TAG")
     ensure_tag_exists(client, owner, repo, tag)
@@ -599,6 +615,7 @@ def run_release(client: GitHubClient) -> None:
 
 
 def run_pull_request(client: GitHubClient) -> None:
+    """Create or reuse the release preparation pull request."""
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
     branch = env("INPUT_BRANCH")
     base = env("INPUT_BASE", required=False, default="main")
@@ -642,6 +659,7 @@ def run_pull_request(client: GitHubClient) -> None:
 
 
 def main() -> int:
+    """Run the selected GitHub operation and report action failures."""
     try:
         operation = env("INPUT_OPERATION").strip().lower()
         client = GitHubClient(env("INPUT_TOKEN"))
