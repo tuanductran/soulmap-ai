@@ -58,7 +58,7 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
 
     assert RELEASE_VERIFY_COMMAND in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert "uses: ./src/action" in content
+    assert "uses: $/src/action" in content
     assert "operation: release" in content
     assert 'git push origin "$TAG"' in content
     assert "dist/release-verification.json" in content
