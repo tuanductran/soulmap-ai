@@ -9,7 +9,6 @@ from urllib.error import HTTPError
 
 import pytest
 
-
 ROOT = Path(__file__).parents[2]
 ACTION_PATH = ROOT / "src" / "action" / "__main__.py"
 
