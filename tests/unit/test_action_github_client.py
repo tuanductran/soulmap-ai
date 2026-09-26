@@ -22,14 +22,17 @@ _spec.loader.exec_module(action)
 
 class FakeResponse:
     def __init__(self, payload: object, headers: dict[str, str] | None = None) -> None:
+        """Create a minimal context-manager-compatible HTTP response."""
         self.status = 200
         self.headers = headers or {}
         self._payload = json.dumps(payload).encode()
 
     def __enter__(self) -> "FakeResponse":
+        """Enter the response context manager."""
         return self
 
     def __exit__(self, *_args: object) -> None:
+        """Exit the response context manager without suppressing errors."""
         return None
 
     def read(self) -> bytes:
@@ -62,14 +65,13 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
     client = action.GitHubClient(token)
 
     with patch.object(action, "urlopen", side_effect=error):
-        try:
+        with pytest.raises(action.GitHubAPIError) as captured:
             client.api("GET", "/repos/a/b")
-        except action.GitHubAPIError as exc:
-            assert exc.status == 403
-            assert token not in str(exc)
-            assert "[REDACTED]" in exc.detail
-        else:
-            raise AssertionError("expected GitHubAPIError")
+
+    exc = captured.value
+    assert exc.status == 403
+    assert token not in str(exc)
+    assert "[REDACTED]" in exc.detail
 
 
 def test_transient_http_error_is_retried() -> None:
@@ -115,12 +117,9 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     }
 
     with patch.object(client, "upload", return_value={"name": "other.zip"}):
-        try:
+        with pytest.raises(action.GitHubActionError) as captured:
             action.upload_assets(client, release, [asset])
-        except action.GitHubActionError as exc:
-            assert "artifact.zip" in str(exc)
-        else:
-            raise AssertionError("expected upload confirmation failure")
+    assert "artifact.zip" in str(captured.value)
 
 
 def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> None:
@@ -139,12 +138,9 @@ def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> Non
         ],
     }
 
-    try:
+    with pytest.raises(action.GitHubActionError) as captured:
         action.upload_assets(client, release, [asset])
-    except action.GitHubActionError as exc:
-        assert "digest does not match" in str(exc)
-    else:
-        raise AssertionError("expected asset digest mismatch")
+    assert "digest does not match" in str(captured.value)
 
 
 def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
@@ -156,12 +152,9 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
         "assets": [{"name": "artifact.zip", "size": 99, "state": "uploaded"}],
     }
 
-    try:
+    with pytest.raises(action.GitHubActionError) as captured:
         action.upload_assets(client, release, [asset])
-    except action.GitHubActionError as exc:
-        assert "refusing to silently publish" in str(exc)
-    else:
-        raise AssertionError("expected asset size mismatch")
+    assert "refusing to silently publish" in str(captured.value)
 
 
 def test_pull_request_contract_requires_complete_metadata(
@@ -180,9 +173,6 @@ def test_pull_request_contract_requires_complete_metadata(
         "paginated",
         return_value=[{"number": 1}, {"number": 2}],
     ):
-        try:
+        with pytest.raises(action.GitHubActionError) as captured:
             action.run_pull_request(client)
-        except action.GitHubActionError as exc:
-            assert "multiple open release PRs" in str(exc)
-        else:
-            raise AssertionError("expected duplicate PR protection")
+    assert "multiple open release PRs" in str(captured.value)
