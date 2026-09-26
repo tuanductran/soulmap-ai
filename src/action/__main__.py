@@ -187,6 +187,17 @@ class GitHubClient:
             content_type=content_type,
         )
 
+    def list_release_assets(self, assets_url: str) -> list[object]:
+        next_url = f"{assets_url}?per_page=100"
+        results: list[object] = []
+        while next_url:
+            response = self.request("GET", next_url)
+            if not isinstance(response, list):
+                raise GitHubActionError("GitHub returned invalid release asset metadata.")
+            results.extend(response)
+            next_url = self._next_link(self.last_response_headers.get("Link"))
+        return results
+
     def delete_release_asset(self, asset_url: str) -> None:
         response = self.request("DELETE", asset_url)
         if response is not None:
@@ -373,17 +384,24 @@ def upload_assets(
     paths: list[Path],
 ) -> None:
     upload_url = release.get("upload_url")
-    if not isinstance(upload_url, str):
+    assets_url = release.get("assets_url")
+    if not isinstance(upload_url, str) or not isinstance(assets_url, str):
         raise GitHubActionError("Release response lacks upload metadata.")
-    assets = release.get("assets", [])
-    if not isinstance(assets, list):
-        raise GitHubActionError("Release response contains invalid asset metadata.")
-    existing = {
-        asset.get("name"): asset
-        for asset in assets
-        if isinstance(asset, dict) and isinstance(asset.get("name"), str)
-    }
+    seen_names: set[str] = set()
     for path in paths:
+        if path.name in seen_names:
+            raise GitHubActionError(
+                f"Duplicate release asset filename in action input: {path.name!r}."
+            )
+        seen_names.add(path.name)
+        content = path.read_bytes()
+        expected_digest = hashlib.sha256(content).hexdigest()
+        assets = client.list_release_assets(assets_url)
+        existing = {
+            asset.get("name"): asset
+            for asset in assets
+            if isinstance(asset, dict) and isinstance(asset.get("name"), str)
+        }
         asset = existing.get(path.name)
         if asset is not None:
             state = asset.get("state")
@@ -394,42 +412,87 @@ def upload_assets(
                     f"(state={state!r})."
                 )
             file_size = path.stat().st_size
+            digest = asset.get("digest")
             if isinstance(size, int) and size != file_size:
                 raise GitHubActionError(
                     f"Release asset {path.name!r} already exists with size "
                     f"{size}, expected {file_size}; refusing to silently "
                     "publish a different artifact under the same name."
                 )
-            digest = asset.get("digest")
             if isinstance(digest, str) and digest.startswith("sha256:"):
-                local_digest = hashlib.sha256(path.read_bytes()).hexdigest()
-                if digest.removeprefix("sha256:") != local_digest:
+                if digest.removeprefix("sha256:") != expected_digest:
                     raise GitHubActionError(
                         f"Release asset {path.name!r} digest does not match "
                         "the local artifact."
                     )
+            elif state == "uploaded":
+                raise GitHubActionError(
+                    f"Release asset {path.name!r} has no verifiable SHA-256 digest."
+                )
             print(f"Release asset already present and verified: {path.name}")
             continue
+
         content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
-        content = path.read_bytes()
         print(f"Uploading release asset: {path}")
-        response = client.upload(
-            upload_url,
-            name=path.name,
-            content=content,
-            content_type=content_type,
-        )
+        try:
+            response = client.upload(
+                upload_url,
+                name=path.name,
+                content=content,
+                content_type=content_type,
+            )
+        except GitHubAPIError as exc:
+            if exc.status not in {422, 500, 502, 503, 504}:
+                raise
+            refreshed_assets = client.list_release_assets(assets_url)
+            candidate = next(
+                (
+                    item
+                    for item in refreshed_assets
+                    if isinstance(item, dict) and item.get("name") == path.name
+                ),
+                None,
+            )
+            if isinstance(candidate, dict) and candidate.get("state") == "uploaded":
+                digest = candidate.get("digest")
+                size = candidate.get("size")
+                if size == len(content) and isinstance(digest, str) and digest == f"sha256:{expected_digest}":
+                    print(f"Release asset upload confirmed after HTTP {exc.status}: {path.name}")
+                    continue
+                raise GitHubActionError(
+                    f"Release asset {path.name!r} exists after failed upload but "
+                    "does not match the local artifact."
+                ) from exc
+            if isinstance(candidate, dict) and candidate.get("state") == "starter":
+                asset_id = candidate.get("id")
+                asset_url = candidate.get("url")
+                if not isinstance(asset_id, int) or not isinstance(asset_url, str):
+                    raise GitHubActionError(
+                        f"GitHub returned an invalid starter asset for {path.name!r}."
+                    ) from exc
+                client.delete_release_asset(asset_url)
+            elif exc.status == 422:
+                raise GitHubActionError(
+                    f"Release asset {path.name!r} appeared concurrently and "
+                    "could not be reconciled safely."
+                ) from exc
+            else:
+                raise
+            response = client.upload(
+                upload_url,
+                name=path.name,
+                content=content,
+                content_type=content_type,
+            )
         if not isinstance(response, dict) or response.get("name") != path.name:
             raise GitHubActionError(
                 f"GitHub did not confirm upload of release asset {path.name!r}."
             )
         response_digest = response.get("digest")
-        if isinstance(response_digest, str) and response_digest.startswith("sha256:"):
-            expected_digest = hashlib.sha256(content).hexdigest()
-            if response_digest.removeprefix("sha256:") != expected_digest:
-                raise GitHubActionError(
-                    f"GitHub reported a digest mismatch for release asset {path.name!r}."
-                )
+        if not isinstance(response_digest, str) or response_digest != f"sha256:{expected_digest}":
+            raise GitHubActionError(
+                f"GitHub did not return a verifiable SHA-256 digest for {path.name!r}."
+            )
 
 
 def finalize_release(
