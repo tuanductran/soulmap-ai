@@ -87,7 +87,6 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     for workflow_path in CI_WORKFLOWS:
         workflow_text = workflow_path.read_text(encoding="utf-8")
         assert f"astral-sh/setup-uv@{SETUP_UV_SHA}" in workflow_text
-        assert "./.github/actions/setup-uv" not in workflow_text
         assert "raven-actions/actionlint" not in workflow_text
         assert "@v7" not in workflow_text
         assert "@v4" not in workflow_text

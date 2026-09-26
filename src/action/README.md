@@ -8,7 +8,7 @@ It uses only the Python standard library. Git tag creation remains a native git 
 The `release` operation expects the Git tag to already exist. It creates or reuses the GitHub Release, uploads missing assets, and publishes it when `draft` is false.
 
 ```yaml
-- uses: ./src/action
+- uses: $/src/action
   with
     operation: release
     token: ${{ github.token }}
@@ -25,7 +25,7 @@ The `release` operation expects the Git tag to already exist. It creates or reus
 ## Pull request
 
 ```yaml
-- uses: ./src/action
+- uses: $/src/action
   with
     operation: pull-request
     token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
