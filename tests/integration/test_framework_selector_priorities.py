@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from soulmap.runtime.routing.stage_detector import detect_stage
+
 ROOT = Path(__file__).resolve().parents[2]
 TEST_ENV = {
     **os.environ,
