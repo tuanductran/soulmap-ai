@@ -7,15 +7,15 @@ import sys
 from collections import defaultdict
 from typing import TypedDict
 
-from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
-
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_dict_field,
     require_list_field,
     require_str_field,
+
 )
+from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 
 Message = dict[str, str]
 
@@ -68,7 +68,7 @@ class ExtractedThemes(TypedDict, total=False):
     session_count: int
 
 
-def _rules():
+def _rules() -> object:
     return load_synthesis_rules()
 
 
