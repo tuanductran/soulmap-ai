@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
