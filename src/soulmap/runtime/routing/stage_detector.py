@@ -110,7 +110,7 @@ def detect_stage(
         selected_stage = 1
         score = 0.0
         confidence = "DEFAULT"
-        signals: list[str] = []
+        signals: dict[int, list[str]] | list[str] = []
     else:
         scores, signals_by_stage = _score_stages(user_messages, rules)
         signals = signals_by_stage
