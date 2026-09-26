@@ -11,7 +11,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "name: Release Prep" in workflow
     assert "workflow_dispatch" in workflow
     assert "if: github.ref == 'refs/heads/main'" in workflow
-    assert "contents: read" in workflow
+    assert "contents: write" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
@@ -44,7 +44,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-provenance" in workflow
     assert "soulmap release-health" in workflow
     assert "dist/release-provenance.json" in workflow
-    assert "contents: write" in workflow
+    assert "contents: read" in workflow
     assert "id-token: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication." in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
