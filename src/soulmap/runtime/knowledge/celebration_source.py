@@ -6,6 +6,7 @@ import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
+from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
@@ -107,13 +108,13 @@ def load_celebration_rules() -> CelebrationRules:
     values = _literal_config(body)
     groups = load_labeled_groups(path, "Detection signals")
     return CelebrationRules(
-        score_weights=dict(values["SCORE_WEIGHTS"]),
+        score_weights=cast(dict[str, int], values["SCORE_WEIGHTS"]),
         threshold=values["THRESHOLD"],
         negative_override_penalty=values["NEGATIVE_OVERRIDE_PENALTY"],
         strength_threshold=values["STRENGTH_THRESHOLD"],
         confirmation_score=values["CONFIRMATION_SCORE"],
-        negative_overrides=values["NEGATIVE_OVERRIDES"],
-        confirmation_signals=values["CONFIRMATION_SIGNALS"],
-        confirmation_assistant_anchors=values["CONFIRMATION_ASSISTANT_ANCHORS"],
+        negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
+        confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
+        confirmation_assistant_anchors=cast(tuple[str, ...], values["CONFIRMATION_ASSISTANT_ANCHORS"]),
         signal_groups=groups,
     )
