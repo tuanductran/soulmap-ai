@@ -105,7 +105,7 @@ def test_paginated_requests_follow_link_header() -> None:
 
     def request(_method: str, url: str) -> list[object]:
         client.last_response_headers = (
-            {"Link": "<https://api.github.com/next>; rel="next""}
+            {"Link": '<https://api.github.com/next>; rel="next"'}
             if "page=1" in url
             else {}
         )
