@@ -88,3 +88,4 @@ jobs:
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
           if-no-files-found: warn
+          retention-days: 30
