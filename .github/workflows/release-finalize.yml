@@ -38,7 +38,7 @@ jobs:
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Verify checkout is the merged release commit
         env:
@@ -200,14 +200,32 @@ jobs:
           cp .release-tools/.github/python/release_tag.py .github/python/release_tag.py
           cp .release-tools/.github/python/release/publish.py .github/python/release/publish.py
 
-      - name: Create immutable release tag and publish GitHub Release
+      - name: Create immutable release tag
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RELEASE_TAG: v${{ needs.verify.outputs.version }}
-          RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          RELEASE_ARTIFACT_DIR: dist
+          TAG: v${{ needs.verify.outputs.version }}
+          MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
-          test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
-          python .github/python/release_tag.py
-          python .github/python/release/publish.py
+          test "$(git rev-parse HEAD)" = "$MERGE_SHA"
+          if git rev-parse "$TAG^{commit}" >/dev/null 2>&1; then
+            existing_commit="$(git rev-parse "$TAG^{commit}")"
+            if [ "$existing_commit" != "$MERGE_SHA" ]; then
+              echo "Release tag $TAG exists but points to $existing_commit, expected $MERGE_SHA."
+              exit 1
+            fi
+            echo "Release tag $TAG already exists at the exact merged commit; reusing it without moving it."
+          else
+            git tag -a "$TAG" -m "Release $TAG" "$MERGE_SHA"
+            git push origin "$TAG"
+          fi
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@efb35369e0ad2af669f228072c1b0d510eae64 # v3.0.3
+        with:
+          tag_name: v${{ needs.verify.outputs.version }}
+          name: v${{ needs.verify.outputs.version }}
+          files: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json
+            dist/release-verification.json
+            dist/release-provenance.json
