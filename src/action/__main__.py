@@ -1,4 +1,3 @@
-# ruff: noqa
 """GitHub operations used by SoulMap workflows."""
 
 from __future__ import annotations
@@ -15,12 +14,12 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
-# fmt: off
 API_ROOT = "https://api.github.com"
 API_VERSION = "2026-03-10"
 USER_AGENT = "soulmap-github-action"
 MAX_RETRIES = 4
 RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+IDEMPOTENT_METHODS = {"DELETE", "GET", "HEAD", "PATCH", "PUT"}
 
 
 class GitHubActionError(RuntimeError):
@@ -71,6 +70,7 @@ class GitHubClient:
         payload: dict[str, object] | None = None,
         data: bytes | None = None,
         content_type: str | None = None,
+        retry_non_idempotent: bool = False,
     ) -> dict[str, object] | list[object] | None:
         body = data if payload is None else json.dumps(payload).encode("utf-8")
         headers = {
@@ -105,7 +105,8 @@ class GitHubClient:
             except HTTPError as exc:
                 self.last_response_headers = dict(exc.headers.items())
                 detail = exc.read().decode("utf-8", errors="replace")
-                if exc.code in RETRYABLE_STATUS_CODES and attempt < MAX_RETRIES:
+                retryable = method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
+                if exc.code in RETRYABLE_STATUS_CODES and retryable and attempt < MAX_RETRIES:
                     time.sleep(self._retry_delay(attempt, self.last_response_headers))
                     continue
                 raise GitHubAPIError(
@@ -144,22 +145,30 @@ class GitHubClient:
     ) -> list[object]:
         query = dict(params or {})
         query.setdefault("per_page", 100)
-        page = 1
+        next_url = f"{API_ROOT}{path}?{urlencode(query)}"
         results: list[object] = []
-        while True:
-            query["page"] = page
-            response = self.api(
-                "GET",
-                f"{path}?{urlencode(query)}",
-            )
+        while next_url:
+            response = self.request("GET", next_url)
             if not isinstance(response, list):
                 raise GitHubActionError(
                     f"GitHub returned a non-list response for paginated {path}."
                 )
             results.extend(response)
-            if len(response) < int(query["per_page"]):
-                return results
-            page += 1
+            next_url = self._next_link(self.last_response_headers.get("Link"))
+        return results
+
+    @staticmethod
+    def _next_link(link_header: str | None) -> str:
+        if not link_header:
+            return ""
+        for link in link_header.split(","):
+            target, _, parameters = link.partition(";")
+            lower_parameters = parameters.lower()
+            if "rel" in lower_parameters and "next" in lower_parameters:
+                target = target.strip()
+                if target.startswith("<") and target.endswith(">"):
+                    return target[1:-1]
+        return ""
 
     def upload(
         self,
@@ -177,6 +186,11 @@ class GitHubClient:
             data=content,
             content_type=content_type,
         )
+
+    def delete_release_asset(self, asset_url: str) -> None:
+        response = self.request("DELETE", asset_url)
+        if response is not None:
+            raise GitHubActionError("GitHub returned content for asset deletion.")
 
     def _retry_delay(self, attempt: int, headers: dict[str, str]) -> float:
         retry_after = headers.get("Retry-After")
@@ -301,8 +315,9 @@ def create_release(
     try:
         response = client.api(
             "POST",
-            f"/repos/{quote(owner)}/{quote(repo)}/releases",
+            f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/releases",
             payload=payload,
+            retry_non_idempotent=True,
         )
     except GitHubAPIError as exc:
         # A concurrent invocation may have created the release after our GET.
