@@ -94,8 +94,10 @@ jobs:
           git push --set-upstream origin "${{ steps.bump.outputs.branch }}"
 
       - name: Open release pull request
-        env:
-          SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-          RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}
-          RELEASE_TAG: ${{ steps.bump.outputs.tag }}
-        run: python .github/python/release/create_pr.py
+        uses: ./src/action
+        with:
+          operation: pull-request
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          branch: ${{ steps.bump.outputs.branch }}
+          base: main
+          tag: ${{ steps.bump.outputs.tag }}

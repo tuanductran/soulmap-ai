@@ -205,13 +205,16 @@ jobs:
           fi
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@efb35369e0ad2af669f228072c1b0d510eae64 # v3.0.3
+        uses: ./src/action
         with:
-          tag_name: v${{ needs.verify.outputs.version }}
-          name: v${{ needs.verify.outputs.version }}
+          operation: release
+          token: ${{ github.token }}
+          tag: v${{ needs.verify.outputs.version }}
+          release-name: v${{ needs.verify.outputs.version }}
           files: |
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
             dist/release-verification.json
             dist/release-provenance.json
+          draft: "false"

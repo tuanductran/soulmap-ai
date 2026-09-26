@@ -43,7 +43,8 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
 
     assert "workflow_dispatch" in content
     assert "git push --set-upstream origin" in content
-    assert "python .github/python/release/create_pr.py" in content
+    assert "uses: ./src/action" in content
+    assert "operation: pull-request" in content
     assert "SOULMAP_RELEASE_TOKEN" in content
     assert "release/prep-" in content
     assert "gh pr create" not in content
@@ -57,7 +58,8 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
 
     assert RELEASE_VERIFY_COMMAND in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert "softprops/action-gh-release@" in content
+    assert "uses: ./src/action" in content
+    assert "operation: release" in content
     assert 'git push origin "$TAG"' in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content

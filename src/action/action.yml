@@ -1,0 +1,81 @@
+name: SoulMap GitHub Operations
+author: Tuan Duc Tran
+description: Python GitHub Action for idempotent release publication and release pull-request creation.
+inputs:
+  operation:
+    description: "Operation to perform: release or pull-request."
+    required: true
+  token:
+    description: GitHub token with the permissions required by the selected operation.
+    required: true
+  repository:
+    description: "GitHub repository in owner/name form."
+    required: false
+    default: ${{ github.repository }}
+  tag:
+    description: "Existing Git tag for release publication or release PR metadata."
+    required: false
+  release-name:
+    description: GitHub Release name.
+    required: false
+  body:
+    description: Release or pull-request body.
+    required: false
+  body-path:
+    description: Path to a release body file in the workspace.
+    required: false
+  files:
+    description: Newline-separated release asset paths.
+    required: false
+  draft:
+    description: "Publish the release when false; keep it draft when true."
+    required: false
+    default: "false"
+  prerelease:
+    description: Mark the release as a prerelease.
+    required: false
+    default: "false"
+  generate-release-notes:
+    description: Ask GitHub to generate release notes.
+    required: false
+    default: "false"
+  branch:
+    description: Head branch for pull-request creation.
+    required: false
+  base:
+    description: Base branch for pull-request creation.
+    required: false
+    default: main
+  title:
+    description: Pull-request title.
+    required: false
+outputs:
+  release-id:
+    description: GitHub release ID when operation is release.
+  release-url:
+    description: Published GitHub Release URL when operation is release.
+  pull-request-url:
+    description: GitHub pull-request URL when operation is pull-request.
+  tag-name:
+    description: Release tag processed by the action.
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    INPUT_OPERATION: ${{ inputs.operation }}
+    INPUT_TOKEN: ${{ inputs.token }}
+    INPUT_REPOSITORY: ${{ inputs.repository }}
+    INPUT_TAG: ${{ inputs.tag }}
+    INPUT_RELEASE_NAME: ${{ inputs.release-name }}
+    INPUT_BODY: ${{ inputs.body }}
+    INPUT_BODY_PATH: ${{ inputs.body-path }}
+    INPUT_FILES: ${{ inputs.files }}
+    INPUT_DRAFT: ${{ inputs.draft }}
+    INPUT_PRERELEASE: ${{ inputs.prerelease }}
+    INPUT_GENERATE_RELEASE_NOTES: ${{ inputs.generate-release-notes }}
+    INPUT_BRANCH: ${{ inputs.branch }}
+    INPUT_BASE: ${{ inputs.base }}
+    INPUT_TITLE: ${{ inputs.title }}
+branding:
+  icon: package
+  color: purple
