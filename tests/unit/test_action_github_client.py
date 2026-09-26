@@ -27,13 +27,13 @@ class FakeResponse:
         self.headers = headers or {}
         self._payload = json.dumps(payload).encode()
 
-    def __enter__(self) -> "FakeResponse":
+    def __enter__(self) -> FakeResponse:
         """Enter the response context manager."""
         return self
 
     def __exit__(self, *_args: object) -> None:
         """Exit the response context manager without suppressing errors."""
-        return None
+        return
 
     def read(self) -> bytes:
         return self._payload
@@ -84,15 +84,15 @@ def test_transient_http_error_is_retried() -> None:
         {},
         __import__("io").BytesIO(b'{"message":"try again"}'),
     )
-    calls = iter([error, FakeResponse({"ok": True})])
+    responses = [error, FakeResponse({"ok": True})]
     client = action.GitHubClient("token")
 
-    with patch.object(
-        action, "urlopen", side_effect=lambda _request, **_kwargs: next(calls)
+    with (
+        patch.object(action, "urlopen", side_effect=responses),
+        patch.object(action.time, "sleep") as sleep,
     ):
-        with patch.object(action.time, "sleep") as sleep:
-            assert client.api("GET", "/repos/a/b") == {"ok": True}
-            assert sleep.call_count == 1
+        assert client.api("GET", "/repos/a/b") == {"ok": True}
+        assert sleep.call_count == 1
 
 
 def test_paginated_requests_continue_until_short_page() -> None:
@@ -173,11 +173,13 @@ def test_pull_request_contract_requires_complete_metadata(
     monkeypatch.delenv("INPUT_BODY", raising=False)
     monkeypatch.delenv("INPUT_BODY_PATH", raising=False)
 
-    with patch.object(
-        client,
-        "paginated",
-        return_value=[{"number": 1}, {"number": 2}],
+    with (
+        patch.object(
+            client,
+            "paginated",
+            return_value=[{"number": 1}, {"number": 2}],
+        ),
+        pytest.raises(action.GitHubActionError) as captured,
     ):
-        with pytest.raises(action.GitHubActionError) as captured:
-            action.run_pull_request(client)
+        action.run_pull_request(client)
     assert "multiple open release PRs" in str(captured.value)
