@@ -24,6 +24,8 @@ def test_python_github_action_is_self_contained() -> None:
     assert "softprops" not in source
     assert "requests" not in source
     assert "PyGithub" not in source
+    assert 'operation == "probe"' in source
+    assert "run_probe" in source
 
 
 def test_python_github_action_has_no_external_imports() -> None:
