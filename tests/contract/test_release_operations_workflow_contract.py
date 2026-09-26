@@ -16,18 +16,15 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: true" in workflow
     assert "git push --set-upstream origin" in workflow
-    assert "python .github/python/release/create_pr.py" in workflow
+    assert "uses: ./src/action" in workflow
     assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
-    assert "RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}" in workflow
-    assert "RELEASE_TAG: ${{ steps.bump.outputs.tag }}" in workflow
+    assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
+    assert "tag: ${{ steps.bump.outputs.tag }}" in workflow
     assert "gh pr create" not in workflow
     assert "release/prep-" in workflow
     assert "git push --follow-tags" not in workflow
     assert "softprops/action-gh-release" not in workflow
-    release_pr_tool = (
-        ROOT / ".github" / "python" / "release" / "create_pr.py"
-    ).read_text()
-    assert "release-finalize workflow" in release_pr_tool
+    assert "operation: pull-request" in workflow
 
 
 def test_release_finalize_publishes_only_after_merged_main_verification() -> None:
@@ -58,7 +55,8 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
     assert 'git push origin "$TAG"' in workflow
-    assert "softprops/action-gh-release@" in workflow
+    assert "uses: ./src/action" in workflow
+    assert "operation: release" in workflow
     assert "tag_name: v${{ needs.verify.outputs.version }}" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
     assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" not in workflow
@@ -112,12 +110,10 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
     assert '"release-verification.json"' not in cleanup_block
 
 
-def test_release_pr_tool_uses_pull_request_api_without_gh_cli() -> None:
-    script = (ROOT / ".github" / "python" / "release" / "create_pr.py").read_text()
-
-    assert "/pulls" in script
-    assert '"SOULMAP_RELEASE_TOKEN"' in script
-    assert '"RELEASE_BRANCH"' in script
-    assert '"RELEASE_TAG"' in script
-    assert "gh pr create" not in script
-    assert "API_ROOT" in script
+def test_local_python_action_contains_github_operations() -> None:
+    action = (ROOT / "src" / "action" / "__main__.py").read_text()
+    assert "/pulls" in action
+    assert "/releases" in action
+    assert "GITHUB_OUTPUT" in action
+    assert "API_VERSION = " in action
+    assert "gh pr create" not in action
