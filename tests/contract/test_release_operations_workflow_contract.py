@@ -46,7 +46,20 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/release-provenance.json" in workflow
     assert "contents: write" in workflow
     assert "id-token: write" in workflow
-    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert (
+        "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}"
+        not in workflow.split("jobs:", 1)[1]
+        .split("publish:", 1)[1]
+        .split("steps:", 1)[1]
+        .split("Verify checkout is the merged release commit", 1)[0]
+    )
+    assert "persist-credentials: false" in workflow
+    assert (
+        "SOULMAP_RELEASE_TOKEN must be configured for release tag publication."
+        in workflow
+    )
+    assert "RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert "http.extraheader=AUTHORIZATION: basic $auth_header" in workflow
     assert "attestations: write" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
@@ -62,7 +75,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         'git config user.email "github-actions[bot]@users.noreply.github.com"'
         in workflow
     )
-    assert 'git push origin "$TAG"' in workflow
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
+        in workflow
+    )
     assert "uses: $/src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow

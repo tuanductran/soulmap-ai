@@ -60,10 +60,16 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
     assert "uses: $/src/action" in content
     assert "operation: release" in content
-    assert 'git push origin "$TAG"' in content
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
+        in content
+    )
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
-    health_command = "uv run soulmap release-health --root . --provenance dist/release-provenance.json"
+    health_command = (
+        "uv run soulmap release-health --root . "
+        "--provenance dist/release-provenance.json"
+    )
     provenance_command = (
         "uv run soulmap release-provenance --root . "
         "--verification dist/release-verification.json "
