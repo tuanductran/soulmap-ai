@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import json
 from pathlib import Path
 from unittest.mock import patch
+
+import pytest
 from urllib.error import HTTPError
 from urllib.request import Request
 
@@ -55,7 +58,7 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
         403,
         "Forbidden",
         {"X-RateLimit-Remaining": "0"},
-        __import__("io").BytesIO(
+        io.BytesIO(
             json.dumps({"message": f"token={token}"}).encode()
         ),
     )
@@ -72,7 +75,7 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
             raise AssertionError("expected GitHubAPIError")
 
 
-def test_transient_http_error_is_retried(monkeypatch) -> None:
+def test_transient_http_error_is_retried() -> None:
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         503,
@@ -136,7 +139,7 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
         raise AssertionError("expected asset size mismatch")
 
 
-def test_pull_request_contract_requires_complete_metadata(monkeypatch) -> None:
+def test_pull_request_contract_requires_complete_metadata(monkeypatch: pytest.MonkeyPatch) -> None:
     client = action.GitHubClient("token")
     monkeypatch.setenv("INPUT_REPOSITORY", "tuanductran/soulmap-ai")
     monkeypatch.setenv("INPUT_BRANCH", "release/prep-1")
