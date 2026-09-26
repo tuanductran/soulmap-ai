@@ -194,6 +194,12 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Stage release tooling from verified release-tool commit
+        run: |
+          mkdir -p .github/python/release
+          cp .release-tools/.github/python/release_tag.py .github/python/release_tag.py
+          cp .release-tools/.github/python/release/publish.py .github/python/release/publish.py
+
       - name: Create immutable release tag and publish GitHub Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -201,8 +207,7 @@ jobs:
           RELEASE_COMMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           RELEASE_ARTIFACT_DIR: dist
-          PYTHONPATH: .release-tools/.github/python
         run: |
           test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
-          python .release-tools/.github/python/release_tag.py
-          python .release-tools/.github/python/release/publish.py
+          python .github/python/release_tag.py
+          python .github/python/release/publish.py
