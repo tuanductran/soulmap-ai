@@ -214,8 +214,9 @@ def should_synthesize(message: str, history: list[Message]) -> dict[str, str | b
         fired.
     """
     msg_lower = message.lower().strip()
+    analysis_history = [*history, {"role": "user", "content": message}]
     user_count = sum(
-        1 for m in history if isinstance(m, dict) and m.get("role") == "user"
+        1 for m in analysis_history if isinstance(m, dict) and m.get("role") == "user"
     )
 
     for phrase in _rules().explicit_requests:
@@ -223,7 +224,6 @@ def should_synthesize(message: str, history: list[Message]) -> dict[str, str | b
             return {"should": True, "reason": "explicit_request"}
 
     rules = _rules()
-    analysis_history = [*history, {"role": "user", "content": message}]
     recurring_theme_count = sum(
         bool(extract_themes(analysis_history).get(domain))
         for domain in ("emotional", "values", "conflicts")
@@ -260,7 +260,7 @@ def synthesize(
             "themes": {},
             "recommendation": (
                 "Not enough conversation history for synthesis. "
-                "Continue standard response. Check again after 8+ user messages."
+                "Continue standard response. Check again after the configured minimum user-message threshold."
             ),
         }
 
