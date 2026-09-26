@@ -80,14 +80,11 @@ Triage every hit before touching anything:
   out of CI, is the correct place for that trade. If a true false positive
   recurs across many files (the `TypedDict` pattern above), prefer
   `vulture --make-whitelist` over lowering the threshold.
-- Before deleting anything under `src/soulmap/runtime/experimental/` or
-  `src/soulmap/runtime/memory/`, read
-  [`docs/engineering/maintenance-boundary.md`](../../../docs/engineering/maintenance-boundary.md)
-  first. Both are documented, boundary-tested, deliberately optional modules,
-  not orphaned code: "no caller inside `src/soulmap/runtime/routing/` or
-  `guards/`" is the intended shape for them, not a defect. A module actually
-  being unreferenced by the core is expected there; treat it as a finding
-  only if it is also undocumented and untested.
+- Before deleting a module, read [`docs/engineering/maintenance-boundary.md`](../../../docs/engineering/maintenance-boundary.md)
+  and verify that the module is not part of the current runtime or tooling contract.
+  Unreferenced code is a candidate for removal when it is also outside the shipped
+  product surface, undocumented as an intentional extension, and not covered by a
+  current test or workflow.
 
 ## Workflow
 
