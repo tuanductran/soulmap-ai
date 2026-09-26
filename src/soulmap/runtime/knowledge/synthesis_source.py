@@ -54,6 +54,8 @@ def _table_values(body: str) -> dict[str, int]:
     for match in _THRESHOLD_RE.finditer(section.group("body")):
         key = re.sub(r"[^a-z0-9]+", "_", match.group("name").strip().lower()).strip("_")
         values[key] = int(match.group("value"))
+    aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
+    values = {aliases.get(key, key): value for key, value in values.items()}
     required = {
         "minimum_user_messages",
         "automatic_synthesis_user_messages",
