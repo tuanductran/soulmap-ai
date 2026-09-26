@@ -15,8 +15,7 @@ Relevant files include:
 - `SOULMAP.md`
 - `skills/safety/`
 - `src/soulmap/runtime/guards/response_safety_gate.py`
-- `src/soulmap/runtime/experimental/biometric_ingest.py`
-- `src/soulmap/runtime/memory/memory_ledger.py`
+- `src/soulmap/runtime/guards/response_safety_gate.py`
 
 ## Do not use this skill for
 
