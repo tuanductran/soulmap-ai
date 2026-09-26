@@ -173,6 +173,7 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     }
 
     with (
+        patch.object(client, "list_release_assets", return_value=[]),
         patch.object(client, "upload", return_value={"name": "other.zip"}),
         pytest.raises(action.GitHubActionError) as captured,
     ):
@@ -186,7 +187,6 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
     client = action.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
-        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
         "assets": [],
     }
@@ -237,7 +237,10 @@ def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> Non
         ],
     }
 
-    with pytest.raises(action.GitHubActionError) as captured:
+    with (
+        patch.object(client, "list_release_assets", return_value=release["assets"]),
+        pytest.raises(action.GitHubActionError) as captured,
+    ):
         action.upload_assets(client, release, [asset])
     assert "digest does not match" in str(captured.value)
 
@@ -252,7 +255,10 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
         "assets": [{"name": "artifact.zip", "size": 99, "state": "uploaded"}],
     }
 
-    with pytest.raises(action.GitHubActionError) as captured:
+    with (
+        patch.object(client, "list_release_assets", return_value=release["assets"]),
+        pytest.raises(action.GitHubActionError) as captured,
+    ):
         action.upload_assets(client, release, [asset])
     assert "refusing to silently publish" in str(captured.value)
 
