@@ -12,6 +12,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "workflow_dispatch" in workflow
     assert "if: github.ref == 'refs/heads/main'" in workflow
     assert "contents: write" in workflow
+    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: true" in workflow
@@ -65,7 +66,6 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
-    assert "SOULMAP_RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" not in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
     ) < workflow.index("Verify merged release tree")
