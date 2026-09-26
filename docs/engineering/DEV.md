@@ -77,9 +77,9 @@ bash scripts/lint.sh
 bash scripts/build-skill.sh
 ```
 
-These shell scripts are convenience wrappers. The Python commands under
-`src/soulmap/devtools/cli/` remain the source of truth for bootstrap, formatting,
-linting, evals, and build behavior.
+These shell scripts are convenience wrappers. The `soulmap` CLI dispatches directly
+to the canonical maintainer tooling under `src/soulmap/devtools/`; `bootstrap` remains
+the only dedicated module entry point under `src/soulmap/devtools/cli/`.
 
 ## Markdown QA
 
