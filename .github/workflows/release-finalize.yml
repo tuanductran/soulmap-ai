@@ -205,7 +205,7 @@ jobs:
           fi
 
       - name: Publish GitHub Release
-        uses: ./src/action
+        uses: $/src/action
         with:
           operation: release
           token: ${{ github.token }}
