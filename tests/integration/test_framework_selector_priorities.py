@@ -315,7 +315,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
 
 def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
     payload = {
-        "message": "I'm just checking in.",
+        "message": "I'm just checking in. I'm doing well. I've found my path.",
         "history": [{"role": "user", "content": "This feels quiet now."}],
         "memory": {},
     }
