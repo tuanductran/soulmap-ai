@@ -16,7 +16,10 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: false" in workflow
-    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"' in workflow
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"'
+        in workflow
+    )
     assert "uses: ./src/action" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
@@ -46,7 +49,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
     assert "id-token: write" in workflow
-    assert "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication." in workflow
+    assert (
+        "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
+        in workflow
+    )
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
