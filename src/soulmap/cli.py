@@ -30,7 +30,6 @@ from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.devtools.support.run import python_module
-from soulmap.runtime.experimental import soulmap_demo
 from soulmap.runtime.guards import markdown_contract
 
 CommandHandler = Callable[[list[str]], int]
@@ -54,7 +53,6 @@ def _command_table() -> dict[str, CommandHandler]:
         "check-case": check_markdown_case.main,
         "check-freshness": check_freshness.main,
         "check-links": check_markdown_links.main,
-        "demo": soulmap_demo.main,
         "eval-groups": eval_groups.main,
         "eval-markdown-contracts": eval_markdown_contracts.main,
         "eval-response-quality": eval_response_quality.main,
