@@ -42,9 +42,13 @@ class GitHubClient:
                 return json.loads(raw) if raw else None
         except HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
-            raise GitHubActionError(f"GitHub API {method} {url} failed with HTTP {exc.code}: {detail}") from exc
+            raise GitHubActionError(
+                f"GitHub API {method} {url} failed with HTTP {exc.code}: {detail}"
+            ) from exc
         except URLError as exc:
-            raise GitHubActionError(f"GitHub API {method} {url} failed: {exc.reason}") from exc
+            raise GitHubActionError(
+                f"GitHub API {method} {url} failed: {exc.reason}"
+            ) from exc
 
     def api(self, method: str, path: str, *, payload: dict[str, object] | None = None) -> dict[str, object] | list[object] | None:
         return self.request(method, f"{API_ROOT}{path}", payload=payload)
@@ -140,7 +144,10 @@ def upload_assets(client: GitHubClient, release: dict[str, object], paths: list[
     existing = {asset.get("name") for asset in assets if isinstance(asset, dict)}
     missing = [path.name for path in paths if path.name not in existing]
     if not release.get("draft", False) and missing:
-        raise GitHubActionError("Published release is immutable and is missing assets: " + ", ".join(missing))
+        raise GitHubActionError(
+            "Published release is immutable and is missing assets: "
+            + ", ".join(missing)
+        )
     for path in paths:
         if path.name in existing:
             print(f"Release asset already present: {path.name}")
@@ -216,7 +223,9 @@ def main() -> int:
         elif operation == "pull-request":
             run_pull_request(client)
         else:
-            raise GitHubActionError(f"Unsupported operation {operation!r}; expected release or pull-request.")
+            raise GitHubActionError(
+                f"Unsupported operation {operation!r}; expected release or pull-request."
+            )
     except GitHubActionError as exc:
         print(f"::error::{exc}", file=sys.stderr)
         return 1
