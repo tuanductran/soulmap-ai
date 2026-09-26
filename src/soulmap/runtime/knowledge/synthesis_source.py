@@ -57,7 +57,11 @@ def _table_values(body: str) -> dict[str, int]:
         key = re.sub(r"[^a-z0-9]+", "_", match.group("name").strip().lower()).strip("_")
         values[key] = int(match.group("value"))
     aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
-    values = {aliases.get(key) or key: value for key, value in values.items()}
+    normalized_values: dict[str, int] = {}
+    for key, value in values.items():
+        canonical_key = aliases.get(key) or key
+        normalized_values[canonical_key] = value
+    values = normalized_values
     required = {
         "minimum_user_messages",
         "automatic_synthesis_user_messages",
