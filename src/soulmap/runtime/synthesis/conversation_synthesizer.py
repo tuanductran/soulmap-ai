@@ -131,15 +131,15 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
     recurring_values = {k: v for k, v in values_scores.items() if v["score"] >= 2}
     recurring_conflicts = {k: v for k, v in conflict_scores.items() if v["score"] >= 2}
 
-    top_emotional = sorted(
-        recurring_emotional.items(), key=lambda x: -x[1]["score"]
-    )[: _rules().max_themes]
+    top_emotional = sorted(recurring_emotional.items(), key=lambda x: -x[1]["score"])[
+        : _rules().max_themes
+    ]
     top_values = sorted(recurring_values.items(), key=lambda x: -x[1]["score"])[
         : _rules().max_themes
     ]
-    top_conflicts = sorted(
-        recurring_conflicts.items(), key=lambda x: -x[1]["score"]
-    )[: _rules().max_themes]
+    top_conflicts = sorted(recurring_conflicts.items(), key=lambda x: -x[1]["score"])[
+        : _rules().max_themes
+    ]
 
     return {
         "emotional": [
@@ -196,7 +196,7 @@ def merge_memory_themes(
         ):
             longitudinal.append(mem_theme)
 
-    extracted["longitudinal"] = longitudinal[:_rules().max_longitudinal]
+    extracted["longitudinal"] = longitudinal[: _rules().max_longitudinal]
     session_count = memory.get("session_count", 1)
     extracted["session_count"] = session_count if isinstance(session_count, int) else 1
     return extracted
