@@ -64,9 +64,11 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
     )
     client = action.GitHubClient(token)
 
-    with patch.object(action, "urlopen", side_effect=error):
-        with pytest.raises(action.GitHubAPIError) as captured:
-            client.api("GET", "/repos/a/b")
+    with (
+        patch.object(action, "urlopen", side_effect=error),
+        pytest.raises(action.GitHubAPIError) as captured,
+    ):
+        client.api("GET", "/repos/a/b")
 
     exc = captured.value
     assert exc.status == 403
@@ -86,7 +88,7 @@ def test_transient_http_error_is_retried() -> None:
     client = action.GitHubClient("token")
 
     with patch.object(
-        action, "urlopen", side_effect=lambda _request: next(calls)
+        action, "urlopen", side_effect=lambda _request, **_kwargs: next(calls)
     ):
         with patch.object(action.time, "sleep") as sleep:
             assert client.api("GET", "/repos/a/b") == {"ok": True}
@@ -95,15 +97,16 @@ def test_transient_http_error_is_retried() -> None:
 
 def test_paginated_requests_continue_until_short_page() -> None:
     client = action.GitHubClient("token")
-    responses = iter([[{"number": 1}, {"number": 2}], [{"number": 3}]])
+    first_page = [{"number": number} for number in range(100)]
+    second_page = [{"number": 100}]
+    responses = iter([first_page, second_page])
 
     with patch.object(
         client, "api", side_effect=lambda *_args, **_kwargs: next(responses)
     ):
         assert client.paginated("/repos/a/b/pulls", params={"state": "open"}) == [
-            {"number": 1},
-            {"number": 2},
-            {"number": 3},
+            *first_page,
+            *second_page,
         ]
 
 
@@ -116,9 +119,11 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
         "assets": [],
     }
 
-    with patch.object(client, "upload", return_value={"name": "other.zip"}):
-        with pytest.raises(action.GitHubActionError) as captured:
-            action.upload_assets(client, release, [asset])
+    with (
+        patch.object(client, "upload", return_value={"name": "other.zip"}),
+        pytest.raises(action.GitHubActionError) as captured,
+    ):
+        action.upload_assets(client, release, [asset])
     assert "artifact.zip" in str(captured.value)
 
 
