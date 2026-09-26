@@ -311,3 +311,15 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     data = run_framework_selector(payload)
 
     assert data["primary_framework"] == "MEANING_INTEGRATION"
+
+
+def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
+    payload = {
+        "message": "I'm just checking in.",
+        "history": [{"role": "user", "content": "This feels quiet now."}],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["context"]["stage"] == 6
