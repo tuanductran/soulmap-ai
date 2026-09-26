@@ -31,8 +31,6 @@ priority problem.
 
 These areas can exist, but must remain clearly secondary to the core:
 
-- experimental modules such as `src/soulmap/runtime/experimental/biometric_ingest.py`
-- experimental modules such as `src/soulmap/runtime/memory/memory_ledger.py`
 - spiritual or symbolic extensions that sit outside the main product promise
 - local workflow assets under `.claude/`
 - future platform adapters beyond the current Claude-first flow

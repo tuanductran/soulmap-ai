@@ -122,9 +122,6 @@ filterwarnings = [
 source = ["src/soulmap"]
 branch = true
 omit = [
-  "src/soulmap/runtime/experimental/soulmap_demo.py",
-  "src/soulmap/runtime/experimental/biometric_ingest.py",
-  "src/soulmap/runtime/memory/memory_ledger.py",
 ]
 
 [tool.coverage.report]

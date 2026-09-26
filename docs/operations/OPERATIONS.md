@@ -78,18 +78,6 @@ uv run soulmap format
 uv run soulmap lint
 ```
 
-## Experimental modules
-
-The repo currently contains two integration-oriented modules that should not be enabled
-silently in production:
-
-- `src/soulmap/runtime/experimental/biometric_ingest.py`: only use with explicit user consent and a documented
-  health-data retention policy.
-- `src/soulmap/runtime/memory/memory_ledger.py`: only use when the product asks for explicit permission to
-  retain a user-confirmed insight.
-
-Treat both as opt-in features that require product-level privacy review.
-
 ## Ownership map
 
 - `src/soulmap/runtime/routing/framework_selector.py`: orchestration and final framework choice

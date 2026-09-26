@@ -69,9 +69,6 @@ uv run soulmap build --skill
 uv run python tests/eval_regression/test_safety_evals.py
 ```
 
-Use `uv run soulmap demo --message "..."` to run the local selector against a single
-message and inspect the routed framework without a full eval pass.
-
 Bash scripts (macOS/Linux):
 
 ```bash
