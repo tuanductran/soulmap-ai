@@ -216,13 +216,12 @@ mirror.
 
 ## Detection signals
 
-Synthesis activates on two structural conditions, not phrase matching:
+The runtime detection contract below is the executable source of truth for synthesis
+activation. It defines both explicit request signals and the structural thresholds.
 
-- User explicitly requests synthesis: "summarize", "what patterns do you see",
-  "pull it together", "what have you noticed across everything I've shared"
-- 10 or more user messages in session with recurring themes detected across turns
-
-No static phrase list. Activates from session structure and explicit user request.
+Do not maintain a second phrase list or a separate message-count rule here. If the
+activation policy changes, update **Runtime detection contract** and its runtime tests
+together.
 
 ## Paired template
 
