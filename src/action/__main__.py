@@ -325,6 +325,7 @@ def ensure_tag_exists(
     repo: str,
     tag: str,
 ) -> None:
+    """Require the requested Git tag to already exist before publishing."""
     path = f"/repos/{quote(owner)}/{quote(repo)}/git/ref/tags/{quote(tag, safe='')}"
     try:
         response = client.api("GET", path)
@@ -344,6 +345,7 @@ def get_release(
     repo: str,
     tag: str,
 ) -> dict[str, object] | None:
+    """Return the release for a tag, or None when it does not exist."""
     path = f"/repos/{quote(owner)}/{quote(repo)}/releases/tags/{quote(tag, safe='')}"
     try:
         response = client.api("GET", path)
@@ -366,6 +368,7 @@ def create_release(
     prerelease: bool,
     generate_notes: bool,
 ) -> dict[str, object]:
+    """Create a draft release and reconcile concurrent creation safely."""
     payload: dict[str, object] = {
         "tag_name": tag,
         "name": name or tag,
@@ -375,7 +378,7 @@ def create_release(
         "generate_release_notes": generate_notes,
     }
     try:
-        response = client.api(
+        response = client.request(
             "POST",
             f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/releases",
             payload=payload,
@@ -399,6 +402,7 @@ def update_release_metadata(
     repo: str,
     release: dict[str, object],
 ) -> dict[str, object]:
+    """Converge mutable release metadata to the requested action inputs."""
     release_id = release.get("id")
     if not isinstance(release_id, int):
         raise GitHubActionError("Release response lacks a valid release ID.")
@@ -559,6 +563,7 @@ def finalize_release(
     draft: bool,
     prerelease: bool,
 ) -> dict[str, object]:
+    """Publish or retain a release according to the requested final state."""
     release_id = release.get("id")
     if not isinstance(release_id, int):
         raise GitHubActionError("Release response lacks a valid release ID.")
