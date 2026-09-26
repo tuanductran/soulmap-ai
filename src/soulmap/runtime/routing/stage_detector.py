@@ -14,35 +14,38 @@ from soulmap.runtime.knowledge.stage_classifier import (
 
 ConversationMessage = dict[str, str]
 
-_STAGE_ROLES = {
-    1: "Sanctuary and witness - presence over wisdom",
-    2: "Mirror with gentle reflection",
-    3: "Mirror for pattern archaeology",
-    4: "Witness to their growing authority",
-    5: "Peer in conversation",
-    6: "Witness to their becoming",
-}
-
-_STAGE_RECOMMENDATIONS = {
-    1: "Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead.",
-    2: "Stage 2: Begin gentle reflection. Name patterns as observations. One question at end.",
-    3: "Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.",
-    4: "Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.",
-    5: "Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.",
-    6: "Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.",
-}
-
-def _memory_minimum_stage(memory: dict[str, object]) -> int:
-    """Apply the exact minimum-stage adjustments documented in the classifier."""
+def _memory_minimum_stage(
+    memory: dict[str, object], rules: StageClassifierRules
+) -> int:
+    """Apply memory-based minimum-stage adjustments from Markdown."""
     minimum = 1
     session_count = memory.get("session_count")
-    if isinstance(session_count, int) and session_count >= 10:
-        minimum = 2
+    if (
+        isinstance(session_count, int)
+        and session_count >= 10
+        and "session_count_ge_10" in rules.memory_minimums
+    ):
+        minimum = max(minimum, rules.memory_minimums["session_count_ge_10"])
     if memory.get("prior_session_showed_pattern_recognition") is True:
-        minimum = max(minimum, 3)
+        minimum = max(minimum, rules.memory_minimums["prior_pattern_recognition"])
     if memory.get("prior_session_showed_breakthrough") is True:
-        minimum = max(minimum, 3)
+        minimum = max(minimum, rules.memory_minimums["prior_breakthrough"])
     return minimum
+
+
+def _lower_stage_message_count(
+    user_messages: list[str], rules: StageClassifierRules, prior_stage: int
+) -> int:
+    """Count recent messages carrying signals from stages below prior_stage."""
+    lower_stages = tuple(stage for stage in rules.stages if stage.number < prior_stage)
+    count = 0
+    for message in user_messages[-5:]:
+        if any(
+            any(keyword in message for keyword in stage.keywords)
+            for stage in lower_stages
+        ):
+            count += 1
+    return count
 
 def _score_stages(
     user_messages: list[str], rules: StageClassifierRules
@@ -73,7 +76,7 @@ def _select_stage(
         return 1, scores[1]
     ranked = sorted(eligible, key=lambda stage: (-scores[stage], stage))
     best = ranked[0]
-    if len(ranked) > 1 and abs(scores[best] - scores[ranked[1]]) <= 2:
+    if len(ranked) > 1 and abs(scores[best] - scores[ranked[1]] ) <= rules.close_score_delta:
         best = min(best, ranked[1])
     return best, scores[best]
 
@@ -108,27 +111,40 @@ def detect_stage(
             confidence = "LOW"
         else:
             selected_stage, score = _select_stage(
-                scores, rules, _memory_minimum_stage(memory)
+                scores, rules, _memory_minimum_stage(memory, rules)
             )
+            if not memory:
+                selected_stage = min(
+                    selected_stage, rules.first_session_max_stage
+                )
+                score = scores[selected_stage]
             prior_stage = memory.get("prior_stage")
             if (
                 isinstance(prior_stage, int)
                 and 1 <= prior_stage <= 6
                 and selected_stage < prior_stage
-                and not bool(memory.get("destabilization_signals"))
             ):
-                selected_stage = prior_stage
-                score = scores.get(prior_stage, 0.0)
+                destabilized = bool(memory.get("destabilization_signals"))
+                lower_signal_messages = _lower_stage_message_count(
+                    user_messages, rules, prior_stage
+                )
+                if (
+                    not destabilized
+                    or lower_signal_messages
+                    < rules.anti_regression_min_lower_stage_messages
+                ):
+                    selected_stage = prior_stage
+                    score = scores.get(prior_stage, 0.0)
             confidence = _confidence(selected_stage, score, rules)
     stage_rule = next(stage for stage in rules.stages if stage.number == selected_stage)
     return {
         "stage": selected_stage,
         "name": stage_rule.name,
         "confidence": confidence,
-        "soulmap_role": _STAGE_ROLES[selected_stage],
+        "soulmap_role": rules.stage_roles[selected_stage],
         "signals": signals if isinstance(signals, list) else signals[selected_stage],
         "score": score,
-        "recommendation": _STAGE_RECOMMENDATIONS[selected_stage],
+        "recommendation": rules.stage_recommendations[selected_stage],
     }
 
 if __name__ == "__main__":
