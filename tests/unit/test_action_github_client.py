@@ -179,6 +179,45 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     assert "artifact.zip" in str(captured.value)
 
 
+def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> None:
+    asset = tmp_path / "artifact.zip"
+    asset.write_bytes(b"artifact")
+    client = action.GitHubClient("token")
+    release = {
+        "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
+        "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
+        "assets": [],
+    }
+    starter = {
+        "id": 7,
+        "name": "artifact.zip",
+        "state": "starter",
+        "url": "https://api.github.com/repos/a/b/releases/assets/7",
+    }
+    uploaded = {
+        "name": "artifact.zip",
+        "state": "uploaded",
+        "size": len(b"artifact"),
+        "digest": "sha256:" + __import__("hashlib").sha256(b"artifact").hexdigest(),
+    }
+
+    with (
+        patch.object(
+            client,
+            "upload",
+            side_effect=[
+                action.GitHubAPIError("POST", "upload", 502, "bad gateway"),
+                uploaded,
+            ],
+        ),
+        patch.object(client, "list_release_assets", side_effect=[[starter], []]),
+        patch.object(client, "delete_release_asset") as delete_asset,
+    ):
+        action.upload_assets(client, release, [asset])
+
+    delete_asset.assert_called_once_with(starter["url"])
+
+
 def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"new")
