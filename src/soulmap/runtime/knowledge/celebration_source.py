@@ -7,7 +7,10 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_labeled_groups
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_labeled_groups,
+)
 
 _CONTRACT_HEADING = "Runtime detection contract"
 _BLOCK_RE = re.compile(
