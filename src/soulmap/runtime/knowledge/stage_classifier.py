@@ -25,7 +25,7 @@ _KEYWORDS_RE = re.compile(
 )
 _QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
 _THRESHOLD_RE = re.compile(
-    r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<threshold>\d+)\s*\|",
+    r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<threshold>\d+)\s*(?:\([^|]+\))?\s*\|",
     re.MULTILINE,
 )
 _CONTRACT_HEADING = "Runtime enforcement contract"
