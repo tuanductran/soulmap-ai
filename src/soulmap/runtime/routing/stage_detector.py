@@ -51,7 +51,8 @@ def _score_stages(
     recent = user_messages[-5:]
     scores = {stage.number: 0.0 for stage in rules.stages}
     signals = {stage.number: [] for stage in rules.stages}
-    for message, multiplier in zip(recent, rules.recency_multipliers, strict=True):
+    multipliers = rules.recency_multipliers[-len(recent) :]
+    for message, multiplier in zip(recent, multipliers, strict=True):
         for stage in rules.stages:
             for keyword in stage.keywords:
                 if keyword in message:
