@@ -8,7 +8,6 @@
       "Bash(uv run soulmap check-api-docs*)",
       "Bash(uv run soulmap check-case*)",
       "Bash(uv run soulmap check-links*)",
-      "Bash(uv run soulmap demo*)",
       "Bash(uv run soulmap eval-groups*)",
       "Bash(uv run soulmap eval-markdown-contracts*)",
       "Bash(uv run soulmap eval-responses*)",
