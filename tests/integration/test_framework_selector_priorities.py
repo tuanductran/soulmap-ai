@@ -320,9 +320,9 @@ def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
     "I'm not looking for answers. I just wanted to reflect."
 ),
         "history": [{"role": "user", "content": "This feels quiet now."}],
-        "memory": {},
+        "memory": {"session_count": 2},
     }
 
     data = run_framework_selector(payload)
 
-    assert data["context"]["stage"] == 3
+    assert data["context"]["stage"] == 6
