@@ -235,7 +235,6 @@ together.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-
 ## Runtime detection contract
 
 The Python synthesizer executes the following operational configuration. This section is
