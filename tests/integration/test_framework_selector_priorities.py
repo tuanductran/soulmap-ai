@@ -17,7 +17,6 @@ TEST_ENV = {
 }
 
 
-
 def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
     env = os.environ.copy()
     if debug:
@@ -319,9 +318,9 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
 def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
     payload = {
         "message": (
-    "I'm just checking in. I'm doing well. I've found my path. "
-    "I'm not looking for answers. I just wanted to reflect."
-),
+            "I'm just checking in. I'm doing well. I've found my path. "
+            "I'm not looking for answers. I just wanted to reflect."
+        ),
         "history": [{"role": "user", "content": "This feels quiet now."}],
         "memory": {"session_count": 2},
     }
