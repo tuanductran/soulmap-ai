@@ -7,6 +7,8 @@ import sys
 from collections import defaultdict
 from typing import TypedDict
 
+from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
+
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
@@ -64,9 +66,6 @@ class ExtractedThemes(TypedDict, total=False):
     conflicts: list[RankedTheme]
     longitudinal: list[str]
     session_count: int
-
-
-from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 
 
 def _rules():
@@ -130,13 +129,13 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
     recurring_values = {k: v for k, v in values_scores.items() if v["score"] >= 2}
     recurring_conflicts = {k: v for k, v in conflict_scores.items() if v["score"] >= 2}
 
-    top_emotional = sorted(recurring_emotional.items(), key=lambda x: -x[1]["score"])[
-        :2
-    ]
+    top_emotional = sorted(
+        recurring_emotional.items(), key=lambda x: -x[1]["score"]
+    )[: _rules().max_themes]
     top_values = sorted(recurring_values.items(), key=lambda x: -x[1]["score"])[:_rules().max_themes]
-    top_conflicts = sorted(recurring_conflicts.items(), key=lambda x: -x[1]["score"])[
-        :2
-    ]
+    top_conflicts = sorted(
+        recurring_conflicts.items(), key=lambda x: -x[1]["score"]
+    )[: _rules().max_themes]
 
     return {
         "emotional": [
@@ -224,8 +223,9 @@ def should_synthesize(message: str, history: list[Message]) -> dict[str, str | b
             return {"should": True, "reason": "explicit_request"}
 
     rules = _rules()
+    extracted = extract_themes(analysis_history)
     recurring_theme_count = sum(
-        bool(extract_themes(analysis_history).get(domain))
+        len(extracted.get(domain, []))
         for domain in ("emotional", "values", "conflicts")
     )
     if (
