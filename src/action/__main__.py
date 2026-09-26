@@ -44,7 +44,9 @@ class GitHubAPIError(GitHubActionError):
         self.status = status
         self.detail = detail
         self.headers = headers
-        super().__init__(f"GitHub API {method} {url} failed with HTTP {status}: {detail}")
+        super().__init__(
+            f"GitHub API {method} {url} failed with HTTP {status}: {detail}"
+        )
 
 
 class GitHubClient:
@@ -109,10 +111,15 @@ class GitHubClient:
                 self.last_response_headers = dict(exc.headers.items())
                 detail = exc.read().decode("utf-8", errors="replace")
                 retryable = method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
-                if exc.code in RETRYABLE_STATUS_CODES and retryable and attempt < MAX_RETRIES:
+                if (
+                    exc.code in RETRYABLE_STATUS_CODES
+                    and retryable
+                    and attempt < MAX_RETRIES
+                ):
                     rate_limited = exc.code in {403, 429} and (
                         self.last_response_headers.get("Retry-After")
-                        or self.last_response_headers.get("X-RateLimit-Remaining") == "0"
+                        or self.last_response_headers.get("X-RateLimit-Remaining")
+                        == "0"
                         or "rate limit" in detail.lower()
                     )
                     time.sleep(
@@ -211,7 +218,9 @@ class GitHubClient:
         while next_url:
             response = self.request("GET", next_url)
             if not isinstance(response, list):
-                raise GitHubActionError("GitHub returned invalid release asset metadata.")
+                raise GitHubActionError(
+                    "GitHub returned invalid release asset metadata." ,
+                )
             results.extend(response)
             next_url = self._next_link(self.last_response_headers.get("Link"))
         return results
@@ -260,11 +269,15 @@ def env(name: str, *, required: bool = True, default: str = "") -> str:
 
 def boolean(name: str, default: bool = False) -> bool:
     """Read an action input that must contain a boolean value."""
-    value = env(
-        name,
-        required=False,
-        default="true" if default else "false",
-    ).strip().lower()
+    value = (
+        env(
+            name,
+            required=False,
+            default="true" if default else "false",
+        )
+.strip()
+.lower()
+    )
     if value not in {"true", "false"}:
         raise GitHubActionError(f"Input {name!r} must be true or false.")
     return value == "true"
@@ -526,8 +539,14 @@ def upload_assets(
             if isinstance(candidate, dict) and candidate.get("state") == "uploaded":
                 digest = candidate.get("digest")
                 size = candidate.get("size")
-                if size == len(content) and isinstance(digest, str) and digest == f"sha256:{expected_digest}":
-                    print(f"Release asset upload confirmed after HTTP {exc.status}: {path.name}")
+                if (
+                    size == len(content)
+                    and isinstance(digest, str)
+                    and digest == f"sha256:{expected_digest}"
+                ):
+                    print(
+                        f"Release asset upload confirmed after HTTP {exc.status}: {path.name}"
+                    )
                     continue
                 raise GitHubActionError(
                     f"Release asset {path.name!r} exists after failed upload but "
@@ -559,7 +578,10 @@ def upload_assets(
                 f"GitHub did not confirm upload of release asset {path.name!r}."
             )
         response_digest = response.get("digest")
-        if not isinstance(response_digest, str) or response_digest != f"sha256:{expected_digest}":
+        if (
+            not isinstance(response_digest, str)
+            or response_digest != f"sha256:{expected_digest}"
+        ):
             raise GitHubActionError(
                 f"GitHub did not return a verifiable SHA-256 digest for {path.name!r}."
             )
@@ -621,7 +643,11 @@ def run_release(client: GitHubClient) -> None:
         boolean("INPUT_PRERELEASE"),
     )
     release_id, release_url = release.get("id"), release.get("html_url")
-    if not isinstance(release_id, int) or not isinstance(release_url, str) or not release_url:
+    if (
+        not isinstance(release_id, int)
+        or not isinstance(release_url, str)
+        or not release_url
+    ):
         raise GitHubActionError("GitHub release response is missing outputs.")
     write_output("release-id", release_id)
     write_output("release-url", release_url)
