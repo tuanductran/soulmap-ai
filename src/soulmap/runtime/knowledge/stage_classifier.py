@@ -203,8 +203,12 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         ),
         memory_minimums=cast(dict[str, int], contract["MEMORY_MINIMUMS"]),
         close_score_delta=float(cast(int | float, contract["CLOSE_SCORE_DELTA"])),
-        first_session_default_stage=int(cast(int | float, contract["FIRST_SESSION_DEFAULT_STAGE"])),
-        first_session_max_stage=int(cast(int | float, contract["FIRST_SESSION_MAX_STAGE"])),
+        first_session_default_stage=int(
+            cast(int | float, contract["FIRST_SESSION_DEFAULT_STAGE"])
+        ),
+        first_session_max_stage=int(
+            cast(int | float, contract["FIRST_SESSION_MAX_STAGE"])
+        ),
         anti_regression_min_lower_stage_messages=int(
             cast(int | float, contract["ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES"])
         ),
