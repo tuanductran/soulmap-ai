@@ -1,6 +1,8 @@
 name: Historical Action Runtime Smoke
 
 on:
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
     inputs:
       historical_commit_sha:
@@ -8,6 +10,9 @@ on:
         required: true
         type: string
         default: "2b2028484e3c40b50096a85a6b3ff0c86b99dbcd"
+
+env:
+  HISTORICAL_COMMIT_SHA: ${{ inputs.historical_commit_sha || '2b2028484e3c40b50096a85a6b3ff0c86b99dbcd' }}
 
 permissions:
   contents: read
@@ -20,15 +25,15 @@ jobs:
       - name: Check out historical commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ inputs.historical_commit_sha }}
+          ref: ${{ env.HISTORICAL_COMMIT_SHA }}
           fetch-depth: 1
           persist-credentials: false
 
       - name: Verify historical workspace predates the action
         env:
-          EXPECTED_SHA: ${{ inputs.historical_commit_sha }}
+          EXPECTED_SHA: ${{ env.HISTORICAL_COMMIT_SHA }}
         run: |
-          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test "$(git rev-parse HEAD)" = "$HISTORICAL_COMMIT_SHA"
           test ! -e src/action/action.yml
 
       - name: Load current repository action against historical workspace
