@@ -69,7 +69,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         'git config user.email "github-actions[bot]@users.noreply.github.com"'
         in workflow
     )
-    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"' in workflow
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
+        in workflow
+    )
     assert "uses: $/src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
