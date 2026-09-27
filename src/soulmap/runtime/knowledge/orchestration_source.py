@@ -5,8 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import cast
-
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
@@ -118,7 +116,18 @@ def _parse_primary_priority(
     for row in rows:
         if len(row) != 10:
             raise ValueError("PRIMARY_PRIORITY rows must contain 10 columns.")
-        _, result, detected, framework, mode, blocked, insight_secondary, no_insight, requires, requires_not = row
+        (
+            _,
+            result,
+            detected,
+            framework,
+            mode,
+            blocked,
+            insight_secondary,
+            no_insight,
+            requires,
+            requires_not,
+        ) = row
         rules.append(
             PrimaryPriorityRule(
                 result=_require_str(result, "PRIMARY_PRIORITY.result"),
