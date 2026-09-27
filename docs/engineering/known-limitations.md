@@ -169,7 +169,7 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
-- `skills/` - all shipped knowledge files
+- shipped knowledge under `skills/` - internal `skills/runtime/` contracts are not distributed
 
 ---
 
@@ -177,8 +177,9 @@ below.
 
 ### What it is
 
-The Python runtime in `src/soulmap/runtime/` is responsible for exactly five
-things: orchestration, routing, validation, packaging, and safety enforcement.
+The Python runtime in `src/soulmap/runtime/` is responsible for orchestration, routing,
+knowledge loading, validation, and safety enforcement. Maintainer packaging belongs to
+`src/soulmap/devtools/`, not the runtime layer.
 It is not responsible for generating responses, defining brand voice, writing
 framework content, or making content decisions.
 
