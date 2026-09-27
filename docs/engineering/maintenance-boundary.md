@@ -12,7 +12,7 @@ These parts are the heart of the project and should remain the primary maintenan
 focus:
 
 - `SOULMAP.md` as the baseline behavioral, safety, and shipped-package contract
-- `skills/` as the core shipped knowledge base
+- the shipped knowledge portions of `skills/` as the core knowledge base; `skills/runtime/` remains an internal runtime integration surface and is intentionally excluded from distribution
 - `src/soulmap/runtime/routing/framework_selector.py` and the existing detector stack
 - `src/soulmap/runtime/guards/response_safety_gate.py` (both files' independent
   crisis-detection call sites are a deliberate defense-in-depth pair, not

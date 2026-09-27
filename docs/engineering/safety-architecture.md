@@ -213,8 +213,9 @@ by replacing the `selection` dict wholesale rather than annotating it.
 
 There are three distinct response-level validators. They check different
 properties of a generated response and none of them generates or rewrites
-response text; SoulMap's Python layer is orchestration, routing, validation,
-packaging, and safety enforcement, never a response generator.
+response text; SoulMap's Python runtime is orchestration, routing, knowledge loading,
+validation, and safety enforcement, never a response generator. Maintainer packaging
+belongs to the `src/soulmap/devtools/` layer.
 
 | Validator | File | Checks | Distinct from |
 | --- | --- | --- | --- |

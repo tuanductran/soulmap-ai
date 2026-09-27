@@ -1,4 +1,4 @@
-"""Resolve stable runtime knowledge identifiers through the shipped Markdown registry."""
+"""Resolve stable runtime knowledge identifiers through the repository Markdown registry."""
 
 from __future__ import annotations
 
@@ -82,7 +82,7 @@ def _validate_registry(
 
 
 def runtime_skill_path(source: str) -> Path:
-    """Resolve one stable source identifier to its shipped Markdown file."""
+    """Resolve one stable source identifier to its repository Markdown file."""
     try:
         relative_path = _registry()[source][0]
     except KeyError as exc:

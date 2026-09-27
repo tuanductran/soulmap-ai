@@ -19,8 +19,9 @@ Keep Markdown compatible across AI tools and OS editors.
   `docs/engineering/content-contract.md`
 - do not use Python constant names, module paths, or code identifiers in prose
   inside `skills/` or `templates/` files, write in plain language instead
-- do not reference a repository-only path from `skills/` content, since `skills/`
-  ships standalone and the reference will resolve to nothing once extracted
+- do not reference a repository-only path from shipped `skills/` content, since shipped
+  knowledge is extracted standalone and the reference will resolve to nothing once extracted;
+  `skills/runtime/` is an internal repository-only exception and is excluded from both archives
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
 `src/soulmap/runtime/config/safety.py` belong in Python source files, not in Markdown knowledge
@@ -29,15 +30,15 @@ interpreters. Describe what a signal means in plain language. If a cross-referen
 to the implementation is genuinely needed, use a sentence like "detected by the
 grief routing layer" rather than a constant name.
 
-**Shipped-package boundary rule:** `skills/` content ships standalone inside
+**Shipped-package boundary rule:** Shipped knowledge under `skills/` ships standalone inside
 `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. Neither archive includes `docs/`,
 `tests/`, `.claude/`, `.github/`, `scripts/`, `library/`, `src/soulmap/`,
 `pyproject.toml`, `uv.lock`, or any other repository-only path (see
 `docs/engineering/repo-contract.md`'s packaged-contents row for the exact list). A
 reference from `skills/` content to one of those paths resolves to nothing once the
 archive is extracted, even when it is a plain mention rather than a clickable
-Markdown link. Before adding a cross-reference inside `skills/`, check whether the
-target actually ships in the same archive. If it does not, state the underlying fact
+Markdown link. Before adding a cross-reference inside shipped `skills/`, check whether the target
+actually ships in the same archive. If it does not, state the underlying fact
 directly instead of pointing to the file, or link to another `skills/` file that
 already covers it.
 `tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`

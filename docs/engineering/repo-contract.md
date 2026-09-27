@@ -18,7 +18,7 @@ Use it to answer four questions for every major repo surface:
 | `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `SOULMAP.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
-| `skills/` | Shipped knowledge base content | Shipped | Frameworks, brand doctrine, safety knowledge, voice and meta references | Markdown contract checks, eval source checks, build smoke, and release review |
+| `skills/` | Knowledge authoring surface | Mixed: shipped knowledge plus internal runtime integration contracts | Shipped framework, brand, safety, voice, meta, domain, spiritual, soulmate, and writing knowledge; `skills/runtime/` is repository-internal runtime integration metadata and is excluded from shipped archives | Markdown contract checks, eval source checks, build smoke, release review, and runtime registry contract tests |
 | `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, and synthesis | Unit tests, evals, compile/lint checks |
@@ -36,7 +36,7 @@ Use it to answer four questions for every major repo surface:
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
-- Shipped knowledge truth lives in `skills/`. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
+- Shipped knowledge truth lives in the shipped portions of `skills/`. `skills/runtime/` owns repository-internal runtime integration contracts and is not shipped. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Explanatory and operational truth lives in `docs/`.
@@ -60,11 +60,12 @@ Use it to answer four questions for every major repo surface:
   with the repo's actual checks, release flow, and local hook wiring.
 - `.claude-plugin/` is packaging metadata, not product doctrine, and it should only be
   described as part of `.skill` artifacts.
-- `skills/` content must never reference a path that does not ship inside
-  `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` (row 28 above lists exactly what
-  those archives contain). Extracted standalone, a reference to `docs/`, `tests/`,
-  `.claude/`, `.github/`, `scripts/`, `library/`, `src/soulmap/`, or any other
-  repository-only path resolves to nothing, whether or not it is a clickable link.
+- Shipped `skills/` content must never reference a path that does not ship inside
+  `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` (the package rows above list exactly
+  what those archives contain). `skills/runtime/` is the explicit repository-only
+  exception because it is excluded from those archives. Extracted shipped knowledge
+  must not reference `docs/`, `tests/`, `.claude/`, `.github/`, `scripts/`, `library/`,
+  `src/soulmap/`, or any other repository-only path, whether or not it is a clickable link.
   `tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
   enforces this; see `.claude/rules/markdown-portability.md`'s shipped-package
   boundary rule for the authoring-time guidance.

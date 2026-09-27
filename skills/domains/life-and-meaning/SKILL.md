@@ -44,12 +44,6 @@ duplicating it.
 
 - Choose one primary framework through meta before loading a domain framework.
 
-## Examples
-
-- A request about grief and self-compassion -> route through the inner-work domain.
-- A request about relationship patterns -> route through the relationships domain.
-- A symbolic spiritual question -> route through the spirituality domain.
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.

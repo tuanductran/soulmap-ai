@@ -7,7 +7,7 @@ description: Add, update, and normalize Markdown knowledge files in this reposit
 
 Use this skill when creating or editing Markdown knowledge files under:
 
-- `skills/`
+- `skills/` shipped knowledge and the internal `skills/runtime/` contract surface
 - `templates/`
 - `docs/`
 
@@ -41,7 +41,7 @@ Always check:
 - `docs/engineering/DEV.md`
 - `docs/engineering/content-contract.md`
 - `README.md`
-- relevant files in `skills/` (shipped) and, for internal-only copy, `templates/`
+- relevant shipped files in `skills/`, plus `skills/runtime/` when auditing runtime integration contracts, and internal-only copy in `templates/`
 
 ## What to maintain
 
@@ -66,9 +66,10 @@ Ensure that docs and knowledge files:
 - do not leak source-specific names, local paths, or temporary working markers into
   tracked Markdown
 - do not reference a repository-only path (`docs/`, `tests/`, `.claude/`, `.github/`,
-  `scripts/`, `library/`, `src/soulmap/`, and so on) from `skills/` content; see
-  `markdown-portability.md`'s shipped-package boundary rule, since `skills/` ships
-  standalone and such a reference resolves to nothing once extracted
+  `scripts/`, `library/`, `src/soulmap/`, and so on) from shipped `skills/` content;
+  `skills/runtime/` is the explicit internal exception. See `markdown-portability.md`'s
+  shipped-package boundary rule, since shipped knowledge is extracted standalone and
+  such a reference resolves to nothing once extracted
 
 ### Cross-file consistency
 
