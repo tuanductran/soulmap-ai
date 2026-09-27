@@ -218,6 +218,8 @@ def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
     if len(values) != len(rows) or any(not value for value in values.values()):
         raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
     return values
+
+
 def default_skill_path(relative_path: str) -> Path:
     """Locate a file under ``skills/`` without depending on devtools.
 
