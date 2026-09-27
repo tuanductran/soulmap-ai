@@ -78,7 +78,7 @@ def test_grief_types_tuple_is_load_bearing(monkeypatch: pytest.MonkeyPatch) -> N
     monkeypatch.setattr(framework_selector, "_GRIEF_TYPES", ())
 
     result = framework_selector.select_framework(
-        "My dog died this morning and I cannot stop crying", []
+        "My dog died this morning and I cannot stop crying", [], {"prior_stage": 3}
     )
 
     assert result["primary_framework"] != "GRIEF"

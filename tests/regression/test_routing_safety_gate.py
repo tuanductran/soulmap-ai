@@ -29,7 +29,7 @@ DEFAULTS = {
     "detect_soulmate_longing": {"soulmate_longing_detected": False},
     "detect_partnership_patterns": {"partnership_patterns_detected": False},
     "detect_patterns": {},
-    "detect_stage": {"stage": 1},
+    "detect_stage": {"stage": 3},
 }
 
 SCENARIOS = [
@@ -255,7 +255,9 @@ def test_a_detector_exception_is_logged_not_only_silently_swallowed(
     with caplog.at_level(
         "WARNING", logger="soulmap.runtime.routing.framework_selector"
     ):
-        framework_selector.select_framework("something ordinary", [])
+        framework_selector.select_framework(
+            "something ordinary", [], {"prior_stage": 3}
+        )
 
     assert "shadow_pattern_detector" in caplog.text
     assert "shadow detector is down" in caplog.text
@@ -274,9 +276,11 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     sanctuary mode for a reply that ends with a question. The more the person
     was crying, the less grief support they got.
     """
-    quiet = framework_selector.select_framework("My dog died this morning", [])
+    quiet = framework_selector.select_framework(
+        "My dog died this morning", [], {"prior_stage": 3}
+    )
     distressed = framework_selector.select_framework(
-        "My dog died this morning and I cannot stop crying", []
+        "My dog died this morning and I cannot stop crying", [], {"prior_stage": 3}
     )
 
     assert quiet["primary_framework"] == "GRIEF"
@@ -291,7 +295,9 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
 def test_moderate_intensity_without_grief_still_de_escalates() -> None:
     """The grief branch must not swallow plain moderate-intensity routing."""
     result = framework_selector.select_framework(
-        "I cannot think anymore, everything is spinning, I do not know what to do", []
+        "I cannot think anymore, everything is spinning, I do not know what to do",
+        [],
+        {"prior_stage": 3},
     )
 
     assert result["primary_framework"] == "DE_ESCALATION"
@@ -303,6 +309,7 @@ def test_high_intensity_still_forces_de_escalation_over_grief() -> None:
         "My dog died and I can't breathe, everything is falling apart, "
         "I can't stop shaking",
         [],
+        {"prior_stage": 3},
     )
 
     assert result["primary_framework"] == "DE_ESCALATION"

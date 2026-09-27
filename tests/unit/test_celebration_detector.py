@@ -152,45 +152,45 @@ class TestDetectCelebrationNegativeOverride:
 class TestFrameworkSelectorP9b:
     def test_win_routes_to_integration_celebration(self) -> None:
         msg = "I finally did it. I said the thing I had been afraid to say."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_relief_routes_to_integration_celebration(self) -> None:
         msg = "I feel lighter than I have in months. The worst is over."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_gratitude_routes_to_integration_celebration(self) -> None:
         msg = "I am so grateful for everything that happened."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_recognized_progress_routes_to_integration_celebration(self) -> None:
         msg = "I noticed I did not react the way I used to. I caught myself this time."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_grief_overrides_celebration(self) -> None:
         """Crisis/grief signals must never be overridden by celebration."""
         msg = "My father just died. I am relieved his suffering is over."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         # Grief takes priority even when "relief" language is present
         assert r["primary_framework"] in ("GRIEF", "DE_ESCALATION", "MIRROR")
         assert r["primary_framework"] != "INTEGRATION_CELEBRATION"
 
     def test_crisis_overrides_celebration(self) -> None:
         msg = "I finally did it - I've been thinking about ending it all."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "CRISIS"
 
     def test_plain_mirror_message_not_routed_to_celebration(self) -> None:
         msg = "I keep getting stuck in my head."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] != "INTEGRATION_CELEBRATION"
 
     def test_instruction_field_references_framework_file(self) -> None:
         msg = "I finally did it."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
         instruction = r.get("instruction", "")
         assert isinstance(instruction, str)
@@ -198,7 +198,7 @@ class TestFrameworkSelectorP9b:
 
     def test_mode_is_mirror(self) -> None:
         msg = "I finally did it."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
         assert r["mode"] == "MIRROR"
 

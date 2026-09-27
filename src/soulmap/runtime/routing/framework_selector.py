@@ -49,6 +49,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_memory_fields,
 )
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
     should_synthesize,
@@ -222,6 +223,7 @@ async def select_framework_async(
 ) -> dict:
     """Run detector phases and return exactly one framework selection."""
     memory = memory or {}
+    orchestration_rules = load_orchestration_rules()
     debug_enabled = str(os.getenv("SOULMAP_DEBUG", "0")).lower() in {
         "1",
         "true",
@@ -268,8 +270,17 @@ async def select_framework_async(
         history,
         debug_events=debug_events,
     )
+    stage_task = _run_detector_async(
+        "stage_detector",
+        detect_stage,
+        [*history, {"role": "user", "content": message}],
+        memory,
+        debug_events=debug_events,
+    )
 
-    dep, intensity = await asyncio.gather(dep_task, intensity_task)
+    dep, intensity, early_stage = await asyncio.gather(
+        dep_task, intensity_task, stage_task
+    )
     intensity_level = intensity.get("level", "NORMAL")
 
     if dep.get("level") == "HIGH_DEPENDENCY":
@@ -282,6 +293,27 @@ async def select_framework_async(
                 "Dependency redirect. Use DEP_REDIRECT from "
                 "skills/frameworks/emotional-deescalation.md. Warm, direct, "
                 "one question pointing toward real-world support."
+            ),
+            "blocked": ["ALL_FRAMEWORKS"],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
+    user_count = sum(
+        1 for item in history if isinstance(item, dict) and item.get("role") == "user"
+    )
+    early_stage_value = early_stage.get("stage", 1)
+    if (
+        early_stage_value == 1
+        and user_count + 1 <= orchestration_rules.stage_1_max_user_messages
+    ):
+        selection = {
+            "primary_framework": "MIRROR",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": {"stage": 1, "stage_override": True},
+            "instruction": (
+                "Stage 1 first-contact override. Use minimal-depth presence and "
+                "reflection; do not activate a framework."
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -364,6 +396,20 @@ async def select_framework_async(
             ),
         }
         insight, grief, conflict = await asyncio.gather(*tasks.values())
+
+        if (
+            insight.get("insight_detected")
+            and insight.get("strength") == orchestration_rules.breakthrough_min_strength
+        ):
+            selection = {
+                "primary_framework": "MEANING_INTEGRATION",
+                "secondary_layer": None,
+                "mode": "MIRROR",
+                "context": insight,
+                "instruction": insight.get("recommendation", ""),
+                "blocked": [],
+            }
+            return _finish(message, history, memory, selection, debug_events)
 
         # Grief outranks moderate-intensity de-escalation. orchestration.md
         # reserves "force De-escalation as primary regardless of topic" for HIGH
@@ -456,13 +502,6 @@ async def select_framework_async(
             detect_existential,
             message,
             history,
-            debug_events=debug_events,
-        ),
-        "stage": _run_detector_async(
-            "stage_detector",
-            detect_stage,
-            [*history, {"role": "user", "content": message}],
-            memory,
             debug_events=debug_events,
         ),
         "somatic": _run_detector_async(
@@ -592,7 +631,7 @@ async def select_framework_async(
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
-    _raw_stage = res["stage"].get("stage", 1)
+    _raw_stage = early_stage.get("stage", 1)
     # Detector results are dicts of object, so narrow the stage here rather
     # than at each comparison. A non-integer stage falls back to 1, the most
     # conservative journey stage, instead of raising mid-routing.
@@ -607,6 +646,21 @@ async def select_framework_async(
             pattern_history,
             debug_events=debug_events,
         )
+
+    if (
+        res["insight"].get("insight_detected")
+        and res["insight"].get("strength")
+        == orchestration_rules.breakthrough_min_strength
+    ):
+        selection = {
+            "primary_framework": "MEANING_INTEGRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["insight"],
+            "instruction": res["insight"].get("recommendation", ""),
+            "blocked": [],
+        }
+        return _finish(message, history, memory, selection, debug_events)
 
     if (
         res["grief"].get("grief_detected")
