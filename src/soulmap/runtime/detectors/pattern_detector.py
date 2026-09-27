@@ -8,17 +8,14 @@ from typing import cast
 
 from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json_value
 from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
-from soulmap.runtime.knowledge.pattern_source import (
-    default_pattern_mapper_path,
-    load_pattern_signals,
-)
+from soulmap.runtime.knowledge.pattern_source import load_pattern_signals
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/pattern-mapper.md.
 # Nothing about a pattern (name, description, detection keywords, cycle
 # phrases, SoulMap role guidance, reflection language) is hardcoded here —
 # it is parsed from the Markdown skill so the two can never drift apart.
-PATTERN_SIGNALS = load_pattern_signals(default_pattern_mapper_path())
+PATTERN_SIGNALS = load_pattern_signals(runtime_skill_path("pattern-mapper"))
 _PATTERN_RULES = load_key_value_table(runtime_skill_path("pattern-mapper"), "Scoring")
 _PATTERN_GUIDANCE = load_key_value_table(runtime_skill_path("pattern-mapper"), "Runtime guidance")
 
