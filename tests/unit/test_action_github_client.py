@@ -6,7 +6,7 @@ import json
 from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 import pytest
 
@@ -163,6 +163,54 @@ def test_rate_limit_retry_uses_reset_window() -> None:
     assert sleep.call_count == 1
     assert sleep.call_args.args[0] >= 119
 
+
+
+def test_forbidden_rate_limit_is_retried() -> None:
+    headers = Message()
+    headers["X-RateLimit-Remaining"] = "0"
+    headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
+    error = HTTPError(
+        "https://api.github.com/repos/a/b",
+        403,
+        "Forbidden",
+        headers,
+        io.BytesIO(b'{"message":"API rate limit exceeded"}'),
+    )
+    client = action.GitHubClient("token")
+
+    with (
+        patch.object(action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]),
+        patch.object(action.time, "sleep") as sleep,
+    ):
+        assert client.api("GET", "/repos/a/b") == {"ok": True}
+
+    assert sleep.call_count == 1
+    assert sleep.call_args.args[0] >= 119
+
+
+def test_network_error_does_not_retry_non_idempotent_requests() -> None:
+    error = URLError("connection reset")
+    client = action.GitHubClient("token")
+
+    with (
+        patch.object(action, "urlopen", side_effect=error) as urlopen,
+        patch.object(action.time, "sleep") as sleep,
+        pytest.raises(action.GitHubActionError),
+    ):
+        client.api("POST", "/repos/a/b/releases")
+
+    assert urlopen.call_count == 1
+    sleep.assert_not_called()
+
+
+def test_next_link_requires_exact_rel_next() -> None:
+    assert action.GitHubClient._next_link(
+        '<https://api.github.com/next>; rel="next", '
+        '<https://api.github.com/other>; rel="not-next"'
+    ) == "https://api.github.com/next"
+    assert action.GitHubClient._next_link(
+        '<https://api.github.com/other>; rel="not-next"'
+    ) == ""
 
 def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
