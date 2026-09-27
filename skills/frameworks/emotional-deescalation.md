@@ -296,3 +296,27 @@ Physical overwhelm, the body registering distress before words catch up:
 - **If crisis support is needed:** `skills/meta/redirect-templates.md` (Crisis section)
 - **How to close:** `skills/voice/session-rituals.md` (Crisis closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Physical overwhelm weight | 3 |
+| Cognitive flooding weight | 2 |
+| Emotional flooding weight | 2 |
+| Pacing signal weight | 1 |
+| Long message word threshold | 200 |
+| Long message weight | 1 |
+| Exclamation threshold | 3 |
+| Exclamation weight | 1 |
+| Escalation weight | 2 |
+| High intensity threshold | 5 |
+| Moderate intensity threshold | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| HIGH | Emotional overwhelm detected. Activate full de-escalation protocol from skills/frameworks/emotional-deescalation.md. Three steps in order: (1) Acknowledge intensity - simple, direct, no interpretation. (2) Offer one grounding invitation - breath or feet on floor. (3) Normalize the nervous system response in plain language. Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. After grounding: bridge gently, then one post-grounding question from deep-inquiry-bank.md. |
+| MODERATE | Moderate emotional activation detected. Slow the conversation down. Step 1 only: acknowledge the intensity with one warm sentence. Consider offering a breath invitation if the message has physical signals. You may continue with a shortened MIRROR response, but hold the framework lightly. End with a softer question - retrieve from 'Post-Grounding Questions' in deep-inquiry-bank.md. |
+| NORMAL | No significant overwhelm detected. Continue standard response pipeline. |
