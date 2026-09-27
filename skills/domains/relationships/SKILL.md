@@ -53,4 +53,4 @@ duplicating it.
 ## References
 
 - [SKILL.md](../../meta/SKILL.md)
-- [skills/runtime/SKILL.md](../../runtime/SKILL.md)
+- [SKILL.md](../../runtime/SKILL.md)
