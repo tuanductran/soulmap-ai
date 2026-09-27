@@ -21,6 +21,8 @@ class OrchestrationRules:
 
     stage_1_max_user_messages: int
     breakthrough_min_strength: str
+    phase_1_safety_before_framework_selection: bool
+    template_routing_required: bool
 
 
 def _contract_body(text: str) -> str:
@@ -47,6 +49,8 @@ def load_orchestration_rules() -> OrchestrationRules:
     required = {
         "stage_1_override_maximum_user_messages",
         "breakthrough_override_minimum_insight_strength",
+        "phase_1_safety_checks_before_framework_selection",
+        "template_routing_required_before_delivery",
     }
     if set(values) != required:
         raise ValueError("Orchestration runtime execution contract is incomplete.")
@@ -61,4 +65,18 @@ def load_orchestration_rules() -> OrchestrationRules:
         raise ValueError("Breakthrough override strength must be emerging or strong.")
     if stage_max < 1:
         raise ValueError("Stage 1 override maximum user messages must be positive.")
-    return OrchestrationRules(stage_max, strength)
+    boolean_values: dict[str, bool] = {}
+    for key in (
+        "phase_1_safety_checks_before_framework_selection",
+        "template_routing_required_before_delivery",
+    ):
+        value = values[key]
+        if value not in {"true", "false"}:
+            raise ValueError(key + " must be true or false.")
+        boolean_values[key] = value == "true"
+    return OrchestrationRules(
+        stage_max,
+        strength,
+        boolean_values["phase_1_safety_checks_before_framework_selection"],
+        boolean_values["template_routing_required_before_delivery"],
+    )

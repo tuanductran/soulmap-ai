@@ -49,7 +49,9 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_memory_fields,
 )
+from soulmap.runtime.knowledge.framework_template_source import resolve_template
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
     should_synthesize,
@@ -182,17 +184,24 @@ def _finish(
     memory: dict[str, object],
     selection: dict[str, object],
     debug_events: list[dict] | None,
+    *,
+    template_required: bool = True,
 ) -> dict[str, object]:
-    """Close out a selection: apply the safety gate, then attach debug data.
-
-    Every branch below ends by calling this with its own ``selection`` dict,
-    so the safety gate and the debug-event contract stay identical across all
-    of them by construction rather than by each branch repeating the call.
-    """
-    return _maybe_attach_debug(
-        _apply_safety_gate(message, history, memory, selection, debug_events),
-        debug_events,
-    )
+    """Apply safety, then attach the knowledge-authored template contract."""
+    result = _apply_safety_gate(message, history, memory, selection, debug_events)
+    if template_required and result.get("safety_status") != "BLOCK":
+        framework = result.get("primary_framework")
+        mode = result.get("mode")
+        if isinstance(framework, str) and isinstance(mode, str):
+            template_context = result.get("context")
+            if not isinstance(template_context, dict):
+                template_context = {}
+            result["template"] = resolve_template(
+                framework,
+                mode,
+                template_context,
+            )
+    return _maybe_attach_debug(result, debug_events)
 
 
 def _simple_selection(
@@ -257,31 +266,12 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    dep_task = _run_detector_async(
+    dep = await _run_detector_async(
         "dependency_detector",
         analyze_dependency,
         history,
         debug_events=debug_events,
     )
-    intensity_task = _run_detector_async(
-        "emotional_intensity_detector",
-        detect_intensity,
-        message,
-        history,
-        debug_events=debug_events,
-    )
-    stage_task = _run_detector_async(
-        "stage_detector",
-        detect_stage,
-        [*history, {"role": "user", "content": message}],
-        memory,
-        debug_events=debug_events,
-    )
-
-    dep, intensity, early_stage = await asyncio.gather(
-        dep_task, intensity_task, stage_task
-    )
-    intensity_level = intensity.get("level", "NORMAL")
 
     if dep.get("level") == "HIGH_DEPENDENCY":
         selection = {
@@ -297,6 +287,41 @@ async def select_framework_async(
             "blocked": ["ALL_FRAMEWORKS"],
         }
         return _finish(message, history, memory, selection, debug_events)
+
+    if orchestration_rules.phase_1_safety_before_framework_selection:
+        scope = classify_message(message)
+        if str(scope.get("tier", "")).startswith("BLACKLIST"):
+            selection = {
+                "primary_framework": "MIRROR",
+                "secondary_layer": None,
+                "mode": "MIRROR",
+                "routing_action": "SAFETY_REDIRECT",
+                "context": {"scope": scope},
+                "instruction": scope.get("explanation", ""),
+                "blocked": ["ALL_FRAMEWORKS"],
+            }
+            result = _apply_safety_gate(
+                message, history, memory, selection, debug_events
+            )
+            result["scope"] = scope
+            return _maybe_attach_debug(result, debug_events)
+
+    intensity_task = _run_detector_async(
+        "emotional_intensity_detector",
+        detect_intensity,
+        message,
+        history,
+        debug_events=debug_events,
+    )
+    stage_task = _run_detector_async(
+        "stage_detector",
+        detect_stage,
+        [*history, {"role": "user", "content": message}],
+        memory,
+        debug_events=debug_events,
+    )
+    intensity, early_stage = await asyncio.gather(intensity_task, stage_task)
+    intensity_level = intensity.get("level", "NORMAL")
 
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"

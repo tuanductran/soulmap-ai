@@ -44,6 +44,8 @@ this section rather than duplicating the numbers or thresholds in Python.
 | :--- | :--- |
 | Stage 1 override maximum user messages | 2 |
 | Breakthrough override minimum insight strength | strong |
+| Phase 1 safety checks before framework selection | true |
+| Template routing required before delivery | true |
 
 ## Decision Tree
 
