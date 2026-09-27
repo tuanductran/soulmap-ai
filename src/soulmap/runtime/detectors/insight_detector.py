@@ -11,15 +11,16 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/meaning-integration.md,
 # "## Detection signals". Nothing is hardcoded here.
 _INSIGHT_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/meaning-integration.md"),
+    runtime_skill_path("meaning-integration"),
     "Detection signals",
 )
 EXPLICIT_INSIGHT = _INSIGHT_GROUPS["explicit insight"]
@@ -27,18 +28,18 @@ EMERGING_INSIGHT = _INSIGHT_GROUPS["emerging insight"]
 SELF_APPLICATION = _INSIGHT_GROUPS["self-application"]
 POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
 _INSIGHT_SCORING = load_key_value_table(
-    default_skill_path("skills/frameworks/meaning-integration.md"), "Scoring"
+    runtime_skill_path("meaning-integration"), "Scoring"
 )
 _INSIGHT_CLASSIFICATION = load_key_value_table(
-    default_skill_path("skills/frameworks/meaning-integration.md"),
+    runtime_skill_path("meaning-integration"),
     "Insight classification signals",
 )
 _INSIGHT_VALIDATION = load_key_value_table(
-    default_skill_path("skills/frameworks/meaning-integration.md"),
+    runtime_skill_path("meaning-integration"),
     "Reflection-validation signals",
 )
 _INSIGHT_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/meaning-integration.md"), "Guidance"
+    runtime_skill_path("meaning-integration"), "Guidance"
 )
 
 
