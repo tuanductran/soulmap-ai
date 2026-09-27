@@ -98,6 +98,7 @@ def _literal_config(body: str) -> dict[str, object]:
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
 
+
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
     """Read and validate the runtime contract from shipped Markdown."""
