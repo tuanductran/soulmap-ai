@@ -631,7 +631,7 @@ async def select_framework_async(
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
-    _raw_stage = res["stage"].get("stage", 1)
+    _raw_stage = early_stage.get("stage", 1)
     # Detector results are dicts of object, so narrow the stage here rather
     # than at each comparison. A non-integer stage falls back to 1, the most
     # conservative journey stage, instead of raising mid-routing.
