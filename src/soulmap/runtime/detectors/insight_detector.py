@@ -44,6 +44,8 @@ _INSIGHT_GUIDANCE = load_key_value_table(
 
 def _phrases(value: str) -> tuple[str, ...]:
     return tuple(part.strip() for part in value.split(";") if part.strip())
+
+
 def _score(name: str) -> int:
     return int(_INSIGHT_SCORING[name])
 
