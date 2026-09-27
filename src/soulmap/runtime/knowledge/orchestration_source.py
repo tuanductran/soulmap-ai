@@ -229,9 +229,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     instruction_rows = _table_rows(body, "Runtime instructions")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
-    runtime_instructions = {
-        row[0]: row[1] for row in instruction_rows if len(row) == 2
-    }
+    runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
     required_instructions = {
         "Stage 1 override",
         "HIGH intensity",
