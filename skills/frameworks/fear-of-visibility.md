@@ -235,4 +235,3 @@ Public expression:
 | :--- | :--- |
 | not_detected | No visibility fear signal. Continue standard pipeline. |
 | detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction at the threshold. Name the protection's intention. Do NOT push toward action or sharing. End with one visibility question from deep-inquiry-bank.md (Visibility Questions section). |
-
