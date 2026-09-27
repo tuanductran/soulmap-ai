@@ -64,7 +64,6 @@ For domain-oriented discovery, use:
 - [wellbeing](../domains/wellbeing/SKILL.md)
 - [life-and-meaning](../domains/life-and-meaning/SKILL.md)
 
-
 ## Files in this skill
 
 - [emotional-deescalation.md](emotional-deescalation.md)
