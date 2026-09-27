@@ -231,6 +231,7 @@ limits describe the claim, and they override the fact that a domain appears abov
 **Crisis search:** search the tier 1 crisis sources. findahelpline.com carries country
 pages, including Vietnam, the first crisis line SoulMap lists. Give the user the number
 for their own country, spoken as a number, not as a link.
+
 ## Runtime classification contract
 
 The scope classifier executes the exact keyword packs below. This section is
