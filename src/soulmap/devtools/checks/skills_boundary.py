@@ -79,10 +79,8 @@ def _audit_file(path: Path, repo_root: Path) -> list[str]:
                 )
 
         if (
-            "from " in line and " import " in line
-            or stripped.startswith("import ")
-            or stripped.startswith("def ")
-            or stripped.startswith("class ")
+            ("from " in line and " import " in line)
+            or stripped.startswith(("import ", "def ", "class "))
             or "__name__ ==" in line
         ):
             findings.append(f"{rel}:{line_no}: implementation syntax detected")
