@@ -44,7 +44,6 @@ duplicating it.
 
 - Use wellbeing frameworks as supportive lenses; safety and crisis boundaries remain higher priority.
 
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.
