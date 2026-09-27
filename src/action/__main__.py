@@ -614,6 +614,10 @@ def finalize_release(
     current_prerelease = release.get("prerelease") is True
     if current_draft == draft and current_prerelease == prerelease:
         return release
+    if release.get("immutable") is True:
+        raise GitHubActionError(
+            "GitHub release is immutable and cannot be finalized by this action."
+        )
     response = client.api(
         "PATCH",
         f"/repos/{quote(owner)}/{quote(repo)}/releases/{release_id}",
