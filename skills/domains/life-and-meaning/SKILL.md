@@ -29,14 +29,14 @@ duplicating it.
 1. Start from the central orchestration skill.
 2. Load the canonical domain files under `skills/frameworks/`.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
-4. If runtime behavior must be checked, follow the shared integration boundary at [skills/runtime/SKILL.md](../../runtime/SKILL.md).
+4. If runtime behavior must be checked, follow the shared integration boundary at [SKILL.md](../../runtime/SKILL.md).
 5. Return to the response pipeline for voice and safety validation.
 
 ## Rules
 
 - Domain skills own meaning and response knowledge.
 - Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
-- Runtime integration is centralized under [skills/runtime/](../../runtime/).
+- Runtime integration is centralized under [runtime/](../../runtime/).
 - Choose one primary framework through meta before loading a domain framework.
 
 ## Examples
@@ -52,5 +52,5 @@ duplicating it.
 
 ## References
 
-- [skills/meta/SKILL.md](../../meta/SKILL.md)
+- [SKILL.md](../../meta/SKILL.md)
 - [skills/runtime/SKILL.md](../../runtime/SKILL.md)
