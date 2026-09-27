@@ -31,6 +31,7 @@ def test_orchestration_runtime_contract_loads() -> None:
         "SOULMATE_LONGING",
         "PARTNERSHIP_PATTERNS",
         "INTEGRATION_CELEBRATION",
+        "MEANING_INTEGRATION",
         "SYNTHESIS",
         "PATTERN",
     ]
