@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("divine-guidance"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("divine-guidance"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("divine-guidance"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
