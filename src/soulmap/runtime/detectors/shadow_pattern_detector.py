@@ -11,16 +11,16 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/shadow-patterns.md and
 # skills/frameworks/self-compassion.md. Nothing is hardcoded here — every
 # phrase list is parsed straight from those Markdown skills.
-_SHADOW_PATH = default_skill_path("skills/frameworks/shadow-patterns.md")
-_SELF_COMPASSION_PATH = default_skill_path("skills/frameworks/self-compassion.md")
+_SHADOW_PATH = runtime_skill_path("shadow-patterns")
+_SELF_COMPASSION_PATH = runtime_skill_path("shadow-patterns")
 
 EXTERNAL_REPEAT_SIGNALS = load_keyword_section(
     _SHADOW_PATH, "External frustration signals"

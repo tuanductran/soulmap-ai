@@ -127,6 +127,8 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Markdown freshness
         run: uv run soulmap check-freshness --root .
+      - name: Skill implementation boundary
+        run: uv run soulmap audit-skills-boundary
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
       - name: Upload knowledge inventory

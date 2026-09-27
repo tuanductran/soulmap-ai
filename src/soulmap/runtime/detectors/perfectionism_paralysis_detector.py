@@ -11,31 +11,31 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/perfectionism-paralysis.md and
 # skills/frameworks/shadow-patterns.md. Nothing is hardcoded here.
 PERFECTIONISM_PARALYSIS_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    runtime_skill_path("perfectionism-paralysis"),
     "Activation Signals",
 )
 PERFECTIONISM_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/shadow-patterns.md"),
+    runtime_skill_path("shadow-patterns"),
     "Perfectionism (as protection)",
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    runtime_skill_path("perfectionism-paralysis"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    runtime_skill_path("perfectionism-paralysis"),
     "Guidance",
 )
 PERSISTENCE_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    runtime_skill_path("perfectionism-paralysis"),
     "Persistence signal group",
 )
 

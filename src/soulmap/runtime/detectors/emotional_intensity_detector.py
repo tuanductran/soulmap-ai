@@ -11,24 +11,24 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/emotional-deescalation.md,
 # "## Detection signals". Nothing is hardcoded here. (This detector only
 # consumes the flooding/pacing/physical groups — the crisis-adjacent groups
 # in that file are for crisis_detector's own separate, careful sync pass.)
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/emotional-deescalation.md"),
+    runtime_skill_path("emotional-deescalation"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/emotional-deescalation.md"), "Guidance"
+    runtime_skill_path("emotional-deescalation"), "Guidance"
 )
 _DEESCALATION_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/emotional-deescalation.md"),
+    runtime_skill_path("emotional-deescalation"),
     "Detection signals",
 )
 COGNITIVE_FLOODING = _DEESCALATION_GROUPS["cognitive flooding"]

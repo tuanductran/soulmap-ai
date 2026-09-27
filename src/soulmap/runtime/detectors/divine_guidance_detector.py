@@ -11,23 +11,21 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/divine-guidance.md,
 # "## Activation Signals". Nothing is hardcoded here.
 DIVINE_GUIDANCE_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/divine-guidance.md"), "Activation Signals"
+    runtime_skill_path("divine-guidance"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/divine-guidance.md"),
+    runtime_skill_path("divine-guidance"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/divine-guidance.md"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("divine-guidance"), "Guidance")
 
 
 HistoryMessage = dict[str, str]

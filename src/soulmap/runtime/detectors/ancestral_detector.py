@@ -11,29 +11,29 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/ancestral-patterns.md,
 # "## Activation Signals" and "## Detection signals". Nothing is hardcoded here.
 ANCESTRAL_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Activation Signals"
+    runtime_skill_path("ancestral-patterns"), "Activation Signals"
 )
 _ANCESTRAL_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Detection signals"
+    runtime_skill_path("ancestral-patterns"), "Detection signals"
 )
 PARENT_SIGNALS = _ANCESTRAL_GROUPS["parent references"]
 PATTERN_SIGNALS = _ANCESTRAL_GROUPS["pattern language"]
 
 HistoryMessage = dict[str, str]
 _ANCESTRAL_SCORING = load_key_value_table(
-    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Scoring"
+    runtime_skill_path("ancestral-patterns"), "Scoring"
 )
 _ANCESTRAL_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Guidance"
+    runtime_skill_path("ancestral-patterns"), "Guidance"
 )
 
 

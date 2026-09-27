@@ -10,15 +10,13 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
-    load_labeled_groups,
-)
+from soulmap.runtime.knowledge.keyword_lists import load_labeled_groups
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/life-direction.md,
 # "## Detection signals". Nothing is hardcoded here.
 _DIRECTION_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/life-direction.md"), "Detection signals"
+    runtime_skill_path("life-direction"), "Detection signals"
 )
 LOSTNESS_SIGNALS = _DIRECTION_GROUPS["lostness"]
 SHOULD_SIGNALS = _DIRECTION_GROUPS["should vs. want"]

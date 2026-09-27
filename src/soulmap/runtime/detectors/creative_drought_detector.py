@@ -11,23 +11,21 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/creative-drought.md,
 # "## Activation Signals". Nothing is hardcoded here.
 CREATIVE_DROUGHT_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/creative-drought.md"), "Activation Signals"
+    runtime_skill_path("creative-drought"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/creative-drought.md"),
+    runtime_skill_path("creative-drought"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/creative-drought.md"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("creative-drought"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
@@ -49,11 +47,11 @@ def detect_creative_drought(
 
     # Secondary: creative identity + absence/emptiness language
     creative_id = load_keyword_section(
-        default_skill_path("skills/frameworks/creative-drought.md"),
+        runtime_skill_path("creative-drought"),
         "Creative-identity signals",
     )
     absence = load_keyword_section(
-        default_skill_path("skills/frameworks/creative-drought.md"), "Absence signals"
+        runtime_skill_path("creative-drought"), "Absence signals"
     )
     if (
         any(c in msg for c in creative_id)

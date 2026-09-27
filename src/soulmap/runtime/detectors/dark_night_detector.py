@@ -11,23 +11,21 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/dark-night-of-soul.md,
 # "## Activation Signals". Nothing is hardcoded here.
 DARK_NIGHT_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Activation Signals"
+    runtime_skill_path("dark-night-of-soul"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/dark-night-of-soul.md"),
+    runtime_skill_path("dark-night-of-soul"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("dark-night-of-soul"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
