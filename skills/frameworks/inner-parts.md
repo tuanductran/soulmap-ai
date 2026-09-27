@@ -370,6 +370,7 @@ Internal dialogue, user reports conversations happening inside:
 - **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 | Rule | Value |
