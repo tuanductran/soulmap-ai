@@ -87,7 +87,7 @@ def detect_anger(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_ANGER_SCORING["Sustained history window"]):]
+        ][-int(_ANGER_SCORING["Sustained history window"]) :]
         anger_count = sum(
             1
             for m in recent
