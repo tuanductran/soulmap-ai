@@ -16,17 +16,19 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/soul-nourishment.md,
 # "## Activation Signals". Nothing is hardcoded here.
 SOUL_NOURISHMENT_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/soul-nourishment.md"), "Activation Signals"
+    runtime_skill_path("soul-nourishment"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/soul-nourishment.md"),
+    runtime_skill_path("soul-nourishment"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/soul-nourishment.md"), "Guidance"
+    runtime_skill_path("soul-nourishment"), "Guidance"
 )
 
 
