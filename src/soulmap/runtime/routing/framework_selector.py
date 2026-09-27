@@ -233,7 +233,9 @@ def _finish(
             raise ValueError(f"Unknown secondary layer {secondary!r}.")
         allowed = rules.valid_secondary.get(normalized, ())
         if secondary not in allowed:
-            raise ValueError(f"Secondary layer {secondary!r} is not valid for {primary!r}.")
+            raise ValueError(
+                f"Secondary layer {secondary!r} is not valid for {primary!r}."
+            )
     template = resolve_template(primary, mode, template_context)
     selection = dict(selection)
     selection["mode"] = mode
