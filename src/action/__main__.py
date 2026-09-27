@@ -442,7 +442,10 @@ def create_tag(
         raise GitHubActionError(
             f"Concurrent release tag {tag!r} does not point to {target_sha}."
         ) from exc
-    if not isinstance(created_ref, dict) or created_ref.get("ref") != f"refs/tags/{tag}":
+    if (
+        not isinstance(created_ref, dict)
+        or created_ref.get("ref") != f"refs/tags/{tag}"
+    ):
         raise GitHubActionError("GitHub did not confirm creation of the release tag.")
 
 
