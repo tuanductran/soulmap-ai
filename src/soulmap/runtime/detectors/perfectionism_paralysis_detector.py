@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -25,6 +26,19 @@ PERFECTIONISM_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/shadow-patterns.md"),
     "Perfectionism (as protection)",
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    "Guidance",
+)
+PERSISTENCE_SIGNALS = load_keyword_section(
+    default_skill_path("skills/frameworks/perfectionism-paralysis.md"),
+    "Persistence signal group",
+)
+
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 2
@@ -41,7 +55,7 @@ def detect_perfectionism_paralysis(
     # Paralysis-specific signals score higher (these are the stopping patterns)
     for phrase in PERFECTIONISM_PARALYSIS_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Paralysis signal weight"])
             signals.append(f"paralysis: '{phrase}'")
             break
 
@@ -53,7 +67,7 @@ def detect_perfectionism_paralysis(
     # the check for "does the pattern appear repeatedly."
     for phrase in PERFECTIONISM_SIGNALS:
         if phrase in msg and score == 0:
-            score += 1
+            score += int(_RULES["General perfectionism weight"])
             signals.append(f"perfectionism: '{phrase}'")
             break
 
@@ -61,51 +75,34 @@ def detect_perfectionism_paralysis(
     # (perfectionism-paralysis.md) either from the current message explicitly
     # naming its own repetition ("a hundred times", "over and over"), or from
     # prior turns naming it.
-    repeat_signals = (
-        "still not ready",
-        "still not finished",
-        "still can't",
-        "again",
-        "still working on",
-        "over and over",
-        "so many times",
-        "every time",
-        "a hundred times",
-    )
+    repeat_signals = PERSISTENCE_SIGNALS
     if score > 0:
         if any(r in msg for r in repeat_signals):
-            score += 1
+            score += int(_RULES["Persistence bonus"])
             signals.append("pattern_persistence_in_message")
         elif history:
             hist_text = " ".join(
                 m.get("content", "").lower()
-                for m in history[-4:]
+                for m in history[-int(_RULES["History window"]):]
                 if isinstance(m, dict) and m.get("role") == "user"
             )
             if any(r in hist_text for r in repeat_signals):
-                score += 1
+                score += int(_RULES["Persistence bonus"])
                 signals.append("pattern_persistence_in_history")
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "perfectionism_paralysis_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No perfectionism paralysis signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "perfectionism_paralysis_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). "
-            "Name the specific shape of the stop. Name what the perfectionism is protecting. "
-            "Do NOT advise 'just ship it' or offer techniques. "
-            "End with one perfectionism question from deep-inquiry-bank.md "
-            "(Perfectionism Questions section)."
-        ),
-    }
+        "recommendation": _GUIDANCE["detected"],    }
 
 
 if __name__ == "__main__":
