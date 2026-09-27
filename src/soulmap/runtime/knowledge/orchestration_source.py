@@ -59,8 +59,12 @@ def _secondary(text: str) -> tuple[str, ...]:
     match = re.search(r"### Phase 4, secondary layer selection(?P<body>.*?)(?=\n### Phase 5,)", section, re.DOTALL)
     if match is None:
         raise ValueError("Secondary-layer contract is missing.")
-    values = tuple(row[0].strip("`") for row in _rows(match.group("body"), 2))
     expected = {"anger", "bypass", "somatic", "meaning_integration", "inner_parts"}
+    values = tuple(
+        row[0].strip("`")
+        for row in _rows(match.group("body"), 2)
+        if row[0].strip("`") in expected
+    )
     if set(values) != expected:
         raise ValueError("Secondary-layer contract is incomplete.")
     return values
