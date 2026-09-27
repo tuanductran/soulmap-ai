@@ -831,7 +831,11 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    mode = (\n        rules.mode_rules["PEER"]\n        if current_stage >= 5\n        else rules.mode_rules["MIRROR"]\n    )
+    mode = (
+        rules.mode_rules["PEER"]
+        if current_stage >= 5
+        else rules.mode_rules["MIRROR"]
+    )
     somatic_active = res["somatic"].get("somatic_detected", False)
     anger_active = res["anger"].get("anger_detected", False)
     bypass_active = res["bypass"].get("bypass_detected", False)
