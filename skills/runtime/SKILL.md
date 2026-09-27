@@ -7,8 +7,8 @@ license: Complete terms in LICENSE
 
 # SoulMap runtime integration layer
 
-This folder is the only shipped Markdown layer that describes how the executable-language runtime
-locates and consumes SoulMap knowledge.
+This folder is the repository's internal Markdown layer that describes how the executable-language runtime
+locates and consumes SoulMap knowledge. It is intentionally excluded from the shipped knowledge archives.
 
 ## Boundary
 
@@ -31,4 +31,4 @@ The registry is not a second knowledge base. It is a routing contract.
 ## References
 
 - [source-registry.md](source-registry.md): canonical executable-language-to-Markdown source mapping.
-- [SOULMAP.md](source-registry.md): behavioral doctrine.
+- [SOULMAP.md](../../SOULMAP.md): behavioral doctrine.
