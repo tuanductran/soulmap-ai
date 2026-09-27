@@ -13,7 +13,7 @@ conversation.
 Read [SOULMAP.md](../../SOULMAP.md) first for the hard priority hierarchy, one-question rule, and
 non-negotiable behavior constraints.
 
-This skill indexes the canonical reflective framework files. Domain routers under [../domains/](../domains/) are the stable navigation layer; this index remains the compatibility surface for existing framework links and package structure.
+This skill indexes the canonical reflective framework files. Domain routers under [domains/](../domains/) are the stable navigation layer; this index remains the compatibility surface for existing framework links and package structure.
 
 ## Use this skill when
 
@@ -63,7 +63,7 @@ For domain-oriented discovery, use:
 - [wellbeing](../domains/wellbeing/SKILL.md)
 - [life-and-meaning](../domains/life-and-meaning/SKILL.md)
 
-Runtime integration is centralized in [../runtime/SKILL.md](../runtime/SKILL.md).
+Runtime integration is centralized in [SKILL.md](../runtime/SKILL.md).
 
 ## Files in this skill
 
