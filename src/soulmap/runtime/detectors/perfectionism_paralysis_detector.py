@@ -23,7 +23,7 @@ PERFECTIONISM_PARALYSIS_SIGNALS = load_keyword_section(
     "Activation Signals",
 )
 PERFECTIONISM_SIGNALS = load_keyword_section(
-    runtime_skill_path("perfectionism-paralysis"),
+    runtime_skill_path("shadow-patterns"),
     "Perfectionism (as protection)",
 )
 _RULES = load_key_value_table(
