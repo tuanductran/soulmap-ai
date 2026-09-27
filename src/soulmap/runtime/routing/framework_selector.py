@@ -185,6 +185,13 @@ def _finish(
     selection: dict[str, object],
     debug_events: list[dict] | None,
 ) -> dict[str, object]:
+    if selection.get("safety_override"):
+        selection = dict(selection)
+        selection["template"] = None
+        return _maybe_attach_debug(
+            _apply_safety_gate(message, history, memory, selection, debug_events),
+            debug_events,
+        )
     rules = load_orchestration_rules()
     primary = str(selection.get("primary_framework", ""))
     secondary = selection.get("secondary_layer")
@@ -326,12 +333,6 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    dep_task = _run_detector_async(
-        "dependency_detector",
-        analyze_dependency,
-        history,
-        debug_events=debug_events,
-    )
     intensity_task = _run_detector_async(
         "emotional_intensity_detector",
         detect_intensity,
