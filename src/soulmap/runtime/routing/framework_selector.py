@@ -341,7 +341,7 @@ async def select_framework_async(
         debug_events=debug_events,
     )
 
-    dep, intensity = await asyncio.gather(dep_task, intensity_task)
+    _, intensity = await asyncio.gather(dep_task, intensity_task)
     intensity_level = intensity.get("level", "NORMAL")
 
     if dep.get("level") == "HIGH_DEPENDENCY":
