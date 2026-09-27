@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("soulmate-longing"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("soulmate-longing"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("soulmate-longing"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
