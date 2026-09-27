@@ -26,9 +26,6 @@ _THRESHOLD_RE = re.compile(
     re.MULTILINE,
 )
 _CONTRACT_HEADING = "Runtime enforcement contract"
-_BLOCK_RE = re.compile(
-    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60", re.MULTILINE | re.DOTALL
-)
 _MULTIPLIER_RE = re.compile(
     r"^\|\s*Current message\s*\|\s*(?P<current>[0-9.]+)x\s*\|\s*$"
     r"|^\|\s*Previous message\s*\|\s*(?P<previous>[0-9.]+)x\s*\|\s*$"
