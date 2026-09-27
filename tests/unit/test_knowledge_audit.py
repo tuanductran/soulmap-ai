@@ -114,7 +114,7 @@ def test_markdown_implementation_reference_audit_ignores_domain_word_python(
     skills.mkdir()
     skill = skills / "example.md"
     skill.write_text(
-        "A blacklist may contain the word python as a user-domain signal.\\n",
+        "A blacklist may contain the word python as a user-domain signal.\n",
         encoding="utf-8",
     )
 
@@ -127,6 +127,6 @@ def test_markdown_implementation_reference_audit_flags_python_fence(
     skills = tmp_path / "skills"
     skills.mkdir()
     skill = skills / "example.md"
-    skill.write_text("```python\\nprint('x')\\n```\\n", encoding="utf-8")
+    skill.write_text("```python\nprint('x')\n```\n", encoding="utf-8")
 
     assert audit.find_markdown_implementation_references(tmp_path) == (skill,)
