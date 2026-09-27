@@ -294,7 +294,7 @@ async def select_framework_async(
             selection = {
                 "primary_framework": "MIRROR",
                 "secondary_layer": None,
-                "mode": "BLOCK",
+                "mode": "MIRROR",
                 "routing_action": "SAFETY_REDIRECT",
                 "context": {"scope": scope},
                 "instruction": scope.get("explanation", ""),
