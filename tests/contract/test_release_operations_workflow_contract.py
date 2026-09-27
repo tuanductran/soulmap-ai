@@ -89,9 +89,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
-    assert workflow.index("Create immutable release tag through Python action") < workflow.index(
-        "Publish GitHub Release"
-    )
+    assert workflow.index(
+        "Create immutable release tag through Python action"
+    ) < workflow.index("Publish GitHub Release")
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
