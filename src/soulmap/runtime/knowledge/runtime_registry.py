@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from functools import lru_cache
 from pathlib import Path
 
@@ -24,7 +25,60 @@ def _registry() -> dict[str, tuple[str, str, str, str]]:
         if source in result:
             raise ValueError(f"Duplicate runtime source: {source}")
         result[source] = (path, signals, contract, guidance)
+
+    violations = _validate_registry(result)
+    if violations:
+        raise ValueError(
+            "Runtime source registry validation failed:\n"
+            + "\n".join(f"- {violation}" for violation in violations)
+        )
     return result
+
+
+def _has_heading(text: str, expected: str) -> bool:
+    """Return whether Markdown contains the registered section heading."""
+    if expected.startswith("Pattern "):
+        return bool(re.search(r"^## Pattern \d+:\s+.+$", text, re.MULTILINE))
+    return bool(
+        re.search(
+            rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
+            text,
+            re.MULTILINE,
+        )
+    )
+
+
+def _validate_registry(
+    entries: dict[str, tuple[str, str, str, str]],
+) -> tuple[str, ...]:
+    """Validate every registry mapping and its required Markdown sections."""
+    violations: list[str] = []
+    skills_root = default_skill_path("skills").resolve()
+
+    for source, (relative_path, signals, contract, guidance) in entries.items():
+        path = default_skill_path(relative_path).resolve()
+        try:
+            path.relative_to(skills_root)
+        except ValueError:
+            violations.append(f"{source}: path escapes skills/: {relative_path}")
+            continue
+
+        if not path.is_file():
+            violations.append(f"{source}: source file does not exist: {relative_path}")
+            continue
+
+        text = path.read_text(encoding="utf-8")
+        for kind, section in (
+            ("signals", signals),
+            ("contract", contract),
+            ("guidance", guidance),
+        ):
+            if section != "-" and (not section or not _has_heading(text, section)):
+                violations.append(
+                    f"{source}: missing {kind} section {section!r} in {relative_path}"
+                )
+
+    return tuple(violations)
 
 
 def runtime_skill_path(source: str) -> Path:

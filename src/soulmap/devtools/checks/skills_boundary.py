@@ -8,7 +8,6 @@ from pathlib import Path
 from soulmap.devtools.support.repo import REPO_ROOT
 
 _RUNTIME_DIR = Path("skills/runtime")
-_ALLOWED_PYTHON_MENTION = Path("skills/safety/whitelist-blacklist-system.md")
 _FORBIDDEN_TEXT = (
     "src/soulmap/",
     ".py",
@@ -50,41 +49,98 @@ def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
     ]
 
 
+def _line_number(token: object) -> int:
+    """Return a best-effort one-based Markdown source line number."""
+    source_map = getattr(token, "map", None)
+    return int(source_map[0]) + 1 if source_map else 1
+
+
+def _implementation_tokens(value: str) -> tuple[str, ...]:
+    """Return implementation references that are meaningful in Markdown syntax."""
+    lowered = value.lower()
+    return tuple(token for token in _FORBIDDEN_TEXT if token.lower() in lowered)
+
+
 def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
-    """Return implementation-leak findings for one shipped Markdown document."""
+    """Return implementation-leak findings using Markdown structure.
+
+    Plain prose is allowed to discuss generic concepts such as Python or class.
+    Implementation references are rejected when they point to repository/runtime
+    surfaces or appear inside executable code constructs.
+    """
+    from markdown_it import MarkdownIt
+
     rel = Path(relative_path)
     findings: list[str] = []
-    lines = text.splitlines()
+    parser = MarkdownIt("commonmark")
+    tokens = parser.parse(text)
 
-    if "python" in text.lower() and rel != _ALLOWED_PYTHON_MENTION:
-        for line_no, line in enumerate(lines, start=1):
-            if "python" in line.lower():
-                findings.append(
-                    f"{rel}:{line_no}: implementation-language reference: Python"
-                )
+    for token in tokens:
+        line_no = _line_number(token)
 
-    fence = chr(96) * 3
-    for line_no, line in enumerate(lines, start=1):
-        stripped = line.strip().lower()
-        if stripped.startswith(fence):
-            language = stripped[len(fence) :].strip()
+        if token.type == "fence":
+            language = token.info.strip().split(maxsplit=1)[0].lower()
             if language in _EXECUTABLE_FENCES:
                 findings.append(
                     f"{rel}:{line_no}: executable code fence is not allowed"
                 )
-
-        for token in _FORBIDDEN_TEXT:
-            if token in line:
+            for reference in _implementation_tokens(token.content):
                 findings.append(
-                    f"{rel}:{line_no}: repository/implementation token: {token!r}"
+                    f"{rel}:{line_no}: implementation token in code block: {reference!r}"
                 )
+            continue
 
-        if (
-            ("from " in line and " import " in line)
-            or stripped.startswith(("import ", "def ", "class "))
-            or "__name__ ==" in line
-        ):
-            findings.append(f"{rel}:{line_no}: implementation syntax detected")
+        if token.type == "code_block":
+            for reference in _implementation_tokens(token.content):
+                findings.append(
+                    f"{rel}:{line_no}: implementation token in code block: {reference!r}"
+                )
+            continue
+
+        if token.type != "inline" or not token.children:
+            continue
+
+        for child in token.children:
+            child_line = line_no
+            if child.type == "code_inline":
+                for reference in _implementation_tokens(child.content):
+                    findings.append(
+                        f"{rel}:{child_line}: implementation token in inline code: "
+                        f"{reference!r}"
+                    )
+            elif child.type in {"link_open", "image"}:
+                href_value = child.attrGet("href") or child.attrGet("src")
+                href = href_value if isinstance(href_value, str) else ""
+                for reference in _implementation_tokens(href):
+                    findings.append(
+                        f"{rel}:{child_line}: implementation reference in link target: "
+                        f"{reference!r}"
+                    )
+
+        plain = token.content
+        for reference in _implementation_tokens(plain):
+            if reference in {"templates/", "library/"}:
+                findings.append(
+                    f"{rel}:{line_no}: repository-only reference: {reference!r}"
+                )
+            elif reference in {
+                "src/soulmap/",
+                ".claude/",
+                ".github/",
+                "tests/",
+                "scripts/",
+                "skills/runtime/",
+                "pyproject.toml",
+                "uv.lock",
+                ".py",
+                "pip install",
+                "uv run",
+                "pytest",
+                "python -m",
+            }:
+                findings.append(
+                    f"{rel}:{line_no}: implementation reference: {reference!r}"
+                )
 
     return findings
 

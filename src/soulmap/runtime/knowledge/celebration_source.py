@@ -9,6 +9,7 @@ from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -28,6 +29,7 @@ class CelebrationRules:
     confirmation_signals: tuple[str, ...]
     confirmation_assistant_anchors: tuple[str, ...]
     signal_groups: dict[str, tuple[str, ...]]
+    guidance: dict[str, str]
 
 
 def _contract_body(text: str) -> str:
@@ -134,6 +136,10 @@ def load_celebration_rules() -> CelebrationRules:
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
     groups = load_labeled_groups(path, "Detection signals")
+    guidance = load_key_value_table(path, "Guidance")
+    required_guidance = {"not_detected", "detected", "closing"}
+    if not required_guidance <= guidance.keys():
+        raise ValueError("Celebration guidance configuration is incomplete.")
     return CelebrationRules(
         score_weights=cast(dict[str, int], values["SCORE_WEIGHTS"]),
         threshold=cast(int, values["THRESHOLD"]),
@@ -146,4 +152,5 @@ def load_celebration_rules() -> CelebrationRules:
             tuple[str, ...], values["CONFIRMATION_ASSISTANT_ANCHORS"]
         ),
         signal_groups=groups,
+        guidance=guidance,
     )

@@ -123,3 +123,33 @@ def test_verifier_rejects_archive_content_drift_from_source(
     assert source_path.read_bytes() == original_source_bytes
     assert result.returncode == 1
     assert f"content mismatch for shipped member {member_name}" in result.stderr
+
+
+def test_verifier_rejects_broken_shipped_markdown_reference(tmp_path: Path) -> None:
+    _build_valid_repo(tmp_path)
+    _write(
+        tmp_path,
+        "skills/public.md",
+        "[Missing knowledge](missing.md)\n",
+    )
+    build_skill.build_zip(tmp_path)
+    build_skill.build_skill(tmp_path)
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "broken shipped Markdown reference" in result.stderr
+
+
+def test_verifier_accepts_relative_and_root_style_markdown_references(
+    tmp_path: Path,
+) -> None:
+    _build_valid_repo(tmp_path)
+    _write(tmp_path, "skills/nested.md", "[Public](../skills/public.md)\n")
+    _write(tmp_path, "SKILL.md", "[Public](skills/public.md)\n")
+    build_skill.build_zip(tmp_path)
+    build_skill.build_skill(tmp_path)
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 0

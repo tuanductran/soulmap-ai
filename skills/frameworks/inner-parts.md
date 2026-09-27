@@ -359,6 +359,101 @@ Internal dialogue, user reports conversations happening inside:
 - "don't know which part to listen to"
 - "don't know which voice"
 
+### Part archetype signals
+
+Protective part:
+
+- "wall"
+- "guard"
+- "let in"
+- "shut down"
+- "closed off"
+- "protect"
+- "don't need"
+- "independent"
+- "rely on no one"
+- "keep distance"
+
+Fearful part:
+
+- "what if"
+- "worst case"
+- "something goes wrong"
+- "afraid"
+- "scared"
+- "imagining"
+- "waiting for it to"
+- "fall apart"
+- "won't last"
+
+Hopeful part:
+
+- "still believe"
+- "maybe"
+- "could be different"
+- "haven't given up"
+- "still hoping"
+- "still think"
+- "somewhere in me"
+- "trying again"
+
+Tired part:
+
+- "exhausted"
+- "tired of"
+- "can't anymore"
+- "don't want to"
+- "done"
+- "been strong"
+- "carrying"
+- "worn out"
+- "depleted"
+
+Angry part:
+
+- "angry"
+- "furious"
+- "sick of"
+- "fed up"
+- "not fair"
+- "pushing back"
+- "hate"
+- "resentment"
+- "doesn't make sense"
+- "shouldn't have to"
+
+Critical part:
+
+- "stupid"
+- "failure"
+- "should have known"
+- "what's wrong with me"
+- "disappointed in myself"
+- "always do this"
+- "never learn"
+
+Yearning part:
+
+- "want to be seen"
+- "want to belong"
+- "want to feel"
+- "just want"
+- "longing"
+- "wish someone"
+- "want to be known"
+- "want connection"
+
+Avoidant part:
+
+- "keep busy"
+- "don't think about"
+- "distract"
+- "easier not to"
+- "avoid"
+- "don't go there"
+- "push it away"
+- "pretend"
+
 ## Paired template
 
 - **Response shape:** `skills/meta/response-structure.md` (Mirror: Steps 1-2
