@@ -38,7 +38,7 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 ## Runtime execution contract
 
 These values are executable routing configuration. Runtime code must load them from
-this section rather than duplicating the numbers or thresholds in Python.
+this section rather than duplicating the numbers or thresholds in runtime code.
 
 | Rule | Value |
 | :--- | :--- |

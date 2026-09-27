@@ -7,7 +7,7 @@ keyword sets, weights, thresholds, or recency multipliers in Python.
 
 from __future__ import annotations
 
-import ast
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -28,7 +28,7 @@ _THRESHOLD_RE = re.compile(
 )
 _CONTRACT_HEADING = "Runtime enforcement contract"
 _BLOCK_RE = re.compile(
-    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60", re.MULTILINE | re.DOTALL
+    r"\x60\x60\x60json\s*(?P<body>.*?)\x60\x60\x60", re.MULTILINE | re.DOTALL
 )
 _MULTIPLIER_RE = re.compile(
     r"^\|\s*Current message\s*\|\s*(?P<current>[0-9.]+)x\s*\|\s*$"
@@ -83,13 +83,14 @@ def _runtime_contract(text: str) -> dict[str, object]:
     block = _BLOCK_RE.search(body)
     if block is None:
         raise ValueError("Stage runtime enforcement configuration is missing.")
-    tree = ast.parse(block.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if isinstance(node, ast.Assign) and len(node.targets) == 1:
-            target = node.targets[0]
-            if isinstance(target, ast.Name):
-                values[target.id] = ast.literal_eval(node.value)
+    try:
+        values = json.loads(block.group("body"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            "Stage runtime enforcement configuration is invalid JSON."
+        ) from exc
+    if not isinstance(values, dict):
+        raise ValueError("Stage runtime enforcement configuration must be an object.")
     required = {
         "MEMORY_MINIMUMS",
         "CLOSE_SCORE_DELTA",
@@ -118,7 +119,9 @@ def _runtime_contract(text: str) -> dict[str, object]:
             raise ValueError(f"Stage runtime setting {key} is invalid.")
     for key in ("STAGE_ROLES", "STAGE_RECOMMENDATIONS"):
         value = values[key]
-        if not isinstance(value, dict) or set(value) != set(range(1, 7)):
+        if not isinstance(value, dict) or set(value) != {
+            str(index) for index in range(1, 7)
+        }:
             raise ValueError(f"Stage runtime mapping {key} is incomplete.")
         if not all(isinstance(item, str) and item for item in value.values()):
             raise ValueError(f"Stage runtime mapping {key} is invalid.")

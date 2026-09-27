@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import ast
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -12,7 +12,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime classification contract"
 _BLOCK_RE = re.compile(
-    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60",
+    r"\x60\x60\x60json\s*(?P<body>.*?)\x60\x60\x60",
     re.MULTILINE | re.DOTALL,
 )
 
@@ -45,14 +45,12 @@ def _literal_config(body: str) -> dict[str, object]:
     match = _BLOCK_RE.search(body)
     if match is None:
         raise ValueError("Scope runtime classification block is missing.")
-    tree = ast.parse(match.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-            continue
-        target = node.targets[0]
-        if isinstance(target, ast.Name):
-            values[target.id] = ast.literal_eval(node.value)
+    try:
+        values = json.loads(match.group("body"))
+    except json.JSONDecodeError as exc:
+        raise ValueError("Scope runtime classification is invalid JSON.") from exc
+    if not isinstance(values, dict):
+        raise ValueError("Scope runtime classification must be an object.")
     required = {
         "WHITELIST_TIER1",
         "WHITELIST_TIER2",

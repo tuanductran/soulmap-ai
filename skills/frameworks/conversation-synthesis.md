@@ -237,7 +237,7 @@ together.
 
 ## Runtime detection contract
 
-The Python synthesizer executes the following operational configuration. This section is
+The runtime synthesizer executes the following operational configuration. This section is
 machine-readable knowledge, not implementation documentation. Changes to these values
 must be made here and covered by runtime tests.
 

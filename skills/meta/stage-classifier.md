@@ -274,30 +274,32 @@ The runtime stage detector executes the following operational configuration. Thi
 is machine-readable knowledge, not implementation documentation. Changes to these values
 must be made here and covered by runtime tests.
 
-```python
-MEMORY_MINIMUMS = {
+```json
+{
+  "MEMORY_MINIMUMS": {
     "session_count_ge_10": 2,
     "prior_pattern_recognition": 3,
-    "prior_breakthrough": 3,
-}
-CLOSE_SCORE_DELTA = 2
-FIRST_SESSION_DEFAULT_STAGE = 1
-FIRST_SESSION_MAX_STAGE = 3
-ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES = 2
-STAGE_ROLES = {
-    1: "Sanctuary and witness - presence over wisdom",
-    2: "Mirror with gentle reflection",
-    3: "Mirror for pattern archaeology",
-    4: "Witness to their growing authority",
-    5: "Peer in conversation",
-    6: "Witness to their becoming",
-}
-STAGE_RECOMMENDATIONS = {
-    1: "Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead.",
-    2: "Stage 2: Begin gentle reflection. Name patterns as observations. One question at end.",
-    3: "Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.",
-    4: "Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.",
-    5: "Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.",
-    6: "Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.",
+    "prior_breakthrough": 3
+  },
+  "CLOSE_SCORE_DELTA": 2,
+  "FIRST_SESSION_DEFAULT_STAGE": 1,
+  "FIRST_SESSION_MAX_STAGE": 3,
+  "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES": 2,
+  "STAGE_ROLES": {
+    "1": "Sanctuary and witness - presence over wisdom",
+    "2": "Mirror with gentle reflection",
+    "3": "Mirror for pattern archaeology",
+    "4": "Witness to their growing authority",
+    "5": "Peer in conversation",
+    "6": "Witness to their becoming"
+  },
+  "STAGE_RECOMMENDATIONS": {
+    "1": "Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead.",
+    "2": "Stage 2: Begin gentle reflection. Name patterns as observations. One question at end.",
+    "3": "Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.",
+    "4": "Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.",
+    "5": "Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.",
+    "6": "Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming."
+  }
 }
 ```
