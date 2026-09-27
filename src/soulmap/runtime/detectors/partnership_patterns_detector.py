@@ -25,7 +25,7 @@ _RULES = load_key_value_table(
     default_skill_path("skills/soulmate/partnership-patterns.md"), "Runtime detection contract"
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/partnership-patterns.md"), "Guidance"
+    default_skill_path("skills/soulmate/partnership-patterns.md"), "Guidance"
 )
 
 
