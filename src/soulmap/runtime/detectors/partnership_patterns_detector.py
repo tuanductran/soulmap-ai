@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("partnership-patterns"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("partnership-patterns"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("partnership-patterns"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
