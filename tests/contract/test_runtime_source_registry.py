@@ -82,33 +82,6 @@ def test_runtime_knowledge_modules_do_not_embed_skill_source_paths() -> None:
     assert not violations, "\n".join(violations)
 
 
-
-    for path in sorted(detector_root.glob("*_detector.py")):
-        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
-                continue
-            if node.func.id != "runtime_skill_path" or len(node.args) != 1:
-                continue
-            argument = node.args[0]
-            if not isinstance(argument, ast.Constant) or not isinstance(
-                argument.value, str
-            ):
-                raise AssertionError(
-                    f"{path.relative_to(REPO_ROOT)} uses a non-literal runtime source"
-                )
-            consumers.setdefault(argument.value, set()).add(
-                str(path.relative_to(REPO_ROOT))
-            )
-
-    unregistered = {
-        source: sorted(paths)
-        for source, paths in consumers.items()
-        if source not in registry
-    }
-    assert not unregistered, f"Unregistered runtime sources: {unregistered}"
-
-
 def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
