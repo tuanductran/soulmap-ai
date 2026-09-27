@@ -386,7 +386,8 @@ def test_framework_selector_enforces_stage_one_first_two_message_override() -> N
 def test_framework_selector_enforces_breakthrough_override_from_knowledge() -> None:
     """A strong insight must become primary even when another framework also fires."""
     message = (
-        "I finally see it now. I understand now that I keep trying to earn the love I most want to receive."
+        "I finally see it now. I understand now that I keep trying to earn "
+        "the love I most want to receive."
     )
     payload = {
         "message": message,
