@@ -34,9 +34,7 @@ GENUINE_INTEGRATION = load_keyword_section(
     _DISCERNMENT_PATH, "Genuine Integration Signals"
 )
 
-_BYPASS_SCORING = load_key_value_table(
-    _DISCERNMENT_PATH, "Scoring"
-)
+_BYPASS_SCORING = load_key_value_table(_DISCERNMENT_PATH, "Scoring")
 _BYPASS_GUIDANCE = load_key_value_table(_DISCERNMENT_PATH, "Guidance")
 
 HistoryMessage = dict[str, str]
@@ -91,7 +89,9 @@ def detect_bypass(
 
     genuine_count = sum(1 for phrase in GENUINE_INTEGRATION if phrase in msg)
     if genuine_count >= 2:
-        score = max(0, score - int(_BYPASS_SCORING["Genuine-integration score reduction"]))
+        score = max(
+            0, score - int(_BYPASS_SCORING["Genuine-integration score reduction"])
+        )
         signals.append(f"genuine_integration_signals: {genuine_count} (score reduced)")
 
     if score < int(_BYPASS_SCORING["Minimum detection score"]):
