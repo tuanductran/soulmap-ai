@@ -1,5 +1,8 @@
 """Contract regression tests for grief, somatic, and intensity policy."""
 
+from collections.abc import Callable
+from types import ModuleType
+
 import pytest
 
 from soulmap.runtime.detectors import (
@@ -33,8 +36,12 @@ from soulmap.runtime.detectors import (
     ],
 )
 def test_detector_policy_is_knowledge_authored(
-    module, key, detector, signal, monkeypatch: pytest.MonkeyPatch
-):
-    monkeypatch.setitem(module._RULES, key, "7")
+    module: ModuleType,
+    key: str,
+    detector: Callable[[str], dict[str, object]],
+    signal: str,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setitem(getattr(module, "_RULES"), key, "7")
     result = detector(signal)
     assert result["score"] == 7
