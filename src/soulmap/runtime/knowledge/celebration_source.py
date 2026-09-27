@@ -89,9 +89,15 @@ def _literal_config(body: str) -> dict[str, object]:
             "NEGATIVE_OVERRIDE_PENALTY": int(scoring["Negative override penalty"]),
             "STRENGTH_THRESHOLD": int(scoring["Strong-signal threshold"]),
             "CONFIRMATION_SCORE": int(scoring["Confirmation score"]),
-            "NEGATIVE_OVERRIDES": _quoted_bullets(\n                _section_body(body, "Negative overrides")\n            ),
-            "CONFIRMATION_SIGNALS": _quoted_bullets(\n                _section_body(body, "Confirmation signals")\n            ),
-            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(\n                _section_body(body, "Confirmation assistant anchors")\n            ),
+            "NEGATIVE_OVERRIDES": _quoted_bullets(
+                _section_body(body, "Negative overrides")
+            ),
+            "CONFIRMATION_SIGNALS": _quoted_bullets(
+                _section_body(body, "Confirmation signals")
+            ),
+            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(
+                _section_body(body, "Confirmation assistant anchors")
+            ),
         }
     except (KeyError, ValueError) as exc:
         raise ValueError("Celebration runtime configuration is invalid.") from exc
