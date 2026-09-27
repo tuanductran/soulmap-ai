@@ -173,7 +173,8 @@ def test_framework_selector_blocks_scope_before_framework_detection() -> None:
     }
     data = run_framework_selector(payload, debug=True)
     assert data["safety_status"] == "BLOCK"
-    assert data["primary_framework"] == "SAFETY_REDIRECT"
+    assert data["primary_framework"] == "MIRROR"
+    assert data["routing_action"] == "SAFETY_REDIRECT"
     modules = [event.get("module") for event in data["debug"]]
     assert "stage_detector" not in modules
     assert "emotional_intensity_detector" not in modules
