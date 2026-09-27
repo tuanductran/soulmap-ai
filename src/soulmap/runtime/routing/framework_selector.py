@@ -375,7 +375,11 @@ async def select_framework_async(
 
     if intensity_level == "HIGH" or crisis_tier == 2:
         fallback = next(
-            (rule for rule in orchestration_rules.intensity_fallback if rule.level == "HIGH"),
+            (
+                rule
+                for rule in orchestration_rules.intensity_fallback
+                if rule.level == "HIGH"
+            ),
             None,
         )
         if fallback is None:
