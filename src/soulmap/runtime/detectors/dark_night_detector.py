@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("dark-night-of-soul"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("dark-night-of-soul"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("dark-night-of-soul"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
