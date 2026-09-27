@@ -16,17 +16,19 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/empath-boundary.md,
 # "## Activation Signals". Nothing is hardcoded here.
 EMPATH_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/empath-boundary.md"), "Activation Signals"
+    runtime_skill_path("empath-boundary"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/empath-boundary.md"),
+    runtime_skill_path("empath-boundary"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/empath-boundary.md"), "Guidance"
+    runtime_skill_path("empath-boundary"), "Guidance"
 )
 
 
@@ -49,10 +51,10 @@ def detect_empath_overwhelm(
 
     # Secondary: drain/exhaustion + people/others context
     drain = load_keyword_section(
-        default_skill_path("skills/frameworks/empath-boundary.md"), "Drain signals"
+        runtime_skill_path("empath-boundary"), "Drain signals"
     )
     people_ctx = load_keyword_section(
-        default_skill_path("skills/frameworks/empath-boundary.md"),
+        runtime_skill_path("empath-boundary"),
         "People-context signals",
     )
     if (
