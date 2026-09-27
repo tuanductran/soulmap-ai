@@ -55,7 +55,23 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     elif primary == "INTEGRATION_CELEBRATION":
         target = "Integration and Celebration"
     else:
-        target = primary.replace("_", " ").title()
+        aliases = {
+            "DARK_NIGHT_OF_SOUL": "Dark Night of the Soul",
+            "ANCESTRAL_PATTERNS": "Ancestral Patterns",
+            "FEAR_OF_VISIBILITY": "Fear of Visibility",
+            "CREATIVE_DROUGHT": "Creative Drought",
+            "EMPATH_BOUNDARY": "Empath Boundary",
+            "PERFECTIONISM_PARALYSIS": "Perfectionism Paralysis",
+            "SOUL_NOURISHMENT": "Soul Nourishment",
+            "DIVINE_GUIDANCE": "Divine Guidance",
+            "SACRED_POLARITY": "Sacred Polarity",
+            "SPIRITUAL_PURPOSE": "Spiritual Purpose",
+            "SOULMATE_LONGING": "Soulmate Longing",
+            "PARTNERSHIP_PATTERNS": "Partnership Patterns",
+            "INNER_PARTS": "Inner Parts",
+            "MEANING_INTEGRATION": "Meaning Integration",
+        }
+        target = aliases.get(primary, primary.replace("_", " ").title())
     for rule in load_template_rules():
         if rule.framework == target:
             return rule
