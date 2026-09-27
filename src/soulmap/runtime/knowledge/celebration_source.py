@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -14,10 +13,6 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 
 _CONTRACT_HEADING = "Runtime detection contract"
-_BLOCK_RE = re.compile(
-    r"```python\s*(?P<body>.*?)```",
-    re.MULTILINE | re.DOTALL,
-)
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,58 +44,56 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-def _literal_config(body: str) -> dict[str, object]:
-    match = _BLOCK_RE.search(body)
+_ROW_RE = re.compile(r"^\\|\\s*(?P<setting>[^|]+?)\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", re.MULTILINE)
+
+
+def _table_rows(body: str) -> list[tuple[str, str]]:
+    return [
+        (match.group("setting").strip(), match.group("value").strip())
+        for match in _ROW_RE.finditer(body)
+        if match.group("setting").strip().lower() != "setting"
+    ]
+
+
+def _section_body(body: str, heading: str) -> str:
+    match = re.search(rf"^### {re.escape(heading)}\\s*$", body, re.MULTILINE)
     if match is None:
-        raise ValueError("Celebration runtime configuration block is missing.")
-    tree = ast.parse(match.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-            continue
-        target = node.targets[0]
-        if not isinstance(target, ast.Name):
-            continue
-        values[target.id] = ast.literal_eval(node.value)
-    required = {
-        "SCORE_WEIGHTS",
-        "THRESHOLD",
-        "NEGATIVE_OVERRIDE_PENALTY",
-        "STRENGTH_THRESHOLD",
-        "CONFIRMATION_SCORE",
-        "NEGATIVE_OVERRIDES",
-        "CONFIRMATION_SIGNALS",
-        "CONFIRMATION_ASSISTANT_ANCHORS",
-    }
-    if set(values) != required:
-        raise ValueError("Celebration runtime configuration is incomplete.")
+        raise ValueError(f"Celebration section {heading!r} is missing.")
+    remainder = body[match.end() :]
+    next_heading = re.search(r"^###\\s+", remainder, re.MULTILINE)
+    return remainder[: next_heading.start()] if next_heading else remainder
+
+
+def _quoted_bullets(body: str) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(re.findall(r'^- "([^"]+)"\\s*$', body, re.MULTILINE)))
+
+
+def _literal_config(body: str) -> dict[str, object]:
+    scoring = dict(_table_rows(_section_body(body, "Scoring")))
+    required = {"Detection threshold", "Negative override penalty", "Strong-signal threshold", "Confirmation score"}
+    if not required <= scoring.keys():
+        raise ValueError("Celebration scoring configuration is incomplete.")
+    try:
+        values: dict[str, object] = {
+            "SCORE_WEIGHTS": {key.removeprefix("Score weight: "): int(value) for key, value in scoring.items() if key.startswith("Score weight: ")},
+            "THRESHOLD": int(scoring["Detection threshold"]),
+            "NEGATIVE_OVERRIDE_PENALTY": int(scoring["Negative override penalty"]),
+            "STRENGTH_THRESHOLD": int(scoring["Strong-signal threshold"]),
+            "CONFIRMATION_SCORE": int(scoring["Confirmation score"]),
+            "NEGATIVE_OVERRIDES": _quoted_bullets(_section_body(body, "Negative overrides")),
+            "CONFIRMATION_SIGNALS": _quoted_bullets(_section_body(body, "Confirmation signals")),
+            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(_section_body(body, "Confirmation assistant anchors")),
+        }
+    except (KeyError, ValueError) as exc:
+        raise ValueError("Celebration runtime configuration is invalid.") from exc
     weights = values["SCORE_WEIGHTS"]
-    if not isinstance(weights, dict) or not all(
-        isinstance(key, str) and isinstance(value, int)
-        for key, value in weights.items()
-    ):
+    if not isinstance(weights, dict) or not weights or any(not isinstance(k, str) or not isinstance(v, int) for k, v in weights.items()):
         raise ValueError("Celebration score weights are invalid.")
-    for key in (
-        "THRESHOLD",
-        "NEGATIVE_OVERRIDE_PENALTY",
-        "STRENGTH_THRESHOLD",
-        "CONFIRMATION_SCORE",
-    ):
+    for key in ("NEGATIVE_OVERRIDES", "CONFIRMATION_SIGNALS", "CONFIRMATION_ASSISTANT_ANCHORS"):
         value = values[key]
-        if not isinstance(value, int):
-            raise ValueError(f"Celebration setting {key} is invalid.")
-    for key in (
-        "NEGATIVE_OVERRIDES",
-        "CONFIRMATION_SIGNALS",
-        "CONFIRMATION_ASSISTANT_ANCHORS",
-    ):
-        value = values[key]
-        if not isinstance(value, tuple) or not all(
-            isinstance(item, str) and item for item in value
-        ):
+        if not isinstance(value, tuple) or not value or not all(isinstance(item, str) and item for item in value):
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
-
 
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
