@@ -131,6 +131,7 @@ def test_markdown_implementation_reference_audit_flags_python_fence(
 
     assert audit.find_markdown_implementation_references(tmp_path) == (skill,)
 
+
 def test_markdown_implementation_reference_audit_covers_templates_and_semantic_leakage(
     tmp_path: Path,
 ) -> None:
