@@ -22,8 +22,8 @@ from __future__ import annotations
 
 import re
 
-from soulmap.devtools.checks.check_api_docs import _source_primary_framework_values
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 
 _PRIORITY_ROW = re.compile(
     r"^\|\s*(Highest|Very high|High|Medium|Lower|Default)\s*\|\s*([^|]+?)\s*\|"
@@ -80,33 +80,38 @@ def _ranked_constants() -> set[str]:
     return {_constant_for(name) for _, name in _doctrine_rows()}
 
 
-def test_every_routed_framework_is_ranked_in_doctrine() -> None:
-    """A framework the router can select must be ranked in doctrine.
+def _runtime_primary_frameworks() -> set[str]:
+    """Return framework constants reachable through the knowledge contract.
 
-    Failing here means the runtime can route somewhere the priority hierarchy
-    does not rank, so nothing states what outranks it.
+    Safety short-circuits and breakthrough override live outside the ranked
+    primary list, so their explicit framework constants are included here.
     """
-    unranked = sorted(_source_primary_framework_values(REPO_ROOT) - _ranked_constants())
+    rules = load_orchestration_rules()
+    return {
+        "CRISIS",
+        "DEPENDENCY",
+        "DE_ESCALATION",
+        "MEANING_INTEGRATION",
+        "MIRROR",
+        *{rule.framework for rule in rules.primary_priority},
+    }
+
+
+def test_every_routed_framework_is_ranked_in_doctrine() -> None:
+    """Every runtime framework must be represented by product doctrine."""
+    unranked = sorted(_runtime_primary_frameworks() - _ranked_constants())
     assert not unranked, (
-        "framework_selector.py can emit primary_framework value(s) with no row "
-        f"in the SOULMAP.md priority table: {unranked}. Add the row, or map the "
-        "name in UNDERIVABLE_NAMES if the constant cannot be derived from it."
+        "The runtime knowledge contract contains framework value(s) with no "
+        f"row in SOULMAP.md: {unranked}."
     )
 
 
 def test_every_ranked_framework_is_reachable_from_the_router() -> None:
-    """A ranked framework must be one the router can actually emit.
-
-    Failing here means doctrine ranks something unreachable, which reads to a
-    reader as a capability the product does not have.
-    """
-    unreachable = sorted(
-        _ranked_constants() - _source_primary_framework_values(REPO_ROOT)
-    )
+    """Every doctrine framework must be reachable through the runtime contract."""
+    unreachable = sorted(_ranked_constants() - _runtime_primary_frameworks())
     assert not unreachable, (
-        "SOULMAP.md ranks framework(s) the selector cannot emit: "
-        f"{unreachable}. Either the row is stale, or the name needs an entry in "
-        "UNDERIVABLE_NAMES."
+        "SOULMAP.md ranks framework(s) absent from the runtime routing contract: "
+        f"{unreachable}. Add them to orchestration.md or remove the stale doctrine row."
     )
 
 
@@ -133,7 +138,7 @@ def test_secondary_layers_stay_out_of_the_primary_table() -> None:
     `DE_ESCALATION` selection. Adding them to the primary table would claim a
     routing behavior that does not exist.
     """
-    emitted = _source_primary_framework_values(REPO_ROOT)
+    emitted = _runtime_primary_frameworks()
 
     assert "ANGER" not in emitted
     assert "SOMATIC" not in emitted

@@ -37,15 +37,48 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 
 ## Runtime execution contract
 
-These values are executable routing configuration. Runtime code must load them from
-this section rather than duplicating the numbers or thresholds in runtime code.
+The JSON below is executable routing knowledge. Runtime code must load these values
+from this section rather than duplicating thresholds, primary priority, response modes,
+or secondary-layer ordering in Python. This is knowledge, not implementation
+documentation.
 
-| Rule | Value |
-| :--- | :--- |
-| Stage 1 override maximum user messages | 2 |
-| Breakthrough override minimum insight strength | strong |
-| Phase 1 safety checks before framework selection | true |
-| Template routing required before delivery | true |
+```json
+{
+  "STAGE_1_OVERRIDE_MAX_USER_MESSAGES": 2,
+  "BREAKTHROUGH_MIN_INSIGHT_STRENGTH": "strong",
+  "PHASE_1_SAFETY_CHECKS_BEFORE_FRAMEWORK_SELECTION": true,
+  "TEMPLATE_ROUTING_REQUIRED_BEFORE_DELIVERY": true,
+  "PRIMARY_PRIORITY": [
+    {"result": "grief", "detected": "grief_detected", "framework": "GRIEF", "mode": "SANCTUARY", "blocked": ["direction", "shadow", "existential", "synthesis"], "insight_secondary": true},
+    {"result": "existential", "detected": "existential_detected", "framework": "EXISTENTIAL", "mode": "MIRROR", "blocked": ["direction", "shadow"], "insight_secondary": true},
+    {"result": "conflict", "detected": "conflict_detected", "framework": "INNER_PARTS", "mode": "MIRROR", "blocked": ["direction", "shadow"], "requires_no_insight": true},
+    {"result": "direction", "detected": "direction_detected", "framework": "DIRECTION", "mode": "MIRROR", "blocked": ["shadow"], "insight_secondary": true},
+    {"result": "creative_drought", "detected": "creative_drought_detected", "framework": "CREATIVE_DROUGHT", "mode": "MIRROR"},
+    {"result": "perfectionism", "detected": "perfectionism_paralysis_detected", "framework": "PERFECTIONISM_PARALYSIS", "mode": "MIRROR"},
+    {"result": "shadow", "detected": "shadow_detected", "framework": "SHADOW", "mode": "MIRROR"},
+    {"result": "ancestral", "detected": "ancestral_detected", "framework": "ANCESTRAL_PATTERNS", "mode": "MIRROR"},
+    {"result": "visibility_fear", "detected": "visibility_fear_detected", "framework": "FEAR_OF_VISIBILITY", "mode": "MIRROR"},
+    {"result": "empath", "detected": "empath_detected", "framework": "EMPATH_BOUNDARY", "mode": "MIRROR"},
+    {"result": "dark_night", "detected": "dark_night_detected", "framework": "DARK_NIGHT_OF_SOUL", "mode": "SANCTUARY"},
+    {"result": "soul_nourishment", "detected": "soul_nourishment_detected", "framework": "SOUL_NOURISHMENT", "mode": "MIRROR"},
+    {"result": "divine_guidance", "detected": "divine_guidance_detected", "framework": "DIVINE_GUIDANCE", "mode": "MIRROR"},
+    {"result": "sacred_polarity", "detected": "sacred_polarity_detected", "framework": "SACRED_POLARITY", "mode": "MIRROR"},
+    {"result": "spiritual_purpose", "detected": "spiritual_purpose_detected", "framework": "SPIRITUAL_PURPOSE", "mode": "MIRROR"},
+    {"result": "soulmate_longing", "detected": "soulmate_longing_detected", "framework": "SOULMATE_LONGING", "mode": "MIRROR"},
+    {"result": "partnership_patterns", "detected": "partnership_pattern_detected", "framework": "PARTNERSHIP_PATTERNS", "mode": "MIRROR"},
+    {"result": "celebration", "detected": "celebration_detected", "framework": "INTEGRATION_CELEBRATION", "mode": "MIRROR", "requires_no_insight": true},
+    {"result": "insight", "detected": "insight_detected", "framework": "MEANING_INTEGRATION", "mode": "MIRROR"},
+    {"result": "synthesis", "detected": "synthesis_triggered", "framework": "SYNTHESIS", "mode": "MIRROR", "requires": "synthesis_ready"},
+    {"result": "pattern", "detected": "primary_pattern", "framework": "PATTERN", "mode": "MIRROR", "requires_not": "wait_for_more"}
+  ],
+  "SECONDARY_PRIORITY": [
+    {"name": "anger", "result": "anger", "detected": "anger_detected"},
+    {"name": "bypass", "result": "bypass", "detected": "bypass_detected"},
+    {"name": "somatic", "result": "somatic", "detected": "somatic_detected"}
+  ],
+  "PEER_MIN_STAGE": 5
+}
+```
 
 ## Decision Tree
 

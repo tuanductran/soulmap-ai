@@ -33,6 +33,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+
 _API_DOC_RELATIVE_PATH = Path("docs/engineering/API.md")
 _FRAMEWORK_SELECTOR_RELATIVE_PATH = Path(
     "src/soulmap/runtime/routing/framework_selector.py"
@@ -168,6 +170,14 @@ def _source_primary_framework_values(repo_root: Path) -> set[str]:
             continue
         if value is not None:
             values.add(value)
+
+    # The central priority list is knowledge-authored, so its framework values
+    # are not literals in framework_selector.py and must be included separately.
+    contract_path = repo_root / "skills" / "meta" / "orchestration.md"
+    if contract_path.exists():
+        values.update(
+            rule.framework for rule in load_orchestration_rules().primary_priority
+        )
     return values
 
 

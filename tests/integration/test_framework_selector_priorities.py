@@ -291,7 +291,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
     """
     message = (
         "Part of me wants to leave but part of me is scared. I finally "
-        "understand why I keep doing this."
+        "understand now. I can see the pattern I keep repeating."
     )
     payload = {
         "message": message,
@@ -336,7 +336,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     Celebration is explicitly skipped once insight is present, so a message
     carrying both surfaces meaning integration instead.
     """
-    message = "I did it, and I finally understand why this took so long."
+    message = "I did it, and I finally understand now. I can see the pattern."
     payload = {
         "message": message,
         "history": [{"role": "user", "content": message}],
@@ -386,7 +386,8 @@ def test_framework_selector_enforces_stage_one_first_two_message_override() -> N
 def test_framework_selector_enforces_breakthrough_override_from_knowledge() -> None:
     """A strong insight must become primary even when another framework also fires."""
     message = (
-        "I finally see it now. I keep trying to earn the love I most want to receive."
+        "I finally see it now. I understand now that I keep trying to earn "
+        "the love I most want to receive."
     )
     payload = {
         "message": message,
