@@ -50,9 +50,15 @@ def detect_partnership_patterns(
             "partnership_pattern_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": _GUIDANCE["detected"],
-    }
+            "recommendation": _GUIDANCE["not_detected"],
+        }
 
+    return {
+        "partnership_pattern_detected": True,
+        "score": score,
+        "signals": signals,
+        "recommendation": _GUIDANCE["detected"],
+    }
 
 if __name__ == "__main__":
     try:
