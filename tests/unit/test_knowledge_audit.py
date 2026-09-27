@@ -130,3 +130,16 @@ def test_markdown_implementation_reference_audit_flags_python_fence(
     skill.write_text("```python\nprint('x')\n```\n", encoding="utf-8")
 
     assert audit.find_markdown_implementation_references(tmp_path) == (skill,)
+
+def test_markdown_implementation_reference_audit_covers_templates_and_semantic_leakage(
+    tmp_path: Path,
+) -> None:
+    templates = tmp_path / "templates"
+    templates.mkdir()
+    skill = templates / "example.md"
+    skill.write_text(
+        "The runtime routing modules implement this policy.\n",
+        encoding="utf-8",
+    )
+
+    assert audit.find_markdown_implementation_references(tmp_path) == (skill,)
