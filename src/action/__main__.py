@@ -115,7 +115,8 @@ class GitHubClient:
                     exc.code in {403, 429}
                     and (
                         self.last_response_headers.get("Retry-After")
-                        or self.last_response_headers.get("X-RateLimit-Remaining") == "0"
+                        or self.last_response_headers.get("X-RateLimit-Remaining")
+                        == "0"
                         or "rate limit" in detail.lower()
                     )
                 )
@@ -140,9 +141,8 @@ class GitHubClient:
                 ) from exc
             except URLError as exc:
                 if (
-                    (method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent)
-                    and attempt < MAX_RETRIES
-                ):
+                    method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
+                ) and attempt < MAX_RETRIES:
                     time.sleep(self._retry_delay(attempt, {}))
                     continue
                 raise GitHubActionError(
