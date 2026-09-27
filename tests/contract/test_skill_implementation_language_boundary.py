@@ -10,7 +10,7 @@ SHIPPED_KNOWLEDGE_ROOTS = (ROOT / "skills", ROOT / "templates")
 
 _FORBIDDEN_PATTERNS = (
     re.compile(
-        r"\bPython\s+(?:runtime|code|implementation|source|module)\b", re.IGNORECASE
+        r"\bPython\s+(?:runtime|code|implementation|source|modules?)\b", re.IGNORECASE
     ),
     re.compile(r"\bin\s+Python\b", re.IGNORECASE),
     re.compile(r"\bsrc/soulmap/", re.IGNORECASE),
