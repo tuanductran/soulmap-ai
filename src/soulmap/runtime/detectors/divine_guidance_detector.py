@@ -22,7 +22,8 @@ DIVINE_GUIDANCE_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/divine-guidance.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/divine-guidance.md"), "Runtime detection contract"
+    default_skill_path("skills/frameworks/divine-guidance.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/divine-guidance.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_divine_guidance(
     message: str, history: list[HistoryMessage] | None = None
