@@ -41,8 +41,6 @@ PERSISTENCE_SIGNALS = load_keyword_section(
 
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 2
-
 
 def detect_perfectionism_paralysis(
     message: str, history: list[HistoryMessage] | None = None
@@ -102,7 +100,8 @@ def detect_perfectionism_paralysis(
         "perfectionism_paralysis_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": _GUIDANCE["detected"],    }
+        "recommendation": _GUIDANCE["detected"],
+    }
 
 
 if __name__ == "__main__":
