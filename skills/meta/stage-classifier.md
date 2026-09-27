@@ -305,4 +305,3 @@ The operational stage-classification policy is authored in this section. Runtime
 | 4 | Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching. |
 | 5 | Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role. |
 | 6 | Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming. |
-
