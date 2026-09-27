@@ -175,9 +175,9 @@ def _source_primary_framework_values(repo_root: Path) -> set[str]:
     # are not literals in framework_selector.py and must be included separately.
     contract_path = repo_root / "skills" / "meta" / "orchestration.md"
     if contract_path.exists():
-        values.update(
-            rule.framework for rule in load_orchestration_rules().primary_priority
-        )
+        rules = load_orchestration_rules()
+        values.update(rule.framework for rule in rules.primary_priority)
+        values.update(rule.framework for rule in rules.intensity_fallback)
     return values
 
 

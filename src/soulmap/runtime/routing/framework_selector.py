@@ -58,11 +58,6 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
     synthesize,
 )
 
-# The grief types that claim the primary route, per the priority table in
-# skills/meta/orchestration.md. Shared by the moderate-intensity branch and the
-# normal-intensity branch so the two cannot drift apart.
-_GRIEF_TYPES = ("acute", "anticipatory", "ambiguous", "complicated")
-
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -204,6 +199,16 @@ def _finish(
                 template_context,
             )
     return _maybe_attach_debug(result, debug_events)
+
+
+def _condition_matches(result: dict[str, object], condition: str | None) -> bool:
+    """Evaluate a simple knowledge-authored routing condition."""
+    if not condition:
+        return True
+    if "=" in condition:
+        field, expected = (part.strip() for part in condition.split("=", 1))
+        return str(result.get(field, "")) == expected
+    return bool(result.get(condition))
 
 
 def _simple_selection(
@@ -369,6 +374,18 @@ async def select_framework_async(
         return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "HIGH" or crisis_tier == 2:
+        fallback = next(
+            (
+                rule
+                for rule in orchestration_rules.intensity_fallback
+                if rule.level == "HIGH"
+            ),
+            None,
+        )
+        if fallback is None:
+            raise ValueError(
+                "HIGH intensity fallback is missing from orchestration contract."
+            )
         tasks = {
             "somatic": _run_detector_async(
                 "somatic_detector",
@@ -399,7 +416,7 @@ async def select_framework_async(
         bypass_active = res["bypass"].get("bypass_detected", False)
 
         selection = {
-            "primary_framework": "DE_ESCALATION",
+            "primary_framework": fallback.framework,
             "secondary_layer": (
                 "anger"
                 if anger_active
@@ -409,7 +426,7 @@ async def select_framework_async(
                     else ("somatic" if somatic_active else None)
                 )
             ),
-            "mode": "SANCTUARY",
+            "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
             "instruction": (
                 "SANCTUARY MODE. Activate emotional-deescalation.md 3-step "
@@ -418,6 +435,8 @@ async def select_framework_async(
             ),
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
+        if selection["secondary_layer"] not in fallback.allowed_secondary:
+            selection["secondary_layer"] = None
         return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "MODERATE":
@@ -460,51 +479,61 @@ async def select_framework_async(
             }
             return _finish(message, history, memory, selection, debug_events)
 
-        # Grief outranks moderate-intensity de-escalation. orchestration.md
-        # reserves "force De-escalation as primary regardless of topic" for HIGH
-        # intensity; MODERATE says "apply slow-down mode, hold framework
-        # lightly", and its priority table lists Grief above
-        # De-escalation (MODERATE) under a first-match-wins rule.
-        #
-        # Demoting grief to a secondary layer here meant that adding an
-        # expression of distress to a loss took grief-companion.md away: "my dog
-        # died this morning" reached GRIEF in sanctuary mode, while "my dog died
-        # this morning and I cannot stop crying" fell to a generic slow-down
-        # that did not honor the grief-specific route. Sanctuary must remain
-        # presence-first and question-free, so the grief route stays aligned
-        # with the response contract.
-        if grief.get("grief_detected") and grief.get("grief_type") in _GRIEF_TYPES:
+        grief_rule = next(
+            (
+                rule
+                for rule in orchestration_rules.primary_priority
+                if rule.result == "grief"
+            ),
+            None,
+        )
+        if grief_rule is not None and grief.get(grief_rule.detected):
             selection = {
-                "primary_framework": "GRIEF",
+                "primary_framework": grief_rule.framework,
                 "secondary_layer": (
-                    "meaning_integration" if insight.get("insight_detected") else None
+                    "meaning_integration"
+                    if grief_rule.insight_secondary and insight.get("insight_detected")
+                    else None
                 ),
-                "mode": "SANCTUARY",
-                "context": {"grief": grief, "intensity": intensity},
-                "instruction": (
-                    "Activate grief-companion.md at moderate intensity. Ground "
-                    "first, then witness the loss before any reflection. Keep it "
-                    "short. Do not ask a question in Sanctuary mode."
-                ),
-                "blocked": ["direction", "shadow", "existential", "synthesis"],
+                "mode": grief_rule.mode,
+                "context": grief,
+                "instruction": grief.get("recommendation", ""),
+                "blocked": list(grief_rule.blocked),
             }
             return _finish(message, history, memory, selection, debug_events)
 
-        secondary = None
-        if insight.get("insight_detected"):
-            secondary = "meaning_integration"
-        elif conflict.get("conflict_detected"):
-            secondary = "inner_parts"
+        # Primary-priority rules are authoritative even at MODERATE intensity.
+        # If none matches, use the knowledge-authored intensity fallback.
+        secondary = (
+            "meaning_integration"
+            if insight.get("insight_detected")
+            else ("inner_parts" if conflict.get("conflict_detected") else None)
+        )
+
+        fallback = next(
+            (
+                rule
+                for rule in orchestration_rules.intensity_fallback
+                if rule.level == "MODERATE"
+            ),
+            None,
+        )
+        if fallback is None:
+            raise ValueError(
+                "MODERATE intensity fallback is missing from orchestration contract."
+            )
+
+        if secondary not in fallback.allowed_secondary:
+            secondary = None
 
         selection = {
-            "primary_framework": "DE_ESCALATION",
+            "primary_framework": fallback.framework,
             "secondary_layer": secondary,
-            "mode": "MIRROR",
+            "mode": fallback.mode,
             "context": intensity,
             "instruction": (
-                "MODERATE intensity. Slow the conversation. Acknowledge first. "
-                "Hold framework lightly. If secondary_layer is set, move into it "
-                "gently after grounding. End with a softer question."
+                "Hold the framework lightly and slow the conversation before "
+                "deeper reflection."
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
@@ -722,7 +751,7 @@ async def select_framework_async(
             continue
         if rule.requires_no_insight and res["insight"].get("insight_detected"):
             continue
-        if rule.requires and not result.get(rule.requires):
+        if not _condition_matches(result, rule.requires):
             continue
         if rule.requires_not and result.get(rule.requires_not):
             continue

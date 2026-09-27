@@ -36,6 +36,16 @@ class SecondaryPriorityRule:
 
 
 @dataclass(frozen=True, slots=True)
+class IntensityFallbackRule:
+    """Knowledge-authored fallback for an emotional intensity level."""
+
+    level: str
+    framework: str
+    mode: str
+    allowed_secondary: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class OrchestrationRules:
     """Executable routing values authored in orchestration.md."""
 
@@ -45,6 +55,7 @@ class OrchestrationRules:
     template_routing_required: bool
     primary_priority: tuple[PrimaryPriorityRule, ...]
     secondary_priority: tuple[SecondaryPriorityRule, ...]
+    intensity_fallback: tuple[IntensityFallbackRule, ...]
     peer_min_stage: int
 
 
@@ -76,7 +87,7 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):
             continue
-        if cells[0].lower() in {"setting", "priority"}:
+        if cells[0].lower() in {"setting", "priority", "level"}:
             continue
         rows.append(cells)
     return rows
@@ -147,6 +158,29 @@ def _parse_primary_priority(
     return tuple(rules)
 
 
+def _parse_intensity_fallback(
+    rows: list[list[str]],
+) -> tuple[IntensityFallbackRule, ...]:
+    if not rows:
+        raise ValueError("INTENSITY_FALLBACK must be a non-empty table.")
+    rules: list[IntensityFallbackRule] = []
+    for row in rows:
+        if len(row) != 4:
+            raise ValueError("INTENSITY_FALLBACK rows must contain 4 columns.")
+        level, framework, mode, allowed = row
+        rules.append(
+            IntensityFallbackRule(
+                level=_require_str(level, "INTENSITY_FALLBACK.level"),
+                framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
+                mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
+                allowed_secondary=tuple(
+                    item.strip() for item in allowed.split(",") if item.strip()
+                ),
+            )
+        )
+    return tuple(rules)
+
+
 def _parse_secondary_priority(
     rows: list[list[str]],
 ) -> tuple[SecondaryPriorityRule, ...]:
@@ -193,6 +227,9 @@ def load_orchestration_rules() -> OrchestrationRules:
 
     primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
     secondary = _parse_secondary_priority(_table_rows(body, "Secondary priority"))
+    intensity_fallback = _parse_intensity_fallback(
+        _table_rows(body, "Intensity fallback")
+    )
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
             scalars["Stage 1 override max user messages"],
@@ -209,6 +246,7 @@ def load_orchestration_rules() -> OrchestrationRules:
         ),
         primary_priority=primary,
         secondary_priority=secondary,
+        intensity_fallback=intensity_fallback,
         peer_min_stage=_require_positive_int(
             scalars["Peer minimum stage"],
             "Peer minimum stage",
