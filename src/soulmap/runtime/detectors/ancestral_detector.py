@@ -55,7 +55,9 @@ def detect_ancestral(
     has_parent = any(signal in msg for signal in PARENT_SIGNALS)
     has_pattern = any(signal in msg for signal in PATTERN_SIGNALS)
     if has_parent and has_pattern and score == 0:
-        score += int(_ANCESTRAL_SCORING["Parent-reference plus pattern-language weight"])
+        score += int(
+            _ANCESTRAL_SCORING["Parent-reference plus pattern-language weight"]
+        )
         signals.append("parent_ref + pattern_language")
 
     if score < int(_ANCESTRAL_SCORING["Minimum detection score"]):
