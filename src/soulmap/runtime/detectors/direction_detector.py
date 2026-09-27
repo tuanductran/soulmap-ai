@@ -54,6 +54,7 @@ def _suggest_lens(msg: str) -> str:
             return _DIRECTION_LENS[lens]
     return _DIRECTION_LENS["default"]
 
+
 def detect_direction_need(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
