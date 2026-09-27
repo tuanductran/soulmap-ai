@@ -63,10 +63,8 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
     assert "uses: ./src/action" in content
     assert "operation: release" in content
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
-        in content
-    )
+    assert "operation: tag" in content
+    assert "target-sha:" in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
     health_command = (
