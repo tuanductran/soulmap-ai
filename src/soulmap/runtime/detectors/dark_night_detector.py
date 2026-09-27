@@ -22,7 +22,8 @@ DARK_NIGHT_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Runtime detection contract"
+    default_skill_path("skills/frameworks/dark-night-of-soul.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_dark_night(
     message: str, history: list[HistoryMessage] | None = None
