@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -19,6 +20,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 # "## Detection signals". Nothing is hardcoded here. (This detector only
 # consumes the flooding/pacing/physical groups — the crisis-adjacent groups
 # in that file are for crisis_detector's own separate, careful sync pass.)
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/emotional-deescalation.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/emotional-deescalation.md"), "Guidance"
+)
 _DEESCALATION_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/emotional-deescalation.md"),
     "Detection signals",
@@ -87,65 +95,49 @@ def detect_intensity(
 
     for phrase in PHYSICAL_OVERWHELM:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Physical overwhelm weight"])
             signals_found.append(f"physical: '{phrase}'")
 
     for phrase in COGNITIVE_FLOODING:
         if phrase in msg:
-            score += 2
+            score += int(_RULES["Cognitive flooding weight"])
             signals_found.append(f"cognitive: '{phrase}'")
 
     for phrase in EMOTIONAL_FLOODING:
         if phrase in msg:
-            score += 2
+            score += int(_RULES["Emotional flooding weight"])
             signals_found.append(f"emotional: '{phrase}'")
 
     for phrase in PACING_SIGNALS:
         if phrase in msg:
-            score += 1
+            score += int(_RULES["Pacing signal weight"])
             signals_found.append(f"pacing: '{phrase}'")
 
     word_count = len(msg.split())
-    if word_count > 200:
-        score += 1
+    if word_count > int(_RULES["Long message word threshold"]):
+        score += int(_RULES["Long message weight"])
         signals_found.append(f"length: {word_count} words")
 
-    if msg.count("!") >= 3:
-        score += 1
+    if msg.count("!") >= int(_RULES["Exclamation threshold"]):
+        score += int(_RULES["Exclamation weight"])
         signals_found.append("punctuation: multiple exclamation marks")
 
     if history and check_escalation(history):
-        score += 2
+        score += int(_RULES["Escalation weight"])
         signals_found.append("escalation: intensity increasing across messages")
 
-    if score >= 5:
+    if score >= int(_RULES["High intensity threshold"]):
         level = "HIGH"
         action = "DEESCALATE_FULL"
-        guidance = (
-            "Emotional overwhelm detected. Activate full de-escalation protocol from "
-            "skills/frameworks/emotional-deescalation.md. Three steps in order: "
-            "(1) Acknowledge intensity  -  simple, direct, no interpretation. "
-            "(2) Offer one grounding invitation  -  breath or feet on floor. "
-            "(3) Normalize the nervous system response in plain language. "
-            "Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. "
-            "After grounding: bridge gently, then one post-grounding question from deep-inquiry-bank.md."
-        )
-    elif score >= 2:
+        guidance = _GUIDANCE["HIGH"]
+    elif score >= int(_RULES["Moderate intensity threshold"]):
         level = "MODERATE"
         action = "SLOW_DOWN"
-        guidance = (
-            "Moderate emotional activation detected. Slow the conversation down. "
-            "Step 1 only: acknowledge the intensity with one warm sentence. "
-            "Consider offering a breath invitation if the message has physical signals. "
-            "You may continue with a shortened MIRROR response, but hold the framework lightly. "
-            "End with a softer question  -  retrieve from 'Post-Grounding Questions' in deep-inquiry-bank.md."
-        )
+        guidance = _GUIDANCE["MODERATE"]
     else:
         level = "NORMAL"
         action = "CONTINUE"
-        guidance = (
-            "No significant overwhelm detected. Continue standard response pipeline."
-        )
+        guidance = _GUIDANCE["NORMAL"]
 
     return {
         "level": level,

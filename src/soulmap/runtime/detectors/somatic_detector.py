@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -19,6 +20,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 # "## Detection signals". Nothing is hardcoded here.
 _SOMATIC_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Detection signals"
+)
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/somatic-wellbeing.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Guidance"
 )
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
@@ -48,14 +56,14 @@ def detect_somatic(message: str) -> dict[str, object]:
 
     for p in BIOMETRIC:
         if p in msg:
-            score += 3
+            score += int(_RULES["Biometric context weight"])
             signals.append(f"biometric:'{p}'")
             mode = "BIOMETRIC"
             break
 
     for p in BODY_SENSATION:
         if p in msg:
-            score += 2
+            score += int(_RULES["Body sensation weight"])
             signals.append(f"body:'{p}'")
             if not mode:
                 mode = "BODY_SENSATION"
@@ -63,20 +71,16 @@ def detect_somatic(message: str) -> dict[str, object]:
 
     for p in SOMATIC_INVITATION:
         if p in msg:
-            score += 1
+            score += int(_RULES["Somatic invitation weight"])
             signals.append(f"invitation:'{p}'")
             if not mode:
                 mode = "SOMATIC_INVITATION"
             break
 
-    if score < 1:
+    if score < int(_RULES["Minimum detection score"]):
         return {"somatic_detected": False, "mode": None}
 
-    guidance = {
-        "BIOMETRIC": "Acknowledge emotional state first. Then use biometric data as reflective indicator  -  not diagnostic. Use somatic_wellbeing.md. Follow with: 'What does this reflect in your inner experience right now?'",
-        "BODY_SENSATION": "Stay with the body sensation  -  don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic_wellbeing.md.",
-        "SOMATIC_INVITATION": "User is in their head / disconnected. Offer one somatic anchor first: 'Can you take one slow breath with me right now?' or 'Can you feel your feet on the floor?' Then continue with active framework.",
-    }.get(mode or "", "")
+    guidance = _GUIDANCE.get(mode or "", "")
 
     return {
         "somatic_detected": True,
