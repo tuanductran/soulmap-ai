@@ -52,6 +52,6 @@ duplicating it.
 
 ## References
 
-- [SOULMAP.md](../../SOULMAP.md)
+- [SOULMAP.md](../../skills/SOULMAP.md)
 - [skills/meta/SKILL.md](../../meta/SKILL.md)
 - [skills/runtime/SKILL.md](../../runtime/SKILL.md)
