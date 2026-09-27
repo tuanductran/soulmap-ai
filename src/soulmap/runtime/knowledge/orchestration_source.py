@@ -66,7 +66,14 @@ def _secondary(text: str) -> tuple[str, ...]:
 
 def _modes(text: str) -> dict[str, str]:
     section = _section(text, "Response mode assignment")
-    values = {row[0]: row[2] for row in _rows(section, 3)}
+    match = re.search(
+        r"(?P<body>.*?)(?=\\n### Valid secondary combinations)",
+        section,
+        re.DOTALL,
+    )
+    if match is None:
+        raise ValueError("Response mode table is missing.")
+    values = {row[0]: row[2] for row in _rows(match.group("body"), 3)}
     if not {"Crisis", "Sanctuary", "Mirror", "PEER"}.issubset(values):
         raise ValueError("Response mode contract is incomplete.")
     return values
