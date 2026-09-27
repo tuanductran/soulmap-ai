@@ -90,7 +90,6 @@ def detect_patterns(conversation_messages: list) -> dict:
     else:
         recommendation = _PATTERN_GUIDANCE["detected"]
 
-
     return {
         "patterns_detected": detected,
         "primary_pattern": primary,
