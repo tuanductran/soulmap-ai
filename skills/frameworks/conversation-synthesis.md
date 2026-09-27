@@ -295,6 +295,7 @@ must be made here and covered by runtime tests.
 ### Recurring emotional theme signals
 
 #### loneliness
+
 - "alone"
 - "lonely"
 - "isolated"
@@ -307,6 +308,7 @@ must be made here and covered by runtime tests.
 - "by myself"
 
 #### fear
+
 - "afraid"
 - "scared"
 - "terrified"
@@ -319,6 +321,7 @@ must be made here and covered by runtime tests.
 - "might leave"
 
 #### grief
+
 - "grief"
 - "grieve"
 - "grieving"
@@ -332,6 +335,7 @@ must be made here and covered by runtime tests.
 - "mourning"
 
 #### not_enough
+
 - "not enough"
 - "not good enough"
 - "never enough"
@@ -343,6 +347,7 @@ must be made here and covered by runtime tests.
 - "failing"
 
 #### freedom_vs_safety
+
 - "trapped"
 - "stuck"
 - "constrained"
@@ -354,6 +359,7 @@ must be made here and covered by runtime tests.
 - "on my own terms"
 
 #### anger
+
 - "angry"
 - "furious"
 - "resentment"
@@ -365,6 +371,7 @@ must be made here and covered by runtime tests.
 - "unfair"
 
 #### shame
+
 - "ashamed"
 - "shame"
 - "embarrassed"
@@ -377,6 +384,7 @@ must be made here and covered by runtime tests.
 ### Recurring value signals
 
 #### autonomy
+
 - "my choice"
 - "my own terms"
 - "freedom to"
@@ -386,6 +394,7 @@ must be made here and covered by runtime tests.
 - "my own path"
 
 #### honesty
+
 - "honest"
 - "truth"
 - "real"
@@ -398,6 +407,7 @@ must be made here and covered by runtime tests.
 - "being real"
 
 #### connection
+
 - "belong"
 - "belonging"
 - "close to"
@@ -409,6 +419,7 @@ must be made here and covered by runtime tests.
 - "known"
 
 #### meaning
+
 - "meaning"
 - "meaningful"
 - "purpose"
@@ -419,6 +430,7 @@ must be made here and covered by runtime tests.
 - "makes sense"
 
 #### safety
+
 - "safe"
 - "secure"
 - "protected"
@@ -428,6 +440,7 @@ must be made here and covered by runtime tests.
 - "afraid to lose"
 
 #### creativity_depth
+
 - "creative"
 - "depth"
 - "interesting"
@@ -441,6 +454,7 @@ must be made here and covered by runtime tests.
 ### Recurring inner-conflict signals
 
 #### seen_vs_hidden
+
 - "want to be seen"
 - "afraid to be seen"
 - "want to be known"
@@ -449,6 +463,7 @@ must be made here and covered by runtime tests.
 - "show"
 
 #### closeness_vs_distance
+
 - "want connection"
 - "push away"
 - "pull back"
@@ -457,6 +472,7 @@ must be made here and covered by runtime tests.
 - "want to be close but"
 
 #### knowing_vs_avoiding
+
 - "i know but"
 - "i see it but"
 - "i understand but still"
@@ -464,6 +480,7 @@ must be made here and covered by runtime tests.
 - "choose not to look"
 
 #### change_vs_familiar
+
 - "want to change"
 - "keep going back"
 - "same patterns"
@@ -472,6 +489,7 @@ must be made here and covered by runtime tests.
 - "known even if"
 
 #### giving_vs_receiving
+
 - "give so much"
 - "never receive"
 - "hard to receive"
