@@ -168,7 +168,12 @@ def test_framework_selector_exposes_debug_events_when_enabled() -> None:
 def test_framework_selector_blocks_scope_before_framework_detection() -> None:
     payload = {
         "message": "Can you predict what will happen in my love life next month?",
-        "history": [{"role": "user", "content": "Can you predict what will happen in my love life next month?"}],
+        "history": [
+            {
+                "role": "user",
+                "content": "Can you predict what will happen in my love life next month?",
+            }
+        ],
         "memory": {},
     }
     data = run_framework_selector(payload, debug=True)
