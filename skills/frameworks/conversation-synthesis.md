@@ -18,7 +18,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Within a session, synthesize when:**
 
-- The conversation has reached 8+ user messages
+- The conversation has reached the configured minimum of 6 user messages; automatic synthesis requires 10 user messages
 - Two or more distinct themes have appeared across the conversation
 - There is a natural pause or reflective moment (user asks "why do I keep talking about
   this", "is there a pattern here", "what does this all add up to")
@@ -35,7 +35,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
-- The conversation has fewer than 6 user messages
+- The conversation has fewer than the configured minimum of 6 user messages
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 

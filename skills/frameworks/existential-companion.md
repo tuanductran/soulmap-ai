@@ -363,3 +363,5 @@ The following values define the operational existential-detection policy.
 | larger_questions | Larger questions territory. Do not make it smaller or more manageable. Let it be as large as it is. |
 | holding | The user is sitting with a question they already know has no answer. Be honest about not having an answer and sit alongside the question. |
 | general | General existential territory. Use holding-space language and reflect without reducing. |
+| detected_prefix | Existential territory detected (territory: {territory}). Activate Existential Reflection Companion. {guidance} |
+| detected_suffix | Do NOT provide philosophical conclusions. Do NOT resolve the uncertainty. Do NOT use growth narrative or silver linings. Hold space. End with one question that goes deeper into the exploration. Retrieve from the deep-inquiry bank: the 'Existential Questions' section. |

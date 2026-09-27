@@ -135,15 +135,17 @@ def detect_insight(
     )
     insight_type = _classify_insight_type(msg)
 
-    integration_map = _INSIGHT_GUIDANCE
-
+    integration_guidance = _INSIGHT_GUIDANCE.get(
+        insight_type, _INSIGHT_GUIDANCE["hold_first"]
+    )
     recommendation = (
-        f"Insight moment detected (strength: {strength}, type: {insight_type}). "
-        "Activate Meaning Integration Guide from skills/frameworks/meaning-integration.md. "
-        + integration_map.get(insight_type, integration_map["hold_first"])
-        + " End with one conscious-noticing question from "
-        "skills/meta/deep-inquiry-bank.md  -  'Integration-Specific Questions' section. "
-        "Do NOT prescribe change. Focus on awareness. Do not use the word 'should'."
+        _INSIGHT_GUIDANCE["detected_prefix"].format(
+            strength=strength,
+            insight_type=insight_type,
+            guidance=integration_guidance,
+        )
+        + " "
+        + _INSIGHT_GUIDANCE["detected_suffix"]
     )
 
     return {

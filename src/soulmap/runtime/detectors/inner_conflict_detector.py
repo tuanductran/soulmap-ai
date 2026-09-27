@@ -119,9 +119,8 @@ def detect_inner_conflict(
     recommendation = _GUIDANCE["detected"].format(primary_type=primary_type)
 
     if parts_suggested:
-        recommendation += (
-            f" Likely parts present: {', '.join(parts_suggested)}. "
-            "Use reflection language from the relevant part sections."
+        recommendation += " " + _GUIDANCE["detected_parts_suffix"].format(
+            parts=", ".join(parts_suggested)
         )
 
     return {
