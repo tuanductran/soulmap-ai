@@ -592,7 +592,7 @@ The exact scope keyword packs are authored in the sections below. Runtime classi
 - "new persona"
 - "override"
 - "bypass"
-- "forget you are soulmap"
+- "forget you are SoulMap"
 - "disable"
 - "developer mode"
 - "dan mode"
