@@ -22,7 +22,8 @@ SOULMATE_LONGING_SIGNALS = load_keyword_section(
     default_skill_path("skills/soulmate/soulmate-longing.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/soulmate/soulmate-longing.md"), "Runtime detection contract"
+    default_skill_path("skills/soulmate/soulmate-longing.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/soulmate/soulmate-longing.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_soulmate_longing(
     message: str, history: list[HistoryMessage] | None = None
