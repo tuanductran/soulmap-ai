@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _ROW_RE = re.compile(
     r"^\|\s*(?P<framework>[^|]+?)\s*\|\s*(?P<mode>[^|]+?)\s*\|\s*"
@@ -34,7 +34,7 @@ def _key(value: str) -> str:
 @lru_cache(maxsize=1)
 def load_template_rules() -> tuple[TemplateRule, ...]:
     """Read and validate the core framework/template mapping table."""
-    path = default_skill_path("skills/meta/framework-template-map.md")
+    path = runtime_skill_path("framework-template-map")
     text = path.read_text(encoding="utf-8")
     rules = tuple(
         TemplateRule(
