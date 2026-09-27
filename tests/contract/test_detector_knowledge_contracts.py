@@ -57,7 +57,9 @@ def test_bypass_detector_uses_knowledge_scoring(
 def test_shadow_detector_uses_knowledge_threshold(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setitem(shadow_pattern_detector._SHADOW_SCORING, "Minimum detection score", "99")
+    monkeypatch.setitem(
+        shadow_pattern_detector._SHADOW_SCORING, "Minimum detection score", "99"
+    )
     result = shadow_pattern_detector.detect_shadow_patterns(
         "people always take advantage of me"
     )
