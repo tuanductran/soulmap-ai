@@ -78,27 +78,27 @@ def detect_existential(
             "identity_shift",
             IDENTITY_SHIFT,
             int(_EXISTENTIAL_SCORING["Identity-shift weight"]),
-        )
+        ),
         (
             "meaning_depth",
             MEANING_DEPTH,
             int(_EXISTENTIAL_SCORING["Meaning-depth weight"]),
-        )
+        ),
         (
             "endings_grief",
             ENDINGS_GRIEF,
             int(_EXISTENTIAL_SCORING["Endings-grief weight"]),
-        )
+        ),
         (
             "larger_questions",
             LARGER_QUESTIONS,
             int(_EXISTENTIAL_SCORING["Larger-questions weight"]),
-        )
+        ),
         (
             "holding",
             HOLDING_QUESTIONS,
             int(_EXISTENTIAL_SCORING["Holding-question weight"]),
-        )
+        ),
     ]
 
     for territory, signals, weight in signal_map:
