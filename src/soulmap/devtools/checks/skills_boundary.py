@@ -58,11 +58,7 @@ def _line_number(token: object) -> int:
 def _implementation_tokens(value: str) -> tuple[str, ...]:
     """Return implementation references that are meaningful in Markdown syntax."""
     lowered = value.lower()
-    return tuple(
-        token
-        for token in _FORBIDDEN_TEXT
-        if token.lower() in lowered
-    )
+    return tuple(token for token in _FORBIDDEN_TEXT if token.lower() in lowered)
 
 
 def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
