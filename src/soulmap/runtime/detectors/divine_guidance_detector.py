@@ -30,8 +30,6 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
-
 
 def detect_divine_guidance(
     message: str, history: list[HistoryMessage] | None = None
@@ -59,7 +57,8 @@ def detect_divine_guidance(
         "divine_guidance_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": _GUIDANCE["detected"],    }
+        "recommendation": _GUIDANCE["detected"],
+    }
 
 
 if __name__ == "__main__":
