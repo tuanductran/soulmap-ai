@@ -406,15 +406,25 @@ runtime may execute these values, but must not duplicate them.
 | sustained meaning signal limit | 6 |
 | sustained transition signal limit | 6 |
 
+### Lens signals
+
+| Lens | Signal groups |
+| :--- | :--- |
+| meaning | meaning |
+| energy | energy |
+| respect | should_vs_want, comparison |
+| misalignment | misalignment |
+| default | none |
+
 ### Lens routing
 
-| Lens | Signal groups | Guidance |
-| :--- | :--- | :--- |
-| meaning | meaning | ask about what has felt meaningful, even in small ways |
-| energy | energy | ask about what energizes vs. drains |
-| respect | should_vs_want, comparison | ask what kind of life they would genuinely admire |
-| misalignment | misalignment | help locate the gap between values and current life |
-| default | none | start with what feels meaningful as the opening lens |
+| Lens | Guidance |
+| :--- | :--- |
+| meaning | ask about what has felt meaningful, even in small ways |
+| energy | ask about what energizes vs. drains |
+| respect | ask what kind of life they would genuinely admire |
+| misalignment | help locate the gap between values and current life |
+| default | start with what feels meaningful as the opening lens |
 
 ### Runtime guidance
 
