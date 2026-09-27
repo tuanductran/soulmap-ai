@@ -22,6 +22,10 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | empath-boundary | skills/frameworks/empath-boundary.md | Activation Signals | Runtime detection contract | Guidance |
 | existential-companion | skills/frameworks/existential-companion.md | Detection signals | Runtime detection contract | Guidance |
 | fear-of-visibility | skills/frameworks/fear-of-visibility.md | Detection signals | Runtime detection contract | Guidance |
+| framework-template-map | skills/meta/framework-template-map.md | - | - | - |
+| orchestration | skills/meta/orchestration.md | - | Runtime execution contract | - |
+| scope-classification | skills/safety/whitelist-blacklist-system.md | - | Runtime classification contract | - |
+| stage-classifier | skills/meta/stage-classifier.md | - | Runtime enforcement contract | - |
 | grief-companion | skills/frameworks/grief-companion.md | Detection signals | Runtime detection contract | Guidance |
 | inner-parts | skills/frameworks/inner-parts.md | Detection signals | Runtime detection contract | Guidance |
 | integration-celebration | skills/frameworks/integration-celebration.md | Detection signals | Runtime detection contract | Guidance |
