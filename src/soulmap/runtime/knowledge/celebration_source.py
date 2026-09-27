@@ -44,7 +44,7 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-_ROW_RE = re.compile(r"^\\|\\s*(?P<setting>[^|]+?)\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", re.MULTILINE)
+_ROW_RE = re.compile(r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", re.MULTILINE)
 
 
 def _table_rows(body: str) -> list[tuple[str, str]]:
@@ -56,16 +56,16 @@ def _table_rows(body: str) -> list[tuple[str, str]]:
 
 
 def _section_body(body: str, heading: str) -> str:
-    match = re.search(rf"^### {re.escape(heading)}\\s*$", body, re.MULTILINE)
+    match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
         raise ValueError(f"Celebration section {heading!r} is missing.")
     remainder = body[match.end() :]
-    next_heading = re.search(r"^###\\s+", remainder, re.MULTILINE)
+    next_heading = re.search(r"^###\s+", remainder, re.MULTILINE)
     return remainder[: next_heading.start()] if next_heading else remainder
 
 
 def _quoted_bullets(body: str) -> tuple[str, ...]:
-    return tuple(dict.fromkeys(re.findall(r'^- "([^"]+)"\\s*$', body, re.MULTILINE)))
+    return tuple(dict.fromkeys(re.findall(r'^- "([^"]+)"\s*$', body, re.MULTILINE)))
 
 
 def _literal_config(body: str) -> dict[str, object]:
