@@ -29,7 +29,7 @@ duplicating it.
 1. Start from the central orchestration skill.
 2. Load the canonical domain files under `skills/soulmate/`.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
-5. Return to the response pipeline for voice and safety validation.
+4. Return to the response pipeline for voice and safety validation.
 
 ## Rules
 
