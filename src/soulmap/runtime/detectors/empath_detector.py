@@ -52,7 +52,8 @@ def detect_empath_overwhelm(
         default_skill_path("skills/frameworks/empath-boundary.md"), "Drain signals"
     )
     people_ctx = load_keyword_section(
-        default_skill_path("skills/frameworks/empath-boundary.md"), "People-context signals"
+        default_skill_path("skills/frameworks/empath-boundary.md"),
+        "People-context signals",
     )
     if (
         any(d in msg for d in drain)
