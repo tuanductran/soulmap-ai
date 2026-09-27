@@ -8,6 +8,7 @@ import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 
+from soulmap.devtools.checks.skills_boundary import audit_markdown
 from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
@@ -156,10 +157,16 @@ def _assert_expected_members(
                 for reference in FORBIDDEN_SKILL_REFERENCES
                 if reference in content
             ]
-            if violations:
+            boundary_findings = audit_markdown(name, content)
+            if violations or boundary_findings:
+                details = []
+                if violations:
+                    details.append(f"forbidden references: {violations}")
+                if boundary_findings:
+                    details.append(f"implementation boundary: {boundary_findings}")
                 raise ExtractedArtifactError(
-                    f"{archive_path.name}:{name} contains forbidden shipped references: "
-                    f"{violations}"
+                    f"{archive_path.name}:{name} contains invalid shipped content: "
+                    + "; ".join(details)
                 )
     finally:
         archive.close()
