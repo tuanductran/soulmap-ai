@@ -73,32 +73,23 @@ def detect_existential(
         "holding": 0,
     }
 
+    signal_sources = {
+        "identity_shift": IDENTITY_SHIFT,
+        "meaning_depth": MEANING_DEPTH,
+        "endings_grief": ENDINGS_GRIEF,
+        "larger_questions": LARGER_QUESTIONS,
+        "holding": HOLDING_QUESTIONS,
+    }
+    signal_weights = {
+        "identity_shift": int(_EXISTENTIAL_SCORING["Identity-shift weight"]),
+        "meaning_depth": int(_EXISTENTIAL_SCORING["Meaning-depth weight"]),
+        "endings_grief": int(_EXISTENTIAL_SCORING["Endings-grief weight"]),
+        "larger_questions": int(_EXISTENTIAL_SCORING["Larger-questions weight"]),
+        "holding": int(_EXISTENTIAL_SCORING["Holding-question weight"]),
+    }
     signal_map = [
-        (
-            "identity_shift",
-            IDENTITY_SHIFT,
-            int(_EXISTENTIAL_SCORING["Identity-shift weight"]),
-        ),
-        (
-            "meaning_depth",
-            MEANING_DEPTH,
-            int(_EXISTENTIAL_SCORING["Meaning-depth weight"]),
-        ),
-        (
-            "endings_grief",
-            ENDINGS_GRIEF,
-            int(_EXISTENTIAL_SCORING["Endings-grief weight"]),
-        ),
-        (
-            "larger_questions",
-            LARGER_QUESTIONS,
-            int(_EXISTENTIAL_SCORING["Larger-questions weight"]),
-        ),
-        (
-            "holding",
-            HOLDING_QUESTIONS,
-            int(_EXISTENTIAL_SCORING["Holding-question weight"]),
-        ),
+        (name, signal_sources[name], signal_weights[name])
+        for name in _EXISTENTIAL_SCORING["Territory priority"].split(";")
     ]
 
     for territory, signals, weight in signal_map:
