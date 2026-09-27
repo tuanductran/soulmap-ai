@@ -16,20 +16,22 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/fear-of-visibility.md,
 # "## Detection signals". Nothing is hardcoded here.
 _VISIBILITY_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Detection signals"
+    runtime_skill_path("fear-of-visibility"), "Detection signals"
 )
 VISIBILITY_FEAR_SIGNALS = _VISIBILITY_GROUPS["direct visibility fear"]
 SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
 PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/fear-of-visibility.md"),
+    runtime_skill_path("fear-of-visibility"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Guidance"
+    runtime_skill_path("fear-of-visibility"), "Guidance"
 )
 
 
