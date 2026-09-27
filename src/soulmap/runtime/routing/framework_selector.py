@@ -366,8 +366,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": {"stage": 1, "stage_override": True},
             "instruction": (
-                "Stage 1 first-contact override. Use minimal-depth presence and "
-                "reflection; do not activate a framework."
+                orchestration_rules.runtime_instructions["Stage 1 override"]
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -428,11 +427,7 @@ async def select_framework_async(
             ),
             "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
-            "instruction": (
-                "SANCTUARY MODE. Activate emotional-deescalation.md 3-step "
-                "protocol: acknowledge → ground → normalize. NO 5-step framework. "
-                "NO inquiry question. 2-4 sentences maximum. Wait for user."
-            ),
+            "instruction": orchestration_rules.runtime_instructions["HIGH intensity"],
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
         if selection["secondary_layer"] not in fallback.allowed_secondary:
@@ -532,8 +527,7 @@ async def select_framework_async(
             "mode": fallback.mode,
             "context": intensity,
             "instruction": (
-                "Hold the framework lightly and slow the conversation before "
-                "deeper reflection."
+                orchestration_rules.runtime_instructions["MODERATE intensity"]
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
@@ -787,9 +781,9 @@ async def select_framework_async(
         "mode": mode,
         "context": {"stage": current_stage},
         "instruction": (
-            "MIRROR mode: 5-step arc. End with one question from deep-inquiry-bank.md."
+            orchestration_rules.runtime_instructions["MIRROR fallback"]
             if mode == "MIRROR"
-            else "PEER mode: dialogue, light structure. End with one question."
+            else orchestration_rules.runtime_instructions["PEER fallback"]
         ),
         "blocked": [],
     }

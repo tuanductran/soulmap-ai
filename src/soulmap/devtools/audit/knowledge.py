@@ -9,6 +9,7 @@ should have been.
 from __future__ import annotations
 
 import argparse
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -20,6 +21,27 @@ from soulmap.runtime.knowledge.consistency import (
     find_python_markdown_duplicates,
     markdown_consumers,
 )
+
+_PYTHON_IMPLEMENTATION_PATTERNS = (
+    re.compile(r"^\s*```(?:python|py)\s*$", re.IGNORECASE | re.MULTILINE),
+    re.compile(r"(?:src/soulmap/|tests/)[^\s)]+\.py"),
+    re.compile(r"(?:^|[\s`])(?:from|import)\s+soulmap(?:\.|\s)", re.MULTILINE),
+)
+
+
+def find_markdown_implementation_references(root: Path) -> tuple[Path, ...]:
+    """Find Markdown skill files containing Python implementation references.
+
+    Skill Markdown may contain declarative runtime contracts and ordinary words such
+    as ``python`` as user-domain signals. This audit only flags implementation
+    coupling: Python fenced blocks, repository Python paths, or Python imports.
+    """
+    findings: list[Path] = []
+    for path in sorted((root / "skills").rglob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        if any(pattern.search(text) for pattern in _PYTHON_IMPLEMENTATION_PATTERNS):
+            findings.append(path)
+    return tuple(findings)
 
 
 def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) -> str:
@@ -122,8 +144,13 @@ def main(argv: list[str] | None = None) -> int:
     root = args.root.resolve()
     duplicates = find_python_markdown_duplicates(root)
     usage = find_config_usage(root)
+    implementation_references = find_markdown_implementation_references(root)
     print(_format_inventory(duplicates, root))
     print(f"\n{_format_usage(usage, root)}")
+    print("\nMarkdown implementation-reference audit")
+    print(f"implementation references: {len(implementation_references)}")
+    for path in implementation_references:
+        print(f"  - {path.relative_to(root)}")
     if args.max_knowledge_duplicates is not None:
         duplicate_count = sum(
             duplicate.classification == "knowledge_duplicate"

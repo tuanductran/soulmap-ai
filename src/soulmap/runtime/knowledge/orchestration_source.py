@@ -57,6 +57,7 @@ class OrchestrationRules:
     secondary_priority: tuple[SecondaryPriorityRule, ...]
     intensity_fallback: tuple[IntensityFallbackRule, ...]
     peer_min_stage: int
+    runtime_instructions: dict[str, str]
 
 
 def _contract_body(text: str) -> str:
@@ -87,7 +88,7 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):
             continue
-        if cells[0].lower() in {"setting", "priority", "level"}:
+        if cells[0].lower() in {"setting", "priority", "level", "name"}:
             continue
         rows.append(cells)
     return rows
@@ -225,6 +226,22 @@ def load_orchestration_rules() -> OrchestrationRules:
     if strength not in {"emerging", "strong"}:
         raise ValueError("Breakthrough minimum insight strength is invalid.")
 
+    instruction_rows = _table_rows(body, "Runtime instructions")
+    if not instruction_rows:
+        raise ValueError("Runtime instructions must be a non-empty table.")
+    runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
+    required_instructions = {
+        "Stage 1 override",
+        "HIGH intensity",
+        "MODERATE intensity",
+        "MIRROR fallback",
+        "PEER fallback",
+    }
+    if set(runtime_instructions) != required_instructions or any(
+        not value for value in runtime_instructions.values()
+    ):
+        raise ValueError("Orchestration runtime instructions are incomplete.")
+
     primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
     secondary = _parse_secondary_priority(_table_rows(body, "Secondary priority"))
     intensity_fallback = _parse_intensity_fallback(
@@ -251,4 +268,5 @@ def load_orchestration_rules() -> OrchestrationRules:
             scalars["Peer minimum stage"],
             "Peer minimum stage",
         ),
+        runtime_instructions=runtime_instructions,
     )
