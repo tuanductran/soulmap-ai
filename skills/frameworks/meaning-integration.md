@@ -351,4 +351,3 @@ The validation bonus applies only when an assistant integration trigger occurred
 | when_it_appears | Insight detected and the user is locating it in time or context. Explore when the pattern usually appears. |
 | noticing_earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
 | different_response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |
-
