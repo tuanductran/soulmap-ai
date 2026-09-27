@@ -127,8 +127,12 @@ def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
                 framework=framework,
                 mode=mode,
                 blocked=tuple(blocked),
-                insight_secondary=item.get("insight_secondary", False),
-                requires_no_insight=item.get("requires_no_insight", False),
+                insight_secondary=_require_bool(
+                    item.get("insight_secondary", False), "insight_secondary"
+                ),
+                requires_no_insight=_require_bool(
+                    item.get("requires_no_insight", False), "requires_no_insight"
+                ),
                 requires=requires_value,
                 requires_not=requires_not_value,
             )
