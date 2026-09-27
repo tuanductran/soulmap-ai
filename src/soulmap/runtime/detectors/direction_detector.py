@@ -19,6 +19,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 _SOURCE = runtime_skill_path("life-direction")
 _DIRECTION_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
 _DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
+_DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
 _DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Runtime guidance")
 
@@ -36,16 +37,19 @@ HistoryMessage = dict[str, str]
 
 def _suggest_lens(msg: str) -> str:
     """Suggest the knowledge-authored inquiry lens."""
-    candidates = (
-        ("meaning", MEANING_SIGNALS[:6]),
-        ("energy", ENERGY_SIGNALS),
-        (
-            "respect",
-            SHOULD_SIGNALS[:4] + COMPARISON_SIGNALS[:4],
-        ),
-        ("misalignment", MISALIGNMENT_SIGNALS[:6]),
-    )
-    for lens, signals in candidates:
+    signal_map = {
+        "meaning": MEANING_SIGNALS,
+        "energy": ENERGY_SIGNALS,
+        "should_vs_want": SHOULD_SIGNALS,
+        "comparison": COMPARISON_SIGNALS,
+        "misalignment": MISALIGNMENT_SIGNALS,
+    }
+    for lens, groups in _DIRECTION_LENS_SIGNALS.items():
+        if lens == "default":
+            continue
+        signals = []
+        for group in groups.split(","):
+            signals.extend(signal_map.get(group.strip(), ()))
         if any(signal in msg for signal in signals):
             return _DIRECTION_LENS[lens]
     return _DIRECTION_LENS["default"]
