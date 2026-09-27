@@ -12,10 +12,6 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_table_rows,
 )
-    find_config_usage,
-    find_python_markdown_duplicates,
-    markdown_consumers,
-)
 
 
 def test_find_python_markdown_duplicates(tmp_path: Path) -> None:
