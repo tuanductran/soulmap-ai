@@ -1,14 +1,16 @@
-from pathlib import Path
-
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
-from soulmap.runtime.knowledge.runtime_registry import runtime_section
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge.runtime_registry import (
+    runtime_section,
+    runtime_skill_path,
+)
 
 
 def test_runtime_registry_resolves_known_domain_source() -> None:
     path = runtime_skill_path("grief-companion")
     assert path == REPO_ROOT / "skills/frameworks/grief-companion.md"
-    assert runtime_section("grief-companion", "contract") == "Runtime detection contract"
+    assert (
+        runtime_section("grief-companion", "contract") == "Runtime detection contract"
+    )
 
 
 def test_detector_modules_do_not_embed_skill_source_paths() -> None:
