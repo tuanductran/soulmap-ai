@@ -374,7 +374,9 @@ def create_tag(
                 "GET",
                 f"/repos/{quote(owner)}/{quote(repo)}/git/tags/{quote(object_sha)}",
             )
-            tag_target = tag_object.get("object") if isinstance(tag_object, dict) else None
+            tag_target = (
+                tag_object.get("object") if isinstance(tag_object, dict) else None
+            )
             if isinstance(tag_target, dict) and tag_target.get("sha") == target_sha:
                 print(f"Release tag {tag} already exists at the expected commit.")
                 return
