@@ -97,9 +97,7 @@ def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
             raise ValueError("Each PRIMARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
         required = ("result", "detected", "framework", "mode")
-        if any(
-            not isinstance(item.get(key), str) or not item[key] for key in required
-        ):
+        if any(not isinstance(item.get(key), str) or not item[key] for key in required):
             raise ValueError(
                 "Each PRIMARY_PRIORITY entry requires string routing fields."
             )
