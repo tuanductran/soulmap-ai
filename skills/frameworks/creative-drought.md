@@ -183,6 +183,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 | Rule | Value |
@@ -201,6 +202,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 ### Secondary signal groups
 
 #### Creative-identity signals
+
 - "as a writer"
 - "as an artist"
 - "as a creator"
@@ -218,6 +220,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 - "creative"
 
 #### Absence signals
+
 - "nothing"
 - "empty"
 - "blank"
