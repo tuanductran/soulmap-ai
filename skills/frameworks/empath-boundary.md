@@ -178,6 +178,7 @@ with people context ("being around people", "after being with", "family gatherin
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 | Rule | Value |
@@ -196,6 +197,7 @@ with people context ("being around people", "after being with", "family gatherin
 ### Secondary signal groups
 
 #### Drain signals
+
 - "drained"
 - "exhausted"
 - "depleted"
@@ -204,6 +206,7 @@ with people context ("being around people", "after being with", "family gatherin
 - "need to recover"
 
 #### People-context signals
+
 - "being around people"
 - "after being with"
 - "after spending time"
