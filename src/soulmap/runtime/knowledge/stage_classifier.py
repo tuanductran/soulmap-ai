@@ -17,7 +17,8 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 _STAGE_RE = re.compile(r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE)
 _KEYWORDS_RE = re.compile(
     r"\*\*Keyword signals \(weight: (?P<weight>\d+) each\):\*\*"
-    r"(?P<body>.*?)(?=\n\*\*Classification signals:\*\*|\Z)",
+    r"(?P<body>.*?)(?=
+\*\*Classification signals:\*\*|\Z)",
     re.DOTALL,
 )
 _QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
@@ -147,7 +148,11 @@ def _runtime_contract(text: str) -> dict[str, object]:
             "Anti-regression minimum lower-stage messages"
         ],
         "STAGE_ROLES": roles,
-        "STAGE_RECOMMENDATIONS": recommendations,\n    }\n\n\ndef parse_stage_classifier(text: str) -> StageClassifierRules:
+        "STAGE_RECOMMENDATIONS": recommendations,
+    }
+
+
+def parse_stage_classifier(text: str) -> StageClassifierRules:
     """Parse the scoring contract from stage-classifier Markdown.
 
     Raises:
@@ -182,7 +187,8 @@ def _runtime_contract(text: str) -> dict[str, object]:
         )
 
     minimums_section_match = re.search(
-        r"## Minimum Thresholds(?P<body>.*?)(?=\n## |\Z)", text, re.DOTALL
+        r"## Minimum Thresholds(?P<body>.*?)(?=
+## |\Z)", text, re.DOTALL
     )
     if minimums_section_match is None:
         raise ValueError("Stage classifier has no minimum-threshold table.")
@@ -194,7 +200,8 @@ def _runtime_contract(text: str) -> dict[str, object]:
         raise ValueError("Stage classifier threshold table is incomplete.")
 
     scoring_section_match = re.search(
-        r"## Scoring Algorithm(?P<body>.*?)(?=\n## |\Z)", text, re.DOTALL
+        r"## Scoring Algorithm(?P<body>.*?)(?=
+## |\Z)", text, re.DOTALL
     )
     if scoring_section_match is None:
         raise ValueError("Stage classifier has no scoring algorithm section.")
