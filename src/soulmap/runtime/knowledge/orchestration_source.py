@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
 
@@ -205,7 +205,7 @@ def _parse_secondary_priority(
 @lru_cache(maxsize=1)
 def load_orchestration_rules() -> OrchestrationRules:
     """Read and validate executable routing values from shipped Markdown."""
-    path = default_skill_path("skills/meta/orchestration.md")
+    path = runtime_skill_path("orchestration")
     body = _contract_body(path.read_text(encoding="utf-8"))
 
     scalar_rows = _table_rows(body, "Scalar settings")
