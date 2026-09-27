@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("grief-companion"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("grief-companion"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("grief-companion"), "Guidance")
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
