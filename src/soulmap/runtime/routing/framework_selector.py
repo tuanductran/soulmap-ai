@@ -364,6 +364,14 @@ async def select_framework_async(
         return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "HIGH" or crisis_tier == 2:
+        fallback = next(
+            (rule for rule in orchestration_rules.intensity_fallback if rule.level == "HIGH"),
+            None,
+        )
+        if fallback is None:
+            raise ValueError(
+                "HIGH intensity fallback is missing from orchestration contract."
+            )
         tasks = {
             "somatic": _run_detector_async(
                 "somatic_detector",
@@ -394,7 +402,7 @@ async def select_framework_async(
         bypass_active = res["bypass"].get("bypass_detected", False)
 
         selection = {
-            "primary_framework": "DE_ESCALATION",
+            "primary_framework": fallback.framework,
             "secondary_layer": (
                 "anger"
                 if anger_active
@@ -404,7 +412,7 @@ async def select_framework_async(
                     else ("somatic" if somatic_active else None)
                 )
             ),
-            "mode": "SANCTUARY",
+            "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
             "instruction": (
                 "SANCTUARY MODE. Activate emotional-deescalation.md 3-step "
@@ -413,6 +421,8 @@ async def select_framework_async(
             ),
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
+        if selection["secondary_layer"] not in fallback.allowed_secondary:
+            selection["secondary_layer"] = None
         return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "MODERATE":
