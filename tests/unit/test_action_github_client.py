@@ -56,7 +56,6 @@ def test_repository_parts_rejects_malformed_repositories() -> None:
 def test_api_error_preserves_status_and_redacts_token() -> None:
     token = "secret-token"
     headers = Message()
-    headers["X-RateLimit-Remaining"] = "0"
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         403,
