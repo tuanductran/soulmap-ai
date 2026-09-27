@@ -135,123 +135,30 @@ def detect_inner_conflict(
 
 
 def _suggest_parts(msg: str) -> list[str]:
-    """Suggest which part archetypes may be visible in the message.
-
-    Matches keywords associated with each archetype. These are possibilities
-    offered to the reflective layer, never a fixed identity assigned to the
-    user.
+    """Suggest part archetypes using the Markdown-owned signal groups.
 
     Args:
         msg: The user's current message, already lowercased and stripped.
 
     Returns:
-        Archetype names that have at least one keyword present. Empty when
-        none match.
+        Up to three archetype names whose authored signals match the message.
     """
-    suggestions = []
-
-    protective_signals = [
-        "wall",
-        "guard",
-        "let in",
-        "shut down",
-        "closed off",
-        "protect",
-        "don't need",
-        "independent",
-        "rely on no one",
-        "keep distance",
+    archetype_labels = (
+        ("protective part", "protective part"),
+        ("fearful part", "fearful part"),
+        ("hopeful part", "hopeful part"),
+        ("tired part", "tired part"),
+        ("angry part", "angry part"),
+        ("critical part", "critical part"),
+        ("yearning part", "yearning part"),
+        ("avoidant part", "avoidant part"),
+    )
+    suggestions = [
+        part_name
+        for group_name, part_name in archetype_labels
+        if any(signal in msg for signal in _INNER_PARTS_GROUPS.get(group_name, ()))
     ]
-    fearful_signals = [
-        "what if",
-        "worst case",
-        "something goes wrong",
-        "afraid",
-        "scared",
-        "imagining",
-        "waiting for it to",
-        "fall apart",
-        "won't last",
-    ]
-    hopeful_signals = [
-        "still believe",
-        "maybe",
-        "could be different",
-        "haven't given up",
-        "still hoping",
-        "still think",
-        "somewhere in me",
-        "trying again",
-    ]
-    tired_signals = [
-        "exhausted",
-        "tired of",
-        "can't anymore",
-        "don't want to",
-        "done",
-        "been strong",
-        "carrying",
-        "worn out",
-        "depleted",
-    ]
-    angry_signals = [
-        "angry",
-        "furious",
-        "sick of",
-        "fed up",
-        "not fair",
-        "pushing back",
-        "hate",
-        "resentment",
-        "doesn't make sense",
-        "shouldn't have to",
-    ]
-    critical_signals = [
-        "stupid",
-        "failure",
-        "should have known",
-        "what's wrong with me",
-        "disappointed in myself",
-        "always do this",
-        "never learn",
-    ]
-    yearning_signals = [
-        "want to be seen",
-        "want to belong",
-        "want to feel",
-        "just want",
-        "longing",
-        "wish someone",
-        "want to be known",
-        "want connection",
-    ]
-    avoidant_signals = [
-        "keep busy",
-        "don't think about",
-        "distract",
-        "easier not to",
-        "avoid",
-        "don't go there",
-        "push it away",
-        "pretend",
-    ]
-
-    part_map = [
-        ("protective part", protective_signals),
-        ("fearful part", fearful_signals),
-        ("hopeful part", hopeful_signals),
-        ("tired part", tired_signals),
-        ("angry part", angry_signals),
-        ("critical part", critical_signals),
-        ("yearning part", yearning_signals),
-        ("avoidant part", avoidant_signals),
-    ]
-
-    for part_name, signals in part_map:
-        if any(s in msg for s in signals):
-            suggestions.append(part_name)
-
-    return suggestions[:3]  # Return max 3 suggested parts
+    return suggestions[:3]
 
 
 if __name__ == "__main__":
