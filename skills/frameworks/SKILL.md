@@ -64,7 +64,6 @@ For domain-oriented discovery, use:
 - [wellbeing](../domains/wellbeing/SKILL.md)
 - [life-and-meaning](../domains/life-and-meaning/SKILL.md)
 
-Runtime integration is centralized in [SKILL.md](../runtime/SKILL.md).
 
 ## Files in this skill
 
