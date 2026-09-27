@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -21,9 +22,16 @@ SACRED_POLARITY_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
     "Activation Signals",
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
+    "Guidance",
+)
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
 
 
 def detect_sacred_polarity(
@@ -36,30 +44,23 @@ def detect_sacred_polarity(
 
     for phrase in SACRED_POLARITY_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"sacred_polarity: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "sacred_polarity_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No sacred polarity signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "sacred_polarity_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Sacred feminine/masculine polarity reflection detected. Activate "
-            "sacred-feminine-masculine.md. Never assign feminine or masculine to the "
-            "user based on gender, and never prescribe how the balance should look. "
-            "Reflect back the pattern they are living and explore what it reveals "
-            "about their relationship to both energies. End with one awareness-"
-            "oriented question, never a prescription for balance."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 
