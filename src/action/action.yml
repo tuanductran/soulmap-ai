@@ -1,6 +1,6 @@
 name: SoulMap GitHub Operations
 author: Tuan Duc Tran
-description: Python GitHub Action for idempotent release publication and release pull-request creation.
+description: Python GitHub Action for idempotent release publication, tag creation, and release pull-request creation.
 inputs:
   operation:
     description: "Operation to perform: release, pull-request, or tag."
