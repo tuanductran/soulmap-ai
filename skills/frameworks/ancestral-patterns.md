@@ -218,4 +218,3 @@ The following values define the operational ancestral-pattern detection policy.
 | :--- | :--- |
 | detected | Ancestral pattern recognition is present. Hold both truths: the wound is real and the person who passed it was also wounded. Do not push toward forgiveness. End with one ancestral question. |
 | not_detected | No ancestral signal. Continue the standard pipeline. |
-
