@@ -228,6 +228,7 @@ and may prevent this framework from activating.
 - **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and celebration
   closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 The detector executes the following operational configuration. This section is
