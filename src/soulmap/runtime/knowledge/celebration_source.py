@@ -44,7 +44,9 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-_ROW_RE = re.compile(r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", re.MULTILINE)
+_ROW_RE = re.compile(
+    r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", re.MULTILINE
+)
 
 
 def _table_rows(body: str) -> list[tuple[str, str]]:
