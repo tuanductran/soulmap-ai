@@ -351,6 +351,7 @@ The following values define the operational existential-detection policy.
 | Sustained endings signal limit | 4 |
 | Sustained larger-question signal limit | 4 |
 | Sustained history threshold | 2 |
+| Territory priority | identity_shift; meaning_depth; endings_grief; larger_questions; holding |
 
 ### Guidance
 
