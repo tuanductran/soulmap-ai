@@ -188,3 +188,20 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Paralysis signal weight | 3 |
+| General perfectionism weight | 1 |
+| Persistence bonus | 1 |
+| Minimum detection score | 2 |
+| History window | 4 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No perfectionism paralysis signal. Continue standard pipeline. |
+| detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Name what the perfectionism is protecting. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
+
