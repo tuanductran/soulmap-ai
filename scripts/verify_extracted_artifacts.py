@@ -79,9 +79,8 @@ def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
     members: set[str] = set()
     for path in paths:
         relative = path.relative_to(repo_root).as_posix()
-        if (
-            not _is_ignored(relative, patterns)
-            and not relative.startswith(RUNTIME_PREFIX)
+        if not _is_ignored(relative, patterns) and not relative.startswith(
+            RUNTIME_PREFIX
         ):
             members.add(relative)
     return members
