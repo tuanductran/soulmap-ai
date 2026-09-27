@@ -427,4 +427,3 @@ The following values define the operational spiritual-bypass detection policy.
 | premature_acceptance | Acceptance may be arriving before the underlying experience has been fully felt. Gently explore what remains underneath without forcing a conclusion. |
 | spiritual_inflation | Spiritual identity may be creating distance from vulnerability. Ground the reflection in the user's specific lived experience. |
 | bypassing_accountability | Spiritual framing may be avoiding the user's own role in a human situation. Return gently to the personal experience without moralizing. |
-
