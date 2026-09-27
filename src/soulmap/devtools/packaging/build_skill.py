@@ -66,7 +66,7 @@ def _iter_inputs(repo_root: Path) -> list[Path]:
     for folder in ["skills"]:
         base = repo_root / folder
         for path in base.rglob("*"):
-            if path.is_file():
+            if path.is_file() and Path("skills/runtime") not in path.relative_to(repo_root).parents:
                 paths.append(path)
 
     return sorted(set(paths))
