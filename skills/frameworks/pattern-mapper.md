@@ -380,7 +380,6 @@ Pattern requires 2+ user messages with matching signals before activating.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-
 ## Runtime detection contract
 
 This section defines executable detection policy for recurring-pattern detection. Pattern
