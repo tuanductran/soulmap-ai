@@ -80,3 +80,17 @@ Do not prescribe balance. Invite awareness and honoring of both.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No sacred polarity signal. Continue standard pipeline. |
+| detected | Sacred feminine/masculine polarity reflection detected. Activate the sacred polarity framework. Explore receptivity and action as complementary capacities without assigning fixed gender traits, prescribing a polarity, or treating the framework as a literal metaphysical law. End with one reflective polarity question. |
