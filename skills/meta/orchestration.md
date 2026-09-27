@@ -51,6 +51,18 @@ these values must be made here and covered by focused runtime tests.
 | Template routing required before delivery | true |
 | Peer minimum stage | 5 |
 
+### Runtime instructions
+
+These short runtime instructions are content contracts, not implementation logic. Runtime code must load them from this section rather than embedding their wording.
+
+| Name | Value |
+| :--- | :--- |
+| Stage 1 override | Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework. |
+| HIGH intensity | SANCTUARY MODE. Activate the emotional-deescalation protocol: acknowledge → ground → normalize. No 5-step framework. No inquiry question. 2-4 sentences maximum. |
+| MODERATE intensity | Hold the framework lightly and slow the conversation before deeper reflection. |
+| MIRROR fallback | MIRROR mode: use the response-structure arc and end with one question from deep-inquiry-bank.md. |
+| PEER fallback | PEER mode: dialogue, light structure, and one question. |
+
 ### Intensity fallback
 
 | Level | Primary framework | Mode | Allowed secondary layers |
