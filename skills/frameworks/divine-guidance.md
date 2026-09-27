@@ -95,4 +95,3 @@ Do not ask them to commit or act. Ask them to notice and discern.
 | :--- | :--- |
 | not_detected | No divine guidance signal. Continue standard pipeline. |
 | detected | Divine guidance discernment detected. Activate divine-guidance.md. Never confirm whether guidance is 'real' or from spirits/guides, and never tell the user what to do based on their guidance. Reflect back the qualities of what they sensed and explore how they can test it against their own deepest knowing. End with one discernment-oriented question. |
-
