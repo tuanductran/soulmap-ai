@@ -19,7 +19,8 @@ Prefer the smallest correct change that makes the system more coherent.
 When files appear to overlap, resolve them in this order:
 
 1. `SOULMAP.md`, baseline SoulMap doctrine and shipped package contract
-2. `skills/`, shipped product knowledge (`templates/` is internal-only, not shipped)
+2. Shipped knowledge under `skills/` (`skills/runtime/` is internal runtime metadata;
+   `templates/` is internal-only and not shipped)
 3. `docs/engineering/`, repository structure and maintenance contract
 4. `src/soulmap/runtime/` and `src/soulmap/devtools/`, executable behavior and tooling
 5. `tests/` and `evals/datasets/`, verification of observable behavior
