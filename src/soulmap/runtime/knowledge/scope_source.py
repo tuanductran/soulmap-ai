@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -12,7 +11,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime classification contract"
 _BLOCK_RE = re.compile(
-    r"\x60\x60\x60json\s*(?P<body>.*?)\x60\x60\x60",
+    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60",
     re.MULTILINE | re.DOTALL,
 )
 
@@ -41,33 +40,42 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
+_PACK_RE = re.compile(r"^### (?P<pack>.+?)\s*$", re.MULTILINE)
+_GROUP_RE = re.compile(r"^#### (?P<group>.+?)\s*$", re.MULTILINE)
+_QUOTED_RE = re.compile(r'"([^"]+)"')
+
+
 def _literal_config(body: str) -> dict[str, object]:
-    match = _BLOCK_RE.search(body)
-    if match is None:
-        raise ValueError("Scope runtime classification block is missing.")
-    try:
-        values = json.loads(match.group("body"))
-    except json.JSONDecodeError as exc:
-        raise ValueError("Scope runtime classification is invalid JSON.") from exc
-    if not isinstance(values, dict):
-        raise ValueError("Scope runtime classification must be an object.")
-    required = {
-        "WHITELIST_TIER1",
-        "WHITELIST_TIER2",
-        "BLACKLIST_LAYER1",
-        "BLACKLIST_PROHIBITED",
+    packs = list(_PACK_RE.finditer(body))
+    expected = {
+        "Whitelist tier 1": "WHITELIST_TIER1",
+        "Whitelist tier 2": "WHITELIST_TIER2",
+        "Blacklist layer 1": "BLACKLIST_LAYER1",
+        "Prohibited blacklist": "BLACKLIST_PROHIBITED",
     }
-    if set(values) != required:
+    if len(packs) != len(expected) or {match.group("pack") for match in packs} != set(
+        expected
+    ):
         raise ValueError("Scope runtime classification packs are incomplete.")
-    for name in required:
-        value = values[name]
-        if not isinstance(value, dict) or not all(
-            isinstance(category, str)
-            and isinstance(keywords, list)
-            and all(isinstance(keyword, str) and keyword for keyword in keywords)
-            for category, keywords in value.items()
-        ):
-            raise ValueError(f"Scope keyword pack {name} is invalid.")
+    values: dict[str, object] = {}
+    for index, pack in enumerate(packs):
+        end = packs[index + 1].start() if index + 1 < len(packs) else len(body)
+        pack_body = body[pack.end() : end]
+        groups = list(_GROUP_RE.finditer(pack_body))
+        if not groups:
+            raise ValueError(f"Scope pack {pack.group('pack')} has no categories.")
+        parsed: dict[str, list[str]] = {}
+        for group_index, group in enumerate(groups):
+            group_end = (
+                groups[group_index + 1].start()
+                if group_index + 1 < len(groups)
+                else len(pack_body)
+            )
+            phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
+            if not phrases:
+                raise ValueError(f"Scope category {group.group('group')} is empty.")
+            parsed[group.group("group")] = phrases
+        values[expected[pack.group("pack")]] = parsed
     return values
 
 
