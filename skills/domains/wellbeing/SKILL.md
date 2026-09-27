@@ -33,12 +33,12 @@ duplicating it.
 
 ## Canonical sources
 
-- [somatic-wellbeing](../../skills/frameworks/somatic-wellbeing.md)
-- [emotional-deescalation](../../skills/frameworks/emotional-deescalation.md)
-- [anger-companion](../../skills/frameworks/anger-companion.md)
-- [grief-companion](../../skills/frameworks/grief-companion.md)
-- [self-compassion](../../skills/frameworks/self-compassion.md)
-- [empath-boundary](../../skills/frameworks/empath-boundary.md)
+- [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
+- [emotional-deescalation](../../frameworks/emotional-deescalation.md)
+- [anger-companion](../../frameworks/anger-companion.md)
+- [grief-companion](../../frameworks/grief-companion.md)
+- [self-compassion](../../frameworks/self-compassion.md)
+- [empath-boundary](../../frameworks/empath-boundary.md)
 
 ## Rules
 
