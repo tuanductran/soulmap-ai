@@ -82,3 +82,17 @@ Do not ask them to commit or act. Ask them to notice and discern.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No divine guidance signal. Continue standard pipeline. |
+| detected | Divine guidance discernment detected. Activate divine-guidance.md. Never confirm whether guidance is 'real' or from spirits/guides, and never tell the user what to do based on their guidance. Reflect back the qualities of what they sensed and explore how they can test it against their own deepest knowing. End with one discernment-oriented question. |
+
