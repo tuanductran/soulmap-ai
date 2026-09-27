@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -41,37 +40,32 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-def _literal_config(body: str) -> dict[str, object]:
-    match = _BLOCK_RE.search(body)
-    if match is None:
-        raise ValueError("Scope runtime classification block is missing.")
-    tree = ast.parse(match.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-            continue
-        target = node.targets[0]
-        if isinstance(target, ast.Name):
-            values[target.id] = ast.literal_eval(node.value)
-    required = {
-        "WHITELIST_TIER1",
-        "WHITELIST_TIER2",
-        "BLACKLIST_LAYER1",
-        "BLACKLIST_PROHIBITED",
-    }
-    if set(values) != required:
-        raise ValueError("Scope runtime classification packs are incomplete.")
-    for name in required:
-        value = values[name]
-        if not isinstance(value, dict) or not all(
-            isinstance(category, str)
-            and isinstance(keywords, list)
-            and all(isinstance(keyword, str) and keyword for keyword in keywords)
-            for category, keywords in value.items()
-        ):
-            raise ValueError(f"Scope keyword pack {name} is invalid.")
-    return values
+_PACK_RE = re.compile(r"^### (?P<pack>.+?)\\s*$", re.MULTILINE)
+_GROUP_RE = re.compile(r"^#### (?P<group>.+?)\\s*$", re.MULTILINE)
+_QUOTED_RE = re.compile(r'"([^"]+)"')
 
+
+def _literal_config(body: str) -> dict[str, object]:
+    packs = list(_PACK_RE.finditer(body))
+    expected = {"Whitelist tier 1": "WHITELIST_TIER1", "Whitelist tier 2": "WHITELIST_TIER2", "Blacklist layer 1": "BLACKLIST_LAYER1", "Prohibited blacklist": "BLACKLIST_PROHIBITED"}
+    if len(packs) != len(expected) or {match.group("pack") for match in packs} != set(expected):
+        raise ValueError("Scope runtime classification packs are incomplete.")
+    values: dict[str, object] = {}
+    for index, pack in enumerate(packs):
+        end = packs[index + 1].start() if index + 1 < len(packs) else len(body)
+        pack_body = body[pack.end() : end]
+        groups = list(_GROUP_RE.finditer(pack_body))
+        if not groups:
+            raise ValueError(f"Scope pack {pack.group('pack')} has no categories.")
+        parsed: dict[str, list[str]] = {}
+        for group_index, group in enumerate(groups):
+            group_end = groups[group_index + 1].start() if group_index + 1 < len(groups) else len(pack_body)
+            phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
+            if not phrases:
+                raise ValueError(f"Scope category {group.group('group')} is empty.")
+            parsed[group.group("group")] = phrases
+        values[expected[pack.group("pack")]] = parsed
+    return values
 
 def _freeze(value: dict[str, list[str]]) -> dict[str, tuple[str, ...]]:
     return {category: tuple(keywords) for category, keywords in value.items()}
