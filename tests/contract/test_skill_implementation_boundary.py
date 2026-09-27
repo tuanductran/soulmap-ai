@@ -16,7 +16,9 @@ def test_audit_accepts_domain_markdown_without_implementation_details(
     assert audit(tmp_path) == []
 
 
-def test_audit_rejects_implementation_commands_and_executable_code(tmp_path: Path) -> None:
+def test_audit_rejects_implementation_commands_and_executable_code(
+    tmp_path: Path,
+) -> None:
     skills = tmp_path / "skills" / "example"
     skills.mkdir(parents=True)
     (skills / "SKILL.md").write_text(
