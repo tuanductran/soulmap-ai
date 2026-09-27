@@ -51,6 +51,17 @@ these values must be made here and covered by focused runtime tests.
 | Template routing required before delivery | true |
 | Peer minimum stage | 5 |
 
+### Intensity fallback
+
+| Level | Primary framework | Mode | Allowed secondary layers |
+| :--- | :--- | :--- | :--- |
+| HIGH | DE_ESCALATION | SANCTUARY | anger, bypass, somatic |
+| MODERATE | DE_ESCALATION | MIRROR | meaning_integration, inner_parts |
+
+These are fallback routes only. Primary-priority rules still win when their conditions
+match. HIGH always uses its fallback primary; MODERATE uses its fallback only when no
+primary-priority rule matches.
+
 ### Primary priority
 
 First matching rule wins. Empty cells mean the condition is not required.
