@@ -44,11 +44,6 @@ duplicating it.
 
 - Use wellbeing frameworks as supportive lenses; safety and crisis boundaries remain higher priority.
 
-## Examples
-
-- A request about grief and self-compassion -> route through the inner-work domain.
-- A request about relationship patterns -> route through the relationships domain.
-- A symbolic spiritual question -> route through the spirituality domain.
 
 ## Edge Cases
 
