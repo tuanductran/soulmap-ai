@@ -17,6 +17,7 @@ from soulmap.devtools.checks import (
     check_freshness,
     check_markdown_case,
     check_markdown_links,
+    skills_boundary,
 )
 from soulmap.devtools.cli import bootstrap_venv
 from soulmap.devtools.evals import (
@@ -53,6 +54,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "check-case": check_markdown_case.main,
         "check-freshness": check_freshness.main,
         "check-links": check_markdown_links.main,
+        "audit-skills-boundary": skills_boundary.main,
         "eval-groups": eval_groups.main,
         "eval-markdown-contracts": eval_markdown_contracts.main,
         "eval-response-quality": eval_response_quality.main,
