@@ -78,3 +78,17 @@ Do not ask for action, practice, or solutions. Ask for presence and honest notic
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No dark night signal. Continue standard pipeline. |
+| detected | Dark Night of the Soul territory detected. Activate dark-night-of-soul.md. Do not offer premature reassurance, spiritual prescriptions, or reframe the emptiness as growth. Name the territory honestly and stay present to the not-knowing alongside the user. End with one presence-oriented question, never a request for action or practice. |
+
