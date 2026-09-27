@@ -16,18 +16,20 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/sacred-feminine-masculine.md,
 # "## Activation Signals". Nothing is hardcoded here.
 SACRED_POLARITY_SIGNALS = load_keyword_section(
-    default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
+    runtime_skill_path("sacred-feminine-masculine"),
     "Activation Signals",
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
+    runtime_skill_path("sacred-feminine-masculine"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/sacred-feminine-masculine.md"),
+    runtime_skill_path("sacred-feminine-masculine"),
     "Guidance",
 )
 
