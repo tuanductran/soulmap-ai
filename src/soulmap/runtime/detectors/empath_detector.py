@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("empath-boundary"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("empath-boundary"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("empath-boundary"), "Guidance")
 
 
 HistoryMessage = dict[str, str]
@@ -48,9 +46,7 @@ def detect_empath_overwhelm(
             break
 
     # Secondary: drain/exhaustion + people/others context
-    drain = load_keyword_section(
-        runtime_skill_path("empath-boundary"), "Drain signals"
-    )
+    drain = load_keyword_section(runtime_skill_path("empath-boundary"), "Drain signals")
     people_ctx = load_keyword_section(
         runtime_skill_path("empath-boundary"),
         "People-context signals",
