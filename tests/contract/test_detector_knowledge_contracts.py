@@ -81,14 +81,18 @@ def test_existential_response_policy_is_markdown_authored() -> None:
     result = existential_detector.detect_existential(
         "I don't recognize myself anymore."
     )
-    assert "Do NOT provide philosophical conclusions." in result["recommendation"]
-    assert "Existential Reflection Companion" in result["recommendation"]
+    recommendation = result["recommendation"]
+    assert isinstance(recommendation, str)
+    assert "Do NOT provide philosophical conclusions." in recommendation
+    assert "Existential Reflection Companion" in recommendation
 
 
 def test_insight_response_policy_is_markdown_authored() -> None:
     result = insight_detector.detect_insight("I finally understand why I do this.")
-    assert "Do NOT prescribe change." in result["recommendation"]
-    assert "Meaning Integration Guide" in result["recommendation"]
+    recommendation = result["recommendation"]
+    assert isinstance(recommendation, str)
+    assert "Do NOT prescribe change." in recommendation
+    assert "Meaning Integration Guide" in recommendation
 
 
 def test_inner_parts_suffix_is_markdown_authored() -> None:
@@ -96,4 +100,6 @@ def test_inner_parts_suffix_is_markdown_authored() -> None:
         "Part of me wants to leave, but another part is scared."
     )
     assert result["parts_suggested"]
-    assert "Likely parts present:" in result["recommendation"]
+    recommendation = result["recommendation"]
+    assert isinstance(recommendation, str)
+    assert "Likely parts present:" in recommendation
