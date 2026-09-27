@@ -31,10 +31,17 @@ duplicating it.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
 4. Return to the response pipeline for voice and safety validation.
 
+## Canonical sources
+
+- [existential-companion](../../skills/frameworks/existential-companion.md)
+- [meaning-integration](../../skills/frameworks/meaning-integration.md)
+- [life-direction](../../skills/frameworks/life-direction.md)
+- [creative-drought](../../skills/frameworks/creative-drought.md)
+- [fear-of-visibility](../../skills/frameworks/fear-of-visibility.md)
+- [soul-nourishment](../../skills/frameworks/soul-nourishment.md)
+
 ## Rules
 
-- Domain skills own meaning and response knowledge.
-- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Choose one primary framework through meta before loading a domain framework.
 
 ## Examples
