@@ -71,9 +71,20 @@ def _secondary(text: str) -> tuple[str, ...]:
         raise ValueError("Secondary-layer contract is incomplete.")
     return values
 
+def _response_section(text: str) -> str:
+    """Return the response-mode section using exact Markdown heading markers."""
+    marker = "## Response mode assignment"
+    end_marker = "## Priority override rules"
+    start = text.find(marker)
+    end = text.find(end_marker, start + len(marker))
+    if start < 0 or end < 0:
+        raise ValueError("Response mode assignment section is missing.")
+    return text[start + len(marker) : end]
+
+
 def _modes(text: str) -> dict[str, str]:
     """Parse the first response-mode table without depending on prose headings."""
-    section = _section(text, "Response mode assignment")
+    section = _response_section(text)
     values: dict[str, str] = {}
     table_started = False
     for line in section.splitlines():
@@ -117,7 +128,7 @@ def _forbidden(text: str) -> frozenset[frozenset[str]]:
             pairs.add(frozenset({_framework(left), _framework(right)}))
     return frozenset(pairs)
 def _overrides(text: str) -> tuple[int, int, str, str, str]:
-    section = _section(text, "Priority override rules")
+    section = _response_section(text)
     stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
     breakthrough = re.search(r"Rule 5, breakthrough overrides continuation.*?switch to\s+([A-Za-z ]+?)\s+immediately", section, re.IGNORECASE | re.DOTALL)
     if stage is None or breakthrough is None:
