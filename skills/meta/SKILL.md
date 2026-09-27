@@ -178,6 +178,9 @@ full decision tree in orchestration.md before finalizing.
 - [session-continuity.md](session-continuity.md)
 - [stage-classifier.md](stage-classifier.md)
 - [user-journey-stages.md](user-journey-stages.md)
+- [quick-reference.md](quick-reference.md)
+- [redirect-templates.md](redirect-templates.md)
+- [response-structure.md](response-structure.md)
 
 ## Expected outcome
 
