@@ -57,6 +57,7 @@ Those belong to [SKILL.md](../brand/SKILL.md) and [SKILL.md](../safety/SKILL.md)
 ## Domain routing
 
 For domain-oriented discovery, use:
+
 - [inner-work](../domains/inner-work/SKILL.md)
 - [relationships](../domains/relationships/SKILL.md)
 - [spirituality](../domains/spirituality/SKILL.md)
