@@ -70,6 +70,7 @@ def _literal_config(body: str) -> dict[str, object]:
             raise ValueError(f"Scope keyword pack {name} is invalid.")
     return values
 
+
 def _freeze(value: dict[str, list[str]]) -> dict[str, tuple[str, ...]]:
     return {category: tuple(keywords) for category, keywords in value.items()}
 
