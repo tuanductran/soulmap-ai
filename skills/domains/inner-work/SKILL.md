@@ -44,7 +44,6 @@ duplicating it.
 - [dark-night-of-soul](../../frameworks/dark-night-of-soul.md)
 - [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
 
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.
