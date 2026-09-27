@@ -62,7 +62,8 @@ def resolve_template(
     if normalized == "de_escalation":
         target = "De-escalation (HIGH)" if mode == "SANCTUARY" else "De-escalation (MODERATE)"
     elif normalized == "grief":
-        grief_type = str(context.get("grief_type", context.get("type", "acute"))).lower()
+        grief_context = context.get("grief") if isinstance(context.get("grief"), dict) else context
+        grief_type = str(grief_context.get("grief_type", grief_context.get("type", "acute"))).lower()
         target = f"Grief ({grief_type})"
     elif normalized == "mirror":
         target = "Mirror (Stage 1)" if context.get("stage_override") else (
