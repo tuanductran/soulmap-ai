@@ -36,8 +36,6 @@ _MULTIPLIER_RE = re.compile(
 )
 
 
-
-
 @dataclass(frozen=True, slots=True)
 class StageRule:
     """Executable scoring rules for one user-journey stage."""
