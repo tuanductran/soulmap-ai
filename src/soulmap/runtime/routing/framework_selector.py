@@ -45,6 +45,7 @@ from soulmap.runtime.detectors.spiritual_purpose_detector import (
 from soulmap.runtime.detectors.visibility_fear_detector import detect_visibility_fear
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.knowledge.template_source import resolve_template
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
@@ -295,6 +296,36 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
+    dep = await _run_detector_async(
+        "dependency_detector",
+        analyze_dependency,
+        history,
+        debug_events=debug_events,
+    )
+    if dep.get("level") == "HIGH_DEPENDENCY":
+        selection = {
+            "primary_framework": "DEPENDENCY",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": dep,
+            "instruction": dep.get("recommendation", ""),
+            "blocked": ["ALL_FRAMEWORKS"],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
+    scope = classify_message(message)
+    if str(scope.get("tier", "")).startswith("BLACKLIST"):
+        selection = {
+            "primary_framework": "BLOCKED",
+            "secondary_layer": None,
+            "mode": "BLOCKED",
+            "context": scope,
+            "instruction": str(scope.get("explanation", "")),
+            "blocked": ["ALL_FRAMEWORKS"],
+            "safety_override": True,
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
     dep_task = _run_detector_async(
         "dependency_detector",
         analyze_dependency,
@@ -324,6 +355,35 @@ async def select_framework_async(
                 "one question pointing toward real-world support."
             ),
             "blocked": ["ALL_FRAMEWORKS"],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
+    stage = await _run_detector_async(
+        "stage_detector",
+        detect_stage,
+        [*history, {"role": "user", "content": message}],
+        memory,
+        debug_events=debug_events,
+    )
+    raw_stage = stage.get("stage", 1)
+    current_stage = raw_stage if isinstance(raw_stage, int) else 1
+    user_count = sum(
+        1 for item in history if isinstance(item, dict) and item.get("role") == "user"
+    )
+    rules = load_orchestration_rules()
+    if (
+        crisis_tier != 2
+        and current_stage == rules.stage1_stage
+        and user_count < rules.stage1_max_user_turn
+    ):
+        selection = {
+            "primary_framework": "MIRROR",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": {"stage": current_stage},
+            "instruction": f"Stage 1 override. Use {rules.stage1_depth} depth and presence before architecture.",
+            "blocked": ["ALL_OTHER_FRAMEWORKS"],
+            "stage": current_stage,
         }
         return _finish(message, history, memory, selection, debug_events)
 
@@ -498,13 +558,6 @@ async def select_framework_async(
             history,
             debug_events=debug_events,
         ),
-        "stage": _run_detector_async(
-            "stage_detector",
-            detect_stage,
-            [*history, {"role": "user", "content": message}],
-            memory,
-            debug_events=debug_events,
-        ),
         "somatic": _run_detector_async(
             "somatic_detector",
             detect_somatic,
@@ -632,11 +685,6 @@ async def select_framework_async(
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
-    _raw_stage = res["stage"].get("stage", 1)
-    # Detector results are dicts of object, so narrow the stage here rather
-    # than at each comparison. A non-integer stage falls back to 1, the most
-    # conservative journey stage, instead of raising mid-routing.
-    current_stage = _raw_stage if isinstance(_raw_stage, int) else 1
     pattern = {}
     if user_count >= 1:
         # Include current message so single-turn pattern signals are captured
