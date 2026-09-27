@@ -88,7 +88,7 @@ def detect_bypass(
             break
 
     genuine_count = sum(1 for phrase in GENUINE_INTEGRATION if phrase in msg)
-    if genuine_count >= 2:
+    if genuine_count >= int(_BYPASS_SCORING["Genuine-integration minimum signals"]):
         score = max(
             0, score - int(_BYPASS_SCORING["Genuine-integration score reduction"])
         )
