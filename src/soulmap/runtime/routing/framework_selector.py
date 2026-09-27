@@ -193,15 +193,11 @@ def _finish(
         framework = result.get("primary_framework")
         mode = result.get("mode")
         if isinstance(framework, str) and isinstance(mode, str):
-            try:
-                result["template"] = resolve_template(
-                    framework,
-                    mode,
-                    result.get("context") if isinstance(result.get("context"), dict) else {},
-                )
-            except ValueError as error:
-                _LOGGER.error("Template routing failed: %s", error)
-                result["template_error"] = str(error)
+            result["template"] = resolve_template(
+                framework,
+                mode,
+                result.get("context") if isinstance(result.get("context"), dict) else {},
+            )
     return _maybe_attach_debug(result, debug_events)
 
 
