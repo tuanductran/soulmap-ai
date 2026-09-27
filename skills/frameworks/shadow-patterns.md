@@ -539,4 +539,3 @@ The following values define the operational shadow-pattern detection policy.
 | pattern | Reflect detected shadow patterns only as possibilities. Name the protective intention, return ownership immediately, and use one shadow-specific question. If the user rejects the reflection, honor that and move on. |
 | external_frustration | Explore repeated external frustration gently through the projection principle. Do not name a shadow pattern until there is more information. |
 | mild | Continue the standard reflective mode while staying alert for patterns emerging across the conversation. |
-
