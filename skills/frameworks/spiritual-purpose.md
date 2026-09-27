@@ -82,3 +82,17 @@ Do not ask them to commit or figure it out. Ask them to notice and honor.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No spiritual purpose signal. Continue standard pipeline. |
+| detected | Spiritual purpose discernment detected. Activate spiritual-purpose.md. Never tell the user what their purpose is or suggest they should know their calling by now. Reflect back what you notice about the energy (aligned or driven) and explore what is underneath the action or inaction. End with one noticing-oriented question, never a request to commit or figure it out. |
+
