@@ -11,15 +11,16 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/spiritual/spiritual-discernment.md,
 # "## Detection signal reference". Nothing is hardcoded here — the phrase
 # lists are parsed straight from that Markdown skill.
-_DISCERNMENT_PATH = default_skill_path("skills/spiritual/spiritual-discernment.md")
+_DISCERNMENT_PATH = runtime_skill_path("spiritual-discernment")
 BYPASS_DISMISS = load_keyword_section(_DISCERNMENT_PATH, "Bypass: Dismissing Pain")
 PREMATURE_ACCEPTANCE = load_keyword_section(
     _DISCERNMENT_PATH, "Bypass: Premature Acceptance"
