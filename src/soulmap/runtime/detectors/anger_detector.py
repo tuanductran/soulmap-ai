@@ -88,8 +88,17 @@ def detect_anger(
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_ANGER_SCORING["Sustained history window"]):]
-        anger_count = sum(1 for m in recent if any(p in m for p in ACTIVE_ANGER[: int(_ANGER_SCORING["Sustained active-signal limit"]) ]))
-        if anger_count >= 2:
+        anger_count = sum(
+            1
+            for m in recent
+            if any(
+                p in m
+                for p in ACTIVE_ANGER[
+                    : int(_ANGER_SCORING["Sustained active-signal limit"])
+                ]
+            )
+        )
+        if anger_count >= int(_ANGER_SCORING["Sustained history threshold"]):
             score += int(_ANGER_SCORING["Sustained active anger bonus"])
             signals.append("sustained_anger_across_messages")
 
