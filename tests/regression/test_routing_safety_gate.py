@@ -29,7 +29,7 @@ DEFAULTS = {
     "detect_soulmate_longing": {"soulmate_longing_detected": False},
     "detect_partnership_patterns": {"partnership_patterns_detected": False},
     "detect_patterns": {},
-    "detect_stage": {"stage": 1},
+    "detect_stage": {"stage": 3},
 }
 
 SCENARIOS = [
