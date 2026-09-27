@@ -106,6 +106,7 @@ def test_audit_cli_passes_without_a_threshold(
 
     assert audit.main(["--root", str(tmp_path)]) == 0
 
+
 def test_markdown_implementation_reference_audit_ignores_domain_word_python(tmp_path: Path) -> None:
     skills = tmp_path / "skills"
     skills.mkdir()
