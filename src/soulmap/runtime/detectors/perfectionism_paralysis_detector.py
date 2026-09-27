@@ -60,7 +60,7 @@ def detect_perfectionism_paralysis(
     # General perfectionism signals add secondary score only. Doctrine
     # (perfectionism-paralysis.md, "Distinguish from genuine discernment"):
     # "Perfectionism paralysis is a pattern, not a single instance." A bare
-    # generic phrase must not reach _THRESHOLD alone; it only crosses the
+    # generic phrase must not reach the minimum detection score alone; it only crosses the
     # threshold combined with the history repetition bonus below, which is
     # the check for "does the pattern appear repeatedly."
     for phrase in PERFECTIONISM_SIGNALS:
