@@ -50,7 +50,6 @@ After meta orchestration, use the domain routers as the stable navigation layer:
 | Wellbeing | [domains/wellbeing/](skills/domains/wellbeing/SKILL.md) |
 | Life and meaning | [domains/life-and-meaning/](skills/domains/life-and-meaning/SKILL.md) |
 
-Python-facing Markdown integration is isolated under [runtime/](skills/runtime/SKILL.md). Domain skills must never carry Python implementation details or executable code.
 
 ### Full knowledge base
 
