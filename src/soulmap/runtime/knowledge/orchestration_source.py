@@ -11,7 +11,9 @@ from typing import cast
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
-_JSON_RE = re.compile(r"^\`\`\`json\s*\n(?P<body>.*?)\n\`\`\`", re.MULTILINE | re.DOTALL)
+_JSON_RE = re.compile(
+    r"^\`\`\`json\s*\n(?P<body>.*?)\n\`\`\`", re.MULTILINE | re.DOTALL
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -95,10 +97,16 @@ def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
             raise ValueError("Each PRIMARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
         required = ("result", "detected", "framework", "mode")
-        if any(not isinstance(item.get(key), str) or not item[key] for key in required):
-            raise ValueError("Each PRIMARY_PRIORITY entry requires string routing fields.")
+        if any(
+            not isinstance(item.get(key), str) or not item[key] for key in required
+        ):
+            raise ValueError(
+                "Each PRIMARY_PRIORITY entry requires string routing fields."
+            )
         blocked = item.get("blocked", [])
-        if not isinstance(blocked, list) or not all(isinstance(v, str) for v in blocked):
+        if not isinstance(blocked, list) or not all(
+            isinstance(v, str) for v in blocked
+        ):
             raise ValueError("PRIMARY_PRIORITY blocked values must be strings.")
         for key in ("insight_secondary", "requires_no_insight"):
             if key in item and not isinstance(item[key], bool):
@@ -130,8 +138,13 @@ def _parse_secondary_priority(value: object) -> tuple[SecondaryPriorityRule, ...
         if not isinstance(item, dict):
             raise ValueError("Each SECONDARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
-        if any(not isinstance(item.get(key), str) or not item[key] for key in ("name", "result", "detected")):
-            raise ValueError("Each SECONDARY_PRIORITY entry requires string routing fields.")
+        if any(
+            not isinstance(item.get(key), str) or not item[key]
+            for key in ("name", "result", "detected")
+        ):
+            raise ValueError(
+                "Each SECONDARY_PRIORITY entry requires string routing fields."
+            )
         rules.append(
             SecondaryPriorityRule(
                 name=item["name"], result=item["result"], detected=item["detected"]
@@ -160,7 +173,9 @@ def load_orchestration_rules() -> OrchestrationRules:
 
     strength = contract["BREAKTHROUGH_MIN_INSIGHT_STRENGTH"]
     if strength not in {"emerging", "strong"}:
-        raise ValueError("BREAKTHROUGH_MIN_INSIGHT_STRENGTH must be emerging or strong.")
+        raise ValueError(
+            "BREAKTHROUGH_MIN_INSIGHT_STRENGTH must be emerging or strong."
+        )
 
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
@@ -178,5 +193,7 @@ def load_orchestration_rules() -> OrchestrationRules:
         ),
         primary_priority=_parse_primary_priority(contract["PRIMARY_PRIORITY"]),
         secondary_priority=_parse_secondary_priority(contract["SECONDARY_PRIORITY"]),
-        peer_min_stage=_require_positive_int(contract["PEER_MIN_STAGE"], "PEER_MIN_STAGE"),
+        peer_min_stage=_require_positive_int(
+            contract["PEER_MIN_STAGE"], "PEER_MIN_STAGE"
+        ),
     )
