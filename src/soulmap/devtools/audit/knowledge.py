@@ -23,9 +23,9 @@ from soulmap.runtime.knowledge.consistency import (
 )
 
 _PYTHON_IMPLEMENTATION_PATTERNS = (
-    re.compile(r"^\\s*```(?:python|py)\\s*$", re.IGNORECASE | re.MULTILINE),
-    re.compile(r"(?:src/soulmap/|tests/)[^\\s)]+\\.py"),
-    re.compile(r"(?:^|[\\s`])(?:from|import)\\s+soulmap(?:\\.|\\s)", re.MULTILINE),
+    re.compile(r"^\s*```(?:python|py)\s*$", re.IGNORECASE | re.MULTILINE),
+    re.compile(r"(?:src/soulmap/|tests/)[^\s)]+\.py"),
+    re.compile(r"(?:^|[\s`])(?:from|import)\s+soulmap(?:\.|\s)", re.MULTILINE),
 )
 
 
