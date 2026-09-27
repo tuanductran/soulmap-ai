@@ -43,7 +43,7 @@ def test_pattern_scoring_uses_markdown_authored_weights() -> None:
         result = pattern_detector.detect_patterns(
             [
                 {"role": "user", "content": "people always leave"},
-                {"role": "user", "content": "same thing happens"},
+                {"role": "user", "content": "it keeps happening"},
             ]
         )
         assert result["patterns_detected"][0]["score"] == 7
