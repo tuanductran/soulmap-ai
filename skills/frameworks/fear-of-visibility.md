@@ -221,3 +221,18 @@ Public expression:
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Direct visibility-fear weight | 3 |
+| Shrinking plus public-expression weight | 2 |
+| Minimum detection score | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No visibility fear signal. Continue standard pipeline. |
+| detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction at the threshold. Name the protection's intention. Do NOT push toward action or sharing. End with one visibility question from deep-inquiry-bank.md (Visibility Questions section). |
+
