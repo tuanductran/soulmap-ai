@@ -11,6 +11,7 @@ def test_runtime_registry_resolves_known_domain_source() -> None:
     assert (
         runtime_section("grief-companion", "contract") == "Runtime detection contract"
     )
+    assert runtime_skill_path("shadow-patterns") != runtime_skill_path("self-compassion")
 
 
 def test_detector_modules_do_not_embed_skill_source_paths() -> None:
