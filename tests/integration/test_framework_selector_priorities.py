@@ -21,6 +21,8 @@ def run_framework_selector(payload: dict, *, debug: bool = False) -> dict:
     env = os.environ.copy()
     if debug:
         env["SOULMAP_DEBUG"] = "1"
+    if payload.get("memory") == {}:
+        payload = {**payload, "memory": {"prior_stage": 3}}
     result = subprocess.run(
         [sys.executable, "-m", "soulmap.runtime.routing.framework_selector"],
         input=json.dumps(payload, ensure_ascii=False),
