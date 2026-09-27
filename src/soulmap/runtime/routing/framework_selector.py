@@ -196,33 +196,14 @@ def _finish(
     primary = str(selection.get("primary_framework", ""))
     secondary = selection.get("secondary_layer")
     mode = str(selection.get("mode", ""))
-    normalized_primary = primary.replace("_", " ").title()
-    aliases = {
-        "Mirror": "Mirror",
-        "De Escalation": "De-escalation",
-        "Integration Celebration": "Integration and Celebration",
-        "Meaning Integration": "Meaning Integration",
-    }
-    normalized_primary = aliases.get(normalized_primary, normalized_primary)
-    if normalized_primary not in rules.priority:
-        raise ValueError(f"Primary framework {primary!r} is not in orchestration.md.")
-    if secondary is not None:
-        if secondary not in rules.secondary_layers:
-            raise ValueError(f"Unknown secondary layer {secondary!r}.")
-        allowed = rules.valid_secondary.get(normalized_primary, ())
-        if secondary not in allowed:
-            raise ValueError(
-                f"Secondary layer {secondary!r} is not valid for {primary!r}."
-            )
-    template_context = (
-        dict(selection.get("context"))
-        if isinstance(selection.get("context"), dict)
-        else {}
-    )
     if isinstance(selection.get("stage"), int):
         template_context.setdefault("stage", selection["stage"])
+    if mode not in rules.modes:
+        raise ValueError(f"Unknown response mode {mode!r}.")
     template = resolve_template(primary, mode, template_context)
     selection = dict(selection)
+    selection["mode"] = mode
+    selection["context"] = template_context
     selection["template"] = {
         "framework": template.framework,
         "mode": template.mode,
