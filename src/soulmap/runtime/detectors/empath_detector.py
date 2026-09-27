@@ -22,7 +22,8 @@ EMPATH_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/empath-boundary.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/empath-boundary.md"), "Runtime detection contract"
+    default_skill_path("skills/frameworks/empath-boundary.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/empath-boundary.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_empath_overwhelm(
     message: str, history: list[HistoryMessage] | None = None
