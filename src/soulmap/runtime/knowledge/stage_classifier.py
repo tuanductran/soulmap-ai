@@ -7,7 +7,6 @@ keyword sets, weights, thresholds, or recency multipliers in Python.
 
 from __future__ import annotations
 
-import ast
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -72,58 +71,40 @@ def _display_name(raw_name: str) -> str:
 
 
 def _runtime_contract(text: str) -> dict[str, object]:
-    match = re.search(
-        rf"^## {re.escape(_CONTRACT_HEADING)}\s*$",
-        text,
-        re.MULTILINE,
-    )
+    match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\\s*$", text, re.MULTILINE)
     if match is None:
         raise ValueError("Stage runtime enforcement contract is missing.")
     body = text[match.end() :]
-    block = _BLOCK_RE.search(body)
-    if block is None:
-        raise ValueError("Stage runtime enforcement configuration is missing.")
-    tree = ast.parse(block.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if isinstance(node, ast.Assign) and len(node.targets) == 1:
-            target = node.targets[0]
-            if isinstance(target, ast.Name):
-                values[target.id] = ast.literal_eval(node.value)
-    required = {
-        "MEMORY_MINIMUMS",
-        "CLOSE_SCORE_DELTA",
-        "FIRST_SESSION_DEFAULT_STAGE",
-        "FIRST_SESSION_MAX_STAGE",
-        "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES",
-        "STAGE_ROLES",
-        "STAGE_RECOMMENDATIONS",
-    }
-    if set(values) != required:
-        raise ValueError("Stage runtime enforcement configuration is incomplete.")
-    if not isinstance(values["MEMORY_MINIMUMS"], dict):
-        raise ValueError("Stage memory minimums are invalid.")
-    if not all(
-        isinstance(key, str) and isinstance(value, int)
-        for key, value in values["MEMORY_MINIMUMS"].items()
-    ):
-        raise ValueError("Stage memory minimums are invalid.")
-    for key in (
-        "CLOSE_SCORE_DELTA",
-        "FIRST_SESSION_DEFAULT_STAGE",
-        "FIRST_SESSION_MAX_STAGE",
-        "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES",
-    ):
-        if not isinstance(values[key], (int, float)):
-            raise ValueError(f"Stage runtime setting {key} is invalid.")
-    for key in ("STAGE_ROLES", "STAGE_RECOMMENDATIONS"):
-        value = values[key]
-        if not isinstance(value, dict) or set(value) != set(range(1, 7)):
-            raise ValueError(f"Stage runtime mapping {key} is incomplete.")
-        if not all(isinstance(item, str) and item for item in value.values()):
-            raise ValueError(f"Stage runtime mapping {key} is invalid.")
-    return values
+    next_heading = re.search(r"^##\\s+", body, re.MULTILINE)
+    body = body[: next_heading.start()] if next_heading else body
+    rows = [
+        (row.group("setting").strip(), row.group("value").strip())
+        for row in re.finditer(r"^\\|\\s*(?P<setting>[^|]+?)\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", body, re.MULTILINE)
+        if row.group("setting").strip().lower() != "setting"
+    ]
+    values = dict(rows)
+    required = {"Memory minimum: session_count_ge_10", "Memory minimum: prior_pattern_recognition", "Memory minimum: prior_breakthrough", "Close score delta", "First session default stage", "First session maximum stage", "Anti-regression minimum lower-stage messages"}
+    if not required <= values.keys():
+        raise ValueError("Stage runtime enforcement settings are incomplete.")
+    try:
+        memory = {setting.removeprefix("Memory minimum: "): int(values[setting]) for setting in required if setting.startswith("Memory minimum: ")}
+        scalar = {key: float(values[key]) if key == "Close score delta" else int(values[key]) for key in ("Close score delta", "First session default stage", "First session maximum stage", "Anti-regression minimum lower-stage messages")}
+    except (KeyError, ValueError) as exc:
+        raise ValueError("Stage runtime enforcement configuration is invalid.") from exc
 
+    def section_rows(heading: str) -> dict[int, str]:
+        section = re.search(rf"^### {re.escape(heading)}\\s*$", body, re.MULTILINE)
+        if section is None:
+            raise ValueError(f"Stage section {heading!r} is missing.")
+        remainder = body[section.end() :]
+        next_section = re.search(r"^###\\s+", remainder, re.MULTILINE)
+        remainder = remainder[: next_section.start()] if next_section else remainder
+        return {int(row.group("stage")): row.group("value").strip() for row in re.finditer(r"^\\|\\s*(?P<stage>[1-6])\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", remainder, re.MULTILINE)}
+
+    roles, recommendations = section_rows("Stage roles"), section_rows("Stage recommendations")
+    if set(roles) != set(range(1, 7)) or set(recommendations) != set(range(1, 7)):
+        raise ValueError("Stage runtime mappings are incomplete.")
+    return {"MEMORY_MINIMUMS": memory, "CLOSE_SCORE_DELTA": scalar["Close score delta"], "FIRST_SESSION_DEFAULT_STAGE": scalar["First session default stage"], "FIRST_SESSION_MAX_STAGE": scalar["First session maximum stage"], "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES": scalar["Anti-regression minimum lower-stage messages"], "STAGE_ROLES": roles, "STAGE_RECOMMENDATIONS": recommendations}
 
 def parse_stage_classifier(text: str) -> StageClassifierRules:
     """Parse the scoring contract from stage-classifier Markdown.
