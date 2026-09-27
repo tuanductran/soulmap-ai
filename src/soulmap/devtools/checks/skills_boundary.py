@@ -66,7 +66,7 @@ def _audit_file(path: Path, repo_root: Path) -> list[str]:
     for line_no, line in enumerate(lines, start=1):
         stripped = line.strip().lower()
         if stripped.startswith(fence):
-            language = stripped[len(fence):].strip()
+            language = stripped[len(fence) :].strip()
             if language in _EXECUTABLE_FENCES:
                 findings.append(
                     f"{rel}:{line_no}: executable code fence is not allowed"
