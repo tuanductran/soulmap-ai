@@ -44,11 +44,13 @@ from soulmap.runtime.detectors.spiritual_purpose_detector import (
 )
 from soulmap.runtime.detectors.visibility_fear_detector import detect_visibility_fear
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_memory_fields,
 )
+from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
     should_synthesize,
@@ -59,6 +61,7 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
 # skills/meta/orchestration.md. Shared by the moderate-intensity branch and the
 # normal-intensity branch so the two cannot drift apart.
 _GRIEF_TYPES = ("acute", "anticipatory", "ambiguous", "complicated")
+_ORCHESTRATION = load_orchestration_rules()
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -222,6 +225,7 @@ async def select_framework_async(
 ) -> dict:
     """Run detector phases and return exactly one framework selection."""
     memory = memory or {}
+    rules = _ORCHESTRATION
     debug_enabled = str(os.getenv("SOULMAP_DEBUG", "0")).lower() in {
         "1",
         "true",
@@ -252,6 +256,18 @@ async def select_framework_async(
                 "framework. No question."
             ),
             "blocked": ["ALL"],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
+    scope = classify_message(message)
+    if str(scope.get("tier", "")).startswith("BLACKLIST"):
+        selection = {
+            "primary_framework": "MIRROR",
+            "secondary_layer": None,
+            "mode": rules.mode_rules["MIRROR"],
+            "context": {"scope": scope},
+            "instruction": str(scope.get("explanation", "")),
+            "blocked": ["ALL_FRAMEWORKS"],
         }
         return _finish(message, history, memory, selection, debug_events)
 
@@ -597,6 +613,16 @@ async def select_framework_async(
     # than at each comparison. A non-integer stage falls back to 1, the most
     # conservative journey stage, instead of raising mid-routing.
     current_stage = _raw_stage if isinstance(_raw_stage, int) else 1
+    if current_stage == 1 and user_count <= rules.stage_1_override_max_user_messages:
+        selection = {
+            "primary_framework": rules.stage_1_override_framework,
+            "secondary_layer": None,
+            "mode": rules.mode_rules["MIRROR"],
+            "context": {"stage": current_stage, "stage_override": True},
+            "instruction": "Use the minimal Stage 1 Mirror response: presence before architecture.",
+            "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
+        }
+        return _finish(message, history, memory, selection, debug_events)
     pattern = {}
     if user_count >= 1:
         # Include current message so single-turn pattern signals are captured
@@ -762,7 +788,7 @@ async def select_framework_async(
 
     if res["insight"].get("insight_detected"):
         selection = {
-            "primary_framework": "MEANING_INTEGRATION",
+            "primary_framework": rules.breakthrough_framework,
             "secondary_layer": None,
             "mode": "MIRROR",
             "context": res["insight"],
@@ -805,7 +831,7 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    mode = "PEER" if current_stage >= 5 else "MIRROR"
+    mode = rules.mode_rules["PEER"] if current_stage >= 5 else rules.mode_rules["MIRROR"]
     somatic_active = res["somatic"].get("somatic_detected", False)
     anger_active = res["anger"].get("anger_detected", False)
     bypass_active = res["bypass"].get("bypass_detected", False)

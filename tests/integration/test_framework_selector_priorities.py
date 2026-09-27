@@ -334,3 +334,42 @@ def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
     data = run_framework_selector(payload)
 
     assert data["context"]["stage"] == 6
+
+
+def test_orchestration_contract_is_loaded_from_knowledge() -> None:
+    from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+
+    rules = load_orchestration_rules()
+    assert rules.primary_priority[0] == "CRISIS"
+    assert rules.primary_priority[-1] == "MIRROR"
+    assert rules.stage_1_override_framework == "MIRROR"
+    assert rules.breakthrough_framework == "MEANING_INTEGRATION"
+    assert rules.mode_rules["PEER"] == "PEER"
+
+
+def test_stage_one_first_two_user_messages_override_detected_frameworks() -> None:
+    message = "I feel completely lost about my life and I keep avoiding every decision."
+    data = run_framework_selector({"message": message, "history": [], "memory": {}})
+    assert data["primary_framework"] == "MIRROR"
+    assert data["secondary_layer"] is None
+    assert data["mode"] == "MIRROR"
+    assert data["context"]["stage_override"] is True
+
+
+def test_stage_one_override_allows_only_the_documented_message_window() -> None:
+    message = "I feel lost and keep avoiding every decision."
+    history = [
+        {"role": "user", "content": "I feel uncertain."},
+        {"role": "assistant", "content": "Tell me more."},
+        {"role": "user", "content": "I still feel uncertain."},
+    ]
+    data = run_framework_selector({"message": message, "history": history, "memory": {}})
+    assert not data.get("context", {}).get("stage_override", False)
+
+
+def test_scope_block_happens_before_reflective_framework_selection() -> None:
+    message = "Can you predict what will happen in my love life next month?"
+    data = run_framework_selector({"message": message, "history": [], "memory": {}})
+    assert data["safety_status"] == "BLOCK"
+    assert data["safety_reason"] == "out_of_scope"
+    assert data["context"]["scope"]["tier"].startswith("BLACKLIST")

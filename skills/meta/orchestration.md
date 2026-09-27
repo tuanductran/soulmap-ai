@@ -216,3 +216,35 @@ conflicting signals), default to:
 
 Never deliver a response without a framework selection, even if the selection is
 Mirror by default.
+
+
+## Runtime execution contract
+
+The selector MUST load these values from this document. Python may execute the
+contract, but must not maintain a second copy of these orchestration decisions.
+
+```python
+PRIMARY_PRIORITY = (
+    "CRISIS", "DEPENDENCY", "DE_ESCALATION_HIGH", "GRIEF",
+    "DE_ESCALATION_MODERATE", "EXISTENTIAL", "INNER_PARTS", "DIRECTION",
+    "CREATIVE_DROUGHT", "PERFECTIONISM_PARALYSIS", "SHADOW",
+    "ANCESTRAL_PATTERNS", "FEAR_OF_VISIBILITY", "EMPATH_BOUNDARY",
+    "DARK_NIGHT_OF_SOUL", "SOUL_NOURISHMENT", "DIVINE_GUIDANCE",
+    "SACRED_POLARITY", "SPIRITUAL_PURPOSE", "SOULMATE_LONGING",
+    "PARTNERSHIP_PATTERNS", "MEANING_INTEGRATION", "INTEGRATION_CELEBRATION",
+    "SYNTHESIS", "PATTERN", "MIRROR",
+)
+STAGE_1_OVERRIDE_MAX_USER_MESSAGES = 2
+STAGE_1_OVERRIDE_FRAMEWORK = "MIRROR"
+BREAKTHROUGH_FRAMEWORK = "MEANING_INTEGRATION"
+SECONDARY_LAYERS = ("anger", "bypass", "somatic", "meaning_integration", "inner_parts")
+MODE_RULES = {
+    "CRISIS": "CRISIS",
+    "SANCTUARY": "SANCTUARY",
+    "MIRROR": "MIRROR",
+    "PEER": "PEER",
+}
+```
+
+The values above are normative. If this block is missing, malformed, or incomplete,
+runtime loading MUST fail rather than silently falling back to Python defaults.
