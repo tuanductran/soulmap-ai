@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Verify release token is configured
         env:
@@ -90,11 +90,15 @@ jobs:
           uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
       - name: Push release branch
+        env:
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          BRANCH: ${{ steps.bump.outputs.branch }}
         run: |
-          git push --set-upstream origin "${{ steps.bump.outputs.branch }}"
+          auth_header="$(printf 'x-access-token:%s' "$RELEASE_TOKEN" | base64 -w0)"
+          git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"
 
       - name: Open release pull request
-        uses: $/src/action
+        uses: ./src/action
         with:
           operation: pull-request
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}

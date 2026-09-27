@@ -97,12 +97,10 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     release_finalize_text = (
         REPO_ROOT / ".github" / "workflows" / "release-finalize.yml"
     ).read_text(encoding="utf-8")
-    assert "uses: $/src/action" in release_finalize_text
+    assert "uses: ./src/action" in release_finalize_text
     assert "operation: release" in release_finalize_text
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
-        in release_finalize_text
-    )
+    assert "operation: tag" in release_finalize_text
+    assert "target-sha:" in release_finalize_text
     assert "actions/upload-artifact@" in release_finalize_text
     assert "git push --follow-tags" not in release_prep_text
 
@@ -128,5 +126,5 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
-    assert "| uv | 0.12.5 (CI installer pin) |" in research_text
+    assert "| uv | 0.12.19 (CI installer pin) |" in research_text
     assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text

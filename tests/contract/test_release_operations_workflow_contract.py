@@ -15,9 +15,12 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
-    assert "persist-credentials: true" in workflow
-    assert "git push --set-upstream origin" in workflow
-    assert "uses: $/src/action" in workflow
+    assert "persist-credentials: false" in workflow
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"'
+        in workflow
+    )
+    assert "uses: ./src/action" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
     assert "tag: ${{ steps.bump.outputs.tag }}" in workflow
@@ -44,22 +47,16 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-provenance" in workflow
     assert "soulmap release-health" in workflow
     assert "dist/release-provenance.json" in workflow
-    assert "contents: write" in workflow
+    assert "contents: read" in workflow
     assert "id-token: write" in workflow
     assert (
-        "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}"
-        not in workflow.split("jobs:", 1)[1]
-        .split("publish:", 1)[1]
-        .split("steps:", 1)[1]
-        .split("Verify checkout is the merged release commit", 1)[0]
-    )
-    assert "persist-credentials: false" in workflow
-    assert (
-        "SOULMAP_RELEASE_TOKEN must be configured for release tag publication."
+        "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
         in workflow
     )
-    assert "RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
-    assert "http.extraheader=AUTHORIZATION: basic $auth_header" in workflow
+    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert "token: ${{ github.token }}" not in workflow
+    assert "persist-credentials: false" in workflow
+    assert "operation: tag" in workflow
     assert "attestations: write" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
@@ -68,18 +65,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
-    assert "Create immutable release tag" in workflow
-    assert "Configure git author" in workflow
-    assert 'git config user.name "github-actions[bot]"' in workflow
-    assert (
-        'git config user.email "github-actions[bot]@users.noreply.github.com"'
-        in workflow
-    )
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
-        in workflow
-    )
-    assert "uses: $/src/action" in workflow
+    assert "Create immutable release tag through Python action" in workflow
+    assert "target-sha:" in workflow
+    assert "uses: ./src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
@@ -101,9 +89,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
-    assert workflow.index("Create immutable release tag") < workflow.index(
-        "Publish GitHub Release"
-    )
+    assert workflow.index(
+        "Create immutable release tag through Python action"
+    ) < workflow.index("Publish GitHub Release")
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:

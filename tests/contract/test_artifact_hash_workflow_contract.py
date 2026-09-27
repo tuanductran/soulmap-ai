@@ -42,8 +42,11 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
     content = _read(RELEASE_WORKFLOW)
 
     assert "workflow_dispatch" in content
-    assert "git push --set-upstream origin" in content
-    assert "uses: $/src/action" in content
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"'
+        in content
+    )
+    assert "uses: ./src/action" in content
     assert "operation: pull-request" in content
     assert "SOULMAP_RELEASE_TOKEN" in content
     assert "release/prep-" in content
@@ -58,12 +61,10 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
 
     assert RELEASE_VERIFY_COMMAND in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert "uses: $/src/action" in content
+    assert "uses: ./src/action" in content
     assert "operation: release" in content
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
-        in content
-    )
+    assert "operation: tag" in content
+    assert "target-sha:" in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
     health_command = (
