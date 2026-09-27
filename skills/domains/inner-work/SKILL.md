@@ -35,7 +35,7 @@ duplicating it.
 ## Rules
 
 - Domain skills own meaning and response knowledge.
-- Do not add Python, source paths, module names, code examples, or packaging instructions here.
+- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Runtime integration is centralized under [skills/runtime/](../../runtime/).
 - Use the relevant framework skill after meta routing. Runtime integration belongs to skills/runtime and is never part of domain authoring.
 
