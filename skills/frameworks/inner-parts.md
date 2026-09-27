@@ -370,3 +370,23 @@ Internal dialogue, user reports conversations happening inside:
 - **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Explicit-conflict weight | 3 |
+| Self-dialogue weight | 2 |
+| Part-naming weight | 2 |
+| Behavioral-confusion weight | 2 |
+| Historical explicit-conflict bonus | 1 |
+| Minimum detection score | 2 |
+| History window | 3 |
+| Historical signal limit | 8 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No inner conflict signals detected. Continue standard response pipeline. |
+| detected | Inner conflict detected ({primary_type}). Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. End with one question that invites the user to listen to one of the parts. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank. |
+
