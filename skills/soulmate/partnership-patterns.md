@@ -106,3 +106,17 @@ Never, under any framing or user pressure:
   does it actually feel like for you right now?"
 - "That pattern is worth noticing. What it means about the right next step is yours
   to decide, not something I can hand you."
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No partnership pattern signal. Continue standard pipeline. |
+| detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward: the pattern is information about the user, not a verdict on the people they dated. Never tell the user who to date or promise that changing the pattern will produce a partner. End with one question about what the pattern involves in the user, not the other people. |
+
