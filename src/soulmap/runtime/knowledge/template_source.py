@@ -47,7 +47,9 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
         raise ValueError("Framework-template mapping is incomplete.")
     return tuple(rules)
 
-def resolve_template(primary: str, mode: str, context: dict[str, object]) -> TemplateRule:
+def resolve_template(
+    primary: str, mode: str, context: dict[str, object]
+) -> TemplateRule:
     """Resolve the deterministic template row for one selection."""
     if primary == "GRIEF":
         grief = context.get("grief", context)
@@ -90,6 +92,4 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     for rule in load_template_rules():
         if rule.framework == target:
             return rule
-    raise ValueError(
-        f"No template mapping for framework {primary!r} in mode {mode!r}."
-    )
+    raise ValueError(f"No template mapping for framework {primary!r} in mode {mode!r}.")
