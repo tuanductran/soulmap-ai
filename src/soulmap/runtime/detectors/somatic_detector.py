@@ -11,22 +11,23 @@ from soulmap.runtime.io.cli_payload import (
     require_non_empty_str_field,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/somatic-wellbeing.md,
 # "## Detection signals". Nothing is hardcoded here.
 _SOMATIC_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Detection signals"
+    runtime_skill_path("somatic-wellbeing"), "Detection signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/somatic-wellbeing.md"),
+    runtime_skill_path("somatic-wellbeing"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Guidance"
+    runtime_skill_path("somatic-wellbeing"), "Guidance"
 )
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
