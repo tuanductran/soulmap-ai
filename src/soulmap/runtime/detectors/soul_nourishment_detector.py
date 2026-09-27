@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,6 +21,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 SOUL_NOURISHMENT_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/soul-nourishment.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/soul-nourishment.md"), "Runtime detection contract"
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/soul-nourishment.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 3
@@ -35,30 +43,23 @@ def detect_soul_nourishment(
 
     for phrase in SOUL_NOURISHMENT_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"soul_nourishment: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "soul_nourishment_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No soul nourishment signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "soul_nourishment_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Soul nourishment recognition detected. Activate soul-nourishment.md. "
-            "Do not prescribe practices, routines, or generic self-care advice. "
-            "Reflect back the aliveness or rightness the user recognized and explore "
-            "what it reveals about what their soul actually needs. End with one "
-            "noticing-oriented question, not a request for commitment or practice."
-        ),
-    }
+        "recommendation": _GUIDANCE["detected"],    }
 
 
 if __name__ == "__main__":
