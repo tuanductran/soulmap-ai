@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from pathlib import Path
 import re
+from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
@@ -39,11 +39,11 @@ def _has_heading(text: str, expected: str) -> bool:
     """Return whether Markdown contains the registered section heading."""
     if expected.startswith("Pattern "):
         return bool(
-            re.search(r"^## Pattern \\d+:\\s+.+$", text, re.MULTILINE)
+            re.search(r"^## Pattern \d+:\s+.+$", text, re.MULTILINE)
         )
     return bool(
         re.search(
-            rf"^#{{2,3}}\\s+{re.escape(expected)}\\s*$",
+            rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
             text,
             re.MULTILINE,
         )
