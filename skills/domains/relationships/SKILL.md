@@ -33,10 +33,10 @@ duplicating it.
 
 ## Canonical sources
 
-- [relationship-reflection](../../skills/frameworks/relationship-reflection.md)
-- [partnership-patterns](../../skills/frameworks/partnership-patterns.md)
-- [soulmate-longing](../../skills/frameworks/soulmate-longing.md)
-- [feminine-masculine-dynamics](../../skills/frameworks/feminine-masculine-dynamics.md)
+- [relationship-reflection](../../frameworks/relationship-reflection.md)
+- [partnership-patterns](../../frameworks/partnership-patterns.md)
+- [soulmate-longing](../../frameworks/soulmate-longing.md)
+- [feminine-masculine-dynamics](../../frameworks/feminine-masculine-dynamics.md)
 
 ## Rules
 
