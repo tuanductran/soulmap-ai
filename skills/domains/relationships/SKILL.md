@@ -35,7 +35,6 @@ duplicating it.
 
 - Domain skills own meaning and response knowledge.
 - Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
-- Runtime integration is centralized under [runtime/](../../runtime/).
 - Use relationship knowledge only after the primary response posture is selected.
 
 ## Examples
