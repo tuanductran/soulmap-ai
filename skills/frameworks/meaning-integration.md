@@ -322,6 +322,7 @@ The following values define the operational insight-detection policy.
 | Strong insight minimum score | 4 |
 | Validation history window | 3 |
 | Validation maximum user word count | 30 |
+| Classification priority | noticing_earlier; when_it_appears; different_response |
 
 ### Insight classification signals
 
