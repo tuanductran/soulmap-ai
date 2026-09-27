@@ -100,28 +100,25 @@ def _modes(text: str) -> dict[str, str]:
         raise ValueError("Response mode contract is incomplete.")
     return values
 def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
-    """Parse the valid-secondary table between its exact structural markers."""
-    section = _section(text, "Response mode assignment")
-    start_marker = "### The following combinations are valid:"
-    end_marker = "### The following combinations are **forbidden**:"
-    start = section.find(start_marker)
-    end = section.find(end_marker, start + len(start_marker))
+    """Parse the valid-secondary table by exact Markdown line markers."""
+    lines = text.splitlines()
+    start = next((i for i, line in enumerate(lines) if line.strip() == "### The following combinations are valid:"), -1)
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].strip() == "### The following combinations are **forbidden**:"), -1)
     if start < 0 or end < 0:
         raise ValueError("Valid secondary combination contract is missing.")
     result: dict[str, tuple[str, ...]] = {}
-    for row in _rows(section[start + len(start_marker) : end], 3):
+    for row in _rows("\n".join(lines[start + 1 : end]), 3):
         layers = tuple(part.strip().strip("`") for part in row[1].split(",") if part.strip().lower() != "none")
         result[_framework(row[0])] = layers
     return result
 def _forbidden(text: str) -> frozenset[frozenset[str]]:
-    """Parse forbidden framework combinations from their structural section."""
-    section = _section(text, "Response mode assignment")
-    start_marker = "### The following combinations are **forbidden**:"
-    start = section.find(start_marker)
+    """Parse forbidden framework combinations by exact Markdown line marker."""
+    lines = text.splitlines()
+    start = next((i for i, line in enumerate(lines) if line.strip() == "### The following combinations are **forbidden**:"), -1)
     if start < 0:
         raise ValueError("Forbidden-combination contract is missing.")
     pairs: set[frozenset[str]] = set()
-    for line in section[start + len(start_marker) :].splitlines():
+    for line in lines[start + 1 :]:
         value = line.strip().lstrip("- ").strip()
         if " + " in value:
             left, right = (part.strip() for part in value.split(" + ", 1))
