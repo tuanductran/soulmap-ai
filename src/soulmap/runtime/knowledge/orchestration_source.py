@@ -9,11 +9,6 @@ from functools import lru_cache
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
-_ROW_RE = re.compile(
-    r"^\|\s*(?P<cell>[^|]*(?:\\\|[^|]*)*)\s*\|(?P<rest>.*)$",
-    re.MULTILINE,
-)
-
 
 @dataclass(frozen=True, slots=True)
 class PrimaryPriorityRule:
