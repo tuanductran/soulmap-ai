@@ -317,7 +317,8 @@ async def select_framework_async(
     )
     if (
         breakthrough.get("insight_detected")
-        and breakthrough.get("strength") == orchestration_rules.breakthrough_min_strength
+        and breakthrough.get("strength")
+        == orchestration_rules.breakthrough_min_strength
     ):
         selection = {
             "primary_framework": "MEANING_INTEGRATION",
