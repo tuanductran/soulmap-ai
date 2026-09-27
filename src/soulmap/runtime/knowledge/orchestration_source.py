@@ -89,29 +89,33 @@ def _modes(text: str) -> dict[str, str]:
         raise ValueError("Response mode contract is incomplete.")
     return values
 def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
+    """Parse the valid-secondary table between its exact structural markers."""
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\n### The following combinations are \*\*forbidden\*\*)", section, re.DOTALL)
-    if match is None:
+    start_marker = "### The following combinations are valid:"
+    end_marker = "### The following combinations are **forbidden**:"
+    start = section.find(start_marker)
+    end = section.find(end_marker, start + len(start_marker))
+    if start < 0 or end < 0:
         raise ValueError("Valid secondary combination contract is missing.")
-    result = {}
-    for row in _rows(match.group("body"), 3):
+    result: dict[str, tuple[str, ...]] = {}
+    for row in _rows(section[start + len(start_marker) : end], 3):
         layers = tuple(part.strip().strip("`") for part in row[1].split(",") if part.strip().lower() != "none")
         result[_framework(row[0])] = layers
     return result
-
 def _forbidden(text: str) -> frozenset[frozenset[str]]:
+    """Parse forbidden framework combinations from their structural section."""
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are \*\*forbidden\*\*(?P<body>.*?)(?=\n## Priority override rules)", section, re.DOTALL)
-    if match is None:
+    start_marker = "### The following combinations are **forbidden**:"
+    start = section.find(start_marker)
+    if start < 0:
         raise ValueError("Forbidden-combination contract is missing.")
-    pairs = set()
-    for line in match.group("body").splitlines():
-        value = line.strip("- ")
+    pairs: set[frozenset[str]] = set()
+    for line in section[start + len(start_marker) :].splitlines():
+        value = line.strip().lstrip("- ").strip()
         if " + " in value:
             left, right = (part.strip() for part in value.split(" + ", 1))
             pairs.add(frozenset({_framework(left), _framework(right)}))
     return frozenset(pairs)
-
 def _overrides(text: str) -> tuple[int, int, str, str, str]:
     section = _section(text, "Priority override rules")
     stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
