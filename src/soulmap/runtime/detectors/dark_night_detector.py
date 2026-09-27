@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,9 +21,16 @@ from soulmap.runtime.knowledge.keyword_lists import (
 DARK_NIGHT_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/dark-night-of-soul.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/dark-night-of-soul.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
 
 
 def detect_dark_night(
@@ -35,29 +43,23 @@ def detect_dark_night(
 
     for phrase in DARK_NIGHT_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"dark_night: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "dark_night_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No dark night signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "dark_night_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Dark Night of the Soul territory detected. Activate dark-night-of-soul.md. "
-            "Do not offer premature reassurance, spiritual prescriptions, or reframe the "
-            "emptiness as growth. Name the territory honestly and stay present to the "
-            "not-knowing alongside the user. End with one presence-oriented question, "
-            "never a request for action or practice."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 

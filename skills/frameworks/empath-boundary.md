@@ -178,3 +178,41 @@ with people context ("being around people", "after being with", "family gatherin
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Drain plus people-context weight | 2 |
+| Minimum detection score | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No empath signal. Continue standard pipeline. |
+| detected | Empath boundary dissolution detected. Activate empath-boundary.md (P8d). Name the dispersion first. Acknowledge what the sensitivity makes possible. Locate the specific weight. End with one empath question from deep-inquiry-bank.md (Empath Questions section). Do NOT suggest specific energy protection techniques. |
+
+### Secondary signal groups
+
+#### Drain signals
+
+- "drained"
+- "exhausted"
+- "depleted"
+- "worn out"
+- "tired after"
+- "need to recover"
+
+#### People-context signals
+
+- "being around people"
+- "after being with"
+- "after spending time"
+- "after the visit"
+- "family gatherings"
+- "around my family"
+- "at work"
+- "in crowds"
+- "in groups"

@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,9 +21,16 @@ from soulmap.runtime.knowledge.keyword_lists import (
 DIVINE_GUIDANCE_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/divine-guidance.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/divine-guidance.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/divine-guidance.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
 
 
 def detect_divine_guidance(
@@ -35,29 +43,23 @@ def detect_divine_guidance(
 
     for phrase in DIVINE_GUIDANCE_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"divine_guidance: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "divine_guidance_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No divine guidance signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "divine_guidance_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Divine guidance discernment detected. Activate divine-guidance.md. "
-            "Never confirm whether guidance is 'real' or from spirits/guides, and never "
-            "tell the user what to do based on their guidance. Reflect back the "
-            "qualities of what they sensed and explore how they can test it against "
-            "their own deepest knowing. End with one discernment-oriented question."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 

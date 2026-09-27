@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -23,9 +24,16 @@ _VISIBILITY_GROUPS = load_labeled_groups(
 VISIBILITY_FEAR_SIGNALS = _VISIBILITY_GROUPS["direct visibility fear"]
 SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
 PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/fear-of-visibility.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 2
 
 
 def detect_visibility_fear(
@@ -38,7 +46,7 @@ def detect_visibility_fear(
 
     for phrase in VISIBILITY_FEAR_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Direct visibility-fear weight"])
             signals.append(f"visibility_fear: '{phrase}'")
             break
 
@@ -48,27 +56,22 @@ def detect_visibility_fear(
         and any(signal in msg for signal in PUBLIC_EXPRESSION_SIGNALS)
         and score == 0
     ):
-        score += 2
+        score += int(_RULES["Shrinking plus public-expression weight"])
         signals.append("shrinking + public expression context")
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "visibility_fear_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No visibility fear signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "visibility_fear_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Fear of visibility detected. Activate fear-of-visibility.md (P8c). "
-            "Name the specific contraction at the threshold. Name the protection's intention. "
-            "Do NOT push toward action or sharing. End with one visibility question from "
-            "deep-inquiry-bank.md (Visibility Questions section)."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 

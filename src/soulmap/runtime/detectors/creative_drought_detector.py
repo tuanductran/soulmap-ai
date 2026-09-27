@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,9 +21,16 @@ from soulmap.runtime.knowledge.keyword_lists import (
 CREATIVE_DROUGHT_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/creative-drought.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/creative-drought.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/creative-drought.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 2
 
 
 def detect_creative_drought(
@@ -35,67 +43,39 @@ def detect_creative_drought(
 
     for phrase in CREATIVE_DROUGHT_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"drought: '{phrase}'")
             break
 
     # Secondary: creative identity + absence/emptiness language
-    creative_id = (
-        "as a writer",
-        "as an artist",
-        "as a creator",
-        "my writing",
-        "my art",
-        "my work",
-        "my content",
-        "my music",
-        "my design",
-        "i create",
-        "i write",
-        "i make",
-        "i used to make",
-        "i used to write",
-        "creative",
+    creative_id = load_keyword_section(
+        default_skill_path("skills/frameworks/creative-drought.md"),
+        "Creative-identity signals",
     )
-    absence = (
-        "nothing",
-        "empty",
-        "blank",
-        "dried up",
-        "gone quiet",
-        "not coming",
-        "not flowing",
-        "stopped",
-        "disappeared",
-        "lost it",
-        "can't access",
+    absence = load_keyword_section(
+        default_skill_path("skills/frameworks/creative-drought.md"), "Absence signals"
     )
     if (
         any(c in msg for c in creative_id)
         and any(a in msg for a in absence)
         and score == 0
     ):
-        score += 2
+        score += int(_RULES["Creative-identity plus absence weight"])
         signals.append("creative identity + absence language")
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "creative_drought_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No creative drought signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "creative_drought_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Creative drought detected. Activate creative-drought.md (P7b). "
-            "Name the specific quality of the silence. Do NOT offer techniques or practices. "
-            "Reflect what the drought may be saying. End with one creative drought question from "
-            "deep-inquiry-bank.md (Creative Drought Questions section)."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 

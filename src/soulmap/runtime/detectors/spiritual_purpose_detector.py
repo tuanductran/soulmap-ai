@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,9 +21,16 @@ from soulmap.runtime.knowledge.keyword_lists import (
 SPIRITUAL_PURPOSE_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/spiritual-purpose.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/spiritual-purpose.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/spiritual-purpose.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
 
 
 def detect_spiritual_purpose(
@@ -35,30 +43,23 @@ def detect_spiritual_purpose(
 
     for phrase in SPIRITUAL_PURPOSE_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"spiritual_purpose: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "spiritual_purpose_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No spiritual purpose signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "spiritual_purpose_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Spiritual purpose discernment detected. Activate spiritual-purpose.md. "
-            "Never tell the user what their purpose is or suggest they should know "
-            "their calling by now. Reflect back what you notice about the energy "
-            "(aligned or driven) and explore what is underneath the action or "
-            "inaction. End with one noticing-oriented question, never a request to "
-            "commit or figure it out."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 

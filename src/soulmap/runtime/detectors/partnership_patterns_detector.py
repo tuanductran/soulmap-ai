@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,9 +21,16 @@ from soulmap.runtime.knowledge.keyword_lists import (
 PARTNERSHIP_PATTERNS_SIGNALS = load_keyword_section(
     default_skill_path("skills/soulmate/partnership-patterns.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/soulmate/partnership-patterns.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/soulmate/partnership-patterns.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 3
 
 
 def detect_partnership_patterns(
@@ -35,32 +43,23 @@ def detect_partnership_patterns(
 
     for phrase in PARTNERSHIP_PATTERNS_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"partnership_pattern: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "partnership_pattern_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": (
-                "No partnership pattern signal. Continue standard pipeline."
-            ),
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "partnership_pattern_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Partnership pattern detected. Activate partnership-patterns.md. Keep "
-            "the lens inward: the pattern is information about the user, not a "
-            "verdict on the people they dated. Never tell the user who to date or "
-            "promise that changing the pattern will produce a partner. End with "
-            "one question about what the pattern involves in the user, not the "
-            "other people."
-        ),
+        "recommendation": _GUIDANCE["detected"],
     }
 
 
