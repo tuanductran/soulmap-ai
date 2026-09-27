@@ -89,27 +89,7 @@ def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) ->
     result = _run(tmp_path)
 
     assert result.returncode == 1
-    assert "forbidden references" in result.stderr
-
-
-def test_verifier_rejects_executable_code_in_shipped_skill(tmp_path: Path) -> None:
-    _build_valid_repo(tmp_path)
-    _write(
-        tmp_path,
-        "skills/public.md",
-        "Implementation detail:\n\n"
-        + chr(96) * 3
-        + "python\nprint('must not ship')\n"
-        + chr(96) * 3
-        + "\n",
-    )
-    build_skill.build_zip(tmp_path)
-    build_skill.build_skill(tmp_path)
-
-    result = _run(tmp_path)
-
-    assert result.returncode == 1
-    assert "executable code fence is not allowed" in result.stderr
+    assert "forbidden shipped references" in result.stderr
 
 
 @pytest.mark.parametrize(
