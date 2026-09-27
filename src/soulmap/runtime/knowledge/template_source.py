@@ -8,6 +8,7 @@ from functools import lru_cache
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
+
 @dataclass(frozen=True, slots=True)
 class TemplateRule:
     """Validated template metadata extracted from the mapping skill."""
@@ -21,6 +22,7 @@ def _norm(value: str) -> str:
     return re.sub(r"\s+", " ", value.strip())
 
 @lru_cache(maxsize=1)
+
 def load_template_rules() -> tuple[TemplateRule, ...]:
     """Read and validate the shipped framework-template mapping."""
     path = default_skill_path("skills/meta/framework-template-map.md")
