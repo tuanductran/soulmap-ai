@@ -11,24 +11,25 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/anger-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
 _ANGER_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/anger-companion.md"), "Detection signals"
+    runtime_skill_path("anger-companion"), "Detection signals"
 )
 ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
 SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
 RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
 _ANGER_SCORING = load_key_value_table(
-    default_skill_path("skills/frameworks/anger-companion.md"), "Scoring"
+    runtime_skill_path("anger-companion"), "Scoring"
 )
 _ANGER_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/anger-companion.md"), "Guidance"
+    runtime_skill_path("anger-companion"), "Guidance"
 )
 
 
