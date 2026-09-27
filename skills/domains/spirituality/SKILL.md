@@ -52,7 +52,6 @@ duplicating it.
 
 - Keep spiritual claims framed as tradition, symbolism, Hypothesis, or user meaning rather than fact.
 
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.
