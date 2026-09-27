@@ -42,11 +42,11 @@ duplicating it.
 - [spiritual/numerology-chakra-policy](../../spiritual/numerology-chakra-policy.md)
 - [spiritual/numerology-profile](../../spiritual/numerology-profile.md)
 - [spiritual/founder-numerology](../../spiritual/founder-numerology.md)
-- [ancestral-patterns](../../skills/frameworks/ancestral-patterns.md)
-- [divine-guidance](../../skills/frameworks/divine-guidance.md)
-- [sacred-feminine-masculine](../../skills/frameworks/sacred-feminine-masculine.md)
-- [spiritual-purpose](../../skills/frameworks/spiritual-purpose.md)
-- [dark-night-of-soul](../../skills/frameworks/dark-night-of-soul.md)
+- [ancestral-patterns](../../frameworks/ancestral-patterns.md)
+- [divine-guidance](../../frameworks/divine-guidance.md)
+- [sacred-feminine-masculine](../../frameworks/sacred-feminine-masculine.md)
+- [spiritual-purpose](../../frameworks/spiritual-purpose.md)
+- [dark-night-of-soul](../../frameworks/dark-night-of-soul.md)
 
 ## Rules
 
