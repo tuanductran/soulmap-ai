@@ -108,9 +108,7 @@ def detect_celebration(
             "score": score,
             "signals": signals_found,
             "has_negative_override": has_negative_override,
-            "recommendation": (
-                "No celebration signal detected. Continue standard pipeline."
-            ),
+            "recommendation": _RULES.guidance["not_detected"],
         }
 
     strength = "strong" if score >= _RULES.strength_threshold else "present"
@@ -119,13 +117,9 @@ def detect_celebration(
     recommendation = (
         f"Celebration signal detected (strength: {strength}, "
         f"type: {celebration_type}). "
-        "Activate integration-celebration.md (P9b). "
-        "Use the framework's four-step arc and the type-specific guidance already "
-        "defined in the Markdown source. Do NOT perform enthusiasm. "
-        "Do NOT open with exclamation. Do NOT immediately ask 'what is next'. "
-        "Close with one agency-preserving question from deep-inquiry-bank.md. "
-        "Closing ritual: skills/voice/session-rituals.md "
-        "(Breakthrough and Celebration Closing section)."
+        + _RULES.guidance["detected"]
+        + " "
+        + _RULES.guidance["closing"]
     )
 
     return {
