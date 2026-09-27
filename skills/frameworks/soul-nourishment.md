@@ -79,3 +79,17 @@ Do not ask for commitment or practice. Ask for awareness and honoring.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No soul nourishment signal. Continue standard pipeline. |
+| detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. End with one noticing-oriented question, not a request for commitment or practice. |
+
