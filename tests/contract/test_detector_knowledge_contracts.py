@@ -9,6 +9,7 @@ from soulmap.runtime.detectors import (
     anger_detector,
     existential_detector,
     insight_detector,
+    inner_conflict_detector,
     shadow_pattern_detector,
     spiritual_bypass_detector,
 )
