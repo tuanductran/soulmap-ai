@@ -44,9 +44,14 @@ from soulmap.runtime.detectors.spiritual_purpose_detector import (
 )
 from soulmap.runtime.detectors.visibility_fear_detector import detect_visibility_fear
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
+from soulmap.runtime.io.cli_payload import (
+    print_json_error,
+    read_stdin_json,
+    require_message_history_memory_fields,
+)
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
-from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.knowledge.template_source import resolve_template
+from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
