@@ -338,6 +338,19 @@ Meaning, searching for what makes a direction worth choosing:
 - "bored with everything"
 - "bored with my life"
 
+Energy, what feels alive or draining:
+
+- "drain"
+- "drained"
+- "exhaust"
+- "exhausted"
+- "energiz"
+- "energized"
+- "alive"
+- "resist"
+- "resisting"
+- "putting off"
+
 Transition, moving between one chapter of life and the next:
 
 - "starting over"
@@ -369,3 +382,52 @@ Transition, moving between one chapter of life and the next:
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+This section defines executable detection policy for the Life Direction detector. The
+runtime may execute these values, but must not duplicate them.
+
+### Scoring
+
+| Signal group | Weight |
+| :--- | ---: |
+| lostness | 3 |
+| meaning_void | 3 |
+| should_vs_want | 2 |
+| comparison | 2 |
+| transition | 2 |
+| misalignment | 2 |
+| sustained history match | 1 |
+| minimum detection score | 2 |
+| recent user history window | 4 |
+| sustained lostness signal limit | 8 |
+| sustained meaning signal limit | 6 |
+| sustained transition signal limit | 6 |
+
+### Lens signals
+
+| Lens | Signal groups |
+| :--- | :--- |
+| meaning | meaning |
+| energy | energy |
+| respect | should_vs_want, comparison |
+| misalignment | misalignment |
+| default | none |
+
+### Lens routing
+
+| Lens | Guidance |
+| :--- | :--- |
+| meaning | ask about what has felt meaningful, even in small ways |
+| energy | ask about what energizes vs. drains |
+| respect | ask what kind of life they would genuinely admire |
+| misalignment | help locate the gap between values and current life |
+| default | start with what feels meaningful as the opening lens |
+
+### Runtime guidance
+
+| State | Recommendation |
+| :--- | :--- |
+| not_detected | No direction signals detected. Continue standard pipeline. |
+| detected | Life direction uncertainty detected. Activate Life Direction Clarifier. Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. Use one lens at a time and end with one reflective question about what kind of life feels honest to the user. |
