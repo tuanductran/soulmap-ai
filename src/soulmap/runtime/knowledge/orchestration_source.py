@@ -10,6 +10,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
 
+
 @dataclass(frozen=True, slots=True)
 class PrimaryPriorityRule:
     """One knowledge-authored primary routing rule."""
