@@ -489,7 +489,7 @@ async def select_framework_async(
                 continue
             if rule.requires_no_insight and insight.get("insight_detected"):
                 continue
-            if not __condition_matches(result, rule.requires):
+            if not _condition_matches(result, rule.requires):
                 continue
             if rule.requires_not and result.get(rule.requires_not):
                 continue
