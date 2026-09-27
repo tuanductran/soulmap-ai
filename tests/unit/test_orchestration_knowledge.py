@@ -1,5 +1,8 @@
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
-from soulmap.runtime.knowledge.template_source import load_template_rules, resolve_template
+from soulmap.runtime.knowledge.template_source import (
+    load_template_rules,
+    resolve_template,
+)
 
 
 def test_orchestration_contract_loads_complete_priority_and_overrides() -> None:
