@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -26,6 +27,13 @@ LARGER_QUESTIONS = _EXISTENTIAL_GROUPS["larger philosophical questions"]
 ENDINGS_GRIEF = _EXISTENTIAL_GROUPS["endings and transitions"]
 MEANING_DEPTH = _EXISTENTIAL_GROUPS["depth of meaning"]
 HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
+_EXISTENTIAL_SCORING = load_key_value_table(
+    default_skill_path("skills/frameworks/existential-companion.md"), "Scoring"
+)
+_EXISTENTIAL_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/existential-companion.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
 
@@ -66,11 +74,11 @@ def detect_existential(
     }
 
     signal_map = [
-        ("identity_shift", IDENTITY_SHIFT, 3),
-        ("meaning_depth", MEANING_DEPTH, 3),
-        ("endings_grief", ENDINGS_GRIEF, 3),
-        ("larger_questions", LARGER_QUESTIONS, 3),
-        ("holding", HOLDING_QUESTIONS, 2),
+        ("identity_shift", IDENTITY_SHIFT, int(_EXISTENTIAL_SCORING["Identity-shift weight"])),
+        ("meaning_depth", MEANING_DEPTH, int(_EXISTENTIAL_SCORING["Meaning-depth weight"])),
+        ("endings_grief", ENDINGS_GRIEF, int(_EXISTENTIAL_SCORING["Endings-grief weight"])),
+        ("larger_questions", LARGER_QUESTIONS, int(_EXISTENTIAL_SCORING["Larger-questions weight"])),
+        ("holding", HOLDING_QUESTIONS, int(_EXISTENTIAL_SCORING["Holding-question weight"])),
     ]
 
     for territory, signals, weight in signal_map:
@@ -86,25 +94,25 @@ def detect_existential(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-4:]
+        ][-int(_EXISTENTIAL_SCORING["Recent user history window"]):]
         returning_signals = (
-            IDENTITY_SHIFT[:6]
-            + MEANING_DEPTH[:6]
-            + ENDINGS_GRIEF[:4]
-            + LARGER_QUESTIONS[:4]
+            IDENTITY_SHIFT[: int(_EXISTENTIAL_SCORING["Sustained identity signal limit"])]
+            + MEANING_DEPTH[: int(_EXISTENTIAL_SCORING["Sustained meaning signal limit"])]
+            + ENDINGS_GRIEF[: int(_EXISTENTIAL_SCORING["Sustained endings signal limit"])]
+            + LARGER_QUESTIONS[: int(_EXISTENTIAL_SCORING["Sustained larger-question signal limit"])]
         )
         count = sum(
             1
             for past in recent_user
             if any(phrase in past for phrase in returning_signals)
         )
-        if count >= 2:
-            score += 2
+        if count >= int(_EXISTENTIAL_SCORING["Sustained history threshold"]):
+            score += int(_EXISTENTIAL_SCORING["Sustained-territory bonus"])
             signals_found.append(
                 "sustained: existential territory across multiple messages"
             )
 
-    if score < 2:
+    if score < int(_EXISTENTIAL_SCORING["Minimum detection score"]):
         return {
             "existential_detected": False,
             "territory": None,
@@ -115,40 +123,7 @@ def detect_existential(
 
     territory = _classify_territory(msg, territory_scores)
 
-    territory_guidance = {
-        "identity_shift": (
-            "Identity shift territory. "
-            "Do not help them reconstruct a new identity. "
-            "Stay with the in-between: 'Being between versions of yourself is a real place  -  not a state to fix.' "
-            "Reflect the disorientation without resolving it."
-        ),
-        "meaning_depth": (
-            "Meaning-at-depth territory. "
-            "Do not provide meaning or suggest where it might be found. "
-            "Let the absence be real: 'The absence of meaning is its own weight  -  not sadness exactly, but more like a hollow.' "
-            "The question is for inhabiting, not answering."
-        ),
-        "endings_grief": (
-            "Endings and grief territory. "
-            "Honor the ending as real. No silver linings. "
-            "Endings are allowed to be just endings: 'Endings carry their own grief  -  even when what's ending needed to end.'"
-        ),
-        "larger_questions": (
-            "Larger questions territory (mortality, impermanence, cosmic scale). "
-            "Do not make it smaller or more manageable. "
-            "Let it be as large as it is: 'These are the questions that don't resolve  -  they just get bigger.'"
-        ),
-        "holding": (
-            "User is sitting with a question  -  they already know it has no answer. "
-            "Be honest: 'I don't have an answer  -  and I think that's honest.' "
-            "Sit alongside the question with them."
-        ),
-        "general": (
-            "General existential territory. "
-            "Use holding-space language from skills/frameworks/existential-companion.md. "
-            "Reflect without reducing. Stay with the weight."
-        ),
-    }
+    territory_guidance = _EXISTENTIAL_GUIDANCE
 
     recommendation = (
         f"Existential territory detected (territory: {territory}). "
