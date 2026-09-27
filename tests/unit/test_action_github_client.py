@@ -57,7 +57,6 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
     token = "secret-token"
     headers = Message()
     headers["X-RateLimit-Remaining"] = "0"
-    headers["Retry-After"] = "0"
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         403,
@@ -333,7 +332,7 @@ def test_create_tag_uses_annotated_tag_and_ref() -> None:
     responses = iter([{"sha": "tag-object-sha"}, {"ref": "refs/tags/v1.2.3"}])
 
     with patch.object(
-        client, "request", side_effect=responses.__next__
+        client, "request", side_effect=lambda *args, **kwargs: next(responses)
     ) as request, patch.object(client, "api", return_value=None):
         action.create_tag(client, "owner", "repo", "v1.2.3", "a" * 40)
 
