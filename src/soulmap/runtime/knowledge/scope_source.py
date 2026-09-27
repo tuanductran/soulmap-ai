@@ -40,8 +40,8 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-_PACK_RE = re.compile(r"^### (?P<pack>.+?)\\s*$", re.MULTILINE)
-_GROUP_RE = re.compile(r"^#### (?P<group>.+?)\\s*$", re.MULTILINE)
+_PACK_RE = re.compile(r"^### (?P<pack>.+?)\s*$", re.MULTILINE)
+_GROUP_RE = re.compile(r"^#### (?P<group>.+?)\s*$", re.MULTILINE)
 _QUOTED_RE = re.compile(r'"([^"]+)"')
 
 
