@@ -40,10 +40,8 @@ _INSIGHT_VALIDATION = load_key_value_table(
 _INSIGHT_GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/meaning-integration.md"), "Guidance"
 )
-
 def _phrases(value: str) -> tuple[str, ...]:
     return tuple(part.strip() for part in value.split(";") if part.strip())
-
 def _score(name: str) -> int:
     return int(_INSIGHT_SCORING[name])
 
@@ -104,13 +102,17 @@ def detect_insight(
     if history:
         recent_assistant = [
             m["content"].lower()
-            for m in history[-int(_score("Validation history window")):]
+            for m in history[-int(_score("Validation history window")) :]
             if isinstance(m, dict) and m.get("role") == "assistant"
         ]
-        integration_triggers = _phrases(_INSIGHT_VALIDATION["Assistant integration triggers"])
+        integration_triggers = _phrases(
+            _INSIGHT_VALIDATION["Assistant integration triggers"]
+        )
         if any(any(t in am for t in integration_triggers) for am in recent_assistant):
             validation = _phrases(_INSIGHT_VALIDATION["User validation"])
-            if any(v in msg for v in validation) and len(msg.split()) < _score("Validation maximum user word count"):
+            if any(v in msg for v in validation) and len(msg.split()) < _score(
+                "Validation maximum user word count"
+            ):
                 score += _score("Validation-of-reflection bonus")
                 signals_found.append("validation_of_reflection")
 
@@ -124,7 +126,9 @@ def detect_insight(
             "recommendation": "No insight signal detected. Continue standard response pipeline.",
         }
 
-    strength = "strong" if score >= _score("Strong insight minimum score") else "emerging"
+    strength = (
+        "strong" if score >= _score("Strong insight minimum score") else "emerging"
+    )
     insight_type = _classify_insight_type(msg)
 
     integration_map = _INSIGHT_GUIDANCE
