@@ -37,7 +37,13 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
         cells = [_norm(cell) for cell in line.strip().strip("|").split("|")]
         if len(cells) == 5:
             rules.append(TemplateRule(*cells))
-    required = {"Crisis", "Dependency", "Existential", "Mirror (Stage 1)", "Integration and Celebration"}
+    required = {
+        "Crisis",
+        "Dependency",
+        "Existential",
+        "Mirror (Stage 1)",
+        "Integration and Celebration",
+    }
     if not required.issubset({rule.framework for rule in rules}):
         raise ValueError("Framework-template mapping is incomplete.")
     return tuple(rules)
