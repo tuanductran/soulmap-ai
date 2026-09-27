@@ -164,6 +164,9 @@ def _assert_markdown_references(archive: zipfile.ZipFile, actual: set[str]) -> N
                 target = child.attrGet("href") or ""
                 if target.startswith(("#", "mailto:", "tel:", "data:")):
                     continue
+                parsed = urlsplit(unquote(target))
+                if parsed.scheme or parsed.netloc:
+                    continue
                 resolved = _resolve_markdown_target(source, target)
                 if resolved is None:
                     raise ExtractedArtifactError(
