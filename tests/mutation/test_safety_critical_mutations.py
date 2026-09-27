@@ -93,7 +93,7 @@ def test_scope_classifier_blacklist_category_is_load_bearing(
     red-team corpus, not an ad hoc example.
     """
     mutated = dict(scope_classifier.BLACKLIST_PROHIBITED)
-    mutated["jailbreak"] = []
+    mutated["jailbreak"] = ()
     monkeypatch.setattr(scope_classifier, "BLACKLIST_PROHIBITED", mutated)
 
     result = scope_classifier.classify_message(

@@ -461,7 +461,8 @@ async def select_framework_async(
         "stage": _run_detector_async(
             "stage_detector",
             detect_stage,
-            history,
+            [*history, {"role": "user", "content": message}],
+            memory,
             debug_events=debug_events,
         ),
         "somatic": _run_detector_async(

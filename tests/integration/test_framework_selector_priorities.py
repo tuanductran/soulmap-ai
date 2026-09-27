@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from soulmap.runtime.routing.stage_detector import detect_stage
+
 ROOT = Path(__file__).resolve().parents[2]
 TEST_ENV = {
     **os.environ,
@@ -311,3 +313,24 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     data = run_framework_selector(payload)
 
     assert data["primary_framework"] == "MEANING_INTEGRATION"
+
+
+def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
+    payload = {
+        "message": (
+            "I'm just checking in. I'm doing well. I've found my path. "
+            "I'm not looking for answers. I just wanted to reflect."
+        ),
+        "history": [{"role": "user", "content": "This feels quiet now."}],
+        "memory": {"session_count": 2},
+    }
+
+    direct = detect_stage(
+        [*payload["history"], {"role": "user", "content": payload["message"]}],
+        payload["memory"],
+    )
+    assert direct["stage"] == 6
+
+    data = run_framework_selector(payload)
+
+    assert data["context"]["stage"] == 6

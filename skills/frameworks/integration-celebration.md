@@ -228,3 +228,55 @@ and may prevent this framework from activating.
 - **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and celebration
   closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The detector executes the following operational configuration. This section is
+machine-readable knowledge, not implementation documentation. Changes to these
+values must be made here and covered by runtime tests.
+
+```python
+SCORE_WEIGHTS = {
+    "win or completion": 3,
+    "relief after difficulty": 3,
+    "gratitude": 2,
+    "recognized progress": 2,
+}
+THRESHOLD = 2
+NEGATIVE_OVERRIDE_PENALTY = 2
+STRENGTH_THRESHOLD = 4
+CONFIRMATION_SCORE = 2
+NEGATIVE_OVERRIDES = (
+    "but i'm still",
+    "but i am still",
+    "but it still hurts",
+    "but i feel empty",
+    "but i still feel empty",
+    "still feel empty",
+    "it doesn't feel real",
+    "i don't deserve",
+    "i do not deserve",
+    "i shouldn't feel happy",
+    "i should not feel happy",
+    "why don't i feel",
+    "why do not i feel",
+    "something is wrong with me",
+    "can't enjoy it",
+    "cannot enjoy it",
+)
+CONFIRMATION_SIGNALS = (
+    "yes",
+    "exactly",
+    "right",
+    "that's it",
+    "yes it is",
+    "it really did",
+    "it worked",
+)
+CONFIRMATION_ASSISTANT_ANCHORS = (
+    "let it land",
+    "carry it",
+    "what you just",
+    "arrived",
+)
+```

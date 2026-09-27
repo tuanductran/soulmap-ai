@@ -10,64 +10,23 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
-    load_labeled_groups,
-)
+from soulmap.runtime.knowledge.celebration_source import load_celebration_rules
 
-# Single source of truth: skills/frameworks/integration-celebration.md,
-# "## Detection signals". Nothing is hardcoded here.
-_CELEBRATION_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/integration-celebration.md"),
-    "Detection signals",
-)
-CELEBRATION_WIN = _CELEBRATION_GROUPS["win or completion"]
-CELEBRATION_RELIEF = _CELEBRATION_GROUPS["relief after difficulty"]
-CELEBRATION_GRATITUDE = _CELEBRATION_GROUPS["gratitude"]
-CELEBRATION_PROGRESS = _CELEBRATION_GROUPS["recognized progress"]
+_RULES = load_celebration_rules()
 
 HistoryMessage = dict[str, str]
-
-# Signal weights
-_WIN_SCORE = 3
-_RELIEF_SCORE = 3
-_GRATITUDE_SCORE = 2
-_PROGRESS_SCORE = 2
-
-# Minimum score to activate the framework
-_THRESHOLD = 2
-
-# Negative override signals - these indicate the positive state is mixed with pain;
-# higher-priority frameworks (grief, crisis, shadow) will handle those cases.
-_NEGATIVE_OVERRIDES: tuple[str, ...] = (
-    "but i'm still",
-    "but i am still",
-    "but it still hurts",
-    "but i feel empty",
-    "but i still feel empty",
-    "still feel empty",
-    "it doesn't feel real",
-    "i don't deserve",
-    "i do not deserve",
-    "i shouldn't feel happy",
-    "i should not feel happy",
-    "why don't i feel",
-    "why do not i feel",
-    "something is wrong with me",
-    "can't enjoy it",
-    "cannot enjoy it",
-)
 
 
 def _classify_celebration_type(msg: str) -> str:
     """Identify the primary subtype of the positive state."""
-    if any(p in msg for p in CELEBRATION_PROGRESS):
+    groups = _RULES.signal_groups
+    if any(p in msg for p in groups["recognized progress"]):
         return "recognized_progress"
-    if any(p in msg for p in CELEBRATION_WIN):
+    if any(p in msg for p in groups["win or completion"]):
         return "win"
-    if any(p in msg for p in CELEBRATION_RELIEF):
+    if any(p in msg for p in groups["relief after difficulty"]):
         return "relief"
-    if any(p in msg for p in CELEBRATION_GRATITUDE):
+    if any(p in msg for p in groups["gratitude"]):
         return "gratitude"
     return "general_positive"
 
@@ -96,35 +55,35 @@ def detect_celebration(
     signals_found: list[str] = []
     score = 0
 
-    for phrase in CELEBRATION_WIN:
+    for phrase in _RULES.signal_groups["win or completion"]:
         if phrase in msg:
-            score += _WIN_SCORE
+            score += _RULES.score_weights["win or completion"]
             signals_found.append(f"win: '{phrase}'")
             break  # one win signal is enough to score the category
 
-    for phrase in CELEBRATION_RELIEF:
+    for phrase in _RULES.signal_groups["relief after difficulty"]:
         if phrase in msg:
-            score += _RELIEF_SCORE
+            score += _RULES.score_weights["relief after difficulty"]
             signals_found.append(f"relief: '{phrase}'")
             break
 
-    for phrase in CELEBRATION_GRATITUDE:
+    for phrase in _RULES.signal_groups["gratitude"]:
         if phrase in msg:
-            score += _GRATITUDE_SCORE
+            score += _RULES.score_weights["gratitude"]
             signals_found.append(f"gratitude: '{phrase}'")
             break
 
-    for phrase in CELEBRATION_PROGRESS:
+    for phrase in _RULES.signal_groups["recognized progress"]:
         if phrase in msg:
-            score += _PROGRESS_SCORE
+            score += _RULES.score_weights["recognized progress"]
             signals_found.append(f"progress: '{phrase}'")
             break
 
     # Check for negative override - mixed pain signals reduce confidence
-    has_negative_override = any(neg in msg for neg in _NEGATIVE_OVERRIDES)
+    has_negative_override = any(neg in msg for neg in _RULES.negative_overrides)
 
     if has_negative_override:
-        score = max(0, score - 2)
+        score = max(0, score - _RULES.negative_override_penalty)
         signals_found.append("negative_override: mixed pain signal detected")
 
     # Check prior assistant turn for a reflection that user is now confirming positively
@@ -134,26 +93,14 @@ def detect_celebration(
             for m in history[-2:]
             if isinstance(m, dict) and m.get("role") == "assistant"
         ]
-        positive_confirmation = (
-            "yes",
-            "exactly",
-            "right",
-            "that's it",
-            "yes it is",
-            "it really did",
-            "it worked",
-        )
-        if any(conf in msg for conf in positive_confirmation) and any(
-            any(
-                sig in am
-                for sig in ("let it land", "carry it", "what you just", "arrived")
-            )
+        if any(conf in msg for conf in _RULES.confirmation_signals) and any(
+            any(sig in am for sig in _RULES.confirmation_assistant_anchors)
             for am in recent_assistant
         ):
-            score += 2
+            score += _RULES.confirmation_score
             signals_found.append("confirms_celebration_reflection")
 
-    if score < _THRESHOLD:
+    if score < _RULES.threshold:
         return {
             "celebration_detected": False,
             "strength": None,
@@ -166,54 +113,17 @@ def detect_celebration(
             ),
         }
 
-    strength = "strong" if score >= 4 else "present"
+    strength = "strong" if score >= _RULES.strength_threshold else "present"
     celebration_type = _classify_celebration_type(msg)
-
-    type_instruction: dict[str, str] = {
-        "win": (
-            "User has achieved something real. Witness the arrival first. "
-            "Do NOT immediately push toward what is next. "
-            "Use Steps 1-2 of the four-step arc from integration-celebration.md. "
-            "Close with a win-specific question from deep-inquiry-bank.md "
-            "(Celebration Questions - Witnessing a win or completion)."
-        ),
-        "relief": (
-            "User is experiencing relief after sustained difficulty. "
-            "Slow it down. Invite them to stay in the experience. "
-            "Use Steps 1-2 of the four-step arc from integration-celebration.md. "
-            "Close with a relief question from deep-inquiry-bank.md "
-            "(Celebration Questions - Relief and lightness)."
-        ),
-        "gratitude": (
-            "User is expressing gratitude inward or outward. "
-            "Reflect what the gratitude is pointing toward. "
-            "Use Steps 1-3 of the four-step arc from integration-celebration.md. "
-            "Close with a gratitude question from deep-inquiry-bank.md "
-            "(Celebration Questions - Gratitude)."
-        ),
-        "recognized_progress": (
-            "User caught an old pattern and responded differently. "
-            "This is a significant moment of self-authorship. "
-            "Witness it before exploring it. "
-            "Use the full four-step arc from integration-celebration.md. "
-            "Close with a progress question from deep-inquiry-bank.md "
-            "(Celebration Questions - Recognized progress)."
-        ),
-        "general_positive": (
-            "User is in a positive primary state. "
-            "Use Steps 1-2 of the four-step arc from integration-celebration.md. "
-            "Close with a deepening question from deep-inquiry-bank.md "
-            "(Celebration Questions - After a breakthrough)."
-        ),
-    }
 
     recommendation = (
         f"Celebration signal detected (strength: {strength}, "
         f"type: {celebration_type}). "
         "Activate integration-celebration.md (P9b). "
-        + type_instruction.get(celebration_type, type_instruction["general_positive"])
-        + " Do NOT perform enthusiasm. Do NOT open with exclamation. "
-        "Do NOT immediately ask 'what is next'. "
+        "Use the framework's four-step arc and the type-specific guidance already "
+        "defined in the Markdown source. Do NOT perform enthusiasm. "
+        "Do NOT open with exclamation. Do NOT immediately ask 'what is next'. "
+        "Close with one agency-preserving question from deep-inquiry-bank.md. "
         "Closing ritual: skills/voice/session-rituals.md "
         "(Breakthrough and Celebration Closing section)."
     )

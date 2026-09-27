@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+import pytest
+
+from soulmap.runtime.knowledge.stage_classifier import (
+    load_stage_classifier,
+    parse_stage_classifier,
+)
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 
@@ -7,7 +13,25 @@ def _user(content: str) -> dict[str, str]:
     return {"role": "user", "content": content}
 
 
-def test_stage_defaults_to_arrival_when_history_has_no_user_message() -> None:
+def test_stage_classifier_loads_the_shipped_contract() -> None:
+    rules = load_stage_classifier()
+
+    assert len(rules.stages) == 6
+    assert rules.thresholds == {1: 0, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12}
+    assert rules.recency_multipliers == (0.5, 1.0, 1.5, 2.0, 3.0)
+
+
+def test_stage_classifier_rejects_missing_stage() -> None:
+    rules = load_stage_classifier()
+    source = "\n".join(
+        f"### Stage {stage.number}, {stage.name.lower()}" for stage in rules.stages[:-1]
+    )
+
+    with pytest.raises(ValueError, match="Expected 6 stage definitions"):
+        parse_stage_classifier(source)
+
+
+def test_stage_defaults_to_arrival_without_user_history() -> None:
     result = detect_stage([{"role": "assistant", "content": "How are you?"}])
 
     assert result["stage"] == 1
@@ -15,52 +39,95 @@ def test_stage_defaults_to_arrival_when_history_has_no_user_message() -> None:
     assert result["signals"] == []
 
 
-def test_stage_uses_low_confidence_when_user_message_has_no_stage_signal() -> None:
-    result = detect_stage([_user("I went for a quiet walk this morning.")])
+def test_first_session_stays_at_stage_one() -> None:
+    result = detect_stage([_user("I trust myself and I know what I need.")])
 
     assert result["stage"] == 1
     assert result["confidence"] == "LOW"
-    assert result["score"] == 0
 
 
-def test_stage_uses_low_confidence_for_old_single_signal() -> None:
+def test_current_turn_uses_the_three_x_recency_multiplier() -> None:
     result = detect_stage(
         [
-            _user("Maybe I can be honest about this."),
-            _user("I am listening to myself today."),
             _user("This feels quiet now."),
-            _user("I want to stay present."),
+            _user("Maybe I can be honest about this."),
         ]
     )
 
     assert result["stage"] == 2
-    assert result["confidence"] == "LOW"
-    assert result["score"] == 2
+    assert result["score"] == 6.0
     assert result["signals"] == ["maybe i"]
 
 
-def test_stage_uses_moderate_confidence_for_recent_single_signal() -> None:
-    result = detect_stage([_user("Maybe I can be honest about this.")])
+def test_recent_five_messages_are_the_only_messages_scored() -> None:
+    history = [_user("Maybe I can be honest about this.")] * 3
+    history.extend(
+        [
+            _user("Nothing useful here."),
+            _user("Still nothing."),
+            _user("Maybe I can be honest about this."),
+        ]
+    )
+    result = detect_stage(history)
 
     assert result["stage"] == 2
-    assert result["confidence"] == "MODERATE"
-    assert result["score"] == 3
+    assert result["signals"] == ["maybe i"]
 
 
-def test_stage_uses_high_confidence_for_multiple_recent_signals() -> None:
-    result = detect_stage([_user("I trust myself, and I know what I need right now.")])
+def test_threshold_prevents_single_stage_three_signal_from_classifying() -> None:
+    result = detect_stage(
+        [
+            _user("This is neutral."),
+            _user("I see a connection."),
+        ]
+    )
+
+    assert result["stage"] == 1
+
+
+def test_close_scores_choose_the_lower_stage() -> None:
+    result = detect_stage(
+        [
+            _user("I see a connection."),
+            _user("Maybe I can be honest about this."),
+        ]
+    )
+
+    assert result["stage"] == 2
+
+
+def test_memory_can_raise_the_minimum_stage() -> None:
+    result = detect_stage(
+        [
+            _user("I trust myself."),
+            _user("I know what I need."),
+        ],
+        {"session_count": 10},
+    )
+
+    assert isinstance(result["stage"], int)
+    assert result["stage"] >= 2
+
+
+def test_prior_stage_prevents_unjustified_regression() -> None:
+    result = detect_stage(
+        [
+            _user("I don't know what to do."),
+            _user("I feel lost."),
+        ],
+        {"prior_stage": 4},
+    )
 
     assert result["stage"] == 4
-    assert result["confidence"] == "HIGH"
-    assert result["score"] == 6
 
 
-def test_stage_deduplicates_repeated_signal_labels_across_messages() -> None:
+def test_destabilization_allows_stage_regression() -> None:
     result = detect_stage(
         [
-            _user("Maybe I can pause."),
-            _user("Maybe I can listen."),
-        ]
+            _user("I don't know what to do."),
+            _user("I feel lost."),
+        ],
+        {"prior_stage": 4, "destabilization_signals": ["acute distress"]},
     )
 
-    assert result["signals"] == ["maybe i"]
+    assert result["stage"] == 1

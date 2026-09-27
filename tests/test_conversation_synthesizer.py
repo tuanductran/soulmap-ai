@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import cast
 
+from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 from soulmap.runtime.synthesis import conversation_synthesizer as synthesizer
 
 
@@ -90,28 +91,70 @@ def test_merge_memory_themes_handles_invalid_or_empty_memory_values() -> None:
     )
 
 
-def test_should_synthesize_covers_explicit_natural_threshold_and_no_trigger() -> None:
-    short_history = _user_messages(["one", "two"])
-    reflective_history = _user_messages([f"message {index}" for index in range(10)])
-    long_history = _user_messages([f"message {index}" for index in range(12)])
+def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
+    rules = load_synthesis_rules()
 
-    assert synthesizer.should_synthesize("Can you synthesize this?", short_history) == {
-        "should": True,
-        "reason": "explicit_request",
-    }
-    assert synthesizer.should_synthesize(
-        "I wonder why this repeats.", reflective_history
-    ) == {
-        "should": True,
-        "reason": "natural_pause_long_session",
-    }
-    assert synthesizer.should_synthesize("I am still here.", long_history) == {
-        "should": True,
-        "reason": "long_session_threshold",
-    }
-    assert synthesizer.should_synthesize("I am still here.", short_history) == {
+    assert rules.minimum_user_messages == 6
+    assert rules.automatic_user_messages == 10
+    assert rules.minimum_recurring_themes == 2
+    assert rules.max_themes == 3
+    assert rules.max_anchors == 2
+    assert rules.max_longitudinal == 3
+    assert "can you synthesize" in rules.explicit_requests
+
+
+def test_should_synthesize_requires_two_distinct_recurring_themes() -> None:
+    one_theme = _user_messages(
+        [f"I feel lonely in message {index}." for index in range(9)]
+    )
+    two_themes = _user_messages(
+        [
+            f"I feel lonely and my own path matters in message {index}."
+            for index in range(9)
+        ]
+    )
+
+    assert synthesizer.should_synthesize("I am still here.", one_theme) == {
         "should": False,
         "reason": "not_triggered",
+    }
+    assert synthesizer.should_synthesize(
+        "I feel lonely and my own path matters too.", two_themes
+    ) == {
+        "should": True,
+        "reason": "recurring_themes_long_session",
+    }
+
+
+def test_should_synthesize_counts_current_user_message() -> None:
+    history = _user_messages(
+        [
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+            "I feel lonely and my own path matters.",
+        ]
+    )
+
+    assert synthesizer.should_synthesize(
+        "I feel lonely and my own path matters.", history
+    ) == {
+        "should": True,
+        "reason": "recurring_themes_long_session",
+    }
+
+
+def test_should_synthesize_explicit_request_is_independent_of_session_length() -> None:
+    assert synthesizer.should_synthesize(
+        "Can you synthesize this?", _user_messages(["one", "two"])
+    ) == {
+        "should": True,
+        "reason": "explicit_request",
     }
 
 
