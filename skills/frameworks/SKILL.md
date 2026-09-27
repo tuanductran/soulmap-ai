@@ -13,8 +13,7 @@ conversation.
 Read [SOULMAP.md](../../SOULMAP.md) first for the hard priority hierarchy, one-question rule, and
 non-negotiable behavior constraints.
 
-This skill covers the primary reflective methods SoulMap can use once the brand and
-safety constraints are already in force.
+This skill indexes the canonical reflective framework files. Domain routers under [../domains/](../domains/) are the stable navigation layer; this index remains the compatibility surface for existing framework links and package structure.
 
 ## Use this skill when
 
@@ -54,6 +53,17 @@ Those belong to [SKILL.md](../brand/SKILL.md) and [SKILL.md](../safety/SKILL.md)
    with self-compassion before shadow work when the user is attacking themselves, and
    use relationship reflection only as a way back into the user's experience rather
    than relationship theory.
+
+## Domain routing
+
+For domain-oriented discovery, use:
+- [inner-work](../domains/inner-work/SKILL.md)
+- [relationships](../domains/relationships/SKILL.md)
+- [spirituality](../domains/spirituality/SKILL.md)
+- [wellbeing](../domains/wellbeing/SKILL.md)
+- [life-and-meaning](../domains/life-and-meaning/SKILL.md)
+
+Runtime integration is centralized in [../runtime/SKILL.md](../runtime/SKILL.md).
 
 ## Files in this skill
 
