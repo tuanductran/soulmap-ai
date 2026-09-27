@@ -308,6 +308,27 @@ async def select_framework_async(
             result["scope"] = scope
             return _maybe_attach_debug(result, debug_events)
 
+    breakthrough = await _run_detector_async(
+        "insight_detector",
+        detect_insight,
+        message,
+        history,
+        debug_events=debug_events,
+    )
+    if (
+        breakthrough.get("insight_detected")
+        and breakthrough.get("strength") == orchestration_rules.breakthrough_min_strength
+    ):
+        selection = {
+            "primary_framework": "MEANING_INTEGRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": breakthrough,
+            "instruction": breakthrough.get("recommendation", ""),
+            "blocked": [],
+        }
+        return _finish(message, history, memory, selection, debug_events)
+
     intensity_task = _run_detector_async(
         "emotional_intensity_detector",
         detect_intensity,
