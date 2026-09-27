@@ -30,7 +30,6 @@ def test_detector_modules_do_not_embed_skill_source_paths() -> None:
     assert not violations, "\n".join(violations)
 
 
-
 def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
