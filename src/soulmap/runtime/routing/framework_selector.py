@@ -479,33 +479,22 @@ async def select_framework_async(
             }
             return _finish(message, history, memory, selection, debug_events)
 
-        for rule in orchestration_rules.primary_priority:
-            result = {
-                "insight": insight,
-                "grief": grief,
-                "conflict": conflict,
-            }.get(rule.result, {})
-            if not isinstance(result, dict) or not result.get(rule.detected):
-                continue
-            if rule.requires_no_insight and insight.get("insight_detected"):
-                continue
-            if not _condition_matches(result, rule.requires):
-                continue
-            if rule.requires_not and result.get(rule.requires_not):
-                continue
-
-            secondary = (
-                "meaning_integration"
-                if rule.insight_secondary and insight.get("insight_detected")
-                else None
-            )
+        grief_rule = next(
+            (rule for rule in orchestration_rules.primary_priority if rule.result == "grief"),
+            None,
+        )
+        if grief_rule is not None and grief.get(grief_rule.detected):
             selection = {
-                "primary_framework": rule.framework,
-                "secondary_layer": secondary,
-                "mode": rule.mode,
-                "context": result,
-                "instruction": result.get("recommendation", ""),
-                "blocked": list(rule.blocked),
+                "primary_framework": grief_rule.framework,
+                "secondary_layer": (
+                    "meaning_integration"
+                    if grief_rule.insight_secondary and insight.get("insight_detected")
+                    else None
+                ),
+                "mode": grief_rule.mode,
+                "context": grief,
+                "instruction": grief.get("recommendation", ""),
+                "blocked": list(grief_rule.blocked),
             }
             return _finish(message, history, memory, selection, debug_events)
 
