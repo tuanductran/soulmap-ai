@@ -91,7 +91,9 @@ def detect_inner_conflict(
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_RULES["History window"]):]
         for past_msg in recent_user:
-            for phrase in EXPLICIT_CONFLICT[: int(_RULES["Historical signal limit"]) ]:  # Check strongest signals in history
+            for phrase in EXPLICIT_CONFLICT[
+                : int(_RULES["Historical signal limit"])
+            ]:  # Check strongest signals in history
                 if phrase in past_msg:
                     score += int(_RULES["Historical explicit-conflict bonus"])
                     if "historical" not in conflict_types:
