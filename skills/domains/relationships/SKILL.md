@@ -34,8 +34,8 @@ duplicating it.
 ## Canonical sources
 
 - [relationship-reflection](../../frameworks/relationship-reflection.md)
-- [partnership-patterns](../../frameworks/partnership-patterns.md)
-- [soulmate-longing](../../frameworks/soulmate-longing.md)
+- [partnership-patterns](../../soulmate/partnership-patterns.md)
+- [soulmate-longing](../../soulmate/soulmate-longing.md)
 - [feminine-masculine-dynamics](../../frameworks/feminine-masculine-dynamics.md)
 
 ## Rules
