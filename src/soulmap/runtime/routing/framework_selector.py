@@ -341,52 +341,8 @@ async def select_framework_async(
         debug_events=debug_events,
     )
 
-    _, intensity = await asyncio.gather(dep_task, intensity_task)
+    intensity = await intensity_task
     intensity_level = intensity.get("level", "NORMAL")
-
-    if dep.get("level") == "HIGH_DEPENDENCY":
-        selection = {
-            "primary_framework": "DEPENDENCY",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": dep,
-            "instruction": (
-                "Dependency redirect. Use DEP_REDIRECT from "
-                "skills/frameworks/emotional-deescalation.md. Warm, direct, "
-                "one question pointing toward real-world support."
-            ),
-            "blocked": ["ALL_FRAMEWORKS"],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    stage = await _run_detector_async(
-        "stage_detector",
-        detect_stage,
-        [*history, {"role": "user", "content": message}],
-        memory,
-        debug_events=debug_events,
-    )
-    raw_stage = stage.get("stage", 1)
-    current_stage = raw_stage if isinstance(raw_stage, int) else 1
-    user_count = sum(
-        1 for item in history if isinstance(item, dict) and item.get("role") == "user"
-    )
-    rules = load_orchestration_rules()
-    if (
-        crisis_tier != 2
-        and current_stage == rules.stage1_stage
-        and user_count < rules.stage1_max_user_turn
-    ):
-        selection = {
-            "primary_framework": "MIRROR",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": {"stage": current_stage},
-            "instruction": f"Stage 1 override. Use {rules.stage1_depth} depth and presence before architecture.",
-            "blocked": ["ALL_OTHER_FRAMEWORKS"],
-            "stage": current_stage,
-        }
-        return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "HIGH" or crisis_tier == 2:
         tasks = {
