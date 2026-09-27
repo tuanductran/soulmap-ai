@@ -20,7 +20,8 @@ permanent, discoverable, and binding on future contributors.
 SoulMap AI follows a knowledge-first architecture: Markdown under `skills/`
 is the source of truth for what SoulMap knows and how it should speak, and
 the Python runtime under `src/soulmap/runtime/` is responsible only for
-orchestration, routing, validation, packaging, and safety enforcement. Crisis
+orchestration, routing, knowledge loading, validation, and safety enforcement. Maintainer
+packaging belongs to `src/soulmap/devtools/`. Crisis
 handling sits inside that runtime layer, and is the most safety-critical
 decision the runtime makes on any given request.
 
