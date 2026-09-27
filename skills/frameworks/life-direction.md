@@ -383,7 +383,6 @@ Transition, moving between one chapter of life and the next:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-
 ## Runtime detection contract
 
 This section defines executable detection policy for the Life Direction detector. The
