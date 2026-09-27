@@ -50,8 +50,12 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     skill_path = build_tool.build_skill(tmp_path)
 
     core_names = {"LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"}
-    assert not any(name.startswith("skills/runtime/") for name in _archive_names(zip_path))
-    assert not any(name.startswith("skills/runtime/") for name in _archive_names(skill_path))
+    assert not any(
+        name.startswith("skills/runtime/") for name in _archive_names(zip_path)
+    )
+    assert not any(
+        name.startswith("skills/runtime/") for name in _archive_names(skill_path)
+    )
     assert _archive_names(zip_path) == core_names
     assert _archive_names(skill_path) == {
         *core_names,
