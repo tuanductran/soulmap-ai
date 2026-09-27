@@ -305,7 +305,6 @@ Changes to these values must be made here and covered by focused contract tests.
 | ownership_return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
 | recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return + one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
 
-
 ### Recurring emotional theme signals
 
 #### loneliness
