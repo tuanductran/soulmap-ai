@@ -289,9 +289,10 @@ async def select_framework_async(
         scope = classify_message(message)
         if str(scope.get("tier", "")).startswith("BLACKLIST"):
             selection = {
-                "primary_framework": "SAFETY_REDIRECT",
+                "primary_framework": "MIRROR",
                 "secondary_layer": None,
                 "mode": "BLOCK",
+                "routing_action": "SAFETY_REDIRECT",
                 "context": {"scope": scope},
                 "instruction": scope.get("explanation", ""),
                 "blocked": ["ALL_FRAMEWORKS"],
