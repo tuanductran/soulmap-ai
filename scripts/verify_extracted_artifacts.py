@@ -7,6 +7,9 @@ import fnmatch
 import sys
 import zipfile
 from pathlib import Path, PurePosixPath
+from urllib.parse import unquote, urlsplit
+
+from markdown_it import MarkdownIt
 
 from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
@@ -104,6 +107,77 @@ def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
     return names, archive
 
 
+def _markdown_members(actual: set[str]) -> tuple[str, ...]:
+    """Return Markdown members that participate in the shipped reference graph."""
+    return tuple(
+        sorted(
+            name
+            for name in actual
+            if name.endswith(".md") and not name.startswith(".claude-plugin/")
+        )
+    )
+
+
+def _resolve_markdown_target(source: str, target: str) -> str | None:
+    """Resolve a shipped Markdown link using standard or repository-root semantics."""
+    parsed = urlsplit(unquote(target))
+    if parsed.scheme or parsed.netloc:
+        return None
+    raw_path = parsed.path
+    if not raw_path:
+        return None
+
+    source_path = PurePosixPath(source)
+    target_path = PurePosixPath(raw_path)
+    if raw_path.startswith("/"):
+        candidate = target_path.relative_to("/")
+    elif raw_path.startswith("skills/") or raw_path in CORE_FILES:
+        candidate = target_path
+    else:
+        candidate = source_path.parent / target_path
+
+    normalized = PurePosixPath()
+    for part in candidate.parts:
+        if part in {"", "."}:
+            continue
+        if part == "..":
+            if not normalized.parts:
+                return None
+            normalized = normalized.parent
+        else:
+            normalized /= part
+    return normalized.as_posix()
+
+
+def _assert_markdown_references(archive: zipfile.ZipFile, actual: set[str]) -> None:
+    """Require every shipped Markdown link to resolve inside the archive."""
+    parser = MarkdownIt("commonmark")
+    for source in _markdown_members(actual):
+        content = archive.read(source).decode("utf-8")
+        for token in parser.parse(content):
+            if token.type != "inline" or not token.children:
+                continue
+            line_no = (token.map[0] + 1) if token.map else 1
+            for child in token.children:
+                if child.type != "link_open":
+                    continue
+                target = child.attrGet("href") or ""
+                if target.startswith(("#", "mailto:", "tel:", "data:")):
+                    continue
+                resolved = _resolve_markdown_target(source, target)
+                if resolved is None:
+                    raise ExtractedArtifactError(
+                        f"{source}:{line_no}: link target escapes shipped package: {target!r}"
+                    )
+                if resolved not in actual and not any(
+                    name.startswith(f"{resolved}/") for name in actual
+                ):
+                    raise ExtractedArtifactError(
+                        f"{source}:{line_no}: broken shipped Markdown reference: "
+                        f"{target!r} -> {resolved!r}"
+                    )
+
+
 def _assert_expected_members(
     archive_path: Path,
     *,
@@ -149,6 +223,8 @@ def _assert_expected_members(
             raise ExtractedArtifactError(
                 f"{archive_path.name} contains repository-only members: {forbidden_members}"
             )
+
+        _assert_markdown_references(archive, actual)
 
         for name in sorted(actual):
             if not name.startswith("skills/") or not name.endswith(".md"):
