@@ -374,11 +374,8 @@ def create_tag(
                 "GET",
                 f"/repos/{quote(owner)}/{quote(repo)}/git/tags/{quote(object_sha)}",
             )
-            if (
-                isinstance(tag_object, dict)
-                and isinstance(tag_object.get("object"), dict)
-                and tag_object["object"].get("sha") == target_sha
-            ):
+            tag_target = tag_object.get("object") if isinstance(tag_object, dict) else None
+            if isinstance(tag_target, dict) and tag_target.get("sha") == target_sha:
                 print(f"Release tag {tag} already exists at the expected commit.")
                 return
         raise GitHubActionError(
@@ -433,11 +430,10 @@ def create_tag(
                 "GET",
                 f"/repos/{quote(owner)}/{quote(repo)}/git/tags/{quote(object_sha)}",
             )
-            if (
-                isinstance(existing_tag, dict)
-                and isinstance(existing_tag.get("object"), dict)
-                and existing_tag["object"].get("sha") == target_sha
-            ):
+            tag_target = (
+                existing_tag.get("object") if isinstance(existing_tag, dict) else None
+            )
+            if isinstance(tag_target, dict) and tag_target.get("sha") == target_sha:
                 return
         raise GitHubActionError(
             f"Concurrent release tag {tag!r} does not point to {target_sha}."
