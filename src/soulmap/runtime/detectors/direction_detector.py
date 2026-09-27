@@ -10,9 +10,6 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.knowledge.keyword_lists import load_labeled_groups
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
-
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
@@ -95,7 +92,15 @@ def detect_direction_need(
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_DIRECTION_RULES["recent user history window"]):]
         history_signals = (
-            LOSTNESS_SIGNALS[: int(_DIRECTION_RULES["sustained lostness signal limit"])] + MEANING_SIGNALS[:6] + TRANSITION_SIGNALS[: int(_DIRECTION_RULES["sustained transition signal limit"])]
+            LOSTNESS_SIGNALS[
+                : int(_DIRECTION_RULES["sustained lostness signal limit"])
+            ]
+            + MEANING_SIGNALS[
+                : int(_DIRECTION_RULES["sustained meaning signal limit"])
+            ]
+            + TRANSITION_SIGNALS[
+                : int(_DIRECTION_RULES["sustained transition signal limit"])
+            ]
         )
         for past_msg in recent_user:
             if any(phrase in past_msg for phrase in history_signals):
