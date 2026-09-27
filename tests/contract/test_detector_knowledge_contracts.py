@@ -67,6 +67,8 @@ def test_shadow_detector_uses_knowledge_threshold(
 def test_ancestral_detector_uses_knowledge_threshold(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setitem(ancestral_detector._ANCESTRAL_SCORING, "Minimum detection score", "99")
+    monkeypatch.setitem(
+        ancestral_detector._ANCESTRAL_SCORING, "Minimum detection score", "99"
+    )
     result = ancestral_detector.detect_ancestral("this runs in my family")
     assert result["ancestral_detected"] is False
