@@ -52,11 +52,6 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.knowledge.template_source import resolve_template
 from soulmap.runtime.routing.scope_classifier import classify_message
-from soulmap.runtime.io.cli_payload import (
-    print_json_error,
-    read_stdin_json,
-    require_message_history_memory_fields,
-)
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
     should_synthesize,
