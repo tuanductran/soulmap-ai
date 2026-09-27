@@ -334,3 +334,32 @@ def test_framework_selector_passes_current_turn_to_stage_detector() -> None:
     data = run_framework_selector(payload)
 
     assert data["context"]["stage"] == 6
+
+
+def test_framework_selector_enforces_stage_one_first_two_message_override() -> None:
+    """Stage 1 must suppress framework activation on the first two user turns."""
+    payload = {
+        "message": "I feel a little lost and want to understand myself.",
+        "history": [],
+        "memory": {},
+    }
+    data = run_framework_selector(payload)
+    assert data["primary_framework"] == "MIRROR"
+    assert data["mode"] == "MIRROR"
+    assert data["context"]["stage_override"] is True
+    assert data["blocked"] == ["ALL_FRAMEWORKS"]
+
+
+def test_framework_selector_enforces_breakthrough_override_from_knowledge() -> None:
+    """A strong insight must become primary even when another framework also fires."""
+    message = (
+        "I finally see it now. I keep trying to earn the love I most want to receive."
+    )
+    payload = {
+        "message": message,
+        "history": [{"role": "user", "content": "I keep feeling rejected."}],
+        "memory": {},
+    }
+    data = run_framework_selector(payload)
+    assert data["primary_framework"] == "MEANING_INTEGRATION"
+    assert data["secondary_layer"] is None
