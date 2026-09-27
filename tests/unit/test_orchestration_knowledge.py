@@ -26,7 +26,10 @@ def test_orchestration_contract_loads_complete_priority_and_overrides() -> None:
 def test_template_contract_resolves_stage_one_and_grief_variants() -> None:
     rules = load_template_rules()
 
-    assert resolve_template("MIRROR", "MIRROR", {"stage": 1}).framework == "Mirror (Stage 1)"
+    assert (
+        resolve_template("MIRROR", "MIRROR", {"stage": 1}).framework
+        == "Mirror (Stage 1)"
+    )
     assert (
         resolve_template(
             "GRIEF",
