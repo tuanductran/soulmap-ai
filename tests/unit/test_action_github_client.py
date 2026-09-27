@@ -270,6 +270,14 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
     delete_asset.assert_called_once_with(starter["url"])
 
 
+
+def test_immutable_release_cannot_be_finalized() -> None:
+    client = action.GitHubClient("token")
+    release = {"id": 7, "draft": True, "prerelease": False, "immutable": True}
+
+    with pytest.raises(action.GitHubActionError, match="immutable"):
+        action.finalize_release(client, "owner", "repo", release, False, False)
+
 def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"new")
