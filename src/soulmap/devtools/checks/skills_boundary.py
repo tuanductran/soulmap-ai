@@ -49,9 +49,9 @@ def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
     ]
 
 
-def _audit_file(path: Path, repo_root: Path) -> list[str]:
-    rel = path.relative_to(repo_root)
-    text = path.read_text(encoding="utf-8")
+def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
+    """Return implementation-leak findings for one shipped Markdown document."""
+    rel = Path(relative_path)
     findings: list[str] = []
     lines = text.splitlines()
 
@@ -86,6 +86,13 @@ def _audit_file(path: Path, repo_root: Path) -> list[str]:
             findings.append(f"{rel}:{line_no}: implementation syntax detected")
 
     return findings
+
+
+def _audit_file(path: Path, repo_root: Path) -> list[str]:
+    return audit_markdown(
+        path.relative_to(repo_root),
+        path.read_text(encoding="utf-8"),
+    )
 
 
 def audit(repo_root: Path) -> list[str]:
