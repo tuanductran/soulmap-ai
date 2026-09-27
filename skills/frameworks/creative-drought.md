@@ -198,3 +198,34 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 | not_detected | No creative drought signal. Continue standard pipeline. |
 | detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect what the drought may be saying. End with one creative drought question from deep-inquiry-bank.md (Creative Drought Questions section). |
 
+### Secondary signal groups
+
+#### Creative-identity signals
+- "as a writer"
+- "as an artist"
+- "as a creator"
+- "my writing"
+- "my art"
+- "my work"
+- "my content"
+- "my music"
+- "my design"
+- "i create"
+- "i write"
+- "i make"
+- "i used to make"
+- "i used to write"
+- "creative"
+
+#### Absence signals
+- "nothing"
+- "empty"
+- "blank"
+- "dried up"
+- "gone quiet"
+- "not coming"
+- "not flowing"
+- "stopped"
+- "disappeared"
+- "lost it"
+- "can't access"
