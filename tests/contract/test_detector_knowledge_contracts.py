@@ -50,7 +50,7 @@ def test_bypass_detector_uses_knowledge_scoring(
         "Dismissing-pain weight",
         "7",
     )
-    result = spiritual_bypass_detector.detect_bypass("pain is an illusion")
+    result = spiritual_bypass_detector.detect_bypass("everything happens for a reason")
     assert result["score"] == 7
 
 
