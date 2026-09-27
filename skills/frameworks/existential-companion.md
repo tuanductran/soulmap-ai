@@ -362,4 +362,3 @@ The following values define the operational existential-detection policy.
 | larger_questions | Larger questions territory. Do not make it smaller or more manageable. Let it be as large as it is. |
 | holding | The user is sitting with a question they already know has no answer. Be honest about not having an answer and sit alongside the question. |
 | general | General existential territory. Use holding-space language and reflect without reducing. |
-
