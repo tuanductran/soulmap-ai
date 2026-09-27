@@ -33,6 +33,7 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | self-compassion | skills/frameworks/self-compassion.md | Activation Signals | Runtime detection contract | Guidance |
 | somatic-wellbeing | skills/frameworks/somatic-wellbeing.md | Detection signals | Runtime detection contract | Guidance |
 | soulmate-longing | skills/soulmate/soulmate-longing.md | Activation Signals | Runtime detection contract | Guidance |
+| soul-nourishment | skills/frameworks/soul-nourishment.md | Activation Signals | Runtime detection contract | Guidance |
 | spiritual-discernment | skills/spiritual/spiritual-discernment.md | Detection signals | Runtime detection contract | Guidance |
 | spiritual-purpose | skills/frameworks/spiritual-purpose.md | Activation Signals | Runtime detection contract | Guidance |
 | life-direction | skills/frameworks/life-direction.md | Activation Signals | Runtime detection contract | Guidance |
