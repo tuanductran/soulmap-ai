@@ -89,7 +89,7 @@ def detect_inner_conflict(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_RULES["History window"]):]
+        ][-int(_RULES["History window"]) :]
         for past_msg in recent_user:
             for phrase in EXPLICIT_CONFLICT[
                 : int(_RULES["Historical signal limit"])
