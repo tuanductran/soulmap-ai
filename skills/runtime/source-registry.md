@@ -36,5 +36,5 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | soul-nourishment | skills/frameworks/soul-nourishment.md | Activation Signals | Runtime detection contract | Guidance |
 | spiritual-discernment | skills/spiritual/spiritual-discernment.md | Detection signals | Runtime detection contract | Guidance |
 | spiritual-purpose | skills/frameworks/spiritual-purpose.md | Activation Signals | Runtime detection contract | Guidance |
-| life-direction | skills/frameworks/life-direction.md | Activation Signals | Runtime detection contract | Guidance |
+| life-direction | skills/frameworks/life-direction.md | Detection signals | Runtime detection contract | Guidance |
 | pattern-mapper | skills/frameworks/pattern-mapper.md | Pattern 1 | Pattern contract | Reflection |
