@@ -10,6 +10,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 @dataclass(frozen=True, slots=True)
 class OrchestrationRules:
+    """Validated routing rules extracted from the orchestration skill."""
     priority: tuple[str, ...]
     secondary_layers: tuple[str, ...]
     modes: dict[str, str]
@@ -112,6 +113,7 @@ def _overrides(text: str) -> tuple[int, int, str, str, str]:
 
 @lru_cache(maxsize=1)
 def load_orchestration_rules() -> OrchestrationRules:
+    """Read and validate the shipped orchestration Markdown contract."""
     path = default_skill_path("skills/meta/orchestration.md")
     text = path.read_text(encoding="utf-8")
     stage, max_turn, framework, depth, breakthrough = _overrides(text)
