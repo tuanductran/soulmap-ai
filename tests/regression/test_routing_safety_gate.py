@@ -289,7 +289,7 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     instruction = distressed["instruction"]
     assert isinstance(instruction, str)
     assert "End with" not in instruction
-    assert "Do not ask a question" in instruction
+    assert "No questions" in instruction
 
 
 def test_moderate_intensity_without_grief_still_de_escalates() -> None:
