@@ -71,15 +71,15 @@ def _display_name(raw_name: str) -> str:
 
 
 def _runtime_contract(text: str) -> dict[str, object]:
-    match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\\s*$", text, re.MULTILINE)
+    match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
         raise ValueError("Stage runtime enforcement contract is missing.")
     body = text[match.end() :]
-    next_heading = re.search(r"^##\\s+", body, re.MULTILINE)
+    next_heading = re.search(r"^##\s+", body, re.MULTILINE)
     body = body[: next_heading.start()] if next_heading else body
     rows = [
         (row.group("setting").strip(), row.group("value").strip())
-        for row in re.finditer(r"^\\|\\s*(?P<setting>[^|]+?)\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", body, re.MULTILINE)
+        for row in re.finditer(r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", body, re.MULTILINE)
         if row.group("setting").strip().lower() != "setting"
     ]
     values = dict(rows)
@@ -93,13 +93,13 @@ def _runtime_contract(text: str) -> dict[str, object]:
         raise ValueError("Stage runtime enforcement configuration is invalid.") from exc
 
     def section_rows(heading: str) -> dict[int, str]:
-        section = re.search(rf"^### {re.escape(heading)}\\s*$", body, re.MULTILINE)
+        section = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
         if section is None:
             raise ValueError(f"Stage section {heading!r} is missing.")
         remainder = body[section.end() :]
-        next_section = re.search(r"^###\\s+", remainder, re.MULTILINE)
+        next_section = re.search(r"^###\s+", remainder, re.MULTILINE)
         remainder = remainder[: next_section.start()] if next_section else remainder
-        return {int(row.group("stage")): row.group("value").strip() for row in re.finditer(r"^\\|\\s*(?P<stage>[1-6])\\s*\\|\\s*(?P<value>[^|]*?)\\s*\\|\\s*$", remainder, re.MULTILINE)}
+        return {int(row.group("stage")): row.group("value").strip() for row in re.finditer(r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", remainder, re.MULTILINE)}
 
     roles, recommendations = section_rows("Stage roles"), section_rows("Stage recommendations")
     if set(roles) != set(range(1, 7)) or set(recommendations) != set(range(1, 7)):
