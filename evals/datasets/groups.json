@@ -603,7 +603,10 @@
         "note": "Shame + self-attack",
         "expect_primary_framework": "MIRROR",
         "expect_secondary_layer": "anger",
-        "expect_mode": "MIRROR"
+        "expect_mode": "MIRROR",
+        "memory": {
+          "prior_stage": 3
+        }
       }
     ]
   },
@@ -621,7 +624,10 @@
         "note": "Active anger — meet it first",
         "expect_primary_framework": "MIRROR",
         "expect_secondary_layer": "anger",
-        "expect_mode": "MIRROR"
+        "expect_mode": "MIRROR",
+        "memory": {
+          "prior_stage": 3
+        }
       },
       {
         "t": "I am still angry about it months later and it will not go away",
@@ -758,14 +764,20 @@
         "note": "Body sensation signal",
         "expect_primary_framework": "MIRROR",
         "expect_secondary_layer": "somatic",
-        "expect_mode": "MIRROR"
+        "expect_mode": "MIRROR",
+        "memory": {
+          "prior_stage": 3
+        }
       },
       {
         "t": "My watch shows low HRV and poor sleep — what is my body telling me",
         "note": "Biometric reflection",
         "expect_primary_framework": "MIRROR",
         "expect_secondary_layer": "somatic",
-        "expect_mode": "MIRROR"
+        "expect_mode": "MIRROR",
+        "memory": {
+          "prior_stage": 3
+        }
       }
     ]
   },
