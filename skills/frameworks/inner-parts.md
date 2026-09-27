@@ -362,6 +362,7 @@ Internal dialogue, user reports conversations happening inside:
 ### Part archetype signals
 
 Protective part:
+
 - "wall"
 - "guard"
 - "let in"
@@ -374,6 +375,7 @@ Protective part:
 - "keep distance"
 
 Fearful part:
+
 - "what if"
 - "worst case"
 - "something goes wrong"
@@ -385,6 +387,7 @@ Fearful part:
 - "won't last"
 
 Hopeful part:
+
 - "still believe"
 - "maybe"
 - "could be different"
@@ -395,6 +398,7 @@ Hopeful part:
 - "trying again"
 
 Tired part:
+
 - "exhausted"
 - "tired of"
 - "can't anymore"
@@ -406,6 +410,7 @@ Tired part:
 - "depleted"
 
 Angry part:
+
 - "angry"
 - "furious"
 - "sick of"
@@ -418,6 +423,7 @@ Angry part:
 - "shouldn't have to"
 
 Critical part:
+
 - "stupid"
 - "failure"
 - "should have known"
@@ -427,6 +433,7 @@ Critical part:
 - "never learn"
 
 Yearning part:
+
 - "want to be seen"
 - "want to belong"
 - "want to feel"
@@ -437,6 +444,7 @@ Yearning part:
 - "want connection"
 
 Avoidant part:
+
 - "keep busy"
 - "don't think about"
 - "distract"
