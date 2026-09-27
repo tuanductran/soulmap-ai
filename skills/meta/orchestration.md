@@ -39,7 +39,7 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 
 The JSON below is executable routing knowledge. Runtime code must load these values
 from this section rather than duplicating thresholds, primary priority, response modes,
-or secondary-layer ordering in Python. This is knowledge, not implementation
+or secondary-layer ordering in the runtime. This is knowledge, not implementation
 documentation.
 
 ```json
