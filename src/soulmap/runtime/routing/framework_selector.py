@@ -185,6 +185,7 @@ def _finish(
     selection: dict[str, object],
     debug_events: list[dict] | None,
 ) -> dict[str, object]:
+    """Validate routing, attach the template contract, and apply safety."""
     if selection.get("safety_override"):
         selection = dict(selection)
         selection["template"] = None
@@ -196,10 +197,38 @@ def _finish(
     primary = str(selection.get("primary_framework", ""))
     secondary = selection.get("secondary_layer")
     mode = str(selection.get("mode", ""))
+    template_context = (
+        dict(selection.get("context"))
+        if isinstance(selection.get("context"), dict)
+        else {}
+    )
     if isinstance(selection.get("stage"), int):
         template_context.setdefault("stage", selection["stage"])
+    stage_value = template_context.get("stage")
+    if not isinstance(stage_value, int):
+        stage_result = detect_stage(
+            [*history, {"role": "user", "content": message}], memory
+        )
+        stage_value = stage_result.get("stage", 1)
+        if isinstance(stage_value, int):
+            template_context["stage"] = stage_value
+    if primary == "MIRROR" and mode == "MIRROR" and isinstance(stage_value, int) and stage_value >= 5:
+        mode = "PEER"
+    normalized = {
+        "DE_ESCALATION": "De-escalation",
+        "INTEGRATION_CELEBRATION": "Integration and Celebration",
+        "MEANING_INTEGRATION": "Meaning Integration",
+    }.get(primary, primary.replace("_", " ").title())
+    if normalized not in rules.priority:
+        raise ValueError(f"Primary framework {primary!r} is not in orchestration.md.")
     if mode not in rules.modes:
         raise ValueError(f"Unknown response mode {mode!r}.")
+    if secondary is not None:
+        if secondary not in rules.secondary_layers:
+            raise ValueError(f"Unknown secondary layer {secondary!r}.")
+        allowed = rules.valid_secondary.get(normalized, ())
+        if secondary not in allowed:
+            raise ValueError(f"Secondary layer {secondary!r} is not valid for {primary!r}.")
     template = resolve_template(primary, mode, template_context)
     selection = dict(selection)
     selection["mode"] = mode
@@ -211,17 +240,10 @@ def _finish(
         "question_rule": template.question_rule,
         "source_file": template.source_file,
     }
-    """Close out a selection: apply the safety gate, then attach debug data.
-
-    Every branch below ends by calling this with its own ``selection`` dict,
-    so the safety gate and the debug-event contract stay identical across all
-    of them by construction rather than by each branch repeating the call.
-    """
     return _maybe_attach_debug(
         _apply_safety_gate(message, history, memory, selection, debug_events),
         debug_events,
     )
-
 
 def _simple_selection(
     framework: str, detector_result: dict[str, object]
@@ -314,6 +336,34 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
+    stage = await _run_detector_async(
+        "stage_detector",
+        detect_stage,
+        [*history, {"role": "user", "content": message}],
+        memory,
+        debug_events=debug_events,
+    )
+    raw_stage = stage.get("stage", 1)
+    current_stage = raw_stage if isinstance(raw_stage, int) else 1
+    user_count = sum(
+        1 for item in history if isinstance(item, dict) and item.get("role") == "user"
+    )
+    rules = load_orchestration_rules()
+    if (
+        crisis_tier != 2
+        and current_stage == rules.stage1_stage
+        and user_count < rules.stage1_max_user_turn
+    ):
+        selection = {
+            "primary_framework": "MIRROR",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": {"stage": current_stage},
+            "instruction": f"Stage 1 override. Use {rules.stage1_depth} depth and presence before architecture.",
+            "blocked": ["ALL_OTHER_FRAMEWORKS"],
+            "stage": current_stage,
+        }
+        return _finish(message, history, memory, selection, debug_events)
     intensity_task = _run_detector_async(
         "emotional_intensity_detector",
         detect_intensity,
