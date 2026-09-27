@@ -51,6 +51,7 @@ def find_markdown_implementation_references(root: Path) -> tuple[Path, ...]:
                 findings.append(path)
     return tuple(findings)
 
+
 def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) -> str:
     grouped: dict[str, list[KnowledgeDuplicate]] = defaultdict(list)
     for duplicate in duplicates:
@@ -172,4 +173,7 @@ def main(argv: list[str] | None = None) -> int:
             return 1
     return 0
 
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
