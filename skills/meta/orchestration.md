@@ -53,7 +53,7 @@ by focused contract tests.
 
 ### Runtime instructions
 
-These short runtime instructions are content contracts, not implementation logic. Runtime code must load them from this section rather than embedding their wording.
+These short instructions are normative content contracts. Their wording is part of the knowledge layer and must remain consistent with the routing behavior they describe.
 
 | Name | Value |
 | :--- | :--- |
