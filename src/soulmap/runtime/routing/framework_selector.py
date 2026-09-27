@@ -185,10 +185,12 @@ def _finish(
     selection: dict[str, object],
     debug_events: list[dict] | None,
     *,
-    template_required: bool = True,
+    template_required: bool | None = None,
 ) -> dict[str, object]:
     """Apply safety, then attach the knowledge-authored template contract."""
     result = _apply_safety_gate(message, history, memory, selection, debug_events)
+    if template_required is None:
+        template_required = load_orchestration_rules().template_routing_required
     if template_required and result.get("safety_status") != "BLOCK":
         framework = result.get("primary_framework")
         mode = result.get("mode")
@@ -687,217 +689,49 @@ async def select_framework_async(
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    if (
-        res["grief"].get("grief_detected")
-        and res["grief"].get("grief_type") in _GRIEF_TYPES
-    ):
+    for rule in orchestration_rules.primary_priority:
+        result = res.get(rule.result, {})
+        if not isinstance(result, dict):
+            continue
+
+        detected = result.get(rule.detected)
+        if not detected:
+            continue
+        if rule.requires_no_insight and res["insight"].get("insight_detected"):
+            continue
+        if rule.requires and not result.get(rule.requires):
+            continue
+        if rule.requires_not and result.get(rule.requires_not):
+            continue
+
         secondary = (
-            "meaning_integration" if res["insight"].get("insight_detected") else None
+            "meaning_integration"
+            if rule.insight_secondary and res["insight"].get("insight_detected")
+            else None
         )
         selection = {
-            "primary_framework": "GRIEF",
+            "primary_framework": rule.framework,
             "secondary_layer": secondary,
-            "mode": "SANCTUARY",
-            "context": res["grief"],
-            "instruction": (
-                "Activate grief-companion.md. Presence first, witness the loss "
-                "before any reflection. End with one grief-specific question."
-            ),
-            "blocked": ["direction", "shadow", "existential", "synthesis"],
+            "mode": rule.mode,
+            "context": result,
+            "instruction": result.get("recommendation", ""),
+            "blocked": list(rule.blocked),
         }
         return _finish(message, history, memory, selection, debug_events)
 
-    if res["existential"].get("existential_detected"):
-        secondary = (
-            "meaning_integration" if res["insight"].get("insight_detected") else None
-        )
-        selection = {
-            "primary_framework": "EXISTENTIAL",
-            "secondary_layer": secondary,
-            "mode": "MIRROR",
-            "context": res["existential"],
-            "instruction": (
-                "Activate existential-companion.md. Territory: "
-                f"{res['existential'].get('territory', 'general')}. Hold space. "
-                "Do not resolve. End with one question that goes deeper."
-            ),
-            "blocked": ["direction", "shadow"],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["conflict"].get("conflict_detected") and not res["insight"].get(
-        "insight_detected"
-    ):
-        selection = {
-            "primary_framework": "INNER_PARTS",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["conflict"],
-            "instruction": (
-                "Activate inner-parts.md. Name 1-2 parts with hidden intention. "
-                "Do not take sides. End with one parts-specific question."
-            ),
-            "blocked": ["direction", "shadow"],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["direction"].get("direction_detected"):
-        selection = {
-            "primary_framework": "DIRECTION",
-            "secondary_layer": (
-                "meaning_integration"
-                if res["insight"].get("insight_detected")
-                else None
-            ),
-            "mode": "MIRROR",
-            "context": res["direction"],
-            "instruction": (
-                "Activate life-direction.md. Presentation: "
-                f"{res['direction'].get('presentation', 'lost')}. Explore values "
-                "NOT options. End with direction-specific question."
-            ),
-            "blocked": ["shadow"],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["creative_drought"].get("creative_drought_detected"):
-        selection = _simple_selection("CREATIVE_DROUGHT", res["creative_drought"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["perfectionism"].get("perfectionism_paralysis_detected"):
-        selection = _simple_selection("PERFECTIONISM_PARALYSIS", res["perfectionism"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["shadow"].get("shadow_detected"):
-        selection = {
-            "primary_framework": "SHADOW",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["shadow"],
-            "instruction": (
-                "Activate shadow-patterns.md. Frame as possibility ONLY. Return "
-                "ownership. End with shadow-specific question."
-            ),
-            "blocked": [],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["ancestral"].get("ancestral_detected"):
-        selection = _simple_selection("ANCESTRAL_PATTERNS", res["ancestral"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["visibility_fear"].get("visibility_fear_detected"):
-        selection = _simple_selection("FEAR_OF_VISIBILITY", res["visibility_fear"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["empath"].get("empath_detected"):
-        selection = _simple_selection("EMPATH_BOUNDARY", res["empath"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["dark_night"].get("dark_night_detected"):
-        selection = _simple_selection("DARK_NIGHT_OF_SOUL", res["dark_night"])
-        selection["mode"] = "SANCTUARY"
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["soul_nourishment"].get("soul_nourishment_detected"):
-        selection = _simple_selection("SOUL_NOURISHMENT", res["soul_nourishment"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["divine_guidance"].get("divine_guidance_detected"):
-        selection = _simple_selection("DIVINE_GUIDANCE", res["divine_guidance"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["sacred_polarity"].get("sacred_polarity_detected"):
-        selection = _simple_selection("SACRED_POLARITY", res["sacred_polarity"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["spiritual_purpose"].get("spiritual_purpose_detected"):
-        selection = _simple_selection("SPIRITUAL_PURPOSE", res["spiritual_purpose"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["soulmate_longing"].get("soulmate_longing_detected"):
-        selection = _simple_selection("SOULMATE_LONGING", res["soulmate_longing"])
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["partnership_patterns"].get("partnership_pattern_detected"):
-        selection = _simple_selection(
-            "PARTNERSHIP_PATTERNS", res["partnership_patterns"]
-        )
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["celebration"].get("celebration_detected") and not res["insight"].get(
-        "insight_detected"
-    ):
-        celebration_ctx = res["celebration"]
-        selection = {
-            "primary_framework": "INTEGRATION_CELEBRATION",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": celebration_ctx,
-            "instruction": celebration_ctx.get("recommendation", ""),
-            "blocked": [],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["insight"].get("insight_detected"):
-        selection = {
-            "primary_framework": "MEANING_INTEGRATION",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["insight"],
-            "instruction": (
-                "Activate meaning-integration.md. Hold the insight first. Do NOT "
-                "prescribe change. End with conscious-noticing question."
-            ),
-            "blocked": [],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if res["synthesis"].get("synthesis_triggered") and res["synthesis"].get(
-        "synthesis_ready"
-    ):
-        selection = {
-            "primary_framework": "SYNTHESIS",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": res["synthesis"],
-            "instruction": (
-                "Activate conversation-synthesis.md. Name 2-3 themes max. Return "
-                "ownership. End with synthesis question."
-            ),
-            "blocked": [],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    if pattern and pattern.get("primary_pattern") and not pattern.get("wait_for_more"):
-        selection = {
-            "primary_framework": "PATTERN",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": pattern,
-            "instruction": (
-                "Activate pattern-mapper.md. Pattern: "
-                f"{pattern.get('primary_pattern')}. Reflect hidden intention. End "
-                "with pattern-specific question."
-            ),
-            "blocked": [],
-        }
-        return _finish(message, history, memory, selection, debug_events)
-
-    mode = "PEER" if current_stage >= 5 else "MIRROR"
-    somatic_active = res["somatic"].get("somatic_detected", False)
-    anger_active = res["anger"].get("anger_detected", False)
-    bypass_active = res["bypass"].get("bypass_detected", False)
+    mode = "PEER" if current_stage >= orchestration_rules.peer_min_stage else "MIRROR"
+    secondary_layer = None
+    for secondary_rule in orchestration_rules.secondary_priority:
+        secondary_result = res.get(secondary_rule.result, {})
+        if isinstance(secondary_result, dict) and secondary_result.get(
+            secondary_rule.detected
+        ):
+            secondary_layer = secondary_rule.name
+            break
 
     selection = {
         "primary_framework": "MIRROR",
-        "secondary_layer": (
-            "anger"
-            if anger_active
-            else (
-                "bypass" if bypass_active else ("somatic" if somatic_active else None)
-            )
-        ),
+        "secondary_layer": secondary_layer,
         "mode": mode,
         "context": {"stage": current_stage},
         "instruction": (
