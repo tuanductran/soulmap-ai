@@ -8,7 +8,6 @@ from pathlib import Path
 from soulmap.devtools.support.repo import REPO_ROOT
 
 _RUNTIME_DIR = Path("skills/runtime")
-_ALLOWED_PYTHON_MENTION = Path("skills/safety/whitelist-blacklist-system.md")
 _FORBIDDEN_TEXT = (
     "src/soulmap/",
     ".py",
