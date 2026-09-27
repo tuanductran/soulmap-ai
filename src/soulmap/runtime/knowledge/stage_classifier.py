@@ -86,7 +86,9 @@ def _runtime_contract(text: str) -> dict[str, object]:
     try:
         values = json.loads(block.group("body"))
     except json.JSONDecodeError as exc:
-        raise ValueError("Stage runtime enforcement configuration is invalid JSON.") from exc
+        raise ValueError(
+            "Stage runtime enforcement configuration is invalid JSON."
+        ) from exc
     if not isinstance(values, dict):
         raise ValueError("Stage runtime enforcement configuration must be an object.")
     required = {
@@ -117,7 +119,9 @@ def _runtime_contract(text: str) -> dict[str, object]:
             raise ValueError(f"Stage runtime setting {key} is invalid.")
     for key in ("STAGE_ROLES", "STAGE_RECOMMENDATIONS"):
         value = values[key]
-        if not isinstance(value, dict) or set(value) != {str(index) for index in range(1, 7)}:
+        if not isinstance(value, dict) or set(value) != {
+            str(index) for index in range(1, 7)
+        }:
             raise ValueError(f"Stage runtime mapping {key} is incomplete.")
         if not all(isinstance(item, str) and item for item in value.values()):
             raise ValueError(f"Stage runtime mapping {key} is invalid.")
