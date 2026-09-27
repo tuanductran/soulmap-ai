@@ -50,7 +50,6 @@ After meta orchestration, use the domain routers as the stable navigation layer:
 | Wellbeing | [domains/wellbeing/](skills/domains/wellbeing/SKILL.md) |
 | Life and meaning | [domains/life-and-meaning/](skills/domains/life-and-meaning/SKILL.md) |
 
-
 ### Full knowledge base
 
 After routing through meta, load from the relevant group:
