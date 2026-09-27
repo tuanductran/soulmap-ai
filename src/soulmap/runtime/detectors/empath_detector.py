@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,6 +21,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 EMPATH_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/empath-boundary.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/empath-boundary.md"), "Runtime detection contract"
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/empath-boundary.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 2
@@ -35,58 +43,38 @@ def detect_empath_overwhelm(
 
     for phrase in EMPATH_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"empath: '{phrase}'")
             break
 
     # Secondary: drain/exhaustion + people/others context
-    drain = (
-        "drained",
-        "exhausted",
-        "depleted",
-        "worn out",
-        "tired after",
-        "need to recover",
+    drain = load_keyword_section(
+        default_skill_path("skills/frameworks/empath-boundary.md"), "Drain signals"
     )
-    people_ctx = (
-        "being around people",
-        "after being with",
-        "after spending time",
-        "after the visit",
-        "family gatherings",
-        "around my family",
-        "at work",
-        "in crowds",
-        "in groups",
+    people_ctx = load_keyword_section(
+        default_skill_path("skills/frameworks/empath-boundary.md"), "People-context signals"
     )
     if (
         any(d in msg for d in drain)
         and any(p in msg for p in people_ctx)
         and score == 0
     ):
-        score += 2
+        score += int(_RULES["Drain plus people-context weight"])
         signals.append("drain + people context")
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "empath_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No empath signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "empath_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Empath boundary dissolution detected. Activate empath-boundary.md (P8d). "
-            "Name the dispersion first. Acknowledge what the sensitivity makes possible. "
-            "Locate the specific weight. End with one empath question from "
-            "deep-inquiry-bank.md (Empath Questions section). "
-            "Do NOT suggest specific energy protection techniques."
-        ),
-    }
+        "recommendation": _GUIDANCE["detected"],    }
 
 
 if __name__ == "__main__":
