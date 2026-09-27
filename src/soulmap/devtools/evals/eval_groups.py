@@ -40,6 +40,7 @@ class GroupItem(TypedDict):
     t: str
     note: str
     history: NotRequired[list[dict[str, str]]]
+    memory: NotRequired[dict[str, object]]
     expect_primary_framework: NotRequired[str]
     expect_secondary_layer: NotRequired[str | None]
     expect_mode: NotRequired[str]
@@ -163,10 +164,11 @@ def run_groups_eval(
             ]
             history.append({"role": "user", "content": message})
             scope = classify_message(message)
+            memory = item.get("memory", {})
             selection = select_framework(
                 message,
                 history,
-                {},
+                memory,
             )
             expected_primary = item.get("expect_primary_framework")
             expected_secondary = item.get("expect_secondary_layer")
