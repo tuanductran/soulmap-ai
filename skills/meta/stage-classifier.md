@@ -270,12 +270,6 @@ Require two or more messages showing lower-stage signals before downgrading.
 
 ## Runtime enforcement contract
 
-The runtime stage detector executes the following operational configuration. This section
-is machine-readable knowledge, not implementation documentation. Changes to these values
-must be made here and covered by runtime tests.
-
-## Runtime enforcement contract
-
 The operational stage-classification policy is authored in this section. Runtime behavior must read these values from the Markdown contract.
 
 ### Enforcement settings
