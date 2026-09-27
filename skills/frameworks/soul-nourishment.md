@@ -79,6 +79,7 @@ Do not ask for commitment or practice. Ask for awareness and honoring.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 | Rule | Value |
