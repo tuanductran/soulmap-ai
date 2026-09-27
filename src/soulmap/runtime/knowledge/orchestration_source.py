@@ -76,6 +76,12 @@ def _load_contract_json(body: str) -> dict[str, object]:
     return cast(dict[str, object], value)
 
 
+def _require_str(value: object, key: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{key} must be a non-empty string.")
+    return value
+
+
 def _require_bool(value: object, key: str) -> bool:
     if not isinstance(value, bool):
         raise ValueError(f"{key} must be true or false.")
@@ -96,11 +102,10 @@ def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
         if not isinstance(item, dict):
             raise ValueError("Each PRIMARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
-        required = ("result", "detected", "framework", "mode")
-        if any(not isinstance(item.get(key), str) or not item[key] for key in required):
-            raise ValueError(
-                "Each PRIMARY_PRIORITY entry requires string routing fields."
-            )
+        result_name = _require_str(item.get("result"), "PRIMARY_PRIORITY.result")
+        detected = _require_str(item.get("detected"), "PRIMARY_PRIORITY.detected")
+        framework = _require_str(item.get("framework"), "PRIMARY_PRIORITY.framework")
+        mode = _require_str(item.get("mode"), "PRIMARY_PRIORITY.mode")
         blocked = item.get("blocked", [])
         if not isinstance(blocked, list) or not all(
             isinstance(v, str) for v in blocked
@@ -109,20 +114,23 @@ def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
         for key in ("insight_secondary", "requires_no_insight"):
             if key in item and not isinstance(item[key], bool):
                 raise ValueError(f"{key} must be boolean.")
-        for key in ("requires", "requires_not"):
-            if key in item and item[key] is not None and not isinstance(item[key], str):
-                raise ValueError(f"{key} must be a string or null.")
+        requires_value = item.get("requires")
+        requires_not_value = item.get("requires_not")
+        if requires_value is not None and not isinstance(requires_value, str):
+            raise ValueError("requires must be a string or null.")
+        if requires_not_value is not None and not isinstance(requires_not_value, str):
+            raise ValueError("requires_not must be a string or null.")
         rules.append(
             PrimaryPriorityRule(
-                result=item["result"],
-                detected=item["detected"],
-                framework=item["framework"],
-                mode=item["mode"],
+                result=result_name,
+                detected=detected,
+                framework=framework,
+                mode=mode,
                 blocked=tuple(blocked),
                 insight_secondary=item.get("insight_secondary", False),
                 requires_no_insight=item.get("requires_no_insight", False),
-                requires=item.get("requires"),
-                requires_not=item.get("requires_not"),
+                requires=requires_value,
+                requires_not=requires_not_value,
             )
         )
     return tuple(rules)
@@ -136,16 +144,16 @@ def _parse_secondary_priority(value: object) -> tuple[SecondaryPriorityRule, ...
         if not isinstance(item, dict):
             raise ValueError("Each SECONDARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
-        if any(
-            not isinstance(item.get(key), str) or not item[key]
-            for key in ("name", "result", "detected")
-        ):
-            raise ValueError(
-                "Each SECONDARY_PRIORITY entry requires string routing fields."
-            )
+        name = _require_str(item.get("name"), "SECONDARY_PRIORITY.name")
+        result_name = _require_str(
+            item.get("result"), "SECONDARY_PRIORITY.result"
+        )
+        detected = _require_str(
+            item.get("detected"), "SECONDARY_PRIORITY.detected"
+        )
         rules.append(
             SecondaryPriorityRule(
-                name=item["name"], result=item["result"], detected=item["detected"]
+                name=name, result=result_name, detected=detected
             )
         )
     return tuple(rules)
@@ -169,7 +177,10 @@ def load_orchestration_rules() -> OrchestrationRules:
     if set(contract) != required:
         raise ValueError("Orchestration runtime execution contract is incomplete.")
 
-    strength = contract["BREAKTHROUGH_MIN_INSIGHT_STRENGTH"]
+    strength = _require_str(
+        contract["BREAKTHROUGH_MIN_INSIGHT_STRENGTH"],
+        "BREAKTHROUGH_MIN_INSIGHT_STRENGTH",
+    )
     if strength not in {"emerging", "strong"}:
         raise ValueError(
             "BREAKTHROUGH_MIN_INSIGHT_STRENGTH must be emerging or strong."
