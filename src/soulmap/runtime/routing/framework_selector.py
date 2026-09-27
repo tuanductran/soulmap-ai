@@ -466,7 +466,6 @@ async def select_framework_async(
         }
         insight, grief, conflict = await asyncio.gather(*tasks.values())
         if insight.get("insight_detected"):
-            rules = load_orchestration_rules()
             selection = {
                 "primary_framework": "MEANING_INTEGRATION",
                 "secondary_layer": None,
@@ -694,7 +693,6 @@ async def select_framework_async(
     results = await asyncio.gather(*tasks.values())
     res = dict(zip(tasks.keys(), results, strict=True))
     if res["insight"].get("insight_detected"):
-        rules = load_orchestration_rules()
         selection = {
             "primary_framework": "MEANING_INTEGRATION",
             "secondary_layer": None,
