@@ -188,6 +188,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
 ## Runtime detection contract
 
 | Rule | Value |
