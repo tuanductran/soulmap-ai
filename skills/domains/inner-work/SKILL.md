@@ -44,9 +44,6 @@ duplicating it.
 - [dark-night-of-soul](../../frameworks/dark-night-of-soul.md)
 - [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
 
-## Rules
-
-
 ## Examples
 
 - A request about grief and self-compassion -> route through the inner-work domain.
