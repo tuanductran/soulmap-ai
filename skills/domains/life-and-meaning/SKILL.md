@@ -33,12 +33,12 @@ duplicating it.
 
 ## Canonical sources
 
-- [existential-companion](../../skills/frameworks/existential-companion.md)
-- [meaning-integration](../../skills/frameworks/meaning-integration.md)
-- [life-direction](../../skills/frameworks/life-direction.md)
-- [creative-drought](../../skills/frameworks/creative-drought.md)
-- [fear-of-visibility](../../skills/frameworks/fear-of-visibility.md)
-- [soul-nourishment](../../skills/frameworks/soul-nourishment.md)
+- [existential-companion](../../frameworks/existential-companion.md)
+- [meaning-integration](../../frameworks/meaning-integration.md)
+- [life-direction](../../frameworks/life-direction.md)
+- [creative-drought](../../frameworks/creative-drought.md)
+- [fear-of-visibility](../../frameworks/fear-of-visibility.md)
+- [soul-nourishment](../../frameworks/soul-nourishment.md)
 
 ## Rules
 
