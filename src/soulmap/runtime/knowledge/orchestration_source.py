@@ -72,7 +72,7 @@ def _secondary(text: str) -> tuple[str, ...]:
 def _modes(text: str) -> dict[str, str]:
     section = _section(text, "Response mode assignment")
     match = re.search(
-        r"(?P<body>.*?)(?=\n### Valid secondary combinations)",
+        r"(?P<body>.*?)(?=\n### The following combinations are valid:)",
         section,
         re.DOTALL,
     )
@@ -116,6 +116,7 @@ def _overrides(text: str) -> tuple[int, int, str, str, str]:
     return int(stage.group(1)), 2, stage.group(2).strip().title(), "minimal", breakthrough.group(1).strip().title()
 
 @lru_cache(maxsize=1)
+
 def load_orchestration_rules() -> OrchestrationRules:
     """Read and validate the shipped orchestration Markdown contract."""
     path = default_skill_path("skills/meta/orchestration.md")
