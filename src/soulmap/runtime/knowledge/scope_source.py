@@ -10,10 +10,6 @@ from typing import cast
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _CONTRACT_HEADING = "Runtime classification contract"
-_BLOCK_RE = re.compile(
-    r"\x60\x60\x60python\s*(?P<body>.*?)\x60\x60\x60",
-    re.MULTILINE | re.DOTALL,
-)
 
 
 @dataclass(frozen=True, slots=True)
