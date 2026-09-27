@@ -231,12 +231,6 @@ and may prevent this framework from activating.
 
 ## Runtime detection contract
 
-The detector executes the following operational configuration. This section is
-machine-readable knowledge, not implementation documentation. Changes to these
-values must be made here and covered by runtime tests.
-
-## Runtime detection contract
-
 The operational detection policy is authored in this section. Runtime behavior must read these values from the Markdown contract.
 
 ### Scoring
