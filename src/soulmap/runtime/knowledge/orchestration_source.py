@@ -81,7 +81,7 @@ def _modes(text: str) -> dict[str, str]:
 
 def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\n### The following combinations are \\*\\*forbidden\\*\\*)", section, re.DOTALL)
+    match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\n### The following combinations are \*\*forbidden\*\*)", section, re.DOTALL)
     if match is None:
         raise ValueError("Valid secondary combination contract is missing.")
     result = {}
@@ -92,7 +92,7 @@ def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
 
 def _forbidden(text: str) -> frozenset[frozenset[str]]:
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are \\*\\*forbidden\\*\\*(?P<body>.*?)(?=\n## Priority override rules)", section, re.DOTALL)
+    match = re.search(r"### The following combinations are \*\*forbidden\*\*(?P<body>.*?)(?=\n## Priority override rules)", section, re.DOTALL)
     if match is None:
         raise ValueError("Forbidden-combination contract is missing.")
     pairs = set()
@@ -105,7 +105,7 @@ def _forbidden(text: str) -> frozenset[frozenset[str]]:
 
 def _overrides(text: str) -> tuple[int, int, str, str, str]:
     section = _section(text, "Priority override rules")
-    stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
+    stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
     breakthrough = re.search(r"Rule 5, breakthrough overrides continuation.*?switch to\s+([A-Za-z ]+?)\s+immediately", section, re.IGNORECASE | re.DOTALL)
     if stage is None or breakthrough is None:
         raise ValueError("Stage-1 or breakthrough override contract is missing.")
