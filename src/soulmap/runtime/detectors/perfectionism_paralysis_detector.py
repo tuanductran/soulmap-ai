@@ -42,6 +42,7 @@ PERSISTENCE_SIGNALS = load_keyword_section(
 
 HistoryMessage = dict[str, str]
 
+
 def detect_perfectionism_paralysis(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
@@ -81,7 +82,7 @@ def detect_perfectionism_paralysis(
         elif history:
             hist_text = " ".join(
                 m.get("content", "").lower()
-                for m in history[-int(_RULES["History window"]):]
+                for m in history[-int(_RULES["History window"]) :]
                 if isinstance(m, dict) and m.get("role") == "user"
             )
             if any(r in hist_text for r in repeat_signals):
