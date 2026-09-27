@@ -13,8 +13,7 @@ _FORBIDDEN_PATTERNS = (
         r"\bPython\s+(?:runtime|code|implementation|source|module)\b", re.IGNORECASE
     ),
     re.compile(r"\bin\s+Python\b", re.IGNORECASE),
-    re.compile(r"\bsrc/soulmap(?:/|\\\\)", re.IGNORECASE),
-    re.compile(r"\bsrc/soulmap/[^\\s)\\]]+\\.py\\b", re.IGNORECASE),
+    re.compile(r"\bsrc/soulmap/", re.IGNORECASE),
 )
 
 
