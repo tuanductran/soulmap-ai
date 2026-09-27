@@ -66,9 +66,11 @@ def resolve_template(
             else "De-escalation (MODERATE)"
         )
     elif normalized == "grief":
-        grief_context = (
-            context.get("grief") if isinstance(context.get("grief"), dict) else context
-        )
+        grief_value = context.get("grief")
+        if isinstance(grief_value, dict):
+            grief_context = grief_value
+        else:
+            grief_context = context
         grief_type = str(
             grief_context.get("grief_type", grief_context.get("type", "acute"))
         ).lower()
