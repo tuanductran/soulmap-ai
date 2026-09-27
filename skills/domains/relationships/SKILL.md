@@ -42,7 +42,6 @@ duplicating it.
 
 - Use relationship knowledge only after the primary response posture is selected.
 
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.
