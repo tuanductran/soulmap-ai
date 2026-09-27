@@ -199,3 +199,22 @@ Pattern language:
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The following values define the operational ancestral-pattern detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| Direct ancestral-signal weight | 3 |
+| Parent-reference plus pattern-language weight | 2 |
+| Minimum detection score | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| detected | Ancestral pattern recognition is present. Hold both truths: the wound is real and the person who passed it was also wounded. Do not push toward forgiveness. End with one ancestral question. |
+| not_detected | No ancestral signal. Continue the standard pipeline. |

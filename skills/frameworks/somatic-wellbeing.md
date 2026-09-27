@@ -57,9 +57,8 @@ breath with me right now?" This can interrupt the mental loop and re-establish p
 
 ## Integration Roadmap
 
-These are potential future integrations. They are not implemented in this repository,
-and SoulMap cannot access calendar or wearable data unless a user explicitly shares
-it.
+These are conceptual future integration directions, not part of the current framework
+behavior. SoulMap uses only information the user explicitly provides in the conversation.
 
 | Integration                       | Function                                                                                                                                                 |
 | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -166,6 +166,60 @@ def load_labeled_groups(
     return extract_labeled_groups(text, heading)
 
 
+def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
+    """Extract data rows from the first Markdown table under a heading."""
+    lines = text.splitlines()
+    target_level: int | None = None
+    start = None
+    for idx, line in enumerate(lines):
+        level = _heading_level(line)
+        if level is not None and line.strip()[level:].strip() == heading:
+            target_level = level
+            start = idx + 1
+            break
+    if start is None or target_level is None:
+        return ()
+
+    rows: list[tuple[str, ...]] = []
+    in_table = False
+    for line in lines[start:]:
+        level = _heading_level(line)
+        if level is not None and level <= target_level:
+            break
+        stripped = line.strip()
+        if not stripped:
+            if in_table:
+                break
+            continue
+        if not stripped.startswith("|"):
+            if in_table:
+                break
+            continue
+        cells = tuple(cell.strip() for cell in stripped.strip("|").split("|"))
+        if all(set(cell) <= {":", "-", " "} for cell in cells):
+            in_table = True
+            continue
+        if in_table:
+            rows.append(cells)
+    return tuple(rows)
+
+
+def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...], ...]:
+    """Read a Markdown knowledge file and extract one contract table."""
+    return extract_table_rows(markdown_path.read_text(encoding="utf-8"), heading)
+
+
+def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
+    """Load a strict two-column Markdown knowledge contract."""
+    rows = load_table_rows(markdown_path, heading)
+    if not rows or any(len(row) != 2 for row in rows):
+        raise ValueError(f"Knowledge table {heading!r} must contain two columns.")
+    values = {row[0]: row[1] for row in rows}
+    if len(values) != len(rows) or any(not value for value in values.values()):
+        raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
+    return values
+
+
 def default_skill_path(relative_path: str) -> Path:
     """Locate a file under ``skills/`` without depending on devtools.
 

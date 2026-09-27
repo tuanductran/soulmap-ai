@@ -304,3 +304,50 @@ Post-reflection validation, user confirming something that was reflected back:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Breakthrough and
   celebration closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The following values define the operational insight-detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| Explicit insight weight | 3 |
+| Emerging insight weight | 2 |
+| Self-application weight | 2 |
+| Post-reflection validation weight | 2 |
+| Validation-of-reflection bonus | 3 |
+| Minimum detection score | 2 |
+| Strong insight minimum score | 4 |
+| Validation history window | 3 |
+| Validation maximum user word count | 30 |
+| Classification priority | noticing_earlier; when_it_appears; different_response |
+
+### Insight classification signals
+
+| Type | Phrases |
+| :--- | :--- |
+| noticing_earlier | catch it; notice it earlier; earlier; before it; before i; sooner; at the beginning; the start of it |
+| when_it_appears | when does; when do i; where does; where do i; what situations; what triggers; always happens when |
+| different_response | what would i do; what could i do; different response; respond differently; handle it; next time |
+
+First matching type wins in the order: noticing_earlier, when_it_appears, different_response. If none matches, use hold_first.
+
+### Reflection-validation signals
+
+| Rule | Phrases |
+| :--- | :--- |
+| Assistant integration triggers | pattern that may appear; part of you that; sometimes when; i wonder if |
+| User validation | yes; exactly; resonates; right; true; that's it; that fits; spot on |
+
+The validation bonus applies only when an assistant integration trigger occurred within the configured history window and the current user message contains a validation phrase within the configured word limit.
+
+### Guidance
+
+| Type | Guidance |
+| :--- | :--- |
+| hold_first | Insight detected. First honor the insight with holding language. Do not immediately move to integration questions. Let the insight breathe. Only after the user settles, offer one integration question. |
+| when_it_appears | Insight detected and the user is locating it in time or context. Explore when the pattern usually appears. |
+| noticing_earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
+| different_response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |

@@ -37,9 +37,9 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 
 ## Runtime execution contract
 
-This section is the executable routing contract. Runtime code must parse these
-tables and must not maintain a second copy of their routing decisions. Changes to
-these values must be made here and covered by focused runtime tests.
+This section is the normative routing contract. The values below define routing behavior;
+no second source of truth may contradict them. Changes to these values must be covered
+by focused contract tests.
 
 ### Scalar settings
 
@@ -53,7 +53,7 @@ these values must be made here and covered by focused runtime tests.
 
 ### Runtime instructions
 
-These short runtime instructions are content contracts, not implementation logic. Runtime code must load them from this section rather than embedding their wording.
+These short instructions are normative content contracts. Their wording is part of the knowledge layer and must remain consistent with the routing behavior they describe.
 
 | Name | Value |
 | :--- | :--- |

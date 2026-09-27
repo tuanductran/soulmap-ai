@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -38,6 +39,9 @@ PERFECTIONISM_SIGNALS = load_keyword_section(
     _SHADOW_PATH, "Perfectionism (as protection)"
 )
 SELF_CRITIC_SIGNALS = load_keyword_section(_SELF_COMPASSION_PATH, "Detection signals")
+_SHADOW_SCORING = load_key_value_table(_SHADOW_PATH, "Scoring")
+_SHADOW_GUIDANCE = load_key_value_table(_SHADOW_PATH, "Guidance")
+
 
 HistoryMessage = dict[str, str]
 
@@ -58,16 +62,28 @@ def detect_shadow_patterns(
 
     for phrase in EXTERNAL_REPEAT_SIGNALS:
         if phrase in msg:
-            score += 2
+            score += int(_SHADOW_SCORING["External-repeat weight"])
             external_frustration = True
             break
 
     pattern_checks = [
-        ("avoidance", AVOIDANCE_SIGNALS, 3),
-        ("people_pleasing", PEOPLE_PLEASING_SIGNALS, 3),
-        ("overthinking", OVERTHINKING_SIGNALS, 2),
-        ("withdrawal", WITHDRAWAL_SIGNALS, 3),
-        ("perfectionism", PERFECTIONISM_SIGNALS, 2),
+        ("avoidance", AVOIDANCE_SIGNALS, int(_SHADOW_SCORING["Avoidance weight"])),
+        (
+            "people_pleasing",
+            PEOPLE_PLEASING_SIGNALS,
+            int(_SHADOW_SCORING["People-pleasing weight"]),
+        ),
+        (
+            "overthinking",
+            OVERTHINKING_SIGNALS,
+            int(_SHADOW_SCORING["Overthinking weight"]),
+        ),
+        ("withdrawal", WITHDRAWAL_SIGNALS, int(_SHADOW_SCORING["Withdrawal weight"])),
+        (
+            "perfectionism",
+            PERFECTIONISM_SIGNALS,
+            int(_SHADOW_SCORING["Perfectionism weight"]),
+        ),
     ]
 
     for pattern_name, signals, weight in pattern_checks:
@@ -82,18 +98,23 @@ def detect_shadow_patterns(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-5:]
+        ][-int(_SHADOW_SCORING["Recent user history window"]) :]
 
         external_count = sum(
             1
             for past in recent_user
-            if any(phrase in past for phrase in EXTERNAL_REPEAT_SIGNALS[:10])
+            if any(
+                phrase in past
+                for phrase in EXTERNAL_REPEAT_SIGNALS[
+                    : int(_SHADOW_SCORING["Sustained external-signal limit"])
+                ]
+            )
         )
-        if external_count >= 2:
-            score += 3
+        if external_count >= int(_SHADOW_SCORING["Sustained history threshold"]):
+            score += int(_SHADOW_SCORING["Sustained external-frustration bonus"])
             external_frustration = True
 
-    if score < 2:
+    if score < int(_SHADOW_SCORING["Minimum detection score"]):
         return {
             "shadow_detected": False,
             "patterns_found": [],
@@ -109,35 +130,16 @@ def detect_shadow_patterns(
     # already crossed the score threshold above).
     for phrase in SELF_CRITIC_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_SHADOW_SCORING["Self-criticism enrichment bonus"])
             patterns_found.append("self_criticism")
             break
 
     if patterns_found:
-        pattern_list = ", ".join(patterns_found)
-        recommendation = (
-            f"Shadow pattern(s) detected: {pattern_list}. "
-            "Activate Shadow Pattern Revealer from skills/frameworks/shadow-patterns.md. "
-            "Frame as possibility ONLY  -  never as fact. "
-            f"Use possibility language: 'Sometimes patterns like this appear when...' "
-            "Reflect the protective intention behind the pattern. "
-            "Do NOT accuse. Return ownership immediately after reflection. "
-            "End with one shadow-specific question from skills/meta/deep-inquiry-bank.md  -  "
-            "'Shadow-Specific Questions' section. "
-            "One reflection only  -  if user rejects, honor it and move on."
-        )
+        recommendation = _SHADOW_GUIDANCE["pattern"]
     elif external_frustration:
-        recommendation = (
-            "Repeated external frustration detected  -  no specific shadow pattern identified yet. "
-            "Explore gently using the projection principle from skills/frameworks/shadow-patterns.md. "
-            "Ask: what is it about this particular thing that keeps getting to you? "
-            "Do not name a shadow pattern until you have more information."
-        )
+        recommendation = _SHADOW_GUIDANCE["external_frustration"]
     else:
-        recommendation = (
-            "Mild shadow signals. Proceed with standard MIRROR response but stay alert "
-            "for shadow patterns emerging across the conversation."
-        )
+        recommendation = _SHADOW_GUIDANCE["mild"]
 
     return {
         "shadow_detected": True,

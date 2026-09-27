@@ -202,3 +202,28 @@ Anger activates as a secondary layer modifier, not a primary framework.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The following values define the operational anger-detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| Active anger weight | 3 |
+| Self-directed anger weight | 3 |
+| Residual anger weight | 2 |
+| Sustained active anger bonus | 2 |
+| Minimum detection score | 2 |
+| Sustained history window | 3 |
+| Sustained active-signal limit | 8 |
+| Sustained history threshold | 2 |
+
+### Guidance
+
+| Type | Guidance |
+| :--- | :--- |
+| active | Active anger is present. Meet the anger before exploring it. Do not jump to what is underneath yet; then name what it is protecting and surface the need under the demand. |
+| self_anger | Anger is turned inward. Use self-compassion as the primary frame. Treat the anger as potentially carrying grief, fear, or perfectionism rather than as a conclusion. |
+| residual | Residual anger has been held for some time. Acknowledge the weight of carrying it, then explore what the anger is still protecting and what remains unresolved. |

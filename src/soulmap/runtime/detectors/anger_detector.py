@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -23,6 +24,13 @@ _ANGER_GROUPS = load_labeled_groups(
 ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
 SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
 RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
+_ANGER_SCORING = load_key_value_table(
+    default_skill_path("skills/frameworks/anger-companion.md"), "Scoring"
+)
+_ANGER_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/anger-companion.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
 
@@ -53,14 +61,14 @@ def detect_anger(
 
     for phrase in ACTIVE_ANGER:
         if phrase in msg:
-            score += 3
+            score += int(_ANGER_SCORING["Active anger weight"])
             signals.append(f"active: '{phrase}'")
             anger_type = "active"
             break
 
     for phrase in SELF_ANGER:
         if phrase in msg:
-            score += 3
+            score += int(_ANGER_SCORING["Self-directed anger weight"])
             signals.append(f"self_anger: '{phrase}'")
             if not anger_type:
                 anger_type = "self_anger"
@@ -68,7 +76,7 @@ def detect_anger(
 
     for phrase in RESIDUAL_ANGER:
         if phrase in msg:
-            score += 2
+            score += int(_ANGER_SCORING["Residual anger weight"])
             signals.append(f"residual: '{phrase}'")
             if not anger_type:
                 anger_type = "residual"
@@ -79,13 +87,22 @@ def detect_anger(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-3:]
-        anger_count = sum(1 for m in recent if any(p in m for p in ACTIVE_ANGER[:8]))
-        if anger_count >= 2:
-            score += 2
+        ][-int(_ANGER_SCORING["Sustained history window"]) :]
+        anger_count = sum(
+            1
+            for m in recent
+            if any(
+                p in m
+                for p in ACTIVE_ANGER[
+                    : int(_ANGER_SCORING["Sustained active-signal limit"])
+                ]
+            )
+        )
+        if anger_count >= int(_ANGER_SCORING["Sustained history threshold"]):
+            score += int(_ANGER_SCORING["Sustained active anger bonus"])
             signals.append("sustained_anger_across_messages")
 
-    if score < 2:
+    if score < int(_ANGER_SCORING["Minimum detection score"]):
         return {
             "anger_detected": False,
             "anger_type": None,
@@ -93,25 +110,7 @@ def detect_anger(
             "signals": [],
         }
 
-    guidance_map = {
-        "active": (
-            "Active anger present. Phase 1 first: meet the anger before exploring it. "
-            "'The anger makes complete sense. Something was crossed here  -  something that matters.' "
-            "Do NOT jump to 'what's underneath' yet. Then Phase 2: name what it's protecting. "
-            "Phase 3: surface the need under the demand. "
-            "See skills/frameworks/anger-companion.md for full protocol."
-        ),
-        "self_anger": (
-            "Anger turned inward. Activate skills/frameworks/self-compassion.md as primary. "
-            "Anger at self is often grief, fear, or perfectionism using anger's force. "
-            "Initial frame: 'The anger is turned inward right now. What was it trying to protect you from?'"
-        ),
-        "residual": (
-            "Residual/chronic anger. The anger has been held for some time. "
-            "Acknowledge the weight of carrying it: 'That's a long time to carry something this heavy.' "
-            "Then explore what the anger is still protecting  -  what hasn't been resolved."
-        ),
-    }
+    guidance_map = _ANGER_GUIDANCE
 
     return {
         "anger_detected": True,

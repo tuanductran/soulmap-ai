@@ -510,3 +510,32 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 - **If it falls outside scope:** `skills/meta/redirect-templates.md`
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The following values define the operational shadow-pattern detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| External-repeat weight | 2 |
+| Avoidance weight | 3 |
+| People-pleasing weight | 3 |
+| Overthinking weight | 2 |
+| Withdrawal weight | 3 |
+| Perfectionism weight | 2 |
+| Sustained external-frustration bonus | 3 |
+| Self-criticism enrichment bonus | 3 |
+| Minimum detection score | 2 |
+| Recent user history window | 5 |
+| Sustained external-signal limit | 10 |
+| Sustained history threshold | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| pattern | Reflect detected shadow patterns only as possibilities. Name the protective intention, return ownership immediately, and use one shadow-specific question. If the user rejects the reflection, honor that and move on. |
+| external_frustration | Explore repeated external frustration gently through the projection principle. Do not name a shadow pattern until there is more information. |
+| mild | Continue the standard reflective mode while staying alert for patterns emerging across the conversation. |

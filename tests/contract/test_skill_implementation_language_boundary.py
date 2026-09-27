@@ -6,7 +6,11 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SHIPPED_KNOWLEDGE_ROOTS = (ROOT / "skills", ROOT / "templates")
+SHIPPED_KNOWLEDGE_ROOTS = tuple(
+    path
+    for path in (ROOT / "skills", ROOT / "templates", ROOT / "frameworks")
+    if path.exists()
+)
 
 _FORBIDDEN_PATTERNS = (
     re.compile(
@@ -14,6 +18,13 @@ _FORBIDDEN_PATTERNS = (
     ),
     re.compile(r"\bin\s+Python\b", re.IGNORECASE),
     re.compile(r"\bsrc/soulmap/", re.IGNORECASE),
+    re.compile(r"\bruntime\s+(?:routing\s+)?modules?\b", re.IGNORECASE),
+    re.compile(r"\bruntime\s+synthesizer\b", re.IGNORECASE),
+    re.compile(r"\bnot\s+implemented\s+in\s+this\s+repository\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:implemented|implementation)\s+(?:in|by)\s+(?:this\s+repository|Python|code|module)\b",
+        re.IGNORECASE,
+    ),
 )
 
 

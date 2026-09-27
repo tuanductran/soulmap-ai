@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
     load_labeled_groups,
 )
@@ -28,7 +29,12 @@ PARENT_SIGNALS = _ANCESTRAL_GROUPS["parent references"]
 PATTERN_SIGNALS = _ANCESTRAL_GROUPS["pattern language"]
 
 HistoryMessage = dict[str, str]
-_THRESHOLD = 2
+_ANCESTRAL_SCORING = load_key_value_table(
+    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Scoring"
+)
+_ANCESTRAL_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/ancestral-patterns.md"), "Guidance"
+)
 
 
 def detect_ancestral(
@@ -41,7 +47,7 @@ def detect_ancestral(
 
     for phrase in ANCESTRAL_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_ANCESTRAL_SCORING["Direct ancestral-signal weight"])
             signals.append(f"ancestral: '{phrase}'")
             break
 
@@ -49,27 +55,24 @@ def detect_ancestral(
     has_parent = any(signal in msg for signal in PARENT_SIGNALS)
     has_pattern = any(signal in msg for signal in PATTERN_SIGNALS)
     if has_parent and has_pattern and score == 0:
-        score += 2
+        score += int(
+            _ANCESTRAL_SCORING["Parent-reference plus pattern-language weight"]
+        )
         signals.append("parent_ref + pattern_language")
 
-    if score < _THRESHOLD:
+    if score < int(_ANCESTRAL_SCORING["Minimum detection score"]):
         return {
             "ancestral_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No ancestral signal. Continue standard pipeline.",
+            "recommendation": _ANCESTRAL_GUIDANCE["not_detected"],
         }
 
     return {
         "ancestral_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Ancestral pattern recognition detected. Activate ancestral-patterns.md (P8b). "
-            "Hold both truths: the wound is real AND the one who passed it was also wounded. "
-            "Do NOT push toward forgiveness. End with one ancestral question from "
-            "deep-inquiry-bank.md (Ancestral Questions section)."
-        ),
+        "recommendation": _ANCESTRAL_GUIDANCE["detected"],
     }
 
 

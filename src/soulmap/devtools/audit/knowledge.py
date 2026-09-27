@@ -22,25 +22,45 @@ from soulmap.runtime.knowledge.consistency import (
     markdown_consumers,
 )
 
-_PYTHON_IMPLEMENTATION_PATTERNS = (
+_IMPLEMENTATION_REFERENCE_PATTERNS = (
     re.compile(r"^\s*```(?:python|py)\s*$", re.IGNORECASE | re.MULTILINE),
-    re.compile(r"(?:src/soulmap/|tests/)[^\s)]+\.py"),
-    re.compile(r"(?:^|[\s`])(?:from|import)\s+soulmap(?:\.|\s)", re.MULTILINE),
+    re.compile(r"(?:src/soulmap/|tests/)[^\s)]+\.py", re.IGNORECASE),
+    re.compile(
+        r"(^|\s)(?:from|import)\s+soulmap(?:\.|\s)", re.MULTILINE | re.IGNORECASE
+    ),
+    re.compile(
+        r"\bPython\s+(?:runtime|code|implementation|source|modules?)\b", re.IGNORECASE
+    ),
+    re.compile(r"\bin\s+Python\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:runtime|implementation)\s+(?:code|module|details?|logic)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\bruntime\s+(?:routing\s+)?modules?\b", re.IGNORECASE),
+    re.compile(r"\bruntime\s+synthesizer\b", re.IGNORECASE),
+    re.compile(r"\bnot\s+implemented\s+in\s+this\s+repository\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:implemented|implementation)\s+(?:in|by)\s+(?:this\s+repository|Python|code|module)\b",
+        re.IGNORECASE,
+    ),
 )
 
 
 def find_markdown_implementation_references(root: Path) -> tuple[Path, ...]:
-    """Find Markdown skill files containing Python implementation references.
-
-    Skill Markdown may contain declarative runtime contracts and ordinary words such
-    as ``python`` as user-domain signals. This audit only flags implementation
-    coupling: Python fenced blocks, repository Python paths, or Python imports.
-    """
+    """Find shipped knowledge files coupled to implementation details."""
     findings: list[Path] = []
-    for path in sorted((root / "skills").rglob("*.md")):
-        text = path.read_text(encoding="utf-8")
-        if any(pattern.search(text) for pattern in _PYTHON_IMPLEMENTATION_PATTERNS):
-            findings.append(path)
+    roots = tuple(
+        path
+        for path in (root / "skills", root / "templates", root / "frameworks")
+        if path.exists()
+    )
+    for knowledge_root in roots:
+        for path in sorted(knowledge_root.rglob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            if any(
+                pattern.search(text) for pattern in _IMPLEMENTATION_REFERENCE_PATTERNS
+            ):
+                findings.append(path)
     return tuple(findings)
 
 

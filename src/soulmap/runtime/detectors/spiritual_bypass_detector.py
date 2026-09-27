@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -32,6 +33,9 @@ BYPASS_ACCOUNTABILITY = load_keyword_section(
 GENUINE_INTEGRATION = load_keyword_section(
     _DISCERNMENT_PATH, "Genuine Integration Signals"
 )
+
+_BYPASS_SCORING = load_key_value_table(_DISCERNMENT_PATH, "Scoring")
+_BYPASS_GUIDANCE = load_key_value_table(_DISCERNMENT_PATH, "Guidance")
 
 HistoryMessage = dict[str, str]
 
@@ -54,14 +58,14 @@ def detect_bypass(
 
     for phrase in BYPASS_DISMISS:
         if phrase in msg:
-            score += 2
+            score += int(_BYPASS_SCORING["Dismissing-pain weight"])
             signals.append(f"dismiss: '{phrase}'")
             bypass_type = "dismissing_pain"
             break
 
     for phrase in PREMATURE_ACCEPTANCE:
         if phrase in msg:
-            score += 2
+            score += int(_BYPASS_SCORING["Premature-acceptance weight"])
             signals.append(f"premature: '{phrase}'")
             if not bypass_type:
                 bypass_type = "premature_acceptance"
@@ -69,7 +73,7 @@ def detect_bypass(
 
     for phrase in SPIRITUAL_INFLATION:
         if phrase in msg:
-            score += 2
+            score += int(_BYPASS_SCORING["Spiritual-inflation weight"])
             signals.append(f"inflation: '{phrase}'")
             if not bypass_type:
                 bypass_type = "spiritual_inflation"
@@ -77,18 +81,20 @@ def detect_bypass(
 
     for phrase in BYPASS_ACCOUNTABILITY:
         if phrase in msg:
-            score += 2
+            score += int(_BYPASS_SCORING["Accountability-bypass weight"])
             signals.append(f"accountability: '{phrase}'")
             if not bypass_type:
                 bypass_type = "bypassing_accountability"
             break
 
     genuine_count = sum(1 for phrase in GENUINE_INTEGRATION if phrase in msg)
-    if genuine_count >= 2:
-        score = max(0, score - 2)
+    if genuine_count >= int(_BYPASS_SCORING["Genuine-integration minimum signals"]):
+        score = max(
+            0, score - int(_BYPASS_SCORING["Genuine-integration score reduction"])
+        )
         signals.append(f"genuine_integration_signals: {genuine_count} (score reduced)")
 
-    if score < 2:
+    if score < int(_BYPASS_SCORING["Minimum detection score"]):
         return {
             "bypass_detected": False,
             "bypass_type": None,
@@ -96,32 +102,7 @@ def detect_bypass(
             "signals": signals,
         }
 
-    guidance_map = {
-        "dismissing_pain": (
-            "Bypass type: using spiritual framework to dismiss pain before it's been felt. "
-            "Use 'ground the mystical' pattern from skills/voice/persona-voice.md: "
-            "'If this is [acceptance/surrender/lesson]  -  it still needs a body to live in. "
-            "What is actually happening for you emotionally right now, underneath the framework?'"
-        ),
-        "premature_acceptance": (
-            "Bypass type: premature acceptance  -  claiming peace before processing. "
-            "Gently check what's underneath: 'That sounds like peace. "
-            "Is there anything underneath it that hasn't been fully felt yet  -  "
-            "something that arrived before the peace did?'"
-        ),
-        "spiritual_inflation": (
-            "Bypass type: spiritual identity being used to create distance from vulnerability. "
-            "Do not challenge the identity  -  ground it: "
-            "'What does [being an empath / your sensitivity / your awareness] feel like "
-            "in this specific situation, in your body, right now?'"
-        ),
-        "bypassing_accountability": (
-            "Bypass type: spiritual framing being used to avoid looking at own role or to "
-            "over-spiritualize a human situation. Gently bring back to the personal: "
-            "'Setting the cosmic frame aside for a moment  -  what did this feel like for you, "
-            "as a person, not as a soul on a journey?'"
-        ),
-    }
+    guidance_map = _BYPASS_GUIDANCE
 
     return {
         "bypass_detected": True,

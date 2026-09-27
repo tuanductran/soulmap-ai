@@ -1,6 +1,6 @@
 ---
 name: "stage-classifier"
-description: "Operationalized classification system for SoulMap user journey stages. Converts user-journey-stages.md into a scoring algorithm the orchestrator can apply at runtime."
+description: "Operationalized classification system for SoulMap user journey stages. Defines the scoring policy and decision boundaries for stage classification."
 ---
 
 # Stage Classifier
@@ -270,7 +270,7 @@ Require two or more messages showing lower-stage signals before downgrading.
 
 ## Runtime enforcement contract
 
-The operational stage-classification policy is authored in this section. Runtime behavior must read these values from the Markdown contract.
+The operational stage-classification policy is authored in this section. These values are normative for stage classification.
 
 ### Enforcement settings
 

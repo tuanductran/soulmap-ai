@@ -23,7 +23,7 @@ responsibly.
 | Public copy readiness | Content review | [templates/social-copy.md](social-copy.md), [templates/email-onboarding.md](email-onboarding.md) |
 | Founder-facing copy readiness | Content review | [skills/brand/founder-personal-brand.md](../skills/brand/founder-personal-brand.md) and [templates/founder-copy.md](founder-copy.md) |
 | Archive self-containment | Path review | shipped files do not depend on missing repo-only paths |
-| Orchestration layer | Content review | [skills/meta/orchestration.md](../skills/meta/orchestration.md) priority hierarchy matches the runtime routing modules |
+| Orchestration layer | Content review | [skills/meta/orchestration.md](../skills/meta/orchestration.md) priority hierarchy matches the orchestration routing contract |
 | Epistemic guardrails | Content review | [skills/meta/epistemic-guardrails.md](../skills/meta/epistemic-guardrails.md) covers all spiritual content categories |
 | Stage classifier alignment | Content review | [skills/meta/stage-classifier.md](../skills/meta/stage-classifier.md) stage signal descriptions match the detection layer |
 | Master prompt completeness | Content review | [skills/meta/master-prompt.md](../skills/meta/master-prompt.md) includes every framework listed in SOULMAP.md's Framework selection table and 7 pipeline steps |

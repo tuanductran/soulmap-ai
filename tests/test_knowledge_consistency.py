@@ -1,10 +1,16 @@
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
     find_python_markdown_duplicates,
     markdown_consumers,
+)
+from soulmap.runtime.knowledge.keyword_lists import (
+    load_key_value_table,
+    load_table_rows,
 )
 
 
@@ -457,3 +463,42 @@ def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> Non
     )
 
     assert markdown_consumers(tmp_path, markdown) == (detector,)
+
+
+def test_markdown_table_contract_loader_reads_rows_and_key_values(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "skill.md"
+    path.write_text(
+        "## Runtime detection contract\n\n"
+        "### Scoring\n\n"
+        "| Rule | Value |\n| :--- | :--- |\n"
+        "| Minimum detection score | 2 |\n"
+        "| Weight | 3 |\n",
+        encoding="utf-8",
+    )
+
+    assert load_table_rows(path, "Scoring") == (
+        ("Minimum detection score", "2"),
+        ("Weight", "3"),
+    )
+    assert load_key_value_table(path, "Scoring") == {
+        "Minimum detection score": "2",
+        "Weight": "3",
+    }
+
+
+def test_markdown_table_contract_loader_rejects_non_two_column_key_value_table(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "skill.md"
+    path.write_text(
+        "## Runtime detection contract\n\n"
+        "### Guidance\n\n"
+        "| Key | Value | Extra |\n| :--- | :--- | :--- |\n"
+        "| one | two | three |\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="two columns"):
+        load_key_value_table(path, "Guidance")

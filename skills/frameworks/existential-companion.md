@@ -329,3 +329,37 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+The following values define the operational existential-detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| Identity-shift weight | 3 |
+| Meaning-depth weight | 3 |
+| Endings-grief weight | 3 |
+| Larger-questions weight | 3 |
+| Holding-question weight | 2 |
+| Sustained-territory bonus | 2 |
+| Minimum detection score | 2 |
+| Recent user history window | 4 |
+| Sustained identity signal limit | 6 |
+| Sustained meaning signal limit | 6 |
+| Sustained endings signal limit | 4 |
+| Sustained larger-question signal limit | 4 |
+| Sustained history threshold | 2 |
+| Territory priority | identity_shift; meaning_depth; endings_grief; larger_questions; holding |
+
+### Guidance
+
+| Territory | Guidance |
+| :--- | :--- |
+| identity_shift | Identity shift territory. Do not reconstruct a new identity. Stay with the in-between and reflect the disorientation without resolving it. |
+| meaning_depth | Meaning-at-depth territory. Do not provide meaning or suggest where it might be found. Let the absence be real. |
+| endings_grief | Endings and grief territory. Honor the ending as real. No silver linings. |
+| larger_questions | Larger questions territory. Do not make it smaller or more manageable. Let it be as large as it is. |
+| holding | The user is sitting with a question they already know has no answer. Be honest about not having an answer and sit alongside the question. |
+| general | General existential territory. Use holding-space language and reflect without reducing. |
