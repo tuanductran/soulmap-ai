@@ -173,7 +173,11 @@ def _source_primary_framework_values(repo_root: Path) -> set[str]:
 
     # The central priority list is knowledge-authored, so its framework values
     # are not literals in framework_selector.py and must be included separately.
-    values.update(rule.framework for rule in load_orchestration_rules().primary_priority)
+    contract_path = repo_root / "skills" / "meta" / "orchestration.md"
+    if contract_path.exists():
+        values.update(
+            rule.framework for rule in load_orchestration_rules().primary_priority
+        )
     return values
 
 
