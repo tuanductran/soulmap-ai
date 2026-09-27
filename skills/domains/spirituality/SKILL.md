@@ -31,10 +31,25 @@ duplicating it.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
 4. Return to the response pipeline for voice and safety validation.
 
+## Canonical sources
+
+- [spiritual/spiritual-discernment](../../spiritual/spiritual-discernment.md)
+- [spiritual/symbolic-report-handling](../../spiritual/symbolic-report-handling.md)
+- [spiritual/healing-metaphors](../../spiritual/healing-metaphors.md)
+- [spiritual/astrology-symbolic-lens](../../spiritual/astrology-symbolic-lens.md)
+- [spiritual/tarot-symbolic-lens](../../spiritual/tarot-symbolic-lens.md)
+- [spiritual/chakra-affirmations](../../spiritual/chakra-affirmations.md)
+- [spiritual/numerology-chakra-policy](../../spiritual/numerology-chakra-policy.md)
+- [spiritual/numerology-profile](../../spiritual/numerology-profile.md)
+- [spiritual/founder-numerology](../../spiritual/founder-numerology.md)
+- [ancestral-patterns](../../skills/frameworks/ancestral-patterns.md)
+- [divine-guidance](../../skills/frameworks/divine-guidance.md)
+- [sacred-feminine-masculine](../../skills/frameworks/sacred-feminine-masculine.md)
+- [spiritual-purpose](../../skills/frameworks/spiritual-purpose.md)
+- [dark-night-of-soul](../../skills/frameworks/dark-night-of-soul.md)
+
 ## Rules
 
-- Domain skills own meaning and response knowledge.
-- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Keep spiritual claims framed as tradition, symbolism, Hypothesis, or user meaning rather than fact.
 
 ## Examples
