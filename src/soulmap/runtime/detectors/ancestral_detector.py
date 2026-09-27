@@ -15,7 +15,6 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
     load_labeled_groups,
 )
-
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/ancestral-patterns.md,
