@@ -44,7 +44,6 @@ duplicating it.
 
 - Choose one primary framework through meta before loading a domain framework.
 
-
 ## Edge Cases
 
 - If multiple domains appear, use the domain selected by meta orchestration rather than blending them.
