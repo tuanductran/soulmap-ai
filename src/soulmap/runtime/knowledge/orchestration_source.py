@@ -72,19 +72,22 @@ def _secondary(text: str) -> tuple[str, ...]:
     return values
 
 def _modes(text: str) -> dict[str, str]:
+    """Parse the first response-mode table without depending on prose headings."""
     section = _section(text, "Response mode assignment")
-    match = re.search(
-        r"(?P<body>.*?)(?=\n### The following combinations are valid:)",
-        section,
-        re.DOTALL,
-    )
-    if match is None:
-        raise ValueError("Response mode table is missing.")
-    values = {row[0]: row[2] for row in _rows(match.group("body"), 3)}
-    if not {"Crisis", "Sanctuary", "Mirror", "PEER"}.issubset(values):
+    values: dict[str, str] = {}
+    table_started = False
+    for line in section.splitlines():
+        if not line.strip().startswith("|"):
+            if table_started:
+                break
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) >= 3 and cells[0] in {"Crisis", "Sanctuary", "Mirror", "PEER"}:
+            values[cells[0]] = cells[2]
+            table_started = True
+    if set(values) != {"Crisis", "Sanctuary", "Mirror", "PEER"}:
         raise ValueError("Response mode contract is incomplete.")
     return values
-
 def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
     section = _section(text, "Response mode assignment")
     match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\n### The following combinations are \*\*forbidden\*\*)", section, re.DOTALL)
