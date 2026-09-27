@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import ast
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -15,7 +15,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 
 _CONTRACT_HEADING = "Runtime detection contract"
 _BLOCK_RE = re.compile(
-    r"```python\s*(?P<body>.*?)```",
+    r"```json\s*(?P<body>.*?)```",
     re.MULTILINE | re.DOTALL,
 )
 
@@ -53,15 +53,14 @@ def _literal_config(body: str) -> dict[str, object]:
     match = _BLOCK_RE.search(body)
     if match is None:
         raise ValueError("Celebration runtime configuration block is missing.")
-    tree = ast.parse(match.group("body"), mode="exec")
-    values: dict[str, object] = {}
-    for node in tree.body:
-        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-            continue
-        target = node.targets[0]
-        if not isinstance(target, ast.Name):
-            continue
-        values[target.id] = ast.literal_eval(node.value)
+    try:
+        values = json.loads(match.group("body"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            "Celebration runtime configuration is invalid JSON."
+        ) from exc
+    if not isinstance(values, dict):
+        raise ValueError("Celebration runtime configuration must be an object.")
     required = {
         "SCORE_WEIGHTS",
         "THRESHOLD",
@@ -95,12 +94,11 @@ def _literal_config(body: str) -> dict[str, object]:
         "CONFIRMATION_ASSISTANT_ANCHORS",
     ):
         value = values[key]
-        if not isinstance(value, tuple) or not all(
+        if not isinstance(value, list) or not all(
             isinstance(item, str) and item for item in value
         ):
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
-
 
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
@@ -115,10 +113,10 @@ def load_celebration_rules() -> CelebrationRules:
         negative_override_penalty=cast(int, values["NEGATIVE_OVERRIDE_PENALTY"]),
         strength_threshold=cast(int, values["STRENGTH_THRESHOLD"]),
         confirmation_score=cast(int, values["CONFIRMATION_SCORE"]),
-        negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
-        confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
-        confirmation_assistant_anchors=cast(
-            tuple[str, ...], values["CONFIRMATION_ASSISTANT_ANCHORS"]
+        negative_overrides=tuple(cast(list[str], values["NEGATIVE_OVERRIDES"])),
+        confirmation_signals=tuple(cast(list[str], values["CONFIRMATION_SIGNALS"])),
+        confirmation_assistant_anchors=tuple(
+            cast(list[str], values["CONFIRMATION_ASSISTANT_ANCHORS"])
         ),
         signal_groups=groups,
     )
