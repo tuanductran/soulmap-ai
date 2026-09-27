@@ -164,7 +164,6 @@ def test_rate_limit_retry_uses_reset_window() -> None:
     assert sleep.call_args.args[0] >= 119
 
 
-
 def test_forbidden_rate_limit_is_retried() -> None:
     headers = Message()
     headers["X-RateLimit-Remaining"] = "0"
@@ -331,9 +330,12 @@ def test_create_tag_uses_annotated_tag_and_ref() -> None:
     client = action.GitHubClient("token")
     responses = iter([{"sha": "tag-object-sha"}, {"ref": "refs/tags/v1.2.3"}])
 
-    with patch.object(
-        client, "request", side_effect=lambda *args, **kwargs: next(responses)
-    ) as request, patch.object(client, "api", return_value=None):
+    with (
+        patch.object(
+            client, "request", side_effect=lambda *args, **kwargs: next(responses)
+        ) as request,
+        patch.object(client, "api", return_value=None),
+    ):
         action.create_tag(client, "owner", "repo", "v1.2.3", "a" * 40)
 
     assert request.call_count == 2
