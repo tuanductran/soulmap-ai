@@ -56,9 +56,7 @@ def _literal_config(body: str) -> dict[str, object]:
     try:
         values = json.loads(match.group("body"))
     except json.JSONDecodeError as exc:
-        raise ValueError(
-            "Celebration runtime configuration is invalid JSON."
-        ) from exc
+        raise ValueError("Celebration runtime configuration is invalid JSON.") from exc
     if not isinstance(values, dict):
         raise ValueError("Celebration runtime configuration must be an object.")
     required = {
