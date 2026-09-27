@@ -147,10 +147,7 @@ def _runtime_contract(text: str) -> dict[str, object]:
             "Anti-regression minimum lower-stage messages"
         ],
         "STAGE_ROLES": roles,
-        "STAGE_RECOMMENDATIONS": recommendations,
-    }
-
-def parse_stage_classifier(text: str) -> StageClassifierRules:
+        "STAGE_RECOMMENDATIONS": recommendations,\n    }\n\n\ndef parse_stage_classifier(text: str) -> StageClassifierRules:
     """Parse the scoring contract from stage-classifier Markdown.
 
     Raises:
