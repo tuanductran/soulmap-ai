@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -25,47 +26,37 @@ EXPLICIT_INSIGHT = _INSIGHT_GROUPS["explicit insight"]
 EMERGING_INSIGHT = _INSIGHT_GROUPS["emerging insight"]
 SELF_APPLICATION = _INSIGHT_GROUPS["self-application"]
 POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
+_INSIGHT_SCORING = load_key_value_table(
+    default_skill_path("skills/frameworks/meaning-integration.md"), "Scoring"
+)
+_INSIGHT_CLASSIFICATION = load_key_value_table(
+    default_skill_path("skills/frameworks/meaning-integration.md"),
+    "Insight classification signals",
+)
+_INSIGHT_VALIDATION = load_key_value_table(
+    default_skill_path("skills/frameworks/meaning-integration.md"),
+    "Reflection-validation signals",
+)
+_INSIGHT_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/meaning-integration.md"), "Guidance"
+)
+
+def _phrases(value: str) -> tuple[str, ...]:
+    return tuple(part.strip() for part in value.split(";") if part.strip())
+
+def _score(name: str) -> int:
+    return int(_INSIGHT_SCORING[name])
+
 
 HistoryMessage = dict[str, str]
 
 
 def _classify_insight_type(msg: str) -> str:
-    """Determine which integration question is most appropriate."""
-    when_signals = [
-        "when does",
-        "when do i",
-        "where does",
-        "where do i",
-        "what situations",
-        "what triggers",
-        "always happens when",
-    ]
-    earlier_signals = [
-        "catch it",
-        "notice it earlier",
-        "earlier",
-        "before it",
-        "before i",
-        "sooner",
-        "at the beginning",
-        "the start of it",
-    ]
-    different_signals = [
-        "what would i do",
-        "what could i do",
-        "different response",
-        "respond differently",
-        "handle it",
-        "next time",
-    ]
-
-    if any(s in msg for s in earlier_signals):
-        return "noticing_earlier"
-    if any(s in msg for s in when_signals):
-        return "when_it_appears"
-    if any(s in msg for s in different_signals):
-        return "different_response"
-    return "hold_first"  # Default: let the insight breathe before anything else
+    """Determine the integration question type from knowledge-authored signals."""
+    for insight_type in ("noticing_earlier", "when_it_appears", "different_response"):
+        if any(signal in msg for signal in _phrases(_INSIGHT_CLASSIFICATION[insight_type])):
+            return insight_type
+    return "hold_first"  # Default: let the insight breathe before anything else.
 
 
 def detect_insight(
@@ -91,22 +82,22 @@ def detect_insight(
 
     for phrase in EXPLICIT_INSIGHT:
         if phrase in msg:
-            score += 3
+            score += _score("Explicit insight weight")
             signals_found.append(f"explicit: '{phrase}'")
 
     for phrase in EMERGING_INSIGHT:
         if phrase in msg:
-            score += 2
+            score += _score("Emerging insight weight")
             signals_found.append(f"emerging: '{phrase}'")
 
     for phrase in SELF_APPLICATION:
         if phrase in msg:
-            score += 2
+            score += _score("Self-application weight")
             signals_found.append(f"self_application: '{phrase}'")
 
     for phrase in POST_REFLECTION:
         if phrase in msg:
-            score += 2
+            score += _score("Post-reflection validation weight")
             signals_found.append(f"post_reflection: '{phrase}'")
 
     if history:
@@ -115,28 +106,14 @@ def detect_insight(
             for m in history[-3:]
             if isinstance(m, dict) and m.get("role") == "assistant"
         ]
-        integration_triggers = [
-            "pattern that may appear",
-            "part of you that",
-            "sometimes when",
-            "i wonder if",
-        ]
+        integration_triggers = _phrases(_INSIGHT_VALIDATION["Assistant integration triggers"])
         if any(any(t in am for t in integration_triggers) for am in recent_assistant):
-            validation = [
-                "yes",
-                "exactly",
-                "resonates",
-                "right",
-                "true",
-                "that's it",
-                "that fits",
-                "spot on",
-            ]
+            validation = _phrases(_INSIGHT_VALIDATION["User validation"])
             if any(v in msg for v in validation) and len(msg.split()) < 30:
-                score += 3
+                score += _score("Validation-of-reflection bonus")
                 signals_found.append("validation_of_reflection")
 
-    if score < 2:
+    if score < _score("Minimum detection score"):
         return {
             "insight_detected": False,
             "strength": None,
@@ -146,34 +123,10 @@ def detect_insight(
             "recommendation": "No insight signal detected. Continue standard response pipeline.",
         }
 
-    strength = "strong" if score >= 4 else "emerging"
+    strength = "strong" if score >= _score("Strong insight minimum score") else "emerging"
     insight_type = _classify_insight_type(msg)
 
-    integration_map = {
-        "hold_first": (
-            "Insight detected. FIRST: honor the insight with holding language  -  "
-            "'Stay with what you just saw. What does it feel like to recognize this?' "
-            "Do NOT immediately move to integration questions. "
-            "Let the insight breathe. Only after the user settles: offer one integration question."
-        ),
-        "when_it_appears": (
-            "Insight detected  -  user is ready to locate it in time/context. "
-            "Use Question 1: 'When does this pattern usually show up for you  -  "
-            "what kinds of situations, or what kind of day?'"
-        ),
-        "noticing_earlier": (
-            "Insight detected  -  user wants to catch the pattern earlier. "
-            "Use Question 2: 'What are the early signals  -  in your body, your mood  -  "
-            "that this is beginning?'"
-        ),
-        "different_response": (
-            "Insight detected  -  user is considering a different response. "
-            "Slow this down first. Use Question 3 with care: "
-            "'If you noticed this one moment earlier  -  not to stop it, just to see it  -  "
-            "what might become possible in that pause?' "
-            "Do NOT prescribe. Explore the space, not the action."
-        ),
-    }
+    integration_map = _INSIGHT_GUIDANCE
 
     recommendation = (
         f"Insight moment detected (strength: {strength}, type: {insight_type}). "
