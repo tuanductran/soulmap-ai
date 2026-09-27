@@ -45,7 +45,7 @@ def load_orchestration_rules() -> OrchestrationRules:
         key = re.sub(
             r"[^a-z0-9]+", "_", match.group("name").strip().lower()
         ).strip("_")
-        if key == "rule":
+        if key == "rule" or key.startswith(":---"):
             continue
         values[key] = match.group("value").strip().lower()
     required = {
