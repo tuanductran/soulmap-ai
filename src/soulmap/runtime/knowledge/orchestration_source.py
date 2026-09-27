@@ -239,7 +239,9 @@ def load_orchestration_rules() -> OrchestrationRules:
         "MIRROR fallback",
         "PEER fallback",
     }
-    if set(runtime_instructions) != required_instructions or any(not value for value in runtime_instructions.values()):
+    if set(runtime_instructions) != required_instructions or any(
+        not value for value in runtime_instructions.values()
+    ):
         raise ValueError("Orchestration runtime instructions are incomplete.")
 
     primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
