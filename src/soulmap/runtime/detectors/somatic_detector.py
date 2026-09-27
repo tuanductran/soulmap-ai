@@ -21,8 +21,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 _SOMATIC_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Detection signals"
 )
-_RULES = load_key_value_table(default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Runtime detection contract")
-_GUIDANCE = load_key_value_table(default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Guidance")
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/somatic-wellbeing.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/somatic-wellbeing.md"), "Guidance"
+)
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
 BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
