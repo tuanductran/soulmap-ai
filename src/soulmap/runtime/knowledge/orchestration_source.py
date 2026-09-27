@@ -167,7 +167,7 @@ def _parse_intensity_fallback(
     for row in rows:
         if len(row) != 4:
             raise ValueError("INTENSITY_FALLBACK rows must contain 4 columns.")
-        _, level, framework, mode, allowed = (*row, "") if len(row) == 4 else row
+        level, framework, mode, allowed = row
         rules.append(
             IntensityFallbackRule(
                 level=_require_str(level, "INTENSITY_FALLBACK.level"),
