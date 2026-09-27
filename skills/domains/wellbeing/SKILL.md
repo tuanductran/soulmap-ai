@@ -35,7 +35,6 @@ duplicating it.
 
 - Domain skills own meaning and response knowledge.
 - Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
-- Runtime integration is centralized under [runtime/](../../runtime/).
 - Use wellbeing frameworks as supportive lenses; safety and crisis boundaries remain higher priority.
 
 ## Examples
