@@ -9,10 +9,12 @@ ROOT = Path(__file__).resolve().parents[2]
 SHIPPED_KNOWLEDGE_ROOTS = (ROOT / "skills", ROOT / "templates")
 
 _FORBIDDEN_PATTERNS = (
-    re.compile(r"\bPython\s+(?:runtime|code|implementation|source|module)\b", re.I),
-    re.compile(r"\bin\s+Python\b", re.I),
-    re.compile(r"\bsrc/soulmap(?:/|\\\\)", re.I),
-    re.compile(r"\bsrc/soulmap/[^\\s)\\]]+\\.py\\b", re.I),
+    re.compile(
+        r"\bPython\s+(?:runtime|code|implementation|source|module)\b", re.IGNORECASE
+    ),
+    re.compile(r"\bin\s+Python\b", re.IGNORECASE),
+    re.compile(r"\bsrc/soulmap(?:/|\\\\)", re.IGNORECASE),
+    re.compile(r"\bsrc/soulmap/[^\\s)\\]]+\\.py\\b", re.IGNORECASE),
 )
 
 
