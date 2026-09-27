@@ -23,7 +23,7 @@ class OrchestrationRules:
     breakthrough_framework: str
 
 def _section(text: str, heading: str) -> str:
-    marker = re.search(rf"^## {re.escape(heading)}\\s*$", text, re.MULTILINE)
+    marker = re.search(rf"^## {re.escape(heading)}\s*$", text, re.MULTILINE)
     if marker is None:
         raise ValueError(f"Orchestration section {heading!r} is missing.")
     start = marker.end()
@@ -42,11 +42,11 @@ def _rows(section: str, columns: int) -> list[list[str]]:
     return rows
 
 def _framework(value: str) -> str:
-    return re.sub(r"\\s+", " ", value.replace(" / Sanctuary", "").strip())
+    return re.sub(r"\s+", " ", value.replace(" / Sanctuary", "").strip())
 
 def _priority(text: str) -> tuple[str, ...]:
     section = _section(text, "Decision Tree")
-    match = re.search(r"### Phase 3, primary framework selection(?P<body>.*?)(?=\\n### Phase 4,)", section, re.DOTALL)
+    match = re.search(r"### Phase 3, primary framework selection(?P<body>.*?)(?=\n### Phase 4,)", section, re.DOTALL)
     if match is None:
         raise ValueError("Primary framework priority table is missing.")
     values = tuple(_framework(row[1]) for row in _rows(match.group("body"), 3))
@@ -56,7 +56,7 @@ def _priority(text: str) -> tuple[str, ...]:
 
 def _secondary(text: str) -> tuple[str, ...]:
     section = _section(text, "Decision Tree")
-    match = re.search(r"### Phase 4, secondary layer selection(?P<body>.*?)(?=\\n### Phase 5,)", section, re.DOTALL)
+    match = re.search(r"### Phase 4, secondary layer selection(?P<body>.*?)(?=\n### Phase 5,)", section, re.DOTALL)
     if match is None:
         raise ValueError("Secondary-layer contract is missing.")
     values = tuple(row[0].strip("`") for row in _rows(match.group("body"), 2))
@@ -68,7 +68,7 @@ def _secondary(text: str) -> tuple[str, ...]:
 def _modes(text: str) -> dict[str, str]:
     section = _section(text, "Response mode assignment")
     match = re.search(
-        r"(?P<body>.*?)(?=\\n### Valid secondary combinations)",
+        r"(?P<body>.*?)(?=\n### Valid secondary combinations)",
         section,
         re.DOTALL,
     )
@@ -81,7 +81,7 @@ def _modes(text: str) -> dict[str, str]:
 
 def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\\n### The following combinations are \\*\\*forbidden\\*\\*)", section, re.DOTALL)
+    match = re.search(r"### The following combinations are valid:(?P<body>.*?)(?=\n### The following combinations are \\*\\*forbidden\\*\\*)", section, re.DOTALL)
     if match is None:
         raise ValueError("Valid secondary combination contract is missing.")
     result = {}
@@ -92,7 +92,7 @@ def _valid_secondary(text: str) -> dict[str, tuple[str, ...]]:
 
 def _forbidden(text: str) -> frozenset[frozenset[str]]:
     section = _section(text, "Response mode assignment")
-    match = re.search(r"### The following combinations are \\*\\*forbidden\\*\\*(?P<body>.*?)(?=\\n## Priority override rules)", section, re.DOTALL)
+    match = re.search(r"### The following combinations are \\*\\*forbidden\\*\\*(?P<body>.*?)(?=\n## Priority override rules)", section, re.DOTALL)
     if match is None:
         raise ValueError("Forbidden-combination contract is missing.")
     pairs = set()
@@ -105,8 +105,8 @@ def _forbidden(text: str) -> frozenset[frozenset[str]]:
 
 def _overrides(text: str) -> tuple[int, int, str, str, str]:
     section = _section(text, "Priority override rules")
-    stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\\s+(\\d+).*?first or second.*?use\\s+([A-Za-z ]+?)\\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
-    breakthrough = re.search(r"Rule 5, breakthrough overrides continuation.*?switch to\\s+([A-Za-z ]+?)\\s+immediately", section, re.IGNORECASE | re.DOTALL)
+    stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
+    breakthrough = re.search(r"Rule 5, breakthrough overrides continuation.*?switch to\s+([A-Za-z ]+?)\s+immediately", section, re.IGNORECASE | re.DOTALL)
     if stage is None or breakthrough is None:
         raise ValueError("Stage-1 or breakthrough override contract is missing.")
     return int(stage.group(1)), 2, stage.group(2).strip().title(), "minimal", breakthrough.group(1).strip().title()
