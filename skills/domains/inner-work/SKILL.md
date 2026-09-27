@@ -44,11 +44,6 @@ duplicating it.
 - [dark-night-of-soul](../../frameworks/dark-night-of-soul.md)
 - [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
 
-## Examples
-
-- A request about grief and self-compassion -> route through the inner-work domain.
-- A request about relationship patterns -> route through the relationships domain.
-- A symbolic spiritual question -> route through the spirituality domain.
 
 ## Edge Cases
 
