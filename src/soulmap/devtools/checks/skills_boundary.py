@@ -109,7 +109,8 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
                         f"{reference!r}"
                     )
             elif child.type in {"link_open", "image"}:
-                href = child.attrGet("href") or child.attrGet("src") or ""
+                href_value = child.attrGet("href") or child.attrGet("src")
+                href = href_value if isinstance(href_value, str) else ""
                 for reference in _implementation_tokens(href):
                     findings.append(
                         f"{rel}:{child_line}: implementation reference in link target: "
