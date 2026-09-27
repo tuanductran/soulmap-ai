@@ -89,7 +89,11 @@ def detect_existential(
     }
     signal_map = [
         (name, signal_sources[name], signal_weights[name])
-        for name in _EXISTENTIAL_SCORING["Territory priority"].split(";")
+        for name in (
+            item.strip()
+            for item in _EXISTENTIAL_SCORING["Territory priority"].split(";")
+            if item.strip()
+        )
     ]
 
     for territory, signals, weight in signal_map:
