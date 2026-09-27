@@ -73,7 +73,7 @@ def _validate_registry(
             ("contract", contract),
             ("guidance", guidance),
         ):
-            if section != "—" and (not section or not _has_heading(text, section)):
+            if section != "-" and (not section or not _has_heading(text, section)):
                 violations.append(
                     f"{source}: missing {kind} section {section!r} in {relative_path}"
                 )
