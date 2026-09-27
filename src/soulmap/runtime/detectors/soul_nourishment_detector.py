@@ -22,7 +22,8 @@ SOUL_NOURISHMENT_SIGNALS = load_keyword_section(
     default_skill_path("skills/frameworks/soul-nourishment.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/soul-nourishment.md"), "Runtime detection contract"
+    default_skill_path("skills/frameworks/soul-nourishment.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/soul-nourishment.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_soul_nourishment(
     message: str, history: list[HistoryMessage] | None = None
