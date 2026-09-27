@@ -98,10 +98,8 @@ Detector = Callable[[str], dict[str, object]]
             "EXPLICIT_CONFLICT",
             "Explicit-conflict weight",
         ),
-
     ],
 )
-
 
 def test_detector_scoring_is_knowledge_authored(
     module: DetectorModule,
