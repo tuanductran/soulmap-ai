@@ -74,11 +74,31 @@ def detect_existential(
     }
 
     signal_map = [
-        ("identity_shift", IDENTITY_SHIFT, int(_EXISTENTIAL_SCORING["Identity-shift weight"])),
-        ("meaning_depth", MEANING_DEPTH, int(_EXISTENTIAL_SCORING["Meaning-depth weight"])),
-        ("endings_grief", ENDINGS_GRIEF, int(_EXISTENTIAL_SCORING["Endings-grief weight"])),
-        ("larger_questions", LARGER_QUESTIONS, int(_EXISTENTIAL_SCORING["Larger-questions weight"])),
-        ("holding", HOLDING_QUESTIONS, int(_EXISTENTIAL_SCORING["Holding-question weight"])),
+        (
+            "identity_shift",
+            IDENTITY_SHIFT,
+            int(_EXISTENTIAL_SCORING["Identity-shift weight"]),
+        )
+        (
+            "meaning_depth",
+            MEANING_DEPTH,
+            int(_EXISTENTIAL_SCORING["Meaning-depth weight"]),
+        )
+        (
+            "endings_grief",
+            ENDINGS_GRIEF,
+            int(_EXISTENTIAL_SCORING["Endings-grief weight"]),
+        )
+        (
+            "larger_questions",
+            LARGER_QUESTIONS,
+            int(_EXISTENTIAL_SCORING["Larger-questions weight"]),
+        )
+        (
+            "holding",
+            HOLDING_QUESTIONS,
+            int(_EXISTENTIAL_SCORING["Holding-question weight"]),
+        )
     ]
 
     for territory, signals, weight in signal_map:
@@ -94,12 +114,20 @@ def detect_existential(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_EXISTENTIAL_SCORING["Recent user history window"]):]
+        ][-int(_EXISTENTIAL_SCORING["Recent user history window"]) :]
         returning_signals = (
-            IDENTITY_SHIFT[: int(_EXISTENTIAL_SCORING["Sustained identity signal limit"])]
-            + MEANING_DEPTH[: int(_EXISTENTIAL_SCORING["Sustained meaning signal limit"])]
-            + ENDINGS_GRIEF[: int(_EXISTENTIAL_SCORING["Sustained endings signal limit"])]
-            + LARGER_QUESTIONS[: int(_EXISTENTIAL_SCORING["Sustained larger-question signal limit"])]
+            IDENTITY_SHIFT[
+                : int(_EXISTENTIAL_SCORING["Sustained identity signal limit"])
+            ]
+            + MEANING_DEPTH[
+                : int(_EXISTENTIAL_SCORING["Sustained meaning signal limit"])
+            ]
+            + ENDINGS_GRIEF[
+                : int(_EXISTENTIAL_SCORING["Sustained endings signal limit"])
+            ]
+            + LARGER_QUESTIONS[
+                : int(_EXISTENTIAL_SCORING["Sustained larger-question signal limit"])
+            ]
         )
         count = sum(
             1
