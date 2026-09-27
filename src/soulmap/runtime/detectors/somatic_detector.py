@@ -25,9 +25,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("somatic-wellbeing"),
     "Runtime detection contract",
 )
-_GUIDANCE = load_key_value_table(
-    runtime_skill_path("somatic-wellbeing"), "Guidance"
-)
+_GUIDANCE = load_key_value_table(runtime_skill_path("somatic-wellbeing"), "Guidance")
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
 BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
