@@ -24,9 +24,7 @@ _ANGER_GROUPS = load_labeled_groups(
 ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
 SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
 RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
-_ANGER_SCORING = load_key_value_table(
-    runtime_skill_path("anger-companion"), "Scoring"
-)
+_ANGER_SCORING = load_key_value_table(runtime_skill_path("anger-companion"), "Scoring")
 _ANGER_GUIDANCE = load_key_value_table(
     runtime_skill_path("anger-companion"), "Guidance"
 )
