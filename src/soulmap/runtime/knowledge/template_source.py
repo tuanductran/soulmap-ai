@@ -22,12 +22,11 @@ def _norm(value: str) -> str:
     return re.sub(r"\s+", " ", value.strip())
 
 @lru_cache(maxsize=1)
-
 def load_template_rules() -> tuple[TemplateRule, ...]:
     """Read and validate the shipped framework-template mapping."""
     path = default_skill_path("skills/meta/framework-template-map.md")
     text = path.read_text(encoding="utf-8")
-    match = re.search(r"^\| Framework \\| Mode \\| Word Range \\| Question Rule \\| Source File \\|\s*$\n(?P<body>.*?)(?=\n## Detailed Structure)", text, re.MULTILINE | re.DOTALL)
+    match = re.search(r"^\| Framework \| Mode \| Word Range \| Question Rule \| Source File \|\s*$\n(?P<body>.*?)(?=\n## Detailed Structure)", text, re.MULTILINE | re.DOTALL)
     if match is None:
         raise ValueError("Framework-template core mapping table is missing.")
     rules = []
@@ -52,10 +51,10 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     """Resolve the deterministic template row for one selection."""
     if primary == "GRIEF":
         grief = context.get("grief", context)
-        variant = grief.get("grief_type", "ambiguous") if isinstance(grief, dict) else "ambiguous"
+        variant = (\n            grief.get("grief_type", "ambiguous")\n            if isinstance(grief, dict)\n            else "ambiguous"\n        )
         target = f"Grief ({variant})"
     elif primary == "DE_ESCALATION":
-        target = "De-escalation (HIGH)" if mode == "SANCTUARY" else "De-escalation (MODERATE)"
+        target = (\n            "De-escalation (HIGH)"\n            if mode == "SANCTUARY"\n            else "De-escalation (MODERATE)"\n        )
     elif primary == "MIRROR" and context.get("stage") == 1:
         target = "Mirror (Stage 1)"
     elif primary == "MIRROR":
@@ -83,4 +82,4 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     for rule in load_template_rules():
         if rule.framework == target:
             return rule
-    raise ValueError(f"No template mapping for framework {primary!r} in mode {mode!r}.")
+    raise ValueError(\n        f"No template mapping for framework {primary!r} in mode {mode!r}."\n    )
