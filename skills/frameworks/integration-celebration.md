@@ -235,48 +235,55 @@ The detector executes the following operational configuration. This section is
 machine-readable knowledge, not implementation documentation. Changes to these
 values must be made here and covered by runtime tests.
 
-```python
-SCORE_WEIGHTS = {
-    "win or completion": 3,
-    "relief after difficulty": 3,
-    "gratitude": 2,
-    "recognized progress": 2,
-}
-THRESHOLD = 2
-NEGATIVE_OVERRIDE_PENALTY = 2
-STRENGTH_THRESHOLD = 4
-CONFIRMATION_SCORE = 2
-NEGATIVE_OVERRIDES = (
-    "but i'm still",
-    "but i am still",
-    "but it still hurts",
-    "but i feel empty",
-    "but i still feel empty",
-    "still feel empty",
-    "it doesn't feel real",
-    "i don't deserve",
-    "i do not deserve",
-    "i shouldn't feel happy",
-    "i should not feel happy",
-    "why don't i feel",
-    "why do not i feel",
-    "something is wrong with me",
-    "can't enjoy it",
-    "cannot enjoy it",
-)
-CONFIRMATION_SIGNALS = (
-    "yes",
-    "exactly",
-    "right",
-    "that's it",
-    "yes it is",
-    "it really did",
-    "it worked",
-)
-CONFIRMATION_ASSISTANT_ANCHORS = (
-    "let it land",
-    "carry it",
-    "what you just",
-    "arrived",
-)
-```
+## Runtime detection contract
+
+The operational detection policy is authored in this section. Runtime behavior must read these values from the Markdown contract.
+
+### Scoring
+
+| Setting | Value |
+| :--- | :--- |
+| Score weight: win or completion | 3 |
+| Score weight: relief after difficulty | 3 |
+| Score weight: gratitude | 2 |
+| Score weight: recognized progress | 2 |
+| Detection threshold | 2 |
+| Negative override penalty | 2 |
+| Strong-signal threshold | 4 |
+| Confirmation score | 2 |
+
+### Negative overrides
+
+- "but i'm still"
+- "but i am still"
+- "but it still hurts"
+- "but i feel empty"
+- "but i still feel empty"
+- "still feel empty"
+- "it doesn't feel real"
+- "i don't deserve"
+- "i do not deserve"
+- "i shouldn't feel happy"
+- "i should not feel happy"
+- "why don't i feel"
+- "why do not i feel"
+- "something is wrong with me"
+- "can't enjoy it"
+- "cannot enjoy it"
+
+### Confirmation signals
+
+- "yes"
+- "exactly"
+- "right"
+- "that's it"
+- "yes it is"
+- "it really did"
+- "it worked"
+
+### Confirmation assistant anchors
+
+- "let it land"
+- "carry it"
+- "what you just"
+- "arrived"
