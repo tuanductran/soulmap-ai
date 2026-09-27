@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -397,3 +399,29 @@ def test_framework_selector_enforces_breakthrough_override_from_knowledge() -> N
     data = run_framework_selector(payload)
     assert data["primary_framework"] == "MEANING_INTEGRATION"
     assert data["secondary_layer"] is None
+
+
+def test_orchestration_contract_is_markdown_native() -> None:
+    from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+
+    rules = load_orchestration_rules()
+    assert rules.stage_1_max_user_messages == 2
+    assert rules.breakthrough_min_strength == "strong"
+    assert rules.primary_priority[0].framework == "GRIEF"
+    assert rules.primary_priority[-1].framework == "PATTERN"
+    assert rules.secondary_priority[0].name == "anger"
+
+
+def test_orchestration_contract_rejects_missing_sections() -> None:
+    from soulmap.runtime.knowledge.orchestration_source import (
+        _contract_body,
+        _table_rows,
+    )
+
+    body = _contract_body(
+        "## Runtime execution contract\n\n"
+        "### Scalar settings\n\n| Setting | Value |\n| --- | --- |\n"
+        "| Stage 1 override max user messages | 2 |\n"
+    )
+    with pytest.raises(ValueError, match="Primary priority"):
+        _table_rows(body, "Primary priority")

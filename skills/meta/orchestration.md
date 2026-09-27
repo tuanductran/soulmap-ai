@@ -37,48 +37,57 @@ If the user's stage has not yet been classified, default to Stage 1 until classi
 
 ## Runtime execution contract
 
-The JSON below is executable routing knowledge. Runtime code must load these values
-from this section rather than duplicating thresholds, primary priority, response modes,
-or secondary-layer ordering in the runtime. This is knowledge, not implementation
-documentation.
+This section is the executable routing contract. Runtime code must parse these
+tables and must not maintain a second copy of their routing decisions. Changes to
+these values must be made here and covered by focused runtime tests.
 
-```json
-{
-  "STAGE_1_OVERRIDE_MAX_USER_MESSAGES": 2,
-  "BREAKTHROUGH_MIN_INSIGHT_STRENGTH": "strong",
-  "PHASE_1_SAFETY_CHECKS_BEFORE_FRAMEWORK_SELECTION": true,
-  "TEMPLATE_ROUTING_REQUIRED_BEFORE_DELIVERY": true,
-  "PRIMARY_PRIORITY": [
-    {"result": "grief", "detected": "grief_detected", "framework": "GRIEF", "mode": "SANCTUARY", "blocked": ["direction", "shadow", "existential", "synthesis"], "insight_secondary": true},
-    {"result": "existential", "detected": "existential_detected", "framework": "EXISTENTIAL", "mode": "MIRROR", "blocked": ["direction", "shadow"], "insight_secondary": true},
-    {"result": "conflict", "detected": "conflict_detected", "framework": "INNER_PARTS", "mode": "MIRROR", "blocked": ["direction", "shadow"], "requires_no_insight": true},
-    {"result": "direction", "detected": "direction_detected", "framework": "DIRECTION", "mode": "MIRROR", "blocked": ["shadow"], "insight_secondary": true},
-    {"result": "creative_drought", "detected": "creative_drought_detected", "framework": "CREATIVE_DROUGHT", "mode": "MIRROR"},
-    {"result": "perfectionism", "detected": "perfectionism_paralysis_detected", "framework": "PERFECTIONISM_PARALYSIS", "mode": "MIRROR"},
-    {"result": "shadow", "detected": "shadow_detected", "framework": "SHADOW", "mode": "MIRROR"},
-    {"result": "ancestral", "detected": "ancestral_detected", "framework": "ANCESTRAL_PATTERNS", "mode": "MIRROR"},
-    {"result": "visibility_fear", "detected": "visibility_fear_detected", "framework": "FEAR_OF_VISIBILITY", "mode": "MIRROR"},
-    {"result": "empath", "detected": "empath_detected", "framework": "EMPATH_BOUNDARY", "mode": "MIRROR"},
-    {"result": "dark_night", "detected": "dark_night_detected", "framework": "DARK_NIGHT_OF_SOUL", "mode": "SANCTUARY"},
-    {"result": "soul_nourishment", "detected": "soul_nourishment_detected", "framework": "SOUL_NOURISHMENT", "mode": "MIRROR"},
-    {"result": "divine_guidance", "detected": "divine_guidance_detected", "framework": "DIVINE_GUIDANCE", "mode": "MIRROR"},
-    {"result": "sacred_polarity", "detected": "sacred_polarity_detected", "framework": "SACRED_POLARITY", "mode": "MIRROR"},
-    {"result": "spiritual_purpose", "detected": "spiritual_purpose_detected", "framework": "SPIRITUAL_PURPOSE", "mode": "MIRROR"},
-    {"result": "soulmate_longing", "detected": "soulmate_longing_detected", "framework": "SOULMATE_LONGING", "mode": "MIRROR"},
-    {"result": "partnership_patterns", "detected": "partnership_pattern_detected", "framework": "PARTNERSHIP_PATTERNS", "mode": "MIRROR"},
-    {"result": "celebration", "detected": "celebration_detected", "framework": "INTEGRATION_CELEBRATION", "mode": "MIRROR", "requires_no_insight": true},
-    {"result": "insight", "detected": "insight_detected", "framework": "MEANING_INTEGRATION", "mode": "MIRROR"},
-    {"result": "synthesis", "detected": "synthesis_triggered", "framework": "SYNTHESIS", "mode": "MIRROR", "requires": "synthesis_ready"},
-    {"result": "pattern", "detected": "primary_pattern", "framework": "PATTERN", "mode": "MIRROR", "requires_not": "wait_for_more"}
-  ],
-  "SECONDARY_PRIORITY": [
-    {"name": "anger", "result": "anger", "detected": "anger_detected"},
-    {"name": "bypass", "result": "bypass", "detected": "bypass_detected"},
-    {"name": "somatic", "result": "somatic", "detected": "somatic_detected"}
-  ],
-  "PEER_MIN_STAGE": 5
-}
-```
+### Scalar settings
+
+| Setting | Value |
+| :--- | :--- |
+| Stage 1 override max user messages | 2 |
+| Breakthrough minimum insight strength | strong |
+| Phase 1 safety checks before framework selection | true |
+| Template routing required before delivery | true |
+| Peer minimum stage | 5 |
+
+### Primary priority
+
+First matching rule wins. Empty cells mean the condition is not required.
+
+| Priority | Result | Detected field | Framework | Mode | Blocked | Insight secondary | Requires no insight | Requires | Requires not |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | grief | grief_detected | GRIEF | SANCTUARY | direction, shadow, existential, synthesis | true | false |  |  |
+| 2 | existential | existential_detected | EXISTENTIAL | MIRROR | direction, shadow | true | false |  |  |
+| 3 | conflict | conflict_detected | INNER_PARTS | MIRROR | direction, shadow | false | true |  |  |
+| 4 | direction | direction_detected | DIRECTION | MIRROR | shadow | true | false |  |  |
+| 5 | creative_drought | creative_drought_detected | CREATIVE_DROUGHT | MIRROR |  | false | false |  |  |
+| 6 | perfectionism | perfectionism_paralysis_detected | PERFECTIONISM_PARALYSIS | MIRROR |  | false | false |  |  |
+| 7 | shadow | shadow_detected | SHADOW | MIRROR |  | false | false |  |  |
+| 8 | ancestral | ancestral_detected | ANCESTRAL_PATTERNS | MIRROR |  | false | false |  |  |
+| 9 | visibility_fear | visibility_fear_detected | FEAR_OF_VISIBILITY | MIRROR |  | false | false |  |  |
+| 10 | empath | empath_detected | EMPATH_BOUNDARY | MIRROR |  | false | false |  |  |
+| 11 | dark_night | dark_night_detected | DARK_NIGHT_OF_SOUL | SANCTUARY |  | false | false |  |  |
+| 12 | soul_nourishment | soul_nourishment_detected | SOUL_NOURISHMENT | MIRROR |  | false | false |  |  |
+| 13 | divine_guidance | divine_guidance_detected | DIVINE_GUIDANCE | MIRROR |  | false | false |  |  |
+| 14 | sacred_polarity | sacred_polarity_detected | SACRED_POLARITY | MIRROR |  | false | false |  |  |
+| 15 | spiritual_purpose | spiritual_purpose_detected | SPIRITUAL_PURPOSE | MIRROR |  | false | false |  |  |
+| 16 | soulmate_longing | soulmate_longing_detected | SOULMATE_LONGING | MIRROR |  | false | false |  |  |
+| 17 | partnership_patterns | partnership_pattern_detected | PARTNERSHIP_PATTERNS | MIRROR |  | false | false |  |  |
+| 18 | celebration | celebration_detected | INTEGRATION_CELEBRATION | MIRROR |  | false | true |  |  |
+| 19 | insight | insight_detected | MEANING_INTEGRATION | MIRROR |  | false | false |  |  |
+| 20 | synthesis | synthesis_triggered | SYNTHESIS | MIRROR |  | false | false | synthesis_ready |  |
+| 21 | pattern | primary_pattern | PATTERN | MIRROR |  | false | false |  | wait_for_more |
+
+### Secondary priority
+
+At most one secondary layer is selected, in this order.
+
+| Priority | Name | Result | Detected field |
+| :--- | :--- | :--- | :--- |
+| 1 | anger | anger | anger_detected |
+| 2 | bypass | bypass | bypass_detected |
+| 3 | somatic | somatic | somatic_detected |
 
 ## Decision Tree
 
