@@ -25,7 +25,7 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
     """Read and validate the shipped framework-template mapping."""
     path = default_skill_path("skills/meta/framework-template-map.md")
     text = path.read_text(encoding="utf-8")
-    match = re.search(r"^\\| Framework \\| Mode \\| Word Range \\| Question Rule \\| Source File \\|\s*$\n(?P<body>.*?)(?=\n## Detailed Structure)", text, re.MULTILINE | re.DOTALL)
+    match = re.search(r"^\| Framework \\| Mode \\| Word Range \\| Question Rule \\| Source File \\|\s*$\n(?P<body>.*?)(?=\n## Detailed Structure)", text, re.MULTILINE | re.DOTALL)
     if match is None:
         raise ValueError("Framework-template core mapping table is missing.")
     rules = []
