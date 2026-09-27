@@ -183,3 +183,18 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Creative-identity plus absence weight | 2 |
+| Minimum detection score | 2 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No creative drought signal. Continue standard pipeline. |
+| detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect what the drought may be saying. End with one creative drought question from deep-inquiry-bank.md (Creative Drought Questions section). |
+
