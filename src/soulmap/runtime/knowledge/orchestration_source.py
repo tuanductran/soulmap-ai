@@ -109,7 +109,9 @@ def _require_str(value: str, key: str) -> str:
     return value
 
 
-def _parse_primary_priority(rows: list[list[str]]) -> tuple[PrimaryPriorityRule, ...]:
+def _parse_primary_priority(
+    rows: list[list[str]],
+) -> tuple[PrimaryPriorityRule, ...]:
     if not rows:
         raise ValueError("PRIMARY_PRIORITY must be a non-empty table.")
     rules: list[PrimaryPriorityRule] = []
@@ -123,7 +125,9 @@ def _parse_primary_priority(rows: list[list[str]]) -> tuple[PrimaryPriorityRule,
                 detected=_require_str(detected, "PRIMARY_PRIORITY.detected"),
                 framework=_require_str(framework, "PRIMARY_PRIORITY.framework"),
                 mode=_require_str(mode, "PRIMARY_PRIORITY.mode"),
-                blocked=tuple(item.strip() for item in blocked.split(",") if item.strip()),
+                blocked=tuple(
+                    item.strip() for item in blocked.split(",") if item.strip()
+                ),
                 insight_secondary=_require_bool(
                     insight_secondary, "PRIMARY_PRIORITY.insight_secondary"
                 ),
@@ -137,7 +141,9 @@ def _parse_primary_priority(rows: list[list[str]]) -> tuple[PrimaryPriorityRule,
     return tuple(rules)
 
 
-def _parse_secondary_priority(rows: list[list[str]]) -> tuple[SecondaryPriorityRule, ...]:
+def _parse_secondary_priority(
+    rows: list[list[str]],
+) -> tuple[SecondaryPriorityRule, ...]:
     if not rows:
         raise ValueError("SECONDARY_PRIORITY must be a non-empty table.")
     rules: list[SecondaryPriorityRule] = []
