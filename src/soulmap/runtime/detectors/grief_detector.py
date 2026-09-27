@@ -21,8 +21,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 _GRIEF_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/grief-companion.md"), "Detection signals"
 )
-_RULES = load_key_value_table(default_skill_path("skills/frameworks/grief-companion.md"), "Runtime detection contract")
-_GUIDANCE = load_key_value_table(default_skill_path("skills/frameworks/grief-companion.md"), "Guidance")
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/grief-companion.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/grief-companion.md"), "Guidance"
+)
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
@@ -91,8 +96,12 @@ def detect_grief(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        [-int(_RULES["Recent user history window"]):]
-        all_grief = ACUTE_GRIEF[: int(_RULES["Acute history signal limit"])] + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])] + AMBIGUOUS_LOSS[: int(_RULES["Ambiguous history signal limit"])]
+        ][-int(_RULES["Recent user history window"]) :]
+        all_grief = (
+            ACUTE_GRIEF[: int(_RULES["Acute history signal limit"])]
+            + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])]
+            + AMBIGUOUS_LOSS[: int(_RULES["Ambiguous history signal limit"])]
+        )
         if sum(1 for m in recent if any(p in m for p in all_grief)) >= 2:
             score += int(_RULES["Sustained grief weight"])
             signals.append("sustained_grief_across_messages")
