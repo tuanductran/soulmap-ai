@@ -79,16 +79,40 @@ def _runtime_contract(text: str) -> dict[str, object]:
     body = body[: next_heading.start()] if next_heading else body
     rows = [
         (row.group("setting").strip(), row.group("value").strip())
-        for row in re.finditer(r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", body, re.MULTILINE)
+        for row in re.finditer(
+            r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$",
+            body,
+            re.MULTILINE,
+        )
         if row.group("setting").strip().lower() != "setting"
     ]
     values = dict(rows)
-    required = {"Memory minimum: session_count_ge_10", "Memory minimum: prior_pattern_recognition", "Memory minimum: prior_breakthrough", "Close score delta", "First session default stage", "First session maximum stage", "Anti-regression minimum lower-stage messages"}
+    required = {
+        "Memory minimum: session_count_ge_10",
+        "Memory minimum: prior_pattern_recognition",
+        "Memory minimum: prior_breakthrough",
+        "Close score delta",
+        "First session default stage",
+        "First session maximum stage",
+        "Anti-regression minimum lower-stage messages",
+    }
     if not required <= values.keys():
         raise ValueError("Stage runtime enforcement settings are incomplete.")
     try:
-        memory = {setting.removeprefix("Memory minimum: "): int(values[setting]) for setting in required if setting.startswith("Memory minimum: ")}
-        scalar = {key: float(values[key]) if key == "Close score delta" else int(values[key]) for key in ("Close score delta", "First session default stage", "First session maximum stage", "Anti-regression minimum lower-stage messages")}
+        memory = {
+            setting.removeprefix("Memory minimum: "): int(values[setting])
+            for setting in required
+            if setting.startswith("Memory minimum: ")
+        }
+        scalar = {
+            key: float(values[key]) if key == "Close score delta" else int(values[key])
+            for key in (
+                "Close score delta",
+                "First session default stage",
+                "First session maximum stage",
+                "Anti-regression minimum lower-stage messages",
+            )
+        }
     except (KeyError, ValueError) as exc:
         raise ValueError("Stage runtime enforcement configuration is invalid.") from exc
 
@@ -99,12 +123,32 @@ def _runtime_contract(text: str) -> dict[str, object]:
         remainder = body[section.end() :]
         next_section = re.search(r"^###\s+", remainder, re.MULTILINE)
         remainder = remainder[: next_section.start()] if next_section else remainder
-        return {int(row.group("stage")): row.group("value").strip() for row in re.finditer(r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", remainder, re.MULTILINE)}
+        return {
+            int(row.group("stage")): row.group("value").strip()
+            for row in re.finditer(
+                r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$",
+                remainder,
+                re.MULTILINE,
+            )
+        }
 
-    roles, recommendations = section_rows("Stage roles"), section_rows("Stage recommendations")
+    roles, recommendations = (
+        section_rows("Stage roles"),
+        section_rows("Stage recommendations"),
+    )
     if set(roles) != set(range(1, 7)) or set(recommendations) != set(range(1, 7)):
         raise ValueError("Stage runtime mappings are incomplete.")
-    return {"MEMORY_MINIMUMS": memory, "CLOSE_SCORE_DELTA": scalar["Close score delta"], "FIRST_SESSION_DEFAULT_STAGE": scalar["First session default stage"], "FIRST_SESSION_MAX_STAGE": scalar["First session maximum stage"], "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES": scalar["Anti-regression minimum lower-stage messages"], "STAGE_ROLES": roles, "STAGE_RECOMMENDATIONS": recommendations}
+    return {
+        "MEMORY_MINIMUMS": memory,
+        "CLOSE_SCORE_DELTA": scalar["Close score delta"],
+        "FIRST_SESSION_DEFAULT_STAGE": scalar["First session default stage"],
+        "FIRST_SESSION_MAX_STAGE": scalar["First session maximum stage"],
+        "ANTI_REGRESSION_MIN_LOWER_STAGE_MESSAGES": scalar[
+            "Anti-regression minimum lower-stage messages"
+        ],
+        "STAGE_ROLES": roles,
+        "STAGE_RECOMMENDATIONS": recommendations,
+    }
 
 def parse_stage_classifier(text: str) -> StageClassifierRules:
     """Parse the scoring contract from stage-classifier Markdown.
