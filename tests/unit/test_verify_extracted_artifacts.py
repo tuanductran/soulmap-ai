@@ -67,7 +67,9 @@ def test_verifier_accepts_both_valid_artifacts(tmp_path: Path) -> None:
     assert result.stderr == ""
     for archive_name in ("soulmap-ai.zip", "soulmap-ai.skill"):
         with zipfile.ZipFile(tmp_path / "dist" / archive_name) as archive:
-            assert not any(name.startswith("skills/runtime/") for name in archive.namelist())
+            assert not any(
+                name.startswith("skills/runtime/") for name in archive.namelist()
+            )
 
 
 def test_verifier_rejects_missing_artifact(tmp_path: Path) -> None:
