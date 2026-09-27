@@ -111,17 +111,16 @@ class GitHubClient:
                 self.last_response_headers = dict(exc.headers.items())
                 detail = exc.read().decode("utf-8", errors="replace")
                 retryable = method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
-                if (
-                    exc.code in RETRYABLE_STATUS_CODES
-                    and retryable
-                    and attempt < MAX_RETRIES
-                ):
-                    rate_limited = exc.code in {403, 429} and (
+                rate_limited = exc.code in {403, 429} and (
                         self.last_response_headers.get("Retry-After")
                         or self.last_response_headers.get("X-RateLimit-Remaining")
                         == "0"
                         or "rate limit" in detail.lower()
                     )
+                status_retryable = exc.code in RETRYABLE_STATUS_CODES or (
+                    exc.code == 403 and rate_limited
+                )
+                if status_retryable and retryable and attempt < MAX_RETRIES:
                     time.sleep(
                         self._retry_delay(
                             attempt,
@@ -138,7 +137,10 @@ class GitHubClient:
                     headers=self.last_response_headers,
                 ) from exc
             except URLError as exc:
-                if attempt < MAX_RETRIES:
+                if (
+                    (method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent)
+                    and attempt < MAX_RETRIES
+                ):
                     time.sleep(self._retry_delay(attempt, {}))
                     continue
                 raise GitHubActionError(
@@ -186,8 +188,15 @@ class GitHubClient:
             return ""
         for link in link_header.split(","):
             target, _, parameters = link.partition(";")
-            lower_parameters = parameters.lower()
-            if "rel" in lower_parameters and "next" in lower_parameters:
+            relation = next(
+                (
+                    value.strip().strip('"').lower()
+                    for value in parameters.split(";")
+                    if value.strip().lower().startswith("rel=")
+                ),
+                "",
+            )
+            if relation == "rel="next"" or relation == "rel=next":
                 target = target.strip()
                 if target.startswith("<") and target.endswith(">"):
                     return target[1:-1]
