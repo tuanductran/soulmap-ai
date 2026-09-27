@@ -234,7 +234,8 @@ for their own country, spoken as a number, not as a link.
 
 ## Runtime classification contract
 
-The exact scope keyword packs are authored in the sections below. Runtime classification reads these phrases directly from the Markdown contract.
+The exact scope keyword packs are authored in the sections below. These phrases are the
+normative classification vocabulary for scope boundaries.
 
 ### Whitelist tier 1
 
