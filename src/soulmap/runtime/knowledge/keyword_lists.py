@@ -203,9 +203,11 @@ def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
             rows.append(cells)
     return tuple(rows)
 
+
 def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...], ...]:
     """Read a Markdown knowledge file and extract one contract table."""
     return extract_table_rows(markdown_path.read_text(encoding="utf-8"), heading)
+
 
 def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
     """Load a strict two-column Markdown knowledge contract."""
