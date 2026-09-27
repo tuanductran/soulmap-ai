@@ -44,6 +44,8 @@ from soulmap.runtime.detectors.spiritual_purpose_detector import (
 )
 from soulmap.runtime.detectors.visibility_fear_detector import detect_visibility_fear
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.template_source import resolve_template
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
@@ -182,6 +184,44 @@ def _finish(
     selection: dict[str, object],
     debug_events: list[dict] | None,
 ) -> dict[str, object]:
+    rules = load_orchestration_rules()
+    primary = str(selection.get("primary_framework", ""))
+    secondary = selection.get("secondary_layer")
+    mode = str(selection.get("mode", ""))
+    normalized_primary = primary.replace("_", " ").title()
+    aliases = {
+        "Mirror": "Mirror",
+        "De Escalation": "De-escalation",
+        "Integration Celebration": "Integration and Celebration",
+        "Meaning Integration": "Meaning Integration",
+    }
+    normalized_primary = aliases.get(normalized_primary, normalized_primary)
+    if normalized_primary not in rules.priority:
+        raise ValueError(f"Primary framework {primary!r} is not in orchestration.md.")
+    if secondary is not None:
+        if secondary not in rules.secondary_layers:
+            raise ValueError(f"Unknown secondary layer {secondary!r}.")
+        allowed = rules.valid_secondary.get(normalized_primary, ())
+        if secondary not in allowed:
+            raise ValueError(
+                f"Secondary layer {secondary!r} is not valid for {primary!r}."
+            )
+    template_context = (
+        dict(selection.get("context"))
+        if isinstance(selection.get("context"), dict)
+        else {}
+    )
+    if isinstance(selection.get("stage"), int):
+        template_context.setdefault("stage", selection["stage"])
+    template = resolve_template(primary, mode, template_context)
+    selection = dict(selection)
+    selection["template"] = {
+        "framework": template.framework,
+        "mode": template.mode,
+        "word_range": template.word_range,
+        "question_rule": template.question_rule,
+        "source_file": template.source_file,
+    }
     """Close out a selection: apply the safety gate, then attach debug data.
 
     Every branch below ends by calling this with its own ``selection`` dict,
