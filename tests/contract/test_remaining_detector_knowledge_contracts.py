@@ -2,7 +2,17 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from typing import Protocol
+
 import pytest
+
+class DetectorModule(Protocol):
+    _RULES: dict[str, str]
+
+
+Detector = Callable[[str], dict[str, object]]
+
 
 from soulmap.runtime.detectors import (
     creative_drought_detector,
@@ -36,8 +46,8 @@ from soulmap.runtime.detectors import (
     ],
 )
 def test_detector_scoring_is_knowledge_authored(
-    module: object,
-    detector,
+    module: DetectorModule,
+    detector: Detector,
     signal_name: str,
     weight_key: str,
     monkeypatch: pytest.MonkeyPatch,
