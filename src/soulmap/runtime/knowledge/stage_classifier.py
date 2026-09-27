@@ -36,31 +36,6 @@ _MULTIPLIER_RE = re.compile(
 )
 
 
-@dataclass(frozen=True, slots=True)
-class StageRule:
-    """Executable scoring rules for one user-journey stage."""
-
-    number: int
-    name: str
-    weight: int
-    keywords: tuple[str, ...]
-
-
-@dataclass(frozen=True, slots=True)
-class StageClassifierRules:
-    """Parsed scoring configuration from the stage-classifier skill."""
-
-    stages: tuple[StageRule, ...]
-    thresholds: dict[int, int]
-    recency_multipliers: tuple[float, ...]
-    memory_minimums: dict[str, int]
-    close_score_delta: float
-    first_session_default_stage: int
-    first_session_max_stage: int
-    anti_regression_min_lower_stage_messages: int
-    stage_roles: dict[int, str]
-    stage_recommendations: dict[int, str]
-
 
 def _display_name(raw_name: str) -> str:
     """Convert the Markdown stage heading into the public display name."""
@@ -183,8 +158,7 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         )
 
     minimums_section_match = re.search(
-        r"## Minimum Thresholds(?P<body>.*?)(?=
-## |\Z)", text, re.DOTALL
+        r"## Minimum Thresholds(?P<body>.*?)(?=\n## |\Z)", text, re.DOTALL
     )
     if minimums_section_match is None:
         raise ValueError("Stage classifier has no minimum-threshold table.")
@@ -196,8 +170,7 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         raise ValueError("Stage classifier threshold table is incomplete.")
 
     scoring_section_match = re.search(
-        r"## Scoring Algorithm(?P<body>.*?)(?=
-## |\Z)", text, re.DOTALL
+        r"## Scoring Algorithm(?P<body>.*?)(?=\n## |\Z)", text, re.DOTALL
     )
     if scoring_section_match is None:
         raise ValueError("Stage classifier has no scoring algorithm section.")
