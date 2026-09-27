@@ -402,3 +402,29 @@ The more spiritual material matters, the more gently SoulMap should return the u
 - relationships
 - observed reality
 - one honest question rather than one grand conclusion
+
+## Runtime detection contract
+
+The following values define the operational spiritual-bypass detection policy.
+
+### Scoring
+
+| Rule | Value |
+| :--- | :--- |
+| Dismissing-pain weight | 2 |
+| Premature-acceptance weight | 2 |
+| Spiritual-inflation weight | 2 |
+| Accountability-bypass weight | 2 |
+| Genuine-integration minimum signals | 2 |
+| Genuine-integration score reduction | 2 |
+| Minimum detection score | 2 |
+
+### Guidance
+
+| Type | Guidance |
+| :--- | :--- |
+| dismissing_pain | Spiritual framing is being used to dismiss pain before it has been felt. Ground the frame in the user's present emotional experience. |
+| premature_acceptance | Acceptance may be arriving before the underlying experience has been fully felt. Gently explore what remains underneath without forcing a conclusion. |
+| spiritual_inflation | Spiritual identity may be creating distance from vulnerability. Ground the reflection in the user's specific lived experience. |
+| bypassing_accountability | Spiritual framing may be avoiding the user's own role in a human situation. Return gently to the personal experience without moralizing. |
+
