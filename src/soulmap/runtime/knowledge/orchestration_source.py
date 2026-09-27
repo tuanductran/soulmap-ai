@@ -6,7 +6,7 @@ import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any
+from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
@@ -61,7 +61,7 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
-def _load_contract_json(body: str) -> dict[str, Any]:
+def _load_contract_json(body: str) -> dict[str, object]:
     match = _JSON_RE.search(body)
     if match is None:
         raise ValueError("Orchestration runtime JSON contract is missing.")
@@ -71,28 +71,29 @@ def _load_contract_json(body: str) -> dict[str, Any]:
         raise ValueError("Orchestration runtime JSON contract is invalid.") from exc
     if not isinstance(value, dict):
         raise ValueError("Orchestration runtime JSON contract must be an object.")
-    return value
+    return cast(dict[str, object], value)
 
 
-def _require_bool(value: Any, key: str) -> bool:
+def _require_bool(value: object, key: str) -> bool:
     if not isinstance(value, bool):
         raise ValueError(f"{key} must be true or false.")
     return value
 
 
-def _require_positive_int(value: Any, key: str) -> int:
+def _require_positive_int(value: object, key: str) -> int:
     if not isinstance(value, int) or isinstance(value, bool) or value < 1:
         raise ValueError(f"{key} must be a positive integer.")
     return value
 
 
-def _parse_primary_priority(value: Any) -> tuple[PrimaryPriorityRule, ...]:
+def _parse_primary_priority(value: object) -> tuple[PrimaryPriorityRule, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError("PRIMARY_PRIORITY must be a non-empty list.")
     rules: list[PrimaryPriorityRule] = []
     for item in value:
         if not isinstance(item, dict):
             raise ValueError("Each PRIMARY_PRIORITY entry must be an object.")
+        item = cast(dict[str, object], item)
         required = ("result", "detected", "framework", "mode")
         if any(not isinstance(item.get(key), str) or not item[key] for key in required):
             raise ValueError("Each PRIMARY_PRIORITY entry requires string routing fields.")
@@ -121,13 +122,14 @@ def _parse_primary_priority(value: Any) -> tuple[PrimaryPriorityRule, ...]:
     return tuple(rules)
 
 
-def _parse_secondary_priority(value: Any) -> tuple[SecondaryPriorityRule, ...]:
+def _parse_secondary_priority(value: object) -> tuple[SecondaryPriorityRule, ...]:
     if not isinstance(value, list) or not value:
         raise ValueError("SECONDARY_PRIORITY must be a non-empty list.")
     rules: list[SecondaryPriorityRule] = []
     for item in value:
         if not isinstance(item, dict):
             raise ValueError("Each SECONDARY_PRIORITY entry must be an object.")
+        item = cast(dict[str, object], item)
         if any(not isinstance(item.get(key), str) or not item[key] for key in ("name", "result", "detected")):
             raise ValueError("Each SECONDARY_PRIORITY entry requires string routing fields.")
         rules.append(
