@@ -37,6 +37,33 @@ _MULTIPLIER_RE = re.compile(
 
 
 
+
+@dataclass(frozen=True, slots=True)
+class StageRule:
+    """Executable scoring rules for one user-journey stage."""
+
+    number: int
+    name: str
+    weight: int
+    keywords: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class StageClassifierRules:
+    """Parsed scoring configuration from the stage-classifier skill."""
+
+    stages: tuple[StageRule, ...]
+    thresholds: dict[int, int]
+    recency_multipliers: tuple[float, ...]
+    memory_minimums: dict[str, int]
+    close_score_delta: float
+    first_session_default_stage: int
+    first_session_max_stage: int
+    anti_regression_min_lower_stage_messages: int
+    stage_roles: dict[int, str]
+    stage_recommendations: dict[int, str]
+
+
 def _display_name(raw_name: str) -> str:
     """Convert the Markdown stage heading into the public display name."""
     return raw_name.replace(" and ", " & ").title()
