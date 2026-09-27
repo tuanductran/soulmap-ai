@@ -255,7 +255,9 @@ def test_a_detector_exception_is_logged_not_only_silently_swallowed(
     with caplog.at_level(
         "WARNING", logger="soulmap.runtime.routing.framework_selector"
     ):
-        framework_selector.select_framework("something ordinary", [], {"prior_stage": 3})
+        framework_selector.select_framework(
+            "something ordinary", [], {"prior_stage": 3}
+        )
 
     assert "shadow_pattern_detector" in caplog.text
     assert "shadow detector is down" in caplog.text
@@ -274,7 +276,9 @@ def test_grief_outranks_moderate_intensity_de_escalation() -> None:
     sanctuary mode for a reply that ends with a question. The more the person
     was crying, the less grief support they got.
     """
-    quiet = framework_selector.select_framework("My dog died this morning", [], {"prior_stage": 3})
+    quiet = framework_selector.select_framework(
+        "My dog died this morning", [], {"prior_stage": 3}
+    )
     distressed = framework_selector.select_framework(
         "My dog died this morning and I cannot stop crying", [], {"prior_stage": 3}
     )
