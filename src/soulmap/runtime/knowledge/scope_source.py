@@ -47,8 +47,15 @@ _QUOTED_RE = re.compile(r'"([^"]+)"')
 
 def _literal_config(body: str) -> dict[str, object]:
     packs = list(_PACK_RE.finditer(body))
-    expected = {"Whitelist tier 1": "WHITELIST_TIER1", "Whitelist tier 2": "WHITELIST_TIER2", "Blacklist layer 1": "BLACKLIST_LAYER1", "Prohibited blacklist": "BLACKLIST_PROHIBITED"}
-    if len(packs) != len(expected) or {match.group("pack") for match in packs} != set(expected):
+    expected = {
+        "Whitelist tier 1": "WHITELIST_TIER1",
+        "Whitelist tier 2": "WHITELIST_TIER2",
+        "Blacklist layer 1": "BLACKLIST_LAYER1",
+        "Prohibited blacklist": "BLACKLIST_PROHIBITED",
+    }
+    if len(packs) != len(expected) or {match.group("pack") for match in packs} != set(
+        expected
+    ):
         raise ValueError("Scope runtime classification packs are incomplete.")
     values: dict[str, object] = {}
     for index, pack in enumerate(packs):
@@ -59,13 +66,18 @@ def _literal_config(body: str) -> dict[str, object]:
             raise ValueError(f"Scope pack {pack.group('pack')} has no categories.")
         parsed: dict[str, list[str]] = {}
         for group_index, group in enumerate(groups):
-            group_end = groups[group_index + 1].start() if group_index + 1 < len(groups) else len(pack_body)
+            group_end = (
+                groups[group_index + 1].start()
+                if group_index + 1 < len(groups)
+                else len(pack_body)
+            )
             phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
             if not phrases:
                 raise ValueError(f"Scope category {group.group('group')} is empty.")
             parsed[group.group("group")] = phrases
         values[expected[pack.group("pack")]] = parsed
     return values
+
 
 def _freeze(value: dict[str, list[str]]) -> dict[str, tuple[str, ...]]:
     return {category: tuple(keywords) for category, keywords in value.items()}
