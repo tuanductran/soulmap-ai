@@ -54,8 +54,6 @@ def _suggest_lens(msg: str) -> str:
             return _DIRECTION_LENS[lens]
     return _DIRECTION_LENS["default"]
 
-
-
 def detect_direction_need(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
@@ -96,12 +94,8 @@ def detect_direction_need(
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_DIRECTION_RULES["recent user history window"]) :]
         history_signals = (
-            LOSTNESS_SIGNALS[
-                : int(_DIRECTION_RULES["sustained lostness signal limit"])
-            ]
-            + MEANING_SIGNALS[
-                : int(_DIRECTION_RULES["sustained meaning signal limit"])
-            ]
+            LOSTNESS_SIGNALS[: int(_DIRECTION_RULES["sustained lostness signal limit"])]
+            + MEANING_SIGNALS[: int(_DIRECTION_RULES["sustained meaning signal limit"])]
             + TRANSITION_SIGNALS[
                 : int(_DIRECTION_RULES["sustained transition signal limit"])
             ]
