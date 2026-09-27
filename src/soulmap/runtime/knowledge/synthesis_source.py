@@ -6,10 +6,8 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
-    load_key_value_table,
-)
+from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime detection contract"
 _THRESHOLD_RE = re.compile(
@@ -123,7 +121,7 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
 @lru_cache(maxsize=1)
 def load_synthesis_rules() -> SynthesisRules:
     """Read and validate the runtime contract from shipped Markdown."""
-    path = default_skill_path("skills/frameworks/conversation-synthesis.md")
+    path = runtime_skill_path("conversation-synthesis")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _table_values(body)
     return SynthesisRules(

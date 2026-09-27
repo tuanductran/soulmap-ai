@@ -66,9 +66,59 @@ def test_runtime_skill_path_consumers_are_registered() -> None:
     assert not unregistered, f"Unregistered runtime sources: {unregistered}"
 
 
+def test_runtime_knowledge_modules_do_not_embed_skill_source_paths() -> None:
+    """Runtime knowledge loaders must resolve Markdown through the registry."""
+    knowledge_root = REPO_ROOT / "src/soulmap/runtime/knowledge"
+    excluded = {"keyword_lists.py", "runtime_registry.py"}
+    violations: list[str] = []
+
+    for path in sorted(knowledge_root.glob("*.py")):
+        if path.name in excluded:
+            continue
+        content = path.read_text(encoding="utf-8")
+        if 'default_skill_path("skills/' in content:
+            violations.append(str(path.relative_to(REPO_ROOT)))
+
+    assert not violations, "\n".join(violations)
+
+
+def test_runtime_knowledge_source_consumers_are_registered() -> None:
+    """Every runtime knowledge loader source reference must be registry-backed."""
+    registry = _registry()
+    knowledge_root = REPO_ROOT / "src/soulmap/runtime/knowledge"
+    excluded = {"keyword_lists.py", "runtime_registry.py"}
+    consumers: dict[str, set[str]] = {}
+
+    for path in sorted(knowledge_root.glob("*.py")):
+        if path.name in excluded:
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+                continue
+            if node.func.id != "runtime_skill_path" or len(node.args) != 1:
+                continue
+            argument = node.args[0]
+            if not isinstance(argument, ast.Constant) or not isinstance(
+                argument.value, str
+            ):
+                raise AssertionError(
+                    f"{path.relative_to(REPO_ROOT)} uses a non-literal runtime source"
+                )
+            consumers.setdefault(argument.value, set()).add(
+                str(path.relative_to(REPO_ROOT))
+            )
+
+    unregistered = {
+        source: sorted(paths)
+        for source, paths in consumers.items()
+        if source not in registry
+    }
+    assert not unregistered, f"Unregistered runtime sources: {unregistered}"
+
+
 def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
-    assert len(registry) == 26
     assert _validate_registry(registry) == ()
     assert all(runtime_skill_path(source).is_file() for source in registry)

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import cast
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime classification contract"
 
@@ -82,7 +82,7 @@ def _freeze(value: dict[str, list[str]]) -> dict[str, tuple[str, ...]]:
 @lru_cache(maxsize=1)
 def load_scope_rules() -> ScopeRules:
     """Read and validate the runtime contract from shipped Markdown."""
-    path = default_skill_path("skills/safety/whitelist-blacklist-system.md")
+    path = runtime_skill_path("scope-classification")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
     return ScopeRules(

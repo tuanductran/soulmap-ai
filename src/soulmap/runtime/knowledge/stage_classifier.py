@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import cast
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _STAGE_RE = re.compile(r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE)
 _KEYWORDS_RE = re.compile(
@@ -248,5 +248,5 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
 @lru_cache(maxsize=1)
 def load_stage_classifier() -> StageClassifierRules:
     """Load and validate the shipped stage-classifier knowledge once per process."""
-    path = default_skill_path("skills/meta/stage-classifier.md")
+    path = runtime_skill_path("stage-classifier")
     return parse_stage_classifier(path.read_text(encoding="utf-8"))

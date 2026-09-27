@@ -8,10 +8,10 @@ from functools import lru_cache
 from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime detection contract"
 
@@ -132,7 +132,7 @@ def _literal_config(body: str) -> dict[str, object]:
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
     """Read and validate the runtime contract from shipped Markdown."""
-    path = default_skill_path("skills/frameworks/integration-celebration.md")
+    path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
     groups = load_labeled_groups(path, "Detection signals")
