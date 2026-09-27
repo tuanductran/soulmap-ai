@@ -267,6 +267,7 @@ major life disruption).
 
 Stage regression is possible in life but should not be triggered by a single message.
 Require two or more messages showing lower-stage signals before downgrading.
+
 ## Runtime enforcement contract
 
 The runtime stage detector executes the following operational configuration. This section
