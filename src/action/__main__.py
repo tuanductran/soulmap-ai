@@ -198,7 +198,7 @@ class GitHubClient:
                 ),
                 "",
             )
-            if relation == "rel="next"" or relation == "rel=next":
+            if relation in {'rel="next"', "rel=next"}:
                 target = target.strip()
                 if target.startswith("<") and target.endswith(">"):
                     return target[1:-1]
