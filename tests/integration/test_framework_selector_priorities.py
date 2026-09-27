@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -418,9 +420,5 @@ def test_orchestration_contract_rejects_missing_sections() -> None:
         "### Scalar settings\n\n| Setting | Value |\n| --- | --- |\n"
         "| Stage 1 override max user messages | 2 |\n"
     )
-    try:
+    with pytest.raises(ValueError, match="Primary priority"):
         _table_rows(body, "Primary priority")
-    except ValueError as exc:
-        assert "Primary priority" in str(exc)
-    else:
-        raise AssertionError("missing primary priority table must fail")
