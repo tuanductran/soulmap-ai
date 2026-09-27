@@ -60,7 +60,8 @@ def detect_sacred_polarity(
         "sacred_polarity_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": _GUIDANCE["detected"],    }
+        "recommendation": _GUIDANCE["detected"],
+    }
 
 
 if __name__ == "__main__":
