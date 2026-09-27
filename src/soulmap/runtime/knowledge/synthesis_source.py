@@ -106,9 +106,121 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
             group_name = stripped[5:].strip().lower()
             current = group_name
             groups[group_name] = ()
-        elif current is not None and (
-            m := re.match(r'^- "([^"]+)"\s*$', stripped)
+        elif current is not None:
+            m = re.match(r'^- "([^"]+)"\s*
+            groups[current] = groups[current] + (m.group(1).lower(),)
+    if not groups or any(not phrases for phrases in groups.values()):
+        raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
+    return groups
+
+
+@lru_cache(maxsize=1)
+def load_synthesis_rules() -> SynthesisRules:
+    """Read and validate the runtime contract from shipped Markdown."""
+    path = default_skill_path("skills/frameworks/conversation-synthesis.md")
+    body = _contract_body(path.read_text(encoding="utf-8"))
+    values = _table_values(body)
+    return SynthesisRules(
+        minimum_user_messages=int(values["minimum_user_messages"]),
+        automatic_user_messages=int(values["automatic_synthesis_user_messages"]),
+        minimum_recurring_themes=int(
+            values["minimum_distinct_recurring_themes_for_automatic_synthesis"]
+        ),
+        max_themes=int(values["maximum_themes_returned"]),
+        max_anchors=int(values["maximum_anchors_per_theme"]),
+        max_longitudinal=int(values["maximum_longitudinal_themes"]),
+        explicit_requests=_quoted_bullets(body, "Explicit request signals"),
+        emotional_themes=_theme_groups(body, "Recurring emotional theme"),
+        value_themes=_theme_groups(body, "Recurring value"),
+        conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
+    )
+, stripped)
         ):
+            groups[current] = groups[current] + (m.group(1).lower(),)
+    if not groups or any(not phrases for phrases in groups.values()):
+        raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
+    return groups
+
+
+@lru_cache(maxsize=1)
+def load_synthesis_rules() -> SynthesisRules:
+    """Read and validate the runtime contract from shipped Markdown."""
+    path = default_skill_path("skills/frameworks/conversation-synthesis.md")
+    body = _contract_body(path.read_text(encoding="utf-8"))
+    values = _table_values(body)
+    return SynthesisRules(
+        minimum_user_messages=int(values["minimum_user_messages"]),
+        automatic_user_messages=int(values["automatic_synthesis_user_messages"]),
+        minimum_recurring_themes=int(
+            values["minimum_distinct_recurring_themes_for_automatic_synthesis"]
+        ),
+        max_themes=int(values["maximum_themes_returned"]),
+        max_anchors=int(values["maximum_anchors_per_theme"]),
+        max_longitudinal=int(values["maximum_longitudinal_themes"]),
+        explicit_requests=_quoted_bullets(body, "Explicit request signals"),
+        emotional_themes=_theme_groups(body, "Recurring emotional theme"),
+        value_themes=_theme_groups(body, "Recurring value"),
+        conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
+    )
+, stripped)
+        ):
+            groups[current] = groups[current] + (m.group(1).lower(),)
+    if not groups or any(not phrases for phrases in groups.values()):
+        raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
+    return groups
+
+
+@lru_cache(maxsize=1)
+def load_synthesis_rules() -> SynthesisRules:
+    """Read and validate the runtime contract from shipped Markdown."""
+    path = default_skill_path("skills/frameworks/conversation-synthesis.md")
+    body = _contract_body(path.read_text(encoding="utf-8"))
+    values = _table_values(body)
+    return SynthesisRules(
+        minimum_user_messages=int(values["minimum_user_messages"]),
+        automatic_user_messages=int(values["automatic_synthesis_user_messages"]),
+        minimum_recurring_themes=int(
+            values["minimum_distinct_recurring_themes_for_automatic_synthesis"]
+        ),
+        max_themes=int(values["maximum_themes_returned"]),
+        max_anchors=int(values["maximum_anchors_per_theme"]),
+        max_longitudinal=int(values["maximum_longitudinal_themes"]),
+        explicit_requests=_quoted_bullets(body, "Explicit request signals"),
+        emotional_themes=_theme_groups(body, "Recurring emotional theme"),
+        value_themes=_theme_groups(body, "Recurring value"),
+        conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
+    )
+, stripped)
+        ):
+            groups[current] = groups[current] + (m.group(1).lower(),)
+    if not groups or any(not phrases for phrases in groups.values()):
+        raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
+    return groups
+
+
+@lru_cache(maxsize=1)
+def load_synthesis_rules() -> SynthesisRules:
+    """Read and validate the runtime contract from shipped Markdown."""
+    path = default_skill_path("skills/frameworks/conversation-synthesis.md")
+    body = _contract_body(path.read_text(encoding="utf-8"))
+    values = _table_values(body)
+    return SynthesisRules(
+        minimum_user_messages=int(values["minimum_user_messages"]),
+        automatic_user_messages=int(values["automatic_synthesis_user_messages"]),
+        minimum_recurring_themes=int(
+            values["minimum_distinct_recurring_themes_for_automatic_synthesis"]
+        ),
+        max_themes=int(values["maximum_themes_returned"]),
+        max_anchors=int(values["maximum_anchors_per_theme"]),
+        max_longitudinal=int(values["maximum_longitudinal_themes"]),
+        explicit_requests=_quoted_bullets(body, "Explicit request signals"),
+        emotional_themes=_theme_groups(body, "Recurring emotional theme"),
+        value_themes=_theme_groups(body, "Recurring value"),
+        conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
+    )
+, stripped)
+            if m is None:
+                continue
             groups[current] = groups[current] + (m.group(1).lower(),)
     if not groups or any(not phrases for phrases in groups.values()):
         raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
