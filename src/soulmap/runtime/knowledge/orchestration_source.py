@@ -145,16 +145,10 @@ def _parse_secondary_priority(value: object) -> tuple[SecondaryPriorityRule, ...
             raise ValueError("Each SECONDARY_PRIORITY entry must be an object.")
         item = cast(dict[str, object], item)
         name = _require_str(item.get("name"), "SECONDARY_PRIORITY.name")
-        result_name = _require_str(
-            item.get("result"), "SECONDARY_PRIORITY.result"
-        )
-        detected = _require_str(
-            item.get("detected"), "SECONDARY_PRIORITY.detected"
-        )
+        result_name = _require_str(item.get("result"), "SECONDARY_PRIORITY.result")
+        detected = _require_str(item.get("detected"), "SECONDARY_PRIORITY.detected")
         rules.append(
-            SecondaryPriorityRule(
-                name=name, result=result_name, detected=detected
-            )
+            SecondaryPriorityRule(name=name, result=result_name, detected=detected)
         )
     return tuple(rules)
 
