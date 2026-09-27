@@ -106,6 +106,7 @@ Never, under any framing or user pressure:
   does it actually feel like for you right now?"
 - "That pattern is worth noticing. What it means about the right next step is yours
   to decide, not something I can hand you."
+
 ## Runtime detection contract
 
 | Rule | Value |
