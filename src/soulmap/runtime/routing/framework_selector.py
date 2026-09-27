@@ -674,6 +674,7 @@ async def select_framework_async(
             debug_events=debug_events,
         )
 
+    res["pattern"] = pattern
     if (
         res["insight"].get("insight_detected")
         and res["insight"].get("strength")
