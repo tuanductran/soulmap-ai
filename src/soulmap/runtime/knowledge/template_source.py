@@ -51,7 +51,11 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     """Resolve the deterministic template row for one selection."""
     if primary == "GRIEF":
         grief = context.get("grief", context)
-        variant = (\n            grief.get("grief_type", "ambiguous")\n            if isinstance(grief, dict)\n            else "ambiguous"\n        )
+        variant = (
+            grief.get("grief_type", "ambiguous")
+            if isinstance(grief, dict)
+            else "ambiguous"
+        )
         target = f"Grief ({variant})"
     elif primary == "DE_ESCALATION":
         target = (\n            "De-escalation (HIGH)"\n            if mode == "SANCTUARY"\n            else "De-escalation (MODERATE)"\n        )
@@ -82,4 +86,6 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
     for rule in load_template_rules():
         if rule.framework == target:
             return rule
-    raise ValueError(\n        f"No template mapping for framework {primary!r} in mode {mode!r}."\n    )
+    raise ValueError(
+        f"No template mapping for framework {primary!r} in mode {mode!r}."
+    )
