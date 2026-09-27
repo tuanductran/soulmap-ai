@@ -149,9 +149,13 @@ def detect_existential(
     territory_guidance = _EXISTENTIAL_GUIDANCE.get(
         territory, _EXISTENTIAL_GUIDANCE["general"]
     )
-    recommendation = _EXISTENTIAL_GUIDANCE["detected_prefix"].format(
-        territory=territory, guidance=territory_guidance
-    ) + " " + _EXISTENTIAL_GUIDANCE["detected_suffix"]
+    recommendation = (
+        _EXISTENTIAL_GUIDANCE["detected_prefix"].format(
+            territory=territory, guidance=territory_guidance
+        )
+        + " "
+        + _EXISTENTIAL_GUIDANCE["detected_suffix"]
+    )
 
     return {
         "existential_detected": True,
