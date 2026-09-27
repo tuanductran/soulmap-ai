@@ -16,20 +16,22 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/inner-parts.md,
 # "## Detection signals". Nothing is hardcoded here.
 _INNER_PARTS_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/inner-parts.md"), "Detection signals"
+    runtime_skill_path("inner-parts"), "Detection signals"
 )
 EXPLICIT_CONFLICT = _INNER_PARTS_GROUPS["explicit inner conflict"]
 PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
 BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/inner-parts.md"),
+    runtime_skill_path("inner-parts"),
     "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/inner-parts.md"),
+    runtime_skill_path("inner-parts"),
     "Guidance",
 )
 
