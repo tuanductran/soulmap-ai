@@ -148,3 +148,20 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Biometric context weight | 3 |
+| Body sensation weight | 2 |
+| Somatic invitation weight | 1 |
+| Minimum detection score | 1 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| BIOMETRIC | Acknowledge emotional state first. Then use biometric data as reflective indicator - not diagnostic. Use somatic_wellbeing.md. Follow with: 'What does this reflect in your inner experience right now?' |
+| BODY_SENSATION | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic_wellbeing.md. |
+| SOMATIC_INVITATION | User is in their head / disconnected. Offer one somatic anchor first: 'Can you take one slow breath with me right now?' or 'Can you feel your feet on the floor?' Then continue with active framework. |
