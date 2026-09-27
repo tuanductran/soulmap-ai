@@ -45,6 +45,8 @@ def load_orchestration_rules() -> OrchestrationRules:
         key = re.sub(
             r"[^a-z0-9]+", "_", match.group("name").strip().lower()
         ).strip("_")
+        if key == "rule":
+            continue
         values[key] = match.group("value").strip().lower()
     required = {
         "stage_1_override_maximum_user_messages",
