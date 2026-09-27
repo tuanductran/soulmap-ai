@@ -107,7 +107,9 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
             current = group_name
             groups[group_name] = ()
         elif current is not None and (
-            m := re.match(r'^- "([^"]+)"\s*
+            m := re.match(r'^- "([^"]+)"\\s*$', stripped)
+        ):
+            groups[current] = groups[current] + (m.group(1).lower(),)
     if not groups or any(not phrases for phrases in groups.values()):
         raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
     return groups
