@@ -17,7 +17,9 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 # it is parsed from the Markdown skill so the two can never drift apart.
 PATTERN_SIGNALS = load_pattern_signals(runtime_skill_path("pattern-mapper"))
 _PATTERN_RULES = load_key_value_table(runtime_skill_path("pattern-mapper"), "Scoring")
-_PATTERN_GUIDANCE = load_key_value_table(runtime_skill_path("pattern-mapper"), "Runtime guidance")
+_PATTERN_GUIDANCE = load_key_value_table(
+    runtime_skill_path("pattern-mapper"), "Runtime guidance"
+)
 
 
 def detect_patterns(conversation_messages: list) -> dict:
