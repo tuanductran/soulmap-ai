@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
 import re
+from functools import lru_cache
 from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import (
@@ -38,9 +38,7 @@ def _registry() -> dict[str, tuple[str, str, str, str]]:
 def _has_heading(text: str, expected: str) -> bool:
     """Return whether Markdown contains the registered section heading."""
     if expected.startswith("Pattern "):
-        return bool(
-            re.search(r"^## Pattern \d+:\s+.+$", text, re.MULTILINE)
-        )
+        return bool(re.search(r"^## Pattern \d+:\s+.+$", text, re.MULTILINE))
     return bool(
         re.search(
             rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
