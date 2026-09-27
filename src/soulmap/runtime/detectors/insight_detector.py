@@ -138,9 +138,15 @@ def detect_insight(
     integration_guidance = _INSIGHT_GUIDANCE.get(
         insight_type, _INSIGHT_GUIDANCE["hold_first"]
     )
-    recommendation = _INSIGHT_GUIDANCE["detected_prefix"].format(
-        strength=strength, insight_type=insight_type, guidance=integration_guidance
-    ) + " " + _INSIGHT_GUIDANCE["detected_suffix"]
+    recommendation = (
+        _INSIGHT_GUIDANCE["detected_prefix"].format(
+            strength=strength,
+            insight_type=insight_type,
+            guidance=integration_guidance,
+        )
+        + " "
+        + _INSIGHT_GUIDANCE["detected_suffix"]
+    )
 
     return {
         "insight_detected": True,
