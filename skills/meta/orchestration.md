@@ -45,6 +45,16 @@ this section rather than duplicating the numbers or thresholds in Python.
 | Stage 1 override maximum user messages | 2 |
 | Breakthrough override minimum insight strength | strong |
 
+## Runtime execution contract
+
+These values are executable routing configuration. Runtime code must load them from
+this section rather than duplicating the numbers or thresholds in Python.
+
+| Rule | Value |
+| :--- | :--- |
+| Stage 1 override maximum user messages | 2 |
+| Breakthrough override minimum insight strength | strong |
+
 ## Decision Tree
 
 ### Phase 1, safety override check (MANDATORY FIRST)
