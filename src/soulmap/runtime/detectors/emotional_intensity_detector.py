@@ -20,8 +20,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 # "## Detection signals". Nothing is hardcoded here. (This detector only
 # consumes the flooding/pacing/physical groups — the crisis-adjacent groups
 # in that file are for crisis_detector's own separate, careful sync pass.)
-_RULES = load_key_value_table(default_skill_path("skills/frameworks/emotional-deescalation.md"), "Runtime detection contract")
-_GUIDANCE = load_key_value_table(default_skill_path("skills/frameworks/emotional-deescalation.md"), "Guidance")
+_RULES = load_key_value_table(
+    default_skill_path("skills/frameworks/emotional-deescalation.md"),
+    "Runtime detection contract",
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/frameworks/emotional-deescalation.md"), "Guidance"
+)
 _DEESCALATION_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/emotional-deescalation.md"),
     "Detection signals",
