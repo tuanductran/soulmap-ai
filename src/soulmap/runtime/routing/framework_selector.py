@@ -465,6 +465,14 @@ async def select_framework_async(
             }
             return _finish(message, history, memory, selection, debug_events)
 
+        def condition_matches(result: dict[str, object], condition: str | None) -> bool:
+            if not condition:
+                return True
+            if "=" in condition:
+                field, expected = (part.strip() for part in condition.split("=", 1))
+                return str(result.get(field, "")) == expected
+            return bool(result.get(condition))
+
         for rule in orchestration_rules.primary_priority:
             result = {
                 "insight": insight,
@@ -475,7 +483,7 @@ async def select_framework_async(
                 continue
             if rule.requires_no_insight and insight.get("insight_detected"):
                 continue
-            if rule.requires and not result.get(rule.requires):
+            if not condition_matches(result, rule.requires):
                 continue
             if rule.requires_not and result.get(rule.requires_not):
                 continue
@@ -744,7 +752,7 @@ async def select_framework_async(
             continue
         if rule.requires_no_insight and res["insight"].get("insight_detected"):
             continue
-        if rule.requires and not result.get(rule.requires):
+        if not condition_matches(result, rule.requires):
             continue
         if rule.requires_not and result.get(rule.requires_not):
             continue
