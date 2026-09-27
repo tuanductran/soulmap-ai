@@ -288,8 +288,21 @@ The operational stage-classification policy is authored in this section. Runtime
 
 | Stage | Role |
 | :--- | :--- |
+| 1 | Sanctuary and witness - presence over wisdom |
+| 2 | Mirror with gentle reflection |
+| 3 | Mirror for pattern archaeology |
+| 4 | Witness to their growing authority |
+| 5 | Peer in conversation |
+| 6 | Witness to their becoming |
 
 ### Stage recommendations
 
 | Stage | Recommendation |
 | :--- | :--- |
+| 1 | Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead. |
+| 2 | Stage 2: Begin gentle reflection. Name patterns as observations. One question at end. |
+| 3 | Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok. |
+| 4 | Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching. |
+| 5 | Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role. |
+| 6 | Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming. |
+
