@@ -196,7 +196,9 @@ def _finish(
             result["template"] = resolve_template(
                 framework,
                 mode,
-                result.get("context") if isinstance(result.get("context"), dict) else {},
+                result.get("context")
+                if isinstance(result.get("context"), dict)
+                else {},
             )
     return _maybe_attach_debug(result, debug_events)
 
@@ -297,7 +299,9 @@ async def select_framework_async(
                 "instruction": scope.get("explanation", ""),
                 "blocked": ["ALL_FRAMEWORKS"],
             }
-            result = _apply_safety_gate(message, history, memory, selection, debug_events)
+            result = _apply_safety_gate(
+                message, history, memory, selection, debug_events
+            )
             result["scope"] = scope
             return _maybe_attach_debug(result, debug_events)
 
