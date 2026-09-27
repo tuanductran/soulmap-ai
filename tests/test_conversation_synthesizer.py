@@ -101,6 +101,8 @@ def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
     assert rules.max_anchors == 2
     assert rules.max_longitudinal == 3
     assert "can you synthesize" in rules.explicit_requests
+    assert "session_opening" in rules.response_guidance
+    assert "recommendation" in rules.response_guidance
 
 
 def test_should_synthesize_requires_two_distinct_recurring_themes() -> None:
@@ -244,3 +246,21 @@ def test_synthesize_uses_current_session_opening_without_longitudinal_memory() -
     assert result["synthesis_ready"] is True
     assert result["is_longitudinal"] is False
     assert str(result["synthesis_frame"]).startswith("Across what you've shared today")
+
+
+def test_synthesis_response_policy_is_markdown_authored() -> None:
+    history = _user_messages(
+        [
+            "I feel alone and my choice matters. I want connection but push away.",
+            "I feel lonely and need my own path. I want connection and pull back.",
+            "I am isolated. My choice matters. I want connection but push away.",
+            "I feel alone again and need my own path. I want connection then pull back.",
+            "I am lonely and want connection but push away. My choice matters.",
+            "I feel isolated and want connection, but I pull back. My own path matters.",
+        ]
+    )
+
+    result = synthesizer.synthesize("Can you reflect back what is recurring?", history)
+    assert result["synthesis_ready"] is True
+    assert "These threads are yours" in str(result["synthesis_frame"])
+    assert "Activate Conversation Pattern Synthesizer" in str(result["recommendation"])

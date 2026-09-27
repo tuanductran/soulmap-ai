@@ -112,18 +112,22 @@ def detect_grief(
             "signals": [],
         }
 
-    type_guidance = _GUIDANCE
+    detected_type = grief_type or "acute"
+    recommendation = (
+        _GUIDANCE["detected_prefix"].format(
+            grief_type=detected_type,
+            guidance=_GUIDANCE.get(detected_type, ""),
+        )
+        + " "
+        + _GUIDANCE["detected_suffix"]
+    )
 
     return {
         "grief_detected": True,
-        "grief_type": grief_type or "acute",
+        "grief_type": detected_type,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            f"Activate grief-companion.md. Type: {grief_type}. "
-            f"{type_guidance.get(grief_type or '', '')} "
-            "Retrieve grief questions from deep-inquiry-bank.md  -  'Grief Questions' section."
-        ),
+        "recommendation": recommendation,
     }
 
 

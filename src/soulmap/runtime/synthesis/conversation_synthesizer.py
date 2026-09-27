@@ -262,10 +262,7 @@ def synthesize(
             "synthesis_ready": False,
             "reason": "insufficient_data",
             "themes": {},
-            "recommendation": (
-                "Not enough conversation history for synthesis. "
-                "Continue standard response. Check again after the configured minimum user-message threshold."
-            ),
+            "recommendation": _rules().response_guidance["insufficient_data"],
         }
 
     themes: ExtractedThemes = extract_themes(analysis_history)
@@ -284,19 +281,16 @@ def synthesize(
             "synthesis_ready": False,
             "reason": "insufficient_recurring_themes",
             "themes": themes,
-            "recommendation": (
-                "Not enough recurring themes detected for synthesis. "
-                "Continue standard response."
-            ),
+            "recommendation": _rules().response_guidance["insufficient_themes"],
         }
 
     is_longitudinal = bool(themes.get("longitudinal"))
     session_count = themes.get("session_count", 1)
 
     if is_longitudinal and session_count >= 3:
-        opening = "Over the seasons we've been talking  -  not just today  -  a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves."
+        opening = _rules().response_guidance["longitudinal_opening"]
     else:
-        opening = "Across what you've shared today, a few threads have surfaced that feel worth staying with."
+        opening = _rules().response_guidance["session_opening"]
 
     all_themes = []
     for t in emotional_themes:
@@ -313,31 +307,31 @@ def synthesize(
     for domain, theme_name, _score in top_3:
         readable = theme_name.replace("_", " ")
         if domain == "emotional":
-            desc = f"An emotional thread of {readable}  -  it appeared in several different things you shared."
+            template = _rules().response_guidance["emotional_theme"]
         elif domain == "values":
-            desc = f"Something that seems to matter to you  -  {readable}  -  keeps appearing, even when the topic changes."
-        else:  # conflicts
-            desc = f"A recurring tension around {readable}  -  it surfaced in more than one place."
-        theme_descriptions.append(desc)
+            template = _rules().response_guidance["value_theme"]
+        else:
+            template = _rules().response_guidance["conflict_theme"]
+        theme_descriptions.append(template.format(theme=readable))
 
     synthesis_frame = (
         opening
         + "\n\n"
         + "\n\n".join(theme_descriptions)
         + "\n\n"
-        + "These threads are yours  -  you surfaced all of them. I might be seeing a connection that isn't yours to keep. "
-        "Of these, which one feels most alive tonight?"
+        + _rules().response_guidance["ownership_return"]
     )
 
     recommendation = (
-        f"Synthesis ready. {len(top_3)} recurring theme(s) identified. "
-        f"{'Longitudinal data available. ' if is_longitudinal else ''}"
-        "Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. "
-        "Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' "
-        "Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. "
-        "End with ownership return + one reflective question from "
-        "skills/meta/deep-inquiry-bank.md  -  'Synthesis Questions' section. "
-        f"Themes detected: {', '.join(f'{d}:{t}' for d, t, _ in top_3)}."
+        _rules()
+        .response_guidance["recommendation"]
+        .format(
+            count=len(top_3),
+            longitudinal_notice=(
+                "Longitudinal data available. " if is_longitudinal else ""
+            ),
+            themes=", ".join(f"{d}:{t}" for d, t, _ in top_3),
+        )
     )
 
     return {

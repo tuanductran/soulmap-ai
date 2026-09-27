@@ -6,7 +6,10 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_key_value_table,
+)
 
 _CONTRACT_HEADING = "Runtime detection contract"
 _THRESHOLD_RE = re.compile(
@@ -28,6 +31,7 @@ class SynthesisRules:
     emotional_themes: dict[str, tuple[str, ...]]
     value_themes: dict[str, tuple[str, ...]]
     conflict_themes: dict[str, tuple[str, ...]]
+    response_guidance: dict[str, str]
 
 
 def _contract_body(text: str) -> str:
@@ -135,4 +139,5 @@ def load_synthesis_rules() -> SynthesisRules:
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
         conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
+        response_guidance=load_key_value_table(path, "Response guidance"),
     )
