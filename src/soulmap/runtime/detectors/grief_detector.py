@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
@@ -20,6 +21,8 @@ from soulmap.runtime.knowledge.keyword_lists import (
 _GRIEF_GROUPS = load_labeled_groups(
     default_skill_path("skills/frameworks/grief-companion.md"), "Detection signals"
 )
+_RULES = load_key_value_table(default_skill_path("skills/frameworks/grief-companion.md"), "Runtime detection contract")
+_GUIDANCE = load_key_value_table(default_skill_path("skills/frameworks/grief-companion.md"), "Guidance")
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
@@ -54,14 +57,14 @@ def detect_grief(
 
     for phrase in ACUTE_GRIEF:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Acute grief weight"])
             signals.append(f"acute: '{phrase}'")
             grief_type = "acute"
             break
 
     for phrase in ANTICIPATORY_GRIEF:
         if phrase in msg:
-            score += 2
+            score += int(_RULES["Anticipatory grief weight"])
             signals.append(f"anticipatory: '{phrase}'")
             if not grief_type:
                 grief_type = "anticipatory"
@@ -69,7 +72,7 @@ def detect_grief(
 
     for phrase in AMBIGUOUS_LOSS:
         if phrase in msg:
-            score += 2
+            score += int(_RULES["Ambiguous loss weight"])
             signals.append(f"ambiguous: '{phrase}'")
             if not grief_type:
                 grief_type = "ambiguous"
@@ -77,7 +80,7 @@ def detect_grief(
 
     for phrase in COMPLICATED_GRIEF:
         if phrase in msg:
-            score += 2
+            score += int(_RULES["Complicated grief weight"])
             signals.append(f"complicated: '{phrase}'")
             if not grief_type:
                 grief_type = "complicated"
@@ -88,13 +91,13 @@ def detect_grief(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-4:]
-        all_grief = ACUTE_GRIEF[:8] + ANTICIPATORY_GRIEF[:4] + AMBIGUOUS_LOSS[:4]
+        [-int(_RULES["Recent user history window"]):]
+        all_grief = ACUTE_GRIEF[: int(_RULES["Acute history signal limit"])] + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])] + AMBIGUOUS_LOSS[: int(_RULES["Ambiguous history signal limit"])]
         if sum(1 for m in recent if any(p in m for p in all_grief)) >= 2:
-            score += 2
+            score += int(_RULES["Sustained grief weight"])
             signals.append("sustained_grief_across_messages")
 
-    if score < 2:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "grief_detected": False,
             "grief_type": None,
@@ -102,12 +105,7 @@ def detect_grief(
             "signals": [],
         }
 
-    type_guidance = {
-        "acute": "Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md.",
-        "anticipatory": "Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after.",
-        "ambiguous": "VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness.",
-        "complicated": "Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.'",
-    }
+    type_guidance = _GUIDANCE
 
     return {
         "grief_detected": True,
