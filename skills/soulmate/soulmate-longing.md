@@ -114,6 +114,7 @@ reflect what is asking for that confirmation instead of answering it.
   decide, not something I can confirm for you."
 - "The idea of a soulmate can be a beautiful way to hold hope. It's not something I
   can verify, so let's stay with what you're actually feeling."
+
 ## Runtime detection contract
 
 | Rule | Value |
