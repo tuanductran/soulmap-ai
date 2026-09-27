@@ -4,10 +4,13 @@ For how this knowledge-loading layer fits into the full request pipeline
 alongside routing and safety enforcement, see
 [`docs/engineering/safety-architecture.md`](safety-architecture.md).
 
-Detectors in `src/soulmap/runtime/` load their phrase lists directly from the
-shipped Markdown skill files at import time. The loader utilities in
-`src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
-structure and Python data structures.
+Detectors in `src/soulmap/runtime/` load phrase lists and runtime contracts from Markdown
+skill files at import time. Most current detectors resolve stable source identifiers
+through the repository-internal `skills/runtime/source-registry.md`; the registry maps
+those identifiers to shipped knowledge files and their contract sections. The loader
+utilities in `src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
+structure and Python data structures. The registry itself is internal runtime metadata
+and is intentionally excluded from the shipped knowledge archives.
 
 This means there is one place to edit a detection phrase. The runtime reflects
 the skill files automatically, so detection behavior and documented framework
@@ -15,10 +18,13 @@ knowledge cannot silently drift apart.
 
 ## How detectors load knowledge
 
-Each detector declares its Markdown source path and section heading inline. The
-detector resolves the skill file at import time using `default_skill_path()` or
-`default_pattern_mapper_path()` from the knowledge module, which walks the
-directory tree or uses the `SOULMAP_REPO_ROOT` environment variable when set.
+Registry-backed detectors resolve a stable source identifier at import time and then
+load the registered Markdown path and section. The runtime registry validates that each
+registered path stays under `skills/`, exists, and contains the registered signal,
+contract, and guidance headings. A small set of loaders also supports direct path
+resolution for protected or specialized sources. Paths are resolved without importing
+devtools, using `default_skill_path()` or the specialized pattern loader and the
+`SOULMAP_REPO_ROOT` environment variable when set.
 
 Two loader utilities cover all current detector patterns:
 
@@ -29,8 +35,10 @@ Two loader utilities cover all current detector patterns:
   `skills/frameworks/pattern-mapper.md` into typed `PatternSignal` objects with
   names, descriptions, detection signals, cycle phrases, and reflection language.
 
-The mapping between a detector and its Markdown source is visible by reading the
-detector itself. There is no separate registry.
+The stable mapping between runtime consumers and Markdown sources is centralized in
+`skills/runtime/source-registry.md`. The registry is a machine-facing contract, not a
+second knowledge base. Detector code should consume stable source identifiers rather
+than duplicating repository paths.
 
 The `soulmap audit-knowledge` command independently verifies this ownership by
 tracing runtime imports and cross-referencing them against Markdown content. It is
