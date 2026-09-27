@@ -6,10 +6,8 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
-    load_table_rows,
-)
+from soulmap.runtime.knowledge.keyword_lists import load_table_rows
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 _REGISTRY_PATH = default_skill_path("skills/runtime/source-registry.md")
 
