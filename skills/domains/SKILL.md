@@ -43,5 +43,4 @@ license: Complete terms in LICENSE
 
 ## References
 
-- [SOULMAP.md](../SOULMAP.md)
 - [runtime](../runtime/SKILL.md)
