@@ -15,7 +15,7 @@ locates and consumes SoulMap knowledge.
 Domain skills own meaning, language, frameworks, signals, and guidance. Runtime
 integration files own the machine-facing mapping needed to load that knowledge.
 
-Python runtime code must not embed a repository path to a domain Markdown file.
+Executable runtime code must not embed a repository path to a domain Markdown file.
 Instead, it resolves a stable source identifier through [source-registry.md](source-registry.md).
 
 The registry is not a second knowledge base. It is a routing contract.
