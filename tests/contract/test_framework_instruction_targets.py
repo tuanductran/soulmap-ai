@@ -5,7 +5,6 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_ROOT = REPO_ROOT / "src" / "soulmap" / "runtime"
-KNOWLEDGE_ROOT = REPO_ROOT / "skills"
 ACTIVATE_TARGET = re.compile(r"\bActivate ([A-Za-z0-9_-]+\.md)\b")
 
 
@@ -16,11 +15,6 @@ def _runtime_activate_targets() -> set[str]:
     return targets
 
 
-def test_runtime_activate_targets_exist_in_shipped_knowledge() -> None:
+def test_runtime_does_not_hardcode_activate_targets() -> None:
     targets = _runtime_activate_targets()
-    shipped_knowledge = {
-        knowledge_path.name for knowledge_path in KNOWLEDGE_ROOT.rglob("*.md")
-    }
-
-    assert targets
-    assert not (targets - shipped_knowledge)
+    assert not targets
