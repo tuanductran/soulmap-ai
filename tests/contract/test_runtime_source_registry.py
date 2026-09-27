@@ -31,7 +31,7 @@ def test_detector_modules_do_not_embed_skill_source_paths() -> None:
         if 'default_skill_path("skills/' in content:
             violations.append(str(path.relative_to(REPO_ROOT)))
 
-    assert not violations, "\\n".join(violations)
+    assert not violations, "\n".join(violations)
 
 
 def test_runtime_skill_path_consumers_are_registered() -> None:
@@ -48,7 +48,9 @@ def test_runtime_skill_path_consumers_are_registered() -> None:
             if node.func.id != "runtime_skill_path" or len(node.args) != 1:
                 continue
             argument = node.args[0]
-            if not isinstance(argument, ast.Constant) or not isinstance(argument.value, str):
+            if not isinstance(argument, ast.Constant) or not isinstance(
+                argument.value, str
+            ):
                 raise AssertionError(
                     f"{path.relative_to(REPO_ROOT)} uses a non-literal runtime source"
                 )
