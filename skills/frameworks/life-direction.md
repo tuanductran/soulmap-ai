@@ -338,6 +338,19 @@ Meaning, searching for what makes a direction worth choosing:
 - "bored with everything"
 - "bored with my life"
 
+Energy, what feels alive or draining:
+
+- "drain"
+- "drained"
+- "exhaust"
+- "exhausted"
+- "energiz"
+- "energized"
+- "alive"
+- "resist"
+- "resisting"
+- "putting off"
+
 Transition, moving between one chapter of life and the next:
 
 - "starting over"
