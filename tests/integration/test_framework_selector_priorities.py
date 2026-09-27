@@ -413,7 +413,10 @@ def test_orchestration_contract_is_markdown_native() -> None:
 
 
 def test_orchestration_contract_rejects_missing_sections() -> None:
-    from soulmap.runtime.knowledge.orchestration_source import _contract_body, _table_rows
+    from soulmap.runtime.knowledge.orchestration_source import (
+        _contract_body,
+        _table_rows,
+    )
 
     body = _contract_body(
         "## Runtime execution contract\n\n"
