@@ -205,3 +205,14 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 | not_detected | No perfectionism paralysis signal. Continue standard pipeline. |
 | detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Name what the perfectionism is protecting. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
 
+### Persistence signal group
+
+- "still not ready"
+- "still not finished"
+- "still can't"
+- "again"
+- "still working on"
+- "over and over"
+- "so many times"
+- "every time"
+- "a hundred times"
