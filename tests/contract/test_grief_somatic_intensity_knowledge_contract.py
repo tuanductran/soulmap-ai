@@ -42,6 +42,6 @@ def test_detector_policy_is_knowledge_authored(
     signal: str,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setitem(getattr(module, "_RULES"), key, "7")
+    monkeypatch.setitem(module._RULES, key, "7")
     result = detector(signal)
     assert result["score"] == 7
