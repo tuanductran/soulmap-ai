@@ -235,18 +235,19 @@ The detector executes the following operational configuration. This section is
 machine-readable knowledge, not implementation documentation. Changes to these
 values must be made here and covered by runtime tests.
 
-```python
-SCORE_WEIGHTS = {
+```json
+{
+  "SCORE_WEIGHTS": {
     "win or completion": 3,
     "relief after difficulty": 3,
     "gratitude": 2,
-    "recognized progress": 2,
-}
-THRESHOLD = 2
-NEGATIVE_OVERRIDE_PENALTY = 2
-STRENGTH_THRESHOLD = 4
-CONFIRMATION_SCORE = 2
-NEGATIVE_OVERRIDES = (
+    "recognized progress": 2
+  },
+  "THRESHOLD": 2,
+  "NEGATIVE_OVERRIDE_PENALTY": 2,
+  "STRENGTH_THRESHOLD": 4,
+  "CONFIRMATION_SCORE": 2,
+  "NEGATIVE_OVERRIDES": [
     "but i'm still",
     "but i am still",
     "but it still hurts",
@@ -262,21 +263,22 @@ NEGATIVE_OVERRIDES = (
     "why do not i feel",
     "something is wrong with me",
     "can't enjoy it",
-    "cannot enjoy it",
-)
-CONFIRMATION_SIGNALS = (
+    "cannot enjoy it"
+  ],
+  "CONFIRMATION_SIGNALS": [
     "yes",
     "exactly",
     "right",
     "that's it",
     "yes it is",
     "it really did",
-    "it worked",
-)
-CONFIRMATION_ASSISTANT_ANCHORS = (
+    "it worked"
+  ],
+  "CONFIRMATION_ASSISTANT_ANCHORS": [
     "let it land",
     "carry it",
     "what you just",
-    "arrived",
-)
+    "arrived"
+  ]
+}
 ```
