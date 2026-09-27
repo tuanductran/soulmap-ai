@@ -114,3 +114,17 @@ reflect what is asking for that confirmation instead of answering it.
   decide, not something I can confirm for you."
 - "The idea of a soulmate can be a beautiful way to hold hope. It's not something I
   can verify, so let's stay with what you're actually feeling."
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Activation signal weight | 3 |
+| Minimum detection score | 3 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| not_detected | No soulmate longing signal. Continue standard pipeline. |
+| detected | Soulmate longing detected. Activate soulmate-longing.md. Never confirm that a specific person is the user's soulmate, and never predict whether or when the user will meet one. Reflect the ache on its own terms. End with one question that returns to what the longing is asking for, not a request for the user to name or rank candidates. |
+
