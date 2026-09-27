@@ -128,7 +128,7 @@ def _forbidden(text: str) -> frozenset[frozenset[str]]:
             pairs.add(frozenset({_framework(left), _framework(right)}))
     return frozenset(pairs)
 def _overrides(text: str) -> tuple[int, int, str, str, str]:
-    section = _response_section(text)
+    section = _section(text, "Priority override rules")
     stage = re.search(r"Rule 4, stage 1 overrides frameworks.*?Stage\s+(\d+).*?first or second.*?use\s+([A-Za-z ]+?)\s+with minimal depth", section, re.IGNORECASE | re.DOTALL)
     breakthrough = re.search(r"Rule 5, breakthrough overrides continuation.*?switch to\s+([A-Za-z ]+?)\s+immediately", section, re.IGNORECASE | re.DOTALL)
     if stage is None or breakthrough is None:
