@@ -8,9 +8,11 @@ from functools import lru_cache
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
+
 @dataclass(frozen=True, slots=True)
 class OrchestrationRules:
     """Validated routing rules extracted from the orchestration skill."""
+
     priority: tuple[str, ...]
     secondary_layers: tuple[str, ...]
     modes: dict[str, str]
