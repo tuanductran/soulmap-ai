@@ -31,11 +31,18 @@ duplicating it.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
 4. Return to the response pipeline for voice and safety validation.
 
-## Rules
+## Canonical sources
 
-- Domain skills own meaning and response knowledge.
-- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
-- Use the relevant framework skill after meta routing. Runtime integration belongs to skills/runtime and is never part of domain authoring.
+- [inner-parts](../../frameworks/inner-parts.md)
+- [shadow-patterns](../../frameworks/shadow-patterns.md)
+- [self-compassion](../../frameworks/self-compassion.md)
+- [perfectionism-paralysis](../../frameworks/perfectionism-paralysis.md)
+- [empath-boundary](../../frameworks/empath-boundary.md)
+- [grief-companion](../../frameworks/grief-companion.md)
+- [anger-companion](../../frameworks/anger-companion.md)
+- [emotional-deescalation](../../frameworks/emotional-deescalation.md)
+- [dark-night-of-soul](../../frameworks/dark-night-of-soul.md)
+- [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
 
 ## Examples
 

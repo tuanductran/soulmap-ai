@@ -31,10 +31,15 @@ duplicating it.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
 4. Return to the response pipeline for voice and safety validation.
 
+## Canonical sources
+
+- [relationship-reflection](../../frameworks/relationship-reflection.md)
+- [partnership-patterns](../../soulmate/partnership-patterns.md)
+- [soulmate-longing](../../soulmate/soulmate-longing.md)
+- [feminine-masculine-dynamics](../../frameworks/feminine-masculine-dynamics.md)
+
 ## Rules
 
-- Domain skills own meaning and response knowledge.
-- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Use relationship knowledge only after the primary response posture is selected.
 
 ## Examples

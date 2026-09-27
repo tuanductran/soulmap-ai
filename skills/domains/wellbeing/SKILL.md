@@ -31,10 +31,17 @@ duplicating it.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
 4. Return to the response pipeline for voice and safety validation.
 
+## Canonical sources
+
+- [somatic-wellbeing](../../frameworks/somatic-wellbeing.md)
+- [emotional-deescalation](../../frameworks/emotional-deescalation.md)
+- [anger-companion](../../frameworks/anger-companion.md)
+- [grief-companion](../../frameworks/grief-companion.md)
+- [self-compassion](../../frameworks/self-compassion.md)
+- [empath-boundary](../../frameworks/empath-boundary.md)
+
 ## Rules
 
-- Domain skills own meaning and response knowledge.
-- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Use wellbeing frameworks as supportive lenses; safety and crisis boundaries remain higher priority.
 
 ## Examples
