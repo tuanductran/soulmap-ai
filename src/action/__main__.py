@@ -111,12 +111,14 @@ class GitHubClient:
                 self.last_response_headers = dict(exc.headers.items())
                 detail = exc.read().decode("utf-8", errors="replace")
                 retryable = method.upper() in IDEMPOTENT_METHODS or retry_non_idempotent
-                rate_limited = exc.code in {403, 429} and (
+                rate_limited = bool(
+                    exc.code in {403, 429}
+                    and (
                         self.last_response_headers.get("Retry-After")
-                        or self.last_response_headers.get("X-RateLimit-Remaining")
-                        == "0"
+                        or self.last_response_headers.get("X-RateLimit-Remaining") == "0"
                         or "rate limit" in detail.lower()
                     )
+                )
                 status_retryable = exc.code in RETRYABLE_STATUS_CODES or (
                     exc.code == 403 and rate_limited
                 )
@@ -125,7 +127,7 @@ class GitHubClient:
                         self._retry_delay(
                             attempt,
                             self.last_response_headers,
-                            rate_limited=bool(rate_limited),
+                            rate_limited=rate_limited,
                         )
                     )
                     continue
