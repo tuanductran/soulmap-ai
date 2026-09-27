@@ -40,6 +40,8 @@ _INSIGHT_VALIDATION = load_key_value_table(
 _INSIGHT_GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/meaning-integration.md"), "Guidance"
 )
+
+
 def _phrases(value: str) -> tuple[str, ...]:
     return tuple(part.strip() for part in value.split(";") if part.strip())
 def _score(name: str) -> int:
