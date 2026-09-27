@@ -12,6 +12,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 @dataclass(frozen=True, slots=True)
 class TemplateRule:
     """Validated template metadata extracted from the mapping skill."""
+
     framework: str
     mode: str
     word_range: str
