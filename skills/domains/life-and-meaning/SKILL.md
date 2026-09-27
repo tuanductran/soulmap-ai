@@ -35,7 +35,6 @@ duplicating it.
 
 - Domain skills own meaning and response knowledge.
 - Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
-- Runtime integration is centralized under [runtime/](../../runtime/).
 - Choose one primary framework through meta before loading a domain framework.
 
 ## Examples
