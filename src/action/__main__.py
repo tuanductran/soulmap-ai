@@ -190,18 +190,14 @@ class GitHubClient:
             return ""
         for link in link_header.split(","):
             target, _, parameters = link.partition(";")
-            relation = next(
-                (
-                    value.strip().strip('"').lower()
-                    for value in parameters.split(";")
-                    if value.strip().lower().startswith("rel=")
-                ),
-                "",
-            )
-            if relation in {'rel="next"', "rel=next"}:
-                target = target.strip()
-                if target.startswith("<") and target.endswith(">"):
-                    return target[1:-1]
+            for parameter in parameters.split(";"):
+                key, separator, value = parameter.strip().partition("=")
+                if separator and key.strip().lower() == "rel":
+                    relation = value.strip().strip('"').lower()
+                    if relation == "next":
+                        target = target.strip()
+                        if target.startswith("<") and target.endswith(">"):
+                            return target[1:-1]
         return ""
 
     def upload(
@@ -342,6 +338,112 @@ def asset_paths() -> list[Path]:
                 raise GitHubActionError(f"Release asset does not exist: {path}")
             paths.append(path)
     return paths
+
+
+def create_tag(
+    client: GitHubClient,
+    owner: str,
+    repo: str,
+    tag: str,
+    target_sha: str,
+) -> None:
+    """Create an immutable annotated tag through GitHub's Git database API."""
+    if not target_sha or len(target_sha) != 40:
+        raise GitHubActionError("Tag target must be a full 40-character commit SHA.")
+    ref_path = f"/repos/{quote(owner)}/{quote(repo)}/git/ref/tags/{quote(tag, safe='')}"
+    try:
+        existing = client.api("GET", ref_path)
+    except GitHubAPIError as exc:
+        if exc.status != 404:
+            raise
+        existing = None
+
+    if existing is not None:
+        if not isinstance(existing, dict):
+            raise GitHubActionError("GitHub returned invalid tag reference metadata.")
+        resolved = existing.get("object")
+        if not isinstance(resolved, dict):
+            raise GitHubActionError("GitHub tag reference lacks object metadata.")
+        object_type = resolved.get("type")
+        object_sha = resolved.get("sha")
+        if object_type == "commit" and object_sha == target_sha:
+            print(f"Release tag {tag} already exists at the expected commit.")
+            return
+        if object_type == "tag" and isinstance(object_sha, str):
+            tag_object = client.api(
+                "GET",
+                f"/repos/{quote(owner)}/{quote(repo)}/git/tags/{quote(object_sha)}",
+            )
+            if (
+                isinstance(tag_object, dict)
+                and isinstance(tag_object.get("object"), dict)
+                and tag_object["object"].get("sha") == target_sha
+            ):
+                print(f"Release tag {tag} already exists at the expected commit.")
+                return
+        raise GitHubActionError(
+            f"Release tag {tag!r} already exists but does not point to {target_sha}."
+        )
+
+    tag_object = client.request(
+        "POST",
+        f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/git/tags",
+        payload={
+            "tag": tag,
+            "message": f"Release {tag}",
+            "object": target_sha,
+            "type": "commit",
+            "tagger": {
+                "name": "github-actions[bot]",
+                "email": "41898282+github-actions[bot]@users.noreply.github.com",
+                "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            },
+        },
+        retry_non_idempotent=True,
+    )
+    if not isinstance(tag_object, dict) or not isinstance(tag_object.get("sha"), str):
+        raise GitHubActionError("GitHub did not return a valid annotated tag object.")
+
+    try:
+        created_ref = client.request(
+            "POST",
+            f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/git/refs",
+            payload={"ref": f"refs/tags/{tag}", "sha": tag_object["sha"]},
+            retry_non_idempotent=True,
+        )
+    except GitHubAPIError as exc:
+        if exc.status not in {409, 422}:
+            raise
+        existing = client.api("GET", ref_path)
+        if not isinstance(existing, dict):
+            raise GitHubActionError(
+                "GitHub returned invalid tag metadata after concurrent creation."
+            ) from exc
+        resolved = existing.get("object")
+        if not isinstance(resolved, dict):
+            raise GitHubActionError(
+                "GitHub tag reference lacks object metadata after concurrent creation."
+            ) from exc
+        object_type = resolved.get("type")
+        object_sha = resolved.get("sha")
+        if object_type == "commit" and object_sha == target_sha:
+            return
+        if object_type == "tag" and isinstance(object_sha, str):
+            existing_tag = client.api(
+                "GET",
+                f"/repos/{quote(owner)}/{quote(repo)}/git/tags/{quote(object_sha)}",
+            )
+            if (
+                isinstance(existing_tag, dict)
+                and isinstance(existing_tag.get("object"), dict)
+                and existing_tag["object"].get("sha") == target_sha
+            ):
+                return
+        raise GitHubActionError(
+            f"Concurrent release tag {tag!r} does not point to {target_sha}."
+        ) from exc
+    if not isinstance(created_ref, dict) or created_ref.get("ref") != f"refs/tags/{tag}":
+        raise GitHubActionError("GitHub did not confirm creation of the release tag.")
 
 
 def ensure_tag_exists(
@@ -628,6 +730,18 @@ def finalize_release(
     return response
 
 
+def run_tag(client: GitHubClient) -> None:
+    """Create or verify the release tag for an exact commit."""
+    owner, repo = repository_parts(env("INPUT_REPOSITORY"))
+    tag = env("INPUT_TAG")
+    target_sha = env("INPUT_TARGET_SHA")
+    create_tag(client, owner, repo, tag, target_sha)
+    write_output("tag-name", tag)
+    summary(f"## SoulMap release tag
+
+- Tag: {tag}\n- Commit: {target_sha}")
+
+
 def run_release(client: GitHubClient) -> None:
     """Execute the complete release publication workflow."""
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
@@ -723,9 +837,11 @@ def main() -> int:
             run_release(client)
         elif operation == "pull-request":
             run_pull_request(client)
+        elif operation == "tag":
+            run_tag(client)
         else:
             raise GitHubActionError(
-                f"Unsupported operation {operation!r}; expected release or pull-request."
+                f"Unsupported operation {operation!r}; expected release, pull-request, or tag."
             )
     except GitHubActionError as exc:
         print(f"::error::{exc}", file=sys.stderr)
