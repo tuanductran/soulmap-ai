@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
