@@ -58,7 +58,11 @@ def resolve_template(primary: str, mode: str, context: dict[str, object]) -> Tem
         )
         target = f"Grief ({variant})"
     elif primary == "DE_ESCALATION":
-        target = (\n            "De-escalation (HIGH)"\n            if mode == "SANCTUARY"\n            else "De-escalation (MODERATE)"\n        )
+        target = (
+            "De-escalation (HIGH)"
+            if mode == "SANCTUARY"
+            else "De-escalation (MODERATE)"
+        )
     elif primary == "MIRROR" and context.get("stage") == 1:
         target = "Mirror (Stage 1)"
     elif primary == "MIRROR":
