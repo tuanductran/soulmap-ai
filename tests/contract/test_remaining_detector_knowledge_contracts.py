@@ -100,7 +100,6 @@ Detector = Callable[[str], dict[str, object]]
         ),
     ],
 )
-
 def test_detector_scoring_is_knowledge_authored(
     module: DetectorModule,
     detector: Detector,
