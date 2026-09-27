@@ -465,6 +465,17 @@ async def select_framework_async(
             ),
         }
         insight, grief, conflict = await asyncio.gather(*tasks.values())
+        if insight.get("insight_detected"):
+            rules = load_orchestration_rules()
+            selection = {
+                "primary_framework": "MEANING_INTEGRATION",
+                "secondary_layer": None,
+                "mode": "MIRROR",
+                "context": insight,
+                "instruction": insight.get("recommendation", ""),
+                "blocked": ["direction", "shadow", "existential", "synthesis"],
+            }
+            return _finish(message, history, memory, selection, debug_events)
 
         # Grief outranks moderate-intensity de-escalation. orchestration.md
         # reserves "force De-escalation as primary regardless of topic" for HIGH
@@ -682,6 +693,18 @@ async def select_framework_async(
 
     results = await asyncio.gather(*tasks.values())
     res = dict(zip(tasks.keys(), results, strict=True))
+    if res["insight"].get("insight_detected"):
+        rules = load_orchestration_rules()
+        selection = {
+            "primary_framework": "MEANING_INTEGRATION",
+            "secondary_layer": None,
+            "mode": "MIRROR",
+            "context": res["insight"],
+            "instruction": res["insight"].get("recommendation", ""),
+            "blocked": ["direction", "shadow", "existential", "synthesis"],
+            "stage": current_stage,
+        }
+        return _finish(message, history, memory, selection, debug_events)
 
     user_count = sum(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
