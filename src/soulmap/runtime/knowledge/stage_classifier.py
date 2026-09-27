@@ -17,8 +17,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 _STAGE_RE = re.compile(r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE)
 _KEYWORDS_RE = re.compile(
     r"\*\*Keyword signals \(weight: (?P<weight>\d+) each\):\*\*"
-    r"(?P<body>.*?)(?=
-\*\*Classification signals:\*\*|\Z)",
+    r"(?P<body>.*?)(?=\n\*\*Classification signals:\*\*|\Z)",
     re.DOTALL,
 )
 _QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
