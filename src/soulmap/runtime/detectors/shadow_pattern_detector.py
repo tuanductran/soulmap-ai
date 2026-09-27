@@ -68,10 +68,22 @@ def detect_shadow_patterns(
 
     pattern_checks = [
         ("avoidance", AVOIDANCE_SIGNALS, int(_SHADOW_SCORING["Avoidance weight"])),
-        ("people_pleasing", PEOPLE_PLEASING_SIGNALS, int(_SHADOW_SCORING["People-pleasing weight"])),
-        ("overthinking", OVERTHINKING_SIGNALS, int(_SHADOW_SCORING["Overthinking weight"])),
+        (
+            "people_pleasing",
+            PEOPLE_PLEASING_SIGNALS,
+            int(_SHADOW_SCORING["People-pleasing weight"]),
+        ),
+        (
+            "overthinking",
+            OVERTHINKING_SIGNALS,
+            int(_SHADOW_SCORING["Overthinking weight"]),
+        ),
         ("withdrawal", WITHDRAWAL_SIGNALS, int(_SHADOW_SCORING["Withdrawal weight"])),
-        ("perfectionism", PERFECTIONISM_SIGNALS, int(_SHADOW_SCORING["Perfectionism weight"])),
+        (
+            "perfectionism",
+            PERFECTIONISM_SIGNALS,
+            int(_SHADOW_SCORING["Perfectionism weight"]),
+        ),
     ]
 
     for pattern_name, signals, weight in pattern_checks:
@@ -86,12 +98,17 @@ def detect_shadow_patterns(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_SHADOW_SCORING["Recent user history window"]):]
+        ][-int(_SHADOW_SCORING["Recent user history window"]) :]
 
         external_count = sum(
             1
             for past in recent_user
-            if any(phrase in past for phrase in EXTERNAL_REPEAT_SIGNALS[: int(_SHADOW_SCORING["Sustained external-signal limit"]) ])
+            if any(
+                phrase in past
+                for phrase in EXTERNAL_REPEAT_SIGNALS[
+                    : int(_SHADOW_SCORING["Sustained external-signal limit"])
+                ]
+            )
         )
         if external_count >= int(_SHADOW_SCORING["Sustained history threshold"]):
             score += int(_SHADOW_SCORING["Sustained external-frustration bonus"])
