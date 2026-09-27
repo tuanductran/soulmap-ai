@@ -43,6 +43,7 @@ def find_markdown_implementation_references(root: Path) -> tuple[Path, ...]:
             findings.append(path)
     return tuple(findings)
 
+
 def _format_inventory(duplicates: tuple[KnowledgeDuplicate, ...], root: Path) -> str:
     grouped: dict[str, list[KnowledgeDuplicate]] = defaultdict(list)
     for duplicate in duplicates:
