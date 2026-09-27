@@ -737,9 +737,7 @@ def run_tag(client: GitHubClient) -> None:
     target_sha = env("INPUT_TARGET_SHA")
     create_tag(client, owner, repo, tag, target_sha)
     write_output("tag-name", tag)
-    summary(f"## SoulMap release tag
-
-- Tag: {tag}\n- Commit: {target_sha}")
+    summary(f"## SoulMap release tag\n\n- Tag: {tag}\n- Commit: {target_sha}")
 
 
 def run_release(client: GitHubClient) -> None:
