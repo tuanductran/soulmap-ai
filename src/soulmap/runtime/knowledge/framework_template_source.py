@@ -67,10 +67,7 @@ def resolve_template(
         )
     elif normalized == "grief":
         grief_value = context.get("grief")
-        if isinstance(grief_value, dict):
-            grief_context = grief_value
-        else:
-            grief_context = context
+        grief_context = grief_value if isinstance(grief_value, dict) else context
         grief_type = str(
             grief_context.get("grief_type", grief_context.get("type", "acute"))
         ).lower()
