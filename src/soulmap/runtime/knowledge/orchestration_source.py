@@ -87,7 +87,7 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):
             continue
-        if cells[0].lower() in {"setting", "priority"}:
+        if cells[0].lower() in {"setting", "priority", "level"}:
             continue
         rows.append(cells)
     return rows
