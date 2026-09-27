@@ -42,11 +42,6 @@ duplicating it.
 
 - Use relationship knowledge only after the primary response posture is selected.
 
-## Examples
-
-- A request about grief and self-compassion -> route through the inner-work domain.
-- A request about relationship patterns -> route through the relationships domain.
-- A symbolic spiritual question -> route through the spirituality domain.
 
 ## Edge Cases
 
