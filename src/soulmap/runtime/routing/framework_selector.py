@@ -212,8 +212,7 @@ def _finish(
         stage_value = stage_result.get("stage", 1)
         if isinstance(stage_value, int):
             template_context["stage"] = stage_value
-    if primary == "MIRROR" and mode == "MIRROR" and isinstance(stage_value, int) and stage_value >= 5:
-        mode = "PEER"
+    if (\n        primary == "MIRROR"\n        and mode == "MIRROR"\n        and isinstance(stage_value, int)\n        and stage_value >= 5\n    ):\n        mode = "PEER"
     normalized = {
         "DE_ESCALATION": "De-escalation",
         "INTEGRATION_CELEBRATION": "Integration and Celebration",
