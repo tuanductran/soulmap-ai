@@ -389,4 +389,3 @@ Internal dialogue, user reports conversations happening inside:
 | :--- | :--- |
 | not_detected | No inner conflict signals detected. Continue standard response pipeline. |
 | detected | Inner conflict detected ({primary_type}). Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. End with one question that invites the user to listen to one of the parts. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank. |
-
