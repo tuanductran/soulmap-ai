@@ -41,4 +41,3 @@ license: Complete terms in LICENSE
 - If safety changes the response mode, safety takes precedence.
 
 ## References
-
