@@ -146,17 +146,12 @@ def detect_existential(
 
     territory = _classify_territory(msg, territory_scores)
 
-    territory_guidance = _EXISTENTIAL_GUIDANCE
-
-    recommendation = (
-        f"Existential territory detected (territory: {territory}). "
-        "Activate Existential Reflection Companion from skills/frameworks/existential-companion.md. "
-        + territory_guidance.get(territory, territory_guidance["general"])
-        + " Do NOT provide philosophical conclusions. Do NOT resolve the uncertainty. "
-        "Do NOT use growth narrative or silver linings. "
-        "Hold space. End with one question that goes deeper into the exploration. "
-        "Retrieve from skills/meta/deep-inquiry-bank.md  -  'Existential Questions' section."
+    territory_guidance = _EXISTENTIAL_GUIDANCE.get(
+        territory, _EXISTENTIAL_GUIDANCE["general"]
     )
+    recommendation = _EXISTENTIAL_GUIDANCE["detected_prefix"].format(
+        territory=territory, guidance=territory_guidance
+    ) + " " + _EXISTENTIAL_GUIDANCE["detected_suffix"]
 
     return {
         "existential_detected": True,
