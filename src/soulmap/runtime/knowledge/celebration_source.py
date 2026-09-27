@@ -70,28 +70,51 @@ def _quoted_bullets(body: str) -> tuple[str, ...]:
 
 def _literal_config(body: str) -> dict[str, object]:
     scoring = dict(_table_rows(_section_body(body, "Scoring")))
-    required = {"Detection threshold", "Negative override penalty", "Strong-signal threshold", "Confirmation score"}
+    required = {
+        "Detection threshold",
+        "Negative override penalty",
+        "Strong-signal threshold",
+        "Confirmation score",
+    }
     if not required <= scoring.keys():
         raise ValueError("Celebration scoring configuration is incomplete.")
     try:
         values: dict[str, object] = {
-            "SCORE_WEIGHTS": {key.removeprefix("Score weight: "): int(value) for key, value in scoring.items() if key.startswith("Score weight: ")},
+            "SCORE_WEIGHTS": {
+                key.removeprefix("Score weight: "): int(value)
+                for key, value in scoring.items()
+                if key.startswith("Score weight: ")
+            },
             "THRESHOLD": int(scoring["Detection threshold"]),
             "NEGATIVE_OVERRIDE_PENALTY": int(scoring["Negative override penalty"]),
             "STRENGTH_THRESHOLD": int(scoring["Strong-signal threshold"]),
             "CONFIRMATION_SCORE": int(scoring["Confirmation score"]),
-            "NEGATIVE_OVERRIDES": _quoted_bullets(_section_body(body, "Negative overrides")),
-            "CONFIRMATION_SIGNALS": _quoted_bullets(_section_body(body, "Confirmation signals")),
-            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(_section_body(body, "Confirmation assistant anchors")),
+            "NEGATIVE_OVERRIDES": _quoted_bullets(\n                _section_body(body, "Negative overrides")\n            ),
+            "CONFIRMATION_SIGNALS": _quoted_bullets(\n                _section_body(body, "Confirmation signals")\n            ),
+            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(\n                _section_body(body, "Confirmation assistant anchors")\n            ),
         }
     except (KeyError, ValueError) as exc:
         raise ValueError("Celebration runtime configuration is invalid.") from exc
     weights = values["SCORE_WEIGHTS"]
-    if not isinstance(weights, dict) or not weights or any(not isinstance(k, str) or not isinstance(v, int) for k, v in weights.items()):
+    if (
+        not isinstance(weights, dict)
+        or not weights
+        or any(
+            not isinstance(k, str) or not isinstance(v, int) for k, v in weights.items()
+        )
+    ):
         raise ValueError("Celebration score weights are invalid.")
-    for key in ("NEGATIVE_OVERRIDES", "CONFIRMATION_SIGNALS", "CONFIRMATION_ASSISTANT_ANCHORS"):
+    for key in (
+        "NEGATIVE_OVERRIDES",
+        "CONFIRMATION_SIGNALS",
+        "CONFIRMATION_ASSISTANT_ANCHORS",
+    ):
         value = values[key]
-        if not isinstance(value, tuple) or not value or not all(isinstance(item, str) and item for item in value):
+        if (
+            not isinstance(value, tuple)
+            or not value
+            or not all(isinstance(item, str) and item for item in value)
+        ):
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
 
