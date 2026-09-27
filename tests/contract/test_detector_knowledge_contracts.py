@@ -74,3 +74,25 @@ def test_ancestral_detector_uses_knowledge_threshold(
     )
     result = ancestral_detector.detect_ancestral("this runs in my family")
     assert result["ancestral_detected"] is False
+
+
+def test_existential_response_policy_is_markdown_authored() -> None:
+    result = existential_detector.detect_existential(
+        "I don't recognize myself anymore."
+    )
+    assert "Do NOT provide philosophical conclusions." in result["recommendation"]
+    assert "Existential Reflection Companion" in result["recommendation"]
+
+
+def test_insight_response_policy_is_markdown_authored() -> None:
+    result = insight_detector.detect_insight("I finally understand why I do this.")
+    assert "Do NOT prescribe change." in result["recommendation"]
+    assert "Meaning Integration Guide" in result["recommendation"]
+
+
+def test_inner_parts_suffix_is_markdown_authored() -> None:
+    result = inner_conflict_detector.detect_inner_conflict(
+        "Part of me wants to leave, but another part is scared."
+    )
+    assert result["parts_suggested"]
+    assert "Likely parts present:" in result["recommendation"]
