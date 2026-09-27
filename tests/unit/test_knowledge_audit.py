@@ -107,7 +107,9 @@ def test_audit_cli_passes_without_a_threshold(
     assert audit.main(["--root", str(tmp_path)]) == 0
 
 
-def test_markdown_implementation_reference_audit_ignores_domain_word_python(tmp_path: Path) -> None:
+def test_markdown_implementation_reference_audit_ignores_domain_word_python(
+    tmp_path: Path,
+) -> None:
     skills = tmp_path / "skills"
     skills.mkdir()
     skill = skills / "example.md"
@@ -119,7 +121,9 @@ def test_markdown_implementation_reference_audit_ignores_domain_word_python(tmp_
     assert audit.find_markdown_implementation_references(tmp_path) == ()
 
 
-def test_markdown_implementation_reference_audit_flags_python_fence(tmp_path: Path) -> None:
+def test_markdown_implementation_reference_audit_flags_python_fence(
+    tmp_path: Path,
+) -> None:
     skills = tmp_path / "skills"
     skills.mkdir()
     skill = skills / "example.md"
