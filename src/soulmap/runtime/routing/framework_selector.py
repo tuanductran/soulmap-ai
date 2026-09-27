@@ -323,9 +323,9 @@ async def select_framework_async(
     scope = classify_message(message)
     if str(scope.get("tier", "")).startswith("BLACKLIST"):
         selection = {
-            "primary_framework": "BLOCKED",
+            "primary_framework": "MIRROR",
             "secondary_layer": None,
-            "mode": "BLOCKED",
+            "mode": "MIRROR",
             "context": scope,
             "instruction": str(scope.get("explanation", "")),
             "blocked": ["ALL_FRAMEWORKS"],
