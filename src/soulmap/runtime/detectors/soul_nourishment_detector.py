@@ -11,7 +11,6 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_keyword_section,
 )
