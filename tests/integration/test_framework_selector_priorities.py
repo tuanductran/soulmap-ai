@@ -165,6 +165,31 @@ def test_framework_selector_exposes_debug_events_when_enabled() -> None:
     assert any(event.get("module") == "crisis_detector" for event in data["debug"])
 
 
+def test_framework_selector_blocks_scope_before_framework_detection() -> None:
+    payload = {
+        "message": "Can you predict what will happen in my love life next month?",
+        "history": [{"role": "user", "content": "Can you predict what will happen in my love life next month?"}],
+        "memory": {},
+    }
+    data = run_framework_selector(payload, debug=True)
+    assert data["safety_status"] == "BLOCK"
+    assert data["primary_framework"] == "SAFETY_REDIRECT"
+    modules = [event.get("module") for event in data["debug"]]
+    assert "stage_detector" not in modules
+    assert "emotional_intensity_detector" not in modules
+
+
+def test_framework_selector_routes_template_contract() -> None:
+    payload = {
+        "message": "I feel lost in my career.",
+        "history": [{"role": "user", "content": "I feel lost in my career."}],
+        "memory": {},
+    }
+    data = run_framework_selector(payload)
+    assert data["template"]["name"] == "Direction"
+    assert data["template"]["source_file"] == "life-direction.md"
+
+
 def test_framework_selector_surfaces_scope_block_metadata() -> None:
     payload = {
         "message": "Can you predict what will happen in my love life next month?",
