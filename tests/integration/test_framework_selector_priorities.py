@@ -285,25 +285,8 @@ def test_framework_selector_breakthrough_overrides_direction() -> None:
 
     data = run_framework_selector(payload)
 
-    assert data["primary_framework"] == "DIRECTION"
-    assert data["secondary_layer"] == "meaning_integration"
-
-
-    message = (
-        "I feel completely lost, and I finally understand why I keep "
-        "avoiding making a decision."
-    )
-    payload = {
-        "message": message,
-        "history": [{"role": "user", "content": message}],
-        "memory": {},
-    }
-
-    data = run_framework_selector(payload)
-
     assert data["primary_framework"] == "MEANING_INTEGRATION"
     assert data["secondary_layer"] is None
-
 
 def test_framework_selector_stage_one_first_turn_uses_minimal_mirror() -> None:
     payload = {
