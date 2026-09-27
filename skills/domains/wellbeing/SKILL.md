@@ -35,7 +35,7 @@ duplicating it.
 ## Rules
 
 - Domain skills own meaning and response knowledge.
-- Do not add Python, source paths, module names, code examples, or packaging instructions here.
+- Do not add implementation languages, source paths, module names, code examples, or packaging instructions here.
 - Runtime integration is centralized under [skills/runtime/](../../runtime/).
 - Use wellbeing frameworks as supportive lenses; safety and crisis boundaries remain higher priority.
 
