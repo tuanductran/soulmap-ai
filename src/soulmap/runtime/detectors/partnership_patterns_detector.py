@@ -22,7 +22,8 @@ PARTNERSHIP_PATTERNS_SIGNALS = load_keyword_section(
     default_skill_path("skills/soulmate/partnership-patterns.md"), "Activation Signals"
 )
 _RULES = load_key_value_table(
-    default_skill_path("skills/soulmate/partnership-patterns.md"), "Runtime detection contract"
+    default_skill_path("skills/soulmate/partnership-patterns.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/soulmate/partnership-patterns.md"), "Guidance"
@@ -30,6 +31,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_partnership_patterns(
     message: str, history: list[HistoryMessage] | None = None
