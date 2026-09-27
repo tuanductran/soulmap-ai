@@ -66,9 +66,7 @@ def resolve_template(
         grief_type = str(grief_context.get("grief_type", grief_context.get("type", "acute"))).lower()
         target = f"Grief ({grief_type})"
     elif normalized == "mirror":
-        target = "Mirror (Stage 1)" if context.get("stage_override") else (
-            "Mirror (emotional)" if mode == "MIRROR" else "Mirror (emotional)"
-        )
+        target = "Mirror (Stage 1)" if context.get("stage_override") else "Mirror (emotional)"
     else:
         names = {
             "integration_celebration": "Integration and Celebration",
