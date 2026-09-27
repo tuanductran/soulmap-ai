@@ -16,6 +16,12 @@ from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
 )
+from soulmap.devtools.packaging.build_skill import (
+    _is_ignored,
+    _iter_claude_plugin_inputs,
+    _iter_inputs,
+    _load_distignore,
+)
 from soulmap.devtools.packaging.library import build_library
 from soulmap.devtools.support.repo import REPO_ROOT
 
@@ -135,19 +141,16 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
 
 
 def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
-    paths: set[Path] = set()
-    for name in CORE_FILES:
-        path = repo_root / name
-        if path.is_file():
-            paths.add(path)
-    skills_root = repo_root / "skills"
-    if skills_root.is_dir():
-        paths.update(path for path in skills_root.rglob("*") if path.is_file())
+    """Return the exact member set that the package builder can ship."""
+    patterns = _load_distignore(repo_root)
+    paths = _iter_inputs(repo_root)
     if include_plugin:
-        plugin_root = repo_root / ".claude-plugin"
-        if plugin_root.is_dir():
-            paths.update(path for path in plugin_root.rglob("*") if path.is_file())
-    return {path.relative_to(repo_root).as_posix() for path in paths}
+        paths = sorted(set(paths + _iter_claude_plugin_inputs(repo_root)))
+    return {
+        path.relative_to(repo_root).as_posix()
+        for path in paths
+        if not _is_ignored(path.relative_to(repo_root).as_posix(), patterns)
+    }
 
 
 def _sha256(path: Path) -> str:
