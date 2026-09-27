@@ -152,7 +152,7 @@ class TestDetectCelebrationNegativeOverride:
 class TestFrameworkSelectorP9b:
     def test_win_routes_to_integration_celebration(self) -> None:
         msg = "I finally did it. I said the thing I had been afraid to say."
-        r = select_framework(msg, _msg(msg), {})
+        r = select_framework(msg, _msg(msg), {"prior_stage": 3})
         assert r["primary_framework"] == "INTEGRATION_CELEBRATION"
 
     def test_relief_routes_to_integration_celebration(self) -> None:
