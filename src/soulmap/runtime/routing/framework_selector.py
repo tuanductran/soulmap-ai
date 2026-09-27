@@ -465,6 +465,36 @@ async def select_framework_async(
             }
             return _finish(message, history, memory, selection, debug_events)
 
+        for rule in orchestration_rules.primary_priority:
+            result = {
+                "insight": insight,
+                "grief": grief,
+                "conflict": conflict,
+            }.get(rule.result, {})
+            if not isinstance(result, dict) or not result.get(rule.detected):
+                continue
+            if rule.requires_no_insight and insight.get("insight_detected"):
+                continue
+            if rule.requires and not result.get(rule.requires):
+                continue
+            if rule.requires_not and result.get(rule.requires_not):
+                continue
+
+            secondary = (
+                "meaning_integration"
+                if rule.insight_secondary and insight.get("insight_detected")
+                else None
+            )
+            selection = {
+                "primary_framework": rule.framework,
+                "secondary_layer": secondary,
+                "mode": rule.mode,
+                "context": result,
+                "instruction": result.get("recommendation", ""),
+                "blocked": list(rule.blocked),
+            }
+            return _finish(message, history, memory, selection, debug_events)
+
         # Primary-priority rules are authoritative even at MODERATE intensity.
         # If none matches, use the knowledge-authored intensity fallback.
         secondary = (
