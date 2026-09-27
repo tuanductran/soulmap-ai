@@ -86,7 +86,7 @@ First matching rule wins. Empty cells mean the condition is not required.
 | 16 | soulmate_longing | soulmate_longing_detected | SOULMATE_LONGING | MIRROR |  | false | false |  |  |
 | 17 | partnership_patterns | partnership_pattern_detected | PARTNERSHIP_PATTERNS | MIRROR |  | false | false |  |  |
 | 18 | celebration | celebration_detected | INTEGRATION_CELEBRATION | MIRROR |  | false | true |  |  |
-| 19 | insight | insight_detected | MEANING_INTEGRATION | MIRROR |  | false | false | strength=strong |  |
+| 19 | insight | insight_detected | MEANING_INTEGRATION | MIRROR |  | false | false |  |  |
 | 20 | synthesis | synthesis_triggered | SYNTHESIS | MIRROR |  | false | false | synthesis_ready |  |
 | 21 | pattern | primary_pattern | PATTERN | MIRROR |  | false | false |  | wait_for_more |
 
