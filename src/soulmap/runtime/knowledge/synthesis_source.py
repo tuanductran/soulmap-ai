@@ -158,12 +158,6 @@ def load_synthesis_rules() -> SynthesisRules:
         value_themes=_theme_groups(body, "Recurring value"),
         conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
     )
-, stripped)
-        ):
-            groups[current] = groups[current] + (m.group(1).lower(),)
-    if not groups or any(not phrases for phrases in groups.values()):
-        raise ValueError(f"Synthesis theme section {heading!r} is incomplete.")
-    return groups
 
 
 @lru_cache(maxsize=1)
