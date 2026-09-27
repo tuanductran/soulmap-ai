@@ -58,11 +58,6 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
     synthesize,
 )
 
-# The grief types that claim the primary route, per the priority table in
-# skills/meta/orchestration.md. Shared by the moderate-intensity branch and the
-# normal-intensity branch so the two cannot drift apart.
-_GRIEF_TYPES = ("acute", "anticipatory", "ambiguous", "complicated")
-
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -460,51 +455,38 @@ async def select_framework_async(
             }
             return _finish(message, history, memory, selection, debug_events)
 
-        # Grief outranks moderate-intensity de-escalation. orchestration.md
-        # reserves "force De-escalation as primary regardless of topic" for HIGH
-        # intensity; MODERATE says "apply slow-down mode, hold framework
-        # lightly", and its priority table lists Grief above
-        # De-escalation (MODERATE) under a first-match-wins rule.
-        #
-        # Demoting grief to a secondary layer here meant that adding an
-        # expression of distress to a loss took grief-companion.md away: "my dog
-        # died this morning" reached GRIEF in sanctuary mode, while "my dog died
-        # this morning and I cannot stop crying" fell to a generic slow-down
-        # that did not honor the grief-specific route. Sanctuary must remain
-        # presence-first and question-free, so the grief route stays aligned
-        # with the response contract.
-        if grief.get("grief_detected") and grief.get("grief_type") in _GRIEF_TYPES:
-            selection = {
-                "primary_framework": "GRIEF",
-                "secondary_layer": (
-                    "meaning_integration" if insight.get("insight_detected") else None
-                ),
-                "mode": "SANCTUARY",
-                "context": {"grief": grief, "intensity": intensity},
-                "instruction": (
-                    "Activate grief-companion.md at moderate intensity. Ground "
-                    "first, then witness the loss before any reflection. Keep it "
-                    "short. Do not ask a question in Sanctuary mode."
-                ),
-                "blocked": ["direction", "shadow", "existential", "synthesis"],
-            }
-            return _finish(message, history, memory, selection, debug_events)
+        # Primary-priority rules are authoritative even at MODERATE intensity.
+        # If none matches, use the knowledge-authored intensity fallback.
+        secondary = (
+            "meaning_integration"
+            if insight.get("insight_detected")
+            else ("inner_parts" if conflict.get("conflict_detected") else None)
+        )
 
-        secondary = None
-        if insight.get("insight_detected"):
-            secondary = "meaning_integration"
-        elif conflict.get("conflict_detected"):
-            secondary = "inner_parts"
+        fallback = next(
+            (
+                rule
+                for rule in orchestration_rules.intensity_fallback
+                if rule.level == "MODERATE"
+            ),
+            None,
+        )
+        if fallback is None:
+            raise ValueError(
+                "MODERATE intensity fallback is missing from orchestration contract."
+            )
+
+        if secondary not in fallback.allowed_secondary:
+            secondary = None
 
         selection = {
-            "primary_framework": "DE_ESCALATION",
+            "primary_framework": fallback.framework,
             "secondary_layer": secondary,
-            "mode": "MIRROR",
+            "mode": fallback.mode,
             "context": intensity,
             "instruction": (
-                "MODERATE intensity. Slow the conversation. Acknowledge first. "
-                "Hold framework lightly. If secondary_layer is set, move into it "
-                "gently after grounding. End with a softer question."
+                "Hold the framework lightly and slow the conversation before "
+                "deeper reflection."
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
