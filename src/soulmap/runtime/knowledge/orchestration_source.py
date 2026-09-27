@@ -232,7 +232,13 @@ def load_orchestration_rules() -> OrchestrationRules:
     runtime_instructions = {
         row[0]: row[1] for row in instruction_rows if len(row) == 2
     }
-    required_instructions = {"Stage 1 override", "HIGH intensity", "MODERATE intensity", "MIRROR fallback", "PEER fallback"}
+    required_instructions = {
+        "Stage 1 override",
+        "HIGH intensity",
+        "MODERATE intensity",
+        "MIRROR fallback",
+        "PEER fallback",
+    }
     if set(runtime_instructions) != required_instructions or any(not value for value in runtime_instructions.values()):
         raise ValueError("Orchestration runtime instructions are incomplete.")
 
