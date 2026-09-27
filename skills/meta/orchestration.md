@@ -35,6 +35,16 @@ The orchestrator receives:
 
 If the user's stage has not yet been classified, default to Stage 1 until classification can be completed.
 
+## Runtime execution contract
+
+These values are executable routing configuration. Runtime code must load them from
+this section rather than duplicating the numbers or thresholds in Python.
+
+| Rule | Value |
+| :--- | :--- |
+| Stage 1 override maximum user messages | 2 |
+| Breakthrough override minimum insight strength | strong |
+
 ## Decision Tree
 
 ### Phase 1, safety override check (MANDATORY FIRST)
@@ -119,8 +129,6 @@ work when intensity is HIGH, where no secondary layer is offered at all.
 
 Route to the correct output template from framework-template-map.md. The mapping
 is deterministic. No unstructured output is permitted.
-
-See `skills/meta/framework-template-map.md` for the full routing table.
 
 ## Response mode assignment
 
