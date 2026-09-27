@@ -60,13 +60,25 @@ def resolve_template(
     context = context or {}
     normalized = _key(framework)
     if normalized == "de_escalation":
-        target = "De-escalation (HIGH)" if mode == "SANCTUARY" else "De-escalation (MODERATE)"
+        target = (
+            "De-escalation (HIGH)"
+            if mode == "SANCTUARY"
+            else "De-escalation (MODERATE)"
+        )
     elif normalized == "grief":
-        grief_context = context.get("grief") if isinstance(context.get("grief"), dict) else context
-        grief_type = str(grief_context.get("grief_type", grief_context.get("type", "acute"))).lower()
+        grief_context = (
+            context.get("grief") if isinstance(context.get("grief"), dict) else context
+        )
+        grief_type = str(
+            grief_context.get("grief_type", grief_context.get("type", "acute"))
+        ).lower()
         target = f"Grief ({grief_type})"
     elif normalized == "mirror":
-        target = "Mirror (Stage 1)" if context.get("stage_override") else "Mirror (emotional)"
+        target = (
+            "Mirror (Stage 1)"
+            if context.get("stage_override")
+            else "Mirror (emotional)"
+        )
     else:
         names = {
             "integration_celebration": "Integration and Celebration",
