@@ -10,6 +10,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 @dataclass(frozen=True, slots=True)
 class TemplateRule:
+    """Validated template metadata extracted from the mapping skill."""
     framework: str
     mode: str
     word_range: str
@@ -21,6 +22,7 @@ def _norm(value: str) -> str:
 
 @lru_cache(maxsize=1)
 def load_template_rules() -> tuple[TemplateRule, ...]:
+    """Read and validate the shipped framework-template mapping."""
     path = default_skill_path("skills/meta/framework-template-map.md")
     text = path.read_text(encoding="utf-8")
     match = re.search(r"^\\| Framework \\| Mode \\| Word Range \\| Question Rule \\| Source File \\|\\s*$\\n(?P<body>.*?)(?=\\n## Detailed Structure)", text, re.MULTILINE | re.DOTALL)
@@ -39,6 +41,7 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
     return tuple(rules)
 
 def resolve_template(primary: str, mode: str, context: dict[str, object]) -> TemplateRule:
+    """Resolve the deterministic template row for one selection."""
     if primary == "GRIEF":
         grief = context.get("grief", context)
         variant = grief.get("grief_type", "ambiguous") if isinstance(grief, dict) else "ambiguous"
