@@ -57,6 +57,7 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
     token = "secret-token"
     headers = Message()
     headers["X-RateLimit-Remaining"] = "0"
+    headers["Retry-After"] = "0"
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         403,
@@ -325,6 +326,21 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
     ):
         action.upload_assets(client, release, [asset])
     assert "refusing to silently publish" in str(captured.value)
+
+
+def test_create_tag_uses_annotated_tag_and_ref() -> None:
+    client = action.GitHubClient("token")
+    responses = iter([{"sha": "tag-object-sha"}, {"ref": "refs/tags/v1.2.3"}])
+
+    with patch.object(
+        client, "request", side_effect=responses.__next__
+    ) as request, patch.object(client, "api", return_value=None):
+        action.create_tag(client, "owner", "repo", "v1.2.3", "a" * 40)
+
+    assert request.call_count == 2
+    assert request.call_args_list[0].args[0] == "POST"
+    assert request.call_args_list[0].args[1].endswith("/git/tags")
+    assert request.call_args_list[1].args[1].endswith("/git/refs")
 
 
 def test_pull_request_contract_requires_complete_metadata(
