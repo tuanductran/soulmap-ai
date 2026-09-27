@@ -21,7 +21,10 @@ _FORBIDDEN_PATTERNS = (
     re.compile(r"\bruntime\s+(?:routing\s+)?modules?\b", re.IGNORECASE),
     re.compile(r"\bruntime\s+synthesizer\b", re.IGNORECASE),
     re.compile(r"\bnot\s+implemented\s+in\s+this\s+repository\b", re.IGNORECASE),
-    re.compile(r"\b(?:implemented|implementation)\s+(?:in|by)\s+(?:this\s+repository|Python|code|module)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:implemented|implementation)\s+(?:in|by)\s+(?:this\s+repository|Python|code|module)\b",
+        re.IGNORECASE,
+    ),
 )
 
 
