@@ -61,7 +61,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert "RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
-    assert "http.extraheader=AUTHORIZATION: basic $auth_header" in workflow
+    assert "operation: tag" in workflow
     assert "attestations: write" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
@@ -71,16 +71,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "Create immutable release tag" in workflow
-    assert "Configure git author" in workflow
-    assert 'git config user.name "github-actions[bot]"' in workflow
-    assert (
-        'git config user.email "github-actions[bot]@users.noreply.github.com"'
-        in workflow
-    )
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push origin "$TAG"'
-        in workflow
-    )
+    assert "target-sha:" in workflow
     assert "uses: ./src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
@@ -103,7 +94,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
-    assert workflow.index("Create immutable release tag") < workflow.index(
+    assert workflow.index("Create immutable release tag through Python action") < workflow.index(
         "Publish GitHub Release"
     )
 
