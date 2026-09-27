@@ -67,6 +67,7 @@ documentation.
     {"result": "soulmate_longing", "detected": "soulmate_longing_detected", "framework": "SOULMATE_LONGING", "mode": "MIRROR"},
     {"result": "partnership_patterns", "detected": "partnership_pattern_detected", "framework": "PARTNERSHIP_PATTERNS", "mode": "MIRROR"},
     {"result": "celebration", "detected": "celebration_detected", "framework": "INTEGRATION_CELEBRATION", "mode": "MIRROR", "requires_no_insight": true},
+    {"result": "insight", "detected": "insight_detected", "framework": "MEANING_INTEGRATION", "mode": "MIRROR"},
     {"result": "synthesis", "detected": "synthesis_triggered", "framework": "SYNTHESIS", "mode": "MIRROR", "requires": "synthesis_ready"},
     {"result": "pattern", "detected": "primary_pattern", "framework": "PATTERN", "mode": "MIRROR", "requires_not": "wait_for_more"}
   ],
