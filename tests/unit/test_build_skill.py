@@ -41,6 +41,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/public.md")
     _write(tmp_path, "skills/private.md")
+    _write(tmp_path, "skills/runtime/source-registry.md", "internal runtime mapping\n")
     _write(tmp_path, "templates/internal.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", "{}\n")
     _write(tmp_path, ".distignore", "skills/private.md\n")
@@ -49,6 +50,8 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     skill_path = build_tool.build_skill(tmp_path)
 
     core_names = {"LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"}
+    assert not any(name.startswith("skills/runtime/") for name in _archive_names(zip_path))
+    assert not any(name.startswith("skills/runtime/") for name in _archive_names(skill_path))
     assert _archive_names(zip_path) == core_names
     assert _archive_names(skill_path) == {
         *core_names,
