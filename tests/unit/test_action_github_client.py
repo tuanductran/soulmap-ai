@@ -179,7 +179,9 @@ def test_forbidden_rate_limit_is_retried() -> None:
     client = action.GitHubClient("token")
 
     with (
-        patch.object(action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]),
+        patch.object(
+            action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+        ),
         patch.object(action.time, "sleep") as sleep,
     ):
         assert client.api("GET", "/repos/a/b") == {"ok": True}
@@ -204,13 +206,17 @@ def test_network_error_does_not_retry_non_idempotent_requests() -> None:
 
 
 def test_next_link_requires_exact_rel_next() -> None:
-    assert action.GitHubClient._next_link(
-        '<https://api.github.com/next>; rel="next", '
-        '<https://api.github.com/other>; rel="not-next"'
-    ) == "https://api.github.com/next"
-    assert action.GitHubClient._next_link(
-        '<https://api.github.com/other>; rel="not-next"'
-    ) == ""
+    assert (
+        action.GitHubClient._next_link(
+            '<https://api.github.com/next>; rel="next", '
+            '<https://api.github.com/other>; rel="not-next"'
+        )
+        == "https://api.github.com/next"
+    )
+    assert (
+        action.GitHubClient._next_link('<https://api.github.com/other>; rel="not-next"')
+        == ""
+    )
 
 def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
