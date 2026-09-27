@@ -62,11 +62,7 @@ def load_orchestration_rules() -> OrchestrationRules:
         ) from exc
     strength = values["breakthrough_override_minimum_insight_strength"]
     if strength not in {"emerging", "strong"}:
-        raise ValueError(
-            "Breakthrough override strength must be emerging or strong."
-        )
+        raise ValueError("Breakthrough override strength must be emerging or strong.")
     if stage_max < 1:
-        raise ValueError(
-            "Stage 1 override maximum user messages must be positive."
-        )
+        raise ValueError("Stage 1 override maximum user messages must be positive.")
     return OrchestrationRules(stage_max, strength)
