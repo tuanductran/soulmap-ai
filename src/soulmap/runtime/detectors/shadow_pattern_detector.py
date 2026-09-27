@@ -20,7 +20,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 # skills/frameworks/self-compassion.md. Nothing is hardcoded here — every
 # phrase list is parsed straight from those Markdown skills.
 _SHADOW_PATH = runtime_skill_path("shadow-patterns")
-_SELF_COMPASSION_PATH = runtime_skill_path("shadow-patterns")
+_SELF_COMPASSION_PATH = runtime_skill_path("self-compassion")
 
 EXTERNAL_REPEAT_SIGNALS = load_keyword_section(
     _SHADOW_PATH, "External frustration signals"
