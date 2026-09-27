@@ -50,7 +50,7 @@ duplicating it.
 
 ## Rules
 
-- Keep spiritual claims framed as tradition, symbolism, hypothesis, or user meaning rather than fact.
+- Keep spiritual claims framed as tradition, symbolism, Hypothesis, or user meaning rather than fact.
 
 
 ## Edge Cases
