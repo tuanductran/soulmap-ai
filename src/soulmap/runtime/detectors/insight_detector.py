@@ -53,9 +53,10 @@ HistoryMessage = dict[str, str]
 
 def _classify_insight_type(msg: str) -> str:
     """Determine the integration question type from knowledge-authored signals."""
-    for insight_type in ("noticing_earlier", "when_it_appears", "different_response"):
-        if any(signal in msg for signal in _phrases(_INSIGHT_CLASSIFICATION[insight_type])):
-            return insight_type
+    for insight_type in _INSIGHT_SCORING["Classification priority"].split(";"):
+        key = insight_type.strip()
+        if any(signal in msg for signal in _phrases(_INSIGHT_CLASSIFICATION[key])):
+            return key
     return "hold_first"  # Default: let the insight breathe before anything else.
 
 
@@ -103,13 +104,13 @@ def detect_insight(
     if history:
         recent_assistant = [
             m["content"].lower()
-            for m in history[-3:]
+            for m in history[-int(_score("Validation history window")):]
             if isinstance(m, dict) and m.get("role") == "assistant"
         ]
         integration_triggers = _phrases(_INSIGHT_VALIDATION["Assistant integration triggers"])
         if any(any(t in am for t in integration_triggers) for am in recent_assistant):
             validation = _phrases(_INSIGHT_VALIDATION["User validation"])
-            if any(v in msg for v in validation) and len(msg.split()) < 30:
+            if any(v in msg for v in validation) and len(msg.split()) < _score("Validation maximum user word count"):
                 score += _score("Validation-of-reflection bonus")
                 signals_found.append("validation_of_reflection")
 
