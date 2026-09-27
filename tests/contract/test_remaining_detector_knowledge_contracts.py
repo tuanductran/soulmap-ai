@@ -99,3 +99,20 @@ Detector = Callable[[str], dict[str, object]]
             "Explicit-conflict weight",
         ),
 
+    ],
+)
+
+
+def test_detector_scoring_is_knowledge_authored(
+    module: DetectorModule,
+    detector: Detector,
+    signal_name: str,
+    weight_key: str,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    signals = getattr(module, signal_name)
+    assert signals
+
+    monkeypatch.setitem(module._RULES, weight_key, "7")
+    result = detector(signals[0])
+    assert result["score"] == 7
