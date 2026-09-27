@@ -258,3 +258,27 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
+
+## Runtime detection contract
+
+| Rule | Value |
+| :--- | :--- |
+| Acute grief weight | 3 |
+| Anticipatory grief weight | 2 |
+| Ambiguous loss weight | 2 |
+| Complicated grief weight | 2 |
+| Sustained grief weight | 2 |
+| Minimum detection score | 2 |
+| Recent user history window | 4 |
+| Acute history signal limit | 8 |
+| Anticipatory history signal limit | 4 |
+| Ambiguous history signal limit | 4 |
+
+### Guidance
+
+| Result | Guidance |
+| :--- | :--- |
+| acute | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| anticipatory | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
+| ambiguous | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
+| complicated | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
