@@ -62,6 +62,7 @@ def detect_partnership_patterns(
         "recommendation": _GUIDANCE["detected"],
     }
 
+
 if __name__ == "__main__":
     try:
         data = read_stdin_json(strip=True)
