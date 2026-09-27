@@ -34,6 +34,8 @@ license: Complete terms in LICENSE
 - Inner conflict or grief -> [inner-work](inner-work/SKILL.md).
 - Relationship patterns -> [relationships](relationships/SKILL.md).
 - Spiritual discernment -> [spirituality](spirituality/SKILL.md).
+- Wellbeing, embodiment, or emotional care -> [wellbeing](wellbeing/SKILL.md).
+- Life direction, meaning, or existential questions -> [life-and-meaning](life-and-meaning/SKILL.md).
 
 ## Edge Cases
 
@@ -41,3 +43,9 @@ license: Complete terms in LICENSE
 - If safety changes the response mode, safety takes precedence.
 
 ## References
+
+- [inner-work](inner-work/SKILL.md)
+- [relationships](relationships/SKILL.md)
+- [spirituality](spirituality/SKILL.md)
+- [wellbeing](wellbeing/SKILL.md)
+- [life-and-meaning](life-and-meaning/SKILL.md)
