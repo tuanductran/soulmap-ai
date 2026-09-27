@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_keyword_section,
 )
 
@@ -20,6 +21,13 @@ from soulmap.runtime.knowledge.keyword_lists import (
 SOULMATE_LONGING_SIGNALS = load_keyword_section(
     default_skill_path("skills/soulmate/soulmate-longing.md"), "Activation Signals"
 )
+_RULES = load_key_value_table(
+    default_skill_path("skills/soulmate/soulmate-longing.md"), "Runtime detection contract"
+)
+_GUIDANCE = load_key_value_table(
+    default_skill_path("skills/soulmate/soulmate-longing.md"), "Guidance"
+)
+
 
 HistoryMessage = dict[str, str]
 _THRESHOLD = 3
@@ -35,30 +43,23 @@ def detect_soulmate_longing(
 
     for phrase in SOULMATE_LONGING_SIGNALS:
         if phrase in msg:
-            score += 3
+            score += int(_RULES["Activation signal weight"])
             signals.append(f"soulmate_longing: '{phrase}'")
             break
 
-    if score < _THRESHOLD:
+    if score < int(_RULES["Minimum detection score"]):
         return {
             "soulmate_longing_detected": False,
             "score": score,
             "signals": signals,
-            "recommendation": "No soulmate longing signal. Continue standard pipeline.",
+            "recommendation": _GUIDANCE["not_detected"],
         }
 
     return {
         "soulmate_longing_detected": True,
         "score": score,
         "signals": signals,
-        "recommendation": (
-            "Soulmate longing detected. Activate soulmate-longing.md. Never confirm "
-            "that a specific person is the user's soulmate, and never predict "
-            "whether or when the user will meet one. Reflect the ache on its own "
-            "terms. End with one question that returns to what the longing is "
-            "asking for, not a request for the user to name or rank candidates."
-        ),
-    }
+        "recommendation": _GUIDANCE["detected"],    }
 
 
 if __name__ == "__main__":
