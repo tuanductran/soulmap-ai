@@ -7,13 +7,6 @@ from typing import Protocol
 
 import pytest
 
-class DetectorModule(Protocol):
-    _RULES: dict[str, str]
-
-
-Detector = Callable[[str], dict[str, object]]
-
-
 from soulmap.runtime.detectors import (
     creative_drought_detector,
     dark_night_detector,
@@ -27,6 +20,13 @@ from soulmap.runtime.detectors import (
     spiritual_purpose_detector,
     visibility_fear_detector,
 )
+
+
+class DetectorModule(Protocol):
+    _RULES: dict[str, str]
+
+
+Detector = Callable[[str], dict[str, object]]
 
 
 @pytest.mark.parametrize(
