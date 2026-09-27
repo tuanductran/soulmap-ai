@@ -7,6 +7,7 @@ import pytest
 from soulmap.devtools.packaging.release_verify import (
     INTEGRATION_GUIDES,
     ReleaseVerificationError,
+    _source_members,
     _verify_integrations,
 )
 
@@ -63,3 +64,28 @@ def test_verify_integrations_rejects_missing_guide(tmp_path: Path) -> None:
 
     with pytest.raises(ReleaseVerificationError, match="integration guide is missing"):
         _verify_integrations(tmp_path, "0.11.0")
+
+
+def test_source_members_match_package_boundary(tmp_path: Path) -> None:
+    for path in (
+        "LICENSE",
+        "SOULMAP.md",
+        "SKILL.md",
+        "skills/domains/example/SKILL.md",
+        "skills/runtime/source-registry.md",
+        ".claude-plugin/marketplace.json",
+        ".DS_Store",
+    ):
+        target = tmp_path / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("fixture\n", encoding="utf-8")
+
+    standard = _source_members(tmp_path, include_plugin=False)
+    skill = _source_members(tmp_path, include_plugin=True)
+
+    assert "skills/domains/example/SKILL.md" in standard
+    assert "skills/runtime/source-registry.md" not in standard
+    assert ".claude-plugin/marketplace.json" not in standard
+    assert ".claude-plugin/marketplace.json" in skill
+    assert ".DS_Store" not in standard
+    assert ".DS_Store" not in skill
