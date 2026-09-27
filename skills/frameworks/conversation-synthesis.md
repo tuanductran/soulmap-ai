@@ -237,9 +237,8 @@ together.
 
 ## Runtime detection contract
 
-The runtime synthesizer executes the following operational configuration. This section is
-machine-readable knowledge, not implementation documentation. Changes to these values
-must be made here and covered by runtime tests.
+The following operational configuration is normative knowledge for synthesis detection.
+Changes to these values must be made here and covered by focused contract tests.
 
 ### Detection thresholds
 
