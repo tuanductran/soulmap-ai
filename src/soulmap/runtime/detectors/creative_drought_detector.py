@@ -49,7 +49,8 @@ def detect_creative_drought(
 
     # Secondary: creative identity + absence/emptiness language
     creative_id = load_keyword_section(
-        default_skill_path("skills/frameworks/creative-drought.md"), "Creative-identity signals"
+        default_skill_path("skills/frameworks/creative-drought.md"),
+        "Creative-identity signals",
     )
     absence = load_keyword_section(
         default_skill_path("skills/frameworks/creative-drought.md"), "Absence signals"
