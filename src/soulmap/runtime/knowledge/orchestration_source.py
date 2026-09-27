@@ -24,9 +24,7 @@ class OrchestrationRules:
 
 
 def _contract_body(text: str) -> str:
-    match = re.search(
-        rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE
-    )
+    match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
         raise ValueError("Orchestration runtime execution contract is missing.")
     start = match.end()
@@ -42,9 +40,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     body = _contract_body(path.read_text(encoding="utf-8"))
     values: dict[str, str] = {}
     for match in _ROW_RE.finditer(body):
-        key = re.sub(
-            r"[^a-z0-9]+", "_", match.group("name").strip().lower()
-        ).strip("_")
+        key = re.sub(r"[^a-z0-9]+", "_", match.group("name").strip().lower()).strip("_")
         if not key or key == "rule":
             continue
         values[key] = match.group("value").strip().lower()
