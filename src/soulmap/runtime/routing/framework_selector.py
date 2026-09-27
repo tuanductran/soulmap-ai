@@ -193,12 +193,13 @@ def _finish(
         framework = result.get("primary_framework")
         mode = result.get("mode")
         if isinstance(framework, str) and isinstance(mode, str):
+            template_context = result.get("context")
+            if not isinstance(template_context, dict):
+                template_context = {}
             result["template"] = resolve_template(
                 framework,
                 mode,
-                result.get("context")
-                if isinstance(result.get("context"), dict)
-                else {},
+                template_context,
             )
     return _maybe_attach_debug(result, debug_events)
 
