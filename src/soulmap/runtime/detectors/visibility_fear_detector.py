@@ -12,6 +12,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.keyword_lists import (
     default_skill_path,
+    load_key_value_table,
     load_labeled_groups,
 )
 
