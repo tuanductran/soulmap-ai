@@ -480,7 +480,11 @@ async def select_framework_async(
             return _finish(message, history, memory, selection, debug_events)
 
         grief_rule = next(
-            (rule for rule in orchestration_rules.primary_priority if rule.result == "grief"),
+            (
+                rule
+                for rule in orchestration_rules.primary_priority
+                if rule.result == "grief"
+            ),
             None,
         )
         if grief_rule is not None and grief.get(grief_rule.detected):
