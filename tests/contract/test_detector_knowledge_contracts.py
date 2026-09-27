@@ -8,6 +8,7 @@ from soulmap.runtime.detectors import (
     ancestral_detector,
     anger_detector,
     existential_detector,
+    grief_detector,
     inner_conflict_detector,
     insight_detector,
     shadow_pattern_detector,
@@ -103,3 +104,11 @@ def test_inner_parts_suffix_is_markdown_authored() -> None:
     recommendation = result["recommendation"]
     assert isinstance(recommendation, str)
     assert "Likely parts present:" in recommendation
+
+
+def test_grief_response_policy_is_markdown_authored() -> None:
+    result = grief_detector.detect_grief("My mother died yesterday.")
+    recommendation = result["recommendation"]
+    assert isinstance(recommendation, str)
+    assert "Activate grief-companion.md." in recommendation
+    assert "Grief Questions" in recommendation
