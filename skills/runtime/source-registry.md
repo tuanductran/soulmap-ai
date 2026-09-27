@@ -14,7 +14,7 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | :--- | :--- | :--- | :--- | :--- |
 | anger-companion | skills/frameworks/anger-companion.md | Detection signals | Runtime detection contract | Guidance |
 | ancestral-patterns | skills/frameworks/ancestral-patterns.md | Activation Signals | Runtime detection contract | Guidance |
-| conversation-synthesis | skills/frameworks/conversation-synthesis.md | Detection signals | Runtime detection contract | — |
+| conversation-synthesis | skills/frameworks/conversation-synthesis.md | Detection signals | Runtime detection contract | - |
 | creative-drought | skills/frameworks/creative-drought.md | Activation Signals | Runtime detection contract | Guidance |
 | dark-night-of-soul | skills/frameworks/dark-night-of-soul.md | Activation Signals | Runtime detection contract | Guidance |
 | divine-guidance | skills/frameworks/divine-guidance.md | Activation Signals | Runtime detection contract | Guidance |
@@ -30,7 +30,7 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | partnership-patterns | skills/soulmate/partnership-patterns.md | Activation Signals | Runtime detection contract | Guidance |
 | sacred-feminine-masculine | skills/frameworks/sacred-feminine-masculine.md | Activation Signals | Runtime detection contract | Guidance |
 | shadow-patterns | skills/frameworks/shadow-patterns.md | Detection signals | Runtime detection contract | Guidance |
-| self-compassion | skills/frameworks/self-compassion.md | Detection signals | — | — |
+| self-compassion | skills/frameworks/self-compassion.md | Detection signals | - | - |
 | somatic-wellbeing | skills/frameworks/somatic-wellbeing.md | Detection signals | Runtime detection contract | Guidance |
 | soulmate-longing | skills/soulmate/soulmate-longing.md | Activation Signals | Runtime detection contract | Guidance |
 | soul-nourishment | skills/frameworks/soul-nourishment.md | Activation Signals | Runtime detection contract | Guidance |
