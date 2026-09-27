@@ -322,12 +322,16 @@ def synthesize(
         + _rules().response_guidance["ownership_return"]
     )
 
-    recommendation = _rules().response_guidance["recommendation"].format(
-        count=len(top_3),
-        longitudinal_notice=(
-            "Longitudinal data available. " if is_longitudinal else ""
-        ),
-        themes=", ".join(f"{d}:{t}" for d, t, _ in top_3),
+    recommendation = (
+        _rules()
+        .response_guidance["recommendation"]
+        .format(
+            count=len(top_3),
+            longitudinal_notice=(
+                "Longitudinal data available. " if is_longitudinal else ""
+            ),
+            themes=", ".join(f"{d}:{t}" for d, t, _ in top_3),
+        )
     )
 
     return {
