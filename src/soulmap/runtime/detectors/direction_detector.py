@@ -94,7 +94,7 @@ def detect_direction_need(
             m["content"].lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_DIRECTION_RULES["recent user history window"]):]
+        ][-int(_DIRECTION_RULES["recent user history window"]) :]
         history_signals = (
             LOSTNESS_SIGNALS[
                 : int(_DIRECTION_RULES["sustained lostness signal limit"])
