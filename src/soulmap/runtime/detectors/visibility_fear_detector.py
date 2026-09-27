@@ -25,7 +25,8 @@ VISIBILITY_FEAR_SIGNALS = _VISIBILITY_GROUPS["direct visibility fear"]
 SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
 PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
 _RULES = load_key_value_table(
-    default_skill_path("skills/frameworks/fear-of-visibility.md"), "Runtime detection contract"
+    default_skill_path("skills/frameworks/fear-of-visibility.md"),
+    "Runtime detection contract",
 )
 _GUIDANCE = load_key_value_table(
     default_skill_path("skills/frameworks/fear-of-visibility.md"), "Guidance"
@@ -33,6 +34,7 @@ _GUIDANCE = load_key_value_table(
 
 
 HistoryMessage = dict[str, str]
+
 
 def detect_visibility_fear(
     message: str, history: list[HistoryMessage] | None = None
