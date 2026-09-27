@@ -20,6 +20,7 @@ class ExtractedArtifactError(ValueError):
 
 CORE_FILES = {"LICENSE", "SOULMAP.md", "SKILL.md"}
 PLUGIN_PREFIX = ".claude-plugin/"
+RUNTIME_PREFIX = "skills/runtime/"
 FORBIDDEN_MEMBER_PREFIXES = (
     ".claude/",
     "docs/",
@@ -78,7 +79,9 @@ def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
     members: set[str] = set()
     for path in paths:
         relative = path.relative_to(repo_root).as_posix()
-        if not _is_ignored(relative, patterns):
+        if not _is_ignored(relative, patterns) and not relative.startswith(
+            RUNTIME_PREFIX
+        ):
             members.add(relative)
     return members
 

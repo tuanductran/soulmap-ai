@@ -34,6 +34,7 @@ def _build_valid_repo(root: Path) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
         _write(root, name)
     _write(root, "skills/public.md")
+    _write(root, "skills/runtime/source-registry.md", "internal runtime mapping\n")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
     build_skill.build_zip(root)
     build_skill.build_skill(root)
@@ -64,6 +65,11 @@ def test_verifier_accepts_both_valid_artifacts(tmp_path: Path) -> None:
     assert "PASS extracted artifact boundary: dist/soulmap-ai.zip" in result.stdout
     assert "PASS extracted artifact boundary: dist/soulmap-ai.skill" in result.stdout
     assert result.stderr == ""
+    for archive_name in ("soulmap-ai.zip", "soulmap-ai.skill"):
+        with zipfile.ZipFile(tmp_path / "dist" / archive_name) as archive:
+            assert not any(
+                name.startswith("skills/runtime/") for name in archive.namelist()
+            )
 
 
 def test_verifier_rejects_missing_artifact(tmp_path: Path) -> None:

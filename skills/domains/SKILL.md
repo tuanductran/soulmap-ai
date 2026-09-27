@@ -28,7 +28,6 @@ license: Complete terms in LICENSE
 
 - Domain routers are navigation layers, not duplicate knowledge bases.
 - Keep implementation details out of domain knowledge.
-- Runtime integration is isolated under [runtime](../runtime/SKILL.md).
 
 ## Examples
 
@@ -42,5 +41,3 @@ license: Complete terms in LICENSE
 - If safety changes the response mode, safety takes precedence.
 
 ## References
-
-- [runtime](../runtime/SKILL.md)
