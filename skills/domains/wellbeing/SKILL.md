@@ -29,7 +29,6 @@ duplicating it.
 1. Start from the central orchestration skill.
 2. Load the canonical domain files under `skills/frameworks/`.
 3. Apply the domain knowledge without inventing runtime or implementation rules.
-4. If runtime behavior must be checked, follow the shared integration boundary at [SKILL.md](../../runtime/SKILL.md).
 5. Return to the response pipeline for voice and safety validation.
 
 ## Rules
@@ -53,4 +52,3 @@ duplicating it.
 ## References
 
 - [SKILL.md](../../meta/SKILL.md)
-- [SKILL.md](../../runtime/SKILL.md)
