@@ -11,15 +11,16 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    default_skill_path,
     load_key_value_table,
     load_labeled_groups,
 )
 
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
 # Single source of truth: skills/frameworks/existential-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
 _EXISTENTIAL_GROUPS = load_labeled_groups(
-    default_skill_path("skills/frameworks/existential-companion.md"),
+    runtime_skill_path("existential-companion"),
     "Detection signals",
 )
 IDENTITY_SHIFT = _EXISTENTIAL_GROUPS["identity shift"]
@@ -28,10 +29,10 @@ ENDINGS_GRIEF = _EXISTENTIAL_GROUPS["endings and transitions"]
 MEANING_DEPTH = _EXISTENTIAL_GROUPS["depth of meaning"]
 HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
 _EXISTENTIAL_SCORING = load_key_value_table(
-    default_skill_path("skills/frameworks/existential-companion.md"), "Scoring"
+    runtime_skill_path("existential-companion"), "Scoring"
 )
 _EXISTENTIAL_GUIDANCE = load_key_value_table(
-    default_skill_path("skills/frameworks/existential-companion.md"), "Guidance"
+    runtime_skill_path("existential-companion"), "Guidance"
 )
 
 
