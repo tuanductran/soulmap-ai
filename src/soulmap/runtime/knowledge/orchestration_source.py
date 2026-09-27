@@ -28,8 +28,11 @@ _EXPECTED_PRIORITY = (
     "SYNTHESIS", "PATTERN", "MIRROR",
 )
 
+
 @dataclass(frozen=True, slots=True)
 class OrchestrationRules:
+    """Validated executable settings from the orchestration knowledge."""
+
     primary_priority: tuple[str, ...]
     stage_1_override_max_user_messages: int
     stage_1_override_framework: str
@@ -37,7 +40,9 @@ class OrchestrationRules:
     secondary_layers: tuple[str, ...]
     mode_rules: dict[str, str]
 
+
 def parse_orchestration(text: str) -> OrchestrationRules:
+    """Parse and validate the runtime execution contract."""
     match = _CONTRACT_RE.search(text)
     if match is None:
         raise ValueError("Orchestration runtime execution contract is missing.")
@@ -91,6 +96,7 @@ def parse_orchestration(text: str) -> OrchestrationRules:
         secondary_layers=secondary,
         mode_rules=modes,
     )
+
 
 @lru_cache(maxsize=1)
 def load_orchestration_rules() -> OrchestrationRules:
