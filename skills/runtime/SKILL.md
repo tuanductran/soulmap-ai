@@ -1,7 +1,7 @@
 ---
 name: "runtime"
 description: "SoulMap runtime integration contracts for the executable-language layer. Use only to connect executable runtime components to shipped Markdown knowledge; domain knowledge remains in the domain skill folders."
-version: "0.12.1"
+version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 

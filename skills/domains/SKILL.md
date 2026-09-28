@@ -1,7 +1,7 @@
 ---
 name: "domains"
 description: "Stable domain navigation for SoulMap knowledge. Use this index to route into inner work, relationships, spirituality, wellbeing, or life and meaning without duplicating domain content."
-version: "0.12.1"
+version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
