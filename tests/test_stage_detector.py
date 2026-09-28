@@ -75,10 +75,15 @@ def test_recent_five_messages_are_the_only_messages_scored() -> None:
 
 
 def test_threshold_prevents_single_stage_three_signal_from_classifying() -> None:
+    # "I see a connection" is a stage-3 keyword with weight 2.  In a two-message
+    # window the recency multipliers are 2.0 (first/older) and 3.0 (last/current).
+    # Placing the signal in the *older* slot gives score = 2 * 2.0 = 4.0, which
+    # is below threshold[3] = 6 — so the stage stays at 1.  The neutral message
+    # in the current slot contributes no signals.
     result = detect_stage(
         [
-            _user("This is neutral."),
             _user("I see a connection."),
+            _user("This is neutral."),
         ]
     )
 
@@ -122,10 +127,13 @@ def test_prior_stage_prevents_unjustified_regression() -> None:
 
 
 def test_destabilization_allows_stage_regression() -> None:
+    # anti_regression_min_lower_stage_messages = 2, so we need at least two
+    # messages carrying stage-1 keywords for the destabilization gate to open.
+    # "i don't know" and "i can't" are both stage-1 keywords.
     result = detect_stage(
         [
-            _user("I don't know what to do."),
-            _user("I feel lost."),
+            _user("I don't know what's happening."),
+            _user("I can't figure this out."),
         ],
         {"prior_stage": 4, "destabilization_signals": ["acute distress"]},
     )

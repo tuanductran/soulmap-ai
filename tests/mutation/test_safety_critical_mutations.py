@@ -67,15 +67,20 @@ def test_dependency_keyword_list_is_load_bearing(
 
 
 def test_grief_types_tuple_is_load_bearing(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Emptying the grief-type tuple must let de-escalation swallow grief again.
+    """Emptying the acute-grief keyword list must prevent grief from routing.
 
-    This is the exact bug this session found and fixed in framework_selector:
-    a bereaved user who also showed moderate distress markers lost the grief
-    framework to de-escalation, so more visible distress produced less grief
-    support. Fixture reused verbatim from
-    tests/regression/test_routing_safety_gate.py.
+    After the knowledge-migration refactor (commit 5ee5716) the ``_GRIEF_TYPES``
+    tuple was removed from ``framework_selector``.  Grief detection is now
+    driven by ``ACUTE_GRIEF`` (and sibling lists) in ``grief_detector``, which
+    are loaded from ``skills/frameworks/grief-companion.md``.  Disabling
+    ``ACUTE_GRIEF`` proves that list is still the primary load-bearing surface
+    for grief routing — if grief could still be detected without it, something
+    else would be silently duplicating its job (the "check that cannot fail"
+    bug class this harness exists to catch).
     """
-    monkeypatch.setattr(framework_selector, "_GRIEF_TYPES", ())
+    from soulmap.runtime.detectors import grief_detector
+
+    monkeypatch.setattr(grief_detector, "ACUTE_GRIEF", ())
 
     result = framework_selector.select_framework(
         "My dog died this morning and I cannot stop crying", [], {"prior_stage": 3}
