@@ -5,6 +5,73 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.13.0 (2026-09-28)
+
+### Feat
+
+- **orchestration**: execute orchestration pipeline contract (#475)
+- **orchestration**: execute knowledge-defined routing overrides (#473)
+
+### Fix
+
+- **test**: align test fixtures with markdown-sourced guidance contracts (#505)
+- **skills**: align inner-work domain description (#503)
+- **skills**: close navigation index gaps (#502)
+- **packaging**: align release verifier with shipped boundary (#498)
+- **packaging**: isolate runtime integration from shipped skills
+- **runtime**: preserve shadow source mapping
+- **templates**: restore implementation-neutral knowledge boundary (#480)
+- **skills**: restore implementation-neutral knowledge boundary (#479)
+- **routing**: execute stage classifier from knowledge (#471)
+- **release**: scope release token to tag publication (#469)
+- **release**: use workflow-capable token for tag publication (#467)
+- **release**: configure git identity before tag creation
+- **actions**: use self-repository action reference for historical releases (#455)
+- **release**: use git push and action for release publication (#452)
+- **release**: support historical release finalization (#451)
+- **release**: use workflow GITHUB_TOKEN for publication (#450)
+- **release**: use current GitHub REST API version (#447)
+- **release**: use release token for immutable tag publication (#446)
+- **release**: move immutable tag creation to Python API tooling
+- create release tags through GitHub API (#440)
+- **ci**: configure git identity before release tagging (#439)
+- **release**: regenerate metadata after health checks (#438)
+- **ci**: finalize release artifacts after build (#437)
+- preserve release verification artifact (#435)
+- **release**: use recovery SHA in publish job
+- **release**: add safe recovery path for finalize
+- **runtime**: align moderate grief sanctuary contract (#423)
+- **ci**: isolate PR autofix from write permissions (#386)
+- **release**: separate verification from publish permissions (#403)
+- **ci**: preserve coverage test exit code (#385)
+- **ci**: correct release action commit pin (#379)
+
+### Refactor
+
+- complete runtime Markdown source registry (#500)
+- move grief and synthesis policy into knowledge
+- complete detector knowledge-policy migration
+- strengthen knowledge-runtime contracts
+- **skills**: make domain routers explicit source maps
+- **knowledge**: move direction and pattern policy to Markdown (#490)
+- **skills**: separate domain routing from runtime integration (#488)
+- **knowledge**: migrate grief somatic and intensity policy
+- **knowledge**: move sacred polarity detector policy to Markdown
+- **knowledge**: migrate remaining detector policy to Markdown
+- **knowledge**: move detector policy into Markdown contracts
+- **knowledge**: enforce knowledge-first orchestration boundaries (#483)
+- **orchestration**: execute knowledge-authored intensity routing (#482)
+- **knowledge**: remove Python implementation leakage from skills (#476)
+- **knowledge**: enforce Markdown-native runtime contracts (#481)
+- **orchestration**: execute knowledge-authored routing contract
+- **skills**: remove implementation-language leakage
+- **action**: harden Python GitHub API client (#470)
+- **devtools**: remove redundant CLI wrapper modules (#460)
+- **runtime**: remove obsolete experimental layers
+- **actions**: build native Python GitHub action (#453)
+- **ci**: rebuild GitHub Actions around Python release tooling (#449)
+- **test**: focus PR CI on high-signal Python tests (#442)
+
 ## v0.12.1 (2026-09-16)
 
 ### Fix
