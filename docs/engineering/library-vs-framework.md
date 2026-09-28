@@ -70,11 +70,36 @@ src/soulmap/runtime/detectors/<framework>_detector.py
                                           scores them, returns a typed result
 ```
 
-Current frameworks: grief, life-direction, shadow-patterns, inner-parts, anger,
-existential-companion, perfectionism-paralysis, empath-boundary,
-creative-drought, somatic-wellbeing, emotional-deescalation, pattern-mapper,
-soulmate-longing, partnership-patterns, and the spiritual-discernment layer
-under `skills/spiritual/`.
+Current framework sources under `skills/frameworks/` are:
+
+- ancestral-patterns
+- anger-companion
+- conversation-synthesis
+- creative-drought
+- dark-night-of-soul
+- divine-guidance
+- emotional-deescalation
+- empath-boundary
+- existential-companion
+- fear-of-visibility
+- feminine-masculine-dynamics
+- grief-companion
+- inner-parts
+- integration-celebration
+- life-direction
+- meaning-integration
+- money-self-worth
+- pattern-mapper
+- perfectionism-paralysis
+- relationship-reflection
+- sacred-feminine-masculine
+- self-compassion
+- shadow-patterns
+- somatic-wellbeing
+- soul-nourishment
+- spiritual-purpose
+
+Each has a corresponding runtime detector, although detector module names may be normalized rather than matching the Markdown filename literally. The authoritative source-to-runtime mapping is `skills/runtime/source-registry.md`.
 
 `skills/soulmate/` is the concrete example of the analogy in the previous
 section: a framework built on top of existing frameworks the way an
