@@ -64,7 +64,6 @@ CERTAINTY_PATTERNS: tuple[str, ...] = (
 )
 
 EXPECTED_FRAMEWORKS = {
-    "DE_ESCALATION",
     "MIRROR",
     "CRISIS",
     "DEPENDENCY",
