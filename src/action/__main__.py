@@ -268,7 +268,9 @@ class GitHubClient:
 
 def env(name: str, *, required: bool = True, default: str = "") -> str:
     """Read and validate an action environment input."""
-    value = os.environ.get(name, default)
+    value = os.environ.get(name, "")
+    if not value:
+        value = default
     if required and not value:
         raise GitHubActionError(f"Missing required action input: {name}")
     return value
