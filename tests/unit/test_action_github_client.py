@@ -165,28 +165,28 @@ def test_rate_limit_retry_uses_reset_window() -> None:
 
 def test_forbidden_rate_limit_is_retried() -> None:
     headers = Message()
-    headers["X-RateLimit-Remaining"] = "0"
-    headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
-    error = HTTPError(
-        "https://api.github.com/repos/a/b",
-        403,
-        "Forbidden",
-        headers,
-        io.BytesIO(b'{"message":"API rate limit exceeded"}'),
-    )
-    client = action.GitHubClient("token")
+    with patch.object(action.time, "time", return_value=1000.0):
+        headers["X-RateLimit-Remaining"] = "0"
+        headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
+        error = HTTPError(
+            "https://api.github.com/repos/a/b",
+            403,
+            "Forbidden",
+            headers,
+            io.BytesIO(b'{"message":"API rate limit exceeded"}'),
+        )
+        client = action.GitHubClient("token")
 
-    with (
-        patch.object(action.time, "time", return_value=1000.0),
-        patch.object(
-            action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
-        ),
-        patch.object(action.time, "sleep") as sleep,
-    ):
-        assert client.api("GET", "/repos/a/b") == {"ok": True}
+        with (
+            patch.object(
+                action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+            ),
+            patch.object(action.time, "sleep") as sleep,
+        ):
+            assert client.api("GET", "/repos/a/b") == {"ok": True}
 
-    assert sleep.call_count == 1
-    assert sleep.call_args.args[0] == 120.0
+        assert sleep.call_count == 1
+        assert sleep.call_args.args[0] == 120.0
 
 
 def test_network_error_does_not_retry_non_idempotent_requests() -> None:
