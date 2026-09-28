@@ -177,6 +177,7 @@ def test_forbidden_rate_limit_is_retried() -> None:
     client = action.GitHubClient("token")
 
     with (
+        patch.object(action.time, "time", return_value=1000.0),
         patch.object(
             action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
         ),
@@ -185,7 +186,7 @@ def test_forbidden_rate_limit_is_retried() -> None:
         assert client.api("GET", "/repos/a/b") == {"ok": True}
 
     assert sleep.call_count == 1
-    assert sleep.call_args.args[0] >= 119
+    assert sleep.call_args.args[0] == 120.0
 
 
 def test_network_error_does_not_retry_non_idempotent_requests() -> None:
