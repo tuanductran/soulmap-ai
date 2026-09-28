@@ -209,6 +209,7 @@ jobs:
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           tag: v${{ needs.verify.outputs.version }}
           release-name: v${{ needs.verify.outputs.version }}
+          generate-release-notes: "true"
           files: |
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill

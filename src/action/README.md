@@ -13,6 +13,7 @@ The `release` operation expects the Git tag to already exist. It creates or reus
     operation: release
     token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
     tag: v0.12.1
+    generate-release-notes: "true"
     files: |
       dist/soulmap-ai.zip
       dist/soulmap-ai.skill

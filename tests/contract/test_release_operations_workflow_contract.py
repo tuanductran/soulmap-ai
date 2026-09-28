@@ -70,6 +70,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "uses: ./src/action" in workflow
     assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
+    assert 'generate-release-notes: "true"' in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
     assert workflow.index(
         "Verify checkout is the merged release commit"
