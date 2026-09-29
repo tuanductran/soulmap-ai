@@ -35,7 +35,13 @@ def _registry() -> dict[str, tuple[str, str, str, str]]:
 def _has_heading(text: str, expected: str) -> bool:
     """Return whether Markdown contains the registered section heading."""
     if expected.startswith("Pattern "):
-        return bool(re.search(r"^## Pattern \d+:\s+.+$", text, re.MULTILINE))
+        return bool(
+            re.search(
+                rf"^##\s+{re.escape(expected)}:\s+.+$",
+                text,
+                re.MULTILINE,
+            )
+        )
     return bool(
         re.search(
             rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
