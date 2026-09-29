@@ -1,19 +1,8 @@
-"""Shared static detector configuration blocks."""
+"""Shared static detector configuration blocks.
+
+Protected safety constants are intentionally not re-exported here. Runtime
+dependency knowledge is resolved through the Markdown source registry.
+"""
 
 from __future__ import annotations
 
-from soulmap.runtime.config.safety import (
-    DECISION_SEEKING,
-    DEPENDENCY_KEYWORDS,
-    HIGH_DEPENDENCY_THRESHOLD,
-    ISOLATION_SIGNALS,
-    MODERATE_DEPENDENCY_THRESHOLD,
-)
-
-__all__ = [
-    "DECISION_SEEKING",
-    "DEPENDENCY_KEYWORDS",
-    "HIGH_DEPENDENCY_THRESHOLD",
-    "ISOLATION_SIGNALS",
-    "MODERATE_DEPENDENCY_THRESHOLD",
-]
