@@ -346,6 +346,90 @@ def find_config_usage(
     )
 
 
+def _detector_string_literals(path: Path) -> tuple[str, ...]:
+    """Return meaningful string literals embedded in a runtime detector.
+
+    Module/function docstrings, import names, and other structural strings are
+    excluded. The audit is intentionally exact-match only: a detector is a
+    knowledge-duplication finding only when it embeds the same phrase that the
+    Markdown parser already treats as detection knowledge.
+    """
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    literals: list[str] = []
+
+    def visit(node: ast.AST, *, is_docstring: bool = False) -> None:
+        if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            body = node.body
+            if body and isinstance(body[0], ast.Expr) and isinstance(
+                body[0].value, ast.Constant
+            ) and isinstance(body[0].value.value, str):
+                visit(body[0], is_docstring=True)
+            for child in body[1:] if body else ():
+                visit(child)
+            return
+        if isinstance(node, ast.Expr) and is_docstring:
+            return
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            value = node.value.strip().lower()
+            if value:
+                literals.append(value)
+            return
+        for child in ast.iter_child_nodes(node):
+            visit(child)
+
+    visit(tree)
+    return tuple(dict.fromkeys(literals))
+
+
+def find_detector_markdown_duplicates(
+    root: Path,
+    *,
+    detector_root: Path = Path("src/soulmap/runtime/detectors"),
+    markdown_roots: tuple[Path, ...] = (
+        Path("skills"),
+        Path("templates"),
+        Path("frameworks"),
+    ),
+) -> tuple[KnowledgeDuplicate, ...]:
+    """Find exact detection-phrase overlaps embedded directly in detectors.
+
+    Detector modules should consume Markdown-owned knowledge through runtime
+    loaders. This audit catches a detector that reintroduces an exact signal
+    phrase even when no legacy config constant exists.
+    """
+    markdown_files = sorted(
+        path
+        for markdown_root in markdown_roots
+        for path in (root / markdown_root).rglob("*.md")
+    )
+    markdown_index: dict[str, tuple[tuple[Path, str, str, str], ...]] = {}
+    for path in markdown_files:
+        for phrase, (section, group, source_kind) in _markdown_knowledge(path).items():
+            markdown_index.setdefault(phrase, ())
+            markdown_index[phrase] += ((path, section, group, source_kind),)
+
+    duplicates: list[KnowledgeDuplicate] = []
+    for detector_path in sorted((root / detector_root).glob("*_detector.py")):
+        for phrase in _detector_string_literals(detector_path):
+            for markdown_path, section, group, source_kind in markdown_index.get(
+                phrase, ()
+            ):
+                duplicates.append(
+                    KnowledgeDuplicate(
+                        phrase=phrase,
+                        python_path=detector_path,
+                        constant="<literal>",
+                        markdown_path=markdown_path,
+                        markdown_section=section,
+                        markdown_group=group,
+                        source_kind=source_kind,
+                        classification="knowledge_duplicate",
+                    )
+                )
+
+    return tuple(duplicates)
+
+
 def find_python_markdown_duplicates(
     root: Path,
     *,
