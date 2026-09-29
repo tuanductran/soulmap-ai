@@ -347,45 +347,34 @@ def find_config_usage(
 
 
 def _detector_string_literals(path: Path) -> tuple[str, ...]:
-    """Return meaningful string literals embedded in a runtime detector.
+    """Return hardcoded literals used directly as message-membership matches.
 
-    Module/function docstrings, import names, and other structural strings are
-    excluded. The audit is intentionally exact-match only: a detector is a
-    knowledge-duplication finding only when it embeds the same phrase that the
-    Markdown parser already treats as detection knowledge.
+    Classification labels and routing keys are intentionally excluded. The
+    audit targets the code shape that can reintroduce a Markdown-owned signal:
+    a string literal compared with a runtime message using ``in``.
     """
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     literals: list[str] = []
 
-    def visit(node: ast.AST, *, is_docstring: bool = False) -> None:
-        if isinstance(
-            node,
-            (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef),
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Compare):
+            continue
+        if not any(isinstance(op, ast.In) for op in node.ops):
+            continue
+        if not isinstance(node.left, ast.Constant) or not isinstance(
+            node.left.value, str
         ):
-            body = node.body
-            if (
-                body
-                and isinstance(body[0], ast.Expr)
-                and isinstance(body[0].value, ast.Constant)
-                and isinstance(body[0].value.value, str)
-            ):
-                visit(body[0], is_docstring=True)
-            for child in body[1:]:
-                visit(child)
-            return
-        if isinstance(node, ast.Expr) and is_docstring:
-            return
-        if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            value = node.value.strip().lower()
-            if value:
-                literals.append(value)
-            return
-        for child in ast.iter_child_nodes(node):
-            visit(child)
+            continue
+        if not any(
+            isinstance(name, ast.Name) and name.id in {"msg", "text", "message"}
+            for name in ast.walk(node.comparators[0])
+        ):
+            continue
+        value = node.left.value.strip().lower()
+        if value:
+            literals.append(value)
 
-    visit(tree)
     return tuple(dict.fromkeys(literals))
-
 
 def find_detector_markdown_duplicates(
     root: Path,
