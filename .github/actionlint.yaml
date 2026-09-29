@@ -1,5 +1,6 @@
-runner-label:
-  - ubuntu-26.04
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
 
 paths:
   .github/workflows/release.yml:
