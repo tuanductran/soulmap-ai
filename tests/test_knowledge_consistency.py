@@ -5,6 +5,7 @@ import pytest
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
+    find_detector_markdown_duplicates,
     find_python_markdown_duplicates,
     markdown_consumers,
 )
@@ -502,3 +503,49 @@ def test_markdown_table_contract_loader_rejects_non_two_column_key_value_table(
 
     with pytest.raises(ValueError, match="two columns"):
         load_key_value_table(path, "Guidance")
+
+
+def test_find_detector_markdown_duplicates_detects_exact_signal_literals(
+    tmp_path: Path,
+) -> None:
+    detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text(
+        'SIGNAL = "shared signal"\n'
+        'INTERNAL = "detector only"\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills/frameworks"
+    skills.mkdir(parents=True)
+    (skills / "example.md").write_text(
+        '## Detection signals\n\nSignals:\n\n- "shared signal"\n',
+        encoding="utf-8",
+    )
+
+    duplicates = find_detector_markdown_duplicates(tmp_path)
+
+    assert len(duplicates) == 1
+    assert duplicates[0].phrase == "shared signal"
+    assert duplicates[0].constant == "<literal>"
+    assert duplicates[0].python_path == detector
+    assert duplicates[0].classification == "knowledge_duplicate"
+
+
+def test_detector_docstrings_are_not_knowledge_duplicates(tmp_path: Path) -> None:
+    detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text(
+        '"""shared signal"""\n'
+        'VALUE = "detector only"\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills/frameworks"
+    skills.mkdir(parents=True)
+    (skills / "example.md").write_text(
+        '## Detection signals\n\nSignals:\n\n- "shared signal"\n',
+        encoding="utf-8",
+    )
+
+    assert find_detector_markdown_duplicates(tmp_path) == ()
