@@ -358,7 +358,10 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
     literals: list[str] = []
 
     def visit(node: ast.AST, *, is_docstring: bool = False) -> None:
-        if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        if isinstance(
+            node,
+            (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef),
+        ):
             body = node.body
             if body and isinstance(body[0], ast.Expr) and isinstance(
                 body[0].value, ast.Constant
