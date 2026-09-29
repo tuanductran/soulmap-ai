@@ -4,15 +4,13 @@ This checklist is the operational boundary for Phase 12. It covers development-t
 
 ## Automation tooling
 
-Two dependency-update bots are currently configured: `.github/dependabot.yml` (uv and
+Both dependency-update bots remain configured: `.github/dependabot.yml` (uv and
 github-actions ecosystems, weekly) and `renovate.json` (repo root, `config:recommended`).
-As of the last review, Dependabot is the actively used tool: it has open pull requests
-for routine dev-dependency bumps, while Renovate's merged history is limited to a
-github-actions pin that Dependabot's own `github-actions` ecosystem entry already
-covers. This overlap has not caused a confirmed duplicate-PR conflict, but the two
-tools are not tracking a documented division of labor. Do not add a third tool or
-expand either config to resolve this; if you decide to keep only one, that decision
-belongs to the repository owner, not to routine dependency-refresh work.
+Renovate currently supplies the Dependency Dashboard, while Dependabot remains configured
+for the `uv` and `github-actions` ecosystems. The repository intentionally has no third
+update bot or automatic merge path. The two tools still do not have a formally exclusive
+division of labor, so routine refresh work must follow the concrete PR and dashboard
+evidence rather than assume one bot is authoritative.
 
 ## Trigger policy
 
