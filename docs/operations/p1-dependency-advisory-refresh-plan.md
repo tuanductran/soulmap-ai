@@ -60,7 +60,7 @@ serially before changing tests.
 If focused or full validation fails, revert the maintenance commit and restore the prior
 `uv.lock`; do not weaken a test, alter a safety boundary or merge partial evidence. If a
 merged update later fails main CI, revert the single P1 commit and rerun the known-good
-0.9.0 validation gate. Keep artifact release/tag creation separate from the refresh
+validation gate captured before the update. Keep artifact release/tag creation separate from the refresh
 unless a separately approved release decision exists.
 
 ## Definition of done
