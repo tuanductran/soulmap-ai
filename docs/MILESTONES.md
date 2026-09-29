@@ -45,8 +45,8 @@ notes, tests, and release records.
 
 ## Current Historical Baseline
 
-The completed roadmap work through Phase 26 establishes the current v0.13.0 release baseline and
-its boundaries. The project deliberately does not treat the following as completed or
+The completed roadmap work through Phase 26 established the architecture baseline in the v0.9.1 era;
+subsequent releases through v0.13.0 preserved and hardened those boundaries. The project deliberately does not treat the following as completed or
 implicitly committed work:
 
 - third-party platform deployment claims without operator evidence;
