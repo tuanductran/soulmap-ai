@@ -363,11 +363,14 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
             (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef),
         ):
             body = node.body
-            if body and isinstance(body[0], ast.Expr) and isinstance(
-                body[0].value, ast.Constant
-            ) and isinstance(body[0].value.value, str):
+            if (
+                body
+                and isinstance(body[0], ast.Expr)
+                and isinstance(body[0].value, ast.Constant)
+                and isinstance(body[0].value.value, str)
+            ):
                 visit(body[0], is_docstring=True)
-            for child in body[1:] if body else ():
+            for child in body[1:]:
                 visit(child)
             return
         if isinstance(node, ast.Expr) and is_docstring:
