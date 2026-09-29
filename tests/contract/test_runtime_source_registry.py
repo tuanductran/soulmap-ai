@@ -4,11 +4,17 @@ import ast
 
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.runtime_registry import (
+    _has_heading,
     _registry,
     _validate_registry,
     runtime_section,
     runtime_skill_path,
 )
+
+
+def test_pattern_registry_heading_validation_is_exact() -> None:
+    assert _has_heading("## Pattern 1: Repeating Cycle\n", "Pattern 1")
+    assert not _has_heading("## Pattern 2: Different Cycle\n", "Pattern 1")
 
 
 def test_runtime_registry_resolves_known_domain_source() -> None:
