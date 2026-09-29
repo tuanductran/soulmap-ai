@@ -1,0 +1,50 @@
+name: Ubuntu 26.04 Compatibility Probe
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ubuntu-26-04-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    name: ubuntu-26.04
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    env:
+      SOULMAP_REPO_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.20"
+          python-version: "3.11"
+
+      - name: Install dev dependencies
+        run: uv sync --locked --python 3.11
+
+      - name: Lint
+        run: uv run soulmap lint --skip-tests
+
+      - name: Focused Python behavior tests
+        env:
+          SOULMAP_PYTEST_SCOPE: focused
+        run: uv run python scripts/pytest_diagnostics.py
+
+      - name: Build and verify artifacts
+        run: |
+          uv run soulmap library-manifest
+          test -f dist/soulmap-ai.zip
+          test -f dist/soulmap-ai.skill
+          test -f dist/soulmap-ai-library.json
+          uv run python scripts/verify_artifact_hashes.py
+          uv run python scripts/verify_extracted_artifacts.py
