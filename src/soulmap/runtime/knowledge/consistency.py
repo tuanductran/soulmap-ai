@@ -355,6 +355,7 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
     """
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     literals: list[str] = []
+    message_names = {"msg", "text", "message"}
 
     for node in ast.walk(tree):
         if not isinstance(node, ast.Compare):
@@ -366,8 +367,8 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
         ):
             continue
         if not any(
-            isinstance(name, ast.Name) and name.id in {"msg", "text", "message"}
-            for name in ast.walk(node.comparators[0])
+            isinstance(comparator, ast.Name) and comparator.id in message_names
+            for comparator in node.comparators
         ):
             continue
         value = node.left.value.strip().lower()
@@ -375,7 +376,6 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
             literals.append(value)
 
     return tuple(dict.fromkeys(literals))
-
 
 def find_detector_markdown_duplicates(
     root: Path,
