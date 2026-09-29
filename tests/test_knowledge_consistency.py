@@ -550,3 +550,25 @@ def test_detector_docstrings_are_not_knowledge_duplicates(tmp_path: Path) -> Non
     )
 
     assert find_detector_markdown_duplicates(tmp_path) == ()
+
+
+def test_detector_classification_literals_are_not_knowledge_matches(
+    tmp_path: Path,
+) -> None:
+    detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
+    detector.parent.mkdir(parents=True)
+    detector.write_text(
+        'return_type = "relief"\n'
+        'if "different signal" in msg:\n'
+        '    return return_type\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills/frameworks"
+    skills.mkdir(parents=True)
+    (skills / "example.md").write_text(
+        '## Detection signals\n\nSignals:\n\n- "relief"\n',
+        encoding="utf-8",
+    )
+
+    assert find_detector_markdown_duplicates(tmp_path) == ()
