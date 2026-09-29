@@ -19,7 +19,7 @@ def test_python_github_action_is_self_contained() -> None:
     assert "INPUT_TOKEN" in metadata
     assert (
         "FROM python:3.11-slim-bookworm@"
-        "sha256:1eef826191f05c3d47031c7a8fa3f88d0603bda82ce87c8ea6a73c743b0e0437"
+        "sha256:a36c24f9cbdf4fd0f52d67f0823eeac19c2028c637cecc392d97f980d4fec56b"
     ) in dockerfile
     assert 'ENTRYPOINT ["python", "/__main__.py"]' in dockerfile
     assert "urllib.request" in source
