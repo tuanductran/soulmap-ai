@@ -511,7 +511,8 @@ def test_find_detector_markdown_duplicates_detects_exact_signal_literals(
     detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
     detector.parent.mkdir(parents=True)
     detector.write_text(
-        'SIGNAL = "shared signal"\n'
+        'if "shared signal" in msg:\n'
+        '    return True\n'
         'INTERNAL = "detector only"\n',
         encoding="utf-8",
     )
