@@ -20,7 +20,10 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "persist-credentials: false" in workflow
     assert "operation: branch" in workflow
     assert "target-sha: ${{ steps.bump.outputs.sha }}" in workflow
-    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push' not in workflow
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push'
+        not in workflow
+    )
     assert "uses: ./src/action" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
     assert "tag: ${{ steps.bump.outputs.tag }}" in workflow
