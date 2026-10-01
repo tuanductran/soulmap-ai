@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 import subprocess
 from pathlib import Path
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
 
 from soulmap.devtools.support.repo import REPO_ROOT
 
@@ -67,7 +67,7 @@ def _run(
     )
 
 
-def _write_summary(root: Path) -> None:
+def _write_summary() -> None:
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if not summary_path:
         return
@@ -116,7 +116,7 @@ def run_weekly_governance(
     for command in ARTIFACT_COMMANDS:
         _run(command, root=root, runner=runner)
 
-    _write_summary(root)
+    _write_summary()
     return 0
 
 
