@@ -7,6 +7,7 @@ import json
 import mimetypes
 import os
 import random
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -478,14 +479,46 @@ def create_branch(
         print(f"Release branch {branch} already exists at the expected commit.")
         return
 
-    created = client.request(
-        "POST",
-        f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/git/refs",
-        payload={"ref": f"refs/heads/{branch}", "sha": target_sha},
-        retry_non_idempotent=True,
-    )
-    if not isinstance(created, dict) or created.get("ref") != f"refs/heads/{branch}":
-        raise GitHubActionError("GitHub did not confirm creation of the release branch.")
+    head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if head != target_sha:
+        raise GitHubActionError(
+            f"Local HEAD {head!r} does not match requested branch target {target_sha!r}."
+        )
+
+    encoded = __import__("base64").b64encode(
+        f"x-access-token:{client.token}".encode("utf-8")
+    ).decode("ascii")
+    environment = os.environ.copy()
+    environment["GIT_CONFIG_COUNT"] = "1"
+    environment["GIT_CONFIG_KEY_0"] = "http.extraheader"
+    environment["GIT_CONFIG_VALUE_0"] = f"AUTHORIZATION: basic {encoded}"
+    try:
+        pushed = subprocess.run(
+            ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        detail = (
+            exc.stderr.strip()
+            if isinstance(exc, subprocess.CalledProcessError)
+            else str(exc)
+        )
+        raise GitHubActionError(
+            f"Failed to publish release branch {branch!r}: {detail}"
+        ) from exc
+
+    if pushed.returncode != 0:
+        raise GitHubActionError(
+            f"Git did not confirm publication of release branch {branch!r}."
+        )
 
 
 def ensure_tag_exists(
