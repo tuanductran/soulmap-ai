@@ -11,6 +11,9 @@ def test_build_summary_marks_passing_verification_as_rollback_ready() -> None:
 
 
 def test_build_summary_does_not_mark_failed_verification_as_ready() -> None:
-    assert build_summary({"status": "fail", "version": "0.13.0"}, "v0.13.0")[
-        "rollback_ready"
-    ] is False
+    assert (
+        build_summary({"status": "fail", "version": "0.13.0"}, "v0.13.0")[
+            "rollback_ready"
+        ]
+        is False
+    )
