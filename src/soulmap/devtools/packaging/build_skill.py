@@ -30,11 +30,9 @@ import textwrap
 import zipfile
 from pathlib import Path
 
-from soulmap.devtools.packaging.members import (
-    is_ignored as _is_ignored,
-    load_distignore as _load_distignore,
-    source_paths,
-)
+from soulmap.devtools.packaging.members import is_ignored as _is_ignored
+from soulmap.devtools.packaging.members import load_distignore as _load_distignore
+from soulmap.devtools.packaging.members import source_paths
 from soulmap.devtools.support.repo import REPO_ROOT
 
 # ---------------------------------------------------------------------------
