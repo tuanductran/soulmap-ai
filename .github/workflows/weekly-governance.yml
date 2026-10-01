@@ -33,50 +33,9 @@ jobs:
           python-version: "3.11"
       - name: Install locked dependencies
         run: uv sync --locked --python 3.11
-      - name: Capture dependency baseline
-        run: |
-          mkdir -p weekly-governance
-          uv tree --depth 1 > weekly-governance/uv-tree.txt
-          uv lock --check
-      - name: Verify P-level and dependency governance contracts
-        run: |
-          uv run pytest -q \
-            tests/contract/test_p_level_governance.py \
-            tests/contract/test_dependency_refresh_process_contract.py \
-            tests/contract/test_toolchain_support_contract.py
-      - name: Run weekly safety and knowledge baseline
-        run: |
-          uv run soulmap markdown-contract --root .
-          uv run soulmap check-links --root .
-          uv run soulmap check-case --root .
-          uv run soulmap lint --skip-tests
-          uv run soulmap audit-knowledge
-          uv run python tests/eval_regression/test_safety_evals.py
-          uv run soulmap eval-groups
-          uv run soulmap eval-responses
-          uv run soulmap eval-markdown-contracts
-      - name: Run reproducible full tests and dependency analysis
-        run: |
-          SOULMAP_PYTEST_SCOPE=full uv run python scripts/pytest_diagnostics.py
-          uv run deptry .
-      - name: Build and verify distribution artifacts
-        run: |
-          uv run soulmap build
-          uv run soulmap build --skill
-          uv run soulmap library-manifest
-          uv run python scripts/verify_artifact_hashes.py
-          uv run python scripts/verify_extracted_artifacts.py
-      - name: Write weekly review summary
-        if: success()
-        run: |
-          {
-            echo "## Weekly SoulMap governance review"
-            echo
-            echo "- P-level governance, dependency-refresh and toolchain contracts passed."
-            echo "- Locked dependency tree captured in the workflow artifact."
-            echo "- Safety/knowledge evals, full tests and artifact verification passed."
-            echo "- This workflow does not update, merge or release dependencies automatically."
-          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Run Python-owned weekly governance gate
+        run: uv run soulmap weekly-governance
+
       - name: Upload weekly review evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

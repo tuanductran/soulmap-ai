@@ -26,6 +26,7 @@ from soulmap.devtools.evals import (
     eval_response_quality,
     eval_responses,
 )
+from soulmap.devtools.governance import weekly as weekly_governance
 from soulmap.devtools.packaging import build_skill, library, release_ops, release_verify
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
@@ -63,6 +64,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "lint": lint_tool.main,
         "library-manifest": library.main,
         "markdown-contract": markdown_contract.main,
+        "weekly-governance": weekly_governance.main,
         "release-gate": lambda args: release_ops.main(["gate", *args]),
         "release-health": lambda args: release_ops.main(["health", *args]),
         "release-provenance": lambda args: release_ops.main(["provenance", *args]),
