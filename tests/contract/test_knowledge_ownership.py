@@ -19,6 +19,7 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
+    (tmp_path / "skills/runtime").mkdir(parents=True)
     (tmp_path / "skills/runtime/source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
         "| Source | Path | Signals | Runtime contract | Guidance |\n"
