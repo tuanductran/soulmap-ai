@@ -5,4 +5,3 @@ dependency knowledge is resolved through the Markdown source registry.
 """
 
 from __future__ import annotations
-
