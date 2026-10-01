@@ -1,0 +1,22 @@
+name: Validate GitHub Actions workflows with Docker
+description: Run pinned actionlint in a minimal Docker image.
+inputs:
+  version:
+    description: actionlint release version.
+    required: false
+    default: "1.7.12"
+  sha256:
+    description: SHA-256 for the Linux amd64 actionlint release archive.
+    required: false
+    default: "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+  config-file:
+    description: Path to the actionlint configuration file.
+    required: false
+    default: ".github/actionlint.yaml"
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.version }}
+    - ${{ inputs.sha256 }}
+    - ${{ inputs.config-file }}
