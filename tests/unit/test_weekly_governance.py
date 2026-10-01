@@ -48,3 +48,25 @@ def test_weekly_governance_writes_success_summary(tmp_path: Path, monkeypatch: p
 
     assert run_weekly_governance(tmp_path, runner=runner) == 0
     assert summary.read_text(encoding="utf-8") == "\n".join(SUMMARY_LINES) + "\n"
+
+
+def test_weekly_governance_stops_after_first_failure(tmp_path: Path) -> None:
+    calls: list[tuple[str, ...]] = []
+
+    def runner(command: list[str], **kwargs: object) -> CompletedProcess[str]:
+        calls.append(tuple(command))
+        if len(calls) == 2:
+            raise __import__("subprocess").CalledProcessError(1, command)
+        return CompletedProcess(command, 0, stdout="dependency tree\n", stderr="")
+
+    try:
+        run_weekly_governance(tmp_path, runner=runner)
+    except __import__("subprocess").CalledProcessError:
+        pass
+    else:
+        raise AssertionError("governance must stop when a canonical check fails")
+
+    assert calls == [
+        ("uv", "tree", "--depth", "1"),
+        ("uv", "lock", "--check"),
+    ]
