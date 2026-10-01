@@ -95,12 +95,12 @@ Isolation signals:
 
 | Label | Pattern |
 | :--- | :--- |
-| only you understand me (really) | `\\bonly you\\s+really\\s+understand(?:s)?\\s+me\\b` |
-| only you understand me (truly) | `\\bonly you\\s+truly\\s+understand(?:s)?\\s+me\\b` |
-| you're the only one who understands me (really) | `\\byou're\\s+the\\s+only\\s+one\\s+who\\s+really\\s+understands\\s+me\\b` |
-| you are the only one who understands me (really) | `\\byou\\s+are\\s+the\\s+only\\s+one\\s+who\\s+really\\s+understands\\s+me\\b` |
-| you're the only one who understands me (truly) | `\\byou're\\s+the\\s+only\\s+one\\s+who\\s+truly\\s+understands\\s+me\\b` |
-| you are the only one who understands me (truly) | `\\byou\\s+are\\s+the\\s+only\\s+one\\s+who\\s+truly\\s+understands\\s+me\\b` |
+| only you understand me (really) | `\bonly you\s+really\s+understand(?:s)?\s+me\b` |
+| only you understand me (truly) | `\bonly you\s+truly\s+understand(?:s)?\s+me\b` |
+| you're the only one who understands me (really) | `\byou're\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b` |
+| you are the only one who understands me (really) | `\byou\s+are\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b` |
+| you're the only one who understands me (truly) | `\byou're\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
+| you are the only one who understands me (truly) | `\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 
 ## Runtime detection contract
 
