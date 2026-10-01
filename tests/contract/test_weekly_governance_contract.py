@@ -11,17 +11,6 @@ WEEKLY_COMMANDS = (
     "actionlint",
     "uv sync --locked --python 3.11",
     "uv run soulmap weekly-governance",
-    "uv lock --check",
-    "tests/contract/test_p_level_governance.py",
-    "tests/contract/test_dependency_refresh_process_contract.py",
-    "tests/contract/test_toolchain_support_contract.py",
-    "uv run soulmap audit-knowledge",
-    "uv run python tests/eval_regression/test_safety_evals.py",
-    "uv run python scripts/pytest_diagnostics.py",
-    "uv run deptry .",
-    "uv run soulmap library-manifest",
-    "uv run python scripts/verify_artifact_hashes.py",
-    "uv run python scripts/verify_extracted_artifacts.py",
 )
 
 SCENARIOS = (
@@ -46,8 +35,10 @@ def test_weekly_workflow_is_scheduled_deterministic_and_non_mutating() -> None:
         assert command in content
 
     assert "uv run soulmap weekly-governance" in content
-    assert "uv run pytest -q \\\\n" not in content
+    assert "uv run pytest -q" not in content
+    assert "uv lock --check" not in content
     assert "uv run deptry ." not in content
+    assert "uv run soulmap audit-knowledge" not in content
     assert "uv run python scripts/verify_artifact_hashes.py" not in content
     assert "uv run python scripts/verify_extracted_artifacts.py" not in content
     for forbidden in ("gh pr merge", "gh pr create", "uv lock --upgrade", "git tag"):
