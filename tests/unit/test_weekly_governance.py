@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from subprocess import CompletedProcess
 
+import pytest
+
 from soulmap.devtools.governance.weekly import (
     ARTIFACT_COMMANDS,
     CONTRACT_TESTS,
@@ -37,7 +39,7 @@ def test_weekly_governance_preserves_command_order(tmp_path: Path) -> None:
     )
 
 
-def test_weekly_governance_writes_success_summary(tmp_path: Path, monkeypatch) -> None:
+def test_weekly_governance_writes_success_summary(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     summary = tmp_path / "summary.md"
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
 
