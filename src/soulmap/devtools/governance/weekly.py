@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import os
 import subprocess
-from pathlib import Path
 from collections.abc import Callable, Sequence
+from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
 
