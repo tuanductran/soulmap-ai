@@ -85,6 +85,44 @@ def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str
     }
 
 
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
+def run_release_gate(
+    repo_root: Path,
+    verification_path: Path,
+    provenance_path: Path,
+) -> dict[str, Any]:
+    """Run the complete release verification/provenance lifecycle in order."""
+    verification = verify_release(repo_root)
+    _write_json(verification_path, verification)
+
+    provenance = create_provenance(repo_root, verification)
+    _write_json(provenance_path, provenance)
+
+    health_verification = verify_release(repo_root)
+    verified_provenance = verify_provenance(repo_root, provenance_path)
+
+    final_verification = verify_release(repo_root)
+    _write_json(verification_path, final_verification)
+    final_provenance = create_provenance(repo_root, final_verification)
+    _write_json(provenance_path, final_provenance)
+
+    return {
+        "status": "pass",
+        "version": final_verification["version"],
+        "health": {
+            "status": "pass",
+            "version": health_verification["version"],
+            "provenance": verified_provenance,
+        },
+        "verification": final_verification,
+        "provenance": final_provenance,
+    }
+
+
 def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     """Verify provenance against the checked-out release artifacts."""
     try:
@@ -132,33 +170,31 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Create or verify SoulMap release operational metadata."
     )
-    parser.add_argument("action", choices=("provenance", "health"))
+    parser.add_argument("action", choices=("provenance", "health", "gate"))
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     parser.add_argument("--verification", type=Path, default=None)
     parser.add_argument("--provenance", type=Path, default=None)
     args = parser.parse_args(argv)
     root = args.root.resolve()
     try:
+        verification_path = (
+            args.verification or root / "dist" / "release-verification.json"
+        )
+        provenance_path = args.provenance or root / "dist" / "release-provenance.json"
         if args.action == "provenance":
-            verification_path = (
-                args.verification or root / "dist" / "release-verification.json"
-            )
             verification = json.loads(verification_path.read_text(encoding="utf-8"))
             payload = create_provenance(root, verification)
-            output = args.provenance or root / "dist" / "release-provenance.json"
-            output.parent.mkdir(parents=True, exist_ok=True)
-            output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-        else:
+            _write_json(provenance_path, payload)
+        elif args.action == "health":
             verification = verify_release(root)
-            provenance_path = (
-                args.provenance or root / "dist" / "release-provenance.json"
-            )
             provenance = verify_provenance(root, provenance_path)
             payload = {
                 "status": "pass",
                 "version": verification["version"],
                 "provenance": provenance,
             }
+        else:
+            payload = run_release_gate(root, verification_path, provenance_path)
         print(json.dumps(payload, indent=2))
         return 0
     except (

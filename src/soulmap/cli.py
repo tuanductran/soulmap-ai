@@ -63,6 +63,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "lint": lint_tool.main,
         "library-manifest": library.main,
         "markdown-contract": markdown_contract.main,
+        "release-gate": lambda args: release_ops.main(["gate", *args]),
         "release-health": lambda args: release_ops.main(["health", *args]),
         "release-provenance": lambda args: release_ops.main(["provenance", *args]),
         "release-verify": release_verify.main,

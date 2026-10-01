@@ -9,7 +9,7 @@ RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release.yml"
 
 
 REQUIRED_ARTIFACT_COMMANDS = (
-    "uv run soulmap release-verify --root . --output dist/release-verification.json",
+    "uv run soulmap release-gate --root . --verification dist/release-verification.json --provenance dist/release-provenance.json",
 )
 
 

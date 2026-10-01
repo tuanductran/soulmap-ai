@@ -81,23 +81,8 @@ jobs:
       - name: Build release artifacts
         run: uv run soulmap library-manifest
 
-      - name: Generate release verification
-        run: uv run soulmap release-verify --root . --output dist/release-verification.json
-
-      - name: Generate release provenance
-        run: uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
-
-      - name: Run release health checks
-        run: uv run soulmap release-health --root . --provenance dist/release-provenance.json
-
-      # release-health revalidates artifacts and older release commits may remove
-      # dist/release-verification.json while rebuilding them. Regenerate both
-      # metadata files from the final post-health artifacts before publication.
-      - name: Regenerate release verification after health checks
-        run: uv run soulmap release-verify --root . --output dist/release-verification.json
-
-      - name: Regenerate release provenance after health checks
-        run: uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
+      - name: Run release verification gate
+        run: uv run soulmap release-gate --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
 
       - name: Verify release artifacts
         run: |

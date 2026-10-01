@@ -88,9 +88,7 @@ jobs:
           uv run soulmap markdown-contract --root .
           uv run soulmap check-links --root .
           uv run soulmap check-case --root .
-          uv run soulmap release-verify --root . --output dist/release-verification.json
-          uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
-          uv run soulmap release-health --root . --provenance dist/release-provenance.json
+          uv run soulmap release-gate --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
 
       - name: Publish release branch through Python action
         uses: ./src/action

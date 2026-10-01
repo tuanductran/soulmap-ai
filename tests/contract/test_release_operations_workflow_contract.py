@@ -47,9 +47,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
     assert "github.event.pull_request.merge_commit_sha" in workflow
     assert "Verify checkout is the merged release commit" in workflow
-    assert "soulmap release-verify" in workflow
-    assert "soulmap release-provenance" in workflow
-    assert "soulmap release-health" in workflow
+    assert "soulmap release-gate" in workflow
+    assert "soulmap release-verify" not in workflow
+    assert "soulmap release-provenance" not in workflow
+    assert "soulmap release-health" not in workflow
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
     assert "id-token: write" in workflow
