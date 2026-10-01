@@ -22,7 +22,9 @@ _ISOLATION_SIGNALS = _SIGNAL_GROUPS["isolation signals"]
 
 _PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
-    (row[0], re.compile(row[1].strip(chr(96)))) for row in _PATTERN_ROWS if len(row) >= 2
+    (row[0], re.compile(row[1].strip(chr(96))))
+    for row in _PATTERN_ROWS
+    if len(row) >= 2
 )
 
 _SCORING = load_key_value_table(_SOURCE, "Scoring")
