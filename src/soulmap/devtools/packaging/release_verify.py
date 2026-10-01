@@ -135,8 +135,6 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
     return checked
 
 
-
-
 def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
     """Compatibility wrapper around the canonical shipped-member contract."""
     return source_members(repo_root, include_plugin=include_plugin)
