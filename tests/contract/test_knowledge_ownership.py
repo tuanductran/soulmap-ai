@@ -21,12 +21,12 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
-    (tmp_path / "skills/runtime").mkdir(parents=True)
+    (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
     (tmp_path / "skills/frameworks").mkdir(parents=True)
     (tmp_path / "skills/frameworks/example.md").write_text(
         "# Example\n", encoding="utf-8"
     )
-    (tmp_path / "skills/runtime/source-registry.md").write_text(
+    (tmp_path / "src/soulmap/runtime/source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
         "| Source | Path | Signals | Runtime contract | Guidance |\n"
         "| :--- | :--- | :--- | :--- | :--- |\n"
@@ -37,7 +37,7 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
     assert any(item.kind == "missing-domain-source" for item in findings)
 
 
-def test_source_members_exclude_runtime_and_honor_plugin_boundary(
+def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
     tmp_path: Path,
 ) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
@@ -67,7 +67,7 @@ def test_source_members_exclude_runtime_and_honor_plugin_boundary(
 def test_runtime_registry_orphan_and_direct_path_are_reported(tmp_path: Path) -> None:
     runtime = tmp_path / "src/soulmap/runtime"
     runtime.mkdir(parents=True)
-    registry = tmp_path / "skills/runtime"
+    registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
