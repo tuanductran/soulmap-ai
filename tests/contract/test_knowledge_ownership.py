@@ -44,7 +44,9 @@ def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
     (tmp_path / "skills/frameworks").mkdir(parents=True)
     (tmp_path / "skills/frameworks/example.md").write_text("", encoding="utf-8")
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
-    (tmp_path / "src/soulmap/runtime/source-registry.md").write_text(\n        "", encoding="utf-8"\n    )
+    (tmp_path / "src/soulmap/runtime/source-registry.md").write_text(
+        "", encoding="utf-8"
+    )
     (tmp_path / ".claude-plugin").mkdir(parents=True)
     (tmp_path / ".claude-plugin/marketplace.json").write_text("{}", encoding="utf-8")
 
