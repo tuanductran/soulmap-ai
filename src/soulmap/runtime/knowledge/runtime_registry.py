@@ -56,7 +56,7 @@ def _validate_registry(
 ) -> tuple[str, ...]:
     """Validate every registry mapping and its required Markdown sections."""
     violations: list[str] = []
-    skills_root = entries_path = registry_path.parent.parent.resolve()
+    skills_root = registry_path.parent.parent.resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
         path = (registry_path.parent.parent / relative_path.removeprefix("skills/")).resolve()
