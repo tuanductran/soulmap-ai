@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 
-def build_summary(verification: dict[str, object], release_ref: str) -> dict[str, object]:
+def build_summary(\n    verification: dict[str, object], release_ref: str\n) -> dict[str, object]:
     """Build the public rollback verification summary from release evidence."""
     status = verification.get("status")
     version = verification.get("version")
@@ -25,7 +25,7 @@ def build_summary(verification: dict[str, object], release_ref: str) -> dict[str
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--verification", type=Path, default=Path("dist/release-verification.json"))
+    parser.add_argument(\n        "--verification", type=Path, default=Path("dist/release-verification.json")\n    )
     parser.add_argument("--release-ref", required=True)
     args = parser.parse_args()
 
