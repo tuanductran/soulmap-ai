@@ -6,7 +6,7 @@ from soulmap.devtools.packaging.members import source_members
 
 def test_real_knowledge_ownership_has_no_errors() -> None:
     findings = audit(Path(__file__).resolve().parents[2])
-    assert not [item for item in findings if item.kind != "shared-domain-source"], findings
+    assert not [item for item in findings if item.kind != "shared-domain-source"], (\n        findings\n    )
 
 
 def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
@@ -30,7 +30,7 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
     assert any(item.kind == "missing-domain-source" for item in findings)
 
 
-def test_source_members_exclude_runtime_and_honor_plugin_boundary(tmp_path: Path) -> None:
+def test_source_members_exclude_runtime_and_honor_plugin_boundary(\n    tmp_path: Path,\n) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
         (tmp_path / name).write_text("", encoding="utf-8")
     (tmp_path / "skills/frameworks").mkdir(parents=True)
