@@ -127,7 +127,9 @@ def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
     assert (
-        _validate_registry(registry, REPO_ROOT / "skills/runtime/source-registry.md")
+        _validate_registry(
+            registry, REPO_ROOT / "src/soulmap/runtime/source-registry.md"
+        )
         == ()
     )
     assert all(runtime_skill_path(source).is_file() for source in registry)

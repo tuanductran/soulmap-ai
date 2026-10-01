@@ -20,10 +20,9 @@ under `src/soulmap/runtime/`, plus a maintainer tooling package under
 
 - `SOULMAP.md`, the shipped SoulMap doctrine, safety rules, and framework hierarchy
 - `skills/`, the shipped knowledge base (frameworks, safety, brand, voice, meta,
-  spiritual, domains, soulmate, writing); `skills/runtime/` is an internal runtime
-  integration contract surface and is not shipped
+  spiritual, domains, soulmate, writing)
 - `templates/`, internal-only product and brand copy, not shipped
-- `src/soulmap/runtime/`, the executable routing, detection, and safety-guard layer
+- `src/soulmap/runtime/`, the executable routing, detection, safety-guard, and internal runtime contract layer
 - `src/soulmap/devtools/`, the maintainer CLI (`soulmap ...`), eval runners, and
   packaging tools
 - `tests/`, the pytest suite; `evals/datasets/`, source-backed routing and safety

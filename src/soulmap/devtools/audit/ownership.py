@@ -28,7 +28,7 @@ class OwnershipFinding:
 
 
 def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
-    registry = _registry(root / "skills/runtime/source-registry.md")
+    registry = _registry(root / "src/soulmap/runtime/source-registry.md")
     findings: list[OwnershipFinding] = []
     used_sources: set[str] = set()
     runtime_root = root / "src/soulmap/runtime"

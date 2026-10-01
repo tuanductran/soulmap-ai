@@ -6,7 +6,6 @@ import fnmatch
 from pathlib import Path
 
 CORE_FILES = ("LICENSE", "SOULMAP.md", "SKILL.md")
-RUNTIME_PREFIX = "skills/runtime/"
 PLUGIN_PREFIX = ".claude-plugin/"
 
 
@@ -37,12 +36,7 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
 
     skills_root = repo_root / "skills"
     if skills_root.is_dir():
-        paths.extend(
-            path
-            for path in skills_root.rglob("*")
-            if path.is_file()
-            and not path.relative_to(repo_root).as_posix().startswith(RUNTIME_PREFIX)
-        )
+        paths.extend(path for path in skills_root.rglob("*") if path.is_file())
 
     if include_plugin:
         plugin_root = repo_root / ".claude-plugin"

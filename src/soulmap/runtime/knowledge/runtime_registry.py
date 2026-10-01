@@ -8,7 +8,7 @@ from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_table_rows
 
-_REGISTRY_PATH = default_skill_path("skills/runtime/source-registry.md")
+_REGISTRY_PATH = default_skill_path("src/soulmap/runtime/source-registry.md")
 
 
 @cache
@@ -59,12 +59,11 @@ def _validate_registry(
 ) -> tuple[str, ...]:
     """Validate every registry mapping and its required Markdown sections."""
     violations: list[str] = []
-    skills_root = registry_path.parent.parent.resolve()
+    repo_root = registry_path.parents[3].resolve()
+    skills_root = (repo_root / "skills").resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
-        path = (
-            registry_path.parent.parent / relative_path.removeprefix("skills/")
-        ).resolve()
+        path = (repo_root / relative_path).resolve()
         try:
             path.relative_to(skills_root)
         except ValueError:
