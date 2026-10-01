@@ -23,9 +23,7 @@ def test_run_release_gate_preserves_verification_lifecycle(
         calls.append("provenance")
         return {"status": "pass", "version": verification["version"]}
 
-    def verify_provenance(
-        root: Path, path: Path
-    ) -> dict[str, object]:
+    def verify_provenance(root: Path, path: Path) -> dict[str, object]:
         calls.append("health")
         return {"status": "pass", "version": "0.11.0"}
 
@@ -36,9 +34,7 @@ def test_run_release_gate_preserves_verification_lifecycle(
     verification_path = tmp_path / "dist" / "release-verification.json"
     provenance_path = tmp_path / "dist" / "release-provenance.json"
 
-    payload = release_ops.run_release_gate(
-        tmp_path, verification_path, provenance_path
-    )
+    payload = release_ops.run_release_gate(tmp_path, verification_path, provenance_path)
 
     assert calls == ["verify", "provenance", "verify", "health", "verify", "provenance"]
     assert payload["status"] == "pass"
