@@ -1,8 +1,10 @@
-self-hosted-runner:
-  labels:
-    - ubuntu-26.04
-
 paths:
+  .github/workflows/ci.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/weekly-governance.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
   .github/workflows/release.yml:
     ignore:
       - 'specifying action "\$/src/action" in invalid format because ref is missing\.'
