@@ -492,7 +492,7 @@ def create_branch(
         )
 
     encoded = base64.b64encode(
-        f"x-access-token:{client.token}".encode("utf-8")
+        f"x-access-token:{client.token}".encode()
     ).decode("ascii")
     environment = os.environ.copy()
     environment["GIT_CONFIG_COUNT"] = "1"
