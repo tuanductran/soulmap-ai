@@ -18,10 +18,9 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "pull-requests: write" not in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: false" in workflow
-    assert (
-        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"'
-        in workflow
-    )
+    assert "operation: branch" in workflow
+    assert "target-sha: ${{ steps.bump.outputs.sha }}" in workflow
+    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push' not in workflow
     assert "uses: ./src/action" in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
@@ -31,6 +30,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "git push --follow-tags" not in workflow
     assert "softprops/action-gh-release" not in workflow
     assert "operation: pull-request" in workflow
+    assert "base64" not in workflow
 
 
 def test_release_finalize_publishes_only_after_merged_main_verification() -> None:
@@ -127,6 +127,9 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
 def test_local_python_action_contains_github_operations() -> None:
     action = (ROOT / "src" / "action" / "__main__.py").read_text()
     assert "/pulls" in action
+    assert "/git/refs" in action
+    assert "def create_branch(" in action
+    assert 'operation == "branch"' in action
     assert "/releases" in action
     assert "GITHUB_OUTPUT" in action
     assert "API_VERSION = " in action
