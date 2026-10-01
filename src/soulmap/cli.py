@@ -12,6 +12,7 @@ import subprocess
 from collections.abc import Callable
 
 from soulmap.devtools.audit import knowledge as audit_knowledge
+from soulmap.devtools.audit import ownership as audit_ownership
 from soulmap.devtools.checks import (
     check_api_docs,
     check_freshness,
@@ -49,6 +50,7 @@ def _run_pytest(args: list[str]) -> int:
 def _command_table() -> dict[str, CommandHandler]:
     return {
         "audit-knowledge": audit_knowledge.main,
+        "audit-knowledge-ownership": audit_ownership.main,
         "bootstrap": bootstrap_venv.main,
         "build": build_skill.main,
         "check-api-docs": check_api_docs.main,
