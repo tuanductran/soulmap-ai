@@ -21,7 +21,6 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
-    (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
     (tmp_path / "skills/frameworks").mkdir(parents=True)
     (tmp_path / "skills/frameworks/example.md").write_text(
         "# Example\n", encoding="utf-8"
@@ -44,8 +43,8 @@ def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
         (tmp_path / name).write_text("", encoding="utf-8")
     (tmp_path / "skills/frameworks").mkdir(parents=True)
     (tmp_path / "skills/frameworks/example.md").write_text("", encoding="utf-8")
-    (tmp_path / "skills/runtime").mkdir(parents=True)
-    (tmp_path / "skills/runtime/source-registry.md").write_text("", encoding="utf-8")
+    (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
+    (tmp_path / "src/soulmap/runtime/source-registry.md").write_text("", encoding="utf-8")
     (tmp_path / ".claude-plugin").mkdir(parents=True)
     (tmp_path / ".claude-plugin/marketplace.json").write_text("{}", encoding="utf-8")
 
@@ -95,7 +94,7 @@ def test_runtime_registry_orphan_and_direct_path_are_reported(tmp_path: Path) ->
 def test_runtime_audit_uses_supplied_root_registry(tmp_path: Path) -> None:
     runtime = tmp_path / "src/soulmap/runtime"
     runtime.mkdir(parents=True)
-    registry = tmp_path / "skills/runtime"
+    registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
