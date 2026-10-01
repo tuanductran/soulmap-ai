@@ -20,13 +20,13 @@ from soulmap.devtools.checks import (
     skills_boundary,
 )
 from soulmap.devtools.cli import bootstrap_venv
-from soulmap.devtools.governance import weekly as weekly_governance
 from soulmap.devtools.evals import (
     eval_groups,
     eval_markdown_contracts,
     eval_response_quality,
     eval_responses,
 )
+from soulmap.devtools.governance import weekly as weekly_governance
 from soulmap.devtools.packaging import build_skill, library, release_ops, release_verify
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
