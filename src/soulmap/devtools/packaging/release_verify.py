@@ -17,12 +17,6 @@ from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
 )
-from soulmap.devtools.packaging.build_skill import (
-    _is_ignored,
-    _iter_claude_plugin_inputs,
-    _iter_inputs,
-    _load_distignore,
-)
 from soulmap.devtools.packaging.library import build_library
 from soulmap.devtools.support.repo import REPO_ROOT
 
