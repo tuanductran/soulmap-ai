@@ -461,7 +461,7 @@ def create_branch(
     """Create or verify a branch reference for an exact commit SHA."""
     if not target_sha or len(target_sha) != 40:
         raise GitHubActionError("Branch target must be a full 40-character commit SHA.")
-    ref_path = f"/repos/{quote(owner)}/{quote(repo)}/git/ref/heads/{quote(branch, safe='')}"
+    ref_path = (\n        f"/repos/{quote(owner)}/{quote(repo)}/git/ref/heads/{quote(branch, safe='')}"\n    )
     try:
         existing = client.api("GET", ref_path)
     except GitHubAPIError as exc:
@@ -471,7 +471,7 @@ def create_branch(
 
     if existing is not None:
         if not isinstance(existing, dict):
-            raise GitHubActionError("GitHub returned invalid branch reference metadata.")
+            raise GitHubActionError(\n                "GitHub returned invalid branch reference metadata."\n            )
         resolved = existing.get("object")
         if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
             raise GitHubActionError(
