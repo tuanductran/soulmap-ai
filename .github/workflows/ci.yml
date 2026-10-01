@@ -55,6 +55,9 @@ jobs:
       - name: Knowledge consistency inventory
         if: matrix.os == 'ubuntu-26.04'
         run: uv run soulmap audit-knowledge
+      - name: Knowledge ownership audit
+        if: matrix.os == 'ubuntu-26.04'
+        run: uv run soulmap audit-knowledge-ownership
       - name: Knowledge migration guard
         if: matrix.os == 'ubuntu-26.04'
         run: uv run soulmap audit-knowledge --max-knowledge-duplicates 519
