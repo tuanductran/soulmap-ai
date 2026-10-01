@@ -26,11 +26,15 @@ soulmap-ai.skill
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import textwrap
 import zipfile
 from pathlib import Path
 
+from soulmap.devtools.packaging.members import (
+    is_ignored as _is_ignored,
+    load_distignore as _load_distignore,
+    source_paths,
+)
 from soulmap.devtools.support.repo import REPO_ROOT
 
 # ---------------------------------------------------------------------------
@@ -38,49 +42,18 @@ from soulmap.devtools.support.repo import REPO_ROOT
 # ---------------------------------------------------------------------------
 
 
-def _load_distignore(repo_root: Path) -> list[str]:
-    distignore = repo_root / ".distignore"
-    if not distignore.is_file():
-        return []
-    patterns: list[str] = []
-    for raw in distignore.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#"):
-            continue
-        patterns.append(line)
-    return patterns
-
-
-def _is_ignored(rel: str, patterns: list[str]) -> bool:
-    return any(fnmatch.fnmatch(rel, pat) for pat in patterns)
-
-
 def _iter_inputs(repo_root: Path) -> list[Path]:
     """Return files shared by the zip and .skill archives."""
-    paths: list[Path] = []
-    for name in ["LICENSE", "SOULMAP.md", "SKILL.md"]:
-        candidate = repo_root / name
-        if candidate.is_file():
-            paths.append(candidate)
-
-    for folder in ["skills"]:
-        base = repo_root / folder
-        for path in base.rglob("*"):
-            if (
-                path.is_file()
-                and Path("skills/runtime") not in path.relative_to(repo_root).parents
-            ):
-                paths.append(path)
-
-    return sorted(set(paths))
+    return source_paths(repo_root, include_plugin=False)
 
 
 def _iter_claude_plugin_inputs(repo_root: Path) -> list[Path]:
-    """Return the .claude-plugin files preserved only in the .skill archive."""
-    base = repo_root / ".claude-plugin"
-    if not base.is_dir():
-        return []
-    return sorted(path for path in base.rglob("*") if path.is_file())
+    """Return plugin files preserved only in the .skill archive."""
+    return [
+        path
+        for path in source_paths(repo_root, include_plugin=True)
+        if path.relative_to(repo_root).as_posix().startswith(".claude-plugin/")
+    ]
 
 
 def _build_archive(
