@@ -22,6 +22,7 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
     )
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
     (tmp_path / "skills/runtime").mkdir(parents=True)
+    (tmp_path / "skills/frameworks").mkdir(parents=True)
     (tmp_path / "skills/frameworks/example.md").write_text("# Example\n", encoding="utf-8")
     (tmp_path / "skills/runtime/source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
