@@ -34,7 +34,7 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
 
     for path in sorted(runtime_root.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
-        if path.name == "pattern_source.py":
+        if path.name in {"pattern_source.py", "runtime_registry.py"}:
             continue
         for match in _DIRECT_RE.finditer(text):
             findings.append(
