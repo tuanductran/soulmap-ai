@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import mimetypes
@@ -490,7 +491,7 @@ def create_branch(
             f"Local HEAD {head!r} does not match requested branch target {target_sha!r}."
         )
 
-    encoded = __import__("base64").b64encode(
+    encoded = base64.b64encode(
         f"x-access-token:{client.token}".encode("utf-8")
     ).decode("ascii")
     environment = os.environ.copy()
