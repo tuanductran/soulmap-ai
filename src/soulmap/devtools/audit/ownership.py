@@ -16,7 +16,6 @@ _CANONICAL_RE = re.compile(
     r"^##\s+Canonical sources\s*$(?P<body>.*?)(?=^##\s+|\Z)",
     re.MULTILINE | re.DOTALL,
 )
-_SOURCE_RE = re.compile(r'\bruntime_skill_path\(\s*"([^"]+)"\s*\)')
 _DIRECT_RE = re.compile(r'default_skill_path\(\s*"skills/([^"]+)"\s*\)')
 
 
