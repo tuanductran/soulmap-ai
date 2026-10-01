@@ -22,10 +22,12 @@ def test_domain_router_missing_source_is_reported(tmp_path: Path) -> None:
     )
     (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
     (tmp_path / "skills/runtime").mkdir(parents=True)
+    (tmp_path / "skills/frameworks/example.md").write_text("# Example\n", encoding="utf-8")
     (tmp_path / "skills/runtime/source-registry.md").write_text(
         "# SoulMap runtime source registry\n\n"
         "| Source | Path | Signals | Runtime contract | Guidance |\n"
-        "| :--- | :--- | :--- | :--- | :--- |\n",
+        "| :--- | :--- | :--- | :--- | :--- |\n"
+        "| example | skills/frameworks/example.md | - | - | - |\n",
         encoding="utf-8",
     )
     findings = audit(tmp_path)
@@ -110,8 +112,4 @@ def test_runtime_audit_uses_supplied_root_registry(tmp_path: Path) -> None:
     )
 
     findings = audit(tmp_path)
-    assert not [
-        item
-        for item in findings
-        if item.kind != "shared-domain-source"
-    ]
+    assert not [item for item in findings if item.kind != "shared-domain-source"]
