@@ -37,7 +37,7 @@ jobs:
 
       - name: Install actionlint
         if: matrix.os == 'ubuntu-26.04'
-        uses: ./.github/actions/actionlint
+        uses: ./.github/actions/actionlint/python
 
       - name: Validate GitHub Actions workflows
         if: matrix.os == 'ubuntu-26.04'
