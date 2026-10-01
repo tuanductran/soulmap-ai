@@ -48,17 +48,4 @@ jobs:
           test "v${version}" = "${{ inputs.release_ref }}"
 
       - name: Emit rollback verification summary
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          verification = json.loads(Path("dist/release-verification.json").read_text())
-          summary = {
-              "status": verification["status"],
-              "release_ref": "${{ inputs.release_ref }}",
-              "version": verification["version"],
-              "rollback_ready": verification["status"] == "pass",
-          }
-          print(json.dumps(summary, indent=2))
-          PY
+        run: uv run python scripts/emit_rollback_summary.py --release-ref "${{ inputs.release_ref }}"
