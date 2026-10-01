@@ -40,7 +40,8 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
         paths.extend(
             path
             for path in skills_root.rglob("*")
-            if path.is_file() and not path.relative_to(repo_root).as_posix().startswith(RUNTIME_PREFIX)
+            if path.is_file()
+            and not path.relative_to(repo_root).as_posix().startswith(RUNTIME_PREFIX)
         )
 
     if include_plugin:
