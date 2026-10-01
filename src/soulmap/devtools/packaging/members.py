@@ -11,6 +11,7 @@ PLUGIN_PREFIX = ".claude-plugin/"
 
 
 def load_distignore(repo_root: Path) -> list[str]:
+    """Load repository packaging exclusion patterns."""
     path = repo_root / ".distignore"
     if not path.is_file():
         return []
@@ -22,6 +23,7 @@ def load_distignore(repo_root: Path) -> list[str]:
 
 
 def is_ignored(relative: str, patterns: list[str]) -> bool:
+    """Return whether a repository-relative path matches an exclusion pattern."""
     return any(fnmatch.fnmatch(relative, pattern) for pattern in patterns)
 
 
@@ -50,6 +52,7 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
 
 
 def source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
+    """Return the canonical set of members allowed in a shipped artifact."""
     patterns = load_distignore(repo_root)
     return {
         path.relative_to(repo_root).as_posix()
