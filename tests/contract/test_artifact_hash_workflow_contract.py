@@ -61,7 +61,15 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
 def test_release_finalize_verifies_artifacts_before_publication() -> None:
     content = _read(RELEASE_FINALIZE_WORKFLOW)
 
-    assert RELEASE_VERIFY_COMMAND in content
+    release_gate_command = (
+        "uv run soulmap release-gate --root . "
+        "--verification dist/release-verification.json "
+        "--provenance dist/release-provenance.json"
+    )
+    assert release_gate_command in content
+    assert "uv run soulmap release-verify " not in content
+    assert "uv run soulmap release-provenance " not in content
+    assert "uv run soulmap release-health " not in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
     assert "uses: ./src/action" in content
     assert "operation: release" in content
@@ -69,22 +77,8 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "target-sha:" in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
-    health_command = (
-        "uv run soulmap release-health --root . "
-        "--provenance dist/release-provenance.json"
-    )
-    provenance_command = (
-        "uv run soulmap release-provenance --root . "
-        "--verification dist/release-verification.json "
-        "--provenance dist/release-provenance.json"
-    )
-    assert content.count(RELEASE_VERIFY_COMMAND) == 2
-    assert content.count(provenance_command) == 2
-    assert content.index(LIBRARY_COMMAND) < content.index(RELEASE_VERIFY_COMMAND)
-    assert content.index(RELEASE_VERIFY_COMMAND) < content.index(health_command)
-    assert content.index(health_command) < content.rindex(RELEASE_VERIFY_COMMAND)
-    assert content.index(health_command) < content.rindex(provenance_command)
-    assert content.rindex(provenance_command) < content.index(VERIFY_COMMAND)
+    assert content.index(LIBRARY_COMMAND) < content.index(release_gate_command)
+    assert content.index(release_gate_command) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)
     assert content.index(EXTRACT_COMMAND) < content.index(
         f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}"
