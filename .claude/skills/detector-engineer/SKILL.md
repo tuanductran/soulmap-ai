@@ -139,44 +139,16 @@ if recent_messages_show_pattern(messages):
 
 Thresholds define when a detector's score triggers a framework override.
 
-### Define thresholds in `src/soulmap/runtime/config/`
-
-```python
-# src/soulmap/runtime/config/safety.py
-HIGH_DEPENDENCY_THRESHOLD = 2       # Score >= 2 triggers high dependency
-MODERATE_DEPENDENCY_THRESHOLD = 1   # Score >= 1 warrants dependency caution
-
-# Crisis tiers are defined by language-specific knowledge packs, not a numeric threshold.
-```
-
-### Use thresholds consistently
-
-```python
-from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
-
-if score >= HIGH_DEPENDENCY_THRESHOLD:
-    level = "HIGH_DEPENDENCY"
-elif score >= MODERATE_DEPENDENCY_THRESHOLD:
-    level = "MODERATE_DEPENDENCY"
-else:
-    level = "LOW_DEPENDENCY"
-```
+For knowledge-first detectors, thresholds are authored in the detector's registered
+Markdown runtime source. Python loads those values and applies them; it must not create
+a second threshold source in src/soulmap/runtime/config/.
 
 ### Tune thresholds based on evals
 
 1. Run `uv run soulmap eval-groups` to see which tests fail
-2. If detector scores are too high or low, adjust the threshold in the relevant file under `src/soulmap/runtime/config/`
+2. If detector scores are too high or low, adjust the threshold in the detector's canonical Markdown source
 3. Re-run evals to verify the fix
-4. Document threshold rationale in comments
-
-Example adjustment:
-
-```python
-# Before: threshold too high, missing moderate dependency cases
-HIGH_DEPENDENCY_THRESHOLD = 2
-# Now: threshold captures high-confidence dependency signals
-HIGH_DEPENDENCY_THRESHOLD = 2
-```
+4. Document threshold rationale in the runtime contract section
 
 ## Scoring best practices
 
@@ -354,7 +326,7 @@ for norm_msg in normalized_messages:
 1. Read `../rules/detector-development.md` before writing any code.
 2. Check `src/soulmap/runtime/config/` for existing signal phrase constants to extend rather than duplicate.
 3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
-4. Add threshold constants to `src/soulmap/runtime/config/safety.py` or the appropriate domain config.
+4. Add detector knowledge to the registered Markdown runtime source; Python should only load and enforce it.
 5. Integrate the detector call into `src/soulmap/runtime/routing/framework_selector.py` at the correct priority.
 6. Add eval cases to `evals/datasets/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
 7. Run `uv run soulmap test -n auto -q` and `uv run soulmap eval-groups` before pushing.
