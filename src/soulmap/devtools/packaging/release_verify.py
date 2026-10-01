@@ -137,6 +137,11 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
 
 
 
+def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
+    """Compatibility wrapper around the canonical shipped-member contract."""
+    return source_members(repo_root, include_plugin=include_plugin)
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
