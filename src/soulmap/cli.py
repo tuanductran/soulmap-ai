@@ -20,6 +20,7 @@ from soulmap.devtools.checks import (
     skills_boundary,
 )
 from soulmap.devtools.cli import bootstrap_venv
+from soulmap.devtools.governance import weekly as weekly_governance
 from soulmap.devtools.evals import (
     eval_groups,
     eval_markdown_contracts,
@@ -63,6 +64,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "lint": lint_tool.main,
         "library-manifest": library.main,
         "markdown-contract": markdown_contract.main,
+        "weekly-governance": weekly_governance.main,
         "release-gate": lambda args: release_ops.main(["gate", *args]),
         "release-health": lambda args: release_ops.main(["health", *args]),
         "release-provenance": lambda args: release_ops.main(["provenance", *args]),
