@@ -16,7 +16,6 @@ _CANONICAL_RE = re.compile(
     r"^##\s+Canonical sources\s*$(?P<body>.*?)(?=^##\s+|\Z)",
     re.MULTILINE | re.DOTALL,
 )
-_DIRECT_RE = re.compile(r'default_skill_path\(\s*"skills/([^"]+)"\s*\)')
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,7 +34,6 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
     runtime_root = root / "src/soulmap/runtime"
 
     for path in sorted(runtime_root.rglob("*.py")):
-        text = path.read_text(encoding="utf-8")
         if path.name in {"pattern_source.py", "runtime_registry.py"}:
             continue
         tree = ast.parse(text, filename=str(path))
