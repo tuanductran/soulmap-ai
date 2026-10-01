@@ -149,6 +149,7 @@ a second threshold source in `src/soulmap/runtime/config/`.
 2. If detector scores are too high or low, adjust the threshold in the detector's canonical Markdown source
 3. Re-run evals to verify the fix
 4. Document threshold rationale in the runtime contract section
+
 ## Scoring best practices
 
 ### Combine multiple signals
