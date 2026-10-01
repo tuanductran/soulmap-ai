@@ -1,8 +1,34 @@
+# Ubuntu 26.04 is a valid GitHub-hosted runner, but actionlint 1.7.12 has not added it yet.
+# Keep this compatibility ignore scoped to workflows that intentionally use that runner.
 paths:
   .github/workflows/ci.yml:
     ignore:
       - 'label "ubuntu-26\.04" is unknown\.'
   .github/workflows/weekly-governance.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/codeql.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/autofix.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/rollback-verify.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/p-level-governance.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/python-compatibility.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/release-immutability-audit.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/release.yml:
+    ignore:
+      - 'label "ubuntu-26\.04" is unknown\.'
+  .github/workflows/release-finalize.yml:
     ignore:
       - 'label "ubuntu-26\.04" is unknown\.'
   .github/workflows/release.yml:
