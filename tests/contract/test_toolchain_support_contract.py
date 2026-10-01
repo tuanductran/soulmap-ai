@@ -13,8 +13,12 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
 CI_WORKFLOWS = tuple((REPO_ROOT / ".github" / "workflows").glob("*.yml"))
-ACTIONLINT_PYTHON_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "python" / "action.yml"
-ACTIONLINT_DOCKER_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "docker" / "action.yml"
+ACTIONLINT_PYTHON_ACTION = (
+    REPO_ROOT / ".github" / "actions" / "actionlint" / "python" / "action.yml"
+)
+ACTIONLINT_DOCKER_ACTION = (
+    REPO_ROOT / ".github" / "actions" / "actionlint" / "docker" / "action.yml"
+)
 
 DIRECT_DEV_PACKAGES = {
     "hypothesis",
@@ -90,10 +94,21 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
         in python_action
     )
     assert "hashlib.sha256" in (
-        REPO_ROOT / ".github" / "actions" / "actionlint" / "python" / "src" / "action.py"
+        REPO_ROOT
+        / ".github"
+        / "actions"
+        / "actionlint"
+        / "python"
+        / "src"
+        / "action.py"
     ).read_text(encoding="utf-8")
     assert "sha256sum --check --strict" in (
-        REPO_ROOT / ".github" / "actions" / "actionlint" / "docker" / "entrypoint.sh"
+        REPO_ROOT
+        / ".github"
+        / "actions"
+        / "actionlint"
+        / "docker"
+        / "entrypoint.sh"
     ).read_text(encoding="utf-8")
 
     for workflow_path in CI_WORKFLOWS:
