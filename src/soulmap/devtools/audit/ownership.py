@@ -83,7 +83,9 @@ def _domain_findings(root: Path) -> tuple[OwnershipFinding, ...]:
         match = _CANONICAL_RE.search(text)
         if match is None:
             findings.append(
-                OwnershipFinding("missing-canonical-sources", router, "Canonical sources")
+                OwnershipFinding(
+                    "missing-canonical-sources", router, "Canonical sources"
+                )
             )
             continue
         for target in _LINK_RE.findall(match.group("body")):
