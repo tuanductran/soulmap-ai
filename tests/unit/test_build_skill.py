@@ -41,7 +41,9 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/public.md")
     _write(tmp_path, "skills/private.md")
-    _write(tmp_path, "src/soulmap/runtime/source-registry.md", "internal runtime mapping\n")
+    _write(
+        tmp_path, "src/soulmap/runtime/source-registry.md", "internal runtime mapping\n"
+    )
     _write(tmp_path, "templates/internal.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", "{}\n")
     _write(tmp_path, ".distignore", "skills/private.md\n")
