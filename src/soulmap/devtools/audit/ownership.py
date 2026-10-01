@@ -95,9 +95,7 @@ def _domain_findings(root: Path) -> tuple[OwnershipFinding, ...]:
             try:
                 relative = resolved.relative_to(root).as_posix()
             except ValueError:
-                findings.append(
-                    OwnershipFinding("domain-path-escape", router, target)
-                )
+                findings.append(OwnershipFinding("domain-path-escape", router, target))
                 continue
             if not resolved.is_file():
                 findings.append(
@@ -118,9 +116,7 @@ def _domain_findings(root: Path) -> tuple[OwnershipFinding, ...]:
                 OwnershipFinding(
                     "shared-domain-source",
                     root / source,
-                    ", ".join(
-                        p.relative_to(root).as_posix() for p in routers
-                    ),
+                    ", ".join(p.relative_to(root).as_posix() for p in routers),
                 )
             )
     return tuple(findings)
@@ -137,9 +133,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
     findings = audit(args.root.resolve())
-    errors = tuple(
-        item for item in findings if item.kind != "shared-domain-source"
-    )
+    errors = tuple(item for item in findings if item.kind != "shared-domain-source")
     print("Knowledge ownership audit")
     print(f"findings: {len(findings)}")
     for item in findings:
