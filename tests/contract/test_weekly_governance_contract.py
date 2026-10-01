@@ -10,6 +10,7 @@ CLAUDE_PILOT = REPO_ROOT / "docs" / "operations" / "p2-claude-private-pilot.md"
 WEEKLY_COMMANDS = (
     "actionlint",
     "uv sync --locked --python 3.11",
+    "uv run soulmap weekly-governance",
     "uv lock --check",
     "tests/contract/test_p_level_governance.py",
     "tests/contract/test_dependency_refresh_process_contract.py",
@@ -43,6 +44,12 @@ def test_weekly_workflow_is_scheduled_deterministic_and_non_mutating() -> None:
     assert "weekly-governance-evidence" in content
     for command in WEEKLY_COMMANDS:
         assert command in content
+
+    assert "uv run soulmap weekly-governance" in content
+    assert "uv run pytest -q \\\\n" not in content
+    assert "uv run deptry ." not in content
+    assert "uv run python scripts/verify_artifact_hashes.py" not in content
+    assert "uv run python scripts/verify_extracted_artifacts.py" not in content
     for forbidden in ("gh pr merge", "gh pr create", "uv lock --upgrade", "git tag"):
         assert forbidden not in content
 
