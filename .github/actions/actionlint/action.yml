@@ -1,6 +1,6 @@
-name: Install actionlint
+name: Validate GitHub Actions workflows
 
-description: Install a pinned actionlint binary without downloading a GitHub Action archive.
+description: Install a pinned actionlint binary and validate the repository's GitHub Actions workflows.
 
 inputs:
   version:
@@ -11,11 +11,15 @@ inputs:
     description: SHA-256 for the Linux amd64 release archive.
     required: false
     default: "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+  config-file:
+    description: Path to the repository actionlint configuration file.
+    required: false
+    default: ".github/actionlint.yaml"
 
 runs:
   using: composite
   steps:
-    - name: Install pinned actionlint (Linux amd64)
+    - name: Install pinned actionlint
       shell: bash
       env:
         ACTIONLINT_VERSION: ${{ inputs.version }}
@@ -31,5 +35,13 @@ runs:
           --output "$archive"
         printf '%s  %s\n' "$ACTIONLINT_SHA256" "$archive" | sha256sum --check --strict
         tar --extract --gzip --file "$archive" --directory "$install_dir"
-        echo "$install_dir" >> "$GITHUB_PATH"
         "$install_dir/actionlint" -version
+        echo "ACTIONLINT_BIN=$install_dir/actionlint" >> "$GITHUB_ENV"
+
+    - name: Validate workflow files
+      shell: bash
+      env:
+        ACTIONLINT_CONFIG: ${{ inputs.config-file }}
+      run: |
+        set -euo pipefail
+        "$ACTIONLINT_BIN" -config-file "$ACTIONLINT_CONFIG"
