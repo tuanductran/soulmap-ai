@@ -113,5 +113,5 @@ def test_runtime_audit_uses_supplied_root_registry(tmp_path: Path) -> None:
     assert not [
         item
         for item in findings
-        if item.kind not in {"shared-domain-source"}
+        if item.kind != "shared-domain-source"
     ]
