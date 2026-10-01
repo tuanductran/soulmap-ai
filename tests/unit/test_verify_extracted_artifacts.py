@@ -34,7 +34,7 @@ def _build_valid_repo(root: Path) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
         _write(root, name)
     _write(root, "skills/public.md")
-    _write(root, "skills/runtime/source-registry.md", "internal runtime mapping\n")
+    _write(root, "src/soulmap/runtime/source-registry.md", "internal runtime mapping\n")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
     build_skill.build_zip(root)
     build_skill.build_skill(root)

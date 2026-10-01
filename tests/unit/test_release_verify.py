@@ -72,7 +72,7 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
         "SOULMAP.md",
         "SKILL.md",
         "skills/domains/example/SKILL.md",
-        "skills/runtime/source-registry.md",
+        "src/soulmap/runtime/source-registry.md",
         ".claude-plugin/marketplace.json",
         ".DS_Store",
     ):
