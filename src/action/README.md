@@ -51,3 +51,16 @@ The `tag` operation creates or verifies an annotated Git tag for an exact commit
     tag: v0.12.1
     target-sha: 0123456789abcdef0123456789abcdef01234567
 ```
+
+## Branch
+
+The `branch` operation creates or verifies a branch reference for an exact commit SHA. It replaces a workflow-side authenticated `git push` shell block with a Python-owned, idempotent branch publication operation.
+
+```yaml
+- uses: ./src/action
+  with:
+    operation: branch
+    token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+    branch: release/prep-123
+    target-sha: 0123456789abcdef0123456789abcdef01234567
+```

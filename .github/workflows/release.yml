@@ -80,6 +80,7 @@ jobs:
             echo "branch=$branch"
             echo "version=$version"
             echo "tag=v$version"
+            echo "sha=$(git rev-parse HEAD)"
           } >> "$GITHUB_OUTPUT"
 
       - name: Verify bumped release tree
@@ -91,13 +92,13 @@ jobs:
           uv run soulmap release-provenance --root . --verification dist/release-verification.json --provenance dist/release-provenance.json
           uv run soulmap release-health --root . --provenance dist/release-provenance.json
 
-      - name: Push release branch
-        env:
-          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-          BRANCH: ${{ steps.bump.outputs.branch }}
-        run: |
-          auth_header="$(printf 'x-access-token:%s' "$RELEASE_TOKEN" | base64 -w0)"
-          git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push --set-upstream origin "$BRANCH"
+      - name: Publish release branch through Python action
+        uses: ./src/action
+        with:
+          operation: branch
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          branch: ${{ steps.bump.outputs.branch }}
+          target-sha: ${{ steps.bump.outputs.sha }}
 
       - name: Open release pull request
         uses: ./src/action

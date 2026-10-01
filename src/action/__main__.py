@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import mimetypes
 import os
 import random
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -449,6 +451,81 @@ def create_tag(
         raise GitHubActionError("GitHub did not confirm creation of the release tag.")
 
 
+def create_branch(
+    client: GitHubClient,
+    owner: str,
+    repo: str,
+    branch: str,
+    target_sha: str,
+) -> None:
+    """Create or verify a branch reference for an exact commit SHA."""
+    if not target_sha or len(target_sha) != 40:
+        raise GitHubActionError("Branch target must be a full 40-character commit SHA.")
+    ref_path = (
+        f"/repos/{quote(owner)}/{quote(repo)}/git/ref/heads/{quote(branch, safe='')}"
+    )
+    try:
+        existing = client.api("GET", ref_path)
+    except GitHubAPIError as exc:
+        if exc.status != 404:
+            raise
+        existing = None
+
+    if existing is not None:
+        if not isinstance(existing, dict):
+            raise GitHubActionError(
+                "GitHub returned invalid branch reference metadata."
+            )
+        resolved = existing.get("object")
+        if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
+            raise GitHubActionError(
+                f"Release branch {branch!r} already exists but does not point to {target_sha}."
+            )
+        print(f"Release branch {branch} already exists at the expected commit.")
+        return
+
+    head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if head != target_sha:
+        raise GitHubActionError(
+            f"Local HEAD {head!r} does not match requested branch target {target_sha!r}."
+        )
+
+    encoded = base64.b64encode(f"x-access-token:{client.token}".encode()).decode(
+        "ascii"
+    )
+    environment = os.environ.copy()
+    environment["GIT_CONFIG_COUNT"] = "1"
+    environment["GIT_CONFIG_KEY_0"] = "http.extraheader"
+    environment["GIT_CONFIG_VALUE_0"] = f"AUTHORIZATION: basic {encoded}"
+    try:
+        pushed = subprocess.run(
+            ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        detail = (
+            exc.stderr.strip()
+            if isinstance(exc, subprocess.CalledProcessError)
+            else str(exc)
+        )
+        raise GitHubActionError(
+            f"Failed to publish release branch {branch!r}: {detail}"
+        ) from exc
+
+    if pushed.returncode != 0:
+        raise GitHubActionError(
+            f"Git did not confirm publication of release branch {branch!r}."
+        )
+
+
 def ensure_tag_exists(
     client: GitHubClient,
     owner: str,
@@ -733,6 +810,16 @@ def finalize_release(
     return response
 
 
+def run_branch(client: GitHubClient) -> None:
+    """Create or verify the release branch for an exact commit."""
+    owner, repo = repository_parts(env("INPUT_REPOSITORY"))
+    branch = env("INPUT_BRANCH")
+    target_sha = env("INPUT_TARGET_SHA")
+    create_branch(client, owner, repo, branch, target_sha)
+    write_output("branch-name", branch)
+    summary(f"## SoulMap release branch\n\n- Branch: {branch}\n- Commit: {target_sha}")
+
+
 def run_tag(client: GitHubClient) -> None:
     """Create or verify the release tag for an exact commit."""
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
@@ -836,13 +923,15 @@ def main() -> int:
         client = GitHubClient(env("INPUT_TOKEN"))
         if operation == "release":
             run_release(client)
+        elif operation == "branch":
+            run_branch(client)
         elif operation == "pull-request":
             run_pull_request(client)
         elif operation == "tag":
             run_tag(client)
         else:
             raise GitHubActionError(
-                f"Unsupported operation {operation!r}; expected release, pull-request, or tag."
+                f"Unsupported operation {operation!r}; expected release, pull-request, tag, or branch."
             )
     except GitHubActionError as exc:
         print(f"::error::{exc}", file=sys.stderr)

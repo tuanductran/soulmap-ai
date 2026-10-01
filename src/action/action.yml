@@ -1,9 +1,9 @@
 name: SoulMap GitHub Operations
 author: Tuan Duc Tran
-description: Python GitHub Action for idempotent release publication, tag creation, and release pull-request creation.
+description: Python GitHub Action for idempotent release publication, tag creation, release pull-request creation, and branch publication.
 inputs:
   operation:
-    description: "Operation to perform: release, pull-request, or tag."
+    description: "Operation to perform: release, pull-request, tag, or branch."
     required: true
   token:
     description: GitHub token with the permissions required by the selected operation.
@@ -16,7 +16,7 @@ inputs:
     description: "Existing Git tag for release publication or release PR metadata."
     required: false
   target-sha:
-    description: "Full commit SHA that an immutable release tag must point to."
+    description: "Full commit SHA that an immutable release tag or branch must point to."
     required: false
   release-name:
     description: GitHub Release name.
@@ -63,6 +63,8 @@ outputs:
     description: GitHub pull-request number when operation is pull-request.
   tag-name:
     description: Release tag processed by the action.
+  branch-name:
+    description: Branch name published by the action.
 runs:
   using: docker
   image: Dockerfile
