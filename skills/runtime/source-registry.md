@@ -42,3 +42,4 @@ shipped Markdown files. It contains no duplicate domain knowledge.
 | spiritual-purpose | skills/frameworks/spiritual-purpose.md | Activation Signals | Runtime detection contract | Guidance |
 | life-direction | skills/frameworks/life-direction.md | Detection signals | Runtime detection contract | Runtime guidance |
 | pattern-mapper | skills/frameworks/pattern-mapper.md | Pattern 1 | Runtime detection contract | Runtime guidance |
+| dependency-detection | skills/safety/dependency-detection.md | Detection signals | Runtime detection contract | Guidance |
