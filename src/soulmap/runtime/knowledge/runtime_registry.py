@@ -63,9 +63,7 @@ def _validate_registry(
     skills_root = (repo_root / "skills").resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
-        path = (
-            repo_root / relative_path
-        ).resolve()
+        path = (repo_root / relative_path).resolve()
         try:
             path.relative_to(skills_root)
         except ValueError:
