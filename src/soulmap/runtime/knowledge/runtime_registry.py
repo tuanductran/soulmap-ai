@@ -12,7 +12,9 @@ _REGISTRY_PATH = default_skill_path("skills/runtime/source-registry.md")
 
 
 @cache
-def _registry(registry_path: Path = _REGISTRY_PATH) -> dict[str, tuple[str, str, str, str]]:
+def _registry(
+    registry_path: Path = _REGISTRY_PATH,
+) -> dict[str, tuple[str, str, str, str]]:
     rows = load_table_rows(registry_path, "SoulMap runtime source registry")
     if not rows or any(len(row) != 5 for row in rows):
         raise ValueError("Runtime source registry must contain five columns.")
@@ -60,7 +62,9 @@ def _validate_registry(
     skills_root = registry_path.parent.parent.resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
-        path = (registry_path.parent.parent / relative_path.removeprefix("skills/")).resolve()
+        path = (
+            registry_path.parent.parent / relative_path.removeprefix("skills/")
+        ).resolve()
         try:
             path.relative_to(skills_root)
         except ValueError:
