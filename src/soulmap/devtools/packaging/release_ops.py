@@ -122,6 +122,7 @@ def run_release_gate(
         "provenance": final_provenance,
     }
 
+
 def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     """Verify provenance against the checked-out release artifacts."""
     try:
