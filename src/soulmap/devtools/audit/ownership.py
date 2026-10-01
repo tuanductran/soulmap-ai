@@ -36,7 +36,7 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
     for path in sorted(runtime_root.rglob("*.py")):
         if path.name in {"pattern_source.py", "runtime_registry.py"}:
             continue
-        tree = ast.parse(text, filename=str(path))
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
                 continue
