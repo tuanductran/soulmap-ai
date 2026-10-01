@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_table_rows
@@ -11,7 +11,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_tab
 _REGISTRY_PATH = default_skill_path("skills/runtime/source-registry.md")
 
 
-@lru_cache(maxsize=None)
+@cache
 def _registry(registry_path: Path = _REGISTRY_PATH) -> dict[str, tuple[str, str, str, str]]:
     rows = load_table_rows(registry_path, "SoulMap runtime source registry")
     if not rows or any(len(row) != 5 for row in rows):
