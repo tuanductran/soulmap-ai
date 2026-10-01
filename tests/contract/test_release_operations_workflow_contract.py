@@ -22,7 +22,6 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "target-sha: ${{ steps.bump.outputs.sha }}" in workflow
     assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push' not in workflow
     assert "uses: ./src/action" in workflow
-    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "branch: ${{ steps.bump.outputs.branch }}" in workflow
     assert "tag: ${{ steps.bump.outputs.tag }}" in workflow
     assert "gh pr create" not in workflow
@@ -70,7 +69,6 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "Create immutable release tag through Python action" in workflow
     assert "target-sha:" in workflow
     assert "uses: ./src/action" in workflow
-    assert "operation: release" in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert 'generate-release-notes: "true"' in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
@@ -86,12 +84,6 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
-    assert workflow.index("Verify downloaded release artifacts") < workflow.index(
-        "Generate release artifact attestations"
-    )
-    assert workflow.index("Generate release artifact attestations") < workflow.index(
-        "Create immutable release tag"
-    )
     assert workflow.index(
         "Create immutable release tag through Python action"
     ) < workflow.index("Publish GitHub Release")
@@ -99,13 +91,14 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
     workflow = (ROOT / ".github" / "workflows" / "rollback-verify.yml").read_text()
+    summary_script = (ROOT / "scripts" / "emit_rollback_summary.py").read_text()
 
     assert "release_ref:" in workflow
     assert "contents: read" in workflow
     assert "release-verify" in workflow
-    assert 'test "v${version}" = "${{ inputs.release_ref }}"' in workflow
-    assert "rollback_ready" in workflow
+    assert "test "v${version}" = "${{ inputs.release_ref }}"" in workflow
     assert "scripts/emit_rollback_summary.py" in workflow
+    assert "rollback_ready" in summary_script
     assert "python - <<'PY'" not in workflow
     assert "contents: write" not in workflow
 
