@@ -23,7 +23,7 @@ def _registry(registry_path: Path = _REGISTRY_PATH) -> dict[str, tuple[str, str,
             raise ValueError(f"Duplicate runtime source: {source}")
         result[source] = (path, signals, contract, guidance)
 
-    violations = _validate_registry(result)
+    violations = _validate_registry(result, registry_path)
     if violations:
         raise ValueError(
             "Runtime source registry validation failed:\n"
@@ -53,6 +53,7 @@ def _has_heading(text: str, expected: str) -> bool:
 
 def _validate_registry(
     entries: dict[str, tuple[str, str, str, str]],
+    registry_path: Path,
 ) -> tuple[str, ...]:
     """Validate every registry mapping and its required Markdown sections."""
     violations: list[str] = []
