@@ -25,7 +25,9 @@ def build_summary(\n    verification: dict[str, object], release_ref: str\n) -> 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(\n        "--verification", type=Path, default=Path("dist/release-verification.json")\n    )
+    parser.add_argument(
+        "--verification", type=Path, default=Path("dist/release-verification.json")
+    )
     parser.add_argument("--release-ref", required=True)
     args = parser.parse_args()
 
