@@ -7,7 +7,9 @@ import json
 from pathlib import Path
 
 
-def build_summary(\n    verification: dict[str, object], release_ref: str\n) -> dict[str, object]:
+def build_summary(
+    verification: dict[str, object], release_ref: str
+) -> dict[str, object]:
     """Build the public rollback verification summary from release evidence."""
     status = verification.get("status")
     version = verification.get("version")
