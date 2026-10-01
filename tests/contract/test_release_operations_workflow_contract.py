@@ -131,6 +131,8 @@ def test_local_python_action_contains_github_operations() -> None:
     assert "/pulls" in action
     assert "/git/refs" in action
     assert "def create_branch(" in action
+    assert '["git", "push", "origin", f"HEAD:refs/heads/{branch}"]' in action
+    assert "GIT_CONFIG_VALUE_0" in action
     assert 'operation == "branch"' in action
     assert "/releases" in action
     assert "GITHUB_OUTPUT" in action
