@@ -44,7 +44,10 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
     assert "workflow_dispatch" in content
     assert "operation: branch" in content
     assert "target-sha: ${{ steps.bump.outputs.sha }}" in content
-    assert 'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push' not in content
+    assert (
+        'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push'
+        not in content
+    )
     assert "uses: ./src/action" in content
     assert "operation: pull-request" in content
     assert "SOULMAP_RELEASE_TOKEN" in content
