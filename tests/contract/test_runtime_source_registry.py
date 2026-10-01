@@ -126,5 +126,8 @@ def test_runtime_knowledge_source_consumers_are_registered() -> None:
 def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
-    assert _validate_registry(registry) == ()
+    assert (
+        _validate_registry(registry, REPO_ROOT / "skills/runtime/source-registry.md")
+        == ()
+    )
     assert all(runtime_skill_path(source).is_file() for source in registry)

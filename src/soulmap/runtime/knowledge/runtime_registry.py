@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_table_rows
@@ -11,9 +11,11 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path, load_tab
 _REGISTRY_PATH = default_skill_path("skills/runtime/source-registry.md")
 
 
-@lru_cache(maxsize=1)
-def _registry() -> dict[str, tuple[str, str, str, str]]:
-    rows = load_table_rows(_REGISTRY_PATH, "SoulMap runtime source registry")
+@cache
+def _registry(
+    registry_path: Path = _REGISTRY_PATH,
+) -> dict[str, tuple[str, str, str, str]]:
+    rows = load_table_rows(registry_path, "SoulMap runtime source registry")
     if not rows or any(len(row) != 5 for row in rows):
         raise ValueError("Runtime source registry must contain five columns.")
 
@@ -23,7 +25,7 @@ def _registry() -> dict[str, tuple[str, str, str, str]]:
             raise ValueError(f"Duplicate runtime source: {source}")
         result[source] = (path, signals, contract, guidance)
 
-    violations = _validate_registry(result)
+    violations = _validate_registry(result, registry_path)
     if violations:
         raise ValueError(
             "Runtime source registry validation failed:\n"
@@ -53,13 +55,16 @@ def _has_heading(text: str, expected: str) -> bool:
 
 def _validate_registry(
     entries: dict[str, tuple[str, str, str, str]],
+    registry_path: Path,
 ) -> tuple[str, ...]:
     """Validate every registry mapping and its required Markdown sections."""
     violations: list[str] = []
-    skills_root = default_skill_path("skills").resolve()
+    skills_root = registry_path.parent.parent.resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
-        path = default_skill_path(relative_path).resolve()
+        path = (
+            registry_path.parent.parent / relative_path.removeprefix("skills/")
+        ).resolve()
         try:
             path.relative_to(skills_root)
         except ValueError:
