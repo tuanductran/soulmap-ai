@@ -391,29 +391,21 @@ def test_real_repository_crisis_constants_are_not_orphaned() -> None:
             assert not by_path_and_constant[key].is_orphaned, key
 
 
-def test_real_repository_dependency_constants_are_not_orphaned() -> None:
-    """Regression guard: dependency detector constants must be active, not orphaned.
+def test_real_repository_dependency_knowledge_has_one_runtime_source() -> None:
+    """Dependency detector knowledge must not remain in static Python config."""
+    registry_source = REPO_ROOT / "skills/safety/dependency-detection.md"
+    safety_config = REPO_ROOT / "src/soulmap/runtime/config/safety.py"
+    package_config = REPO_ROOT / "src/soulmap/runtime/config/__init__.py"
 
-    ``dependency_detector.py`` imports DECISION_SEEKING, DEPENDENCY_KEYWORDS,
-    and ISOLATION_SIGNALS via ``from soulmap.runtime.config import ...``.
-    These were previously reported as orphaned because the detector used to
-    create same-named local variables from Markdown instead of importing from
-    config, meaning the audit never saw a real import reference.
-    """
-    usage = find_config_usage(REPO_ROOT)
-    by_constant = {item.constant: item for item in usage}
+    assert registry_source.is_file()
+    assert "DEPENDENCY_KEYWORDS" not in safety_config.read_text(encoding="utf-8")
+    assert "DECISION_SEEKING" not in safety_config.read_text(encoding="utf-8")
+    assert "ISOLATION_SIGNALS" not in safety_config.read_text(encoding="utf-8")
+    assert "HIGH_DEPENDENCY_THRESHOLD" not in package_config.read_text(encoding="utf-8")
+    assert "MODERATE_DEPENDENCY_THRESHOLD" not in package_config.read_text(
+        encoding="utf-8"
+    )
 
-    for constant in ("DECISION_SEEKING", "DEPENDENCY_KEYWORDS", "ISOLATION_SIGNALS"):
-        assert constant in by_constant, f"{constant} not found in config usage"
-        assert not by_constant[constant].is_orphaned, (
-            f"{constant} incorrectly reported as orphaned — "
-            "dependency_detector.py must import it from soulmap.runtime.config"
-        )
-        referenced = {p.name for p in by_constant[constant].referenced_from}
-        assert "dependency_detector.py" in referenced, (
-            f"{constant} active but not referenced by dependency_detector.py: "
-            f"found {referenced}"
-        )
 
 
 def test_local_variable_same_name_as_config_constant_is_still_orphaned(
