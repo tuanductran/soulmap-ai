@@ -55,7 +55,7 @@ The `tag` operation creates or verifies an annotated Git tag for an exact commit
 
 ## Branch
 
-The `branch` operation creates or verifies a branch reference for an exact commit SHA. It replaces a workflow-side authenticated `git push` with an idempotent GitHub API operation.
+The `branch` operation creates or verifies a branch reference for an exact commit SHA. It replaces a workflow-side authenticated `git push` shell block with a Python-owned, idempotent branch publication operation.
 
 ```yaml
 - uses: ./src/action
