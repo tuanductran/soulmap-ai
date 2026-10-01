@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from subprocess import CompletedProcess
+from subprocess import CalledProcessError, CompletedProcess
 
 import pytest
 
@@ -56,12 +56,12 @@ def test_weekly_governance_stops_after_first_failure(tmp_path: Path) -> None:
     def runner(command: list[str], **kwargs: object) -> CompletedProcess[str]:
         calls.append(tuple(command))
         if len(calls) == 2:
-            raise __import__("subprocess").CalledProcessError(1, command)
+            raise CalledProcessError(1, command)
         return CompletedProcess(command, 0, stdout="dependency tree\n", stderr="")
 
     try:
         run_weekly_governance(tmp_path, runner=runner)
-    except __import__("subprocess").CalledProcessError:
+    except CalledProcessError:
         pass
     else:
         raise AssertionError("governance must stop when a canonical check fails")
