@@ -22,6 +22,8 @@ _DIRECT_RE = re.compile(r'default_skill_path\(\s*"skills/([^"]+)"\s*\)')
 
 @dataclass(frozen=True, slots=True)
 class OwnershipFinding:
+    """One knowledge ownership audit finding."""
+
     kind: str
     path: Path
     detail: str
@@ -128,6 +130,7 @@ def audit(root: Path) -> tuple[OwnershipFinding, ...]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the knowledge ownership audit command."""
     parser = argparse.ArgumentParser(prog="soulmap audit-knowledge-ownership")
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
