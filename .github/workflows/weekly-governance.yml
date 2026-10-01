@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install actionlint
-        uses: ./.github/actions/actionlint
+        uses: ./.github/actions/actionlint/python
       - name: Validate GitHub Actions workflows
         run: actionlint -config-file .github/actionlint.yaml
       - name: Install uv
