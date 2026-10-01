@@ -64,6 +64,7 @@ uv run soulmap eval-groups
 uv run soulmap eval-responses
 uv run soulmap eval-markdown-contracts
 uv run soulmap audit-knowledge
+uv run soulmap audit-knowledge-ownership
 uv run soulmap build
 uv run soulmap build --skill
 uv run python tests/eval_regression/test_safety_evals.py

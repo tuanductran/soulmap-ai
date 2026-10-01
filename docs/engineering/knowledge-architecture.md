@@ -40,11 +40,21 @@ The stable mapping between runtime consumers and Markdown sources is centralized
 second knowledge base. Detector code should consume stable source identifiers rather
 than duplicating repository paths.
 
-The `soulmap audit-knowledge` command independently verifies this ownership by
-tracing runtime imports and cross-referencing them against Markdown content. It is
+The `soulmap audit-knowledge` command independently verifies Python config ownership by
+tracing runtime imports and cross-referencing them against Markdown content. The
+separate `soulmap audit-knowledge-ownership` command verifies the broader ownership
+boundary across runtime consumers, domain routers, and package membership. It is
 the authoritative, up-to-date record of which constants are active, which are
 orphaned, and which Markdown file owns which detection phrases. Trust the tool
 over any static document.
+
+## Ownership audit
+
+`audit-knowledge-ownership` is intentionally broader than phrase duplication. It verifies
+that runtime Markdown consumers use registered source identifiers, that domain routers
+point only to existing knowledge files, and that package tooling shares one canonical
+shipped-member contract. Shared domain membership is reported as information rather
+than treated as drift because some frameworks intentionally serve more than one domain.
 
 ## Protected modules
 

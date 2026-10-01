@@ -16,13 +16,8 @@ from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
 )
-from soulmap.devtools.packaging.build_skill import (
-    _is_ignored,
-    _iter_claude_plugin_inputs,
-    _iter_inputs,
-    _load_distignore,
-)
 from soulmap.devtools.packaging.library import build_library
+from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 INTEGRATION_GUIDES = (
@@ -141,16 +136,8 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
 
 
 def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
-    """Return the exact member set that the package builder can ship."""
-    patterns = _load_distignore(repo_root)
-    paths = _iter_inputs(repo_root)
-    if include_plugin:
-        paths = sorted(set(paths + _iter_claude_plugin_inputs(repo_root)))
-    return {
-        path.relative_to(repo_root).as_posix()
-        for path in paths
-        if not _is_ignored(path.relative_to(repo_root).as_posix(), patterns)
-    }
+    """Compatibility wrapper around the canonical shipped-member contract."""
+    return source_members(repo_root, include_plugin=include_plugin)
 
 
 def _sha256(path: Path) -> str:
@@ -175,7 +162,7 @@ def _verify_archive(
                 raise ReleaseVerificationError(
                     f"{path.name}: unsafe archive member path"
                 )
-            expected = _source_members(repo_root, include_plugin=include_plugin)
+            expected = source_members(repo_root, include_plugin=include_plugin)
             missing = sorted(expected - actual)
             unexpected = sorted(actual - expected)
             if missing:

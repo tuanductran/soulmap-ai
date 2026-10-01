@@ -24,6 +24,7 @@ SAFETY_COMMANDS = (
     ("uv", "run", "soulmap", "check-case", "--root", "."),
     ("uv", "run", "soulmap", "lint", "--skip-tests"),
     ("uv", "run", "soulmap", "audit-knowledge"),
+    ("uv", "run", "soulmap", "audit-knowledge-ownership"),
     ("uv", "run", "python", "tests/eval_regression/test_safety_evals.py"),
     ("uv", "run", "soulmap", "eval-groups"),
     ("uv", "run", "soulmap", "eval-responses"),

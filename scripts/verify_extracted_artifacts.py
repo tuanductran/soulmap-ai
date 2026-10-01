@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import sys
 import zipfile
 from pathlib import Path, PurePosixPath
@@ -15,15 +14,13 @@ from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
 )
+from soulmap.devtools.packaging.members import CORE_FILES, PLUGIN_PREFIX, source_members
 
 
 class ExtractedArtifactError(ValueError):
     """Raised when an archive violates the shipped package contract."""
 
 
-CORE_FILES = {"LICENSE", "SOULMAP.md", "SKILL.md"}
-PLUGIN_PREFIX = ".claude-plugin/"
-RUNTIME_PREFIX = "skills/runtime/"
 FORBIDDEN_MEMBER_PREFIXES = (
     ".claude/",
     "docs/",
@@ -47,46 +44,6 @@ FORBIDDEN_SKILL_REFERENCES = (
     "uv.lock",
     ".py",
 )
-
-
-def _distignore_patterns(repo_root: Path) -> list[str]:
-    path = repo_root / ".distignore"
-    if not path.is_file():
-        return []
-    return [
-        line
-        for raw in path.read_text(encoding="utf-8").splitlines()
-        if (line := raw.strip()) and not line.startswith("#")
-    ]
-
-
-def _is_ignored(relative: str, patterns: list[str]) -> bool:
-    return any(fnmatch.fnmatch(relative, pattern) for pattern in patterns)
-
-
-def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
-    patterns = _distignore_patterns(repo_root)
-    paths: set[Path] = set()
-    for name in CORE_FILES:
-        candidate = repo_root / name
-        if candidate.is_file():
-            paths.add(candidate)
-    skills_root = repo_root / "skills"
-    if skills_root.is_dir():
-        paths.update(path for path in skills_root.rglob("*") if path.is_file())
-    if include_plugin:
-        plugin_root = repo_root / ".claude-plugin"
-        if plugin_root.is_dir():
-            paths.update(path for path in plugin_root.rglob("*") if path.is_file())
-
-    members: set[str] = set()
-    for path in paths:
-        relative = path.relative_to(repo_root).as_posix()
-        if not _is_ignored(relative, patterns) and not relative.startswith(
-            RUNTIME_PREFIX
-        ):
-            members.add(relative)
-    return members
 
 
 def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
@@ -113,7 +70,7 @@ def _markdown_members(actual: set[str]) -> tuple[str, ...]:
         sorted(
             name
             for name in actual
-            if name.endswith(".md") and not name.startswith(".claude-plugin/")
+            if name.endswith(".md") and not name.startswith(PLUGIN_PREFIX)
         )
     )
 
@@ -189,7 +146,7 @@ def _assert_expected_members(
 ) -> None:
     actual, archive = _read_members(archive_path)
     try:
-        expected = _source_members(repo_root, include_plugin=include_plugin)
+        expected = source_members(repo_root, include_plugin=include_plugin)
         missing = sorted(expected - actual)
         unexpected = sorted(actual - expected)
         if missing:
@@ -201,7 +158,7 @@ def _assert_expected_members(
                 f"{archive_path.name} contains unexpected members: {unexpected}"
             )
 
-        if not actual >= CORE_FILES:
+        if not actual >= set(CORE_FILES):
             raise ExtractedArtifactError(
                 f"{archive_path.name} must contain {sorted(CORE_FILES)}"
             )
@@ -212,7 +169,7 @@ def _assert_expected_members(
             raise ExtractedArtifactError(f"{archive_path.name}: {exc}") from exc
 
         if include_plugin:
-            if ".claude-plugin/marketplace.json" not in actual:
+            if f"{PLUGIN_PREFIX}marketplace.json" not in actual:
                 raise ExtractedArtifactError(
                     ".skill artifact must preserve .claude-plugin/marketplace.json"
                 )
