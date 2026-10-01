@@ -407,7 +407,6 @@ def test_real_repository_dependency_knowledge_has_one_runtime_source() -> None:
     )
 
 
-
 def test_local_variable_same_name_as_config_constant_is_still_orphaned(
     tmp_path: Path,
 ) -> None:
