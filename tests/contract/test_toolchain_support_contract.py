@@ -13,7 +13,8 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
 CI_WORKFLOWS = tuple((REPO_ROOT / ".github" / "workflows").glob("*.yml"))
-ACTIONLINT_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "action.yml"
+ACTIONLINT_PYTHON_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "python" / "action.yml"
+ACTIONLINT_DOCKER_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "docker" / "action.yml"
 
 DIRECT_DEV_PACKAGES = {
     "hypothesis",
@@ -76,13 +77,24 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
 
 
 def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
-    actionlint_text = ACTIONLINT_ACTION.read_text(encoding="utf-8")
-    assert 'default: "1.7.12"' in actionlint_text
+    python_action = ACTIONLINT_PYTHON_ACTION.read_text(encoding="utf-8")
+    docker_action = ACTIONLINT_DOCKER_ACTION.read_text(encoding="utf-8")
+    assert 'default: "1.7.12"' in python_action
+    assert 'default: "1.7.12"' in docker_action
+    assert "using: docker" in python_action
+    assert "using: docker" in docker_action
+    assert "image: Dockerfile" in python_action
+    assert "image: Dockerfile" in docker_action
     assert (
         "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
-        in actionlint_text
+        in python_action
     )
-    assert "sha256sum --check --strict" in actionlint_text
+    assert "hashlib.sha256" in (
+        REPO_ROOT / ".github" / "actions" / "actionlint" / "python" / "src" / "action.py"
+    ).read_text(encoding="utf-8")
+    assert "sha256sum --check --strict" in (
+        REPO_ROOT / ".github" / "actions" / "actionlint" / "docker" / "entrypoint.sh"
+    ).read_text(encoding="utf-8")
 
     for workflow_path in CI_WORKFLOWS:
         workflow_text = workflow_path.read_text(encoding="utf-8")
