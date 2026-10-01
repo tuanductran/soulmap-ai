@@ -35,13 +35,9 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install actionlint
-        if: matrix.os == 'ubuntu-26.04'
-        uses: ./.github/actions/actionlint
-
       - name: Validate GitHub Actions workflows
         if: matrix.os == 'ubuntu-26.04'
-        run: actionlint -config-file .github/actionlint.yaml
+        uses: ./.github/actions/actionlint
 
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
