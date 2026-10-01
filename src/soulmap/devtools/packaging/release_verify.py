@@ -17,6 +17,7 @@ from soulmap.devtools.packaging.artifact_integrity import (
     verify_member_content,
 )
 from soulmap.devtools.packaging.library import build_library
+from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 INTEGRATION_GUIDES = (
