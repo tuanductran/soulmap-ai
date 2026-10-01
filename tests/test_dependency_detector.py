@@ -1,9 +1,8 @@
 """Edge-case coverage for the AI-dependency detector.
 
-Phrases used below are taken verbatim from
-soulmap.runtime.config.safety (DEPENDENCY_KEYWORDS, DECISION_SEEKING,
-ISOLATION_SIGNALS), the static config module this detector imports from
-directly. Nothing here is guessed.
+Signal phrases are authored in the canonical Markdown runtime source
+skills/safety/dependency-detection.md and exercised here as behavioral
+regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import analyze_dependency

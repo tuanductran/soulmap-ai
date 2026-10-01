@@ -1,31 +1,43 @@
 """Score conversation history for signs of unhealthy AI dependency."""
 
+from __future__ import annotations
+
 import json
 import re
 import sys
 
-from soulmap.runtime.config import (
-    DECISION_SEEKING,
-    DEPENDENCY_KEYWORDS,
-    HIGH_DEPENDENCY_THRESHOLD,
-    ISOLATION_SIGNALS,
-    MODERATE_DEPENDENCY_THRESHOLD,
-)
 from soulmap.runtime.io.text_normalization import normalize_message_text
+from soulmap.runtime.knowledge.keyword_lists import (
+    load_key_value_table,
+    load_labeled_groups,
+    load_table_rows,
+)
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    (
-        "only you understand me",
-        re.compile(r"\bonly you\s+(?:really\s+|truly\s+)?understand(?:s)?\s+me\b"),
-    ),
-    (
-        "you are the only one who understands me",
-        re.compile(
-            r"\byou(?:'re| are)\s+the\s+only\s+one\s+who\s+"
-            r"(?:really\s+|truly\s+)?understands\s+me\b"
-        ),
-    ),
-]
+_SOURCE = runtime_skill_path("dependency-detection")
+_SIGNAL_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
+_DEPENDENCY_KEYWORDS = _SIGNAL_GROUPS["dependency keywords"]
+_DECISION_SEEKING = _SIGNAL_GROUPS["decision-seeking phrases"]
+_ISOLATION_SIGNALS = _SIGNAL_GROUPS["isolation signals"]
+
+_PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
+_DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
+    (row[0], re.compile(row[1].strip(chr(96))))
+    for row in _PATTERN_ROWS
+    if len(row) >= 2
+)
+
+_SCORING = load_key_value_table(_SOURCE, "Scoring")
+_GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
+
+_DEPENDENCY_KEYWORD_WEIGHT = int(_SCORING["Dependency keyword weight"])
+_DEPENDENCY_REGEX_WEIGHT = int(_SCORING["Dependency regex weight"])
+_DECISION_SEEKING_WEIGHT = int(_SCORING["Decision-seeking weight"])
+_ISOLATION_SIGNAL_WEIGHT = int(_SCORING["Isolation signal weight"])
+_HIGH_MESSAGE_VOLUME_THRESHOLD = int(_SCORING["High message volume threshold"])
+_HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
+_HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
+_MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -33,7 +45,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
 
     Args:
         conversation_messages: List of dicts with 'role' and 'content' keys.
-                               Expected format: [{"role": "user", "content": "..."}, ...]
+                               Expected format: [{"role": "user", "content": "..."}]
 
     Returns:
         Dict with keys: level (str), score (int), signals (list), recommendation (str)
@@ -57,67 +69,56 @@ def analyze_dependency(conversation_messages: list) -> dict:
 
     for msg in user_messages:
         keyword_match = next(
-            (keyword for keyword in DEPENDENCY_KEYWORDS if keyword in msg),
+            (keyword for keyword in _DEPENDENCY_KEYWORDS if keyword in msg),
             None,
         )
         if keyword_match:
             signal = f"dependency_keyword: '{keyword_match}'"
             if signal not in signals_found:
-                score += 2
+                score += _DEPENDENCY_KEYWORD_WEIGHT
                 signals_found.append(signal)
             continue
 
-        for label, pattern in DEPENDENCY_PATTERNS:
+        for label, pattern in _DEPENDENCY_PATTERNS:
             if pattern.search(msg):
                 signal = f"dependency_pattern: '{label}'"
                 if signal not in signals_found:
-                    score += 2
+                    score += _DEPENDENCY_REGEX_WEIGHT
                     signals_found.append(signal)
                 break
 
     decision_count = 0
     for msg in user_messages:
-        for pattern in DECISION_SEEKING:
+        for pattern in _DECISION_SEEKING:
             if pattern in msg:
                 decision_count += 1
-                score += 1
+                score += _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
     for msg in user_messages:
-        for signal in ISOLATION_SIGNALS:
+        for signal in _ISOLATION_SIGNALS:
             if signal in msg:
-                score += 2
+                score += _ISOLATION_SIGNAL_WEIGHT
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
 
-    if len(user_messages) > 10:
-        score += 1
+    if len(user_messages) > _HIGH_MESSAGE_VOLUME_THRESHOLD:
+        score += _HIGH_MESSAGE_VOLUME_BONUS
         signals_found.append(f"high_message_volume: {len(user_messages)} user messages")
 
-    if score >= HIGH_DEPENDENCY_THRESHOLD:
+    if score >= _HIGH_DEPENDENCY_THRESHOLD:
         level = "HIGH_DEPENDENCY"
-        recommendation = (
-            "Warmly redirect toward real-world support. Use the dependency detection "
-            "response: 'I notice you have been returning here often for decisions like "
-            "this. The answers you are searching for live in you, not in our conversations. "
-            "Is there someone in your real life you could bring this to?'"
-        )
-    elif score >= MODERATE_DEPENDENCY_THRESHOLD:
+    elif score >= _MODERATE_DEPENDENCY_THRESHOLD:
         level = "MODERATE_DEPENDENCY"
-        recommendation = (
-            "Begin gently pointing back to the user's own knowing. Celebrate any signs "
-            "of self-direction. Avoid becoming the primary decision-making source."
-        )
     else:
         level = "LOW_DEPENDENCY"
-        recommendation = "No significant dependency signals detected. Continue normal reflective engagement."
 
     return {
         "level": level,
         "score": score,
         "signals": signals_found,
-        "recommendation": recommendation,
+        "recommendation": _GUIDANCE[level],
     }
 
 
