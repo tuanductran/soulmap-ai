@@ -13,7 +13,6 @@ from markdown_it import MarkdownIt
 from soulmap.devtools.packaging.members import (
     CORE_FILES,
     PLUGIN_PREFIX,
-    RUNTIME_PREFIX,
     source_members,
 )
 from soulmap.devtools.packaging.artifact_integrity import (
