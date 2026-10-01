@@ -12,7 +12,6 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
