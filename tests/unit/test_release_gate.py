@@ -3,11 +3,13 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.packaging import release_ops
 
 
 def test_run_release_gate_preserves_verification_lifecycle(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     calls: list[str] = []
 
