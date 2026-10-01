@@ -86,3 +86,17 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert content.index(
         f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}"
     ) < content.index("Publish GitHub Release")
+
+
+def test_release_prep_uses_python_release_gate() -> None:
+    content = _read(RELEASE_WORKFLOW)
+
+    release_gate_command = (
+        "uv run soulmap release-gate --root . "
+        "--verification dist/release-verification.json "
+        "--provenance dist/release-provenance.json"
+    )
+    assert release_gate_command in content
+    assert "uv run soulmap release-verify " not in content
+    assert "uv run soulmap release-provenance " not in content
+    assert "uv run soulmap release-health " not in content
