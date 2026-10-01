@@ -39,7 +39,9 @@ def test_weekly_governance_preserves_command_order(tmp_path: Path) -> None:
     )
 
 
-def test_weekly_governance_writes_success_summary(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_weekly_governance_writes_success_summary(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     summary = tmp_path / "summary.md"
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
 
