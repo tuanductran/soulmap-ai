@@ -12,6 +12,7 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
@@ -140,17 +141,6 @@ def _verify_version_markers(repo_root: Path, version: str) -> list[str]:
     return checked
 
 
-def _source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
-    """Return the exact member set that the package builder can ship."""
-    patterns = _load_distignore(repo_root)
-    paths = _iter_inputs(repo_root)
-    if include_plugin:
-        paths = sorted(set(paths + _iter_claude_plugin_inputs(repo_root)))
-    return {
-        path.relative_to(repo_root).as_posix()
-        for path in paths
-        if not _is_ignored(path.relative_to(repo_root).as_posix(), patterns)
-    }
 
 
 def _sha256(path: Path) -> str:
@@ -175,7 +165,7 @@ def _verify_archive(
                 raise ReleaseVerificationError(
                     f"{path.name}: unsafe archive member path"
                 )
-            expected = _source_members(repo_root, include_plugin=include_plugin)
+            expected = source_members(repo_root, include_plugin=include_plugin)
             missing = sorted(expected - actual)
             unexpected = sorted(actual - expected)
             if missing:
