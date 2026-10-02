@@ -51,7 +51,7 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
         == "https://github.com/tuanductran/soulmap-ai/releases/tag/v1.2.3"
     )
     assert payload["generated_by"] == "uv run soulmap library-manifest"
-    assert payload["entries"][0]["path"] == "skills/brand"
+    assert payload["entries"][0]["path"] == "."
     assert [artifact["filename"] for artifact in payload["artifacts"]] == [
         "soulmap-ai.zip",
         "soulmap-ai.skill",
