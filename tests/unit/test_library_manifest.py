@@ -76,16 +76,16 @@ def test_read_marketplace_rejects_missing_file(tmp_path: Path) -> None:
 
 
 def test_read_marketplace_rejects_a_non_object_payload(tmp_path: Path) -> None:
-    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(["not", "an", "object"]))
+    _write(
+        tmp_path, ".claude-plugin/marketplace.json", json.dumps(["not", "an", "object"])
+    )
 
     with pytest.raises(ValueError, match="must contain a JSON object"):
         library._read_marketplace(tmp_path)
 
 
 @pytest.mark.parametrize("plugins", [[], "not a list", None])
-def test_read_marketplace_requires_plugins(
-    tmp_path: Path, plugins: object
-) -> None:
+def test_read_marketplace_requires_plugins(tmp_path: Path, plugins: object) -> None:
     payload = json.loads(_marketplace())
     payload["plugins"] = plugins
     _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
