@@ -1,7 +1,7 @@
 ---
 name: "inner-work"
 description: "Psychology, emotional regulation, grief, inner parts, shadow patterns, self-compassion, and reflective pattern work. Use this domain router when the request clearly belongs to this area."
-version: "0.12.1"
+version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
