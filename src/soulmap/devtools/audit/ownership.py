@@ -84,7 +84,6 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
     return tuple(findings)
 
 
-
 def audit(root: Path) -> tuple[OwnershipFinding, ...]:
     """Return deterministic ownership findings for the repository."""
     return _runtime_findings(root)
