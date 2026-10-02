@@ -24,6 +24,8 @@ jobs:
         include:
           - os: ubuntu-26.04
             check_name: ubuntu-latest
+          - os: ubuntu-24.04
+            check_name: ubuntu-24.04
           - os: macos-latest
             check_name: macos-latest
           - os: windows-latest
@@ -46,7 +48,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
-          version: "0.12.20"
+          version: "0.12.21"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
@@ -124,7 +126,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
-          version: "0.12.20"
+          version: "0.12.21"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11
@@ -155,7 +157,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
-          version: "0.12.20"
+          version: "0.12.21"
           python-version: "3.11"
       - name: Install dev dependencies
         run: uv sync --locked --python 3.11

@@ -34,7 +34,7 @@ def _build_valid_repo(root: Path) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md"):
         _write(root, name)
     _write(root, "skills/public.md")
-    _write(root, "skills/runtime/source-registry.md", "internal runtime mapping\n")
+    _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
     build_skill.build_zip(root)
     build_skill.build_skill(root)
@@ -68,7 +68,7 @@ def test_verifier_accepts_both_valid_artifacts(tmp_path: Path) -> None:
     for archive_name in ("soulmap-ai.zip", "soulmap-ai.skill"):
         with zipfile.ZipFile(tmp_path / "dist" / archive_name) as archive:
             assert not any(
-                name.startswith("skills/runtime/") for name in archive.namelist()
+                name.startswith("src/soulmap/runtime/") for name in archive.namelist()
             )
 
 

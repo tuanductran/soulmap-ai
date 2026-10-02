@@ -3,7 +3,7 @@ from __future__ import annotations
 import ast
 
 from soulmap.devtools.support.repo import REPO_ROOT
-from soulmap.runtime.knowledge.runtime_registry import (
+from soulmap.runtime.source_registry import (
     _has_heading,
     _registry,
     _validate_registry,
@@ -126,8 +126,11 @@ def test_runtime_knowledge_source_consumers_are_registered() -> None:
 def test_runtime_registry_is_complete_and_structurally_valid() -> None:
     registry = _registry()
 
-    assert (
-        _validate_registry(registry, REPO_ROOT / "skills/runtime/source-registry.md")
-        == ()
-    )
+    assert _validate_registry(registry) == ()
     assert all(runtime_skill_path(source).is_file() for source in registry)
+
+
+def test_runtime_contract_surface_contains_only_python() -> None:
+    runtime_root = REPO_ROOT / "src/soulmap/runtime"
+    assert not list(runtime_root.rglob("*.md"))
+    assert (runtime_root / "source_registry.py").is_file()

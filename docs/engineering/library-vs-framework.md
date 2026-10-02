@@ -99,7 +99,7 @@ Current framework sources under `skills/frameworks/` are:
 - soul-nourishment
 - spiritual-purpose
 
-Each has a corresponding runtime detector, although detector module names may be normalized rather than matching the Markdown filename literally. The authoritative source-to-runtime mapping is `skills/runtime/source-registry.md`.
+Each has a corresponding runtime detector, although detector module names may be normalized rather than matching the Markdown filename literally. The authoritative source-to-runtime mapping is `src/soulmap/runtime/source_registry.py`.
 
 `skills/soulmate/` is the concrete example of the analogy in the previous
 section: a framework built on top of existing frameworks the way an
