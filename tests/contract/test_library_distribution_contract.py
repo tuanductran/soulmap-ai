@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -18,8 +19,10 @@ def test_marketplace_skill_inventory_is_complete() -> None:
     marketplace = _read_json(MARKETPLACE)
     plugins = {plugin["name"]: plugin for plugin in marketplace["plugins"]}
 
+    with (REPO_ROOT / "pyproject.toml").open("rb") as handle:
+        project_version = tomllib.load(handle)["project"]["version"]
     assert marketplace["name"] == "soulmap-ai"
-    assert marketplace["version"] == "0.13.0"
+    assert marketplace["version"] == project_version
     assert set(plugins) == {
         "SoulMap Brand System",
         "SoulMap Core Frameworks",
@@ -33,8 +36,11 @@ def test_marketplace_skill_inventory_is_complete() -> None:
 
     for plugin in plugins.values():
         assert plugin["source"] == "./"
+        assert plugin["version"] == marketplace["version"]
         assert len(plugin["skills"]) == 1
-        path = REPO_ROOT / plugin["skills"][0][2:]
+        skill_path = plugin["skills"][0]
+        assert skill_path.startswith("./skills/")
+        path = REPO_ROOT / skill_path[2:]
         assert path.is_dir()
         assert (path / "SKILL.md").is_file()
 
