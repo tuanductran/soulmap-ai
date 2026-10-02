@@ -133,9 +133,9 @@ def detect_crisis(message: str) -> dict:
             "signals": signals_found,
             "response_guidance": (
                 "STOP. Do not use the five-step framework. Do not offer reflective questions. "
-                "1. Acknowledge with full presence in 1-2 sentences. "
-                "2. Express care clearly. "
-                "3. Provide crisis line for the user's region immediately. "
+                "1. Provide the crisis line for the user's region immediately. "
+                "2. Acknowledge with full presence in 1-2 sentences. "
+                "3. Express care clearly. "
                 "Known crisis lines: "
                 "Vietnam: HOPE 0865 044 400 (free, 24/7) | "
                 "US: 988 (call or text) | "
