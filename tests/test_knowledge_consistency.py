@@ -5,6 +5,7 @@ import pytest
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge.consistency import (
     find_config_usage,
+    find_detector_markdown_duplicates,
     find_python_markdown_duplicates,
     markdown_consumers,
 )
