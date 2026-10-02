@@ -18,6 +18,7 @@ from soulmap.runtime.knowledge.consistency import (
     ConfigUsage,
     KnowledgeDuplicate,
     find_config_usage,
+    find_detector_markdown_duplicates,
     find_python_markdown_duplicates,
     markdown_consumers,
 )
@@ -163,10 +164,27 @@ def main(argv: list[str] | None = None) -> int:
 
     root = args.root.resolve()
     duplicates = find_python_markdown_duplicates(root)
+    detector_duplicates = find_detector_markdown_duplicates(root)
     usage = find_config_usage(root)
     implementation_references = find_markdown_implementation_references(root)
     print(_format_inventory(duplicates, root))
+    print("\nDetector knowledge-drift audit")
+    print(f"exact detector/Markdown overlaps: {len(detector_duplicates)}")
+    for duplicate in detector_duplicates:
+        print(
+            f"  - {duplicate.python_path.relative_to(root)}::{duplicate.phrase!r} "
+            f"-> {duplicate.markdown_path.relative_to(root)} "
+            f"[{duplicate.markdown_section}]"
+        )
     print(f"\n{_format_usage(usage, root)}")
+    if detector_duplicates:
+        print(
+            "\nDetector knowledge-drift guard failed: "
+            f"{len(detector_duplicates)} exact Markdown-owned phrase(s) are "
+            "embedded directly in detector code."
+        )
+        return 1
+
     print("\nMarkdown implementation-reference audit")
     print(f"implementation references: {len(implementation_references)}")
     for path in implementation_references:
