@@ -1,4 +1,4 @@
-"""Build the versioned SoulMap AI Library manifest."""
+"""Build the versioned SoulMap AI Library distribution manifest."""
 
 from __future__ import annotations
 
@@ -7,41 +7,46 @@ import hashlib
 import json
 import mimetypes
 import tomllib
-from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
 from soulmap.devtools.packaging.build_skill import build_skill, build_zip
 from soulmap.devtools.support.repo import REPO_ROOT
 
-CATALOG_PATH = Path("library/catalog.json")
+MARKETPLACE_PATH = Path(".claude-plugin/marketplace.json")
 MANIFEST_NAME = "soulmap-ai-library.json"
 
 
-def _read_catalog(repo_root: Path) -> dict[str, Any]:
-    path = repo_root / CATALOG_PATH
+def _read_marketplace(repo_root: Path) -> dict[str, Any]:
+    """Read the shipped skill inventory from marketplace metadata."""
+    path = repo_root / MARKETPLACE_PATH
     if not path.is_file():
-        raise FileNotFoundError(f"Library catalog is missing: {path}")
+        raise FileNotFoundError(f"Marketplace metadata is missing: {path}")
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
-        raise ValueError("Library catalog must contain a JSON object")
-    if payload.get("schema_version") != "1.0":
-        raise ValueError("Library catalog schema_version must be 1.0")
-    if payload.get("library_id") != "soulmap-ai":
-        raise ValueError("Library catalog library_id must be soulmap-ai")
-    entries = payload.get("entries")
-    if not isinstance(entries, list) or not entries:
-        raise ValueError("Library catalog must define at least one entry")
-    for entry in entries:
-        if not isinstance(entry, dict):
-            raise ValueError("Library catalog entries must be objects")
-        entry_path = entry.get("path")
-        if not isinstance(entry_path, str) or not (repo_root / entry_path).is_dir():
-            raise ValueError(f"Library entry path is not a directory: {entry_path}")
+        raise ValueError("Marketplace metadata must contain a JSON object")
+    plugins = payload.get("plugins")
+    if not isinstance(plugins, list) or not plugins:
+        raise ValueError("Marketplace metadata must define at least one plugin")
+    for plugin in plugins:
+        if not isinstance(plugin, dict):
+            raise ValueError("Marketplace plugins must be objects")
+        skills = plugin.get("skills")
+        if not isinstance(skills, list) or len(skills) != 1:
+            raise ValueError(
+                "Each marketplace plugin must define exactly one skill path"
+            )
+        skill_path = skills[0]
+        if not isinstance(skill_path, str) or not skill_path.startswith("./"):
+            raise ValueError("Marketplace skill paths must be repository-relative")
+        path_value = skill_path[2:]
+        if not (repo_root / path_value).is_dir():
+            raise ValueError(f"Marketplace skill path is not a directory: {path_value}")
     return payload
 
 
 def _project_version(repo_root: Path) -> str:
+    """Read the project version from pyproject.toml."""
     pyproject_path = repo_root / "pyproject.toml"
     with pyproject_path.open("rb") as handle:
         payload = tomllib.load(handle)
@@ -70,27 +75,60 @@ def _artifact_metadata(repo_root: Path, path: Path, *, skill: bool) -> dict[str,
     }
 
 
+def _library_entries(marketplace: dict[str, Any]) -> list[dict[str, Any]]:
+    """Normalize marketplace skills into the Library's public inventory."""
+    entries: list[dict[str, Any]] = []
+    for plugin in marketplace["plugins"]:
+        skill_path = plugin["skills"][0][2:]
+        entries.append(
+            {
+                "id": Path(skill_path).name,
+                "plugin_name": plugin["name"],
+                "path": skill_path,
+                "kind": "knowledge-skill",
+                "status": "stable",
+            }
+        )
+    return entries
+
+
 def build_library(repo_root: Path) -> Path:
-    """Build distribution artifacts and write a versioned Library manifest."""
-    catalog = _read_catalog(repo_root)
+    """Build distribution artifacts and write the versioned Library manifest."""
+    marketplace = _read_marketplace(repo_root)
     version = _project_version(repo_root)
     zip_path = build_zip(repo_root)
     skill_path = build_skill(repo_root)
 
-    manifest = deepcopy(catalog)
-    manifest.update(
-        {
-            "version": version,
-            "release_url": catalog["distribution"]["release_url_template"].format(
-                version=version
-            ),
-            "generated_by": "uv run soulmap library-manifest",
-            "artifacts": [
-                _artifact_metadata(repo_root, zip_path, skill=False),
-                _artifact_metadata(repo_root, skill_path, skill=True),
-            ],
-        }
-    )
+    manifest = {
+        "schema_version": "1.0",
+        "library_id": "soulmap-ai",
+        "display_name": "SoulMap AI Library",
+        "version": version,
+        "repository": "https://github.com/tuanductran/soulmap-ai",
+        "project_version_source": "pyproject.toml:[project].version",
+        "source_of_truth": {
+            "behavioral_contract": "SOULMAP.md",
+            "root_skill": "SKILL.md",
+            "skill_inventory": ".claude-plugin/marketplace.json",
+        },
+        "distribution": {
+            "catalog_status": "derived-from-shipped-skill-inventory",
+            "installation_mode": "manual-upload",
+            "automatic_installation": False,
+            "release_url_template": "https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}",
+        },
+        "compatibility": {
+            "root_manifest": "SKILL.md",
+            "skills_root": "skills",
+        },
+        "entries": _library_entries(marketplace),
+        "release_url": f"https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}",
+        "generated_by": "uv run soulmap library-manifest",
+        "artifacts": [
+            _artifact_metadata(repo_root, zip_path, skill=False),
+            _artifact_metadata(repo_root, skill_path, skill=True),
+        ],
+    }
 
     output_path = repo_root / "dist" / MANIFEST_NAME
     output_path.write_text(
@@ -101,14 +139,7 @@ def build_library(repo_root: Path) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Build the Library distribution manifest from the command line.
-
-    Args:
-        argv: Command-line arguments, or None to read from ``sys.argv``.
-
-    Returns:
-        0 on success.
-    """
+    """Build the versioned Library distribution manifest."""
     parser = argparse.ArgumentParser(
         description="Build the versioned dist/soulmap-ai-library.json manifest."
     )

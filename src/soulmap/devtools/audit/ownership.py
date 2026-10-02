@@ -1,21 +1,14 @@
-"""Audit knowledge ownership across runtime consumers and domain routers."""
+"""Audit knowledge ownership across runtime consumers."""
 
 from __future__ import annotations
 
 import argparse
 import ast
-import re
 from dataclasses import dataclass
 from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.source_registry import _registry
-
-_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)")
-_CANONICAL_RE = re.compile(
-    r"^##\s+Canonical sources\s*$(?P<body>.*?)(?=^##\s+|\Z)",
-    re.MULTILINE | re.DOTALL,
-)
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,58 +84,9 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
     return tuple(findings)
 
 
-def _domain_findings(root: Path) -> tuple[OwnershipFinding, ...]:
-    domains_root = root / "skills/domains"
-    findings: list[OwnershipFinding] = []
-    memberships: dict[str, list[Path]] = {}
-
-    for router in sorted(domains_root.glob("*/SKILL.md")):
-        text = router.read_text(encoding="utf-8")
-        match = _CANONICAL_RE.search(text)
-        if match is None:
-            findings.append(
-                OwnershipFinding(
-                    "missing-canonical-sources", router, "Canonical sources"
-                )
-            )
-            continue
-        for target in _LINK_RE.findall(match.group("body")):
-            if target.startswith(("http://", "https://")):
-                continue
-            resolved = (router.parent / target).resolve()
-            try:
-                relative = resolved.relative_to(root).as_posix()
-            except ValueError:
-                findings.append(OwnershipFinding("domain-path-escape", router, target))
-                continue
-            if not resolved.is_file():
-                findings.append(
-                    OwnershipFinding("missing-domain-source", router, relative)
-                )
-                continue
-            if not relative.startswith("skills/") or not relative.endswith(".md"):
-                findings.append(
-                    OwnershipFinding("non-knowledge-domain-source", router, relative)
-                )
-                continue
-            memberships.setdefault(relative, []).append(router)
-
-    # Shared membership is intentional and therefore diagnostic, not a failure.
-    for source, routers in sorted(memberships.items()):
-        if len(routers) > 1:
-            findings.append(
-                OwnershipFinding(
-                    "shared-domain-source",
-                    root / source,
-                    ", ".join(p.relative_to(root).as_posix() for p in routers),
-                )
-            )
-    return tuple(findings)
-
-
 def audit(root: Path) -> tuple[OwnershipFinding, ...]:
     """Return deterministic ownership findings for the repository."""
-    return _runtime_findings(root) + _domain_findings(root)
+    return _runtime_findings(root)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -151,13 +95,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
     findings = audit(args.root.resolve())
-    errors = tuple(item for item in findings if item.kind != "shared-domain-source")
+    errors = findings
     print("Knowledge ownership audit")
     print(f"findings: {len(findings)}")
     for item in findings:
         print(
-            f"[{'INFO' if item.kind == 'shared-domain-source' else 'ERROR'}] "
-            f"{item.kind}: {item.path.relative_to(args.root.resolve())} -> {item.detail}"
+            f"[ERROR] {item.kind}: "
+            f"{item.path.relative_to(args.root.resolve())} -> {item.detail}"
         )
     if errors:
         return 1

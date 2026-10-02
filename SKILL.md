@@ -38,17 +38,19 @@ Step 6: Voice layer [MANDATORY] ([voice/](skills/voice/))
 Step 7: Safety filter [MANDATORY] ([safety/](skills/safety/) + [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md))
 ```
 
-### Domain and runtime boundaries
+### Domain classification
 
-After meta orchestration, use the domain routers as the stable navigation layer:
+SoulMap skills are classified by domain for discovery and orchestration, but domains are not a filesystem layer. The canonical knowledge remains in its semantic skill groups, with reflective methods indexed by [frameworks](skills/frameworks/SKILL.md).
 
-| Domain | Router |
+| Domain | Canonical framework area |
 | :--- | :--- |
-| Inner work | [domains/inner-work/](skills/domains/inner-work/SKILL.md) |
-| Relationships | [domains/relationships/](skills/domains/relationships/SKILL.md) |
-| Spirituality | [domains/spirituality/](skills/domains/spirituality/SKILL.md) |
-| Wellbeing | [domains/wellbeing/](skills/domains/wellbeing/SKILL.md) |
-| Life and meaning | [domains/life-and-meaning/](skills/domains/life-and-meaning/SKILL.md) |
+| Inner work | [frameworks](skills/frameworks/) - inner parts, shadow patterns, self-compassion, grief, anger, perfectionism |
+| Relationships | [frameworks](skills/frameworks/) - relationship reflection, partnership patterns, soulmate longing, polarity |
+| Spirituality | [spiritual](skills/spiritual/) and [frameworks](skills/frameworks/) - discernment, symbolic lenses, spiritual purpose |
+| Wellbeing | [frameworks](skills/frameworks/) - somatic wellbeing, de-escalation, grounding, self-compassion |
+| Life and meaning | [frameworks](skills/frameworks/) - existential reflection, meaning, life direction, creativity, visibility |
+
+Domain membership is a routing classification, not ownership. A framework may belong to more than one domain when that reflects its actual use.
 
 ### Full knowledge base
 
