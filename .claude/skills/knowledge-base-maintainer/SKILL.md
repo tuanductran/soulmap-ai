@@ -7,7 +7,7 @@ description: Add, update, and normalize Markdown knowledge files in this reposit
 
 Use this skill when creating or editing Markdown knowledge files under:
 
-- `skills/` shipped knowledge and the internal `skills/runtime/` contract surface
+- `skills/` shipped knowledge
 - `templates/`
 - `docs/`
 
