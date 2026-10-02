@@ -30,17 +30,13 @@ Library, not copy-pasted into the new detector.
 
 ## Skill loading already follows progressive disclosure
 
-Every `skills/*/SKILL.md` and `.claude/skills/*/SKILL.md` in this repository
-already loads in the shape Anthropic's Agent Skills documentation calls
-progressive disclosure: front matter `name` and `description` are always
-loaded, the full `SKILL.md` body loads only once a skill activates, and a
-referenced content file (a specific `skills/frameworks/<name>.md`, for
-example) loads only when its detector fires. This was arrived at
-independently, as a consequence of the Library-vs-Framework split above, not
-copied from that documentation. It is worth naming here so a contributor
-coming from the wider Claude Skills ecosystem recognizes the pattern
-immediately, without implying any change to how skills are authored or
-loaded. See the [Agent Skills overview](https://platform.Claude.com/docs/en/agents-and-tools/agent-skills/overview).
+The root `SKILL.md` uses the progressive-disclosure pattern described by
+Anthropic's Agent Skills documentation: its front matter and entrypoint guidance
+are loaded first, then directly referenced canonical knowledge is loaded only
+when that part of the response pipeline is needed. This keeps the distributable
+Skill entrypoint small while preserving the full canonical knowledge base under
+`skills/`. Developer Skills under `.claude/skills/` are separate internal tooling
+and are not part of the SoulMap distribution. See the [Agent Skills overview](https://platform.Claude.com/docs/en/agents-and-tools/agent-skills/overview).
 
 ## What is Library (do not duplicate, only extend carefully)
 
