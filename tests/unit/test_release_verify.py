@@ -71,7 +71,7 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
         "LICENSE",
         "SOULMAP.md",
         "SKILL.md",
-        "skills/domains/example/SKILL.md",
+        "skills/frameworks/example.md",
         "src/soulmap/runtime/source_registry.py",
         ".claude-plugin/marketplace.json",
         ".DS_Store",
@@ -83,7 +83,7 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
     standard = _source_members(tmp_path, include_plugin=False)
     skill = _source_members(tmp_path, include_plugin=True)
 
-    assert "skills/domains/example/SKILL.md" in standard
+    assert "skills/frameworks/example.md" in standard
     assert "src/soulmap/runtime/source_registry.py" not in standard
     assert ".claude-plugin/marketplace.json" not in standard
     assert ".claude-plugin/marketplace.json" in skill
