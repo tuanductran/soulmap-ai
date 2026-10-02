@@ -31,7 +31,7 @@ grief routing layer" rather than a constant name.
 
 **Shipped-package boundary rule:** Shipped knowledge under `skills/` ships standalone inside
 `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. Neither archive includes `docs/`,
-`tests/`, `.claude/`, `.github/`, `scripts/`, `library/`, `src/soulmap/`,
+`tests/`, `.claude/`, `.github/`, `scripts/`, `src/soulmap/`,
 `pyproject.toml`, `uv.lock`, or any other repository-only path (see
 `docs/engineering/repo-contract.md`'s packaged-contents row for the exact list). A
 reference from `skills/` content to one of those paths resolves to nothing once the
