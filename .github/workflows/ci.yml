@@ -24,6 +24,8 @@ jobs:
         include:
           - os: ubuntu-26.04
             check_name: ubuntu-latest
+          - os: ubuntu-24.04
+            check_name: ubuntu-24.04
           - os: macos-latest
             check_name: macos-latest
           - os: windows-latest
