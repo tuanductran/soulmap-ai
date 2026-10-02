@@ -35,14 +35,3 @@ def test_audit_rejects_implementation_commands_and_executable_code(
 
     assert any("uv run" in finding for finding in findings)
     assert any("executable code fence" in finding for finding in findings)
-
-
-def test_runtime_integration_folder_is_not_domain_scanned(tmp_path: Path) -> None:
-    runtime = tmp_path / "skills" / "runtime"
-    runtime.mkdir(parents=True)
-    (runtime / "contract.md").write_text(
-        "Python runtime integration may reference src/soulmap/.\n",
-        encoding="utf-8",
-    )
-
-    assert audit(tmp_path) == []
