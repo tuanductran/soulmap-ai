@@ -20,7 +20,7 @@ under `src/soulmap/runtime/`, plus a maintainer tooling package under
 
 - `SOULMAP.md`, the shipped SoulMap doctrine, safety rules, and framework hierarchy
 - `skills/`, the shipped knowledge base (frameworks, safety, brand, voice, meta,
-  spiritual, soulmate, writing; domain classification lives in the framework index)
+  spiritual, soulmate, writing; domain classification is documented in the root `SKILL.md` entrypoint)
 - `templates/`, internal-only product and brand copy, not shipped
 - `src/soulmap/runtime/`, the executable routing, detection, safety-guard, and internal runtime contract layer
 - `src/soulmap/devtools/`, the maintainer CLI (`soulmap ...`), eval runners, and
