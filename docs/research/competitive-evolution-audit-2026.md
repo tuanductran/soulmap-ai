@@ -176,10 +176,10 @@ product's anti-dependency stance. No gap found.
 Cross-checked against Anthropic's own documented Agent Skills model
 ([overview](https://platform.Claude.com/docs/en/agents-and-tools/agent-skills/overview)):
 
-* **Level 1 (name and description always loaded):** every `skills/*/SKILL.md`
-  and every `.claude/skills/*/SKILL.md` already has YAML front matter with
-  `name` and `description`. Confirmed already correct.
-* **Level 2 (full body on activation):** `skills/*/SKILL.md`'s own workflow
+* **Level 1 (name and description always loaded):** the shipped root `SKILL.md`
+  and internal `.claude/skills/*/SKILL.md` files use YAML front matter with
+  `name` and `description`.
+* **Level 2 (full body on activation):** the shipped root `SKILL.md`'s workflow
   sections already point to specific files to read next rather than inlining
   everything. Confirmed already correct.
 * **Level 3 (referenced files on demand):** the Framework-pair pattern
