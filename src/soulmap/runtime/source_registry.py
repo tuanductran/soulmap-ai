@@ -69,13 +69,15 @@ def _has_heading(text: str, expected: str) -> bool:
 
 def _validate_registry(
     entries: dict[str, tuple[str, str, str, str]],
+    repo_root: Path | None = None,
 ) -> tuple[str, ...]:
     """Validate every registry mapping against its shipped Markdown source."""
     violations: list[str] = []
-    skills_root = default_skill_path("skills").resolve()
+    root = (repo_root or default_skill_path("skills").parent).resolve()
+    skills_root = (root / "skills").resolve()
 
     for source, (relative_path, signals, contract, guidance) in entries.items():
-        path = default_skill_path(relative_path).resolve()
+        path = (root / relative_path).resolve()
         try:
             path.relative_to(skills_root)
         except ValueError:
@@ -101,9 +103,25 @@ def _validate_registry(
 
 
 @cache
-def _registry() -> dict[str, tuple[str, str, str, str]]:
+def _registry(
+    repo_root: Path | None = None,
+) -> dict[str, tuple[str, str, str, str]]:
     """Return the Python-owned registry after validating shipped sources."""
+    if repo_root is not None:
+        return _registry_for_root(repo_root)
     violations = _validate_registry(REGISTRY)
+    if violations:
+        raise ValueError(
+            "Runtime source registry validation failed:\n"
+            + "\n".join(f"- {violation}" for violation in violations)
+        )
+    return REGISTRY
+
+
+@cache
+def _registry_for_root(repo_root: Path) -> dict[str, tuple[str, str, str, str]]:
+    """Validate the registry against an explicitly supplied repository root."""
+    violations = _validate_registry(REGISTRY, repo_root)
     if violations:
         raise ValueError(
             "Runtime source registry validation failed:\n"
