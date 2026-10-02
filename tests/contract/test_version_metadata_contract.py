@@ -33,8 +33,8 @@ def _package_version() -> str:
 
 
 def _skill_manifests() -> list[Path]:
-    """Return the root manifest plus every shipped skill's manifest."""
-    return [REPO_ROOT / "SKILL.md", *sorted(REPO_ROOT.glob("skills/*/SKILL.md"))]
+    """Return the single shipped SoulMap Skill manifest."""
+    return [REPO_ROOT / "SKILL.md"]
 
 
 def _declared_version(manifest: Path) -> str | None:
@@ -49,7 +49,7 @@ def test_the_manifest_discovery_is_not_silently_matching_nothing() -> None:
     """A glob returning nothing would make every assertion below vacuous."""
     manifests = _skill_manifests()
 
-    assert len(manifests) >= 8, f"expected root plus 7 skills, found {len(manifests)}"
+    assert manifests == [REPO_ROOT / "SKILL.md"]
     for manifest in manifests:
         assert manifest.is_file(), manifest
 
@@ -80,7 +80,7 @@ def test_the_marketplace_and_every_plugin_declare_the_package_version() -> None:
     )
 
     plugins = data["plugins"]
-    assert len(plugins) >= 7, f"expected the full plugin set, found {len(plugins)}"
+    assert len(plugins) == 1
 
     mismatched = {
         plugin.get("name", "<unnamed>"): plugin.get("version")
@@ -92,21 +92,16 @@ def test_the_marketplace_and_every_plugin_declare_the_package_version() -> None:
     )
 
 
-def test_every_shipped_skill_directory_has_a_versioned_manifest() -> None:
-    """A new skill directory must not ship without a manifest to version.
-
-    Without this, adding `skills/newthing/` with content but no `SKILL.md`
-    would leave it unversioned and unnoticed, since the checks above only
-    look at manifests that already exist.
-    """
+def test_supporting_knowledge_directories_do_not_define_skill_manifests() -> None:
+    """Supporting knowledge namespaces must not become independent Skills."""
     directories = sorted(
         path for path in (REPO_ROOT / "skills").iterdir() if path.is_dir()
     )
 
-    assert directories, "no skill directories found, check the path"
-    missing = [
-        str(directory.relative_to(REPO_ROOT))
+    assert directories, "no supporting knowledge directories found"
+    manifests = [
+        directory / "SKILL.md"
         for directory in directories
-        if not (directory / "SKILL.md").is_file()
+        if (directory / "SKILL.md").is_file()
     ]
-    assert not missing, f"skill directories without a SKILL.md manifest: {missing}"
+    assert not manifests, f"supporting directories contain Skill entrypoints: {manifests}"
