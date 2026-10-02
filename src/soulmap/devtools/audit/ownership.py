@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
-from soulmap.runtime.knowledge.runtime_registry import _registry
+from soulmap.runtime.source_registry import _registry
 
 _LINK_RE = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)")
 _CANONICAL_RE = re.compile(
@@ -28,7 +28,7 @@ class OwnershipFinding:
 
 
 def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
-    registry = _registry(root / "src/soulmap/runtime/source-registry.md")
+    registry = _registry(root)
     findings: list[OwnershipFinding] = []
     used_sources: set[str] = set()
     runtime_root = root / "src/soulmap/runtime"
@@ -80,7 +80,7 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
         findings.append(
             OwnershipFinding(
                 "unconsumed-registry-source",
-                root / "skills/runtime/source-registry.md",
+                root / "src/soulmap/runtime/source_registry.py",
                 source,
             )
         )
