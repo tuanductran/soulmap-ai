@@ -1,7 +1,7 @@
 ---
 name: "relationships"
 description: "Relationship reflection, partnership patterns, attachment-adjacent reflection, and connection themes without turning them into prediction. Use this domain router when the request clearly belongs to this area."
-version: "0.12.1"
+version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
