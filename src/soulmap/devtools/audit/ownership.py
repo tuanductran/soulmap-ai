@@ -34,7 +34,7 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
     runtime_root = root / "src/soulmap/runtime"
 
     for path in sorted(runtime_root.rglob("*.py")):
-        if path.name in {"pattern_source.py", "runtime_registry.py"}:
+        if path.name in {"pattern_source.py", "runtime_registry.py", "source_registry.py"}:
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
         for node in ast.walk(tree):
