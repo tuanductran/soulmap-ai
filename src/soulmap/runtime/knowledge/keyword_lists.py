@@ -223,8 +223,8 @@ def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
 def default_skill_path(relative_path: str) -> Path:
     """Locate a file under ``skills/`` without depending on devtools.
 
-    Mirrors ``pattern_source.default_pattern_mapper_path`` — runtime modules
-    ship and run standalone, so this does not import ``soulmap.devtools``.
+    Runtime modules ship and run standalone, so this does not import
+    ``soulmap.devtools``.
     """
     import os
 
