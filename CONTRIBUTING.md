@@ -31,7 +31,8 @@ Before merging, confirm that any changes to positioning, safety, or templates re
 consistent across:
 
 - [README.md](README.md)
-- [skills/brand/SKILL.md](skills/brand/SKILL.md)
+- [SKILL.md](SKILL.md), the single shipped Skill entrypoint
+- [skills/brand/](skills/brand/)
 - [templates/README.md](templates/README.md) (internal-only, not shipped)
 - [skills/brand/message-hierarchy.md](skills/brand/message-hierarchy.md)
 - [skills/brand/surfaces-and-scope.md](skills/brand/surfaces-and-scope.md)
@@ -75,63 +76,30 @@ This repo intentionally does not run a heavy `pre-push` hook. Before pushing, ru
   - Minor: new frameworks, new detectors, or expanded policies.
   - Major: behavioral breaking changes in safety rules or response structure.
 
-## Adding or Editing SKILL.md Files
+## Skill entrypoint contract
 
-When creating or updating a `SKILL.md` in `skills/` or `.claude/skills/`,
-follow these rules. Treat them as repo contract rules and verify them through the
-normal formatting and linting flow.
+SoulMap has exactly one shipped Skill entrypoint: the root [SKILL.md](SKILL.md).
 
-### Frontmatter requirements
+The `skills/` tree contains supporting canonical knowledge. Do not add nested
+`SKILL.md` files there; a nested file would be interpreted as another Claude Skill
+and would violate the distribution contract.
 
-```yaml
----
-name: "hyphenated-short-name"
-description: Third-person summary. Relevant for [task types].
-license: Complete terms in LICENSE
----
-```
+Developer-maintenance Skills under `.claude/skills/` are repository tooling and are
+not shipped in the SoulMap artifact.
 
-**name:** Lowercase, hyphen-separated, 64 characters max. No underscores.
+When editing canonical knowledge under `skills/`, preserve the Markdown-first rule:
+knowledge lives in Markdown; Python routes, loads, normalizes, validates, and enforces
+that knowledge.
 
-**description:** Third-person only. Never open with "Use this when" or "Use when" --
-these are imperative instructions, not descriptions. The description is injected into the
-system prompt as metadata: mixing imperative language degrades routing reliability.
+## Build contract
 
-```yaml
-# Correct
-description: SoulMap AI safety rules covering crisis handling and dependency prevention.
-  Relevant for requests involving harm, escalation, or refusal behavior.
-
-# Wrong
-description: SoulMap AI safety rules. Use this when a request involves harm.
-```
-
-**license:** Always `Complete terms in LICENSE`. Do not omit.
-
-### Invocation controls for side-effect skills
-
-If a skill triggers real-world side effects (publishing, releasing, deploying), add
-`disable-model-invocation: true` after the description line:
-
-```yaml
----
-name: release-readiness-review
-description: ...
-disable-model-invocation: true
----
-```
-
-### Build contract
-
-After adding any `.md` to `skills/`, run the appropriate command(s) to rebuild the distribution artifacts. (`templates/` is internal-only and is excluded from the build.)
+After adding or editing any shipped `.md` under `skills/`, rebuild the distribution
+artifacts and verify the single-entrypoint contract.
 
 ```bash
-# To build the standard .zip archive
-uv run soulmap build
-
-# To build the .skill package for Claude
-uv run soulmap build --skill
+uv run soulmap library-manifest
 ```
 
-If the new file is missing from the rebuilt archive, the build or packaging validation
-steps should be treated as failed and fixed before release.
+The generated `dist/soulmap-ai.skill` must contain exactly one `SKILL.md`, at the
+archive root. If a second `SKILL.md` appears, the build or packaging validation must
+be treated as failed before release.

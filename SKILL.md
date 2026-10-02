@@ -20,7 +20,7 @@ the orchestration layer first. Do not jump directly to a framework file.
 
 ### Mandatory first step
 
-Load [SKILL.md](skills/meta/SKILL.md) and run the execution pipeline
+Load [orchestration.md](skills/meta/orchestration.md) and run the execution pipeline
 defined in [execution-pipeline.md](skills/meta/execution-pipeline.md).
 
 The pipeline has 7 steps. Steps 6 (voice) and 7 (safety) are mandatory and cannot
@@ -30,50 +30,59 @@ be skipped for any response.
 
 ```text
 Step 1: Intent + emotional state detection
-Step 2: Depth calibration ([stage-classifier.md](skills/meta/stage-classifier.md))
-Step 3: Framework selection ([orchestration.md](skills/meta/orchestration.md))
-Step 4: Response-shape selection ([framework-template-map.md](skills/meta/framework-template-map.md))
-Step 5: Content generation ([frameworks/](skills/frameworks/))
-Step 6: Voice layer [MANDATORY] ([voice/](skills/voice/))
-Step 7: Safety filter [MANDATORY] ([safety/](skills/safety/) + [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md))
+Step 2: Depth calibration (stage-classifier.md)
+Step 3: Framework selection (orchestration.md)
+Step 4: Response-shape selection (framework-template-map.md)
+Step 5: Content generation (frameworks/)
+Step 6: Voice layer [MANDATORY] (voice/)
+Step 7: Safety filter [MANDATORY] (safety/ + epistemic-guardrails.md)
 ```
 
 ### Domain classification
 
-SoulMap skills are classified by domain for discovery and orchestration, but domains are not a filesystem layer. The canonical knowledge remains in its semantic skill groups, with reflective methods indexed by [frameworks](skills/frameworks/SKILL.md).
+SoulMap skills are classified by domain for discovery and orchestration, but domains
+are not a filesystem layer. Canonical knowledge remains in semantic groups, while
+reflective methods live in `skills/frameworks/`.
 
 | Domain | Canonical framework area |
 | :--- | :--- |
-| Inner work | [frameworks](skills/frameworks/) - inner parts, shadow patterns, self-compassion, grief, anger, perfectionism |
-| Relationships | [frameworks](skills/frameworks/) - relationship reflection, partnership patterns, soulmate longing, polarity |
-| Spirituality | [spiritual](skills/spiritual/) and [frameworks](skills/frameworks/) - discernment, symbolic lenses, spiritual purpose |
-| Wellbeing | [frameworks](skills/frameworks/) - somatic wellbeing, de-escalation, grounding, self-compassion |
-| Life and meaning | [frameworks](skills/frameworks/) - existential reflection, meaning, life direction, creativity, visibility |
+| Inner work | `skills/frameworks/` - inner parts, shadow patterns, self-compassion, grief, anger, perfectionism |
+| Relationships | `skills/frameworks/` - relationship reflection, partnership patterns, soulmate longing, polarity |
+| Spirituality | `skills/spiritual/` and `skills/frameworks/` - discernment, symbolic lenses, spiritual purpose |
+| Wellbeing | `skills/frameworks/` - somatic wellbeing, de-escalation, grounding, self-compassion |
+| Life and meaning | `skills/frameworks/` - existential reflection, meaning, life direction, creativity, visibility |
 
-Domain membership is a routing classification, not ownership. A framework may belong to more than one domain when that reflects its actual use.
+Domain membership is a routing classification, not ownership. A framework may belong
+to more than one domain when that reflects its actual use.
 
 ### Full knowledge base
 
-After routing through meta, load from the relevant group:
+After routing through meta, load the relevant canonical knowledge file:
 
-| When you need...                              | Load from...                |
-| :-------------------------------------------- | :-------------------------- |
-| Orchestration and pipeline rules              | [meta/](skills/meta/) |
-| Behavioral contract and safety rules          | [SOULMAP.md](SOULMAP.md) |
-| Response frameworks (grief, crisis, and so on) | [frameworks/](skills/frameworks/) |
-| Safety boundaries and scope control           | [safety/](skills/safety/) |
-| Brand, positioning, and public copy           | [brand/](skills/brand/) |
-| Voice, tone, and response calibration         | [voice/](skills/voice/) |
-| Deep inquiry questions and journey stages     | [deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md) |
-| Depth calibration guidance                    | [stage-classifier.md](skills/meta/stage-classifier.md) |
-| Framework-to-template guidance                | [framework-template-map.md](skills/meta/framework-template-map.md) |
-| Epistemic guardrails for spiritual content    | [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
-| Spiritual layer and symbolic frameworks       | [spiritual/](skills/spiritual/) |
-| Soulmate longing, partnership patterns, and connection numerology | [soulmate/](skills/soulmate/) |
+| When you need... | Load from... |
+| :--- | :--- |
+| Orchestration and pipeline rules | [orchestration.md](skills/meta/orchestration.md), [execution-pipeline.md](skills/meta/execution-pipeline.md) |
+| Depth calibration | [stage-classifier.md](skills/meta/stage-classifier.md) |
+| Framework-to-template guidance | [framework-template-map.md](skills/meta/framework-template-map.md) |
+| Response frameworks | [frameworks/](skills/frameworks/) |
+| Safety boundaries and scope control | [safety/](skills/safety/) |
+| Epistemic guardrails | [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
+| Brand, positioning, and public copy | [brand/](skills/brand/) |
+| Voice, tone, and response calibration | [voice/](skills/voice/) |
+| Spiritual layer and symbolic frameworks | [spiritual/](skills/spiritual/) |
+| Soulmate longing and partnership patterns | [soulmate/](skills/soulmate/) |
 | Turning personal reflection into public writing | [writing/](skills/writing/) |
-| Response templates and quick reference        | [response-structure.md](skills/meta/response-structure.md), [quick-reference.md](skills/meta/quick-reference.md) |
-| Competitive differentiation language          | [competitive-differentiation.md](skills/brand/competitive-differentiation.md) |
-| Research backing for brand claims             | [research-backing.md](skills/brand/research-backing.md) |
+| Deep inquiry and journey stages | [deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md), [user-journey-stages.md](skills/meta/user-journey-stages.md) |
+| Response templates and quick reference | [response-structure.md](skills/meta/response-structure.md), [quick-reference.md](skills/meta/quick-reference.md) |
 
-See [SOULMAP.md](SOULMAP.md) for the full behavioral contract and non-negotiable safety
-rules that govern every response.
+[SOULMAP.md](SOULMAP.md) defines the full behavioral contract and non-negotiable
+safety rules that govern every response.
+
+## Distribution contract
+
+This root `SKILL.md` is the **only Skill entrypoint shipped by SoulMap**.
+Files under `skills/` are supporting canonical knowledge, not independent Claude
+Skills. They must not contain additional `SKILL.md` files.
+
+Developer and repository-maintenance Skills under `.claude/skills/` are internal
+tooling and are not part of the SoulMap distribution artifact.

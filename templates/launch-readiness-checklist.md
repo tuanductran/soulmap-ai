@@ -43,9 +43,8 @@ responsibly.
 
 ## Brand Integrity
 
-- [skills/brand/SKILL.md](../skills/brand/SKILL.md) and
-  [skills/brand/brand-positioning.md](../skills/brand/brand-positioning.md) still
-  describe the same core promise.
+- [SKILL.md](../SKILL.md) and [skills/brand/brand-positioning.md](../skills/brand/brand-positioning.md)
+  still describe the same core promise.
 - [skills/brand/surfaces-and-scope.md](../skills/brand/surfaces-and-scope.md) still
   cleanly separates live chat rules from public content and internal strategy.
 - Templates reflect anti-dependency and return ownership to the user.

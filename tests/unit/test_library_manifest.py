@@ -24,9 +24,9 @@ def _marketplace() -> str:
             "version": "1.2.3",
             "plugins": [
                 {
-                    "name": "SoulMap Brand System",
+                    "name": "SoulMap AI",
                     "source": "./",
-                    "skills": ["./skills/brand"],
+                    "skills": ["./"],
                 }
             ],
         }
@@ -38,7 +38,7 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
     _write(tmp_path, "LICENSE")
     _write(tmp_path, "SOULMAP.md")
     _write(tmp_path, "SKILL.md")
-    _write(tmp_path, "skills/brand/SKILL.md")
+    _write(tmp_path, "skills/brand/brand-doctrine.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", _marketplace())
 
     manifest_path = library.build_library(tmp_path)
@@ -51,7 +51,7 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
         == "https://github.com/tuanductran/soulmap-ai/releases/tag/v1.2.3"
     )
     assert payload["generated_by"] == "uv run soulmap library-manifest"
-    assert payload["entries"][0]["path"] == "skills/brand"
+    assert payload["entries"][0]["path"] == "."
     assert [artifact["filename"] for artifact in payload["artifacts"]] == [
         "soulmap-ai.zip",
         "soulmap-ai.skill",
@@ -104,13 +104,13 @@ def test_read_marketplace_rejects_invalid_skill_path(tmp_path: Path) -> None:
 
 
 def test_read_marketplace_accepts_valid_inventory(tmp_path: Path) -> None:
+    _write(tmp_path, "SKILL.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", _marketplace())
-    _write(tmp_path, "skills/brand/SKILL.md")
 
     payload = library._read_marketplace(tmp_path)
 
     assert payload["name"] == "soulmap-ai"
-    assert payload["plugins"][0]["skills"] == ["./skills/brand"]
+    assert payload["plugins"][0]["skills"] == ["./"]
 
 
 @pytest.mark.parametrize(

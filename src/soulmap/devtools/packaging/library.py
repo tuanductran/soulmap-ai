@@ -18,7 +18,7 @@ MANIFEST_NAME = "soulmap-ai-library.json"
 
 
 def _read_marketplace(repo_root: Path) -> dict[str, Any]:
-    """Read the shipped skill inventory from marketplace metadata."""
+    """Read the shipped Skill inventory from marketplace metadata."""
     path = repo_root / MARKETPLACE_PATH
     if not path.is_file():
         raise FileNotFoundError(f"Marketplace metadata is missing: {path}")
@@ -40,8 +40,13 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
         if not isinstance(skill_path, str) or not skill_path.startswith("./"):
             raise ValueError("Marketplace skill paths must be repository-relative")
         path_value = skill_path[2:]
-        if not (repo_root / path_value).is_dir():
-            raise ValueError(f"Marketplace skill path is not a directory: {path_value}")
+        target = repo_root / path_value
+        if not target.is_dir():
+            raise ValueError(
+                f"Marketplace skill path is not a directory: {path_value or '.'}"
+            )
+        if path_value == "" and not (repo_root / "SKILL.md").is_file():
+            raise ValueError("The root marketplace Skill requires SKILL.md")
     return payload
 
 
@@ -76,15 +81,15 @@ def _artifact_metadata(repo_root: Path, path: Path, *, skill: bool) -> dict[str,
 
 
 def _library_entries(marketplace: dict[str, Any]) -> list[dict[str, Any]]:
-    """Normalize marketplace skills into the Library's public inventory."""
+    """Normalize marketplace Skills into the Library's public inventory."""
     entries: list[dict[str, Any]] = []
     for plugin in marketplace["plugins"]:
         skill_path = plugin["skills"][0][2:]
         entries.append(
             {
-                "id": Path(skill_path).name,
+                "id": Path(skill_path).name if skill_path else "soulmap-ai",
                 "plugin_name": plugin["name"],
-                "path": skill_path,
+                "path": skill_path or ".",
                 "kind": "knowledge-skill",
                 "status": "stable",
             }

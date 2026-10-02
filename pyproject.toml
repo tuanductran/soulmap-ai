@@ -158,7 +158,6 @@ version_files = [
   "docs/integrations/gemini-instructions.md:soulmap_version",
   "docs/integrations/poe-system-prompt.md:soulmap_version",
   "SKILL.md:version",
-  "skills/*/SKILL.md:version",
   ".claude-plugin/marketplace.json:version"
 ]
 
