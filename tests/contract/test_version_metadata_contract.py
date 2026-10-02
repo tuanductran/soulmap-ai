@@ -1,11 +1,9 @@
 """Every shipped skill and marketplace plugin declares the package version.
 
-A consumer who installs a skill or a plugin has no other way to tell which
-release of SoulMap the content belongs to. `cz bump` keeps the declarations in
-step through `version_files` in `pyproject.toml`, and this contract is what
-makes a missed entry fail rather than drift quietly: a new skill directory
-whose `SKILL.md` has no `version`, or a bump that reaches `pyproject.toml`
-while leaving a plugin behind.
+A consumer who installs the SoulMap Skill or plugin has no other way to tell
+which release the content belongs to. cz bump keeps the declarations in step
+through version_files in pyproject.toml, and this contract makes a missed
+entry fail rather than drift quietly.
 
 Versions move in lockstep with the package on purpose. A skill is not
 independently released, so an independent version would imply a guarantee the
@@ -66,7 +64,7 @@ def test_every_skill_manifest_declares_the_package_version() -> None:
 
     assert not mismatched, (
         f"skill manifests out of step with pyproject ({expected}): {mismatched}. "
-        f"`cz bump` should carry these; check the version_files globs."
+        "cz bump should carry these; check the version_files globs."
     )
 
 
@@ -104,4 +102,6 @@ def test_supporting_knowledge_directories_do_not_define_skill_manifests() -> Non
         for directory in directories
         if (directory / "SKILL.md").is_file()
     ]
-    assert not manifests, f"supporting directories contain Skill entrypoints: {manifests}"
+    assert not manifests, (
+        f"supporting directories contain Skill entrypoints: {manifests}"
+    )
