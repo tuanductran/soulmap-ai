@@ -532,6 +532,8 @@ def test_detector_classification_literals_are_not_knowledge_matches(
     )
 
     assert find_detector_markdown_duplicates(tmp_path) == ()
+
+
 def test_markdown_consumers_finds_runtime_markdown_loader(tmp_path: Path) -> None:
     markdown = tmp_path / "skills/frameworks/example.md"
     markdown.parent.mkdir(parents=True)
