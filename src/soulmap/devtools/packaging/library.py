@@ -42,7 +42,9 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
         path_value = skill_path[2:]
         target = repo_root / path_value
         if not target.is_dir():
-            raise ValueError(f"Marketplace skill path is not a directory: {path_value or '.'}")
+raise ValueError(
+                f"Marketplace skill path is not a directory: {path_value or '.'}"
+            )
         if path_value == "" and not (repo_root / "SKILL.md").is_file():
             raise ValueError("The root marketplace Skill requires SKILL.md")
     return payload
