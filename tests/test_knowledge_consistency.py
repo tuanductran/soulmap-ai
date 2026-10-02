@@ -471,9 +471,7 @@ def test_find_detector_markdown_duplicates_detects_exact_signal_literals(
     detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
     detector.parent.mkdir(parents=True)
     detector.write_text(
-        'if "shared signal" in msg:\n'
-        '    return True\n'
-        'INTERNAL = "detector only"\n',
+        'if "shared signal" in msg:\n    return True\nINTERNAL = "detector only"\n',
         encoding="utf-8",
     )
 
@@ -497,8 +495,7 @@ def test_detector_docstrings_are_not_knowledge_duplicates(tmp_path: Path) -> Non
     detector = tmp_path / "src/soulmap/runtime/detectors/example_detector.py"
     detector.parent.mkdir(parents=True)
     detector.write_text(
-        '"""shared signal"""\n'
-        'VALUE = "detector only"\n',
+        '"""shared signal"""\nVALUE = "detector only"\n',
         encoding="utf-8",
     )
 
@@ -520,7 +517,7 @@ def test_detector_classification_literals_are_not_knowledge_matches(
     detector.write_text(
         'return_type = "relief"\n'
         'if "different signal" in msg:\n'
-        '    return return_type\n',
+        "    return return_type\n",
         encoding="utf-8",
     )
 
