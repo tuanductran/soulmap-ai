@@ -170,7 +170,10 @@ def markdown_consumers(root: Path, markdown_path: Path) -> tuple[Path, ...]:
 
 def _classification(python_path: Path, constant: str) -> str:
     """Classify overlap without deciding ownership or mutating either source."""
-    if python_path.name != "safety.py":
+    is_safety_config = python_path.name == "safety.py" or python_path.name.startswith(
+        "safety_"
+    )
+    if not is_safety_config:
         return "knowledge_duplicate"
 
     if constant.startswith("CRISIS_"):
