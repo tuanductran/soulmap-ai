@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 
 import soulmap.devtools.audit.ownership as ownership
-
 from soulmap.devtools.audit.ownership import audit
 from soulmap.devtools.packaging.members import source_members
 
@@ -15,7 +14,9 @@ def test_real_knowledge_ownership_has_no_errors() -> None:
     )
 
 
-def test_domain_router_missing_source_is_reported(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_domain_router_missing_source_is_reported(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     router = tmp_path / "skills/domains/example/SKILL.md"
     router.parent.mkdir(parents=True)
     router.write_text(
@@ -64,7 +65,9 @@ def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
     }
 
 
-def test_runtime_registry_orphan_and_direct_path_are_reported(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_runtime_registry_orphan_and_direct_path_are_reported(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     runtime = tmp_path / "src/soulmap/runtime"
     runtime.mkdir(parents=True)
     monkeypatch.setattr(
@@ -88,7 +91,9 @@ def test_runtime_registry_orphan_and_direct_path_are_reported(tmp_path: Path, mo
     assert "unconsumed-registry-source" in kinds
 
 
-def test_runtime_audit_uses_supplied_root_registry(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_runtime_audit_uses_supplied_root_registry(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     runtime = tmp_path / "src/soulmap/runtime"
     runtime.mkdir(parents=True)
     monkeypatch.setattr(
