@@ -11,7 +11,6 @@ def test_real_knowledge_ownership_has_no_errors() -> None:
     assert not findings
 
 
-
 def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
     tmp_path: Path,
 ) -> None:
