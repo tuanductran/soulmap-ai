@@ -18,7 +18,7 @@ Use it to answer four questions for every major repo surface:
 | `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `SOULMAP.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
-| `skills/` | Knowledge authoring surface | Shipped knowledge | Shipped framework, brand, safety, voice, meta, domain, spiritual, soulmate, and writing knowledge | Markdown contract checks, eval source checks, build smoke, release review, and runtime registry contract tests |
+| `skills/` | Knowledge authoring surface | Shipped knowledge | Shipped framework, brand, safety, voice, meta, domain-classified, spiritual, soulmate, and writing knowledge | Markdown contract checks, eval source checks, build smoke, release review, and runtime registry contract tests |
 | `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, and synthesis | Unit tests, evals, compile/lint checks |
@@ -36,7 +36,7 @@ Use it to answer four questions for every major repo surface:
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
-- Shipped knowledge truth lives in `skills/`. Runtime integration contract truth lives in `src/soulmap/runtime/`. `library/catalog.json` owns Library distribution metadata; it is not a runtime knowledge source. `templates/` is internal-only and is not shipped.
+- Shipped knowledge truth lives in `skills/`. Runtime integration contract truth lives in `src/soulmap/runtime/`. `templates/` is internal-only and is not shipped.
 - Runtime implementation truth lives in `src/soulmap/runtime/`.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Explanatory and operational truth lives in `docs/`.
