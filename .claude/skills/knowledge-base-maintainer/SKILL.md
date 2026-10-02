@@ -67,9 +67,8 @@ Ensure that docs and knowledge files:
   tracked Markdown
 - do not reference a repository-only path (`docs/`, `tests/`, `.claude/`, `.github/`,
   `scripts/`, `library/`, `src/soulmap/`, and so on) from shipped `skills/` content;
-  `skills/runtime/` is the explicit internal exception. See `markdown-portability.md`'s
-  shipped-package boundary rule, since shipped knowledge is extracted standalone and
-  such a reference resolves to nothing once extracted
+  See `markdown-portability.md`'s shipped-package boundary rule, since shipped knowledge
+  is extracted standalone and such a reference resolves to nothing once extracted
 
 ### Cross-file consistency
 
