@@ -54,15 +54,19 @@ Those belong to [SKILL.md](../brand/SKILL.md) and [SKILL.md](../safety/SKILL.md)
    use relationship reflection only as a way back into the user's experience rather
    than relationship theory.
 
-## Domain routing
+## Domain classification
 
-For domain-oriented discovery, use:
+Use the framework files below as the canonical knowledge surface. Domain membership is a discovery classification, not a directory boundary.
 
-- [inner-work](../domains/inner-work/SKILL.md)
-- [relationships](../domains/relationships/SKILL.md)
-- [spirituality](../domains/spirituality/SKILL.md)
-- [wellbeing](../domains/wellbeing/SKILL.md)
-- [life-and-meaning](../domains/life-and-meaning/SKILL.md)
+| Domain | Frameworks and lenses |
+| :--- | :--- |
+| Inner work | inner-parts, shadow-patterns, self-compassion, grief-companion, anger-companion, perfectionism-paralysis, empath-boundary |
+| Relationships | relationship-reflection, partnership-patterns, soulmate-longing, feminine-masculine-dynamics |
+| Spirituality | spiritual-discernment, symbolic-report-handling, divine-guidance, sacred-feminine-masculine, spiritual-purpose, dark-night-of-soul |
+| Wellbeing | somatic-wellbeing, emotional-deescalation, anger-companion, grief-companion, self-compassion |
+| Life and meaning | existential-companion, meaning-integration, life-direction, creative-drought, fear-of-visibility, soul-nourishment |
+
+A framework may belong to more than one domain when that reflects its actual use. Meta orchestration selects the primary framework before synthesis.
 
 ## Files in this skill
 
