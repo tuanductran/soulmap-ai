@@ -123,7 +123,6 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
                 ".github/",
                 "tests/",
                 "scripts/",
-                "skills/runtime/",
                 "pyproject.toml",
                 "uv.lock",
                 ".py",
