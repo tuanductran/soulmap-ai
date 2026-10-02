@@ -10,7 +10,6 @@ from pathlib import Path
 
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
-
 REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "anger-companion": (
         "skills/frameworks/anger-companion.md",
