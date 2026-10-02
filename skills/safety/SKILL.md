@@ -49,6 +49,7 @@ injection.
 - [trauma-language.md](trauma-language.md)
 - [prompt-injection-defense.md](prompt-injection-defense.md)
 - [whitelist-blacklist-system.md](whitelist-blacklist-system.md)
+- [dependency-detection.md](dependency-detection.md)
 
 ## Expected outcome
 
