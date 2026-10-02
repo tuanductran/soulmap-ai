@@ -24,9 +24,9 @@ def _marketplace() -> str:
             "version": "1.2.3",
             "plugins": [
                 {
-                    "name": "SoulMap Brand System",
+                    "name": "SoulMap AI",
                     "source": "./",
-                    "skills": ["./skills/brand"],
+                    "skills": ["./"],
                 }
             ],
         }
@@ -38,7 +38,7 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
     _write(tmp_path, "LICENSE")
     _write(tmp_path, "SOULMAP.md")
     _write(tmp_path, "SKILL.md")
-    _write(tmp_path, "skills/brand/SKILL.md")
+    _write(tmp_path, "skills/brand/brand-doctrine.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", _marketplace())
 
     manifest_path = library.build_library(tmp_path)
@@ -105,7 +105,7 @@ def test_read_marketplace_rejects_invalid_skill_path(tmp_path: Path) -> None:
 
 def test_read_marketplace_accepts_valid_inventory(tmp_path: Path) -> None:
     _write(tmp_path, ".claude-plugin/marketplace.json", _marketplace())
-    _write(tmp_path, "skills/brand/SKILL.md")
+    _write(tmp_path, "skills/brand/brand-doctrine.md")
 
     payload = library._read_marketplace(tmp_path)
 
