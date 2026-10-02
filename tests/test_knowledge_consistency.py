@@ -269,8 +269,8 @@ def test_multilingual_safety_overlap_is_classified_as_protected(tmp_path: Path) 
     skills = tmp_path / "skills"
     skills.mkdir(parents=True)
     (skills / "safety.md").write_text(
-        "## Detection signals\n\nCrisis signals:\n\n- \"protected phrase\"\n"
-        "Grandiosity signals:\n\n- \"grandiosity phrase\"\n",
+        '## Detection signals\n\nCrisis signals:\n\n- "protected phrase"\n'
+        'Grandiosity signals:\n\n- "grandiosity phrase"\n',
         encoding="utf-8",
     )
 
