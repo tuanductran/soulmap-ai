@@ -41,7 +41,7 @@ Always check:
 - `docs/engineering/DEV.md`
 - `docs/engineering/content-contract.md`
 - `README.md`
-- relevant shipped files in `skills/`, plus `skills/runtime/` when auditing runtime integration contracts, and internal-only copy in `templates/`
+- relevant shipped files in `skills/` when auditing knowledge contracts, and internal-only copy in `templates/`
 
 ## What to maintain
 
