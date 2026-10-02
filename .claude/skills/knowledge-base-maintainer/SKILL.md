@@ -66,7 +66,7 @@ Ensure that docs and knowledge files:
 - do not leak source-specific names, local paths, or temporary working markers into
   tracked Markdown
 - do not reference a repository-only path (`docs/`, `tests/`, `.claude/`, `.github/`,
-  `scripts/`, `library/`, `src/soulmap/`, and so on) from shipped `skills/` content;
+  `scripts/`, `src/soulmap/`, and so on) from shipped `skills/` content;
   See `markdown-portability.md`'s shipped-package boundary rule, since shipped knowledge
   is extracted standalone and such a reference resolves to nothing once extracted
 
