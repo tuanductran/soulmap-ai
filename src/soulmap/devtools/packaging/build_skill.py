@@ -54,6 +54,23 @@ def _iter_claude_plugin_inputs(repo_root: Path) -> list[Path]:
     ]
 
 
+def _assert_single_skill_entrypoint(repo_root: Path) -> None:
+    """Reject distributable Skill sources with multiple SKILL.md entrypoints."""
+    skill_files = [
+        path
+        for path in _iter_inputs(repo_root)
+        if path.name == "SKILL.md"
+    ]
+    if len(skill_files) != 1 or skill_files[0].relative_to(repo_root).as_posix() != "SKILL.md":
+        paths = ", ".join(
+            path.relative_to(repo_root).as_posix() for path in skill_files
+        )
+        raise ValueError(
+            "SoulMap distribution requires exactly one root SKILL.md; "
+            f"found: {paths or 'none'}"
+        )
+
+
 def _build_archive(
     repo_root: Path,
     output_name: str,
@@ -68,6 +85,8 @@ def _build_archive(
 
     patterns = _load_distignore(repo_root)
     inputs = _iter_inputs(repo_root)
+    if include_claude_plugin:
+        _assert_single_skill_entrypoint(repo_root)
     if include_claude_plugin:
         inputs = sorted(set(inputs + _iter_claude_plugin_inputs(repo_root)))
 
