@@ -130,7 +130,7 @@ def build_library(repo_root: Path) -> Path:
 
     output_path = repo_root / "dist" / MANIFEST_NAME
     output_path.write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=True) + "\\n", encoding="utf-8"
+        json.dumps(manifest, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
     )
     print(f"OK (library): {output_path}")
     return output_path
