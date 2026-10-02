@@ -10,6 +10,7 @@ from pathlib import Path
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.source_registry import _registry
 
+
 @dataclass(frozen=True, slots=True)
 class OwnershipFinding:
     """One knowledge ownership audit finding."""
