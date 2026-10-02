@@ -4,8 +4,6 @@ This module owns only runtime routing metadata. Domain meaning remains in the
 shipped Markdown files under skills/; this registry does not copy their content.
 """
 
-from __future__ import annotations
-
 import re
 from functools import cache
 from pathlib import Path
