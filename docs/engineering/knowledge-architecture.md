@@ -6,7 +6,7 @@ alongside routing and safety enforcement, see
 
 Detectors in `src/soulmap/runtime/` load phrase lists and runtime contracts from Markdown
 skill files at import time. Most current detectors resolve stable source identifiers
-through the repository-internal `src/soulmap/runtime/source-registry.md`; the registry maps
+through the repository-internal `src/soulmap/runtime/source_registry.py`; the registry maps
 those identifiers to shipped knowledge files and their contract sections. The loader
 utilities in `src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
 structure and Python data structures. The registry itself is internal runtime metadata
@@ -36,7 +36,7 @@ Two loader utilities cover all current detector patterns:
   names, descriptions, detection signals, cycle phrases, and reflection language.
 
 The stable mapping between runtime consumers and Markdown sources is centralized in
-`src/soulmap/runtime/source-registry.md`. The registry is a machine-facing contract, not a
+`src/soulmap/runtime/source_registry.py`. The registry is a machine-facing contract, not a
 second knowledge base. Detector code should consume stable source identifiers rather
 than duplicating repository paths.
 
