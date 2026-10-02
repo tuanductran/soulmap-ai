@@ -101,8 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"findings: {len(findings)}")
     for item in findings:
         print(
-            f"[{'INFO' if item.kind == 'shared-domain-source' else 'ERROR'}] "
-            f"{item.kind}: {item.path.relative_to(args.root.resolve())} -> {item.detail}"
+            f"[ERROR] {item.kind}: "
+            f"{item.path.relative_to(args.root.resolve())} -> {item.detail}"
         )
     if errors:
         return 1
