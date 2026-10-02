@@ -256,6 +256,31 @@ def test_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
     assert duplicates[0].classification == "safety_protected_overlap"
 
 
+def test_multilingual_safety_overlap_is_classified_as_protected(tmp_path: Path) -> None:
+    """Protected safety classification must cover language-pack modules."""
+    config = tmp_path / "src/soulmap/runtime/config"
+    config.mkdir(parents=True)
+    (config / "safety_en.py").write_text(
+        'CRISIS_TIER1: tuple[str, ...] = ("protected phrase",)\\n'
+        'GRANDIOSITY_SIGNALS: tuple[str, ...] = ("grandiosity phrase",)\\n',
+        encoding="utf-8",
+    )
+
+    skills = tmp_path / "skills"
+    skills.mkdir(parents=True)
+    (skills / "safety.md").write_text(
+        "## Detection signals\\n\\nCrisis signals:\\n\\n- \"protected phrase\"\\n"
+        "Grandiosity signals:\\n\\n- \"grandiosity phrase\"\\n",
+        encoding="utf-8",
+    )
+
+    duplicates = find_python_markdown_duplicates(tmp_path)
+
+    by_constant = {duplicate.constant: duplicate for duplicate in duplicates}
+    assert by_constant["CRISIS_TIER1"].classification == "safety_protected_overlap"
+    assert by_constant["GRANDIOSITY_SIGNALS"].classification == "review_required"
+
+
 def test_grandiosity_overlap_requires_review(tmp_path: Path) -> None:
     config = tmp_path / "src/soulmap/runtime/config"
     config.mkdir(parents=True)
