@@ -44,7 +44,7 @@ than duplicating repository paths.
 The `soulmap audit-knowledge` command independently verifies Python config ownership by
 tracing runtime imports and cross-referencing them against Markdown content. The
 separate `soulmap audit-knowledge-ownership` command verifies the broader ownership
-boundary across runtime consumers, domain routers, and package membership. It is
+boundary across runtime consumers and package membership. It is
 the authoritative, up-to-date record of which constants are active, which are
 orphaned, and which Markdown file owns which detection phrases. Trust the tool
 over any static document.
@@ -53,8 +53,7 @@ over any static document.
 
 `audit-knowledge-ownership` is intentionally broader than phrase duplication. It verifies
 that runtime Markdown consumers use registered source identifiers and that package
-tooling shares one canonical shipped-member contract. Domain classification is maintained
-as framework discovery metadata rather than as a separate router tree.
+tooling shares one canonical shipped-member contract. Domain classification is maintained as framework discovery metadata rather than as a separate filesystem layer.
 
 ## Protected modules
 
