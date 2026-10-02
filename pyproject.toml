@@ -159,6 +159,7 @@ version_files = [
   "docs/integrations/poe-system-prompt.md:soulmap_version",
   "SKILL.md:version",
   "skills/*/SKILL.md:version",
+  "skills/domains/*/SKILL.md:version",
   ".claude-plugin/marketplace.json:version"
 ]
 
