@@ -19,7 +19,6 @@ Use it to answer four questions for every major repo surface:
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
 | `skills/` | Knowledge authoring surface | Shipped knowledge | Shipped framework, brand, safety, voice, meta, domain-classified, spiritual, soulmate, and writing knowledge | Markdown contract checks, eval source checks, build smoke, release review, and runtime registry contract tests |
-| `library/` | Versioned Library source catalog | Shipped metadata | Library identity, skill entries, source-of-truth paths, compatibility, and manual distribution boundary; no runtime phrase lists | Library catalog contract tests and release review |
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, and synthesis | Unit tests, evals, compile/lint checks |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
@@ -27,7 +26,7 @@ Use it to answer four questions for every major repo surface:
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Published in the repository, not packaged in `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
-| `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Catalog metadata, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
+| `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Derived Library inventory, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
 
 ## Ownership Boundaries
 
@@ -64,7 +63,7 @@ Use it to answer four questions for every major repo surface:
   `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` (the package rows above list exactly
   what those archives contain). Runtime integration contracts live outside `skills/`
   and are therefore not part of those archives. Extracted shipped knowledge
-  must not reference `docs/`, `tests/`, `.claude/`, `.github/`, `scripts/`, `library/`,
+  must not reference `docs/`, `tests/`, `.claude/`, `.github/`, `scripts/`,
   `src/soulmap/`, or any other repository-only path, whether or not it is a clickable link.
   `tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
   enforces this; see `.claude/rules/markdown-portability.md`'s shipped-package
