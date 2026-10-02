@@ -36,8 +36,9 @@ def test_marketplace_declares_one_root_skill() -> None:
 
 def test_skill_source_contains_exactly_one_skill_entrypoint() -> None:
     skill_files = [
-        path for path in REPO_ROOT.rglob("SKILL.md")
-        if ".git" not in path.parts
+        path
+        for path in build_skill._iter_inputs(REPO_ROOT)
+        if path.name == "SKILL.md"
     ]
     assert skill_files == [REPO_ROOT / "SKILL.md"]
 
