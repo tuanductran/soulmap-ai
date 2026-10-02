@@ -430,7 +430,6 @@ def find_detector_markdown_duplicates(
     return tuple(duplicates)
 
 
-
 def find_python_markdown_duplicates(
     root: Path,
     *,
