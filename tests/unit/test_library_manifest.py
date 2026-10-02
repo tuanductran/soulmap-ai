@@ -104,13 +104,13 @@ def test_read_marketplace_rejects_invalid_skill_path(tmp_path: Path) -> None:
 
 
 def test_read_marketplace_accepts_valid_inventory(tmp_path: Path) -> None:
+    _write(tmp_path, "SKILL.md")
     _write(tmp_path, ".claude-plugin/marketplace.json", _marketplace())
-    _write(tmp_path, "skills/brand/brand-doctrine.md")
 
     payload = library._read_marketplace(tmp_path)
 
     assert payload["name"] == "soulmap-ai"
-    assert payload["plugins"][0]["skills"] == ["./skills/brand"]
+    assert payload["plugins"][0]["skills"] == ["./"]
 
 
 @pytest.mark.parametrize(
