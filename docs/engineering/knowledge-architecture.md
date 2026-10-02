@@ -21,10 +21,10 @@ knowledge cannot silently drift apart.
 Registry-backed detectors resolve a stable source identifier at import time and then
 load the registered Markdown path and section. The runtime registry validates that each
 registered path stays under `skills/`, exists, and contains the registered signal,
-contract, and guidance headings. A small set of loaders also supports direct path
-resolution for protected or specialized sources. Paths are resolved without importing
-devtools, using `default_skill_path()` or the specialized pattern loader and the
-`SOULMAP_REPO_ROOT` environment variable when set.
+contract, and guidance headings. A small set of loaders also supports direct path resolution for sources that are not
+registry-backed. `default_skill_path()` resolves those runtime paths without importing
+devtools; the pattern loader only parses a caller-supplied Markdown path and does not
+perform repository path discovery.
 
 Two loader utilities cover all current detector patterns:
 
@@ -34,6 +34,7 @@ Two loader utilities cover all current detector patterns:
 - `pattern_source.py` parses the structured `## Pattern N:` sections in
   `skills/frameworks/pattern-mapper.md` into typed `PatternSignal` objects with
   names, descriptions, detection signals, cycle phrases, and reflection language.
+  It accepts the Markdown path from its caller and does not resolve repository paths.
 
 The stable mapping between runtime consumers and Markdown sources is centralized in
 `src/soulmap/runtime/source_registry.py`. The registry is a machine-facing contract, not a
