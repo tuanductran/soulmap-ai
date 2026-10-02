@@ -17,7 +17,7 @@ The Library is organized by semantic capability rather than by domain directorie
 - `skills/brand/` - identity and positioning
 - `skills/writing/` - reflection-to-writing guidance
 
-Domains such as inner work, relationships, spirituality, wellbeing, and life and meaning are **classification dimensions**, not filesystem boundaries. The framework index owns the domain map so one framework can participate in multiple domains without duplication.
+Domains such as inner work, relationships, spirituality, wellbeing, and life and meaning are **classification dimensions**, not filesystem boundaries. The root `SKILL.md` entrypoint documents the domain map so one framework can participate in multiple domains without duplication.
 
 ## Skill inventory
 
