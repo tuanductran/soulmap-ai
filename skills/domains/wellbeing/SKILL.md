@@ -1,7 +1,7 @@
 ---
 name: "wellbeing"
 description: "Somatic awareness, emotional de-escalation, grounding, and body-oriented reflective support. Use this domain router when the request clearly belongs to this area."
-version: "0.12.1"
+version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
