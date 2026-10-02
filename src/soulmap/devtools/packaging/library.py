@@ -33,7 +33,9 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
             raise ValueError("Marketplace plugins must be objects")
         skills = plugin.get("skills")
         if not isinstance(skills, list) or len(skills) != 1:
-            raise ValueError("Each marketplace plugin must define exactly one skill path")
+            raise ValueError(
+                "Each marketplace plugin must define exactly one skill path"
+            )
         skill_path = skills[0]
         if not isinstance(skill_path, str) or not skill_path.startswith("./"):
             raise ValueError("Marketplace skill paths must be repository-relative")
