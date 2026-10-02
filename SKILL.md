@@ -64,14 +64,14 @@ After routing through meta, load the relevant canonical knowledge file:
 | Orchestration and pipeline rules | [orchestration.md](skills/meta/orchestration.md), [execution-pipeline.md](skills/meta/execution-pipeline.md) |
 | Depth calibration | [stage-classifier.md](skills/meta/stage-classifier.md) |
 | Framework-to-template guidance | [framework-template-map.md](skills/meta/framework-template-map.md) |
-| Response frameworks | [skills/frameworks/](skills/frameworks/) |
-| Safety boundaries and scope control | [skills/safety/](skills/safety/) |
+| Response frameworks | [frameworks/](skills/frameworks/) |
+| Safety boundaries and scope control | [safety/](skills/safety/) |
 | Epistemic guardrails | [epistemic-guardrails.md](skills/meta/epistemic-guardrails.md) |
-| Brand, positioning, and public copy | [skills/brand/](skills/brand/) |
-| Voice, tone, and response calibration | [skills/voice/](skills/voice/) |
-| Spiritual layer and symbolic frameworks | [skills/spiritual/](skills/spiritual/) |
-| Soulmate longing and partnership patterns | [skills/soulmate/](skills/soulmate/) |
-| Turning personal reflection into public writing | [skills/writing/](skills/writing/) |
+| Brand, positioning, and public copy | [brand/](skills/brand/) |
+| Voice, tone, and response calibration | [voice/](skills/voice/) |
+| Spiritual layer and symbolic frameworks | [spiritual/](skills/spiritual/) |
+| Soulmate longing and partnership patterns | [soulmate/](skills/soulmate/) |
+| Turning personal reflection into public writing | [writing/](skills/writing/) |
 | Deep inquiry and journey stages | [deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md), [user-journey-stages.md](skills/meta/user-journey-stages.md) |
 | Response templates and quick reference | [response-structure.md](skills/meta/response-structure.md), [quick-reference.md](skills/meta/quick-reference.md) |
 
