@@ -185,34 +185,3 @@ def load_pattern_signals(markdown_path: Path) -> dict[str, PatternSignal]:
     """
     text = markdown_path.read_text(encoding="utf-8")
     return parse_pattern_mapper(text)
-
-
-_RELATIVE_MARKDOWN_PATH = Path("skills") / "frameworks" / "pattern-mapper.md"
-
-
-def default_pattern_mapper_path() -> Path:
-    """Locate ``skills/frameworks/pattern-mapper.md`` without depending on devtools.
-
-    Runtime modules ship and run standalone (invoked via stdin JSON), so this
-    intentionally does not import ``soulmap.devtools``. It walks up from this
-    file, then from the current working directory, looking for the shipped
-    Markdown skill.
-    """
-    import os
-
-    env_root = os.environ.get("SOULMAP_REPO_ROOT")
-    if env_root:
-        candidate = Path(env_root) / _RELATIVE_MARKDOWN_PATH
-        if candidate.exists():
-            return candidate
-
-    for base in (Path(__file__).resolve(), Path.cwd().resolve()):
-        for parent in (base, *base.parents):
-            candidate = parent / _RELATIVE_MARKDOWN_PATH
-            if candidate.exists():
-                return candidate
-
-    raise FileNotFoundError(
-        "Could not locate skills/frameworks/pattern-mapper.md; set "
-        "SOULMAP_REPO_ROOT or run from within the soulmap-ai repo."
-    )
