@@ -34,7 +34,7 @@ def test_domain_router_missing_source_is_reported(
     (tmp_path / "skills/frameworks/example.md").write_text(
         "# Example\n", encoding="utf-8"
     )
-    findings = audit(tmp_path)
+    findings = ownership.audit(tmp_path)
     assert any(item.kind == "missing-domain-source" for item in findings)
 
 
@@ -84,7 +84,7 @@ def test_runtime_registry_orphan_and_direct_path_are_reported(
         encoding="utf-8",
     )
 
-    findings = audit(tmp_path)
+    findings = ownership.audit(tmp_path)
     kinds = {item.kind for item in findings}
     assert "direct-source-path" in kinds
     assert "unconsumed-registry-source" in kinds
@@ -110,5 +110,5 @@ def test_runtime_audit_uses_supplied_root_registry(
         encoding="utf-8",
     )
 
-    findings = audit(tmp_path)
+    findings = ownership.audit(tmp_path)
     assert not [item for item in findings if item.kind != "shared-domain-source"]
