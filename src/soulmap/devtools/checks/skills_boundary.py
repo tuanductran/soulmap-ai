@@ -41,11 +41,7 @@ _EXECUTABLE_FENCES = (
 
 def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
     root = repo_root / "skills"
-    return [
-        path
-        for path in sorted(root.rglob("*.md"))
-        if _RUNTIME_DIR not in path.relative_to(repo_root).parents
-    ]
+    return sorted(root.rglob("*.md"))
 
 
 def _line_number(token: object) -> int:
