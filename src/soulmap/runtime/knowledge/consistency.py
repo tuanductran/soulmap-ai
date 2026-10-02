@@ -380,6 +380,7 @@ def _detector_string_literals(path: Path) -> tuple[str, ...]:
 
     return tuple(dict.fromkeys(literals))
 
+
 def find_detector_markdown_duplicates(
     root: Path,
     *,
