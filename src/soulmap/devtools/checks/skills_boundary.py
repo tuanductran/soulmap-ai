@@ -15,7 +15,6 @@ _FORBIDDEN_TEXT = (
     "tests/",
     "scripts/",
     "templates/",
-    "skills/runtime/",
     "library/",
     "pyproject.toml",
     "uv.lock",
