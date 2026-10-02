@@ -13,7 +13,7 @@ Accepted.
 
 SoulMap uses Markdown as the source of truth for shipped knowledge and keeps Python
 focused on deterministic runtime enforcement. Most runtime detectors now resolve
-their signals and routing contracts through `skills/runtime/source-registry.md`.
+their signals and routing contracts through `src/soulmap/runtime/source_registry.py`.
 
 The dependency detector is a remaining legacy boundary. It imports
 `DEPENDENCY_KEYWORDS`, `DECISION_SEEKING`, `ISOLATION_SIGNALS`, and dependency
