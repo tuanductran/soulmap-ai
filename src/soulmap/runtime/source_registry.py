@@ -53,14 +53,14 @@ def _has_heading(text: str, expected: str) -> bool:
     if expected.startswith("Pattern "):
         return bool(
             re.search(
-                rf"^##\\s+{re.escape(expected)}:\\s+.+$",
+                rf"^##\s+{re.escape(expected)}:\s+.+$",
                 text,
                 re.MULTILINE,
             )
         )
     return bool(
         re.search(
-            rf"^#{{2,3}}\\s+{re.escape(expected)}\\s*$",
+            rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
             text,
             re.MULTILINE,
         )
