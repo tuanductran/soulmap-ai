@@ -56,55 +56,35 @@ and must not be treated as one swappable framework among many.
 
 ## What is Framework (add freely, one file pair per framework)
 
-Every framework follows the same two-file shape:
+Detector-backed primary frameworks follow a two-file integration shape:
 
 ```text
-skills/frameworks/<framework>.md         source of truth: detection signals,
-                                          reflective guidance, recommendation text
+skills/frameworks/<framework>.md         canonical knowledge source: detection
+                                          signals and reflective guidance
 src/soulmap/runtime/detectors/<framework>_detector.py
-                                          loads signals from the Markdown file,
-                                          scores them, returns a typed result
+                                          loads the registered Markdown source,
+                                          scores signals, and returns a typed result
 ```
 
-Current framework sources under `skills/frameworks/` are:
+Not every file under `skills/frameworks/` is a standalone detector-backed
+primary framework. Some are supporting lenses or knowledge sources consumed by
+an existing framework or the host-layer response flow. For example,
+`self-compassion.md` is a registered supporting source used by the shadow
+detector, while `money-self-worth.md`, `relationship-reflection.md`, and
+`feminine-masculine-dynamics.md` are knowledge/evaluation sources rather than
+independent runtime detector modules.
 
-- ancestral-patterns
-- anger-companion
-- conversation-synthesis
-- creative-drought
-- dark-night-of-soul
-- divine-guidance
-- emotional-deescalation
-- empath-boundary
-- existential-companion
-- fear-of-visibility
-- feminine-masculine-dynamics
-- grief-companion
-- inner-parts
-- integration-celebration
-- life-direction
-- meaning-integration
-- money-self-worth
-- pattern-mapper
-- perfectionism-paralysis
-- relationship-reflection
-- sacred-feminine-masculine
-- self-compassion
-- shadow-patterns
-- somatic-wellbeing
-- soul-nourishment
-- spiritual-purpose
-
-Each has a corresponding runtime detector, although detector module names may be normalized rather than matching the Markdown filename literally. The authoritative source-to-runtime mapping is `src/soulmap/runtime/source_registry.py`.
+The authoritative runtime source-to-consumer mapping is
+`src/soulmap/runtime/source_registry.py`. A source belongs in that registry only
+when runtime code needs a stable identifier for it. Absence of a detector does
+not make a Markdown source invalid or unused.
 
 `skills/soulmate/` is the concrete example of the analogy in the previous
-section: a framework built on top of existing frameworks the way an
-application framework builds on a UI library, rather than duplicating them.
-Its two primary files, `soulmate-longing.md` and `partnership-patterns.md`,
-follow the exact same two-file shape as every other framework. Its third
-file, `numerology-connection-lens.md`, is a topic lens with no detector, the
-same category `relationship-reflection.md` belongs to, applied only after a
-primary framework is already active.
+section: a framework layer built on top of existing SoulMap infrastructure rather
+than a second runtime architecture. Its primary files,
+`soulmate-longing.md` and `partnership-patterns.md`, have runtime-backed
+sources and detectors. Its `numerology-connection-lens.md` is intentionally a
+topic lens with no detector, applied only after a primary framework is active.
 
 ## The authoring rule for new frameworks
 

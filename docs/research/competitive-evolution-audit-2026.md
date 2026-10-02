@@ -183,8 +183,9 @@ Cross-checked against Anthropic's own documented Agent Skills model
   sections already point to specific files to read next rather than inlining
   everything. Confirmed already correct.
 * **Level 3 (referenced files on demand):** the Framework-pair pattern
-  (`docs/engineering/library-vs-framework.md`) already treats each
-  `skills/frameworks/<name>.md` as a file loaded only when its detector fires.
+  (`docs/engineering/library-vs-framework.md`) already distinguishes
+  detector-backed framework files from supporting knowledge lenses; detector-backed
+  sources are loaded only when their runtime path is active.
   Confirmed already correct.
 
 SoulMap's Skill layer already implements the pattern this research names.
