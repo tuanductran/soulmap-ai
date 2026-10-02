@@ -20,8 +20,7 @@ Keep Markdown compatible across AI tools and OS editors.
 - do not use Python constant names, module paths, or code identifiers in prose
   inside `skills/` or `templates/` files, write in plain language instead
 - do not reference a repository-only path from shipped `skills/` content, since shipped
-  knowledge is extracted standalone and the reference will resolve to nothing once extracted;
-  `skills/runtime/` is an internal repository-only exception and is excluded from both archives
+  knowledge is extracted standalone and the reference will resolve to nothing once extracted
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
 `src/soulmap/runtime/config/safety.py` belong in Python source files, not in Markdown knowledge

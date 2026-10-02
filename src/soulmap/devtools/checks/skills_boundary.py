@@ -7,7 +7,6 @@ from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
 
-_RUNTIME_DIR = Path("skills/runtime")
 _FORBIDDEN_TEXT = (
     "src/soulmap/",
     ".py",
@@ -16,7 +15,6 @@ _FORBIDDEN_TEXT = (
     "tests/",
     "scripts/",
     "templates/",
-    "skills/runtime/",
     "library/",
     "pyproject.toml",
     "uv.lock",
@@ -42,11 +40,7 @@ _EXECUTABLE_FENCES = (
 
 def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
     root = repo_root / "skills"
-    return [
-        path
-        for path in sorted(root.rglob("*.md"))
-        if _RUNTIME_DIR not in path.relative_to(repo_root).parents
-    ]
+    return sorted(root.rglob("*.md"))
 
 
 def _line_number(token: object) -> int:
@@ -129,7 +123,6 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
                 ".github/",
                 "tests/",
                 "scripts/",
-                "skills/runtime/",
                 "pyproject.toml",
                 "uv.lock",
                 ".py",

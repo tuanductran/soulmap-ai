@@ -169,7 +169,7 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
-- shipped knowledge under `skills/` - internal `skills/runtime/` contracts are not distributed
+- shipped knowledge under `skills/` - runtime integration contracts are internal and not distributed
 
 ---
 
