@@ -56,12 +56,11 @@ def _iter_claude_plugin_inputs(repo_root: Path) -> list[Path]:
 
 def _assert_single_skill_entrypoint(repo_root: Path) -> None:
     """Reject distributable Skill sources with multiple SKILL.md entrypoints."""
-    skill_files = [
-        path
-        for path in _iter_inputs(repo_root)
-        if path.name == "SKILL.md"
-    ]
-    if len(skill_files) != 1 or skill_files[0].relative_to(repo_root).as_posix() != "SKILL.md":
+    skill_files = [path for path in _iter_inputs(repo_root) if path.name == "SKILL.md"]
+    if (
+        len(skill_files) != 1
+        or skill_files[0].relative_to(repo_root).as_posix() != "SKILL.md"
+    ):
         paths = ", ".join(
             path.relative_to(repo_root).as_posix() for path in skill_files
         )
