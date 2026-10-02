@@ -52,10 +52,9 @@ over any static document.
 ## Ownership audit
 
 `audit-knowledge-ownership` is intentionally broader than phrase duplication. It verifies
-that runtime Markdown consumers use registered source identifiers, that domain routers
-point only to existing knowledge files, and that package tooling shares one canonical
-shipped-member contract. Shared domain membership is reported as information rather
-than treated as drift because some frameworks intentionally serve more than one domain.
+that runtime Markdown consumers use registered source identifiers and that package
+tooling shares one canonical shipped-member contract. Domain classification is maintained
+as framework discovery metadata rather than as a separate router tree.
 
 ## Protected modules
 
