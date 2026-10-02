@@ -3,12 +3,11 @@ from pathlib import Path
 import pytest
 
 import soulmap.devtools.audit.ownership as ownership
-from soulmap.devtools.audit.ownership import audit
 from soulmap.devtools.packaging.members import source_members
 
 
 def test_real_knowledge_ownership_has_no_errors() -> None:
-    findings = audit(Path(__file__).resolve().parents[2])
+    findings = ownership.audit(Path(__file__).resolve().parents[2])
     assert not [item for item in findings if item.kind != "shared-domain-source"], (
         findings
     )
