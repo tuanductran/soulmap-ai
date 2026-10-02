@@ -8,34 +8,8 @@ from soulmap.devtools.packaging.members import source_members
 
 def test_real_knowledge_ownership_has_no_errors() -> None:
     findings = ownership.audit(Path(__file__).resolve().parents[2])
-    assert not [item for item in findings if item.kind != "shared-domain-source"], (
-        findings
-    )
+    assert not findings
 
-
-def test_domain_router_missing_source_is_reported(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    router = tmp_path / "skills/domains/example/SKILL.md"
-    router.parent.mkdir(parents=True)
-    router.write_text(
-        "---\nname: example\n---\n\n"
-        "## Canonical sources\n\n"
-        "- [missing](../../frameworks/missing.md)\n",
-        encoding="utf-8",
-    )
-    monkeypatch.setattr(
-        ownership,
-        "_registry",
-        lambda _root: {"example": ("skills/frameworks/example.md", "-", "-", "-")},
-    )
-    (tmp_path / "src/soulmap/runtime").mkdir(parents=True)
-    (tmp_path / "skills/frameworks").mkdir(parents=True)
-    (tmp_path / "skills/frameworks/example.md").write_text(
-        "# Example\n", encoding="utf-8"
-    )
-    findings = ownership.audit(tmp_path)
-    assert any(item.kind == "missing-domain-source" for item in findings)
 
 
 def test_source_members_exclude_runtime_contract_and_honor_plugin_boundary(
@@ -111,4 +85,4 @@ def test_runtime_audit_uses_supplied_root_registry(
     )
 
     findings = ownership.audit(tmp_path)
-    assert not [item for item in findings if item.kind != "shared-domain-source"]
+    assert not findings
