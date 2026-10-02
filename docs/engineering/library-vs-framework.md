@@ -104,8 +104,7 @@ Its two primary files, `soulmate-longing.md` and `partnership-patterns.md`,
 follow the exact same two-file shape as every other framework. Its third
 file, `numerology-connection-lens.md`, is a topic lens with no detector, the
 same category `relationship-reflection.md` belongs to, applied only after a
-primary framework is already active. See
-[`../../skills/soulmate/SKILL.md`](../../skills/soulmate/SKILL.md).
+primary framework is already active.
 
 ## The authoring rule for new frameworks
 
