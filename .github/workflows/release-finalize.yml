@@ -113,7 +113,7 @@ jobs:
 
       - name: Preserve verification diagnostics on failure
         if: ${{ failure() }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a0 # v7.0.1
         with:
           name: release-finalize-failure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
@@ -162,6 +162,8 @@ jobs:
           test -f dist/soulmap-ai-library.json
           test -f dist/release-verification.json
           test -f dist/release-provenance.json
+          uv run python scripts/verify_artifact_hashes.py
+          uv run python scripts/verify_extracted_artifacts.py
 
       - name: Generate release artifact attestations
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
