@@ -185,5 +185,3 @@ def load_pattern_signals(markdown_path: Path) -> dict[str, PatternSignal]:
     """
     text = markdown_path.read_text(encoding="utf-8")
     return parse_pattern_mapper(text)
-
-
