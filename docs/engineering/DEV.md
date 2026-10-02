@@ -149,7 +149,7 @@ for the package comparison and decision boundary.
 - `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
   SHA-256 digests when `uv run soulmap library-manifest` is used.
 
-For the catalog and manual distribution boundary, see [`operations/LIBRARY.md`](../operations/LIBRARY.md).
+For the Library manifest and manual distribution boundary, see [`operations/LIBRARY.md`](../operations/LIBRARY.md).
 
 ## Claude plugin packaging
 
