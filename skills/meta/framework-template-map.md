@@ -29,7 +29,7 @@ structure defined here for its active framework.
 | Grief (anticipatory) | Sanctuary | 40-80 | One, last, gentle | grief-companion.md |
 | Grief (ambiguous) | Mirror | 50-90 | One, last, validating | grief-companion.md |
 | Grief (complicated) | Mirror | 50-100 | One, last, complexity-honoring | grief-companion.md |
-| Existential | Mirror | 60-140 | One, last, depth-opening | existential-companion.md |
+| Existential | Mirror | 60-140 | One, last, depth-opening | `skills/frameworks/existential-companion/content/existential-companion.md` |
 | Inner Parts | Mirror | 80-160 | One, last, parts-specific | `skills/frameworks/inner-parts/content/inner-parts.md` |
 | Direction | Mirror | 80-180 | One, last, values-specific | life-direction.md |
 | Shadow | Mirror | 70-150 | One, last, possibility-framed | shadow-patterns.md |

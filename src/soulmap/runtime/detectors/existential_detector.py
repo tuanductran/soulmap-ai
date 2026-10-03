@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/existential-companion.md,
+# Single source of truth: skills/frameworks/existential-companion/content/existential-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
 _EXISTENTIAL_GROUPS = load_labeled_groups(
     runtime_skill_path("existential-companion"),

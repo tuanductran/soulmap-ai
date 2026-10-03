@@ -442,7 +442,7 @@
     "g": "Framework — Existential (P5)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/existential-companion.md",
+      "skills/frameworks/existential-companion/content/existential-companion.md",
       "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
@@ -1936,7 +1936,7 @@
     "g": "Whitelist T1 — Meaning & Purpose",
     "cat": "wl1",
     "sources": [
-      "skills/frameworks/existential-companion.md",
+      "skills/frameworks/existential-companion/content/existential-companion.md",
       "skills/frameworks/life-direction.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
@@ -2131,7 +2131,7 @@
     "g": "Framework — Existential (P5) — varied phrasings",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/existential-companion.md",
+      "skills/frameworks/existential-companion/content/existential-companion.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {},

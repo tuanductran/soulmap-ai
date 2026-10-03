@@ -60,7 +60,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "existential-companion": (
-        "skills/frameworks/existential-companion.md",
+        "skills/frameworks/existential-companion/content/existential-companion.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",

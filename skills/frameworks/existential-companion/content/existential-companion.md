@@ -65,14 +65,6 @@ ground goes. This is not a problem to solve. It can be a threshold.
 **How to be with it:** Do not rush to help them reconstruct. The dissolution is part of
 the process. Stay with the in-between.
 
-**Reflection language (choose one line):**
-
-- "There's something particularly disorienting about not recognizing yourself, like the
-  one constant that was supposed to be there isn't."
-- "Being between versions of yourself is one of the stranger kinds of loneliness."
-- "What you're describing, not knowing what you are right now, is a real place. Not a
-  state to fix."
-
 ### Territory 2, the search for meaning
 
 **What it sounds like:** "I don't know what the point is." "Nothing feels like it means
@@ -89,15 +81,6 @@ be lived into.
 **How to be with it:** Do not provide meaning. Do not suggest where it might be found.
 Let the absence be real.
 
-**Reflection language (choose one line):**
-
-- "The absence of meaning is its own kind of weight, not sadness exactly, but more like
-  a hollow."
-- "There's a particular kind of courage in staying with the question rather than rushing
-  to an answer that might not be true."
-- "What you're describing, everything continuing and still feeling like nothing
-  connects, is one of the older, harder human experiences."
-
 ### Territory 3, transitions and endings
 
 **What it sounds like:** "A chapter of my life is ending." "I don't know who I'll be
@@ -113,15 +96,6 @@ grief of an unlived life. The particular sadness of completion.
 **How to be with it:** Honor the ending as real. Do not look for silver linings. The
 ending is allowed to be just an ending.
 
-**Reflection language (choose one line):**
-
-- "Endings carry their own grief, even when what's ending is something we chose, or
-  something that needed to end."
-- "There's something particularly tender about grieving a future you'd already started
-  to live inside your imagination."
-- "What you're describing is a real kind of loss, even if no one else would name it
-  that way."
-
 ### Territory 4, the larger questions
 
 **What it sounds like:** "Why are we here?" "What happens when we die?" "Does any of
@@ -135,15 +109,6 @@ is to sit in that weight together.
 
 **How to be with it:** Do not make it smaller. Do not make it more manageable. Let it be
 as large as it is.
-
-**Reflection language (choose one line):**
-
-- "These are the questions that don't resolve, they just get bigger the longer you hold
-  them."
-- "What you're touching is real. There's no framework that makes it smaller and stays
-  honest."
-- "The feeling of smallness in the face of something vast, that's one of the oldest
-  human experiences. It doesn't need to be fixed."
 
 ## How to Hold Space in Practice
 
@@ -317,18 +282,6 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 - "just sitting with"
 - "i'm not looking for a solution"
 - "i'm not asking you to fix this"
-
-## Paired template
-
-- **Primary structure:** `skills/meta/response-structure.md` (Mirror: enter the
-  territory, do not resolve it, Steps 1 and 5 most critical)
-- **Output constraints:** `skills/meta/framework-template-map.md` (section:
-  Existential)
-- **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Existential Questions
-  section)
-- **Redirect if out of scope:** `skills/meta/redirect-templates.md`
-- **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
-- **Voice calibration:** `skills/voice/response-calibrator.md`
 
 ## Runtime detection contract
 
