@@ -11,8 +11,8 @@ content.
 
 ## Resource loading
 
-1. Read the canonical relationship-reflection content for lenses and boundaries.
-2. Read the relationship-reflection examples when a representative situation would
+1. Read [canonical relationship-reflection content](../content/relationship-reflection.md) for lenses and boundaries.
+2. Read [relationship-reflection examples](../examples/relationship-reflection.md) when a representative situation would
    clarify how to apply the content.
 3. Apply the global SoulMap orchestration, voice, epistemic, and safety rules from their
    canonical locations. Do not copy those rules into this prompt.
