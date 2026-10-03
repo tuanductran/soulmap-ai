@@ -102,7 +102,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "inner-parts": (
-        "skills/frameworks/inner-parts.md",
+        "skills/frameworks/inner-parts/content/inner-parts.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",
