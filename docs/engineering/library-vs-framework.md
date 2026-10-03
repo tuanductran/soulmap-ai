@@ -59,7 +59,7 @@ and must not be treated as one swappable framework among many.
 Detector-backed primary frameworks follow a two-file integration shape:
 
 ```text
-skills/frameworks/<framework>.md         canonical knowledge source: detection
+skills/frameworks/<framework>/content/*.md canonical knowledge source: detection
                                           signals and reflective guidance
 src/soulmap/runtime/detectors/<framework>_detector.py
                                           loads the registered Markdown source,
@@ -86,11 +86,24 @@ than a second runtime architecture. Its primary files,
 sources and detectors. Its `numerology-connection-lens.md` is intentionally a
 topic lens with no detector, applied only after a primary framework is active.
 
+## Skill resource model
+
+A framework can now be decomposed into optional Skill-local resources when its material benefits from progressive disclosure:
+
+```text
+skills/frameworks/<name>/
+├── content/   canonical framework knowledge
+├── examples/  worked demonstrations
+└── prompt/    Skill-local orchestration that references the other resources
+```
+
+This does not create another `SKILL.md`, detector, or runtime. `content/` owns canonical knowledge, `examples/` demonstrates application without becoming canned answers, and `prompt/` orchestrates resource use without copying their contents. Existing frameworks remain valid as single Markdown files; migration is evidence-driven.
+
 ## The authoring rule for new frameworks
 
 When adding framework N+1:
 
-1. Write `skills/frameworks/<name>.md` with a `## Detection signals` section.
+1. Write the canonical framework knowledge under `skills/frameworks/<name>/content/` when using the layered resource model, with a `## Detection signals` section if runtime-backed. A simple single-file framework remains allowed.
    This is the only place phrase lists live, per
    [`knowledge-architecture.md`](knowledge-architecture.md).
 2. Write `src/soulmap/runtime/detectors/<name>_detector.py` that loads from
