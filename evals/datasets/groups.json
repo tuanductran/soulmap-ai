@@ -43,7 +43,7 @@
     "cat": "wl1",
     "sources": [
       "skills/frameworks/pattern-mapper.md",
-      "skills/frameworks/shadow-patterns.md",
+      "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
       "skills/meta/quick-reference.md"
     ],
     "items": [
@@ -109,7 +109,7 @@
     "g": "Whitelist T1 — Inner Work & Shadow",
     "cat": "wl1",
     "sources": [
-      "skills/frameworks/shadow-patterns.md",
+      "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
       "skills/frameworks/inner-parts.md",
       "skills/meta/quick-reference.md"
     ],
@@ -538,7 +538,7 @@
     "g": "Framework — Shadow (P8)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/shadow-patterns.md",
+      "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
       "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
