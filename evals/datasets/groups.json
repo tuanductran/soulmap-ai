@@ -639,12 +639,13 @@
     "g": "Framework — Relationship",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/relationship-reflection.md",
+      "skills/frameworks/relationship-reflection/content/relationship-reflection.md",
+      "skills/frameworks/relationship-reflection/examples/relationship-reflection.md",
       "skills/frameworks/inner-parts.md",
       "skills/meta/quick-reference.md"
     ],
     "source_markers": {
-      "skills/frameworks/relationship-reflection.md": [
+      "skills/frameworks/relationship-reflection/examples/relationship-reflection.md": [
         "I keep loving people who do not love me back",
         "Whenever I start to get close, I find ways to push them away"
       ]
@@ -1833,7 +1834,7 @@
     "g": "Whitelist T1 — Loneliness & Belonging",
     "cat": "wl1",
     "sources": [
-      "skills/frameworks/relationship-reflection.md",
+      "skills/frameworks/relationship-reflection/content/relationship-reflection.md",
       "skills/meta/deep-inquiry-bank.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],

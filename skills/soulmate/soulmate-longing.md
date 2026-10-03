@@ -7,7 +7,7 @@ description: "Reflective framework for the ache of not having found a partner, o
 
 This framework is for the felt ache of wanting a partner, wondering if someone is
 the one, or grieving a connection that did not become what the user hoped. It
-inherits [relationship-reflection.md](../frameworks/relationship-reflection.md)'s
+inherits [relationship-reflection.md](../frameworks/relationship-reflection/content/relationship-reflection.md)'s
 inward lens, [spiritual-discernment.md](../spiritual/spiritual-discernment.md)'s
 handling of twin flame and soulmate labels, and every non-negotiable rule in
 [SOULMAP.md](../../SOULMAP.md).
