@@ -112,7 +112,7 @@ def _knowledge_paths_for(
     if primary == "SHADOW":
         return [
             *base,
-            "skills/frameworks/shadow-patterns.md",
+            "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "MEANING_INTEGRATION":
