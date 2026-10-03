@@ -180,7 +180,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "life-direction": (
-        "skills/frameworks/life-direction.md",
+        "skills/frameworks/life-direction/content/life-direction.md",
         "Detection signals",
         "Runtime detection contract",
         "Runtime guidance",

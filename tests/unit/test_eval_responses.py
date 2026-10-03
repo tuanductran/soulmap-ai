@@ -64,7 +64,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "DIRECTION", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/life-direction.md",
+            "skills/frameworks/life-direction/content/life-direction.md",
         ),
         (
             {"primary_framework": "SHADOW", "safety_status": "PASS"},
