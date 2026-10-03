@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
@@ -131,6 +131,32 @@ duplication and makes drift likely, so it is explicitly rejected.
 - Resource boundaries will require authoring and contract guidance.
 - Existing cross-links will need careful preservation when a large framework is
   decomposed.
+
+### Acceptance evidence
+
+The implementation decision is now accepted based on two isolated repository spikes:
+
+1. PR #561 decomposed the non-detector-backed `relationship-reflection` framework into `content/`, `examples/`, and `prompt/` without introducing a second Skill entrypoint, runtime, or duplicated global doctrine.
+2. PR #562 decomposed the larger runtime-backed `shadow-patterns` framework, including its detector-loaded canonical source, supporting `self-compassion` source, downstream evals, tests, and integration references.
+3. Both spikes preserved Markdown link and packaging contracts. PR #562 initially exposed a stale relative link through CI; the link was corrected and the complete required CI matrix then passed.
+4. The prompt resources reference canonical content and examples instead of copying them, while examples are explicitly demonstrations rather than canned responses.
+5. The existing recursive package boundary required no packager redesign. The successful PR #562 build and knowledge-audit runs provide repository-level evidence that the layered resources remain inside the shipped knowledge boundary.
+6. The two decompositions demonstrate clearer authoring ownership and enable progressive disclosure: orchestration can reference examples optionally while runtime-backed consumers continue loading only the canonical `content/` source.
+
+Acceptance authorizes the resource model as a supported architectural option. It does **not** require repository-wide migration.
+
+### Migration policy
+
+Migration remains evidence-driven and should be proposed per framework. Prefer migration only when a framework has enough mixed concerns, examples, or orchestration material that the separation materially improves maintainability or progressive disclosure. Simple, coherent single-file frameworks remain valid.
+
+A migration must preserve:
+
+- the single shipped root `SKILL.md` entrypoint;
+- canonical ownership in `content/` when layered;
+- no duplication between `content/`, `examples/`, and `prompt/`;
+- existing runtime registry and detector contracts;
+- shipped-link and extracted-artifact integrity;
+- global SoulMap doctrine and safety ownership.
 
 ### Follow-up evidence required before acceptance
 
