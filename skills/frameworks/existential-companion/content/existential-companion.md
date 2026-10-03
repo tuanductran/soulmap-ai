@@ -2,6 +2,7 @@
 name: "existential-companion"
 description: "Hold space for existential questions without conclusions."
 ---
+
 # Existential reflection companion
 
 When users explore the deeper territory of human experience, identity shifts, the
