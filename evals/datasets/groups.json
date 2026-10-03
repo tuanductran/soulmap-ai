@@ -192,7 +192,7 @@
     "g": "Whitelist T2 — Work connected to identity",
     "cat": "wl2",
     "sources": [
-      "skills/frameworks/life-direction.md",
+      "skills/frameworks/life-direction/content/life-direction.md",
       "skills/frameworks/meaning-integration.md",
       "skills/safety/whitelist-blacklist-system.md",
       "skills/meta/quick-reference.md"
@@ -500,7 +500,7 @@
     "g": "Framework — Direction (P7)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/life-direction.md",
+      "skills/frameworks/life-direction/content/life-direction.md",
       "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
@@ -788,7 +788,7 @@
     "g": "Framework — Money & Self-Worth",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/life-direction.md",
+      "skills/frameworks/life-direction/content/life-direction.md",
       "skills/meta/response-structure.md"
     ],
     "items": [
@@ -1937,7 +1937,7 @@
     "cat": "wl1",
     "sources": [
       "skills/frameworks/existential-companion/content/existential-companion.md",
-      "skills/frameworks/life-direction.md",
+      "skills/frameworks/life-direction/content/life-direction.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {},
@@ -2210,7 +2210,7 @@
     "g": "Framework — Direction (P7) — varied phrasings",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/life-direction.md",
+      "skills/frameworks/life-direction/content/life-direction.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {},
@@ -2767,7 +2767,7 @@
     "sources": [
       "skills/meta/orchestration.md",
       "skills/frameworks/grief-companion.md",
-      "skills/frameworks/life-direction.md"
+      "skills/frameworks/life-direction/content/life-direction.md"
     ],
     "source_markers": {},
     "items": [
