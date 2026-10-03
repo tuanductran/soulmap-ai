@@ -1,7 +1,7 @@
 """Edge-case coverage for the recurring-pattern detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/pattern-mapper.md ("Pattern 1: Abandonment Loop",
+skills/frameworks/pattern-mapper/content/pattern-mapper.md ("Pattern 1: Abandonment Loop",
 "Pattern 2: Approval Seeking" - Detection signals and Cycle phrases
 sections), which this detector loads from via
 soulmap.runtime.knowledge.pattern_source. Nothing here is guessed.

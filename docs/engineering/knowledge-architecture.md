@@ -32,7 +32,7 @@ Two loader utilities cover all current detector patterns:
   from a named section under a Markdown heading. Used by detectors that need a
   plain tuple of matching phrases per category.
 - `pattern_source.py` parses the structured `## Pattern N:` sections in
-  `skills/frameworks/pattern-mapper.md` into typed `PatternSignal` objects with
+  `skills/frameworks/pattern-mapper/content/pattern-mapper.md` into typed `PatternSignal` objects with
   names, descriptions, detection signals, cycle phrases, and reflection language.
   It accepts the Markdown path from its caller and does not resolve repository paths.
 

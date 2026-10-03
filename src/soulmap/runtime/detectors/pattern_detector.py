@@ -11,7 +11,7 @@ from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
 from soulmap.runtime.knowledge.pattern_source import load_pattern_signals
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/pattern-mapper.md.
+# Single source of truth: skills/frameworks/pattern-mapper/content/pattern-mapper.md.
 # Nothing about a pattern (name, description, detection keywords, cycle
 # phrases, SoulMap role guidance, reflection language) is hardcoded here —
 # it is parsed from the Markdown skill so the two can never drift apart.

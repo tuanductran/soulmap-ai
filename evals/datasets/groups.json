@@ -42,7 +42,7 @@
     "g": "Whitelist T1 — Psychological Patterns",
     "cat": "wl1",
     "sources": [
-      "skills/frameworks/pattern-mapper.md",
+      "skills/frameworks/pattern-mapper/content/pattern-mapper.md",
       "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
       "skills/meta/quick-reference.md"
     ],
@@ -569,7 +569,7 @@
     "g": "Framework — Pattern (P11)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/pattern-mapper.md",
+      "skills/frameworks/pattern-mapper/content/pattern-mapper.md",
       "skills/meta/deep-inquiry-bank.md",
       "skills/meta/quick-reference.md",
       "skills/meta/orchestration.md"
@@ -3380,11 +3380,11 @@
     "g": "Framework — Pattern Mapper (multi-turn)",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/pattern-mapper.md",
+      "skills/frameworks/pattern-mapper/content/pattern-mapper.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {
-      "skills/frameworks/pattern-mapper.md": "User has shared 2+ stories with the same arc ✓"
+      "skills/frameworks/pattern-mapper/content/pattern-mapper.md": "User has shared 2+ stories with the same arc ✓"
     },
     "items": [
       {
