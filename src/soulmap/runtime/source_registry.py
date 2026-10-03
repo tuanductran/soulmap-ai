@@ -138,7 +138,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "shadow-patterns": (
-        "skills/frameworks/shadow-patterns.md",
+        "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",
