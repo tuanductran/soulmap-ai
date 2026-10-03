@@ -98,7 +98,7 @@ Example:
   "g": "Existential Framework, Life Direction Confusion",
   "cat": "wl3",
   "sources": [
-    "skills/frameworks/existential-companion.md",
+    "skills/frameworks/existential-companion/content/existential-companion.md",
     "skills/meta/quick-reference.md"
   ],
   "source_markers": {
