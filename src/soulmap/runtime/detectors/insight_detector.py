@@ -59,7 +59,7 @@ def _classify_insight_type(msg: str) -> str:
         key = insight_type.strip()
         if any(signal in msg for signal in _phrases(_INSIGHT_CLASSIFICATION[key])):
             return key
-    return "hold_first"  # Default: let the insight breathe before anything else.
+    return _INSIGHT_SCORING["Default classification"]
 
 
 def detect_insight(
