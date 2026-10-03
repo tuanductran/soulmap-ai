@@ -94,7 +94,7 @@ def _knowledge_paths_for(
     if primary == "EXISTENTIAL":
         return [
             *base,
-            "skills/frameworks/existential-companion.md",
+            "skills/frameworks/existential-companion/content/existential-companion.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "INNER_PARTS":
