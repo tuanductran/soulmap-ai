@@ -10,6 +10,8 @@ applied. They are not answers to copy verbatim.
 
 ## Repeating unreciprocated love
 
+**Example user message:** "I keep loving people who do not love me back"
+
 **Situation:** The user says they repeatedly love people who do not seem to love them back.
 
 **Relevant content:** Repeated relationship patterns.
@@ -18,6 +20,8 @@ applied. They are not answers to copy verbatim.
 they can observe in their own participation. Do not infer the other person's motives.
 
 ## Closeness followed by withdrawal
+
+**Example user message:** "Whenever I start to get close, I find ways to push them away"
 
 **Situation:** The user says that whenever a relationship becomes close, they find a way
 to push the person away.
