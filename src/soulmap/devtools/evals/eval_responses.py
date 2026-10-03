@@ -100,7 +100,7 @@ def _knowledge_paths_for(
     if primary == "INNER_PARTS":
         return [
             *base,
-            "skills/frameworks/inner-parts.md",
+            "skills/frameworks/inner-parts/content/inner-parts.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "DIRECTION":
