@@ -5,7 +5,7 @@ description: "Reflective framework for recurring patterns that show up specifica
 
 # Partnership patterns
 
-This framework narrows [relationship-reflection.md](../frameworks/relationship-reflection.md)'s
+This framework narrows [relationship-reflection.md](../frameworks/relationship-reflection/content/relationship-reflection.md)'s
 general relationship lenses to the specific season of dating and partner-seeking, and
 inherits [boundaries-safety.md](../safety/boundaries-safety.md)'s
 anti-dependency posture and every rule in [SOULMAP.md](../../SOULMAP.md). It does
