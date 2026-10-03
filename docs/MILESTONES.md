@@ -40,13 +40,14 @@ notes, tests, and release records.
 | 24 | Research & Audit Tooling | Consolidated research/audit findings into repository-native evidence and process guidance rather than adding speculative runtime features. |
 | 25 | Safety Matrix Closure | Resolved the remaining safety-matrix status gaps; the matrix now distinguishes enforced, bounded, and guidance-only rules without open `partial` rows. |
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
+| 27 | Knowledge-First Architecture Consolidation & Release Hardening | Completed the post-v0.13 architecture consolidation: Python-owned runtime source registry, Markdown-owned detector knowledge, removal of obsolete domain/runtime/library surfaces, a single shipped SoulMap Skill entrypoint, and strengthened release artifact verification and immutable action pinning. |
 
 ---
 
 ## Current Historical Baseline
 
-The completed roadmap work through Phase 26 established the architecture baseline in the v0.9.1 era;
-subsequent releases through v0.13.0 preserved and hardened those boundaries. The project deliberately does not treat the following as completed or
+The completed roadmap work through Phase 27 now includes the post-v0.13 consolidation and release-hardening work completed through 03/10/2026;
+subsequent maintenance should preserve these boundaries rather than reopen completed migrations. The project deliberately does not treat the following as completed or
 implicitly committed work:
 
 - third-party platform deployment claims without operator evidence;
