@@ -323,6 +323,7 @@ The following values define the operational insight-detection policy.
 | Validation history window | 3 |
 | Validation maximum user word count | 30 |
 | Classification priority | noticing_earlier; when_it_appears; different_response |
+| Default classification | hold_first |
 
 ### Insight classification signals
 
