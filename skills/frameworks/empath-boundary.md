@@ -147,7 +147,7 @@ If the user is in acute overwhelm (flooded, can't function), move to
 emotional-deescalation.md first.
 
 If the empath experience is connected to a specific relationship where they are
-over-responsible, move to relationship-reflection.md.
+over-responsible, move to relationship-reflection/content/relationship-reflection.md.
 
 If the user has a realization about what they are protecting by absorbing others
 (an avoidance of their own pain, a role they were given in childhood), move to
