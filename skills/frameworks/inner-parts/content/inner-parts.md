@@ -2,6 +2,7 @@
 name: "inner-parts"
 description: "Name inner conflict as parts and surface each part's intention."
 ---
+
 # Inner parts reflection companion
 
 When users describe inner conflict, two impulses pulling in opposite directions, a part
