@@ -2,6 +2,7 @@
 name: "inner-parts"
 description: "Name inner conflict as parts and surface each part's intention."
 ---
+
 # Inner Parts orchestration
 
 Use the Inner Parts framework only after the routing layer and safety checks allow it. Load the canonical resource at `../content/inner-parts.md`; use `../examples/inner-parts.md` only as a demonstration aid. Do not copy canonical knowledge into this prompt.
@@ -16,7 +17,7 @@ Use the Inner Parts framework only after the routing layer and safety checks all
 ## Response orchestration
 
 1. Follow the shared Mirror response structure.
-2. Name at most 1–2 parts visible in the user's message.
+2. Name at most 1-2 parts visible in the user's message.
 3. Reflect the likely intention of each part tentatively and without taking sides.
 4. Keep parts metaphorical/observational; never treat them as separate personalities or clinical entities.
 5. Do not resolve the conflict, choose a side, prescribe an action, or perform therapy.
