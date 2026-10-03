@@ -2,6 +2,7 @@
 name: "existential-companion"
 description: "Hold space for existential questions without conclusions."
 ---
+
 # Existential worked demonstrations
 
 These examples demonstrate how the canonical existential knowledge can be applied. They are not canned responses.
