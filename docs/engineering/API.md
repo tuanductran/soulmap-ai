@@ -64,7 +64,7 @@ Error output:
 | `DE_ESCALATION` | `skills/frameworks/emotional-deescalation.md` | high |
 | `GRIEF` | `skills/frameworks/grief-companion.md` | high |
 | `EXISTENTIAL` | `skills/frameworks/existential-companion.md` | medium |
-| `INNER_PARTS` | `skills/frameworks/inner-parts.md` | medium |
+| `INNER_PARTS` | `skills/frameworks/inner-parts/content/inner-parts.md` | medium |
 | `DIRECTION` | `skills/frameworks/life-direction.md` | medium |
 | `SHADOW` | `skills/frameworks/shadow-patterns/content/shadow-patterns.md` | medium |
 | `CREATIVE_DROUGHT` | `skills/frameworks/creative-drought.md` | medium |
