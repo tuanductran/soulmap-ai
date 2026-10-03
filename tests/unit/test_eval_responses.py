@@ -79,7 +79,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "SYNTHESIS", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/conversation-synthesis.md",
+            "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md",
         ),
         (
             {"primary_framework": "MIRROR", "safety_status": "PASS"},

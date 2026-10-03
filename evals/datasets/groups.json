@@ -3309,11 +3309,11 @@
     "g": "Framework — Conversation Synthesis (multi-turn)",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/conversation-synthesis.md",
+      "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {
-      "skills/frameworks/conversation-synthesis.md": "Two or more distinct themes have appeared across the conversation"
+      "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md": "Two or more distinct themes have appeared across the conversation"
     },
     "items": [
       {

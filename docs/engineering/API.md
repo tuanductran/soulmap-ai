@@ -81,7 +81,7 @@ Error output:
 | `PARTNERSHIP_PATTERNS` | `skills/soulmate/partnership-patterns.md` | medium |
 | `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration.md` | medium |
 | `INTEGRATION_CELEBRATION` | `skills/frameworks/integration-celebration.md` | medium |
-| `SYNTHESIS` | `skills/frameworks/conversation-synthesis.md` | lower |
+| `SYNTHESIS` | `skills/frameworks/conversation-synthesis/content/conversation-synthesis.md` | lower |
 | `PATTERN` | `skills/frameworks/pattern-mapper.md` | lower |
 | `MIRROR` | `skills/meta/response-structure.md` | default |
 

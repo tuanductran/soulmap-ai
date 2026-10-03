@@ -124,7 +124,7 @@ def _knowledge_paths_for(
     if primary == "SYNTHESIS":
         return [
             *base,
-            "skills/frameworks/conversation-synthesis.md",
+            "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     return [
