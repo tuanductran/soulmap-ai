@@ -158,7 +158,7 @@ Changes to these values must be made here and covered by focused contract tests.
 | emotional_theme | An emotional thread of {theme} - it appeared in several different things you shared. |
 | value_theme | Something that seems to matter to you - {theme} - keeps appearing, even when the topic changes. |
 | conflict_theme | A recurring tension around {theme} - it surfaced in more than one place. |
-| ownership_return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
+| ownership_return | These threads are yours. You surfaced them. Of these, which one feels most unfinished? |
 | recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis/content/conversation-synthesis.md. Use non-fixed framing. Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return + one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
 
 ### Recurring emotional theme signals
