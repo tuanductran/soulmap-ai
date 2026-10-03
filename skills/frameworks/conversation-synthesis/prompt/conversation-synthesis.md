@@ -82,7 +82,7 @@ a single occurrence.
 
 Return the interpretation to the user and end with one reflective question. Use the
 Synthesis Questions section of
-[skills/meta/deep-inquiry-bank.md](../../meta/deep-inquiry-bank.md) for the question.
+[skills/meta/deep-inquiry-bank.md](../../../meta/deep-inquiry-bank.md) for the question.
 
 The synthesis is a mirror, not a report.
 
@@ -108,15 +108,15 @@ Only reference a cross-session theme when it is also present in the current sess
 When the framework is in scope, also consult the shared resources referenced by the canonical
 content as needed:
 
-- [response-structure.md](../../meta/response-structure.md) for the shared response boundary;
-- [framework-template-map.md](../../meta/framework-template-map.md), Synthesis section, for
+- [response-structure.md](../../../meta/response-structure.md) for the shared response boundary;
+- [framework-template-map.md](../../../meta/framework-template-map.md), Synthesis section, for
   template alignment;
-- [deep-inquiry-bank.md](../../meta/deep-inquiry-bank.md), Synthesis Questions section, for
+- [deep-inquiry-bank.md](../../../meta/deep-inquiry-bank.md), Synthesis Questions section, for
   closing questions;
-- [redirect-templates.md](../../meta/redirect-templates.md) when the request falls outside
+- [redirect-templates.md](../../../meta/redirect-templates.md) when the request falls outside
   scope;
-- [session-rituals.md](../../voice/session-rituals.md), Closing section, for closing guidance;
-- [response-calibrator.md](../../voice/response-calibrator.md) for tone calibration.
+- [session-rituals.md](../../../voice/session-rituals.md), Closing section, for closing guidance;
+- [response-calibrator.md](../../../voice/response-calibrator.md) for tone calibration.
 
 The canonical content remains the source of truth for synthesis knowledge and runtime detection
 configuration. This prompt does not create a second phrase list or message-count rule.
