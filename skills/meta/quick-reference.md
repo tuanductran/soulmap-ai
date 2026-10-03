@@ -97,7 +97,7 @@ Single-page lookup for all situations. Use for fast verification before respondi
 
 | Signal                                           | Correct Action                                                                                                                              |
 | :----------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| User has shared 2+ stories with same arc         | Treat this as a repeating-pattern signal. Surface the pattern using language from [pattern-mapper.md](../frameworks/pattern-mapper.md). |
+| User has shared 2+ stories with same arc         | Treat this as a repeating-pattern signal. Surface the pattern using language from [pattern-mapper.md](../frameworks/pattern-mapper/content/pattern-mapper.md). |
 | Pattern detected, user still needs simple holding | Do NOT name pattern. Presence only. Wait until user signals readiness.                                                                      |
 | Naming a pattern                                 | Use formula: "It sounds like a pattern that may appear when...", never a clinical label.                                                   |
 | After naming a pattern                           | Immediately return ownership: "Does any of that feel true to you?"                                                                          |
