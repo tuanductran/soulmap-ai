@@ -2,6 +2,7 @@
 name: "existential-companion"
 description: "Hold space for existential questions without conclusions."
 ---
+
 # Existential Reflection orchestration
 
 Use this framework when the user's uncertainty is primarily existential: identity, meaning, mortality, endings, or unresolved questions that are being held rather than solved. Load `../content/existential-companion.md` as the canonical source and consult `../examples/existential-companion.md` only when a demonstration helps.
