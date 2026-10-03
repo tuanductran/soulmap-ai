@@ -69,25 +69,25 @@ improves authoring, progressive disclosure, or response quality.
 
 ## Rationale
 
-### 1. It preserves the knowledge-first architecture
+### Knowledge-first architecture
 
 The model keeps behavior-defining material in Markdown. It does not introduce
 a response generator, executable Skill runtime, or second routing engine.
 
-### 2. It gives each resource a single ownership question
+### Single ownership question
 
 The current framework files can contain knowledge, examples, and instructions
 together. Explicit resource roles make future review easier: a maintainer can
 ask whether a new paragraph belongs to knowledge, demonstration, or
 orchestration before adding it.
 
-### 3. It supports progressive disclosure
+### Progressive disclosure
 
 An AI tool can load the Skill entrypoint first, then the Skill-level prompt,
 then only the relevant content and examples. This can reduce unnecessary
 context without requiring a Python selector.
 
-### 4. It remains packaging-compatible
+### Packaging compatibility
 
 The current package builder recursively includes files under `skills/`. The
 resource directories therefore fit the existing distribution boundary. The
