@@ -69,7 +69,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "SHADOW", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/shadow-patterns.md",
+            "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
         ),
         (
             {"primary_framework": "MEANING_INTEGRATION", "safety_status": "PASS"},

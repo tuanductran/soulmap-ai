@@ -17,7 +17,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/perfectionism-paralysis.md and
-# skills/frameworks/shadow-patterns.md. Nothing is hardcoded here.
+# skills/frameworks/shadow-patterns/content/shadow-patterns.md. Nothing is hardcoded here.
 PERFECTIONISM_PARALYSIS_SIGNALS = load_keyword_section(
     runtime_skill_path("perfectionism-paralysis"),
     "Activation Signals",

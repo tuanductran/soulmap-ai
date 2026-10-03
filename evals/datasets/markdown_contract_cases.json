@@ -250,7 +250,7 @@
         ]
       },
       {
-        "path": "skills/frameworks/shadow-patterns.md",
+        "path": "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
         "must_include_all": [
           "one small honest thing"
         ]

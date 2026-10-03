@@ -3,7 +3,7 @@ name: "shadow-patterns"
 description: "Explore recurring frustrations with possibility language and projection checks."
 ---
 
-# Shadow pattern revealer
+# Shadow pattern content
 
 When users describe repeated frustrations, recurring conflicts, or situations that "keep
 happening to them", help them gently explore whether a hidden protective pattern within
@@ -499,17 +499,6 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 - "as an empath i feel"
 - "i'm highly sensitive so"
 - "my vibration is too high for"
-
-## Paired template
-
-- **Response shape:** `skills/meta/response-structure.md` (Mirror: name the
-  pattern as possibility only, never as fact, Steps 2-4 critical)
-- **Check against:** `skills/meta/framework-template-map.md` (section: Shadow)
-- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Shadow-Specific
-  Questions section)
-- **If it falls outside scope:** `skills/meta/redirect-templates.md`
-- **How to close:** `skills/voice/session-rituals.md` (Closing section)
-- **Tone support:** `skills/voice/response-calibrator.md`
 
 ## Runtime detection contract
 

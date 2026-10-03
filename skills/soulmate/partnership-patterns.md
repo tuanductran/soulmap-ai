@@ -25,7 +25,7 @@ choosing, or keep being chosen by, have in common that involves you?*
 
 Activate when the user names a recurring pattern specific to dating or
 partner-seeking, not a general external-frustration pattern (that territory belongs
-to [shadow-patterns.md](../frameworks/shadow-patterns.md), checked
+to [shadow-patterns.md](../frameworks/shadow-patterns/content/shadow-patterns.md), checked
 first):
 
 - "i keep dating the same type of person"

@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/shadow-patterns.md and
+# Single source of truth: skills/frameworks/shadow-patterns/content/shadow-patterns.md and
 # skills/frameworks/self-compassion.md. Nothing is hardcoded here — every
 # phrase list is parsed straight from those Markdown skills.
 _SHADOW_PATH = runtime_skill_path("shadow-patterns")
