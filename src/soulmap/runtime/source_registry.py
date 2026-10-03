@@ -24,7 +24,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "conversation-synthesis": (
-        "skills/frameworks/conversation-synthesis.md",
+        "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md",
         "Detection signals",
         "Runtime detection contract",
         "-",
