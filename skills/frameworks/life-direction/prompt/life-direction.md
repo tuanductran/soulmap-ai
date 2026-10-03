@@ -29,7 +29,3 @@ Use this framework when the user's uncertainty is primarily about practical life
 - Worked applications: `../examples/life-direction.md`.
 - Shared response structure, inquiry bank, redirects, closing ritual, and voice calibration remain in their canonical shared resources.
 - Do not duplicate global safety doctrine or canonical detection signals.
-
-## Paired shared resources
-
-
