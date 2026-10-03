@@ -37,7 +37,7 @@ Examples:
 
 - `skills/frameworks/emotional-deescalation.md`, crisis and de-escalation response
 - `skills/frameworks/grief-companion.md`, grief support
-- `skills/frameworks/inner-parts.md`, inner conflict work
+- `skills/frameworks/inner-parts/content/inner-parts.md`, inner conflict work
 
 ## YAML front matter
 
