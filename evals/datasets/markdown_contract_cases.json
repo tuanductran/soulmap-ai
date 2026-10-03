@@ -157,7 +157,7 @@
     ],
     "markdown_targets": [
       {
-        "path": "skills/frameworks/conversation-synthesis.md",
+        "path": "skills/frameworks/conversation-synthesis/content/conversation-synthesis.md",
         "must_include_all": [
           "These threads are yours.",
           "You surfaced them.",
