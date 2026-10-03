@@ -186,7 +186,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Runtime guidance",
     ),
     "pattern-mapper": (
-        "skills/frameworks/pattern-mapper.md",
+        "skills/frameworks/pattern-mapper/content/pattern-mapper.md",
         "Pattern 1",
         "Runtime detection contract",
         "Runtime guidance",
