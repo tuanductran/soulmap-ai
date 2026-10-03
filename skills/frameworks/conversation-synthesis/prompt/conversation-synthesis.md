@@ -6,9 +6,9 @@ description: "Skill-local orchestration for loading and applying Conversation Pa
 # Conversation synthesis orchestration
 
 Use the canonical knowledge in
-[../content/conversation-synthesis.md](../content/conversation-synthesis.md) and the
+[conversation-synthesis.md](../content/conversation-synthesis.md) and the
 worked demonstrations in
-[../examples/conversation-synthesis.md](../examples/conversation-synthesis.md).
+[conversation-synthesis.md](../examples/conversation-synthesis.md).
 
 Do not duplicate their content here. This resource defines only when and how to apply them.
 
@@ -82,7 +82,7 @@ a single occurrence.
 
 Return the interpretation to the user and end with one reflective question. Use the
 Synthesis Questions section of
-[skills/meta/deep-inquiry-bank.md](../../../meta/deep-inquiry-bank.md) for the question.
+[deep-inquiry-bank.md](../../../meta/deep-inquiry-bank.md) for the question.
 
 The synthesis is a mirror, not a report.
 
