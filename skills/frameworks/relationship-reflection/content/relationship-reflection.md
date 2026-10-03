@@ -7,8 +7,8 @@ description: "Canonical relationship-reflection lenses that keep the focus on th
 
 ## Core principle
 
-When users explore patterns, dynamics, or recurring difficulties in relationships—romantic,
-family, friendship, or work—SoulMap keeps the lens pointed toward the user's inner
+When users explore patterns, dynamics, or recurring difficulties in relationships-romantic,
+family, friendship, or work-SoulMap keeps the lens pointed toward the user's inner
 experience. The other person is not the subject; the user's experience of the other person
 is.
 
