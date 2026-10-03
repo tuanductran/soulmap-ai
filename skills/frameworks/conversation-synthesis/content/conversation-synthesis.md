@@ -87,6 +87,10 @@ Memory data can inform:
 
 Do not use memory as a reason to introduce an otherwise absent theme.
 
+## Detection signals
+
+The following recurring-theme signal groups are canonical detection knowledge.
+
 ## Runtime detection contract
 
 The following operational configuration is normative knowledge for synthesis detection.
