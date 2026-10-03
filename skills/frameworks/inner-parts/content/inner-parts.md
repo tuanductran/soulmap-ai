@@ -87,13 +87,6 @@ it gets too real." "I always have a plan B." "I don't need anyone."
 **Its hidden intention:** Safety. It learned that closeness costs something. It is not
 the enemy, it is the one that survived.
 
-**Reflection language (choose one line):**
-
-- "It sounds like there's a part of you that has gotten very good at protecting you -
-  and it's been doing that for a long time."
-- "There may be a part that keeps the walls up not because it wants distance, but
-  because it remembers what it felt like when the walls came down."
-
 ### The fearful part
 
 **What it sounds like:** "What if it goes wrong?" "I can't stop imagining the worst."
@@ -102,13 +95,6 @@ apart."
 
 **Its hidden intention:** Preparation. It scans for danger so the person isn't caught
 off guard. It learned that surprises hurt.
-
-**Reflection language (choose one line):**
-
-- "It sounds like there's a part of you that stays alert, that keeps watch so nothing
-  catches you off guard."
-- "Something in you that has gotten very practiced at imagining what could go wrong -
-  not to scare you, but to prepare you."
 
 ### The hopeful part
 
@@ -119,12 +105,6 @@ time..."
 **Its hidden intention:** Continuation. It carries the thread that says *this doesn't
 have to be forever*. It is often the quietest part.
 
-**Reflection language (choose one line):**
-
-- "There seems to be a part of you that hasn't let go of the possibility, even when
-  everything else is tired."
-- "Something in you is still keeping a door open. That part doesn't give up easily."
-
 ### The tired part
 
 **What it sounds like:** "I'm exhausted from trying." "I don't want to care anymore."
@@ -133,13 +113,6 @@ have to be forever*. It is often the quietest part.
 **Its hidden intention:** Rest. It has been carrying something for a very long time.
 Tiredness is not defeat, it can be the body asking for something that hasn't been
 given.
-
-**Reflection language (choose one line):**
-
-- "There's a part of you that sounds deeply tired, not of the situation, but of having
-  to keep showing up for it."
-- "Something in you has been carrying this for a long time and it's asking to put it
-  down, even just for a moment."
 
 ### The angry part
 
@@ -150,13 +123,6 @@ at who."
 **Its hidden intention:** Boundary. Anger often marks a place where something important
 was violated, a need, a boundary, a value. It points to what matters.
 
-**Reflection language (choose one line):**
-
-- "There's a part of you that is angry, and anger usually knows what it's protecting.
-  What does this part care about that feels like it wasn't honored here?"
-- "Something in you is pushing back. Anger often knows the boundary before the mind
-  does."
-
 ### The critical part
 
 **What it sounds like:** "I'm so stupid." "Why do I always do this?" "I should have
@@ -164,14 +130,6 @@ known better." "I'm a failure." "What is wrong with me?"
 
 **Its hidden intention:** Standards. The critic learned that if it points out the flaw
 first, it hurts less when others do. It is trying to protect through preemptive attack.
-
-**Reflection language (choose one line):**
-
-- "There's a part of you that is very hard on you, and it often means well, even when
-  it doesn't feel that way. It may have learned that self-criticism was a way to stay
-  ahead of being criticized by others."
-- "Something in you holds you to a very high standard. That part is exhausting to live
-  with, but it didn't come from nowhere."
 
 ### The avoidant part
 
@@ -181,14 +139,6 @@ fine, I just don't go there." "I distract myself." "It's easier not to."
 **Its hidden intention:** Survival. It learned that some feelings, if felt fully, might
 be too much. It is not weakness, it is management.
 
-**Reflection language (choose one line):**
-
-- "There's a part of you that keeps moving, that has learned to stay one step ahead of
-  the feeling."
-- "Something in you has gotten very good at creating distance from this. That part isn't
-  avoiding it out of laziness, it's avoiding it because at some point, this felt like
-  it might be too much to hold."
-
 ### The yearning part
 
 **What it sounds like:** "I just want to be seen." "I want someone to really know me."
@@ -197,13 +147,6 @@ once."
 
 **Its hidden intention:** Connection. This part carries the deepest longing, and is
 often the most vulnerable and least heard.
-
-**Reflection language (choose one line):**
-
-- "There's a part of you that really wants to be known, not just seen from a distance,
-  but actually known."
-- "Something in you is still looking for that. It hasn't stopped wanting it, even when
-  other parts have given up."
 
 ## How to Work with Two Parts in Conflict
 
@@ -453,18 +396,6 @@ Avoidant part:
 - "don't go there"
 - "push it away"
 - "pretend"
-
-## Paired template
-
-- **Response shape:** `skills/meta/response-structure.md` (Mirror: Steps 1-2
-  name the parts, Step 5 invites listening to ONE part)
-- **Check against:** `skills/meta/framework-template-map.md` (section:
-  Inner Parts)
-- **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Parts-Specific
-  Questions section)
-- **If it falls outside scope:** `skills/meta/redirect-templates.md`
-- **How to close:** `skills/voice/session-rituals.md` (Closing section)
-- **Tone support:** `skills/voice/response-calibrator.md`
 
 ## Runtime detection contract
 

@@ -59,7 +59,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "INNER_PARTS", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/inner-parts.md",
+            "skills/frameworks/inner-parts/content/inner-parts.md",
         ),
         (
             {"primary_framework": "DIRECTION", "safety_status": "PASS"},

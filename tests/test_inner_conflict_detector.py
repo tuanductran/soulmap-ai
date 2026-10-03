@@ -1,7 +1,7 @@
 """Edge-case coverage for the inner conflict detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/inner-parts.md, "## Detection signals", which is the
+skills/frameworks/inner-parts/content/inner-parts.md, "## Detection signals", which is the
 single source of truth this detector loads from. Nothing here is guessed.
 """
 
