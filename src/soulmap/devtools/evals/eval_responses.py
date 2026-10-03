@@ -106,7 +106,7 @@ def _knowledge_paths_for(
     if primary == "DIRECTION":
         return [
             *base,
-            "skills/frameworks/life-direction.md",
+            "skills/frameworks/life-direction/content/life-direction.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "SHADOW":
