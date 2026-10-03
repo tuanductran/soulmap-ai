@@ -91,6 +91,8 @@ Do not use memory as a reason to introduce an otherwise absent theme.
 
 The following recurring-theme signal groups are canonical detection knowledge.
 
+Two or more distinct themes have appeared across the conversation.
+
 ## Runtime detection contract
 
 The following operational configuration is normative knowledge for synthesis detection.
