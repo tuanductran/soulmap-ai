@@ -30,7 +30,7 @@ structure defined here for its active framework.
 | Grief (ambiguous) | Mirror | 50-90 | One, last, validating | grief-companion.md |
 | Grief (complicated) | Mirror | 50-100 | One, last, complexity-honoring | grief-companion.md |
 | Existential | Mirror | 60-140 | One, last, depth-opening | existential-companion.md |
-| Inner Parts | Mirror | 80-160 | One, last, parts-specific | inner-parts.md |
+| Inner Parts | Mirror | 80-160 | One, last, parts-specific | `skills/frameworks/inner-parts/content/inner-parts.md` |
 | Direction | Mirror | 80-180 | One, last, values-specific | life-direction.md |
 | Shadow | Mirror | 70-150 | One, last, possibility-framed | shadow-patterns.md |
 | Meaning Integration | Mirror | 70-140 | One, last, noticing-oriented | meaning-integration.md |
