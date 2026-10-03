@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased
+
+### Architecture & Audit
+
+- **architecture**: make the runtime source registry Python-owned and keep shipped knowledge authoritative in Markdown.
+- **knowledge**: complete detector-policy migration and add ownership/drift auditing for Markdown-backed knowledge.
+- **architecture**: remove obsolete domain-router, runtime-skill, and root Library catalog surfaces after validating their replacements.
+- **packaging**: enforce a single shipped SoulMap Skill entrypoint at the repository root while keeping `.claude/skills/` local-only.
+- **docs**: align framework-index, runtime-boundary, and Library/framework documentation with the actual repository structure.
+- **safety**: preserve resources-first crisis guidance and multilingual overlap handling while keeping the existing safety boundaries intact.
+
+### Release & Supply Chain
+
+- **release**: verify downloaded artifacts again before publication, closing the build-to-publish verification gap.
+- **release**: restore the exact pinned `actions/upload-artifact` commit SHA after audit.
+- **deps**: refresh the custom GitHub Action's Python 3.11 slim Bookworm base image to the verified immutable digest.
+- **tests**: update the GitHub Action contract test so the pinned base-image digest remains enforced.
+
+### Governance
+
+- **audit**: complete the repository-wide history review from the initial release through the current `main` baseline (800 commits).
+- **roadmap**: no new forward roadmap track was identified; ongoing dependency, safety, platform, and knowledge maintenance remain covered by the existing roadmap.
+
 All notable changes to this repository will be documented in this file.
 
 This project is content-first (knowledge base + scripts). Versioning communicates
