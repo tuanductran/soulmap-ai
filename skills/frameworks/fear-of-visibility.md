@@ -74,7 +74,7 @@ Additional detection phrases:
 
 Do not activate for general social anxiety without a specific link to self-expression
 or being known. If the signal is primarily about relationships (fear of rejection
-from a specific person), use relationship-reflection.md instead.
+from a specific person), use relationship-reflection/content/relationship-reflection.md instead.
 
 ## Framework Priority
 
