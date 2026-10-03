@@ -54,7 +54,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "EXISTENTIAL", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/existential-companion.md",
+            "skills/frameworks/existential-companion/content/existential-companion.md",
         ),
         (
             {"primary_framework": "INNER_PARTS", "safety_status": "PASS"},
