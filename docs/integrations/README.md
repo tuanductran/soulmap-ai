@@ -59,7 +59,7 @@ Priority files (upload these):
 Optional (for richer framework access):
 
 - [`../skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-- [`../skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
+- [`../skills/frameworks/life-direction/content/life-direction.md`](../../skills/frameworks/life-direction/content/life-direction.md)
 - [`../skills/frameworks/shadow-patterns/content/shadow-patterns.md`](../../skills/frameworks/shadow-patterns/content/shadow-patterns.md)
 - [`../skills/frameworks/emotional-deescalation.md`](../../skills/frameworks/emotional-deescalation.md)
 - [`../skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
@@ -100,7 +100,7 @@ Upload these files (extract from `dist/soulmap-ai.zip` first):
 5. [`../skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
 6. [`../skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
 7. [`../skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-8. [`../skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
+8. [`../skills/frameworks/life-direction/content/life-direction.md`](../../skills/frameworks/life-direction/content/life-direction.md)
 9. [`../skills/frameworks/shadow-patterns/content/shadow-patterns.md`](../../skills/frameworks/shadow-patterns/content/shadow-patterns.md)
 10. [`../skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
 
