@@ -1,6 +1,6 @@
 """Load pattern-detection knowledge straight from the shipped Markdown skill.
 
-`skills/frameworks/pattern-mapper.md` is the single source of truth for pattern
+`skills/frameworks/pattern-mapper/content/pattern-mapper.md` is the single source of truth for pattern
 names, descriptions, detection signals, cycle phrases, SoulMap role guidance, and
 reflection language. This module parses that Markdown (plain prose sections, no
 YAML front matter keys) into the structure `detectors/pattern_detector.py` needs
