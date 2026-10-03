@@ -1,3 +1,8 @@
+---
+name: "relationship-reflection-examples"
+description: "Worked demonstrations for applying relationship-reflection content without producing canned answers."
+---
+
 # Relationship reflection examples
 
 These are demonstrations of how the canonical relationship-reflection content can be
