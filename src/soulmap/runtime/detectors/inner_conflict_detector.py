@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/inner-parts.md,
+# Single source of truth: skills/frameworks/inner-parts/content/inner-parts.md,
 # "## Detection signals". Nothing is hardcoded here.
 _INNER_PARTS_GROUPS = load_labeled_groups(
     runtime_skill_path("inner-parts"), "Detection signals"
