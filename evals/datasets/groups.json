@@ -539,6 +539,8 @@
     "cat": "fw",
     "sources": [
       "skills/frameworks/shadow-patterns/content/shadow-patterns.md",
+      "skills/frameworks/shadow-patterns/examples/shadow-patterns.md",
+      "skills/frameworks/shadow-patterns/prompt/shadow-patterns.md",
       "skills/meta/response-structure.md",
       "skills/meta/orchestration.md"
     ],
