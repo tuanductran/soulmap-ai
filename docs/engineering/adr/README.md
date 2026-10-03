@@ -41,3 +41,4 @@ Number ADRs sequentially, zero-padded to four digits:
 | [0003](0003-bounded-edit-distance-crisis-backstop-proposal.md) | Bounded Edit-Distance Backstop for Crisis Phrase Matching | Proposed |
 | [0004](0004-tiered-trusted-sources.md) | Tiered Trusted Sources and Claim-Level Citation Limits | Accepted |
 | [0005](0005-dependency-detection-knowledge-boundary.md) | Dependency Detection Knowledge Boundary | Accepted |
+| [0006](0006-layered-skill-resources.md) | Layered Skill Resources for Content, Examples, and Prompt Orchestration | Proposed |
