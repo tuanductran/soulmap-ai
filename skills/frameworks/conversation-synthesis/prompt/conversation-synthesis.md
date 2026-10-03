@@ -65,12 +65,12 @@ Avoid fixed-person framing such as:
 
 Build the response in three parts.
 
-### 1. Opening frame
+### Opening frame
 
 Use one sentence that makes clear you are stepping back to reflect what you heard across the
 conversation.
 
-### 2. Themes
+### Themes
 
 Name 2-3 observations. Keep each to 1-2 sentences and include at least one specific anchor
 to something the user actually said or shared.
@@ -78,7 +78,7 @@ to something the user actually said or shared.
 Use the relevant theme domain from the canonical content. Do not invent a recurring theme from
 a single occurrence.
 
-### 3. Ownership return
+### Ownership return
 
 Return the interpretation to the user and end with one reflective question. Use the
 Synthesis Questions section of
