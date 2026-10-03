@@ -1,3 +1,8 @@
+---
+name: "relationship-reflection-prompt"
+description: "Skill-local orchestration instructions for using relationship-reflection content and examples."
+---
+
 # Relationship reflection prompt
 
 ## Purpose
