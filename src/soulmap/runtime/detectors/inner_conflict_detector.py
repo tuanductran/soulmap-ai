@@ -134,28 +134,21 @@ def detect_inner_conflict(
 
 
 def _suggest_parts(msg: str) -> list[str]:
-    """Suggest part archetypes using the Markdown-owned signal groups.
+    """Suggest part archetypes using Markdown-owned signal groups.
 
-    Args:
-        msg: The user's current message, already lowercased and stripped.
-
-    Returns:
-        Up to three archetype names whose authored signals match the message.
+    The archetype names and their ordering are derived from the Detection
+    signals groups. This keeps the runtime from duplicating the Markdown
+    taxonomy while preserving the authored order and existing output labels.
     """
-    archetype_labels = (
-        ("protective part", "protective part"),
-        ("fearful part", "fearful part"),
-        ("hopeful part", "hopeful part"),
-        ("tired part", "tired part"),
-        ("angry part", "angry part"),
-        ("critical part", "critical part"),
-        ("yearning part", "yearning part"),
-        ("avoidant part", "avoidant part"),
+    archetype_labels = tuple(
+        (group_name, group_name)
+        for group_name in _INNER_PARTS_GROUPS
+        if group_name.endswith(" part")
     )
     suggestions = [
         part_name
         for group_name, part_name in archetype_labels
-        if any(signal in msg for signal in _INNER_PARTS_GROUPS.get(group_name, ()))
+        if any(signal in msg for signal in _INNER_PARTS_GROUPS[group_name])
     ]
     return suggestions[:3]
 
