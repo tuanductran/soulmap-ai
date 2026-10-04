@@ -82,9 +82,7 @@ def detect_direction_need(
         for group, signals in signal_groups:
             limit_key = f"sustained {group} signal limit"
             if limit_key in _DIRECTION_RULES:
-                history_signals.extend(
-                    signals[: int(_DIRECTION_RULES[limit_key])]
-                )
+                history_signals.extend(signals[: int(_DIRECTION_RULES[limit_key])])
         for past_msg in recent_user:
             if any(phrase in past_msg for phrase in history_signals):
                 score += int(_DIRECTION_RULES["sustained history match"])
