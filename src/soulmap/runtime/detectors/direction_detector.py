@@ -19,37 +19,22 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 _SOURCE = runtime_skill_path("life-direction")
 _DIRECTION_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
 _DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
+_DIRECTION_SCORING_GROUPS = load_key_value_table(_SOURCE, "Detection scoring groups")
 _DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
 _DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Runtime guidance")
-
-LOSTNESS_SIGNALS = _DIRECTION_GROUPS["lostness"]
-SHOULD_SIGNALS = _DIRECTION_GROUPS["should vs. want"]
-MISALIGNMENT_SIGNALS = _DIRECTION_GROUPS["misalignment"]
-COMPARISON_SIGNALS = _DIRECTION_GROUPS["comparison and falling behind"]
-MEANING_SIGNALS = _DIRECTION_GROUPS["meaning"]
-TRANSITION_SIGNALS = _DIRECTION_GROUPS["transition"]
-ENERGY_SIGNALS = _DIRECTION_GROUPS["energy"]
-
 
 HistoryMessage = dict[str, str]
 
 
 def _suggest_lens(msg: str) -> str:
     """Suggest the knowledge-authored inquiry lens."""
-    signal_map = {
-        "meaning": MEANING_SIGNALS,
-        "energy": ENERGY_SIGNALS,
-        "should_vs_want": SHOULD_SIGNALS,
-        "comparison": COMPARISON_SIGNALS,
-        "misalignment": MISALIGNMENT_SIGNALS,
-    }
     for lens, groups in _DIRECTION_LENS_SIGNALS.items():
         if lens == "default":
             continue
         signals = []
         for group in groups.split(","):
-            signals.extend(signal_map.get(group.strip(), ()))
+            signals.extend(_DIRECTION_GROUPS.get(group.strip(), ()))
         if any(signal in msg for signal in signals):
             return _DIRECTION_LENS[lens]
     return _DIRECTION_LENS["default"]
@@ -70,13 +55,13 @@ def detect_direction_need(
     score = 0
     direction_types = []
 
-    signal_groups = (
-        ("lostness", LOSTNESS_SIGNALS),
-        ("meaning_void", MEANING_SIGNALS),
-        ("should_vs_want", SHOULD_SIGNALS),
-        ("comparison", COMPARISON_SIGNALS),
-        ("transition", TRANSITION_SIGNALS),
-        ("misalignment", MISALIGNMENT_SIGNALS),
+    # The Markdown scoring table owns the detection-group identifiers and
+    # their priority. Only keys that also have a Detection signals group are
+    # executable detector groups.
+    signal_groups = tuple(
+        (scoring_group, _DIRECTION_GROUPS[detection_group])
+        for detection_group, scoring_group in _DIRECTION_SCORING_GROUPS.items()
+        if detection_group in _DIRECTION_GROUPS and scoring_group in _DIRECTION_RULES
     )
 
     for type_name, signals in signal_groups:
@@ -94,13 +79,11 @@ def detect_direction_need(
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_DIRECTION_RULES["recent user history window"]) :]
-        history_signals = (
-            LOSTNESS_SIGNALS[: int(_DIRECTION_RULES["sustained lostness signal limit"])]
-            + MEANING_SIGNALS[: int(_DIRECTION_RULES["sustained meaning signal limit"])]
-            + TRANSITION_SIGNALS[
-                : int(_DIRECTION_RULES["sustained transition signal limit"])
-            ]
-        )
+        history_signals = []
+        for group, signals in signal_groups:
+            limit_key = f"sustained {group} signal limit"
+            if limit_key in _DIRECTION_RULES:
+                history_signals.extend(signals[: int(_DIRECTION_RULES[limit_key])])
         for past_msg in recent_user:
             if any(phrase in past_msg for phrase in history_signals):
                 score += int(_DIRECTION_RULES["sustained history match"])

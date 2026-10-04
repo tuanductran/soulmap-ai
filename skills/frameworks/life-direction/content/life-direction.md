@@ -340,6 +340,17 @@ runtime may execute these values, but must not duplicate them.
 | sustained meaning signal limit | 6 |
 | sustained transition signal limit | 6 |
 
+### Detection scoring groups
+
+| Detection group | Scoring group |
+| :--- | :--- |
+| lostness | lostness |
+| meaning | meaning_void |
+| should vs. want | should_vs_want |
+| comparison and falling behind | comparison |
+| transition | transition |
+| misalignment | misalignment |
+
 ### Lens signals
 
 | Lens | Signal groups |
