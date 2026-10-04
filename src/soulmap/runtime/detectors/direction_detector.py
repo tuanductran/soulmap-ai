@@ -19,6 +19,9 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 _SOURCE = runtime_skill_path("life-direction")
 _DIRECTION_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
 _DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
+_DIRECTION_SCORING_GROUPS = load_key_value_table(
+    _SOURCE, "Detection scoring groups"
+)
 _DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
 _DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Runtime guidance")
@@ -58,9 +61,10 @@ def detect_direction_need(
     # their priority. Only keys that also have a Detection signals group are
     # executable detector groups.
     signal_groups = tuple(
-        (group, _DIRECTION_GROUPS[group])
-        for group in _DIRECTION_RULES
-        if group in _DIRECTION_GROUPS
+        (scoring_group, _DIRECTION_GROUPS[detection_group])
+        for detection_group, scoring_group in _DIRECTION_SCORING_GROUPS.items()
+        if detection_group in _DIRECTION_GROUPS
+        and scoring_group in _DIRECTION_RULES
     )
 
     for type_name, signals in signal_groups:
