@@ -9,7 +9,8 @@ from functools import lru_cache
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _ROW_RE = re.compile(
-    r"^\|\s*(?P<framework>[^|]+?)\s*\|\s*(?P<mode>[^|]+?)\s*\|\s*"
+    r"^\|\s*(?P<framework>[^|]+?)\s*\|\s*(?P<runtime_framework>[^|]+?)\s*\|\s*"
+    r"(?P<runtime_variant>[^|]+?)\s*\|\s*(?P<mode>[^|]+?)\s*\|\s*"
     r"(?P<word_range>[^|]+?)\s*\|\s*(?P<question_rule>[^|]+?)\s*\|\s*"
     r"(?P<source_file>[^|]+?)\s*\|\s*$",
     re.MULTILINE,
@@ -21,14 +22,12 @@ class TemplateRule:
     """Output constraints for one framework/mode mapping."""
 
     framework: str
+    runtime_framework: str
+    runtime_variant: str
     mode: str
     word_range: str
     question_rule: str
     source_file: str
-
-
-def _key(value: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
 
 
 @lru_cache(maxsize=1)
@@ -39,6 +38,8 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
     rules = tuple(
         TemplateRule(
             framework=match.group("framework").strip(),
+            runtime_framework=match.group("runtime_framework").strip(),
+            runtime_variant=match.group("runtime_variant").strip(),
             mode=match.group("mode").strip(),
             word_range=match.group("word_range").strip(),
             question_rule=match.group("question_rule").strip(),
@@ -48,6 +49,11 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
     )
     if not rules:
         raise ValueError("Framework template mapping table is missing.")
+    keys = [(rule.runtime_framework, rule.runtime_variant) for rule in rules]
+    if any(not framework or not variant for framework, variant in keys):
+        raise ValueError("Framework template runtime identifiers are incomplete.")
+    if len(keys) != len(set(keys)):
+        raise ValueError("Framework template runtime identifiers must be unique.")
     return rules
 
 
@@ -58,47 +64,24 @@ def resolve_template(
 ) -> dict[str, str]:
     """Resolve the deterministic template contract for a routing selection."""
     context = context or {}
-    normalized = _key(framework)
-    if normalized == "de_escalation":
-        target = (
-            "De-escalation (HIGH)"
-            if mode == "SANCTUARY"
-            else "De-escalation (MODERATE)"
-        )
-    elif normalized == "grief":
+    runtime_framework = framework.strip().upper()
+    variant = "default"
+    if runtime_framework == "DE_ESCALATION":
+        variant = "high" if mode == "SANCTUARY" else "moderate"
+    elif runtime_framework == "GRIEF":
         grief_value = context.get("grief")
         grief_context = grief_value if isinstance(grief_value, dict) else context
-        grief_type = str(
+        variant = str(
             grief_context.get("grief_type", grief_context.get("type", "acute"))
         ).lower()
-        target = f"Grief ({grief_type})"
-    elif normalized == "mirror":
-        target = (
-            "Mirror (Stage 1)"
-            if context.get("stage_override")
-            else "Mirror (emotional)"
-        )
-    else:
-        names = {
-            "integration_celebration": "Integration and Celebration",
-            "meaning_integration": "Meaning Integration",
-            "dark_night_of_soul": "Dark Night of the Soul",
-            "fear_of_visibility": "Fear of Visibility",
-            "creative_drought": "Creative Drought",
-            "empath_boundary": "Empath Boundary",
-            "perfectionism_paralysis": "Perfectionism Paralysis",
-            "soul_nourishment": "Soul Nourishment",
-            "divine_guidance": "Divine Guidance",
-            "sacred_polarity": "Sacred Polarity",
-            "spiritual_purpose": "Spiritual Purpose",
-            "soulmate_longing": "Soulmate Longing",
-            "partnership_patterns": "Partnership Patterns",
-            "ancestral_patterns": "Ancestral Patterns",
-        }
-        target = names.get(normalized, framework.replace("_", " ").title())
+    elif runtime_framework == "MIRROR":
+        variant = "stage_1" if context.get("stage_override") else "emotional"
 
     for rule in load_template_rules():
-        if rule.framework.strip().lower() == target.lower():
+        if (
+            rule.runtime_framework == runtime_framework
+            and rule.runtime_variant == variant
+        ):
             return {
                 "name": rule.framework,
                 "mode": rule.mode,
