@@ -282,6 +282,16 @@ The operational detection policy is authored in this section. Runtime behavior m
 - "what you just"
 - "arrived"
 
+### Type mapping
+
+| Detection group | Runtime type |
+| :--- | :--- |
+| recognized progress | recognized_progress |
+| win or completion | win |
+| relief after difficulty | relief |
+| gratitude | gratitude |
+| default | general_positive |
+
 ### Guidance
 
 | Key | Value |

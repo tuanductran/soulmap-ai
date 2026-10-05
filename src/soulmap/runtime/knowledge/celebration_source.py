@@ -30,6 +30,7 @@ class CelebrationRules:
     confirmation_assistant_anchors: tuple[str, ...]
     signal_groups: dict[str, tuple[str, ...]]
     guidance: dict[str, str]
+    type_mapping: dict[str, str]
 
 
 def _contract_body(text: str) -> str:
@@ -137,6 +138,7 @@ def load_celebration_rules() -> CelebrationRules:
     values = _literal_config(body)
     groups = load_labeled_groups(path, "Detection signals")
     guidance = load_key_value_table(path, "Guidance")
+    type_mapping = load_key_value_table(path, "Type mapping")
     required_guidance = {"not_detected", "detected", "closing"}
     if not required_guidance <= guidance.keys():
         raise ValueError("Celebration guidance configuration is incomplete.")
@@ -153,4 +155,5 @@ def load_celebration_rules() -> CelebrationRules:
         ),
         signal_groups=groups,
         guidance=guidance,
+        type_mapping=type_mapping,
     )
