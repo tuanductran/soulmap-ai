@@ -30,10 +30,6 @@ class TemplateRule:
     source_file: str
 
 
-def _key(value: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
-
-
 @lru_cache(maxsize=1)
 def load_template_rules() -> tuple[TemplateRule, ...]:
     """Read and validate the core framework/template mapping table."""
@@ -53,6 +49,11 @@ def load_template_rules() -> tuple[TemplateRule, ...]:
     )
     if not rules:
         raise ValueError("Framework template mapping table is missing.")
+    keys = [(rule.runtime_framework, rule.runtime_variant) for rule in rules]
+    if any(not framework or not variant for framework, variant in keys):
+        raise ValueError("Framework template runtime identifiers are incomplete.")
+    if len(keys) != len(set(keys)):
+        raise ValueError("Framework template runtime identifiers must be unique.")
     return rules
 
 
