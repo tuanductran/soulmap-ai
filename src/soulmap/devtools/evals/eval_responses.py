@@ -88,7 +88,7 @@ def _knowledge_paths_for(
     if primary == "GRIEF":
         return [
             *base,
-            "skills/frameworks/grief-companion.md",
+            "skills/frameworks/grief-companion/content/grief-companion.md",
             "skills/meta/deep-inquiry-bank.md",
         ]
     if primary == "EXISTENTIAL":

@@ -154,7 +154,7 @@ Valid framework names (from framework files in `skills/frameworks/`):
 
 ```json
 "source_markers": {
-  "skills/frameworks/grief-companion.md": "acute loss, fresh grief, death of someone close",
+  "skills/frameworks/grief-companion/content/grief-companion.md": "acute loss, fresh grief, death of someone close",
   "skills/meta/quick-reference.md": "I just found out that..."
 }
 ```

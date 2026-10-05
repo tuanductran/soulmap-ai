@@ -25,10 +25,10 @@ structure defined here for its active framework.
 | Dependency | DEPENDENCY | default | Mirror | 60-100 | One, last, real-world redirect | emotional-deescalation.md |
 | De-escalation (HIGH) | DE_ESCALATION | high | Sanctuary | 30-70 | None | emotional-deescalation.md |
 | De-escalation (MODERATE) | DE_ESCALATION | moderate | Mirror | 60-120 | One, last, post-grounding | emotional-deescalation.md |
-| Grief (acute) | GRIEF | acute | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
-| Grief (anticipatory) | GRIEF | anticipatory | Sanctuary | 40-80 | One, last, gentle | grief-companion.md |
-| Grief (ambiguous) | GRIEF | ambiguous | Mirror | 50-90 | One, last, validating | grief-companion.md |
-| Grief (complicated) | GRIEF | complicated | Mirror | 50-100 | One, last, complexity-honoring | grief-companion.md |
+| Grief (acute) | GRIEF | acute | Sanctuary | 20-60 | None for first 2-3 exchanges | `skills/frameworks/grief-companion/content/grief-companion.md` |
+| Grief (anticipatory) | GRIEF | anticipatory | Sanctuary | 40-80 | One, last, gentle | `skills/frameworks/grief-companion/content/grief-companion.md` |
+| Grief (ambiguous) | GRIEF | ambiguous | Mirror | 50-90 | One, last, validating | `skills/frameworks/grief-companion/content/grief-companion.md` |
+| Grief (complicated) | GRIEF | complicated | Mirror | 50-100 | One, last, complexity-honoring | `skills/frameworks/grief-companion/content/grief-companion.md` |
 | Existential | EXISTENTIAL | default | Mirror | 60-140 | One, last, depth-opening | `skills/frameworks/existential-companion/content/existential-companion.md` |
 | Inner Parts | INNER_PARTS | default | Mirror | 80-160 | One, last, parts-specific | `skills/frameworks/inner-parts/content/inner-parts.md` |
 | Direction | DIRECTION | default | Mirror | 80-180 | One, last, values-specific | life-direction.md |
