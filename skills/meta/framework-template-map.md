@@ -19,39 +19,39 @@ structure defined here for its active framework.
 
 ## Core mapping table
 
-| Framework | Runtime Framework | Mode | Word Range | Question Rule | Source File |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Crisis | CRISIS | Crisis | 20-40 | None, resources only | emotional-deescalation.md |
-| Dependency | DEPENDENCY | Mirror | 60-100 | One, last, real-world redirect | emotional-deescalation.md |
-| De-escalation (HIGH) | DE_ESCALATION | Sanctuary | 30-70 | None | emotional-deescalation.md |
-| De-escalation (MODERATE) | DE_ESCALATION | Mirror | 60-120 | One, last, post-grounding | emotional-deescalation.md |
-| Grief (acute) | GRIEF | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
-| Grief (anticipatory) | GRIEF | Sanctuary | 40-80 | One, last, gentle | grief-companion.md |
-| Grief (ambiguous) | GRIEF | Mirror | 50-90 | One, last, validating | grief-companion.md |
-| Grief (complicated) | GRIEF | Mirror | 50-100 | One, last, complexity-honoring | grief-companion.md |
-| Existential | EXISTENTIAL | Mirror | 60-140 | One, last, depth-opening | `skills/frameworks/existential-companion/content/existential-companion.md` |
-| Inner Parts | INNER_PARTS | Mirror | 80-160 | One, last, parts-specific | `skills/frameworks/inner-parts/content/inner-parts.md` |
-| Direction | DIRECTION | Mirror | 80-180 | One, last, values-specific | life-direction.md |
-| Shadow | SHADOW | Mirror | 70-150 | One, last, possibility-framed | shadow-patterns.md |
-| Meaning Integration | MEANING_INTEGRATION | Mirror | 70-140 | One, last, noticing-oriented | meaning-integration.md |
-| Synthesis | SYNTHESIS | Mirror | 120-200 | One, last, ownership-returning | conversation-synthesis.md |
-| Pattern | PATTERN | Mirror | 70-160 | One, last, pattern-specific | pattern-mapper.md |
-| Ancestral Patterns | ANCESTRAL_PATTERNS | Mirror | 70-160 | One, last, from Ancestral Questions | ancestral-patterns.md |
-| Fear of Visibility | VISIBILITY_FEAR | Mirror, Spacious | 70-150 | One, last, from Visibility Questions | fear-of-visibility.md |
-| Creative Drought | CREATIVE_DROUGHT | Mirror, No techniques | 70-160 | One, last, from Creative Drought Questions | creative-drought.md |
-| Empath Boundary | EMPATH | Mirror, Grounding | 70-150 | One, last, from Empath Questions | empath-boundary.md |
-| Perfectionism Paralysis | PERFECTIONISM | Mirror, No advice | 70-160 | One, last, from Perfectionism Questions | perfectionism-paralysis.md |
-| Dark Night of the Soul | DARK_NIGHT | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul.md |
-| Soul Nourishment | SOUL_NOURISHMENT | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |
-| Divine Guidance | DIVINE_GUIDANCE | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance.md |
-| Sacred Polarity | SACRED_POLARITY | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
-| Spiritual Purpose | SPIRITUAL_PURPOSE | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
-| Soulmate Longing | SOULMATE_LONGING | Mirror | 60-140 | One, last, returns to the longing itself | soulmate-longing.md |
-| Partnership Patterns | PARTNERSHIP_PATTERNS | Mirror | 70-150 | One, last, keeps the pattern pointed inward | partnership-patterns.md |
-| Mirror (emotional) | MIRROR | Mirror | 80-180 | One, last, inner experience | response-structure.md |
-| Mirror (intellectual) | MIRROR | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
-| Mirror (Stage 1) | MIRROR | Mirror | 30-80 | Optional, soft | response-structure.md |
-| Integration and Celebration | INTEGRATION_CELEBRATION | Mirror (light) | 60-140 | One, last, deepening, not "what's next" | integration-celebration.md |
+| Framework | Runtime Framework | Runtime Variant | Mode | Word Range | Question Rule | Source File |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Crisis | CRISIS | default | Crisis | 20-40 | None, resources only | emotional-deescalation.md |
+| Dependency | DEPENDENCY | default | Mirror | 60-100 | One, last, real-world redirect | emotional-deescalation.md |
+| De-escalation (HIGH) | DE_ESCALATION | high | Sanctuary | 30-70 | None | emotional-deescalation.md |
+| De-escalation (MODERATE) | DE_ESCALATION | moderate | Mirror | 60-120 | One, last, post-grounding | emotional-deescalation.md |
+| Grief (acute) | GRIEF | acute | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
+| Grief (anticipatory) | GRIEF | anticipatory | Sanctuary | 40-80 | One, last, gentle | grief-companion.md |
+| Grief (ambiguous) | GRIEF | ambiguous | Mirror | 50-90 | One, last, validating | grief-companion.md |
+| Grief (complicated) | GRIEF | complicated | Mirror | 50-100 | One, last, complexity-honoring | grief-companion.md |
+| Existential | EXISTENTIAL | default | Mirror | 60-140 | One, last, depth-opening | `skills/frameworks/existential-companion/content/existential-companion.md` |
+| Inner Parts | INNER_PARTS | default | Mirror | 80-160 | One, last, parts-specific | `skills/frameworks/inner-parts/content/inner-parts.md` |
+| Direction | DIRECTION | default | Mirror | 80-180 | One, last, values-specific | life-direction.md |
+| Shadow | SHADOW | default | Mirror | 70-150 | One, last, possibility-framed | shadow-patterns.md |
+| Meaning Integration | MEANING_INTEGRATION | default | Mirror | 70-140 | One, last, noticing-oriented | meaning-integration.md |
+| Synthesis | SYNTHESIS | default | Mirror | 120-200 | One, last, ownership-returning | conversation-synthesis.md |
+| Pattern | PATTERN | default | Mirror | 70-160 | One, last, pattern-specific | pattern-mapper.md |
+| Ancestral Patterns | ANCESTRAL_PATTERNS | default | Mirror | 70-160 | One, last, from Ancestral Questions | ancestral-patterns.md |
+| Fear of Visibility | VISIBILITY_FEAR | default | Mirror, Spacious | 70-150 | One, last, from Visibility Questions | fear-of-visibility.md |
+| Creative Drought | CREATIVE_DROUGHT | default | Mirror, No techniques | 70-160 | One, last, from Creative Drought Questions | creative-drought.md |
+| Empath Boundary | EMPATH | default | Mirror, Grounding | 70-150 | One, last, from Empath Questions | empath-boundary.md |
+| Perfectionism Paralysis | PERFECTIONISM | default | Mirror, No advice | 70-160 | One, last, from Perfectionism Questions | perfectionism-paralysis.md |
+| Dark Night of the Soul | DARK_NIGHT | default | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul.md |
+| Soul Nourishment | SOUL_NOURISHMENT | default | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |
+| Divine Guidance | DIVINE_GUIDANCE | default | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance.md |
+| Sacred Polarity | SACRED_POLARITY | default | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
+| Spiritual Purpose | SPIRITUAL_PURPOSE | default | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
+| Soulmate Longing | SOULMATE_LONGING | default | Mirror | 60-140 | One, last, returns to the longing itself | soulmate-longing.md |
+| Partnership Patterns | PARTNERSHIP_PATTERNS | default | Mirror | 70-150 | One, last, keeps the pattern pointed inward | partnership-patterns.md |
+| Mirror (emotional) | MIRROR | emotional | Mirror | 80-180 | One, last, inner experience | response-structure.md |
+| Mirror (intellectual) | MIRROR | intellectual | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
+| Mirror (Stage 1) | MIRROR | stage_1 | Mirror | 30-80 | Optional, soft | response-structure.md |
+| Integration and Celebration | INTEGRATION_CELEBRATION | default | Mirror (light) | 60-140 | One, last, deepening, not "what's next" | integration-celebration.md |
 
 ## Detailed Structure per Framework
 
