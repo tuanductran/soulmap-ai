@@ -309,10 +309,10 @@ The following values define the operational existential-detection policy.
 | Sustained-territory bonus | 2 |
 | Minimum detection score | 2 |
 | Recent user history window | 4 |
-| Sustained identity signal limit | 6 |
-| Sustained meaning signal limit | 6 |
-| Sustained endings signal limit | 4 |
-| Sustained larger-question signal limit | 4 |
+| Sustained identity_shift signal limit | 6 |
+| Sustained meaning_depth signal limit | 6 |
+| Sustained endings_grief signal limit | 4 |
+| Sustained larger_questions signal limit | 4 |
 | Sustained history threshold | 2 |
 | Territory priority | identity_shift; meaning_depth; endings_grief; larger_questions; holding |
 
