@@ -72,7 +72,7 @@ def test_grief_types_tuple_is_load_bearing(monkeypatch: pytest.MonkeyPatch) -> N
     After the knowledge-migration refactor (commit 5ee5716) the ``_GRIEF_TYPES``
     tuple was removed from ``framework_selector``.  Grief detection is now
     driven by ``ACUTE_GRIEF`` (and sibling lists) in ``grief_detector``, which
-    are loaded from ``skills/frameworks/grief-companion.md``.  Disabling
+    are loaded from ``skills/frameworks/grief-companion/content/grief-companion.md``.  Disabling
     ``ACUTE_GRIEF`` proves that list is still the primary load-bearing surface
     for grief routing — if grief could still be detected without it, something
     else would be silently duplicating its job (the "check that cannot fail"
