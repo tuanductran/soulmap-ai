@@ -150,7 +150,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "-",
     ),
     "somatic-wellbeing": (
-        "skills/frameworks/somatic-wellbeing.md",
+        "skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",
