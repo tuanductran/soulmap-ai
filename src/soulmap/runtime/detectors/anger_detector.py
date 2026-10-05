@@ -83,7 +83,7 @@ def detect_anger(
                 anger_type = _ANGER_TYPES["residual anger"]
             break
 
-    if history and anger_type == "active":
+    if history and anger_type == _ANGER_TYPES["active anger"]:
         recent = [
             m["content"].lower()
             for m in history
