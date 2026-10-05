@@ -207,6 +207,14 @@ Anger activates as a secondary layer modifier, not a primary framework.
 
 The following values define the operational anger-detection policy.
 
+### Detection type mapping
+
+| Detection group | Runtime type |
+| :--- | :--- |
+| active anger | active |
+| self-directed anger | self_anger |
+| residual anger | residual |
+
 ### Scoring
 
 | Rule | Value |

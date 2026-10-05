@@ -25,6 +25,9 @@ ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
 SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
 RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
 _ANGER_SCORING = load_key_value_table(runtime_skill_path("anger-companion"), "Scoring")
+_ANGER_TYPES = load_key_value_table(
+    runtime_skill_path("anger-companion"), "Detection type mapping"
+)
 _ANGER_GUIDANCE = load_key_value_table(
     runtime_skill_path("anger-companion"), "Guidance"
 )
@@ -61,7 +64,7 @@ def detect_anger(
         if phrase in msg:
             score += int(_ANGER_SCORING["Active anger weight"])
             signals.append(f"active: '{phrase}'")
-            anger_type = "active"
+            anger_type = _ANGER_TYPES["active anger"]
             break
 
     for phrase in SELF_ANGER:
@@ -69,7 +72,7 @@ def detect_anger(
             score += int(_ANGER_SCORING["Self-directed anger weight"])
             signals.append(f"self_anger: '{phrase}'")
             if not anger_type:
-                anger_type = "self_anger"
+                anger_type = _ANGER_TYPES["self-directed anger"]
             break
 
     for phrase in RESIDUAL_ANGER:
@@ -77,10 +80,10 @@ def detect_anger(
             score += int(_ANGER_SCORING["Residual anger weight"])
             signals.append(f"residual: '{phrase}'")
             if not anger_type:
-                anger_type = "residual"
+                anger_type = _ANGER_TYPES["residual anger"]
             break
 
-    if history and anger_type == "active":
+    if history and anger_type == _ANGER_TYPES["active anger"]:
         recent = [
             m["content"].lower()
             for m in history
