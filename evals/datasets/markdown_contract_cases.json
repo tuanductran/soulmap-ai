@@ -390,7 +390,7 @@
     ],
     "markdown_targets": [
       {
-        "path": "skills/frameworks/grief-companion.md",
+        "path": "skills/frameworks/grief-companion/content/grief-companion.md",
         "must_include_all": [
           "\"Everything happens for a reason.\", Never.",
           "\"Time heals everything.\", Never."
