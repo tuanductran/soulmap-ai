@@ -283,6 +283,16 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 - "i'm not looking for a solution"
 - "i'm not asking you to fix this"
 
+## Detection territory groups
+
+| Detection group | Runtime territory |
+| :--- | :--- |
+| identity shift | identity_shift |
+| larger philosophical questions | larger_questions |
+| endings and transitions | endings_grief |
+| depth of meaning | meaning_depth |
+| holding a question | holding |
+
 ## Runtime detection contract
 
 The following values define the operational existential-detection policy.
@@ -291,18 +301,18 @@ The following values define the operational existential-detection policy.
 
 | Rule | Value |
 | :--- | :--- |
-| Identity-shift weight | 3 |
-| Meaning-depth weight | 3 |
-| Endings-grief weight | 3 |
-| Larger-questions weight | 3 |
-| Holding-question weight | 2 |
+| identity_shift weight | 3 |
+| meaning_depth weight | 3 |
+| endings_grief weight | 3 |
+| larger_questions weight | 3 |
+| holding weight | 2 |
 | Sustained-territory bonus | 2 |
 | Minimum detection score | 2 |
 | Recent user history window | 4 |
-| Sustained identity signal limit | 6 |
-| Sustained meaning signal limit | 6 |
-| Sustained endings signal limit | 4 |
-| Sustained larger-question signal limit | 4 |
+| Sustained identity_shift signal limit | 6 |
+| Sustained meaning_depth signal limit | 6 |
+| Sustained endings_grief signal limit | 4 |
+| Sustained larger_questions signal limit | 4 |
 | Sustained history threshold | 2 |
 | Territory priority | identity_shift; meaning_depth; endings_grief; larger_questions; holding |
 
