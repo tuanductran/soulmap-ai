@@ -274,6 +274,15 @@ Complicated grief, grief stuck, unresolved, or contested:
 | Anticipatory history signal limit | 4 |
 | Ambiguous history signal limit | 4 |
 
+### Detection type mapping
+
+| Detection group | Runtime type |
+| :--- | :--- |
+| acute grief | acute |
+| anticipatory grief | anticipatory |
+| ambiguous loss | ambiguous |
+| complicated grief | complicated |
+
 ### Guidance
 
 | Result | Guidance |
