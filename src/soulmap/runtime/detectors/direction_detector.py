@@ -22,6 +22,7 @@ _DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
 _DIRECTION_SCORING_GROUPS = load_key_value_table(_SOURCE, "Detection scoring groups")
 _DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
+_DIRECTION_PRESENTATION = load_key_value_table(_SOURCE, "Presentation routing")
 _DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Runtime guidance")
 
 HistoryMessage = dict[str, str]
@@ -102,16 +103,10 @@ def detect_direction_need(
             "recommendation": _DIRECTION_GUIDANCE["not_detected"],
         }
 
-    presentation_map = {
-        "lostness": "lost",
-        "meaning_void": "meaning_void",
-        "should_vs_want": "should_vs_want",
-        "comparison": "comparison",
-        "transition": "transition",
-        "misalignment": "misalignment",
-    }
     primary_type = direction_types[0] if direction_types else "lostness"
-    presentation = presentation_map.get(primary_type, "lost")
+    presentation = _DIRECTION_PRESENTATION.get(
+        primary_type, _DIRECTION_PRESENTATION["default"]
+    )
 
     suggested_lens = _suggest_lens(msg)
 
