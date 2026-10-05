@@ -62,7 +62,7 @@ Error output:
 | `CRISIS` | `skills/frameworks/emotional-deescalation.md` | highest |
 | `DEPENDENCY` | `skills/frameworks/emotional-deescalation.md` | very high |
 | `DE_ESCALATION` | `skills/frameworks/emotional-deescalation.md` | high |
-| `GRIEF` | `skills/frameworks/grief-companion.md` | high |
+| `GRIEF` | `skills/frameworks/grief-companion/content/grief-companion.md` | high |
 | `EXISTENTIAL` | `skills/frameworks/existential-companion/content/existential-companion.md` | medium |
 | `INNER_PARTS` | `skills/frameworks/inner-parts/content/inner-parts.md` | medium |
 | `DIRECTION` | `skills/frameworks/life-direction/content/life-direction.md` | medium |
