@@ -29,6 +29,9 @@ _GUIDANCE = load_key_value_table(runtime_skill_path("somatic-wellbeing"), "Guida
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
 BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
+_SOMATIC_TYPES = load_key_value_table(
+    runtime_skill_path("somatic-wellbeing"), "Detection type mapping"
+)
 
 
 def detect_somatic(message: str) -> dict[str, object]:
@@ -56,7 +59,7 @@ def detect_somatic(message: str) -> dict[str, object]:
         if p in msg:
             score += int(_RULES["Biometric context weight"])
             signals.append(f"biometric:'{p}'")
-            mode = "BIOMETRIC"
+            mode = _SOMATIC_TYPES["biometric context"]
             break
 
     for p in BODY_SENSATION:
@@ -64,7 +67,7 @@ def detect_somatic(message: str) -> dict[str, object]:
             score += int(_RULES["Body sensation weight"])
             signals.append(f"body:'{p}'")
             if not mode:
-                mode = "BODY_SENSATION"
+                mode = _SOMATIC_TYPES["body sensation language"]
             break
 
     for p in SOMATIC_INVITATION:
@@ -72,7 +75,7 @@ def detect_somatic(message: str) -> dict[str, object]:
             score += int(_RULES["Somatic invitation weight"])
             signals.append(f"invitation:'{p}'")
             if not mode:
-                mode = "SOMATIC_INVITATION"
+                mode = _SOMATIC_TYPES["somatic invitation"]
             break
 
     if score < int(_RULES["Minimum detection score"]):

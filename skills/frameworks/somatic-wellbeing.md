@@ -158,6 +158,14 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 | Somatic invitation weight | 1 |
 | Minimum detection score | 1 |
 
+### Detection type mapping
+
+| Detection group | Runtime mode |
+| :--- | :--- |
+| biometric context | BIOMETRIC |
+| body sensation language | BODY_SENSATION |
+| somatic invitation | SOMATIC_INVITATION |
+
 ### Guidance
 
 | Result | Guidance |
