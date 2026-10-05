@@ -18,7 +18,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "ancestral-patterns": (
-        "skills/frameworks/ancestral-patterns.md",
+        "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",
