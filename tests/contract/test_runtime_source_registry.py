@@ -19,7 +19,7 @@ def test_pattern_registry_heading_validation_is_exact() -> None:
 
 def test_runtime_registry_resolves_known_domain_source() -> None:
     path = runtime_skill_path("grief-companion")
-    assert path == REPO_ROOT / "skills/frameworks/grief-companion.md"
+    assert path == REPO_ROOT / "skills/frameworks/grief-companion/content/grief-companion.md"
     assert (
         runtime_section("grief-companion", "contract") == "Runtime detection contract"
     )
