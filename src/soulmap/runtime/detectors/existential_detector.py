@@ -22,11 +22,9 @@ _EXISTENTIAL_GROUPS = load_labeled_groups(
     runtime_skill_path("existential-companion"),
     "Detection signals",
 )
-IDENTITY_SHIFT = _EXISTENTIAL_GROUPS["identity shift"]
-LARGER_QUESTIONS = _EXISTENTIAL_GROUPS["larger philosophical questions"]
-ENDINGS_GRIEF = _EXISTENTIAL_GROUPS["endings and transitions"]
-MEANING_DEPTH = _EXISTENTIAL_GROUPS["depth of meaning"]
-HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
+_EXISTENTIAL_TERRITORIES = load_key_value_table(
+    runtime_skill_path("existential-companion"), "Detection territory groups"
+)
 _EXISTENTIAL_SCORING = load_key_value_table(
     runtime_skill_path("existential-companion"), "Scoring"
 )
@@ -41,11 +39,8 @@ HistoryMessage = dict[str, str]
 def _classify_territory(_msg: str, scores: dict[str, int]) -> str:
     """Return the primary existential territory."""
     territory_scores = {
-        "identity_shift": scores.get("identity_shift", 0),
-        "meaning_depth": scores.get("meaning_depth", 0),
-        "endings_grief": scores.get("endings_grief", 0),
-        "larger_questions": scores.get("larger_questions", 0),
-        "holding": scores.get("holding", 0),
+        territory: scores.get(territory, 0)
+        for territory in _EXISTENTIAL_TERRITORIES.values()
     }
     primary = max(territory_scores, key=lambda territory: territory_scores[territory])
     if territory_scores[primary] == 0:
@@ -65,27 +60,15 @@ def detect_existential(
     msg = message.lower().strip()
     signals_found = []
     score = 0
-    territory_scores = {
-        "identity_shift": 0,
-        "meaning_depth": 0,
-        "endings_grief": 0,
-        "larger_questions": 0,
-        "holding": 0,
-    }
+    territory_scores = {territory: 0 for territory in _EXISTENTIAL_TERRITORIES.values()}
 
     signal_sources = {
-        "identity_shift": IDENTITY_SHIFT,
-        "meaning_depth": MEANING_DEPTH,
-        "endings_grief": ENDINGS_GRIEF,
-        "larger_questions": LARGER_QUESTIONS,
-        "holding": HOLDING_QUESTIONS,
+        territory: _EXISTENTIAL_GROUPS[group]
+        for group, territory in _EXISTENTIAL_TERRITORIES.items()
     }
     signal_weights = {
-        "identity_shift": int(_EXISTENTIAL_SCORING["Identity-shift weight"]),
-        "meaning_depth": int(_EXISTENTIAL_SCORING["Meaning-depth weight"]),
-        "endings_grief": int(_EXISTENTIAL_SCORING["Endings-grief weight"]),
-        "larger_questions": int(_EXISTENTIAL_SCORING["Larger-questions weight"]),
-        "holding": int(_EXISTENTIAL_SCORING["Holding-question weight"]),
+        territory: int(_EXISTENTIAL_SCORING[f"{territory} weight"])
+        for territory in _EXISTENTIAL_TERRITORIES.values()
     }
     signal_map = [
         (name, signal_sources[name], signal_weights[name])
@@ -110,19 +93,15 @@ def detect_existential(
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_EXISTENTIAL_SCORING["Recent user history window"]) :]
-        returning_signals = (
-            IDENTITY_SHIFT[
-                : int(_EXISTENTIAL_SCORING["Sustained identity signal limit"])
-            ]
-            + MEANING_DEPTH[
-                : int(_EXISTENTIAL_SCORING["Sustained meaning signal limit"])
-            ]
-            + ENDINGS_GRIEF[
-                : int(_EXISTENTIAL_SCORING["Sustained endings signal limit"])
-            ]
-            + LARGER_QUESTIONS[
-                : int(_EXISTENTIAL_SCORING["Sustained larger-question signal limit"])
-            ]
+        returning_signals = sum(
+            (
+                signal_sources[territory][
+                    : int(_EXISTENTIAL_SCORING[f"Sustained {territory} signal limit"])
+                ]
+                for territory in _EXISTENTIAL_TERRITORIES.values()
+                if territory != "holding"
+            ),
+            [],
         )
         count = sum(
             1
