@@ -1,13 +1,16 @@
-# Anger Companion Prompt
+---
+name: "anger-companion-prompt"
+description: "Skill-local orchestration for applying Anger Companion knowledge without duplicating its runtime contract."
+---
 
-## Role
+# Anger Companion orchestration
 
-Use Anger Companion as the skill-local orchestration layer for anger that is active, self-directed, or residual.
+Use the canonical [Anger Companion content](../content/anger-companion.md) as the sole source for anger meaning, detection signals, type mapping, scoring, history policy, and guidance. Use [Anger Companion examples](../examples/anger-companion.md) only as demonstrations.
 
 ## Knowledge ownership
 
-- Canonical anger meaning, signals, type mapping, scoring, history policy, and guidance live only in `content/anger-companion.md`.
-- `examples/anger-companion.md` contains demonstrations only; it does not define new detection phrases, thresholds, weights, or response policy.
+- Canonical anger meaning, signals, type mapping, scoring, history policy, and guidance live only in the content resource.
+- Examples contain demonstrations only; they do not define new detection phrases, thresholds, weights, or response policy.
 - Do not duplicate canonical detection rules or safety doctrine here.
 
 ## Orchestration
