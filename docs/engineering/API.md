@@ -69,7 +69,7 @@ Error output:
 | `SHADOW` | `skills/frameworks/shadow-patterns/content/shadow-patterns.md` | medium |
 | `CREATIVE_DROUGHT` | `skills/frameworks/creative-drought.md` | medium |
 | `PERFECTIONISM_PARALYSIS` | `skills/frameworks/perfectionism-paralysis.md` | medium |
-| `ANCESTRAL_PATTERNS` | `skills/frameworks/ancestral-patterns.md` | medium |
+| `ANCESTRAL_PATTERNS` | `skills/frameworks/ancestral-patterns/content/ancestral-patterns.md` | medium |
 | `FEAR_OF_VISIBILITY` | `skills/frameworks/fear-of-visibility.md` | medium |
 | `EMPATH_BOUNDARY` | `skills/frameworks/empath-boundary.md` | medium |
 | `DARK_NIGHT_OF_SOUL` | `skills/frameworks/dark-night-of-soul.md` | medium |
