@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/grief-companion.md,
+# Single source of truth: skills/frameworks/grief-companion/content/grief-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
 _GRIEF_GROUPS = load_labeled_groups(
     runtime_skill_path("grief-companion"), "Detection signals"
@@ -43,7 +43,7 @@ def detect_grief(
     """Score grief signals in the current message.
 
     Matches the phrase groups authored in
-    ``skills/frameworks/grief-companion.md``: acute grief, anticipatory grief,
+    ``skills/frameworks/grief-companion/content/grief-companion.md``: acute grief, anticipatory grief,
     ambiguous loss, and complicated grief. Acute grief is checked first, since
     it routes to the shortest and most held response.
 
