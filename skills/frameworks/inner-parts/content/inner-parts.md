@@ -397,6 +397,15 @@ Avoidant part:
 - "push it away"
 - "pretend"
 
+### Detection type mapping
+
+| Detection group | Runtime type |
+| :--- | :--- |
+| explicit inner conflict | explicit |
+| internal dialogue | self_dialogue |
+| part-naming | part_naming |
+| behavioral confusion | behavioral_confusion |
+
 ## Runtime detection contract
 
 | Rule | Value |

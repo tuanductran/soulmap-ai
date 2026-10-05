@@ -24,6 +24,9 @@ _INNER_PARTS_GROUPS = load_labeled_groups(
 EXPLICIT_CONFLICT = _INNER_PARTS_GROUPS["explicit inner conflict"]
 PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
 BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
+_INNER_PART_TYPES = load_key_value_table(
+    runtime_skill_path("inner-parts"), "Detection type mapping"
+)
 _RULES = load_key_value_table(
     runtime_skill_path("inner-parts"),
     "Runtime detection contract",
@@ -61,28 +64,28 @@ def detect_inner_conflict(
             score += int(_RULES["Explicit-conflict weight"])
             signals_found.append(f"explicit: '{phrase}'")
             if "explicit" not in conflict_types:
-                conflict_types.append("explicit")
+                conflict_types.append(_INNER_PART_TYPES["explicit inner conflict"])
 
     for phrase in SELF_DIALOGUE:
         if phrase in msg:
             score += int(_RULES["Self-dialogue weight"])
             signals_found.append(f"self_dialogue: '{phrase}'")
             if "self_dialogue" not in conflict_types:
-                conflict_types.append("self_dialogue")
+                conflict_types.append(_INNER_PART_TYPES["internal dialogue"])
 
     for phrase in PART_NAMING:
         if phrase in msg:
             score += int(_RULES["Part-naming weight"])
             signals_found.append(f"part_naming: '{phrase}'")
             if "part_naming" not in conflict_types:
-                conflict_types.append("part_naming")
+                conflict_types.append(_INNER_PART_TYPES["part-naming"])
 
     for phrase in BEHAVIORAL_CONFUSION:
         if phrase in msg:
             score += int(_RULES["Behavioral-confusion weight"])
             signals_found.append(f"confusion: '{phrase}'")
             if "behavioral_confusion" not in conflict_types:
-                conflict_types.append("behavioral_confusion")
+                conflict_types.append(_INNER_PART_TYPES["behavioral confusion"])
 
     if history:
         recent_user = [
