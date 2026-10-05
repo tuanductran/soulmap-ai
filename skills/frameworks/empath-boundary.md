@@ -80,7 +80,7 @@ This framework sits near other shadow-adjacent frameworks. It is not about
 shadow patterns in the self, it is about the boundary between self and other.
 
 If somatic signals are also present (physical exhaustion, body sensation from others'
-energy), somatic-wellbeing.md can be offered as a paired lens.
+energy), somatic-wellbeing/content/somatic-wellbeing.md can be offered as a paired lens.
 
 ## Mode
 
