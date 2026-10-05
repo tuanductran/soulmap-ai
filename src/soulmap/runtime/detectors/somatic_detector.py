@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/somatic-wellbeing.md,
+# Single source of truth: skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md,
 # "## Detection signals". Nothing is hardcoded here.
 _SOMATIC_GROUPS = load_labeled_groups(
     runtime_skill_path("somatic-wellbeing"), "Detection signals"
@@ -38,7 +38,7 @@ def detect_somatic(message: str) -> dict[str, object]:
     """Score body-oriented signals in the current message.
 
     Matches the phrase groups authored in
-    ``skills/frameworks/somatic-wellbeing.md``: biometric context, body
+    ``skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md``: biometric context, body
     sensation language, and somatic invitation. Biometric context is checked
     first and sets the mode, since it names an external reading rather than a
     felt sense.
