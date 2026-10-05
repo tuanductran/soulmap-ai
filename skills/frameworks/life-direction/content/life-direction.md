@@ -371,6 +371,18 @@ runtime may execute these values, but must not duplicate them.
 | misalignment | help locate the gap between values and current life |
 | default | start with what feels meaningful as the opening lens |
 
+### Presentation routing
+
+| Detection type | Presentation |
+| :--- | :--- |
+| lostness | lost |
+| meaning_void | meaning_void |
+| should_vs_want | should_vs_want |
+| comparison | comparison |
+| transition | transition |
+| misalignment | misalignment |
+| default | lost |
+
 ### Runtime guidance
 
 | State | Recommendation |
