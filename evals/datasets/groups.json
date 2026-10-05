@@ -616,7 +616,7 @@
     "g": "Framework — Anger",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/anger-companion.md",
+      "skills/frameworks/anger-companion/content/anger-companion.md",
       "skills/meta/response-structure.md",
       "skills/meta/observation-seed.md"
     ],
@@ -1872,7 +1872,7 @@
     "g": "Whitelist T1 — Anger & Resentment",
     "cat": "wl1",
     "sources": [
-      "skills/frameworks/anger-companion.md",
+      "skills/frameworks/anger-companion/content/anger-companion.md",
       "skills/meta/deep-inquiry-bank.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
