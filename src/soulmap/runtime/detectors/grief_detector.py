@@ -25,6 +25,9 @@ _RULES = load_key_value_table(
     runtime_skill_path("grief-companion"),
     "Runtime detection contract",
 )
+_GRIEF_TYPES = load_key_value_table(
+    runtime_skill_path("grief-companion"), "Detection type mapping"
+)
 _GUIDANCE = load_key_value_table(runtime_skill_path("grief-companion"), "Guidance")
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
@@ -62,7 +65,7 @@ def detect_grief(
         if phrase in msg:
             score += int(_RULES["Acute grief weight"])
             signals.append(f"acute: '{phrase}'")
-            grief_type = "acute"
+            grief_type = _GRIEF_TYPES["acute grief"]
             break
 
     for phrase in ANTICIPATORY_GRIEF:
@@ -70,7 +73,7 @@ def detect_grief(
             score += int(_RULES["Anticipatory grief weight"])
             signals.append(f"anticipatory: '{phrase}'")
             if not grief_type:
-                grief_type = "anticipatory"
+                grief_type = _GRIEF_TYPES["anticipatory grief"]
             break
 
     for phrase in AMBIGUOUS_LOSS:
@@ -78,7 +81,7 @@ def detect_grief(
             score += int(_RULES["Ambiguous loss weight"])
             signals.append(f"ambiguous: '{phrase}'")
             if not grief_type:
-                grief_type = "ambiguous"
+                grief_type = _GRIEF_TYPES["ambiguous loss"]
             break
 
     for phrase in COMPLICATED_GRIEF:
@@ -86,7 +89,7 @@ def detect_grief(
             score += int(_RULES["Complicated grief weight"])
             signals.append(f"complicated: '{phrase}'")
             if not grief_type:
-                grief_type = "complicated"
+                grief_type = _GRIEF_TYPES["complicated grief"]
             break
 
     if history:
@@ -112,7 +115,7 @@ def detect_grief(
             "signals": [],
         }
 
-    detected_type = grief_type or "acute"
+    detected_type = grief_type or _GRIEF_TYPES["acute grief"]
     recommendation = (
         _GUIDANCE["detected_prefix"].format(
             grief_type=detected_type,
