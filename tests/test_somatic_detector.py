@@ -1,7 +1,7 @@
 """Edge-case coverage for the somatic detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/somatic-wellbeing.md, "## Detection signals", which is
+skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md, "## Detection signals", which is
 the single source of truth this detector loads from. Nothing here is
 guessed.
 """
