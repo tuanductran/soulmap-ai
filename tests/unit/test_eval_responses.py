@@ -49,7 +49,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "GRIEF", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/grief-companion.md",
+            "skills/frameworks/grief-companion/content/grief-companion.md",
         ),
         (
             {"primary_framework": "EXISTENTIAL", "safety_status": "PASS"},
