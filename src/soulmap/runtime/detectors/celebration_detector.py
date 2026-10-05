@@ -21,14 +21,14 @@ def _classify_celebration_type(msg: str) -> str:
     """Identify the primary subtype of the positive state."""
     groups = _RULES.signal_groups
     if any(p in msg for p in groups["recognized progress"]):
-        return "recognized_progress"
+        return _RULES.type_mapping["recognized progress"]
     if any(p in msg for p in groups["win or completion"]):
-        return "win"
+        return _RULES.type_mapping["win or completion"]
     if any(p in msg for p in groups["relief after difficulty"]):
-        return "relief"
+        return _RULES.type_mapping["relief after difficulty"]
     if any(p in msg for p in groups["gratitude"]):
-        return "gratitude"
-    return "general_positive"
+        return _RULES.type_mapping["gratitude"]
+    return _RULES.type_mapping["default"]
 
 
 def detect_celebration(
