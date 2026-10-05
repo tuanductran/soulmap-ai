@@ -60,7 +60,7 @@ def detect_existential(
     msg = message.lower().strip()
     signals_found = []
     score = 0
-    territory_scores = {territory: 0 for territory in _EXISTENTIAL_TERRITORIES.values()}
+    territory_scores = dict.fromkeys(_EXISTENTIAL_TERRITORIES.values(), 0)
 
     signal_sources = {
         territory: _EXISTENTIAL_GROUPS[group]
@@ -93,16 +93,14 @@ def detect_existential(
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_EXISTENTIAL_SCORING["Recent user history window"]) :]
-        returning_signals = sum(
-            (
-                signal_sources[territory][
-                    : int(_EXISTENTIAL_SCORING[f"Sustained {territory} signal limit"])
-                ]
-                for territory in _EXISTENTIAL_TERRITORIES.values()
-                if territory != "holding"
-            ),
-            [],
-        )
+        returning_signals = [
+            phrase
+            for territory in _EXISTENTIAL_TERRITORIES.values()
+            if territory != "holding"
+            for phrase in signal_sources[territory][
+                : int(_EXISTENTIAL_SCORING[f"Sustained {territory} signal limit"])
+            ]
+        ]
         count = sum(
             1
             for past in recent_user
