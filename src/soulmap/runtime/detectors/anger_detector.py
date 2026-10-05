@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/anger-companion.md,
+# Single source of truth: skills/frameworks/anger-companion/content/anger-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
 _ANGER_GROUPS = load_labeled_groups(
     runtime_skill_path("anger-companion"), "Detection signals"
@@ -42,7 +42,7 @@ def detect_anger(
     """Score anger signals in the current message.
 
     Matches the phrase groups authored in
-    ``skills/frameworks/anger-companion.md``: active anger, self-directed
+    ``skills/frameworks/anger-companion/content/anger-companion.md``: active anger, self-directed
     anger, and residual anger. The first group to match sets the type, so a
     message carrying more than one reports the strongest.
 

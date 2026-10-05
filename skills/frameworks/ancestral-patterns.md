@@ -75,7 +75,7 @@ Additional detection phrases:
 - "father wound"
 
 Do not activate when the user is simply angry at a parent without recognizing the
-pattern. That belongs in shadow-patterns.md or anger-companion.md first.
+pattern. That belongs in shadow-patterns.md or anger-companion/content/anger-companion.md first.
 
 ## Framework Priority
 
@@ -152,7 +152,7 @@ If the user begins to move toward grief after recognizing the ancestral pattern,
 them into grief-companion.md.
 
 If the user begins to move toward anger at the parent who passed the wound, follow them
-into anger-companion.md, the recognition has opened a door, let them walk through it.
+into anger-companion/content/anger-companion.md, the recognition has opened a door, let them walk through it.
 
 If the user reaches a moment of genuine insight or shift after ancestral work, move to
 meaning-integration.md.
