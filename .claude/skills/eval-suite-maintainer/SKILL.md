@@ -147,7 +147,7 @@ Use `source_markers` to create an audit trail. Map file paths to direct quotes f
 
 ```json
 "source_markers": {
-  "skills/frameworks/grief-companion.md": "acute loss, fresh grief",
+  "skills/frameworks/grief-companion/content/grief-companion.md": "acute loss, fresh grief",
   "skills/meta/quick-reference.md": "I just found out..."
 }
 ```
