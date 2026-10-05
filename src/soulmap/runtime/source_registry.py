@@ -12,7 +12,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "anger-companion": (
-        "skills/frameworks/anger-companion.md",
+        "skills/frameworks/anger-companion/content/anger-companion.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",
