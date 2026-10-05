@@ -1656,12 +1656,12 @@
     "g": "Framework — Ancestral Patterns (P8b)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/ancestral-patterns.md",
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md",
       "skills/meta/framework-template-map.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/ancestral-patterns.md": "Activation Signals"
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md": "Activation Signals"
     },
     "items": [
       {
@@ -1972,12 +1972,12 @@
     "g": "Whitelist T2 — Parenting & Childhood wounds",
     "cat": "wl2",
     "sources": [
-      "skills/frameworks/ancestral-patterns.md",
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md",
       "skills/frameworks/inner-parts/content/inner-parts.md",
       "skills/safety/whitelist-blacklist-system.md"
     ],
     "source_markers": {
-      "skills/frameworks/ancestral-patterns.md": "Activation Signals"
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md": "Activation Signals"
     },
     "items": [
       {
@@ -2248,11 +2248,11 @@
     "g": "Framework — Ancestral Patterns (P8b) — varied phrasings",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/ancestral-patterns.md",
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/ancestral-patterns.md": "Activation Signals"
+      "skills/frameworks/ancestral-patterns/content/ancestral-patterns.md": "Activation Signals"
     },
     "items": [
       {
