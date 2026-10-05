@@ -758,7 +758,7 @@
     "g": "Framework — Somatic",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/somatic-wellbeing.md",
+      "skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md",
       "skills/meta/response-structure.md"
     ],
     "items": [
@@ -2848,7 +2848,7 @@
     "g": "Edge — Scope (Wellness with inner connection)",
     "cat": "edge",
     "sources": [
-      "skills/frameworks/somatic-wellbeing.md",
+      "skills/frameworks/somatic-wellbeing/content/somatic-wellbeing.md",
       "skills/safety/whitelist-blacklist-system.md",
       "skills/meta/redirect-templates.md"
     ],
