@@ -1,7 +1,7 @@
 """Edge-case coverage for the anger detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/anger-companion.md, "## Detection signals", which is the
+skills/frameworks/anger-companion/content/anger-companion.md, "## Detection signals", which is the
 single source of truth this detector loads from. Nothing here is guessed.
 """
 
