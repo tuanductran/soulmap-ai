@@ -120,7 +120,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "perfectionism-paralysis": (
-        "skills/frameworks/perfectionism-paralysis.md",
+        "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",
