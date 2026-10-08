@@ -43,7 +43,7 @@ structure defined here for its active framework.
 | Perfectionism Paralysis | PERFECTIONISM_PARALYSIS | default | Mirror, No advice | 70-160 | One, last, from Perfectionism Questions | perfectionism-paralysis.md |
 | Dark Night of the Soul | DARK_NIGHT_OF_SOUL | default | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul/content/dark-night-of-soul.md |
 | Soul Nourishment | SOUL_NOURISHMENT | default | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |
-| Divine Guidance | DIVINE_GUIDANCE | default | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance.md |
+| Divine Guidance | DIVINE_GUIDANCE | default | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance/content/divine-guidance.md |
 | Sacred Polarity | SACRED_POLARITY | default | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
 | Spiritual Purpose | SPIRITUAL_PURPOSE | default | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
 | Soulmate Longing | SOULMATE_LONGING | default | Mirror | 60-140 | One, last, returns to the longing itself | soulmate-longing.md |
