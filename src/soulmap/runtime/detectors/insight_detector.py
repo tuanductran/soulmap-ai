@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/meaning-integration.md,
+# Single source of truth: skills/frameworks/meaning-integration/content/meaning-integration.md,
 # "## Detection signals". Nothing is hardcoded here.
 _INSIGHT_GROUPS = load_labeled_groups(
     runtime_skill_path("meaning-integration"),
