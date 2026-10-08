@@ -151,7 +151,7 @@ over-responsible, move to relationship-reflection/content/relationship-reflectio
 
 If the user has a realization about what they are protecting by absorbing others
 (an avoidance of their own pain, a role they were given in childhood), move to
-shadow-patterns.md or ancestral-patterns.md.
+shadow-patterns.md or ancestral-patterns/content/ancestral-patterns.md.
 
 ## Detection signals
 

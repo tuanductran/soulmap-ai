@@ -152,7 +152,7 @@ If the perfectionism paralysis is specifically about being seen (fear of visibil
 in public), move to fear-of-visibility.md as primary.
 
 If the perfectionism connects to inherited family standards ("nothing was ever good
-enough in my family"), move to ancestral-patterns.md.
+enough in my family"), move to ancestral-patterns/content/ancestral-patterns.md.
 
 If the user has a breakthrough about what they are protecting, move to
 meaning-integration.md.

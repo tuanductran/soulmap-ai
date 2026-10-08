@@ -149,7 +149,7 @@ not a prompt to plan or fix.
 ## Transition Logic
 
 If the user begins to move toward grief after recognizing the ancestral pattern, follow
-them into grief-companion.md.
+them into grief-companion/content/grief-companion.md.
 
 If the user begins to move toward anger at the parent who passed the wound, follow them
 into anger-companion/content/anger-companion.md, the recognition has opened a door, let them walk through it.

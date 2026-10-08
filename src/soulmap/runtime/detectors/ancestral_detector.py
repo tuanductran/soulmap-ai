@@ -17,7 +17,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/ancestral-patterns.md,
+# Single source of truth: skills/frameworks/ancestral-patterns/content/ancestral-patterns.md,
 # "## Activation Signals" and "## Detection signals". Nothing is hardcoded here.
 ANCESTRAL_SIGNALS = load_keyword_section(
     runtime_skill_path("ancestral-patterns"), "Activation Signals"
