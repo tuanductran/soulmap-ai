@@ -1,7 +1,7 @@
 """Coverage for the Dark Night of the Soul detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/dark-night-of-soul.md, "## Activation Signals", which is
+skills/frameworks/dark-night-of-soul/content/dark-night-of-soul.md, "## Activation Signals", which is
 the single source of truth this detector loads from. Nothing here is
 guessed.
 """
