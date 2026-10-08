@@ -67,7 +67,7 @@ Error output:
 | `INNER_PARTS` | `skills/frameworks/inner-parts/content/inner-parts.md` | medium |
 | `DIRECTION` | `skills/frameworks/life-direction/content/life-direction.md` | medium |
 | `SHADOW` | `skills/frameworks/shadow-patterns/content/shadow-patterns.md` | medium |
-| `CREATIVE_DROUGHT` | `skills/frameworks/creative-drought.md` | medium |
+| `CREATIVE_DROUGHT` | `skills/frameworks/creative-drought/content/creative-drought.md` | medium |
 | `PERFECTIONISM_PARALYSIS` | `skills/frameworks/perfectionism-paralysis.md` | medium |
 | `ANCESTRAL_PATTERNS` | `skills/frameworks/ancestral-patterns/content/ancestral-patterns.md` | medium |
 | `FEAR_OF_VISIBILITY` | `skills/frameworks/fear-of-visibility.md` | medium |
