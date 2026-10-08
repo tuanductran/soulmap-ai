@@ -1,11 +1,9 @@
 """Edge-case coverage for the creative drought detector.
 
 Primary phrases used below are taken verbatim from
-skills/frameworks/creative-drought.md, "## Activation Signals". The
-secondary creative-identity / absence-language word lists are hardcoded
-directly in soulmap.runtime.detectors.creative_drought_detector itself
-(not Markdown-sourced), so those phrases are copied from the module's own
-source.
+skills/frameworks/creative-drought/content/creative-drought.md, "## Activation Signals".
+The secondary creative-identity / absence-language lists are also loaded
+from the canonical Markdown runtime contract.
 """
 
 from typing import cast

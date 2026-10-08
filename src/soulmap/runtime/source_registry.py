@@ -30,7 +30,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "-",
     ),
     "creative-drought": (
-        "skills/frameworks/creative-drought.md",
+        "skills/frameworks/creative-drought/content/creative-drought.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",
