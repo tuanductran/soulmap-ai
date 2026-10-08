@@ -682,7 +682,7 @@
       "skills/meta/redirect-templates.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md",
-      "skills/frameworks/integration-celebration.md"
+      "skills/frameworks/integration-celebration/content/integration-celebration.md"
     ],
     "items": [
       {
@@ -709,14 +709,14 @@
     "g": "Framework — Integration and Celebration (P9b)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/integration-celebration.md",
+      "skills/frameworks/integration-celebration/content/integration-celebration.md",
       "skills/meta/framework-template-map.md",
       "skills/meta/deep-inquiry-bank.md",
       "skills/voice/session-rituals.md",
       "templates/celebration-response.md"
     ],
     "source_markers": {
-      "skills/frameworks/integration-celebration.md": "Activation Signals"
+      "skills/frameworks/integration-celebration/content/integration-celebration.md": "Activation Signals"
     },
     "items": [
       {
@@ -2821,7 +2821,7 @@
     "g": "Edge — Ambiguous Distress (Celebration or Grief?)",
     "cat": "edge",
     "sources": [
-      "skills/frameworks/integration-celebration.md",
+      "skills/frameworks/integration-celebration/content/integration-celebration.md",
       "skills/frameworks/grief-companion/content/grief-companion.md"
     ],
     "source_markers": {},
@@ -2911,7 +2911,7 @@
     "g": "Edge — Celebration with mixed signal (not pure P9b)",
     "cat": "edge",
     "sources": [
-      "skills/frameworks/integration-celebration.md",
+      "skills/frameworks/integration-celebration/content/integration-celebration.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},

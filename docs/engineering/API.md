@@ -80,7 +80,7 @@ Error output:
 | `SOULMATE_LONGING` | `skills/soulmate/soulmate-longing.md` | medium |
 | `PARTNERSHIP_PATTERNS` | `skills/soulmate/partnership-patterns.md` | medium |
 | `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration.md` | medium |
-| `INTEGRATION_CELEBRATION` | `skills/frameworks/integration-celebration.md` | medium |
+| `INTEGRATION_CELEBRATION` | `skills/frameworks/integration-celebration/content/integration-celebration.md` | medium |
 | `SYNTHESIS` | `skills/frameworks/conversation-synthesis/content/conversation-synthesis.md` | lower |
 | `PATTERN` | `skills/frameworks/pattern-mapper/content/pattern-mapper.md` | lower |
 | `MIRROR` | `skills/meta/response-structure.md` | default |

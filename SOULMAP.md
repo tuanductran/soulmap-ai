@@ -240,7 +240,7 @@ exists.
 Use the shipped knowledge files by purpose:
 
 - [frameworks/](skills/frameworks/) for response frameworks, including
-  [integration-celebration.md](skills/frameworks/integration-celebration.md) for
+  [integration-celebration.md](skills/frameworks/integration-celebration/content/integration-celebration.md) for
   positive emotional states
 - [safety/](skills/safety/) for boundaries, trauma language, and refusal posture
 - [voice/](skills/voice/) for tone, pacing, and response rhythm
