@@ -3199,7 +3199,7 @@
     "g": "Framework Coverage — Divine Guidance",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/divine-guidance.md",
+      "skills/frameworks/divine-guidance/content/divine-guidance.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},

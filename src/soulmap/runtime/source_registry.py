@@ -42,7 +42,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "divine-guidance": (
-        "skills/frameworks/divine-guidance.md",
+        "skills/frameworks/divine-guidance/content/divine-guidance.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",

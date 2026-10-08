@@ -1,7 +1,7 @@
 """Coverage for the divine guidance detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/divine-guidance.md, "## Activation Signals", which is
+skills/frameworks/divine-guidance/content/divine-guidance.md, "## Activation Signals", which is
 the single source of truth this detector loads from. Nothing here is
 guessed.
 """
