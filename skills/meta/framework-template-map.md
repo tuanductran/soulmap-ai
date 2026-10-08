@@ -51,7 +51,7 @@ structure defined here for its active framework.
 | Mirror (emotional) | MIRROR | emotional | Mirror | 80-180 | One, last, inner experience | response-structure.md |
 | Mirror (intellectual) | MIRROR | intellectual | Mirror | 100-220 | One, last, grounded inquiry | response-structure.md |
 | Mirror (Stage 1) | MIRROR | stage_1 | Mirror | 30-80 | Optional, soft | response-structure.md |
-| Integration and Celebration | INTEGRATION_CELEBRATION | default | Mirror (light) | 60-140 | One, last, deepening, not "what's next" | integration-celebration.md |
+| Integration and Celebration | INTEGRATION_CELEBRATION | default | Mirror (light) | 60-140 | One, last, deepening, not "what's next" | integration-celebration/content/integration-celebration.md |
 
 ## Detailed Structure per Framework
 
