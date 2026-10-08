@@ -3177,7 +3177,7 @@
     "g": "Framework Coverage — Soul Nourishment",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/soul-nourishment.md",
+      "skills/frameworks/soul-nourishment/content/soul-nourishment.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},

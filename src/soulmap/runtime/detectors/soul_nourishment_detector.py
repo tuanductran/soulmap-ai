@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/soul-nourishment.md,
+# Single source of truth: skills/frameworks/soul-nourishment/content/soul-nourishment.md,
 # "## Activation Signals". Nothing is hardcoded here.
 SOUL_NOURISHMENT_SIGNALS = load_keyword_section(
     runtime_skill_path("soul-nourishment"), "Activation Signals"

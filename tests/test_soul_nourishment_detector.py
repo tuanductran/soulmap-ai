@@ -1,7 +1,7 @@
 """Coverage for the soul nourishment detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/soul-nourishment.md, "## Activation Signals", which is
+skills/frameworks/soul-nourishment/content/soul-nourishment.md, "## Activation Signals", which is
 the single source of truth this detector loads from. Nothing here is
 guessed.
 """
