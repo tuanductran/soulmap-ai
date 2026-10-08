@@ -74,7 +74,7 @@ def test_json_and_source_loaders_use_repo_relative_paths(
         (
             {"primary_framework": "MEANING_INTEGRATION", "safety_status": "PASS"},
             {"tier": "ALLOW", "category": "inner_work"},
-            "skills/frameworks/meaning-integration.md",
+            "skills/frameworks/meaning-integration/content/meaning-integration.md",
         ),
         (
             {"primary_framework": "SYNTHESIS", "safety_status": "PASS"},
