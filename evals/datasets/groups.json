@@ -1800,12 +1800,12 @@
     "g": "Framework — Perfectionism Paralysis (P7c)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/perfectionism-paralysis.md",
+      "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md",
       "skills/meta/framework-template-map.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/perfectionism-paralysis.md": "Activation Signals"
+      "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md": "Activation Signals"
     },
     "items": [
       {
@@ -2417,11 +2417,11 @@
     "g": "Framework — Perfectionism Paralysis (P7c) — varied phrasings",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/perfectionism-paralysis.md",
+      "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/perfectionism-paralysis.md": "Activation Signals"
+      "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md": "Activation Signals"
     },
     "items": [
       {
@@ -2794,7 +2794,7 @@
     "cat": "edge",
     "sources": [
       "skills/meta/orchestration.md",
-      "skills/frameworks/perfectionism-paralysis.md",
+      "skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md",
       "skills/frameworks/fear-of-visibility.md"
     ],
     "source_markers": {},
