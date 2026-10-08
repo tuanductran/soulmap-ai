@@ -3155,7 +3155,7 @@
     "g": "Framework Coverage — Dark Night of the Soul",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/dark-night-of-soul.md",
+      "skills/frameworks/dark-night-of-soul/content/dark-night-of-soul.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},
