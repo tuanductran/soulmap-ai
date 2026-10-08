@@ -1,7 +1,7 @@
 """Edge-case coverage for the perfectionism paralysis detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/perfectionism-paralysis.md ("## Activation Signals") and
+skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md ("## Activation Signals") and
 skills/frameworks/shadow-patterns/content/shadow-patterns.md ("### Perfectionism (as protection)"),
 the two sources this detector loads from. Nothing here is guessed.
 """
