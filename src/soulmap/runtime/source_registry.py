@@ -36,7 +36,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "dark-night-of-soul": (
-        `skills/frameworks/dark-night-of-soul/content/dark-night-of-soul.md`,
+        "skills/frameworks/dark-night-of-soul/content/dark-night-of-soul.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",
