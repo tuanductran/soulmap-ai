@@ -20,6 +20,12 @@ uv run soulmap build --skill       # dist/soulmap-ai.skill
 uv run soulmap build --claude-ai   # dist/soulmap-ai-claude.zip
 ```
 
+## Local Agent Skills (Codex CLI, Gemini CLI, GitHub Copilot CLI)
+
+**Format:** Extracted folder containing the single root `SKILL.md` and the shipped knowledge tree.
+
+See [agent-skills.md](agent-skills.md) for the installation commands and per-tool discovery checks. This documents local skill discovery only; it does not claim hosted upload or live activation acceptance.
+
 ## Claude (Skills)
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).

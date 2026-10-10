@@ -100,3 +100,23 @@ def test_integration_readme_upload_references_ship_in_standard_archive() -> None
 
     assert package_references
     assert package_references <= shipped
+
+
+def test_portable_agent_skills_guide_documents_local_install_contract() -> None:
+    guide = REPO_ROOT / "docs" / "integrations" / "agent-skills.md"
+    text = guide.read_text(encoding="utf-8")
+
+    required = (
+        "dist/soulmap-ai.zip",
+        ".agents/skills/soulmap-ai/",
+        "Codex CLI",
+        "Gemini CLI",
+        "GitHub Copilot CLI",
+        "https://developers.openai.com/codex/skills",
+        "https://geminicli.com/docs/cli/skills/",
+        "https://docs.GitHub.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills",
+        "does not claim",
+        "sole SoulMap entrypoint",
+    )
+    missing = [anchor for anchor in required if anchor not in text]
+    assert not missing, f"agent-skills.md is missing contract anchors: {missing}"

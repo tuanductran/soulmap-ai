@@ -51,25 +51,30 @@ into separate Skills or implying that repository CI proves live platform accepta
 Do not add another entrypoint, create framework-level `SKILL.md` files, or change runtime
 behavior as part of this work.
 
+### Non-Claude Agent Skills
+
+**Status:** Local installation guidance in progress; hosted distribution remains conditional.
+
+The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Gems, and Poe bots, which have distinct product contracts.
+
+- [Issue #610](https://github.com/tuanductran/soulmap-ai/issues/610): document local Agent Skills installation and discovery for Codex CLI, Gemini CLI, and GitHub Copilot CLI.
+- [Issue #611](https://github.com/tuanductran/soulmap-ai/issues/611): assess the OpenAI hosted Skills API contract separately; no artifact or live upload claim until its requirements are verified.
+- [Issue #613](https://github.com/tuanductran/soulmap-ai/issues/613): review the Gemini Apps transition from Gems to Skills separately from Gemini CLI's local Agent Skills.
+- [Issue #614](https://github.com/tuanductran/soulmap-ai/issues/614): refresh ChatGPT Custom GPT and Poe setup guidance against current official product docs.
+
 ### Platform & Distribution Expansion
 
 **Status:** Conditional / blocked by external platform readiness.
 
-The repository has the foundation for Claude-first distribution plus documented ChatGPT,
-Gemini, and Poe integration surfaces. The remaining work should only become an active
-implementation track when there is a real deployment owner and a configured platform
-integration to validate.
+The repository has documented ChatGPT Custom GPT, Gemini Gem, and Poe integration surfaces plus local Agent Skills discovery guidance. Further platform adapters or hosted integrations should only become active implementation tracks when there is a real deployment owner and a configured integration to validate.
 
 Potential work:
 
-- Add additional platform adapters where a concrete deployment requirement justifies them.
-- Run live integration acceptance tests for Claude, ChatGPT, Gemini, and Poe when the
-  corresponding deployment surfaces are active.
-- Record operator acceptance evidence without claiming that repository tests prove
-  third-party deployment behavior.
+- Add hosted platform adapters where a concrete deployment requirement justifies them.
+- Run live integration acceptance tests for Claude, ChatGPT, Gemini, Poe, and hosted Skills APIs when the corresponding deployment surfaces are active.
+- Record operator acceptance evidence without claiming that repository tests prove third-party deployment behavior.
 
-This work remains intentionally outside the current package-only execution scope until the
-external prerequisites exist.
+Hosted integration work remains outside the current package-only execution scope until the external prerequisites exist.
 
 ---
 
