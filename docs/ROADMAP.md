@@ -53,11 +53,14 @@ behavior as part of this work.
 
 ### Non-Claude Agent Skills
 
-**Status:** Local installation guidance documented; hosted API contract reviewed; credentialed acceptance remains pending.
+**Status:** Local installation guidance documented; hosted API contract reviewed; product-side acceptance remains pending.
 
 The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Apps Skills, and Poe bots, which have distinct product contracts. Gemini Apps is transitioning from Gems to Skills; the legacy guide is marked and the current migration path is documented separately. The named-root package structure has also been reviewed against the OpenAI Skills API; live upload remains unverified.
 
 - [Issue #617](https://github.com/tuanductran/soulmap-ai/issues/617): perform credentialed OpenAI hosted Skills API upload/retrieval and product-side activation acceptance; repository CI must not use API secrets.
+- [Issue #619](https://github.com/tuanductran/soulmap-ai/issues/619): verify SoulMap Skill import and behavior in Gemini Apps.
+- [Issue #620](https://github.com/tuanductran/soulmap-ai/issues/620): validate ChatGPT Custom GPT and Poe deployments using currently available account/model options.
+- [Issue #621](https://github.com/tuanductran/soulmap-ai/issues/621): verify discovery, explicit invocation, and relative resource paths in Codex CLI, Gemini CLI, and GitHub Copilot CLI.
 
 ### Platform & Distribution Expansion
 
@@ -68,7 +71,7 @@ The repository has documented ChatGPT Custom GPT, Gemini Apps, Poe, and local Ag
 Potential work:
 
 - Add hosted platform adapters where a concrete deployment requirement justifies them.
-- Run live integration acceptance tests for Claude, ChatGPT, Gemini, Poe, and hosted Skills APIs when the corresponding deployment surfaces are active.
+- Use the platform-specific acceptance issues above, plus [Issue #601](https://github.com/tuanductran/soulmap-ai/issues/601) for Claude, when the corresponding deployment surfaces and eligible accounts are available.
 - Record operator acceptance evidence without claiming that repository tests prove third-party deployment behavior.
 
 Hosted integration work remains outside the current package-only execution scope until the external prerequisites exist.
