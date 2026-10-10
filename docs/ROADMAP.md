@@ -53,11 +53,11 @@ behavior as part of this work.
 
 ### Non-Claude Agent Skills
 
-**Status:** Local installation guidance documented; hosted distribution remains conditional.
+**Status:** Local installation guidance documented; hosted API contract reviewed; credentialed acceptance remains pending.
 
-The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Apps Skills, and Poe bots, which have distinct product contracts. Gemini Apps is transitioning from Gems to Skills; the legacy guide is marked and the current migration path is documented separately.
+The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Apps Skills, and Poe bots, which have distinct product contracts. Gemini Apps is transitioning from Gems to Skills; the legacy guide is marked and the current migration path is documented separately. The named-root package structure has also been reviewed against the OpenAI Skills API; live upload remains unverified.
 
-- [Issue #611](https://github.com/tuanductran/soulmap-ai/issues/611): assess the OpenAI hosted Skills API contract separately; no artifact or live upload claim until its requirements are verified.
+- [Issue #617](https://github.com/tuanductran/soulmap-ai/issues/617): perform credentialed OpenAI hosted Skills API upload/retrieval and product-side activation acceptance; repository CI must not use API secrets.
 
 ### Platform & Distribution Expansion
 
