@@ -5,14 +5,19 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Twenty-one distinct skill files have now received targeted semantic review across the focused PR batches: #631, #633, #634, #635, and #637 are merged; #636 contains seven additional changes pending final CI and merge. Fifty-four files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Twenty-three distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, and #637 are merged; #636, #638, and #639 contain additional reviewed changes pending final CI and merge. Fifty-two files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
-## Confirmed findings fixed in this batch
+## Confirmed findings across the current audit batches
 
 1. `skills/frameworks/dark-night-of-soul.md`: removed claims that a spiritual "Dark Night" is distinct from depression; clarified that chat cannot distinguish causes, added support/referral thresholds, and reaffirmed crisis/de-escalation priority.
 2. `skills/frameworks/fear-of-visibility.md`: removed the implied "ancestral memory" explanation as a default cause; ancestry/family history remains a possibility only when grounded in user-provided context.
 3. `skills/frameworks/sacred-feminine-masculine.md`: changed universal claims about both energies being present in everyone to optional symbolic framing; behavior alone must not be treated as evidence of a missing "energy".
 4. `skills/brand/surfaces-and-scope.md`, `skills/meta/response-structure.md`, `skills/meta/orchestration.md`, `skills/meta/framework-template-map.md`, and `skills/frameworks/integration-celebration.md`: aligned question rules so a question is an optional invitation, not a quota. When used, it remains at most one and last; safety, mode, grief, trauma, preference, and readiness take precedence.
+5. `skills/frameworks/creative-drought.md` and `skills/frameworks/perfectionism-paralysis.md`: removed predictive growth language and overconfident causal claims; explanations remain tentative and user-grounded.
+6. `skills/frameworks/empath-boundary.md`: treats "absorbing emotions" as the user's description of an experience, not proof of literal emotional or energy transfer.
+7. `skills/frameworks/conversation-synthesis.md`: makes the closing question optional when readiness, safety, or closure calls for none.
+8. `skills/brand/competitive-differentiation.md` (PR #638 pending): replaces broad competitor assertions with sourced, dated statements from official product/privacy documentation.
+9. `skills/safety/ethics-safety.md` (PR #639 pending): separates privacy/governance requirements from unverified claims about current operations and host-platform data handling.
 
 ## External authoring references
 
@@ -29,7 +34,7 @@ Status meanings:
 
 - [ ] `skills/brand/brand-doctrine.md` - Inventory screened; semantic review pending.
 - [ ] `skills/brand/brand-positioning.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/competitive-differentiation.md` - Inventory screened; semantic review pending.
+- [x] `skills/brand/competitive-differentiation.md` - Targeted review and changes in PR #638; pending CI/merge.
 - [ ] `skills/brand/consciousness-framework.md` - Inventory screened; semantic review pending.
 - [ ] `skills/brand/content-pillars.md` - Inventory screened; semantic review pending.
 - [ ] `skills/brand/founder-personal-brand.md` - Inventory screened; semantic review pending.
@@ -89,7 +94,7 @@ Status meanings:
 
 - [ ] `skills/safety/boundaries-safety.md` - Inventory screened; semantic review pending.
 - [ ] `skills/safety/dependency-detection.md` - Inventory screened; semantic review pending.
-- [ ] `skills/safety/ethics-safety.md` - Inventory screened; semantic review pending.
+- [x] `skills/safety/ethics-safety.md` - Targeted review and changes in PR #639; pending CI/merge.
 - [ ] `skills/safety/prompt-injection-defense.md` - Inventory screened; semantic review pending.
 - [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/safety/whitelist-blacklist-system.md` - Inventory screened; semantic review pending.
