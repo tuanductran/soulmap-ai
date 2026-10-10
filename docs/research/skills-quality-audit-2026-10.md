@@ -4,7 +4,7 @@
 
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
-- This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
+- All 75 files now have an explicit targeted-review disposition for purpose, trigger precision, examples, boundaries, and neighboring overlap. This is not a claim of exhaustive line-by-line proof or complete evaluation coverage. Files with pending PR changes are reviewed but are not complete until required checks pass.
 - All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, #644, and #645 contain reviewed changes pending final CI and merge. No skill file remains without a review disposition, but the final safety-policy change and other open PRs must pass required checks before the audit can close. The orchestration fallback wording was verified as aligned on current `main`.
 
 ## Confirmed findings across the current audit batches
