@@ -69,7 +69,7 @@ Copilot CLI supports project skills under `.agents/skills/` and personal skills 
 2. Run `copilot skill list` or `/skills list` in an interactive session.
 3. Use `/soulmap-ai` to request the Skill explicitly, or inspect it with the CLI's skill information commands if discovery fails.
 
-Official documentation: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills
+Official documentation: [GitHub Copilot CLI](https://docs.GitHub.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)
 
 ## Compatibility boundary
 
