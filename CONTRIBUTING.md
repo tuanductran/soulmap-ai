@@ -101,5 +101,6 @@ uv run soulmap library-manifest
 ```
 
 The generated `dist/soulmap-ai.skill` must contain exactly one `SKILL.md`, at the
-archive root. If a second `SKILL.md` appears, the build or packaging validation must
-be treated as failed before release.
+archive root. The Claude.ai-specific `dist/soulmap-ai-claude.zip` must contain exactly
+one `soulmap-ai/SKILL.md` under the named root directory. If a second `SKILL.md` appears,
+the build or packaging validation must be treated as failed before release.
