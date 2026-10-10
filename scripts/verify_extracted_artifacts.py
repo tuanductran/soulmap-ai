@@ -93,7 +93,11 @@ def _resolve_markdown_target(
         if archive_prefix:
             candidate = PurePosixPath(archive_prefix) / candidate
     elif raw_path.startswith("skills/") or raw_path in CORE_FILES:
-        candidate = PurePosixPath(archive_prefix) / target_path if archive_prefix else target_path
+        candidate = (
+            PurePosixPath(archive_prefix) / target_path
+            if archive_prefix
+            else target_path
+        )
     else:
         candidate = source_path.parent / target_path
 
@@ -208,9 +212,7 @@ def _assert_expected_members(
                 f"{archive_path.name} contains repository-only members: {forbidden_members}"
             )
 
-        _assert_markdown_references(
-            archive, actual, archive_prefix=archive_prefix
-        )
+        _assert_markdown_references(archive, actual, archive_prefix=archive_prefix)
 
         for name in sorted(actual):
             source_name = name[len(archive_prefix) :] if archive_prefix else name
