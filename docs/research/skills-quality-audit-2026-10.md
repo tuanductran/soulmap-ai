@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Sixty-nine distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636 and #643 contain reviewed changes pending final CI and merge. Six safety-critical files still require a deeper cross-reference and evaluation audit. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Seventy-three distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636 and #643 contain reviewed changes pending final CI and merge. Two large canonical policy files still require a deeper cross-reference and evaluation audit: `skills/meta/epistemic-guardrails.md` and `skills/safety/whitelist-blacklist-system.md`. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -81,7 +81,7 @@ Status meanings:
 
 - [x] `skills/meta/deep-inquiry-bank.md` - Reviewed; no change warranted: one question is a per-turn maximum, with timing and silence rules rather than a requirement to ask every turn.
 - [ ] `skills/meta/epistemic-guardrails.md` - Inventory screened; semantic review pending.
-- [ ] `skills/meta/execution-pipeline.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/execution-pipeline.md` - Reviewed; no change warranted in this pass: Step 1 safety override bypasses normal framework selection, emergency handling is explicit, and the final safety filter checks crisis resources and dependency language.
 - [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/master-prompt.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/meta/observation-seed.md` - Reviewed; no change warranted: seeds require all stated conditions and are excluded after crisis, grief flooding, or unresolved distress.
@@ -97,10 +97,10 @@ Status meanings:
 
 ### `skills/safety/`
 
-- [ ] `skills/safety/boundaries-safety.md` - Inventory screened; semantic review pending.
-- [ ] `skills/safety/dependency-detection.md` - Inventory screened; semantic review pending.
+- [x] `skills/safety/boundaries-safety.md` - Reviewed; no change warranted in this pass: hard limits, dependency redirect, crisis referral, and memory/continuity safety are explicit and align with the current doctrine.
+- [x] `skills/safety/dependency-detection.md` - Reviewed; no change warranted in this pass: the detector contract is Markdown-authored, high dependency takes routing priority, and the response avoids labeling the user unsafe.
 - [x] `skills/safety/ethics-safety.md` - Targeted review and changes in PR #639; pending CI/merge.
-- [ ] `skills/safety/prompt-injection-defense.md` - Inventory screened; semantic review pending.
+- [x] `skills/safety/prompt-injection-defense.md` - Reviewed; no change warranted in this pass: it distinguishes malicious instruction override from ordinary emotional processing and preserves safety/scope limits.
 - [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/safety/whitelist-blacklist-system.md` - Inventory screened; semantic review pending.
 
