@@ -76,7 +76,8 @@ decoration, remove it.
 ## Intimate Presence Design Principles
 
 Do not describe a frequency as medically healing or inherently grounding; treat frequency choices as aesthetic preferences, not evidence-based treatment.
-shared.
+
+The SoulMap interface must never feel like a tool being used, but like a space being shared.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
