@@ -1,4 +1,4 @@
-# Skills quality audit ledger — 2026-10-11
+# Skills quality audit ledger - 2026-10-11
 
 ## Status and method
 
@@ -9,9 +9,9 @@
 
 ## Confirmed findings fixed in this batch
 
-1. `skills/frameworks/dark-night-of-soul.md`: removed claims that a spiritual “Dark Night” is distinct from depression; clarified that chat cannot distinguish causes, added support/referral thresholds, and reaffirmed crisis/de-escalation priority.
-2. `skills/frameworks/fear-of-visibility.md`: removed the implied “ancestral memory” explanation as a default cause; ancestry/family history remains a possibility only when grounded in user-provided context.
-3. `skills/frameworks/sacred-feminine-masculine.md`: changed universal claims about both energies being present in everyone to optional symbolic framing; behavior alone must not be treated as evidence of a missing “energy”.
+1. `skills/frameworks/dark-night-of-soul.md`: removed claims that a spiritual "Dark Night" is distinct from depression; clarified that chat cannot distinguish causes, added support/referral thresholds, and reaffirmed crisis/de-escalation priority.
+2. `skills/frameworks/fear-of-visibility.md`: removed the implied "ancestral memory" explanation as a default cause; ancestry/family history remains a possibility only when grounded in user-provided context.
+3. `skills/frameworks/sacred-feminine-masculine.md`: changed universal claims about both energies being present in everyone to optional symbolic framing; behavior alone must not be treated as evidence of a missing "energy".
 4. `skills/brand/surfaces-and-scope.md`, `skills/meta/response-structure.md`, `skills/meta/orchestration.md`, `skills/meta/framework-template-map.md`, and `skills/frameworks/integration-celebration.md`: aligned question rules so a question is an optional invitation, not a quota. When used, it remains at most one and last; safety, mode, grief, trauma, preference, and readiness take precedence.
 
 ## External authoring references
@@ -27,102 +27,102 @@ Status meanings:
 
 ### `skills/brand/`
 
-- [ ] `skills/brand/brand-doctrine.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/brand-positioning.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/competitive-differentiation.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/consciousness-framework.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/content-pillars.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/founder-personal-brand.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/message-hierarchy.md` — Inventory screened; semantic review pending.
-- [ ] `skills/brand/research-backing.md` — Inventory screened; semantic review pending.
-- [x] `skills/brand/surfaces-and-scope.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/brand/visual-identity.md` — Inventory screened; semantic review pending.
+- [ ] `skills/brand/brand-doctrine.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/brand-positioning.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/competitive-differentiation.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/consciousness-framework.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/content-pillars.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/founder-personal-brand.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/message-hierarchy.md` - Inventory screened; semantic review pending.
+- [ ] `skills/brand/research-backing.md` - Inventory screened; semantic review pending.
+- [x] `skills/brand/surfaces-and-scope.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/brand/visual-identity.md` - Inventory screened; semantic review pending.
 
 ### `skills/frameworks/`
 
-- [ ] `skills/frameworks/ancestral-patterns.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/anger-companion.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/conversation-synthesis.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/creative-drought.md` — Inventory screened; semantic review pending.
-- [x] `skills/frameworks/dark-night-of-soul.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/divine-guidance.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/emotional-deescalation.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/empath-boundary.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/existential-companion.md` — Inventory screened; semantic review pending.
-- [x] `skills/frameworks/fear-of-visibility.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/feminine-masculine-dynamics.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/grief-companion.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/inner-parts.md` — Inventory screened; semantic review pending.
-- [x] `skills/frameworks/integration-celebration.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/life-direction.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/meaning-integration.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/money-self-worth.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/pattern-mapper.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/perfectionism-paralysis.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/relationship-reflection.md` — Inventory screened; semantic review pending.
-- [x] `skills/frameworks/sacred-feminine-masculine.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/self-compassion.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/shadow-patterns.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/somatic-wellbeing.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/soul-nourishment.md` — Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/spiritual-purpose.md` — Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/ancestral-patterns.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/anger-companion.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/conversation-synthesis.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/creative-drought.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/frameworks/divine-guidance.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/emotional-deescalation.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/empath-boundary.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/existential-companion.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/frameworks/feminine-masculine-dynamics.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/grief-companion.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/inner-parts.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/frameworks/life-direction.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/meaning-integration.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/money-self-worth.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/pattern-mapper.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/perfectionism-paralysis.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/relationship-reflection.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/frameworks/self-compassion.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/shadow-patterns.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/somatic-wellbeing.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/soul-nourishment.md` - Inventory screened; semantic review pending.
+- [ ] `skills/frameworks/spiritual-purpose.md` - Inventory screened; semantic review pending.
 
 ### `skills/meta/`
 
-- [ ] `skills/meta/deep-inquiry-bank.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/epistemic-guardrails.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/execution-pipeline.md` — Inventory screened; semantic review pending.
-- [x] `skills/meta/framework-template-map.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/master-prompt.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/observation-seed.md` — Inventory screened; semantic review pending.
-- [x] `skills/meta/orchestration.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/quick-reference.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/redirect-templates.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/resource-recommendations.md` — Inventory screened; semantic review pending.
-- [x] `skills/meta/response-structure.md` — Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/session-continuity.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/session-contract.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/stage-classifier.md` — Inventory screened; semantic review pending.
-- [ ] `skills/meta/user-journey-stages.md` — Inventory screened; semantic review pending.
+- [ ] `skills/meta/deep-inquiry-bank.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/epistemic-guardrails.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/execution-pipeline.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/meta/master-prompt.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/observation-seed.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/meta/quick-reference.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/redirect-templates.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/resource-recommendations.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
+- [ ] `skills/meta/session-continuity.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/session-contract.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/stage-classifier.md` - Inventory screened; semantic review pending.
+- [ ] `skills/meta/user-journey-stages.md` - Inventory screened; semantic review pending.
 
 ### `skills/safety/`
 
-- [ ] `skills/safety/boundaries-safety.md` — Inventory screened; semantic review pending.
-- [ ] `skills/safety/dependency-detection.md` — Inventory screened; semantic review pending.
-- [ ] `skills/safety/ethics-safety.md` — Inventory screened; semantic review pending.
-- [ ] `skills/safety/prompt-injection-defense.md` — Inventory screened; semantic review pending.
-- [ ] `skills/safety/trauma-language.md` — Inventory screened; semantic review pending.
-- [ ] `skills/safety/whitelist-blacklist-system.md` — Inventory screened; semantic review pending.
+- [ ] `skills/safety/boundaries-safety.md` - Inventory screened; semantic review pending.
+- [ ] `skills/safety/dependency-detection.md` - Inventory screened; semantic review pending.
+- [ ] `skills/safety/ethics-safety.md` - Inventory screened; semantic review pending.
+- [ ] `skills/safety/prompt-injection-defense.md` - Inventory screened; semantic review pending.
+- [ ] `skills/safety/trauma-language.md` - Inventory screened; semantic review pending.
+- [ ] `skills/safety/whitelist-blacklist-system.md` - Inventory screened; semantic review pending.
 
 ### `skills/soulmate/`
 
-- [ ] `skills/soulmate/numerology-connection-lens.md` — Inventory screened; semantic review pending.
-- [ ] `skills/soulmate/partnership-patterns.md` — Inventory screened; semantic review pending.
-- [ ] `skills/soulmate/soulmate-longing.md` — Inventory screened; semantic review pending.
+- [ ] `skills/soulmate/numerology-connection-lens.md` - Inventory screened; semantic review pending.
+- [ ] `skills/soulmate/partnership-patterns.md` - Inventory screened; semantic review pending.
+- [ ] `skills/soulmate/soulmate-longing.md` - Inventory screened; semantic review pending.
 
 ### `skills/spiritual/`
 
-- [ ] `skills/spiritual/astrology-symbolic-lens.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/chakra-affirmations.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/founder-numerology.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/healing-metaphors.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/numerology-chakra-policy.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/numerology-profile.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/spiritual-discernment.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/symbolic-report-handling.md` — Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/tarot-symbolic-lens.md` — Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/astrology-symbolic-lens.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/chakra-affirmations.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/founder-numerology.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/healing-metaphors.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/numerology-chakra-policy.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/numerology-profile.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/spiritual-discernment.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/symbolic-report-handling.md` - Inventory screened; semantic review pending.
+- [ ] `skills/spiritual/tarot-symbolic-lens.md` - Inventory screened; semantic review pending.
 
 ### `skills/voice/`
 
-- [ ] `skills/voice/persona-voice.md` — Inventory screened; semantic review pending.
-- [ ] `skills/voice/response-calibrator.md` — Inventory screened; semantic review pending.
-- [ ] `skills/voice/session-rituals.md` — Inventory screened; semantic review pending.
+- [ ] `skills/voice/persona-voice.md` - Inventory screened; semantic review pending.
+- [ ] `skills/voice/response-calibrator.md` - Inventory screened; semantic review pending.
+- [ ] `skills/voice/session-rituals.md` - Inventory screened; semantic review pending.
 
 ### `skills/writing/`
 
-- [ ] `skills/writing/disclosure-boundaries.md` — Inventory screened; semantic review pending.
-- [ ] `skills/writing/platform-shapes.md` — Inventory screened; semantic review pending.
-- [ ] `skills/writing/reflection-to-page.md` — Inventory screened; semantic review pending.
+- [ ] `skills/writing/disclosure-boundaries.md` - Inventory screened; semantic review pending.
+- [ ] `skills/writing/platform-shapes.md` - Inventory screened; semantic review pending.
+- [ ] `skills/writing/reflection-to-page.md` - Inventory screened; semantic review pending.
 
 ## Next review queue
 
