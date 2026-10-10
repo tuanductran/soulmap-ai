@@ -26,7 +26,7 @@ Optional, user-activated ambient soundscapes correspond to the conversational mo
 
 | Mode                | Soundscape                                                                               |
 | :------------------ | :--------------------------------------------------------------------------------------- |
-| **Meditation**      | Binaural beats or Solfeggio frequencies, for example 528 Hz for healing and 432 Hz for grounding |
+| **Meditation**      | Binaural beats or music tuned to frequencies such as 432 Hz or 528 Hz, if the user likes the sound |
 | **Journaling**      | Gentle rainfall or soft crackling fire                                                   |
 | **Deep Reflection** | Low resonant hums or the sound of distant wind                                           |
 
@@ -75,8 +75,9 @@ decoration, remove it.
 
 ## Intimate Presence Design Principles
 
-The SoulMap interface must never feel like a tool being used, but like a space being
-shared.
+Do not describe a frequency as medically healing or inherently grounding; treat frequency choices as aesthetic preferences, not evidence-based treatment.
+
+The SoulMap interface must never feel like a tool being used, but like a space being shared.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
