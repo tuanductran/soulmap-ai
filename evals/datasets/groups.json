@@ -1764,12 +1764,12 @@
     "g": "Framework — Empath Boundary (P8d)",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/empath-boundary.md",
+      "skills/frameworks/empath-boundary/content/empath-boundary.md",
       "skills/meta/framework-template-map.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/empath-boundary.md": "Activation Signals"
+      "skills/frameworks/empath-boundary/content/empath-boundary.md": "Activation Signals"
     },
     "items": [
       {
@@ -2377,11 +2377,11 @@
     "g": "Framework — Empath Boundary (P8d) — varied phrasings",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/empath-boundary.md",
+      "skills/frameworks/empath-boundary/content/empath-boundary.md",
       "skills/meta/deep-inquiry-bank.md"
     ],
     "source_markers": {
-      "skills/frameworks/empath-boundary.md": "Activation Signals"
+      "skills/frameworks/empath-boundary/content/empath-boundary.md": "Activation Signals"
     },
     "items": [
       {
