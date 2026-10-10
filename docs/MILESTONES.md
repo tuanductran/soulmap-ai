@@ -42,6 +42,7 @@ notes, tests, and release records.
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
 | 27 | Knowledge-First Architecture Consolidation & Release Hardening | Completed the post-v0.13 architecture consolidation: Python-owned runtime source registry, Markdown-owned detector knowledge, removal of obsolete domain/runtime/library surfaces, a single shipped SoulMap Skill entrypoint, and strengthened release artifact verification and immutable action pinning. |
 | 28 | Non-Claude Distribution Guide Refresh | Documented portable local Agent Skills for Codex, Gemini CLI, and Copilot; refreshed ChatGPT/Poe guidance and documented the Gemini Apps Gems-to-Skills transition without claiming live acceptance. |
+| 29 | OpenAI Hosted Skills API Contract Review | Confirmed the named-root package layout against the documented upload shape, removed provider-specific wording from the root Skill, and recorded a credentialed acceptance runbook without claiming live upload success. |
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "SoulMap AI, platform integration guide"
-description: "Deployment and local Agent Skills guidance for ChatGPT, Gemini Apps and CLI, Poe, Claude, Codex, and GitHub Copilot."
+description: "Deployment and local Agent Skills guidance for ChatGPT, the OpenAI Skills API, Gemini Apps and CLI, Poe, Claude, Codex, and GitHub Copilot."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.13.0"
 ---
@@ -25,6 +25,12 @@ uv run soulmap build --claude-ai   # dist/soulmap-ai-claude.zip
 **Format:** Extracted folder containing the single root `SKILL.md` and the shipped knowledge tree.
 
 See [agent-skills.md](agent-skills.md) for the installation commands and per-tool discovery checks. This documents local skill discovery only; it does not claim hosted upload or live activation acceptance.
+
+## OpenAI Skills API (hosted)
+
+**Format:** A ZIP containing one top-level Skill folder with `SKILL.md` and supporting resources.
+
+See [openai-skills-api.md](openai-skills-api.md) for the compatibility review and credentialed manual test procedure. The package shape is reviewed, but live API acceptance and activation remain unverified.
 
 ## Claude (Skills)
 

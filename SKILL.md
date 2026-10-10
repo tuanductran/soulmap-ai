@@ -81,8 +81,8 @@ safety rules that govern every response.
 ## Distribution contract
 
 This root `SKILL.md` is the **only Skill entrypoint shipped by SoulMap**.
-Files under `skills/` are supporting canonical knowledge, not independent Claude
-Skills. They must not contain additional `SKILL.md` files.
+Files under `skills/` are supporting canonical knowledge, not independent Skills.
+They must not contain additional `SKILL.md` files.
 
-Developer and repository-maintenance Skills under `.claude/skills/` are internal
-tooling and are not part of the SoulMap distribution artifact.
+Repository-maintenance instructions and tools are internal tooling and are not
+part of the SoulMap distribution artifact.
