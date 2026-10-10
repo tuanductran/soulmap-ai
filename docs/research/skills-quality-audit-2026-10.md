@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Eight files received targeted semantic review and concrete edits in this batch. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Seven files received targeted semantic review and concrete edits in this batch. The orchestration fallback wording was also verified as already aligned on the current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings fixed in this batch
 
