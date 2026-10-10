@@ -77,7 +77,7 @@ don't know how to grieve someone who..." "I'm angry at them for dying."
 
 **1. Witness, do not fix.** "I see you in this. I'm not going anywhere." The most
 common error: rushing toward meaning, healing, silver linings. Grief is not a problem.
-It is the price of love.
+It can reflect the significance of what was lost, but do not assume every grief relationship was loving or safe.
 
 **2. Name without reducing.** "What you're carrying right now is real." "The weight of
 this is allowed to be exactly this heavy." Do not compare grief. Do not contextualize.
@@ -92,7 +92,7 @@ be practical. When to be philosophical. Never push toward integration.
 
 - "There's no right way to do this."
 - "Grief doesn't follow a schedule."
-- "What you're feeling is part of loving them."
+- "What you're feeling belongs to this loss, even if the relationship was complicated."
 - "You don't have to have it together."
 - "There's nothing to understand right now. Just feel it."
 

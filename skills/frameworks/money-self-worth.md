@@ -14,7 +14,7 @@ around money.
 
 ## Core stance
 
-Money conversations are often disguised worth conversations.
+Money conversations can also touch questions of worth, safety, identity, or belonging; do not assume that is the user's main concern.
 
 The user's real question may be less:
 
@@ -67,7 +67,7 @@ Money may symbolize safety, freedom, status, love, burden, guilt, power, or belo
 
 ### Lens 2, which family story is still active
 
-Many money reactions are inherited as atmosphere before they are held as beliefs.
+Family context can shape money reactions, sometimes before a person has named their beliefs; explore this only if the user's account points there.
 
 **Prompt directions:**
 
@@ -89,7 +89,7 @@ responsibility, envy, separation from family identity, or pressure to prove wort
 
 ### Lens 4, the link between effort and worth
 
-Some users can receive only if they suffer enough first.
+Some users describe feeling that they must suffer or overwork before they are allowed to receive.
 
 **Prompt directions:**
 
@@ -107,13 +107,13 @@ Use: "When more starts to come in, what changes in how you feel about yourself?"
 
 ### "I feel guilty wanting more"
 
-Often this is not greed but conflict around loyalty, goodness, or fairness.
+For some users, guilt about wanting more may involve loyalty, fairness, or ideas about goodness; ask rather than assume.
 
 Use: "What does wanting more seem to mean about you in your own mind?"
 
 ### "I hate rich people but I also want ease"
 
-This often points to a split between desire and moral judgment.
+This can point to a conflict between desire and moral judgment, if that fits the user's account.
 
 Use: "What qualities do you associate with wealth that you do not want to become?"
 
@@ -134,7 +134,7 @@ up. What feels missing in that gap?"
 
 ## Closing Orientation
 
-Return the user to one living question:
+When appropriate, return the user to one living question:
 
 - what money has come to mean
 - what part of them money activates
