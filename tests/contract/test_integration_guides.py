@@ -135,5 +135,7 @@ def test_chatgpt_and_poe_guides_avoid_stale_deployment_assumptions() -> None:
         "https://help.Poe.com/hc/en-us/articles/19944206309524-Poe-FAQs",
     )
     missing = [anchor for anchor in required if anchor not in text]
-    assert not missing, f"integration README is missing current platform guidance: {missing}"
+    assert not missing, (
+        f"integration README is missing current platform guidance: {missing}"
+    )
     assert "Base model: `Claude-3.5-Sonnet` or `GPT-4o`" not in text
