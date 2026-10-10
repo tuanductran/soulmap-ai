@@ -132,7 +132,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "sacred-feminine-masculine": (
-        "skills/frameworks/sacred-feminine-masculine.md",
+        "skills/frameworks/sacred-feminine-masculine/content/sacred-feminine-masculine.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",

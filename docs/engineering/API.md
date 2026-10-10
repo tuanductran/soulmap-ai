@@ -75,7 +75,7 @@ Error output:
 | `DARK_NIGHT_OF_SOUL` | `skills/frameworks/dark-night-of-soul/content/dark-night-of-soul.md` | medium |
 | `SOUL_NOURISHMENT` | `skills/frameworks/soul-nourishment/content/soul-nourishment.md` | medium |
 | `DIVINE_GUIDANCE` | `skills/frameworks/divine-guidance/content/divine-guidance.md` | medium |
-| `SACRED_POLARITY` | `skills/frameworks/sacred-feminine-masculine.md` | medium |
+| `SACRED_POLARITY` | `skills/frameworks/sacred-feminine-masculine/content/sacred-feminine-masculine.md` | medium |
 | `SPIRITUAL_PURPOSE` | `skills/frameworks/spiritual-purpose.md` | medium |
 | `SOULMATE_LONGING` | `skills/soulmate/soulmate-longing.md` | medium |
 | `PARTNERSHIP_PATTERNS` | `skills/soulmate/partnership-patterns.md` | medium |

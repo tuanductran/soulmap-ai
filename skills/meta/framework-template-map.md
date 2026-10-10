@@ -44,7 +44,7 @@ structure defined here for its active framework.
 | Dark Night of the Soul | DARK_NIGHT_OF_SOUL | default | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul/content/dark-night-of-soul.md |
 | Soul Nourishment | SOUL_NOURISHMENT | default | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |
 | Divine Guidance | DIVINE_GUIDANCE | default | Mirror | 60-140 | One, last, discernment-oriented | divine-guidance/content/divine-guidance.md |
-| Sacred Polarity | SACRED_POLARITY | default | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
+| Sacred Polarity | SACRED_POLARITY | default | Mirror | 60-140 | One, last, awareness-oriented, never a prescription | sacred-feminine-masculine/content/sacred-feminine-masculine.md |
 | Spiritual Purpose | SPIRITUAL_PURPOSE | default | Mirror | 60-140 | One, last, noticing-oriented, no commitment requests | spiritual-purpose.md |
 | Soulmate Longing | SOULMATE_LONGING | default | Mirror | 60-140 | One, last, returns to the longing itself | soulmate-longing.md |
 | Partnership Patterns | PARTNERSHIP_PATTERNS | default | Mirror | 70-150 | One, last, keeps the pattern pointed inward | partnership-patterns.md |
