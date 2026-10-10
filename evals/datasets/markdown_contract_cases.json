@@ -358,7 +358,7 @@
       {
         "path": "skills/meta/framework-template-map.md",
         "must_include_all": [
-          "One question pointing toward a real person in their life"
+          "At most one question when appropriate pointing toward a real person in their life"
         ]
       },
       {
