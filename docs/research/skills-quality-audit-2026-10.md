@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Forty-seven distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Twenty-eight files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Forty-one distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Thirty-four files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -21,6 +21,7 @@
 10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; the PR is merged after all required checks passed.
 11. `skills/frameworks/emotional-deescalation.md` and `skills/brand/visual-identity.md` (PR #641 pending): add a medical triage gate before grounding and remove unsupported claims that specific sound frequencies heal or ground.
 12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 pending): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
+13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 pending): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
 
 ## External authoring references
 
@@ -87,11 +88,11 @@ Status meanings:
 - [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/quick-reference.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/meta/redirect-templates.md` - Inventory screened; semantic review pending.
-- [ ] `skills/meta/resource-recommendations.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in PR #643; pending CI/merge.
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/meta/session-continuity.md` - Inventory screened; semantic review pending.
-- [ ] `skills/meta/session-contract.md` - Inventory screened; semantic review pending.
-- [ ] `skills/meta/stage-classifier.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/session-contract.md` - Targeted review and changes in PR #643; pending CI/merge.
+- [x] `skills/meta/stage-classifier.md` - Targeted review and changes in PR #643; pending CI/merge.
 - [ ] `skills/meta/user-journey-stages.md` - Inventory screened; semantic review pending.
 
 ### `skills/safety/`
@@ -125,7 +126,7 @@ Status meanings:
 
 - [ ] `skills/voice/persona-voice.md` - Inventory screened; semantic review pending.
 - [x] `skills/voice/response-calibrator.md` - Targeted review in #631; see the linked PR history.
-- [ ] `skills/voice/session-rituals.md` - Inventory screened; semantic review pending.
+- [x] `skills/voice/session-rituals.md` - Targeted review and changes in PR #643; pending CI/merge.
 
 ### `skills/writing/`
 
