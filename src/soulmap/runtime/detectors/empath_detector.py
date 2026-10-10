@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/empath-boundary.md,
+# Single source of truth: skills/frameworks/empath-boundary/content/empath-boundary.md,
 # "## Activation Signals". Nothing is hardcoded here.
 EMPATH_SIGNALS = load_keyword_section(
     runtime_skill_path("empath-boundary"), "Activation Signals"
