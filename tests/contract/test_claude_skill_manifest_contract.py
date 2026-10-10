@@ -9,10 +9,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SKILL_MANIFEST = REPO_ROOT / "SKILL.md"
 
 _FRONTMATTER_RE = re.compile(
-    r"\\A---\\r?\\n(?P<header>.*?)\\r?\\n---(?:\\r?\\n|$)",
+    r"\A---\r?\n(?P<header>.*?)\r?\n---(?:\r?\n|$)",
     re.DOTALL,
 )
-_SCALAR_RE_TEMPLATE = r"^{key}:\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\r\\n#]+?))\\s*(?:#.*)?$"
+_SCALAR_RE_TEMPLATE = r"""^{key}:\s*(?:"([^"]*)"|'([^']*)'|([^\r\n#]+?))\s*(?:#.*)?$"""
 _NAME_RE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 _RESERVED_NAME_PARTS = {"anthropic", "claude"}
 
