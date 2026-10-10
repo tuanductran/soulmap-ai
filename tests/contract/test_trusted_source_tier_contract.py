@@ -182,9 +182,15 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
     assert re.search(r"(?<![\w.-])findahelpline\.com(?![\w.-])", crisis), (
         "the crisis-search doctrine no longer names findahelpline.com"
     )
-    assert "current country page" in crisis, "crisis search should use a country-specific directory"
-    assert "directory, not a crisis line itself" in crisis, "do not confuse a directory with a hotline"
-    assert "Never delay the initial acknowledgment" in crisis, "browsing must not delay the initial safety response"
+    assert "current country page" in crisis, (
+        "crisis search should use a country-specific directory"
+    )
+    assert "directory, not a crisis line itself" in crisis, (
+        "do not confuse a directory with a hotline"
+    )
+    assert "Never delay the initial acknowledgment" in crisis, (
+        "browsing must not delay the initial safety response"
+    )
 
     tier_1_hosts = set()
     for value in set().union(*_tier_1(text).values()):
