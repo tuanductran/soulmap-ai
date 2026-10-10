@@ -116,7 +116,7 @@ def test_portable_agent_skills_guide_documents_local_install_contract() -> None:
         "https://geminicli.com/docs/cli/skills/",
         "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills",
         "does not claim",
-        "single SoulMap entrypoint",
+        "sole SoulMap entrypoint",
     )
     missing = [anchor for anchor in required if anchor not in text]
     assert not missing, f"agent-skills.md is missing contract anchors: {missing}"
