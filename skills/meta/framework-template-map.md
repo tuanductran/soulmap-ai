@@ -89,7 +89,7 @@ Resources come first.
 
 **Opening constraint:** Acknowledge before redirecting. Never redirect without acknowledgment.
 
-**Closing constraint:** Question must ask about a real person or real-world support,
+**Closing constraint (if a question is used):** It should ask about a real person or real-world support,
 not about SoulMap or the conversation.
 
 **Example arc:**
