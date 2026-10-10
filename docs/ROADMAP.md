@@ -53,14 +53,11 @@ behavior as part of this work.
 
 ### Non-Claude Agent Skills
 
-**Status:** Local installation guidance in progress; hosted distribution remains conditional.
+**Status:** Local installation guidance documented; hosted distribution remains conditional.
 
-The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Gems, and Poe bots, which have distinct product contracts.
+The existing generic ZIP can be extracted as a folder-based Skill for compatible local agents. Keep this path separate from Claude.ai uploads, ChatGPT Custom GPTs, Gemini Apps Skills, and Poe bots, which have distinct product contracts. Gemini Apps is transitioning from Gems to Skills; the legacy guide is marked and the current migration path is documented separately.
 
-- [Issue #610](https://github.com/tuanductran/soulmap-ai/issues/610): document local Agent Skills installation and discovery for Codex CLI, Gemini CLI, and GitHub Copilot CLI.
 - [Issue #611](https://github.com/tuanductran/soulmap-ai/issues/611): assess the OpenAI hosted Skills API contract separately; no artifact or live upload claim until its requirements are verified.
-- [Issue #613](https://github.com/tuanductran/soulmap-ai/issues/613): review the Gemini Apps transition from Gems to Skills separately from Gemini CLI's local Agent Skills.
-- [Issue #614](https://github.com/tuanductran/soulmap-ai/issues/614): refresh ChatGPT Custom GPT and Poe setup guidance against current official product docs.
 
 ### Platform & Distribution Expansion
 
