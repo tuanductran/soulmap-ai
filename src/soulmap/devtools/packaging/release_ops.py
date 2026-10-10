@@ -19,6 +19,7 @@ from soulmap.devtools.support.repo import REPO_ROOT
 ARTIFACT_NAMES = (
     "soulmap-ai.zip",
     "soulmap-ai.skill",
+    "soulmap-ai-claude.zip",
     "soulmap-ai-library.json",
 )
 
