@@ -7,6 +7,8 @@ soulmap_version: "0.13.0"
 
 # Gemini Gem, instructions
 
+> **Legacy platform note (reviewed 2026-10-10):** This file describes the older Gemini Apps Gem workflow. Google is transitioning Gems to Skills beginning November 2026 for personal Google Accounts, March 2027 for Workspace business/enterprise/non-profit accounts, and June 2027 for Workspace education accounts. Existing Gems and supported files are expected to transition automatically. See the [Gemini Apps Skills guide](gemini-apps-skills.md) and the [official transition article](https://support.Google.com/gemini/answer/18560919). Gemini CLI local Agent Skills are a separate surface; see [agent-skills.md](agent-skills.md).
+
 Paste the text below into the **Instructions** field
 when creating the SoulMap AI Gem at gemini.google.com.
 
