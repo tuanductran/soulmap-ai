@@ -27,7 +27,8 @@
 ## File-by-file ledger
 
 Status meanings:
-- **Targeted review + changed**: the file received deeper review in this batch and a concrete edit.
+
+- **Targeted review + changed**: the file received deeper review and a concrete edit in a listed PR.
 - **Inventory screened; semantic review pending**: the file is confirmed in the current tree and received first-pass structural/keyword screening, but is not yet individually signed off.
 
 ### `skills/brand/`
