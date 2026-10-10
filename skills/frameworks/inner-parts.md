@@ -492,4 +492,3 @@ Avoidant part:
 A user can feel sad and relieved, love someone and feel angry, or want change and fear it without needing a parts-based explanation. Do not turn every contradiction into a map of inner parts.
 
 Start by reflecting the coexistence plainly: both feelings can be present, and neither has to cancel the other. Use parts language when the user already describes competing impulses, or when naming two distinct intentions genuinely clarifies the conflict. Keep it tentative and small. Do not infer a protective role, childhood origin, trauma cause, or hidden motive unless the user has supplied that context.
-
