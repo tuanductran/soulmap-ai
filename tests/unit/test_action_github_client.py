@@ -366,3 +366,50 @@ def test_pull_request_contract_requires_complete_metadata(
     ):
         action.run_pull_request(client)
     assert "multiple open release PRs" in str(captured.value)
+
+
+
+def test_release_immutability_operation_needs_no_token(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("INPUT_OPERATION", "verify-release-immutability")
+    monkeypatch.setenv("INPUT_REPOSITORY", "owner/repo")
+    monkeypatch.setenv("INPUT_TAG", "v1.2.3")
+    monkeypatch.delenv("INPUT_TOKEN", raising=False)
+    response = FakeResponse({"tag_name": "v1.2.3", "immutable": True})
+
+    with patch.object(action, "urlopen", return_value=response) as urlopen:
+        assert action.main() == 0
+
+    request = urlopen.call_args.args[0]
+    assert request.full_url.endswith("/repos/owner/repo/releases/tags/v1.2.3")
+    assert request.get_header("Authorization") is None
+
+
+def test_release_immutability_operation_rejects_mutable_release(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("INPUT_REPOSITORY", "owner/repo")
+    monkeypatch.setenv("INPUT_TAG", "v1.2.3")
+    response = FakeResponse({"tag_name": "v1.2.3", "immutable": False})
+
+    with (
+        patch.object(action, "urlopen", return_value=response),
+        pytest.raises(action.GitHubActionError, match="not immutable"),
+    ):
+        action.run_verify_release_immutability()
+
+
+def test_release_immutability_operation_checks_latest_when_tag_omitted(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("INPUT_REPOSITORY", "owner/repo")
+    monkeypatch.delenv("INPUT_TAG", raising=False)
+    response = FakeResponse({"tag_name": "v1.2.3", "immutable": True})
+
+    with patch.object(action, "urlopen", return_value=response) as urlopen:
+        action.run_verify_release_immutability()
+
+    assert urlopen.call_args.args[0].full_url.endswith(
+        "/repos/owner/repo/releases/latest"
+    )
