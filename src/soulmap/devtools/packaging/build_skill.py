@@ -2,13 +2,15 @@
 
 Flags
 -----
-default   Build dist/soulmap-ai.zip   (when no flag is given)
---skill   Build dist/soulmap-ai.skill
+default     Build dist/soulmap-ai.zip (when no flag is given)
+--skill     Build dist/soulmap-ai.skill
+--claude-ai Build dist/soulmap-ai-claude.zip with a named root directory
 
 Examples:
 --------
-uv run soulmap build                  # zip build
-uv run soulmap build --skill          # .skill build
+uv run soulmap build                  # standard ZIP
+uv run soulmap build --skill          # .skill package
+uv run soulmap build --claude-ai      # Claude.ai upload ZIP
 
 Formats
 -------
@@ -21,6 +23,10 @@ soulmap-ai.skill
     Skill-oriented archive with the same core knowledge files as the zip build.
     Also includes the full .claude-plugin/ directory without rewriting it.
     Excludes templates/ (internal-only, not shipped).
+
+soulmap-ai-claude.zip
+    Claude.ai Custom Skills upload archive. All shipped files are prefixed by
+    soulmap-ai/ and .claude-plugin/ is excluded.
 """
 
 from __future__ import annotations
@@ -76,6 +82,8 @@ def _build_archive(
     label: str,
     *,
     include_claude_plugin: bool,
+    archive_prefix: str = "",
+    validate_entrypoint: bool = False,
 ) -> Path:
     """Build an archive from the requested file set using the requested filename."""
     out_dir = repo_root / "dist"
@@ -84,7 +92,7 @@ def _build_archive(
 
     patterns = _load_distignore(repo_root)
     inputs = _iter_inputs(repo_root)
-    if include_claude_plugin:
+    if include_claude_plugin or validate_entrypoint:
         _assert_single_skill_entrypoint(repo_root)
     if include_claude_plugin:
         inputs = sorted(set(inputs + _iter_claude_plugin_inputs(repo_root)))
@@ -97,7 +105,8 @@ def _build_archive(
             rel = path.relative_to(repo_root).as_posix()
             if _is_ignored(rel, patterns):
                 continue
-            archive.write(path, arcname=rel)
+            arcname = f"{archive_prefix}/{rel}" if archive_prefix else rel
+            archive.write(path, arcname=arcname)
 
     size_kb = out_path.stat().st_size // 1024
     print(f"OK ({label}): {out_path}  (~{size_kb}KB)")
@@ -134,6 +143,18 @@ def build_skill(repo_root: Path) -> Path:
     )
 
 
+def build_claude_ai_zip(repo_root: Path) -> Path:
+    """Build the Claude.ai upload ZIP with a named ``soulmap-ai/`` root."""
+    return _build_archive(
+        repo_root,
+        "soulmap-ai-claude.zip",
+        "claude-ai",
+        include_claude_plugin=False,
+        archive_prefix="soulmap-ai",
+        validate_entrypoint=True,
+    )
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -159,10 +180,16 @@ def main(argv: list[str] | None = None) -> int:
               uv run soulmap build --skill   build the .skill package
         """),
     )
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         "--skill",
         action="store_true",
         help="Build dist/soulmap-ai.skill with .claude-plugin preserved",
+    )
+    group.add_argument(
+        "--claude-ai",
+        action="store_true",
+        help="Build dist/soulmap-ai-claude.zip with a named soulmap-ai/ root",
     )
 
     args = parser.parse_args(argv)
@@ -170,6 +197,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.skill:
         build_skill(repo_root)
+    elif args.claude_ai:
+        build_claude_ai_zip(repo_root)
     else:
         build_zip(repo_root)
 
