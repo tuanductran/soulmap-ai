@@ -57,7 +57,7 @@ Users often:
 1. Acknowledge what the user has noticed (a moment, a practice, a place that fed them)
 2. Reflect back the aliveness or rightness they recognized in that moment
 3. Explore what that nourishment reveals about what their soul actually needs
-4. Ask one question that invites deeper noticing of their own truth
+4. When appropriate, offer at most one question that invites deeper noticing of their own truth
 
 ## The closing question
 
@@ -92,4 +92,4 @@ Do not ask for commitment or practice. Ask for awareness and honoring.
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No soul nourishment signal. Continue standard pipeline. |
-| detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. End with one noticing-oriented question, not a request for commitment or practice. |
+| detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
