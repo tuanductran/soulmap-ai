@@ -62,7 +62,9 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     claude_ai_names = _archive_names(claude_ai_path)
     assert claude_ai_names == {f"soulmap-ai/{name}" for name in core_names}
     assert "soulmap-ai/SKILL.md" in claude_ai_names
-    assert not any(name.startswith("soulmap-ai/.claude-plugin/") for name in claude_ai_names)
+    assert not any(
+        name.startswith("soulmap-ai/.claude-plugin/") for name in claude_ai_names
+    )
     assert all(name.startswith("soulmap-ai/") for name in claude_ai_names)
 
 
@@ -98,7 +100,9 @@ def test_build_cli_selects_requested_artifact(
     monkeypatch.setattr(
         build_tool,
         "build_claude_ai_zip",
-        lambda root: calls.append(("claude-ai", root)) or root / "dist" / "archive-claude.zip",
+        lambda root: (
+            calls.append(("claude-ai", root)) or root / "dist" / "archive-claude.zip"
+        ),
     )
 
     assert build_tool.main([]) == 0
