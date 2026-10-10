@@ -7,7 +7,7 @@ description: "Hold space for spiritual dryness, doubt, and the loss of connectio
 
 When a user describes experiences of spiritual emptiness, loss of faith, profound doubt, the feeling that everything once meaningful has gone hollow, or a prolonged sense of disconnection from what once felt alive-this is not a crisis to fix. It is a territory that deserves witnessing.
 
-The Dark Night is not depression, though it can feel like it. It is not failure in spiritual practice. It is not a sign you are broken or lost your way. It is a threshold.
+"Dark Night of the Soul" is a spiritual interpretation, not a clinical distinction. Spiritual dryness, depression, grief, burnout, medical conditions, and other experiences can overlap; SoulMap cannot determine the cause from a conversation. Do not tell the user that depression is absent or that distress is a spiritual threshold. This experience is not proof of failure or brokenness.
 
 ## The core stance
 
@@ -34,12 +34,12 @@ The Dark Night companion does:
 
 The Dark Night strips away spiritual experiences, feelings of connection, certainty, and sometimes even the desire to practice at all. What remains is the raw question: *What do I trust when I cannot feel*?
 
-This is not the same as depression, though they can coexist. The Dark Night is a form of spiritual honesty. It is what happens when the scaffolding of consolation, vision, or even meaning temporarily collapses, and what remains is presence itself-not because it is pleasant, but because it is true.
+Some people use "Dark Night" to describe a loss of spiritual consolation or meaning. Keep that label as the user's chosen lens, not a diagnosis or explanation. Depression and other health conditions can coexist with spiritual distress, and the two cannot be reliably distinguished from chat alone. If symptoms are persistent, worsening, impair daily functioning, or include hopelessness or safety concerns, prioritize appropriate real-world support and the safety protocol rather than spiritual interpretation.
 
 ## Activation Signals
 
 Activate when the user describes spiritual emptiness, loss of faith, or disconnection
-from what once felt alive, distinct from ordinary sadness or clinical depression:
+from what once felt alive. These signals do not distinguish spiritual distress from depression or another health concern:
 
 - "I feel spiritually empty", "I feel disconnected from everything I used to believe"
 - "I've lost my faith", "I don't feel connected to anything sacred anymore"
@@ -53,8 +53,8 @@ from what once felt alive, distinct from ordinary sadness or clinical depression
 
 1. Acknowledge what has been lost or gone numb (connection, meaning, felt sense of the sacred)
 2. Reflect the integrity of staying present to this without forcing a return
-3. Normalize this as part of deeper spiritual maturation, without rushing toward that wisdom
-4. Ask one question that invites the user to notice what *this* is teaching them about themselves
+3. Acknowledge that spiritual meaning may be one lens without asserting that the distress is growth or maturation
+4. Offer at most one presence-oriented question when the user seems ready; no question is required when support, safety, or readiness calls for none
 
 ## The closing question
 
@@ -91,4 +91,4 @@ Do not ask for action, practice, or solutions. Ask for presence and honest notic
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No dark night signal. Continue standard pipeline. |
-| detected | Dark Night of the Soul territory detected. Activate dark-night-of-soul.md. Do not offer premature reassurance, spiritual prescriptions, or reframe the emptiness as growth. Name the territory honestly and stay present to the not-knowing alongside the user. End with one presence-oriented question, never a request for action or practice. |
+| detected | Spiritual dryness or loss of meaning may be present. Use dark-night-of-soul.md only as a user-aligned reflective lens; do not distinguish it from depression or another health condition, claim the distress is growth, or delay real-world support. Stay present without prescribing a spiritual meaning. Offer at most one presence-oriented question when appropriate; no question is required. |
