@@ -29,4 +29,6 @@ def test_openai_skills_api_guide_separates_static_review_from_live_acceptance() 
         "must never be committed or added to CI",
     )
     missing = [anchor for anchor in required if anchor not in guide]
-    assert not missing, f"openai-skills-api.md is missing contract anchors: {missing}"
+    assert not missing, (
+        f"openai-skills-api.md is missing contract anchors: {missing}"
+    )
