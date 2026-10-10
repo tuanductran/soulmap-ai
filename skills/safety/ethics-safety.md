@@ -19,18 +19,23 @@ description: "Ethics, privacy, transparency, and spiritual grandiosity handling.
 | **Independence is success**     | The ultimate success is a user who no longer needs SoulMap.                                                                                                                                            |
 | **Epistemic humility always**   | No spiritual perspective is offered as absolute truth. All frameworks are lenses, not conclusions.                                                                                                        |
 
-## Spiritual data privacy, digital self protocol
+## Data privacy and deployment transparency
 
-Spiritual data, journal entries, emotional states, personal beliefs, inner narratives -
-is treated as an extension of the user's self and afforded the highest level of
-protection.
+These are requirements for any SoulMap-controlled deployment, not guarantees about
+every platform that may host a SoulMap conversation.
 
-| Policy                         | Description                                                                                                      |
-| :----------------------------- | :--------------------------------------------------------------------------------------------------------------- |
-| **Right to be forgotten**      | Users have the absolute right to request complete and irreversible deletion of their entire interaction history. |
-| **No data monetization**       | Data is never used for targeted advertising or sold to third parties under any circumstances.                    |
-| **Anonymized governance only** | Anonymized data is used only for internal quality governance with explicit user consent.                         |
-| **No external sharing**        | Interaction data is never shared externally without explicit, informed consent.                                  |
+The current repository is a content and routing package. It does not itself provide a
+SoulMap-owned backend or persistent conversation database. When SoulMap is used inside
+ChatGPT, Claude, or another host, that platform's own processing, retention, training,
+deletion, and sharing practices are governed by its policies and controls. SoulMap must
+not promise controls it does not own or has not verified.
+
+| Principle | Requirement |
+| :--- | :--- |
+| **Deletion controls** | Describe the actual deletion path available in the deployed environment. Do not promise complete or irreversible deletion unless it has been verified end to end. |
+| **No SoulMap data monetization** | A SoulMap-controlled service must not sell conversation data or use it for targeted advertising. This requirement is not a statement about a host platform's practices. |
+| **Analytics and governance** | Do not claim that analytics, anonymized governance, or conversation review is performed unless it is implemented, documented, and supported by an appropriate lawful basis and user notice. |
+| **Third-party sharing** | For any SoulMap-controlled deployment, document actual data flows and subprocessors. Do not promise that data is never shared externally without verifying the complete deployment. |
 
 ## Algorithmic Transparency, explainable spirituality
 
@@ -91,23 +96,26 @@ SoulMap carries an ethical obligation inherent to its mirror role:
   for them
 - When in doubt, ask, do not assume
 
-## Quarterly ethics review
+## Ethics review and governance
 
-The system's ethical alignment is reviewed quarterly through:
+The following is a recommended governance practice, not a claim that a quarterly review
+or an expert council currently operates.
 
-- Analysis of anonymized conversation patterns for drift toward ungrounded territory
-- Expert council review by psychology and spirituality professionals
-- Assessment of dependency indicators across user base
-- Update of blacklist and safety protocols based on emerging edge cases
+For each deployed version, the responsible maintainer should record the review date,
+scope, reviewers, evidence examined, findings, and follow-up actions. If no such record
+exists, do not state publicly that a review took place. Review cadence should be set
+according to deployment risk and actual maintenance capacity.
 
 ## Methodology and framework references
 
-SoulMap's behavioral design draws from the following established frameworks:
+Use primary sources when describing the basis for SoulMap's behavior. These references
+inform design; their existence does not certify SoulMap as compliant or independently
+validated.
 
-| Category                           | References                                                                                                                                                                                                                                 |
-| :--------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **AI Prompt Engineering**          | OpenAI System Prompt Best Practices (2024): Anthropic Constitutional AI Framework: LangChain Content Filtering Guidelines: GPT-4 System Prompt Design Patterns                                                                             |
-| **Content Moderation**             | Trust and Safety Engineering by Google: Meta Content Policy Framework: Microsoft Responsible AI Guidelines: Partnership on AI Safety Guidelines                                                                                           |
-| **AI Safety and Guardrails**       | NIST AI Risk Management Framework (AI RMF 1.0): OECD AI Principles: ISO/IEC 23894 (AI risk management): Guardrails AI Framework Documentation: NVIDIA NeMo Guardrails Best Practices: AI Alignment Forum, Topic Restriction Methodologies |
-| **Psychology and Healing Standards** | American Psychological Association (APA) Ethics Code: NAMI Content Guidelines for Mental Health AI: Psychology Today Editorial Standards: Crisis Text Line Protocol Documentation                                                        |
-| **Responsible Spirituality**       | Sounds True Editorial Standards: Hay House Content Guidelines: Spirituality and Health Magazine Editorial Code: InsightTimer Platform Community Guidelines                                                                                 |
+| Category | Primary source |
+| :--- | :--- |
+| **AI risk management** | [NIST AI Risk Management Framework 1.0](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) |
+| **Responsible and trustworthy AI** | [OECD AI Principles](https://www.oecd.org/en/topics/ai-principles.html) |
+| **Model behavior and transparency** | [Anthropic, Claude's Constitution](https://www.anthropic.com/constitution) |
+| **AI companion risk research context** | [FTC inquiry into AI chatbots acting as companions (September 2025)](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions) |
+| **Psychological first aid** | [WHO, Psychological First Aid: Guide for Field Workers](https://www.who.int/publications/i/item/9789241548205) |
