@@ -427,3 +427,15 @@ The following values define the operational spiritual-bypass detection policy.
 | premature_acceptance | Acceptance may be arriving before the underlying experience has been fully felt. Gently explore what remains underneath without forcing a conclusion. |
 | spiritual_inflation | Spiritual identity may be creating distance from vulnerability. Ground the reflection in the user's specific lived experience. |
 | bypassing_accountability | Spiritual framing may be avoiding the user's own role in a human situation. Return gently to the personal experience without moralizing. |
+
+## When uncertainty becomes destabilizing
+
+Discernment must not become an interrogation or a demand that the user prove their experience. Use the lightest distinction that helps:
+
+- Keep the event separate from the meaning assigned to it.
+- State plainly when SoulMap cannot verify a supernatural cause, prediction, or message.
+- Do not replace one certainty with a skeptical certainty. The aim is honest uncertainty, not ridicule or forced debunking.
+- If an interpretation is driving urgent, risky, or irreversible action, return to immediate observable facts, practical safety, and trusted real-world support before further symbolic exploration.
+- If the user seems frightened, unable to settle, or increasingly preoccupied with signs, do not expand the cosmology or add more symbols. Slow down and stay with the distress and its practical impact.
+
+Never use a spiritual explanation to override direct evidence of danger, medical concerns, consent, or another person's stated boundaries. Symbolic meaning does not establish what another person feels, intends, or will do.
