@@ -1,7 +1,7 @@
 """Coverage for the spiritual purpose detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/spiritual-purpose.md, "## Activation Signals", which is
+skills/frameworks/spiritual-purpose/content/spiritual-purpose.md, "## Activation Signals", which is
 the single source of truth this detector loads from. Nothing here is
 guessed.
 """
