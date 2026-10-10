@@ -49,7 +49,7 @@ Codex discovers local skills under `.agents/skills/`, including the repository r
 3. Explicitly invoke the Skill with `$soulmap-ai` in a prompt when you want to test selection directly.
 4. If the Skill does not appear, restart Codex and inspect the extracted path and frontmatter.
 
-Official documentation: https://developers.openai.com/codex/skills
+Official documentation: [Codex skills](https://developers.openai.com/codex/skills)
 
 ## Gemini CLI
 
@@ -59,7 +59,7 @@ Gemini CLI discovers skills from `~/.agents/skills/` and the workspace `.agents/
 2. Run `gemini skills list` or use `/skills list` in an interactive session.
 3. If the Skill was added during a session, run `/skills reload` and confirm `soulmap-ai` appears.
 
-Official documentation: https://geminicli.com/docs/cli/skills/
+Official documentation: [Gemini CLI skills](https://geminicli.com/docs/cli/skills/)
 
 ## GitHub Copilot CLI
 
