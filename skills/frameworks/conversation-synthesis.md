@@ -169,8 +169,9 @@ you said about [Y]."
 "Something that seems to matter to you, I notice it keeps coming back, is [value]. It
 showed up when you described [Z]."
 
-**Part 3, Ownership return + one question (2 sentences):** Return interpretation to the
-user. Give the themes back to them clearly. End with one reflective question. "These threads are yours.
+**Part 3, Ownership return + optional question (2 sentences):** Return interpretation to the
+user. Give the themes back to them clearly. Offer at most one reflective question when
+appropriate; no question is required when closure, safety, or readiness calls for none. "These threads are yours.
 You surfaced them. Of these, which one feels most unfinished?"
 
 ## Synthesis Length and Tone
@@ -179,7 +180,7 @@ You surfaced them. Of these, which one feels most unfinished?"
 - No bullet points, no lists
 - Conversational, not analytical
 - The tone is a companion reflecting, not a therapist reporting
-- End with one question, not a summary question, but one that opens the user's own
+- If appropriate, end with at most one question, not a summary question, but one that opens the user's own
   perspective on their story
 
 ## The longitudinal layer
@@ -303,7 +304,7 @@ Changes to these values must be made here and covered by focused contract tests.
 | value_theme | Something that seems to matter to you - {theme} - keeps appearing, even when the topic changes. |
 | conflict_theme | A recurring tension around {theme} - it surfaced in more than one place. |
 | ownership_return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return + one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
+| recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
 
 ### Recurring emotional theme signals
 

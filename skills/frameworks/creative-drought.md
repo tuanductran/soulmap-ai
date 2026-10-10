@@ -113,7 +113,7 @@ change before the work can come, or the well is replenishing. Do not prescribe
 which, frame it as a possibility.
 
 > "Sometimes what feels like nothing is actually a necessary emptying."
-> "The drought often precedes something the old work wasn't making space for."
+> "A pause can create room to notice what no longer fits, though no insight or growth is guaranteed."
 
 **Step 4, One question (last sentence)**
 From the Creative Drought section of deep-inquiry-bank.md. Direct toward: what
@@ -155,7 +155,7 @@ their life they cannot return to), move to grief-companion.md.
 If the user connects it to identity ("I don't know who I am without this"), move to
 existential-companion.md.
 
-If the user has a realization about what the drought has been protecting them from,
+If the user offers a realization about what the drought may have been protecting them from,
 move to meaning-integration.md.
 
 ## Detection signals
@@ -197,7 +197,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No creative drought signal. Continue standard pipeline. |
-| detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect what the drought may be saying. End with one creative drought question from deep-inquiry-bank.md (Creative Drought Questions section). |
+| detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
 
 ### Secondary signal groups
 
