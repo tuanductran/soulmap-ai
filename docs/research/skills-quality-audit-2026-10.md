@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Seventy-four distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, and #644 contain reviewed changes pending final CI and merge. One large canonical policy file still requires a deeper cross-reference and evaluation audit: `skills/safety/whitelist-blacklist-system.md`. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, #644, and #645 contain reviewed changes pending final CI and merge. No skill file remains without a review disposition, but the final safety-policy change and other open PRs must pass required checks before the audit can close. The orchestration fallback wording was verified as aligned on current `main`.
 
 ## Confirmed findings across the current audit batches
 
@@ -23,6 +23,7 @@
 12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 merged): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
 13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 pending): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
 14. `skills/meta/epistemic-guardrails.md` (PR #644 pending): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
+15. `skills/safety/whitelist-blacklist-system.md` (PR #645 pending): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
 
 ## External authoring references
 
@@ -103,7 +104,7 @@ Status meanings:
 - [x] `skills/safety/ethics-safety.md` - Targeted review and changes in PR #639; pending CI/merge.
 - [x] `skills/safety/prompt-injection-defense.md` - Reviewed; no change warranted in this pass: it distinguishes malicious instruction override from ordinary emotional processing and preserves safety/scope limits.
 - [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
-- [ ] `skills/safety/whitelist-blacklist-system.md` - Inventory screened; semantic review pending.
+- [x] `skills/safety/whitelist-blacklist-system.md` - Targeted review and changes in PR #645; pending CI/merge.
 
 ### `skills/soulmate/`
 
