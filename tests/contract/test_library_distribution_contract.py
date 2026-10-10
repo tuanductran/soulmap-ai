@@ -50,6 +50,16 @@ def test_skill_archive_contains_exactly_one_skill_entrypoint() -> None:
     assert skill_files == ["SKILL.md"]
 
 
+def test_claude_ai_archive_contains_one_entrypoint_under_named_root() -> None:
+    artifact = build_skill.build_claude_ai_zip(REPO_ROOT)
+    with zipfile.ZipFile(artifact) as archive:
+        names = archive.namelist()
+        skill_files = [name for name in names if Path(name).name == "SKILL.md"]
+    assert skill_files == ["soulmap-ai/SKILL.md"]
+    assert all(name.startswith("soulmap-ai/") for name in names)
+    assert not any(".claude-plugin/" in name for name in names)
+
+
 def test_library_documentation_and_source_of_truth_paths_exist() -> None:
     assert (REPO_ROOT / "docs/operations/LIBRARY.md").is_file()
     assert (REPO_ROOT / "docs/operations/UPLOAD.md").is_file()
