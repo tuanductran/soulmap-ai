@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Twenty-three distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, and #637 are merged; #636, #638, and #639 contain additional reviewed changes pending final CI and merge. Fifty-two files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Thirty-two distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, and #639 are merged; #636 and #640 contain reviewed changes pending final CI and merge. Forty-three files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -16,8 +16,9 @@
 5. `skills/frameworks/creative-drought.md` and `skills/frameworks/perfectionism-paralysis.md`: removed predictive growth language and overconfident causal claims; explanations remain tentative and user-grounded.
 6. `skills/frameworks/empath-boundary.md`: treats "absorbing emotions" as the user's description of an experience, not proof of literal emotional or energy transfer.
 7. `skills/frameworks/conversation-synthesis.md`: makes the closing question optional when readiness, safety, or closure calls for none.
-8. `skills/brand/competitive-differentiation.md` (PR #638 pending): replaces broad competitor assertions with sourced, dated statements from official product/privacy documentation.
-9. `skills/safety/ethics-safety.md` (PR #639 pending): separates privacy/governance requirements from unverified claims about current operations and host-platform data handling.
+8. `skills/brand/competitive-differentiation.md` (PR #638 merged): replaces broad competitor assertions with sourced, dated statements from official product/privacy documentation.
+9. `skills/safety/ethics-safety.md` (PR #639 merged): separates privacy/governance requirements from unverified claims about current operations and host-platform data handling.
+10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; this PR remains pending CI/merge.
 
 ## External authoring references
 
@@ -47,21 +48,21 @@ Status meanings:
 ### `skills/frameworks/`
 
 - [x] `skills/frameworks/ancestral-patterns.md` - Targeted review in #635; see the linked PR history.
-- [ ] `skills/frameworks/anger-companion.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/anger-companion.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/conversation-synthesis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/creative-drought.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/divine-guidance.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/divine-guidance.md` - Targeted review in #640 pending CI/merge.
 - [ ] `skills/frameworks/emotional-deescalation.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
-- [ ] `skills/frameworks/existential-companion.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/existential-companion.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/feminine-masculine-dynamics.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/grief-companion.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/life-direction.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/meaning-integration.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/life-direction.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/meaning-integration.md` - Targeted review in #640 pending CI/merge.
 - [ ] `skills/frameworks/money-self-worth.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/pattern-mapper.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
@@ -70,8 +71,8 @@ Status meanings:
 - [ ] `skills/frameworks/self-compassion.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/shadow-patterns.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
-- [ ] `skills/frameworks/soul-nourishment.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/spiritual-purpose.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/soul-nourishment.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/spiritual-purpose.md` - Targeted review in #640 pending CI/merge.
 
 ### `skills/meta/`
 
@@ -103,8 +104,8 @@ Status meanings:
 ### `skills/soulmate/`
 
 - [ ] `skills/soulmate/numerology-connection-lens.md` - Inventory screened; semantic review pending.
-- [ ] `skills/soulmate/partnership-patterns.md` - Inventory screened; semantic review pending.
-- [ ] `skills/soulmate/soulmate-longing.md` - Inventory screened; semantic review pending.
+- [x] `skills/soulmate/partnership-patterns.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/soulmate/soulmate-longing.md` - Targeted review in #640 pending CI/merge.
 
 ### `skills/spiritual/`
 
