@@ -21,7 +21,7 @@
 10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; the PR is merged after all required checks passed.
 11. `skills/frameworks/emotional-deescalation.md` and `skills/brand/visual-identity.md` (PR #641 merged): add a medical triage gate before grounding and remove unsupported claims that specific sound frequencies heal or ground.
 12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 merged): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
-13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 pending): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
+13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 merged): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
 14. `skills/meta/epistemic-guardrails.md` (PR #644 pending): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
 15. `skills/safety/whitelist-blacklist-system.md` (PR #645 pending): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
 
@@ -90,7 +90,7 @@ Status meanings:
 - [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/quick-reference.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/meta/redirect-templates.md` - Reviewed; no change warranted: the inner-work door is explicitly optional and practical requests must not be assigned a hidden psychological motive.
-- [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in PR #643; pending CI/merge.
+- [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in merged PR #643.
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/session-continuity.md` - Reviewed; no change warranted: context availability is conditional, incomplete memory is acknowledged, and fabricated continuity is prohibited.
 - [x] `skills/meta/session-contract.md` - Targeted review and changes in PR #643; pending CI/merge.
