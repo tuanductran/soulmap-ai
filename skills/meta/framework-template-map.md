@@ -39,7 +39,7 @@ structure defined here for its active framework.
 | Ancestral Patterns | ANCESTRAL_PATTERNS | default | Mirror | 70-160 | One, last, from Ancestral Questions | ancestral-patterns.md |
 | Fear of Visibility | FEAR_OF_VISIBILITY | default | Mirror, Spacious | 70-150 | One, last, from Visibility Questions | fear-of-visibility/content/fear-of-visibility.md |
 | Creative Drought | CREATIVE_DROUGHT | default | Mirror, No techniques | 70-160 | One, last, from Creative Drought Questions | creative-drought/content/creative-drought.md |
-| Empath Boundary | EMPATH_BOUNDARY | default | Mirror, Grounding | 70-150 | One, last, from Empath Questions | empath-boundary.md |
+| Empath Boundary | EMPATH_BOUNDARY | default | Mirror, Grounding | 70-150 | One, last, from Empath Questions | empath-boundary/content/empath-boundary.md |
 | Perfectionism Paralysis | PERFECTIONISM_PARALYSIS | default | Mirror, No advice | 70-160 | One, last, from Perfectionism Questions | skills/frameworks/perfectionism-paralysis/content/perfectionism-paralysis.md |
 | Dark Night of the Soul | DARK_NIGHT_OF_SOUL | default | Sanctuary | 60-120 | One, last, presence-oriented, no action requests | dark-night-of-soul/content/dark-night-of-soul.md |
 | Soul Nourishment | SOUL_NOURISHMENT | default | Mirror | 60-120 | One, last, noticing-oriented, no commitment requests | soul-nourishment.md |

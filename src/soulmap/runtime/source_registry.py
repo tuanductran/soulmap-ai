@@ -54,7 +54,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "empath-boundary": (
-        "skills/frameworks/empath-boundary.md",
+        "skills/frameworks/empath-boundary/content/empath-boundary.md",
         "Activation Signals",
         "Runtime detection contract",
         "Guidance",
