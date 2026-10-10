@@ -65,7 +65,9 @@ def test_verifier_accepts_both_valid_artifacts(tmp_path: Path) -> None:
     assert result.returncode == 0
     assert "PASS extracted artifact boundary: dist/soulmap-ai.zip" in result.stdout
     assert "PASS extracted artifact boundary: dist/soulmap-ai.skill" in result.stdout
-    assert "PASS extracted artifact boundary: dist/soulmap-ai-claude.zip" in result.stdout
+    assert (
+        "PASS extracted artifact boundary: dist/soulmap-ai-claude.zip" in result.stdout
+    )
     assert result.stderr == ""
     for archive_name in ("soulmap-ai.zip", "soulmap-ai.skill"):
         with zipfile.ZipFile(tmp_path / "dist" / archive_name) as archive:
@@ -176,7 +178,9 @@ def test_verifier_rejects_tampered_claude_ai_member(tmp_path: Path) -> None:
     assert "content mismatch for shipped member soulmap-ai/SKILL.md" in result.stderr
 
 
-def test_verifier_checks_root_style_links_after_claude_ai_prefix(tmp_path: Path) -> None:
+def test_verifier_checks_root_style_links_after_claude_ai_prefix(
+    tmp_path: Path,
+) -> None:
     _build_valid_repo(tmp_path)
     _write(tmp_path, "SKILL.md", "[Public](skills/public.md)\\n")
     build_skill.build_zip(tmp_path)
