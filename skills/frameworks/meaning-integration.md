@@ -158,8 +158,8 @@ mean to just stay with seeing this for a while? What does the noticing itself op
 
 ## The conscious noticing question
 
-Every integration response closes with one question that invites the user to carry the
-awareness into daily life, not as a task, but as an orientation.
+When appropriate, an integration response may close with at most one question that invites the user to carry the
+awareness into daily life, not as a task, but as an orientation. A reflection or quiet close is valid when the user is not ready.
 
 **Framework for the closing question:**
 
@@ -347,9 +347,9 @@ The validation bonus applies only when an assistant integration trigger occurred
 
 | Type | Guidance |
 | :--- | :--- |
-| hold_first | Insight detected. First honor the insight with holding language. Do not immediately move to integration questions. Let the insight breathe. Only after the user settles, offer one integration question. |
+| hold_first | Insight detected. First honor the insight with holding language. Do not immediately move to integration questions. Let the insight breathe. Only after the user settles, consider offering at most one integration question if it would help; no question is required. |
 | when_it_appears | Insight detected and the user is locating it in time or context. Explore when the pattern usually appears. |
 | noticing_earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
 | different_response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |
 | detected_prefix | Insight moment detected (strength: {strength}, type: {insight_type}). Activate Meaning Integration Guide. {guidance} |
-| detected_suffix | End with one conscious-noticing question from the deep-inquiry bank: the 'Integration-Specific Questions' section. Do NOT prescribe change. Focus on awareness. Do not use the word 'should'. |
+| detected_suffix | Offer at most one conscious-noticing question from the deep-inquiry bank when appropriate: the 'Integration-Specific Questions' section. Do NOT prescribe change. No question is required when it would add pressure. Focus on awareness. Do not use the word 'should'. |

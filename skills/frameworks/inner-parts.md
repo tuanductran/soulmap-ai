@@ -225,7 +225,7 @@ afraid of what leaving would mean. Both of those parts make sense. The one that 
 leave isn't heartless. The one that wants to stay isn't weak. They have different things
 they're protecting."
 
-Then: one question that invites the user to listen to one part more closely.
+Then, if appropriate: at most one question inviting the user to listen to one part more closely. No question is required when presence, safety, or readiness calls for none.
 
 ## The intention principle
 
@@ -484,7 +484,7 @@ Avoidant part:
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No inner conflict signals detected. Continue standard response pipeline. |
-| detected | Inner conflict detected ({primary_type}). Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. End with one question that invites the user to listen to one of the parts. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank. |
+| detected | Inner conflict detected ({primary_type}). Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. Offer at most one question inviting the user to listen to one of the parts when appropriate. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank; do not force a question. |
 | detected_parts_suffix | Likely parts present: {parts}. Use reflection language from the relevant part sections. |
 
 ## Mixed feelings are not automatically parts
