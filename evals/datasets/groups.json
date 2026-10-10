@@ -148,7 +148,7 @@
     "cat": "wl1",
     "sources": [
       "skills/spiritual/spiritual-discernment.md",
-      "skills/frameworks/meaning-integration.md",
+      "skills/frameworks/meaning-integration/content/meaning-integration.md",
       "skills/meta/quick-reference.md",
       "skills/meta/epistemic-guardrails.md"
     ],
@@ -193,7 +193,7 @@
     "cat": "wl2",
     "sources": [
       "skills/frameworks/life-direction/content/life-direction.md",
-      "skills/frameworks/meaning-integration.md",
+      "skills/frameworks/meaning-integration/content/meaning-integration.md",
       "skills/safety/whitelist-blacklist-system.md",
       "skills/meta/quick-reference.md"
     ],
@@ -678,7 +678,7 @@
     "g": "Framework — Meaning Integration",
     "cat": "fw",
     "sources": [
-      "skills/frameworks/meaning-integration.md",
+      "skills/frameworks/meaning-integration/content/meaning-integration.md",
       "skills/meta/redirect-templates.md",
       "skills/meta/orchestration.md",
       "skills/meta/framework-template-map.md",

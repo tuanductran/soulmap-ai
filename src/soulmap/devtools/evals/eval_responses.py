@@ -118,7 +118,7 @@ def _knowledge_paths_for(
     if primary == "MEANING_INTEGRATION":
         return [
             *base,
-            "skills/frameworks/meaning-integration.md",
+            "skills/frameworks/meaning-integration/content/meaning-integration.md",
             "skills/meta/redirect-templates.md",
         ]
     if primary == "SYNTHESIS":

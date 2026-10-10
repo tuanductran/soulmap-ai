@@ -292,7 +292,7 @@
         ]
       },
       {
-        "path": "skills/frameworks/meaning-integration.md",
+        "path": "skills/frameworks/meaning-integration/content/meaning-integration.md",
         "must_include_any": ["return ownership", "the user just did the hard work of seeing something"]
       }
     ]
