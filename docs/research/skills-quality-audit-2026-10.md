@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Thirty-four distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, and #639 are merged; #636, #640, and #641 contain reviewed changes pending final CI and merge. Forty-one files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Thirty-four distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Forty-one files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -18,7 +18,7 @@
 7. `skills/frameworks/conversation-synthesis.md`: makes the closing question optional when readiness, safety, or closure calls for none.
 8. `skills/brand/competitive-differentiation.md` (PR #638 merged): replaces broad competitor assertions with sourced, dated statements from official product/privacy documentation.
 9. `skills/safety/ethics-safety.md` (PR #639 merged): separates privacy/governance requirements from unverified claims about current operations and host-platform data handling.
-10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; this PR remains pending CI/merge.
+10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; the PR is merged after all required checks passed.
 11. `skills/frameworks/emotional-deescalation.md` and `skills/brand/visual-identity.md` (PR #641 pending): add a medical triage gate before grounding and remove unsupported claims that specific sound frequencies heal or ground.
 
 ## External authoring references
@@ -49,7 +49,7 @@ Status meanings:
 ### `skills/frameworks/`
 
 - [x] `skills/frameworks/ancestral-patterns.md` - Targeted review in #635; see the linked PR history.
-- [x] `skills/frameworks/anger-companion.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/anger-companion.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/conversation-synthesis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/creative-drought.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
