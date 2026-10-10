@@ -63,7 +63,7 @@ The existing generic ZIP can be extracted as a folder-based Skill for compatible
 
 **Status:** Conditional / blocked by external platform readiness.
 
-The repository has documented ChatGPT Custom GPT, Gemini Gem, and Poe integration surfaces plus local Agent Skills discovery guidance. Further platform adapters or hosted integrations should only become active implementation tracks when there is a real deployment owner and a configured integration to validate.
+The repository has documented ChatGPT Custom GPT, Gemini Apps, Poe, and local Agent Skills discovery surfaces. Further platform adapters or hosted integrations should only become active implementation tracks when there is a real deployment owner and a configured integration to validate.
 
 Potential work:
 
