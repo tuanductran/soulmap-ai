@@ -139,3 +139,29 @@ def test_chatgpt_and_poe_guides_avoid_stale_deployment_assumptions() -> None:
         f"integration README is missing current platform guidance: {missing}"
     )
     assert "Base model: `Claude-3.5-Sonnet` or `GPT-4o`" not in text
+
+
+def test_gemini_apps_guide_tracks_gems_to_skills_transition() -> None:
+    integration_root = REPO_ROOT / "docs" / "integrations"
+    guide = (integration_root / "gemini-apps-skills.md").read_text(encoding="utf-8")
+    index = (integration_root / "README.md").read_text(encoding="utf-8")
+    legacy = (integration_root / "gemini-instructions.md").read_text(encoding="utf-8")
+
+    required = (
+        "November 2026",
+        "March 2027",
+        "June 2027",
+        "dist/soulmap-ai.zip",
+        "Replace skill",
+        "been uploaded or accepted in a live Gemini Apps account",
+        "Gemini CLI local Agent Skills are different product surfaces",
+        "https://support.Google.com/gemini/answer/18560919",
+    )
+    missing = [anchor for anchor in required if anchor not in guide]
+    assert not missing, (
+        f"gemini-apps-skills.md is missing transition contract anchors: {missing}"
+    )
+    assert "[Gemini Apps Skills guide](gemini-apps-skills.md)" in index
+    assert "Legacy platform note" in legacy
+    assert "up to 10 uploaded files" not in index
+    assert "upload knowledge files (max 10)" not in index
