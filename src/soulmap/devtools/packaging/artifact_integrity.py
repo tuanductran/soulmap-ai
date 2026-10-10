@@ -19,7 +19,11 @@ class ArtifactContentError(ValueError):
 
 
 def verify_member_content(
-    archive: zipfile.ZipFile, repo_root: Path, member_names: set[str]
+    archive: zipfile.ZipFile,
+    repo_root: Path,
+    member_names: set[str],
+    *,
+    archive_prefix: str = "",
 ) -> None:
     """Verify that every named archive member's bytes match its source file.
 
@@ -34,7 +38,12 @@ def verify_member_content(
             file's bytes, or the source file is missing.
     """
     for name in sorted(member_names):
-        source_path = repo_root / name
+        if archive_prefix and not name.startswith(archive_prefix):
+            raise ArtifactContentError(
+                f"shipped member is outside archive prefix {archive_prefix!r}: {name}"
+            )
+        source_name = name[len(archive_prefix) :] if archive_prefix else name
+        source_path = repo_root / source_name
         if not source_path.is_file():
             raise ArtifactContentError(
                 f"source file for shipped member is missing: {name}"
