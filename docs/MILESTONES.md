@@ -36,12 +36,12 @@ notes, tests, and release records.
 | 20 | Shipped-Skills Reference Boundary | Closed a shipped-skill reference gap where boundary validation did not cover a repository-only surface. |
 | 21 | Competitive Evolution Audit | Reviewed external AI/agent patterns and deliberately retained the existing architecture where no missing capability justified adoption. |
 | 22 | Shipped-Package Boundary | Audited and tightened the boundary between repository-only material and the shipped package. |
-| 23 | Non-Claude Distribution Guide Refresh | Documented portable local Agent Skills for Codex, Gemini CLI, and Copilot; refreshed ChatGPT/Poe guidance and documented the Gemini Apps Gems-to-Skills transition without claiming live acceptance. |
 | 23 | Dead-Code Audit | Audited for unused code and retained only intentional surfaces, with no unsupported cleanup introduced. |
 | 24 | Research & Audit Tooling | Consolidated research/audit findings into repository-native evidence and process guidance rather than adding speculative runtime features. |
 | 25 | Safety Matrix Closure | Resolved the remaining safety-matrix status gaps; the matrix now distinguishes enforced, bounded, and guidance-only rules without open `partial` rows. |
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
 | 27 | Knowledge-First Architecture Consolidation & Release Hardening | Completed the post-v0.13 architecture consolidation: Python-owned runtime source registry, Markdown-owned detector knowledge, removal of obsolete domain/runtime/library surfaces, a single shipped SoulMap Skill entrypoint, and strengthened release artifact verification and immutable action pinning. |
+| 28 | Non-Claude Distribution Guide Refresh | Documented portable local Agent Skills for Codex, Gemini CLI, and Copilot; refreshed ChatGPT/Poe guidance and documented the Gemini Apps Gems-to-Skills transition without claiming live acceptance. |
 
 ---
 
