@@ -7,7 +7,8 @@ soulmap_version: "0.13.0"
 
 # OpenAI hosted Skills API
 
-**Contract review date:** 2026-10-10  
+**Contract review date:** 2026-10-10
+
 **Status:** Package shape and shipped instructions reviewed; live API acceptance remains unverified.
 
 This is the hosted OpenAI Skills API, not a ChatGPT Custom GPT and not Codex CLI's local `.agents/skills/` discovery.
