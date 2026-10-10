@@ -108,7 +108,10 @@ def _resolve_markdown_target(
         else:
             normalized /= part
     normalized_name = normalized.as_posix()
-    if archive_prefix and not normalized_name.startswith(archive_prefix):
+    if archive_prefix and not (
+        normalized_name == archive_prefix.rstrip("/")
+        or normalized_name.startswith(archive_prefix)
+    ):
         return None
     return normalized_name
 
