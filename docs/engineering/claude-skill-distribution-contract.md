@@ -29,7 +29,7 @@ The repository's `dist/soulmap-ai.skill` currently preserves `.claude-plugin/mar
 
 - `dist/soulmap-ai.zip`: existing generic/manual-extraction artifact; root-level file contract remains unchanged.
 - `dist/soulmap-ai.skill`: existing plugin-metadata-preserving artifact; its contract remains unchanged.
-- `dist/soulmap-ai-claude.zip`: proposed dedicated Claude.ai upload artifact, tracked in Issue #605; not yet implemented or live-upload tested.
+- `dist/soulmap-ai-claude.zip`: dedicated Claude.ai upload artifact with every shipped member under `soulmap-ai/`; repository validation is implemented, but live-upload acceptance has not been tested.
 
 ## Validation boundary
 
