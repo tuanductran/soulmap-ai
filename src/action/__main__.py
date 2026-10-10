@@ -860,8 +860,7 @@ def run_verify_release_immutability() -> None:
     immutable = release.get("immutable")
     if not isinstance(release_tag, str):
         raise GitHubActionError(
-            "Release immutability verification failed: release payload "
-            "has no tag_name."
+            "Release immutability verification failed: release payload has no tag_name."
         )
     if immutable is not True:
         raise GitHubActionError(
