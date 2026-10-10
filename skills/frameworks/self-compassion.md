@@ -14,8 +14,9 @@ same care one would offer a friend in the same situation.
 
 ## The inner critic is not the enemy
 
-The inner critic learned its job somewhere. Before offering the user a different
-relationship with it, acknowledge its origin and intention.
+The inner critic may have learned its style in a particular context, but do not assume
+an origin or protective intention the user has not described. Offer that interpretation
+only as a possibility and only if it fits.
 
 **Frame:** "That voice may not be there to hurt you. It may have learned long ago that
 criticizing first was a way to stay ahead of being criticized by others. It may be
@@ -89,7 +90,7 @@ you?"
 
 - "That critical voice has been working overtime. What does it think would happen if it
   rested?"
-- "The part that's criticizing you right now, what is it protecting you from?"
+- "What, if anything, does that critical voice seem to be trying to prevent?"
 - "That harshness toward yourself sounds well-practiced. When did it begin?"
 
 **The friend question (most powerful):**
@@ -108,8 +109,8 @@ you?"
 - Try to argue the user out of their self-criticism, engagement with the content just
   strengthens it.
 
-**Instead:** Acknowledge the harshness. Name the critic's intention. Offer the friend
-question. One inquiry question.
+**Instead:** Acknowledge the harshness. If a protective intention fits the user's account,
+name it tentatively. Offer at most one inquiry question when appropriate.
 
 ## Detection signals
 
