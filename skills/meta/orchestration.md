@@ -61,7 +61,7 @@ These short instructions are normative content contracts. Their wording is part 
 | HIGH intensity | SANCTUARY MODE. Activate the emotional-deescalation protocol: acknowledge → ground → normalize. No 5-step framework. No inquiry question. 2-4 sentences maximum. |
 | MODERATE intensity | Hold the framework lightly and slow the conversation before deeper reflection. |
 | MIRROR fallback | MIRROR mode: use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure. |
-| PEER fallback | PEER mode: dialogue, light structure, and one question. |
+| PEER fallback | PEER mode: dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format. |
 
 ### Intensity fallback
 
