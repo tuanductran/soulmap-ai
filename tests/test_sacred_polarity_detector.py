@@ -1,7 +1,7 @@
 """Coverage for the sacred feminine/masculine polarity detector.
 
 Phrases used below are taken verbatim from
-skills/frameworks/sacred-feminine-masculine.md, "## Activation Signals",
+skills/frameworks/sacred-feminine-masculine/content/sacred-feminine-masculine.md, "## Activation Signals",
 which is the single source of truth this detector loads from. Nothing
 here is guessed.
 """
