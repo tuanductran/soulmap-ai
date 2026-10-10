@@ -16,7 +16,7 @@
 
 ## External authoring references
 
-- Anthropic's [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) recommends concise, well-structured, tested skills; clear trigger descriptions; progressive disclosure where it helps; and real usage evaluations. This supports checking discoverability and actual use before splitting files merely because they are long.
+- Anthropic's [Skill authoring best practices](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) recommends concise, well-structured, tested skills; clear trigger descriptions; progressive disclosure where it helps; and real usage evaluations. This supports checking discoverability and actual use before splitting files merely because they are long.
 - WHO's [Psychological First Aid guide](https://www.who.int/publications/i/item/9789241548205) emphasizes humane, practical support that respects dignity, culture, and abilities. WHO's guidance includes listening without pressuring people to talk. This is consistent with making reflective questions optional rather than mandatory.
 
 ## File-by-file ledger
