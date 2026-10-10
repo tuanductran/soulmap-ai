@@ -114,7 +114,7 @@ def test_portable_agent_skills_guide_documents_local_install_contract() -> None:
         "GitHub Copilot CLI",
         "https://developers.openai.com/codex/skills",
         "https://geminicli.com/docs/cli/skills/",
-        "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills",
+        "https://docs.GitHub.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills",
         "does not claim",
         "sole SoulMap entrypoint",
     )
