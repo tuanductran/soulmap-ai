@@ -3221,7 +3221,7 @@
     "g": "Framework Coverage — Sacred Polarity",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/sacred-feminine-masculine.md",
+      "skills/frameworks/sacred-feminine-masculine/content/sacred-feminine-masculine.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},
