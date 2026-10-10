@@ -2,6 +2,12 @@
 
 All notable changes to this repository will be documented in this file.
 
+## Unreleased
+
+### Refactor
+
+- **scripts**: remove redundant format, lint, and skill-build shell wrappers; use the canonical `soulmap` CLI directly
+
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
