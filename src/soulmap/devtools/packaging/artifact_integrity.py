@@ -32,6 +32,8 @@ def verify_member_content(
         repo_root: Repository root the members were built from.
         member_names: Archive member names to check, each expected to exist
             as a file at ``repo_root / name``.
+        archive_prefix: Optional path prefix in the archive that is not part of
+            the repository-relative source path.
 
     Raises:
         ArtifactContentError: If a member's bytes differ from the source
