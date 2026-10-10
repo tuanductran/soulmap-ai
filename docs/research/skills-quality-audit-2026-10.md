@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - All 75 files now have an explicit targeted-review disposition for purpose, trigger precision, examples, boundaries, and neighboring overlap. This is not a claim of exhaustive line-by-line proof or complete evaluation coverage. Files with pending PR changes are reviewed but are not complete until required checks pass.
-- All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, and #645 contain reviewed changes pending final CI and merge. No skill file remains without a review disposition, but the final safety-policy change and other open PRs must pass required checks before the audit can close. The orchestration fallback wording was verified as aligned on current `main`.
+- All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #636, #637, #638, #639, #640, #641, #642, #643, #644, and #645 are merged. All 75 files have an explicit targeted-review disposition; no file remains unreviewed in the inventory. Close the parent audit issue only after required post-merge checks pass on the final `main` head. The orchestration fallback wording was verified as aligned on current `main`.
 
 ## Confirmed findings across the current audit batches
 
@@ -23,7 +23,7 @@
 12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 merged): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
 13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 merged): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
 14. `skills/meta/epistemic-guardrails.md` (PR #644 merged): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
-15. `skills/safety/whitelist-blacklist-system.md` (PR #645 pending): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
+15. `skills/safety/whitelist-blacklist-system.md` (PR #645 merged): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
 
 ## External authoring references
 
@@ -41,13 +41,13 @@ Status meanings:
 
 - [x] `skills/brand/brand-doctrine.md` - Reviewed; no change warranted: this is normative brand doctrine and the promise is phrased as a design aim, not a guarantee.
 - [x] `skills/brand/brand-positioning.md` - Reviewed; no change warranted: explicitly excludes prediction, diagnosis, and spiritual authority; promises are bounded.
-- [x] `skills/brand/competitive-differentiation.md` - Targeted review and changes in PR #638; pending CI/merge.
+- [x] `skills/brand/competitive-differentiation.md` - Targeted review and changes in merged PR #638.
 - [x] `skills/brand/consciousness-framework.md` - Reviewed; no change warranted: the 3D/5D terms appear only in the avoid/translate table, while core states are relational rather than a hierarchy.
 - [x] `skills/brand/content-pillars.md` - Reviewed; no change warranted: percentage allocations are internal editorial planning, and the content filters prohibit prediction, spiritual inflation, and dependency hooks.
 - [x] `skills/brand/founder-personal-brand.md` - Reviewed; no change warranted: founder voice is a calibration layer, explicitly subordinate to safety, non-prediction, and non-diagnosis doctrine.
 - [x] `skills/brand/message-hierarchy.md` - Reviewed; no change warranted: public positioning preserves non-therapist, non-guru, non-diagnosis, and non-prediction boundaries.
 - [x] `skills/brand/research-backing.md` - Targeted review in #633; see the linked PR history.
-- [x] `skills/brand/surfaces-and-scope.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/brand/surfaces-and-scope.md` - Targeted review and changes in merged PR #636; required checks passed before merge.
 - [x] `skills/brand/visual-identity.md` - Targeted review and changes in merged PR #641.
 
 ### `skills/frameworks/`
@@ -57,8 +57,8 @@ Status meanings:
 - [x] `skills/frameworks/conversation-synthesis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/creative-drought.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
-- [x] `skills/frameworks/divine-guidance.md` - Targeted review in #640 pending CI/merge.
-- [x] `skills/frameworks/emotional-deescalation.md` - Targeted review and changes in PR #641; pending CI/merge.
+- [x] `skills/frameworks/divine-guidance.md` - Targeted review in merged PR #640.
+- [x] `skills/frameworks/emotional-deescalation.md` - Targeted review and changes in merged PR #641.
 - [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/existential-companion.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
@@ -68,7 +68,7 @@ Status meanings:
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/frameworks/life-direction.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/meaning-integration.md` - Targeted review in #640 pending CI/merge.
-- [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in PR #642; pending CI/merge.
+- [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/pattern-mapper.md` - Reviewed; no change warranted: the non-labeling rule, minimum evidence requirement, and wait-for-a-second-story rule constrain pattern claims.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/relationship-reflection.md` - Reviewed; no change warranted: abuse/coercion exceptions take priority and clinical attachment labels are prohibited.
@@ -93,7 +93,7 @@ Status meanings:
 - [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in merged PR #643.
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/session-continuity.md` - Reviewed; no change warranted: context availability is conditional, incomplete memory is acknowledged, and fabricated continuity is prohibited.
-- [x] `skills/meta/session-contract.md` - Targeted review and changes in PR #643; pending CI/merge.
+- [x] `skills/meta/session-contract.md` - Targeted review and changes in merged PR #643.
 - [x] `skills/meta/stage-classifier.md` - Targeted review and changes in PR #643; pending CI/merge.
 - [x] `skills/meta/user-journey-stages.md` - Reviewed; no change warranted: stages are explicitly non-linear, non-prescriptive, and success is reduced dependency.
 
@@ -104,7 +104,7 @@ Status meanings:
 - [x] `skills/safety/ethics-safety.md` - Targeted review and changes in PR #639; pending CI/merge.
 - [x] `skills/safety/prompt-injection-defense.md` - Reviewed; no change warranted in this pass: it distinguishes malicious instruction override from ordinary emotional processing and preserves safety/scope limits.
 - [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
-- [x] `skills/safety/whitelist-blacklist-system.md` - Targeted review and changes in PR #645; pending CI/merge.
+- [x] `skills/safety/whitelist-blacklist-system.md` - Targeted review and changes in merged PR #645.
 
 ### `skills/soulmate/`
 
@@ -136,10 +136,9 @@ Status meanings:
 - [x] `skills/writing/platform-shapes.md` - Reviewed; no change warranted: surface claims are date-stamped and explicitly must not be repeated as current facts without qualification.
 - [x] `skills/writing/reflection-to-page.md` - Reviewed; no change warranted: distinguishes private processing from public writing, avoids diagnosis, and prohibits engagement hooks.
 
-## Next review queue
+## Closure criteria and follow-up
 
-1. Review the remaining 67 files individually, starting with cross-cutting rule ownership and overlap in `skills/meta/quick-reference.md`, `skills/meta/deep-inquiry-bank.md`, `skills/meta/whitelist-blacklist-system.md`, and `skills/frameworks/conversation-synthesis.md`. Large size alone is not a defect; inspect retrieval/use paths before splitting.
-2. Compare each framework's activation signals and priority against `SOULMAP.md`, `skills/meta/orchestration.md`, the registry, and existing routing/eval cases. Add a new framework only if a demonstrated distinct need is not covered by an existing one.
-3. Review spiritual and soulmate content for symbolic-only framing, consent, non-prediction, and no metaphysical claims presented as fact.
-4. Review brand and writing files for claims about research, platform features, or market conditions that may be stale or lack primary-source support.
-5. Run the repository-required Markdown contracts, lint, tests, safety evaluations, and artifact builds for the final batches. No Python runtime or protected safety constants are changed in this batch.
+- The inventory contains 75/75 files with explicit targeted-review dispositions. Some files were changed; others were intentionally left unchanged because their current boundaries already met the audit criteria.
+- The targeted PR batches (#631, #633-#645) are merged. The audit is not closed until CI, Python Compatibility, CodeQL, P-level governance, and the repository-required content checks pass on the final `main` head after the ledger update.
+- This ledger records targeted semantic review and concrete dispositions; it does not claim that every file was rewritten or that content is exhaustively proven correct for every possible prompt.
+- For future maintenance, split large knowledge files only when load paths and evaluations show a retrieval problem; add a framework only when a distinct unmet need is demonstrated; refresh platform and research claims against current primary sources.
