@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.devtools.packaging.build_skill import build_claude_ai_zip
 from soulmap.devtools.packaging.release_verify import (
     INTEGRATION_GUIDES,
     ReleaseVerificationError,
@@ -11,7 +12,6 @@ from soulmap.devtools.packaging.release_verify import (
     _verify_archive,
     _verify_integrations,
 )
-from soulmap.devtools.packaging.build_skill import build_claude_ai_zip
 
 
 def _write_guides(root: Path, *, version: str = "0.11.0") -> None:
