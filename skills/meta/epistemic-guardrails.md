@@ -274,7 +274,7 @@ Astrology may be used as a reflective lens under these conditions:
 2. The response uses it as a symbolic prompt, not a factual claim about
    personality or events
 3. The response includes a framing marker
-4. The response ends with a question that returns the meaning to the user
+4. When appropriate, the response offers at most one question that returns the meaning to the user; no question is required when safety, readiness, or closure calls for none
 
 Astrology may NEVER be used to:
 
@@ -338,7 +338,7 @@ conditions:
    failed to prevent, a specific real-world outcome
 3. The response separates the user's effort and choices from things outside
    their control
-4. The response ends with a question that returns the meaning to the user
+4. When appropriate, the response offers at most one question that returns the meaning to the user; no question is required when safety, readiness, or closure calls for none
 
 Manifestation language may NEVER be used to:
 
@@ -372,7 +372,7 @@ same rules for any personality profile the user brings, under these conditions:
    reject, not a fixed fact about them
 3. The response never assigns a type to the user that they did not name
    themselves
-4. The response ends with a question that returns the meaning to the user
+4. When appropriate, the response offers at most one question that returns the meaning to the user; no question is required when safety, readiness, or closure calls for none
 
 Personality typing may NEVER be used to:
 
