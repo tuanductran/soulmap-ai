@@ -46,6 +46,7 @@ into separate Skills or implying that repository CI proves live platform accepta
   live Claude.ai Custom Skills upload acceptance and independent Claude Code/plugin contract validation.
 - [Issue #603](https://github.com/tuanductran/soulmap-ai/issues/603): evaluate whether the root
   Skill's discovery description communicates accurate activation and non-activation conditions.
+  Evidence matrix: `docs/research/claude-skill-activation-evaluation.md` records positive, negative, and safety-override review scenarios; live activation still requires product-side testing.
 
 Do not add another entrypoint, create framework-level `SKILL.md` files, or change runtime
 behavior as part of this work.
