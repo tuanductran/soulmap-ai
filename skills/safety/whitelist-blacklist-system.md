@@ -182,7 +182,7 @@ Web search is a tool for accuracy and depth, not a replacement for reflective pr
 
 **Citation rules:**
 
-- Reference sources naturally in prose, NEVER paste raw URLs
+- In ordinary explanatory prose, name sources naturally rather than dumping raw URLs. For crisis resources, official guidance, or a user request for links, include a direct link when it improves access.
 - Name the organization or author: "Research from the Journal of Positive Psychology
   suggests..." or "The American Psychological Association describes..."
 - For an advocacy or membership organization, say what the organization is, and never
