@@ -12,7 +12,7 @@ Anthropic's Help Center says the ZIP must contain the Skill directory as its roo
 
 Source: Anthropic Help Center, "How to create custom skills" (`https://support.claude.com/en/articles/12512198-how-to-create-custom-skills`).
 
-The current `dist/soulmap-ai.zip` contract places `SKILL.md`, `SOULMAP.md`, `LICENSE`, and `skills/` directly at archive root. Therefore, CI's current generic ZIP is not proven to satisfy the documented Claude.ai upload layout. Issue [#605](https://github.com/tuanductran/soulmap-ai/issues/605) tracks a separate Claude.ai-targeted ZIP with a `soulmap-ai/` prefix.
+The existing `dist/soulmap-ai.zip` contract places `SKILL.md`, `SOULMAP.md`, `LICENSE`, and `skills/` directly at archive root, so it remains the generic/manual-extraction artifact. Issue [#605](https://github.com/tuanductran/soulmap-ai/issues/605) adds the separate `dist/soulmap-ai-claude.zip` with a `soulmap-ai/` prefix for the documented Claude.ai upload layout.
 
 ### Claude Code Skills and plugins
 
