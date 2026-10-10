@@ -11,7 +11,7 @@ def test_release_immutability_verification_is_owned_by_python_action() -> None:
         encoding="utf-8"
     )
     assert "run_verify_release_immutability" in action
-    assert "urllib.request" not in action
+    assert "from urllib.request import Request, urlopen" in action
     assert "immutable" in action
     assert "verify-release-immutability" in metadata
     assert "required: false" in metadata
