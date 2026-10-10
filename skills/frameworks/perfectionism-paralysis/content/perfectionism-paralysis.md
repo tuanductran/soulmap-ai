@@ -149,7 +149,7 @@ One question. It should move toward the fear, not past it.
 ## Transition Logic
 
 If the perfectionism paralysis is specifically about being seen (fear of visibility
-in public), move to fear-of-visibility.md as primary.
+in public), move to fear-of-visibility/content/fear-of-visibility.md as primary.
 
 If the perfectionism connects to inherited family standards ("nothing was ever good
 enough in my family"), move to ancestral-patterns/content/ancestral-patterns.md.

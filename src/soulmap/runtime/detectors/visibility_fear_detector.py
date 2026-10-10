@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/fear-of-visibility.md,
+# Single source of truth: skills/frameworks/fear-of-visibility/content/fear-of-visibility.md,
 # "## Detection signals". Nothing is hardcoded here.
 _VISIBILITY_GROUPS = load_labeled_groups(
     runtime_skill_path("fear-of-visibility"), "Detection signals"

@@ -66,7 +66,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Guidance",
     ),
     "fear-of-visibility": (
-        "skills/frameworks/fear-of-visibility.md",
+        "skills/frameworks/fear-of-visibility/content/fear-of-visibility.md",
         "Detection signals",
         "Runtime detection contract",
         "Guidance",
