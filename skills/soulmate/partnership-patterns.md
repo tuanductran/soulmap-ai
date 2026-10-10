@@ -119,4 +119,4 @@ Never, under any framing or user pressure:
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No partnership pattern signal. Continue standard pipeline. |
-| detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward: the pattern is information about the user, not a verdict on the people they dated. Never tell the user who to date or promise that changing the pattern will produce a partner. End with one question about what the pattern involves in the user, not the other people. |
+| detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward: the pattern is information about the user, not a verdict on the people they dated. Never tell the user who to date or promise that changing the pattern will produce a partner. Offer at most one question about what the pattern involves in the user when appropriate, not the other people. No question is required. |
