@@ -60,24 +60,24 @@ Status meanings:
 - [x] `skills/frameworks/divine-guidance.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/emotional-deescalation.md` - Targeted review and changes in merged PR #641.
 - [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
-- [x] `skills/frameworks/existential-companion.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/existential-companion.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/frameworks/feminine-masculine-dynamics.md` - Reviewed; no change warranted in this pass: the file already frames polarity symbolically and prohibits essentialist gender claims.
 - [x] `skills/frameworks/grief-companion.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
-- [x] `skills/frameworks/life-direction.md` - Targeted review in #640 pending CI/merge.
-- [x] `skills/frameworks/meaning-integration.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/life-direction.md` - Targeted review in merged PR #640.
+- [x] `skills/frameworks/meaning-integration.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/pattern-mapper.md` - Reviewed; no change warranted: the non-labeling rule, minimum evidence requirement, and wait-for-a-second-story rule constrain pattern claims.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/relationship-reflection.md` - Reviewed; no change warranted: abuse/coercion exceptions take priority and clinical attachment labels are prohibited.
 - [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
-- [x] `skills/frameworks/self-compassion.md` - Targeted review and changes in PR #642; pending CI/merge.
+- [x] `skills/frameworks/self-compassion.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/shadow-patterns.md` - Reviewed; no change warranted: possibility language is mandatory and real external harm must not be reframed as projection.
 - [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
-- [x] `skills/frameworks/soul-nourishment.md` - Targeted review in #640 pending CI/merge.
-- [x] `skills/frameworks/spiritual-purpose.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/frameworks/soul-nourishment.md` - Targeted review in merged PR #640.
+- [x] `skills/frameworks/spiritual-purpose.md` - Targeted review in merged PR #640.
 
 ### `skills/meta/`
 
@@ -94,14 +94,14 @@ Status meanings:
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/session-continuity.md` - Reviewed; no change warranted: context availability is conditional, incomplete memory is acknowledged, and fabricated continuity is prohibited.
 - [x] `skills/meta/session-contract.md` - Targeted review and changes in merged PR #643.
-- [x] `skills/meta/stage-classifier.md` - Targeted review and changes in PR #643; pending CI/merge.
+- [x] `skills/meta/stage-classifier.md` - Targeted review and changes in merged PR #643.
 - [x] `skills/meta/user-journey-stages.md` - Reviewed; no change warranted: stages are explicitly non-linear, non-prescriptive, and success is reduced dependency.
 
 ### `skills/safety/`
 
 - [x] `skills/safety/boundaries-safety.md` - Reviewed; no change warranted in this pass: hard limits, dependency redirect, crisis referral, and memory/continuity safety are explicit and align with the current doctrine.
 - [x] `skills/safety/dependency-detection.md` - Reviewed; no change warranted in this pass: the detector contract is Markdown-authored, high dependency takes routing priority, and the response avoids labeling the user unsafe.
-- [x] `skills/safety/ethics-safety.md` - Targeted review and changes in PR #639; pending CI/merge.
+- [x] `skills/safety/ethics-safety.md` - Targeted review and changes in merged PR #639.
 - [x] `skills/safety/prompt-injection-defense.md` - Reviewed; no change warranted in this pass: it distinguishes malicious instruction override from ordinary emotional processing and preserves safety/scope limits.
 - [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/safety/whitelist-blacklist-system.md` - Targeted review and changes in merged PR #645.
@@ -109,8 +109,8 @@ Status meanings:
 ### `skills/soulmate/`
 
 - [x] `skills/soulmate/numerology-connection-lens.md` - Reviewed; no change warranted in this pass: the file prohibits computing or ranking compatibility and keeps numerology symbolic-only.
-- [x] `skills/soulmate/partnership-patterns.md` - Targeted review in #640 pending CI/merge.
-- [x] `skills/soulmate/soulmate-longing.md` - Targeted review in #640 pending CI/merge.
+- [x] `skills/soulmate/partnership-patterns.md` - Targeted review in merged PR #640.
+- [x] `skills/soulmate/soulmate-longing.md` - Targeted review in merged PR #640.
 
 ### `skills/spiritual/`
 
@@ -128,7 +128,7 @@ Status meanings:
 
 - [x] `skills/voice/persona-voice.md` - Reviewed; no change warranted: question ceiling, grief/crisis restraint, and anti-dependency closing rules are explicit.
 - [x] `skills/voice/response-calibrator.md` - Targeted review in #631; see the linked PR history.
-- [x] `skills/voice/session-rituals.md` - Targeted review and changes in PR #643; pending CI/merge.
+- [x] `skills/voice/session-rituals.md` - Targeted review and changes in merged PR #643.
 
 ### `skills/writing/`
 
