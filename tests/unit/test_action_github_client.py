@@ -367,6 +367,7 @@ def test_pull_request_contract_requires_complete_metadata(
         action.run_pull_request(client)
     assert "multiple open release PRs" in str(captured.value)
 
+
 def test_release_immutability_operation_needs_no_token(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
