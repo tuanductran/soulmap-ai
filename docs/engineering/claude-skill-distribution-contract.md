@@ -19,6 +19,7 @@ The current `dist/soulmap-ai.zip` contract places `SKILL.md`, `SOULMAP.md`, `LIC
 Claude Code filesystem Skills use a directory containing `SKILL.md`; project Skills are typically located under `.claude/skills/`. Plugins are a separate distribution layer that can bundle Skills and other extension components and use plugin/marketplace metadata.
 
 Sources:
+
 - Claude Code extension overview (`https://code.claude.com/docs/en/features-overview`)
 - Agent Skills overview (`https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview`)
 
