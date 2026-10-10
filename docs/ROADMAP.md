@@ -27,7 +27,7 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 ### Claude-First Skill Contract & Distribution
 
-**Status:** Active, bounded validation and compatibility research.
+**Status:** Claude.ai archive implementation complete; external platform acceptance remains pending.
 
 Claude is the primary shipped Skill surface. Keep its single root `SKILL.md` entrypoint,
 canonical `skills/` knowledge tree, and artifact boundaries explicit. Validation should
@@ -39,9 +39,11 @@ into separate Skills or implying that repository CI proves live platform accepta
 - [Issue #601](https://github.com/tuanductran/soulmap-ai/issues/601): verify Claude.ai Custom
   Skills upload and Claude Code/plugin installation contracts independently before changing
   artifact structure.
-- [Issue #605](https://github.com/tuanductran/soulmap-ai/issues/605): add a dedicated Claude.ai
-  ZIP with the named Skill directory at archive root; preserve the existing generic ZIP and
-  Claude Code plugin-aware artifact contracts.
+- [PR #607](https://github.com/tuanductran/soulmap-ai/pull/607) (merged): add and validate
+  `dist/soulmap-ai-claude.zip` with the named `soulmap-ai/` root, while preserving the existing
+  generic ZIP and plugin-metadata-preserving artifact contracts.
+- [Issue #601](https://github.com/tuanductran/soulmap-ai/issues/601) remains the follow-up for
+  live Claude.ai Custom Skills upload acceptance and independent Claude Code/plugin contract validation.
 - [Issue #603](https://github.com/tuanductran/soulmap-ai/issues/603): evaluate whether the root
   Skill's discovery description communicates accurate activation and non-activation conditions.
 
