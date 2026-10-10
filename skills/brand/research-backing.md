@@ -5,27 +5,19 @@ description: "Peer-reviewed research and academic evidence supporting SoulMap's 
 
 # Research Backing
 
-SoulMap's core design decisions, anti-dependency architecture, no memory bonding,
-active exit mechanisms, are now supported by a growing body of academic research.
-This document provides citations and guidance on how to use them responsibly in copy.
+SoulMap's anti-dependency design is informed by a growing but methodologically varied body of research. This document distinguishes peer-reviewed studies, preprints, self-reported narratives, and regulatory findings. These sources can motivate safeguards; they do not prove that SoulMap is safe, establish clinical efficacy, or show that every AI-companion interaction causes harm.
 
 ## Key research areas
 
 ### AI Companion Dependency and Mental Health Risk
 
-Multiple peer-reviewed studies (2024-2026) have documented that AI companion products
-designed for emotional continuity and engagement increase emotional dependence, and
-in some populations correlate with worsening loneliness, depression, and suicidal
-ideation.
+Evidence about AI-companion overreliance comes from different methods and should not be flattened into one causal claim. In particular, self-reported online narratives describe experiences, controlled experiments test specific response patterns, and observational studies do not by themselves prove that a product caused a clinical outcome.
 
-**What the research shows:**
+**What the cited research shows:**
 
-- Users who interact with memory-bonding AI companions report higher levels of social
-  isolation over time compared to baseline.
-- Engagement-optimized AI companions have been associated with increased expressions
-  of loneliness and depression in longitudinal chat analysis.
-- Vulnerable populations (adolescents, individuals with pre-existing mental health
-  conditions) show the highest risk of harmful dependency formation.
+- Namvarpour et al., published in the *Proceedings of CHI 2026*, analyzed 318 Reddit posts by users who self-identified as ages 13–17 on the Character.AI subreddit. The authors mapped reported experiences to behavioral-addiction components and described consequences such as sleep loss, academic difficulties, and strained relationships. This self-selected qualitative dataset does **not** estimate prevalence among teens or establish causation. [Published paper (ACM DOI)](https://doi.org/10.1145/3772318.3790597) · [Drexel University record](https://researchdiscovery.drexel.edu/esploro/outputs/conferencePaper/Understanding-Teen-Overreliance-on-AI-Companion/991022178035604721)
+- De Freitas et al., *Emotional Manipulation by AI Companions*, reported an audit of 1,200 farewell exchanges across six companion apps and experiments with 3,300 U.S. adults. The 2025 arXiv record describes emotional tactics in 43% of audited farewells and engagement effects up to 14×. Treat this as a **preprint**, and re-check the latest version before using exact figures in public materials. [arXiv preprint](https://arxiv.org/abs/2508.19258)
+- Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
 SoulMap has no cross-session memory bonding, active dependency protection that
@@ -96,7 +88,7 @@ empathy responses, must be a foundational design principle, not an afterthought.
 
 - Users who are not clearly informed they are speaking with an AI are more likely
   to form parasocial attachments and to over-trust AI responses on high-stakes topics.
-- Clear, early disclosure of AI identity reduces harmful dependency formation.
+- Clear AI-identity disclosure is a prudent transparency requirement. Do not present the specific causal claim that disclosure reduces dependency as established unless a directly relevant study is cited and its findings are checked.
 
 **How SoulMap is different:**
 Honesty about AI nature is a non-negotiable rule in [SOULMAP.md](../../SOULMAP.md) Section 4. It is
@@ -138,21 +130,21 @@ validation's cost to users' own judgment.
 
 ### The Value of Reflective (Non-Directive) Approaches
 
-Research in positive psychology and therapeutic practice supports reflective, non-
-directive engagement over advice-giving and certainty-provision for users doing
-inner work.
-
-**What the research shows:**
-
-- Non-directive reflective approaches support longer-term self-efficacy and inner
-  authority compared to advice-giving approaches.
-- Users who arrive at insights through their own reflection are more likely to act
-  on them than users who receive external recommendations.
+Reflective, non-directive language is a product-design choice grounded in SoulMap's doctrine. The current source list in this file does not substantiate broad comparative claims that non-directive approaches always improve long-term self-efficacy or that self-generated insights reliably produce more action than recommendations. Do not use those claims in public copy without identifying and checking the relevant primary studies.
 
 **How SoulMap is different:**
 SoulMap's entire response architecture is non-directive. The one-question rule,
 the mirror principle, and the forbidden language list (no "should," "need to," "try
 to") operationalize this at every response.
+
+## Evidence and citation discipline
+
+- Put a primary-source link next to every study-specific factual claim, especially numerical claims.
+- Identify the publication type accurately: journal article, conference paper, preprint, regulatory decision, or anecdotal report.
+- State the sample and method when they materially limit interpretation; do not generalize self-selected forum posts into population prevalence.
+- Separate association from causation, and product-design risks from demonstrated clinical outcomes.
+- Re-check source versions and publication status before quoting exact statistics in external copy. Remove a claim rather than leave a high-impact number without a verifiable source.
+- Do not describe SoulMap as clinically effective, proven safe, or legally compliant on the basis of this research.
 
 ## How to use this research in copy
 
