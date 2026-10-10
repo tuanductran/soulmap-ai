@@ -101,6 +101,6 @@ After changing shell scripts, run the narrowest relevant checks first, then wide
 
 ```bash
 bash -n path/to/script.sh
-bash scripts/lint.sh --skip-tests
+uv run soulmap lint --skip-tests
 python -m pytest tests/smoke/test_scripts_smoke.py -q
 ```
