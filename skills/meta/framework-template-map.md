@@ -312,7 +312,7 @@ state toward difficulty.
 **Structure:**
 
 - 1-2 sentences witnessing the recognition (the user traced the pattern back)
-- 1-2 sentences holding both truths (the wound is real AND the one who passed it was also wounded)
+- 1-2 sentences acknowledging the user's reported impact while keeping inherited causation tentative. Acknowledge the predecessor's pain only if the user has described it; do not use it to excuse harm.
 - 1 sentence returning to what is present now in the recognition
 - One question from Ancestral Questions section of deep-inquiry-bank.md
 
