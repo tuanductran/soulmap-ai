@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Thirty-four distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Forty-one files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Thirty-seven distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Thirty-eight files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -20,6 +20,7 @@
 9. `skills/safety/ethics-safety.md` (PR #639 merged): separates privacy/governance requirements from unverified claims about current operations and host-platform data handling.
 10. Ten additional files in PR #640 align framework-specific closing-question instructions with the canonical readiness-aware rule; the PR is merged after all required checks passed.
 11. `skills/frameworks/emotional-deescalation.md` and `skills/brand/visual-identity.md` (PR #641 pending): add a medical triage gate before grounding and remove unsupported claims that specific sound frequencies heal or ground.
+12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 pending): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
 
 ## External authoring references
 
@@ -59,17 +60,17 @@ Status meanings:
 - [x] `skills/frameworks/existential-companion.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/feminine-masculine-dynamics.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/grief-companion.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/grief-companion.md` - Targeted review and changes in PR #642; pending CI/merge.
 - [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/frameworks/life-direction.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/meaning-integration.md` - Targeted review in #640 pending CI/merge.
-- [ ] `skills/frameworks/money-self-worth.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in PR #642; pending CI/merge.
 - [ ] `skills/frameworks/pattern-mapper.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
 - [ ] `skills/frameworks/relationship-reflection.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/self-compassion.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/self-compassion.md` - Targeted review and changes in PR #642; pending CI/merge.
 - [ ] `skills/frameworks/shadow-patterns.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
 - [x] `skills/frameworks/soul-nourishment.md` - Targeted review in #640 pending CI/merge.
