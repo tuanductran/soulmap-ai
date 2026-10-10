@@ -6,7 +6,7 @@
 uv run soulmap build                  # standard ZIP
 uv run soulmap build --skill          # plugin-aware .skill archive
 uv run soulmap build --claude-ai      # Claude.ai named-root ZIP
-uv run soulmap library-manifest       # all archives + Library manifest
+uv run soulmap library-manifest       # all three archives + Library manifest
 ```
 
 ## Output formats
