@@ -38,6 +38,7 @@ def _build_valid_repo(root: Path) -> None:
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
     build_skill.build_zip(root)
     build_skill.build_skill(root)
+    build_skill.build_claude_ai_zip(root)
 
 
 def _tamper_archive_member(archive_path: Path, member_name: str) -> None:
@@ -64,12 +65,18 @@ def test_verifier_accepts_both_valid_artifacts(tmp_path: Path) -> None:
     assert result.returncode == 0
     assert "PASS extracted artifact boundary: dist/soulmap-ai.zip" in result.stdout
     assert "PASS extracted artifact boundary: dist/soulmap-ai.skill" in result.stdout
+    assert "PASS extracted artifact boundary: dist/soulmap-ai-claude.zip" in result.stdout
     assert result.stderr == ""
     for archive_name in ("soulmap-ai.zip", "soulmap-ai.skill"):
         with zipfile.ZipFile(tmp_path / "dist" / archive_name) as archive:
             assert not any(
                 name.startswith("src/soulmap/runtime/") for name in archive.namelist()
             )
+    with zipfile.ZipFile(tmp_path / "dist" / "soulmap-ai-claude.zip") as archive:
+        names = archive.namelist()
+        assert "soulmap-ai/SKILL.md" in names
+        assert all(name.startswith("soulmap-ai/") for name in names)
+        assert not any(".claude-plugin/" in name for name in names)
 
 
 def test_verifier_rejects_missing_artifact(tmp_path: Path) -> None:
@@ -91,6 +98,7 @@ def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) ->
     )
     build_skill.build_zip(tmp_path)
     build_skill.build_skill(tmp_path)
+    build_skill.build_claude_ai_zip(tmp_path)
 
     result = _run(tmp_path)
 
@@ -134,6 +142,7 @@ def test_verifier_rejects_broken_shipped_markdown_reference(tmp_path: Path) -> N
     )
     build_skill.build_zip(tmp_path)
     build_skill.build_skill(tmp_path)
+    build_skill.build_claude_ai_zip(tmp_path)
 
     result = _run(tmp_path)
 
@@ -149,6 +158,30 @@ def test_verifier_accepts_relative_and_root_style_markdown_references(
     _write(tmp_path, "SKILL.md", "[Public](skills/public.md)\n")
     build_skill.build_zip(tmp_path)
     build_skill.build_skill(tmp_path)
+    build_skill.build_claude_ai_zip(tmp_path)
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 0
+
+
+def test_verifier_rejects_tampered_claude_ai_member(tmp_path: Path) -> None:
+    _build_valid_repo(tmp_path)
+    archive_path = tmp_path / "dist" / "soulmap-ai-claude.zip"
+    _tamper_archive_member(archive_path, "soulmap-ai/SKILL.md")
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "content mismatch for shipped member soulmap-ai/SKILL.md" in result.stderr
+
+
+def test_verifier_checks_root_style_links_after_claude_ai_prefix(tmp_path: Path) -> None:
+    _build_valid_repo(tmp_path)
+    _write(tmp_path, "SKILL.md", "[Public](skills/public.md)\\n")
+    build_skill.build_zip(tmp_path)
+    build_skill.build_skill(tmp_path)
+    build_skill.build_claude_ai_zip(tmp_path)
 
     result = _run(tmp_path)
 
