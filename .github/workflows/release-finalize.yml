@@ -161,6 +161,7 @@ jobs:
         run: |
           test -f dist/soulmap-ai.zip
           test -f dist/soulmap-ai.skill
+          test -f dist/soulmap-ai-claude.zip
           test -f dist/soulmap-ai-library.json
           test -f dist/release-verification.json
           test -f dist/release-provenance.json
@@ -173,6 +174,7 @@ jobs:
           subject-path: |
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
+            dist/soulmap-ai-claude.zip
             dist/soulmap-ai-library.json
 
       - name: Create immutable release tag through Python action
