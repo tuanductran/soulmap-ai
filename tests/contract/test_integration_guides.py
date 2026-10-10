@@ -153,7 +153,7 @@ def test_gemini_apps_guide_tracks_gems_to_skills_transition() -> None:
         "June 2027",
         "dist/soulmap-ai.zip",
         "Replace skill",
-        "has not been uploaded or accepted in a live Gemini Apps account",
+        "been uploaded or accepted in a live Gemini Apps account",
         "Gemini CLI local Agent Skills are different product surfaces",
         "https://support.Google.com/gemini/answer/18560919",
     )
