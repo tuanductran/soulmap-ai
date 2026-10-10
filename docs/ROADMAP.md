@@ -43,7 +43,6 @@ into separate Skills or implying that repository CI proves live platform accepta
 Do not add another entrypoint, create framework-level `SKILL.md` files, or change runtime
 behavior as part of this work.
 
-
 ### Platform & Distribution Expansion
 
 **Status:** Conditional / blocked by external platform readiness.
