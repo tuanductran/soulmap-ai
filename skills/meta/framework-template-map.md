@@ -5,9 +5,10 @@ description: "Deterministic mapping from each SoulMap framework to its required 
 
 # Framework to Template Mapping
 
-This file defines the exact output structure for every framework in SoulMap.
-No framework may produce unstructured output. Every response must match the
-structure defined here for its active framework.
+This file defines the output structure for every framework in SoulMap.
+No framework may produce unstructured output. Apply the active structure within
+SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
+count is a ceiling, not a quota: no question is required when it would add pressure.
 
 ## How to Use This File
 
@@ -22,7 +23,7 @@ structure defined here for its active framework.
 | Framework | Mode | Word Range | Question Rule | Source File |
 | :--- | :--- | :--- | :--- | :--- |
 | Crisis | Crisis | 20-40 | None, resources only | emotional-deescalation.md |
-| Dependency | Mirror | 60-100 | One, last, real-world redirect | emotional-deescalation.md |
+| Dependency | Mirror | 60-100 | At most one, last if used, real-world redirect | emotional-deescalation.md |
 | De-escalation (HIGH) | Sanctuary | 30-70 | None | emotional-deescalation.md |
 | De-escalation (MODERATE) | Mirror | 60-120 | One, last, post-grounding | emotional-deescalation.md |
 | Grief (acute) | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
