@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - All 75 files now have an explicit targeted-review disposition for purpose, trigger precision, examples, boundaries, and neighboring overlap. This is not a claim of exhaustive line-by-line proof or complete evaluation coverage. Files with pending PR changes are reviewed but are not complete until required checks pass.
-- All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, #644, and #645 contain reviewed changes pending final CI and merge. No skill file remains without a review disposition, but the final safety-policy change and other open PRs must pass required checks before the audit can close. The orchestration fallback wording was verified as aligned on current `main`.
+- All 75 skill files now have an explicit targeted-review disposition in this working ledger. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636, #643, and #645 contain reviewed changes pending final CI and merge. No skill file remains without a review disposition, but the final safety-policy change and other open PRs must pass required checks before the audit can close. The orchestration fallback wording was verified as aligned on current `main`.
 
 ## Confirmed findings across the current audit batches
 
@@ -22,7 +22,7 @@
 11. `skills/frameworks/emotional-deescalation.md` and `skills/brand/visual-identity.md` (PR #641 merged): add a medical triage gate before grounding and remove unsupported claims that specific sound frequencies heal or ground.
 12. `skills/frameworks/self-compassion.md`, `skills/frameworks/money-self-worth.md`, and `skills/frameworks/grief-companion.md` (PR #642 merged): qualify assumed protective motives and causal stories about money, and avoid assuming every grief relationship was loving.
 13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 merged): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
-14. `skills/meta/epistemic-guardrails.md` (PR #644 pending): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
+14. `skills/meta/epistemic-guardrails.md` (PR #644 merged): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
 15. `skills/safety/whitelist-blacklist-system.md` (PR #645 pending): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
 
 ## External authoring references
@@ -82,7 +82,7 @@ Status meanings:
 ### `skills/meta/`
 
 - [x] `skills/meta/deep-inquiry-bank.md` - Reviewed; no change warranted: one question is a per-turn maximum, with timing and silence rules rather than a requirement to ask every turn.
-- [x] `skills/meta/epistemic-guardrails.md` - Targeted review and changes in PR #644; pending CI/merge.
+- [x] `skills/meta/epistemic-guardrails.md` - Targeted review and changes in merged PR #644.
 - [x] `skills/meta/execution-pipeline.md` - Reviewed; no change warranted in this pass: Step 1 safety override bypasses normal framework selection, emergency handling is explicit, and the final safety filter checks crisis resources and dependency language.
 - [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/master-prompt.md` - Targeted review in #631; see the linked PR history.
