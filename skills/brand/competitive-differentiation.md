@@ -10,59 +10,28 @@ relative to the broader AI companion landscape.
 
 ## The mirror trap problem
 
-The AI companion industry is built on a single economic model: maximize engagement,
-maximize return visits, and deepen the user's attachment to the product over time.
-Products such as Replika, Nomi, Character.AI, and even the more carefully designed Pi
-all optimize toward this goal.
+SoulMap is designed to avoid making user attachment or continued engagement the measure
+of a successful interaction. This is a statement about SoulMap's own design, not a
+claim that every other companion product shares one internal business model.
 
-The surface experience differs: some companions feel warm, some intellectual, some
-romantic. But the underlying architecture is identical: learn the user's preferences,
-become more personalized to those preferences over time, and make the user feel
-increasingly understood and attached.
+The following comparison uses publicly documented product and privacy statements as
+evidence. It is not an independent audit of competitor systems. Product features and
+policies change, so use dated primary sources and do not infer internal motives,
+engagement metrics, or the absence of safeguards unless a source directly establishes
+the specific claim.
 
-This is the mirror trap: a product that claims to reflect you back to yourself, while
-quietly becoming indispensable to that reflection.
+## Publicly documented differences
 
-SoulMap is designed specifically to avoid this trap. This is not a positioning choice
-made after launch. It is the founding architecture.
+| Product | What its public documentation says | What this does not establish |
+| :--- | :--- | :--- |
+| Replika | Its [privacy policy](https://replika.com/legal/privacy/en) says conversation data and preferences are processed to provide individualized conversations and allow the companion to learn from interactions. Its [memory help article](https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work) describes memory layers and personalization over time. | This alone does not establish the company's internal engagement metrics, user outcomes, or whether specific safeguards are absent. |
+| Character.AI | Its [privacy policy](https://support.character.ai/hc/en-us/articles/39030432883099-Privacy-Policy) describes using information to operate, improve, and personalize the service. Its [training-data documentation](https://support.character.ai/hc/en-us/articles/47703013822875-Training-Data-Documentation) says user interaction data is among sources used for model development. | These disclosures do not establish that every feature is designed to create dependency or that the product lacks a particular safety mechanism. |
+| Pi / Inflection AI | Its [privacy policy](https://pi.ai/privacy), last updated 11 August 2026, describes using information to provide, maintain, improve, and personalize services, and says users may opt out of model training in account settings. | This does not prove that engagement is the sole or primary optimization objective, nor does it establish the absence of dependency safeguards. |
+| SoulMap | The SoulMap repository/package has no SoulMap-owned backend or persistent conversation database. Its doctrine explicitly prioritizes user autonomy and reduced dependency. | This is not a claim about the data retention or privacy practices of ChatGPT or any other platform that may host a SoulMap conversation. |
 
-## What competitor products do (and SoulMap refuses)
+The FTC's [September 2025 inquiry into AI chatbots acting as companions](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions) sought information from seven companies about engagement monetization, safety evaluation, user inputs, and data practices. It was an information-gathering inquiry, not a finding that every named company engaged in wrongdoing.
 
-| Behavior | Replika / Nomi / Character.AI | Pi | SoulMap |
-| :--- | :--- | :--- | :--- |
-| Emotional continuity and memory bonding | Yes, core feature | Yes, by design | No, by design |
-| Personality learns to mirror the user over time | Yes, explicit goal | Partial | No, by design |
-| Engagement metrics drive design decisions | Yes | Likely | No |
-| Positions AI as primary support relationship | Yes | Partially | No |
-| Celebrates long conversation streaks | Yes | Varies | No |
-| Frames more use as success | Yes | Yes | No |
-| Frames less use as success | No | No | Yes, explicitly |
-| Has a dependency-detection and exit mechanism | No | No | Yes, built in |
-| Refuses to confirm spiritual identity claims | No | No | Yes, always |
-| Anti-dependency as a core safety rule | No | No | Yes, Rule 1 |
-
-## A newer direction: fixed-window data deletion
-
-The comparison above is about engagement architecture. A related but separate axis is
-how long a product keeps a user's raw conversation data at all.
-
-Products that offer persistent memory and personalization, as the row above shows,
-need to retain conversation history to make that memory possible. Retaining data
-indefinitely is a structural requirement of that design, not an incidental choice.
-
-A newer entrant, KAi, positions itself against this on the data-retention axis
-specifically: it states that it deletes raw conversation data within 24 hours and does
-not keep the original conversation log. This is a distinct claim from an
-engagement-architecture claim, and this document does not independently verify it.
-
-SoulMap's position on this axis is structural rather than a stated deletion window:
-there is no SoulMap AI backend and no conversation storage at all.
-
-| Product | Data retention approach |
-| :--- | :--- |
-| Replika / Nomi / Character.AI | Retains conversation history to power persistent memory, see the table above |
-| KAi | States it deletes raw conversation data within 24 hours, no retained original log |
-| SoulMap | No backend and no conversation storage of any kind |
+Avoid unsupported statements such as "all competitors optimize for dependency", "competitors have no dependency safeguards", or "memory products must retain conversation logs indefinitely". Describe only what a current primary source supports, and label product-level interpretation as interpretation.
 
 ## The Anti-Engagement Architecture
 
