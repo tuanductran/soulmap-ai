@@ -1,10 +1,9 @@
 """Edge-case coverage for the empath boundary detector.
 
 Primary phrases used below are taken verbatim from
-skills/frameworks/empath-boundary.md, "## Activation Signals". The
-secondary drain/people-context word lists are hardcoded directly in
-soulmap.runtime.detectors.empath_detector itself (not Markdown-sourced),
-so those phrases are copied from the module's own source.
+skills/frameworks/empath-boundary/content/empath-boundary.md, "## Activation Signals". The
+secondary drain/people-context word lists are loaded from the canonical Markdown
+resource, so those phrases are sourced from that resource as well.
 """
 
 from typing import cast
