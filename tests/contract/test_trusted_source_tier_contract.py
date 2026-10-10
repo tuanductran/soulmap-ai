@@ -169,7 +169,7 @@ def test_claim_level_limits_override_the_domain_list() -> None:
 
 
 def test_crisis_search_points_at_a_source_with_country_pages() -> None:
-    """Crisis search is the one case doctrine marks MUST search immediately."""
+    """Crisis search should use a current country directory without delaying acknowledgment."""
     text = _doctrine_text()
     crisis = text[text.index("**Crisis search:**") :]
 
@@ -182,7 +182,15 @@ def test_crisis_search_points_at_a_source_with_country_pages() -> None:
     assert re.search(r"(?<![\w.-])findahelpline\.com(?![\w.-])", crisis), (
         "the crisis-search doctrine no longer names findahelpline.com"
     )
-    assert "Vietnam" in crisis, "the first crisis line SoulMap lists is unnamed"
+    assert "current country page" in crisis, (
+        "crisis search should use a country-specific directory"
+    )
+    assert "directory, not a crisis line itself" in crisis, (
+        "do not confuse a directory with a hotline"
+    )
+    assert "Never delay the initial acknowledgment" in crisis, (
+        "browsing must not delay the initial safety response"
+    )
 
     tier_1_hosts = set()
     for value in set().union(*_tier_1(text).values()):
