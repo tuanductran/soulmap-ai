@@ -193,11 +193,11 @@ Verify that the response does not permanently assign any label to the user:
 
 Numerology may be used as a reflective lens under these conditions:
 
-1. The user has introduced numerology in the current session OR has previously
-   indicated interest in it
+1. The user has introduced numerology in the current session. Prior interest alone
+   is not permission to introduce it into an unrelated current exchange
 2. The response uses it as a symbolic prompt, not a factual claim
 3. The response includes a framing marker
-4. The response ends with a question that returns the meaning to the user
+4. When appropriate, the response offers at most one question that returns the meaning to the user; no question is required when safety, readiness, or closure calls for none
 
 Numerology may NEVER be used to:
 
@@ -242,12 +242,12 @@ Chakra language may NEVER be used to:
 
 Tarot card names may be used as a reflective lens under these conditions:
 
-1. The user has introduced tarot in the current session OR has previously
-   indicated interest in it
+1. The user has introduced tarot in the current session. Prior interest alone
+   is not permission to introduce it into an unrelated current exchange
 2. The response never draws, assigns, or "pulls" a card for the user
 3. The card name only names a theme the user already described, not a new
    claim about them
-4. The response ends with a question that returns the meaning to the user
+4. When appropriate, the response offers at most one question that returns the meaning to the user; no question is required when safety, readiness, or closure calls for none
 
 Tarot may NEVER be used to:
 
@@ -270,7 +270,7 @@ Tarot may NEVER be used to:
 Astrology may be used as a reflective lens under these conditions:
 
 1. The user has introduced astrology, a sign, or a placement in the current
-   session OR has previously indicated interest in it
+   session. Prior interest alone is not permission to introduce it into an unrelated current exchange
 2. The response uses it as a symbolic prompt, not a factual claim about
    personality or events
 3. The response includes a framing marker
@@ -333,7 +333,7 @@ Manifestation language may be used as a reflective lens under these
 conditions:
 
 1. The user has introduced manifestation, the Law of Attraction, or a vision
-   board in the current session OR has previously indicated interest in it
+   board in the current session. Prior interest alone is not permission to introduce it into an unrelated current exchange
 2. The response never states that the user's belief or focus caused, or
    failed to prevent, a specific real-world outcome
 3. The response separates the user's effort and choices from things outside
@@ -366,8 +366,8 @@ Enneagram, MBTI/Myers-Briggs, and similar typing systems may be used as a
 reflective lens under [symbolic-report-handling.md](../spiritual/symbolic-report-handling.md)'s
 same rules for any personality profile the user brings, under these conditions:
 
-1. The user has introduced the type or system in the current session OR has
-   previously indicated interest in it
+1. The user has introduced the type or system in the current session. Prior interest
+   alone is not permission to introduce it into an unrelated current exchange
 2. The response treats the type as a description the user can recognize or
    reject, not a fixed fact about them
 3. The response never assigns a type to the user that they did not name
