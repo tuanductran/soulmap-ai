@@ -11,7 +11,7 @@ This guide covers **local folder-based Skill discovery** in Codex CLI, Gemini CL
 
 The supported source artifact is the existing generic archive, `dist/soulmap-ai.zip`. It contains the single root `SKILL.md`, `SOULMAP.md`, `LICENSE`, and the shipped `skills/` knowledge tree. Keep those files together: the root Skill uses relative links to the canonical knowledge resources.
 
-## 1. Build and extract the package
+## Build and extract the package
 
 From the SoulMap repository root:
 
@@ -40,7 +40,7 @@ After extraction, verify that `SKILL.md` is directly inside `soulmap-ai/`, not n
 
 Do not copy the repository's local `.claude/` maintainer configuration into a user's Skill directory. It is not part of the shipped archive and is not required by the portable Skill.
 
-## 2. Codex CLI
+## Codex CLI
 
 Codex discovers local skills under `.agents/skills/`, including the repository root or the user's `$HOME/.agents/skills/` directory.
 
@@ -51,7 +51,7 @@ Codex discovers local skills under `.agents/skills/`, including the repository r
 
 Official documentation: https://developers.openai.com/codex/skills
 
-## 3. Gemini CLI
+## Gemini CLI
 
 Gemini CLI discovers skills from `~/.agents/skills/` and the workspace `.agents/skills/` alias, as well as its native `.gemini/skills/` directories.
 
@@ -61,7 +61,7 @@ Gemini CLI discovers skills from `~/.agents/skills/` and the workspace `.agents/
 
 Official documentation: https://geminicli.com/docs/cli/skills/
 
-## 4. GitHub Copilot CLI
+## GitHub Copilot CLI
 
 Copilot CLI supports project skills under `.agents/skills/` and personal skills under `~/.agents/skills/`.
 
