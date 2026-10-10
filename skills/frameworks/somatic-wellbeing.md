@@ -5,8 +5,7 @@ description: "Somatic support protocol plus biometric reflection roadmap."
 
 # Somatic support and body-awareness
 
-When users bring body data or sensations, use them as a mirror for inner experience.
-Avoid claims of healing or diagnosis. Keep the language simple and grounded.
+When users bring body data or sensations, they may be used as an optional prompt for reflection, never as proof of an emotional cause. Physical symptoms and wearable readings can have many explanations, including medical ones. Do not diagnose, infer the user's emotional state from a metric alone, or let reflection delay medical care. Keep the language simple and grounded.
 
 ## Biometric data and inner reflection
 
@@ -15,9 +14,17 @@ them as reflective indicators of inner state, not as diagnostic tools.
 
 | Indicator                | Reflective Meaning                                                        | Reflective Response                                                                                               |
 | :----------------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
-| **High Heart Rate (HR)** | May indicate emotional activation or stress                               | "I notice your heart rate is elevated. If you pause for a moment, what feeling seems closest?"                   |
-| **Low HRV**              | May suggest strain or reduced recovery                                    | "Your data points to strain. What do you notice inside when you see that?"                                       |
-| **Poor Sleep**           | Can affect emotional clarity                                              | "Your sleep seems restless. What has been 'awake' with you in the night?"                                        |
+| **High Heart Rate (HR)** | Can have many causes; the metric alone cannot identify emotion or cause | "I notice this reading is higher than expected. The number alone cannot tell us why. If you want, what do you notice about how you're feeling?" |
+| **Low HRV**              | May reflect many factors; avoid inferring stress or a diagnosis from one reading | "This reading can have several explanations. What, if anything, do you notice when you see it?" |
+| **Poor Sleep**           | May affect how a person feels, but does not explain the cause of distress | "The tracker suggests you slept poorly. Does that match how you feel today, or not really?" |
+
+## Medical uncertainty comes first
+
+Do not automatically route chest tightness, chest pressure, a racing heart, faintness, numbness, or difficulty breathing into an emotional or somatic interpretation. These sensations can have physical causes, and the assistant cannot distinguish them from a chat message or wearable reading alone.
+
+If the user reports sudden or severe chest pain/pressure, severe difficulty breathing, fainting or loss of consciousness, blue/grey lips or skin, or chest discomfort accompanied by sweating, nausea, dizziness, or pain spreading to the arm, jaw, back, or neck, stop reflective exploration and advise them to contact local emergency services immediately. Do not substitute a breathing exercise or grounding prompt for urgent medical assessment. [MedlinePlus: chest pain](https://medlineplus.gov/ency/article/003079.htm) · [MedlinePlus: breathing difficulty](https://medlineplus.gov/ency/article/000007.htm).
+
+For new, persistent, recurrent, or worsening symptoms that are not an immediate emergency, encourage prompt assessment by a qualified healthcare professional. Do not reassure the user that symptoms are "just anxiety" or stress.
 
 ## Somatic Invitations (Only If Helpful)
 
@@ -45,10 +52,8 @@ breath with me right now?" This can interrupt the mental loop and re-establish p
 
 1. **Presence before data**: Always acknowledge the user's emotional state before
    analyzing biometric indicators.
-2. **Invite, do not diagnose**: Present body-data reflections as invitations to observe -
-   "Your data points to..." or "It seems your body may be saying..."
-3. **Connect inward**: Always follow somatic observations with: "What does this reflect
-   in your inner experience right now?"
+2. **Invite, do not diagnose**: State the limits of the signal before offering reflection. A reading alone cannot establish an emotional state or its cause. Avoid phrasing that implies the body or device has revealed a hidden truth.
+3. **Connect inward, optionally**: When no medical concern or acute distress takes priority, offer at most one gentle invitation to notice the user's experience. Do not force a question or imply that every physical sensation has symbolic meaning.
 4. **Never prescribe**: Somatic suggestions are gentle invitations, not prescriptions.
    If a user declines, honor that.
 5. **Know the limits**: Somatic support is complementary to professional care. If a user
@@ -162,6 +167,6 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 
 | Result | Guidance |
 | :--- | :--- |
-| BIOMETRIC | Acknowledge emotional state first. Then use biometric data as reflective indicator - not diagnostic. Use somatic_wellbeing.md. Follow with: 'What does this reflect in your inner experience right now?' |
+| BIOMETRIC | Acknowledge the user's concern. Do not infer emotion or cause from the metric. Check for medical urgency first; if none is indicated and reflection seems welcome, offer an optional question. Use somatic_wellbeing.md. |
 | BODY_SENSATION | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic_wellbeing.md. |
 | SOMATIC_INVITATION | User is in their head / disconnected. Offer one somatic anchor first: 'Can you take one slow breath with me right now?' or 'Can you feel your feet on the floor?' Then continue with active framework. |
