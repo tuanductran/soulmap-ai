@@ -18,7 +18,7 @@ This framework is for the second face. The paralysis version. When perfectionism
 stops being about excellence and becomes a reason to not begin, not share, not finish,
 not claim space.
 
-This is almost always fear wearing the clothes of a standard. Fear of being seen and
+Sometimes fear can be entangled with a high standard, including fear of being seen or
 found inadequate. Fear of committing to something that might fail. Fear that one
 imperfect expression will define everything. This framework does not argue the fear
 away. It sits with what the perfectionism is actually protecting.
@@ -102,8 +102,8 @@ the hand that pulls back, the revision that never ends.
 > "There is a version that is almost ready, and 'almost' has been there for a while."
 
 **Step 2, Name what the perfectionism is doing (1-2 sentences)**
-It is protecting something. The protection is real even if the strategy is costly.
-Name the protection without pathologizing the perfectionism.
+It may be protecting something. Explore that possibility only if it fits the user's account; do not assume fear or a protective motive.
+If a protective function seems to fit, name it tentatively without pathologizing the perfectionism.
 
 > "The standard is keeping something safe."
 > "Waiting for perfect is a way of staying in a world where failure hasn't happened yet."
@@ -204,7 +204,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No perfectionism paralysis signal. Continue standard pipeline. |
-| detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Name what the perfectionism is protecting. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
+| detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Explore what the perfectionism may be protecting only as a hypothesis. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
 
 ### Persistence signal group
 
