@@ -38,13 +38,17 @@ been verified.
 
 **Format:** Instructions text + individual `.md` knowledge files (ZIP not supported).
 
-### Step 1, create the GPT
+### Step 1, confirm eligibility and open the GPT editor
 
-1. Go to [chatgpt.com/create](https://chatgpt.com/create)
-2. Click **Configure** (not Create)
+**Reviewed 2026-10-10.** OpenAI's current help documentation says new GPT creation and publishing are available to eligible Business, Enterprise, and Edu workspace users with the required permissions. Personal Free, Go, Plus, and Pro accounts cannot create or publish new GPTs; editing an existing GPT depends on the account and permission conditions.
+
+1. Open [Explore GPTs](https://chatgpt.com/gpts) or [the GPT editor](https://chatgpt.com/create).
+2. Continue only if the account or workspace exposes the Create/configuration workflow.
 3. Name: `SoulMap`
 4. Description: `A reflective companion that helps you hear yourself more clearly.
    No prediction, no diagnosis, no dependence.`
+
+See the [official GPT creation and editing guide](https://help.OpenAI.com/en/articles/8554397-gpts) for current eligibility and UI details.
 
 ### Step 2, paste the instructions
 
@@ -53,9 +57,11 @@ and paste it into the **Instructions** field.
 
 ### Step 3, upload knowledge files
 
-Upload these files from `dist/soulmap-ai.zip` (extract first):
+Extract `dist/soulmap-ai.zip` first, then upload the selected Markdown files individually. Put behavioral rules and tone in the GPT's **Instructions** field; use Knowledge files as reference material.
 
-Priority files (upload these):
+Start with the priority files below, then add optional references only as the current editor's file limit permits. OpenAI's help pages have described different limits in different upload contexts, so this guide intentionally does not promise a fixed count; follow the limit shown in the current GPT editor.
+
+Priority files:
 
 - [`../SOULMAP.md`](../../SOULMAP.md)
 - [`../SKILL.md`](../../SKILL.md)
@@ -64,7 +70,7 @@ Priority files (upload these):
 - [`../skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
 - [`../skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
 
-Optional (for richer framework access):
+Optional references:
 
 - [`../skills/frameworks/grief-companion/content/grief-companion.md`](../../skills/frameworks/grief-companion/content/grief-companion.md)
 - [`../skills/frameworks/life-direction/content/life-direction.md`](../../skills/frameworks/life-direction/content/life-direction.md)
@@ -77,9 +83,9 @@ Optional (for richer framework access):
 Copy from [chatgpt-instructions.md](chatgpt-instructions.md)
 under the `## Conversation starters` section.
 
-### Step 5, publish
+### Step 5, save or publish if eligible
 
-Set sharing to **Anyone with the link** for private use, or **Public** for GPT Store.
+Sharing and publishing options depend on the account, workspace, and permissions. Personal accounts currently cannot publish newly created GPTs; use the options actually available in the current editor and consult OpenAI's official guide before treating this as a deployable path.
 
 ## Gemini (Gems)
 
@@ -118,14 +124,16 @@ Click **Save**, then click the **Share** icon in Gem manager to generate a share
 
 ## Poe (Bot)
 
-**Format:** System prompt only (no file upload for standard bots).
+**Format:** System prompt for a prompt bot. API bots are a separate integration path.
+
+**Reviewed 2026-10-10.** Poe's available bot types and underlying models change over time. Choose from the current Create Bot interface rather than relying on a hard-coded model name. See the [official Poe FAQ](https://help.Poe.com/hc/en-us/articles/19944206309524-Poe-FAQs).
 
 ### Step 1, create the bot
 
 1. Go to [poe.com](https://poe.com)
 2. Click **Create bot**
 3. Name: `SoulMap-AI`
-4. Base model: `Claude-3.5-Sonnet` or `GPT-4o`
+4. Choose a currently available text model from Poe's Create Bot interface. Model availability changes over time; this guide does not guarantee that any named model remains selectable.
 
 ### Step 2, paste the system prompt
 
