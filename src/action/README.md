@@ -17,6 +17,7 @@ The `release` operation expects the Git tag to already exist. It creates or reus
     files: |
       dist/soulmap-ai.zip
       dist/soulmap-ai.skill
+      dist/soulmap-ai-claude.zip
       dist/soulmap-ai-library.json
       dist/release-verification.json
       dist/release-provenance.json
