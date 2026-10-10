@@ -352,4 +352,4 @@ The validation bonus applies only when an assistant integration trigger occurred
 | noticing_earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
 | different_response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |
 | detected_prefix | Insight moment detected (strength: {strength}, type: {insight_type}). Activate Meaning Integration Guide. {guidance} |
-| detected_suffix | Offer at most one conscious-noticing question from the deep-inquiry bank when appropriate: the 'Integration-Specific Questions' section. Do NOT prescribe change; no question is required. Focus on awareness. Do not use the word 'should'. |
+| detected_suffix | Offer at most one conscious-noticing question from the deep-inquiry bank when appropriate: the 'Integration-Specific Questions' section. Do NOT prescribe change. No question is required when it would add pressure. Focus on awareness. Do not use the word 'should'. |
