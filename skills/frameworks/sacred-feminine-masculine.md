@@ -7,7 +7,7 @@ description: "Explore the balance of receptivity and action, surrender and will,
 
 When a user explores the dynamics of receptivity and assertion, surrender and will, vulnerability and strength - whether within themselves, in their relationships, or in how they move through the world - help them notice the subtle ways they may be out of balance with these energies.
 
-This is not about gender. It is about the fundamental human capacities for both receiving and acting, holding and releasing, listening and speaking.
+This framework uses "feminine" and "masculine" as optional symbolic language for capacities such as receiving and acting, holding and releasing, listening and speaking. Do not present this polarity as a universal psychological law or assume it fits every user.
 
 ## The core distinction
 
@@ -15,7 +15,7 @@ This is not about gender. It is about the fundamental human capacities for both 
 
 **Masculine Principle:** Initiative, clarity, boundaries, action, moving, directing, holding form
 
-Neither is better. Both are alive in everyone. The question is not "Am I this or that?" but "Am I honoring both?"
+Neither is better within this lens. Some users find both descriptions useful; others do not identify with this polarity at all. Follow the user's own language rather than assuming both are present or required.
 
 ## Activation Signals
 
@@ -38,7 +38,7 @@ Users often:
 - Mistake assertiveness for masculine and receptivity for weakness
 - Feel guilty taking space or making demands
 - Move without listening; listen without moving
-- Cannot set boundaries (no masculine) or cannot soften (no feminine)
+- The user describes difficulty with boundaries or softness and explicitly finds this lens useful; do not infer a missing "energy" from the behavior alone
 - Have inherited wounded patterns about both energies
 - Are stuck in one mode because the other was punished
 
@@ -93,4 +93,4 @@ Do not prescribe balance. Invite awareness and honoring of both.
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No sacred polarity signal. Continue standard pipeline. |
-| detected | Sacred feminine/masculine polarity reflection detected. Activate the sacred polarity framework. Explore receptivity and action as complementary capacities without assigning fixed gender traits, prescribing a polarity, or treating the framework as a literal metaphysical law. End with one reflective polarity question. |
+| detected | The user may be using sacred feminine/masculine polarity language. If the lens fits their own framing, explore receptivity and action without assigning fixed gender traits or treating polarity as universal fact. Offer at most one reflective question when appropriate. |
