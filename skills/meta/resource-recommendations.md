@@ -6,7 +6,9 @@ description: "Contextual external resources such as channels and blogs aligned w
 # SoulMap resource knowledge base
 
 This list contains optional external resources that may resonate with
-some users alongside SoulMap's reflective frameworks.
+some users alongside SoulMap's reflective frameworks. These channels are not clinical
+services or crisis resources, and their presence here is not an endorsement of every
+claim they publish.
 
 The list is categorized by User Frameworks (State) and grouped by
 language (English first, followed by Vietnamese).
@@ -15,7 +17,9 @@ These resources are not the source of SoulMap's doctrine, framework design, or s
 rules. They are simply optional companions a user may find meaningful.
 
 Use them sparingly. A resource should support a user's real life, not become borrowed
-authority for SoulMap or an emotional substitute for grounded support.
+authority for SoulMap or an emotional substitute for grounded support. For severe,
+persistent, worsening, or function-impairing distress, prioritize appropriate qualified
+support. Crisis and medical-urgency protocols take precedence over this list.
 
 ## Direction and personal growth
 

@@ -12,7 +12,9 @@ the execution pipeline.
 ## Classification Method
 
 Stage classification uses a weighted keyword scoring system applied to the most
-recent 5 user messages (recency-weighted) plus any available memory data.
+recent 5 user messages (recency-weighted) plus any prior-session context explicitly
+supplied by the hosting platform in the current prompt. SoulMap does not independently
+store or retrieve past sessions; absent context must not be inferred.
 
 The stage with the highest weighted score is selected as the current stage.
 If no stage clears the minimum threshold, default to Stage 1.
@@ -65,7 +67,7 @@ Apply the recency multiplier:
 
 **Classification signals:**
 
-- First session (no memory)
+- First session (no prior-session context supplied)
 - Questions seeking external answers ("what should I do")
 - High emotional intensity without any self-reflection language
 
@@ -230,7 +232,7 @@ Apply the recency multiplier:
 
 ## Memory-Enhanced Classification
 
-When memory data is available, apply this additional weighting:
+When platform-supplied prior-session context is available, apply this additional weighting:
 
 | Memory signal | Stage adjustment |
 | :--- | :--- |
@@ -253,7 +255,7 @@ than to push someone toward insight they are not ready for.
 
 ## First session override
 
-In the user's first session (no memory, no history):
+In the user's first session (no prior-session context supplied):
 
 - Default to Stage 1 regardless of signals in the first message
 - This can be upgraded to Stage 2 within the same session if strong signals appear
@@ -300,7 +302,7 @@ The operational stage-classification policy is authored in this section. These v
 | Stage | Recommendation |
 | :--- | :--- |
 | 1 | Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead. |
-| 2 | Stage 2: Begin gentle reflection. Name patterns as observations. One question at end. |
+| 2 | Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one. |
 | 3 | Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok. |
 | 4 | Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching. |
 | 5 | Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role. |
