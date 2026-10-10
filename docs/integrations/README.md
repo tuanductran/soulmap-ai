@@ -15,16 +15,18 @@ must be reviewed when that version changes.
 ## Build the distribution artifacts first
 
 ```bash
-uv run soulmap build           # dist/soulmap-ai.zip
-uv run soulmap build --skill   # dist/soulmap-ai.skill
+uv run soulmap build               # dist/soulmap-ai.zip
+uv run soulmap build --skill       # dist/soulmap-ai.skill
+uv run soulmap build --claude-ai   # dist/soulmap-ai-claude.zip
 ```
 
 ## Claude (Skills)
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
 
-Upload `dist/soulmap-ai.skill` (rename to `.zip` if the dialog requires it) via
-`Customize`, then `Skills`, then `Upload a skill`
+Upload `dist/soulmap-ai-claude.zip` via `Customize`, then `Skills`, then `Upload a skill`.
+This archive uses the documented named-root layout; live upload acceptance has not yet
+been verified.
 
 ## ChatGPT (Custom GPT)
 
