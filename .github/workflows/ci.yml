@@ -167,6 +167,7 @@ jobs:
         run: |
           test -f dist/soulmap-ai.zip
           test -f dist/soulmap-ai.skill
+          test -f dist/soulmap-ai-claude.zip
           test -f dist/soulmap-ai-library.json
           uv run python scripts/verify_artifact_hashes.py
       - name: Verify extracted artifact boundaries
@@ -178,6 +179,7 @@ jobs:
           path: |
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
+            dist/soulmap-ai-claude.zip
             dist/soulmap-ai-library.json
           if-no-files-found: error
           retention-days: 30

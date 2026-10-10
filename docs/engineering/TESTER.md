@@ -101,6 +101,7 @@ Verify:
 
 - `dist/soulmap-ai.zip` exists and excludes `.claude-plugin/`.
 - `dist/soulmap-ai.skill` exists and preserves `.claude-plugin/` as-is.
+- `dist/soulmap-ai-claude.zip` exists, contains exactly one `soulmap-ai/SKILL.md`, prefixes every member with `soulmap-ai/`, and excludes `.claude-plugin/`.
 - `dist/soulmap-ai-library.json` exists and contains the current project version, release URL,
   both artifact paths, byte sizes, and SHA-256 digests matching the generated files.
 - The CI `build` job and release workflow both run

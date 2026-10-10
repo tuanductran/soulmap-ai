@@ -371,8 +371,8 @@ to fall through to multiple frameworks simultaneously.
 
 ### What it is
 
-The SoulMap build system produces exactly two distribution artifacts:
-`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. The content of each is
+The SoulMap build system produces three distribution archives:
+`dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`, and `dist/soulmap-ai-claude.zip`, plus the Library manifest. The content of each is
 fixed by [`docs/engineering/repo-contract.md`](repo-contract.md).
 
 `templates/` is excluded from both artifacts. It is internal-only. The
@@ -406,7 +406,8 @@ skill-oriented environments.
 | Artifact | Includes | Excludes |
 | --- | --- | --- |
 | `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `SOULMAP.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
-| `dist/soulmap-ai.skill` | zip contents plus `.claude-plugin/` | `templates/`, `.claude/` |
+| `dist/soulmap-ai.skill` | standard ZIP contents plus `.claude-plugin/` | `templates/`, `.claude/` |
+| `dist/soulmap-ai-claude.zip` | standard ZIP contents under `soulmap-ai/` | `templates/`, `.claude/`, `.claude-plugin/` |
 
 ### Related documentation
 

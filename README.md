@@ -87,12 +87,14 @@ targets Python 3.11 explicitly.
 ```bash
 uv run soulmap build
 uv run soulmap build --skill
+uv run soulmap build --claude-ai
 ```
 
 Outputs:
 
 - `dist/soulmap-ai.zip`, standard knowledge archive without `.claude-plugin/`
-- `dist/soulmap-ai.skill`, skill package with `.claude-plugin/` preserved
+- `dist/soulmap-ai.skill`, plugin-metadata-preserving archive
+- `dist/soulmap-ai-claude.zip`, Claude.ai Custom Skills ZIP with a named `soulmap-ai/` root
 
 For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
@@ -102,8 +104,10 @@ The Python wheel and source distribution are local developer/test tooling surfac
 provide the `soulmap` CLI and repository validation code, but they are not standalone
 knowledge-base runtimes and do not replace the repository's `skills/` source tree.
 
-For use in AI tools, import the generated `dist/soulmap-ai.skill` or
-`dist/soulmap-ai.zip` artifact. Those artifacts are the supported distribution surface for
+For use in AI tools, select the artifact matching the target surface: use
+`dist/soulmap-ai-claude.zip` for Claude.ai Custom Skills, `dist/soulmap-ai.skill` for
+the plugin-metadata-preserving contract, or `dist/soulmap-ai.zip` for clean extraction.
+These generated archives are the supported distribution surface for
 SoulMap doctrine and package knowledge; the Python distribution is not an AI Skill installer.
 
 ## Where to start

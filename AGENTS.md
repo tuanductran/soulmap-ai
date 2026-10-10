@@ -73,8 +73,9 @@ safety evals above. If a change touches `skills/` or `templates/`, also run
 ## Build artifacts
 
 ```bash
-uv run soulmap build          # dist/soulmap-ai.zip
-uv run soulmap build --skill  # dist/soulmap-ai.skill
+uv run soulmap build               # dist/soulmap-ai.zip
+uv run soulmap build --skill       # dist/soulmap-ai.skill
+uv run soulmap build --claude-ai   # dist/soulmap-ai-claude.zip
 ```
 
 Run these after any change under `skills/` to confirm the new content packages

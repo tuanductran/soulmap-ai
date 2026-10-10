@@ -4,10 +4,12 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.devtools.packaging.build_skill import build_claude_ai_zip
 from soulmap.devtools.packaging.release_verify import (
     INTEGRATION_GUIDES,
     ReleaseVerificationError,
     _source_members,
+    _verify_archive,
     _verify_integrations,
 )
 
@@ -89,3 +91,19 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
     assert ".claude-plugin/marketplace.json" in skill
     assert ".DS_Store" not in standard
     assert ".DS_Store" not in skill
+
+
+def test_release_verifier_accepts_named_root_claude_ai_archive(tmp_path: Path) -> None:
+    for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"):
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("fixture\\n", encoding="utf-8")
+
+    artifact = build_claude_ai_zip(tmp_path)
+
+    result = _verify_archive(
+        tmp_path, artifact, include_plugin=False, archive_prefix="soulmap-ai/"
+    )
+
+    assert result["filename"] == "soulmap-ai-claude.zip"
+    assert result["path"] == "dist/soulmap-ai-claude.zip"

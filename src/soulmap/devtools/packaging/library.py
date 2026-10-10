@@ -10,7 +10,11 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-from soulmap.devtools.packaging.build_skill import build_skill, build_zip
+from soulmap.devtools.packaging.build_skill import (
+    build_claude_ai_zip,
+    build_skill,
+    build_zip,
+)
 from soulmap.devtools.support.repo import REPO_ROOT
 
 MARKETPLACE_PATH = Path(".claude-plugin/marketplace.json")
@@ -69,8 +73,14 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _artifact_metadata(repo_root: Path, path: Path, *, skill: bool) -> dict[str, Any]:
-    return {
+def _artifact_metadata(
+    repo_root: Path,
+    path: Path,
+    *,
+    skill: bool,
+    archive_root: str | None = None,
+) -> dict[str, Any]:
+    metadata = {
         "filename": path.name,
         "path": path.relative_to(repo_root).as_posix(),
         "media_type": mimetypes.guess_type(path.name)[0] or "application/octet-stream",
@@ -78,6 +88,9 @@ def _artifact_metadata(repo_root: Path, path: Path, *, skill: bool) -> dict[str,
         "sha256": _sha256(path),
         "includes_claude_plugin": skill,
     }
+    if archive_root is not None:
+        metadata["archive_root"] = archive_root
+    return metadata
 
 
 def _library_entries(marketplace: dict[str, Any]) -> list[dict[str, Any]]:
@@ -103,6 +116,7 @@ def build_library(repo_root: Path) -> Path:
     version = _project_version(repo_root)
     zip_path = build_zip(repo_root)
     skill_path = build_skill(repo_root)
+    claude_ai_path = build_claude_ai_zip(repo_root)
 
     manifest = {
         "schema_version": "1.0",
@@ -132,6 +146,9 @@ def build_library(repo_root: Path) -> Path:
         "artifacts": [
             _artifact_metadata(repo_root, zip_path, skill=False),
             _artifact_metadata(repo_root, skill_path, skill=True),
+            _artifact_metadata(
+                repo_root, claude_ai_path, skill=False, archive_root="soulmap-ai"
+            ),
         ],
     }
 

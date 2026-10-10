@@ -40,7 +40,8 @@ uv run soulmap library-manifest
 This builds:
 
 - `dist/soulmap-ai.zip` - standard knowledge archive
-- `dist/soulmap-ai.skill` - skill-oriented archive with `.claude-plugin/`
+- `dist/soulmap-ai.skill` - plugin-metadata-preserving archive
+- `dist/soulmap-ai-claude.zip` - Claude.ai Custom Skills archive with a named `soulmap-ai/` root
 - `dist/soulmap-ai-library.json` - generated Library manifest containing project version, skill inventory, release URL, compatibility metadata, and SHA-256 digests
 
 The manifest is derived from the shipped skill inventory and `pyproject.toml`. Do not hand-edit it.
@@ -71,7 +72,7 @@ Before release, build and verify the artifacts from the exact release tree. The 
 A release reviewer should confirm:
 
 1. the manifest version matches the release tag;
-2. both archives exist;
+2. all three archives exist;
 3. recorded sizes and SHA-256 digests match the generated files;
 4. extracted archives contain only the intended shipped boundary.
 

@@ -145,7 +145,8 @@ for the package comparison and decision boundary.
 ## What gets generated
 
 - `dist/soulmap-ai.zip`: standard knowledge archive without `.claude-plugin/`.
-- `dist/soulmap-ai.skill`: skill package with `.claude-plugin/` preserved.
+- `dist/soulmap-ai.skill`: plugin-metadata-preserving archive.
+- `dist/soulmap-ai-claude.zip`: Claude.ai named-root upload archive.
 - `dist/soulmap-ai-library.json`: versioned Library manifest with release metadata and
   SHA-256 digests when `uv run soulmap library-manifest` is used.
 
@@ -232,7 +233,7 @@ This repo includes a GitHub Actions workflow named `Release` that automates:
 - Lint + tests
 - Version bump (Commitizen)
 - Changelog update (Commitizen)
-- Building `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`, and the versioned Library manifest
+- Building the three archives and versioned Library manifest
 - Verifying artifact SHA-256 integrity before release mutation
 - Verifying extracted ZIP and `.skill` boundaries before release mutation
 - Creating a GitHub Release and uploading all three artifacts

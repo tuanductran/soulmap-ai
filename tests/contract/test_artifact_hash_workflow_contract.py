@@ -35,6 +35,7 @@ def test_ci_build_job_verifies_and_uploads_library_manifest() -> None:
     assert VERIFY_COMMAND in content
     assert EXTRACT_COMMAND in content
     assert MANIFEST_PATH in content
+    assert "dist/soulmap-ai-claude.zip" in content
     _assert_verify_before_final_manifest_upload(content)
 
 
@@ -77,6 +78,7 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "target-sha:" in content
     assert "dist/release-verification.json" in content
     assert "dist/release-provenance.json" in content
+    assert "dist/soulmap-ai-claude.zip" in content
     assert content.index(LIBRARY_COMMAND) < content.index(release_gate_command)
     assert content.index(release_gate_command) < content.index(VERIFY_COMMAND)
     assert content.index(VERIFY_COMMAND) < content.index(EXTRACT_COMMAND)

@@ -149,7 +149,11 @@ def _sha256(path: Path) -> str:
 
 
 def _verify_archive(
-    repo_root: Path, path: Path, *, include_plugin: bool
+    repo_root: Path,
+    path: Path,
+    *,
+    include_plugin: bool,
+    archive_prefix: str = "",
 ) -> dict[str, Any]:
     if not path.is_file():
         raise ReleaseVerificationError(
@@ -162,7 +166,8 @@ def _verify_archive(
                 raise ReleaseVerificationError(
                     f"{path.name}: unsafe archive member path"
                 )
-            expected = source_members(repo_root, include_plugin=include_plugin)
+            source_names = source_members(repo_root, include_plugin=include_plugin)
+            expected = {f"{archive_prefix}{name}" for name in source_names}
             missing = sorted(expected - actual)
             unexpected = sorted(actual - expected)
             if missing:
@@ -173,11 +178,14 @@ def _verify_archive(
                 raise ReleaseVerificationError(
                     f"{path.name}: unexpected members: {unexpected}"
                 )
-            if not actual >= CORE_FILES:
+            required_core = {f"{archive_prefix}{name}" for name in CORE_FILES}
+            if not actual >= required_core:
                 raise ReleaseVerificationError(
-                    f"{path.name}: missing one or more core files: {sorted(CORE_FILES)}"
+                    f"{path.name}: missing one or more core files: {sorted(required_core)}"
                 )
-            has_plugin = any(name.startswith(PLUGIN_PREFIX) for name in actual)
+            has_plugin = any(
+                name.startswith(f"{archive_prefix}{PLUGIN_PREFIX}") for name in actual
+            )
             if has_plugin != include_plugin:
                 expectation = "include" if include_plugin else "exclude"
                 raise ReleaseVerificationError(
@@ -185,7 +193,9 @@ def _verify_archive(
                 )
 
             try:
-                verify_member_content(archive, repo_root, expected)
+                verify_member_content(
+                    archive, repo_root, expected, archive_prefix=archive_prefix
+                )
             except ArtifactContentError as exc:
                 raise ReleaseVerificationError(f"{path.name}: {exc}") from exc
     except zipfile.BadZipFile as exc:
@@ -209,6 +219,7 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
     for filename in (
         "soulmap-ai.zip",
         "soulmap-ai.skill",
+        "soulmap-ai-claude.zip",
         "soulmap-ai-library.json",
     ):
         path = dist / filename
@@ -218,9 +229,16 @@ def verify_release(repo_root: Path) -> dict[str, Any]:
     manifest_path = build_library(repo_root)
     zip_path = dist / "soulmap-ai.zip"
     skill_path = dist / "soulmap-ai.skill"
+    claude_ai_path = dist / "soulmap-ai-claude.zip"
     artifacts = [
         _verify_archive(repo_root, zip_path, include_plugin=False),
         _verify_archive(repo_root, skill_path, include_plugin=True),
+        _verify_archive(
+            repo_root,
+            claude_ai_path,
+            include_plugin=False,
+            archive_prefix="soulmap-ai/",
+        ),
     ]
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

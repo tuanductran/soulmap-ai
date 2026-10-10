@@ -1,5 +1,5 @@
 """Distribution artifact builders.
 
-Builds the two shipped artifacts, ``dist/soulmap-ai.zip`` and
-``dist/soulmap-ai.skill``, plus the Library distribution manifest.
+Builds the standard archive, plugin-aware archive, Claude.ai named-root archive,
+and the Library distribution manifest.
 """

@@ -25,7 +25,8 @@ Use it to answer four questions for every major repo surface:
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, runtime/tooling source, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Published in the repository, not packaged in `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
-| `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
+| `dist/soulmap-ai.skill` | Plugin-metadata-preserving package | Generated release artifact | Standard package contents plus `.claude-plugin/` preserved as-is | `uv run soulmap build --skill`, extraction checks, and release review |
+| `dist/soulmap-ai-claude.zip` | Claude.ai Custom Skills upload archive | Generated release artifact | Standard package contents under `soulmap-ai/`, excluding `.claude-plugin/` | `uv run soulmap build --claude-ai`, named-root/content/link checks, and release review |
 | `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Derived Library inventory, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
 
 ## Ownership Boundaries
@@ -40,7 +41,7 @@ Use it to answer four questions for every major repo surface:
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Explanatory and operational truth lives in `docs/`.
 - Release artifact truth lives in `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`,
-  `dist/soulmap-ai-library.json`, and the tests that verify them.
+  `dist/soulmap-ai-claude.zip`, `dist/soulmap-ai-library.json`, and the tests that verify them.
 - Python wheel/sdist output is local tooling only; it must not be described as the AI Skill
   installation surface. AI-tool imports use the generated `.skill` or `.zip` artifacts.
 

@@ -48,6 +48,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
 
     zip_path = build_tool.build_zip(tmp_path)
     skill_path = build_tool.build_skill(tmp_path)
+    claude_ai_path = build_tool.build_claude_ai_zip(tmp_path)
 
     core_names = {"LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"}
     assert not any(
@@ -58,6 +59,13 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
         *core_names,
         ".claude-plugin/marketplace.json",
     }
+    claude_ai_names = _archive_names(claude_ai_path)
+    assert claude_ai_names == {f"soulmap-ai/{name}" for name in core_names}
+    assert "soulmap-ai/SKILL.md" in claude_ai_names
+    assert not any(
+        name.startswith("soulmap-ai/.claude-plugin/") for name in claude_ai_names
+    )
+    assert all(name.startswith("soulmap-ai/") for name in claude_ai_names)
 
 
 def test_build_zip_replaces_an_existing_archive(tmp_path: Path) -> None:
@@ -89,6 +97,19 @@ def test_build_cli_selects_requested_artifact(
         lambda root: calls.append(("skill", root)) or root / "dist" / "archive.skill",
     )
 
+    monkeypatch.setattr(
+        build_tool,
+        "build_claude_ai_zip",
+        lambda root: (
+            calls.append(("claude-ai", root)) or root / "dist" / "archive-claude.zip"
+        ),
+    )
+
     assert build_tool.main([]) == 0
     assert build_tool.main(["--skill"]) == 0
-    assert calls == [("zip", tmp_path), ("skill", tmp_path)]
+    assert build_tool.main(["--claude-ai"]) == 0
+    assert calls == [
+        ("zip", tmp_path),
+        ("skill", tmp_path),
+        ("claude-ai", tmp_path),
+    ]

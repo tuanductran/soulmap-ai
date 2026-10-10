@@ -55,7 +55,11 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
     assert [artifact["filename"] for artifact in payload["artifacts"]] == [
         "soulmap-ai.zip",
         "soulmap-ai.skill",
+        "soulmap-ai-claude.zip",
     ]
+    claude_artifact = payload["artifacts"][2]
+    assert claude_artifact["archive_root"] == "soulmap-ai"
+    assert claude_artifact["includes_claude_plugin"] is False
 
     for artifact in payload["artifacts"]:
         artifact_path = tmp_path / artifact["path"]
@@ -68,6 +72,11 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
         assert ".claude-plugin/marketplace.json" not in archive.namelist()
     with zipfile.ZipFile(tmp_path / "dist/soulmap-ai.skill") as archive:
         assert ".claude-plugin/marketplace.json" in archive.namelist()
+    with zipfile.ZipFile(tmp_path / "dist/soulmap-ai-claude.zip") as archive:
+        names = archive.namelist()
+        assert "soulmap-ai/SKILL.md" in names
+        assert all(name.startswith("soulmap-ai/") for name in names)
+        assert not any(".claude-plugin/" in name for name in names)
 
 
 def test_read_marketplace_rejects_missing_file(tmp_path: Path) -> None:
