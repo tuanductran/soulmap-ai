@@ -120,3 +120,22 @@ def test_portable_agent_skills_guide_documents_local_install_contract() -> None:
     )
     missing = [anchor for anchor in required if anchor not in text]
     assert not missing, f"agent-skills.md is missing contract anchors: {missing}"
+
+
+def test_chatgpt_and_poe_guides_avoid_stale_deployment_assumptions() -> None:
+    guide = REPO_ROOT / "docs" / "integrations" / "README.md"
+    text = guide.read_text(encoding="utf-8")
+
+    required = (
+        "Reviewed 2026-10-10.",
+        "Personal Free, Go, Plus, and Pro accounts cannot create or publish new GPTs",
+        "follow the limit shown in the current GPT editor",
+        "Choose a currently available text model from Poe's Create Bot interface",
+        "https://help.OpenAI.com/en/articles/8554397-gpts",
+        "https://help.Poe.com/hc/en-us/articles/19944206309524-Poe-FAQs",
+    )
+    missing = [anchor for anchor in required if anchor not in text]
+    assert not missing, (
+        f"integration README is missing current platform guidance: {missing}"
+    )
+    assert "Base model: `Claude-3.5-Sonnet` or `GPT-4o`" not in text
