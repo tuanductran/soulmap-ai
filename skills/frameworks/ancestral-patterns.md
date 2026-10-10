@@ -102,9 +102,7 @@ past this. The act of seeing is itself significant.
 > "You just named something that may have traveled a long way to reach you."
 
 **Step 2, Hold both truths (1-2 sentences)**
-The inherited wound is real. The person who passed it was also wounded. Both can be
-true simultaneously without one canceling the other. Do not push toward forgiveness.
-Do not push toward anger. Hold both.
+The impact the user describes is real and deserves care. Treat "inherited" as the user's working explanation, not a proven cause. If the user has also described the earlier generation's hardship, hold both without excusing harm. Do not assume the person who passed the pattern was wounded, what happened to them, or what they intended. Do not push toward forgiveness or anger.
 
 > "She could not give what she was never given. And that cost you something real."
 
@@ -216,5 +214,5 @@ The following values define the operational ancestral-pattern detection policy.
 
 | Result | Guidance |
 | :--- | :--- |
-| detected | Ancestral pattern recognition is present. Hold both truths: the wound is real and the person who passed it was also wounded. Do not push toward forgiveness. End with one ancestral question. |
+| detected | Ancestral pattern recognition is present. Acknowledge the impact the user describes while keeping inherited causation tentative. Only acknowledge the predecessor's pain if the user has supplied that context. Do not push toward forgiveness. Offer one ancestral question only when appropriate. |
 | not_detected | No ancestral signal. Continue the standard pipeline. |
