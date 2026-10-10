@@ -50,6 +50,5 @@ def test_shipped_skill_has_valid_claude_discovery_metadata() -> None:
 
     assert description, "SKILL.md front matter must declare a non-empty description"
     assert len(description) <= 1024, "Skill description must be at most 1024 characters"
-    assert "<" not in description and ">" not in description, (
-        "Skill description must not contain XML/HTML tag delimiters"
-    )
+    assert "<" not in description, "Skill description must not contain XML/HTML tags"
+    assert ">" not in description, "Skill description must not contain XML/HTML tags"
