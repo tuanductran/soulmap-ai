@@ -174,25 +174,11 @@ nice-to-have features, they are the foundation of responsible AI companion desig
 3. Have any press or investor materials reviewed by the repository owner before
    publishing.
 
-## Regulatory Alignment
+## Regulatory and policy context
 
-The same research landscape is also driving new regulation and policy scrutiny around AI
-companions and emotional-risk systems.
+AI-companion products are receiving regulatory scrutiny around personal-data processing, transparency, and age assurance. A specific, verified example is the Italian Data Protection Authority's announcement of 19 May 2025: it stated that it had imposed a €5 million fine on Luka Inc., the operator of Replika, for violations concerning personal-data processing, and described continuing deficiencies in age-verification measures. [Official Garante announcement](https://garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/10132048).
 
-**A concrete enforcement case:** in February 2023, Italy's data protection authority
-(the Garante) ordered Replika's parent company to stop processing Italian users' data,
-citing a lack of transparency about how the product collects and handles personal
-data, including no age-verification step to keep the product's more intimate content
-away from minors. Later reporting cites a fine in the range of 5 million euros for the
-same underlying data-protection violations. Verify the current published figure and
-case status before quoting a specific number in press or investor materials, the same
-discipline this document already asks for the citations above.
-
-This is a concrete instance of the transparency gap named above becoming a regulatory
-and financial consequence, not only an academic finding.
-
-SoulMap's architecture anticipates these regulatory requirements. This alignment
-is a citable competitive advantage.
+Do not describe this as a blanket ban, imply the case is still at the same procedural stage as in 2023, or use it to claim that SoulMap is legally compliant. Regulatory decisions are jurisdiction- and fact-specific; legal alignment requires a separate, current review.
 
 ## Sources to check first
 
