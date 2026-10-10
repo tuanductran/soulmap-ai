@@ -158,7 +158,9 @@ def test_gemini_apps_guide_tracks_gems_to_skills_transition() -> None:
         "https://support.Google.com/gemini/answer/18560919",
     )
     missing = [anchor for anchor in required if anchor not in guide]
-    assert not missing, f"gemini-apps-skills.md is missing transition contract anchors: {missing}"
+    assert not missing, (
+        f"gemini-apps-skills.md is missing transition contract anchors: {missing}"
+    )
     assert "[Gemini Apps Skills guide](gemini-apps-skills.md)" in index
     assert "Legacy platform note" in legacy
     assert "up to 10 uploaded files" not in index
