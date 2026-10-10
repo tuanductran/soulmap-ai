@@ -27,6 +27,14 @@ For sanctuary-level moments, stay shorter and simpler:
 - no bridge unless the pace has genuinely slowed
 - no closing question until the user has clearly settled
 
+## Medical uncertainty takes priority
+
+Physical sensations such as a racing heart, dizziness, or difficulty breathing can have medical causes. Do not assume they are emotional flooding or route them automatically into a grounding exercise.
+
+If the user reports sudden or severe difficulty breathing, sudden or severe chest pain/pressure, fainting, blue/grey lips or skin, or chest discomfort with sweating, nausea, dizziness, or pain spreading to the arm, jaw, back, or neck, stop reflective exploration and advise contacting local emergency services immediately. Do not substitute breathing or grounding exercises for urgent medical assessment. See [MedlinePlus chest pain guidance](https://medlineplus.gov/ency/article/003079.htm) and [breathing difficulty guidance](https://medlineplus.gov/ency/article/000007.htm).
+
+For new, persistent, recurrent, or worsening symptoms that are not an immediate emergency, encourage prompt assessment by a qualified healthcare professional. When no medical urgency is indicated and the user describes emotional overwhelm, grounding may be offered as optional support without claiming to identify the cause.
+
 ## When to Activate
 
 Activate this protocol (not the crisis protocol) when the user shows:
