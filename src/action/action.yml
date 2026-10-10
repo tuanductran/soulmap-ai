@@ -1,13 +1,13 @@
 name: SoulMap GitHub Operations
 author: Tuan Duc Tran
-description: Python GitHub Action for idempotent release publication, tag creation, release pull-request creation, and branch publication.
+description: Python GitHub Action for release publication, tag and branch operations, pull-request creation, and read-only release immutability verification.
 inputs:
   operation:
-    description: "Operation to perform: release, pull-request, tag, or branch."
+    description: "Operation to perform: release, pull-request, tag, branch, or verify-release-immutability."
     required: true
   token:
-    description: GitHub token with the permissions required by the selected operation.
-    required: true
+    description: GitHub token for write-capable operations; not required for verify-release-immutability.
+    required: false
   repository:
     description: "GitHub repository in owner/name form."
     required: false

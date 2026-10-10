@@ -70,7 +70,6 @@ Some Markdown formatters can rewrite or relocate YAML front matter.
 
 To avoid structural damage:
 
-- Use `uv run soulmap format` / `uv run soulmap lint` or `bash scripts/format.sh` /
-  `bash scripts/lint.sh`.
+- Use the canonical `uv run soulmap format` and `uv run soulmap lint` commands.
 - Do not run auto-formatters over `skills/` unless they are known to preserve YAML
   front matter exactly.

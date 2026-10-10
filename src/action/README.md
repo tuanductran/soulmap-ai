@@ -3,6 +3,22 @@
 A Python/Docker GitHub Action for the repository's GitHub-specific release operations.
 It uses only the Python standard library and GitHub REST APIs for release tags, releases, assets, and pull requests.
 
+## Release immutability audit
+
+The `verify-release-immutability` operation performs a read-only request to the
+public GitHub Releases API. It does not require a token and fails unless GitHub
+returns `immutable: true`. Omit `tag` to check the latest published release.
+
+```yaml
+- uses: ./src/action
+  with:
+    operation: verify-release-immutability
+    repository: ${{ github.repository }}
+    tag: v0.13.0 # optional
+```
+
+The workflow invoking this operation should retain `permissions: contents: read`.
+
 ## Release
 
 The `release` operation expects the Git tag to already exist. It creates or reuses the GitHub Release, uploads missing assets, and publishes it when `draft` is false.
