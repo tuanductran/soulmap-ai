@@ -1,6 +1,6 @@
 ---
 title: "SoulMap AI, platform integration guide"
-description: "Deployment and local Agent Skills guidance for ChatGPT, Gemini Apps and CLI, Poe, Claude, Codex, and GitHub Copilot."
+description: "Deployment and local Agent Skills guidance for ChatGPT, the OpenAI Skills API, Gemini Apps and CLI, Poe, Claude, Codex, and GitHub Copilot."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.13.0"
 ---
