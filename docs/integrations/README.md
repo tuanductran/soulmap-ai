@@ -1,6 +1,6 @@
 ---
 title: "SoulMap AI, platform integration guide"
-description: "Step-by-step instructions for deploying SoulMap AI on ChatGPT, Gemini, Poe, and Claude."
+description: "Deployment and local Agent Skills guidance for ChatGPT, Gemini Apps and CLI, Poe, Claude, Codex, and GitHub Copilot."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.13.0"
 ---
@@ -87,25 +87,21 @@ under the `## Conversation starters` section.
 
 Sharing and publishing options depend on the account, workspace, and permissions. Personal accounts currently cannot publish newly created GPTs; use the options actually available in the current editor and consult OpenAI's official guide before treating this as a deployable path.
 
-## Gemini (Gems)
+## Gemini Apps (Gems; legacy workflow)
 
-**Format:** Instructions text + up to 10 uploaded files.
+**Status:** Gemini Apps is transitioning from Gems to Skills. This section is retained only for accounts where the existing Gems workflow remains available; use the [Gemini Apps Skills guide](gemini-apps-skills.md) for the current direction.
 
-### Step 1, create the Gem
+**Reviewed 2026-10-10.** Google's official transition schedule says personal Google Accounts move in November 2026, Workspace business/enterprise/non-profit accounts in March 2027, and Workspace education accounts in June 2027. Google says existing Gems and supported files will transition automatically. Check the [official Gems-to-Skills transition article](https://support.Google.com/gemini/answer/18560919) for current account-specific details.
 
-1. Go to [gemini.google.com](https://gemini.google.com)
-2. Click **Gem manager** in the left sidebar
-3. Click **New Gem**
-4. Name: `SoulMap`
+If you still need to configure a legacy Gem, the previous instructions and knowledge-file shortlist remain below. Do not treat the old file-count limit or UI labels as current guarantees.
 
-### Step 2, paste the instructions
+### Legacy setup: create or edit a Gem
 
-Copy the full text from [gemini-instructions.md](gemini-instructions.md)
-and paste it into the instructions field.
+1. Open [Gemini Apps](https://gemini.google.com) and use the Gems area only if it remains available for your account.
+2. Copy the instructions from [gemini-instructions.md](gemini-instructions.md) into the Gem's Instructions field.
+3. If the editor permits Knowledge files, start with the priority sources below and follow the current UI's file and size limits.
 
-### Step 3, upload knowledge files (max 10)
-
-Upload these files (extract from `dist/soulmap-ai.zip` first):
+Priority sources:
 
 1. [`../SOULMAP.md`](../../SOULMAP.md)
 2. [`../SKILL.md`](../../SKILL.md)
@@ -117,10 +113,6 @@ Upload these files (extract from `dist/soulmap-ai.zip` first):
 8. [`../skills/frameworks/life-direction/content/life-direction.md`](../../skills/frameworks/life-direction/content/life-direction.md)
 9. [`../skills/frameworks/shadow-patterns/content/shadow-patterns.md`](../../skills/frameworks/shadow-patterns/content/shadow-patterns.md)
 10. [`../skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
-
-### Step 4, share
-
-Click **Save**, then click the **Share** icon in Gem manager to generate a share link.
 
 ## Poe (Bot)
 
