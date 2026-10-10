@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Thirty-seven distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Thirty-eight files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Forty-seven distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, and #640 are merged; #636 and #641 contain reviewed changes pending final CI and merge. Twenty-eight files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -59,7 +59,7 @@ Status meanings:
 - [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/existential-companion.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/frameworks/feminine-masculine-dynamics.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/feminine-masculine-dynamics.md` - Reviewed; no change warranted in this pass: the file already frames polarity symbolically and prohibits essentialist gender claims.
 - [x] `skills/frameworks/grief-companion.md` - Targeted review and changes in PR #642; pending CI/merge.
 - [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
@@ -105,21 +105,21 @@ Status meanings:
 
 ### `skills/soulmate/`
 
-- [ ] `skills/soulmate/numerology-connection-lens.md` - Inventory screened; semantic review pending.
+- [x] `skills/soulmate/numerology-connection-lens.md` - Reviewed; no change warranted in this pass: the file prohibits computing or ranking compatibility and keeps numerology symbolic-only.
 - [x] `skills/soulmate/partnership-patterns.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/soulmate/soulmate-longing.md` - Targeted review in #640 pending CI/merge.
 
 ### `skills/spiritual/`
 
-- [ ] `skills/spiritual/astrology-symbolic-lens.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/chakra-affirmations.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/founder-numerology.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/healing-metaphors.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/numerology-chakra-policy.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/numerology-profile.md` - Inventory screened; semantic review pending.
+- [x] `skills/spiritual/astrology-symbolic-lens.md` - Reviewed; no change warranted in this pass: symbolic-only use, no horoscope generation, prediction, diagnosis, or compatibility verdict.
+- [x] `skills/spiritual/chakra-affirmations.md` - Reviewed; no change warranted in this pass: explicit consent, symbolic framing, and no healing/destiny promises are already required.
+- [x] `skills/spiritual/founder-numerology.md` - Reviewed; no change warranted in this pass: numbers-only handling and no personal identifiers are explicit.
+- [x] `skills/spiritual/healing-metaphors.md` - Reviewed; no change warranted in this pass: metaphors are prompts for curiosity, not diagnosis or causal explanation.
+- [x] `skills/spiritual/numerology-chakra-policy.md` - Reviewed; no change warranted in this pass: symbolic-only limits, consent, data minimization, and safety overrides are explicit.
+- [x] `skills/spiritual/numerology-profile.md` - Reviewed; no change warranted in this pass: profile is explicitly non-evidential and cannot establish mission, rank, identity, or future.
 - [x] `skills/spiritual/spiritual-discernment.md` - Targeted review in #631; see the linked PR history.
-- [ ] `skills/spiritual/symbolic-report-handling.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/tarot-symbolic-lens.md` - Inventory screened; semantic review pending.
+- [x] `skills/spiritual/symbolic-report-handling.md` - Reviewed; no change warranted in this pass: report claims are separated from evidence, with consent, data minimization, and no prediction/prescription.
+- [x] `skills/spiritual/tarot-symbolic-lens.md` - Reviewed; no change warranted in this pass: no card assignment, prediction, diagnosis, or compatibility verdict.
 
 ### `skills/voice/`
 
