@@ -26,6 +26,12 @@ uv run soulmap build --claude-ai   # dist/soulmap-ai-claude.zip
 
 See [agent-skills.md](agent-skills.md) for the installation commands and per-tool discovery checks. This documents local skill discovery only; it does not claim hosted upload or live activation acceptance.
 
+## OpenAI Skills API (hosted)
+
+**Format:** A ZIP containing one top-level Skill folder with `SKILL.md` and supporting resources.
+
+See [openai-skills-api.md](openai-skills-api.md) for the compatibility review and credentialed manual test procedure. The package shape is reviewed, but live API acceptance and activation remain unverified.
+
 ## Claude (Skills)
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
