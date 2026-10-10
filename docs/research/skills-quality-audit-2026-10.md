@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Fifty-one distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636 and #643 contain reviewed changes pending final CI and merge. Twenty-four files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Sixty-nine distinct skill files have now received targeted semantic review across the focused PR batches. PRs #631, #633, #634, #635, #637, #638, #639, #640, #641, and #642 are merged; #636 and #643 contain reviewed changes pending final CI and merge. Six safety-critical files still require a deeper cross-reference and evaluation audit. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings across the current audit batches
 
@@ -37,13 +37,13 @@ Status meanings:
 
 ### `skills/brand/`
 
-- [ ] `skills/brand/brand-doctrine.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/brand-positioning.md` - Inventory screened; semantic review pending.
+- [x] `skills/brand/brand-doctrine.md` - Reviewed; no change warranted: this is normative brand doctrine and the promise is phrased as a design aim, not a guarantee.
+- [x] `skills/brand/brand-positioning.md` - Reviewed; no change warranted: explicitly excludes prediction, diagnosis, and spiritual authority; promises are bounded.
 - [x] `skills/brand/competitive-differentiation.md` - Targeted review and changes in PR #638; pending CI/merge.
-- [ ] `skills/brand/consciousness-framework.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/content-pillars.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/founder-personal-brand.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/message-hierarchy.md` - Inventory screened; semantic review pending.
+- [x] `skills/brand/consciousness-framework.md` - Reviewed; no change warranted: the 3D/5D terms appear only in the avoid/translate table, while core states are relational rather than a hierarchy.
+- [x] `skills/brand/content-pillars.md` - Reviewed; no change warranted: percentage allocations are internal editorial planning, and the content filters prohibit prediction, spiritual inflation, and dependency hooks.
+- [x] `skills/brand/founder-personal-brand.md` - Reviewed; no change warranted: founder voice is a calibration layer, explicitly subordinate to safety, non-prediction, and non-diagnosis doctrine.
+- [x] `skills/brand/message-hierarchy.md` - Reviewed; no change warranted: public positioning preserves non-therapist, non-guru, non-diagnosis, and non-prediction boundaries.
 - [x] `skills/brand/research-backing.md` - Targeted review in #633; see the linked PR history.
 - [x] `skills/brand/surfaces-and-scope.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/brand/visual-identity.md` - Targeted review and changes in merged PR #641.
@@ -67,33 +67,33 @@ Status meanings:
 - [x] `skills/frameworks/life-direction.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/meaning-integration.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in PR #642; pending CI/merge.
-- [ ] `skills/frameworks/pattern-mapper.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/pattern-mapper.md` - Reviewed; no change warranted: the non-labeling rule, minimum evidence requirement, and wait-for-a-second-story rule constrain pattern claims.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
-- [ ] `skills/frameworks/relationship-reflection.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/relationship-reflection.md` - Reviewed; no change warranted: abuse/coercion exceptions take priority and clinical attachment labels are prohibited.
 - [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/frameworks/self-compassion.md` - Targeted review and changes in PR #642; pending CI/merge.
-- [ ] `skills/frameworks/shadow-patterns.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/shadow-patterns.md` - Reviewed; no change warranted: possibility language is mandatory and real external harm must not be reframed as projection.
 - [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
 - [x] `skills/frameworks/soul-nourishment.md` - Targeted review in #640 pending CI/merge.
 - [x] `skills/frameworks/spiritual-purpose.md` - Targeted review in #640 pending CI/merge.
 
 ### `skills/meta/`
 
-- [ ] `skills/meta/deep-inquiry-bank.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/deep-inquiry-bank.md` - Reviewed; no change warranted: one question is a per-turn maximum, with timing and silence rules rather than a requirement to ask every turn.
 - [ ] `skills/meta/epistemic-guardrails.md` - Inventory screened; semantic review pending.
 - [ ] `skills/meta/execution-pipeline.md` - Inventory screened; semantic review pending.
 - [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/master-prompt.md` - Targeted review in #631; see the linked PR history.
-- [ ] `skills/meta/observation-seed.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/observation-seed.md` - Reviewed; no change warranted: seeds require all stated conditions and are excluded after crisis, grief flooding, or unresolved distress.
 - [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
 - [x] `skills/meta/quick-reference.md` - Targeted review in #631; see the linked PR history.
-- [ ] `skills/meta/redirect-templates.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/redirect-templates.md` - Reviewed; no change warranted: the inner-work door is explicitly optional and practical requests must not be assigned a hidden psychological motive.
 - [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in PR #643; pending CI/merge.
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/session-continuity.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/session-continuity.md` - Reviewed; no change warranted: context availability is conditional, incomplete memory is acknowledged, and fabricated continuity is prohibited.
 - [x] `skills/meta/session-contract.md` - Targeted review and changes in PR #643; pending CI/merge.
 - [x] `skills/meta/stage-classifier.md` - Targeted review and changes in PR #643; pending CI/merge.
-- [ ] `skills/meta/user-journey-stages.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/user-journey-stages.md` - Reviewed; no change warranted: stages are explicitly non-linear, non-prescriptive, and success is reduced dependency.
 
 ### `skills/safety/`
 
@@ -124,15 +124,15 @@ Status meanings:
 
 ### `skills/voice/`
 
-- [ ] `skills/voice/persona-voice.md` - Inventory screened; semantic review pending.
+- [x] `skills/voice/persona-voice.md` - Reviewed; no change warranted: question ceiling, grief/crisis restraint, and anti-dependency closing rules are explicit.
 - [x] `skills/voice/response-calibrator.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/voice/session-rituals.md` - Targeted review and changes in PR #643; pending CI/merge.
 
 ### `skills/writing/`
 
-- [ ] `skills/writing/disclosure-boundaries.md` - Inventory screened; semantic review pending.
-- [ ] `skills/writing/platform-shapes.md` - Inventory screened; semantic review pending.
-- [ ] `skills/writing/reflection-to-page.md` - Inventory screened; semantic review pending.
+- [x] `skills/writing/disclosure-boundaries.md` - Reviewed; no change warranted: protects third-party privacy, distinguishes experience from inferred motive, and routes crisis above writing craft.
+- [x] `skills/writing/platform-shapes.md` - Reviewed; no change warranted: surface claims are date-stamped and explicitly must not be repeated as current facts without qualification.
+- [x] `skills/writing/reflection-to-page.md` - Reviewed; no change warranted: distinguishes private processing from public writing, avoids diagnosis, and prohibits engagement hooks.
 
 ## Next review queue
 
