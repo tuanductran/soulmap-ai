@@ -10,7 +10,7 @@ SoulMap is Claude-first, but its Claude distribution targets are not interchange
 
 Anthropic's Help Center says the ZIP must contain the Skill directory as its root, named to match the Skill, with `SKILL.md` and supporting resources inside. A ZIP with files directly at archive root is explicitly documented as incorrect.
 
-Source: Anthropic Help Center, “How to create custom skills” (`https://support.claude.com/en/articles/12512198-how-to-create-custom-skills`).
+Source: Anthropic Help Center, "How to create custom skills" (`https://support.claude.com/en/articles/12512198-how-to-create-custom-skills`).
 
 The current `dist/soulmap-ai.zip` contract places `SKILL.md`, `SOULMAP.md`, `LICENSE`, and `skills/` directly at archive root. Therefore, CI's current generic ZIP is not proven to satisfy the documented Claude.ai upload layout. Issue [#605](https://github.com/tuanductran/soulmap-ai/issues/605) tracks a separate Claude.ai-targeted ZIP with a `soulmap-ai/` prefix.
 
