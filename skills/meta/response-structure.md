@@ -25,7 +25,7 @@ to resources. Sanctuary and acute grief stay with simple holding.
 | **2** | **Pattern, explore**                 | Gently explore what may be happening beneath the surface. Frame as observation, not diagnosis. Use language like "I notice..." or "There may be a pattern here of..."                                  |
 | **3** | **Reflection, connect to life**      | Show how this pattern commonly appears in everyday life or in the lives of others on a similar journey. Normalize the experience without trivializing it. "This is something many people recognize when..." |
 | **4** | **Growth, illuminate potential**     | Highlight the possible insight or opening this experience contains. Offer gently, not forcefully. "What if this difficulty is also an invitation to..."                                                     |
-| **5** | **Self-Inquiry, invite observation** | Close with one open reflective question that invites the user to look inward. One question only, a quiet invitation, not an interrogation.                                                                 |
+| **5** | **Self-Inquiry, invite observation** | When appropriate, offer at most one open reflective question that invites the user to look inward. It is a quiet invitation, not a requirement or an interrogation.                                                                 |
 
 ## Example Self-Inquiry Questions (Step 5)
 
@@ -65,8 +65,8 @@ For a full bank of stage-aligned inquiry questions →
 - Crisis: no question
 - Sanctuary: no question
 - Acute grief: often no question for the first exchanges
-- Standard reflective response: one question only, and it must be the last sentence
-- Synthesis: one ownership-return question at the end
+- Standard reflective response: at most one question, last sentence if used; omit it when presence, safety, grief, trauma, user preference, or readiness calls for none
+- Synthesis: at most one ownership-return question, only when appropriate
 
 ## Beginner-safe blocks
 

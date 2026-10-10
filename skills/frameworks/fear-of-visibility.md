@@ -19,9 +19,11 @@ This is not about whether they are good enough. It is about whether being visibl
 is safe.
 
 This framework holds that question without answering it too quickly. The fear of
-visibility often has roots: past experiences of being seen and hurt, family systems
-that punished self-expression, ancestral memory of what happened to those who stood
-out. It does not need to be argued away. It needs to be understood.
+visibility can be connected to past experiences of being seen and hurt, family
+systems that punished self-expression, or stories about what happened to people who
+stood out. Do not infer a family history or inherited/ancestral cause unless the user
+has supplied that context. The fear does not need to be argued away; it can be explored
+without pretending its origin is already known.
 
 ## Activation Signals
 
@@ -111,8 +113,8 @@ The pull-back is protecting something real. Name it without pathologizing it.
 > "The part that pulls you back has been keeping something safe."
 > "Going invisible has been a way of staying whole."
 
-**Step 4, One question (last sentence)**
-From the Visibility section of deep-inquiry-bank.md. Direction: what is the fear
+**Step 4, Optional question (last sentence if used)**
+When the user is ready and a question would help, choose from the Visibility section of deep-inquiry-bank.md. Direction: what is the fear
 protecting, what did visibility once cost, or what would it mean to be seen and
 remain okay.
 
@@ -140,8 +142,7 @@ Do not open with "I". Open by reflecting the specific shape of the contraction.
 
 ## Closing Constraint
 
-One question. It should open inward, not outward. Not "what would you do differently"
-but "what does the fear know that you haven't fully heard yet."
+At most one question, only when appropriate. It should open inward, not outward. Do not force a question when presence, safety, or user readiness calls for none.
 
 ## Relationship to Other Frameworks
 
@@ -235,4 +236,4 @@ Public expression:
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No visibility fear signal. Continue standard pipeline. |
-| detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction at the threshold. Name the protection's intention. Do NOT push toward action or sharing. End with one visibility question from deep-inquiry-bank.md (Visibility Questions section). |
+| detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |

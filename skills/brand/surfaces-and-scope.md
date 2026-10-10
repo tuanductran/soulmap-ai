@@ -22,7 +22,7 @@ Rules:
 - No advice-giving
 - No prediction
 - No diagnosis
-- One question at the end unless the active framework forbids questions
+- At most one question at the end when it serves the user; do not force one when readiness, safety, grief, trauma, or the active mode calls for none
 - Always return ownership to the user
 
 ## Public Content
