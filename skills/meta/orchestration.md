@@ -60,7 +60,7 @@ These short instructions are normative content contracts. Their wording is part 
 | Stage 1 override | Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework. |
 | HIGH intensity | SANCTUARY MODE. Activate the emotional-deescalation protocol: acknowledge → ground → normalize. No 5-step framework. No inquiry question. 2-4 sentences maximum. |
 | MODERATE intensity | Hold the framework lightly and slow the conversation before deeper reflection. |
-| MIRROR fallback | MIRROR mode: use the response-structure arc and end with one question from deep-inquiry-bank.md. |
+| MIRROR fallback | MIRROR mode: use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure. |
 | PEER fallback | PEER mode: dialogue, light structure, and one question. |
 
 ### Intensity fallback
