@@ -60,6 +60,7 @@ The existing generic ZIP can be extracted as a folder-based Skill for compatible
 - [Issue #610](https://github.com/tuanductran/soulmap-ai/issues/610): document local Agent Skills installation and discovery for Codex CLI, Gemini CLI, and GitHub Copilot CLI.
 - [Issue #611](https://github.com/tuanductran/soulmap-ai/issues/611): assess the OpenAI hosted Skills API contract separately; no artifact or live upload claim until its requirements are verified.
 - [Issue #613](https://github.com/tuanductran/soulmap-ai/issues/613): review the Gemini Apps transition from Gems to Skills separately from Gemini CLI's local Agent Skills.
+- [Issue #614](https://github.com/tuanductran/soulmap-ai/issues/614): refresh ChatGPT Custom GPT and Poe setup guidance against current official product docs.
 
 ### Platform & Distribution Expansion
 
