@@ -7,6 +7,7 @@
 Anthropic's Skill authoring guidance says the description should state what a Skill does and when it should be used. The root description should communicate SoulMap's reflective purpose and the user intents that make it relevant, rather than listing internal implementation components.
 
 References:
+
 - Anthropic, Skill authoring best practices: `https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices`
 - Anthropic Help Center, custom Skill packaging and testing: `https://support.claude.com/en/articles/12512198-how-to-create-custom-skills`
 - SoulMap behavior contract: `SOULMAP.md`
