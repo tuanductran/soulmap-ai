@@ -25,6 +25,24 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 ## Current Roadmap
 
+### Claude-First Skill Contract & Distribution
+
+**Status:** Active, bounded validation and compatibility research.
+
+Claude is the primary shipped Skill surface. Keep its single root `SKILL.md` entrypoint,
+canonical `skills/` knowledge tree, and artifact boundaries explicit. Validation should
+follow the current Anthropic Skill contract without turning supporting framework resources
+into separate Skills or implying that repository CI proves live platform acceptance.
+
+- [Issue #600](https://github.com/tuanductran/soulmap-ai/issues/600): validate the shipped
+  root Skill's discovery metadata in CI.
+- [Issue #601](https://github.com/tuanductran/soulmap-ai/issues/601): verify Claude.ai Custom
+  Skills upload and Claude Code/plugin installation contracts independently before changing
+  artifact structure.
+
+Do not add another entrypoint, create framework-level `SKILL.md` files, or change runtime
+behavior as part of this work.
+
 ### Platform & Distribution Expansion
 
 **Status:** Conditional / blocked by external platform readiness.
