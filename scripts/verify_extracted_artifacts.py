@@ -75,7 +75,9 @@ def _markdown_members(actual: set[str]) -> tuple[str, ...]:
     )
 
 
-def _resolve_markdown_target(source: str, target: str) -> str | None:
+def _resolve_markdown_target(
+    source: str, target: str, *, archive_prefix: str = ""
+) -> str | None:
     """Resolve a shipped Markdown link using standard or repository-root semantics."""
     parsed = urlsplit(unquote(target))
     if parsed.scheme or parsed.netloc:
@@ -88,8 +90,10 @@ def _resolve_markdown_target(source: str, target: str) -> str | None:
     target_path = PurePosixPath(raw_path)
     if raw_path.startswith("/"):
         candidate = target_path.relative_to("/")
+        if archive_prefix:
+            candidate = PurePosixPath(archive_prefix) / candidate
     elif raw_path.startswith("skills/") or raw_path in CORE_FILES:
-        candidate = target_path
+        candidate = PurePosixPath(archive_prefix) / target_path if archive_prefix else target_path
     else:
         candidate = source_path.parent / target_path
 
@@ -103,10 +107,15 @@ def _resolve_markdown_target(source: str, target: str) -> str | None:
             normalized = normalized.parent
         else:
             normalized /= part
-    return normalized.as_posix()
+    normalized_name = normalized.as_posix()
+    if archive_prefix and not normalized_name.startswith(archive_prefix):
+        return None
+    return normalized_name
 
 
-def _assert_markdown_references(archive: zipfile.ZipFile, actual: set[str]) -> None:
+def _assert_markdown_references(
+    archive: zipfile.ZipFile, actual: set[str], *, archive_prefix: str = ""
+) -> None:
     """Require every shipped Markdown link to resolve inside the archive."""
     parser = MarkdownIt("commonmark")
     for source in _markdown_members(actual):
@@ -124,7 +133,9 @@ def _assert_markdown_references(archive: zipfile.ZipFile, actual: set[str]) -> N
                 parsed = urlsplit(unquote(target))
                 if parsed.scheme or parsed.netloc:
                     continue
-                resolved = _resolve_markdown_target(source, target)
+                resolved = _resolve_markdown_target(
+                    source, target, archive_prefix=archive_prefix
+                )
                 if resolved is None:
                     raise ExtractedArtifactError(
                         f"{source}:{line_no}: link target escapes shipped package: {target!r}"
@@ -143,10 +154,12 @@ def _assert_expected_members(
     *,
     repo_root: Path,
     include_plugin: bool,
+    archive_prefix: str = "",
 ) -> None:
     actual, archive = _read_members(archive_path)
     try:
-        expected = source_members(repo_root, include_plugin=include_plugin)
+        source_names = source_members(repo_root, include_plugin=include_plugin)
+        expected = {f"{archive_prefix}{name}" for name in source_names}
         missing = sorted(expected - actual)
         unexpected = sorted(actual - expected)
         if missing:
@@ -158,13 +171,16 @@ def _assert_expected_members(
                 f"{archive_path.name} contains unexpected members: {unexpected}"
             )
 
-        if not actual >= set(CORE_FILES):
+        required_core = {f"{archive_prefix}{name}" for name in CORE_FILES}
+        if not actual >= required_core:
             raise ExtractedArtifactError(
-                f"{archive_path.name} must contain {sorted(CORE_FILES)}"
+                f"{archive_path.name} must contain {sorted(required_core)}"
             )
 
         try:
-            verify_member_content(archive, repo_root, expected)
+            verify_member_content(
+                archive, repo_root, expected, archive_prefix=archive_prefix
+            )
         except ArtifactContentError as exc:
             raise ExtractedArtifactError(f"{archive_path.name}: {exc}") from exc
 
@@ -176,18 +192,26 @@ def _assert_expected_members(
         elif any(name.startswith(PLUGIN_PREFIX) for name in actual):
             raise ExtractedArtifactError("standard ZIP must exclude .claude-plugin/")
 
+        source_member_names = {
+            name[len(archive_prefix) :] if archive_prefix else name for name in actual
+        }
         forbidden_members = sorted(
-            name for name in actual if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
+            name
+            for name in source_member_names
+            if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
         )
         if forbidden_members:
             raise ExtractedArtifactError(
                 f"{archive_path.name} contains repository-only members: {forbidden_members}"
             )
 
-        _assert_markdown_references(archive, actual)
+        _assert_markdown_references(
+            archive, actual, archive_prefix=archive_prefix
+        )
 
         for name in sorted(actual):
-            if not name.startswith("skills/") or not name.endswith(".md"):
+            source_name = name[len(archive_prefix) :] if archive_prefix else name
+            if not source_name.startswith("skills/") or not source_name.endswith(".md"):
                 continue
             content = archive.read(name).decode("utf-8")
             violations = [
@@ -217,6 +241,12 @@ def verify_artifacts(repo_root: Path) -> None:
         repo_root=repo_root,
         include_plugin=True,
     )
+    _assert_expected_members(
+        dist / "soulmap-ai-claude.zip",
+        repo_root=repo_root,
+        include_plugin=False,
+        archive_prefix="soulmap-ai/",
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -238,6 +268,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print("PASS extracted artifact boundary: dist/soulmap-ai.zip")
     print("PASS extracted artifact boundary: dist/soulmap-ai.skill")
+    print("PASS extracted artifact boundary: dist/soulmap-ai-claude.zip")
     return 0
 
 
