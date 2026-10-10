@@ -26,7 +26,6 @@ Keep packaging behavior and packaging claims aligned.
 - `pyproject.toml`
 - `docs/engineering/repo-contract.md`
 - `docs/engineering/DEV.md`
-- `scripts/build-skill.sh`
 - `src/soulmap/devtools/packaging/build_skill.py`
 - `dist/`
 
@@ -34,7 +33,7 @@ Keep packaging behavior and packaging claims aligned.
 
 - docs that describe the wrong artifact contents
 - stale references to files that are not shipped
-- mismatches between build scripts and repo docs
+- mismatches between the CLI build command and repo docs
 - packaging steps that bypass the current
   `uv run soulmap build` contract
 - broken assumptions about skill archives, zip archives, or extracted bundle structure

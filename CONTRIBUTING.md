@@ -22,8 +22,8 @@ uv run soulmap check-api-docs --root .
 uv run soulmap test
 ```
 
-On macOS/Linux the shell scripts delegate to the canonical `uv run soulmap ...`
-commands.
+The shell bootstrap helper sets up the local environment; formatting, linting, and tests
+use the canonical `uv run soulmap ...` commands on every platform.
 
 ## Brand Consistency
 

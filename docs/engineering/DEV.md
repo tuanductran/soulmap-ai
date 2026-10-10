@@ -70,17 +70,11 @@ uv run soulmap build --skill
 uv run python tests/eval_regression/test_safety_evals.py
 ```
 
-Bash scripts (macOS/Linux):
-
-```bash
-bash scripts/format.sh
-bash scripts/lint.sh
-bash scripts/build-skill.sh
-```
-
-These shell scripts are convenience wrappers. The `soulmap` CLI dispatches directly
-to the canonical maintainer tooling under `src/soulmap/devtools/`; `bootstrap` remains
-the only dedicated module entry point under `src/soulmap/devtools/cli/`.
+The remaining shell helpers are limited to environment bootstrap and optional shell
+activation. Formatting, linting, and packaging use the same cross-platform CLI commands
+shown above. The `soulmap` CLI dispatches directly to the canonical maintainer tooling
+under `src/soulmap/devtools/`; `bootstrap` remains the only dedicated module entry point
+under `src/soulmap/devtools/cli/`.
 
 ## Markdown QA
 
@@ -216,7 +210,7 @@ description: "One short sentence describing the full file."
   [`../skills/brand/brand-doctrine.md`](../../skills/brand/brand-doctrine.md) must use
   `name: "brand-doctrine"`.
 - Use the repo tooling for Markdown changes. `uv run soulmap format` is the canonical
-  formatter, and `bash scripts/format.sh` delegates to it on macOS/Linux.
+  formatter, and `uv run soulmap format` is the canonical command on every platform.
 - Before landing Markdown-heavy changes, run the contract check plus the focused local
   link and case checkers so broken anchors or canonical term drift fail early.
 

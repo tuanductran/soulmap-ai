@@ -810,6 +810,70 @@ def finalize_release(
     return response
 
 
+def run_verify_release_immutability() -> None:
+    """Verify a published release through GitHub's unauthenticated public API."""
+    repository = env(
+        "INPUT_REPOSITORY",
+        required=False,
+        default=os.environ.get("GITHUB_REPOSITORY", ""),
+    )
+    if not repository:
+        raise GitHubActionError(
+            "Missing action input INPUT_REPOSITORY or GITHUB_REPOSITORY."
+        )
+    owner, repo = repository_parts(repository)
+    tag = env("INPUT_TAG", required=False) or None
+    endpoint = (
+        f"/repos/{quote(owner)}/{quote(repo)}/releases/tags/{quote(tag, safe='')}"
+        if tag
+        else f"/repos/{quote(owner)}/{quote(repo)}/releases/latest"
+    )
+    request = Request(
+        f"{API_ROOT}{endpoint}",
+        headers={
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "soulmap-github-action",
+        },
+    )
+    try:
+        with urlopen(request, timeout=30) as response:
+            release = json.load(response)
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise GitHubActionError(
+            f"Release immutability verification failed: GitHub API GET "
+            f"{endpoint} returned HTTP {exc.code}: {detail}"
+        ) from exc
+    except URLError as exc:
+        raise GitHubActionError(
+            f"Release immutability verification failed: GitHub API GET "
+            f"{endpoint} failed: {exc.reason}"
+        ) from exc
+
+    if not isinstance(release, dict):
+        raise GitHubActionError(
+            "Release immutability verification failed: GitHub returned "
+            "an unexpected release payload."
+        )
+    release_tag = release.get("tag_name")
+    immutable = release.get("immutable")
+    if not isinstance(release_tag, str):
+        raise GitHubActionError(
+            "Release immutability verification failed: release payload has no tag_name."
+        )
+    if immutable is not True:
+        raise GitHubActionError(
+            f"Release {release_tag} is not immutable (immutable={immutable!r}). "
+            "Enable GitHub release immutability before treating release "
+            "protection as complete."
+        )
+
+    write_output("tag-name", release_tag)
+    summary(f"## Release immutability verified\n\n- Tag: {release_tag}")
+    print(f"Release {release_tag} is immutable.")
+
+
 def run_branch(client: GitHubClient) -> None:
     """Create or verify the release branch for an exact commit."""
     owner, repo = repository_parts(env("INPUT_REPOSITORY"))
@@ -920,18 +984,23 @@ def main() -> int:
     """Run the selected GitHub operation and report action failures."""
     try:
         operation = env("INPUT_OPERATION").strip().lower()
-        client = GitHubClient(env("INPUT_TOKEN"))
-        if operation == "release":
-            run_release(client)
-        elif operation == "branch":
-            run_branch(client)
-        elif operation == "pull-request":
-            run_pull_request(client)
-        elif operation == "tag":
-            run_tag(client)
+        if operation == "verify-release-immutability":
+            run_verify_release_immutability()
+        elif operation in {"release", "branch", "pull-request", "tag"}:
+            client = GitHubClient(env("INPUT_TOKEN"))
+            if operation == "release":
+                run_release(client)
+            elif operation == "branch":
+                run_branch(client)
+            elif operation == "pull-request":
+                run_pull_request(client)
+            else:
+                run_tag(client)
         else:
             raise GitHubActionError(
-                f"Unsupported operation {operation!r}; expected release, pull-request, tag, or branch."
+                "Unsupported operation "
+                f"{operation!r}; expected release, pull-request, tag, branch, "
+                "or verify-release-immutability."
             )
     except GitHubActionError as exc:
         print(f"::error::{exc}", file=sys.stderr)

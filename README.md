@@ -34,7 +34,7 @@ It contains:
 - the shipped knowledge base in [skills/](skills/)
 - the canonical Python runtime and safety logic in [src/soulmap/runtime/](src/soulmap/runtime/)
 - the canonical local tooling in [src/soulmap/devtools/](src/soulmap/devtools/) and
-  convenience wrappers in [scripts/](scripts/)
+  small setup/CI helpers in [scripts/](scripts/)
 - the operational and maintainer docs in [docs/](docs/)
 
 The repo is designed to keep brand, safety, packaging, and implementation aligned.

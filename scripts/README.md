@@ -1,16 +1,13 @@
 # Scripts
 
-This folder contains shell and Python helpers for contributor workflows and CI.
+This folder contains the small set of shell and Python helpers that have distinct
+local-workflow or CI consumers. Canonical developer commands live in the `soulmap` CLI
+implemented under `src/soulmap/devtools/`.
 
-The shell scripts here are thin macOS/Linux wrappers around the canonical Python entry
-points in `src/soulmap/devtools/` and `src/soulmap/runtime/`.
-
-## Common commands
+## Setup
 
 ```bash
 bash scripts/bootstrap_venv.sh
-bash scripts/format.sh
-bash scripts/lint.sh
 ```
 
 Activating `.venv` is optional when you use `uv run ...`. To activate it in the

@@ -12,7 +12,12 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "ci.yml",
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
-CI_WORKFLOWS = tuple((REPO_ROOT / ".github" / "workflows").glob("*.yml"))
+# This workflow runs the repository's Docker action and does not need uv.
+CI_WORKFLOWS = tuple(
+    path
+    for path in (REPO_ROOT / ".github" / "workflows").glob("*.yml")
+    if path.name != "release-immutability-audit.yml"
+)
 ACTIONLINT_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "action.yml"
 
 DIRECT_DEV_PACKAGES = {
