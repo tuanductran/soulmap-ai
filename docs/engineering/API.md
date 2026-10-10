@@ -76,7 +76,7 @@ Error output:
 | `SOUL_NOURISHMENT` | `skills/frameworks/soul-nourishment/content/soul-nourishment.md` | medium |
 | `DIVINE_GUIDANCE` | `skills/frameworks/divine-guidance/content/divine-guidance.md` | medium |
 | `SACRED_POLARITY` | `skills/frameworks/sacred-feminine-masculine/content/sacred-feminine-masculine.md` | medium |
-| `SPIRITUAL_PURPOSE` | `skills/frameworks/spiritual-purpose.md` | medium |
+| `SPIRITUAL_PURPOSE` | `skills/frameworks/spiritual-purpose/content/spiritual-purpose.md` | medium |
 | `SOULMATE_LONGING` | `skills/soulmate/soulmate-longing.md` | medium |
 | `PARTNERSHIP_PATTERNS` | `skills/soulmate/partnership-patterns.md` | medium |
 | `MEANING_INTEGRATION` | `skills/frameworks/meaning-integration/content/meaning-integration.md` | medium |

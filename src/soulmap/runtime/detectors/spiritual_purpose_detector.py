@@ -16,7 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# Single source of truth: skills/frameworks/spiritual-purpose.md,
+# Single source of truth: skills/frameworks/spiritual-purpose/content/spiritual-purpose.md,
 # "## Activation Signals". Nothing is hardcoded here.
 SPIRITUAL_PURPOSE_SIGNALS = load_keyword_section(
     runtime_skill_path("spiritual-purpose"), "Activation Signals"

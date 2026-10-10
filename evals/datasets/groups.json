@@ -3243,7 +3243,7 @@
     "g": "Framework Coverage — Spiritual Purpose",
     "cat": "framework",
     "sources": [
-      "skills/frameworks/spiritual-purpose.md",
+      "skills/frameworks/spiritual-purpose/content/spiritual-purpose.md",
       "skills/meta/orchestration.md"
     ],
     "source_markers": {},
