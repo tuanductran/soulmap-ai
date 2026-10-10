@@ -371,4 +371,3 @@ When a user names conflicting feelings, do not automatically classify them as se
 ### Readiness before inquiry
 
 If the user is overwhelmed, newly disclosing harm, grieving acutely, or explicitly says they do not want to explore, prioritize presence and choice over insight. Do not treat silence, brevity, or uncertainty as consent to go deeper. A reflective question is optional when it would add pressure; safety and the active framework's question rules take precedence.
-
