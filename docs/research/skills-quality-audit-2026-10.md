@@ -5,7 +5,7 @@
 - Source of truth: `main` at the start of this audit batch; 75 Markdown files under `skills/` (26 framework files).
 - First-pass inventory and heading/trigger/boundary keyword screening has been run across all 75 files.
 - This is a **working ledger, not a declaration that all 75 files have passed a full semantic audit**. Files marked pending still require individual review of purpose, trigger precision, examples, references, neighboring overlap, and existing evaluation coverage.
-- Seven files received targeted semantic review and concrete edits in this batch. The orchestration fallback wording was also verified as already aligned on the current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
+- Twenty-one distinct skill files have now received targeted semantic review across the focused PR batches: #631, #633, #634, #635, and #637 are merged; #636 contains seven additional changes pending final CI and merge. Fifty-four files still require individual semantic disposition. The orchestration fallback wording was verified as aligned on current `main`. Do not close the parent audit issue until the remaining dispositions and required checks are complete.
 
 ## Confirmed findings fixed in this batch
 
@@ -34,36 +34,36 @@ Status meanings:
 - [ ] `skills/brand/content-pillars.md` - Inventory screened; semantic review pending.
 - [ ] `skills/brand/founder-personal-brand.md` - Inventory screened; semantic review pending.
 - [ ] `skills/brand/message-hierarchy.md` - Inventory screened; semantic review pending.
-- [ ] `skills/brand/research-backing.md` - Inventory screened; semantic review pending.
+- [x] `skills/brand/research-backing.md` - Targeted review in #633; see the linked PR history.
 - [x] `skills/brand/surfaces-and-scope.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/brand/visual-identity.md` - Inventory screened; semantic review pending.
 
 ### `skills/frameworks/`
 
-- [ ] `skills/frameworks/ancestral-patterns.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/ancestral-patterns.md` - Targeted review in #635; see the linked PR history.
 - [ ] `skills/frameworks/anger-companion.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/conversation-synthesis.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/creative-drought.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/conversation-synthesis.md` - Targeted review in #637; see the linked PR history.
+- [x] `skills/frameworks/creative-drought.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/divine-guidance.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/emotional-deescalation.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/empath-boundary.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
 - [ ] `skills/frameworks/existential-companion.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/feminine-masculine-dynamics.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/grief-companion.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/inner-parts.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/life-direction.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/meaning-integration.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/money-self-worth.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/pattern-mapper.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/perfectionism-paralysis.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
 - [ ] `skills/frameworks/relationship-reflection.md` - Inventory screened; semantic review pending.
 - [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
 - [ ] `skills/frameworks/self-compassion.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/shadow-patterns.md` - Inventory screened; semantic review pending.
-- [ ] `skills/frameworks/somatic-wellbeing.md` - Inventory screened; semantic review pending.
+- [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
 - [ ] `skills/frameworks/soul-nourishment.md` - Inventory screened; semantic review pending.
 - [ ] `skills/frameworks/spiritual-purpose.md` - Inventory screened; semantic review pending.
 
@@ -73,10 +73,10 @@ Status meanings:
 - [ ] `skills/meta/epistemic-guardrails.md` - Inventory screened; semantic review pending.
 - [ ] `skills/meta/execution-pipeline.md` - Inventory screened; semantic review pending.
 - [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/master-prompt.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/master-prompt.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/meta/observation-seed.md` - Inventory screened; semantic review pending.
 - [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
-- [ ] `skills/meta/quick-reference.md` - Inventory screened; semantic review pending.
+- [x] `skills/meta/quick-reference.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/meta/redirect-templates.md` - Inventory screened; semantic review pending.
 - [ ] `skills/meta/resource-recommendations.md` - Inventory screened; semantic review pending.
 - [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
@@ -91,7 +91,7 @@ Status meanings:
 - [ ] `skills/safety/dependency-detection.md` - Inventory screened; semantic review pending.
 - [ ] `skills/safety/ethics-safety.md` - Inventory screened; semantic review pending.
 - [ ] `skills/safety/prompt-injection-defense.md` - Inventory screened; semantic review pending.
-- [ ] `skills/safety/trauma-language.md` - Inventory screened; semantic review pending.
+- [x] `skills/safety/trauma-language.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/safety/whitelist-blacklist-system.md` - Inventory screened; semantic review pending.
 
 ### `skills/soulmate/`
@@ -108,14 +108,14 @@ Status meanings:
 - [ ] `skills/spiritual/healing-metaphors.md` - Inventory screened; semantic review pending.
 - [ ] `skills/spiritual/numerology-chakra-policy.md` - Inventory screened; semantic review pending.
 - [ ] `skills/spiritual/numerology-profile.md` - Inventory screened; semantic review pending.
-- [ ] `skills/spiritual/spiritual-discernment.md` - Inventory screened; semantic review pending.
+- [x] `skills/spiritual/spiritual-discernment.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/spiritual/symbolic-report-handling.md` - Inventory screened; semantic review pending.
 - [ ] `skills/spiritual/tarot-symbolic-lens.md` - Inventory screened; semantic review pending.
 
 ### `skills/voice/`
 
 - [ ] `skills/voice/persona-voice.md` - Inventory screened; semantic review pending.
-- [ ] `skills/voice/response-calibrator.md` - Inventory screened; semantic review pending.
+- [x] `skills/voice/response-calibrator.md` - Targeted review in #631; see the linked PR history.
 - [ ] `skills/voice/session-rituals.md` - Inventory screened; semantic review pending.
 
 ### `skills/writing/`
