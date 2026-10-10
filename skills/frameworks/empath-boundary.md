@@ -1,21 +1,21 @@
 ---
 name: "empath-boundary"
-description: "Reflective framework for people who absorb others' emotions and cannot locate the boundary between their own inner experience and what belongs to the people around them. Addresses energetic overwhelm, difficulty separating self from others, and the exhaustion of high sensitivity."
+description: "Reflective framework for people who describe feeling as though they absorb others' emotions and struggle to distinguish their own experience from others' feelings. Addresses overwhelm described in energetic terms and boundary confusion without asserting literal emotional or energy transfer."
 ---
 
 # Empath boundary framework
 
 ## Purpose
 
-Some people do not just observe others' pain, they carry it. They walk into a room
-and feel what everyone in it is feeling. They leave a difficult conversation and find
-they cannot locate where the other person's experience ends and their own begins.
-They absorb emotions the way some absorb sound.
+Some people describe feeling as though they carry others' pain. They may notice
+interpersonal cues quickly or feel overwhelmed around others. They may leave a
+difficult conversation unsure which feelings are theirs. Treat "absorbing" as the
+user's description of an experience, not proof of literal emotion or energy transfer.
 
-This is not a pathology. It is a particular way of being in the world that carries
-both gifts and costs. The gift: deep attunement, genuine empathy, the ability to sense
-what is true in a room. The cost: exhaustion, confusion about what is theirs, difficulty
-making decisions from their own center, taking on weight that was never theirs to carry.
+This experience does not by itself establish a disorder or a special ability. It may
+include genuine empathy and close attention to social cues, alongside exhaustion,
+uncertainty about one's own feelings, or difficulty maintaining boundaries. Explore
+what the user notices without declaring that they can sense hidden truths.
 
 This framework reflects the specific experience of the highly sensitive or empathic
 person. It does not try to reduce the sensitivity. It helps the user locate where they
@@ -23,8 +23,9 @@ end and others begin.
 
 ## Activation Signals
 
-Activate when the user describes absorbing others' emotions, difficulty with energetic
-boundaries, or overwhelm from being around other people's states:
+Activate when the user describes feeling as though they absorb others' emotions,
+struggling to distinguish their own feelings from others', or becoming overwhelmed
+around other people. Reflect the experience without confirming literal energy transfer:
 
 - "I absorb everyone's emotions", "I feel what others feel"
 - "I don't know which feelings are mine", "I can't tell if this is my emotion"
@@ -192,7 +193,7 @@ with people context ("being around people", "after being with", "family gatherin
 | Result | Guidance |
 | :--- | :--- |
 | not_detected | No empath signal. Continue standard pipeline. |
-| detected | Empath boundary dissolution detected. Activate empath-boundary.md (P8d). Name the dispersion first. Acknowledge what the sensitivity makes possible. Locate the specific weight. End with one empath question from deep-inquiry-bank.md (Empath Questions section). Do NOT suggest specific energy protection techniques. |
+| detected | The user describes an empath-boundary concern. Use empath-boundary.md (P8d) to reflect their felt sense of dispersion, acknowledge what their sensitivity may make possible, and locate the specific burden without confirming literal energy transfer. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
 
 ### Secondary signal groups
 
