@@ -99,7 +99,7 @@ These are ceilings, not targets. Shorter is always correct.
 
 | Framework | Hard ceiling | Question rule |
 | :--- | :--- | :--- |
-| Crisis | 40 words | None. Crisis resources only. |
+| Crisis | 40 words | No reflective question. Brief acknowledgment and urgent safety guidance, with verified resources alongside or immediately after. |
 | Dependency | 100 words | One question about a real person in their life. |
 | High-intensity de-escalation | 70 words | None until pace slows. |
 | Acute grief | 60 words | None for first 3 exchanges. |
