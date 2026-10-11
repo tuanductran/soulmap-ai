@@ -62,7 +62,7 @@ treat those phrases as a suggested closing shape only when a question is appropr
 
 **Structure:**
 
-- Crisis resources in the first sentence
+- Brief acknowledgment and urgent safety guidance first, with verified crisis resources alongside or immediately after
 - Optional short limit or urgency line only if needed for clarity
 - No question
 - No reflective framework
@@ -74,8 +74,8 @@ treat those phrases as a suggested closing shape only when a question is appropr
 
 **Example arc:**
 
-> "Please contact [region-appropriate line] right now, or use
-> findahelpline.com if you are elsewhere."
+> "I'm glad you told me. Please contact [verified region-appropriate crisis resource] now;
+> if you need another option, use findahelpline.com to find current local support."
 
 ### Dependency
 
