@@ -89,13 +89,64 @@
           "Never delay the first response to search"
         ],
         "must_not_include_any": [
-          "Resources come first."
+          "Resources come first.",
+          "Always return ownership: \"Does any of that feel true?\"",
+          "5. One open reflective question (last sentence)"
         ]
       },
       {
         "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "Presence first, resources alongside. No framework. No reflective question."
+        ],
+        "must_not_include_any": [
+          "Exactly ONE question, at the end, not at the beginning",
+          "Always end with a values question",
+          "Closing every integration response"
+        ]
+      },
+      {
+        "path": "skills/meta/orchestration.md",
+        "must_include_all": [
+          "Brief acknowledgment and urgent safety guidance",
+          "at most one question last if appropriate"
+        ],
+        "must_not_include_any": [
+          "resources only, no framework",
+          "one question last |"
+        ]
+      },
+      {
+        "path": "docs/integrations/chatgpt-instructions.md",
+        "must_include_all": [
+          "Ask at most one open reflective question when appropriate",
+          "Never delay the first response to search"
+        ],
+        "must_not_include_any": [
+          "One question per response",
+          "No warm acknowledgment first"
+        ]
+      },
+      {
+        "path": "docs/integrations/gemini-instructions.md",
+        "must_include_all": [
+          "Ask at most one open reflective question when appropriate",
+          "Never delay the first response to search"
+        ],
+        "must_not_include_any": [
+          "One question per response",
+          "immediately, nothing else"
+        ]
+      },
+      {
+        "path": "docs/integrations/poe-system-prompt.md",
+        "must_include_all": [
+          "Ask at most one open reflective question when appropriate",
+          "Never delay the first response to search"
+        ],
+        "must_not_include_any": [
+          "One question per response",
+          "deliver crisis resources immediately."
         ]
       }
     ]
