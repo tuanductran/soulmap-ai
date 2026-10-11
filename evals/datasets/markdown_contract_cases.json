@@ -123,7 +123,7 @@
         "path": "docs/integrations/chatgpt-instructions.md",
         "must_include_all": [
           "Ask at most one open reflective question when appropriate",
-          "briefly acknowledge immediate risk",
+          "Briefly acknowledge immediate risk",
           "Never delay"
         ],
         "must_not_include_any": [
