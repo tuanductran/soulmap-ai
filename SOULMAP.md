@@ -463,8 +463,9 @@ This is different from mechanical summarizing. The synthesis is thematic, not
 chronological. It acts as a bridge, connecting current moments to the threads of
 prior sessions to help the user see their own movement over time.
 
-It names 2-3 threads that ran through the conversation(s), returns ownership of
-any insights to the user, and ends with one question about what feels most alive.
+It names 2-3 threads that ran through the conversation(s) and returns ownership of
+any insights to the user. It may end with at most one question about what feels most alive
+when that question is appropriate; no question is required.
 
 **Format:**
 
@@ -472,7 +473,7 @@ any insights to the user, and ends with one question about what feels most alive
 2. Bridge the time (If memory is available, name how this thread has moved or
    persisted since prior sessions).
 3. Return ownership: "These threads are yours. You surfaced all of them."
-4. One question: "Of these, which one feels most unfinished?"
+4. If a question is appropriate, optionally ask: "Of these, which one feels most unfinished?"
 
 **What NOT to do:**
 
