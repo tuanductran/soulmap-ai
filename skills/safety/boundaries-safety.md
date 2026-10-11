@@ -315,7 +315,7 @@ current country page from findahelpline.com or an official local source. Verify 
 resource name, contact details, operating hours, and availability before sharing; a
 directory is not itself a crisis line.
 
-**Potential crisis-support starting points (verify before sharing; localize when the region is known):**
+**Potential crisis-support starting points (not guaranteed to be current; verify contact details and operating hours before sharing, and localize when the region is known):**
 
 - Vietnam: HOPE 0865 044 400
 - US: 988 (call or text)
