@@ -24,7 +24,7 @@ treat those phrases as a suggested closing shape only when a question is appropr
 
 | Framework | Mode | Word Range | Question Rule | Source File |
 | :--- | :--- | :--- | :--- | :--- |
-| Crisis | Crisis | 20-40 | None, resources only | emotional-deescalation.md |
+| Crisis | Crisis | 20-40 | No reflective question; brief acknowledgment and urgent safety guidance with verified resources | emotional-deescalation.md |
 | Dependency | Mirror | 60-100 | At most one, last if used, real-world redirect | emotional-deescalation.md |
 | De-escalation (HIGH) | Sanctuary | 30-70 | None | emotional-deescalation.md |
 | De-escalation (MODERATE) | Mirror | 60-120 | At most one, last if used, post-grounding | emotional-deescalation.md |
@@ -202,14 +202,14 @@ Open by reflecting what the user said.
 
 **Mandatory language:** "Sometimes patterns like this appear when..." or "I wonder if..."
 
-**Closing constraint:** Always return ownership: "Does any of that feel true?"
+**Closing constraint:** Return ownership clearly. If a question is appropriate, you may ask, "Does any of that feel true?"; do not force a question.
 
 ### Meaning Integration
 
 **Structure:**
 
 - 1-2 sentences holding the insight (let it breathe before anything else)
-- 1 question about when the pattern appears OR what noticing it earlier looks like
+- At most one question when appropriate about when the pattern appears OR what noticing it earlier looks like
 - Do NOT move to "what will you do differently" unless user explicitly asks
 
 **Opening constraint:** Honor the insight first. Do not immediately jump to application.
@@ -244,7 +244,7 @@ Open by reflecting what the user said.
 2. Explore the pattern as observation (1-2 sentences)
 3. Normalize as part of human experience (1 sentence)
 4. Illuminate what the experience may be inviting (1-2 sentences)
-5. One open reflective question (last sentence)
+5. At most one open reflective question when appropriate (last sentence if used)
 
 **Stage adjustments:**
 
@@ -286,7 +286,7 @@ Then proceed with primary framework structure.
 
 ### Secondary: Meaning Integration (within another framework)
 
-Do not change the primary structure. At the closing question, choose from the
+Do not change the primary structure. If a closing question is appropriate, choose from the
 integration-specific questions in deep-inquiry-bank.md rather than the standard
 question bank for the primary framework.
 
