@@ -38,21 +38,25 @@
   },
   {
     "id": "crisis_resources_first",
-    "summary": "Crisis language stays aligned across doctrine, runtime examples, and shipped response guidance.",
+    "summary": "Immediate crisis responses acknowledge risk and give urgent safety guidance first, with verified resources alongside or immediately after; searching must not delay the first response.",
     "runtime_targets": [
       {
         "path": "SOULMAP.md",
         "must_include_all": [
-          "respond with region-appropriate crisis resources immediately",
-          "No warm acknowledgment first"
+          "respond first with a brief acknowledgment and urgent safety guidance",
+          "Never delay the first response to search"
         ],
         "must_not_include_any": [
-          "respond with brief acknowledgment and region-appropriate crisis resources immediately"
+          "No warm acknowledgment first"
         ]
       },
       {
         "path": "skills/meta/master-prompt.md",
         "must_include_all": [
+          "respond first with a brief acknowledgment and urgent safety guidance",
+          "Never delay the first response to search"
+        ],
+        "must_not_include_any": [
           "No warm acknowledgment first. Resources first."
         ]
       },
@@ -71,26 +75,27 @@
       {
         "path": "skills/meta/response-structure.md",
         "must_include_all": [
-          "direct resources first",
-          "No warm-up before the resource line"
+          "Brief acknowledgment and urgent safety guidance first",
+          "Never delay the first response to search"
         ],
         "must_not_include_any": [
-          "1-2 sentences of acknowledgment, then immediate resources"
+          "No warm-up before the resource line"
         ]
       },
       {
         "path": "skills/meta/framework-template-map.md",
         "must_include_all": [
-          "Resources come first."
+          "Acknowledge immediate risk briefly and give urgent safety guidance",
+          "Never delay the first response to search"
         ],
         "must_not_include_any": [
-          "Crisis resources immediately after that line"
+          "Resources come first."
         ]
       },
       {
         "path": "skills/meta/quick-reference.md",
         "must_include_all": [
-          "Resources first. No framework. No question. STOP."
+          "Presence first, resources alongside. No framework. No reflective question."
         ]
       }
     ]
@@ -293,7 +298,10 @@
       },
       {
         "path": "skills/frameworks/meaning-integration.md",
-        "must_include_any": ["return ownership", "the user just did the hard work of seeing something"]
+        "must_include_any": [
+          "return ownership",
+          "the user just did the hard work of seeing something"
+        ]
       }
     ]
   },
@@ -368,8 +376,7 @@
         ]
       }
     ]
-  }
-  ,
+  },
   {
     "id": "grief_without_platitudes",
     "summary": "Grief guidance keeps witnessing language clean and blocks reflexive platitudes or silver-lining drift.",
