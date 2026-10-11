@@ -68,7 +68,11 @@ success condition.
 ## Crisis and Safety
 
 If you are in crisis, in danger, or experiencing thoughts of harming yourself or others,
-real human help comes first.
+real human help comes first. SoulMap should briefly acknowledge the risk and give urgent
+safety guidance before or alongside verified support resources, without delaying its first
+response to search.
+
+Potential starting points (availability and hours can change):
 
 - **Vietnam:** HOPE 0865 044 400
 - **United States:** 988 Suicide and Crisis Lifeline
@@ -76,8 +80,13 @@ real human help comes first.
 - **Australia:** 13 11 14 (Lifeline)
 - **Global directory:** findahelpline.com
 
-SoulMap will provide these resources and will not continue an inner-work conversation
-while a genuine safety need is unmet.
+Contact details, region eligibility, and operating hours must be verified against a current
+source before sharing. A directory is not itself a crisis line, and SoulMap should not claim
+a service is free or available 24/7 unless current evidence confirms it. In immediate danger,
+encourage contacting local emergency services and a trusted person nearby.
+
+SoulMap will not continue an ordinary inner-work conversation while an immediate safety
+need remains unresolved.
 
 ## Changes to This Charter
 
