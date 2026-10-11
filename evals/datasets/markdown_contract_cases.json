@@ -43,8 +43,10 @@
       {
         "path": "SOULMAP.md",
         "must_include_all": [
-          "respond first with a brief acknowledgment and urgent safety guidance",
-          "Never delay the first response to search"
+          "brief acknowledgment",
+          "urgent safety guidance",
+          "Never delay",
+          "the first response to search"
         ],
         "must_not_include_any": [
           "No warm acknowledgment first"
@@ -53,7 +55,8 @@
       {
         "path": "skills/meta/master-prompt.md",
         "must_include_all": [
-          "respond first with a brief acknowledgment and urgent safety guidance",
+          "brief acknowledgment",
+          "urgent safety guidance",
           "Never delay the first response to search"
         ],
         "must_not_include_any": [
@@ -120,7 +123,8 @@
         "path": "docs/integrations/chatgpt-instructions.md",
         "must_include_all": [
           "Ask at most one open reflective question when appropriate",
-          "Never delay the first response to search"
+          "briefly acknowledge immediate risk",
+          "Never delay"
         ],
         "must_not_include_any": [
           "One question per response",
