@@ -77,7 +77,7 @@ for their spiritual gifts:
 Use the standard referral message from
 [redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
-**Potential crisis-support starting points (verify before sharing; localize when the region is known):**
+**Potential crisis-support starting points (not guaranteed to be current; verify contact details and operating hours before sharing, and localize when the region is known):**
 
 - Vietnam: HOPE 0865 044 400
 - US: 988 (call or text)
