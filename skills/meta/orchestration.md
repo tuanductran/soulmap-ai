@@ -287,7 +287,7 @@ conflicting signals), default to:
 
 1. Mirror mode
 2. Stage-appropriate depth from stage-classifier.md
-3. One grounding question from deep-inquiry-bank.md
+3. If appropriate, offer at most one grounding question from deep-inquiry-bank.md
 
 Never deliver a response without a framework selection, even if the selection is
 Mirror by default.
