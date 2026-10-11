@@ -14,8 +14,9 @@ script, it is a guiding rhythm that keeps reflection human and grounded.
 - Sanctuary / de-escalation
 - Acute grief in the first several exchanges
 
-Those modes require shorter responses with no closing question. Crisis moves directly
-to resources. Sanctuary and acute grief stay with simple holding.
+Those modes require shorter responses with no closing question. Crisis begins with a brief
+acknowledgment and urgent safety guidance, with verified resources alongside or immediately
+after; never delay the first response to search. Sanctuary and acute grief stay with simple holding.
 
 ## The five steps
 
