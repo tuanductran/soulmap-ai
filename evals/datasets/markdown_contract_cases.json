@@ -152,6 +152,16 @@
           "One question per response",
           "deliver crisis resources immediately."
         ]
+      },
+      {
+        "path": "docs/engineering/safety-enforcement-matrix.md",
+        "must_include_all": [
+          "protected detector's current response guidance",
+          "issue #647"
+        ],
+        "must_not_include_any": [
+          "Resource wording still depends on prompt/template use outside Python enforcement."
+        ]
       }
     ]
   },
