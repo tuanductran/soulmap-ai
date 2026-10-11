@@ -4,6 +4,10 @@ All notable changes to this repository will be documented in this file.
 
 ## Unreleased
 
+### Fix
+
+- **safety/docs**: align crisis response ordering, verified-resource guidance, and optional-question rules across doctrine, integration prompts, and evaluation contracts; track the protected runtime's stale crisis-resource availability claim in issue #647
+
 ### Refactor
 
 - **scripts**: remove redundant format, lint, and skill-build shell wrappers; use the canonical `soulmap` CLI directly

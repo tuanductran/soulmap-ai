@@ -7,7 +7,7 @@ description: "Current, source-backed reference for AI-companion regulation relev
 
 This document is an operational reference, not legal advice. It records enacted requirements and official regulatory guidance that may be relevant to SoulMap AI's architecture. Applicability depends on the product, deployment model, jurisdiction, user population, and other facts. Obtain qualified legal review before making a compliance determination.
 
-**Last reviewed:** 2026-09-17
+**Last reviewed:** 2026-10-11
 
 ## Important distinction
 

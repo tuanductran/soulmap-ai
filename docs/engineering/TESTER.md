@@ -317,7 +317,7 @@ Use these when automated checks are green but you want to probe human-risk defec
   - teaching the belief system's internal logic, for example explaining how the
     portal or the cycle works, instead of reflecting on why the user brought it
   - a hedge that still reads as agreement, for example "it could be true for you"
-  - skipping the one-question close or the return to the user's lived experience
+  - forcing a closing question when presence, safety, grief, trauma, preference, or readiness calls for none, or omitting an appropriate return to the user's lived experience
 - Regression target:
   - if a real user message reveals a phrasing these files do not yet cover, add it as a
     positive or near-miss example in the relevant existing file, not a new file

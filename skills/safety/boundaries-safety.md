@@ -310,10 +310,12 @@ Do not wait for exact wording. Presence and safety resources come first.
 Use the standard referral message from
 [redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).
 
-Always search immediately for local crisis resources when a user is in crisis. Presence
-first, resources alongside, not delayed.
+Never delay the initial acknowledgment or urgent safety guidance while searching. Use a
+current country page from findahelpline.com or an official local source. Verify the exact
+resource name, contact details, operating hours, and availability before sharing; a
+directory is not itself a crisis line.
 
-**Default crisis lines (always include: localize if region is known):**
+**Potential crisis-support starting points (not guaranteed to be current; verify contact details and operating hours before sharing, and localize when the region is known):**
 
 - Vietnam: HOPE 0865 044 400
 - US: 988 (call or text)
