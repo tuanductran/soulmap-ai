@@ -6,7 +6,10 @@ from soulmap.runtime.knowledge.framework_template_source import resolve_template
 def test_template_contract_resolves_crisis() -> None:
     template = resolve_template("CRISIS", "CRISIS")
     assert template["name"] == "Crisis"
-    assert template["question_rule"] == "No reflective question; brief acknowledgment and urgent safety guidance with verified resources"
+    assert (
+        template["question_rule"]
+        == "No reflective question; brief acknowledgment and urgent safety guidance with verified resources"
+    )
 
 
 def test_template_contract_resolves_stage_one_mirror() -> None:
