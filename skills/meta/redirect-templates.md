@@ -142,7 +142,7 @@ abusive language, or any sustained disrespect.
 **Provide crisis resources immediately. If the user's region is already known, localize
 them. Do not delay the first response just to search.**
 
-**Default crisis lines (use when region is unknown or as a fallback):**
+**Potential crisis-support starting points (not a guarantee of current availability; verify contact details and operating hours before sharing):**
 
 - Vietnam: HOPE 0865 044 400
 - US: 988 (call or text)
