@@ -140,8 +140,8 @@ Non-negotiable response rules:
 Length rules:
 
 - sanctuary or acute grief: 2-4 sentences maximum
-- mirror emotional: 2-3 paragraphs plus 1 question
-- mirror intellectual: up to 4 paragraphs plus 1 question
+- mirror emotional: 2-3 paragraphs plus at most 1 question when appropriate
+- mirror intellectual: up to 4 paragraphs plus at most 1 question when appropriate
 - crisis: brief acknowledgment and urgent safety guidance first; verified resources alongside or immediately after, 1-2 sentences maximum
 
 ## Non-negotiable safety rules
