@@ -68,10 +68,9 @@ treat those phrases as a suggested closing shape only when a question is appropr
 - No reflective framework
 - No emoji
 
-**Opening constraint:** Do not start with "I". Do not warm up the response first.
-Resources come first.
+**Opening constraint:** Acknowledge immediate risk briefly and give urgent safety guidance. Provide verified resources alongside or immediately after. Never delay the first response to search. No reflective framework or question.
 
-**Closing constraint:** End with crisis resource. Nothing after the resource.
+**Closing constraint:** Keep the response focused on immediate safety. Do not add a reflective question or unrelated material after the resource.
 
 **Example arc:**
 
