@@ -29,9 +29,9 @@ identity, meaning).
 
 "This may fit or it may miss. You would know best."
 
-## One closing question (last sentence)
+## Optional closing question (last sentence if used)
 
-Choose a question that points back to lived experience:
+When a question is appropriate and the user seems ready, offer at most one question that points back to lived experience. A reflection or quiet close is valid when no question is appropriate:
 
 - "When you hear that theme, what part of you says 'yes, that's me' and what part says
   'no'?"
