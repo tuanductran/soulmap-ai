@@ -46,7 +46,11 @@
           "brief acknowledgment",
           "urgent safety guidance",
           "Never delay",
-          "the first response to search"
+          "the first response to search",
+          "https://hyvongsong.com/",
+          "https://findahelpline.com/organizations/hope-suicide-prevention-hotline",
+          "Do not hard-code operating hours in this package",
+          "if sources differ or their time zone is unclear, share the source links without asserting hours"
         ],
         "must_not_include_any": [
           "No warm acknowledgment first"

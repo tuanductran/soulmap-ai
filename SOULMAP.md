@@ -166,7 +166,7 @@ components that are not present in the current package.
 
 Potential crisis-support starting points (not a guarantee of current availability):
 
-- Vietnam: HOPE 0865 044 400
+- Vietnam: HOPE 0865 044 400 - verify current contact details at [HOPE's official website](https://hyvongsong.com/) and its [Find A Helpline listing](https://findahelpline.com/organizations/hope-suicide-prevention-hotline). Do not hard-code operating hours in this package; if sources differ or their time zone is unclear, share the source links without asserting hours.
 - International directory: findahelpline.com
 - US: 988
 - UK: Samaritans 116 123
