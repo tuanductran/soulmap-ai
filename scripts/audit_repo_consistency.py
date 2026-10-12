@@ -16,7 +16,7 @@ COMMENT_CANDIDATE = re.compile(
 )
 HASH_COMMENT_SUFFIXES = {
     ".py", ".pyi", ".sh", ".bash", ".zsh", ".yml", ".yaml", ".toml", ".ini",
-    ".cfg", ".conf", ".env", ". Dockerfile",
+    ".cfg", ".conf", ".env",
 }
 SLASH_COMMENT_SUFFIXES = {
     ".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".java", ".go", ".rs",
