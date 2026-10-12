@@ -72,15 +72,17 @@ def comment_body(path: Path, line: str, in_html_comment: bool) -> tuple[str | No
     if suffix in {".md", ".mdx", ".html", ".htm", ".xml", ".svg"}:
         if in_html_comment or "<!--" in line:
             body = line.split("<!--", 1)[-1].split("-->", 1)[0]
-            return body, "<!--" in line and "-->" not in line or (
-                in_html_comment and "-->" not in line
-            )
+            return body, "-->" not in line
         return None, False
     if suffix in HASH_COMMENT_SUFFIXES or path.name == "Dockerfile":
         return (stripped[1:], False) if stripped.startswith("#") else (None, False)
-    if suffix in SLASH_COMMENT_SUFFIXES:
-        if stripped.startswith(("//", "/*", "*", "*/")):
-            return stripped.lstrip("/*/"), False
+    if suffix in SLASH_COMMENT_SUFFIXES and stripped.startswith(
+        ("/*", "*/", "//", "*")
+    ):
+        prefix = next(
+            marker for marker in ("/*", "*/", "//", "*") if stripped.startswith(marker)
+        )
+        return stripped[len(prefix) :].lstrip(), False
     return None, False
 
 
