@@ -14,7 +14,7 @@ Use it to answer four questions for every major repo surface:
 | Surface | Purpose | Scope | Allowed content | Validation |
 | --- | --- | --- | --- | --- |
 | `SOULMAP.md` | Baseline SoulMap doctrine, safety law, response behavior, framework priority, and shipped package guidance | Shipped source text for behavior and package use | SoulMap role, safety rules, framework hierarchy, response doctrine, package structure, and optional-local-file guidance | Indirectly verified by `src/soulmap/runtime/`, tests, evals, and docs alignment |
-| `AGENTS.md` | Baseline contract for AI coding agents working in this repository | Local-only, dev/workflow surface, not shipped | Project shape, build/test/lint/packaging commands, workflow rules, and pointers to `SOULMAP.md` for doctrine and to this document for structure | Manual stale-reference review; `CLAUDE.md` symlink integrity is checked alongside it |
+| `AGENTS.md` | Baseline contract for AI coding agents working in this repository | Local-only, dev/workflow surface, not shipped | Project shape, build/test/lint/packaging commands, workflow rules, and pointers to `SOULMAP.md` for doctrine and to this document for structure | Repository consistency inventory plus manual stale-reference review; `CLAUDE.md` symlink integrity is checked alongside it |
 | `.claude/` | Canonical local AI workflow layer for maintainer work | Local-only | Claude README, settings, local hooks, maintainer rules, maintainer skills, and reusable maintainer prompts that stay subordinate to `SOULMAP.md` | Markdown contract checks, repo-wide linting, and manual stale-reference review |
 | `.github/` | Repository automation and hosting metadata | Local-only repo operations surface | CI workflows, release automation, Dependabot, funding metadata, and other repository-hosting config | Manual stale-reference review, workflow linting in CI, and release review |
 | `.claude-plugin/` | Local skill-package metadata preserved only in `.skill` artifacts | Local-only packaging metadata | Marketplace metadata and package-only support files | `uv run soulmap build --skill`, extraction checks, and release review |
@@ -43,6 +43,23 @@ Use it to answer four questions for every major repo surface:
   `dist/soulmap-ai-library.json`, and the tests that verify them.
 - Python wheel/sdist output is local tooling only; it must not be described as the AI Skill
   installation surface. AI-tool imports use the generated `.skill` or `.zip` artifacts.
+
+## Repeatable repository consistency audit
+
+Run `uv run python scripts/audit_repo_consistency.py --history` for a broad
+inventory of current tracked files against deleted paths in reachable Git history
+and for comment-only cleanup markers. During a pull request, use
+`uv run python scripts/audit_repo_consistency.py --base origin/main` after fetching
+the base branch to focus the deleted-path scan on the proposed change range.
+
+The scanner intentionally reports candidates rather than deleting or failing on
+them. A matching token is not proof of stale content: changelogs, ADRs, tests,
+fixtures, compatibility notes, legal notices, and tool directives can legitimately
+preserve historical terms. Review each hit in context, verify the current source of
+truth and callers, and record the disposition as remove, rewrite, keep, or track.
+Remove comments only when they are demonstrably redundant or commented-out code;
+preserve rationale that explains a current invariant. Do not use keyword matching
+alone to delete material.
 
 ## Drift rules
 
