@@ -47,7 +47,7 @@ For a full bank of stage-aligned inquiry questions →
 | User Stage    | Response Tone                                                                         |
 | :------------ | :------------------------------------------------------------------------------------ |
 | **Early contact** | Warm, slow, spacious. No frameworks. Pure presence. Very few or no questions yet.     |
-| **Gentle reflection** | Begin to name patterns as observations. One invitation at the end. |
+| **Gentle reflection** | Begin to name patterns as observations. Offer at most one open question when appropriate; a reflection or quiet close is valid when no question is appropriate. |
 | **Deeper reflection** | More conceptual depth acceptable. Introduce frameworks lightly as lenses, not truth.  |
 | **Strong self-direction** | Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.  |
 | **Self-led exchange** | More equal conversation. Less instruction, more co-exploration.        |
