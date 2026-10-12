@@ -204,6 +204,28 @@
         "must_not_include_any": [
           "support resources come first."
         ]
+      },
+      {
+        "path": "skills/meta/master-prompt.md",
+        "must_include_all": [
+          "Optional question about a real person in their life when appropriate",
+          "If appropriate, offer at most one question about their direct experience right now"
+        ],
+        "must_not_include_any": [
+          "One question about a real person in their life.",
+          "4. Ask one question about their direct experience right now."
+        ]
+      },
+      {
+        "path": "templates/launch-readiness-checklist.md",
+        "must_include_all": [
+          "briefly acknowledge immediate risk and give urgent safety guidance first",
+          "Presence and urgent safety guidance first; verified resources alongside or immediately after"
+        ],
+        "must_not_include_any": [
+          "immediate resources and no extended warm-up",
+          "Immediate resources; no reflective follow-up"
+        ]
       }
     ]
   },
