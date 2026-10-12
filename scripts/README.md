@@ -71,4 +71,34 @@ uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
 ```
 
+## Repository consistency and comment audit
+
+Run the repository-wide inventory from a clean checkout:
+
+```bash
+uv run python scripts/audit_repo_consistency.py --history
+```
+
+For a focused pull-request audit, compare against the current base ref:
+
+```bash
+git fetch origin main
+uv run python scripts/audit_repo_consistency.py --base origin/main
+```
+
+The report inventories references to paths deleted in the selected Git range and
+comment-only markers such as `TODO`, `FIXME`, `HACK`, `XXX`, temporary notes,
+and obsolete/migration markers. It is a candidate inventory, not an auto-cleaner:
+inspect each match in context and classify it as remove, rewrite, keep, or track
+separately. Historical ADRs, changelogs, test fixtures, intentional compatibility
+notes, legal notices, and tool directives may legitimately mention old names or
+markers. Never delete a comment solely because it matches a keyword.
+
+When a path was deleted, search for both its exact repository path and distinctive
+basename references. Confirm each candidate against the current tree and source of
+truth before editing. For a comment cleanup, remove only redundant narration or
+commented-out code whose intent is fully recoverable from Git history; preserve
+rationale that explains a current invariant. Review the diff, then run the normal
+format, lint, link/Markdown checks, and relevant tests.
+
 For setup and workflow details, use [`docs/engineering/DEV.md`](../docs/engineering/DEV.md).
