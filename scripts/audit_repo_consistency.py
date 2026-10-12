@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import argparse
 import re
+import io
 import subprocess
+import tokenize
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 COMMENT_CANDIDATE = re.compile(
     r"\b(TODO|FIXME|HACK|XXX|TBD|WIP|deprecated|obsolete|temporarily|temporary|"
@@ -85,15 +87,29 @@ def comment_body(path: Path, line: str, in_html_comment: bool) -> tuple[str | No
 def comment_candidates(path: Path, content: str) -> list[tuple[int, str]]:
     """Return review-only candidates from comments, never deleting anything."""
     findings: list[tuple[int, str]] = []
+    suffix = path.suffix.lower()
+    if suffix in {".py", ".pyi"}:
+        try:
+            tokens = tokenize.generate_tokens(io.StringIO(content).readline)
+            for token in tokens:
+                if token.type != tokenize.COMMENT:
+                    continue
+                body = token.string.lstrip("#").strip()
+                marker_match = COMMENT_CANDIDATE.search(body)
+                code_match = COMMENTED_CODE.search(body)
+                if marker_match or code_match:
+                    findings.append((token.start[0], token.string.strip()))
+        except (IndentationError, tokenize.TokenError):
+            pass
+        return findings
+
     in_html_comment = False
     for number, line in enumerate(content.splitlines(), start=1):
         body, in_html_comment = comment_body(path, line, in_html_comment)
         if body is None:
             continue
         marker_match = COMMENT_CANDIDATE.search(body)
-        code_match = path.suffix.lower() in CODE_SUFFIXES and COMMENTED_CODE.search(
-            body.strip()
-        )
+        code_match = suffix in CODE_SUFFIXES and COMMENTED_CODE.search(body.strip())
         if marker_match or code_match:
             findings.append((number, line.strip()))
     return findings
