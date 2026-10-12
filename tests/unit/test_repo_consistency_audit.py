@@ -9,11 +9,13 @@ def test_comment_candidates_only_reports_review_markers() -> None:
     content = (
         "# TODO: remove after migration\n"
         "# This invariant protects the parser boundary.\n"
+        "# return old_value\n"
         "value = 1  # TODO inline comment is not a whole-line comment\n"
     )
 
     assert comment_candidates(Path("module.py"), content) == [
-        (1, "# TODO: remove after migration")
+        (1, "# TODO: remove after migration"),
+        (3, "# return old_value"),
     ]
 
 
