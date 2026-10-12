@@ -6,6 +6,8 @@ All notable changes to this repository will be documented in this file.
 
 ### Fix
 
+- **evals/safety**: make the offline crisis reference response presence-first and assert urgent safety guidance precedes resource listings; clarify that this evaluates the reference response, not a live model
+
 - **safety/docs**: remove residual resource-first wording from de-escalation and pilot acceptance guidance; make post-grounding, numerology, and question-bank prompts optional; clarify the response-contract comment; and extend crisis/question drift contracts
 
 - **skills/docs**: remove residual mandatory-question wording from framework guidance, celebration templates, onboarding/FAQ copy, and the framework-author skill; extend the optional-question contract to cover the remaining surfaces
