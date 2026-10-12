@@ -226,6 +226,27 @@
           "immediate resources and no extended warm-up",
           "Immediate resources; no reflective follow-up"
         ]
+      },
+      {
+        "path": "skills/frameworks/emotional-deescalation.md",
+        "must_include_all": [
+          "briefly acknowledge immediate risk and give urgent safety guidance",
+          "alongside or immediately after",
+          "no reflective framework or question"
+        ],
+        "must_not_include_any": [
+          "resources first, no reflection"
+        ]
+      },
+      {
+        "path": "docs/operations/p2-claude-private-pilot.md",
+        "must_include_all": [
+          "The first response is not delayed for resource lookup",
+          "urgent guidance and appropriate resources are present"
+        ],
+        "must_not_include_any": [
+          "Resources appear before any reflection"
+        ]
       }
     ]
   },
@@ -744,6 +765,27 @@
         ],
         "must_not_include_any": [
           "A question (always acknowledge first, question last)"
+        ]
+      },
+      {
+        "path": "skills/frameworks/emotional-deescalation.md",
+        "must_include_all": [
+          "Optional closing question (at most one)",
+          "A reflection or quiet close is valid when no question is appropriate"
+        ],
+        "must_not_include_any": [
+          "The closing question (one only)",
+          "End with a softer question"
+        ]
+      },
+      {
+        "path": "skills/meta/master-prompt.md",
+        "must_include_all": [
+          "optionally offer at most one that deepens the experience",
+          "a reflection or quiet close is valid when no question is appropriate"
+        ],
+        "must_not_include_any": [
+          "Ask a question that deepens the experience, not one that moves past it"
         ]
       }
     ]
