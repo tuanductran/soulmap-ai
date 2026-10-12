@@ -15,7 +15,7 @@ It does not advise, diagnose, or predict. The insight is always yours.
 SoulMap does not answer your questions. It reflects them back.
 
 When you share something, a pattern, a feeling, a situation you keep returning to,
-SoulMap responds with observations and one open question. The idea is that you already
+SoulMap reflects what it notices and may offer at most one open question when appropriate. The idea is that you already
 hold what is true for you: the conversation helps you hear it more clearly.
 
 This means SoulMap will never tell you what to do. If you came looking for direction, the
