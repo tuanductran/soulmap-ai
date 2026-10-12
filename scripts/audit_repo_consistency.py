@@ -18,6 +18,12 @@ HASH_COMMENT_SUFFIXES = {
     ".py", ".pyi", ".sh", ".bash", ".zsh", ".yml", ".yaml", ".toml", ".ini",
     ".cfg", ".conf", ".env",
 }
+CODE_SUFFIXES = {".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java"}
+COMMENTED_CODE = re.compile(
+    r"^(?:if\\s|elif\\s|else:|return\\s|raise\\s|def\\s|class\\s|import\\s|"
+    r"from\\s|for\\s|while\\s|try:|except(?:\\s|:)|with\\s|async\\s+def\\s|"
+    r"assert\\s|[A-Za-z_]\\w*\\s*=\\s*(?:None|True|False|[\\[{\\d\\\"']))"
+)
 SLASH_COMMENT_SUFFIXES = {
     ".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".java", ".go", ".rs",
     ".c", ".h", ".cpp", ".hpp", ".swift", ".kt", ".kts",
@@ -82,7 +88,13 @@ def comment_candidates(path: Path, content: str) -> list[tuple[int, str]]:
     in_html_comment = False
     for number, line in enumerate(content.splitlines(), start=1):
         body, in_html_comment = comment_body(path, line, in_html_comment)
-        if body is not None and COMMENT_CANDIDATE.search(body):
+        if body is None:
+            continue
+        marker_match = COMMENT_CANDIDATE.search(body)
+        code_match = path.suffix.lower() in CODE_SUFFIXES and COMMENTED_CODE.search(
+            body.strip()
+        )
+        if marker_match or code_match:
             findings.append((number, line.strip()))
     return findings
 
