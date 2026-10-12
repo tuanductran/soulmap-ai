@@ -4,6 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW = REPO_ROOT / ".github" / "workflows" / "weekly-governance.yml"
+CI_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "ci.yml"
 WEEKLY_GUIDE = REPO_ROOT / "docs" / "operations" / "weekly-governance-review.md"
 CLAUDE_PILOT = REPO_ROOT / "docs" / "operations" / "p2-claude-private-pilot.md"
 
@@ -46,6 +47,18 @@ def test_weekly_workflow_is_scheduled_deterministic_and_non_mutating() -> None:
     assert "uv run python scripts/verify_extracted_artifacts.py" not in content
     for forbidden in ("gh pr merge", "gh pr create", "uv lock --upgrade", "git tag"):
         assert forbidden not in content
+
+
+def test_repository_consistency_audit_runs_on_pr_and_full_history_weekly() -> None:
+    ci_content = CI_WORKFLOW.read_text(encoding="utf-8")
+    weekly_content = WORKFLOW.read_text(encoding="utf-8")
+
+    assert "fetch-depth: 0" in ci_content
+    assert "uv run python scripts/audit_repo_consistency.py --base origin/main" in ci_content
+    assert "repo-consistency-audit.txt" in ci_content
+    assert "uv run python scripts/audit_repo_consistency.py --history" in weekly_content
+    assert "fetch-depth: 0" in weekly_content
+    assert "repo-consistency-audit.txt" in weekly_content
 
 
 def test_weekly_governance_guide_matches_workflow_boundary() -> None:
