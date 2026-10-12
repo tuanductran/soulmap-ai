@@ -16,7 +16,7 @@ def test_comment_candidates_only_reports_review_markers() -> None:
     assert comment_candidates(Path("module.py"), content) == [
         (1, "# TODO: remove after migration"),
         (3, "# return old_value"),
-        (4, "value = 1  # TODO inline comment should be inventoried too"),
+        (4, "# TODO inline comment should be inventoried too"),
     ]
 
 
