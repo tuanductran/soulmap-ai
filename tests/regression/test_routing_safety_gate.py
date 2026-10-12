@@ -163,7 +163,6 @@ def test_every_routing_path_calls_safety_gate(
     ) -> dict[str, object]:
         called["count"] += 1
         called["args"] = (message, history, memory, selection)
-        # return a simple pass-through gated result
         return {"status": "ok", "reason": "allowed", "selection": selection}
 
     monkeypatch.setattr(framework_selector, "apply_safety_gate", fake_apply_safety_gate)
