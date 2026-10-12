@@ -133,21 +133,21 @@ def detect_crisis(message: str) -> dict:
             "signals": signals_found,
             "response_guidance": (
                 "STOP. Do not use the five-step framework. Do not offer reflective questions. "
-                "1. Provide the crisis line for the user's region immediately. "
-                "2. Acknowledge with full presence in 1-2 sentences. "
-                "3. Express care clearly. "
-                "Known crisis lines: "
-                "Vietnam: HOPE 0865 044 400 (free, 24/7) | "
-                "US: 988 (call or text) | "
-                "UK: Samaritans 116 123 | "
-                "AU: Lifeline 13 11 14 | "
+                "1. Briefly acknowledge the immediate risk and express care in 1-2 sentences; do not minimize or promise outcomes. "
+                "2. Give urgent safety guidance: if danger may be immediate, contact local emergency services and move near a trusted person if safe. "
+                "3. Share region-appropriate crisis resources alongside or immediately after that first response; never delay initial safety guidance to search. "
+                "Resource starting points only; verify the user's region, contact details, and current availability before making claims: "
+                "Vietnam: HOPE 0865 044 400 (hours and availability must be verified; do not claim 24/7) | "
+                "US: 988 (call or text; verify current regional availability) | "
+                "UK: Samaritans 116 123 (verify current availability) | "
+                "AU: Lifeline 13 11 14 (verify current availability) | "
                 "International: findahelpline.com | "
-                "If region is unknown, use findahelpline.com and include the most likely local line. "
-                "4. Encourage them to reach out to a real person right now. "
+                "If region is unknown, offer findahelpline.com as a starting point; do not guess the user's country or invent a local line. "
+                "4. Encourage them to reach out to a trusted real person right now. "
                 "No emoji. No spiritual framing. Words only. "
                 "Example: 'I hear you. What you are carrying right now is real and it is heavy. "
-                "Please reach out to a crisis support line right now - you do not have to be alone with this. "
-                "[include region-appropriate line above]'"
+                "If you may be in immediate danger, contact local emergency services and get near someone you trust if safe. "
+                "[include a region-appropriate resource only when its details are verified]'"
             ),
         }
 

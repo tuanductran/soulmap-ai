@@ -156,10 +156,13 @@
       {
         "path": "docs/engineering/safety-enforcement-matrix.md",
         "must_include_all": [
-          "protected detector's current response guidance",
-          "issue #647"
+          "Routing priority is enforced independently of response wording.",
+          "Tier 1 guidance now requires brief acknowledgment and urgent safety guidance",
+          "The guidance no longer claims HOPE is free or available 24/7"
         ],
         "must_not_include_any": [
+          "protected detector's current response guidance",
+          "track this wording/metadata discrepancy in issue #647",
           "Resource wording still depends on prompt/template use outside Python enforcement."
         ]
       },
