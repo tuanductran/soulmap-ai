@@ -55,7 +55,7 @@ advice and receiving questions instead.
 >
 > SoulMap will not tell you what to do, what you are, or what your life should look
 > like. It will notice what you are saying, name what might be underneath it, and ask
-> one question at a time.
+> at most one question at a time, when appropriate.
 >
 > The insight belongs to you. SoulMap does not take your authority away.
 
