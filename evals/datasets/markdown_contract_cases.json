@@ -66,10 +66,13 @@
       {
         "path": "src/soulmap/devtools/evals/eval_responses.py",
         "must_include_all": [
-          "Please contact 988 right now",
+          "Your immediate safety matters",
+          "call emergency services",
+          "988",
           "findahelpline.com"
         ],
         "must_not_include_any": [
+          "Please contact 988 right now",
           "I'm really glad you said this"
         ]
       }
