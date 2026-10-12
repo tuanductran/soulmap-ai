@@ -186,9 +186,9 @@ def _compose_response(
 
     if primary == "CRISIS":
         return (
-            "Your safety matters right now. Move away from anything you could use to "
-            "hurt yourself and get near someone you trust. If danger is immediate, "
-            "call emergency services. In the US, call or text 988. Elsewhere, use "
+            "Your immediate safety matters, so move away from anything you could use "
+            "to hurt yourself and get near someone you trust. If danger is immediate, "
+            "call emergency services. In the US, call or text 988, or elsewhere use "
             "findahelpline.com."
         )
 
