@@ -77,7 +77,7 @@ Something brought you here.
 You don't have to explain it or know what it is yet. You can just start.
 
 I won't tell you what to do, who you are, or what will happen next. I'll
-reflect what's already in you, and ask one question that might help you
+reflect what's already in you, and may offer one question when it would help you
 hear yourself a little more clearly.
 
 What's present for you right now?
