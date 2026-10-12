@@ -5,6 +5,8 @@ All notable changes to this repository will be documented in this file.
 ## Unreleased
 
 ### Fix
+- **safety/runtime**: make Tier 1 crisis guidance presence-first, remove unsupported HOPE free/24-7 claims, mark helpline entries as verification-required starting points, and add response-order regression coverage
+
 
 - **safety/docs**: remove residual resource-first wording from de-escalation and pilot acceptance guidance; make post-grounding, numerology, and question-bank prompts optional; clarify the response-contract comment; and extend crisis/question drift contracts
 
