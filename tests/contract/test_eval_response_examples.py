@@ -26,7 +26,10 @@ def test_crisis_example_acknowledges_risk_before_resources() -> None:
     assert "call emergency services" in lowered
     assert "988" in lowered
     assert "findahelpline" in lowered
-    assert lowered.index("your immediate safety matters") < lowered.index("call emergency services")
+    assert (
+        lowered.index("your immediate safety matters")
+        < lowered.index("call emergency services")
+    )
     assert lowered.index("call emergency services") < lowered.index("988")
     assert lowered.index("988") < lowered.index("findahelpline")
     assert "?" not in response
