@@ -186,9 +186,10 @@ def _compose_response(
 
     if primary == "CRISIS":
         return (
-            "Please contact 988 right now if you are in the US, or use "
-            "findahelpline.com to find the right crisis line where you are. "
-            "You do not have to be alone with this."
+            "Your immediate safety matters, so move away from anything you could use "
+            "to hurt yourself and get near someone you trust. If danger is immediate, "
+            "call emergency services. In the US, call or text 988, or elsewhere use "
+            "findahelpline.com."
         )
 
     if primary == "DEPENDENCY":

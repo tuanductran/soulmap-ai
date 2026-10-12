@@ -66,11 +66,35 @@
       {
         "path": "src/soulmap/devtools/evals/eval_responses.py",
         "must_include_all": [
-          "Please contact 988 right now",
+          "Your immediate safety matters",
+          "call emergency services",
           "findahelpline.com"
         ],
         "must_not_include_any": [
+          "Please contact 988 right now if you are in the US",
           "I'm really glad you said this"
+        ]
+      },
+      {
+        "path": "tests/contract/test_eval_response_examples.py",
+        "must_include_all": [
+          "test_crisis_example_acknowledges_risk_before_resources",
+          "your immediate safety matters",
+          "call emergency services"
+        ],
+        "must_not_include_any": [
+          "test_crisis_example_puts_resources_before_warm_acknowledgment"
+        ]
+      },
+      {
+        "path": "tests/unit/test_eval_responses.py",
+        "must_include_all": [
+          "test_crisis_reference_response_is_presence_first",
+          "your immediate safety matters",
+          "call emergency services"
+        ],
+        "must_not_include_any": [
+          "test_crisis_reference_response_puts_resources_first"
         ]
       }
     ],
