@@ -46,11 +46,12 @@ Use it to answer four questions for every major repo surface:
 
 ## Repeatable repository consistency audit
 
-Run `uv run python scripts/audit_repo_consistency.py --history` for a broad
-inventory of current tracked files against deleted paths in reachable Git history
-and for comment-only cleanup markers. During a pull request, use
-`uv run python scripts/audit_repo_consistency.py --base origin/main` after fetching
-the base branch to focus the deleted-path scan on the proposed change range.
+Pull-request CI runs `uv run python scripts/audit_repo_consistency.py --base origin/main`
+and uploads the report with the knowledge inventory. This scans comment-cleanup
+candidates across tracked files and focuses deleted-path references on the proposed
+change range. The weekly governance workflow runs
+`uv run python scripts/audit_repo_consistency.py --history` with full Git history
+and uploads the broader report as weekly evidence.
 
 The scanner intentionally reports candidates rather than deleting or failing on
 them. A matching token is not proof of stale content: changelogs, ADRs, tests,
