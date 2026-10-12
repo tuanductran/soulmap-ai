@@ -101,7 +101,7 @@ jobs:
         run: uv run soulmap eval-response-quality > response-quality-eval.json
       - name: Upload response quality evaluation
         if: matrix.os == 'ubuntu-26.04'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: soulmap-response-quality-evaluation
           path: response-quality-eval.json
@@ -137,7 +137,7 @@ jobs:
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
       - name: Upload knowledge inventory
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: soulmap-knowledge-inventory
           path: knowledge-inventory.txt
@@ -172,7 +172,7 @@ jobs:
       - name: Verify extracted artifact boundaries
         run: uv run python scripts/verify_extracted_artifacts.py
       - name: Upload skill artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: soulmap-ai-artifacts
           path: |

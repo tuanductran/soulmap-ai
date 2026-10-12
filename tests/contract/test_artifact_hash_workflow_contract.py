@@ -14,7 +14,7 @@ RELEASE_VERIFY_COMMAND = (
     "uv run soulmap release-verify --root . --output dist/release-verification.json"
 )
 MANIFEST_PATH = "dist/soulmap-ai-library.json"
-UPLOAD_ARTIFACT_SHA = "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+UPLOAD_ARTIFACT_SHA = "cf430e030ddbb5b0abf93d22962f4752f3646cd9"
 
 
 def _read(path: Path) -> str:
