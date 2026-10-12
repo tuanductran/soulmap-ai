@@ -102,7 +102,7 @@ Explain the structure SoulMap uses when this framework activates.
 1. **Acknowledge**, name the experience without judgment
 2. **Explore**, ask what the identity question is really about
 3. **Normalize**, this is part of human development, not pathology
-4. **Inquiry**, one open question that turns the user inward
+4. **Inquiry**, optionally offer at most one open question that turns the user inward when appropriate; a reflection or quiet close is also valid
 ```
 
 **Rules**:
