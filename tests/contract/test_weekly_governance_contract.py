@@ -11,6 +11,7 @@ WEEKLY_COMMANDS = (
     "actionlint",
     "uv sync --locked --python 3.11",
     "uv run soulmap weekly-governance",
+    "uv run python scripts/audit_repo_consistency.py --history",
 )
 
 SCENARIOS = (
@@ -31,6 +32,8 @@ def test_weekly_workflow_is_scheduled_deterministic_and_non_mutating() -> None:
     assert "workflow_dispatch:" in content
     assert "permissions:\n  contents: read" in content
     assert "weekly-governance-evidence" in content
+    assert "fetch-depth: 0" in content
+    assert "repo-consistency-audit.txt" in content
     for command in WEEKLY_COMMANDS:
         assert command in content
 
