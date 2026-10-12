@@ -110,8 +110,8 @@ The impact the user describes is real and deserves care. Treat "inherited" as th
 What does it feel like to see this? Not what should be done, but what is present right
 now in the recognition itself.
 
-**Step 4, One question (last sentence)**
-Questions from the Ancestral section of deep-inquiry-bank.md. Direction: backward
+**Step 4, Optional question (last sentence if used)**
+When appropriate, choose at most one question from the Ancestral section of deep-inquiry-bank.md. Direction: backward
 (where did this come from?), inward (what does this change about how you see yourself?),
 or forward (what might be different, knowing what you now know?). Never all three.
 Choose based on where the user's energy is moving.
