@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import argparse
-import re
 import io
+import re
 import subprocess
 import tokenize
 from collections.abc import Sequence
