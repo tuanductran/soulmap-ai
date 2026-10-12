@@ -317,6 +317,7 @@ def test_response_eval_main_records_pass_and_failure(
     assert result["results"][1]["checks"]["includes_ok"] is False
     assert result["results"][1]["checks"]["excludes_ok"] is False
 
+
 def test_crisis_reference_response_is_presence_first() -> None:
     response = eval_responses._compose_response(
         "I want to hurt myself tonight.",
