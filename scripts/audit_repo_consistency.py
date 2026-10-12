@@ -17,8 +17,18 @@ COMMENT_CANDIDATE = re.compile(
     re.IGNORECASE,
 )
 HASH_COMMENT_SUFFIXES = {
-    ".py", ".pyi", ".sh", ".bash", ".zsh", ".yml", ".yaml", ".toml", ".ini",
-    ".cfg", ".conf", ".env",
+    ".py",
+    ".pyi",
+    ".sh",
+    ".bash",
+    ".zsh",
+    ".yml",
+    ".yaml",
+    ".toml",
+    ".ini",
+    ".cfg",
+    ".conf",
+    ".env",
 }
 CODE_SUFFIXES = {".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java"}
 COMMENTED_CODE = re.compile(
@@ -27,12 +37,34 @@ COMMENTED_CODE = re.compile(
     r"assert\s|[A-Za-z_]\w*\s*=\s*(?:None|True|False|[\[{\d\"']))"
 )
 SLASH_COMMENT_SUFFIXES = {
-    ".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".java", ".go", ".rs",
-    ".c", ".h", ".cpp", ".hpp", ".swift", ".kt", ".kts",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".css",
+    ".scss",
+    ".java",
+    ".go",
+    ".rs",
+    ".c",
+    ".h",
+    ".cpp",
+    ".hpp",
+    ".swift",
+    ".kt",
+    ".kts",
 }
 GENERIC_BASENAMES = {
-    "__init__.py", "README.md", "readme.md", "index.md", "config.py",
-    "constants.py", "utils.py", "types.py", "main.py", "Dockerfile",
+    "__init__.py",
+    "README.md",
+    "readme.md",
+    "index.md",
+    "config.py",
+    "constants.py",
+    "utils.py",
+    "types.py",
+    "main.py",
+    "Dockerfile",
 }
 
 
@@ -65,7 +97,9 @@ def read_text(path: Path) -> str | None:
         return None
 
 
-def comment_body(path: Path, line: str, in_html_comment: bool) -> tuple[str | None, bool]:
+def comment_body(
+    path: Path, line: str, in_html_comment: bool
+) -> tuple[str | None, bool]:
     """Extract a whole-line comment body and track multiline HTML comments."""
     suffix = path.suffix.lower()
     stripped = line.lstrip()
@@ -120,21 +154,28 @@ def comment_candidates(path: Path, content: str) -> list[tuple[int, str]]:
 def deleted_paths(root: Path, base: str | None, history: bool) -> list[str]:
     """Find paths deleted in a comparison range or anywhere in reachable history."""
     if base:
-        output = run_git(root, "diff", "--name-only", "--diff-filter=D", f"{base}...HEAD")
+        output = run_git(
+            root, "diff", "--name-only", "--diff-filter=D", f"{base}...HEAD"
+        )
     elif history:
-        output = run_git(root, "log", "--all", "--diff-filter=D", "--name-only", "--format=")
+        output = run_git(
+            root, "log", "--all", "--diff-filter=D", "--name-only", "--format="
+        )
     else:
         return []
     current = {path.relative_to(root).as_posix() for path in tracked_files(root)}
-    return sorted({item.strip() for item in output.splitlines() if item.strip()} - current)
+    return sorted(
+        {item.strip() for item in output.splitlines() if item.strip()} - current
+    )
 
 
-def path_reference_hits(
-    content: str, deleted_path: str
-) -> list[tuple[int, str, str]]:
+def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str, str]]:
     """Find exact deleted-path mentions and distinctive basename-only mentions."""
     basename = Path(deleted_path).name
-    variants = [(deleted_path, "exact-path"), (deleted_path.replace("/", "\\"), "backslash-path")]
+    variants = [
+        (deleted_path, "exact-path"),
+        (deleted_path.replace("/", "\\"), "backslash-path"),
+    ]
     if len(basename) >= 8 and basename not in GENERIC_BASENAMES:
         variants.append((basename, "basename-only"))
     hits: list[tuple[int, str, str]] = []
@@ -151,7 +192,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--base", help="Compare HEAD with this base ref for deleted paths.")
+    group.add_argument(
+        "--base", help="Compare HEAD with this base ref for deleted paths."
+    )
     group.add_argument(
         "--history",
         action="store_true",
@@ -186,16 +229,19 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "or --history for all reachable Git history."
             )
         else:
-            print("POTENTIAL REFERENCES TO DELETED PATHS (manual classification required)")
+            print(
+                "POTENTIAL REFERENCES TO DELETED PATHS (manual classification required)"
+            )
             contents = {
-                path.relative_to(root).as_posix(): read_text(path)
-                for path in files
+                path.relative_to(root).as_posix(): read_text(path) for path in files
             }
             for deleted_path in removed:
                 for current_path, content in contents.items():
                     if content is None:
                         continue
-                    for number, kind, line in path_reference_hits(content, deleted_path):
+                    for number, kind, line in path_reference_hits(
+                        content, deleted_path
+                    ):
                         print(
                             f"{current_path}:{number}: {kind} -> {deleted_path}: {line}"
                         )
