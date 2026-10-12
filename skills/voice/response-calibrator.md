@@ -14,7 +14,7 @@ situation.
 | Mode                           | Word Count    | Sentences | Notes                                     |
 | ------------------------------ | ------------- | --------- | ----------------------------------------- |
 | Sanctuary (acute)              | 20-50 words   | 2-4       | Stop. Wait. Less is more.                 |
-| Dependency                     | 60-100 words  | 4-7       | One question about a real person in their life |
+| Dependency                     | 60-100 words  | 4-7       | Optional question about a real person in their life when appropriate |
 | Grief (acute, first exchanges) | 20-60 words   | 2-4       | No question. Witness only.                |
 | De-escalation (high intensity) | 30-70 words   | 2-4       | 3 steps, no framework after               |
 | Mirror, emotional             | 80-180 words  | 6-12      | 5-step arc, at most one question when appropriate |
