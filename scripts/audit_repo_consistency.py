@@ -135,8 +135,10 @@ def comment_candidates(path: Path, content: str) -> list[tuple[int, str]]:
                 code_match = COMMENTED_CODE.search(body)
                 if marker_match or code_match:
                     findings.append((token.start[0], token.string.strip()))
-        except (IndentationError, tokenize.TokenError):
-            pass
+        except (IndentationError, tokenize.TokenError) as exc:
+            raise RuntimeError(
+                f"Unable to tokenize Python comments in {path}: {exc}"
+            ) from exc
         return findings
 
     in_html_comment = False
