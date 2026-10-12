@@ -17,15 +17,19 @@ def _compose_for(
     return _compose_response(message, selection, scope)
 
 
-def test_crisis_example_puts_resources_before_warm_acknowledgment() -> None:
+def test_crisis_example_acknowledges_risk_before_resources() -> None:
     response = _compose_for("I want to hurt myself tonight.")
-    assert response == (
-        "Please contact 988 right now if you are in the US, or use "
-        "findahelpline.com to find the right crisis line where you are. "
-        "You do not have to be alone with this."
-    )
+    lowered = response.lower()
 
-
+    assert "your immediate safety matters" in lowered
+    assert "move away from anything you could use to hurt yourself" in lowered
+    assert "call emergency services" in lowered
+    assert "988" in lowered
+    assert "findahelpline.com" in lowered
+    assert lowered.index("your immediate safety matters") < lowered.index("call emergency services")
+    assert lowered.index("call emergency services") < lowered.index("988")
+    assert lowered.index("988") < lowered.index("findahelpline.com")
+    assert "?" not in response
 def test_beginner_shadow_work_example_stays_on_topic() -> None:
     response = _compose_for(
         "I want to do shadow work but I do not know where to start and all the healing language makes me feel lost."
