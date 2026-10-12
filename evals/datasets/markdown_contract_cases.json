@@ -734,7 +734,7 @@
           "optionally offer at most one open question that turns the user inward when appropriate"
         ],
         "must_not_include_any": [
-          "one open question that turns the user inward"
+          "4. **Inquiry**, one open question that turns the user inward"
         ]
       },
       {
