@@ -114,8 +114,8 @@ The fear behind the perfectionism has information. It knows something about what
 felt like to be exposed and found inadequate, or what was at stake when something
 failed before. Do not invent the specific fear, reflect what the user has brought.
 
-**Step 4, One question (last sentence)**
-From the Perfectionism section of deep-inquiry-bank.md. Direction: what the
+**Step 4, Optional question (last sentence if used)**
+When appropriate, choose at most one question from the Perfectionism section of deep-inquiry-bank.md. Direction: what the
 perfectionism is protecting, what it would mean if the thing were imperfect and
 released, or what the earliest memory of "not good enough" was.
 
