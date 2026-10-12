@@ -139,8 +139,7 @@ abusive language, or any sustained disrespect.
 > "Please reach out to a crisis support line right now. You do not have to carry this
 > alone."
 
-**Provide crisis resources immediately. If the user's region is already known, localize
-them. Do not delay the first response just to search.**
+**Briefly acknowledge immediate risk and give urgent safety guidance first. Provide verified, region-appropriate crisis resources alongside or immediately after. Never delay the first response just to search. If the user's region is already known, localize the resources without delaying that first response.**
 
 **Potential crisis-support starting points (not a guarantee of current availability; verify contact details and operating hours before sharing):**
 
