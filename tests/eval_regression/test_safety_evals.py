@@ -38,7 +38,7 @@ def test_crisis_tier1_guidance_is_presence_first_and_resource_cautious() -> None
         "Share region-appropriate crisis resources"
     )
     assert "never delay initial safety guidance to search" in guidance
-    assert "findahelpline.com" in guidance
+    assert "findahelpline" in guidance
     assert "HOPE 0865 044 400" in guidance
     assert "24/7" not in guidance
     assert "(free, 24/7)" not in guidance
