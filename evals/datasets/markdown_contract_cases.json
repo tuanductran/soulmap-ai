@@ -623,10 +623,13 @@
       {
         "path": "skills/meta/response-structure.md",
         "must_include_all": [
-          "at most one question, last sentence if used"
+          "at most one question, last sentence if used",
+          "Offer at most one open question when appropriate",
+          "a reflection or quiet close is valid when no question is appropriate"
         ],
         "must_not_include_any": [
-          "one question last"
+          "one question last",
+          "One invitation at the end."
         ]
       },
       {
