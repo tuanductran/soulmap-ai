@@ -58,3 +58,27 @@ prioritizes immediate support resources and encourages reaching qualified help.
 - No spiritual bypassing
 - No sales language
 - No "come back anytime" closings
+
+## Social post: every household, an AI creator (2027)
+
+**The next era is not only about using AI. It is about creating with it.**
+
+A 2027 aspiration: every household has a Vibecoder. 🫡🤏🏻
+
+Not everyone needs to become a professional software engineer. But more people can
+learn to turn their ideas into something real with AI: build a small app, make a game,
+create a useful tool, or shape a personal AI brand that reflects their own knowledge,
+voice, and values.
+
+AI can expand what we are able to make. It does not replace the human part: deciding
+what matters, asking better questions, bringing lived experience, and taking
+responsibility for what we put into the world.
+
+The goal is not for every person to sound alike or to outsource their identity to a
+model. It is for each person to have more room to express what is distinct about them
+and build something useful from it.
+
+**One person, one distinct voice. One household, one maker. Every idea, a chance to
+become real.**
+
+2027: not just using AI — learning to create with it.
