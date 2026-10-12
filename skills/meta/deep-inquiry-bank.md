@@ -132,7 +132,7 @@ Use ONLY after completing the three-step de-escalation sequence from the **Emoti
 De-Escalation Guide**. These are softer and more open than standard mirror questions -
 they invite noticing, not analyzing.
 
-One question only. Never force it, if the user is still flooded, stay present. Wait.
+Offer at most one question only if grounding has landed and the user seems ready. Never force it; if the user is still flooded, stay present. Wait.
 
 **After the flood begins to settle:**
 
@@ -158,8 +158,8 @@ One question only. Never force it, if the user is still flooded, stay present. W
 ## Parts-specific questions
 
 Use after naming one or two parts using the Inner Parts framework from the **Inner
-Parts** framework. One question only. Invite the user to listen to a specific part, not
-to resolve the conflict.
+Parts** framework. When appropriate, offer at most one question inviting the user to listen to a specific part, not
+to resolve the conflict. A reflection or quiet close is valid when no question is appropriate.
 
 **Rule:** The question should help the user *hear* one of the parts more clearly, not
 choose between them.
@@ -234,8 +234,7 @@ choose between them.
 ## Direction-specific questions
 
 Use after activating the Life Direction Clarifier from the **Life Direction Clarifier**.
-Match the question to the lens being explored and the user's presentation. One question
-only. Always the closing sentence. An invitation, never a push.
+Match the question to the lens being explored and the user's presentation. If a question is appropriate, offer at most one; if used, it is the closing sentence. An invitation, never a push.
 
 **North star question, return to this whenever lost:**
 
@@ -314,7 +313,7 @@ only. Always the closing sentence. An invitation, never a push.
 ## Shadow-specific questions
 
 Use after naming a shadow pattern as a possibility from the **Shadow Pattern Revealer**.
-One question only. Always the closing sentence. Frame as an invitation to look, not a
+When appropriate, offer at most one question; if used, it is the closing sentence. A reflection or quiet close is valid when no question is appropriate. Frame as an invitation to look, not a
 challenge.
 
 **Grounding question, use with any shadow pattern:**
@@ -371,8 +370,7 @@ challenge.
 
 These questions help ground the insight in daily life through awareness, not action.
 
-**Golden rule:** Questions about *noticing*, never about *doing*. One question only. The
-closing sentence of the response.
+**Golden rule:** Questions about *noticing*, never about *doing*. Offer at most one question when appropriate; if used, it is the closing sentence. A reflection or quiet close is valid when no question is appropriate.
 
 ### Holding the Insight (use first, before any other integration question)
 
@@ -434,7 +432,7 @@ These questions go *deeper into* the exploration, not around it, not toward reso
 **The test for every question:** Does it open the territory further, or does it try to
 close it? Only use questions that open.
 
-One question only. The closing sentence. A gentle invitation into more, not toward an
+When appropriate, offer at most one question; if used, it is the closing sentence. A gentle invitation into more, not toward an
 answer.
 
 ### Identity Shift
@@ -500,8 +498,7 @@ Used at the end of any existential exploration to return gently to the present.
 These questions invite the user to see their own story more clearly, not to analyze it,
 but to notice it from a slight distance.
 
-One question only. Always the closing sentence. Return interpretation to the user before
-asking.
+When appropriate, offer at most one question; if used, it is the closing sentence. Return interpretation to the user before asking. A reflection or quiet close is valid when no question is appropriate.
 
 ### General synthesis closing questions
 
@@ -605,8 +602,8 @@ Keep the lens pointed inward, the other person is not the subject.
 ## Somatic Questions
 
 Use when the somatic secondary layer is active. Ask AFTER
-offering a grounding invitation (breath or feet on floor). One question only. Connect
-the physical sensation to inner experience.
+offering a grounding invitation (breath or feet on floor). If a question is appropriate, offer at most one and connect
+the physical sensation to inner experience. A reflection or quiet close is valid when no question is appropriate.
 
 - What does your body know about this, even if your mind doesn't yet?
 - If this sensation in your [chest / stomach / throat] could speak, what would it say?
@@ -634,7 +631,7 @@ what the user brings. These are for when the opening is genuinely empty.
 ## Anger Questions
 
 Use after the anger signal is clearly active and Phase 1 (meeting the anger) is complete. One
-question. The closing sentence. Opens toward the need, not the target.
+question when appropriate; if used, it is the closing sentence. Opens toward the need, not the target.
 
 ### What the anger is protecting
 

@@ -50,12 +50,10 @@ Activate this protocol (not the crisis protocol) when the user shows:
 
 Do NOT activate for:
 
-- Any self-harm or suicide-risk signals → use the immediate crisis response (resources
-  first, no reflection)
+- Any self-harm or suicide-risk signals → use the immediate crisis response: briefly acknowledge immediate risk and give urgent safety guidance; provide verified, region-appropriate resources alongside or immediately after; no reflective framework or question.
 - Direct crisis language such as "I do not want to keep living" or "I do not want to be
   here anymore" → treat as an immediate crisis even if the user does not say "suicide"
-- Any "I'm not safe", active abuse, or complete breakdown signals → use presence-only
-  crisis support (witnessing first, minimal language, no reflection)
+- Any "I'm not safe", active abuse, or complete breakdown signals → prioritize immediate safety: briefly acknowledge risk and give urgent guidance, offer verified relevant support resources when appropriate, and avoid reflective frameworks or questions.
 - Anticipatory grief language like "watching them decline" or "saying goodbye every day"
   → route to grief support, not crisis, unless there is direct self-harm intent
 - Normal sadness, grief, or reflective emotional sharing → use a standard sanctuary-mode
@@ -150,14 +148,13 @@ If yes: offer a gentle bridge before any inquiry.
 If the user is still flooded: stay in Steps 1-3. Do not advance to reflection. Repeat
 Step 1 in different words if needed.
 
-## The closing question (one only)
+## Optional closing question (at most one)
 
-Only after grounding is established. Retrieve from the **Deep Inquiry Bank** -
-"Post-Grounding Questions" section. These questions are designed for the moment after
-overwhelm begins to settle, softer than standard mirror questions.
-
-Choose the one that feels most alive given what the user shared. Never ask more than
-one.
+Only consider a question after grounding is established and when the user seems ready.
+Retrieve from the **Deep Inquiry Bank**, "Post-Grounding Questions" section. These
+questions are designed for the moment after overwhelm begins to settle, softer than
+standard mirror questions. If appropriate, choose at most one based on what the user
+shared. A reflection or quiet close is valid when no question is appropriate.
 
 ## Tone rules for de-escalation responses
 
@@ -325,6 +322,6 @@ Physical overwhelm, the body registering distress before words catch up:
 
 | Result | Guidance |
 | :--- | :--- |
-| HIGH | Emotional overwhelm detected. Activate full de-escalation protocol from skills/frameworks/emotional-deescalation.md. Three steps in order: (1) Acknowledge intensity - simple, direct, no interpretation. (2) Offer one grounding invitation - breath or feet on floor. (3) Normalize the nervous system response in plain language. Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. After grounding: bridge gently, then one post-grounding question from deep-inquiry-bank.md. |
-| MODERATE | Moderate emotional activation detected. Slow the conversation down. Step 1 only: acknowledge the intensity with one warm sentence. Consider offering a breath invitation if the message has physical signals. You may continue with a shortened MIRROR response, but hold the framework lightly. End with a softer question - retrieve from 'Post-Grounding Questions' in deep-inquiry-bank.md. |
+| HIGH | Emotional overwhelm detected. Activate full de-escalation protocol from skills/frameworks/emotional-deescalation.md. Three steps in order: (1) Acknowledge intensity - simple, direct, no interpretation. (2) Offer one grounding invitation - breath or feet on floor. (3) Normalize the nervous system response in plain language. Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. After grounding: bridge gently; optionally offer at most one post-grounding question from deep-inquiry-bank.md when appropriate. A reflection or quiet close is also valid. |
+| MODERATE | Moderate emotional activation detected. Slow the conversation down. Step 1 only: acknowledge the intensity with one warm sentence. Consider offering a breath invitation if the message has physical signals. You may continue with a shortened MIRROR response, but hold the framework lightly. If a question is appropriate, optionally close with a softer question from 'Post-Grounding Questions' in deep-inquiry-bank.md. |
 | NORMAL | No significant overwhelm detected. Continue standard response pipeline. |

@@ -38,7 +38,8 @@ _PARAGRAPH_SPLIT_RE = re.compile(r"\n\s*\n")
 
 # A crisis response must carry helpline resources, and doctrine's "1-2
 # sentences" counts SoulMap's own prose, not the resource block it is required
-# to deliver first. Every listed line ("988", "0865 044 400", "13 11 14")
+# to include. Resource placement is defined by the canonical crisis doctrine.
+# Every listed line ("988", "0865 044 400", "13 11 14")
 # carries at least three digits, and reflective prose effectively never does, so
 # digit-bearing fragments are excluded before counting. Without this the
 # canonical correct crisis response would be flagged for rewrite, which is the

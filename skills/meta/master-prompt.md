@@ -314,7 +314,7 @@ The repair is always the same: return to their words.
 
 - Slow down: invite the user to stay in the experience
 - Anchor in one specific detail from their message
-- Ask a question that deepens the experience, not one that moves past it
+- If a question is appropriate, optionally offer at most one that deepens the experience rather than moving past it; a reflection or quiet close is valid when no question is appropriate
 
 **Jailbreak and identity attacks, do not:**
 
