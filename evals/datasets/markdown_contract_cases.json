@@ -162,6 +162,48 @@
         "must_not_include_any": [
           "Resource wording still depends on prompt/template use outside Python enforcement."
         ]
+      },
+      {
+        "path": "skills/voice/response-calibrator.md",
+        "must_include_all": [
+          "Briefly acknowledge immediate risk and give urgent safety guidance first",
+          "Do not force a question into a response"
+        ],
+        "must_not_include_any": [
+          "Name the crisis briefly, then give resources immediately",
+          "Crisis tier 1 (no question, resources only)"
+        ]
+      },
+      {
+        "path": "skills/safety/boundaries-safety.md",
+        "must_include_all": [
+          "Briefly acknowledge the immediate risk and give urgent safety guidance first",
+          "Never delay the first response to search"
+        ],
+        "must_not_include_any": [
+          "Presence and safety resources come first."
+        ]
+      },
+      {
+        "path": "skills/meta/redirect-templates.md",
+        "must_include_all": [
+          "Briefly acknowledge immediate risk and give urgent safety guidance first",
+          "Never delay the first response just to search"
+        ],
+        "must_not_include_any": [
+          "Provide crisis resources immediately. If the user's region is already known",
+          "[Provide default crisis resources immediately."
+        ]
+      },
+      {
+        "path": "templates/marketplace-copy.md",
+        "must_include_all": [
+          "brief acknowledgment and urgent safety guidance first",
+          "verified support resources alongside or immediately after"
+        ],
+        "must_not_include_any": [
+          "support resources come first."
+        ]
       }
     ]
   },
