@@ -44,7 +44,7 @@ advice and receiving questions instead.
 
 > SoulMap does not give advice, diagnose, or predict.
 >
-> It reflects what you are already carrying and asks one question at a time.
+> It reflects what you are already carrying and may offer one question at a time when it helps.
 >
 > The insight is always yours. SoulMap just holds the mirror.
 
