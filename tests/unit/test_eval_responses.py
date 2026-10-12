@@ -134,7 +134,7 @@ def test_knowledge_paths_follow_safety_scope_and_framework(
         ),
         (
             "I cannot stay safe",
-            {"primary_framework": "CRISIS", "safety_status": "OVERRIDE"},
+            {"primary_framework": "CRISIS", "mode": "CRISIS", "safety_status": "OVERRIDE"},
             {"category": "crisis"},
             "findahelpline.com",
         ),
@@ -326,7 +326,7 @@ def test_crisis_reference_response_is_presence_first() -> None:
     )
     lowered = response.lower()
 
-    assert "your safety matters right now" in lowered
+    assert "your immediate safety matters" in lowered
     assert "move away from anything you could use to" in lowered
     assert "call emergency services" in lowered
     assert "988" in lowered
@@ -337,3 +337,7 @@ def test_crisis_reference_response_is_presence_first() -> None:
     assert lowered.index("988") < lowered.index("findahelpline.com")
     assert "?" not in response
     assert ";" not in response
+    assert eval_responses.grade_response_contract(
+        response,
+        {"primary_framework": "CRISIS", "mode": "CRISIS"},
+    )["ok"] is True
