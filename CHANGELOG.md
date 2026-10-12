@@ -6,6 +6,8 @@ All notable changes to this repository will be documented in this file.
 
 ### Fix
 
+- **skills/docs**: remove residual mandatory-question wording from framework guidance, celebration templates, onboarding/FAQ copy, and the framework-author skill; extend the optional-question contract to cover the remaining surfaces
+
 - **safety/docs**: align response calibration, crisis referral templates, safety boundaries, and marketplace copy with presence-first crisis guidance; add Markdown contract coverage for these surfaces
 
 - **safety/docs**: align crisis response ordering, verified-resource guidance, and optional-question rules across doctrine, integration prompts, and evaluation contracts; track the protected runtime's stale crisis-resource availability claim in issue #647
