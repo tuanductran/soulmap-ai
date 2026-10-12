@@ -787,6 +787,36 @@
         "must_not_include_any": [
           "Ask a question that deepens the experience, not one that moves past it"
         ]
+      },
+      {
+        "path": "templates/numerology-reflection-template.md",
+        "must_include_all": [
+          "Optional closing question (last sentence if used)",
+          "A reflection or quiet close is valid when no question is appropriate"
+        ],
+        "must_not_include_any": [
+          "One closing question (last sentence)"
+        ]
+      },
+      {
+        "path": "skills/meta/execution-pipeline.md",
+        "must_include_all": [
+          "At most one when appropriate; last sentence if used"
+        ],
+        "must_not_include_any": [
+          "One only, last sentence, not clinical"
+        ]
+      },
+      {
+        "path": "skills/meta/deep-inquiry-bank.md",
+        "must_include_all": [
+          "If a question is appropriate, offer at most one",
+          "A reflection or quiet close is valid when no question is appropriate"
+        ],
+        "must_not_include_any": [
+          "One question only. Always the closing sentence",
+          "One question only. The closing sentence."
+        ]
       }
     ]
   }
