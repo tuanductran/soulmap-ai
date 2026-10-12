@@ -76,7 +76,7 @@ When a reflective question is appropriate under SOULMAP.md and the active framew
 
 - "I" (too self-referential), *"What you're describing..."* is better than *"I hear
   that..."*
-- A question (always acknowledge first, question last)
+- A forced question (acknowledge first; if a question is used, place it last)
 - A restatement of what the user said word-for-word (mechanical, not reflective)
 - "That sounds..." as a default opener, often generic
 - "I understand...", presumptuous
