@@ -20,9 +20,9 @@ HASH_COMMENT_SUFFIXES = {
 }
 CODE_SUFFIXES = {".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java"}
 COMMENTED_CODE = re.compile(
-    r"^(?:if\\s|elif\\s|else:|return\\s|raise\\s|def\\s|class\\s|import\\s|"
-    r"from\\s|for\\s|while\\s|try:|except(?:\\s|:)|with\\s|async\\s+def\\s|"
-    r"assert\\s|[A-Za-z_]\\w*\\s*=\\s*(?:None|True|False|[\\[{\\d\\\"']))"
+    r"^(?:if\s|elif\s|else:|return\s|raise\s|def\s|class\s|import\s|"
+    r"from\s|for\s|while\s|try:|except(?:\s|:)|with\s|async\s+def\s|"
+    r"assert\s|[A-Za-z_]\w*\s*=\s*(?:None|True|False|[\[{\d\"']))"
 )
 SLASH_COMMENT_SUFFIXES = {
     ".js", ".jsx", ".ts", ".tsx", ".css", ".scss", ".java", ".go", ".rs",
