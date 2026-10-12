@@ -184,7 +184,7 @@ framework generated the content.
 | Vocabulary | No banned words from SOULMAP.md Section 5 |
 | Register | Warm but not rescuing, clear but not harsh, poetic only when earned |
 | Emoji | None in grief, crisis, trauma, self-harm conversations. None unless user context warrants |
-| Question | One only, last sentence, not clinical, about inner experience not external situation |
+| Question | At most one when appropriate; last sentence if used; not clinical; about inner experience, not external situation |
 | Closing | Does not end with SoulMap as center, oriented toward user's life |
 
 **Stage-voice alignment:**
