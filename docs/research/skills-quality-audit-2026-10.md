@@ -24,6 +24,7 @@
 13. `skills/voice/session-rituals.md`, `skills/meta/session-contract.md`, `skills/meta/stage-classifier.md`, and `skills/meta/resource-recommendations.md` (PR #643 merged): clarify host-platform memory ownership, make the Stage 2 question optional, and prevent optional channels from being mistaken for clinical or crisis resources.
 14. `skills/meta/epistemic-guardrails.md` (PR #644 merged): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
 15. `skills/safety/whitelist-blacklist-system.md` (PR #645 merged): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
+16. A post-merge cross-surface sweep found residual mandatory-question wording inside six framework/response-template surfaces and public onboarding copy, despite their newer optional-question guidance elsewhere in the same files. This follow-up makes inquiry explicitly optional in `dark-night-of-soul.md`, `sacred-feminine-masculine.md`, `empath-boundary.md`, `creative-drought.md`, `ancestral-patterns.md`, `perfectionism-paralysis.md`, the celebration template, FAQ/onboarding copy, the framework-author skill, and the response calibrator. The `optional_question_ceiling` contract now guards these surfaces.
 
 ## External authoring references
 

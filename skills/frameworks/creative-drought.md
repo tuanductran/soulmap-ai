@@ -115,8 +115,8 @@ which, frame it as a possibility.
 > "Sometimes what feels like nothing is actually a necessary emptying."
 > "A pause can create room to notice what no longer fits, though no insight or growth is guaranteed."
 
-**Step 4, One question (last sentence)**
-From the Creative Drought section of deep-inquiry-bank.md. Direct toward: what
+**Step 4, Optional question (last sentence if used)**
+When appropriate, choose at most one question from the Creative Drought section of deep-inquiry-bank.md. Direct toward: what
 the silence feels like, what changed before the drought began, or what the person
 is afraid the drought means.
 

@@ -639,6 +639,112 @@
         "must_not_include_any": [
           "One question per response"
         ]
+      },
+      {
+        "path": "skills/frameworks/dark-night-of-soul.md",
+        "must_include_all": [
+          "Offer at most one presence-oriented question when the user seems ready"
+        ],
+        "must_not_include_any": [
+          "Ask one question that goes deeper into the experience"
+        ]
+      },
+      {
+        "path": "skills/frameworks/sacred-feminine-masculine.md",
+        "must_include_all": [
+          "When appropriate, offer at most one question"
+        ],
+        "must_not_include_any": [
+          "Ask one question that invites noticing"
+        ]
+      },
+      {
+        "path": "skills/frameworks/empath-boundary.md",
+        "must_include_all": [
+          "Step 4, Optional question (last sentence if used)",
+          "When appropriate, choose at most one question"
+        ],
+        "must_not_include_any": [
+          "Step 4, One question (last sentence)"
+        ]
+      },
+      {
+        "path": "skills/frameworks/creative-drought.md",
+        "must_include_all": [
+          "Step 4, Optional question (last sentence if used)",
+          "When appropriate, choose at most one question"
+        ],
+        "must_not_include_any": [
+          "Step 4, One question (last sentence)"
+        ]
+      },
+      {
+        "path": "skills/frameworks/ancestral-patterns.md",
+        "must_include_all": [
+          "Step 4, Optional question (last sentence if used)",
+          "When appropriate, choose at most one question"
+        ],
+        "must_not_include_any": [
+          "Step 4, One question (last sentence)"
+        ]
+      },
+      {
+        "path": "skills/frameworks/perfectionism-paralysis.md",
+        "must_include_all": [
+          "Step 4, Optional question (last sentence if used)",
+          "When appropriate, choose at most one question"
+        ],
+        "must_not_include_any": [
+          "Step 4, One question (last sentence)"
+        ]
+      },
+      {
+        "path": "templates/faq.md",
+        "must_include_all": [
+          "may offer at most one open question when appropriate"
+        ],
+        "must_not_include_any": [
+          "responds with observations and one open question"
+        ]
+      },
+      {
+        "path": "templates/onboarding-copy.md",
+        "must_include_all": [
+          "at most one question at a time, when appropriate"
+        ],
+        "must_not_include_any": [
+          "asks one question at a time"
+        ]
+      },
+      {
+        "path": "templates/celebration-response.md",
+        "must_include_all": [
+          "Optional question when appropriate",
+          "Do not end on a question if the user has signaled the conversation is closing"
+        ],
+        "must_not_include_any": [
+          "One question (deepening, not forward-pushing)",
+          "One question from the relief section of the inquiry bank",
+          "One question that deepens what matters"
+        ]
+      },
+      {
+        "path": ".claude/skills/framework-author/SKILL.md",
+        "must_include_all": [
+          "optionally offer at most one open question that turns the user inward when appropriate"
+        ],
+        "must_not_include_any": [
+          "4. **Inquiry**, one open question that turns the user inward"
+        ]
+      },
+      {
+        "path": "skills/voice/response-calibrator.md",
+        "must_include_all": [
+          "A forced question (acknowledge first; if a question is used, place it last)"
+        ],
+        "must_not_include_any": [
+          "A question (always acknowledge first, question last)"
+        ]
       }
     ]
   }

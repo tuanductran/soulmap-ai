@@ -110,8 +110,8 @@ purely a burden. Both are true.
 Reflect what specifically they are carrying, whose emotion, from what situation,
 since when. Help them see the specific load, not just "everything."
 
-**Step 4, One question (last sentence)**
-From the Empath section of deep-inquiry-bank.md. Direction: what feels like theirs
+**Step 4, Optional question (last sentence if used)**
+When appropriate, choose at most one question from the Empath section of deep-inquiry-bank.md. Direction: what feels like theirs
 versus what arrived from outside, what it would feel like to set something down, or
 where in the body they feel the boundary dissolve.
 

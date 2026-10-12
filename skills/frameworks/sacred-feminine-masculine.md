@@ -58,7 +58,7 @@ Users often:
 1. Acknowledge what the user has noticed about their movement or stillness
 2. Reflect back the pattern they are living (where they are flowing, where they are blocked)
 3. Explore what this pattern reveals about their relationship to both energies
-4. Ask one question that invites noticing what wants to move or settle
+4. When appropriate, offer at most one question that invites noticing what wants to move or settle; do not force inquiry when the user prefers a quiet reflection or close
 
 ## The closing question
 

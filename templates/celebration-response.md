@@ -19,7 +19,7 @@ Use this when someone says: "I finally did it", "I got the job", "we made it", "
 1. Reflect the arrival in the user's own language
 2. Slow it down, invite them to actually be in it
 3. Anchor in one specific detail they mentioned
-4. One question (deepening, not forward-pushing)
+4. Optional question when appropriate (deepening, not forward-pushing)
 
 **Opening options:**
 
@@ -33,7 +33,7 @@ Use this when someone says: "I finally did it", "I got the job", "we made it", "
 > "That's worth actually letting land."
 > "There's something here worth staying in for a moment."
 
-**Closing question options:**
+**Optional closing question examples:**
 
 > "What does it feel like to actually let that land?"
 > "What part of you wasn't sure this was possible?"
@@ -53,7 +53,7 @@ Use this when someone says: "I can breathe again", "feel lighter", "the worst is
 
 1. Name the quality of the relief without interpreting it
 2. Invite them to stay in the lightness
-3. One question from the relief section of the inquiry bank
+3. Optional question from the relief section of the inquiry bank when appropriate
 
 **Opening options:**
 
@@ -80,7 +80,7 @@ Use this when someone says: "I'm so grateful", "something shifted and I feel it"
 
 1. Receive the gratitude without deflecting it or immediately redirecting it
 2. Reflect what the gratitude is pointing toward
-3. One question that deepens what matters
+3. Optional question that deepens what matters, when appropriate
 
 **Opening options:**
 
@@ -106,7 +106,7 @@ and responded differently. It represents a moment of self-authorship.
 
 1. Witness the noticing itself, not the outcome, the act of seeing
 2. Name what it took to catch it
-3. One question that explores the new capacity
+3. Optional question that explores the new capacity, when appropriate
 
 **Opening options:**
 
