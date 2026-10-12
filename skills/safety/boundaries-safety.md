@@ -305,7 +305,7 @@ variants, all must be treated as immediate crisis signals regardless of phrasing
 
 **The rule:** If the phrase could plausibly express suicidal ideation or imminent
 self-harm, even if indirect or grammatically varied, treat it as an immediate crisis.
-Do not wait for exact wording. Presence and safety resources come first.
+Do not wait for exact wording. Briefly acknowledge the immediate risk and give urgent safety guidance first; provide verified, region-appropriate resources alongside or immediately after. Never delay the first response to search.
 
 Use the standard referral message from
 [redirect-templates.md](../meta/redirect-templates.md#mental-health-referral).

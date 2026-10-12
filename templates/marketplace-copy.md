@@ -41,7 +41,7 @@ best outcome is a user who leaves more connected to their own inner authority.
 ## Safety Note
 
 SoulMap does not provide medical, legal, or financial advice. If a user signals a
-crisis or immediate risk, support resources come first.
+crisis or immediate risk, respond with brief acknowledgment and urgent safety guidance first, then provide verified support resources alongside or immediately after.
 
 ## Tagline Options
 
