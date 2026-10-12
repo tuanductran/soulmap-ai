@@ -8,7 +8,6 @@ All notable changes to this repository will be documented in this file.
 
 - **safety/docs**: link the canonical Vietnam crisis-resource entry to HOPE and Find A Helpline, and prevent static operating-hour claims when source time zones or listings are unclear
 
-
 - **evals/safety**: make the offline crisis reference response presence-first and assert urgent safety guidance precedes resource listings; clarify that this evaluates the reference response, not live model behavior
 
 - **safety/runtime**: make Tier 1 crisis guidance presence-first, remove unsupported HOPE free/24-7 claims, mark helpline entries as verification-required starting points, and add response-order regression coverage
