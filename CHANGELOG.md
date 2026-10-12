@@ -6,7 +6,7 @@ All notable changes to this repository will be documented in this file.
 
 ### Fix
 
-- **safety/docs**: remove residual resource-first wording from de-escalation and pilot acceptance guidance, make post-grounding questions optional, and correct the response-contract comment so it no longer claims resource-first ordering; extend crisis/question drift contracts
+- **safety/docs**: remove residual resource-first wording from de-escalation and pilot acceptance guidance; make post-grounding, numerology, and question-bank prompts optional; clarify the response-contract comment; and extend crisis/question drift contracts
 
 - **skills/docs**: remove residual mandatory-question wording from framework guidance, celebration templates, onboarding/FAQ copy, and the framework-author skill; extend the optional-question contract to cover the remaining surfaces
 
