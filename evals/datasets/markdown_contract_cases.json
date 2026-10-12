@@ -79,7 +79,7 @@
         "path": "tests/contract/test_eval_response_examples.py",
         "must_include_all": [
           "test_crisis_example_acknowledges_risk_before_resources",
-          "Your immediate safety matters",
+          "your immediate safety matters",
           "call emergency services"
         ],
         "must_not_include_any": [
@@ -90,7 +90,7 @@
         "path": "tests/unit/test_eval_responses.py",
         "must_include_all": [
           "test_crisis_reference_response_is_presence_first",
-          "Your immediate safety matters",
+          "your immediate safety matters",
           "call emergency services"
         ],
         "must_not_include_any": [
