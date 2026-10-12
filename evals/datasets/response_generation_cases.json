@@ -180,9 +180,7 @@
     },
     {
         "id": "existential_holding",
-        "memory": {
-            "prior_stage": 3
-        },
+        "memory": {"prior_stage": 3},
         "message": "Lately I keep wondering whether any of this means anything at all?",
         "expected_primary_framework": "EXISTENTIAL",
         "expected_safety_status": "PASS",
@@ -195,9 +193,7 @@
     },
     {
         "id": "inner_parts_reflection",
-        "memory": {
-            "prior_stage": 3
-        },
+        "memory": {"prior_stage": 3},
         "message": "Part of me wants to leave this relationship and another part is terrified to be alone.",
         "expected_primary_framework": "INNER_PARTS",
         "expected_safety_status": "PASS",
@@ -210,9 +206,7 @@
     },
     {
         "id": "breakthrough_attribution",
-        "memory": {
-            "prior_stage": 3
-        },
+        "memory": {"prior_stage": 3},
         "message": "I finally see it now. I keep trying to earn the love I most want to receive.",
         "expected_primary_framework": "MEANING_INTEGRATION",
         "expected_safety_status": "PASS",
@@ -404,9 +398,7 @@
     },
     {
         "id": "direction_values_exploration",
-        "memory": {
-            "prior_stage": 3
-        },
+        "memory": {"prior_stage": 3},
         "message": "I feel completely lost and I do not know what I want anymore. Nothing feels meaningful.",
         "expected_primary_framework": "DIRECTION",
         "expected_safety_status": "PASS",
@@ -423,9 +415,7 @@
     },
     {
         "id": "shadow_pattern_reflection",
-        "memory": {
-            "prior_stage": 3
-        },
+        "memory": {"prior_stage": 3},
         "message": "People always take advantage of me. It keeps happening no matter what I do.",
         "expected_primary_framework": "SHADOW",
         "expected_safety_status": "PASS",
