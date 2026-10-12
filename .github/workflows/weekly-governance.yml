@@ -21,6 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Install actionlint
         uses: ./.github/actions/actionlint
@@ -33,6 +34,8 @@ jobs:
           python-version: "3.11"
       - name: Install locked dependencies
         run: uv sync --locked --python 3.11
+      - name: Audit deleted-path references and stale comment candidates
+        run: uv run python scripts/audit_repo_consistency.py --history > repo-consistency-audit.txt
       - name: Run Python-owned weekly governance gate
         run: uv run soulmap weekly-governance
 
@@ -43,6 +46,7 @@ jobs:
           name: weekly-governance-evidence
           path: |
             weekly-governance/uv-tree.txt
+            repo-consistency-audit.txt
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json

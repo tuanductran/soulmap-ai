@@ -8,13 +8,14 @@ dependency, merges a pull request, changes a tag or creates a release.
 
 | Area | Evidence produced |
 | --- | --- |
+| Repository consistency | The full Git history is scanned for references to deleted paths and comment-cleanup candidates; the report is uploaded for manual classification. |
 | P-level governance | Contract tests confirm priority metadata, safety-boundary evidence, rollback language, workflow and P1 plan remain connected. |
 | Dependency hygiene | `uv lock --check`, a captured direct dependency tree and Deptry confirm the locked baseline remains coherent. |
 | Safety/knowledge baseline | Markdown contract, links, case, lint, knowledge audit, safety evals, grouped evals, response evals and Markdown contract evals all run. |
 | Test reproducibility | The full suite runs through `pytest_diagnostics.py`, preserving the seed and serial reproduction details on failure. |
 | Distribution integrity | ZIP, skill and Library manifest artifacts are rebuilt and verified by hash and extraction boundary. |
 
-The uploaded `weekly-governance-evidence` artifact contains the direct dependency tree and,
+The uploaded `weekly-governance-evidence` artifact contains the repository consistency inventory, the direct dependency tree and,
 when the build reaches that stage, the generated distribution artifacts. Review the
 workflow summary and artifact before deciding whether a Dependency Dashboard item has a
 real maintenance trigger.
