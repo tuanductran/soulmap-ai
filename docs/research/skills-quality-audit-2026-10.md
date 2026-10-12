@@ -58,23 +58,23 @@ Status meanings:
 - [x] `skills/frameworks/anger-companion.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/conversation-synthesis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/creative-drought.md` - Targeted review in #637; see the linked PR history.
-- [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/frameworks/dark-night-of-soul.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/frameworks/divine-guidance.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/emotional-deescalation.md` - Targeted review and changes in merged PR #641.
 - [x] `skills/frameworks/empath-boundary.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/existential-companion.md` - Targeted review in merged PR #640.
-- [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/frameworks/fear-of-visibility.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/frameworks/feminine-masculine-dynamics.md` - Reviewed; no change warranted in this pass: the file already frames polarity symbolically and prohibits essentialist gender claims.
 - [x] `skills/frameworks/grief-companion.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/inner-parts.md` - Targeted review in #631; see the linked PR history.
-- [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/frameworks/integration-celebration.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/frameworks/life-direction.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/meaning-integration.md` - Targeted review in merged PR #640.
 - [x] `skills/frameworks/money-self-worth.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/pattern-mapper.md` - Reviewed; no change warranted: the non-labeling rule, minimum evidence requirement, and wait-for-a-second-story rule constrain pattern claims.
 - [x] `skills/frameworks/perfectionism-paralysis.md` - Targeted review in #637; see the linked PR history.
 - [x] `skills/frameworks/relationship-reflection.md` - Reviewed; no change warranted: abuse/coercion exceptions take priority and clinical attachment labels are prohibited.
-- [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/frameworks/sacred-feminine-masculine.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/frameworks/self-compassion.md` - Targeted review and changes in merged PR #642.
 - [x] `skills/frameworks/shadow-patterns.md` - Reviewed; no change warranted: possibility language is mandatory and real external harm must not be reframed as projection.
 - [x] `skills/frameworks/somatic-wellbeing.md` - Targeted review in #634; see the linked PR history.
@@ -86,14 +86,14 @@ Status meanings:
 - [x] `skills/meta/deep-inquiry-bank.md` - Reviewed; no change warranted: one question is a per-turn maximum, with timing and silence rules rather than a requirement to ask every turn.
 - [x] `skills/meta/epistemic-guardrails.md` - Targeted review and changes in merged PR #644.
 - [x] `skills/meta/execution-pipeline.md` - Reviewed; no change warranted in this pass: Step 1 safety override bypasses normal framework selection, emergency handling is explicit, and the final safety filter checks crisis resources and dependency language.
-- [x] `skills/meta/framework-template-map.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/meta/framework-template-map.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/meta/master-prompt.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/meta/observation-seed.md` - Reviewed; no change warranted: seeds require all stated conditions and are excluded after crisis, grief flooding, or unresolved distress.
-- [x] `skills/meta/orchestration.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/meta/orchestration.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/meta/quick-reference.md` - Targeted review in #631; see the linked PR history.
 - [x] `skills/meta/redirect-templates.md` - Reviewed; no change warranted: the inner-work door is explicitly optional and practical requests must not be assigned a hidden psychological motive.
 - [x] `skills/meta/resource-recommendations.md` - Targeted review and changes in merged PR #643.
-- [x] `skills/meta/response-structure.md` - Targeted review + changed; validate in PR CI.
+- [x] `skills/meta/response-structure.md` - Targeted review + changed; corresponding PR merged and required CI checks passed.
 - [x] `skills/meta/session-continuity.md` - Reviewed; no change warranted: context availability is conditional, incomplete memory is acknowledged, and fabricated continuity is prohibited.
 - [x] `skills/meta/session-contract.md` - Targeted review and changes in merged PR #643.
 - [x] `skills/meta/stage-classifier.md` - Targeted review and changes in merged PR #643.
@@ -141,6 +141,6 @@ Status meanings:
 ## Closure criteria and follow-up
 
 - The inventory contains 75/75 files with explicit targeted-review dispositions. Some files were changed; others were intentionally left unchanged because their current boundaries already met the audit criteria.
-- The targeted PR batches (#631, #633-#645) are merged. The audit is not closed until CI, Python Compatibility, CodeQL, P-level governance, and the repository-required content checks pass on the final `main` head after the ledger update.
+- The targeted PR batches (#631, #633-#645) are merged. The ledger was reconciled on 2026-10-12; CI, Python Compatibility, CodeQL, P-level governance, and knowledge/content checks passed on pre-update `main` at `eba5f3f6e284d56e17da7a70506b0a849ef2d556`. The ledger-only PR must pass the required checks before this audit is considered closed.
 - This ledger records targeted semantic review and concrete dispositions; it does not claim that every file was rewritten or that content is exhaustively proven correct for every possible prompt.
 - For future maintenance, split large knowledge files only when load paths and evaluations show a retrieval problem; add a framework only when a distinct unmet need is demonstrated; refresh platform and research claims against current primary sources.
