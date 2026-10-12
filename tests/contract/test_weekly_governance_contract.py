@@ -54,7 +54,10 @@ def test_repository_consistency_audit_runs_on_pr_and_full_history_weekly() -> No
     weekly_content = WORKFLOW.read_text(encoding="utf-8")
 
     assert "fetch-depth: 0" in ci_content
-    assert "uv run python scripts/audit_repo_consistency.py --base origin/main" in ci_content
+    assert (
+        "uv run python scripts/audit_repo_consistency.py --base origin/main"
+        in ci_content
+    )
     assert "repo-consistency-audit.txt" in ci_content
     assert "uv run python scripts/audit_repo_consistency.py --history" in weekly_content
     assert "fetch-depth: 0" in weekly_content
