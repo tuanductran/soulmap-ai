@@ -57,7 +57,7 @@ def test_dependency_keyword_list_is_load_bearing(
     Fixture reused verbatim from tests/test_dependency_detector.py, which
     proves the pre-mutation behavior; this test proves the reverse.
     """
-    monkeypatch.setattr(dependency_detector, "DEPENDENCY_KEYWORDS", ())
+    monkeypatch.setattr(dependency_detector, "_DEPENDENCY_KEYWORDS", ())
 
     result = dependency_detector.analyze_dependency(
         [{"role": "user", "content": "I don't know what I would do without you."}]
