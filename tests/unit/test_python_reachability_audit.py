@@ -19,7 +19,7 @@ def test_resolve_imports_only_returns_known_local_modules() -> None:
         "soulmap.devtools.example",
         {"soulmap", "soulmap.cli", "soulmap.runtime"},
     )
-    assert found == {"soulmap.cli", "soulmap.runtime"}
+    assert found == {"soulmap", "soulmap.cli", "soulmap.runtime"}
 
 
 def test_analyze_reports_unreachable_as_candidates_not_deletions(tmp_path: Path) -> None:
