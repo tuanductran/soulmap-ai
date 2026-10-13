@@ -117,24 +117,6 @@ uv run python scripts/audit_resource_inventory.py
 ```
 
 It records resources under `skills/`, `templates/`, local maintainer prompts/skills/rules,
-plugin metadata, evaluation datasets, schemas (when present), and the root shipped
-knowledge files. Evidence labels distinguish runtime registry edges, literal path
-references, local Markdown links, package inclusion, and local-maintainer conventions.
-A missing target in the canonical runtime registry is an error; resources without a
-static edge remain review-only, not proven unused. Dynamic loaders, product conventions,
-external consumers, and human-selected prompts cannot be fully inferred by this scan.
-Use it alongside the existing knowledge ownership audit, Markdown contracts, registry
-tests, build verification, and Python module inventory; never use it to auto-delete files.
-
-## Resource reachability inventory
-
-Run the resource inventory separately from the Python import graph:
-
-```bash
-uv run python scripts/audit_resource_inventory.py
-```
-
-It records resources under `skills/`, `templates/`, local maintainer prompts/skills/rules,
 plugin metadata, evaluation datasets, documentation, schemas (when present), and the root
 shipped knowledge files. Evidence labels distinguish runtime registry edges, literal path
 references, local Markdown links, package inclusion, and local-maintainer conventions.
