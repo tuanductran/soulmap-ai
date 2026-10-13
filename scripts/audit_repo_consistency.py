@@ -183,7 +183,12 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
     hits: list[tuple[int, str, str]] = []
     for number, line in enumerate(content.splitlines(), start=1):
         for token, kind in variants:
-            if token and token in line:
+            if not token:
+                continue
+            pattern = re.compile(
+                rf"(?<![\\w.-]){re.escape(token)}(?![\\w.-])"
+            )
+            if pattern.search(line):
                 hits.append((number, kind, line.strip()))
                 break
     return hits
