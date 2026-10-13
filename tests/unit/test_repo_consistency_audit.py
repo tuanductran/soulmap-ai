@@ -50,6 +50,7 @@ def test_directory_reference_hits_finds_path_forms_without_matching_similar_name
         "See retired-assets/manifest.json.\\n"
         "Old path: ./retired-assets\\\\manifest.json\\n"
         "Not the same: retired-assets-old/manifest.json.\\n"
+        "Not root-relative: docs/retired-assets/manifest.json.\\n"
         "The retired-assets directory was discussed in prose.\\n"
     )
 
