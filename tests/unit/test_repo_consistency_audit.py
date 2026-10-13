@@ -51,24 +51,25 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
 
 
 def test_directory_reference_paths_avoid_similar_names() -> None:
-    content = (
-        "See retired-assets/manifest.json.\n"
-        "Old path: ./retired-assets\\\\manifest.json\n"
-        "Not the same: retired-assets-old/manifest.json.\n"
-        "Not root-relative: docs/retired-assets/manifest.json.\n"
-        "The retired-assets directory was discussed in prose.\n"
+    content = "\n".join(
+        [
+            "See retired-assets/manifest.json.",
+            r"Old path: ./retired-assets\manifest.json",
+            "Not the same: retired-assets-old/manifest.json.",
+            "Not root-relative: docs/retired-assets/manifest.json.",
+            "The retired-assets directory was discussed in prose.",
+        ]
     )
 
     assert directory_reference_hits(content, "retired-assets") == [
         (1, "directory-path", "See retired-assets/manifest.json."),
-        (2, "directory-path", "Old path: ./retired-assets\\\\manifest.json"),
+        (2, "directory-path", r"Old path: ./retired-assets\manifest.json"),
     ]
 
 
 def test_directory_reference_hits_finds_quoted_root_directory_tokens() -> None:
-    from scripts.audit_repo_consistency import directory_reference_hits
+    content = 'Path("retired-assets") is a path configuration.'
 
-    content = 'Path("retired-assets") is a path configuration.\n'
     assert directory_reference_hits(content, "retired-assets") == [
         (
             1,
