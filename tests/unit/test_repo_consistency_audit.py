@@ -45,7 +45,8 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
     ]
 
 
-def test_directory_reference_hits_finds_path_forms_without_matching_similar_names() -> None:
+def test_directory_reference_hits_finds_path_forms_without_matching_similar_names(
+) -> None:
     from scripts.audit_repo_consistency import directory_reference_hits
 
     content = (
@@ -67,7 +68,11 @@ def test_directory_reference_hits_finds_quoted_root_directory_tokens() -> None:
 
     content = 'Path("retired-assets") is a path configuration.\n'
     assert directory_reference_hits(content, "retired-assets") == [
-        (1, "quoted-directory-token", 'Path("retired-assets") is a path configuration.')
+        (
+            1,
+            "quoted-directory-token",
+            'Path("retired-assets") is a path configuration.',
+        )
     ]
 
 
