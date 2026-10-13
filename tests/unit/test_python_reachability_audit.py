@@ -64,3 +64,34 @@ def test_resolve_imports_tracks_literal_dynamic_imports() -> None:
         "soulmap.other",
         "soulmap.third",
     }
+
+
+def test_resolve_imports_uses_package_name_for_relative_import_in_init() -> None:
+    tree = ast.parse("from .helper import VALUE")
+    found = resolve_imports(
+        tree,
+        "pkg.sub",
+        {"pkg", "pkg.sub", "pkg.sub.helper", "pkg.helper"},
+        is_package=True,
+    )
+    assert found == {"pkg.sub.helper"}
+
+
+def test_analyze_tracks_relative_imports_from_package_initializer(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "src" / "pkg"
+    subpackage = source / "sub"
+    subpackage.mkdir(parents=True)
+    (source / "__init__.py").write_text("", encoding="utf-8")
+    (source / "cli.py").write_text("import pkg.sub\n", encoding="utf-8")
+    (subpackage / "__init__.py").write_text(
+        "from .helper import VALUE\n", encoding="utf-8"
+    )
+    (subpackage / "helper.py").write_text("VALUE = 1\n", encoding="utf-8")
+
+    reachable, candidates, missing = analyze(tmp_path, ("pkg.cli",))
+
+    assert "pkg.sub.helper" in reachable
+    assert candidates == set()
+    assert missing == []
