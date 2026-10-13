@@ -80,9 +80,20 @@ def analyze(root: Path, entries: tuple[str, ...]) -> tuple[set[str], set[str], l
         except (OSError, SyntaxError, UnicodeDecodeError) as exc:
             raise RuntimeError(f"Cannot analyze {path}: {exc}") from exc
         graph[name] = resolve_imports(tree, name, known)
+        parts = name.split(".")
+        graph[name].update(
+            ".".join(parts[:index])
+            for index in range(1, len(parts))
+            if ".".join(parts[:index]) in known
+        )
 
     reachable: set[str] = set()
-    queue = deque(entry for entry in entries if entry in known)
+    queue = deque(
+        module
+        for entry in entries
+        if entry in known
+        for module in (entry, *parent_modules(entry, known))
+    )
     while queue:
         current = queue.popleft()
         if current in reachable:
@@ -90,6 +101,16 @@ def analyze(root: Path, entries: tuple[str, ...]) -> tuple[set[str], set[str], l
         reachable.add(current)
         queue.extend(graph[current] - reachable)
     return reachable, known - reachable, missing
+
+
+def parent_modules(name: str, known_modules: set[str]) -> tuple[str, ...]:
+    """Return known parent packages from nearest to farthest."""
+    parts = name.split(".")
+    return tuple(
+        ".".join(parts[:index])
+        for index in range(len(parts) - 1, 0, -1)
+        if ".".join(parts[:index]) in known_modules
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
