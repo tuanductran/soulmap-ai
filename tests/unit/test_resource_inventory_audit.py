@@ -7,7 +7,9 @@ from scripts.audit_resource_inventory import audit
 
 def test_inventory_keeps_unreferenced_resources_review_only(tmp_path: Path) -> None:
     (tmp_path / "skills/frameworks").mkdir(parents=True)
-    (tmp_path / "skills/frameworks/example.md").write_text("# Example\n", encoding="utf-8")
+    (tmp_path / "skills/frameworks/example.md").write_text(
+        "# Example\n", encoding="utf-8"
+    )
     (tmp_path / "templates").mkdir()
     (tmp_path / "templates/internal.md").write_text("# Internal\n", encoding="utf-8")
     (tmp_path / "SKILL.md").write_text("# Entry\n", encoding="utf-8")
@@ -29,7 +31,9 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(tmp_path:
         encoding="utf-8",
     )
     (tmp_path / "skills/frameworks").mkdir(parents=True)
-    (tmp_path / "skills/frameworks/example.md").write_text("# Example\n", encoding="utf-8")
+    (tmp_path / "skills/frameworks/example.md").write_text(
+        "# Example\n", encoding="utf-8"
+    )
 
     findings = {item.path: item for item in audit(tmp_path)}
 
@@ -52,7 +56,9 @@ def test_inventory_tracks_local_markdown_links(tmp_path: Path) -> None:
     (tmp_path / "docs").mkdir()
     (tmp_path / "skills").mkdir()
     (tmp_path / "skills/knowledge.md").write_text("# Knowledge\n", encoding="utf-8")
-    (tmp_path / "docs/guide.md").write_text("[Knowledge](../skills/knowledge.md)\n", encoding="utf-8")
+    (tmp_path / "docs/guide.md").write_text(
+        "[Knowledge](../skills/knowledge.md)\n", encoding="utf-8"
+    )
 
     findings = {item.path: item for item in audit(tmp_path)}
 

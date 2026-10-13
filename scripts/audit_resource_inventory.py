@@ -22,10 +22,21 @@ RESOURCE_ROOTS: dict[str, tuple[str, ...]] = {
     "maintainer-rules": (".claude/rules",),
     "plugin-metadata": (".claude-plugin",),
     "eval-datasets": ("evals/datasets",),
+    "supporting-docs": ("docs",),
     "schemas": ("schemas",),
 }
-ROOT_RESOURCES = ("SKILL.md", "SOULMAP.md")
-TEXT_SUFFIXES = {".md", ".json", ".json5", ".jsonl", ".toml", ".yaml", ".yml", ".py", ".txt"}
+ROOT_RESOURCES = ("LICENSE", "SKILL.md", "SOULMAP.md")
+TEXT_SUFFIXES = {
+    ".md",
+    ".json",
+    ".json5",
+    ".jsonl",
+    ".toml",
+    ".yaml",
+    ".yml",
+    ".py",
+    ".txt",
+}
 EXCLUDED_PARTS = {".git", ".venv", "dist", "build", "node_modules", "__pycache__"}
 MARKDOWN_LINK = re.compile(r"!?(?:\[[^\]]*\])\(([^)]+)\)")
 
@@ -48,7 +59,9 @@ def _resource_files(root: Path) -> dict[str, str]:
             if not base.is_dir():
                 continue
             for path in sorted(base.rglob("*")):
-                if path.is_file() and not any(part in EXCLUDED_PARTS for part in path.parts):
+                if path.is_file() and not any(
+                    part in EXCLUDED_PARTS for part in path.parts
+                ):
                     found[path.relative_to(root).as_posix()] = category
     for name in ROOT_RESOURCES:
         if (root / name).is_file():
@@ -61,20 +74,30 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
     registry_file = root / "src/soulmap/runtime/source_registry.py"
     if not registry_file.is_file():
         return set(), set()
-    tree = ast.parse(registry_file.read_text(encoding="utf-8"), filename=str(registry_file))
+    tree = ast.parse(
+        registry_file.read_text(encoding="utf-8"), filename=str(registry_file)
+    )
     for node in tree.body:
-        if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) and node.target.id == "REGISTRY":
-            value = node.value
-        elif isinstance(node, ast.Assign) and any(
-            isinstance(target, ast.Name) and target.id == "REGISTRY" for target in node.targets
-        ):
-            value = node.value
-        else:
+        is_registry_assignment = (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == "REGISTRY"
+        ) or (
+            isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "REGISTRY"
+                for target in node.targets
+            )
+        )
+        if not is_registry_assignment:
             continue
+        value = node.value
         try:
             registry = ast.literal_eval(value)
         except (ValueError, TypeError):
-            return set(), {"runtime registry is not a static literal; manual review required"}
+            return set(), {
+                "runtime registry is not a static literal; manual review required"
+            }
         if not isinstance(registry, dict):
             return set(), {"runtime registry is not a mapping; manual review required"}
         paths = {
@@ -97,7 +120,9 @@ def _resolved_markdown_links(path: Path, root: Path) -> set[str]:
     targets: set[str] = set()
     for raw_target in MARKDOWN_LINK.findall(content):
         target = raw_target.strip().split(maxsplit=1)[0].strip("<>")
-        if not target or target.startswith(("#", "https://", "http://", "mailto:", "data:")):
+        if not target or target.startswith(
+            ("#", "https://", "http://", "mailto:", "data:")
+        ):
             continue
         target = target.split("#", 1)[0].split("?", 1)[0]
         if not target:
@@ -121,7 +146,8 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
     registry_paths, registry_warnings = _registry_paths(root)
     existing_paths = set(resources)
     source_files = [
-        path for path in root.rglob("*")
+        path
+        for path in root.rglob("*")
         if path.is_file()
         and path.suffix.lower() in TEXT_SUFFIXES
         and not any(part in EXCLUDED_PARTS for part in path.relative_to(root).parts)
@@ -153,7 +179,12 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
             evidence.add("local-markdown-link")
         if category == "shipped-knowledge":
             evidence.add("shipped-package-contract")
-        elif category in {"maintainer-prompts", "maintainer-skills", "maintainer-rules", "internal-templates"}:
+        elif category in {
+            "maintainer-prompts",
+            "maintainer-skills",
+            "maintainer-rules",
+            "internal-templates",
+        }:
             evidence.add("local-maintainer-surface")
         elif category == "plugin-metadata":
             evidence.add("skill-artifact-metadata")
@@ -165,10 +196,20 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
 
     for missing in sorted(registry_paths - existing_paths):
         findings.append(
-            ResourceFinding(missing, "missing-resource", ("canonical-runtime-registry-target-missing",))
+            ResourceFinding(
+                missing,
+                "missing-resource",
+                ("canonical-runtime-registry-target-missing",),
+            )
         )
     for warning in sorted(registry_warnings):
-        findings.append(ResourceFinding("src/soulmap/runtime/source_registry.py", "audit-limitation", (warning,)))
+        findings.append(
+            ResourceFinding(
+                "src/soulmap/runtime/source_registry.py",
+                "audit-limitation",
+                (warning,),
+            )
+        )
     return tuple(findings)
 
 
@@ -188,7 +229,10 @@ def main(argv: list[str] | None = None) -> int:
     for category, count in sorted(counts.items()):
         print(f"{category}: {count}")
     missing = any(finding.category == "missing-resource" for finding in findings)
-    print("Unreferenced resources remain review-only; convention-based and dynamic loaders are not proven.")
+    print(
+        "Unreferenced resources remain review-only; convention-based and dynamic "
+        "loaders are not proven."
+    )
     return 1 if missing else 0
 
 
