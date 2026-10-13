@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from scripts.audit_resource_inventory import audit, main
 
 
@@ -100,12 +102,15 @@ def test_inventory_uses_paths_relative_to_repository_root(tmp_path: Path) -> Non
     findings = {item.path: item for item in audit(root)}
 
     assert "skills/frameworks/example.md" in findings
-    assert "canonical-runtime-registry" in findings["skills/frameworks/example.md"].evidence
+    assert (
+        "canonical-runtime-registry"
+        in findings["skills/frameworks/example.md"].evidence
+    )
     assert not any(item.category == "missing-resource" for item in findings.values())
 
 
 def test_main_returns_incomplete_status_for_unreadable_source_and_missing_registry(
-    tmp_path: Path, capsys
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     docs = tmp_path / "docs"
     docs.mkdir()
