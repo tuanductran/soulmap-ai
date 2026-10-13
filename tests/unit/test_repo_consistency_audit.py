@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from scripts.audit_repo_consistency import comment_candidates, path_reference_hits
+from scripts.audit_repo_consistency import (
+    comment_candidates,
+    deleted_directories,
+    directory_reference_hits,
+    path_reference_hits,
+)
 
 
 def test_comment_candidates_only_reports_review_markers() -> None:
@@ -45,10 +50,7 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
     ]
 
 
-def test_directory_reference_hits_finds_path_forms_without_matching_similar_names(
-) -> None:
-    from scripts.audit_repo_consistency import directory_reference_hits
-
+def test_directory_reference_paths_avoid_similar_names() -> None:
     content = (
         "See retired-assets/manifest.json.\n"
         "Old path: ./retired-assets\\\\manifest.json\n"
@@ -79,12 +81,11 @@ def test_directory_reference_hits_finds_quoted_root_directory_tokens() -> None:
 def test_deleted_directories_only_includes_absent_ancestors(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    from scripts import audit_repo_consistency as audit
-
     monkeypatch.setattr(
-        audit, "tracked_files", lambda root: [root / "src" / "live.py"]
+        "scripts.audit_repo_consistency.tracked_files",
+        lambda root: [root / "src" / "live.py"],
     )
 
-    assert audit.deleted_directories(
+    assert deleted_directories(
         tmp_path, ["retired-assets/manifest.json", "src/removed.py"]
     ) == ["retired-assets"]
