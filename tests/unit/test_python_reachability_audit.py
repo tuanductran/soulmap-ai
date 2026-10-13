@@ -8,7 +8,8 @@ from scripts.audit_python_reachability import analyze, module_name, resolve_impo
 
 def test_module_name_maps_package_and_module_paths() -> None:
     source_root = Path("src")
-    assert module_name(source_root / "soulmap" / "__init__.py", source_root) == "soulmap"
+    package_init = source_root / "soulmap" / "__init__.py"
+    assert module_name(package_init, source_root) == "soulmap"
     assert module_name(source_root / "soulmap" / "cli.py", source_root) == "soulmap.cli"
 
 
@@ -22,7 +23,9 @@ def test_resolve_imports_only_returns_known_local_modules() -> None:
     assert found == {"soulmap", "soulmap.cli", "soulmap.runtime"}
 
 
-def test_analyze_reports_unreachable_as_candidates_not_deletions(tmp_path: Path) -> None:
+def test_analyze_reports_unreachable_as_candidates_not_deletions(
+    tmp_path: Path,
+) -> None:
     source = tmp_path / "src" / "soulmap"
     source.mkdir(parents=True)
     (source / "__init__.py").write_text("", encoding="utf-8")
