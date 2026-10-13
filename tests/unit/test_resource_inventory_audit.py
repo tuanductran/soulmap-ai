@@ -86,7 +86,6 @@ def test_repository_registry_targets_exist() -> None:
     assert not any(item.category == "missing-resource" for item in findings)
 
 
-
 def test_inventory_uses_paths_relative_to_repository_root(tmp_path: Path) -> None:
     root = tmp_path / "build" / "repo"
     registry = root / "src/soulmap/runtime"
