@@ -90,3 +90,19 @@ def test_deleted_directories_only_includes_absent_ancestors(
     assert deleted_directories(
         tmp_path, ["retired-assets/manifest.json", "src/removed.py"]
     ) == ["retired-assets"]
+
+
+def test_path_reference_hits_avoid_substring_matches() -> None:
+    content = "\n".join(
+        [
+            "Exact path: docs/old-guide.md.",
+            "Not the same path: docs/old-guide.md.bak",
+            "Not the same basename: old-guide.mdx",
+            r"Windows path: docs\old-guide.md",
+        ]
+    )
+
+    assert path_reference_hits(content, "docs/old-guide.md") == [
+        (1, "exact-path", "Exact path: docs/old-guide.md."),
+        (4, "backslash-path", r"Windows path: docs\old-guide.md"),
+    ]
