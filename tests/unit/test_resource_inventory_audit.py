@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from scripts.audit_resource_inventory import audit
+from scripts.audit_resource_inventory import audit, main
 
 
 def test_inventory_keeps_unreferenced_resources_review_only(tmp_path: Path) -> None:
@@ -82,3 +82,50 @@ def test_repository_registry_targets_exist() -> None:
 
     assert any("canonical-runtime-registry" in item.evidence for item in findings)
     assert not any(item.category == "missing-resource" for item in findings)
+
+
+
+def test_inventory_uses_paths_relative_to_repository_root(tmp_path: Path) -> None:
+    root = tmp_path / "build" / "repo"
+    registry = root / "src/soulmap/runtime"
+    registry.mkdir(parents=True)
+    (registry / "source_registry.py").write_text(
+        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals")}\n',
+        encoding="utf-8",
+    )
+    resource = root / "skills/frameworks/example.md"
+    resource.parent.mkdir(parents=True)
+    resource.write_text("# Example\n", encoding="utf-8")
+
+    findings = {item.path: item for item in audit(root)}
+
+    assert "skills/frameworks/example.md" in findings
+    assert "canonical-runtime-registry" in findings["skills/frameworks/example.md"].evidence
+    assert not any(item.category == "missing-resource" for item in findings.values())
+
+
+def test_main_returns_incomplete_status_for_unreadable_source_and_missing_registry(
+    tmp_path: Path, capsys
+) -> None:
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    (docs / "unreadable.md").write_bytes(b"\xff\xfe\xfa")
+
+    exit_code = main(["--root", str(tmp_path)])
+    output = capsys.readouterr().out
+
+    assert exit_code == 2
+    assert "canonical runtime registry file is missing" in output
+    assert "source file could not be read (UnicodeDecodeError)" in output
+    assert "INCOMPLETE:" in output
+
+
+def test_main_returns_error_for_missing_registry_target(tmp_path: Path) -> None:
+    registry = tmp_path / "src/soulmap/runtime"
+    registry.mkdir(parents=True)
+    (registry / "source_registry.py").write_text(
+        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals")}\n',
+        encoding="utf-8",
+    )
+
+    assert main(["--root", str(tmp_path)]) == 1
