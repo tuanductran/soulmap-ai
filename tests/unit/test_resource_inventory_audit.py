@@ -17,13 +17,19 @@ def test_inventory_keeps_unreferenced_resources_review_only(tmp_path: Path) -> N
 
     findings = {item.path: item for item in audit(tmp_path)}
 
-    assert "shipped-package-contract" in findings["skills/frameworks/example.md"].evidence
+    assert (
+        "shipped-package-contract" in findings["skills/frameworks/example.md"].evidence
+    )
     assert "shipped-package-contract" in findings["SKILL.md"].evidence
     assert "local-maintainer-surface" in findings["templates/internal.md"].evidence
-    assert "review-only-no-static-edge" not in findings["templates/internal.md"].evidence
+    assert (
+        "review-only-no-static-edge" not in findings["templates/internal.md"].evidence
+    )
 
 
-def test_inventory_resolves_registry_edges_and_reports_missing_targets(tmp_path: Path) -> None:
+def test_inventory_resolves_registry_edges_and_reports_missing_targets(
+    tmp_path: Path,
+) -> None:
     registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
@@ -37,7 +43,10 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(tmp_path:
 
     findings = {item.path: item for item in audit(tmp_path)}
 
-    assert "canonical-runtime-registry" in findings["skills/frameworks/example.md"].evidence
+    assert (
+        "canonical-runtime-registry"
+        in findings["skills/frameworks/example.md"].evidence
+    )
     assert "missing-resource" not in findings
 
     (registry / "source_registry.py").write_text(
@@ -47,7 +56,8 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(tmp_path:
     findings = audit(tmp_path)
 
     assert any(
-        item.path == "skills/frameworks/absent.md" and item.category == "missing-resource"
+        item.path == "skills/frameworks/absent.md"
+        and item.category == "missing-resource"
         for item in findings
     )
 

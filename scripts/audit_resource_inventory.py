@@ -192,7 +192,9 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
             evidence.add("evaluation-data-surface")
         if not evidence:
             evidence.add("review-only-no-static-edge")
-        findings.append(ResourceFinding(resource_path, category, tuple(sorted(evidence))))
+        findings.append(
+            ResourceFinding(resource_path, category, tuple(sorted(evidence)))
+        )
 
     for missing in sorted(registry_paths - existing_paths):
         findings.append(
