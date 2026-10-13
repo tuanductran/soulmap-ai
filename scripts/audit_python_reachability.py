@@ -32,11 +32,14 @@ def module_name(path: Path, source_root: Path) -> str | None:
 
 
 def resolve_imports(
-    tree: ast.Module, current_module: str, known_modules: set[str]
+    tree: ast.Module,
+    current_module: str,
+    known_modules: set[str],
+    is_package: bool = False,
 ) -> set[str]:
     """Return statically resolvable in-repository imports from an AST."""
     found: set[str] = set()
-    package = current_module.rpartition(".")[0]
+    package = current_module if is_package else current_module.rpartition(".")[0]
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
@@ -102,7 +105,9 @@ def analyze(
             tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
         except (OSError, SyntaxError, UnicodeDecodeError) as exc:
             raise RuntimeError(f"Cannot analyze {path}: {exc}") from exc
-        graph[name] = resolve_imports(tree, name, known)
+        graph[name] = resolve_imports(
+            tree, name, known, is_package=path.name == "__init__.py"
+        )
         parts = name.split(".")
         graph[name].update(
             ".".join(parts[:index])
