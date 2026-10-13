@@ -63,16 +63,14 @@ def resolve_imports(
             # outside the static graph and must be reviewed as a limitation.
             function = node.func
             is_dynamic_import = (
-                isinstance(function, ast.Name)
-                and function.id == "__import__"
-            ) or (
-                isinstance(function, ast.Attribute)
-                and function.attr == "import_module"
-                and isinstance(function.value, ast.Name)
-                and function.value.id == "importlib"
-            ) or (
-                isinstance(function, ast.Name)
-                and function.id == "import_module"
+                (isinstance(function, ast.Name) and function.id == "__import__")
+                or (
+                    isinstance(function, ast.Attribute)
+                    and function.attr == "import_module"
+                    and isinstance(function.value, ast.Name)
+                    and function.value.id == "importlib"
+                )
+                or (isinstance(function, ast.Name) and function.id == "import_module")
             )
             if (
                 is_dynamic_import
