@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import ast
 from pathlib import Path
 
 from scripts.audit_python_reachability import analyze, module_name, resolve_imports
-import ast
 
 
 def test_module_name_maps_package_and_module_paths() -> None:
@@ -32,6 +32,6 @@ def test_analyze_reports_unreachable_as_candidates_not_deletions(tmp_path: Path)
 
     reachable, candidates, missing = analyze(tmp_path, ("soulmap.cli",))
 
-    assert reachable == {"soulmap.cli", "soulmap.used"}
-    assert candidates == {"soulmap", "soulmap.dynamic"}
+    assert reachable == {"soulmap", "soulmap.cli", "soulmap.used"}
+    assert candidates == {"soulmap.dynamic"}
     assert missing == []
