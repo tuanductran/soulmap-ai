@@ -94,16 +94,16 @@ def test_deleted_directories_only_includes_absent_ancestors(
 
 
 def test_path_reference_hits_avoid_substring_matches() -> None:
-    content = "\\n".join(
+    content = "\n".join(
         [
             "Exact path: docs/old-guide.md.",
             "Not the same path: docs/old-guide.md.bak",
             "Not the same basename: old-guide.mdx",
-            "Windows path: docs\\\\old-guide.md",
+            r"Windows path: docs\old-guide.md",
         ]
     )
 
     assert path_reference_hits(content, "docs/old-guide.md") == [
         (1, "exact-path", "Exact path: docs/old-guide.md."),
-        (4, "backslash-path", "Windows path: docs\\\\old-guide.md"),
+        (4, "backslash-path", r"Windows path: docs\old-guide.md"),
     ]
