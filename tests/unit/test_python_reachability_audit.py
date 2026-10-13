@@ -42,12 +42,12 @@ def test_analyze_reports_unreachable_as_candidates_not_deletions(
 
 def test_resolve_imports_tracks_literal_dynamic_imports() -> None:
     tree = ast.parse(
-        "import importlib\\n"
-        "importlib.import_module('soulmap.dynamic')\\n"
-        "__import__('soulmap.other')\\n"
-        "from importlib import import_module\\n"
-        "import_module('soulmap.third')\\n"
-        "importlib.import_module(module_name)\\n"
+        "import importlib\n"
+        "importlib.import_module('soulmap.dynamic')\n"
+        "__import__('soulmap.other')\n"
+        "from importlib import import_module\n"
+        "import_module('soulmap.third')\n"
+        "importlib.import_module(module_name)\n"
     )
     found = resolve_imports(
         tree,
