@@ -189,6 +189,50 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
     return hits
 
 
+def deleted_directories(root: Path, removed_paths: Sequence[str]) -> list[str]:
+    """Return deleted ancestor directories that no longer contain tracked files."""
+    current_directories: set[str] = set()
+    for path in tracked_files(root):
+        for parent in path.relative_to(root).parents:
+            if parent.as_posix() != ".":
+                current_directories.add(parent.as_posix())
+
+    removed_directories: set[str] = set()
+    for removed_path in removed_paths:
+        for parent in Path(removed_path).parents:
+            name = parent.as_posix()
+            if name != "." and name not in current_directories:
+                removed_directories.add(name)
+    return sorted(removed_directories, key=lambda value: (value.count("/"), value))
+
+
+def directory_reference_hits(
+    content: str, deleted_directory: str
+) -> list[tuple[int, str, str]]:
+    """Find path-shaped or quoted references to a deleted directory.
+
+    Deliberately require path separators or a quoted standalone root-directory
+    token. This avoids treating ordinary prose mentions as stale path references.
+    Findings remain candidates for manual review, not proof of dead code.
+    """
+    normalized = deleted_directory.replace("\\", "/").strip("/")
+    path_pattern = re.compile(rf"(?<![\\w-]){re.escape(normalized)}(?=[/\\\\])")
+    basename = Path(normalized).name
+    quoted_pattern = None
+    if "/" not in normalized and basename:
+        quoted_pattern = re.compile(
+            rf"(?P<quote>['\"\x60]){re.escape(basename)}(?P=quote)"
+        )
+
+    hits: list[tuple[int, str, str]] = []
+    for number, line in enumerate(content.splitlines(), start=1):
+        if path_pattern.search(line):
+            hits.append((number, "directory-path", line.strip()))
+        elif quoted_pattern and quoted_pattern.search(line):
+            hits.append((number, "quoted-directory-token", line.strip()))
+    return hits
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the repository consistency inventory."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -248,8 +292,25 @@ def main(argv: Sequence[str] | None = None) -> int:
                             f"{current_path}:{number}: {kind} -> {deleted_path}: {line}"
                         )
                         path_count += 1
+
+            removed_directories = deleted_directories(root, removed)
+            directory_count = 0
+            print("POTENTIAL REFERENCES TO DELETED DIRECTORIES")
+            for directory in removed_directories:
+                for current_path, content in contents.items():
+                    if content is None:
+                        continue
+                    for number, kind, line in directory_reference_hits(
+                        content, directory
+                    ):
+                        print(
+                            f"{current_path}:{number}: {kind} -> {directory}/: {line}"
+                        )
+                        directory_count += 1
             print(f"Deleted paths examined: {len(removed)}")
+            print(f"Deleted directories examined: {len(removed_directories)}")
             print(f"Potential path references: {path_count}")
+            print(f"Potential directory references: {directory_count}")
     return 0
 
 
