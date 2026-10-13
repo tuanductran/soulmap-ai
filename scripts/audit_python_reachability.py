@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import ast
-import sys
 from collections import deque
 from pathlib import Path
 
@@ -37,7 +36,7 @@ def resolve_imports(
 ) -> set[str]:
     """Return statically resolvable in-repository imports from an AST."""
     found: set[str] = set()
-    package = current_module if current_module.endswith(".__init__") else current_module.rpartition(".")[0]
+    package = current_module.rpartition(".")[0]
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
@@ -62,7 +61,9 @@ def resolve_imports(
     return found
 
 
-def analyze(root: Path, entries: tuple[str, ...]) -> tuple[set[str], set[str], list[str]]:
+def analyze(
+    root: Path, entries: tuple[str, ...]
+) -> tuple[set[str], set[str], list[str]]:
     """Build a conservative static import graph for Python modules under src."""
     source_root = root / SOURCE_ROOT
     paths = sorted(source_root.rglob("*.py"))
@@ -144,7 +145,9 @@ def module_path(root: Path, name: str) -> str:
     """Return the source path for a module name."""
     base = root / SOURCE_ROOT / Path(*name.split("."))
     init_path = base / "__init__.py"
-    return str(init_path.relative_to(root) if init_path.is_file() else base.with_suffix(".py").relative_to(root))
+    if init_path.is_file():
+        return str(init_path.relative_to(root))
+    return str(base.with_suffix(".py").relative_to(root))
 
 
 if __name__ == "__main__":
