@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from scripts.audit_repo_consistency import comment_candidates, path_reference_hits
 
 
@@ -47,11 +49,11 @@ def test_directory_reference_hits_finds_path_forms_without_matching_similar_name
     from scripts.audit_repo_consistency import directory_reference_hits
 
     content = (
-        "See retired-assets/manifest.json.\\n"
-        "Old path: ./retired-assets\\\\manifest.json\\n"
-        "Not the same: retired-assets-old/manifest.json.\\n"
-        "Not root-relative: docs/retired-assets/manifest.json.\\n"
-        "The retired-assets directory was discussed in prose.\\n"
+        "See retired-assets/manifest.json.\n"
+        "Old path: ./retired-assets\\\\manifest.json\n"
+        "Not the same: retired-assets-old/manifest.json.\n"
+        "Not root-relative: docs/retired-assets/manifest.json.\n"
+        "The retired-assets directory was discussed in prose.\n"
     )
 
     assert directory_reference_hits(content, "retired-assets") == [
@@ -63,14 +65,14 @@ def test_directory_reference_hits_finds_path_forms_without_matching_similar_name
 def test_directory_reference_hits_finds_quoted_root_directory_tokens() -> None:
     from scripts.audit_repo_consistency import directory_reference_hits
 
-    content = 'Path("retired-assets") is a path configuration.\\n'
+    content = 'Path("retired-assets") is a path configuration.\n'
     assert directory_reference_hits(content, "retired-assets") == [
         (1, "quoted-directory-token", 'Path("retired-assets") is a path configuration.')
     ]
 
 
 def test_deleted_directories_only_includes_absent_ancestors(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     from scripts import audit_repo_consistency as audit
 
