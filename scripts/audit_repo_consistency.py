@@ -216,9 +216,7 @@ def directory_reference_hits(
     Findings remain candidates for manual review, not proof of dead code.
     """
     normalized = deleted_directory.replace("\\", "/").strip("/")
-    path_pattern = re.compile(
-        rf"(?<![\w./-])(?:\./)?{re.escape(normalized)}(?=[/\\])"
-    )
+    path_pattern = re.compile(rf"(?<![\w./-])(?:\./)?{re.escape(normalized)}(?=[/\\])")
     basename = Path(normalized).name
     quoted_pattern = None
     if "/" not in normalized and basename:
