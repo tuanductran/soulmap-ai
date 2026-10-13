@@ -73,3 +73,13 @@ def test_inventory_tracks_local_markdown_links(tmp_path: Path) -> None:
     findings = {item.path: item for item in audit(tmp_path)}
 
     assert "local-markdown-link" in findings["skills/knowledge.md"].evidence
+
+def test_repository_registry_targets_exist() -> None:
+    root = Path(__file__).resolve().parents[2]
+
+    findings = audit(root)
+
+    assert any(
+        "canonical-runtime-registry" in item.evidence for item in findings
+    )
+    assert not any(item.category == "missing-resource" for item in findings)
