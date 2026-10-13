@@ -185,7 +185,7 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
         for token, kind in variants:
             if not token:
                 continue
-            pattern = re.compile(rf"(?<![\w.-]){re.escape(token)}(?![\w.-])")
+            pattern = re.compile(rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])")
             if pattern.search(line):
                 hits.append((number, kind, line.strip()))
                 break
