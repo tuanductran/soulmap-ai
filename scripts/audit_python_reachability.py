@@ -58,6 +58,30 @@ def resolve_imports(
                 candidate = ".".join(part for part in (target, alias.name) if part)
                 if candidate in known_modules:
                     found.add(candidate)
+        elif isinstance(node, ast.Call):
+            # Resolve only literal absolute module names; computed names remain
+            # outside the static graph and must be reviewed as a limitation.
+            function = node.func
+            is_dynamic_import = (
+                isinstance(function, ast.Name)
+                and function.id == "__import__"
+            ) or (
+                isinstance(function, ast.Attribute)
+                and function.attr == "import_module"
+                and isinstance(function.value, ast.Name)
+                and function.value.id == "importlib"
+            ) or (
+                isinstance(function, ast.Name)
+                and function.id == "import_module"
+            )
+            if (
+                is_dynamic_import
+                and node.args
+                and isinstance(node.args[0], ast.Constant)
+                and isinstance(node.args[0].value, str)
+                and node.args[0].value in known_modules
+            ):
+                found.add(node.args[0].value)
     return found
 
 
