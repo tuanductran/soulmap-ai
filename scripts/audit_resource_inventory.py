@@ -213,9 +213,7 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
             )
         )
     for source_path, warning in sorted(unreadable_sources.items()):
-        findings.append(
-            ResourceFinding(source_path, "audit-limitation", (warning,))
-        )
+        findings.append(ResourceFinding(source_path, "audit-limitation", (warning,)))
     for warning in sorted(registry_warnings):
         findings.append(
             ResourceFinding(
