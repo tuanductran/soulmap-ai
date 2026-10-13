@@ -71,6 +71,43 @@ uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
 ```
 
+## Python reachability inventory
+
+Run the conservative source-module inventory from the repository root:
+
+```bash
+uv run python scripts/audit_python_reachability.py
+uv run python scripts/audit_python_reachability.py --entry soulmap.cli --entry soulmap.runtime.detectors.crisis_detector
+```
+
+The inventory starts from declared Python entry modules, follows static local imports,
+package initializers, and literal `importlib.import_module(...)`, `import_module(...)`,
+or `__import__(...)` calls. Modules outside that graph are **review candidates only**.
+It does not prove files or symbols are unused and must never drive automated deletion.
+Computed dynamic imports, test/script-only consumers, entry-point metadata, registry
+conventions, non-Python callers, and files loaded by path are not fully inferred.
+
+Keep the audit categories separate:
+
+- **Python module reachability:** this inventory; candidates are not deletion evidence.
+- **Unused symbols / unreachable statements:** Vulture provides confidence-scored
+  symbol-level findings, not a complete repository file reachability graph.
+- **Dependency declarations:** Deptry compares Python imports with project dependency
+  metadata; it does not establish whether a local module or Markdown resource is used.
+- **Stale references to deleted paths:** `audit_repo_consistency.py` scans Git history
+  and tracked text for likely references; matches still require contextual review.
+- **Canonical knowledge and indirectly loaded resources:** `skills/`, registry data,
+  Markdown contracts, templates, prompts, schemas, and package inclusion are governed by
+  the existing knowledge audits, contract tests, registry tests, and build verification.
+  This Python-only graph must not classify these resources as unused.
+
+Knip is a useful design reference for explicit entry points, recursive graph expansion,
+and configuration/plugin-aware discovery, but its documented analyzer targets JavaScript
+and TypeScript ecosystems. Do not add Knip as a dependency or treat it as a Python,
+Markdown, or SoulMap registry analyzer. Its key lesson here is that accurate reachability
+depends on discovering entry points and non-import references before interpreting
+unreachable candidates.
+
 ## Repository consistency and comment audit
 
 Run the repository-wide inventory from a clean checkout:
