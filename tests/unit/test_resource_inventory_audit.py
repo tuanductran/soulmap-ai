@@ -74,6 +74,7 @@ def test_inventory_tracks_local_markdown_links(tmp_path: Path) -> None:
 
     assert "local-markdown-link" in findings["skills/knowledge.md"].evidence
 
+
 def test_repository_registry_targets_exist() -> None:
     root = Path(__file__).resolve().parents[2]
 
