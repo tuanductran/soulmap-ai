@@ -250,7 +250,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     if incomplete:
         print(
-            "INCOMPLETE: review audit-limitation findings before trusting this inventory."
+            "INCOMPLETE: review audit-limitation findings before "
+            "trusting this inventory."
         )
         return 2
     return 1 if missing else 0
