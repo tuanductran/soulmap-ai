@@ -180,14 +180,17 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
     ]
     if len(basename) >= 8 and basename not in GENERIC_BASENAMES:
         variants.append((basename, "basename-only"))
+
+    # Compile once per deleted path, not once per scanned line. Full-history
+    # audits may inspect thousands of deleted paths across many tracked files.
+    patterns = [
+        (re.compile(rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])"), kind)
+        for token, kind in variants
+        if token
+    ]
     hits: list[tuple[int, str, str]] = []
     for number, line in enumerate(content.splitlines(), start=1):
-        for token, kind in variants:
-            if not token:
-                continue
-            pattern = re.compile(
-                rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])"
-            )
+        for pattern, kind in patterns:
             if pattern.search(line):
                 hits.append((number, kind, line.strip()))
                 break
