@@ -82,4 +82,3 @@ def test_repository_registry_targets_exist() -> None:
 
     assert any("canonical-runtime-registry" in item.evidence for item in findings)
     assert not any(item.category == "missing-resource" for item in findings)
-
