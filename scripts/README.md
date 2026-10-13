@@ -95,10 +95,16 @@ notes, legal notices, and tool directives may legitimately mention old names or
 markers. Never delete a comment solely because it matches a keyword.
 
 When a path was deleted, search for both its exact repository path and distinctive
-basename references. Confirm each candidate against the current tree and source of
-truth before editing. For a comment cleanup, remove only redundant narration or
-commented-out code whose intent is fully recoverable from Git history; preserve
-rationale that explains a current invariant. Review the diff, then run the normal
-format, lint, link/Markdown checks, and relevant tests.
+basename references. The history mode also derives ancestor directories that no
+longer contain tracked files and checks for path-shaped references using directory
+boundaries, including forward- and backslash separators and quoted standalone
+root-directory tokens. This catches stale folder references without treating every
+ordinary prose mention as a path. All matches remain review candidates.
+
+Confirm each candidate against the current tree and source of truth before editing.
+For a comment cleanup, remove only redundant narration or commented-out code whose
+intent is fully recoverable from Git history; preserve rationale that explains a
+current invariant. Review the diff, then run the normal format, lint, link/Markdown
+checks, and relevant tests.
 
 For setup and workflow details, use [`docs/engineering/DEV.md`](../docs/engineering/DEV.md).

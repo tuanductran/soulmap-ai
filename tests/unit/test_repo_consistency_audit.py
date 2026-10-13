@@ -2,7 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from scripts.audit_repo_consistency import comment_candidates, path_reference_hits
+import pytest
+
+from scripts.audit_repo_consistency import (
+    comment_candidates,
+    deleted_directories,
+    directory_reference_hits,
+    path_reference_hits,
+)
 
 
 def test_comment_candidates_only_reports_review_markers() -> None:
@@ -41,3 +48,45 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
         (1, "exact-path", "See docs/old-guide.md for details."),
         (2, "basename-only", "The old-guide.md reference may also be stale."),
     ]
+
+
+def test_directory_reference_paths_avoid_similar_names() -> None:
+    content = "\n".join(
+        [
+            "See retired-assets/manifest.json.",
+            r"Old path: ./retired-assets\manifest.json",
+            "Not the same: retired-assets-old/manifest.json.",
+            "Not root-relative: docs/retired-assets/manifest.json.",
+            "The retired-assets directory was discussed in prose.",
+        ]
+    )
+
+    assert directory_reference_hits(content, "retired-assets") == [
+        (1, "directory-path", "See retired-assets/manifest.json."),
+        (2, "directory-path", r"Old path: ./retired-assets\manifest.json"),
+    ]
+
+
+def test_directory_reference_hits_finds_quoted_root_directory_tokens() -> None:
+    content = 'Path("retired-assets") is a path configuration.'
+
+    assert directory_reference_hits(content, "retired-assets") == [
+        (
+            1,
+            "quoted-directory-token",
+            'Path("retired-assets") is a path configuration.',
+        )
+    ]
+
+
+def test_deleted_directories_only_includes_absent_ancestors(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        "scripts.audit_repo_consistency.tracked_files",
+        lambda root: [root / "src" / "live.py"],
+    )
+
+    assert deleted_directories(
+        tmp_path, ["retired-assets/manifest.json", "src/removed.py"]
+    ) == ["retired-assets"]
