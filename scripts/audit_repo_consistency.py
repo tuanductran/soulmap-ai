@@ -184,7 +184,7 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
     # Compile once per deleted path, not once per scanned line. Full-history
     # audits may inspect thousands of deleted paths across many tracked files.
     patterns = [
-        (re.compile(rf"(?<![\\w.-]){re.escape(token)}(?![\\w-]|\\.[A-Za-z0-9])"), kind)
+        (re.compile(rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])"), kind)
         for token, kind in variants
         if token
     ]
