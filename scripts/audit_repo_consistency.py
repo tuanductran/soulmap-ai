@@ -196,6 +196,7 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
                 break
     return hits
 
+
 def deleted_directories(root: Path, removed_paths: Sequence[str]) -> list[str]:
     """Return deleted ancestor directories that no longer contain tracked files."""
     current_directories: set[str] = set()
