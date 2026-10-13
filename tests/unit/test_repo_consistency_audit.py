@@ -92,7 +92,6 @@ def test_deleted_directories_only_includes_absent_ancestors(
     ) == ["retired-assets"]
 
 
-
 def test_path_reference_hits_avoid_substring_matches() -> None:
     content = "\n".join(
         [
