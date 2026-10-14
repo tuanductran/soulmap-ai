@@ -123,6 +123,10 @@ references, local Markdown links, package inclusion, and local-maintainer conven
 A missing target in the canonical runtime registry is an error; resources without a
 static edge remain review-only, not proven unused. Dynamic loaders, product conventions,
 external consumers, and human-selected prompts cannot be fully inferred by this scan.
+The command exits with status `0` for a complete scan without missing registry targets,
+`1` when a complete scan finds a missing registry target, and `2` when the scan is
+incomplete (for example, the canonical registry is missing or source files cannot be read).
+Review every `audit-limitation` finding before trusting the inventory.
 Use it alongside the existing knowledge ownership audit, Markdown contracts, registry
 tests, build verification, and Python module inventory; never use it to auto-delete files.
 

@@ -60,7 +60,7 @@ def _resource_files(root: Path) -> dict[str, str]:
                 continue
             for path in sorted(base.rglob("*")):
                 if path.is_file() and not any(
-                    part in EXCLUDED_PARTS for part in path.parts
+                    part in EXCLUDED_PARTS for part in path.relative_to(root).parts
                 ):
                     found[path.relative_to(root).as_posix()] = category
     for name in ROOT_RESOURCES:
@@ -73,10 +73,14 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
     """Read literal source paths from the canonical runtime registry."""
     registry_file = root / "src/soulmap/runtime/source_registry.py"
     if not registry_file.is_file():
-        return set(), set()
-    tree = ast.parse(
-        registry_file.read_text(encoding="utf-8"), filename=str(registry_file)
-    )
+        return set(), {"canonical runtime registry file is missing"}
+    try:
+        content = registry_file.read_text(encoding="utf-8")
+        tree = ast.parse(content, filename=str(registry_file))
+    except (OSError, UnicodeDecodeError, SyntaxError) as exc:
+        return set(), {
+            f"canonical runtime registry could not be analyzed ({type(exc).__name__})"
+        }
     for node in tree.body:
         is_registry_assignment = (
             isinstance(node, ast.AnnAssign)
@@ -154,11 +158,15 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
     ]
     literal_path_sources: dict[str, set[str]] = {path: set() for path in resources}
     markdown_links: dict[str, set[str]] = {path: set() for path in resources}
+    unreadable_sources: dict[str, str] = {}
     for source in source_files:
         relative_source = source.relative_to(root).as_posix()
         try:
             content = source.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
+        except (OSError, UnicodeDecodeError) as exc:
+            unreadable_sources[relative_source] = (
+                f"source file could not be read ({type(exc).__name__})"
+            )
             continue
         linked = _resolved_markdown_links(source, root)
         for target in linked & existing_paths:
@@ -204,6 +212,8 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
                 ("canonical-runtime-registry-target-missing",),
             )
         )
+    for source_path, warning in sorted(unreadable_sources.items()):
+        findings.append(ResourceFinding(source_path, "audit-limitation", (warning,)))
     for warning in sorted(registry_warnings):
         findings.append(
             ResourceFinding(
@@ -216,7 +226,7 @@ def audit(root: Path) -> tuple[ResourceFinding, ...]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Print a resource inventory; only missing registry targets fail the command."""
+    """Print a resource inventory and return nonzero for errors or incomplete scans."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     args = parser.parse_args(argv)
@@ -230,11 +240,18 @@ def main(argv: list[str] | None = None) -> int:
     print("\nInventory counts")
     for category, count in sorted(counts.items()):
         print(f"{category}: {count}")
+    incomplete = any(finding.category == "audit-limitation" for finding in findings)
     missing = any(finding.category == "missing-resource" for finding in findings)
     print(
         "Unreferenced resources remain review-only; convention-based and dynamic "
         "loaders are not proven."
     )
+    if incomplete:
+        print(
+            "INCOMPLETE: review audit-limitation findings before "
+            "trusting this inventory."
+        )
+        return 2
     return 1 if missing else 0
 
 
