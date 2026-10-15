@@ -94,7 +94,7 @@ When reviewing safety claims manually, keep the matrix status labels strict:
 
 ```bash
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 uv run soulmap library-manifest
 uv run python scripts/verify_extracted_artifacts.py
 ```
@@ -212,7 +212,7 @@ contracts:
 - `uv run soulmap eval-groups`
 - `uv run soulmap eval-markdown-contracts`
 - `uv run soulmap build`
-- `uv run soulmap build --skill`
+- `uv run soulmap dev`
 - `uv run soulmap library-manifest`
 - `uv run python scripts/verify_artifact_hashes.py`
 - `uv run python scripts/verify_extracted_artifacts.py`

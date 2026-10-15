@@ -1,7 +1,6 @@
 """The ``soulmap`` command-line entry point.
 
-Dispatches every developer command (format, lint, test, build, the evaluation
-runs, and the repository checkers) to its implementation module, so
+Dispatches developer commands to their canonical implementation modules, so
 contributors and CI share one command surface.
 """
 
@@ -28,7 +27,13 @@ from soulmap.devtools.evals import (
     eval_responses,
 )
 from soulmap.devtools.governance import weekly as weekly_governance
-from soulmap.devtools.packaging import build_skill, library, release_ops, release_verify
+from soulmap.devtools.packaging import (
+    build_skill,
+    library,
+    release_ops,
+    release_verify,
+)
+from soulmap.devtools.packaging import dev as dev_tool
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
@@ -58,6 +63,7 @@ def _command_table() -> dict[str, CommandHandler]:
         "check-freshness": check_freshness.main,
         "check-links": check_markdown_links.main,
         "audit-skills-boundary": skills_boundary.main,
+        "dev": dev_tool.main,
         "eval-groups": eval_groups.main,
         "eval-markdown-contracts": eval_markdown_contracts.main,
         "eval-response-quality": eval_response_quality.main,
@@ -95,8 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     """Dispatch a command and return its exit code.
 
     A leading ``--`` in the forwarded arguments is dropped, so both
-    ``soulmap lint --skip-tests`` and ``soulmap lint -- --skip-tests`` reach
-    the command the same way.
+    ``soulmap lint --skip-tests`` and ``soulmap lint -- --skip-tests``
+    reach the command the same way.
 
     Args:
         argv: Command-line arguments, or None to read from ``sys.argv``.

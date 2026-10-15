@@ -187,7 +187,7 @@ Cross-platform:
 
 ```bash
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 uv run soulmap library-manifest
 ```
 

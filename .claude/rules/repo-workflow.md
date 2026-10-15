@@ -70,7 +70,7 @@ If packaging or release behavior changed, also run:
 
 ```bash
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 ```
 
 ## AI tool guardrails

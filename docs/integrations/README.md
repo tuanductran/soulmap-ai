@@ -15,8 +15,8 @@ must be reviewed when that version changes.
 ## Build the distribution artifacts first
 
 ```bash
-uv run soulmap build           # dist/soulmap-ai.zip
-uv run soulmap build --skill   # dist/soulmap-ai.skill
+uv run soulmap build           # both artifacts
+uv run soulmap dev   # verify and extract both
 ```
 
 ## Claude (Skills)

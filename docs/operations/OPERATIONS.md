@@ -51,7 +51,7 @@ uv run soulmap eval-responses
 uv run soulmap markdown-contract --root .
 uv run python tests/eval_regression/test_safety_evals.py
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 uv run soulmap test -n auto -q
 ```
 

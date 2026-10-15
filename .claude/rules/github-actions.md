@@ -69,7 +69,7 @@ commands already used by the workflows, such as:
 uv run soulmap eval-groups
 uv run soulmap markdown-contract --root .
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 ```
 
 If `actionlint` is available locally, run it after changing `.github/workflows/`.

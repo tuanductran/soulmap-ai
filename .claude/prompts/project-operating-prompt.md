@@ -80,7 +80,7 @@ If packaging or shipped-surface behavior changed, also run:
 
 ```bash
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 ```
 
 ## Success condition

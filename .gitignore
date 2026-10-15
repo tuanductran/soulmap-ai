@@ -41,6 +41,7 @@ venv.bak/
 build/
 coverage.xml
 dist/
+.soulmap/
 htmlcov/
 pip-wheel-metadata/
 

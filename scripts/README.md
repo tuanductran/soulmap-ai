@@ -27,7 +27,7 @@ uv run soulmap check-links --root .
 uv run soulmap check-case --root .
 uv run soulmap check-api-docs --root .
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 uv run soulmap library-manifest
 uv run python scripts/verify_artifact_hashes.py
 uv run python scripts/verify_extracted_artifacts.py

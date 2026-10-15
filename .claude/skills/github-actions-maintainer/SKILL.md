@@ -66,7 +66,7 @@ Add these when relevant:
 uv run soulmap eval-groups
 uv run soulmap markdown-contract --root .
 uv run soulmap build
-uv run soulmap build --skill
+uv run soulmap dev
 ```
 
 If `actionlint` is available, run it after changing workflow files.

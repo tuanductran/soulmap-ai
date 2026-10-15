@@ -73,12 +73,14 @@ safety evals above. If a change touches `skills/` or `templates/`, also run
 ## Build artifacts
 
 ```bash
-uv run soulmap build          # dist/soulmap-ai.zip
-uv run soulmap build --skill  # dist/soulmap-ai.skill
+uv run soulmap build          # both dist/soulmap-ai.zip and dist/soulmap-ai.skill
+uv run soulmap dev            # verify and extract both under .soulmap/
 ```
 
 Run these after any change under `skills/` to confirm the new content packages
-correctly. See [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
+correctly. `build` always creates both artifacts. `dev` verifies each archive against
+the package contract and refreshes `.soulmap/zip/` and `.soulmap/skill/` for local
+inspection; it does not start a server. See [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
 ## Git workflow
 
