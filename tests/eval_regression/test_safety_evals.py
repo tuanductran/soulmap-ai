@@ -43,7 +43,7 @@ def test_crisis_tier1_guidance_is_presence_first_and_resource_cautious() -> None
     assert "HOPE 0865 044 400" in guidance
     assert "do not claim 24/7" in guidance
     assert not _has_unsupported_24_7_claim(guidance)
-            r"|\(\s*free\s*,\s*24\s*/\s*7\s*\)",
+    assert "(free, 24/7)" not in guidance
     assert "Do not offer reflective questions" in guidance
 
 
