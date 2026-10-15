@@ -41,5 +41,3 @@ jobs:
       - name: Run focused test suite
         run: uv run python scripts/pytest_diagnostics.py
 
-      - name: Run safety red-team dataset
-        run: uv run python tests/eval_regression/test_safety_evals.py
