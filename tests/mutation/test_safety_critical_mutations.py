@@ -15,10 +15,11 @@ module is documented to catch is no longer caught. That is what proves the
 list is load-bearing rather than decorative.
 
 This is deliberately a short, hand-picked list, not a general mutation-testing
-tool. docs/engineering/performance-tooling.md rules out adding one to CI: the
-runtime cost of mutating and re-testing every branch in the runtime would far
-exceed what a full suite run already costs, for value concentrated in a small
-number of safety-critical modules. Add a case here only when a real
+tool. Keep it focused on safety-critical checks whose failure would be easy to
+miss; do not expand it into a repository-wide mutation runner without measured
+benefit. This follows the repository's performance guidance in
+`.claude/rules/performance-tooling.md`, which favors focused checks and avoids
+extra CI work without a clear payoff. Add a case here only when a real
 regression proved a specific list or check was silently doing nothing, the
 same standard the eval-runner fix that motivated this file met.
 """
