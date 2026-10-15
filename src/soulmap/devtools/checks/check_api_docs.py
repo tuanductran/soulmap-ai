@@ -19,8 +19,8 @@ Deliberately not checked: whether every module with a ``__main__`` block gets
 its own doc section. ``API.md`` already covers the detector modules under
 ``src/soulmap/runtime/detectors/`` with one blanket paragraph plus a single
 example, by design, and several internal modules (``scope_classifier.py``,
-``stage_detector.py``, ``conversation_synthesizer.py``, ``markdown_contract.py``,
-``soulmap_demo.py``) are intentionally documented elsewhere or not documented
+``stage_detector.py``, ``conversation_synthesizer.py``, ``markdown_contract.py``)
+are intentionally documented elsewhere or not documented
 individually at all. A literal "every entrypoint needs its own section" rule
 would flag all of that pre-existing, correct structure as broken.
 """
