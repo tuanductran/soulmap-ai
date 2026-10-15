@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from soulmap.runtime.knowledge.keyword_lists import (
     _read_markdown_text_cached,
     load_key_value_table,
@@ -8,7 +10,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 
 
 def test_loaders_read_each_markdown_version_once(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     path = tmp_path / "knowledge.md"
     path.write_text(
