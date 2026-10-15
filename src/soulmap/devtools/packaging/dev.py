@@ -11,14 +11,11 @@ from soulmap.devtools.packaging import build_skill
 from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
-OUTPUTS = (
-    ("soulmap-ai.zip", "zip", False),
-    ("soulmap-ai.skill", "skill", True),
-)
 
-
-def _verify_archive(archive_path: Path, expected_members: set[str]) -> None:
-    """Reject corrupt archives, unexpected files, and unsafe extraction paths."""
+def _verify_archive(
+    archive_path: Path, expected_members: set[str], source_root: Path
+) -> None:
+    """Reject corrupt, stale, unexpected, or unsafe archive contents."""
     with zipfile.ZipFile(archive_path) as archive:
         names = archive.namelist()
         if len(names) != len(set(names)):
@@ -47,15 +44,25 @@ def _verify_archive(archive_path: Path, expected_members: set[str]) -> None:
             raise ValueError(
                 f"Archive CRC check failed for {archive_path}: {corrupt_member}"
             )
+        stale_members = [
+            name
+            for name in names
+            if archive.read(name) != (source_root / name).read_bytes()
+        ]
+        if stale_members:
+            raise ValueError(
+                f"Archive content differs from source for {archive_path}: "
+                f"{stale_members[:5]}"
+            )
 
 
-def _extract_verified(archive_path: Path, destination: Path) -> int:
+def _extract_verified(
+    archive_path: Path, destination: Path, source_root: Path
+) -> int:
     """Verify an archive against the package contract, then refresh its output tree."""
     include_plugin = archive_path.name == "soulmap-ai.skill"
-    expected_members = source_members(
-        archive_path.parents[1], include_plugin=include_plugin
-    )
-    _verify_archive(archive_path, expected_members)
+    expected_members = source_members(source_root, include_plugin=include_plugin)
+    _verify_archive(archive_path, expected_members, source_root)
 
     if destination.exists():
         shutil.rmtree(destination)
@@ -81,10 +88,11 @@ def main(argv: list[str] | None = None) -> int:
     archives = build_skill.build_all(repo_root)
     output_root = repo_root / ".soulmap"
     total_files = 0
-    for archive_path, (_, output_name, _) in zip(archives, OUTPUTS, strict=True):
+    for archive_path, output_name in zip(archives, ("zip", "skill"), strict=True):
         total_files += _extract_verified(
             archive_path,
             output_root / output_name,
+            repo_root,
         )
     print(f"OK (dev): {total_files} packaged file entries verified under {output_root}")
     return 0
