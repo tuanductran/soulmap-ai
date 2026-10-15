@@ -2,28 +2,6 @@
 
 All notable changes to this repository will be documented in this file.
 
-## Unreleased
-
-### Fix
-
-- **safety/docs**: link the canonical Vietnam crisis-resource entry to HOPE and Find A Helpline, and prevent static operating-hour claims when source time zones or listings are unclear
-
-- **evals/safety**: make the offline crisis reference response presence-first and assert urgent safety guidance precedes resource listings; clarify that this evaluates the reference response, not live model behavior
-
-- **safety/runtime**: make Tier 1 crisis guidance presence-first, remove unsupported HOPE free/24-7 claims, mark helpline entries as verification-required starting points, and add response-order regression coverage
-
-- **safety/docs**: remove residual resource-first wording from de-escalation and pilot acceptance guidance; make post-grounding, numerology, and question-bank prompts optional; clarify the response-contract comment; and extend crisis/question drift contracts
-
-- **skills/docs**: remove residual mandatory-question wording from framework guidance, celebration templates, onboarding/FAQ copy, and the framework-author skill; extend the optional-question contract to cover the remaining surfaces
-
-- **safety/docs**: align response calibration, crisis referral templates, safety boundaries, and marketplace copy with presence-first crisis guidance; add Markdown contract coverage for these surfaces
-
-- **safety/docs**: align crisis response ordering, verified-resource guidance, and optional-question rules across doctrine, integration prompts, and evaluation contracts; track the protected runtime's stale crisis-resource availability claim in issue #647
-
-### Refactor
-
-- **scripts**: remove redundant format, lint, and skill-build shell wrappers; use the canonical `soulmap` CLI directly
-
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 

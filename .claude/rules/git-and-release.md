@@ -38,6 +38,17 @@ Preferred branch names:
 - `test/...`
 - `ci/...`
 
+## Changelog and version bump
+
+- Do not manually add an `Unreleased` section or append unreleased entries to
+  `CHANGELOG.md` for routine changes.
+- The `Release Prep` workflow runs `uv run cz bump --yes`; Commitizen generates the
+  versioned changelog from Conventional Commits because
+  `update_changelog_on_bump = true` is configured in `pyproject.toml`.
+- Edit `CHANGELOG.md` manually only for explicit historical corrections or changes
+  to changelog-generation configuration. Do not duplicate entries that the bump
+  workflow will generate.
+
 ## Branch workflow (required)
 
 Never push directly to `main`. All changes must go through a branch and PR.
