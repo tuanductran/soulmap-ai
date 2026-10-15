@@ -121,7 +121,7 @@ def test_dev_rejects_unsafe_archive_member_paths(tmp_path: Path) -> None:
         archive.writestr("../outside.txt", "unsafe")
 
     with pytest.raises(ValueError, match="unsafe member paths"):
-        dev_tool._verify_archive(archive_path, {"../outside.txt"})
+        dev_tool._verify_archive(archive_path, {"../outside.txt"}, tmp_path)
 
 
 def test_build_zip_replaces_an_existing_archive(tmp_path: Path) -> None:
@@ -134,3 +134,14 @@ def test_build_zip_replaces_an_existing_archive(tmp_path: Path) -> None:
     assert rebuilt_archive == first_archive
     assert zipfile.is_zipfile(rebuilt_archive)
     assert _archive_names(rebuilt_archive) == {"LICENSE"}
+
+
+
+def test_dev_rejects_archive_content_that_differs_from_source(tmp_path: Path) -> None:
+    source = _write(tmp_path, "skills/example.md", "current source\n")
+    archive_path = tmp_path / "stale.zip"
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        archive.writestr("skills/example.md", "stale content\n")
+
+    with pytest.raises(ValueError, match="differs from source"):
+        dev_tool._verify_archive(archive_path, {source.relative_to(tmp_path).as_posix()}, tmp_path)
