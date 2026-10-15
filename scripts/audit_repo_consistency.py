@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import posixpath
 import re
 import subprocess
 import tokenize
@@ -187,8 +188,18 @@ def deleted_paths(root: Path, base: str | None, history: bool) -> list[str]:
     )
 
 
-def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str, str]]:
-    """Find exact deleted-path mentions and distinctive basename-only mentions."""
+def path_reference_hits(
+    content: str,
+    deleted_path: str,
+    *,
+    source_path: Path | None = None,
+    current_paths: set[str] | None = None,
+) -> list[tuple[int, str, str]]:
+    """Find exact deleted-path mentions and distinctive basename-only mentions.
+
+    When a line resolves to a current file with the same basename, do not also
+    report it as a possible reference to a different historical path.
+    """
     basename = Path(deleted_path).name
     variants = [
         (deleted_path, "exact-path"),
@@ -204,10 +215,41 @@ def path_reference_hits(content: str, deleted_path: str) -> list[tuple[int, str,
         for token, kind in variants
         if token
     ]
+    same_basename_paths = (
+        {
+            path
+            for path in current_paths or set()
+            if Path(path).name == basename and path != deleted_path
+        }
+        if source_path is not None
+        else set()
+    )
+    current_path_patterns: list[re.Pattern[str]] = []
+    same_directory_basename = False
+    for path in same_basename_paths:
+        tokens = {path, path.replace("/", "\\")}
+        if source_path is not None:
+            relative = posixpath.relpath(path, source_path.parent.as_posix())
+            tokens.update({relative, relative.replace("/", "\\")})
+            if relative == basename:
+                same_directory_basename = True
+        current_path_patterns.extend(
+            re.compile(
+                rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])"
+            )
+            for token in tokens
+            if token and token != basename
+        )
+
     hits: list[tuple[int, str, str]] = []
     for number, line in enumerate(content.splitlines(), start=1):
+        mentions_current_path = same_directory_basename or any(
+            pattern.search(line) for pattern in current_path_patterns
+        )
         for pattern, kind in patterns:
             if pattern.search(line):
+                if kind == "basename-only" and mentions_current_path:
+                    continue
                 hits.append((number, kind, line.strip()))
                 break
     return hits
@@ -312,7 +354,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                     if content is None:
                         continue
                     for number, kind, line in path_reference_hits(
-                        content, deleted_path
+                        content,
+                        deleted_path,
+                        source_path=Path(current_path),
+                        current_paths={
+                            tracked.relative_to(root).as_posix() for tracked in files
+                        },
                     ):
                         print(
                             f"{current_path}:{number}: {kind} -> {deleted_path}: {line}"
