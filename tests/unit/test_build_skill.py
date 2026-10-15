@@ -27,11 +27,23 @@ def test_distignore_loader_handles_missing_comments_and_patterns(
 ) -> None:
     assert build_tool._load_distignore(tmp_path) == []
 
-    _write(tmp_path, ".distignore", "# internal files\n\nskills/private.md\n*.tmp\n")
+    _write(
+        tmp_path,
+        ".distignore",
+        "# internal files\n\nskills/private.md\n*.tmp\n"
+        ".claude-plugin/README.md\n",
+    )
 
-    assert build_tool._load_distignore(tmp_path) == ["skills/private.md", "*.tmp"]
+    assert build_tool._load_distignore(tmp_path) == [
+        "skills/private.md",
+        "*.tmp",
+        ".claude-plugin/README.md",
+    ]
     assert build_tool._is_ignored("skills/private.md", ["skills/private.md"])
     assert build_tool._is_ignored("notes.tmp", ["*.tmp"])
+    assert build_tool._is_ignored(
+        ".claude-plugin/README.md", [".claude-plugin/README.md"]
+    )
     assert not build_tool._is_ignored("skills/public.md", ["*.tmp"])
 
 
@@ -44,7 +56,12 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
-    _write(root, ".distignore", "skills/private.md\n")
+    _write(root, ".claude-plugin/README.md", "Claude plugin development notes\n")
+    _write(
+        root,
+        ".distignore",
+        "skills/private.md\n.claude-plugin/README.md\n",
+    )
     return {"LICENSE", "SOULMAP.md", "SKILL.md", "skills/public.md"}
 
 
@@ -60,10 +77,12 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
         name.startswith("src/soulmap/runtime/") for name in _archive_names(zip_path)
     )
     assert _archive_names(zip_path) == core_names
-    assert _archive_names(skill_path) == {
+    skill_names = _archive_names(skill_path)
+    assert skill_names == {
         *core_names,
         ".claude-plugin/marketplace.json",
     }
+    assert ".claude-plugin/README.md" not in skill_names
 
 
 def test_build_all_creates_both_archives(tmp_path: Path) -> None:
@@ -116,6 +135,7 @@ def test_dev_builds_verifies_and_extracts_both_artifacts(
     assert (zip_tree / "skills/public.md").read_text(encoding="utf-8") == "content\n"
     assert not (zip_tree / ".claude-plugin").exists()
     assert (skill_tree / ".claude-plugin/marketplace.json").is_file()
+    assert not (skill_tree / ".claude-plugin/README.md").exists()
 
 
 def test_dev_rejects_unsafe_archive_member_paths(tmp_path: Path) -> None:
