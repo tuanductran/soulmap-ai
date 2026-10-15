@@ -42,7 +42,8 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-# The dependency threshold is loaded from the canonical Markdown source:\n# skills/safety/dependency-detection.md
+# The dependency threshold is loaded from the canonical Markdown source:
+# skills/safety/dependency-detection.md
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
