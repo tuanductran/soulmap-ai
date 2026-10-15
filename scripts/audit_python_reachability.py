@@ -53,7 +53,7 @@ def resolve_imports(
             if node.level:
                 base_parts = package.split(".") if package else []
                 ascend = node.level - 1
-                if ascend > len(base_parts):
+                if ascend >= len(base_parts):
                     continue
                 base = ".".join(base_parts[: len(base_parts) - ascend])
                 target = ".".join(part for part in (base, node.module or "") if part)
