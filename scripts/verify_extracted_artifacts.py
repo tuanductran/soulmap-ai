@@ -86,6 +86,28 @@ FORBIDDEN_PACKAGE_REFERENCES = (
 )
 
 
+def _is_forbidden_entrypoint(name: str) -> bool:
+    """Return whether an archive path names a repository agent entrypoint."""
+    basename = PurePosixPath(name).name.casefold()
+    reserved_prefixes = (
+        "agents",
+        "claude",
+        "gemini",
+        "codex",
+        "copilot",
+        "cursor",
+        "aider",
+        "qwen",
+        "warp",
+        "cody",
+        "opencode",
+    )
+    return basename in FORBIDDEN_ENTRYPOINT_NAMES or (
+        basename.endswith(".md")
+        and basename.split(".", maxsplit=1)[0] in reserved_prefixes
+    )
+
+
 def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
     if not archive_path.is_file():
         raise ExtractedArtifactError(f"artifact not found: {archive_path}")
@@ -219,8 +241,7 @@ def _assert_expected_members(
         forbidden_members = sorted(
             name
             for name in actual
-            if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
-            or PurePosixPath(name).name.casefold() in FORBIDDEN_ENTRYPOINT_NAMES
+            if name.startswith(FORBIDDEN_MEMBER_PREFIXES) or _is_forbidden_entrypoint(name)
         )
         if forbidden_members:
             raise ExtractedArtifactError(
