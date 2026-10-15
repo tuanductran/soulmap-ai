@@ -28,8 +28,8 @@ inspection, green CI, or narrow local checks.
 - `tests/`
 - `evals/`
 - `docs/engineering/TESTER.md`
-- `../rules/evals-and-testing.md`
-- `../rules/repo-workflow.md`
+- `.claude/rules/evals-and-testing.md`
+- `.claude/rules/repo-workflow.md`
 
 ## What to look for
 
