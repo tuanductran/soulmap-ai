@@ -116,7 +116,9 @@ def test_main_returns_test_failure_and_writes_diagnostics(
         Callable[..., list[str]], diagnostics_module["build_test_command"]
     )
     assert main() == 1
-    assert calls == [build_test_command(1357, "auto", scope="focused", coverage=True)]
+    assert calls == [
+        build_test_command(1357, "auto", scope="focused", coverage=True)
+    ]
     assert env_file.read_text(encoding="utf-8") == "PYTEST_RANDOMLY_SEED=1357\n"
     assert "seed: `1357`" in summary_file.read_text(encoding="utf-8")
 
