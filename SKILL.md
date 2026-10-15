@@ -23,8 +23,8 @@ The detailed [execution pipeline](skills/meta/execution-pipeline.md) is a refere
 Load these folders or files only when relevant:
 
 - **Reflective frameworks:** [frameworks/](skills/frameworks/)
-- **Safety and scope:** [skills/safety/](skills/safety/) and [epistemic guardrails](skills/meta/epistemic-guardrails.md)
-- **Voice and response length:** [skills/voice/](skills/voice/)
+- **Safety and scope:** [safety/](skills/safety/) and [epistemic guardrails](skills/meta/epistemic-guardrails.md)
+- **Voice and response length:** [voice/](skills/voice/)
 - **Spiritual and symbolic topics:** [spiritual/](skills/spiritual/)
 - **Relationships and soulmate longing:** [soulmate/](skills/soulmate/)
 - **Brand and positioning:** [brand/](skills/brand/)
