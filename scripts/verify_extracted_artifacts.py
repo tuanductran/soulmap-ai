@@ -14,7 +14,12 @@ from soulmap.devtools.packaging.artifact_integrity import (
     ArtifactContentError,
     verify_member_content,
 )
-from soulmap.devtools.packaging.members import CORE_FILES, PLUGIN_PREFIX, source_members
+from soulmap.devtools.packaging.members import (
+    CORE_FILES,
+    PLUGIN_PREFIX,
+    is_excluded_entrypoint_name,
+    source_members,
+)
 
 
 class ExtractedArtifactError(ValueError):
@@ -84,28 +89,6 @@ FORBIDDEN_PACKAGE_REFERENCES = (
     "uv.lock",
     ".py",
 )
-
-
-def _is_forbidden_entrypoint(name: str) -> bool:
-    """Return whether an archive path names a repository agent entrypoint."""
-    basename = PurePosixPath(name).name.casefold()
-    reserved_prefixes = (
-        "agents",
-        "claude",
-        "gemini",
-        "codex",
-        "copilot",
-        "cursor",
-        "aider",
-        "qwen",
-        "warp",
-        "cody",
-        "opencode",
-    )
-    return basename in FORBIDDEN_ENTRYPOINT_NAMES or (
-        basename.endswith(".md")
-        and basename.split(".", maxsplit=1)[0] in reserved_prefixes
-    )
 
 
 def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
@@ -241,7 +224,7 @@ def _assert_expected_members(
         forbidden_members = sorted(
             name
             for name in actual
-            if name.startswith(FORBIDDEN_MEMBER_PREFIXES) or _is_forbidden_entrypoint(name)
+            if name.startswith(FORBIDDEN_MEMBER_PREFIXES) or is_excluded_entrypoint_name(PurePosixPath(name).name)
         )
         if forbidden_members:
             raise ExtractedArtifactError(
