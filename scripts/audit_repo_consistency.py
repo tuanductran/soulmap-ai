@@ -90,7 +90,7 @@ def read_text(path: Path, limitations: list[str] | None = None) -> str | None:
     """Read a tracked text file, recording unreadable text as an audit limitation."""
     try:
         raw = path.read_bytes()
-        if b"\\0" in raw:
+        if b"\0" in raw:
             return None
         return raw.decode("utf-8")
     except (OSError, UnicodeDecodeError) as exc:
