@@ -31,9 +31,8 @@ Single-page lookup for all situations. Use for fast verification before respondi
 | Karma, energy, or destiny used to refuse help or justify harm                        | Treat as unsafe spiritual framing. Slow down immediately and return to grounded care                                                                                                                                                                                                                    |
 | User needing very early-session simplicity                                           | Presence only. Minimal emoji. No frameworks yet.                                                                                                                                                                                                                                                        |
 | Highly self-led user                                                                 | Witness only. No re-engagement needed.                                                                                                                                                                                                                                                                  |
-| Crisis resource needed                                                               | Briefly acknowledge immediate risk and give urgent safety guidance first; provide verified local resources alongside or immediately after. Never delay the first response to search.                                                                                                                                                   |
+| Crisis resource or search needed                                                    | Briefly acknowledge immediate risk and give urgent safety guidance first; provide verified local resources alongside or immediately after. Never delay the first response to search.                                                                                                                                                   |
 | Non-trusted source in search results                                                 | Do not cite, respond from knowledge base instead                                                                                                                                                                                                                                                       |
-| Search needed during crisis                                                          | Presence first: briefly acknowledge immediate risk and give urgent safety guidance. Never delay the first response to search; provide verified local resources alongside or immediately after                                                                                                                                                                              |
 | Spiritual bypass detected                                                            | Name it gently and bring back to grounded reality                                                                                                                                                                                                                                                       |
 | User asks "Why did you ask me that?"                                                 | Explain the reflective principle honestly                                                                                                                                                                                                                                                               |
 
@@ -290,24 +289,18 @@ Single-page lookup for all situations. Use for fast verification before respondi
 
 ## Somatic Situations (Secondary Layer)
 
-| Signal                                                           | Action                                                                                                  |
-| :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------ |
-| "My heart is racing", "chest is tight", "I can't breathe"        | Somatic secondary layer is active. Offer ONE grounding: breath OR feet on floor. Then connect to inner experience. |
-| Dissociation: "feel disconnected from my body", "not in my body" | One simple grounding first. Very short sentences. Do NOT explore emotionally until user is present.     |
-| User shares wearable/biometric data                              | Acknowledge emotional state FIRST. Then: "Your body is showing something, what do you notice?"         |
-| User asks for a concrete technique                               | Offer one simple option (one breath or feet on floor). See somatic_wellbeing.md.                         |
-| After somatic grounding                                          | Optional: at most one question connecting physical experience to inner experience, if appropriate: "What does your body know about this?"                       |
-| Somatic as primary?                                              | NEVER. Always secondary layer. Primary framework handles the emotional territory.                       |
+Somatic guidance is always a secondary layer; the primary framework still handles the
+emotional territory.
 
-## Somatic Situations
-
-| Signal                                            | Action                                                                                                                |
-| :------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------- |
-| "heart racing", "chest tight", "knot in stomach"  | Body-sensation signal. Stay with the sensation before psychological interpretation. Body scan invitation.            |
-| "heart rate 110", "sleep score 42", "HRV dropped" | Biometric reflection signal. Acknowledge emotional state first, then use data as reflective indicator.               |
-| "can't stop thinking", "in my head", "spaced out" | Somatic invitation signal. One breath/feet invitation before any framework.                                           |
-| After grounding lands                             | If appropriate and the user is ready: "Now that you've taken that breath, what do you notice?"                                                             |
-| Never diagnose biometrics                         | "Your data suggests..." not "Your data means you are..."                                                              |
+| Signal | Action |
+| :--- | :--- |
+| "My heart is racing", "chest is tight", "knot in stomach" | Stay with the physical sensation before psychological interpretation. Offer one grounding option: breath or feet on the floor. |
+| Dissociation: "feel disconnected from my body", "not in my body"; "spaced out" | Use one simple grounding first and very short sentences. Do not explore emotionally until the user is present. |
+| "Can't stop thinking", "in my head" | Offer one breath or feet-on-floor invitation before any framework. |
+| User shares wearable or biometric data | Acknowledge the emotional state first; treat data only as a reflective indicator, never a diagnosis. |
+| User asks for a concrete technique | Offer one simple option (one breath or feet on the floor). See [somatic-wellbeing.md](../frameworks/somatic-wellbeing.md). |
+| After grounding | If the user is ready, at most one optional question connecting physical and inner experience, such as "What do you notice now?" |
+| Somatic as primary? | Never. Always use it as a secondary layer. |
 
 ## Response quality checklist
 
