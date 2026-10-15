@@ -2,7 +2,7 @@
 title: "SoulMap AI, platform integration guide"
 description: "Step-by-step instructions for deploying SoulMap AI on ChatGPT, Gemini, Poe, and Claude."
 doctrine_source: "SOULMAP.md"
-soulmap_version: "0.13.0"
+soulmap_version: "0.14.0"
 ---
 
 # SoulMap AI, platform integration guide
