@@ -56,9 +56,7 @@ def _verify_archive(
             )
 
 
-def _extract_verified(
-    archive_path: Path, destination: Path, source_root: Path
-) -> int:
+def _extract_verified(archive_path: Path, destination: Path, source_root: Path) -> int:
     """Verify an archive against the package contract, then refresh its output tree."""
     include_plugin = archive_path.name == "soulmap-ai.skill"
     expected_members = source_members(source_root, include_plugin=include_plugin)
