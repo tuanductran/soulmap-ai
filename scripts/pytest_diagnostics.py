@@ -80,7 +80,10 @@ def _write_failure_summary(
         "- Serial reproduction:",
         "",
         "  ```bash",
-        "  " + " ".join(build_test_command(seed, "0", scope=scope, coverage=coverage)),
+        "  "
+        + " ".join(
+            build_test_command(seed, "0", scope=scope, coverage=coverage)
+        ),
         "  ```",
         "",
         "The serial command preserves the seed while removing xdist parallelism.",
