@@ -23,8 +23,8 @@ Catch security issues that matter to this repo's real tooling and automation sur
 
 ## Sources to check first
 
-- `../rules/source-character-safety.md`
-- `../rules/github-actions.md`
+- `.claude/rules/source-character-safety.md`
+- `.claude/rules/github-actions.md`
 - `docs/engineering/DEV.md`
 - `scripts/`
 - `src/soulmap/devtools/`
