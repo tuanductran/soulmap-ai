@@ -180,9 +180,7 @@ def deleted_paths(root: Path, base: str | None, history: bool) -> list[str]:
         relative = path.relative_to(root)
         current.add(relative.as_posix())
         current.update(
-            parent.as_posix()
-            for parent in relative.parents
-            if parent.as_posix() != "."
+            parent.as_posix() for parent in relative.parents if parent.as_posix() != "."
         )
     return sorted(
         {item.strip() for item in output.splitlines() if item.strip()} - current
