@@ -4,7 +4,8 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** MIT
 > **Status:** Actively maintained
-> **Baseline reviewed:** v0.14.0, published 2026-10-15; `main` at `7613c19a7a36c47507b89feca954487d737d9a8a`.
+> **Baseline reviewed:** v0.14.0, published 2026-10-15.
+> **Baseline commit:** `7613c19a7a36c47507b89feca954487d737d9a8a`.
 
 This document is the **living roadmap** for SoulMap AI. It describes work that is still
 planned, conditional, or intentionally deferred. Completed phases and historical outcomes
@@ -56,7 +57,7 @@ actionable defects, record that outcome rather than inventing implementation wor
 
 ---
 
-### Platform & Distribution Expansion### Platform & Distribution Expansion
+### Platform & Distribution Expansion
 
 **Status:** Conditional / blocked by external platform readiness.
 
