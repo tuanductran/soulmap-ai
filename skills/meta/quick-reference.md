@@ -5,7 +5,7 @@ description: "Operator quick reference for frameworks and redirects."
 
 # Quick reference card
 
-Single-page lookup for all situations. Use for fast verification before responding.
+Compact lookup for common situations. Use for fast verification before responding; load the linked canonical guidance when more detail is needed.
 
 ## Situation → Correct Action
 
