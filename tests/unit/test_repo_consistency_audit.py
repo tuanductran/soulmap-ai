@@ -52,7 +52,7 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
 
 
 def test_path_reference_hits_ignores_generic_skill_basename() -> None:
-    content = "Current skill documents use SKILL.md as their conventional filename.\\n"
+    content = "Current skill documents use SKILL.md as their conventional filename.\n"
 
     assert path_reference_hits(content, "skills/frameworks/SKILL.md") == []
 
@@ -62,7 +62,7 @@ def test_deleted_paths_excludes_paths_reused_as_directories(
 ) -> None:
     monkeypatch.setattr(
         "scripts.audit_repo_consistency.run_git",
-        lambda root, *args: ".claude/hooks\\nsrc/removed.py\\n",
+        lambda root, *args: ".claude/hooks\nsrc/removed.py\n",
     )
     monkeypatch.setattr(
         "scripts.audit_repo_consistency.tracked_files",
