@@ -159,8 +159,8 @@ jobs:
             knowledge-inventory.txt
             repo-consistency-audit.txt
             repo-consistency-history-audit.txt
-          python-reachability-audit.txt
-          resource-inventory-audit.txt
+            python-reachability-audit.txt
+            resource-inventory-audit.txt
           if-no-files-found: error
           retention-days: 30
 
