@@ -40,4 +40,3 @@ jobs:
 
       - name: Run focused test suite
         run: uv run python scripts/pytest_diagnostics.py
-
