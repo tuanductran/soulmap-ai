@@ -10,7 +10,7 @@ cases, writing framework assertions, validating source markers, and running eval
 
 ## Do not use this skill for
 
-- Modifying the core framework selection logic, use code editing tools directly and follow [`../rules/detector-development.md`](../../rules/detector-development.md)
+- Modifying the core framework selection logic, use code editing tools directly and follow [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
 - Writing framework skill files (Activation Signals, Response Structure), use [`framework-author`](../framework-author/SKILL.md)
 - Developing new detector modules, use [`detector-engineer`](../detector-engineer/SKILL.md)
 - Creating non-eval tests, use standard pytest patterns
@@ -46,7 +46,7 @@ The group structure guarantees that:
 Always check these files first:
 
 - `evals/README.md`, how to run evals and interpret results
-- `../rules/evals-and-testing.md`, group structure conventions and schema
+- `.claude/rules/evals-and-testing.md`, group structure conventions and schema
 - `skills/frameworks/`, the authoritative framework definitions
 - `evals/datasets/groups.json`, the current eval state
 - `evals/datasets/response_generation_cases.json`, end-to-end response cases
