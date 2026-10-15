@@ -85,8 +85,10 @@ def test_build_cli_always_builds_both_artifacts(
     monkeypatch.setattr(
         build_tool,
         "build_all",
-        lambda root: calls.append(root)
-        or (root / "dist/soulmap-ai.zip", root / "dist/soulmap-ai.skill"),
+        lambda root: (
+            calls.append(root)
+            or (root / "dist/soulmap-ai.zip", root / "dist/soulmap-ai.skill")
+        ),
     )
 
     assert build_tool.main([]) == 0
@@ -137,7 +139,6 @@ def test_build_zip_replaces_an_existing_archive(tmp_path: Path) -> None:
     assert _archive_names(rebuilt_archive) == {"LICENSE"}
 
 
-
 def test_dev_rejects_archive_content_that_differs_from_source(tmp_path: Path) -> None:
     source = _write(tmp_path, "skills/example.md", "current source\n")
     archive_path = tmp_path / "stale.zip"
@@ -148,7 +149,6 @@ def test_dev_rejects_archive_content_that_differs_from_source(tmp_path: Path) ->
         dev_tool._verify_archive(
             archive_path, {source.relative_to(tmp_path).as_posix()}, tmp_path
         )
-
 
 
 def test_cli_exposes_build_and_dev_commands(
