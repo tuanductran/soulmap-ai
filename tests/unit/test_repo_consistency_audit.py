@@ -67,7 +67,7 @@ def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
 
 def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
     assert path_reference_hits(
-        "The old repo-contract.md reference needs review.\\n",
+        "The old repo-contract.md reference needs review.\n",
         "docs/repo-contract.md",
         source_path=Path("README.md"),
         current_paths={"docs/engineering/repo-contract.md"},
