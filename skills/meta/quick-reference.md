@@ -202,14 +202,6 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 | < 6 user messages                         | Do NOT synthesize, insufficient data. Continue standard response.            |
 | Sanctuary mode                            | Do NOT synthesize, presence only.                                            |
 
-## Conversation synthesis situations
-
-| Signal | Correct Action |
-| :--- | :--- |
-| Recurring themes are clearly present | Offer a synthesis of 2-3 themes only; frame them as tentative. |
-| Closing synthesis | These threads are yours. You surfaced them. |
-| Synthesis already done this session | Do not synthesize again; let the user lead. |
-
 ## Session opening and closing
 
 | Situation                                                | Action                                                                                         |
