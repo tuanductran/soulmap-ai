@@ -72,10 +72,10 @@ def test_failure_summary_contains_serial_reproduction(
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary_file))
 
     write_failure_summary = cast(
-        Callable[[int, str, int, str], None],
+        Callable[..., None],
         diagnostics_module["_write_failure_summary"],
     )
-    write_failure_summary(2468, "auto", 1, "focused")
+    write_failure_summary(2468, "auto", 1, "focused", coverage=True)
 
     summary = summary_file.read_text(encoding="utf-8")
     assert "Test scope: `focused`" in summary
@@ -83,6 +83,8 @@ def test_failure_summary_contains_serial_reproduction(
     assert "pytest-xdist workers: `auto`" in summary
     assert "tests/contract" in summary
     assert "--randomly-seed=2468" in summary
+    assert "--cov=src/soulmap" in summary
+    assert "--cov-report=term-missing" in summary
 
 
 def test_main_returns_test_failure_and_writes_diagnostics(
@@ -97,6 +99,7 @@ def test_main_returns_test_failure_and_writes_diagnostics(
     monkeypatch.setenv("PYTEST_RANDOMLY_SEED", "1357")
     monkeypatch.setenv("SOULMAP_PYTEST_WORKERS", "auto")
     monkeypatch.setenv("SOULMAP_PYTEST_SCOPE", "focused")
+    monkeypatch.setenv("SOULMAP_PYTEST_COVERAGE", "1")
     monkeypatch.setattr(diagnostics_module["platform"], "platform", lambda: "test-os")
 
     calls: list[list[str]] = []
@@ -113,6 +116,16 @@ def test_main_returns_test_failure_and_writes_diagnostics(
         Callable[..., list[str]], diagnostics_module["build_test_command"]
     )
     assert main() == 1
-    assert calls == [build_test_command(1357, "auto", scope="focused")]
+    assert calls == [build_test_command(1357, "auto", scope="focused", coverage=True)]
     assert env_file.read_text(encoding="utf-8") == "PYTEST_RANDOMLY_SEED=1357\n"
     assert "seed: `1357`" in summary_file.read_text(encoding="utf-8")
+
+
+def test_build_test_command_can_include_coverage(
+    diagnostics_module: dict[str, object],
+) -> None:
+    build_test_command = cast(
+        Callable[..., list[str]], diagnostics_module["build_test_command"]
+    )
+    command = build_test_command(12345, "auto", scope="focused", coverage=True)
+    assert command[-2:] == ["--cov=src/soulmap", "--cov-report=term-missing"]
