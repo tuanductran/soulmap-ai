@@ -11,8 +11,10 @@
 
 Pull-request CI uses a focused Python test gate rather than collecting every test file. The
 focused gate covers `tests/contract`, `tests/integration`, `tests/regression`, and `tests/unit`.
-The three-platform matrix runs only the script smoke test outside Ubuntu, while safety and
-response evals remain explicit CI steps.
+On Ubuntu, the same focused run collects the coverage report and records reproducibility
+diagnostics, avoiding a second execution of those test directories. The three-platform matrix
+runs only the script smoke test outside Ubuntu, while safety and response evals remain explicit
+CI steps.
 
 The full pytest suite remains available for deliberate repository-wide validation and runs in
 weekly governance. Use `SOULMAP_PYTEST_SCOPE=full uv run python scripts/pytest_diagnostics.py` when

@@ -76,8 +76,11 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     for workflow_text in (ci_text, release_text):
         assert "uv run python scripts/pytest_diagnostics.py" in workflow_text
 
-    assert "PYTEST_RANDOMLY_SEED" in ci_text
-    assert '--randomly-seed="${PYTEST_RANDOMLY_SEED}"' in ci_text
+    assert "PYTEST_RANDOMLY_SEED" in script_text
+    assert "--cov=src/soulmap" in script_text
+    assert "--cov-report=term-missing" in script_text
+    assert 'SOULMAP_PYTEST_COVERAGE: "1"' in ci_text
+    assert "Coverage report (Ubuntu only)" not in ci_text
 
 
 def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
