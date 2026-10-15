@@ -133,3 +133,25 @@ def test_main_returns_error_for_missing_registry_target(tmp_path: Path) -> None:
     )
 
     assert main(["--root", str(tmp_path)]) == 1
+
+
+def test_registry_invalid_entry_marks_inventory_incomplete(tmp_path: Path) -> None:
+    registry = tmp_path / "src/soulmap/runtime"
+    registry.mkdir(parents=True)
+    (registry / "source_registry.py").write_text(
+        'REGISTRY = {"valid": ("skills/valid.md", "Signals", "Contract", "Guidance"), '
+        '"invalid": ("skills/invalid.md",)}\\n',
+        encoding="utf-8",
+    )
+    (tmp_path / "skills").mkdir()
+    (tmp_path / "skills/valid.md").write_text("# Valid\\n", encoding="utf-8")
+
+    findings = audit(tmp_path)
+
+    assert any(
+        item.category == "audit-limitation"
+        and "runtime registry contains invalid entries" in " ".join(item.evidence)
+        for item in findings
+    )
+    assert not any(item.category == "missing-resource" for item in findings)
+    assert main(["--root", str(tmp_path)]) == 2
