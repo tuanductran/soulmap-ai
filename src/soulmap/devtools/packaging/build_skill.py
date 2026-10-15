@@ -1,32 +1,12 @@
-"""Build distribution artifacts for SoulMap AI.
+"""Build both SoulMap AI distribution artifacts from the canonical source set.
 
-Flags
------
-default   Build dist/soulmap-ai.zip   (when no flag is given)
---skill   Build dist/soulmap-ai.skill
-
-Examples:
---------
-uv run soulmap build                  # zip build
-uv run soulmap build --skill          # .skill build
-
-Formats
--------
-soulmap-ai.zip
-    Standard distribution zip for manual extraction and document-based tools.
-    Includes root SKILL.md, SOULMAP.md, LICENSE, and skills/.
-    Excludes .claude-plugin/ and templates/ (internal-only, not shipped).
-
-soulmap-ai.skill
-    Skill-oriented archive with the same core knowledge files as the zip build.
-    Also includes the full .claude-plugin/ directory without rewriting it.
-    Excludes templates/ (internal-only, not shipped).
+The default command always creates the standard ZIP and the Claude-oriented
+.skill archive. Their only packaging difference is the preserved plugin metadata.
 """
 
 from __future__ import annotations
 
 import argparse
-import textwrap
 import zipfile
 from pathlib import Path
 
@@ -35,13 +15,9 @@ from soulmap.devtools.packaging.members import load_distignore as _load_distigno
 from soulmap.devtools.packaging.members import source_paths
 from soulmap.devtools.support.repo import REPO_ROOT
 
-# ---------------------------------------------------------------------------
-# Shared helpers
-# ---------------------------------------------------------------------------
-
 
 def _iter_inputs(repo_root: Path) -> list[Path]:
-    """Return files shared by the zip and .skill archives."""
+    """Return files shared by the ZIP and .skill archives."""
     return source_paths(repo_root, include_plugin=False)
 
 
@@ -77,7 +53,7 @@ def _build_archive(
     *,
     include_claude_plugin: bool,
 ) -> Path:
-    """Build an archive from the requested file set using the requested filename."""
+    """Build an archive from the canonical shipped files."""
     out_dir = repo_root / "dist"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / output_name
@@ -86,31 +62,21 @@ def _build_archive(
     inputs = _iter_inputs(repo_root)
     if include_claude_plugin:
         _assert_single_skill_entrypoint(repo_root)
-    if include_claude_plugin:
         inputs = sorted(set(inputs + _iter_claude_plugin_inputs(repo_root)))
-
-    if out_path.exists():
-        out_path.unlink()
 
     with zipfile.ZipFile(out_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for path in inputs:
-            rel = path.relative_to(repo_root).as_posix()
-            if _is_ignored(rel, patterns):
-                continue
-            archive.write(path, arcname=rel)
+            relative = path.relative_to(repo_root).as_posix()
+            if not _is_ignored(relative, patterns):
+                archive.write(path, arcname=relative)
 
     size_kb = out_path.stat().st_size // 1024
     print(f"OK ({label}): {out_path}  (~{size_kb}KB)")
     return out_path
 
 
-# ---------------------------------------------------------------------------
-# Output 1: ZIP
-# ---------------------------------------------------------------------------
-
-
 def build_zip(repo_root: Path) -> Path:
-    """Build dist/soulmap-ai.zip."""
+    """Build dist/soulmap-ai.zip without Claude plugin metadata."""
     return _build_archive(
         repo_root,
         "soulmap-ai.zip",
@@ -119,13 +85,8 @@ def build_zip(repo_root: Path) -> Path:
     )
 
 
-# ---------------------------------------------------------------------------
-# Output 2: .skill
-# ---------------------------------------------------------------------------
-
-
 def build_skill(repo_root: Path) -> Path:
-    """Build dist/soulmap-ai.skill with .claude-plugin preserved."""
+    """Build dist/soulmap-ai.skill with Claude plugin metadata preserved."""
     return _build_archive(
         repo_root,
         "soulmap-ai.skill",
@@ -134,45 +95,19 @@ def build_skill(repo_root: Path) -> Path:
     )
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
+def build_all(repo_root: Path) -> tuple[Path, Path]:
+    """Build and return both supported distribution artifacts."""
+    return build_zip(repo_root), build_skill(repo_root)
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Build the distribution artifacts from the command line.
-
-    Args:
-        argv: Command-line arguments, or None to read from ``sys.argv``.
-            Selects the standard zip, the skill package, or both.
-
-    Returns:
-        0 when every requested artifact builds, non-zero on failure.
-    """
+    """Build both distribution artifacts; artifact selection is not configurable."""
     parser = argparse.ArgumentParser(
         prog="soulmap build",
-        description="Build SoulMap AI distribution artifacts.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=textwrap.dedent("""\
-            examples:
-              uv run soulmap build           build the standard zip
-              uv run soulmap build --skill   build the .skill package
-        """),
+        description="Build both SoulMap AI distribution artifacts.",
     )
-    parser.add_argument(
-        "--skill",
-        action="store_true",
-        help="Build dist/soulmap-ai.skill with .claude-plugin preserved",
-    )
-
-    args = parser.parse_args(argv)
-    repo_root = REPO_ROOT
-
-    if args.skill:
-        build_skill(repo_root)
-    else:
-        build_zip(repo_root)
-
+    parser.parse_args(argv)
+    build_all(REPO_ROOT)
     return 0
 
 
