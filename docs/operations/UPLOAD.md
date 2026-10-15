@@ -3,8 +3,8 @@
 ## Build commands
 
 ```bash
-uv run soulmap build             # standard zip
-uv run soulmap build --skill     # skill package
+uv run soulmap build             # both archives
+uv run soulmap dev               # verify and extract both archives under .soulmap/
 uv run soulmap library-manifest  # both archives + Library manifest
 ```
 
@@ -103,11 +103,15 @@ that can be unpacked into that directory structure on any compatible agent runti
 
 ### Zip build for ChatGPT (Code Interpreter) or multi-file tools
 
-Build the standard zip:
+Build both archives in one command:
 
 ```bash
 uv run soulmap build
 ```
+
+The command always creates both `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`;
+there is no artifact-selection flag. To inspect verified extracted trees locally, run
+`uv run soulmap dev`, which refreshes `.soulmap/zip/` and `.soulmap/skill/`.
 
 What you get:
 
@@ -129,10 +133,10 @@ Suggested use for Custom GPT knowledge or Claude Projects:
 
 ### Skill build for Claude Custom Skills or skill-oriented agents
 
-Build the skill package:
+The `.skill` archive is produced by the same default build command:
 
 ```bash
-uv run soulmap build --skill
+uv run soulmap build
 ```
 
 What you get:
