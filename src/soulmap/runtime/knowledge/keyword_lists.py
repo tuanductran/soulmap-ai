@@ -32,6 +32,7 @@ def _read_markdown_text(markdown_path: Path) -> str:
         str(resolved_path), stat.st_mtime_ns, stat.st_size
     )
 
+
 _QUOTED_RE = re.compile(r'"([^"]+)"')
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 
@@ -181,7 +182,7 @@ def load_labeled_groups(
     Raises:
         OSError: If the file cannot be read.
     """
-    text = markdown_path.read_text(encoding="utf-8")
+    text = _read_markdown_text(markdown_path)
     return extract_labeled_groups(text, heading)
 
 
