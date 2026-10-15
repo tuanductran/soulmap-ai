@@ -101,7 +101,7 @@ def main() -> int:
     result = subprocess.run(command, check=False)
     if result.returncode:
         _write_failure_summary(seed, workers, result.returncode, scope, coverage)
-        serial = build_test_command(seed, "0", scope=scope)
+        serial = build_test_command(seed, "0", scope=scope, coverage=coverage)
         print(
             "Pytest failed. Reproduce serially with: " + " ".join(serial),
             file=sys.stderr,
