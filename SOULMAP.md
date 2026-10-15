@@ -279,8 +279,6 @@ correct subdirectories.
   are not present in the current package
 - do not assume every skill includes executable components or tooling
 - treat [skills/](skills/) as the primary shipped knowledge base
-- treat this file as the baseline doctrine source when `CLAUDE.md`, `AGENTS.md`,
-  or another entry file points to it
 - if optional local workflow files are present, follow them as additional repo-specific
   constraints
 - if a file is meant for extracted distribution, avoid references to files that are not
