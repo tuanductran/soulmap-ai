@@ -104,11 +104,24 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
             }
         if not isinstance(registry, dict):
             return set(), {"runtime registry is not a mapping; manual review required"}
-        paths = {
-            entry[0]
-            for entry in registry.values()
-            if isinstance(entry, tuple) and entry and isinstance(entry[0], str)
-        }
+        invalid_entries = [
+            key
+            for key, entry in registry.items()
+            if not isinstance(key, str)
+            or not isinstance(entry, tuple)
+            or len(entry) != 4
+            or not all(isinstance(value, str) for value in entry)
+        ]
+        if invalid_entries:
+            preview = ", ".join(repr(key) for key in invalid_entries[:5])
+            remainder = len(invalid_entries) - 5
+            if remainder > 0:
+                preview += f", and {remainder} more"
+            return set(), {
+                "runtime registry contains invalid entries "
+                f"({len(invalid_entries)}): {preview}; manual review required"
+            }
+        paths = {entry[0] for entry in registry.values()}
         return paths, set()
     return set(), {"canonical REGISTRY assignment was not found"}
 
