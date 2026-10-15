@@ -90,6 +90,16 @@ def test_resolve_imports_uses_package_name_for_relative_import_in_init() -> None
     assert found == {"pkg.sub.helper"}
 
 
+def test_resolve_imports_ignores_relative_imports_beyond_top_level() -> None:
+    tree = ast.parse("from ...helper import VALUE")
+    found = resolve_imports(
+        tree,
+        "pkg.sub.module",
+        {"pkg", "pkg.sub", "pkg.helper"},
+    )
+    assert found == set()
+
+
 def test_analyze_tracks_relative_imports_from_package_initializer(
     tmp_path: Path,
 ) -> None:
