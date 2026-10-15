@@ -109,7 +109,7 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
             for key, entry in registry.items()
             if not isinstance(key, str)
             or not isinstance(entry, tuple)
-            or len(entry) != 4
+            or len(entry) < 2
             or not all(isinstance(value, str) for value in entry)
         ]
         if invalid_entries:
