@@ -7,6 +7,7 @@ import pytest
 from scripts.audit_repo_consistency import (
     comment_candidates,
     deleted_directories,
+    deleted_paths,
     directory_reference_hits,
     path_reference_hits,
 )
@@ -47,6 +48,32 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
     assert path_reference_hits(content, "docs/old-guide.md") == [
         (1, "exact-path", "See docs/old-guide.md for details."),
         (2, "basename-only", "The old-guide.md reference may also be stale."),
+    ]
+
+
+def test_path_reference_hits_ignores_generic_skill_basename() -> None:
+    content = "Current skill documents use SKILL.md as their conventional filename.\\n"
+
+    assert path_reference_hits(content, "skills/frameworks/SKILL.md") == []
+
+
+def test_deleted_paths_excludes_paths_reused_as_directories(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        "scripts.audit_repo_consistency.run_git",
+        lambda root, *args: ".claude/hooks\\nsrc/removed.py\\n",
+    )
+    monkeypatch.setattr(
+        "scripts.audit_repo_consistency.tracked_files",
+        lambda root: [
+            root / ".claude" / "hooks" / "session-start.sh",
+            root / "src" / "live.py",
+        ],
+    )
+
+    assert deleted_paths(tmp_path, base="origin/main", history=False) == [
+        "src/removed.py"
     ]
 
 
