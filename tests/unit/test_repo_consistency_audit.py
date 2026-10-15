@@ -57,12 +57,15 @@ def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
         "See docs/engineering/repo-contract.md for details.\\n"
     )
 
-    assert path_reference_hits(
-        content,
-        "docs/repo-contract.md",
-        source_path=Path("docs/engineering/DEV.md"),
-        current_paths={"docs/engineering/repo-contract.md"},
-    ) == []
+    assert (
+        path_reference_hits(
+            content,
+            "docs/repo-contract.md",
+            source_path=Path("docs/engineering/DEV.md"),
+            current_paths={"docs/engineering/repo-contract.md"},
+        )
+        == []
+    )
 
 
 def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
