@@ -118,8 +118,8 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
             if remainder > 0:
                 preview += f", and {remainder} more"
             warning = (
-                f"runtime registry contains invalid entries ({len(invalid_entries)}): "
-                f"{preview}; manual review required"
+                "runtime registry contains invalid entries "
+                + f"({len(invalid_entries)}): {preview}; manual review required"
             )
             return set(), {warning}
         paths = {entry[0] for entry in registry.values()}
