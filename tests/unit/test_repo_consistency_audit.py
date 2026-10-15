@@ -51,6 +51,29 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
     ]
 
 
+def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
+    content = (
+        "[Repository contract](repo-contract.md)\\n"
+        "See docs/engineering/repo-contract.md for details.\\n"
+    )
+
+    assert path_reference_hits(
+        content,
+        "docs/repo-contract.md",
+        source_path=Path("docs/engineering/DEV.md"),
+        current_paths={"docs/engineering/repo-contract.md"},
+    ) == []
+
+
+def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
+    assert path_reference_hits(
+        "The old repo-contract.md reference needs review.\\n",
+        "docs/repo-contract.md",
+        source_path=Path("README.md"),
+        current_paths={"docs/engineering/repo-contract.md"},
+    ) == [(1, "basename-only", "The old repo-contract.md reference needs review.")]
+
+
 def test_path_reference_hits_ignores_generic_skill_basename() -> None:
     content = "Current skill documents use SKILL.md as their conventional filename.\n"
 
