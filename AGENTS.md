@@ -94,6 +94,11 @@ Full rules: [.claude/rules/git-and-release.md](.claude/rules/git-and-release.md)
 
 - Prefer the smallest correct change. Do not fix unrelated things in the same
   diff.
+- Do not manually add or maintain an `Unreleased` section or append pending
+  entries to `CHANGELOG.md`. The Release Prep workflow runs `uv run cz bump --yes`,
+  and Commitizen generates the versioned changelog entry from Conventional Commits.
+  Only change `CHANGELOG.md` manually when explicitly correcting historical entries
+  or maintaining the changelog-generation configuration.
 - Prefer updating an existing file over creating a parallel one.
 - Content changes (frameworks, safety language, brand copy) belong in `skills/`
   or `templates/`, not in Python. Python is orchestration, detection, and
