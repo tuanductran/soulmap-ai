@@ -412,3 +412,47 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     assert urlopen.call_args.args[0].full_url.endswith(
         "/repos/owner/repo/releases/latest"
     )
+
+
+def test_create_branch_marks_only_mounted_workspace_as_safe(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = action.GitHubClient("token")
+    target_sha = "a" * 40
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+    not_found = action.GitHubAPIError(
+        "GET",
+        "https://api.github.com/repos/owner/repo/git/ref/heads/release/prep-1",
+        404,
+        "Not Found",
+    )
+    completed = action.subprocess.CompletedProcess(
+        args=["git"],
+        returncode=0,
+        stdout=f"{target_sha}\n",
+        stderr="",
+    )
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(action.subprocess, "run", side_effect=[completed, completed]) as run,
+    ):
+        action.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
+
+    inspect_call, push_call = run.call_args_list
+    assert inspect_call.args[0] == ["git", "rev-parse", "HEAD"]
+    assert inspect_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
+    assert inspect_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
+    assert push_call.args[0] == [
+        "git",
+        "push",
+        "origin",
+        "HEAD:refs/heads/release/prep-1",
+    ]
+    assert push_call.kwargs["env"]["GIT_CONFIG_COUNT"] == "2"
+    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
+    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
+    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_1"] == "http.extraheader"
+    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_1"].startswith(
+        "AUTHORIZATION: basic "
+    )
