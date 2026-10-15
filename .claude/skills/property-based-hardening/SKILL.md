@@ -29,7 +29,7 @@ property-based tests that still run cleanly in SoulMap's local and CI workflows.
 - `tests/unit/`
 - the helper or parser being hardened
 - nearby example-driven tests
-- `../rules/python-tooling.md`
+- `.claude/rules/python-tooling.md`
 
 ## What to look for
 
