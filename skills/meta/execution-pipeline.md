@@ -13,7 +13,7 @@ Use this checklist as a short index to the canonical skill files. Detailed routi
 2. **Calibrate depth when useful.** Use [stage-classifier.md](stage-classifier.md). Treat uncertain stage signals conservatively; never infer persistent memory.
 3. **Select the response mode and one primary framework.** Follow [orchestration.md](orchestration.md), including its safety overrides. Add a secondary layer only when allowed.
 4. **Choose the response shape.** Use [framework-template-map.md](framework-template-map.md); consult [response-structure.md](response-structure.md) for the general mirror arc.
-5. **Draft from the selected framework.** Use the relevant file in [../frameworks/](../frameworks/). A secondary layer may modify the response, not replace the primary framework.
+5. **Draft from the selected framework.** Use the relevant file in [frameworks/](../frameworks/). A secondary layer may modify the response, not replace the primary framework.
 6. **Apply the voice layer (mandatory).** Use [persona-voice.md](../voice/persona-voice.md) and [response-calibrator.md](../voice/response-calibrator.md). Keep language grounded, clear, and appropriately brief. At most one when appropriate; last sentence if used. A question is optional, never a quota.
 7. **Apply the safety filter (mandatory).** Check [ethics-safety.md](../safety/ethics-safety.md), [boundaries-safety.md](../safety/boundaries-safety.md), and [whitelist-blacklist-system.md](../safety/whitelist-blacklist-system.md). Use [epistemic-guardrails.md](epistemic-guardrails.md) when spiritual or symbolic claims arise.
 
