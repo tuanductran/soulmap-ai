@@ -56,8 +56,8 @@ def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
     current_path = "docs/engineering/" + basename
     deleted_path = "docs/" + basename
     content = (
-        f"[Repository contract]({basename})\\n"
-        f"See {current_path} for details.\\n"
+        f"[Repository contract]({basename})\n"
+        f"See {current_path} for details.\n"
     )
 
     assert (
@@ -75,7 +75,7 @@ def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
     basename = "repo-" + "contract.md"
     line = f"The old {basename} reference needs review."
     assert path_reference_hits(
-        line + "\\n",
+        line + "\n",
         "docs/" + basename,
         source_path=Path("README.md"),
         current_paths={"docs/engineering/" + basename},
@@ -83,7 +83,7 @@ def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
 
 
 def test_path_reference_hits_ignores_generic_skill_basename() -> None:
-    content = "Current skill documents use SKILL.md as their conventional filename.\\n"
+    content = "Current skill documents use SKILL.md as their conventional filename.\n"
     target_path = "/".join(("skills", "frameworks", "SKILL.md"))
 
     assert path_reference_hits(content, target_path) == []
@@ -91,7 +91,7 @@ def test_path_reference_hits_ignores_generic_skill_basename() -> None:
 
 def test_path_reference_hits_ignores_generic_action_basename() -> None:
     assert path_reference_hits(
-        "The action.yml manifest is checked by its contract test.\\n",
+        "The action.yml manifest is checked by its contract test.\n",
         ".github/actions/setup-uv/" + "action.yml",
     ) == []
 
