@@ -106,3 +106,23 @@ def test_path_reference_hits_avoid_substring_matches() -> None:
         (1, "exact-path", "Exact path: docs/old-guide.md."),
         (4, "backslash-path", r"Windows path: docs\old-guide.md"),
     ]
+
+
+def test_main_returns_incomplete_status_for_unreadable_tracked_text(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    unreadable = tmp_path / "unreadable.md"
+    unreadable.write_bytes(b"\xff\xfe\xfa")
+    monkeypatch.setattr(
+        "scripts.audit_repo_consistency.tracked_files", lambda root: [unreadable]
+    )
+
+    from scripts.audit_repo_consistency import main
+
+    exit_code = main(["--root", str(tmp_path), "--comments-only"])
+    output = capsys.readouterr().out
+
+    assert exit_code == 2
+    assert "AUDIT LIMITATION:" in output
+    assert "UnicodeDecodeError" in output
+    assert "INCOMPLETE:" in output

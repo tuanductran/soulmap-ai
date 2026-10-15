@@ -35,7 +35,7 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(
     registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals")}\n',
+        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     (tmp_path / "skills/frameworks").mkdir(parents=True)
@@ -52,7 +52,7 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(
     assert "missing-resource" not in findings
 
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals")}\n',
+        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     findings = audit(tmp_path)
@@ -91,7 +91,7 @@ def test_inventory_uses_paths_relative_to_repository_root(tmp_path: Path) -> Non
     registry = root / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals")}\n',
+        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     resource = root / "skills/frameworks/example.md"
@@ -128,8 +128,30 @@ def test_main_returns_error_for_missing_registry_target(tmp_path: Path) -> None:
     registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals")}\n',
+        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
 
     assert main(["--root", str(tmp_path)]) == 1
+
+
+def test_registry_invalid_entry_marks_inventory_incomplete(tmp_path: Path) -> None:
+    registry = tmp_path / "src/soulmap/runtime"
+    registry.mkdir(parents=True)
+    (registry / "source_registry.py").write_text(
+        'REGISTRY = {"valid": ("skills/valid.md", "Signals", "Contract", "Guidance"), '
+        '"invalid": ("skills/invalid.md",)}\n',
+        encoding="utf-8",
+    )
+    (tmp_path / "skills").mkdir()
+    (tmp_path / "skills/valid.md").write_text("# Valid\n", encoding="utf-8")
+
+    findings = audit(tmp_path)
+
+    assert any(
+        item.category == "audit-limitation"
+        and "runtime registry contains invalid entries" in " ".join(item.evidence)
+        for item in findings
+    )
+    assert not any(item.category == "missing-resource" for item in findings)
+    assert main(["--root", str(tmp_path)]) == 2
