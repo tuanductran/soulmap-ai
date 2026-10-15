@@ -63,7 +63,7 @@ def test_unsupported_24_7_claims_are_detected_but_negations_are_allowed() -> Non
     """Accept a warning while detecting unsupported affirmative resource claims."""
     assert not _has_unsupported_24_7_claim("Do not claim 24/7 availability.")
     assert _has_unsupported_24_7_claim("The hotline is available 24/7.")
-            r"|\(\s*free\s*,\s*24\s*/\s*7\s*\)",
+    assert _has_unsupported_24_7_claim("This hotline is (free, 24/7).")
 
 
 def run_tests(cases_path: Path = DATASET) -> int:
