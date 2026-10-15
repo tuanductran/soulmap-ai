@@ -16,9 +16,7 @@ from pathlib import Path
 
 
 @lru_cache(maxsize=128)
-def _read_markdown_text_cached(
-    resolved_path: str, modified_ns: int, size: int
-) -> str:
+def _read_markdown_text_cached(resolved_path: str, modified_ns: int, size: int) -> str:
     """Read Markdown once per path version, allowing edits to invalidate cache."""
     del modified_ns, size  # These values are cache-key inputs, not read options.
     return Path(resolved_path).read_text(encoding="utf-8")
