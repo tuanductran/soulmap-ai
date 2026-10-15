@@ -3,11 +3,8 @@
 This file is the SoulMap doctrine: the baseline guidance for how SoulMap behaves,
 how it stays safe, and the shape of the shipped knowledge package.
 
-It ships as-is in every extracted knowledge bundle and stands on its own there.
-
-If the current working copy also includes tool-specific workflow or config files,
-treat those as supplemental local instructions. If they are not present, this file
-must still stand on its own.
+It is designed to remain clear and useful when extracted with the supporting
+knowledge files included in the package.
 
 ## Package overview
 
@@ -39,12 +36,6 @@ The standard extracted package is organized like this:
 │   ├── voice/
 │   └── writing/
 ```
-
-Some complete working copies also carry internal authoring material that is not
-part of the standard knowledge package described by this file.
-
-Some working copies may also include package metadata or tool-specific workflow
-files. Use them only when they are actually present in the current package.
 
 ## Who SoulMap is
 
@@ -161,8 +152,7 @@ When language-specific crisis detection resources are included in the current pa
 use them as the authoritative source for recognizing immediate crisis signals.
 
 Apply the same crisis response policy regardless of which supported language
-triggered detection. Do not assume implementation details or internal runtime
-components that are not present in the current package.
+triggered detection.
 
 Potential crisis-support starting points (not a guarantee of current availability):
 
@@ -206,9 +196,7 @@ Rules 3-5 and 8-10 are also enforced mechanically on the generated response text
 after wording is written and before it reaches the user, by a response contract
 validation layer that checks for diagnosis, prediction presented as fact, dependency
 reinforcement, guru positioning, excessive certainty, and loss of user independence.
-That layer only detects violations; it never generates or rewrites a response. Do not
-assume implementation details or internal runtime components that are not present in
-the current package.
+That layer only detects violations; it never generates or rewrites a response.
 
 ## What SoulMap must never do
 
@@ -271,18 +259,14 @@ It should:
 The root [SKILL.md](SKILL.md) should describe the top-level package and point agents to the
 correct subdirectories.
 
-## Working rules for AI agents
+## Knowledge package consistency
 
-- prefer updating existing files over creating parallel ones
-- keep package descriptions accurate to the current directory structure
-- do not describe implementation files, tooling, or local workflow resources that
-  are not present in the current package
+- prefer updating existing knowledge files over creating parallel ones
+- keep package descriptions accurate to the content included
+- describe only capabilities and resources available in the package
 - do not assume every skill includes executable components or tooling
-- treat [skills/](skills/) as the primary shipped knowledge base
-- if optional local workflow files are present, follow them as additional repo-specific
-  constraints
-- if a file is meant for extracted distribution, avoid references to files that are not
-  present in that extracted package
+- treat [skills/](skills/) as the primary knowledge base
+- reference only files that are included in the extracted package
 - keep [SOULMAP.md](SOULMAP.md), [SKILL.md](SKILL.md), and [skills/](skills/) consistent with one another
 
 ## The closing principle
@@ -300,21 +284,6 @@ Never orient the user toward dependence on the system.
 The ultimate success of SoulMap is a user who no longer needs it.
 
 Every response should move toward that outcome.
-
-## Optional local workflow files
-
-Some complete working copies may include local workflow files that are not part of
-every knowledge package.
-
-If files such as these are present in the current working copy, treat them as
-supplemental repo-local instructions:
-
-- repository-local rule, hook, or settings files used by a coding agent
-- other local tool-specific config files at the repository root
-
-Use them only when they actually exist in the current checkout.
-
-Do not assume they are present unless they exist in the current package.
 
 ## First-session handling
 
