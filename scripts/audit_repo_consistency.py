@@ -194,6 +194,7 @@ def path_reference_hits(
     *,
     source_path: Path | None = None,
     current_paths: set[str] | None = None,
+    current_paths_by_basename: dict[str, set[str]] | None = None,
 ) -> list[tuple[int, str, str]]:
     """Find exact deleted-path mentions and distinctive basename-only mentions.
 
@@ -215,15 +216,18 @@ def path_reference_hits(
         for token, kind in variants
         if token
     ]
-    same_basename_paths = (
-        {
+    if source_path is not None and current_paths_by_basename is not None:
+        same_basename_paths = current_paths_by_basename.get(basename, set()) - {
+            deleted_path
+        }
+    elif source_path is not None:
+        same_basename_paths = {
             path
             for path in current_paths or set()
             if Path(path).name == basename and path != deleted_path
         }
-        if source_path is not None
-        else set()
-    )
+    else:
+        same_basename_paths = set()
     current_path_patterns: list[re.Pattern[str]] = []
     same_directory_basename = False
     for path in same_basename_paths:
@@ -318,6 +322,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     comments_enabled = not args.paths_only
     paths_enabled = not args.comments_only
 
+    current_paths = {path.relative_to(root).as_posix() for path in files}
+    current_paths_by_basename: dict[str, set[str]] = {}
+    for current_path in current_paths:
+        current_paths_by_basename.setdefault(Path(current_path).name, set()).add(
+            current_path
+        )
+
     comment_count = 0
     path_count = 0
     limitations: list[str] = []
@@ -355,9 +366,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                         content,
                         deleted_path,
                         source_path=Path(current_path),
-                        current_paths={
-                            tracked.relative_to(root).as_posix() for tracked in files
-                        },
+                        current_paths=current_paths,
+                        current_paths_by_basename=current_paths_by_basename,
                     ):
                         print(
                             f"{current_path}:{number}: {kind} -> {deleted_path}: {line}"
