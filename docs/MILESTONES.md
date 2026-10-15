@@ -41,8 +41,20 @@ notes, tests, and release records.
 | 25 | Safety Matrix Closure | Resolved the remaining safety-matrix status gaps; the matrix now distinguishes enforced, bounded, and guidance-only rules without open `partial` rows. |
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
 | 27 | v0.14.0 Audit & Release Integrity | Added review-only Python/resource reachability inventories, stale-path and detector-knowledge drift checks, incomplete-scan reporting, relative-import resolution, and Docker Action workspace trust; verified release finalization, cross-platform CI, Python compatibility, and CodeQL. |
-| 28 | Audit False-Positive Reduction & Reference Repair | Reduced confirmed stale-path and Markdown-reference audit false positives; included CLI, Docker Action, and P-level governance entrypoints in reachability analysis; corrected stale maintainer rule paths and a deleted-module docstring reference. No source was deleted based on scanner output; the docstring-only `safety.py` remains review-only pending post-merge verification. |
+| 28 | Audit False-Positive Reduction & Reference Repair | Reduced confirmed stale-path and Markdown-reference audit false positives; included CLI, Docker Action, and P-level governance entrypoints in reachability analysis; corrected stale maintainer rule paths and a deleted-module docstring reference. The follow-up inventory found no actionable source deletion; the docstring-only `safety.py` remains review-only and is retained. |
 
+
+## Post-Merge Audit Verification
+
+The canonical inventory jobs ran in [CI run 38692440277](https://github.com/tuanductran/soulmap-ai/actions/runs/38692440277) on PR #679 commit `2401299fc71d6e16fa8dff9330451537c037b58d`, a documentation-only branch based on post-merge `main` at `3e4b279207c956b9a5df795be874df6c61d16cd0`. The runtime and audit implementation matched `main`; the full-history scan also included the documentation-branch commits. The report artifact is `soulmap-knowledge-inventory`.
+
+- Knowledge inventory: 11 safety-protected overlaps; zero exact detector/Markdown overlaps; 15 active config constants and zero orphaned constants; zero Markdown implementation-reference findings.
+- Python reachability: 99 reachable modules and one review-only candidate, `src/soulmap/runtime/config/safety.py`. It contains no runtime constants, but remains referenced by architecture/tests and is retained; reachability alone is not proof of safe deletion.
+- Resource inventory: no missing resource targets or incomplete-scan marker; 5 eval datasets, 17 internal templates, 10 maintainer prompts, 13 maintainer rules, 23 maintainer skills, 2 plugin metadata files, 78 shipped-knowledge files, and 46 supporting documents. Unreferenced resources remain review-only.
+- Current-branch consistency audit: zero deleted paths/directories examined and zero path/directory candidates because the PR contains documentation-only changes.
+- Full-history audit: 140 deleted paths and 38 deleted directories examined; 24 path candidates, 10 directory candidates, and 2 comment candidates. Manual classification found the remaining path hits to be historical changelog references, test fixtures/negative guards, basename-only matches to relocated/current files, or supporting-document references. The directory hits describe the intentionally absent root `library/` source directory, historical `modules/` paths, and a shell-rule glob. The two comment candidates explain test intent. No additional source deletion or runtime change was justified.
+
+The audit artifacts are review evidence, not a deletion list. Reopen this workstream only if a later source, entrypoint, packaging, or knowledge change produces new actionable findings.
 ---
 
 ## Current Historical Baseline
