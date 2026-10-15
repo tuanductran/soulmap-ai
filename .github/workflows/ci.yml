@@ -72,23 +72,14 @@ jobs:
       - name: Dependency vulnerability audit (pip-audit)
         if: matrix.os == 'ubuntu-26.04'
         run: uv run pip-audit
-      - name: Focused Python behavior tests (Ubuntu only)
+      - name: Focused Python behavior tests and coverage (Ubuntu only)
         if: matrix.os == 'ubuntu-26.04'
         env:
           SOULMAP_PYTEST_SCOPE: focused
+          SOULMAP_PYTEST_COVERAGE: "1"
         run: uv run python scripts/pytest_diagnostics.py
       - name: Cross-platform smoke tests
         run: uv run pytest -q tests/smoke/test_scripts_smoke.py
-      - name: Coverage report (Ubuntu only)
-        if: matrix.os == 'ubuntu-26.04'
-        run: |
-          set -o pipefail
-          uv run pytest -n auto \
-            tests/contract tests/integration tests/regression tests/unit \
-            --randomly-seed="${PYTEST_RANDOMLY_SEED}" \
-            --cov=src/soulmap \
-            --cov-report=term-missing \
-            -q 2>&1 | tail -20
       - name: Safety evals
         if: matrix.os == 'ubuntu-26.04'
         run: uv run python tests/eval_regression/test_safety_evals.py
