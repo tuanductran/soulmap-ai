@@ -11,7 +11,26 @@ higher level.
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from pathlib import Path
+
+
+@lru_cache(maxsize=128)
+def _read_markdown_text_cached(
+    resolved_path: str, modified_ns: int, size: int
+) -> str:
+    """Read Markdown once per path version, allowing edits to invalidate cache."""
+    del modified_ns, size  # These values are cache-key inputs, not read options.
+    return Path(resolved_path).read_text(encoding="utf-8")
+
+
+def _read_markdown_text(markdown_path: Path) -> str:
+    """Read a Markdown file with metadata-based cache invalidation."""
+    resolved_path = markdown_path.resolve()
+    stat = resolved_path.stat()
+    return _read_markdown_text_cached(
+        str(resolved_path), stat.st_mtime_ns, stat.st_size
+    )
 
 _QUOTED_RE = re.compile(r'"([^"]+)"')
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
@@ -85,7 +104,7 @@ def load_keyword_section(markdown_path: Path, heading: str) -> tuple[str, ...]:
             content, so a missing file is a repository error rather than a
             condition to absorb.
     """
-    text = markdown_path.read_text(encoding="utf-8")
+    text = _read_markdown_text(markdown_path)
     return extract_keyword_section(text, heading)
 
 
@@ -206,7 +225,7 @@ def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
 
 def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...], ...]:
     """Read a Markdown knowledge file and extract one contract table."""
-    return extract_table_rows(markdown_path.read_text(encoding="utf-8"), heading)
+    return extract_table_rows(_read_markdown_text(markdown_path), heading)
 
 
 def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
