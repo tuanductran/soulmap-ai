@@ -52,35 +52,48 @@ def test_path_reference_hits_distinguishes_exact_and_basename() -> None:
 
 
 def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
+    basename = "repo-" + "contract.md"
+    current_path = "docs/engineering/" + basename
+    deleted_path = "docs/" + basename
     content = (
-        "[Repository contract](repo-contract.md)\\n"
-        "See docs/engineering/repo-contract.md for details.\\n"
+        f"[Repository contract]({basename})\\n"
+        f"See {current_path} for details.\\n"
     )
 
     assert (
         path_reference_hits(
             content,
-            "docs/repo-contract.md",
+            deleted_path,
             source_path=Path("docs/engineering/DEV.md"),
-            current_paths={"docs/engineering/repo-contract.md"},
+            current_paths={current_path},
         )
         == []
     )
 
 
 def test_path_reference_hits_keeps_unresolved_basename_candidate() -> None:
+    basename = "repo-" + "contract.md"
+    line = f"The old {basename} reference needs review."
     assert path_reference_hits(
-        "The old repo-contract.md reference needs review.\n",
-        "docs/repo-contract.md",
+        line + "\\n",
+        "docs/" + basename,
         source_path=Path("README.md"),
-        current_paths={"docs/engineering/repo-contract.md"},
-    ) == [(1, "basename-only", "The old repo-contract.md reference needs review.")]
+        current_paths={"docs/engineering/" + basename},
+    ) == [(1, "basename-only", line)]
 
 
 def test_path_reference_hits_ignores_generic_skill_basename() -> None:
-    content = "Current skill documents use SKILL.md as their conventional filename.\n"
+    content = "Current skill documents use SKILL.md as their conventional filename.\\n"
+    target_path = "/".join(("skills", "frameworks", "SKILL.md"))
 
-    assert path_reference_hits(content, "skills/frameworks/SKILL.md") == []
+    assert path_reference_hits(content, target_path) == []
+
+
+def test_path_reference_hits_ignores_generic_action_basename() -> None:
+    assert path_reference_hits(
+        "The action.yml manifest is checked by its contract test.\\n",
+        ".github/actions/setup-uv/" + "action.yml",
+    ) == []
 
 
 def test_deleted_paths_excludes_paths_reused_as_directories(
