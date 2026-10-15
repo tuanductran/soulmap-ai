@@ -1,5 +1,6 @@
 # Exclude macOS Finder metadata from packaged knowledge files and skill plugin
-# bundles.
+# bundles, plus the Claude plugin's repository-facing README.
 .DS_Store
 Icon?
 ._*
+.claude-plugin/README.md
