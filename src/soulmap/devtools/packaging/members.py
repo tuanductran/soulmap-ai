@@ -28,7 +28,16 @@ EXCLUDED_ENTRYPOINT_NAMES = frozenset(
     }
 )
 EXCLUDED_DIRECTORY_NAMES = frozenset(
-    {".git", ".claude", ".cursor", ".github", ".vscode", ".idea", ".venv", "__pycache__"}
+    {
+        ".git",
+        ".claude",
+        ".cursor",
+        ".github",
+        ".vscode",
+        ".idea",
+        ".venv",
+        "__pycache__",
+    }
 )
 EXCLUDED_ENTRYPOINT_PREFIXES = frozenset(
     {
