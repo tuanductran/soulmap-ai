@@ -121,6 +121,20 @@ def test_markdown_implementation_reference_audit_ignores_domain_word_python(
     assert audit.find_markdown_implementation_references(tmp_path) == ()
 
 
+def test_markdown_implementation_reference_audit_ignores_doctrine_prose(
+    tmp_path: Path,
+) -> None:
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    skill = skills / "example.md"
+    skill.write_text(
+        "Apply the response principles from SOULMAP.md before answering.\\n",
+        encoding="utf-8",
+    )
+
+    assert audit.find_markdown_implementation_references(tmp_path) == ()
+
+
 def test_markdown_implementation_reference_audit_flags_python_fence(
     tmp_path: Path,
 ) -> None:
