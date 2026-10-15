@@ -57,7 +57,9 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "skills/AGENTS.override.md", "agent entrypoint variant\n")
     _write(root, "skills/CLAUDE.local.md", "agent entrypoint variant\n")
     _write(root, "skills/.cursorrules", "agent entrypoint must not ship\n")
-    _write(root, "skills/nested/.github/copilot-instructions.md", "local instructions\n")
+    _write(
+        root, "skills/nested/.github/copilot-instructions.md", "local instructions\n"
+    )
     _write(root, "AGENTS.md", "repository instructions must not ship\n")
     _write(root, "CLAUDE.md", "agent entrypoint must not ship\n")
     _write(root, "GEMINI.md", "agent entrypoint must not ship\n")
@@ -122,7 +124,9 @@ def test_build_archives_exclude_agent_entrypoints_and_local_config(
             name.rsplit("/", 1)[-1].casefold() in excluded_names for name in names
         )
         assert not any(
-            any(part.casefold() in excluded_directories for part in name.split("/")[:-1])
+            any(
+                part.casefold() in excluded_directories for part in name.split("/")[:-1]
+            )
             for name in names
         )
 
