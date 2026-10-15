@@ -54,6 +54,8 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "skills/private.md")
     _write(root, "skills/AGENTS.md", "repository instructions must not ship\n")
     _write(root, "skills/nested/CLAUDE.md", "agent entrypoint must not ship\n")
+    _write(root, "skills/AGENTS.override.md", "agent entrypoint variant\n")
+    _write(root, "skills/CLAUDE.local.md", "agent entrypoint variant\n")
     _write(root, "skills/nested/.github/copilot-instructions.md", "local instructions\n")
     _write(root, "AGENTS.md", "repository instructions must not ship\n")
     _write(root, "CLAUDE.md", "agent entrypoint must not ship\n")
@@ -61,6 +63,7 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "CODEX.md", "agent entrypoint must not ship\n")
     _write(root, ".claude/CLAUDE.md", "local instructions\n")
     _write(root, ".github/agents/reviewer.md", "local instructions\n")
+    _write(root, "skills/nested/.vscode/settings.json", "{}\n")
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
@@ -104,6 +107,8 @@ def test_build_archives_exclude_agent_entrypoints_and_local_config(
     excluded_names = {
         "agents.md",
         "claude.md",
+        "agents.override.md",
+        "claude.local.md",
         "gemini.md",
         "codex.md",
         "copilot-instructions.md",
