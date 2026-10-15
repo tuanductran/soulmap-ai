@@ -56,8 +56,11 @@ SLASH_COMMENT_SUFFIXES = {
 }
 GENERIC_BASENAMES = {
     "__init__.py",
+    "AGENTS.md",
+    "CLAUDE.md",
     "README.md",
     "readme.md",
+    "SKILL.md",
     "index.md",
     "config.py",
     "constants.py",
@@ -169,7 +172,18 @@ def deleted_paths(root: Path, base: str | None, history: bool) -> list[str]:
         )
     else:
         return []
-    current = {path.relative_to(root).as_posix() for path in tracked_files(root)}
+    # Include tracked directories as current paths too. Git history can contain a
+    # deleted file whose path was later reused as a directory (for example,
+    # ".claude/hooks"); references to that live directory are not stale file paths.
+    current: set[str] = set()
+    for path in tracked_files(root):
+        relative = path.relative_to(root)
+        current.add(relative.as_posix())
+        current.update(
+            parent.as_posix()
+            for parent in relative.parents
+            if parent.as_posix() != "."
+        )
     return sorted(
         {item.strip() for item in output.splitlines() if item.strip()} - current
     )
