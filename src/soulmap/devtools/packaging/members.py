@@ -30,6 +30,30 @@ EXCLUDED_ENTRYPOINT_NAMES = frozenset(
 EXCLUDED_DIRECTORY_NAMES = frozenset(
     {".git", ".claude", ".cursor", ".github", ".vscode", ".idea", ".venv", "__pycache__"}
 )
+EXCLUDED_ENTRYPOINT_PREFIXES = frozenset(
+    {
+        "agents",
+        "claude",
+        "gemini",
+        "codex",
+        "copilot",
+        "cursor",
+        "aider",
+        "qwen",
+        "warp",
+        "cody",
+        "opencode",
+    }
+)
+
+
+def is_excluded_entrypoint_name(name: str) -> bool:
+    """Return whether a filename is reserved for repository agent instructions."""
+    normalized = name.casefold()
+    return normalized in EXCLUDED_ENTRYPOINT_NAMES or (
+        normalized.endswith(".md")
+        and normalized.split(".", maxsplit=1)[0] in EXCLUDED_ENTRYPOINT_PREFIXES
+    )
 
 
 def load_distignore(repo_root: Path) -> list[str]:
@@ -52,23 +76,7 @@ def is_ignored(relative: str, patterns: list[str]) -> bool:
 def is_excluded_source(path: Path, repo_root: Path) -> bool:
     """Return whether a source file is an agent entrypoint or local config."""
     relative = path.relative_to(repo_root)
-    name = relative.name.casefold()
-    reserved_prefixes = (
-        "agents",
-        "claude",
-        "gemini",
-        "codex",
-        "copilot",
-        "cursor",
-        "aider",
-        "qwen",
-        "warp",
-        "cody",
-        "opencode",
-    )
-    if name in EXCLUDED_ENTRYPOINT_NAMES or (
-        name.endswith(".md") and name.split(".", maxsplit=1)[0] in reserved_prefixes
-    ):
+    if is_excluded_entrypoint_name(relative.name):
         return True
     return any(
         part.casefold() in EXCLUDED_DIRECTORY_NAMES for part in relative.parts[:-1]
