@@ -24,8 +24,8 @@ enough for local development workflows.
 
 ## Sources to check first
 
-- `../rules/python-tooling.md`
-- `../rules/repo-workflow.md`
+- `.claude/rules/python-tooling.md`
+- `.claude/rules/repo-workflow.md`
 - `docs/engineering/DEV.md`
 - `scripts/`
 - `src/soulmap/devtools/`
