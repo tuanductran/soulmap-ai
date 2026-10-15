@@ -27,7 +27,7 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 ## Current Roadmap
 
-### Priority 1 — Triage v0.14.0 audit findings
+### Priority 1: Triage v0.14.0 audit findings
 
 **Status:** Next focused workstream; evidence review before code changes.
 
