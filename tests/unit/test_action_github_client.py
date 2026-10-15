@@ -435,7 +435,9 @@ def test_create_branch_marks_only_mounted_workspace_as_safe(
 
     with (
         patch.object(client, "api", side_effect=not_found),
-        patch.object(action.subprocess, "run", side_effect=[completed, completed]) as run,
+        patch.object(
+            action.subprocess, "run", side_effect=[completed, completed]
+        ) as run,
     ):
         action.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
 
