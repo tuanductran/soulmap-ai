@@ -62,6 +62,7 @@ GENERIC_BASENAMES = {
     "README.md",
     "readme.md",
     "SKILL.md",
+    "action.yml",
     "index.md",
     "config.py",
     "constants.py",
