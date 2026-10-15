@@ -35,7 +35,7 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(
     registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals")}\n',
+        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     (tmp_path / "skills/frameworks").mkdir(parents=True)
@@ -52,7 +52,7 @@ def test_inventory_resolves_registry_edges_and_reports_missing_targets(
     assert "missing-resource" not in findings
 
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals")}\n',
+        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     findings = audit(tmp_path)
@@ -91,7 +91,7 @@ def test_inventory_uses_paths_relative_to_repository_root(tmp_path: Path) -> Non
     registry = root / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals")}\n',
+        'REGISTRY = {"example": ("skills/frameworks/example.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
     resource = root / "skills/frameworks/example.md"
@@ -128,7 +128,7 @@ def test_main_returns_error_for_missing_registry_target(tmp_path: Path) -> None:
     registry = tmp_path / "src/soulmap/runtime"
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
-        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals")}\n',
+        'REGISTRY = {"missing": ("skills/frameworks/absent.md", "Signals", "Contract", "Guidance")}\n',
         encoding="utf-8",
     )
 
