@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap import cli as cli_tool
 from soulmap.devtools.packaging import build_skill as build_tool
 from soulmap.devtools.packaging import dev as dev_tool
 
@@ -144,4 +145,27 @@ def test_dev_rejects_archive_content_that_differs_from_source(tmp_path: Path) ->
         archive.writestr("skills/example.md", "stale content\n")
 
     with pytest.raises(ValueError, match="differs from source"):
-        dev_tool._verify_archive(archive_path, {source.relative_to(tmp_path).as_posix()}, tmp_path)
+        dev_tool._verify_archive(
+            archive_path, {source.relative_to(tmp_path).as_posix()}, tmp_path
+        )
+
+
+
+def test_cli_exposes_build_and_dev_commands(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[tuple[str, list[str]]] = []
+    monkeypatch.setattr(
+        cli_tool.build_skill,
+        "main",
+        lambda args: calls.append(("build", args)) or 0,
+    )
+    monkeypatch.setattr(
+        cli_tool.dev_tool,
+        "main",
+        lambda args: calls.append(("dev", args)) or 0,
+    )
+
+    assert cli_tool.main(["build"]) == 0
+    assert cli_tool.main(["dev"]) == 0
+    assert calls == [("build", []), ("dev", [])]
