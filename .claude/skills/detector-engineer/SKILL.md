@@ -42,7 +42,8 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.config import HIGH_DEPENDENCY_THRESHOLD
+# The dependency threshold is loaded from the canonical Markdown source:
+# skills/safety/dependency-detection.md
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -324,7 +325,7 @@ for norm_msg in normalized_messages:
 ## Workflow
 
 1. Read `.claude/rules/detector-development.md` before writing any code.
-2. Check `src/soulmap/runtime/config/` for existing signal phrase constants to extend rather than duplicate.
+2. Read the detector's registered Markdown runtime source first; extend its canonical knowledge rather than duplicating semantic signals or thresholds in Python.
 3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
 4. Add detector knowledge to the registered Markdown runtime source; Python should only load and enforce it.
 5. Integrate the detector call into `src/soulmap/runtime/routing/framework_selector.py` at the correct priority.
@@ -336,7 +337,7 @@ for norm_msg in normalized_messages:
 A detector is done when:
 
 - It preserves the detector-specific return contract established by the implementation and tests
-- Shared signal and threshold constants are reused from `src/soulmap/runtime/config/` when an existing constant applies
+- Semantic signals and thresholds remain in the registered Markdown runtime source; Python configuration is used only for values explicitly owned by runtime configuration
 - It is called at the correct priority in `src/soulmap/runtime/routing/framework_selector.py`
 - At least one eval case in `evals/datasets/groups.json` covers its primary signal
 - `uv run soulmap test -n auto -q` passes with no regressions

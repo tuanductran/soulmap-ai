@@ -58,8 +58,12 @@ The audit artifacts are review evidence, not a deletion list. Reopen this workst
 ## Current Historical Baseline
 
 Phases 1-28 record the current architecture and audit work through the v0.14.0 release
-and the follow-up false-positive/reference fixes. Post-merge canonical audit verification
-remains active work in [`ROADMAP.md`](ROADMAP.md). The v0.14.0 release adds stronger review-only repository
+and the follow-up false-positive/reference fixes. The canonical inventory verification is recorded above from CI run
+[`38692440277`](https://github.com/tuanductran/soulmap-ai/actions/runs/38692440277),
+which ran on the documentation-only PR #679 branch against the merged runtime and audit
+implementation. No separate source-change work item remains from that audit; reopen this
+workstream only if a later source, entrypoint, packaging, or knowledge change produces
+new actionable findings. The v0.14.0 release adds stronger review-only repository
 inventories and makes incomplete audit scans visible without weakening the project's
 knowledge-first, deterministic-safety, and package-boundary rules. The project deliberately
 does not treat the following as completed or implicitly committed work:

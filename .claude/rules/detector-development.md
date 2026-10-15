@@ -93,28 +93,17 @@ Example return value:
 
 ## Threshold conventions
 
-Thresholds are defined in `src/soulmap/runtime/config/` as named constants:
+For knowledge-first detectors, the registered Markdown runtime source owns semantic
+thresholds and scoring values. Python may parse, normalize, and enforce those values,
+but must not create a parallel source of truth in `src/soulmap/runtime/config/`.
 
-```python
-HIGH_DEPENDENCY_THRESHOLD = 2
-MODERATE_DEPENDENCY_THRESHOLD = 1
-```
+For example, dependency thresholds are defined in
+`skills/safety/dependency-detection.md`. Update that canonical source, preserve its
+runtime contract, and validate the change through the relevant eval suite.
 
-**Rules for thresholds**:
-
-- Define shared numeric thresholds as module-level constants in `src/soulmap/runtime/config/` (or the appropriate domain config)
-- Use semantic names, for example `HIGH_`, `MODERATE_`, or `CRITICAL_`
-- Document the threshold purpose with a comment
-- Use thresholds consistently across detectors
-- Thresholds should be tuned through eval suite assertions (see `evals/datasets/groups.json`)
-
-Example:
-
-```python
-# src/soulmap/runtime/config/safety.py
-HIGH_DEPENDENCY_THRESHOLD = 2  # Score >= 2 triggers high dependency
-MODERATE_DEPENDENCY_THRESHOLD = 1  # Score >= 1 warrants dependency caution
-```
+Only use Python configuration constants when the existing architecture explicitly
+assigns that value to runtime configuration; do not migrate Markdown-owned knowledge
+into Python for stylistic consistency.
 
 ## Secondary scoring patterns
 
