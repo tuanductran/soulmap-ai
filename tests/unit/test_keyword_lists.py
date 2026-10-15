@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -22,7 +23,9 @@ def test_loaders_read_each_markdown_version_once(
     original_read_text = Path.read_text
     reads = 0
 
-    def counted_read_text(self: Path, *args, **kwargs) -> str:
+    def counted_read_text(
+        self: Path, *args: Any, **kwargs: Any
+    ) -> str:
         nonlocal reads
         if self.resolve() == path.resolve():
             reads += 1
