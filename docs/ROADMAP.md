@@ -4,6 +4,8 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** MIT
 > **Status:** Actively maintained
+> **Baseline reviewed:** v0.14.0, published 2026-10-15.
+> **Baseline commit:** `7613c19a7a36c47507b89feca954487d737d9a8a`.
 
 This document is the **living roadmap** for SoulMap AI. It describes work that is still
 planned, conditional, or intentionally deferred. Completed phases and historical outcomes
@@ -24,6 +26,36 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 ---
 
 ## Current Roadmap
+
+### Priority 1: Triage v0.14.0 audit findings
+
+**Status:** Next focused workstream; evidence review before code changes.
+
+The v0.14.0 release adds review-only Python module/resource reachability inventories,
+stale-reference detection for deleted paths, detector-Markdown knowledge-drift checks,
+and explicit reporting when consistency or resource scans are incomplete. The audit
+outputs identify candidates and discrepancies; they do not prove that a candidate is
+safe to remove or that a finding is a defect.
+
+Next steps:
+
+- Run the canonical audit commands against the current `main` and preserve the exact
+  reports, command lines, and commit SHA used for review.
+- Give every reported unreachable module/resource and stale-reference candidate an
+  explicit disposition: intentional, confirmed defect, or needs more evidence.
+- Check dynamic imports, package/runtime registries, CLI entrypoints, tests, generated
+  files, and distribution boundaries before classifying anything as dead code.
+- Trace detector knowledge-drift findings to the Markdown source of truth and runtime
+  consumer; fix only reproducible ownership or behavior gaps.
+- Add regression tests for confirmed false positives or false negatives. Keep the
+  inventories review-only and do not automate source deletion.
+
+**Exit criteria:** the current reports have documented dispositions; any code cleanup
+is isolated into evidence-backed changes; audit completeness failures remain visible;
+and the standard repository validation and CI gates pass. If the reports reveal no
+actionable defects, record that outcome rather than inventing implementation work.
+
+---
 
 ### Platform & Distribution Expansion
 

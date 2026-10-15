@@ -40,14 +40,17 @@ notes, tests, and release records.
 | 24 | Research & Audit Tooling | Consolidated research/audit findings into repository-native evidence and process guidance rather than adding speculative runtime features. |
 | 25 | Safety Matrix Closure | Resolved the remaining safety-matrix status gaps; the matrix now distinguishes enforced, bounded, and guidance-only rules without open `partial` rows. |
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
+| 27 | v0.14.0 Audit & Release Integrity | Added review-only Python/resource reachability inventories, stale-path and detector-knowledge drift checks, incomplete-scan reporting, relative-import resolution, and Docker Action workspace trust; verified release finalization, cross-platform CI, Python compatibility, and CodeQL. |
 
 ---
 
 ## Current Historical Baseline
 
-The completed roadmap work through Phase 26 established the architecture baseline in the v0.9.1 era;
-subsequent releases through v0.13.0 preserved and hardened those boundaries. The project deliberately does not treat the following as completed or
-implicitly committed work:
+Phases 1-27 establish the current architecture and audit baseline through v0.14.0,
+published on 2026-10-15. The v0.14.0 release adds stronger review-only repository
+inventories and makes incomplete audit scans visible without weakening the project's
+knowledge-first, deterministic-safety, and package-boundary rules. The project deliberately
+does not treat the following as completed or implicitly committed work:
 
 - third-party platform deployment claims without operator evidence;
 - additional platform adapters unless a platform-specific workstream is justified;
