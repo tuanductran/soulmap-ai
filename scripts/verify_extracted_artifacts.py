@@ -224,7 +224,8 @@ def _assert_expected_members(
         forbidden_members = sorted(
             name
             for name in actual
-            if name.startswith(FORBIDDEN_MEMBER_PREFIXES) or is_excluded_entrypoint_name(PurePosixPath(name).name)
+            if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
+            or is_excluded_entrypoint_name(PurePosixPath(name).name)
         )
         if forbidden_members:
             raise ExtractedArtifactError(
