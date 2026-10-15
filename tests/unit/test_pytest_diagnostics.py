@@ -43,6 +43,7 @@ def test_build_test_command_supports_full_and_focused_scopes(
         "-q",
         "--randomly-seed=12345",
         "tests/contract",
+        "tests/eval_regression/test_safety_evals.py",
         "tests/integration",
         "tests/regression",
         "tests/unit",

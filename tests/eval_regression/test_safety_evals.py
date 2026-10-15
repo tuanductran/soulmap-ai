@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -40,9 +41,29 @@ def test_crisis_tier1_guidance_is_presence_first_and_resource_cautious() -> None
     assert "never delay initial safety guidance to search" in guidance
     assert "findahelpline" in guidance
     assert "HOPE 0865 044 400" in guidance
-    assert "24/7" not in guidance
+    assert "do not claim 24/7" in guidance
+    assert not _has_unsupported_24_7_claim(guidance)
     assert "(free, 24/7)" not in guidance
     assert "Do not offer reflective questions" in guidance
+
+
+def _has_unsupported_24_7_claim(text: str) -> bool:
+    """Detect unsupported affirmative claims that a resource operates 24/7."""
+    return bool(
+        re.search(
+            r"\b(?:available|operates?|open)\s+(?:for\s+)?24\s*/\s*7\b"
+            r"|\(\s*free\s*,\s*24\s*/\s*7\s*\)",
+            text,
+            re.IGNORECASE,
+        )
+    )
+
+
+def test_unsupported_24_7_claims_are_detected_but_negations_are_allowed() -> None:
+    """Accept a warning while detecting unsupported affirmative resource claims."""
+    assert not _has_unsupported_24_7_claim("Do not claim 24/7 availability.")
+    assert _has_unsupported_24_7_claim("The hotline is available 24/7.")
+    assert _has_unsupported_24_7_claim("This hotline is (free, 24/7).")
 
 
 def run_tests(cases_path: Path = DATASET) -> int:

@@ -17,6 +17,7 @@ from pathlib import Path
 
 FOCUSED_TEST_TARGETS = (
     "tests/contract",
+    "tests/eval_regression/test_safety_evals.py",
     "tests/integration",
     "tests/regression",
     "tests/unit",
