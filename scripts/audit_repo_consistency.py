@@ -86,14 +86,18 @@ def tracked_files(root: Path) -> list[Path]:
     return [root / name for name in names if name and (root / name).is_file()]
 
 
-def read_text(path: Path) -> str | None:
-    """Read a tracked text file, skipping binary and non-UTF-8 content."""
+def read_text(path: Path, limitations: list[str] | None = None) -> str | None:
+    """Read a tracked text file, recording unreadable text as an audit limitation."""
     try:
         raw = path.read_bytes()
-        if b"\0" in raw:
+        if b"\\0" in raw:
             return None
         return raw.decode("utf-8")
-    except (OSError, UnicodeDecodeError):
+    except (OSError, UnicodeDecodeError) as exc:
+        if limitations is not None:
+            limitations.append(
+                f"{path}: unable to read tracked text file ({type(exc).__name__})"
+            )
         return None
 
 
@@ -264,10 +268,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     comment_count = 0
     path_count = 0
+    limitations: list[str] = []
     if comments_enabled:
         print("COMMENT CANDIDATES (manual review; no automatic deletion)")
         for path in files:
-            content = read_text(path)
+            content = read_text(path, limitations)
             if content is None:
                 continue
             for number, line in comment_candidates(path, content):
@@ -287,7 +292,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "POTENTIAL REFERENCES TO DELETED PATHS (manual classification required)"
             )
             contents = {
-                path.relative_to(root).as_posix(): read_text(path) for path in files
+                path.relative_to(root).as_posix(): read_text(path, limitations)
+                for path in files
             }
             for deleted_path in removed:
                 for current_path, content in contents.items():
@@ -319,6 +325,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"Deleted directories examined: {len(removed_directories)}")
             print(f"Potential path references: {path_count}")
             print(f"Potential directory references: {directory_count}")
+    for limitation in sorted(set(limitations)):
+        print(f"AUDIT LIMITATION: {limitation}")
+    if limitations:
+        print("INCOMPLETE: one or more tracked text files could not be inspected.")
+        return 2
     return 0
 
 
