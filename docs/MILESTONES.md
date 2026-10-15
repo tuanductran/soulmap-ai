@@ -46,7 +46,7 @@ notes, tests, and release records.
 
 ## Current Historical Baseline
 
-Phases 1–27 establish the current architecture and audit baseline through v0.14.0,
+Phases 1-27 establish the current architecture and audit baseline through v0.14.0,
 published on 2026-10-15. The v0.14.0 release adds stronger review-only repository
 inventories and makes incomplete audit scans visible without weakening the project's
 knowledge-first, deterministic-safety, and package-boundary rules. The project deliberately
