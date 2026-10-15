@@ -25,7 +25,7 @@ For this repo, prefer Python-focused tests over doc or workflow policing tests.
 
 ## Sources to check first
 
-- `../rules/evals-and-testing.md`
+- `.claude/rules/evals-and-testing.md`
 - `docs/engineering/TESTER.md`
 - `tests/`
 - `evals/`

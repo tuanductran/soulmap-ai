@@ -38,7 +38,7 @@ The copy must stay aligned with:
 - `skills/brand/brand-positioning.md`
 - `skills/brand/message-hierarchy.md`
 - `skills/brand/surfaces-and-scope.md`
-- `../rules/language-and-grammar.md`
+- `.claude/rules/language-and-grammar.md`
 - `templates/brand-copy.md`
 - `templates/founder-copy.md`
 - `templates/founder-posts.md`
@@ -126,7 +126,7 @@ Briefly note which brand rule or positioning principle the revision now matches.
 ## Writing rules
 
 - Prefer clean, calm, high-trust language.
-- Follow `../rules/language-and-grammar.md` for sentence case, active voice,
+- Follow `.claude/rules/language-and-grammar.md` for sentence case, active voice,
   list shape, and SoulMap-safe wording.
 - Do not make the copy more mystical than the repo supports.
 - Do not make the copy more clinical than the repo supports.

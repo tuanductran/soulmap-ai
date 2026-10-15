@@ -21,7 +21,7 @@ Examples:
 
 Before designing any workflow, inspect the relevant existing tooling and contracts:
 
-- `../rules/repo-workflow.md`, current working discipline and quality checks
+- `.claude/rules/repo-workflow.md`, current working discipline and quality checks
 - `.github/workflows/`, existing CI workflows
 - `src/soulmap/devtools/`, canonical Python tooling package
 - `scripts/`, bash helper scripts

@@ -16,9 +16,9 @@ Use this skill when working on:
 
 ## Sources to check first
 
-- `../rules/github-actions.md`
-- `../rules/repo-workflow.md`
-- `../rules/python-tooling.md`
+- `.claude/rules/github-actions.md`
+- `.claude/rules/repo-workflow.md`
+- `.claude/rules/python-tooling.md`
 - `.github/workflows/`
 - `src/soulmap/devtools/`
 - `docs/engineering/DEV.md`

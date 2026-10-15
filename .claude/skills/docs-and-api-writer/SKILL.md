@@ -44,7 +44,7 @@ Always check:
 - `README.md`
 - existing tests under `tests/`
 - `SOULMAP.md` when behavior or safety is involved
-- `../rules/language-and-grammar.md` for repo-local grammar and style
+- `.claude/rules/language-and-grammar.md` for repo-local grammar and style
 
 ## What to check
 
@@ -102,7 +102,7 @@ Mention any adjacent docs that may also need to stay in sync.
 ## Writing rules
 
 - Prefer concrete commands and examples.
-- Follow `../rules/language-and-grammar.md` for sentence case, active voice,
+- Follow `.claude/rules/language-and-grammar.md` for sentence case, active voice,
   plain wording, and list discipline.
 - Do not document features the repo does not expose.
 - Keep examples minimal but executable.
