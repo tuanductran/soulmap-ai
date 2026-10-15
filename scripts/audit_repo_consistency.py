@@ -245,15 +245,16 @@ def path_reference_hits(
 
     hits: list[tuple[int, str, str]] = []
     for number, line in enumerate(content.splitlines(), start=1):
-        mentions_current_path = same_directory_basename or any(
-            pattern.search(line) for pattern in current_path_patterns
-        )
         for pattern, kind in patterns:
-            if pattern.search(line):
-                if kind == "basename-only" and mentions_current_path:
-                    continue
-                hits.append((number, kind, line.strip()))
-                break
+            if not pattern.search(line):
+                continue
+            if kind == "basename-only" and (
+                same_directory_basename
+                or any(current_pattern.search(line) for current_pattern in current_path_patterns)
+            ):
+                continue
+            hits.append((number, kind, line.strip()))
+            break
     return hits
 
 
