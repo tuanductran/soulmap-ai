@@ -29,7 +29,7 @@ the task clearly centers on CLI behavior, test strategy, packaging, or detector 
 ## Sources to check first
 
 - `pyproject.toml`
-- `../rules/python-tooling.md`
+- `.claude/rules/python-tooling.md`
 - `docs/engineering/DEV.md`
 - the target Python files
 - the closest tests in `tests/`
