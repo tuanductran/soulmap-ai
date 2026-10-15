@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Any
 
 import pytest
 
@@ -24,12 +23,14 @@ def test_loaders_read_each_markdown_version_once(
     reads = 0
 
     def counted_read_text(
-        self: Path, *args: Any, **kwargs: Any
+        self: Path,
+        encoding: str | None = None,
+        errors: str | None = None,
     ) -> str:
         nonlocal reads
         if self.resolve() == path.resolve():
             reads += 1
-        return original_read_text(self, *args, **kwargs)
+        return original_read_text(self, encoding=encoding, errors=errors)
 
     monkeypatch.setattr(Path, "read_text", counted_read_text)
 
