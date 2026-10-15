@@ -87,10 +87,11 @@ def test_path_reference_hits_ignores_generic_skill_basename() -> None:
 
 
 def test_path_reference_hits_ignores_generic_action_basename() -> None:
+    target_path = "." + "/".join(("github", "actions", "setup-uv", "action.yml"))
     assert (
         path_reference_hits(
             "The action.yml manifest is checked by its contract test.\n",
-            ".github/actions/setup-uv/" + "action.yml",
+            target_path,
         )
         == []
     )
