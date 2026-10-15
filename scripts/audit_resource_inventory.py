@@ -117,10 +117,11 @@ def _registry_paths(root: Path) -> tuple[set[str], set[str]]:
             remainder = len(invalid_entries) - 5
             if remainder > 0:
                 preview += f", and {remainder} more"
-            return set(), {
+            warning = (
                 f"runtime registry contains invalid entries ({len(invalid_entries)}): "
                 f"{preview}; manual review required"
-            }
+            )
+            return set(), {warning}
         paths = {entry[0] for entry in registry.values()}
         return paths, set()
     return set(), {"canonical REGISTRY assignment was not found"}
