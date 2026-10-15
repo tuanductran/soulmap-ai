@@ -29,11 +29,11 @@ from soulmap.devtools.evals import (
 from soulmap.devtools.governance import weekly as weekly_governance
 from soulmap.devtools.packaging import (
     build_skill,
-    dev as dev_tool,
     library,
     release_ops,
     release_verify,
 )
+from soulmap.devtools.packaging import dev as dev_tool
 from soulmap.devtools.quality import format as format_tool
 from soulmap.devtools.quality import lint as lint_tool
 from soulmap.devtools.support.repo import REPO_ROOT
