@@ -41,13 +41,15 @@ notes, tests, and release records.
 | 25 | Safety Matrix Closure | Resolved the remaining safety-matrix status gaps; the matrix now distinguishes enforced, bounded, and guidance-only rules without open `partial` rows. |
 | 26 | Tiered Trusted Sources | Established tiering for trusted sources and aligned source governance with SoulMap's epistemic and safety doctrine. |
 | 27 | v0.14.0 Audit & Release Integrity | Added review-only Python/resource reachability inventories, stale-path and detector-knowledge drift checks, incomplete-scan reporting, relative-import resolution, and Docker Action workspace trust; verified release finalization, cross-platform CI, Python compatibility, and CodeQL. |
+| 28 | Audit False-Positive Reduction & Reference Repair | Reduced confirmed stale-path and Markdown-reference audit false positives; included CLI, Docker Action, and P-level governance entrypoints in reachability analysis; corrected stale maintainer rule paths and a deleted-module docstring reference. No source was deleted based on scanner output; the docstring-only `safety.py` remains review-only pending post-merge verification. |
 
 ---
 
 ## Current Historical Baseline
 
-Phases 1-27 establish the current architecture and audit baseline through v0.14.0,
-published on 2026-10-15. The v0.14.0 release adds stronger review-only repository
+Phases 1-28 record the current architecture and audit work through the v0.14.0 release
+and the follow-up false-positive/reference fixes. Post-merge canonical audit verification
+remains active work in [`ROADMAP.md`](ROADMAP.md). The v0.14.0 release adds stronger review-only repository
 inventories and makes incomplete audit scans visible without weakening the project's
 knowledge-first, deterministic-safety, and package-boundary rules. The project deliberately
 does not treat the following as completed or implicitly committed work:
