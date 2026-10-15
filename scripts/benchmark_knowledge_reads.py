@@ -189,10 +189,7 @@ def main(argv: list[str] | None = None) -> int:
         if not comparisons:
             print("No matching benchmark names to compare.")
         for name, result in comparisons.items():
-            print(
-                f"{name}: {result['change_pct']:+.2f}% "
-                f"({result['direction']})"
-            )
+            print(f"{name}: {result['change_pct']:+.2f}% ({result['direction']})")
         if args.fail_on_regression is not None and any(
             float(result["change_pct"]) > args.fail_on_regression
             for result in comparisons.values()
