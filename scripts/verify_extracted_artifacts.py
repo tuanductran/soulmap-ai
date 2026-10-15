@@ -43,23 +43,6 @@ FORBIDDEN_MEMBER_PREFIXES = (
     "templates/",
     "tests/",
 )
-FORBIDDEN_ENTRYPOINT_NAMES = frozenset(
-    {
-        "agents.md",
-        "claude.md",
-        "gemini.md",
-        "codex.md",
-        "copilot.md",
-        "copilot-instructions.md",
-        "cursor.md",
-        "cursorrules",
-        "aider.md",
-        "qwen.md",
-        "warp.md",
-        "cody.md",
-        "opencode.md",
-    }
-)
 FORBIDDEN_PACKAGE_REFERENCES = (
     "AGENTS.md",
     "CLAUDE.md",
