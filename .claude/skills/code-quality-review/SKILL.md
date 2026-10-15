@@ -24,8 +24,8 @@ tooling contract.
 ## Sources to check first
 
 - `pyproject.toml`
-- `../rules/python-tooling.md`
-- `../rules/source-character-safety.md`
+- `.claude/rules/python-tooling.md`
+- `.claude/rules/source-character-safety.md`
 - `docs/engineering/DEV.md`
 - the target Python files and nearby tests
 
@@ -89,7 +89,7 @@ Triage every hit before touching anything:
 ## Workflow
 
 1. Read the target Python files and the closest tests first.
-2. Compare the implementation with `pyproject.toml` and `../rules/python-tooling.md`.
+2. Compare the implementation with `pyproject.toml` and `.claude/rules/python-tooling.md`.
 3. Identify concrete quality issues that affect clarity, correctness, or maintenance.
 4. Make the smallest correct change that improves the code without widening scope.
 5. Update tests when the observable contract changes.
