@@ -3,7 +3,20 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-from scripts.audit_python_reachability import analyze, module_name, resolve_imports
+from scripts.audit_python_reachability import (
+    DEFAULT_ENTRY_MODULES,
+    analyze,
+    module_name,
+    resolve_imports,
+)
+
+
+def test_default_entries_cover_cli_action_and_governance_entrypoints() -> None:
+    assert DEFAULT_ENTRY_MODULES == (
+        "soulmap.cli",
+        "action.__main__",
+        "soulmap.devtools.checks.p_level_governance",
+    )
 
 
 def test_module_name_maps_package_and_module_paths() -> None:
