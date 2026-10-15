@@ -52,6 +52,15 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "SKILL.md")
     _write(root, "skills/public.md")
     _write(root, "skills/private.md")
+    _write(root, "skills/AGENTS.md", "repository instructions must not ship\n")
+    _write(root, "skills/nested/CLAUDE.md", "agent entrypoint must not ship\n")
+    _write(root, "skills/nested/.github/copilot-instructions.md", "local instructions\n")
+    _write(root, "AGENTS.md", "repository instructions must not ship\n")
+    _write(root, "CLAUDE.md", "agent entrypoint must not ship\n")
+    _write(root, "GEMINI.md", "agent entrypoint must not ship\n")
+    _write(root, "CODEX.md", "agent entrypoint must not ship\n")
+    _write(root, ".claude/CLAUDE.md", "local instructions\n")
+    _write(root, ".github/agents/reviewer.md", "local instructions\n")
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
@@ -82,6 +91,37 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
         ".claude-plugin/marketplace.json",
     }
     assert ".claude-plugin/README.md" not in skill_names
+
+
+def test_build_archives_exclude_agent_entrypoints_and_local_config(
+    tmp_path: Path,
+) -> None:
+    _create_source_tree(tmp_path)
+
+    zip_path = build_tool.build_zip(tmp_path)
+    skill_path = build_tool.build_skill(tmp_path)
+
+    excluded_names = {
+        "agents.md",
+        "claude.md",
+        "gemini.md",
+        "codex.md",
+        "copilot-instructions.md",
+    }
+    excluded_directories = {".claude", ".cursor", ".github", ".vscode", ".idea", ".git"}
+    for archive_path in (zip_path, skill_path):
+        names = _archive_names(archive_path)
+        assert not any(
+            name.rsplit("/", 1)[-1].casefold() in excluded_names for name in names
+        )
+        assert not any(
+            any(part.casefold() in excluded_directories for part in name.split("/")[:-1])
+            for name in names
+        )
+
+    # The .skill artifact retains only its required plugin metadata.
+    assert ".claude-plugin/marketplace.json" in _archive_names(skill_path)
+    assert ".claude-plugin/marketplace.json" not in _archive_names(zip_path)
 
 
 def test_build_all_creates_both_archives(tmp_path: Path) -> None:
