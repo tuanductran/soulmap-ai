@@ -95,7 +95,7 @@ def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) ->
     result = _run(tmp_path)
 
     assert result.returncode == 1
-    assert "forbidden shipped references" in result.stderr
+    assert "forbidden package references" in result.stderr
 
 
 @pytest.mark.parametrize(
@@ -123,6 +123,25 @@ def test_verifier_rejects_archive_content_drift_from_source(
     assert source_path.read_bytes() == original_source_bytes
     assert result.returncode == 1
     assert f"content mismatch for shipped member {member_name}" in result.stderr
+
+
+def test_verifier_rejects_repository_entrypoint_reference_in_root_doctrine(
+    tmp_path: Path,
+) -> None:
+    _build_valid_repo(tmp_path)
+    _write(
+        tmp_path,
+        "SOULMAP.md",
+        "Do not load AGENTS.md for this shipped package.\n",
+    )
+    build_skill.build_zip(tmp_path)
+    build_skill.build_skill(tmp_path)
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "forbidden package references" in result.stderr
+    assert "SOULMAP.md" in result.stderr
 
 
 def test_verifier_rejects_broken_shipped_markdown_reference(tmp_path: Path) -> None:
