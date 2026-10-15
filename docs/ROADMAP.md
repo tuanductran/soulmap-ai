@@ -29,18 +29,20 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 ### Priority 1: Triage v0.14.0 audit findings
 
-**Status:** Next focused workstream; evidence review before code changes.
+**Status:** In progress; post-merge audit verification remains pending.
 
 The v0.14.0 release adds review-only Python module/resource reachability inventories,
 stale-reference detection for deleted paths, detector-Markdown knowledge-drift checks,
-and explicit reporting when consistency or resource scans are incomplete. The audit
-outputs identify candidates and discrepancies; they do not prove that a candidate is
-safe to remove or that a finding is a defect.
+and explicit reporting when consistency or resource scans are incomplete. PRs [#677](https://github.com/tuanductran/soulmap-ai/pull/677)
+and [#678](https://github.com/tuanductran/soulmap-ai/pull/678) reduced confirmed audit noise
+and corrected stale maintainer references. The audit outputs identify candidates and
+discrepancies; they do not prove that a candidate is safe to remove or that a finding is a defect.
 
 Next steps:
 
-- Run the canonical audit commands against the current `main` and preserve the exact
-  reports, command lines, and commit SHA used for review.
+- Rerun the canonical audit commands against post-merge `main` and preserve the exact
+  reports, command lines, and commit SHA used for review. The pre-merge report is evidence
+  for the fixes, not a substitute for this verification.
 - Give every reported unreachable module/resource and stale-reference candidate an
   explicit disposition: intentional, confirmed defect, or needs more evidence.
 - Check dynamic imports, package/runtime registries, CLI entrypoints, tests, generated
