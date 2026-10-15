@@ -55,10 +55,7 @@ def test_path_reference_hits_ignores_current_file_with_same_basename() -> None:
     basename = "repo-" + "contract.md"
     current_path = "docs/engineering/" + basename
     deleted_path = "docs/" + basename
-    content = (
-        f"[Repository contract]({basename})\n"
-        f"See {current_path} for details.\n"
-    )
+    content = f"[Repository contract]({basename})\nSee {current_path} for details.\n"
 
     assert (
         path_reference_hits(
@@ -90,10 +87,13 @@ def test_path_reference_hits_ignores_generic_skill_basename() -> None:
 
 
 def test_path_reference_hits_ignores_generic_action_basename() -> None:
-    assert path_reference_hits(
-        "The action.yml manifest is checked by its contract test.\n",
-        ".github/actions/setup-uv/" + "action.yml",
-    ) == []
+    assert (
+        path_reference_hits(
+            "The action.yml manifest is checked by its contract test.\n",
+            ".github/actions/setup-uv/" + "action.yml",
+        )
+        == []
+    )
 
 
 def test_deleted_paths_excludes_paths_reused_as_directories(
