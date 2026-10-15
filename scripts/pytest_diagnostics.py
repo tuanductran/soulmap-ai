@@ -28,12 +28,13 @@ def build_test_command(
     workers: str = "auto",
     *,
     scope: str = "full",
+    coverage: bool = False,
 ) -> list[str]:
     """Build a reproducible pytest command for the selected repository scope."""
     if scope not in {"full", "focused"}:
         raise ValueError(f"Unknown test scope: {scope}")
     targets = [] if scope == "full" else list(FOCUSED_TEST_TARGETS)
-    return [
+    command = [
         "uv",
         "run",
         "soulmap",
@@ -44,7 +45,9 @@ def build_test_command(
         f"--randomly-seed={seed}",
         *targets,
     ]
-
+    if coverage:
+        command.extend(["--cov=src/soulmap", "--cov-report=term-missing"])
+    return command
 
 def _summary_path() -> Path | None:
     raw = os.environ.get("GITHUB_STEP_SUMMARY")
@@ -63,6 +66,7 @@ def _write_failure_summary(
     workers: str,
     exit_code: int,
     scope: str,
+    coverage: bool = False,
 ) -> None:
     lines = [
         "## Pytest reproducibility diagnostics",
@@ -76,7 +80,7 @@ def _write_failure_summary(
         "- Serial reproduction:",
         "",
         "  ```bash",
-        "  " + " ".join(build_test_command(seed, "0", scope=scope)),
+        "  " + " ".join(build_test_command(seed, "0", scope=scope, coverage=coverage)),
         "  ```",
         "",
         "The serial command preserves the seed while removing xdist parallelism.",
@@ -90,12 +94,13 @@ def _write_failure_summary(
 def main() -> int:
     scope = os.environ.get("SOULMAP_PYTEST_SCOPE", "full")
     workers = os.environ.get("SOULMAP_PYTEST_WORKERS", "auto")
+    coverage = os.environ.get("SOULMAP_PYTEST_COVERAGE") == "1"
     seed = int(os.environ.get("PYTEST_RANDOMLY_SEED", secrets.randbits(32)))
     _persist_seed(seed)
-    command = build_test_command(seed, workers, scope=scope)
+    command = build_test_command(seed, workers, scope=scope, coverage=coverage)
     result = subprocess.run(command, check=False)
     if result.returncode:
-        _write_failure_summary(seed, workers, result.returncode, scope)
+        _write_failure_summary(seed, workers, result.returncode, scope, coverage)
         serial = build_test_command(seed, "0", scope=scope)
         print(
             "Pytest failed. Reproduce serially with: " + " ".join(serial),
