@@ -251,7 +251,10 @@ def path_reference_hits(
                 continue
             if kind == "basename-only" and (
                 same_directory_basename
-                or any(current_pattern.search(line) for current_pattern in current_path_patterns)
+                or any(
+                    current_pattern.search(line)
+                    for current_pattern in current_path_patterns
+                )
             ):
                 continue
             hits.append((number, kind, line.strip()))
