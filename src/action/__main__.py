@@ -484,11 +484,21 @@ def create_branch(
         print(f"Release branch {branch} already exists at the expected commit.")
         return
 
+    # Docker actions run as root while the checked-out workspace is owned by
+    # the runner user. Explicitly trust only the mounted workspace so Git's
+    # dubious-ownership protection does not reject read-only and push commands.
+    workspace = os.environ.get("GITHUB_WORKSPACE", str(Path.cwd()))
+    environment = os.environ.copy()
+    environment["GIT_CONFIG_COUNT"] = "1"
+    environment["GIT_CONFIG_KEY_0"] = "safe.directory"
+    environment["GIT_CONFIG_VALUE_0"] = workspace
+
     head = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         check=True,
         capture_output=True,
         text=True,
+        env=environment,
     ).stdout.strip()
     if head != target_sha:
         raise GitHubActionError(
@@ -498,10 +508,9 @@ def create_branch(
     encoded = base64.b64encode(f"x-access-token:{client.token}".encode()).decode(
         "ascii"
     )
-    environment = os.environ.copy()
-    environment["GIT_CONFIG_COUNT"] = "1"
-    environment["GIT_CONFIG_KEY_0"] = "http.extraheader"
-    environment["GIT_CONFIG_VALUE_0"] = f"AUTHORIZATION: basic {encoded}"
+    environment["GIT_CONFIG_COUNT"] = "2"
+    environment["GIT_CONFIG_KEY_1"] = "http.extraheader"
+    environment["GIT_CONFIG_VALUE_1"] = f"AUTHORIZATION: basic {encoded}"
     try:
         pushed = subprocess.run(
             ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
