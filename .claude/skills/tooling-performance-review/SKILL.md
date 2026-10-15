@@ -26,9 +26,9 @@ Improve performance where the repository really pays for it:
 
 ## Sources to check first
 
-- `../rules/performance-tooling.md`
-- `../rules/python-tooling.md`
-- `../rules/shell-scripting.md`
+- `.claude/rules/performance-tooling.md`
+- `.claude/rules/python-tooling.md`
+- `.claude/rules/shell-scripting.md`
 - `pyproject.toml`
 - `docs/engineering/DEV.md`
 - `docs/engineering/TESTER.md`
