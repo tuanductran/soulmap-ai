@@ -30,8 +30,7 @@ def test_distignore_loader_handles_missing_comments_and_patterns(
     _write(
         tmp_path,
         ".distignore",
-        "# internal files\n\nskills/private.md\n*.tmp\n"
-        ".claude-plugin/README.md\n",
+        "# internal files\n\nskills/private.md\n*.tmp\n.claude-plugin/README.md\n",
     )
 
     assert build_tool._load_distignore(tmp_path) == [
