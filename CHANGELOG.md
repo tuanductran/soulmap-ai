@@ -5,6 +5,56 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.14.0 (2026-10-15)
+
+### Feat
+
+- **audit**: add review-only reachability inventories
+- **audit**: detect stale references to deleted directories
+- **audit**: detect detector Markdown knowledge drift (#553)
+
+### Fix
+
+- **action**: trust mounted workspace in Docker git commands (#674)
+- **audit**: report incomplete consistency scans
+- **audit**: report incomplete resource inventories
+- **audit**: resolve relative imports in package initializers (#666)
+- **audit**: respect deleted-path token boundaries (#663)
+- **safety**: verify crisis resource sources without hard-coded hours
+- **doctrine**: keep reflective questions optional across response stages
+- **safety**: make Tier 1 crisis guidance presence-first (#654)
+- **safety**: close remaining crisis and question guidance drift (#652)
+- **governance**: repair two weekly regression failures (#651)
+- **skills**: remove residual mandatory-question wording
+- **safety**: finish presence-first crisis guidance alignment
+- **safety**: align crisis and question guidance across shipped surfaces
+- **skill**: ship exactly one SoulMap Skill entrypoint (#554)
+- **release**: cover nested domain skill versions (#551)
+- **audit**: classify multilingual safety overlaps (#543)
+- **safety**: enforce resources-first crisis guidance (#542)
+- validate exact runtime registry headings (#522)
+- **security**: minimize release prep GITHUB_TOKEN scope (#510)
+- **release**: generate release notes on every publish (#509)
+- **action**: fallback to default input when env value is empty string (#508)
+
+### Refactor
+
+- **action**: absorb release immutability audit
+- **architecture**: remove domain routers and root library catalog (#552)
+- **audit**: remove dead runtime surface references (#550)
+- **runtime**: remove unused pattern path helper (#546)
+- **runtime**: make source registry Python-owned (#541)
+- harden knowledge ownership audit (#537)
+- enforce knowledge-first ownership audit (#536)
+- move weekly governance orchestration into Python (#534)
+- consolidate release verification orchestration in Python (#532)
+- move release-owned automation into Python (#530)
+- migrate dependency detector knowledge to Markdown (#528)
+
+### Perf
+
+- **audit**: compile deleted-path patterns once (#665)
+
 ## v0.13.0 (2026-09-28)
 
 ### Feat

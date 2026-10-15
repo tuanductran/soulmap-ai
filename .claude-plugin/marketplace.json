@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "soulmap-ai",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "SoulMap AI reflective companion skill and its supporting canonical knowledge.",
   "owner": {
     "name": "Tuan Duc Tran",
@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "SoulMap AI",
-      "version": "0.13.0",
+      "version": "0.14.0",
       "description": "The single SoulMap AI Skill entrypoint with supporting reflective frameworks, safety guardrails, voice, spiritual, soulmate, writing, brand, and orchestration knowledge.",
       "source": "./",
       "skills": [
