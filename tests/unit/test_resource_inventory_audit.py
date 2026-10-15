@@ -140,11 +140,11 @@ def test_registry_invalid_entry_marks_inventory_incomplete(tmp_path: Path) -> No
     registry.mkdir(parents=True)
     (registry / "source_registry.py").write_text(
         'REGISTRY = {"valid": ("skills/valid.md", "Signals", "Contract", "Guidance"), '
-        '"invalid": ("skills/invalid.md",)}\\n',
+        '"invalid": ("skills/invalid.md",)}\n',
         encoding="utf-8",
     )
     (tmp_path / "skills").mkdir()
-    (tmp_path / "skills/valid.md").write_text("# Valid\\n", encoding="utf-8")
+    (tmp_path / "skills/valid.md").write_text("# Valid\n", encoding="utf-8")
 
     findings = audit(tmp_path)
 
