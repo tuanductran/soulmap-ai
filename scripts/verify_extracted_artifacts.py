@@ -23,6 +23,13 @@ class ExtractedArtifactError(ValueError):
 
 FORBIDDEN_MEMBER_PREFIXES = (
     ".claude/",
+    ".cursor/",
+    ".github/",
+    ".vscode/",
+    ".idea/",
+    ".git/",
+    ".venv/",
+    "__pycache__/",
     "docs/",
     "dist/",
     "library/",
@@ -31,12 +38,45 @@ FORBIDDEN_MEMBER_PREFIXES = (
     "templates/",
     "tests/",
 )
-FORBIDDEN_SKILL_REFERENCES = (
+FORBIDDEN_ENTRYPOINT_NAMES = frozenset(
+    {
+        "agents.md",
+        "claude.md",
+        "gemini.md",
+        "codex.md",
+        "copilot.md",
+        "copilot-instructions.md",
+        "cursor.md",
+        "cursorrules",
+        "aider.md",
+        "qwen.md",
+        "warp.md",
+        "cody.md",
+        "opencode.md",
+    }
+)
+FORBIDDEN_PACKAGE_REFERENCES = (
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "CODEX.md",
+    "COPILOT.md",
+    "copilot-instructions.md",
+    "CURSOR.md",
+    ".cursorrules",
+    "AIDER.md",
+    "QWEN.md",
+    "WARP.md",
+    "CODY.md",
+    "OPENCODE.md",
     "src/soulmap/",
     "docs/engineering/",
     "tests/",
     ".claude/",
     ".github/",
+    ".cursor/",
+    ".vscode/",
+    ".idea/",
     "templates/",
     "scripts/",
     "library/",
@@ -177,7 +217,10 @@ def _assert_expected_members(
             raise ExtractedArtifactError("standard ZIP must exclude .claude-plugin/")
 
         forbidden_members = sorted(
-            name for name in actual if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
+            name
+            for name in actual
+            if name.startswith(FORBIDDEN_MEMBER_PREFIXES)
+            or PurePosixPath(name).name.casefold() in FORBIDDEN_ENTRYPOINT_NAMES
         )
         if forbidden_members:
             raise ExtractedArtifactError(
@@ -186,18 +229,18 @@ def _assert_expected_members(
 
         _assert_markdown_references(archive, actual)
 
-        for name in sorted(actual):
-            if not name.startswith("skills/") or not name.endswith(".md"):
-                continue
+        # Shipped knowledge must be self-contained and must not name local
+        # agent entrypoints, repository docs, or implementation-only paths.
+        for name in _markdown_members(actual):
             content = archive.read(name).decode("utf-8")
             violations = [
                 reference
-                for reference in FORBIDDEN_SKILL_REFERENCES
-                if reference in content
+                for reference in FORBIDDEN_PACKAGE_REFERENCES
+                if reference.casefold() in content.casefold()
             ]
             if violations:
                 raise ExtractedArtifactError(
-                    f"{archive_path.name}:{name} contains forbidden shipped references: "
+                    f"{archive_path.name}:{name} contains forbidden package references: "
                     f"{violations}"
                 )
     finally:
