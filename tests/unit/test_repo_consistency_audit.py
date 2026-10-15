@@ -112,7 +112,7 @@ def test_main_returns_incomplete_status_for_unreadable_tracked_text(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     unreadable = tmp_path / "unreadable.md"
-    unreadable.write_bytes(b"\\xff\\xfe\\xfa")
+    unreadable.write_bytes(b"\xff\xfe\xfa")
     monkeypatch.setattr(
         "scripts.audit_repo_consistency.tracked_files", lambda root: [unreadable]
     )
