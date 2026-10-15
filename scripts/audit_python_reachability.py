@@ -13,7 +13,11 @@ import ast
 from collections import deque
 from pathlib import Path
 
-DEFAULT_ENTRY_MODULES = ("soulmap.cli",)
+DEFAULT_ENTRY_MODULES = (
+    "soulmap.cli",
+    "action.__main__",
+    "soulmap.devtools.checks.p_level_governance",
+)
 SOURCE_ROOT = Path("src")
 
 

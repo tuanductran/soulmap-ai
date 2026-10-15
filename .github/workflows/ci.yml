@@ -139,6 +139,16 @@ jobs:
         run: uv run python scripts/audit_repo_consistency.py --base origin/main | tee repo-consistency-audit.txt
       - name: Audit full reachable Git history for stale path references
         run: uv run python scripts/audit_repo_consistency.py --history | tee repo-consistency-history-audit.txt
+      - name: Audit Python module reachability (review only)
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          uv run python scripts/audit_python_reachability.py | tee python-reachability-audit.txt
+      - name: Audit resource inventory (review only)
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          uv run python scripts/audit_resource_inventory.py | tee resource-inventory-audit.txt
       - name: Generate knowledge inventory
         run: uv run soulmap audit-knowledge > knowledge-inventory.txt
       - name: Upload knowledge inventory
@@ -149,6 +159,8 @@ jobs:
             knowledge-inventory.txt
             repo-consistency-audit.txt
             repo-consistency-history-audit.txt
+            python-reachability-audit.txt
+            resource-inventory-audit.txt
           if-no-files-found: error
           retention-days: 30
 
