@@ -9,7 +9,7 @@ Use this skill when writing new detector modules, extending existing detectors, 
 
 ## Do not use this skill for
 
-- Editing rules and conventions, refer to [`../rules/detector-development.md`](../../rules/detector-development.md)
+- Editing rules and conventions, refer to [`.claude/rules/detector-development.md`](../../rules/detector-development.md)
 - Writing or extending test groups in `evals/datasets/groups.json`, use [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md)
 - Defining framework activation signals, use [`framework-author`](../framework-author/SKILL.md)
 - General Python work outside `src/soulmap/runtime/detectors/`, use code editing tools directly
@@ -323,7 +323,7 @@ for norm_msg in normalized_messages:
 
 ## Workflow
 
-1. Read `../rules/detector-development.md` before writing any code.
+1. Read `.claude/rules/detector-development.md` before writing any code.
 2. Check `src/soulmap/runtime/config/` for existing signal phrase constants to extend rather than duplicate.
 3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
 4. Add detector knowledge to the registered Markdown runtime source; Python should only load and enforce it.
