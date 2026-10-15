@@ -52,7 +52,23 @@ def is_ignored(relative: str, patterns: list[str]) -> bool:
 def is_excluded_source(path: Path, repo_root: Path) -> bool:
     """Return whether a source file is an agent entrypoint or local config."""
     relative = path.relative_to(repo_root)
-    if relative.name.casefold() in EXCLUDED_ENTRYPOINT_NAMES:
+    name = relative.name.casefold()
+    reserved_prefixes = (
+        "agents",
+        "claude",
+        "gemini",
+        "codex",
+        "copilot",
+        "cursor",
+        "aider",
+        "qwen",
+        "warp",
+        "cody",
+        "opencode",
+    )
+    if name in EXCLUDED_ENTRYPOINT_NAMES or (
+        name.endswith(".md") and name.split(".", maxsplit=1)[0] in reserved_prefixes
+    ):
         return True
     return any(
         part.casefold() in EXCLUDED_DIRECTORY_NAMES for part in relative.parts[:-1]
