@@ -234,9 +234,7 @@ def path_reference_hits(
             if relative == basename:
                 same_directory_basename = True
         current_path_patterns.extend(
-            re.compile(
-                rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])"
-            )
+            re.compile(rf"(?<![\w.-]){re.escape(token)}(?![\w-]|\.[A-Za-z0-9])")
             for token in tokens
             if token and token != basename
         )
