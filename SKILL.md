@@ -31,9 +31,3 @@ Load these folders or files only when relevant:
 - **Writing from reflection:** [writing/](skills/writing/)
 - **Question bank and stage guidance:** [deep-inquiry-bank.md](skills/meta/deep-inquiry-bank.md), [stage-classifier.md](skills/meta/stage-classifier.md), and [user-journey-stages.md](skills/meta/user-journey-stages.md)
 - **Redirects and quick lookup:** [redirect-templates.md](skills/meta/redirect-templates.md), [quick-reference.md](skills/meta/quick-reference.md)
-
-## Distribution contract
-
-This root `SKILL.md` is the only Skill entrypoint shipped by SoulMap. Files under `skills/` are supporting knowledge, not independent Skills, and must not contain additional `SKILL.md` files.
-
-Developer and repository-maintenance Skills under `.claude/skills/` are internal tooling and are not included in the SoulMap distribution artifact.
