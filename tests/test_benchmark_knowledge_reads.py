@@ -107,6 +107,8 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
     assert all(result["median_seconds"] > 0 for result in report["benchmarks"].values())
     assert set(report["workload"]["timing_scope"]) == set(report["benchmarks"])
     assert "end-to-end" in report["workload"]["comparison_note"]
-    timing_scope = report["workload"]["timing_scope"]["warm_cache_detector_knowledge_loads"]
+    timing_scope = report["workload"]["timing_scope"][
+        "warm_cache_detector_knowledge_loads"
+    ]
     assert "Path.resolve()" in timing_scope
     assert "Path.stat()" in timing_scope
