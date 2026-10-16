@@ -49,8 +49,9 @@ The harness loads the `Scoring` and `Runtime guidance` tables from the canonical
   cache miss followed by one hit because both tables come from the same file.
 - **Cache-warm:** prime the text cache before the timer starts, then load both tables.
 
-Each timed sample runs the same two table parses. The cache-cold path includes cache
-clearing and the first file load; the cache-warm setup is outside the timed sample.
+Each timed sample runs the same two table parses. Cache clearing and cache priming
+are setup work outside the timer; the cache-cold path measures the first file load
+plus the second cache hit.
 Workloads are interleaved in rotating order to reduce fixed-order and drift bias.
 The uncached path intentionally models the pre-cache implementation and therefore
 does not perform the metadata checks required by the cache.
