@@ -266,7 +266,9 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
     if cached_knowledge != expected_knowledge:
         raise AssertionError("Cached detector knowledge differs from batch parsing")
     if cached_knowledge != expected_loader_knowledge:
-        raise AssertionError("Cached detector knowledge differs from uncached loader calls")
+        raise AssertionError(
+            "Cached detector knowledge differs from uncached loader calls"
+        )
     _read_markdown_text_cached.cache_clear()
 
     def uncached_multi_table() -> None:
