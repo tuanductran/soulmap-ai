@@ -109,6 +109,7 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "pattern.guidance": load_key_value_table(pattern, "Runtime guidance"),
     }
 
+
 def _uncached_detector_loader_calls() -> dict[str, object]:
     """Repeat the production loader call pattern without using the text cache."""
     empath = runtime_skill_path("empath-boundary")
