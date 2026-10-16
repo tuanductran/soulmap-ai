@@ -46,8 +46,8 @@ def analyze_dependency(
     """Analyze conversation history to detect AI dependency signals.
 
     Args:
-        conversation_messages: List of dicts with 'role' and 'content' keys.
-                               Expected format: [{"role": "user", "content": "..."}]
+        conversation_messages: Conversation messages with role and content.
+        current_message: Optional current user turn; included unless already last.
 
     Returns:
         Dict with keys: level (str), score (int), signals (list), recommendation (str)
