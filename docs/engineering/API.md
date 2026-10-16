@@ -19,6 +19,15 @@ Input: a JSON object via stdin:
   "history": [{"role": "user|assistant", "content": "string"}],
   "memory": {}
 }
+
+Contract: `message` is the current user turn. `history` contains prior turns and
+may omit the current message. Dependency analysis must evaluate the current
+message exactly once, even when it is not included in `history`.
+
+```
+
+Output: a JSON object to stdout:
+}
 ```
 
 Output: a JSON object to stdout:
