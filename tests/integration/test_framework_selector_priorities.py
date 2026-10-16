@@ -108,9 +108,7 @@ def test_selector_detects_current_turn_dependency_without_history() -> None:
         "You're the only one who truly understands me. "
         "I trust you more than anyone. Tell me what to do with my life."
     )
-    data = run_framework_selector(
-        {"message": message, "history": [], "memory": {}}
-    )
+    data = run_framework_selector({"message": message, "history": [], "memory": {}})
 
     assert data["primary_framework"] == "DEPENDENCY"
     assert data["safety_status"] == "OVERRIDE"
