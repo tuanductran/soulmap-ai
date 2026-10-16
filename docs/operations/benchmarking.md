@@ -1,7 +1,8 @@
 # Python benchmark harness
 
-The benchmark harness measures the repeated Markdown table-read path without adding
-a runtime or development dependency. It is a diagnostic tool, not a unit test and
+The benchmark harness measures repeated Markdown table reads and representative
+detector knowledge-loading patterns without adding a runtime or development
+dependency. It is a diagnostic tool, not a unit test and
 not a CI gate by default.
 
 ## Run
@@ -74,22 +75,35 @@ a warm OS page cache the metadata checks can cost as much as the file read they
 replace. Results are observational and should not be treated as strict thresholds
 across heterogeneous runners.
 
-### Representative detector workload limits
+### Detector workload and cache comparison
 
-The detector workload is representative, not call-for-call equivalent. Its uncached
-baseline reads each of four Markdown sources once and parses multiple sections from
-those in-memory strings. The cold/warm variants use production loaders for each
-section, which repeatedly resolve paths and check file metadata; cold mode reads each
-source on its first loader call, while warm mode reuses cached text. The JSON report
-includes a `workload.timing_scope` entry for each benchmark so this difference is
-explicit in the evidence.
+The detector suite spans four canonical Markdown sources: empath boundary, ancestral
+patterns, somatic wellbeing, and pattern mapper. Before timing, the harness verifies that
+cached values match both uncached parsing paths.
 
-Do not infer that the cache improves overall detector latency from these microbenchmarks
-alone. For example, the 2026-10-16 GitHub Actions run on CPython 3.11 reported a median
-of about 1.40 ms for the batch-read uncached detector workload and 1.91 ms for the warm
-production-loader workload. Those are different call patterns, not a controlled estimate
-of cache overhead or proof that caching is harmful. The two-table microbenchmark also
-showed only small differences on that runner. Treat these results as a reason to avoid
-claiming a demonstrated speedup, not as grounds to remove the cache or alter runtime
-behavior. A decision about cache value needs an equivalent workload comparison and,
-ideally, measurements from actual request paths.
+It reports three distinct detector comparisons:
+
+- **Batch baseline** (`uncached_detector_knowledge_loads`): reads each source once,
+  then parses multiple sections from in-memory text. This models batching, not the
+  current per-section loader call pattern.
+- **Equivalent uncached loader calls** (`uncached_detector_loader_calls`): follows
+  the same per-section call pattern and parses the same values as the cached variant,
+  but reads Markdown directly for each section instead of using the text cache.
+- **Production cache cold/warm** (`cold_cache_detector_knowledge_loads` and
+  `warm_cache_detector_knowledge_loads`): calls the production loaders per section.
+  Cold mode clears the cache before timing; warm mode primes it before timing.
+
+For the closest estimate of the cache's net effect under the current loader pattern,
+compare `uncached_detector_loader_calls` with
+`warm_cache_detector_knowledge_loads`. This is not a pure measurement of file-read
+cost: both paths resolve the four source IDs before timing the section reads, but
+the cached path additionally calls `Path.resolve()` and `Path.stat()` on every loader
+call for cache invalidation, while the uncached path performs direct reads. The batch
+baseline is useful for evaluating a future batching change, but must not be used alone
+to claim that caching itself is faster or slower.
+
+The JSON report records a `workload.timing_scope` entry for each benchmark so the
+included path resolution, metadata checks, reads, parsing, and setup boundaries remain
+explicit. These microbenchmarks are still not an actual request-path latency suite;
+retain or remove the cache only when comparable results and representative request-path
+measurements justify that decision.

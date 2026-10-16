@@ -110,6 +110,40 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
     }
 
 
+def _uncached_detector_loader_calls() -> dict[str, object]:
+    """Repeat the production loader call pattern without using the text cache."""
+    empath = runtime_skill_path("empath-boundary")
+    ancestral = runtime_skill_path("ancestral-patterns")
+    somatic = runtime_skill_path("somatic-wellbeing")
+    pattern = runtime_skill_path("pattern-mapper")
+
+    def keyword(path: Path, heading: str) -> tuple[str, ...]:
+        return extract_keyword_section(path.read_text(encoding="utf-8"), heading)
+
+    def groups(path: Path, heading: str) -> dict[str, tuple[str, ...]]:
+        return extract_labeled_groups(path.read_text(encoding="utf-8"), heading)
+
+    def table(path: Path, heading: str) -> dict[str, str]:
+        return _uncached_key_value_table(path.read_text(encoding="utf-8"), heading)
+
+    return {
+        "empath.activation": keyword(empath, "Activation Signals"),
+        "empath.drain": keyword(empath, "Drain signals"),
+        "empath.people_context": keyword(empath, "People-context signals"),
+        "empath.contract": table(empath, "Runtime detection contract"),
+        "empath.guidance": table(empath, "Guidance"),
+        "ancestral.activation": keyword(ancestral, "Activation Signals"),
+        "ancestral.groups": groups(ancestral, "Detection signals"),
+        "ancestral.scoring": table(ancestral, "Scoring"),
+        "ancestral.guidance": table(ancestral, "Guidance"),
+        "somatic.groups": groups(somatic, "Detection signals"),
+        "somatic.contract": table(somatic, "Runtime detection contract"),
+        "somatic.guidance": table(somatic, "Guidance"),
+        "pattern.scoring": table(pattern, "Scoring"),
+        "pattern.guidance": table(pattern, "Runtime guidance"),
+    }
+
+
 def summarize(samples_seconds: list[float]) -> dict[str, float | int]:
     """Summarize wall-clock samples using robust and familiar statistics."""
     if not samples_seconds:
@@ -225,9 +259,15 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
 
     # Refuse to report timings if cache-backed production loaders change meaning.
     expected_knowledge = _uncached_detector_knowledge_loads()
+    expected_loader_knowledge = _uncached_detector_loader_calls()
     _read_markdown_text_cached.cache_clear()
-    if _cached_detector_knowledge_loads() != expected_knowledge:
-        raise AssertionError("Cached detector knowledge differs from uncached parsing")
+    cached_knowledge = _cached_detector_knowledge_loads()
+    if cached_knowledge != expected_knowledge:
+        raise AssertionError("Cached detector knowledge differs from batch parsing")
+    if cached_knowledge != expected_loader_knowledge:
+        raise AssertionError(
+            "Cached detector knowledge differs from uncached loader calls"
+        )
     _read_markdown_text_cached.cache_clear()
 
     def uncached_multi_table() -> None:
@@ -274,6 +314,10 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                     None,
                     _uncached_detector_knowledge_loads,
                 ),
+                "uncached_detector_loader_calls": (
+                    None,
+                    _uncached_detector_loader_calls,
+                ),
                 "cold_cache_detector_knowledge_loads": (
                     clear_runtime_cache,
                     cold_cache_detector_knowledge,
@@ -316,11 +360,12 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                 "before timing. Samples are interleaved; setup is outside timed samples."
             ),
             "comparison_note": (
-                "These are end-to-end workload comparisons, not an isolated estimate "
-                "of cache overhead. The uncached detector workload reads each source "
-                "once and parses multiple sections from memory; production-loader "
-                "variants call loaders per section. Use timing_scope to account for "
-                "path resolution, stat calls, file reads, and Markdown parsing."
+                "The batch-read detector workload is an end-to-end baseline, not a "
+                "call-for-call cache comparison. Compare uncached_detector_loader_calls "
+                "with warm_cache_detector_knowledge_loads for the closest estimate of "
+                "text-cache impact under the same per-section loader pattern. The "
+                "production cache still pays path resolution, stat, and parse costs; "
+                "use timing_scope to interpret each measurement."
             ),
             "timing_scope": {
                 "uncached_two_table_reads": (
@@ -344,6 +389,12 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                     "Markdown files once, then parses multiple sections from in-memory "
                     "text. This is a batch-read baseline, not a call-for-call clone of "
                     "production loader calls."
+                ),
+                "uncached_detector_loader_calls": (
+                    "Timed work follows the same per-section call pattern and parses "
+                    "the same values as the production loaders, but reads Markdown "
+                    "directly on each call without the text cache or a Path.stat() "
+                    "cache-key check. Path resolution and file reads remain timed."
                 ),
                 "cold_cache_detector_knowledge_loads": (
                     "Timed work resolves four registry paths and calls production "
