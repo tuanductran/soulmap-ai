@@ -170,7 +170,7 @@ def test_first_person_dependency_signal_still_reaches_high_dependency() -> None:
 
 def test_first_person_signal_after_negated_clause_is_preserved() -> None:
     result = analyze_dependency(
-        [_user("I never said you are my only support; you are all I have.")]
+        [_user("I never said you are my only support, I feel you are all I have.")]
     )
 
     assert result["level"] == "HIGH_DEPENDENCY"
@@ -179,7 +179,7 @@ def test_first_person_signal_after_negated_clause_is_preserved() -> None:
 
 def test_first_person_signal_after_quoted_third_party_clause_is_preserved() -> None:
     result = analyze_dependency(
-        [_user('My friend said "you are all I have," but I feel you are all I have.')]
+        [_user('My friend said "you are all I have," I feel you are all I have.')]
     )
 
     assert result["level"] == "HIGH_DEPENDENCY"
@@ -204,7 +204,8 @@ def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
     result = analyze_dependency(
         [
             _user(
-                "If I ever said you are all I have, but I mean it now: I have no one else."
+                "If I ever said you are all I have, but I mean it now: "
+                "I have no one else."
             )
         ]
     )

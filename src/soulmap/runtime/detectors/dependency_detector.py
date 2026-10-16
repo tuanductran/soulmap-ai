@@ -31,7 +31,9 @@ _SCORING = load_key_value_table(_SOURCE, "Scoring")
 _GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
 _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
 _CONTEXT_EXCLUSION_CUES = tuple(
-    cue for cues in _CONTEXT_EXCLUSION_GROUPS.values() for cue in cues
+    (group, cue)
+    for group, cues in _CONTEXT_EXCLUSION_GROUPS.items()
+    for cue in cues
 )
 _CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
 _CLAUSE_BOUNDARY_CUES = tuple(
@@ -102,19 +104,24 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
     ):
         return True
 
-    for cue in _CONTEXT_EXCLUSION_CUES:
+    for group, cue in _CONTEXT_EXCLUSION_CUES:
         for match in re.finditer(re.escape(cue), message[:start]):
             if match.end() <= start and not _has_clause_boundary(
-                message[match.end() : start]
+                message[match.end() : start],
+                comma_is_boundary=group != "third-party attribution",
             ):
                 return True
     return False
 
 
-def _has_clause_boundary(text: str) -> bool:
-    """Check clause boundaries loaded from the canonical Markdown knowledge."""
+def _has_clause_boundary(text: str, *, comma_is_boundary: bool) -> bool:
+    """Check Markdown-defined clause boundaries for one exclusion cue."""
+    if _quoted_spans(text):
+        return True
     for boundary in _CLAUSE_BOUNDARY_CUES:
-        if boundary in {".", ";", "!", "?"}:
+        if boundary == "," and not comma_is_boundary:
+            continue
+        if boundary in {".", ";", "!", "?", ","}:
             if boundary in text:
                 return True
         elif re.search(rf"\b{re.escape(boundary)}\b", text):
