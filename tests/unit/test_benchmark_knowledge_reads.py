@@ -7,7 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from scripts.benchmark_knowledge_reads import compare_reports, main, run_suite, summarize
+from scripts.benchmark_knowledge_reads import (
+    compare_reports,
+    main,
+    run_suite,
+    summarize,
+)
 from soulmap.runtime.knowledge.keyword_lists import _read_markdown_text_cached
 
 
@@ -68,10 +73,16 @@ def test_compare_reports_flags_invalid_baseline_median(bad_median: object) -> No
 
 def test_compare_reports_flags_invalid_or_missing_current_median() -> None:
     baseline = {
-        "benchmarks": {"missing": {"median_seconds": 1.0}, "invalid": {"median_seconds": 1.0}}
+        "benchmarks": {
+            "missing": {"median_seconds": 1.0},
+            "invalid": {"median_seconds": 1.0},
+        }
     }
     current = {
-        "benchmarks": {"missing": {}, "invalid": {"median_seconds": 0.0}}
+        "benchmarks": {
+            "missing": {},
+            "invalid": {"median_seconds": 0.0},
+        }
     }
 
     result = compare_reports(baseline, current)
