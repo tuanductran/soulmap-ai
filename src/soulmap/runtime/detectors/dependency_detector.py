@@ -40,22 +40,43 @@ _HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
 _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
 
 
-def analyze_dependency(conversation_messages: list) -> dict:
+def analyze_dependency(
+    conversation_messages: list, *, current_message: str | None = None
+) -> dict:
     """Analyze conversation history to detect AI dependency signals.
 
     Args:
-        conversation_messages: List of dicts with 'role' and 'content' keys.
-                               Expected format: [{"role": "user", "content": "..."}]
+        conversation_messages: Conversation messages with role and content.
+        current_message: Optional current user turn; included unless already last.
 
     Returns:
         Dict with keys: level (str), score (int), signals (list), recommendation (str)
     """
+    messages = list(conversation_messages)
+    if current_message:
+        last_user_message = next(
+            (
+                item
+                for item in reversed(messages)
+                if isinstance(item, dict) and item.get("role") == "user"
+            ),
+            None,
+        )
+        current_is_last_user_message = (
+            isinstance(last_user_message, dict)
+            and isinstance(last_user_message.get("content"), str)
+            and normalize_message_text(last_user_message["content"])
+            == normalize_message_text(current_message)
+        )
+        if not current_is_last_user_message:
+            messages.append({"role": "user", "content": current_message})
+
     score = 0
     signals_found = []
 
     user_messages = [
         normalize_message_text(m["content"])
-        for m in conversation_messages
+        for m in messages
         if isinstance(m, dict) and m.get("role") == "user"
     ]
 
