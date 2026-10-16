@@ -124,9 +124,7 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         return extract_labeled_groups(path.read_text(encoding="utf-8"), heading)
 
     def table(path: Path, heading: str) -> dict[str, str]:
-        return _uncached_key_value_table(
-            path.read_text(encoding="utf-8"), heading
-        )
+        return _uncached_key_value_table(path.read_text(encoding="utf-8"), heading)
 
     return {
         "empath.activation": keyword(empath, "Activation Signals"),
