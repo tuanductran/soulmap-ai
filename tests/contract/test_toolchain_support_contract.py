@@ -81,6 +81,10 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     assert "--cov-report=term-missing" in script_text
     assert 'SOULMAP_PYTEST_COVERAGE: "1"' in ci_text
     assert "Coverage report (Ubuntu only)" not in ci_text
+    assert (
+        "uv run pytest -q tests/test_*.py tests/mutation/test_safety_critical_mutations.py"
+        in ci_text
+    )
 
 
 def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:

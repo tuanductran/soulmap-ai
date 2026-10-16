@@ -78,6 +78,9 @@ jobs:
           SOULMAP_PYTEST_SCOPE: focused
           SOULMAP_PYTEST_COVERAGE: "1"
         run: uv run python scripts/pytest_diagnostics.py
+      - name: Core detector and safety mutation tests
+        if: matrix.os == 'ubuntu-26.04'
+        run: uv run pytest -q tests/test_*.py tests/mutation/test_safety_critical_mutations.py
       - name: Cross-platform smoke tests
         run: uv run pytest -q tests/smoke/test_scripts_smoke.py
       - name: Safety evals
