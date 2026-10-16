@@ -230,11 +230,15 @@ understanding) are documented in full in its own module docstring and in
 status is tracked as its own row in the
 [safety enforcement matrix](safety-enforcement-matrix.md).
 
-Where this sits in the pipeline: all three validators run against generated
-response text, after the framework selector and safety gate have already
-decided routing, and before that text reaches the user. They are the last
-checkpoint, and the only checkpoint that inspects the actual words of the
-response rather than the routing decision that produced it.
+The intended integration order is to run all three validators against the
+LLM-generated response after routing and before delivery. However, this
+repository does not contain the production LLM host or delivery adapter, so
+repository evidence alone cannot establish that an external host invokes all
+three validators on every live response. The local response-evaluation harness
+runs the validators against harness-composed reference responses; this verifies
+the validators and those reference cases, not the live delivery boundary.
+Production integrations must explicitly call all three validators and prevent
+delivery when any validator requires a rewrite.
 
 ```mermaid
 flowchart LR
