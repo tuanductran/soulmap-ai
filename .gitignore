@@ -32,6 +32,7 @@ venv.bak/
 .uv-cache/
 
 # Build and packaging artifacts
+/artifacts/
 .eggs/
 .coverage
 .coverage.*

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import platform
 import statistics
 import sys
@@ -43,18 +44,56 @@ def summarize(samples_seconds: list[float]) -> dict[str, float]:
     }
 
 
+def _valid_median(results: dict[str, Any], name: str) -> float | None:
+    """Return a finite, positive median for a benchmark, or None if unusable."""
+    entry = results.get(name)
+    if not isinstance(entry, dict):
+        return None
+    value = entry.get("median_seconds")
+    if isinstance(value, bool) or not isinstance(value, int | float):
+        return None
+    median = float(value)
+    return median if math.isfinite(median) and median > 0.0 else None
+
+
 def compare_reports(
     baseline: dict[str, Any], current: dict[str, Any]
-) -> dict[str, dict[str, float | str]]:
-    """Compare matching benchmark medians; positive change means slower."""
+) -> dict[str, dict[str, Any]]:
+    """Compare reports; positive change means slower.
+
+    Missing benchmark names and invalid medians are explicitly not comparable,
+    never treated as zero change, and never trigger the regression gate.
+    """
     baseline_results = baseline.get("benchmarks", {})
     current_results = current.get("benchmarks", {})
-    comparisons: dict[str, dict[str, float | str]] = {}
-    for name in sorted(set(baseline_results) & set(current_results)):
-        before = float(baseline_results[name]["median_seconds"])
-        after = float(current_results[name]["median_seconds"])
-        change_pct = ((after - before) / before * 100.0) if before else 0.0
+    if not isinstance(baseline_results, dict):
+        baseline_results = {}
+    if not isinstance(current_results, dict):
+        current_results = {}
+
+    comparisons: dict[str, dict[str, Any]] = {}
+    for name in sorted(set(baseline_results) | set(current_results)):
+        before = _valid_median(baseline_results, name)
+        after = _valid_median(current_results, name)
+        if before is None or after is None:
+            if name not in baseline_results:
+                reason = "benchmark is missing from baseline"
+            elif name not in current_results:
+                reason = "benchmark is missing from current report"
+            elif before is None:
+                reason = "baseline median is missing, non-finite or not positive"
+            else:
+                reason = "current median is missing, non-finite or not positive"
+            comparisons[name] = {
+                "status": "invalid",
+                "direction": "not_comparable",
+                "reason": reason,
+            }
+            continue
+
+        change_pct = (after - before) / before * 100.0
         comparisons[name] = {
+            "status": "ok",
             "baseline_median_seconds": before,
             "current_median_seconds": after,
             "change_pct": change_pct,
@@ -63,52 +102,80 @@ def compare_reports(
     return comparisons
 
 
-def _measure(
-    operation: Benchmark, *, warmups: int, iterations: int
-) -> dict[str, float]:
-    for _ in range(warmups):
-        operation()
-    samples: list[float] = []
-    for _ in range(iterations):
-        start = time.perf_counter()
-        operation()
-        samples.append(time.perf_counter() - start)
-    return summarize(samples)
+def _measure_interleaved(
+    operations: dict[str, tuple[Callable[[], object] | None, Benchmark]],
+    *,
+    warmups: int,
+    iterations: int,
+) -> dict[str, dict[str, float]]:
+    """Measure workloads in rotating order, running setup outside timed samples."""
+    names = list(operations)
+    samples: dict[str, list[float]] = {name: [] for name in names}
+
+    def run_one(name: str, *, timed: bool) -> None:
+        setup, operation = operations[name]
+        if setup is not None:
+            setup()
+        if timed:
+            start = time.perf_counter()
+            operation()
+            samples[name].append(time.perf_counter() - start)
+        else:
+            operation()
+
+    # Rotate the starting workload each round to reduce fixed-order bias.
+    for round_index in range(warmups):
+        shift = round_index % len(names)
+        for name in names[shift:] + names[:shift]:
+            run_one(name, timed=False)
+
+    for round_index in range(iterations):
+        shift = round_index % len(names)
+        for name in names[shift:] + names[:shift]:
+            run_one(name, timed=True)
+
+    return {name: summarize(values) for name, values in samples.items()}
 
 
 def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
-    """Run the same two-table workload with uncached, cold-cache and warm-cache reads."""
+    """Run comparable two-table workloads in an interleaved order."""
     markdown_path = runtime_skill_path("pattern-mapper")
 
     def uncached_multi_table() -> None:
         for heading in TABLE_HEADINGS:
             extract_table_rows(markdown_path.read_text(encoding="utf-8"), heading)
 
-    def cold_cache_multi_table() -> None:
+    def clear_cache() -> None:
         _read_markdown_text_cached.cache_clear()
+
+    def cold_cache_multi_table() -> None:
         for heading in TABLE_HEADINGS:
             load_table_rows(markdown_path, heading)
+
+    def prime_cache() -> None:
+        _read_markdown_text_cached.cache_clear()
+        # The text cache is keyed by file version, so one table load primes the
+        # Markdown content for both timed table parses.
+        load_table_rows(markdown_path, TABLE_HEADINGS[0])
 
     def warm_cache_multi_table() -> None:
         for heading in TABLE_HEADINGS:
             load_table_rows(markdown_path, heading)
 
-    # Prime the file cache before measuring warm-cache behavior.
-    _read_markdown_text_cached.cache_clear()
-    for heading in TABLE_HEADINGS:
-        load_table_rows(markdown_path, heading)
+    try:
+        benchmarks = _measure_interleaved(
+            {
+                "uncached_two_table_reads": (None, uncached_multi_table),
+                "cold_cache_two_table_loads": (clear_cache, cold_cache_multi_table),
+                "warm_cache_two_table_loads": (prime_cache, warm_cache_multi_table),
+            },
+            warmups=warmups,
+            iterations=iterations,
+        )
+    finally:
+        # Leave the process-wide Markdown cache empty rather than primed.
+        _read_markdown_text_cached.cache_clear()
 
-    benchmarks = {
-        "uncached_two_table_reads": _measure(
-            uncached_multi_table, warmups=warmups, iterations=iterations
-        ),
-        "cold_cache_two_table_loads": _measure(
-            cold_cache_multi_table, warmups=warmups, iterations=iterations
-        ),
-        "warm_cache_two_table_loads": _measure(
-            warm_cache_multi_table, warmups=warmups, iterations=iterations
-        ),
-    }
     return {
         "schema_version": 1,
         "created_at": datetime.now(UTC).isoformat(),
@@ -123,7 +190,9 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
             "headings": list(TABLE_HEADINGS),
             "description": (
                 "Load the Scoring and Runtime guidance Markdown tables from the "
-                "same file; compare direct reads, cache-cold loads, and cache-warm loads."
+                "same file. Uncached reads the file for each table; cache-cold "
+                "clears the cache then performs one miss and one hit; cache-warm "
+                "primes the cache outside the timed sample. Samples are interleaved."
             ),
         },
         "benchmarks": benchmarks,
@@ -189,9 +258,13 @@ def main(argv: list[str] | None = None) -> int:
         if not comparisons:
             print("No matching benchmark names to compare.")
         for name, result in comparisons.items():
+            if result["status"] != "ok":
+                print(f"{name}: not comparable ({result['reason']})")
+                continue
             print(f"{name}: {result['change_pct']:+.2f}% ({result['direction']})")
         if args.fail_on_regression is not None and any(
-            float(result["change_pct"]) > args.fail_on_regression
+            result["status"] == "ok"
+            and float(result["change_pct"]) > args.fail_on_regression
             for result in comparisons.values()
         ):
             print(
