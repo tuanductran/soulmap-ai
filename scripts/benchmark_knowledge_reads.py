@@ -189,7 +189,7 @@ def _measure_interleaved(
     *,
     warmups: int,
     iterations: int,
-) -> dict[str, dict[str, float]]:
+) -> dict[str, dict[str, float | int]]:
     """Measure workloads in rotating order, running setup outside timed samples."""
     names = list(operations)
     samples: dict[str, list[float]] = {name: [] for name in names}
