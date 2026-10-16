@@ -198,6 +198,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         "benchmarks": benchmarks,
     }
 
+
 def _load_report(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict) or "benchmarks" not in payload:
