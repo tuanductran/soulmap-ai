@@ -144,8 +144,10 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         for heading in TABLE_HEADINGS:
             extract_table_rows(markdown_path.read_text(encoding="utf-8"), heading)
 
-    def cold_cache_multi_table() -> None:
+    def clear_cache() -> None:
         _read_markdown_text_cached.cache_clear()
+
+    def cold_cache_multi_table() -> None:
         for heading in TABLE_HEADINGS:
             load_table_rows(markdown_path, heading)
 
@@ -163,7 +165,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         benchmarks = _measure_interleaved(
             {
                 "uncached_two_table_reads": (None, uncached_multi_table),
-                "cold_cache_two_table_loads": (None, cold_cache_multi_table),
+                "cold_cache_two_table_loads": (clear_cache, cold_cache_multi_table),
                 "warm_cache_two_table_loads": (prime_cache, warm_cache_multi_table),
             },
             warmups=warmups,
