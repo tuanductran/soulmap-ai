@@ -73,7 +73,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
     comparisons = compare_reports(baseline, current)
 
     assert comparisons["warm"]["status"] == "ok"
-    assert comparisons["warm"]["change_pct"] == 20.0
+    assert abs(comparisons["warm"]["change_pct"] - 20.0) < 1e-9
     assert comparisons["bad"]["status"] == "invalid"
     assert comparisons["new"]["status"] == "invalid"
 
