@@ -106,6 +106,18 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
+def test_current_message_is_added_only_when_not_already_last_in_history() -> None:
+    message = (
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    history = [_user(message)]
+
+    assert analyze_dependency(history, current_message=message) == analyze_dependency(
+        history
+    )
+
+
 def test_recommendation_present_for_each_level() -> None:
     low = analyze_dependency([_user("Had a quiet day.")])
     moderate = analyze_dependency([_user("Should I do this or not?")])
