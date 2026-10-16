@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from scripts import benchmark_knowledge_reads as benchmark
 from scripts.benchmark_knowledge_reads import compare_reports, run_suite, summarize
 from soulmap.runtime.knowledge.keyword_lists import (
     _read_markdown_text_cached,
@@ -78,6 +79,15 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
     assert comparisons["new"]["status"] == "invalid"
 
 
+def test_cached_detector_knowledge_matches_uncached_parsing() -> None:
+    """Representative detector loaders must preserve Markdown semantics."""
+    _read_markdown_text_cached.cache_clear()
+    assert benchmark._cached_detector_knowledge_loads() == (
+        benchmark._uncached_detector_knowledge_loads()
+    )
+    _read_markdown_text_cached.cache_clear()
+
+
 def test_benchmark_suite_emits_all_expected_workloads() -> None:
     """The benchmark entrypoint must execute and report each comparison mode."""
     report = run_suite(warmups=0, iterations=1)
@@ -88,6 +98,9 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
         "uncached_two_table_reads",
         "cold_cache_two_table_loads",
         "warm_cache_two_table_loads",
+        "uncached_detector_knowledge_loads",
+        "cold_cache_detector_knowledge_loads",
+        "warm_cache_detector_knowledge_loads",
     }
     assert all(
         result["median_seconds"] > 0
