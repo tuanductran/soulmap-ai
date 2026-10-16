@@ -20,13 +20,96 @@ from typing import Any
 
 from soulmap.runtime.knowledge.keyword_lists import (
     _read_markdown_text_cached,
+    extract_keyword_section,
+    extract_labeled_groups,
     extract_table_rows,
+    load_key_value_table,
+    load_keyword_section,
+    load_labeled_groups,
     load_table_rows,
 )
 from soulmap.runtime.source_registry import runtime_skill_path
 
 Benchmark = Callable[[], object]
 TABLE_HEADINGS = ("Scoring", "Runtime guidance")
+
+
+def _uncached_key_value_table(text: str, heading: str) -> dict[str, str]:
+    """Parse a strict two-column table without using the Markdown text cache."""
+    rows = extract_table_rows(text, heading)
+    if not rows or any(len(row) != 2 for row in rows):
+        raise ValueError(f"Knowledge table {heading!r} must contain two columns.")
+    values = {row[0]: row[1] for row in rows}
+    if len(values) != len(rows) or any(not value for value in values.values()):
+        raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
+    return values
+
+
+def _uncached_detector_knowledge_loads() -> dict[str, object]:
+    """Load representative detector knowledge directly from Markdown files."""
+    sources = {
+        name: runtime_skill_path(name).read_text(encoding="utf-8")
+        for name in (
+            "empath-boundary",
+            "ancestral-patterns",
+            "somatic-wellbeing",
+            "pattern-mapper",
+        )
+    }
+    empath = sources["empath-boundary"]
+    ancestral = sources["ancestral-patterns"]
+    somatic = sources["somatic-wellbeing"]
+    pattern = sources["pattern-mapper"]
+    return {
+        "empath.activation": extract_keyword_section(empath, "Activation Signals"),
+        "empath.drain": extract_keyword_section(empath, "Drain signals"),
+        "empath.people_context": extract_keyword_section(
+            empath, "People-context signals"
+        ),
+        "empath.contract": _uncached_key_value_table(
+            empath, "Runtime detection contract"
+        ),
+        "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
+        "ancestral.activation": extract_keyword_section(
+            ancestral, "Activation Signals"
+        ),
+        "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
+        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring"),
+        "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
+        "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
+        "somatic.contract": _uncached_key_value_table(
+            somatic, "Runtime detection contract"
+        ),
+        "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
+        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
+        "pattern.guidance": _uncached_key_value_table(pattern, "Runtime guidance"),
+    }
+
+
+def _cached_detector_knowledge_loads() -> dict[str, object]:
+    """Load the same representative detector knowledge through runtime loaders."""
+    empath = runtime_skill_path("empath-boundary")
+    ancestral = runtime_skill_path("ancestral-patterns")
+    somatic = runtime_skill_path("somatic-wellbeing")
+    pattern = runtime_skill_path("pattern-mapper")
+    return {
+        "empath.activation": load_keyword_section(empath, "Activation Signals"),
+        "empath.drain": load_keyword_section(empath, "Drain signals"),
+        "empath.people_context": load_keyword_section(empath, "People-context signals"),
+        "empath.contract": load_key_value_table(empath, "Runtime detection contract"),
+        "empath.guidance": load_key_value_table(empath, "Guidance"),
+        "ancestral.activation": load_keyword_section(
+            ancestral, "Activation Signals"
+        ),
+        "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
+        "ancestral.scoring": load_key_value_table(ancestral, "Scoring"),
+        "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
+        "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
+        "somatic.contract": load_key_value_table(somatic, "Runtime detection contract"),
+        "somatic.guidance": load_key_value_table(somatic, "Guidance"),
+        "pattern.scoring": load_key_value_table(pattern, "Scoring"),
+        "pattern.guidance": load_key_value_table(pattern, "Runtime guidance"),
+    }
 
 
 def summarize(samples_seconds: list[float]) -> dict[str, float]:
@@ -138,8 +221,15 @@ def _measure_interleaved(
 
 
 def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
-    """Run comparable two-table workloads in an interleaved order."""
+    """Run interleaved cache benchmarks for tables and detector knowledge."""
     markdown_path = runtime_skill_path("pattern-mapper")
+
+    # Refuse to report timings if cache-backed production loaders change meaning.
+    expected_knowledge = _uncached_detector_knowledge_loads()
+    _read_markdown_text_cached.cache_clear()
+    if _cached_detector_knowledge_loads() != expected_knowledge:
+        raise AssertionError("Cached detector knowledge differs from uncached parsing")
+    _read_markdown_text_cached.cache_clear()
 
     def uncached_multi_table() -> None:
         for heading in TABLE_HEADINGS:
@@ -162,12 +252,37 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         for heading in TABLE_HEADINGS:
             load_table_rows(markdown_path, heading)
 
+    def clear_runtime_cache() -> None:
+        _read_markdown_text_cached.cache_clear()
+
+    def cold_cache_detector_knowledge() -> None:
+        _cached_detector_knowledge_loads()
+
+    def prime_runtime_cache() -> None:
+        _read_markdown_text_cached.cache_clear()
+        _cached_detector_knowledge_loads()
+
+    def warm_cache_detector_knowledge() -> None:
+        _cached_detector_knowledge_loads()
+
     try:
         benchmarks = _measure_interleaved(
             {
                 "uncached_two_table_reads": (None, uncached_multi_table),
                 "cold_cache_two_table_loads": (clear_cache, cold_cache_multi_table),
                 "warm_cache_two_table_loads": (prime_cache, warm_cache_multi_table),
+                "uncached_detector_knowledge_loads": (
+                    None,
+                    _uncached_detector_knowledge_loads,
+                ),
+                "cold_cache_detector_knowledge_loads": (
+                    clear_runtime_cache,
+                    cold_cache_detector_knowledge,
+                ),
+                "warm_cache_detector_knowledge_loads": (
+                    prime_runtime_cache,
+                    warm_cache_detector_knowledge,
+                ),
             },
             warmups=warmups,
             iterations=iterations,
@@ -188,11 +303,18 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         "workload": {
             "source": "skills/frameworks/pattern-mapper.md",
             "headings": list(TABLE_HEADINGS),
+            "detector_sources": [
+                "skills/frameworks/empath-boundary.md",
+                "skills/frameworks/ancestral-patterns.md",
+                "skills/frameworks/somatic-wellbeing.md",
+                "skills/frameworks/pattern-mapper.md",
+            ],
             "description": (
-                "Load the Scoring and Runtime guidance Markdown tables from the "
-                "same file. Uncached reads the file for each table; cache-cold "
-                "clears the cache then performs one miss and one hit; cache-warm "
-                "primes the cache outside the timed sample. Samples are interleaved."
+                "Includes the original two-table microbenchmark and a representative "
+                "detector knowledge workload spanning keyword sections, labeled "
+                "groups, and key/value tables from empath, ancestral, somatic, and "
+                "pattern-mapper Markdown. Cached and uncached outputs are compared "
+                "before timing. Samples are interleaved; setup is outside timed samples."
             ),
         },
         "benchmarks": benchmarks,
