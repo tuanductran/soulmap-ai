@@ -73,3 +73,23 @@ cached. The warm path still checks file metadata to invalidate stale content, so
 a warm OS page cache the metadata checks can cost as much as the file read they
 replace. Results are observational and should not be treated as strict thresholds
 across heterogeneous runners.
+
+### Representative detector workload limits
+
+The detector workload is representative, not call-for-call equivalent. Its uncached
+baseline reads each of four Markdown sources once and parses multiple sections from
+those in-memory strings. The cold/warm variants use production loaders for each
+section, which repeatedly resolve paths and check file metadata; cold mode reads each
+source on its first loader call, while warm mode reuses cached text. The JSON report
+includes a `workload.timing_scope` entry for each benchmark so this difference is
+explicit in the evidence.
+
+Do not infer that the cache improves overall detector latency from these microbenchmarks
+alone. For example, the 2026-10-16 GitHub Actions run on CPython 3.11 reported a median
+of about 1.40 ms for the batch-read uncached detector workload and 1.91 ms for the warm
+production-loader workload. Those are different call patterns, not a controlled estimate
+of cache overhead or proof that caching is harmful. The two-table microbenchmark also
+showed only small differences on that runner. Treat these results as a reason to avoid
+claiming a demonstrated speedup, not as grounds to remove the cache or alter runtime
+behavior. A decision about cache value needs an equivalent workload comparison and,
+ideally, measurements from actual request paths.

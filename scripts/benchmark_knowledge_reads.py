@@ -110,11 +110,12 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
     }
 
 
-def summarize(samples_seconds: list[float]) -> dict[str, float]:
+def summarize(samples_seconds: list[float]) -> dict[str, float | int]:
     """Summarize wall-clock samples using robust and familiar statistics."""
     if not samples_seconds:
         raise ValueError("At least one timing sample is required.")
     return {
+        "sample_count": len(samples_seconds),
         "min_seconds": min(samples_seconds),
         "median_seconds": statistics.median(samples_seconds),
         "mean_seconds": statistics.fmean(samples_seconds),
@@ -188,7 +189,7 @@ def _measure_interleaved(
     *,
     warmups: int,
     iterations: int,
-) -> dict[str, dict[str, float]]:
+) -> dict[str, dict[str, float | int]]:
     """Measure workloads in rotating order, running setup outside timed samples."""
     names = list(operations)
     samples: dict[str, list[float]] = {name: [] for name in names}
@@ -314,6 +315,50 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                 "pattern-mapper Markdown. Cached and uncached outputs are compared "
                 "before timing. Samples are interleaved; setup is outside timed samples."
             ),
+            "comparison_note": (
+                "These are end-to-end workload comparisons, not an isolated estimate "
+                "of cache overhead. The uncached detector workload reads each source "
+                "once and parses multiple sections from memory; production-loader "
+                "variants call loaders per section. Use timing_scope to account for "
+                "path resolution, stat calls, file reads, and Markdown parsing."
+            ),
+            "timing_scope": {
+                "uncached_two_table_reads": (
+                    "Timed work reads source text twice and parses each table; "
+                    "runtime_skill_path resolution occurs before timing."
+                ),
+                "cold_cache_two_table_loads": (
+                    "Timed work calls the production loader twice. Each call performs "
+                    "Path.resolve() and Path.stat(); the first load reads text and "
+                    "populates cache, and both calls parse a table. Cache clearing is "
+                    "outside the timed sample."
+                ),
+                "warm_cache_two_table_loads": (
+                    "Timed work calls the production loader twice. Each call still "
+                    "performs Path.resolve() and Path.stat(); text reads are cache "
+                    "hits, while table parsing and metadata checks remain timed. Cache "
+                    "priming is outside the timed sample."
+                ),
+                "uncached_detector_knowledge_loads": (
+                    "Timed work resolves each registry path, reads each of four "
+                    "Markdown files once, then parses multiple sections from in-memory "
+                    "text. This is a batch-read baseline, not a call-for-call clone of "
+                    "production loader calls."
+                ),
+                "cold_cache_detector_knowledge_loads": (
+                    "Timed work resolves four registry paths and calls production "
+                    "loaders per section. Each loader call performs Path.resolve() and "
+                    "Path.stat(); the first load per file reads text and later sections "
+                    "reuse cached text. Cache clearing is outside the timed sample."
+                ),
+                "warm_cache_detector_knowledge_loads": (
+                    "Timed work resolves four registry paths and calls production "
+                    "loaders per section. Each loader call performs Path.resolve() and "
+                    "Path.stat(); cached text avoids repeated file reads, but metadata "
+                    "checks and parsing remain timed. Cache priming is outside the "
+                    "timed sample."
+                ),
+            },
         },
         "benchmarks": benchmarks,
     }

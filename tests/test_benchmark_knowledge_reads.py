@@ -50,6 +50,7 @@ def test_summarize_reports_median_and_single_sample_dispersion() -> None:
     """The report summary must handle a single timing sample deterministically."""
     result = summarize([0.25])
 
+    assert result["sample_count"] == 1
     assert result["median_seconds"] == 0.25
     assert result["mean_seconds"] == 0.25
     assert result["stdev_seconds"] == 0.0
@@ -102,4 +103,12 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
         "cold_cache_detector_knowledge_loads",
         "warm_cache_detector_knowledge_loads",
     }
+    assert all(result["sample_count"] == 1 for result in report["benchmarks"].values())
     assert all(result["median_seconds"] > 0 for result in report["benchmarks"].values())
+    assert set(report["workload"]["timing_scope"]) == set(report["benchmarks"])
+    assert "end-to-end" in report["workload"]["comparison_note"]
+    timing_scope = report["workload"]["timing_scope"][
+        "warm_cache_detector_knowledge_loads"
+    ]
+    assert "Path.resolve()" in timing_scope
+    assert "Path.stat()" in timing_scope
