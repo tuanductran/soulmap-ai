@@ -1,7 +1,8 @@
 # Python benchmark harness
 
 The benchmark harness measures repeated Markdown table reads and representative
-detector knowledge-loading patterns without adding a runtime or development dependency. It is a diagnostic tool, not a unit test and
+detector knowledge-loading patterns without adding a runtime or development
+dependency. It is a diagnostic tool, not a unit test and
 not a CI gate by default.
 
 ## Run
@@ -87,7 +88,7 @@ It reports three distinct detector comparisons:
   current per-section loader call pattern.
 - **Equivalent uncached loader calls** (`uncached_detector_loader_calls`): follows
   the same per-section call pattern and parses the same values as the cached variant,
-  but reads Markdown directly on every call instead of using the text cache.
+  but reads Markdown directly for each section instead of using the text cache.
 - **Production cache cold/warm** (`cold_cache_detector_knowledge_loads` and
   `warm_cache_detector_knowledge_loads`): calls the production loaders per section.
   Cold mode clears the cache before timing; warm mode primes it before timing.
@@ -95,8 +96,9 @@ It reports three distinct detector comparisons:
 For the closest estimate of the cache's net effect under the current loader pattern,
 compare `uncached_detector_loader_calls` with
 `warm_cache_detector_knowledge_loads`. This is not a pure measurement of file-read
-cost: the cached path still resolves paths and calls `Path.stat()` for cache
-invalidation, while the uncached path performs direct reads. The batch baseline is
+cost: both paths resolve the four source IDs before timing the section reads, but
+the cached path additionally calls `Path.resolve()` and `Path.stat()` on every loader
+call for cache invalidation, while the uncached path performs direct reads. The batch baseline is
 useful for evaluating a future batching change, but must not be used alone to claim
 that caching itself is faster or slower.
 
