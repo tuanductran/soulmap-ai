@@ -98,9 +98,9 @@ compare `uncached_detector_loader_calls` with
 `warm_cache_detector_knowledge_loads`. This is not a pure measurement of file-read
 cost: both paths resolve the four source IDs before timing the section reads, but
 the cached path additionally calls `Path.resolve()` and `Path.stat()` on every loader
-call for cache invalidation, while the uncached path performs direct reads. The batch baseline is
-useful for evaluating a future batching change, but must not be used alone to claim
-that caching itself is faster or slower.
+call for cache invalidation, while the uncached path performs direct reads. The batch
+baseline is useful for evaluating a future batching change, but must not be used alone
+to claim that caching itself is faster or slower.
 
 The JSON report records a `workload.timing_scope` entry for each benchmark so the
 included path resolution, metadata checks, reads, parsing, and setup boundaries remain
