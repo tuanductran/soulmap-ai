@@ -116,3 +116,94 @@ def test_recommendation_present_for_each_level() -> None:
     assert low["recommendation"]
     assert moderate["recommendation"]
     assert high["recommendation"]
+
+
+def test_quoted_dependency_signal_is_not_treated_as_user_endorsement() -> None:
+    result = analyze_dependency(
+        [_user('My friend said, "you are all I have"; how should I respond?')]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert not any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_third_party_dependency_signal_is_not_treated_as_user_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("My coworker told his chatbot you're the only one who understands me.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("If I ever said you are all I have, that would be a fictional example.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_explicit_negation_does_not_count_as_dependency_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("I don't feel that you are the only one who understands me.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_first_person_dependency_signal_still_reaches_high_dependency() -> None:
+    result = analyze_dependency(
+        [_user("I feel like you are all I have, and I have no one else.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_first_person_signal_after_negated_clause_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user("I never said you are my only support; you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_first_person_signal_after_quoted_third_party_clause_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user('My friend said "you are all I have," but I feel you are all I have.')]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_third_party_cue_does_not_hide_a_later_first_person_signal() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "My coworker told his chatbot you're the only one who understands me, "
+                "but I feel you are all I have."
+            )
+        ]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
+    result = analyze_dependency(
+        [_user("If I ever said you are all I have, but I mean it now: I have no one else.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2

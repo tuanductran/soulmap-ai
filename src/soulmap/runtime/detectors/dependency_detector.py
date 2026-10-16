@@ -29,6 +29,17 @@ _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
 
 _SCORING = load_key_value_table(_SOURCE, "Scoring")
 _GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
+_CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
+_CONTEXT_EXCLUSION_CUES = tuple(
+    cue for cues in _CONTEXT_EXCLUSION_GROUPS.values() for cue in cues
+)
+_CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
+_CLAUSE_BOUNDARY_CUES = tuple(
+    cue for cues in _CLAUSE_BOUNDARY_GROUPS.values() for cue in cues
+)
+_QUOTED_SPAN_PATTERN = re.compile(
+    r'"[^"\\n]*"|“[^”\\n]*”|‘[^’\\n]*’|(?<!\\w)\\'[^\\'\\n]+\\'(?!\\w)'
+)
 
 _DEPENDENCY_KEYWORD_WEIGHT = int(_SCORING["Dependency keyword weight"])
 _DEPENDENCY_REGEX_WEIGHT = int(_SCORING["Dependency regex weight"])
@@ -38,6 +49,42 @@ _HIGH_MESSAGE_VOLUME_THRESHOLD = int(_SCORING["High message volume threshold"])
 _HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
 _HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
 _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
+
+
+def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
+    """Return whether a phrase occurs outside quoted or excluded context."""
+    return any(
+        not _is_context_excluded(message, match.start(), match.end())
+        for match in re.finditer(re.escape(phrase), message)
+    )
+
+
+def _is_context_excluded(message: str, start: int, end: int) -> bool:
+    """Check whether one signal occurrence is quoted or contextually excluded."""
+    if any(
+        quoted.start() <= start and end <= quoted.end()
+        for quoted in _QUOTED_SPAN_PATTERN.finditer(message)
+    ):
+        return True
+
+    for cue in _CONTEXT_EXCLUSION_CUES:
+        for match in re.finditer(re.escape(cue), message[:start]):
+            if match.end() <= start and not _has_clause_boundary(
+                message[match.end() : start]
+            ):
+                return True
+    return False
+
+
+def _has_clause_boundary(text: str) -> bool:
+    """Check clause boundaries loaded from the canonical Markdown knowledge."""
+    for boundary in _CLAUSE_BOUNDARY_CUES:
+        if boundary in {".", ";", "!", "?"}:
+            if boundary in text:
+                return True
+        elif re.search(rf"\\b{re.escape(boundary)}\\b", text):
+            return True
+    return False
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -69,7 +116,11 @@ def analyze_dependency(conversation_messages: list) -> dict:
 
     for msg in user_messages:
         keyword_match = next(
-            (keyword for keyword in _DEPENDENCY_KEYWORDS if keyword in msg),
+            (
+                keyword
+                for keyword in _DEPENDENCY_KEYWORDS
+                if _has_unexcluded_occurrence(msg, keyword)
+            ),
             None,
         )
         if keyword_match:
@@ -80,7 +131,10 @@ def analyze_dependency(conversation_messages: list) -> dict:
             continue
 
         for label, pattern in _DEPENDENCY_PATTERNS:
-            if pattern.search(msg):
+            if any(
+                not _is_context_excluded(msg, match.start(), match.end())
+                for match in pattern.finditer(msg)
+            ):
                 signal = f"dependency_pattern: '{label}'"
                 if signal not in signals_found:
                     score += _DEPENDENCY_REGEX_WEIGHT
@@ -89,8 +143,8 @@ def analyze_dependency(conversation_messages: list) -> dict:
 
     decision_count = 0
     for msg in user_messages:
-        for pattern in _DECISION_SEEKING:
-            if pattern in msg:
+        for phrase in _DECISION_SEEKING:
+            if _has_unexcluded_occurrence(msg, phrase):
                 decision_count += 1
                 score += _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
@@ -98,7 +152,7 @@ def analyze_dependency(conversation_messages: list) -> dict:
 
     for msg in user_messages:
         for signal in _ISOLATION_SIGNALS:
-            if signal in msg:
+            if _has_unexcluded_occurrence(msg, signal):
                 score += _ISOLATION_SIGNAL_WEIGHT
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
