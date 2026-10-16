@@ -99,7 +99,7 @@ def _pyright_available(repo_root: Path) -> bool:
     python = python_executable(repo_root)
     try:
         run([python, "-m", "pyright", "--version"], cwd=repo_root, check=True)
-    except Exception:
+    except (OSError, subprocess.CalledProcessError):
         return False
     return True
 
