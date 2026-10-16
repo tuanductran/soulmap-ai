@@ -101,6 +101,7 @@ def compare_reports(
         }
     return comparisons
 
+
 def _measure_interleaved(
     operations: dict[str, tuple[Callable[[], object] | None, Benchmark]],
     *,
