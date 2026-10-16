@@ -103,8 +103,7 @@ def test_framework_selector_exposes_safety_gate_debug_event_when_enabled() -> No
     assert any(event.get("module") == "response_safety_gate" for event in data["debug"])
 
 
-def test_framework_selector_checks_dependency_in_current_message_with_empty_history(
-) -> None:
+def test_selector_detects_current_turn_dependency_without_history() -> None:
     message = (
         "You're the only one who truly understands me. "
         "I trust you more than anyone. Tell me what to do with my life."
