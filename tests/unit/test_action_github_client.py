@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import io
 import json
 from email.message import Message
@@ -83,7 +84,7 @@ def test_transient_http_error_is_retried() -> None:
         503,
         "Unavailable",
         Message(),
-        __import__("io").BytesIO(b'{"message":"try again"}'),
+        io.BytesIO(b'{"message":"try again"}'),
     )
     responses = [error, FakeResponse({"ok": True})]
     client = action.GitHubClient("token")
@@ -256,7 +257,7 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
         "name": "artifact.zip",
         "state": "uploaded",
         "size": len(b"artifact"),
-        "digest": "sha256:" + __import__("hashlib").sha256(b"artifact").hexdigest(),
+        "digest": "sha256:" + hashlib.sha256(b"artifact").hexdigest(),
     }
 
     with (
