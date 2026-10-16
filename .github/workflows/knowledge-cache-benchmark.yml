@@ -9,6 +9,9 @@ on:
       - "src/soulmap/runtime/knowledge/keyword_lists.py"
       - "src/soulmap/runtime/knowledge/pattern_source.py"
       - "skills/frameworks/pattern-mapper.md"
+      - "skills/frameworks/empath-boundary.md"
+      - "skills/frameworks/ancestral-patterns.md"
+      - "skills/frameworks/somatic-wellbeing.md"
       - "pyproject.toml"
       - "uv.lock"
   push:
@@ -20,6 +23,9 @@ on:
       - "src/soulmap/runtime/knowledge/keyword_lists.py"
       - "src/soulmap/runtime/knowledge/pattern_source.py"
       - "skills/frameworks/pattern-mapper.md"
+      - "skills/frameworks/empath-boundary.md"
+      - "skills/frameworks/ancestral-patterns.md"
+      - "skills/frameworks/somatic-wellbeing.md"
       - "pyproject.toml"
       - "uv.lock"
   workflow_dispatch:
