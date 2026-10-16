@@ -83,9 +83,9 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
 def test_cached_detector_knowledge_matches_uncached_parsing() -> None:
     """Representative detector loaders must preserve Markdown semantics."""
     _read_markdown_text_cached.cache_clear()
-    assert benchmark._cached_detector_knowledge_loads() == (
-        benchmark._uncached_detector_knowledge_loads()
-    )
+    cached = benchmark._cached_detector_knowledge_loads()
+    assert cached == benchmark._uncached_detector_knowledge_loads()
+    assert cached == benchmark._uncached_detector_loader_calls()
     _read_markdown_text_cached.cache_clear()
 
 
@@ -100,6 +100,7 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
         "cold_cache_two_table_loads",
         "warm_cache_two_table_loads",
         "uncached_detector_knowledge_loads",
+        "uncached_detector_loader_calls",
         "cold_cache_detector_knowledge_loads",
         "warm_cache_detector_knowledge_loads",
     }
