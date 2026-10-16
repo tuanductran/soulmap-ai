@@ -57,9 +57,13 @@ def _quoted_spans(message: str) -> list[tuple[int, int]]:
 
     for index, char in enumerate(message):
         if closing is None:
-            if char in {'"', "“", "‘"}:
+            if char in {'"', chr(0x201C), chr(0x2018)}:
                 start = index
-                closing = {'"': '"', "“": "”", "‘": "’"}[char]
+                closing = {
+                    '"': '"',
+                    chr(0x201C): chr(0x201D),
+                    chr(0x2018): chr(0x2019),
+                }[char]
             elif (
                 char == "'"
                 and (index == 0 or not message[index - 1].isalnum())
@@ -70,7 +74,7 @@ def _quoted_spans(message: str) -> list[tuple[int, int]]:
                 closing = "'"
             continue
 
-        if char != closing and not (closing == "’" and char == "'"):
+        if char != closing and not (closing == chr(0x2019) and char == "'"):
             continue
         if (
             char == "'"
