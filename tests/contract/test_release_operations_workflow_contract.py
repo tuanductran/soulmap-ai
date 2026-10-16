@@ -44,8 +44,12 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "inputs.merge_commit_sha" in workflow
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
-    assert "github.event.pull_request.head.repo.full_name == github.repository" in workflow
-    assert "github.event.pull_request.base.repo.full_name == github.repository" in workflow
+    assert (
+        "github.event.pull_request.head.repo.full_name == github.repository" in workflow
+    )
+    assert (
+        "github.event.pull_request.base.repo.full_name == github.repository" in workflow
+    )
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
     assert workflow.count('git merge-base --is-ancestor "$MERGE_SHA" origin/main') == 2
     assert "github.event.pull_request.merge_commit_sha" in workflow
