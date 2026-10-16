@@ -74,8 +74,17 @@ def test_tracked_hygiene_returns_empty_without_git_and_flags_all_generated_paths
     ]
 
 
-def test_pyright_availability_reports_success_and_failure(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+@pytest.mark.parametrize(
+    "failure",
+    [
+        FileNotFoundError("pyright is unavailable"),
+        subprocess.CalledProcessError(1, ["python", "-m", "pyright", "--version"]),
+    ],
+)
+def test_pyright_availability_reports_success_and_expected_failures(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    failure: Exception,
 ) -> None:
     calls: list[list[str]] = []
     monkeypatch.setattr(lint_tool, "python_executable", lambda _root: "python")
@@ -90,7 +99,7 @@ def test_pyright_availability_reports_success_and_failure(
     monkeypatch.setattr(
         lint_tool,
         "run",
-        lambda *_args, **_kwargs: (_ for _ in ()).throw(RuntimeError("missing")),
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(failure),
     )
     assert lint_tool._pyright_available(tmp_path) is False
 
