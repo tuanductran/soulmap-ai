@@ -54,12 +54,18 @@ def analyze_dependency(
     """
     messages = list(conversation_messages)
     if current_message:
-        last_message = messages[-1] if messages else None
+        last_user_message = next(
+            (
+                item
+                for item in reversed(messages)
+                if isinstance(item, dict) and item.get("role") == "user"
+            ),
+            None,
+        )
         current_is_last_user_message = (
-            isinstance(last_message, dict)
-            and last_message.get("role") == "user"
-            and isinstance(last_message.get("content"), str)
-            and normalize_message_text(last_message["content"])
+            isinstance(last_user_message, dict)
+            and isinstance(last_user_message.get("content"), str)
+            and normalize_message_text(last_user_message["content"])
             == normalize_message_text(current_message)
         )
         if not current_is_last_user_message:
