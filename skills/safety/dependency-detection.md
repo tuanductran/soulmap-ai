@@ -163,7 +163,7 @@ because they often introduce reported speech. A complete quoted span ends attrib
 scope before any later unquoted signal.
 
 Clause boundary markers:
-- "," 
+- ","
 - "."
 - ";"
 - "!"
