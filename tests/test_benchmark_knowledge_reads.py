@@ -102,7 +102,4 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
         "cold_cache_detector_knowledge_loads",
         "warm_cache_detector_knowledge_loads",
     }
-    assert all(
-        result["median_seconds"] > 0
-        for result in report["benchmarks"].values()
-    )
+    assert all(result["median_seconds"] > 0 for result in report["benchmarks"].values())

@@ -98,9 +98,7 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "empath.people_context": load_keyword_section(empath, "People-context signals"),
         "empath.contract": load_key_value_table(empath, "Runtime detection contract"),
         "empath.guidance": load_key_value_table(empath, "Guidance"),
-        "ancestral.activation": load_keyword_section(
-            ancestral, "Activation Signals"
-        ),
+        "ancestral.activation": load_keyword_section(ancestral, "Activation Signals"),
         "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
         "ancestral.scoring": load_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
