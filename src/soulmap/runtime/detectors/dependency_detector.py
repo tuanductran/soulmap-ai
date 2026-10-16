@@ -37,10 +37,6 @@ _CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
 _CLAUSE_BOUNDARY_CUES = tuple(
     cue for cues in _CLAUSE_BOUNDARY_GROUPS.values() for cue in cues
 )
-_QUOTED_SPAN_PATTERN = re.compile(
-    r'"[^"\\n]*"|“[^”\\n]*”|‘[^’\\n]*’|(?<!\\w)\\'[^\\'\\n]+\\'(?!\\w)'
-)
-
 _DEPENDENCY_KEYWORD_WEIGHT = int(_SCORING["Dependency keyword weight"])
 _DEPENDENCY_REGEX_WEIGHT = int(_SCORING["Dependency regex weight"])
 _DECISION_SEEKING_WEIGHT = int(_SCORING["Decision-seeking weight"])
@@ -49,6 +45,45 @@ _HIGH_MESSAGE_VOLUME_THRESHOLD = int(_SCORING["High message volume threshold"])
 _HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
 _HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
 _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
+
+
+def _quoted_spans(message: str) -> list[tuple[int, int]]:
+    """Return spans enclosed by paired quotes without treating contractions as quotes."""
+    spans: list[tuple[int, int]] = []
+    start: int | None = None
+    closing: str | None = None
+
+    for index, char in enumerate(message):
+        if closing is None:
+            if char in {'"', "“", "‘"}:
+                start = index
+                closing = {'"': '"', "“": "”", "‘": "’"}[char]
+            elif (
+                char == "'"
+                and (index == 0 or not message[index - 1].isalnum())
+                and index + 1 < len(message)
+                and not message[index + 1].isspace()
+            ):
+                start = index
+                closing = "'"
+            continue
+
+        if char != closing and not (closing == "’" and char == "'"):
+            continue
+        if (
+            char == "'"
+            and index > 0
+            and index + 1 < len(message)
+            and message[index - 1].isalnum()
+            and message[index + 1].isalnum()
+        ):
+            continue
+        if start is not None:
+            spans.append((start, index + 1))
+        start = None
+        closing = None
+
+    return spans
 
 
 def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
@@ -62,8 +97,8 @@ def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
 def _is_context_excluded(message: str, start: int, end: int) -> bool:
     """Check whether one signal occurrence is quoted or contextually excluded."""
     if any(
-        quoted.start() <= start and end <= quoted.end()
-        for quoted in _QUOTED_SPAN_PATTERN.finditer(message)
+        quoted_start <= start and end <= quoted_end
+        for quoted_start, quoted_end in _quoted_spans(message)
     ):
         return True
 
@@ -82,7 +117,7 @@ def _has_clause_boundary(text: str) -> bool:
         if boundary in {".", ";", "!", "?"}:
             if boundary in text:
                 return True
-        elif re.search(rf"\\b{re.escape(boundary)}\\b", text):
+        elif re.search(rf"\b{re.escape(boundary)}\b", text):
             return True
     return False
 
