@@ -103,6 +103,20 @@ def test_framework_selector_exposes_safety_gate_debug_event_when_enabled() -> No
     assert any(event.get("module") == "response_safety_gate" for event in data["debug"])
 
 
+def test_framework_selector_checks_dependency_in_current_message_with_empty_history() -> None:
+    message = (
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    data = run_framework_selector(
+        {"message": message, "history": [], "memory": {}}
+    )
+
+    assert data["primary_framework"] == "DEPENDENCY"
+    assert data["safety_status"] == "OVERRIDE"
+    assert data["blocked"] == ["ALL_FRAMEWORKS"]
+
+
 def test_framework_selector_prioritizes_grief_before_direction() -> None:
     payload = {
         "message": "My father died yesterday and now I feel lost.",
