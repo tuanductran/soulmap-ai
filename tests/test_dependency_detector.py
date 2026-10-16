@@ -202,7 +202,11 @@ def test_third_party_cue_does_not_hide_a_later_first_person_signal() -> None:
 
 def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
     result = analyze_dependency(
-        [_user("If I ever said you are all I have, but I mean it now: I have no one else.")]
+        [
+            _user(
+                "If I ever said you are all I have, but I mean it now: I have no one else."
+            )
+        ]
     )
 
     assert result["level"] == "HIGH_DEPENDENCY"

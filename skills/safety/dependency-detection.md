@@ -161,6 +161,7 @@ A context cue stops applying when one of these boundaries occurs before the sign
 Commas are not boundaries by themselves because they often separate attribution from
 reported speech.
 
+Clause boundary markers:
 - "."
 - ";"
 - "!"

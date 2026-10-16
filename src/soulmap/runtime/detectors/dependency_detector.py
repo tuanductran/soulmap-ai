@@ -48,7 +48,7 @@ _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
 
 
 def _quoted_spans(message: str) -> list[tuple[int, int]]:
-    """Return spans enclosed by paired quotes without treating contractions as quotes."""
+    """Return quoted spans while leaving contractions intact."""
     spans: list[tuple[int, int]] = []
     start: int | None = None
     closing: str | None = None
