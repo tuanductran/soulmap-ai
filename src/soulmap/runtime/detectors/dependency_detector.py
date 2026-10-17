@@ -138,7 +138,10 @@ def _has_clause_boundary(
     quoted_span_is_boundary: bool,
 ) -> bool:
     """Check Markdown-defined clause boundaries for one exclusion cue."""
-    if quoted_span_is_boundary and _quoted_spans(text):
+    if quoted_span_is_boundary and (
+        re.search(r'"[^"\\n]*"|“[^”\\n]*”|‘[^’\\n]*’', text)
+        or _quoted_spans(text)
+    ):
         return True
     for boundary in _CLAUSE_BOUNDARY_CUES:
         if boundary == "," and not comma_is_boundary:
