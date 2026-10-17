@@ -260,3 +260,24 @@ def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
 
     assert result["level"] == "HIGH_DEPENDENCY"
     assert result["score"] == 2
+
+
+def test_current_message_is_added_only_when_not_already_last_in_history() -> None:
+    message = (
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    history = [_user(message)]
+
+    assert analyze_dependency(history, current_message=message) == analyze_dependency(
+        history
+    )
+
+
+def test_current_message_is_not_duplicated_before_trailing_assistant_turn() -> None:
+    message = "You are all I have. Tell me what to do with my life."
+    history = [_user(message), {"role": "assistant", "content": "I hear you."}]
+
+    assert analyze_dependency(history, current_message=message) == analyze_dependency(
+        history
+    )
