@@ -280,7 +280,7 @@ def analyze_dependency(
 
     context_indexes = [_build_context_index(msg) for msg in user_messages]
 
-    for msg, context_index in zip(user_messages, context_indexes):
+    for msg, context_index in zip(user_messages, context_indexes, strict=True):
         keyword_match = next(
             (
                 keyword
@@ -308,14 +308,14 @@ def analyze_dependency(
                 break
 
     decision_count = 0
-    for msg, context_index in zip(user_messages, context_indexes):
+    for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
         decision_count += len(unexcluded_matches)
         score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
-    for msg, context_index in zip(user_messages, context_indexes):
+    for msg, context_index in zip(user_messages, context_indexes, strict=True):
         for signal in _ISOLATION_SIGNALS:
             if _has_unexcluded_occurrence(msg, signal, context_index):
                 score += _ISOLATION_SIGNAL_WEIGHT
