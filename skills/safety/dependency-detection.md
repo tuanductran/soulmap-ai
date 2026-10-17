@@ -186,6 +186,7 @@ Clause boundary markers:
 - "while"
 - "yet"
 - "and i"
+- ", i"
 
 ## Runtime detection contract
 
