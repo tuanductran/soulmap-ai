@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Preserve organization-level settings when this repository has them.
+inheritance: true
+
+tone_instructions: >-
+  Prefer fewer, high-confidence findings. Report concrete correctness, security,
+  safety, and regression risks with a reproducible example. Skip style or lint
+  issues already enforced by CI, speculative edge cases, and unrelated refactors.
+
+reviews:
+  profile: chill
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: false
+    drafts: false
+  path_instructions:
+    - path: "src/soulmap/runtime/detectors/**/*.py"
+      instructions: >-
+        Prioritize reproducible behavior regressions, safety-routing errors,
+        incorrect boundary handling, and meaningful performance risks. Tie each
+        finding to a concrete input and expected versus actual behavior. Do not
+        report style issues covered by Ruff or propose unrelated refactors.
+    - path: "tests/**/*.py"
+      instructions: >-
+        Report only material gaps that allow incorrect production behavior to
+        pass, or tests whose assertions contradict the intended contract. Avoid
+        requests for redundant cases, naming/style preferences, and speculative
+        coverage additions.
