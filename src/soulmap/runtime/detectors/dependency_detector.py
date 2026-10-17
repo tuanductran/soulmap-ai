@@ -158,7 +158,7 @@ def analyze_dependency(
 
     Args:
         conversation_messages: Conversation messages with role and content.
-        current_message: Optional current user turn; included unless already last.
+        current_message: Optional current user turn appended to prior-only history.
 
     Returns:
         Dict with keys: level (str), score (int), signals (list), recommendation (str)
@@ -217,9 +217,13 @@ def analyze_dependency(
     decision_count = 0
     for msg in user_messages:
         for phrase in _DECISION_SEEKING:
-            if _has_unexcluded_occurrence(msg, phrase):
-                decision_count += 1
-                score += _DECISION_SEEKING_WEIGHT
+            unexcluded_matches = [
+                match
+                for match in re.finditer(re.escape(phrase), msg)
+                if not _is_context_excluded(msg, match.start(), match.end())
+            ]
+            decision_count += len(unexcluded_matches)
+            score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
