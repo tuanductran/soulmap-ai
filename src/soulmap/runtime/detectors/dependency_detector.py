@@ -51,7 +51,7 @@ _HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
 _HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
 _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
 _APOSTROPHE_ELISIONS = re.compile(
-    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\\b",
+    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\b",
     re.IGNORECASE,
 )
 
