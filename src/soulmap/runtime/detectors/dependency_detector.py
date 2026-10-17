@@ -5,6 +5,9 @@ from __future__ import annotations
 import json
 import re
 import sys
+from bisect import bisect_left, bisect_right
+from dataclasses import dataclass
+from functools import lru_cache
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
 from soulmap.runtime.knowledge.keyword_lists import (
@@ -108,87 +111,102 @@ def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
     )
 
 
-def _is_context_excluded(message: str, start: int, end: int) -> bool:
-    """Check whether one signal occurrence is quoted or contextually excluded."""
-    quoted_spans = _quoted_spans(message)
-    if any(
-        quoted_start <= start and end <= quoted_end
-        for quoted_start, quoted_end in quoted_spans
-    ):
-        return True
+@dataclass(frozen=True)
+class _ContextIndex:
+    """Precomputed quote, cue, and clause-boundary offsets for one message."""
 
-    # Only the latest unquoted cue in each group can still govern this signal.
-    # Any clause boundary that ends the latest cue's scope also ends an earlier
-    # cue's scope, so boundary checks are needed only once per group.
-    latest_cue_end_by_group: dict[str, int] = {}
-    prefix = message[:start]
-    for group, cue in _CONTEXT_EXCLUSION_CUES:
-        for match in re.finditer(
-            rf"(?<!\w){re.escape(cue)}(?!\w)",
-            prefix,
-            flags=re.IGNORECASE,
-        ):
-            if match.end() > start:
-                continue
-            cue_is_quoted = any(
-                quoted_start <= match.start() and match.end() <= quoted_end
-                for quoted_start, quoted_end in quoted_spans
-            )
-            if not cue_is_quoted and match.end() > latest_cue_end_by_group.get(
-                group, -1
-            ):
-                latest_cue_end_by_group[group] = match.end()
-
-    for group, cue_end in latest_cue_end_by_group.items():
-        if not _has_clause_boundary(
-            message[cue_end:start],
-            comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
-            quoted_span_is_boundary="third-party attribution" in group.lower(),
-        ):
-            return True
-    return False
+    quoted_spans: tuple[tuple[int, int], ...]
+    cue_ends_by_group: dict[str, tuple[int, ...]]
+    boundary_spans_by_group: dict[str, tuple[tuple[int, int], ...]]
 
 
-def _has_clause_boundary(
-    text: str,
-    *,
-    comma_is_boundary: bool,
-    quoted_span_is_boundary: bool,
-) -> bool:
-    """Check Markdown-defined clause boundaries for one exclusion cue."""
-    quoted_spans = _quoted_spans(text)
-    if quoted_span_is_boundary and quoted_spans:
-        return True
+@lru_cache(maxsize=128)
+def _build_context_index(message: str) -> _ContextIndex:
+    """Build one reusable context index instead of rescanning each signal prefix."""
+    quoted_spans = tuple(_quoted_spans(message))
 
-    def outside_quotes(match: re.Match[str]) -> bool:
-        return not any(
-            quoted_start <= match.start() and match.end() <= quoted_end
+    def is_quoted(start: int, end: int) -> bool:
+        return any(
+            quoted_start <= start and end <= quoted_end
             for quoted_start, quoted_end in quoted_spans
         )
 
-    for boundary in _CLAUSE_BOUNDARY_CUES:
-        if boundary == "," and not comma_is_boundary:
-            continue
-        if boundary in {".", ";", "!", "?", ","}:
-            if any(
-                outside_quotes(match)
-                for match in re.finditer(re.escape(boundary), text)
-            ):
-                return True
-        elif boundary.startswith(","):
-            if any(
-                outside_quotes(match)
-                for match in re.finditer(
-                    rf"{re.escape(boundary)}\b", text, flags=re.IGNORECASE
-                )
-            ):
-                return True
-        elif any(
-            outside_quotes(match)
-            for match in re.finditer(
-                rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE
-            )
+    cue_ends: dict[str, set[int]] = {
+        group: set() for group in _CONTEXT_EXCLUSION_GROUPS
+    }
+    for group, cue in _CONTEXT_EXCLUSION_CUES:
+        for match in re.finditer(
+            rf"(?<!\\w){re.escape(cue)}(?!\\w)",
+            message,
+            flags=re.IGNORECASE,
         ):
+            if not is_quoted(match.start(), match.end()):
+                cue_ends[group].add(match.end())
+
+    boundary_spans: dict[str, tuple[tuple[int, int], ...]] = {}
+    for group in _CONTEXT_EXCLUSION_GROUPS:
+        spans: set[tuple[int, int]] = set()
+        comma_is_boundary = _CONTEXT_EXCLUSION_POLICY.get(group, True)
+        for boundary in _CLAUSE_BOUNDARY_CUES:
+            if boundary == "," and not comma_is_boundary:
+                continue
+            if boundary in {".", ";", "!", "?", ","}:
+                matches = re.finditer(re.escape(boundary), message)
+            elif boundary.startswith(","):
+                matches = re.finditer(
+                    rf"{re.escape(boundary)}\\b", message, flags=re.IGNORECASE
+                )
+            else:
+                matches = re.finditer(
+                    rf"\\b{re.escape(boundary)}\\b",
+                    message,
+                    flags=re.IGNORECASE,
+                )
+            for match in matches:
+                if not is_quoted(match.start(), match.end()):
+                    spans.add((match.start(), match.end()))
+        boundary_spans[group] = tuple(sorted(spans))
+
+    return _ContextIndex(
+        quoted_spans=quoted_spans,
+        cue_ends_by_group={
+            group: tuple(sorted(ends)) for group, ends in cue_ends.items()
+        },
+        boundary_spans_by_group=boundary_spans,
+    )
+
+
+def _is_context_excluded(message: str, start: int, end: int) -> bool:
+    """Check a signal against the message's cached context index."""
+    index = _build_context_index(message)
+    if any(
+        quoted_start <= start and end <= quoted_end
+        for quoted_start, quoted_end in index.quoted_spans
+    ):
+        return True
+
+    for group, cue_ends in index.cue_ends_by_group.items():
+        cue_index = bisect_right(cue_ends, start) - 1
+        if cue_index < 0:
+            continue
+        cue_end = cue_ends[cue_index]
+
+        boundaries = index.boundary_spans_by_group[group]
+        boundary_starts = tuple(span[0] for span in boundaries)
+        boundary_index = bisect_left(boundary_starts, cue_end)
+        boundary_end = bisect_left(boundary_starts, start)
+        has_boundary = any(
+            boundary_span_end <= start
+            for _, boundary_span_end in boundaries[boundary_index:boundary_end]
+        )
+
+        if "third-party attribution" in group.lower():
+            has_boundary = has_boundary or any(
+                cue_end <= quoted_start and quoted_end <= start
+                for quoted_start, quoted_end in index.quoted_spans
+            )
+
+        if not has_boundary:
             return True
     return False
 
