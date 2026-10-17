@@ -169,9 +169,8 @@ Negation of an assertion:
 ## Clause boundaries
 
 A context cue stops applying when one of these boundaries occurs before the signal.
-Commas end hypothetical and negation scope, but do not end third-party attribution
-because they often introduce reported speech. A complete quoted span ends attribution
-scope before any later unquoted signal.
+Comma behavior is defined by the Context exclusion policy table. A complete quoted
+span ends attribution scope before any later unquoted signal.
 
 Clause boundary markers:
 
