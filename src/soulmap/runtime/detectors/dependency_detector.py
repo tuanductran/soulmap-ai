@@ -151,6 +151,25 @@ def _has_clause_boundary(
     return False
 
 
+def _unexcluded_decision_seeking_matches(message: str) -> list[tuple[int, int]]:
+    """Count decision-seeking spans once, preferring longer overlapping phrases."""
+    candidates = [
+        (match.start(), match.end())
+        for phrase in _DECISION_SEEKING
+        for match in re.finditer(re.escape(phrase), message)
+        if not _is_context_excluded(message, match.start(), match.end())
+    ]
+    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
+
+    selected: list[tuple[int, int]] = []
+    occupied_until = -1
+    for start, end in candidates:
+        if start >= occupied_until:
+            selected.append((start, end))
+            occupied_until = end
+    return selected
+
+
 def analyze_dependency(
     conversation_messages: list, *, current_message: str | None = None
 ) -> dict:
@@ -216,14 +235,9 @@ def analyze_dependency(
 
     decision_count = 0
     for msg in user_messages:
-        for phrase in _DECISION_SEEKING:
-            unexcluded_matches = [
-                match
-                for match in re.finditer(re.escape(phrase), msg)
-                if not _is_context_excluded(msg, match.start(), match.end())
-            ]
-            decision_count += len(unexcluded_matches)
-            score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
+        unexcluded_matches = _unexcluded_decision_seeking_matches(msg)
+        decision_count += len(unexcluded_matches)
+        score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
