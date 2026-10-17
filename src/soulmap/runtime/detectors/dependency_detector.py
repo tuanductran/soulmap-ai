@@ -138,37 +138,48 @@ def _has_clause_boundary(
     quoted_span_is_boundary: bool,
 ) -> bool:
     """Check Markdown-defined clause boundaries for one exclusion cue."""
-    if quoted_span_is_boundary and _quoted_spans(text):
+    quoted_spans = _quoted_spans(text)
+    if quoted_span_is_boundary and quoted_spans:
         return True
+
+    def outside_quotes(match: re.Match[str]) -> bool:
+        return not any(
+            quoted_start <= match.start() and match.end() <= quoted_end
+            for quoted_start, quoted_end in quoted_spans
+        )
+
     for boundary in _CLAUSE_BOUNDARY_CUES:
         if boundary == "," and not comma_is_boundary:
             continue
         if boundary in {".", ";", "!", "?", ","}:
-            if boundary in text:
+            if any(
+                outside_quotes(match)
+                for match in re.finditer(re.escape(boundary), text)
+            ):
                 return True
         elif boundary.startswith(","):
-            quoted_spans = _quoted_spans(text)
             if any(
-                not any(
-                    quoted_start <= match.start() and match.end() <= quoted_end
-                    for quoted_start, quoted_end in quoted_spans
-                )
+                outside_quotes(match)
                 for match in re.finditer(
                     rf"{re.escape(boundary)}\b", text, flags=re.IGNORECASE
                 )
             ):
                 return True
-        elif re.search(rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
+        elif any(
+            outside_quotes(match)
+            for match in re.finditer(
+                rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE
+            )
+        ):
             return True
     return False
-
 
 def _unexcluded_decision_seeking_matches(message: str) -> list[tuple[int, int]]:
     """Count decision-seeking spans once, preferring longer overlapping phrases."""
     candidates = [
         (match.start(), match.end())
         for phrase in _DECISION_SEEKING
-        for match in re.finditer(re.escape(phrase), message)
+        for match in re.finditer(rf"(?<!\\w){re.escape(phrase)}(?!\\w)", message)
         if not _is_context_excluded(message, match.start(), match.end())
     ]
     candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
