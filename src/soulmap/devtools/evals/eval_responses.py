@@ -321,7 +321,7 @@ def main(argv: list[str] | None = None) -> int:
     ok = True
 
     for case in cases:
-        history = case.get("history", [{"role": "user", "content": case["message"]}])
+        history = case.get("history", [])
         memory = case.get("memory", {})
         selection = select_framework(case["message"], history, memory)
         scope = classify_message(case["message"])
