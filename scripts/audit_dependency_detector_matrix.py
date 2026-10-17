@@ -33,6 +33,10 @@ CASES: tuple[dict[str, str], ...] = (
         "text": "If I ever said you are all I have, that would be a fictional example.",
     },
     {
+        "id": "hypothetical_with_unrelated_quote",
+        "text": 'Hypothetically, the phrase "hello" could be followed by you are all I have in a fictional example.',
+    },
+    {
         "id": "user_endorsed_issue_example",
         "text": "I feel like you are all I have, and I have no one else.",
     },
