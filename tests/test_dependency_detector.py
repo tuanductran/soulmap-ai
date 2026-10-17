@@ -199,12 +199,7 @@ def test_quoted_punctuation_does_not_end_hypothetical_scope() -> None:
 
 def test_quoted_contrast_word_does_not_end_hypothetical_scope() -> None:
     result = analyze_dependency(
-        [
-            _user(
-                'Hypothetically, the word "but" appears before '
-                "you are all I have."
-            )
-        ]
+        [_user('Hypothetically, the word "but" appears before you are all I have.')]
     )
 
     assert result["level"] == "LOW_DEPENDENCY"
@@ -216,7 +211,7 @@ def test_quoted_punctuation_does_not_end_negation_scope() -> None:
     result = analyze_dependency(
         [
             _user(
-                "I don't think that the phrase \"hello!\" means "
+                'I don\\'t think that the phrase "hello!" means '
                 "you are the only one who understands me."
             )
         ]
