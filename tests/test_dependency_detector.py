@@ -106,6 +106,15 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
+
+def test_each_unexcluded_decision_seeking_occurrence_is_counted() -> None:
+    result = analyze_dependency([_user("Should I leave? Should I stay?")])
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
+
+
 def test_recommendation_present_for_each_level() -> None:
     low = analyze_dependency([_user("Had a quiet day.")])
     moderate = analyze_dependency([_user("Should I do this or not?")])
