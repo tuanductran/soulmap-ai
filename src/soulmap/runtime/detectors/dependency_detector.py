@@ -122,7 +122,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
                 match.end() <= start
                 and not cue_is_quoted
                 and not _has_clause_boundary(
-                message[match.end() : start],
+                    message[match.end() : start],
                     comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
                 )
             ):
