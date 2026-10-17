@@ -7,7 +7,6 @@ import re
 import sys
 from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
-from functools import lru_cache
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
 from soulmap.runtime.knowledge.keyword_lists import (
@@ -103,10 +102,12 @@ def _quoted_spans(message: str) -> list[tuple[int, int]]:
     return spans
 
 
-def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
+def _has_unexcluded_occurrence(
+    message: str, phrase: str, context_index: _ContextIndex
+) -> bool:
     """Return whether a phrase occurs outside quoted or excluded context."""
     return any(
-        not _is_context_excluded(message, match.start(), match.end())
+        not _is_context_excluded(context_index, match.start(), match.end())
         for match in re.finditer(re.escape(phrase), message)
     )
 
@@ -121,7 +122,6 @@ class _ContextIndex:
     boundary_starts_by_group: dict[str, tuple[int, ...]]
 
 
-@lru_cache(maxsize=128)
 def _build_context_index(message: str) -> _ContextIndex:
     """Build one reusable context index instead of rescanning each signal prefix."""
     quoted_spans = tuple(_quoted_spans(message))
@@ -181,9 +181,8 @@ def _build_context_index(message: str) -> _ContextIndex:
     )
 
 
-def _is_context_excluded(message: str, start: int, end: int) -> bool:
-    """Check a signal against the message's cached context index."""
-    index = _build_context_index(message)
+def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
+    """Check a signal against its message's precomputed context index."""
     if any(
         quoted_start <= start and end <= quoted_end
         for quoted_start, quoted_end in index.quoted_spans
@@ -222,13 +221,15 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
     return False
 
 
-def _unexcluded_decision_seeking_matches(message: str) -> list[tuple[int, int]]:
+def _unexcluded_decision_seeking_matches(
+    message: str, context_index: _ContextIndex
+) -> list[tuple[int, int]]:
     """Count decision-seeking spans once, preferring longer overlapping phrases."""
     candidates = [
         (match.start(), match.end())
         for phrase in _DECISION_SEEKING
         for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
-        if not _is_context_excluded(message, match.start(), match.end())
+        if not _is_context_excluded(context_index, match.start(), match.end())
     ]
     candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
 
@@ -277,12 +278,14 @@ def analyze_dependency(
             "recommendation": "No user messages found in conversation history.",
         }
 
-    for msg in user_messages:
+    context_indexes = [_build_context_index(msg) for msg in user_messages]
+
+    for msg, context_index in zip(user_messages, context_indexes):
         keyword_match = next(
             (
                 keyword
                 for keyword in _DEPENDENCY_KEYWORDS
-                if _has_unexcluded_occurrence(msg, keyword)
+                if _has_unexcluded_occurrence(msg, keyword, context_index)
             ),
             None,
         )
@@ -295,7 +298,7 @@ def analyze_dependency(
 
         for label, pattern in _DEPENDENCY_PATTERNS:
             if any(
-                not _is_context_excluded(msg, match.start(), match.end())
+                not _is_context_excluded(context_index, match.start(), match.end())
                 for match in pattern.finditer(msg)
             ):
                 signal = f"dependency_pattern: '{label}'"
@@ -305,16 +308,16 @@ def analyze_dependency(
                 break
 
     decision_count = 0
-    for msg in user_messages:
-        unexcluded_matches = _unexcluded_decision_seeking_matches(msg)
+    for msg, context_index in zip(user_messages, context_indexes):
+        unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
         decision_count += len(unexcluded_matches)
         score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
-    for msg in user_messages:
+    for msg, context_index in zip(user_messages, context_indexes):
         for signal in _ISOLATION_SIGNALS:
-            if _has_unexcluded_occurrence(msg, signal):
+            if _has_unexcluded_occurrence(msg, signal, context_index):
                 score += _ISOLATION_SIGNAL_WEIGHT
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
