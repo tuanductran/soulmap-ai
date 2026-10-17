@@ -72,8 +72,34 @@ def _compare(
     """Compare captured baseline and candidate observations."""
     baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
     candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    baseline_by_id = {case["id"]: case for case in baseline["cases"]}
-    candidate_by_id = {case["id"]: case for case in candidate["cases"]}
+    expected_ids = [case["id"] for case in CASES]
+
+    def index_cases(payload: object, label: str) -> dict[str, dict[str, Any]]:
+        if not isinstance(payload, dict) or not isinstance(payload.get("cases"), list):
+            raise ValueError(f"{label} matrix must contain a 'cases' list.")
+
+        indexed: dict[str, dict[str, Any]] = {}
+        for item in payload["cases"]:
+            if not isinstance(item, dict) or not isinstance(item.get("id"), str):
+                raise ValueError(f"{label} matrix contains a case without a string id.")
+            case_id = item["id"]
+            if case_id in indexed:
+                raise ValueError(f"{label} matrix contains duplicate case id: {case_id}")
+            indexed[case_id] = item
+
+        expected = set(expected_ids)
+        actual = set(indexed)
+        if actual != expected:
+            missing = sorted(expected - actual)
+            unexpected = sorted(actual - expected)
+            raise ValueError(
+                f"{label} matrix case IDs do not match CASES; "
+                f"missing={missing}, unexpected={unexpected}"
+            )
+        return indexed
+
+    baseline_by_id = index_cases(baseline, "Baseline")
+    candidate_by_id = index_cases(candidate, "Candidate")
 
     comparisons: list[dict[str, Any]] = []
     for case in CASES:
