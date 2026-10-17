@@ -84,7 +84,9 @@ def _compare(
                 raise ValueError(f"{label} matrix contains a case without a string id.")
             case_id = item["id"]
             if case_id in indexed:
-                raise ValueError(f"{label} matrix contains duplicate case id: {case_id}")
+                raise ValueError(
+                    f"{label} matrix contains duplicate case id: {case_id}"
+                )
             indexed[case_id] = item
 
         expected = set(expected_ids)
