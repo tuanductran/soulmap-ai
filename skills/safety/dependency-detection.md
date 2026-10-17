@@ -163,7 +163,7 @@ Negation of an assertion:
 | Context group | Comma ends scope |
 | :--- | :--- |
 | Third-party attribution | no |
-| Hypothetical framing | yes |
+| Hypothetical framing | no |
 | Negation of an assertion | yes |
 
 ## Clause boundaries
