@@ -321,6 +321,7 @@ def main(argv: list[str] | None = None) -> int:
     ok = True
 
     for case in cases:
+        # Explicit history contains prior turns only; message is supplied separately.
         history = case.get("history", [])
         memory = case.get("memory", {})
         selection = select_framework(case["message"], history, memory)
