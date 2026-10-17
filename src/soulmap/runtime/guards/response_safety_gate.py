@@ -66,7 +66,7 @@ def apply_safety_gate(
             },
         }
 
-    dependency = analyze_dependency(history)
+    dependency = analyze_dependency(history, current_message=message)
     if dependency.get("level") == "HIGH_DEPENDENCY":
         return {
             "status": "OVERRIDE",
