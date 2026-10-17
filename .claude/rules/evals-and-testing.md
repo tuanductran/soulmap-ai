@@ -76,7 +76,7 @@ Each group in `evals/datasets/groups.json` has this schema:
 
 **Optional fields**:
 
-- `history`, prior conversation messages used to exercise multi-turn routing; the runner appends the current `t` as the final user message
+- `history`, prior conversation messages used to exercise multi-turn routing; the runner passes these prior turns unchanged and supplies the current `t` separately to the selector
 
 - `source_markers`, object mapping file paths to specific quoted text that backs this group
 

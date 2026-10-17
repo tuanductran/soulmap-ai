@@ -106,6 +106,22 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
+def test_each_unexcluded_decision_seeking_occurrence_is_counted() -> None:
+    result = analyze_dependency([_user("Should I leave? Should I stay?")])
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
+
+
+def test_nested_decision_seeking_phrase_is_counted_once() -> None:
+    result = analyze_dependency([_user("What should I do?")])
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
 def test_recommendation_present_for_each_level() -> None:
     low = analyze_dependency([_user("Had a quiet day.")])
     moderate = analyze_dependency([_user("Should I do this or not?")])
@@ -116,3 +132,297 @@ def test_recommendation_present_for_each_level() -> None:
     assert low["recommendation"]
     assert moderate["recommendation"]
     assert high["recommendation"]
+
+
+def test_quoted_dependency_signal_is_not_treated_as_user_endorsement() -> None:
+    result = analyze_dependency(
+        [_user('My friend said, "you are all I have"; how should I respond?')]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert not any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_third_party_dependency_signal_is_not_treated_as_user_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("My coworker told his chatbot you're the only one who understands me.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_comma_does_not_end_third_party_attribution_scope() -> None:
+    result = analyze_dependency([_user("My friend said, you are all I have.")])
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_first_person_restart_after_comma_ends_third_party_scope() -> None:
+    result = analyze_dependency(
+        [_user("My friend said hi, I feel you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_quoted_compound_boundary_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [_user('Hypothetically, the phrase ", I" is followed by you are all I have.')]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_quoted_punctuation_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'Hypothetically, the phrase "hello!" could be followed by '
+                "you are all I have."
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_quoted_contrast_word_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [_user('Hypothetically, the word "but" appears before you are all I have.')]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_quoted_punctuation_does_not_end_negation_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'I don\'t think that the phrase "hello!" means '
+                "you are the only one who understands me."
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_decision_phrase_requires_word_boundaries() -> None:
+    result = analyze_dependency(
+        [_user("My mom thinks I should invest more time. Should I?")]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
+def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("If I ever said you are all I have, that would be a fictional example.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_explicit_negation_does_not_count_as_dependency_endorsement() -> None:
+    result = analyze_dependency(
+        [_user("I don't feel that you are the only one who understands me.")]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_first_person_dependency_signal_still_reaches_high_dependency() -> None:
+    result = analyze_dependency(
+        [_user("I feel like you are all I have, and I have no one else.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_first_person_signal_after_negated_clause_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user("I never said you are my only support, I feel you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_first_person_signal_after_quoted_third_party_clause_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user('My friend said "you are all I have," I feel you are all I have.')]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_third_party_cue_does_not_hide_a_later_first_person_signal() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "My coworker told his chatbot you're the only one who understands me, "
+                "but I feel you are all I have."
+            )
+        ]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_first_person_signal_after_period_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user("My friend said you are all I have. I feel you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_quoted_context_cue_does_not_suppress_real_dependency_signal() -> None:
+    result = analyze_dependency(
+        [_user('The word "hypothetically" explains why you are all I have.')]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_exclusion_cue_inside_larger_word_does_not_suppress_signal() -> None:
+    result = analyze_dependency([_user("Unhypothetically, you are all I have.")])
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_contractions_do_not_open_unintended_quoted_spans() -> None:
+    result = analyze_dependency(
+        [_user("I'm worried because you're the only one who understands me.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_decision_seeking_occurrence_in_hypothetical_context_is_excluded() -> None:
+    result = analyze_dependency(
+        [_user("Hypothetically, what would you do; but seriously, help me decide.")]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
+def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "If I ever said you are all I have, but I mean it now: "
+                "I have no one else."
+            )
+        ]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+
+
+def test_current_message_is_counted_when_text_repeats_last_user_turn() -> None:
+    message = "Help me decide."
+    history = [_user(message)]
+
+    result = analyze_dependency(history, current_message=message)
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
+
+
+def test_current_message_is_counted_after_trailing_assistant_turn() -> None:
+    message = "Help me decide."
+    history = [_user(message), {"role": "assistant", "content": "I hear you."}]
+
+    result = analyze_dependency(history, current_message=message)
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
+
+
+def test_unrelated_quote_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'Hypothetically, the phrase "hello" could be followed by '
+                "you are all I have in a fictional example."
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_unrelated_quote_ends_third_party_attribution_scope() -> None:
+    result = analyze_dependency(
+        [_user('My friend said the phrase "hello" and then said you are all I have.')]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_apostrophe_elision_does_not_open_a_quoted_span() -> None:
+    result = analyze_dependency(
+        [_user("'Cause you are all I have, and my parents' support matters.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_single_quoted_multi_sentence_text_remains_excluded() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "She gave this example: 'you are all I have. "
+                "You are the only one who understands me.'"
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []

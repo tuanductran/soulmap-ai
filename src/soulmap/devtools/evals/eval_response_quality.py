@@ -124,7 +124,7 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
     message = cast(str, case["message"])
     history = cast(
         list[dict[str, str]],
-        case.get("history", [{"role": "user", "content": message}]),
+        case.get("history", []),
     )
     memory = cast(dict[str, object] | None, case.get("memory", {}))
     selection = select_framework(message, history, memory)
@@ -179,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
         message = cast(str, case["message"])
         history = cast(
             list[dict[str, str]],
-            case.get("history", [{"role": "user", "content": message}]),
+            case.get("history", []),
         )
         memory = cast(dict[str, object] | None, case.get("memory", {}))
         selection = select_framework(message, history, memory)
