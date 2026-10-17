@@ -148,7 +148,6 @@ Hypothetical framing:
 - "in a fictional example"
 - "hypothetically"
 
-
 Negation of an assertion:
 
 - "i never said"
@@ -158,7 +157,6 @@ Negation of an assertion:
 - "i do not feel that"
 - "i don't think that"
 - "i do not think that"
-
 
 ## Clause boundaries
 
@@ -181,7 +179,6 @@ Clause boundary markers:
 - "while"
 - "yet"
 - "and i"
-
 
 ## Runtime detection contract
 
