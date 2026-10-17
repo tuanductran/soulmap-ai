@@ -49,6 +49,21 @@ def test_safety_gate_checks_dependency_in_current_message_with_empty_history() -
     assert selection["primary_framework"] == "DEPENDENCY"
 
 
+def test_safety_gate_counts_repeated_current_decision_turn() -> None:
+    message = "Help me decide."
+    result = apply_safety_gate(
+        message,
+        [{"role": "user", "content": message}],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    assert result["status"] == "OVERRIDE"
+    assert result["reason"] == "high_dependency"
+    selection = cast(dict[str, object], result["selection"])
+    assert selection["primary_framework"] == "DEPENDENCY"
+
+
 def test_safety_gate_does_not_block_benign_instructions_language() -> None:
     message = "I need clearer instructions for talking to my partner."
     result = apply_safety_gate(
