@@ -33,6 +33,11 @@ _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
 )
+_CONTEXT_EXCLUSION_POLICY = {
+    row[0].lower(): row[1].strip().lower() == "yes"
+    for row in load_table_rows(_SOURCE, "Context exclusion policy")
+    if len(row) >= 2
+}
 _CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
 _CLAUSE_BOUNDARY_CUES = tuple(
     cue for cues in _CLAUSE_BOUNDARY_GROUPS.values() for cue in cues
@@ -110,7 +115,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         for match in re.finditer(re.escape(cue), message[:start]):
             if match.end() <= start and not _has_clause_boundary(
                 message[match.end() : start],
-                comma_is_boundary=group != "third-party attribution",
+                comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
             ):
                 return True
     return False
