@@ -147,7 +147,16 @@ def _has_clause_boundary(
             if boundary in text:
                 return True
         elif boundary.startswith(","):
-            if re.search(rf"{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
+            quoted_spans = _quoted_spans(text)
+            if any(
+                not any(
+                    quoted_start <= match.start() and match.end() <= quoted_end
+                    for quoted_start, quoted_end in quoted_spans
+                )
+                for match in re.finditer(
+                    rf"{re.escape(boundary)}\\b", text, flags=re.IGNORECASE
+                )
+            ):
                 return True
         elif re.search(rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
             return True

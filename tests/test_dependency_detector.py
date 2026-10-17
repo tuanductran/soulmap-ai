@@ -163,11 +163,23 @@ def test_comma_does_not_end_third_party_attribution_scope() -> None:
 
 
 def test_first_person_restart_after_comma_ends_third_party_scope() -> None:
-    result = analyze_dependency([_user("My friend said hi, I feel you are all I have.")])
+    result = analyze_dependency(
+        [_user("My friend said hi, I feel you are all I have.")]
+    )
 
     assert result["level"] == "HIGH_DEPENDENCY"
     assert result["score"] == 2
     assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_quoted_compound_boundary_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [_user('Hypothetically, the phrase ", I" is followed by you are all I have.')]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
 
 
 def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
