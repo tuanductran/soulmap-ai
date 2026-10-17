@@ -403,7 +403,6 @@ def test_unrelated_quote_ends_third_party_attribution_scope() -> None:
     assert any("dependency_keyword" in signal for signal in result["signals"])
 
 
-
 def test_apostrophe_elision_does_not_open_a_quoted_span() -> None:
     result = analyze_dependency(
         [_user("'Cause you are all I have, and my parents' support matters.")]
