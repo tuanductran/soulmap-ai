@@ -184,7 +184,12 @@ def test_quoted_compound_boundary_does_not_end_hypothetical_scope() -> None:
 
 def test_quoted_punctuation_does_not_end_hypothetical_scope() -> None:
     result = analyze_dependency(
-        [_user('Hypothetically, the phrase "hello!" could be followed by you are all I have.') ]
+        [
+            _user(
+                'Hypothetically, the phrase "hello!" could be followed by '
+                "you are all I have."
+            )
+        ]
     )
 
     assert result["level"] == "LOW_DEPENDENCY"
@@ -194,7 +199,27 @@ def test_quoted_punctuation_does_not_end_hypothetical_scope() -> None:
 
 def test_quoted_contrast_word_does_not_end_hypothetical_scope() -> None:
     result = analyze_dependency(
-        [_user('Hypothetically, the word "but" appears before you are all I have.') ]
+        [
+            _user(
+                'Hypothetically, the word "but" appears before '
+                "you are all I have."
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_quoted_punctuation_does_not_end_negation_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'I don\'t believe the phrase "hello!" means '
+                "you are the only one who understands me."
+            )
+        ]
     )
 
     assert result["level"] == "LOW_DEPENDENCY"
