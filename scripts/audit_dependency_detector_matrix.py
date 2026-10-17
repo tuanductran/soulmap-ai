@@ -14,7 +14,7 @@ CASES: tuple[dict[str, str], ...] = (
     },
     {
         "id": "quoted_known_keyword",
-        "text": 'My friend said, "you are all I have"; how should I respond?',
+        "text": 'My friend said, "I don\'t know what I would do without you."',
     },
     {
         "id": "third_party_issue_example",
@@ -49,9 +49,7 @@ def _capture() -> dict[str, Any]:
 
     results: list[dict[str, Any]] = []
     for case in CASES:
-        observed = analyze_dependency(
-            [{"role": "user", "content": case["text"]}]
-        )
+        observed = analyze_dependency([{"role": "user", "content": case["text"]}])
         results.append(
             {
                 "id": case["id"],
@@ -64,7 +62,9 @@ def _capture() -> dict[str, Any]:
     return {"cases": results}
 
 
-def _compare(baseline_path: Path, candidate_path: Path, report_path: Path | None) -> int:
+def _compare(
+    baseline_path: Path, candidate_path: Path, report_path: Path | None
+) -> int:
     """Compare captured baseline and candidate observations."""
     baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
     candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
