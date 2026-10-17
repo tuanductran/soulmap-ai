@@ -118,6 +118,7 @@ class _ContextIndex:
     quoted_spans: tuple[tuple[int, int], ...]
     cue_ends_by_group: dict[str, tuple[int, ...]]
     boundary_spans_by_group: dict[str, tuple[tuple[int, int], ...]]
+    boundary_starts_by_group: dict[str, tuple[int, ...]]
 
 
 @lru_cache(maxsize=128)
@@ -136,7 +137,7 @@ def _build_context_index(message: str) -> _ContextIndex:
     }
     for group, cue in _CONTEXT_EXCLUSION_CUES:
         for match in re.finditer(
-            rf"(?<!\\w){re.escape(cue)}(?!\\w)",
+            rf"(?<!\w){re.escape(cue)}(?!\w)",
             message,
             flags=re.IGNORECASE,
         ):
@@ -154,11 +155,11 @@ def _build_context_index(message: str) -> _ContextIndex:
                 matches = re.finditer(re.escape(boundary), message)
             elif boundary.startswith(","):
                 matches = re.finditer(
-                    rf"{re.escape(boundary)}\\b", message, flags=re.IGNORECASE
+                    rf"{re.escape(boundary)}\b", message, flags=re.IGNORECASE
                 )
             else:
                 matches = re.finditer(
-                    rf"\\b{re.escape(boundary)}\\b",
+                    rf"\b{re.escape(boundary)}\b",
                     message,
                     flags=re.IGNORECASE,
                 )
@@ -173,6 +174,10 @@ def _build_context_index(message: str) -> _ContextIndex:
             group: tuple(sorted(ends)) for group, ends in cue_ends.items()
         },
         boundary_spans_by_group=boundary_spans,
+        boundary_starts_by_group={
+            group: tuple(span[0] for span in spans)
+            for group, spans in boundary_spans.items()
+        },
     )
 
 
@@ -192,7 +197,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         cue_end = cue_ends[cue_index]
 
         boundaries = index.boundary_spans_by_group[group]
-        boundary_starts = tuple(span[0] for span in boundaries)
+        boundary_starts = index.boundary_starts_by_group[group]
         boundary_index = bisect_left(boundary_starts, cue_end)
         boundary_end = bisect_left(boundary_starts, start)
         has_boundary = any(
