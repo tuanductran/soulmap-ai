@@ -31,9 +31,7 @@ _SCORING = load_key_value_table(_SOURCE, "Scoring")
 _GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
 _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
 _CONTEXT_EXCLUSION_CUES = tuple(
-    (group, cue)
-    for group, cues in _CONTEXT_EXCLUSION_GROUPS.items()
-    for cue in cues
+    (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
 )
 _CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
 _CLAUSE_BOUNDARY_CUES = tuple(
