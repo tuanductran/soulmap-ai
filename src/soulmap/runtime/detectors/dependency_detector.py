@@ -167,7 +167,7 @@ def analyze_dependency(
     # Always append the current turn when supplied: text equality cannot tell
     # whether the same words are a previous turn or the current turn repeated.
     messages = list(conversation_messages)
-    if current_message is not None:
+    if current_message:
         messages.append({"role": "user", "content": current_message})
 
     score = 0
