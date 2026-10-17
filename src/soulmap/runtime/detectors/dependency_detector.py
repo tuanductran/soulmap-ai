@@ -124,15 +124,21 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
                 and not _has_clause_boundary(
                     message[match.end() : start],
                     comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
+                    quoted_span_is_boundary="third-party attribution" in group.lower(),
                 )
             ):
                 return True
     return False
 
 
-def _has_clause_boundary(text: str, *, comma_is_boundary: bool) -> bool:
+def _has_clause_boundary(
+    text: str,
+    *,
+    comma_is_boundary: bool,
+    quoted_span_is_boundary: bool,
+) -> bool:
     """Check Markdown-defined clause boundaries for one exclusion cue."""
-    if _quoted_spans(text):
+    if quoted_span_is_boundary and _quoted_spans(text):
         return True
     for boundary in _CLAUSE_BOUNDARY_CUES:
         if boundary == "," and not comma_is_boundary:
