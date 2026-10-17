@@ -200,10 +200,16 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         boundary_starts = index.boundary_starts_by_group[group]
         boundary_index = bisect_left(boundary_starts, cue_end)
         boundary_end = bisect_left(boundary_starts, start)
-        has_boundary = any(
-            boundary_span_end <= start
-            for _, boundary_span_end in boundaries[boundary_index:boundary_end]
-        )
+        # Boundary phrases are short; only a final overlapping span can end
+        # after the signal start. Walk backward until a completed boundary is
+        # found, rather than rescanning every boundary in the interval.
+        has_boundary = False
+        while boundary_end > boundary_index:
+            _, boundary_span_end = boundaries[boundary_end - 1]
+            if boundary_span_end <= start:
+                has_boundary = True
+                break
+            boundary_end -= 1
 
         if "third-party attribution" in group.lower():
             has_boundary = has_boundary or any(
