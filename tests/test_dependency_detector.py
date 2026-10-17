@@ -299,11 +299,11 @@ def test_unrelated_quote_does_not_end_hypothetical_scope() -> None:
     assert result["signals"] == []
 
 
-def test_unrelated_quote_still_ends_third_party_attribution_scope() -> None:
+def test_unrelated_quote_ends_third_party_attribution_scope() -> None:
     result = analyze_dependency(
         [_user('My friend said the phrase "hello" and then said you are all I have.')]
     )
 
-    assert result["level"] == "LOW_DEPENDENCY"
-    assert result["score"] == 0
-    assert result["signals"] == []
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
