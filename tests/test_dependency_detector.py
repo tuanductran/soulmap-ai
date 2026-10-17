@@ -208,6 +208,36 @@ def test_third_party_cue_does_not_hide_a_later_first_person_signal() -> None:
     assert result["score"] == 2
 
 
+def test_first_person_signal_after_period_is_preserved() -> None:
+    result = analyze_dependency(
+        [_user("My friend said you are all I have. I feel you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_contractions_do_not_open_unintended_quoted_spans() -> None:
+    result = analyze_dependency(
+        [_user("I'm worried because you're the only one who understands me.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_decision_seeking_occurrence_in_hypothetical_context_is_excluded() -> None:
+    result = analyze_dependency(
+        [_user("Hypothetically tell me what to do; but seriously, tell me what to do.")]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
 def test_hypothetical_cue_does_not_hide_a_later_first_person_signal() -> None:
     result = analyze_dependency(
         [
