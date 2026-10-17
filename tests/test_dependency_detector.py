@@ -315,9 +315,7 @@ def test_quoted_context_cue_does_not_suppress_real_dependency_signal() -> None:
 
 
 def test_exclusion_cue_inside_larger_word_does_not_suppress_signal() -> None:
-    result = analyze_dependency(
-        [_user("Unhypothetically, you are all I have.")]
-    )
+    result = analyze_dependency([_user("Unhypothetically, you are all I have.")])
 
     assert result["level"] == "HIGH_DEPENDENCY"
     assert result["score"] == 2
