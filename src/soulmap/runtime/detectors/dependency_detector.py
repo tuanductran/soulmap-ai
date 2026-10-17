@@ -105,17 +105,26 @@ def _has_unexcluded_occurrence(message: str, phrase: str) -> bool:
 
 def _is_context_excluded(message: str, start: int, end: int) -> bool:
     """Check whether one signal occurrence is quoted or contextually excluded."""
+    quoted_spans = _quoted_spans(message)
     if any(
         quoted_start <= start and end <= quoted_end
-        for quoted_start, quoted_end in _quoted_spans(message)
+        for quoted_start, quoted_end in quoted_spans
     ):
         return True
 
     for group, cue in _CONTEXT_EXCLUSION_CUES:
         for match in re.finditer(re.escape(cue), message[:start]):
-            if match.end() <= start and not _has_clause_boundary(
+            cue_is_quoted = any(
+                quoted_start <= match.start() and match.end() <= quoted_end
+                for quoted_start, quoted_end in quoted_spans
+            )
+            if (
+                match.end() <= start
+                and not cue_is_quoted
+                and not _has_clause_boundary(
                 message[match.end() : start],
-                comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
+                    comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
+                )
             ):
                 return True
     return False
