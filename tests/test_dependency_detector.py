@@ -240,7 +240,7 @@ def test_contractions_do_not_open_unintended_quoted_spans() -> None:
 
 def test_decision_seeking_occurrence_in_hypothetical_context_is_excluded() -> None:
     result = analyze_dependency(
-        [_user("Hypothetically, what should I do; but seriously, what should I do?")]
+        [_user("Hypothetically, what would you do; but seriously, help me decide.")]
     )
 
     assert result["level"] == "MODERATE_DEPENDENCY"
