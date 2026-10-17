@@ -154,7 +154,7 @@ def _has_clause_boundary(
                     for quoted_start, quoted_end in quoted_spans
                 )
                 for match in re.finditer(
-                    rf"{re.escape(boundary)}\\b", text, flags=re.IGNORECASE
+                    rf"{re.escape(boundary)}\b", text, flags=re.IGNORECASE
                 )
             ):
                 return True
