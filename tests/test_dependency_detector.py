@@ -106,7 +106,6 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
-
 def test_each_unexcluded_decision_seeking_occurrence_is_counted() -> None:
     result = analyze_dependency([_user("Should I leave? Should I stay?")])
 
