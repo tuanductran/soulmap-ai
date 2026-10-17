@@ -146,6 +146,9 @@ def _has_clause_boundary(
         if boundary in {".", ";", "!", "?", ","}:
             if boundary in text:
                 return True
+        elif boundary.startswith(","):
+            if re.search(rf"{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
+                return True
         elif re.search(rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
             return True
     return False
