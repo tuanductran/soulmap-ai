@@ -114,7 +114,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
 
     for group, cue in _CONTEXT_EXCLUSION_CUES:
         for match in re.finditer(
-            rf"(?<!\\w){re.escape(cue)}(?!\\w)",
+            rf"(?<!\w){re.escape(cue)}(?!\w)",
             message[:start],
             flags=re.IGNORECASE,
         ):
