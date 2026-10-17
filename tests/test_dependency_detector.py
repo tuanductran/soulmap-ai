@@ -182,7 +182,6 @@ def test_quoted_compound_boundary_does_not_end_hypothetical_scope() -> None:
     assert result["signals"] == []
 
 
-
 def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
     result = analyze_dependency(
         [_user("If I ever said you are all I have, that would be a fictional example.")]
