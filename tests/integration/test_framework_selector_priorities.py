@@ -241,7 +241,13 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
+        "history": [
+            {
+                "role": "user",
+                "content": "Earlier this week I took a long walk and had a quiet afternoon thinking about ordinary things.",
+            },
+            {"role": "user", "content": "I had a quiet afternoon yesterday."},
+        ],
         "memory": {},
     }
 
@@ -285,7 +291,13 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
+        "history": [
+            {
+                "role": "user",
+                "content": "Earlier this week I took a long walk and had a quiet afternoon thinking about ordinary things.",
+            },
+            {"role": "user", "content": "I had a quiet afternoon yesterday."},
+        ],
         "memory": {},
     }
 
