@@ -110,6 +110,7 @@ boundary. Quoted text is handled as quoted text, not as evidence of the user's o
 dependency.
 
 Third-party attribution:
+
 - "my friend said"
 - "my friend says"
 - "my friend told"
@@ -139,6 +140,7 @@ Third-party attribution:
 - "someone told"
 
 Hypothetical framing:
+
 - "if i ever said"
 - "if i said"
 - "if someone said"
@@ -146,7 +148,9 @@ Hypothetical framing:
 - "in a fictional example"
 - "hypothetically"
 
+
 Negation of an assertion:
+
 - "i never said"
 - "i didn't say"
 - "i did not say"
@@ -154,6 +158,7 @@ Negation of an assertion:
 - "i do not feel that"
 - "i don't think that"
 - "i do not think that"
+
 
 ## Clause boundaries
 
@@ -163,6 +168,7 @@ because they often introduce reported speech. A complete quoted span ends attrib
 scope before any later unquoted signal.
 
 Clause boundary markers:
+
 - ","
 - "."
 - ";"
@@ -175,6 +181,7 @@ Clause boundary markers:
 - "while"
 - "yet"
 - "and i"
+
 
 ## Runtime detection contract
 
