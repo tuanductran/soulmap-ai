@@ -241,7 +241,7 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [],
         "memory": {},
     }
 
