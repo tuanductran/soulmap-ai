@@ -314,6 +314,16 @@ def test_quoted_context_cue_does_not_suppress_real_dependency_signal() -> None:
     assert any("dependency_keyword" in signal for signal in result["signals"])
 
 
+def test_exclusion_cue_inside_larger_word_does_not_suppress_signal() -> None:
+    result = analyze_dependency(
+        [_user("Unhypothetically, you are all I have.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
 def test_contractions_do_not_open_unintended_quoted_spans() -> None:
     result = analyze_dependency(
         [_user("I'm worried because you're the only one who understands me.")]
