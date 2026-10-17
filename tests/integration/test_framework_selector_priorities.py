@@ -241,7 +241,7 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -263,7 +263,7 @@ def test_framework_selector_prioritizes_existential_over_direction() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -285,7 +285,7 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -309,7 +309,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -332,7 +332,7 @@ def test_framework_selector_attaches_meaning_integration_as_secondary_for_direct
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -353,7 +353,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     message = "I did it, and I finally understand now. I can see the pattern."
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
