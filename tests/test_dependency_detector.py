@@ -138,6 +138,14 @@ def test_third_party_dependency_signal_is_not_treated_as_user_endorsement() -> N
     assert result["signals"] == []
 
 
+def test_comma_does_not_end_third_party_attribution_scope() -> None:
+    result = analyze_dependency([_user("My friend said, you are all I have.")])
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
 def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
     result = analyze_dependency(
         [_user("If I ever said you are all I have, that would be a fictional example.")]
