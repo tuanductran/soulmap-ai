@@ -113,7 +113,11 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         return True
 
     for group, cue in _CONTEXT_EXCLUSION_CUES:
-        for match in re.finditer(re.escape(cue), message[:start], flags=re.IGNORECASE):
+        for match in re.finditer(
+            rf"(?<!\\w){re.escape(cue)}(?!\\w)",
+            message[:start],
+            flags=re.IGNORECASE,
+        ):
             cue_is_quoted = any(
                 quoted_start <= match.start() and match.end() <= quoted_end
                 for quoted_start, quoted_end in quoted_spans
