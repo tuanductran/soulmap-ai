@@ -281,3 +281,32 @@ def test_current_message_is_not_duplicated_before_trailing_assistant_turn() -> N
     assert analyze_dependency(history, current_message=message) == analyze_dependency(
         history
     )
+
+
+def test_unrelated_quote_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'Hypothetically, the phrase "hello" could be followed by '
+                "you are all I have in a fictional example."
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_unrelated_quote_still_ends_third_party_attribution_scope() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                'My friend said the phrase "hello" and then said you are all I have.'
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
