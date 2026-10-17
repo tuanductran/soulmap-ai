@@ -129,9 +129,8 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
                 quoted_start <= match.start() and match.end() <= quoted_end
                 for quoted_start, quoted_end in quoted_spans
             )
-            if (
-                not cue_is_quoted
-                and match.end() > latest_cue_end_by_group.get(group, -1)
+            if not cue_is_quoted and match.end() > latest_cue_end_by_group.get(
+                group, -1
             ):
                 latest_cue_end_by_group[group] = match.end()
 
@@ -143,6 +142,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         ):
             return True
     return False
+
 
 def _has_clause_boundary(
     text: str,
