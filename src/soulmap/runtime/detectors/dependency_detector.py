@@ -179,7 +179,7 @@ def _unexcluded_decision_seeking_matches(message: str) -> list[tuple[int, int]]:
     candidates = [
         (match.start(), match.end())
         for phrase in _DECISION_SEEKING
-        for match in re.finditer(rf"(?<!\\w){re.escape(phrase)}(?!\\w)", message)
+        for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
         if not _is_context_excluded(message, match.start(), match.end())
     ]
     candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
