@@ -401,3 +401,29 @@ def test_unrelated_quote_ends_third_party_attribution_scope() -> None:
     assert result["level"] == "HIGH_DEPENDENCY"
     assert result["score"] == 2
     assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+
+def test_apostrophe_elision_does_not_open_a_quoted_span() -> None:
+    result = analyze_dependency(
+        [_user("'Cause you are all I have, and my parents' support matters.")]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
+def test_single_quoted_multi_sentence_text_remains_excluded() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "She gave this example: 'you are all I have. "
+                "You are the only one who understands me.'"
+            )
+        ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []

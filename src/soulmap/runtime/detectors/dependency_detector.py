@@ -50,6 +50,10 @@ _HIGH_MESSAGE_VOLUME_THRESHOLD = int(_SCORING["High message volume threshold"])
 _HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
 _HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
 _MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
+_APOSTROPHE_ELISIONS = re.compile(
+    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\\b",
+    re.IGNORECASE,
+)
 
 
 def _quoted_spans(message: str) -> list[tuple[int, int]]:
@@ -72,6 +76,7 @@ def _quoted_spans(message: str) -> list[tuple[int, int]]:
                 and (index == 0 or not message[index - 1].isalnum())
                 and index + 1 < len(message)
                 and not message[index + 1].isspace()
+                and not _APOSTROPHE_ELISIONS.match(message[index:])
             ):
                 start = index
                 closing = "'"
