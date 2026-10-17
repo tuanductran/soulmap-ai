@@ -113,7 +113,7 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
         return True
 
     for group, cue in _CONTEXT_EXCLUSION_CUES:
-        for match in re.finditer(re.escape(cue), message[:start]):
+        for match in re.finditer(re.escape(cue), message[:start], flags=re.IGNORECASE):
             cue_is_quoted = any(
                 quoted_start <= match.start() and match.end() <= quoted_end
                 for quoted_start, quoted_end in quoted_spans
@@ -140,7 +140,7 @@ def _has_clause_boundary(text: str, *, comma_is_boundary: bool) -> bool:
         if boundary in {".", ";", "!", "?", ","}:
             if boundary in text:
                 return True
-        elif re.search(rf"\b{re.escape(boundary)}\b", text):
+        elif re.search(rf"\b{re.escape(boundary)}\b", text, flags=re.IGNORECASE):
             return True
     return False
 
