@@ -182,6 +182,36 @@ def test_quoted_compound_boundary_does_not_end_hypothetical_scope() -> None:
     assert result["signals"] == []
 
 
+def test_quoted_punctuation_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [_user('Hypothetically, the phrase "hello!" could be followed by you are all I have.') ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_quoted_contrast_word_does_not_end_hypothetical_scope() -> None:
+    result = analyze_dependency(
+        [_user('Hypothetically, the word "but" appears before you are all I have.') ]
+    )
+
+    assert result["level"] == "LOW_DEPENDENCY"
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_decision_phrase_requires_word_boundaries() -> None:
+    result = analyze_dependency(
+        [_user("My mom thinks I should invest more time. Should I?")]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
 def test_hypothetical_dependency_signal_is_not_treated_as_endorsement() -> None:
     result = analyze_dependency(
         [_user("If I ever said you are all I have, that would be a fictional example.")]
