@@ -112,28 +112,37 @@ def _is_context_excluded(message: str, start: int, end: int) -> bool:
     ):
         return True
 
+    # Only the latest unquoted cue in each group can still govern this signal.
+    # Any clause boundary that ends the latest cue's scope also ends an earlier
+    # cue's scope, so boundary checks are needed only once per group.
+    latest_cue_end_by_group: dict[str, int] = {}
+    prefix = message[:start]
     for group, cue in _CONTEXT_EXCLUSION_CUES:
         for match in re.finditer(
             rf"(?<!\w){re.escape(cue)}(?!\w)",
-            message[:start],
+            prefix,
             flags=re.IGNORECASE,
         ):
+            if match.end() > start:
+                continue
             cue_is_quoted = any(
                 quoted_start <= match.start() and match.end() <= quoted_end
                 for quoted_start, quoted_end in quoted_spans
             )
             if (
-                match.end() <= start
-                and not cue_is_quoted
-                and not _has_clause_boundary(
-                    message[match.end() : start],
-                    comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
-                    quoted_span_is_boundary="third-party attribution" in group.lower(),
-                )
+                not cue_is_quoted
+                and match.end() > latest_cue_end_by_group.get(group, -1)
             ):
-                return True
-    return False
+                latest_cue_end_by_group[group] = match.end()
 
+    for group, cue_end in latest_cue_end_by_group.items():
+        if not _has_clause_boundary(
+            message[cue_end:start],
+            comma_is_boundary=_CONTEXT_EXCLUSION_POLICY.get(group, True),
+            quoted_span_is_boundary="third-party attribution" in group.lower(),
+        ):
+            return True
+    return False
 
 def _has_clause_boundary(
     text: str,
