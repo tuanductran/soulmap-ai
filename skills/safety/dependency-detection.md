@@ -158,6 +158,14 @@ Negation of an assertion:
 - "i don't think that"
 - "i do not think that"
 
+## Context exclusion policy
+
+| Context group | Comma ends scope |
+| :--- | :--- |
+| Third-party attribution | no |
+| Hypothetical framing | yes |
+| Negation of an assertion | yes |
+
 ## Clause boundaries
 
 A context cue stops applying when one of these boundaries occurs before the signal.
