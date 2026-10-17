@@ -174,6 +174,7 @@ def _has_clause_boundary(
             return True
     return False
 
+
 def _unexcluded_decision_seeking_matches(message: str) -> list[tuple[int, int]]:
     """Count decision-seeking spans once, preferring longer overlapping phrases."""
     candidates = [
