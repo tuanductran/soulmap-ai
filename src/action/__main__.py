@@ -530,7 +530,6 @@ def create_branch(
         ) from exc
 
 
-
 def ensure_tag_exists(
     client: GitHubClient,
     owner: str,
