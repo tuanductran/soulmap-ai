@@ -15,15 +15,11 @@ _CONTRACT_HEADING = "Runtime execution contract"
 class PrimaryPriorityRule:
     """One knowledge-authored primary routing rule."""
 
-    result: str
-    detected: str
     framework: str
     mode: str
     blocked: tuple[str, ...]
     insight_secondary: bool = False
     requires_no_insight: bool = False
-    requires: str | None = None
-    requires_not: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,8 +27,6 @@ class SecondaryPriorityRule:
     """One knowledge-authored secondary-layer rule."""
 
     name: str
-    result: str
-    detected: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -123,24 +117,11 @@ def _parse_primary_priority(
         raise ValueError("PRIMARY_PRIORITY must be a non-empty table.")
     rules: list[PrimaryPriorityRule] = []
     for row in rows:
-        if len(row) != 10:
-            raise ValueError("PRIMARY_PRIORITY rows must contain 10 columns.")
-        (
-            _,
-            result,
-            detected,
-            framework,
-            mode,
-            blocked,
-            insight_secondary,
-            no_insight,
-            requires,
-            requires_not,
-        ) = row
+        if len(row) != 6:
+            raise ValueError("PRIMARY_PRIORITY rows must contain 6 columns.")
+        _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                result=_require_str(result, "PRIMARY_PRIORITY.result"),
-                detected=_require_str(detected, "PRIMARY_PRIORITY.detected"),
                 framework=_require_str(framework, "PRIMARY_PRIORITY.framework"),
                 mode=_require_str(mode, "PRIMARY_PRIORITY.mode"),
                 blocked=tuple(
@@ -152,8 +133,6 @@ def _parse_primary_priority(
                 requires_no_insight=_require_bool(
                     no_insight, "PRIMARY_PRIORITY.requires_no_insight"
                 ),
-                requires=requires or None,
-                requires_not=requires_not or None,
             )
         )
     return tuple(rules)
@@ -189,14 +168,12 @@ def _parse_secondary_priority(
         raise ValueError("SECONDARY_PRIORITY must be a non-empty table.")
     rules: list[SecondaryPriorityRule] = []
     for row in rows:
-        if len(row) != 4:
-            raise ValueError("SECONDARY_PRIORITY rows must contain 4 columns.")
-        _, name, result, detected = row
+        if len(row) != 2:
+            raise ValueError("SECONDARY_PRIORITY rows must contain 2 columns.")
+        _, name = row
         rules.append(
             SecondaryPriorityRule(
                 name=_require_str(name, "SECONDARY_PRIORITY.name"),
-                result=_require_str(result, "SECONDARY_PRIORITY.result"),
-                detected=_require_str(detected, "SECONDARY_PRIORITY.detected"),
             )
         )
     return tuple(rules)
