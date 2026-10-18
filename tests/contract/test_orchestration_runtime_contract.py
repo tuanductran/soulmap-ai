@@ -63,6 +63,7 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
         "PEER fallback": "PEER mode: dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
     }
 
+
 def test_detector_bindings_cover_every_markdown_framework() -> None:
     from soulmap.runtime.routing.framework_selector import (
         _primary_detector_binding,
@@ -158,4 +159,3 @@ def test_detector_bindings_reject_unknown_names() -> None:
         _primary_detector_binding("UNKNOWN")
     with pytest.raises(ValueError, match="Unknown secondary detector binding"):
         _secondary_detector_binding("unknown")
-
