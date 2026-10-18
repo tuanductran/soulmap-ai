@@ -278,9 +278,9 @@ The operational stage-classification policy is authored in this section. These v
 
 | Setting | Value |
 | :--- | :--- |
-| Memory minimum: session_count_ge_10 | 2 |
-| Memory minimum: prior_pattern_recognition | 3 |
-| Memory minimum: prior_breakthrough | 3 |
+| Minimum stage when session count is at least 10 | 2 |
+| Minimum stage when a prior session showed pattern recognition | 3 |
+| Minimum stage when a prior session showed a breakthrough | 3 |
 | Close score delta | 2 |
 | First session default stage | 1 |
 | First session maximum stage | 3 |
