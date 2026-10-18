@@ -12,11 +12,12 @@ WORKFLOWS = (
     REPO_ROOT / ".github" / "workflows" / "ci.yml",
     REPO_ROOT / ".github" / "workflows" / "release.yml",
 )
-# This workflow runs the repository's Docker action and does not need uv.
+# CodeQL uses build-mode none and the read-only release audit uses the Docker
+# action directly; neither workflow needs the project's uv environment.
 CI_WORKFLOWS = tuple(
     path
     for path in (REPO_ROOT / ".github" / "workflows").glob("*.yml")
-    if path.name != "release-immutability-audit.yml"
+    if path.name not in {"codeql.yml", "release-immutability-audit.yml"}
 )
 ACTIONLINT_ACTION = REPO_ROOT / ".github" / "actions" / "actionlint" / "action.yml"
 
@@ -63,6 +64,18 @@ def test_python_floor_and_ci_baseline_are_aligned() -> None:
         workflow_text = workflow_path.read_text(encoding="utf-8")
         assert 'python-version: "3.11"' in workflow_text
 
+def test_codeql_static_analysis_uses_one_suite_without_project_install() -> None:
+    workflow_text = (
+        REPO_ROOT / ".github" / "workflows" / "codeql.yml"
+    ).read_text(encoding="utf-8")
+
+    assert "build-mode: none" in workflow_text
+    assert "queries: security-and-quality" in workflow_text
+    assert "queries: security-extended,security-and-quality" not in workflow_text
+    assert "astral-sh/setup-uv@" not in workflow_text
+    assert "uv sync --locked" not in workflow_text
+
+
 
 def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     script_text = PYTEST_DIAGNOSTICS.read_text(encoding="utf-8")
@@ -85,6 +98,10 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
         "uv run pytest -q tests/test_*.py tests/mutation/test_safety_critical_mutations.py"
         in ci_text
     )
+
+
+    assert "name: Knowledge consistency inventory" not in ci_text
+    assert "uv run soulmap audit-knowledge --max-knowledge-duplicates 519" in ci_text
 
 
 def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
