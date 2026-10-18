@@ -84,10 +84,17 @@ def _runtime_contract(text: str) -> dict[str, object]:
         if row.group("setting").strip().lower() != "setting"
     ]
     values = dict(rows)
+    memory_settings = {
+        "session_count_ge_10": "Minimum stage when session count is at least 10",
+        "prior_pattern_recognition": (
+            "Minimum stage when a prior session showed pattern recognition"
+        ),
+        "prior_breakthrough": (
+            "Minimum stage when a prior session showed a breakthrough"
+        ),
+    }
     required = {
-        "Memory minimum: session_count_ge_10",
-        "Memory minimum: prior_pattern_recognition",
-        "Memory minimum: prior_breakthrough",
+        *memory_settings.values(),
         "Close score delta",
         "First session default stage",
         "First session maximum stage",
@@ -97,9 +104,7 @@ def _runtime_contract(text: str) -> dict[str, object]:
         raise ValueError("Stage runtime enforcement settings are incomplete.")
     try:
         memory = {
-            setting.removeprefix("Memory minimum: "): int(values[setting])
-            for setting in required
-            if setting.startswith("Memory minimum: ")
+            key: int(values[setting]) for key, setting in memory_settings.items()
         }
         scalar = {
             key: float(values[key]) if key == "Close score delta" else int(values[key])
