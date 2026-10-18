@@ -29,11 +29,11 @@ Audit all shipped `skills/**/*.md` and relevant metadata/entrypoint files. Trace
 
 Classify each candidate as:
 
-1. Canonical product knowledge — keep in Markdown.
-2. Runtime-owned configuration/contract — possible Python/runtime owner only if supported by current contracts/history.
-3. Technical identifier or portable interface — not automatically leakage; justify why it exists.
-4. Duplicated or stale knowledge/runtime metadata — identify all copies and the authoritative owner.
-5. Intentional exception / false positive — explain why it is valid.
+1. Canonical product knowledge - keep in Markdown.
+2. Runtime-owned configuration/contract - possible Python/runtime owner only if supported by current contracts/history.
+3. Technical identifier or portable interface - not automatically leakage; justify why it exists.
+4. Duplicated or stale knowledge/runtime metadata - identify all copies and the authoritative owner.
+5. Intentional exception / false positive - explain why it is valid.
 
 Look for Python-only schemas/directives, duplicate defaults/mappings/thresholds/selector labels/registry entries, runtime code consuming implementation-only skill metadata, obsolete paths/contracts from migrations, and gaps or false positives in ownership tests and packaging validation.
 
