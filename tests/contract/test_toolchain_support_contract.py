@@ -64,6 +64,7 @@ def test_python_floor_and_ci_baseline_are_aligned() -> None:
         workflow_text = workflow_path.read_text(encoding="utf-8")
         assert 'python-version: "3.11"' in workflow_text
 
+
 def test_codeql_static_analysis_uses_one_suite_without_project_install() -> None:
     workflow_text = (
         REPO_ROOT / ".github" / "workflows" / "codeql.yml"
