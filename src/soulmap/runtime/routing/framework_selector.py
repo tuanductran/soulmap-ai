@@ -211,6 +211,70 @@ def _condition_matches(result: dict[str, object], condition: str | None) -> bool
     return bool(result.get(condition))
 
 
+_PRIMARY_DETECTOR_BINDINGS: dict[str, tuple[str, str, str | None, str | None]] = {
+    "GRIEF": ("grief", "grief_detected", None, None),
+    "EXISTENTIAL": ("existential", "existential_detected", None, None),
+    "INNER_PARTS": ("conflict", "conflict_detected", None, None),
+    "DIRECTION": ("direction", "direction_detected", None, None),
+    "CREATIVE_DROUGHT": ("creative_drought", "creative_drought_detected", None, None),
+    "PERFECTIONISM_PARALYSIS": (
+        "perfectionism",
+        "perfectionism_paralysis_detected",
+        None,
+        None,
+    ),
+    "SHADOW": ("shadow", "shadow_detected", None, None),
+    "ANCESTRAL_PATTERNS": ("ancestral", "ancestral_detected", None, None),
+    "FEAR_OF_VISIBILITY": ("visibility_fear", "visibility_fear_detected", None, None),
+    "EMPATH_BOUNDARY": ("empath", "empath_detected", None, None),
+    "DARK_NIGHT_OF_SOUL": ("dark_night", "dark_night_detected", None, None),
+    "SOUL_NOURISHMENT": ("soul_nourishment", "soul_nourishment_detected", None, None),
+    "DIVINE_GUIDANCE": ("divine_guidance", "divine_guidance_detected", None, None),
+    "SACRED_POLARITY": ("sacred_polarity", "sacred_polarity_detected", None, None),
+    "SPIRITUAL_PURPOSE": (
+        "spiritual_purpose",
+        "spiritual_purpose_detected",
+        None,
+        None,
+    ),
+    "SOULMATE_LONGING": ("soulmate_longing", "soulmate_longing_detected", None, None),
+    "PARTNERSHIP_PATTERNS": (
+        "partnership_patterns",
+        "partnership_pattern_detected",
+        None,
+        None,
+    ),
+    "INTEGRATION_CELEBRATION": ("celebration", "celebration_detected", None, None),
+    "MEANING_INTEGRATION": ("insight", "insight_detected", None, None),
+    "SYNTHESIS": ("synthesis", "synthesis_triggered", "synthesis_ready", None),
+    "PATTERN": ("pattern", "primary_pattern", None, "wait_for_more"),
+}
+
+_SECONDARY_DETECTOR_BINDINGS: dict[str, tuple[str, str]] = {
+    "anger": ("anger", "anger_detected"),
+    "bypass": ("bypass", "bypass_detected"),
+    "somatic": ("somatic", "somatic_detected"),
+}
+
+
+def _primary_detector_binding(
+    framework: str,
+) -> tuple[str, str, str | None, str | None]:
+    """Resolve Python-owned detector fields for a semantic framework."""
+    try:
+        return _PRIMARY_DETECTOR_BINDINGS[framework]
+    except KeyError:
+        raise ValueError(f"Unknown primary framework binding: {framework}") from None
+
+
+def _secondary_detector_binding(name: str) -> tuple[str, str]:
+    """Resolve Python-owned detector fields for a semantic secondary layer."""
+    try:
+        return _SECONDARY_DETECTOR_BINDINGS[name]
+    except KeyError:
+        raise ValueError(f"Unknown secondary detector binding: {name}") from None
+
+
 def _simple_selection(
     framework: str, detector_result: dict[str, object]
 ) -> dict[str, object]:
@@ -479,11 +543,20 @@ async def select_framework_async(
             (
                 rule
                 for rule in orchestration_rules.primary_priority
-                if rule.result == "grief"
+                if rule.framework == "GRIEF"
             ),
             None,
         )
-        if grief_rule is not None and grief.get(grief_rule.detected):
+        grief_binding = (
+            _primary_detector_binding(grief_rule.framework)
+            if grief_rule is not None
+            else None
+        )
+        if (
+            grief_rule is not None
+            and grief_binding is not None
+            and grief.get(grief_binding[1])
+        ):
             selection = {
                 "primary_framework": grief_rule.framework,
                 "secondary_layer": (
@@ -737,18 +810,21 @@ async def select_framework_async(
         return _finish(message, history, memory, selection, debug_events)
 
     for rule in orchestration_rules.primary_priority:
-        result = res.get(rule.result, {})
+        result_key, detected_field, requires, requires_not = _primary_detector_binding(
+            rule.framework
+        )
+        result = res.get(result_key, {})
         if not isinstance(result, dict):
             continue
 
-        detected = result.get(rule.detected)
+        detected = result.get(detected_field)
         if not detected:
             continue
         if rule.requires_no_insight and res["insight"].get("insight_detected"):
             continue
-        if not _condition_matches(result, rule.requires):
+        if not _condition_matches(result, requires):
             continue
-        if rule.requires_not and result.get(rule.requires_not):
+        if requires_not and result.get(requires_not):
             continue
 
         secondary = (
@@ -769,10 +845,9 @@ async def select_framework_async(
     mode = "PEER" if current_stage >= orchestration_rules.peer_min_stage else "MIRROR"
     secondary_layer = None
     for secondary_rule in orchestration_rules.secondary_priority:
-        secondary_result = res.get(secondary_rule.result, {})
-        if isinstance(secondary_result, dict) and secondary_result.get(
-            secondary_rule.detected
-        ):
+        result_key, detected_field = _secondary_detector_binding(secondary_rule.name)
+        secondary_result = res.get(result_key, {})
+        if isinstance(secondary_result, dict) and secondary_result.get(detected_field):
             secondary_layer = secondary_rule.name
             break
 
