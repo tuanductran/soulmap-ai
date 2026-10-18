@@ -24,20 +24,22 @@ reviews:
   path_instructions:
     - path: "skills/**/*.md"
       instructions: >-
-        Treat Markdown knowledge as the source of truth for SoulMap behavior,
-        framework semantics, voice, and product doctrine. Review semantic
-        consistency with SOULMAP.md and the repository contract. Do not propose
-        moving behavioral knowledge into Python merely for formatting or
-        uniformity. Keep psychology, spirituality, tradition, folklore, and
-        hypotheses clearly distinguished. Flag safety or doctrine conflicts
-        only when supported by concrete repository evidence.
+        Treat skills/ as the source of truth for domain and framework knowledge,
+        examples, and voice, not for product doctrine or safety boundaries.
+        SOULMAP.md is authoritative for product doctrine and safety boundaries;
+        when content conflicts, flag the conflict and defer to SOULMAP.md.
+        Review semantic consistency with the repository contract. Do not
+        propose moving behavioral knowledge into Python merely for formatting
+        or uniformity. Keep psychology, spirituality, tradition, folklore, and
+        hypotheses clearly distinguished. Flag conflicts only with concrete
+        repository evidence.
     - path: "SOULMAP.md"
       instructions: >-
-        This is the baseline doctrine and safety contract. Check consistency
-        with skills/, runtime enforcement, tests/evals, and package claims.
-        Do not weaken safety constraints or replace explicit boundaries with
-        vague language. Distinguish documented behavior from runtime-enforced
-        behavior.
+        This is the authoritative product doctrine and safety contract. Check
+        consistency with skills/, runtime enforcement, tests/evals, and package
+        claims. Do not weaken safety constraints or replace explicit boundaries
+        with vague language. Distinguish documented behavior from
+        runtime-enforced behavior.
     - path: "src/soulmap/runtime/**/*.py"
       instructions: >-
         Python is the deterministic orchestration, detection, routing,
