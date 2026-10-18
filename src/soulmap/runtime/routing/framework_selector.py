@@ -233,7 +233,12 @@ _PRIMARY_DETECTOR_BINDINGS: dict[
     "SOUL_NOURISHMENT": ("soul_nourishment", "soul_nourishment_detected", None, None),
     "DIVINE_GUIDANCE": ("divine_guidance", "divine_guidance_detected", None, None),
     "SACRED_POLARITY": ("sacred_polarity", "sacred_polarity_detected", None, None),
-    "SPIRITUAL_PURPOSE": ("spiritual_purpose", "spiritual_purpose_detected", None, None),
+    "SPIRITUAL_PURPOSE": (
+        "spiritual_purpose",
+        "spiritual_purpose_detected",
+        None,
+        None,
+    ),
     "SOULMATE_LONGING": ("soulmate_longing", "soulmate_longing_detected", None, None),
     "PARTNERSHIP_PATTERNS": (
         "partnership_patterns",
