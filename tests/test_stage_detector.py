@@ -19,6 +19,11 @@ def test_stage_classifier_loads_the_shipped_contract() -> None:
     assert len(rules.stages) == 6
     assert rules.thresholds == {1: 0, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12}
     assert rules.recency_multipliers == (0.5, 1.0, 1.5, 2.0, 3.0)
+    assert rules.memory_minimums == {
+        "session_count_ge_10": 2,
+        "prior_pattern_recognition": 3,
+        "prior_breakthrough": 3,
+    }
 
 
 def test_stage_classifier_rejects_missing_stage() -> None:
