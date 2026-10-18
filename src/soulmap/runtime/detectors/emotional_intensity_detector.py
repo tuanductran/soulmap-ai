@@ -122,7 +122,11 @@ def detect_intensity(
         score += int(_RULES["Exclamation weight"])
         signals_found.append("punctuation: multiple exclamation marks")
 
-    if history and check_escalation(history):
+    escalation_history = [
+        *(history or []),
+        {"role": "user", "content": message},
+    ]
+    if check_escalation(escalation_history):
         score += int(_RULES["Escalation weight"])
         signals_found.append("escalation: intensity increasing across messages")
 

@@ -96,7 +96,6 @@ def test_escalating_history_adds_signal_in_detect_intensity() -> None:
     history = [
         {"role": "user", "content": "hi"},
         {"role": "user", "content": "not doing great"},
-        {"role": "user", "content": "everything is just so much right now, I can't"},
     ]
     result = detect_intensity("everything is just so much right now, I can't", history)
 

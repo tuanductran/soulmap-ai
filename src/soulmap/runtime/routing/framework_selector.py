@@ -277,6 +277,7 @@ async def select_framework_async(
         "dependency_detector",
         analyze_dependency,
         history,
+        current_message=message,
         debug_events=debug_events,
     )
 

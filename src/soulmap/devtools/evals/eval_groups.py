@@ -158,11 +158,12 @@ def run_groups_eval(
 
         for item in group["items"]:
             message = item["t"]
+            # History contains prior turns only; the selector receives the
+            # current message separately and must not count it twice.
             history = [
                 {"role": entry["role"], "content": entry["content"]}
                 for entry in item.get("history", [])
             ]
-            history.append({"role": "user", "content": message})
             scope = classify_message(message)
             memory = item.get("memory", {})
             selection = select_framework(

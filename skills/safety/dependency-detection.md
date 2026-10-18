@@ -102,6 +102,92 @@ Isolation signals:
 | you're the only one who understands me (truly) | `\byou're\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 | you are the only one who understands me (truly) | `\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 
+## Context exclusion cues
+
+Context cues suppress a dependency signal only when the cue precedes that signal in
+the same clause. They do not suppress a later first-person signal after a clause
+boundary. Quoted text is handled as quoted text, not as evidence of the user's own
+dependency.
+
+Third-party attribution:
+
+- "my friend said"
+- "my friend says"
+- "my friend told"
+- "my sister said"
+- "my sister says"
+- "my sister told"
+- "my brother said"
+- "my brother says"
+- "my brother told"
+- "my coworker said"
+- "my coworker says"
+- "my coworker told"
+- "my colleague said"
+- "my colleague says"
+- "my colleague told"
+- "my partner said"
+- "my partner says"
+- "my partner told"
+- "my roommate said"
+- "my roommate says"
+- "my roommate told"
+- "my client said"
+- "my client says"
+- "my client told"
+- "someone said"
+- "someone says"
+- "someone told"
+
+Hypothetical framing:
+
+- "if i ever said"
+- "if i said"
+- "if someone said"
+- "what would count as"
+- "in a fictional example"
+- "hypothetically"
+
+Negation of an assertion:
+
+- "i never said"
+- "i didn't say"
+- "i did not say"
+- "i don't feel that"
+- "i do not feel that"
+- "i don't think that"
+- "i do not think that"
+
+## Context exclusion policy
+
+| Context group | Comma ends scope |
+| :--- | :--- |
+| Third-party attribution | no |
+| Hypothetical framing | no |
+| Negation of an assertion | yes |
+
+## Clause boundaries
+
+A context cue stops applying when one of these boundaries occurs before the signal.
+Comma behavior is defined by the Context exclusion policy table. A complete quoted
+span ends attribution scope before any later unquoted signal.
+
+Clause boundary markers:
+
+- ","
+- "."
+- ";"
+- "!"
+- "?"
+- "but"
+- "however"
+- "although"
+- "whereas"
+- "while"
+- "yet"
+- "and i"
+- ", i"
+
 ## Runtime detection contract
 
 ### Scoring

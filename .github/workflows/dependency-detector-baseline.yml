@@ -1,0 +1,94 @@
+name: Dependency Detector Baseline Audit
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/dependency-detector-baseline.yml"
+      - "scripts/audit_dependency_detector_matrix.py"
+      - "src/soulmap/runtime/detectors/dependency_detector.py"
+      - "src/soulmap/runtime/io/text_normalization.py"
+      - "src/soulmap/runtime/knowledge/keyword_lists.py"
+      - "src/soulmap/runtime/knowledge/runtime_registry.py"
+      - "skills/safety/dependency-detection.md"
+      - "tests/test_dependency_detector.py"
+      - "tests/contract/test_response_safety_gate.py"
+      - "tests/integration/test_framework_selector_priorities.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-detector-baseline-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    name: Capture baseline and candidate observations
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout PR base as baseline
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: baseline
+          persist-credentials: false
+
+      - name: Checkout PR head as candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: "0.12.24"
+          python-version: "3.11"
+
+      - name: Prepare output directory
+        run: mkdir -p artifacts
+
+      - name: Install baseline dependencies
+        run: uv sync --locked --python 3.11
+        working-directory: baseline
+
+      - name: Capture detector baseline from PR base SHA
+        env:
+          SOULMAP_REPO_ROOT: ${{ github.workspace }}/baseline
+          PYTHONPATH: ${{ github.workspace }}/baseline/src
+        run: >-
+          uv run python ../candidate/scripts/audit_dependency_detector_matrix.py
+          --output ../artifacts/dependency-detector-baseline.json
+        working-directory: baseline
+
+      - name: Install candidate dependencies
+        run: uv sync --locked --python 3.11
+        working-directory: candidate
+
+      - name: Capture candidate from PR head SHA
+        env:
+          SOULMAP_REPO_ROOT: ${{ github.workspace }}/candidate
+          PYTHONPATH: ${{ github.workspace }}/candidate/src
+        run: >-
+          uv run python scripts/audit_dependency_detector_matrix.py
+          --output ../artifacts/dependency-detector-candidate.json
+        working-directory: candidate
+
+      - name: Compare observed matrices
+        if: always()
+        run: >-
+          python candidate/scripts/audit_dependency_detector_matrix.py
+          --compare artifacts/dependency-detector-baseline.json
+          artifacts/dependency-detector-candidate.json
+          --report artifacts/dependency-detector-comparison.json
+
+      - name: Upload observed results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dependency-detector-baseline-comparison
+          path: artifacts/dependency-detector-*.json
+          if-no-files-found: warn
+          retention-days: 30

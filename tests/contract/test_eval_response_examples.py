@@ -11,7 +11,7 @@ def _compose_for(
     history: list[dict[str, str]] | None = None,
 ) -> str:
     if history is None:
-        history = [{"role": "user", "content": message}]
+        history = []
     selection = select_framework(message, history, {})
     scope = classify_message(message)
     return _compose_response(message, selection, scope)
@@ -72,10 +72,6 @@ def test_synthesis_example_returns_authorship_to_user() -> None:
         {
             "role": "assistant",
             "content": "That feeling of invisibility seems to return.",
-        },
-        {
-            "role": "user",
-            "content": "Looking back at our conversation, what themes do you see?",
         },
     ]
     response = _compose_for(

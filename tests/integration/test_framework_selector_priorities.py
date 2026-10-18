@@ -103,6 +103,18 @@ def test_framework_selector_exposes_safety_gate_debug_event_when_enabled() -> No
     assert any(event.get("module") == "response_safety_gate" for event in data["debug"])
 
 
+def test_selector_detects_current_turn_dependency_without_history() -> None:
+    message = (
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    data = run_framework_selector({"message": message, "history": [], "memory": {}})
+
+    assert data["primary_framework"] == "DEPENDENCY"
+    assert data["safety_status"] == "OVERRIDE"
+    assert data["blocked"] == ["ALL_FRAMEWORKS"]
+
+
 def test_framework_selector_prioritizes_grief_before_direction() -> None:
     payload = {
         "message": "My father died yesterday and now I feel lost.",
@@ -229,7 +241,13 @@ def test_framework_selector_prioritizes_grief_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [
+            {
+                "role": "user",
+                "content": "Earlier this week I took a long walk and had a quiet afternoon thinking about ordinary things.",
+            },
+            {"role": "user", "content": "I had a quiet afternoon yesterday."},
+        ],
         "memory": {},
     }
 
@@ -251,7 +269,7 @@ def test_framework_selector_prioritizes_existential_over_direction() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -273,7 +291,13 @@ def test_framework_selector_prioritizes_direction_over_shadow() -> None:
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [
+            {
+                "role": "user",
+                "content": "Earlier this week I took a long walk and had a quiet afternoon thinking about ordinary things.",
+            },
+            {"role": "user", "content": "I had a quiet afternoon yesterday."},
+        ],
         "memory": {},
     }
 
@@ -297,7 +321,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_inner_parts_when
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -320,7 +344,7 @@ def test_framework_selector_attaches_meaning_integration_as_secondary_for_direct
     )
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
@@ -341,7 +365,7 @@ def test_framework_selector_uses_meaning_integration_instead_of_celebration_when
     message = "I did it, and I finally understand now. I can see the pattern."
     payload = {
         "message": message,
-        "history": [{"role": "user", "content": message}],
+        "history": [{"role": "user", "content": "I had a quiet afternoon yesterday."}],
         "memory": {},
     }
 
