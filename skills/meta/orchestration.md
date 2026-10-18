@@ -78,39 +78,39 @@ primary-priority rule matches.
 
 First matching rule wins. Empty cells mean the condition is not required.
 
-| Priority | Result | Detected field | Framework | Mode | Blocked | Insight secondary | Requires no insight | Requires | Requires not |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | grief | grief_detected | GRIEF | SANCTUARY | direction, shadow, existential, synthesis | true | false |  |  |
-| 2 | existential | existential_detected | EXISTENTIAL | MIRROR | direction, shadow | true | false |  |  |
-| 3 | conflict | conflict_detected | INNER_PARTS | MIRROR | direction, shadow | false | true |  |  |
-| 4 | direction | direction_detected | DIRECTION | MIRROR | shadow | true | false |  |  |
-| 5 | creative_drought | creative_drought_detected | CREATIVE_DROUGHT | MIRROR |  | false | false |  |  |
-| 6 | perfectionism | perfectionism_paralysis_detected | PERFECTIONISM_PARALYSIS | MIRROR |  | false | false |  |  |
-| 7 | shadow | shadow_detected | SHADOW | MIRROR |  | false | false |  |  |
-| 8 | ancestral | ancestral_detected | ANCESTRAL_PATTERNS | MIRROR |  | false | false |  |  |
-| 9 | visibility_fear | visibility_fear_detected | FEAR_OF_VISIBILITY | MIRROR |  | false | false |  |  |
-| 10 | empath | empath_detected | EMPATH_BOUNDARY | MIRROR |  | false | false |  |  |
-| 11 | dark_night | dark_night_detected | DARK_NIGHT_OF_SOUL | SANCTUARY |  | false | false |  |  |
-| 12 | soul_nourishment | soul_nourishment_detected | SOUL_NOURISHMENT | MIRROR |  | false | false |  |  |
-| 13 | divine_guidance | divine_guidance_detected | DIVINE_GUIDANCE | MIRROR |  | false | false |  |  |
-| 14 | sacred_polarity | sacred_polarity_detected | SACRED_POLARITY | MIRROR |  | false | false |  |  |
-| 15 | spiritual_purpose | spiritual_purpose_detected | SPIRITUAL_PURPOSE | MIRROR |  | false | false |  |  |
-| 16 | soulmate_longing | soulmate_longing_detected | SOULMATE_LONGING | MIRROR |  | false | false |  |  |
-| 17 | partnership_patterns | partnership_pattern_detected | PARTNERSHIP_PATTERNS | MIRROR |  | false | false |  |  |
-| 18 | celebration | celebration_detected | INTEGRATION_CELEBRATION | MIRROR |  | false | true |  |  |
-| 19 | insight | insight_detected | MEANING_INTEGRATION | MIRROR |  | false | false |  |  |
-| 20 | synthesis | synthesis_triggered | SYNTHESIS | MIRROR |  | false | false | synthesis_ready |  |
-| 21 | pattern | primary_pattern | PATTERN | MIRROR |  | false | false |  | wait_for_more |
+| Priority | Framework | Mode | Blocked | Insight secondary | Requires no insight |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | GRIEF | SANCTUARY | direction, shadow, existential, synthesis | true | false |
+| 2 | EXISTENTIAL | MIRROR | direction, shadow | true | false |
+| 3 | INNER_PARTS | MIRROR | direction, shadow | false | true |
+| 4 | DIRECTION | MIRROR | shadow | true | false |
+| 5 | CREATIVE_DROUGHT | MIRROR |  | false | false |
+| 6 | PERFECTIONISM_PARALYSIS | MIRROR |  | false | false |
+| 7 | SHADOW | MIRROR |  | false | false |
+| 8 | ANCESTRAL_PATTERNS | MIRROR |  | false | false |
+| 9 | FEAR_OF_VISIBILITY | MIRROR |  | false | false |
+| 10 | EMPATH_BOUNDARY | MIRROR |  | false | false |
+| 11 | DARK_NIGHT_OF_SOUL | SANCTUARY |  | false | false |
+| 12 | SOUL_NOURISHMENT | MIRROR |  | false | false |
+| 13 | DIVINE_GUIDANCE | MIRROR |  | false | false |
+| 14 | SACRED_POLARITY | MIRROR |  | false | false |
+| 15 | SPIRITUAL_PURPOSE | MIRROR |  | false | false |
+| 16 | SOULMATE_LONGING | MIRROR |  | false | false |
+| 17 | PARTNERSHIP_PATTERNS | MIRROR |  | false | false |
+| 18 | INTEGRATION_CELEBRATION | MIRROR |  | false | true |
+| 19 | MEANING_INTEGRATION | MIRROR |  | false | false |
+| 20 | SYNTHESIS | MIRROR |  | false | false |
+| 21 | PATTERN | MIRROR |  | false | false |
 
 ### Secondary priority
 
 At most one secondary layer is selected, in this order.
 
-| Priority | Name | Result | Detected field |
-| :--- | :--- | :--- | :--- |
-| 1 | anger | anger | anger_detected |
-| 2 | bypass | bypass | bypass_detected |
-| 3 | somatic | somatic | somatic_detected |
+| Priority | Name |
+| :--- | :--- |
+| 1 | anger |
+| 2 | bypass |
+| 3 | somatic |
 
 ## Decision Tree
 
