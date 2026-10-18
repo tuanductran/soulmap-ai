@@ -62,3 +62,65 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
         "MIRROR fallback": "MIRROR mode: use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
         "PEER fallback": "PEER mode: dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
     }
+
+def test_detector_bindings_cover_every_markdown_framework() -> None:
+    from soulmap.runtime.routing.framework_selector import (
+        _primary_detector_binding,
+        _secondary_detector_binding,
+    )
+
+    rules = load_orchestration_rules()
+    expected_primary = {
+        "GRIEF": ("grief", "grief_detected", None, None),
+        "EXISTENTIAL": ("existential", "existential_detected", None, None),
+        "INNER_PARTS": ("conflict", "conflict_detected", None, None),
+        "DIRECTION": ("direction", "direction_detected", None, None),
+        "CREATIVE_DROUGHT": ("creative_drought", "creative_drought_detected", None, None),
+        "PERFECTIONISM_PARALYSIS": ("perfectionism", "perfectionism_paralysis_detected", None, None),
+        "SHADOW": ("shadow", "shadow_detected", None, None),
+        "ANCESTRAL_PATTERNS": ("ancestral", "ancestral_detected", None, None),
+        "FEAR_OF_VISIBILITY": ("visibility_fear", "visibility_fear_detected", None, None),
+        "EMPATH_BOUNDARY": ("empath", "empath_detected", None, None),
+        "DARK_NIGHT_OF_SOUL": ("dark_night", "dark_night_detected", None, None),
+        "SOUL_NOURISHMENT": ("soul_nourishment", "soul_nourishment_detected", None, None),
+        "DIVINE_GUIDANCE": ("divine_guidance", "divine_guidance_detected", None, None),
+        "SACRED_POLARITY": ("sacred_polarity", "sacred_polarity_detected", None, None),
+        "SPIRITUAL_PURPOSE": ("spiritual_purpose", "spiritual_purpose_detected", None, None),
+        "SOULMATE_LONGING": ("soulmate_longing", "soulmate_longing_detected", None, None),
+        "PARTNERSHIP_PATTERNS": ("partnership_patterns", "partnership_pattern_detected", None, None),
+        "INTEGRATION_CELEBRATION": ("celebration", "celebration_detected", None, None),
+        "MEANING_INTEGRATION": ("insight", "insight_detected", None, None),
+        "SYNTHESIS": ("synthesis", "synthesis_triggered", "synthesis_ready", None),
+        "PATTERN": ("pattern", "primary_pattern", None, "wait_for_more"),
+    }
+    expected_secondary = {
+        "anger": ("anger", "anger_detected"),
+        "bypass": ("bypass", "bypass_detected"),
+        "somatic": ("somatic", "somatic_detected"),
+    }
+
+    assert set(expected_primary) == {rule.framework for rule in rules.primary_priority}
+    assert set(expected_secondary) == {rule.name for rule in rules.secondary_priority}
+    assert {
+        rule.framework: _primary_detector_binding(rule.framework)
+        for rule in rules.primary_priority
+    } == expected_primary
+    assert {
+        rule.name: _secondary_detector_binding(rule.name)
+        for rule in rules.secondary_priority
+    } == expected_secondary
+
+
+def test_detector_bindings_reject_unknown_names() -> None:
+    import pytest
+
+    from soulmap.runtime.routing.framework_selector import (
+        _primary_detector_binding,
+        _secondary_detector_binding,
+    )
+
+    with pytest.raises(ValueError, match="Unknown primary framework binding"):
+        _primary_detector_binding("UNKNOWN")
+    with pytest.raises(ValueError, match="Unknown secondary detector binding"):
+        _secondary_detector_binding("unknown")
+
