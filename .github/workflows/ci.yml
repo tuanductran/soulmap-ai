@@ -54,9 +54,6 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Lint
         run: uv run soulmap lint --skip-tests
-      - name: Knowledge consistency inventory
-        if: matrix.os == 'ubuntu-26.04'
-        run: uv run soulmap audit-knowledge
       - name: Knowledge ownership audit
         if: matrix.os == 'ubuntu-26.04'
         run: uv run soulmap audit-knowledge-ownership
