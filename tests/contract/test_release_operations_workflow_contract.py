@@ -92,9 +92,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Verify downloaded release artifacts") < workflow.index(
         "Generate release artifact attestations"
     )
-    assert workflow.index(
-        "Verify release token is configured"
-    ) < workflow.index("Generate release artifact attestations")
+    assert workflow.index("Verify release token is configured") < workflow.index(
+        "Generate release artifact attestations"
+    )
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
     )
