@@ -14,6 +14,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "permissions:" in workflow
     assert "contents: read" in workflow
     assert "contents: write" not in workflow
+    assert 'if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then' in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" not in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
