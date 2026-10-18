@@ -512,7 +512,7 @@ def create_branch(
     environment["GIT_CONFIG_KEY_1"] = "http.extraheader"
     environment["GIT_CONFIG_VALUE_1"] = f"AUTHORIZATION: basic {encoded}"
     try:
-        pushed = subprocess.run(
+        subprocess.run(
             ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
             check=True,
             capture_output=True,
@@ -529,10 +529,6 @@ def create_branch(
             f"Failed to publish release branch {branch!r}: {detail}"
         ) from exc
 
-    if pushed.returncode != 0:
-        raise GitHubActionError(
-            f"Git did not confirm publication of release branch {branch!r}."
-        )
 
 
 def ensure_tag_exists(
