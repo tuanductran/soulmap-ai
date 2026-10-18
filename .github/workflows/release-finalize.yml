@@ -175,14 +175,6 @@ jobs:
           test -f dist/release-verification.json
           test -f dist/release-provenance.json
 
-      - name: Generate release artifact attestations
-        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
-        with:
-          subject-path: |
-            dist/soulmap-ai.zip
-            dist/soulmap-ai.skill
-            dist/soulmap-ai-library.json
-
       - name: Verify release token is configured
         env:
           RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
@@ -191,6 +183,14 @@ jobs:
             echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
             exit 1
           fi
+
+      - name: Generate release artifact attestations
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            dist/soulmap-ai.zip
+            dist/soulmap-ai.skill
+            dist/soulmap-ai-library.json
 
       - name: Create immutable release tag through Python action
         uses: ./src/action
