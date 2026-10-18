@@ -94,7 +94,13 @@ flowchart LR
 ```
 
 The three response validators in `src/soulmap/runtime/guards/` check generated
-text; they never produce it.
+text; they never produce it. This repository does not include the production
+LLM host or delivery adapter, so the package cannot prove that an external host
+runs all three validators before delivering every live response. The local
+`eval-responses` harness invokes the validators against its own composed
+reference responses; that is not an end-to-end test of a deployed host. Any
+production integration must call all three validators and block delivery when
+a validator requires a rewrite.
 
 ### Related documentation
 
