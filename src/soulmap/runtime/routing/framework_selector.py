@@ -211,9 +211,7 @@ def _condition_matches(result: dict[str, object], condition: str | None) -> bool
     return bool(result.get(condition))
 
 
-_PRIMARY_DETECTOR_BINDINGS: dict[
-    str, tuple[str, str, str | None, str | None]
-] = {
+_PRIMARY_DETECTOR_BINDINGS: dict[str, tuple[str, str, str | None, str | None]] = {
     "GRIEF": ("grief", "grief_detected", None, None),
     "EXISTENTIAL": ("existential", "existential_detected", None, None),
     "INNER_PARTS": ("conflict", "conflict_detected", None, None),
