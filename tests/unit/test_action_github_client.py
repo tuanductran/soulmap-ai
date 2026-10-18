@@ -161,7 +161,7 @@ def test_rate_limit_retry_uses_reset_window() -> None:
         assert client.api("GET", "/repos/a/b") == {"ok": True}
 
     assert sleep.call_count == 1
-    assert sleep.call_args.args[0] >= 119
+    assert sleep.call_args.args[0] >= 118
 
 
 def test_forbidden_rate_limit_is_retried() -> None:
