@@ -179,7 +179,7 @@ jobs:
         env:
           RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
-          if [ -z "$RELEASE_TOKEN" ]; then
+          if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then
             echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
             exit 1
           fi
