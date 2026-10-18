@@ -66,9 +66,7 @@ def test_python_floor_and_ci_baseline_are_aligned() -> None:
 
 
 def test_codeql_static_analysis_uses_one_suite_without_project_install() -> None:
-    workflow_text = (
-        REPO_ROOT / ".github" / "workflows" / "codeql.yml"
-    ).read_text(encoding="utf-8")
+    workflow_text = (REPO_ROOT / ".github" / "workflows" / "codeql.yml").read_text(encoding="utf-8")
 
     assert "build-mode: none" in workflow_text
     assert "queries: security-and-quality" in workflow_text
