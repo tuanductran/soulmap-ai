@@ -78,6 +78,7 @@ def _quoted_spans(message: str) -> list[tuple[int, int]]:
                 and (index == 0 or not message[index - 1].isalnum())
                 and index + 1 < len(message)
                 and not message[index + 1].isspace()
+                and not message[index + 1].isdigit()
                 and not _APOSTROPHE_ELISIONS.match(message[index:])
             ):
                 start = index

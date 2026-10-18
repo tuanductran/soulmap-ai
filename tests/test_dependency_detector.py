@@ -413,6 +413,21 @@ def test_apostrophe_elision_does_not_open_a_quoted_span() -> None:
     assert any("dependency_keyword" in signal for signal in result["signals"])
 
 
+def test_decade_apostrophe_does_not_open_a_quoted_span() -> None:
+    result = analyze_dependency(
+        [
+            _user(
+                "Since the '90s I've felt you are all I have, "
+                "and my friend says 'hang in there'."
+            )
+        ]
+    )
+
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert any("dependency_keyword" in signal for signal in result["signals"])
+
+
 def test_single_quoted_multi_sentence_text_remains_excluded() -> None:
     result = analyze_dependency(
         [
