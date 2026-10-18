@@ -1,29 +1,93 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
-# Preserve organization-level settings when this repository has them.
+# Keep organization-level defaults where CodeRabbit supports inheritance.
 inheritance: true
 
+language: en-US
 tone_instructions: >-
-  Prefer fewer, high-confidence findings. Report concrete correctness, security,
-  safety, and regression risks with a reproducible example. Skip style or lint
-  issues already enforced by CI, speculative edge cases, and unrelated refactors.
+  Prefer high-confidence, actionable findings. Prioritize correctness, safety,
+  security, packaging, and contract regressions. Avoid style issues enforced by
+  CI, speculative edge cases, duplicate findings, and unrelated refactors.
 
 reviews:
   profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
   poem: false
+  collapse_walkthrough: true
   auto_review:
     enabled: true
-    auto_incremental_review: false
+    auto_incremental_review: true
     drafts: false
+    base_branches:
+      - main
+  path_filters: []
   path_instructions:
+    - path: "skills/**/*.md"
+      instructions: >-
+        Treat Markdown knowledge as the source of truth for SoulMap behavior,
+        framework semantics, voice, and product doctrine. Review semantic
+        consistency with SOULMAP.md and the repository contract. Do not propose
+        moving behavioral knowledge into Python merely for formatting or
+        uniformity. Keep psychology, spirituality, tradition, folklore, and
+        hypotheses clearly distinguished. Flag safety or doctrine conflicts
+        only when supported by concrete repository evidence.
+    - path: "SOULMAP.md"
+      instructions: >-
+        This is the baseline doctrine and safety contract. Check consistency
+        with skills/, runtime enforcement, tests/evals, and package claims.
+        Do not weaken safety constraints or replace explicit boundaries with
+        vague language. Distinguish documented behavior from runtime-enforced
+        behavior.
+    - path: "src/soulmap/runtime/**/*.py"
+      instructions: >-
+        Python is the deterministic orchestration, detection, routing,
+        normalization, validation, and enforcement layer; it must not become a
+        duplicate source of behavioral knowledge owned by Markdown. Review
+        concrete behavior, fail-safe paths, boundary conditions, typed
+        contracts, and regression risks against SOULMAP.md and the safety
+        enforcement matrix. Do not recommend unrelated refactors.
     - path: "src/soulmap/runtime/detectors/**/*.py"
       instructions: >-
-        Prioritize reproducible behavior regressions, safety-routing errors,
-        incorrect boundary handling, and meaningful performance risks. Tie each
-        finding to a concrete input and expected versus actual behavior. Do not
-        report style issues covered by Ruff or propose unrelated refactors.
+        For detector changes, verify representative positive and negative
+        inputs, boundary behavior, precedence, and interactions with routing
+        and safety gates. Cite a concrete input and expected versus actual
+        behavior. Never recommend weakening safety detection just to make
+        behavior symmetrical.
+    - path: "src/soulmap/runtime/guards/**/*.py"
+      instructions: >-
+        Treat these files as safety-sensitive enforcement boundaries. Verify
+        fail-closed or documented degraded behavior, independent validation,
+        and that downstream processing cannot bypass required safety handling.
+        Do not suggest relaxing established safety invariants without explicit
+        evidence that the invariant is wrong.
     - path: "tests/**/*.py"
       instructions: >-
-        Report only material gaps that allow incorrect production behavior to
-        pass, or tests whose assertions contradict the intended contract. Avoid
-        requests for redundant cases, naming/style preferences, and speculative
-        coverage additions.
+        Focus on tests that miss a material production regression, assert the
+        wrong contract, or are nondeterministic. Check that tests validate
+        observable behavior rather than implementation details. Avoid asking
+        for redundant cases or speculative coverage without a distinct risk.
+    - path: "evals/datasets/**/*.json"
+      instructions: >-
+        Treat eval cases as source-backed behavioral contracts. Check scenario
+        intent, expected routing or response constraints, consistency with
+        SOULMAP.md and skills/, and meaningful regression coverage. Do not
+        change expected outcomes merely to make an implementation pass.
+    - path: "docs/engineering/**/*.md"
+      instructions: >-
+        Verify architecture, ownership, packaging, safety, and validation claims
+        against the current code, tests, workflows, and repository contract.
+        Keep documented limitations distinct from defects and do not duplicate
+        source-of-truth rules when a link is sufficient.
+    - path: ".github/workflows/**/*.{yml,yaml}"
+      instructions: >-
+        Review workflow triggers, permissions, pinned third-party actions,
+        secret exposure, concurrency, required-check behavior, and whether
+        commands match the repository's uv/Python 3.11 tooling. Avoid proposing
+        broad workflow rewrites unrelated to the diff.
+    - path: ".coderabbit.yaml"
+      instructions: >-
+        Keep configuration valid against the official CodeRabbit schema.
+        Ensure path instructions match the repository structure and do not
+        contradict AGENTS.md, SOULMAP.md, or docs/engineering/repo-contract.md.
+        Avoid excluding source, safety, tests, or governance files from review
+        without a concrete reason.
