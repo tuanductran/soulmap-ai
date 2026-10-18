@@ -96,6 +96,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         "Create immutable release tag"
     )
     assert workflow.index(
+        "Verify release token is configured"
+    ) < workflow.index("Create immutable release tag through Python action")
+    assert workflow.index(
         "Create immutable release tag through Python action"
     ) < workflow.index("Publish GitHub Release")
 
