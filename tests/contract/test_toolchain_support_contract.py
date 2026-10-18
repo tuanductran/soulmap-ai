@@ -76,7 +76,6 @@ def test_codeql_static_analysis_uses_one_suite_without_project_install() -> None
     assert "uv sync --locked" not in workflow_text
 
 
-
 def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     script_text = PYTEST_DIAGNOSTICS.read_text(encoding="utf-8")
     assert "uv" in script_text
@@ -98,10 +97,13 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
         "uv run pytest -q tests/test_*.py tests/mutation/test_safety_critical_mutations.py"
         in ci_text
     )
-
-
     assert "name: Knowledge consistency inventory" not in ci_text
-    assert "uv run soulmap audit-knowledge --max-knowledge-duplicates 519" in ci_text
+    assert "name: Knowledge migration guard" not in ci_text
+    assert (
+        "uv run soulmap audit-knowledge --max-knowledge-duplicates 519 > knowledge-inventory.txt"
+        in ci_text
+    )
+    assert ci_text.count("uv run soulmap audit-knowledge ") == 1
 
 
 def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
