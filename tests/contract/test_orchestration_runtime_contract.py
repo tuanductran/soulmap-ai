@@ -46,6 +46,10 @@ def test_orchestration_runtime_contract_loads() -> None:
         "bypass",
         "somatic",
     ]
+    assert all(not hasattr(rule, "result") for rule in rules.primary_priority)
+    assert all(not hasattr(rule, "detected") for rule in rules.primary_priority)
+    assert all(not hasattr(rule, "result") for rule in rules.secondary_priority)
+    assert all(not hasattr(rule, "detected") for rule in rules.secondary_priority)
 
 
 def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
