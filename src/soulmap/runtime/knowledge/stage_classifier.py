@@ -103,9 +103,7 @@ def _runtime_contract(text: str) -> dict[str, object]:
     if not required <= values.keys():
         raise ValueError("Stage runtime enforcement settings are incomplete.")
     try:
-        memory = {
-            key: int(values[setting]) for key, setting in memory_settings.items()
-        }
+        memory = {key: int(values[setting]) for key, setting in memory_settings.items()}
         scalar = {
             key: float(values[key]) if key == "Close score delta" else int(values[key])
             for key in (
