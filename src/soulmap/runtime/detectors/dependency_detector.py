@@ -118,6 +118,7 @@ class _ContextIndex:
     """Precomputed quote, cue, and clause-boundary offsets for one message."""
 
     quoted_spans: tuple[tuple[int, int], ...]
+    quoted_starts: tuple[int, ...]
     cue_ends_by_group: dict[str, tuple[int, ...]]
     boundary_spans_by_group: dict[str, tuple[tuple[int, int], ...]]
     boundary_starts_by_group: dict[str, tuple[int, ...]]
@@ -126,12 +127,11 @@ class _ContextIndex:
 def _build_context_index(message: str) -> _ContextIndex:
     """Build one reusable context index instead of rescanning each signal prefix."""
     quoted_spans = tuple(_quoted_spans(message))
+    quoted_starts = tuple(span[0] for span in quoted_spans)
 
     def is_quoted(start: int, end: int) -> bool:
-        return any(
-            quoted_start <= start and end <= quoted_end
-            for quoted_start, quoted_end in quoted_spans
-        )
+        quote_index = bisect_right(quoted_starts, start) - 1
+        return quote_index >= 0 and end <= quoted_spans[quote_index][1]
 
     cue_ends: dict[str, set[int]] = {
         group: set() for group in _CONTEXT_EXCLUSION_GROUPS
@@ -171,6 +171,7 @@ def _build_context_index(message: str) -> _ContextIndex:
 
     return _ContextIndex(
         quoted_spans=quoted_spans,
+        quoted_starts=quoted_starts,
         cue_ends_by_group={
             group: tuple(sorted(ends)) for group, ends in cue_ends.items()
         },
@@ -184,10 +185,8 @@ def _build_context_index(message: str) -> _ContextIndex:
 
 def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
     """Check a signal against its message's precomputed context index."""
-    if any(
-        quoted_start <= start and end <= quoted_end
-        for quoted_start, quoted_end in index.quoted_spans
-    ):
+    quote_index = bisect_right(index.quoted_starts, start) - 1
+    if quote_index >= 0 and end <= index.quoted_spans[quote_index][1]:
         return True
 
     for group, cue_ends in index.cue_ends_by_group.items():
@@ -211,10 +210,11 @@ def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
                 break
             boundary_end -= 1
 
-        if "third-party attribution" in group.lower():
-            has_boundary = has_boundary or any(
-                cue_end <= quoted_start and quoted_end <= start
-                for quoted_start, quoted_end in index.quoted_spans
+        if "third-party attribution" in group.lower() and not has_boundary:
+            quote_index = bisect_left(index.quoted_starts, cue_end)
+            has_boundary = (
+                quote_index < len(index.quoted_spans)
+                and index.quoted_spans[quote_index][1] <= start
             )
 
         if not has_boundary:
