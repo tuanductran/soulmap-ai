@@ -65,6 +65,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
         in workflow
     )
+    assert 'if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then' in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
@@ -92,8 +93,14 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Verify downloaded release artifacts") < workflow.index(
         "Generate release artifact attestations"
     )
+    assert workflow.index("Verify release token is configured") < workflow.index(
+        "Generate release artifact attestations"
+    )
     assert workflow.index("Generate release artifact attestations") < workflow.index(
         "Create immutable release tag"
+    )
+    assert workflow.index("Verify release token is configured") < workflow.index(
+        "Create immutable release tag through Python action"
     )
     assert workflow.index(
         "Create immutable release tag through Python action"

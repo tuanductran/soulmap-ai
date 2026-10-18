@@ -54,15 +54,9 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Lint
         run: uv run soulmap lint --skip-tests
-      - name: Knowledge consistency inventory
-        if: matrix.os == 'ubuntu-26.04'
-        run: uv run soulmap audit-knowledge
       - name: Knowledge ownership audit
         if: matrix.os == 'ubuntu-26.04'
         run: uv run soulmap audit-knowledge-ownership
-      - name: Knowledge migration guard
-        if: matrix.os == 'ubuntu-26.04'
-        run: uv run soulmap audit-knowledge --max-knowledge-duplicates 519
       - name: Dead code detection (Vulture)
         if: matrix.os == 'ubuntu-26.04'
         run: uv run vulture
@@ -143,8 +137,8 @@ jobs:
         run: |
           set -o pipefail
           uv run python scripts/audit_resource_inventory.py | tee resource-inventory-audit.txt
-      - name: Generate knowledge inventory
-        run: uv run soulmap audit-knowledge > knowledge-inventory.txt
+      - name: Generate and validate knowledge inventory
+        run: uv run soulmap audit-knowledge --max-knowledge-duplicates 519 > knowledge-inventory.txt
       - name: Upload knowledge inventory
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

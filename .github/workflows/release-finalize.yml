@@ -175,6 +175,15 @@ jobs:
           test -f dist/release-verification.json
           test -f dist/release-provenance.json
 
+      - name: Verify release token is configured
+        env:
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+        run: |
+          if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then
+            echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
+            exit 1
+          fi
+
       - name: Generate release artifact attestations
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
@@ -191,14 +200,6 @@ jobs:
           tag: v${{ needs.verify.outputs.version }}
           target-sha: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
 
-      - name: Verify release token is configured
-        env:
-          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-        run: |
-          if [ -z "$RELEASE_TOKEN" ]; then
-            echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
-            exit 1
-          fi
       - name: Publish GitHub Release
         uses: ./src/action
         with:

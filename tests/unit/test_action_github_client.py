@@ -452,6 +452,7 @@ def test_create_branch_marks_only_mounted_workspace_as_safe(
         "origin",
         "HEAD:refs/heads/release/prep-1",
     ]
+    assert push_call.kwargs["check"] is True
     assert push_call.kwargs["env"]["GIT_CONFIG_COUNT"] == "2"
     assert push_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
     assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
