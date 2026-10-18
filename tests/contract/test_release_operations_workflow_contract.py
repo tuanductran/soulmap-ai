@@ -14,7 +14,6 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "permissions:" in workflow
     assert "contents: read" in workflow
     assert "contents: write" not in workflow
-    assert 'if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then' in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "pull-requests: write" not in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
@@ -66,6 +65,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
         in workflow
     )
+    assert 'if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then' in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
