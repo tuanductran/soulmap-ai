@@ -810,8 +810,8 @@ async def select_framework_async(
         return _finish(message, history, memory, selection, debug_events)
 
     for rule in orchestration_rules.primary_priority:
-        result_key, detected_field, requires, requires_not = (
-            _primary_detector_binding(rule.framework)
+        result_key, detected_field, requires, requires_not = _primary_detector_binding(
+            rule.framework
         )
         result = res.get(result_key, {})
         if not isinstance(result, dict):
