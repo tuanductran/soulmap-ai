@@ -183,14 +183,6 @@ jobs:
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
 
-      - name: Create immutable release tag through Python action
-        uses: ./src/action
-        with:
-          operation: tag
-          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
-          tag: v${{ needs.verify.outputs.version }}
-          target-sha: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
-
       - name: Verify release token is configured
         env:
           RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
@@ -199,6 +191,15 @@ jobs:
             echo "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
             exit 1
           fi
+
+      - name: Create immutable release tag through Python action
+        uses: ./src/action
+        with:
+          operation: tag
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          tag: v${{ needs.verify.outputs.version }}
+          target-sha: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
+
       - name: Publish GitHub Release
         uses: ./src/action
         with:
