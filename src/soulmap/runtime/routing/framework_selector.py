@@ -211,68 +211,65 @@ def _condition_matches(result: dict[str, object], condition: str | None) -> bool
     return bool(result.get(condition))
 
 
+_PRIMARY_DETECTOR_BINDINGS: dict[
+    str, tuple[str, str, str | None, str | None]
+] = {
+    "GRIEF": ("grief", "grief_detected", None, None),
+    "EXISTENTIAL": ("existential", "existential_detected", None, None),
+    "INNER_PARTS": ("conflict", "conflict_detected", None, None),
+    "DIRECTION": ("direction", "direction_detected", None, None),
+    "CREATIVE_DROUGHT": ("creative_drought", "creative_drought_detected", None, None),
+    "PERFECTIONISM_PARALYSIS": (
+        "perfectionism",
+        "perfectionism_paralysis_detected",
+        None,
+        None,
+    ),
+    "SHADOW": ("shadow", "shadow_detected", None, None),
+    "ANCESTRAL_PATTERNS": ("ancestral", "ancestral_detected", None, None),
+    "FEAR_OF_VISIBILITY": ("visibility_fear", "visibility_fear_detected", None, None),
+    "EMPATH_BOUNDARY": ("empath", "empath_detected", None, None),
+    "DARK_NIGHT_OF_SOUL": ("dark_night", "dark_night_detected", None, None),
+    "SOUL_NOURISHMENT": ("soul_nourishment", "soul_nourishment_detected", None, None),
+    "DIVINE_GUIDANCE": ("divine_guidance", "divine_guidance_detected", None, None),
+    "SACRED_POLARITY": ("sacred_polarity", "sacred_polarity_detected", None, None),
+    "SPIRITUAL_PURPOSE": ("spiritual_purpose", "spiritual_purpose_detected", None, None),
+    "SOULMATE_LONGING": ("soulmate_longing", "soulmate_longing_detected", None, None),
+    "PARTNERSHIP_PATTERNS": (
+        "partnership_patterns",
+        "partnership_pattern_detected",
+        None,
+        None,
+    ),
+    "INTEGRATION_CELEBRATION": ("celebration", "celebration_detected", None, None),
+    "MEANING_INTEGRATION": ("insight", "insight_detected", None, None),
+    "SYNTHESIS": ("synthesis", "synthesis_triggered", "synthesis_ready", None),
+    "PATTERN": ("pattern", "primary_pattern", None, "wait_for_more"),
+}
+
+_SECONDARY_DETECTOR_BINDINGS: dict[str, tuple[str, str]] = {
+    "anger": ("anger", "anger_detected"),
+    "bypass": ("bypass", "bypass_detected"),
+    "somatic": ("somatic", "somatic_detected"),
+}
+
+
 def _primary_detector_binding(
     framework: str,
 ) -> tuple[str, str, str | None, str | None]:
     """Resolve Python-owned detector fields for a semantic framework."""
-    match framework:
-        case "GRIEF":
-            return "grief", "grief_detected", None, None
-        case "EXISTENTIAL":
-            return "existential", "existential_detected", None, None
-        case "INNER_PARTS":
-            return "conflict", "conflict_detected", None, None
-        case "DIRECTION":
-            return "direction", "direction_detected", None, None
-        case "CREATIVE_DROUGHT":
-            return "creative_drought", "creative_drought_detected", None, None
-        case "PERFECTIONISM_PARALYSIS":
-            return "perfectionism", "perfectionism_paralysis_detected", None, None
-        case "SHADOW":
-            return "shadow", "shadow_detected", None, None
-        case "ANCESTRAL_PATTERNS":
-            return "ancestral", "ancestral_detected", None, None
-        case "FEAR_OF_VISIBILITY":
-            return "visibility_fear", "visibility_fear_detected", None, None
-        case "EMPATH_BOUNDARY":
-            return "empath", "empath_detected", None, None
-        case "DARK_NIGHT_OF_SOUL":
-            return "dark_night", "dark_night_detected", None, None
-        case "SOUL_NOURISHMENT":
-            return "soul_nourishment", "soul_nourishment_detected", None, None
-        case "DIVINE_GUIDANCE":
-            return "divine_guidance", "divine_guidance_detected", None, None
-        case "SACRED_POLARITY":
-            return "sacred_polarity", "sacred_polarity_detected", None, None
-        case "SPIRITUAL_PURPOSE":
-            return "spiritual_purpose", "spiritual_purpose_detected", None, None
-        case "SOULMATE_LONGING":
-            return "soulmate_longing", "soulmate_longing_detected", None, None
-        case "PARTNERSHIP_PATTERNS":
-            return "partnership_patterns", "partnership_pattern_detected", None, None
-        case "INTEGRATION_CELEBRATION":
-            return "celebration", "celebration_detected", None, None
-        case "MEANING_INTEGRATION":
-            return "insight", "insight_detected", None, None
-        case "SYNTHESIS":
-            return "synthesis", "synthesis_triggered", "synthesis_ready", None
-        case "PATTERN":
-            return "pattern", "primary_pattern", None, "wait_for_more"
-        case _:
-            raise ValueError(f"Unknown primary framework binding: {framework}")
+    try:
+        return _PRIMARY_DETECTOR_BINDINGS[framework]
+    except KeyError:
+        raise ValueError(f"Unknown primary framework binding: {framework}") from None
 
 
 def _secondary_detector_binding(name: str) -> tuple[str, str]:
     """Resolve Python-owned detector fields for a semantic secondary layer."""
-    match name:
-        case "anger":
-            return "anger", "anger_detected"
-        case "bypass":
-            return "bypass", "bypass_detected"
-        case "somatic":
-            return "somatic", "somatic_detected"
-        case _:
-            raise ValueError(f"Unknown secondary detector binding: {name}")
+    try:
+        return _SECONDARY_DETECTOR_BINDINGS[name]
+    except KeyError:
+        raise ValueError(f"Unknown secondary detector binding: {name}") from None
 
 
 def _simple_selection(
