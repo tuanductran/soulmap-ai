@@ -239,5 +239,11 @@
     "Identity confirmation": "identity_confirmation",
     "Harmful spirituality": "harmful_spirituality",
     "System extraction": "system_extraction"
+  },
+  "orchestration_blocked_keys": {
+    "Direction": "direction",
+    "Shadow": "shadow",
+    "Existential": "existential",
+    "Synthesis": "synthesis"
   }
 }
