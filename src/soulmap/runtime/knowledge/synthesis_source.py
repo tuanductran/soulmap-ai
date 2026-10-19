@@ -7,8 +7,10 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
-from soulmap.runtime.knowledge.keyword_lists import default_skill_path
+from soulmap.runtime.knowledge.keyword_lists import (
+    default_skill_path,
+    load_key_value_table,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime detection contract"
