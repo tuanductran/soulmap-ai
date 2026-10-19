@@ -138,14 +138,21 @@ def test_release_health_preserves_verification_summary_for_publication() -> None
 
 
 def test_local_python_action_contains_github_operations() -> None:
-    action = (ROOT / "src" / "action" / "__main__.py").read_text()
-    assert "/pulls" in action
-    assert "/git/refs" in action
-    assert "def create_branch(" in action
-    assert '["git", "push", "origin", f"HEAD:refs/heads/{branch}"]' in action
-    assert "GIT_CONFIG_VALUE_0" in action
+    action_dir = ROOT / "src" / "action"
+    action = (action_dir / "__main__.py").read_text()
+    operations = (action_dir / "operations.py").read_text()
+    refs = (action_dir / "refs.py").read_text()
+    releases = (action_dir / "releases.py").read_text()
+    inputs = (action_dir / "inputs.py").read_text()
+    constants = (action_dir / "constants.py").read_text()
+    combined = "\\n".join((action, operations, refs, releases, inputs, constants))
+    assert "/pulls" in operations
+    assert "/git/refs" in refs
+    assert "def create_branch(" in refs
+    assert '["git", "push", "origin", f"HEAD:refs/heads/{branch}"]' in refs
+    assert "GIT_CONFIG_VALUE_0" in refs
     assert 'operation == "branch"' in action
-    assert "/releases" in action
-    assert "GITHUB_OUTPUT" in action
-    assert "API_VERSION = " in action
-    assert "gh pr create" not in action
+    assert "/releases" in releases
+    assert "GITHUB_OUTPUT" in inputs
+    assert "API_VERSION = " in constants
+    assert "gh pr create" not in combined
