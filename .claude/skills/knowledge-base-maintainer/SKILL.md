@@ -119,7 +119,7 @@ whether any warnings came from anti-bot or rate-limit responses.
 - Do not over-refactor content that is already correct.
 - Do not use Python constant names, module paths, or code identifiers in prose.
   Write what a concept means, not what it is called in the implementation.
-  Wrong: `ACUTE_GRIEF` (phrase list in `src/soulmap/runtime/config/safety.py`)
+  Wrong: `CRISIS_TIER1` (phrase list in `src/soulmap/runtime/config/safety_vi.py`)
   Right: Acute grief, loss just happened or recently named
 
 ## Definition of done

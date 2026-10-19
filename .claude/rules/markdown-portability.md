@@ -23,7 +23,7 @@ Keep Markdown compatible across AI tools and OS editors.
   knowledge is extracted standalone and the reference will resolve to nothing once extracted
 
 **Python identifier rule:** names like `ACUTE_GRIEF`, `VISIBILITY_FEAR_SIGNALS`, or
-`src/soulmap/runtime/config/safety.py` belong in Python source files, not in Markdown knowledge
+`src/soulmap/runtime/config/safety_vi.py` belong in Python source files, not in Markdown knowledge
 files. Readers of skill and template files are AI tools and humans, not Python
 interpreters. Describe what a signal means in plain language. If a cross-reference
 to the implementation is genuinely needed, use a sentence like "detected by the
