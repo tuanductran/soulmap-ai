@@ -137,9 +137,10 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             cell_aliases = aliases
             if heading == "Primary priority" and index == 3:
                 cell_aliases = blocked_aliases
-            elif heading == "Secondary priority" and index == 1:
-                cell_aliases = secondary_aliases
-            elif heading == "Intensity fallback" and index == 3:
+            elif (heading, index) in {
+                ("Secondary priority", 1),
+                ("Intensity fallback", 3),
+            }:
                 cell_aliases = secondary_aliases
             cells.append(_runtime_cell(cell.strip().replace("\\|", "|"), cell_aliases))
         if not cells or all(not cell for cell in cells):
