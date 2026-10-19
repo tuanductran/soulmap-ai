@@ -485,7 +485,7 @@ Avoidant part:
 | :--- | :--- |
 | No conflict detected | No inner conflict signals detected. Continue standard response pipeline. |
 | Conflict detected | Inner conflict is present. Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. Offer at most one question inviting the user to listen to one of the parts when appropriate. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank; do not force a question. |
-| Suggested parts | Likely parts are present. Use reflection language from the relevant part sections. |
+| Suggested parts | Likely parts present: use reflection language from the relevant part sections. |
 
 ## Mixed feelings are not automatically parts
 
