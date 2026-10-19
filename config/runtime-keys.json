@@ -2,12 +2,16 @@
   "markdown_key_labels": {
     "skills/frameworks/anger-companion.md": {
       "Guidance": {
-        "Self-directed anger": "self_anger"
+        "Self-directed anger": "self_anger",
+        "Active anger": "active",
+        "Residual anger": "residual"
       }
     },
     "skills/frameworks/shadow-patterns.md": {
       "Guidance": {
-        "External frustration": "external_frustration"
+        "External frustration": "external_frustration",
+        "Recurring pattern": "pattern",
+        "Mild pattern signal": "mild"
       }
     },
     "skills/frameworks/life-direction.md": {
@@ -16,7 +20,8 @@
         "Should versus want": "should_vs_want"
       },
       "Runtime guidance": {
-        "No direction signal detected": "not_detected"
+        "No direction signal detected": "not_detected",
+        "Direction detected": "detected"
       }
     },
     "skills/frameworks/existential-companion.md": {
@@ -26,7 +31,9 @@
         "Endings and grief": "endings_grief",
         "Larger questions": "larger_questions",
         "Detection summary": "detected_prefix",
-        "Additional guidance": "detected_suffix"
+        "Additional guidance": "detected_suffix",
+        "Holding question": "holding",
+        "General existential territory": "general"
       }
     },
     "skills/frameworks/grief-companion.md": {
@@ -60,72 +67,88 @@
     "skills/frameworks/pattern-mapper.md": {
       "Runtime guidance": {
         "No signal detected": "not_detected",
-        "Insufficient history": "insufficient_history"
+        "Insufficient history": "insufficient_history",
+        "Pattern combination": "combination",
+        "Pattern detected": "detected"
       }
     },
     "skills/soulmate/soulmate-longing.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/empath-boundary.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/divine-guidance.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/soul-nourishment.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/creative-drought.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/spiritual-purpose.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/fear-of-visibility.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/dark-night-of-soul.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/ancestral-patterns.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/soulmate/partnership-patterns.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/perfectionism-paralysis.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/integration-celebration.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Celebration detected": "detected",
+        "Closing guidance": "closing"
       }
     },
     "skills/frameworks/sacred-feminine-masculine.md": {
       "Guidance": {
-        "No signal detected": "not_detected"
+        "No signal detected": "not_detected",
+        "Signal detected": "detected"
       }
     },
     "skills/frameworks/conversation-synthesis.md": {
@@ -161,6 +184,13 @@
         "High dependency": "HIGH_DEPENDENCY",
         "Moderate dependency": "MODERATE_DEPENDENCY",
         "Low dependency": "LOW_DEPENDENCY"
+      }
+    },
+    "skills/frameworks/emotional-deescalation.md": {
+      "Guidance": {
+        "High intensity": "HIGH",
+        "Moderate intensity": "MODERATE",
+        "Normal intensity": "NORMAL"
       }
     }
   },
