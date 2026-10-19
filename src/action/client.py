@@ -143,13 +143,18 @@ class GitHubClient:
         """Collect all list items by following GitHub Link headers."""
         query = dict(params or {})
         query.setdefault("per_page", 100)
-        next_url = f"{API_ROOT}{path}?{urlencode(query)}"
+        start_url = f"{API_ROOT}{path}?{urlencode(query)}"
+        return self._collect_paginated(start_url, context=f"paginated {path}")
+
+    def _collect_paginated(self, start_url: str, *, context: str) -> list[object]:
+        """Collect list responses by following GitHub Link headers."""
+        next_url = start_url
         results: list[object] = []
         while next_url:
             response = self.request("GET", next_url)
             if not isinstance(response, list):
                 raise GitHubActionError(
-                    f"GitHub returned a non-list response for paginated {path}."
+                    f"GitHub returned a non-list response for {context}."
                 )
             results.extend(response)
             next_url = self._next_link(self.last_response_headers.get("Link"))
@@ -192,16 +197,7 @@ class GitHubClient:
     def list_release_assets(self, assets_url: str) -> list[object]:
         """List all assets for a release using its hypermedia URL."""
         next_url = f"{assets_url}?per_page=100"
-        results: list[object] = []
-        while next_url:
-            response = self.request("GET", next_url)
-            if not isinstance(response, list):
-                raise GitHubActionError(
-                    "GitHub returned invalid release asset metadata.",
-                )
-            results.extend(response)
-            next_url = self._next_link(self.last_response_headers.get("Link"))
-        return results
+        return self._collect_paginated(next_url, context="release asset metadata")
 
     def delete_release_asset(self, asset_url: str) -> None:
         """Delete a release asset, including a failed starter upload."""
