@@ -283,5 +283,19 @@
     "Somatic signal": "somatic",
     "Meaning Integration": "meaning_integration",
     "Inner Parts": "inner_parts"
+  },
+  "synthesis_threshold_keys": {
+    "Minimum user messages to synthesize": "minimum_user_messages",
+    "Automatic synthesis user messages": "automatic_synthesis_user_messages",
+    "Minimum distinct recurring themes for automatic synthesis": "minimum_distinct_recurring_themes_for_automatic_synthesis",
+    "Maximum themes returned": "maximum_themes_returned",
+    "Maximum anchors per theme": "maximum_anchors_per_theme",
+    "Maximum longitudinal themes": "maximum_longitudinal_themes"
+  },
+  "scope_pack_keys": {
+    "Whitelist tier 1": "WHITELIST_TIER1",
+    "Whitelist tier 2": "WHITELIST_TIER2",
+    "Blacklist layer 1": "BLACKLIST_LAYER1",
+    "Prohibited blacklist": "BLACKLIST_PROHIBITED"
   }
 }
