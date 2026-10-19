@@ -51,15 +51,12 @@ def _literal_config(body: str) -> dict[str, object]:
     if not isinstance(category_keys, dict):
         raise ValueError("Scope category keys must be a JSON object.")
     packs = list(_PACK_RE.finditer(body))
-    expected = {
-        "Whitelist tier 1": "WHITELIST_TIER1",
-        "Whitelist tier 2": "WHITELIST_TIER2",
-        "Blacklist layer 1": "BLACKLIST_LAYER1",
-        "Prohibited blacklist": "BLACKLIST_PROHIBITED",
-    }
-    if len(packs) != len(expected) or {match.group("pack") for match in packs} != set(
-        expected
-    ):
+    pack_keys = key_config.get("scope_pack_keys", {})
+    if not isinstance(pack_keys, dict):
+        raise ValueError("Scope pack keys must be a JSON object.")
+    if len(packs) != len(pack_keys) or {
+        match.group("pack") for match in packs
+    } != set(pack_keys):
         raise ValueError("Scope runtime classification packs are incomplete.")
     values: dict[str, object] = {}
     for index, pack in enumerate(packs):
@@ -81,7 +78,7 @@ def _literal_config(body: str) -> dict[str, object]:
             display_name = group.group("group")
             category = str(category_keys.get(display_name, display_name))
             parsed[category] = phrases
-        values[expected[pack.group("pack")]] = parsed
+        values[str(pack_keys[pack.group("pack")])] = parsed
     return values
 
 
