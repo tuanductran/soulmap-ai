@@ -54,9 +54,9 @@ def _literal_config(body: str) -> dict[str, object]:
     pack_keys = key_config.get("scope_pack_keys", {})
     if not isinstance(pack_keys, dict):
         raise ValueError("Scope pack keys must be a JSON object.")
-    if len(packs) != len(pack_keys) or {
-        match.group("pack") for match in packs
-    } != set(pack_keys):
+    if len(packs) != len(pack_keys) or {match.group("pack") for match in packs} != set(
+        pack_keys
+    ):
         raise ValueError("Scope runtime classification packs are incomplete.")
     values: dict[str, object] = {}
     for index, pack in enumerate(packs):
