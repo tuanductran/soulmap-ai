@@ -295,6 +295,7 @@ def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
         load_table_rows(markdown_path, heading),
     )
 
+
 def default_skill_path(relative_path: str) -> Path:
     """Locate a file under ``skills/`` without depending on devtools.
 
