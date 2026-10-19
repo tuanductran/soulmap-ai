@@ -77,6 +77,17 @@ def _orchestration_value_keys() -> dict[str, str]:
     return {str(label): str(key) for label, key in values.items()}
 
 
+def _orchestration_blocked_keys() -> dict[str, str]:
+    """Load the lower-case framework IDs used by the blocked column."""
+    config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    values = config.get("orchestration_blocked_keys", {})
+    if not isinstance(values, dict):
+        raise ValueError("Orchestration blocked keys must be a JSON object.")
+    return {str(label): str(key) for label, key in values.items()}
+
+
 def _runtime_cell(value: str, aliases: dict[str, str]) -> str:
     """Resolve readable Markdown labels to config-owned runtime identifiers."""
     if value in aliases:
@@ -97,13 +108,20 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
         section = section[: next_section.start()]
     rows: list[list[str]] = []
     aliases = _orchestration_value_keys()
+    blocked_aliases = (
+        _orchestration_blocked_keys() if heading == "Primary priority" else {}
+    )
     for line in section.splitlines():
         stripped = line.strip()
         if not stripped.startswith("|") or not stripped.endswith("|"):
             continue
+        raw_cells = stripped[1:-1].split("|")
         cells = [
-            _runtime_cell(cell.strip().replace("\\|", "|"), aliases)
-            for cell in stripped[1:-1].split("|")
+            _runtime_cell(
+                cell.strip().replace("\\|", "|"),
+                blocked_aliases if heading == "Primary priority" and index == 3 else aliases,
+            )
+            for index, cell in enumerate(raw_cells)
         ]
         if not cells or all(not cell for cell in cells):
             continue
