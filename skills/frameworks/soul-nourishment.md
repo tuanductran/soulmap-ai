@@ -92,4 +92,4 @@ Do not ask for commitment or practice. Ask for awareness and honoring.
 | Result | Guidance |
 | :--- | :--- |
 | No signal detected | No soul nourishment signal. Continue standard pipeline. |
-| detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
+| Signal detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
