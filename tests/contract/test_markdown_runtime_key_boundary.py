@@ -21,7 +21,9 @@ def test_skills_do_not_contain_python_format_placeholders() -> None:
     """Dynamic Python formatting belongs outside canonical skill Markdown."""
     violations: list[str] = []
     for path in sorted(SKILLS_ROOT.rglob("*.md")):
-        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        for line_number, line in enumerate(
+            path.read_text(encoding="utf-8").splitlines(), 1
+        ):
             if PYTHON_PLACEHOLDER.search(line):
                 violations.append(
                     f"{path.relative_to(REPO_ROOT)}:{line_number}: {line.strip()}"
@@ -34,7 +36,9 @@ def test_skills_do_not_contain_python_shaped_identifiers() -> None:
     """Key-shaped runtime identifiers must be resolved through config, not Markdown."""
     violations: list[str] = []
     for path in sorted(SKILLS_ROOT.rglob("*.md")):
-        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        for line_number, line in enumerate(
+            path.read_text(encoding="utf-8").splitlines(), 1
+        ):
             if SNAKE_CASE_TOKEN.search(line):
                 violations.append(
                     f"{path.relative_to(REPO_ROOT)}:{line_number}: {line.strip()}"
