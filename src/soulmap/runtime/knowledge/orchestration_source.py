@@ -116,13 +116,14 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
         if not stripped.startswith("|") or not stripped.endswith("|"):
             continue
         raw_cells = stripped[1:-1].split("|")
-        cells = [
-            _runtime_cell(
-                cell.strip().replace("\\|", "|"),
-                blocked_aliases if heading == "Primary priority" and index == 3 else aliases,
+        cells: list[str] = []
+        for index, cell in enumerate(raw_cells):
+            cell_aliases = aliases
+            if heading == "Primary priority" and index == 3:
+                cell_aliases = blocked_aliases
+            cells.append(
+                _runtime_cell(cell.strip().replace("\\|", "|"), cell_aliases)
             )
-            for index, cell in enumerate(raw_cells)
-        ]
         if not cells or all(not cell for cell in cells):
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):
