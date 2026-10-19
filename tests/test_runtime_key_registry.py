@@ -83,9 +83,7 @@ def test_scope_pack_labels_resolve_only_through_config() -> None:
     )
     pack_keys = config["scope_pack_keys"]
 
-    import re
-
-    labels = set(re.findall(r"^### (?P<pack>.+?)\\s*$", body, re.MULTILINE))
+    labels = set(re.findall(r"^### (?P<pack>.+?)\s*$", body, re.MULTILINE))
     assert labels == set(pack_keys)
     assert set(pack_keys.values()) == {
         "WHITELIST_TIER1",
