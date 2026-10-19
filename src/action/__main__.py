@@ -5,16 +5,20 @@ from __future__ import annotations
 import sys
 
 from client import GitHubClient
-from errors import GitHubActionError, GitHubAPIError as GitHubAPIError
-from inputs import env, repository_parts as repository_parts
+from errors import GitHubActionError
+from errors import GitHubAPIError as GitHubAPIError
+from inputs import env
+from inputs import repository_parts as repository_parts
 from operations import (
     run_branch,
     run_pull_request,
     run_release,
     run_tag,
 )
-from refs import create_branch as create_branch, create_tag as create_tag
-from releases import finalize_release as finalize_release, upload_assets as upload_assets
+from refs import create_branch as create_branch
+from refs import create_tag as create_tag
+from releases import finalize_release as finalize_release
+from releases import upload_assets as upload_assets
 from verify import run_verify_release_immutability
 
 
