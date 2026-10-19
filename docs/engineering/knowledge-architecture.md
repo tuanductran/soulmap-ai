@@ -64,8 +64,9 @@ The per-language crisis packs (`safety_en.py`, `safety_vi.py`, `safety_es.py`,
 rather than Markdown-loaded phrase lists. This is intentional.
 
 `src/soulmap/runtime/config/safety.py` is currently a docstring-only legacy stub:
-it defines no safety constants and is not imported by the runtime. The active crisis
-signals live in the per-language packs and are combined by `crisis_language_packs.py`.
+it defines no safety constants and is not imported by the runtime. The phrase-tuple signals live in the per-language packs and are combined by
+`crisis_language_packs.py`. The detector also evaluates its local
+`CRISIS_TIER1_PATTERNS` and `FAREWELL_CRISIS_PATTERNS` regex lists directly.
 The stub remains review-only; static reachability alone is not sufficient grounds to
 delete it.
 
