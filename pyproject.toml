@@ -38,6 +38,9 @@ soulmap = "soulmap.cli:main"
 [tool.hatch.build.targets.wheel]
 packages = ["src/soulmap"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"config/runtime-keys.json" = "soulmap/runtime/config/runtime-keys.json"
+
 [tool.hatch.build.targets.sdist]
 include = [
   "/SOULMAP.md",
