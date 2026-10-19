@@ -218,10 +218,7 @@
     "Direction": "DIRECTION",
     "Shadow": "SHADOW",
     "Synthesis": "SYNTHESIS",
-    "Pattern": "PATTERN",
-    "Anger signal": "anger",
-    "Spiritual bypass": "bypass",
-    "Somatic signal": "somatic"
+    "Pattern": "PATTERN"
   },
   "scope_category_keys": {
     "Self-awareness": "self_awareness",
@@ -245,5 +242,12 @@
     "Shadow": "shadow",
     "Existential": "existential",
     "Synthesis": "synthesis"
+  },
+  "orchestration_secondary_layer_keys": {
+    "Anger signal": "anger",
+    "Spiritual bypass": "bypass",
+    "Somatic signal": "somatic",
+    "Meaning Integration": "meaning_integration",
+    "Inner Parts": "inner_parts"
   }
 }
