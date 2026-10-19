@@ -30,10 +30,11 @@ def _documented_layers() -> set[str]:
     text = ORCHESTRATION.read_text(encoding="utf-8")
     section = text.split("| Secondary Layer | Activate When |", 1)[1]
     section = section.split("\nDo NOT activate", 1)[0]
-    labels = [
-        label.strip().strip("`")
-        for label in re.findall(r"^\| ([^|]+) \|", section, re.MULTILINE)
-    ]
+    labels: list[str] = []
+    for raw_label in re.findall(r"^\| ([^|]+) \|", section, re.MULTILINE):
+        label = raw_label.strip().strip("`")
+        if label and not set(label) <= {":", "-", " "}:
+            labels.append(label)
     aliases = json.loads(RUNTIME_KEYS.read_text(encoding="utf-8"))[
         "orchestration_value_keys"
     ]
@@ -91,6 +92,7 @@ def test_every_documented_secondary_layer_is_reachable() -> None:
         f"secondary layers documented but never emitted: {sorted(unreachable)}"
     )
 
+
 def test_intensity_fallback_secondary_layers_use_runtime_identifiers() -> None:
     """Display labels in Markdown must normalize to selector-facing layer IDs."""
     rules = load_orchestration_rules()
@@ -101,6 +103,8 @@ def test_intensity_fallback_secondary_layers_use_runtime_identifiers() -> None:
         for layer in fallback.allowed_secondary
     )
     moderate = next(
-        fallback for fallback in rules.intensity_fallback if fallback.level == "MODERATE"
+        fallback
+        for fallback in rules.intensity_fallback
+        if fallback.level == "MODERATE"
     )
     assert set(moderate.allowed_secondary) == {"meaning_integration", "inner_parts"}
