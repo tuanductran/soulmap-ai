@@ -11,11 +11,13 @@ so adding a layer in one place and forgetting the other fails here.
 from __future__ import annotations
 
 import ast
+import json
 import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ORCHESTRATION = REPO_ROOT / "skills" / "meta" / "orchestration.md"
+RUNTIME_KEYS = REPO_ROOT / "config" / "runtime-keys.json"
 SELECTOR = (
     REPO_ROOT / "src" / "soulmap" / "runtime" / "routing" / "framework_selector.py"
 )
@@ -26,7 +28,9 @@ def _documented_layers() -> set[str]:
     text = ORCHESTRATION.read_text(encoding="utf-8")
     section = text.split("| Secondary Layer | Activate When |", 1)[1]
     section = section.split("\nDo NOT activate", 1)[0]
-    return set(re.findall(r"^\| `([a-z_]+)` \|", section, re.MULTILINE))
+    labels = re.findall(r"^\| `([^`]+)` \|", section, re.MULTILINE)
+    aliases = json.loads(RUNTIME_KEYS.read_text(encoding="utf-8"))["orchestration_value_keys"]
+    return {aliases.get(label, label.lower()) for label in labels}
 
 
 def _resulting_strings(node: ast.expr) -> set[str]:
