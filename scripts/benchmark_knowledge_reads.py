@@ -27,6 +27,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
     load_labeled_groups,
     load_table_rows,
+    resolve_key_value_rows,
 )
 from soulmap.runtime.source_registry import runtime_skill_path
 
@@ -34,15 +35,15 @@ Benchmark = Callable[[], object]
 TABLE_HEADINGS = ("Scoring", "Runtime guidance")
 
 
-def _uncached_key_value_table(text: str, heading: str) -> dict[str, str]:
-    """Parse a strict two-column table without using the Markdown text cache."""
-    rows = extract_table_rows(text, heading)
-    if not rows or any(len(row) != 2 for row in rows):
-        raise ValueError(f"Knowledge table {heading!r} must contain two columns.")
-    values = {row[0]: row[1] for row in rows}
-    if len(values) != len(rows) or any(not value for value in values.values()):
-        raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
-    return values
+def _uncached_key_value_table(
+    text: str, heading: str, source_path: Path
+) -> dict[str, str]:
+    """Parse Markdown without the text cache, then apply the shared config map."""
+    return resolve_key_value_rows(
+        source_path,
+        heading,
+        extract_table_rows(text, heading),
+    )
 
 
 def _uncached_detector_knowledge_loads() -> dict[str, object]:
@@ -69,20 +70,20 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "empath.contract": _uncached_key_value_table(
             empath, "Runtime detection contract"
         ),
-        "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
+        "empath.guidance": _uncached_key_value_table(empath, "Guidance", runtime_skill_path("empath-boundary")),
         "ancestral.activation": extract_keyword_section(
             ancestral, "Activation Signals"
         ),
         "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring"),
-        "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
+        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring", runtime_skill_path("ancestral-patterns")),
+        "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance", runtime_skill_path("ancestral-patterns")),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(
             somatic, "Runtime detection contract"
         ),
-        "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
-        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": _uncached_key_value_table(pattern, "Runtime guidance"),
+        "somatic.guidance": _uncached_key_value_table(somatic, "Guidance", runtime_skill_path("somatic-wellbeing")),
+        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring", runtime_skill_path("pattern-mapper")),
+        "pattern.guidance": _uncached_key_value_table(pattern, "Runtime guidance", runtime_skill_path("pattern-mapper")),
     }
 
 
@@ -124,7 +125,9 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         return extract_labeled_groups(path.read_text(encoding="utf-8"), heading)
 
     def table(path: Path, heading: str) -> dict[str, str]:
-        return _uncached_key_value_table(path.read_text(encoding="utf-8"), heading)
+        return _uncached_key_value_table(
+            path.read_text(encoding="utf-8"), heading, path
+        )
 
     return {
         "empath.activation": keyword(empath, "Activation Signals"),
