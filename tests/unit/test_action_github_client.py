@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import sys
 from email.message import Message
 from pathlib import Path
 from unittest.mock import patch
@@ -12,7 +13,17 @@ from urllib.error import HTTPError, URLError
 import pytest
 
 ROOT = Path(__file__).parents[2]
-ACTION_PATH = ROOT / "src" / "action" / "__main__.py"
+ACTION_DIR = ROOT / "src" / "action"
+ACTION_PATH = ACTION_DIR / "__main__.py"
+sys.path.insert(0, str(ACTION_DIR))
+
+client_module = importlib.import_module("client")
+errors_module = importlib.import_module("errors")
+inputs_module = importlib.import_module("inputs")
+operations_module = importlib.import_module("operations")
+refs_module = importlib.import_module("refs")
+releases_module = importlib.import_module("releases")
+verify_module = importlib.import_module("verify")
 
 _spec = importlib.util.spec_from_file_location("soulmap_action", ACTION_PATH)
 assert _spec is not None
@@ -41,14 +52,14 @@ class FakeResponse:
 
 
 def test_repository_parts_rejects_malformed_repositories() -> None:
-    assert action.repository_parts("tuanductran/soulmap-ai") == (
+    assert inputs_module.repository_parts("tuanductran/soulmap-ai") == (
         "tuanductran",
         "soulmap-ai",
     )
     for value in ("", "owner", "/repo", "owner/", "owner/a/b"):
         try:
-            action.repository_parts(value)
-        except action.GitHubActionError:
+            inputs_module.repository_parts(value)
+        except errors_module.GitHubActionError:
             pass
         else:
             raise AssertionError(f"expected invalid repository: {value!r}")
@@ -64,11 +75,11 @@ def test_api_error_preserves_status_and_redacts_token() -> None:
         headers,
         io.BytesIO(json.dumps({"message": f"token={token}"}).encode()),
     )
-    client = action.GitHubClient(token)
+    client = client_module.GitHubClient(token)
 
     with (
-        patch.object(action, "urlopen", side_effect=error),
-        pytest.raises(action.GitHubAPIError) as captured,
+        patch.object(client_module, "urlopen", side_effect=error),
+        pytest.raises(errors_module.GitHubAPIError) as captured,
     ):
         client.api("GET", "/repos/a/b")
 
@@ -87,18 +98,18 @@ def test_transient_http_error_is_retried() -> None:
         io.BytesIO(b'{"message":"try again"}'),
     )
     responses = [error, FakeResponse({"ok": True})]
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
 
     with (
-        patch.object(action, "urlopen", side_effect=responses),
-        patch.object(action.time, "sleep") as sleep,
+        patch.object(client_module, "urlopen", side_effect=responses),
+        patch.object(client_module.time, "sleep") as sleep,
     ):
         assert client.api("GET", "/repos/a/b") == {"ok": True}
         assert sleep.call_count == 1
 
 
 def test_paginated_requests_follow_link_header() -> None:
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     first_page: list[object] = [{"number": 1}]
     second_page: list[object] = [{"number": 2}]
     responses = iter([first_page, second_page])
@@ -126,12 +137,12 @@ def test_non_idempotent_requests_do_not_retry_by_default() -> None:
         Message(),
         io.BytesIO(b'{"message":"try again"}'),
     )
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
 
     with (
-        patch.object(action, "urlopen", side_effect=error) as urlopen,
-        patch.object(action.time, "sleep") as sleep,
-        pytest.raises(action.GitHubAPIError),
+        patch.object(client_module, "urlopen", side_effect=error) as urlopen,
+        patch.object(client_module.time, "sleep") as sleep,
+        pytest.raises(errors_module.GitHubAPIError),
     ):
         client.api("POST", "/repos/a/b/releases")
 
@@ -142,7 +153,7 @@ def test_non_idempotent_requests_do_not_retry_by_default() -> None:
 def test_rate_limit_retry_uses_reset_window() -> None:
     headers = Message()
     headers["X-RateLimit-Remaining"] = "0"
-    headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
+    headers["X-RateLimit-Reset"] = str(int(client_module.time.time()) + 120)
     error = HTTPError(
         "https://api.github.com/repos/a/b",
         429,
@@ -150,13 +161,13 @@ def test_rate_limit_retry_uses_reset_window() -> None:
         headers,
         io.BytesIO(b'{"message":"rate limit"}'),
     )
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
 
     with (
         patch.object(
-            action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+            client_module, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
         ),
-        patch.object(action.time, "sleep") as sleep,
+        patch.object(client_module.time, "sleep") as sleep,
     ):
         assert client.api("GET", "/repos/a/b") == {"ok": True}
 
@@ -166,9 +177,9 @@ def test_rate_limit_retry_uses_reset_window() -> None:
 
 def test_forbidden_rate_limit_is_retried() -> None:
     headers = Message()
-    with patch.object(action.time, "time", return_value=1000.0):
+    with patch.object(client_module.time, "time", return_value=1000.0):
         headers["X-RateLimit-Remaining"] = "0"
-        headers["X-RateLimit-Reset"] = str(int(action.time.time()) + 120)
+        headers["X-RateLimit-Reset"] = str(int(client_module.time.time()) + 120)
         error = HTTPError(
             "https://api.github.com/repos/a/b",
             403,
@@ -176,13 +187,15 @@ def test_forbidden_rate_limit_is_retried() -> None:
             headers,
             io.BytesIO(b'{"message":"API rate limit exceeded"}'),
         )
-        client = action.GitHubClient("token")
+        client = client_module.GitHubClient("token")
 
         with (
             patch.object(
-                action, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+                client_module,
+                "urlopen",
+                side_effect=[error, FakeResponse({"ok": True})],
             ),
-            patch.object(action.time, "sleep") as sleep,
+            patch.object(client_module.time, "sleep") as sleep,
         ):
             assert client.api("GET", "/repos/a/b") == {"ok": True}
 
@@ -192,12 +205,12 @@ def test_forbidden_rate_limit_is_retried() -> None:
 
 def test_network_error_does_not_retry_non_idempotent_requests() -> None:
     error = URLError("connection reset")
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
 
     with (
-        patch.object(action, "urlopen", side_effect=error) as urlopen,
-        patch.object(action.time, "sleep") as sleep,
-        pytest.raises(action.GitHubActionError),
+        patch.object(client_module, "urlopen", side_effect=error) as urlopen,
+        patch.object(client_module.time, "sleep") as sleep,
+        pytest.raises(errors_module.GitHubActionError),
     ):
         client.api("POST", "/repos/a/b/releases")
 
@@ -207,14 +220,16 @@ def test_network_error_does_not_retry_non_idempotent_requests() -> None:
 
 def test_next_link_requires_exact_rel_next() -> None:
     assert (
-        action.GitHubClient._next_link(
+        client_module.GitHubClient._next_link(
             '<https://api.github.com/next>; rel="next", '
             '<https://api.github.com/other>; rel="not-next"'
         )
         == "https://api.github.com/next"
     )
     assert (
-        action.GitHubClient._next_link('<https://api.github.com/other>; rel="not-next"')
+        client_module.GitHubClient._next_link(
+            '<https://api.github.com/other>; rel="not-next"'
+        )
         == ""
     )
 
@@ -222,7 +237,7 @@ def test_next_link_requires_exact_rel_next() -> None:
 def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"artifact")
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
@@ -232,16 +247,16 @@ def test_asset_upload_requires_github_confirmation(tmp_path: Path) -> None:
     with (
         patch.object(client, "list_release_assets", return_value=[]),
         patch.object(client, "upload", return_value={"name": "other.zip"}),
-        pytest.raises(action.GitHubActionError) as captured,
+        pytest.raises(errors_module.GitHubActionError) as captured,
     ):
-        action.upload_assets(client, release, [asset])
+        releases_module.upload_assets(client, release, [asset])
     assert "artifact.zip" in str(captured.value)
 
 
 def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"artifact")
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
@@ -265,30 +280,30 @@ def test_failed_asset_upload_cleans_up_starter_and_retries(tmp_path: Path) -> No
             client,
             "upload",
             side_effect=[
-                action.GitHubAPIError("POST", "upload", 502, "bad gateway"),
+                errors_module.GitHubAPIError("POST", "upload", 502, "bad gateway"),
                 uploaded,
             ],
         ),
         patch.object(client, "list_release_assets", side_effect=[[], [starter]]),
         patch.object(client, "delete_release_asset") as delete_asset,
     ):
-        action.upload_assets(client, release, [asset])
+        releases_module.upload_assets(client, release, [asset])
 
     delete_asset.assert_called_once_with(starter["url"])
 
 
 def test_immutable_release_cannot_be_finalized() -> None:
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     release = {"id": 7, "draft": True, "prerelease": False, "immutable": True}
 
-    with pytest.raises(action.GitHubActionError, match="immutable"):
-        action.finalize_release(client, "owner", "repo", release, False, False)
+    with pytest.raises(errors_module.GitHubActionError, match="immutable"):
+        releases_module.finalize_release(client, "owner", "repo", release, False, False)
 
 
 def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"new")
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
@@ -304,16 +319,16 @@ def test_existing_asset_with_different_digest_is_rejected(tmp_path: Path) -> Non
 
     with (
         patch.object(client, "list_release_assets", return_value=release["assets"]),
-        pytest.raises(action.GitHubActionError) as captured,
+        pytest.raises(errors_module.GitHubActionError) as captured,
     ):
-        action.upload_assets(client, release, [asset])
+        releases_module.upload_assets(client, release, [asset])
     assert "digest does not match" in str(captured.value)
 
 
 def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
     asset = tmp_path / "artifact.zip"
     asset.write_bytes(b"new")
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     release = {
         "upload_url": "https://uploads.github.com/repos/a/b/releases/1/assets{?name,label}",
         "assets_url": "https://api.github.com/repos/a/b/releases/1/assets",
@@ -322,14 +337,14 @@ def test_existing_asset_with_different_size_is_rejected(tmp_path: Path) -> None:
 
     with (
         patch.object(client, "list_release_assets", return_value=release["assets"]),
-        pytest.raises(action.GitHubActionError) as captured,
+        pytest.raises(errors_module.GitHubActionError) as captured,
     ):
-        action.upload_assets(client, release, [asset])
+        releases_module.upload_assets(client, release, [asset])
     assert "refusing to silently publish" in str(captured.value)
 
 
 def test_create_tag_uses_annotated_tag_and_ref() -> None:
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     responses = iter([{"sha": "tag-object-sha"}, {"ref": "refs/tags/v1.2.3"}])
 
     with (
@@ -338,7 +353,7 @@ def test_create_tag_uses_annotated_tag_and_ref() -> None:
         ) as request,
         patch.object(client, "api", return_value=None),
     ):
-        action.create_tag(client, "owner", "repo", "v1.2.3", "a" * 40)
+        refs_module.create_tag(client, "owner", "repo", "v1.2.3", "a" * 40)
 
     assert request.call_count == 2
     assert request.call_args_list[0].args[0] == "POST"
@@ -349,7 +364,7 @@ def test_create_tag_uses_annotated_tag_and_ref() -> None:
 def test_pull_request_contract_requires_complete_metadata(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     monkeypatch.setenv("INPUT_REPOSITORY", "tuanductran/soulmap-ai")
     monkeypatch.setenv("INPUT_BRANCH", "release/prep-1")
     monkeypatch.setenv("INPUT_BASE", "main")
@@ -363,9 +378,9 @@ def test_pull_request_contract_requires_complete_metadata(
             "paginated",
             return_value=[{"number": 1}, {"number": 2}],
         ),
-        pytest.raises(action.GitHubActionError) as captured,
+        pytest.raises(errors_module.GitHubActionError) as captured,
     ):
-        action.run_pull_request(client)
+        operations_module.run_pull_request(client)
     assert "multiple open release PRs" in str(captured.value)
 
 
@@ -378,7 +393,7 @@ def test_release_immutability_operation_needs_no_token(
     monkeypatch.delenv("INPUT_TOKEN", raising=False)
     response = FakeResponse({"tag_name": "v1.2.3", "immutable": True})
 
-    with patch.object(action, "urlopen", return_value=response) as urlopen:
+    with patch.object(verify_module, "urlopen", return_value=response) as urlopen:
         assert action.main() == 0
 
     request = urlopen.call_args.args[0]
@@ -394,10 +409,10 @@ def test_release_immutability_operation_rejects_mutable_release(
     response = FakeResponse({"tag_name": "v1.2.3", "immutable": False})
 
     with (
-        patch.object(action, "urlopen", return_value=response),
-        pytest.raises(action.GitHubActionError, match="not immutable"),
+        patch.object(verify_module, "urlopen", return_value=response),
+        pytest.raises(errors_module.GitHubActionError, match="not immutable"),
     ):
-        action.run_verify_release_immutability()
+        verify_module.run_verify_release_immutability()
 
 
 def test_release_immutability_operation_checks_latest_when_tag_omitted(
@@ -407,8 +422,8 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     monkeypatch.delenv("INPUT_TAG", raising=False)
     response = FakeResponse({"tag_name": "v1.2.3", "immutable": True})
 
-    with patch.object(action, "urlopen", return_value=response) as urlopen:
-        action.run_verify_release_immutability()
+    with patch.object(verify_module, "urlopen", return_value=response) as urlopen:
+        verify_module.run_verify_release_immutability()
 
     assert urlopen.call_args.args[0].full_url.endswith(
         "/repos/owner/repo/releases/latest"
@@ -418,16 +433,16 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
 def test_create_branch_marks_only_mounted_workspace_as_safe(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    client = action.GitHubClient("token")
+    client = client_module.GitHubClient("token")
     target_sha = "a" * 40
     monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
-    not_found = action.GitHubAPIError(
+    not_found = errors_module.GitHubAPIError(
         "GET",
         "https://api.github.com/repos/owner/repo/git/ref/heads/release/prep-1",
         404,
         "Not Found",
     )
-    completed = action.subprocess.CompletedProcess(
+    completed = refs_module.subprocess.CompletedProcess(
         args=["git"],
         returncode=0,
         stdout=f"{target_sha}\n",
@@ -437,10 +452,10 @@ def test_create_branch_marks_only_mounted_workspace_as_safe(
     with (
         patch.object(client, "api", side_effect=not_found),
         patch.object(
-            action.subprocess, "run", side_effect=[completed, completed]
+            refs_module.subprocess, "run", side_effect=[completed, completed]
         ) as run,
     ):
-        action.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
+        refs_module.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
 
     inspect_call, push_call = run.call_args_list
     assert inspect_call.args[0] == ["git", "rev-parse", "HEAD"]

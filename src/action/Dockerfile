@@ -4,6 +4,6 @@ RUN apt-get update \
     && apt-get install --no-install-recommends --yes git \
     && rm -rf /var/lib/apt/lists/*
 
-COPY __main__.py /__main__.py
+COPY ./*.py /
 
 ENTRYPOINT ["python", "/__main__.py"]

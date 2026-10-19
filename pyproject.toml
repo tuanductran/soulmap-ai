@@ -135,6 +135,7 @@ show_missing = true
 [tool.pyright]
 typeCheckingMode = "standard"
 pythonVersion = "3.11"
+extraPaths = ["src/action"]
 include = ["src", "tests"]
 exclude = [
   ".venv",
@@ -162,7 +163,17 @@ version_files = [
 ]
 
 [tool.deptry]
-known_first_party = ["soulmap"]
+known_first_party = [
+  "soulmap",
+  "client",
+  "constants",
+  "errors",
+  "inputs",
+  "operations",
+  "refs",
+  "releases",
+  "verify",
+]
 
 [tool.vulture]
 paths = ["src", "tests", "scripts"]

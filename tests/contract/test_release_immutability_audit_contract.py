@@ -5,10 +5,14 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def test_release_immutability_verification_is_owned_by_python_action() -> None:
     action = (ROOT / "src" / "action" / "__main__.py").read_text(encoding="utf-8")
-    metadata = (ROOT / "src" / "action" / "action.yml").read_text(encoding="utf-8")
+    action_dir = ROOT / "src" / "action"
+    verification = (action_dir / "verify.py").read_text(encoding="utf-8")
+    constants = (action_dir / "constants.py").read_text(encoding="utf-8")
+    metadata = (action_dir / "action.yml").read_text(encoding="utf-8")
     assert "run_verify_release_immutability" in action
-    assert "from urllib.request import Request, urlopen" in action
-    assert "immutable" in action
+    assert "from urllib.request import Request, urlopen" in verification
+    assert "immutable" in verification
+    assert "VERIFY_API_VERSION" in constants
     assert "verify-release-immutability" in metadata
     assert "required: false" in metadata
 

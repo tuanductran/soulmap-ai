@@ -1,7 +1,7 @@
 # SoulMap GitHub Operations
 
 A Python/Docker GitHub Action for the repository's GitHub-specific release operations.
-It uses only the Python standard library and GitHub REST APIs for release tags, releases, assets, and pull requests.
+It uses only the Python standard library and GitHub REST APIs for release tags, releases, assets, and pull requests. Shared constants, errors, input/output helpers, the REST client, reference operations, release operations, and operation handlers live in separate Python modules; `__main__.py` is only the entry point.
 
 ## Release immutability audit
 
