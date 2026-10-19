@@ -39,7 +39,7 @@ class GitHubClient:
 
     @staticmethod
     def _validate_request_url(url: str) -> None:
-        """Restrict credential-bearing requests to GitHub's HTTPS endpoints."""
+        """Restrict authenticated URLs to GitHub's HTTPS endpoints."""
         try:
             parsed = urlsplit(url)
             port = parsed.port
