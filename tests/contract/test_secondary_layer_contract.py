@@ -15,6 +15,8 @@ import json
 import re
 from pathlib import Path
 
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ORCHESTRATION = REPO_ROOT / "skills" / "meta" / "orchestration.md"
 RUNTIME_KEYS = REPO_ROOT / "config" / "runtime-keys.json"
@@ -85,3 +87,17 @@ def test_every_documented_secondary_layer_is_reachable() -> None:
     assert not unreachable, (
         f"secondary layers documented but never emitted: {sorted(unreachable)}"
     )
+
+def test_intensity_fallback_secondary_layers_use_runtime_identifiers() -> None:
+    """Display labels in Markdown must normalize to selector-facing layer IDs."""
+    rules = load_orchestration_rules()
+
+    assert all(
+        layer == layer.lower()
+        for fallback in rules.intensity_fallback
+        for layer in fallback.allowed_secondary
+    )
+    moderate = next(
+        fallback for fallback in rules.intensity_fallback if fallback.level == "MODERATE"
+    )
+    assert set(moderate.allowed_secondary) == {"meaning_integration", "inner_parts"}
