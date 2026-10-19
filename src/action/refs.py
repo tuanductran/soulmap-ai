@@ -11,7 +11,7 @@ from urllib.parse import quote
 
 from client import GitHubClient
 from constants import API_ROOT
-from errors import GitHubAPIError, GitHubActionError
+from errors import GitHubActionError, GitHubAPIError
 
 
 def create_tag(

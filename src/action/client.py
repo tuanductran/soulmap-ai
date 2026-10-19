@@ -17,7 +17,7 @@ from constants import (
     RETRYABLE_STATUS_CODES,
     USER_AGENT,
 )
-from errors import GitHubAPIError, GitHubActionError
+from errors import GitHubActionError, GitHubAPIError
 
 
 class GitHubClient:
