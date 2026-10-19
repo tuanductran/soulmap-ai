@@ -67,7 +67,7 @@ These short instructions are normative content contracts. Their wording is part 
 
 | Level | Primary framework | Mode | Allowed secondary layers |
 | :--- | :--- | :--- | :--- |
-| HIGH | De-escalation | SANCTUARY | anger, bypass, somatic |
+| HIGH | De-escalation | SANCTUARY | Anger signal, Spiritual bypass, Somatic signal |
 | MODERATE | De-escalation | MIRROR | Meaning Integration, Inner Parts |
 
 These are fallback routes only. Primary-priority rules still win when their conditions
@@ -80,13 +80,13 @@ First matching rule wins. Empty cells mean the condition is not required.
 
 | Priority | Framework | Mode | Blocked | Insight secondary | Requires no insight |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | GRIEF | SANCTUARY | direction, shadow, existential, synthesis | true | false |
-| 2 | EXISTENTIAL | MIRROR | direction, shadow | true | false |
-| 3 | Inner Parts | MIRROR | direction, shadow | false | true |
-| 4 | DIRECTION | MIRROR | shadow | true | false |
+| 1 | Grief | SANCTUARY | Direction, Shadow, Existential, Synthesis | true | false |
+| 2 | Existential | MIRROR | Direction, Shadow | true | false |
+| 3 | Inner Parts | MIRROR | Direction, Shadow | false | true |
+| 4 | Direction | MIRROR | Shadow | true | false |
 | 5 | Creative Drought | MIRROR |  | false | false |
 | 6 | Perfectionism Paralysis | MIRROR |  | false | false |
-| 7 | SHADOW | MIRROR |  | false | false |
+| 7 | Shadow | MIRROR |  | false | false |
 | 8 | Ancestral Patterns | MIRROR |  | false | false |
 | 9 | Fear of Visibility | MIRROR |  | false | false |
 | 10 | Empath Boundary | MIRROR |  | false | false |
@@ -99,8 +99,8 @@ First matching rule wins. Empty cells mean the condition is not required.
 | 17 | Partnership Patterns | MIRROR |  | false | false |
 | 18 | Integration and Celebration | MIRROR |  | false | true |
 | 19 | Meaning Integration | MIRROR |  | false | false |
-| 20 | SYNTHESIS | MIRROR |  | false | false |
-| 21 | PATTERN | MIRROR |  | false | false |
+| 20 | Synthesis | MIRROR |  | false | false |
+| 21 | Pattern | MIRROR |  | false | false |
 
 ### Secondary priority
 
@@ -108,9 +108,9 @@ At most one secondary layer is selected, in this order.
 
 | Priority | Name |
 | :--- | :--- |
-| 1 | anger |
-| 2 | bypass |
-| 3 | somatic |
+| 1 | Anger signal |
+| 2 | Spiritual bypass |
+| 3 | Somatic signal |
 
 ## Decision Tree
 
@@ -180,9 +180,9 @@ layer maximum per response.
 
 | Secondary Layer | Activate When |
 | :--- | :--- |
-| `anger` | Anger signals present alongside primary framework |
-| `bypass` | Spiritual bypass signals present alongside primary framework |
-| `somatic` | Body sensation or biometric signals present |
+| Anger signal | Anger signals present alongside primary framework |
+| Spiritual bypass | Spiritual bypass signals present alongside primary framework |
+| Somatic signal | Body sensation or biometric signals present |
 | `Meaning Integration` | Insight moment detected within grief, existential, or direction |
 | `Inner Parts` | Inner conflict present at moderate intensity, when no insight moment takes the layer first |
 
