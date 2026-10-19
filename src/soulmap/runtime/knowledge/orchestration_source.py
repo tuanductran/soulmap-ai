@@ -121,9 +121,7 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             cell_aliases = aliases
             if heading == "Primary priority" and index == 3:
                 cell_aliases = blocked_aliases
-            cells.append(
-                _runtime_cell(cell.strip().replace("\\|", "|"), cell_aliases)
-            )
+            cells.append(_runtime_cell(cell.strip().replace("\\|", "|"), cell_aliases))
         if not cells or all(not cell for cell in cells):
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):
@@ -200,9 +198,7 @@ def _parse_intensity_fallback(
                 framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
                 mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
                 allowed_secondary=tuple(
-                    item.strip().lower()
-                    for item in allowed.split(",")
-                    if item.strip()
+                    item.strip().lower() for item in allowed.split(",") if item.strip()
                 ),
             )
         )
