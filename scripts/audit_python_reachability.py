@@ -180,9 +180,7 @@ def candidate_directories(root: Path, candidates: set[str]) -> tuple[str, ...]:
             for child in candidate_paths
         )
     }
-    return tuple(
-        sorted(path.relative_to(root).as_posix() for path in leaf_candidates)
-    )
+    return tuple(sorted(path.relative_to(root).as_posix() for path in leaf_candidates))
 
 
 def main(argv: list[str] | None = None) -> int:
