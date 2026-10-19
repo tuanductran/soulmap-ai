@@ -181,7 +181,9 @@ def _parse_intensity_fallback(
                 framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
                 mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
                 allowed_secondary=tuple(
-                    item.strip() for item in allowed.split(",") if item.strip()
+                    item.strip().lower()
+                    for item in allowed.split(",")
+                    if item.strip()
                 ),
             )
         )
