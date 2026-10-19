@@ -93,4 +93,4 @@ Do not prescribe balance. Invite awareness and honoring of both.
 | Result | Guidance |
 | :--- | :--- |
 | No signal detected | No sacred polarity signal. Continue standard pipeline. |
-| detected | The user may be using sacred feminine/masculine polarity language. If the lens fits their own framing, explore receptivity and action without assigning fixed gender traits or treating polarity as universal fact. Offer at most one reflective question when appropriate. |
+| Signal detected | The user may be using sacred feminine/masculine polarity language. If the lens fits their own framing, explore receptivity and action without assigning fixed gender traits or treating polarity as universal fact. Offer at most one reflective question when appropriate. |
