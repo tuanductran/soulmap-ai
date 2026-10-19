@@ -17,9 +17,9 @@ ACTION_DIR = ROOT / "src" / "action"
 ACTION_PATH = ACTION_DIR / "__main__.py"
 sys.path.insert(0, str(ACTION_DIR))
 
-import client as client_module
-import refs as refs_module
-import verify as verify_module
+client_module = importlib.import_module("client")
+refs_module = importlib.import_module("refs")
+verify_module = importlib.import_module("verify")
 
 _spec = importlib.util.spec_from_file_location("soulmap_action", ACTION_PATH)
 assert _spec is not None

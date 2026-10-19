@@ -9,9 +9,9 @@ import time
 from pathlib import Path
 from urllib.parse import quote
 
+from client import GitHubClient
 from constants import API_ROOT
 from errors import GitHubAPIError, GitHubActionError
-from client import GitHubClient
 
 
 def create_tag(

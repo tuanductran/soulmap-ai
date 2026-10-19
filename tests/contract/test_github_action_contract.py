@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import ast
-from pathlib import Path
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).parents[2]
 ACTION_DIR = ROOT / "src" / "action"
@@ -15,7 +15,7 @@ def test_python_github_action_is_self_contained() -> None:
         path.name: path.read_text(encoding="utf-8")
         for path in ACTION_DIR.glob("*.py")
     }
-    combined_source = "\\n".join(sources.values())
+    combined_source = "\n".join(sources.values())
 
     assert "runs:" in metadata
     assert "using: docker" in metadata
