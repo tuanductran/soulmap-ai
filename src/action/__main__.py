@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 
 from client import GitHubClient
-from errors import GitHubActionError
+from errors import GitHubActionError, GitHubAPIError as GitHubAPIError
 from inputs import env, repository_parts as repository_parts
 from operations import (
     run_branch,
