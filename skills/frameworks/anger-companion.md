@@ -223,6 +223,6 @@ The following values define the operational anger-detection policy.
 
 | Type | Guidance |
 | :--- | :--- |
-| active | Active anger is present. Meet the anger before exploring it. Do not jump to what is underneath yet; then name what it is protecting and surface the need under the demand. |
+| Active anger | Active anger is present. Meet the anger before exploring it. Do not jump to what is underneath yet; then name what it is protecting and surface the need under the demand. |
 | Self-directed anger | Anger is turned inward. Use self-compassion as the primary frame. Treat the anger as potentially carrying grief, fear, or perfectionism rather than as a conclusion. |
-| residual | Residual anger has been held for some time. Acknowledge the weight of carrying it, then explore what the anger is still protecting and what remains unresolved. |
+| Residual anger | Residual anger has been held for some time. Acknowledge the weight of carrying it, then explore what the anger is still protecting and what remains unresolved. |
