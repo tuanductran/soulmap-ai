@@ -145,8 +145,48 @@ def parent_modules(name: str, known_modules: set[str]) -> tuple[str, ...]:
     )
 
 
+def candidate_directories(root: Path, candidates: set[str]) -> tuple[str, ...]:
+    """Return leaf directories whose tracked Python modules are all candidates.
+
+    A directory is reported only when it contains Python files and every Python
+    module below it is a file-level review candidate. This is still not proof
+    that the directory is unused: convention-based and non-Python consumers
+    must be checked manually.
+    """
+    source_root = root / SOURCE_ROOT
+    paths = sorted(source_root.rglob("*.py"))
+    modules_by_directory: dict[Path, set[str]] = {}
+    for path in paths:
+        name = module_name(path, source_root)
+        if name is None:
+            continue
+        for directory in path.parents:
+            if directory == source_root.parent:
+                break
+            if directory == source_root or source_root not in directory.parents:
+                continue
+            modules_by_directory.setdefault(directory, set()).add(name)
+
+    candidate_paths = {
+        directory
+        for directory, modules in modules_by_directory.items()
+        if modules and modules <= candidates
+    }
+    leaf_candidates = {
+        directory
+        for directory in candidate_paths
+        if not any(
+            child != directory and directory in child.parents
+            for child in candidate_paths
+        )
+    }
+    return tuple(
+        sorted(path.relative_to(root).as_posix() for path in leaf_candidates)
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
-    """Print review-only candidates not statically reachable from entry modules."""
+    """Print review-only file and directory candidates from configured entries."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument(
@@ -163,10 +203,15 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ENTRY NOT FOUND: {entry}")
     print("REVIEW-ONLY: not statically reachable from configured Python entry points")
     for name in sorted(candidates):
-        print(f"{module_path(root, name)}: {name}")
+        print(f"FILE: {module_path(root, name)}: {name}")
+    directories = candidate_directories(root, candidates)
+    for directory in directories:
+        print(f"DIRECTORY: {directory}")
     print(f"Entry modules: {len(entries)}")
+    print(f"Python modules analyzed: {len(reachable) + len(candidates)}")
     print(f"Reachable modules: {len(reachable)}")
-    print(f"Review candidates: {len(candidates)}")
+    print(f"Review candidate files: {len(candidates)}")
+    print(f"Review candidate directories: {len(directories)}")
     print("Limitations: dynamic imports, test-only consumers, data/Markdown loaders,")
     print("entry-point conventions, and non-Python consumers are not proven here.")
     return 1 if missing else 0
