@@ -30,7 +30,10 @@ def _documented_layers() -> set[str]:
     text = ORCHESTRATION.read_text(encoding="utf-8")
     section = text.split("| Secondary Layer | Activate When |", 1)[1]
     section = section.split("\nDo NOT activate", 1)[0]
-    labels = re.findall(r"^\| `([^`]+)` \|", section, re.MULTILINE)
+    labels = [
+        label.strip().strip("`")
+        for label in re.findall(r"^\| ([^|]+) \|", section, re.MULTILINE)
+    ]
     aliases = json.loads(RUNTIME_KEYS.read_text(encoding="utf-8"))[
         "orchestration_value_keys"
     ]
