@@ -227,7 +227,9 @@ def test_next_link_requires_exact_rel_next() -> None:
         == "https://api.github.com/next"
     )
     assert (
-        client_module.GitHubClient._next_link('<https://api.github.com/other>; rel="not-next"')
+        client_module.GitHubClient._next_link(
+            '<https://api.github.com/other>; rel="not-next"'
+        )
         == ""
     )
 
