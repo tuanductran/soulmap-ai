@@ -43,6 +43,11 @@
         "Different response": "different_response",
         "Detection summary": "detected_prefix",
         "Additional guidance": "detected_suffix"
+      },
+      "Insight classification signals": {
+        "Notice earlier": "noticing_earlier",
+        "When it appears": "when_it_appears",
+        "Different response": "different_response"
       }
     },
     "skills/frameworks/inner-parts.md": {
