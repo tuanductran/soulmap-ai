@@ -8,4 +8,4 @@ Python-facing identifiers belong in `config/runtime-keys.json`, not in the prose
 - A shared identifier should have a stable, documented meaning. If it is a domain concept rather than an implementation identifier, explain it in a dedicated terminology document such as `skills/meta/runtime-terminology.md`.
 - Do not mass-replace tokens based on spelling alone. Confirm a runtime consumer, update the config mapping and tests together, and preserve the original safety behavior.
 
-This boundary is being migrated incrementally. A key-like token not listed in the config is not automatically safe: audit its consumer before deciding whether it is a domain term, a prose label, or a runtime identifier.
+The contract test scans every `skills/**/*.md` file for Python format placeholders and key-shaped identifiers in table-key positions. When a new runtime identifier is needed, add its mapping to config and test the consumer rather than embedding the identifier in Markdown. A token outside the current pattern checks still requires consumer-level review.
