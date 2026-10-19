@@ -129,6 +129,40 @@ def test_paginated_requests_follow_link_header() -> None:
         ]
 
 
+def test_release_asset_pagination_uses_shared_link_following() -> None:
+    client = client_module.GitHubClient("token")
+    first_page: list[object] = [{"name": "one.zip"}]
+    second_page: list[object] = [{"name": "two.zip"}]
+    responses = iter([first_page, second_page])
+
+    def request(_method: str, url: str) -> list[object]:
+        client.last_response_headers = (
+            {"Link": '<https://api.github.com/assets?page=2>; rel="next"'}
+            if "page=2" not in url
+            else {}
+        )
+        return next(responses)
+
+    with patch.object(client, "request", side_effect=request):
+        assert client.list_release_assets("https://api.github.com/assets") == [
+            *first_page,
+            *second_page,
+        ]
+
+
+def test_release_asset_pagination_rejects_non_list_response() -> None:
+    client = client_module.GitHubClient("token")
+
+    with (
+        patch.object(client, "request", return_value={"assets": []}),
+        pytest.raises(
+            errors_module.GitHubActionError,
+            match="non-list response for release asset metadata",
+        ),
+    ):
+        client.list_release_assets("https://api.github.com/assets")
+
+
 def test_non_idempotent_requests_do_not_retry_by_default() -> None:
     error = HTTPError(
         "https://api.github.com/repos/a/b",
