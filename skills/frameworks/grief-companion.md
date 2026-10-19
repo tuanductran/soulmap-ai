@@ -278,9 +278,9 @@ Complicated grief, grief stuck, unresolved, or contested:
 
 | Result | Guidance |
 | :--- | :--- |
-| acute | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
-| anticipatory | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
-| ambiguous | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
-| complicated | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
+| Acute grief | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
+| Ambiguous grief | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
+| Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
 | Detection summary | Grief detected. Activate grief-companion.md. Follow the guidance for the identified grief type. |
 | Additional guidance | Retrieve grief questions from the deep-inquiry bank: the 'Grief Questions' section. |
