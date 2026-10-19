@@ -63,7 +63,7 @@ The per-language crisis packs (`safety_en.py`, `safety_vi.py`, `safety_es.py`,
 `src/soulmap/runtime/detectors/crisis_detector.py` use hardcoded Python constants
 rather than Markdown-loaded phrase lists. This is intentional.
 
-`src/soulmap/runtime/config/safety.py` is currently a docstring-only legacy stub:
+`src/soulmap/runtime/config/safety.py` is currently a legacy stub with no safety constants:
 it defines no safety constants and is not imported by the runtime. The phrase-tuple signals live in the per-language packs and are combined by
 `crisis_language_packs.py`. The detector also evaluates its local
 `CRISIS_TIER1_PATTERNS` and `FAREWELL_CRISIS_PATTERNS` regex lists directly.
