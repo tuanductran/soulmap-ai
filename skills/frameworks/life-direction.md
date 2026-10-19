@@ -430,4 +430,4 @@ runtime may execute these values, but must not duplicate them.
 | State | Recommendation |
 | :--- | :--- |
 | No direction signal detected | No direction signals detected. Continue standard pipeline. |
-| detected | Life direction uncertainty detected. Activate Life Direction Clarifier. Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. Use one lens at a time. Offer at most one reflective question about what kind of life feels honest to the user when appropriate; do not force a question. |
+| Direction detected | Life direction uncertainty detected. Activate Life Direction Clarifier. Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. Use one lens at a time. Offer at most one reflective question about what kind of life feels honest to the user when appropriate; do not force a question. |
