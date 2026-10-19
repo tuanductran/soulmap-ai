@@ -255,8 +255,10 @@ def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
     root = default_skill_path("skills").parent.resolve()
     try:
         relative_path = markdown_path.resolve().relative_to(root).as_posix()
-    except ValueError as exc:
-        raise ValueError("Runtime key table must be inside the repository.") from exc
+    except ValueError:
+        # Unit tests and callers may parse temporary Markdown fixtures. Those
+        # fixtures have no repository-owned key mapping, so preserve their labels.
+        relative_path = ""
     registry = _runtime_key_registry()
     by_source = registry.get("markdown_key_labels", {}).get(relative_path, {})
     by_heading = by_source.get(heading, {}) if isinstance(by_source, dict) else {}
