@@ -212,7 +212,16 @@
     "Soulmate Longing": "SOULMATE_LONGING",
     "Partnership Patterns": "PARTNERSHIP_PATTERNS",
     "Integration and Celebration": "INTEGRATION_CELEBRATION",
-    "Meaning Integration": "MEANING_INTEGRATION"
+    "Meaning Integration": "MEANING_INTEGRATION",
+    "Grief": "GRIEF",
+    "Existential": "EXISTENTIAL",
+    "Direction": "DIRECTION",
+    "Shadow": "SHADOW",
+    "Synthesis": "SYNTHESIS",
+    "Pattern": "PATTERN",
+    "Anger signal": "anger",
+    "Spiritual bypass": "bypass",
+    "Somatic signal": "somatic"
   },
   "scope_category_keys": {
     "Self-awareness": "self_awareness",
