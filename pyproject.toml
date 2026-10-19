@@ -163,7 +163,17 @@ version_files = [
 ]
 
 [tool.deptry]
-known_first_party = ["soulmap"]
+known_first_party = [
+  "soulmap",
+  "client",
+  "constants",
+  "errors",
+  "inputs",
+  "operations",
+  "refs",
+  "releases",
+  "verify",
+]
 
 [tool.vulture]
 paths = ["src", "tests", "scripts"]
