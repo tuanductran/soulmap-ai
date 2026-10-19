@@ -312,7 +312,7 @@ def synthesize(
             template = _rules().response_guidance["value_theme"]
         else:
             template = _rules().response_guidance["conflict_theme"]
-        theme_descriptions.append(f"{template} {readable}.")
+        theme_descriptions.append(f'{template} The recurring theme is "{readable}".')
 
     synthesis_frame = (
         opening
