@@ -36,9 +36,9 @@ def _documented_layers() -> set[str]:
         if label and not set(label) <= {":", "-", " "}:
             labels.append(label)
     aliases = json.loads(RUNTIME_KEYS.read_text(encoding="utf-8"))[
-        "orchestration_value_keys"
+        "orchestration_secondary_layer_keys"
     ]
-    return {aliases.get(label, label.lower()).lower() for label in labels}
+    return {aliases[label] for label in labels}
 
 
 def _resulting_strings(node: ast.expr) -> set[str]:
