@@ -57,12 +57,17 @@ tooling shares one canonical shipped-member contract. Domain classification is m
 
 ## Protected modules
 
-`src/soulmap/runtime/config/safety.py`, the per-language crisis packs
-(`safety_en.py`, `safety_vi.py`, `safety_es.py`, `safety_fr.py`, `safety_zh.py`),
-`src/soulmap/runtime/knowledge/crisis_language_packs.py` (which combines the packs
-by direct import, not Markdown loading), and
+The per-language crisis packs (`safety_en.py`, `safety_vi.py`, `safety_es.py`,
+`safety_fr.py`, `safety_zh.py`), `src/soulmap/runtime/knowledge/crisis_language_packs.py`
+(which combines the packs by direct import, not Markdown loading), and
 `src/soulmap/runtime/detectors/crisis_detector.py` use hardcoded Python constants
 rather than Markdown-loaded phrase lists. This is intentional.
+
+`src/soulmap/runtime/config/safety.py` is currently a docstring-only legacy stub:
+it defines no safety constants and is not imported by the runtime. The active crisis
+signals live in the per-language packs and are combined by `crisis_language_packs.py`.
+The stub remains review-only; static reachability alone is not sufficient grounds to
+delete it.
 
 Crisis detection (Issue #130) is multilingual but still fully static: each
 language pack is a literal, human-authored tuple of phrases with no translation
