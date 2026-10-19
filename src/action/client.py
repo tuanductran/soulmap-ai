@@ -6,7 +6,7 @@ import json
 import random
 import time
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 from constants import (
@@ -37,6 +37,25 @@ class GitHubClient:
         self.token = token
         self.last_response_headers: dict[str, str] = {}
 
+    @staticmethod
+    def _validate_request_url(url: str) -> None:
+        """Restrict authenticated URLs to GitHub's HTTPS endpoints."""
+        try:
+            parsed = urlsplit(url)
+            port = parsed.port
+        except ValueError as exc:
+            raise GitHubActionError("GitHub request URL is invalid.") from exc
+        if (
+            parsed.scheme != "https"
+            or parsed.hostname not in {"api.github.com", "uploads.github.com"}
+            or parsed.username is not None
+            or parsed.password is not None
+            or port not in {None, 443}
+        ):
+            raise GitHubActionError(
+                "GitHub request URL must use HTTPS with a trusted GitHub host."
+            )
+
     def request(
         self,
         method: str,
@@ -48,10 +67,10 @@ class GitHubClient:
         retry_non_idempotent: bool = False,
     ) -> dict[str, object] | list[object] | None:
         """Send an authenticated REST request and decode its JSON response."""
+        self._validate_request_url(url)
         body = data if payload is None else json.dumps(payload).encode("utf-8")
         headers = {
             "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {self.token}",
             "X-GitHub-Api-Version": API_VERSION,
             "User-Agent": USER_AGENT,
         }
@@ -62,10 +81,11 @@ class GitHubClient:
 
         for attempt in range(MAX_RETRIES + 1):
             try:
-                with urlopen(
-                    Request(url, data=body, method=method, headers=headers),
-                    timeout=60,
-                ) as response:
+                request = Request(url, data=body, method=method, headers=headers)
+                # urllib forwards regular headers across redirects. Keep the token
+                # unredirected so it is never copied to a redirect destination.
+                request.add_unredirected_header("Authorization", f"Bearer {self.token}")
+                with urlopen(request, timeout=60) as response:
                     self.last_response_headers = dict(response.headers.items())
                     if response.status == 204:
                         return None

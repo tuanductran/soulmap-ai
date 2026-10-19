@@ -65,6 +65,40 @@ def test_repository_parts_rejects_malformed_repositories() -> None:
             raise AssertionError(f"expected invalid repository: {value!r}")
 
 
+@pytest.mark.parametrize(
+    "url",
+    [
+        "http://api.github.com/repos/a/b",
+        "https://api.github.com.evil.example/repos/a/b",
+        "https://evil.example/repos/a/b",
+        "https://user@api.github.com/repos/a/b",
+        "https://api.github.com:444/repos/a/b",
+    ],
+)
+def test_request_rejects_untrusted_urls_before_network(url: str) -> None:
+    client = client_module.GitHubClient("secret-token")
+
+    with (
+        patch.object(client_module, "urlopen") as urlopen,
+        pytest.raises(errors_module.GitHubActionError, match="trusted GitHub host"),
+    ):
+        client.request("GET", url)
+
+    urlopen.assert_not_called()
+
+
+def test_request_keeps_authorization_out_of_redirected_headers() -> None:
+    client = client_module.GitHubClient("secret-token")
+    response = FakeResponse({"ok": True})
+
+    with patch.object(client_module, "urlopen", return_value=response) as urlopen:
+        assert client.api("GET", "/repos/a/b") == {"ok": True}
+
+    request = urlopen.call_args.args[0]
+    assert request.unredirected_hdrs["Authorization"] == "Bearer secret-token"
+    assert "Authorization" not in request.headers
+
+
 def test_api_error_preserves_status_and_redacts_token() -> None:
     token = "secret-token"
     headers = Message()
