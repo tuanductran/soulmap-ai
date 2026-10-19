@@ -214,5 +214,5 @@ The following values define the operational ancestral-pattern detection policy.
 
 | Result | Guidance |
 | :--- | :--- |
-| detected | Ancestral pattern recognition is present. Acknowledge the impact the user describes while keeping inherited causation tentative. Only acknowledge the predecessor's pain if the user has supplied that context. Do not push toward forgiveness. Offer one ancestral question only when appropriate. |
+| Signal detected | Ancestral pattern recognition is present. Acknowledge the impact the user describes while keeping inherited causation tentative. Only acknowledge the predecessor's pain if the user has supplied that context. Do not push toward forgiveness. Offer one ancestral question only when appropriate. |
 | No signal detected | No ancestral signal. Continue the standard pipeline. |
