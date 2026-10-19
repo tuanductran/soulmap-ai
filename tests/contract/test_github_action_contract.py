@@ -12,8 +12,7 @@ def test_python_github_action_is_self_contained() -> None:
     metadata = (ACTION_DIR / "action.yml").read_text(encoding="utf-8")
     dockerfile = (ACTION_DIR / "Dockerfile").read_text(encoding="utf-8")
     sources = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in ACTION_DIR.glob("*.py")
+        path.name: path.read_text(encoding="utf-8") for path in ACTION_DIR.glob("*.py")
     }
     combined_source = "\n".join(sources.values())
 

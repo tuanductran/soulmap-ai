@@ -187,7 +187,9 @@ def test_forbidden_rate_limit_is_retried() -> None:
 
         with (
             patch.object(
-                client_module, "urlopen", side_effect=[error, FakeResponse({"ok": True})]
+                client_module,
+                "urlopen",
+                side_effect=[error, FakeResponse({"ok": True})],
             ),
             patch.object(client_module.time, "sleep") as sleep,
         ):
