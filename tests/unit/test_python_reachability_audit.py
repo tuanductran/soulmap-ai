@@ -131,10 +131,10 @@ def test_candidate_directories_require_every_module_to_be_unreachable(
     unused.mkdir(parents=True)
     used.mkdir(parents=True)
     (unused / "__init__.py").write_text("", encoding="utf-8")
-    (unused / "first.py").write_text("VALUE = 1\\n", encoding="utf-8")
-    (unused / "second.py").write_text("VALUE = 2\\n", encoding="utf-8")
+    (unused / "first.py").write_text("VALUE = 1\n", encoding="utf-8")
+    (unused / "second.py").write_text("VALUE = 2\n", encoding="utf-8")
     (used / "__init__.py").write_text("", encoding="utf-8")
-    (used / "entry.py").write_text("VALUE = 3\\n", encoding="utf-8")
+    (used / "entry.py").write_text("VALUE = 3\n", encoding="utf-8")
 
     candidates = {
         "pkg.unused",
@@ -153,7 +153,7 @@ def test_candidate_directories_do_not_flag_mixed_reachability_packages(
     package = tmp_path / "src" / "pkg"
     package.mkdir(parents=True)
     (package / "__init__.py").write_text("", encoding="utf-8")
-    (package / "used.py").write_text("VALUE = 1\\n", encoding="utf-8")
-    (package / "maybe_unused.py").write_text("VALUE = 2\\n", encoding="utf-8")
+    (package / "used.py").write_text("VALUE = 1\n", encoding="utf-8")
+    (package / "maybe_unused.py").write_text("VALUE = 2\n", encoding="utf-8")
 
     assert candidate_directories(tmp_path, {"pkg.maybe_unused"}) == ()
