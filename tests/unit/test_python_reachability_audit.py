@@ -118,3 +118,42 @@ def test_analyze_tracks_relative_imports_from_package_initializer(
     assert "pkg.sub.helper" in reachable
     assert candidates == set()
     assert missing == []
+
+
+def test_candidate_directories_require_every_module_to_be_unreachable(
+    tmp_path: Path,
+) -> None:
+    from scripts.audit_python_reachability import candidate_directories
+
+    source = tmp_path / "src"
+    unused = source / "pkg" / "unused"
+    used = source / "pkg" / "used"
+    unused.mkdir(parents=True)
+    used.mkdir(parents=True)
+    (unused / "__init__.py").write_text("", encoding="utf-8")
+    (unused / "first.py").write_text("VALUE = 1\\n", encoding="utf-8")
+    (unused / "second.py").write_text("VALUE = 2\\n", encoding="utf-8")
+    (used / "__init__.py").write_text("", encoding="utf-8")
+    (used / "entry.py").write_text("VALUE = 3\\n", encoding="utf-8")
+
+    candidates = {
+        "pkg.unused",
+        "pkg.unused.first",
+        "pkg.unused.second",
+    }
+
+    assert candidate_directories(tmp_path, candidates) == ("src/pkg/unused",)
+
+
+def test_candidate_directories_do_not_flag_mixed_reachability_packages(
+    tmp_path: Path,
+) -> None:
+    from scripts.audit_python_reachability import candidate_directories
+
+    package = tmp_path / "src" / "pkg"
+    package.mkdir(parents=True)
+    (package / "__init__.py").write_text("", encoding="utf-8")
+    (package / "used.py").write_text("VALUE = 1\\n", encoding="utf-8")
+    (package / "maybe_unused.py").write_text("VALUE = 2\\n", encoding="utf-8")
+
+    assert candidate_directories(tmp_path, {"pkg.maybe_unused"}) == ()
