@@ -47,3 +47,48 @@ def test_every_configured_markdown_key_label_resolves_without_raw_keys() -> None
                     f"{relative_path} / {heading}: runtime key {runtime_key!r} "
                     "still appears as a Markdown row label"
                 )
+
+
+def test_synthesis_threshold_labels_resolve_only_through_config() -> None:
+    """Every threshold display label must have an explicit runtime-key mapping."""
+    synthesis_path = REPO_ROOT / "skills" / "frameworks" / "conversation-synthesis.md"
+    config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    threshold_rows = load_table_rows(synthesis_path, "Detection thresholds")
+    labels = {row[0] for row in threshold_rows}
+    mappings = config["synthesis_threshold_keys"]
+
+    assert labels == set(mappings)
+    assert set(mappings.values()) == {
+        "minimum_user_messages",
+        "automatic_synthesis_user_messages",
+        "minimum_distinct_recurring_themes_for_automatic_synthesis",
+        "maximum_themes_returned",
+        "maximum_anchors_per_theme",
+        "maximum_longitudinal_themes",
+    }
+
+
+def test_scope_pack_labels_resolve_only_through_config() -> None:
+    """Scope pack headings are human-readable labels, not Python-owned keys."""
+    from soulmap.runtime.knowledge.scope_source import _contract_body
+
+    scope_path = REPO_ROOT / "skills" / "safety" / "whitelist-blacklist-system.md"
+    scope_text = scope_path.read_text(encoding="utf-8")
+    body = _contract_body(scope_text)
+    config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    pack_keys = config["scope_pack_keys"]
+
+    import re
+
+    labels = set(re.findall(r"^### (?P<pack>.+?)\\s*$", body, re.MULTILINE))
+    assert labels == set(pack_keys)
+    assert set(pack_keys.values()) == {
+        "WHITELIST_TIER1",
+        "WHITELIST_TIER2",
+        "BLACKLIST_LAYER1",
+        "BLACKLIST_PROHIBITED",
+    }
