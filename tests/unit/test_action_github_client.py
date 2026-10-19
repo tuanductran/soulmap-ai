@@ -138,7 +138,7 @@ def test_release_asset_pagination_uses_shared_link_following() -> None:
     def request(_method: str, url: str) -> list[object]:
         client.last_response_headers = (
             {"Link": '<https://api.github.com/assets?page=2>; rel="next"'}
-            if "page=1" in url
+            if "page=2" not in url
             else {}
         )
         return next(responses)
