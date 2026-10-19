@@ -243,21 +243,19 @@ def _runtime_key_registry() -> dict[str, Any]:
     return payload
 
 
-def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
-    """Load a two-column Markdown table using key identifiers from config.
-
-    Markdown's first column is a human-readable label. Runtime key names are
-    owned by config/runtime-keys.json and mapped to those labels here.
-    """
-    rows = load_table_rows(markdown_path, heading)
+def resolve_key_value_rows(
+    markdown_path: Path,
+    heading: str,
+    rows: tuple[tuple[str, ...], ...],
+) -> dict[str, str]:
+    """Resolve human-readable Markdown table cells through runtime config."""
     if not rows or any(len(row) != 2 for row in rows):
         raise ValueError(f"Knowledge table {heading!r} must contain two columns.")
     root = default_skill_path("skills").parent.resolve()
     try:
         relative_path = markdown_path.resolve().relative_to(root).as_posix()
     except ValueError:
-        # Unit tests and callers may parse temporary Markdown fixtures. Those
-        # fixtures have no repository-owned key mapping, so preserve their labels.
+        # Temporary fixtures have no repository-owned key mapping.
         relative_path = ""
     registry = _runtime_key_registry()
     by_source = registry.get("markdown_key_labels", {}).get(relative_path, {})
@@ -284,6 +282,18 @@ def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
         raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
     return values
 
+
+def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
+    """Load a two-column Markdown table using key identifiers from config.
+
+    Markdown's first column is a human-readable label. Runtime key names are
+    owned by config/runtime-keys.json and mapped to those labels here.
+    """
+    return resolve_key_value_rows(
+        markdown_path,
+        heading,
+        load_table_rows(markdown_path, heading),
+    )
 
 def default_skill_path(relative_path: str) -> Path:
     """Locate a file under ``skills/`` without depending on devtools.
