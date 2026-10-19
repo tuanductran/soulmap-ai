@@ -72,22 +72,34 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
             "Runtime detection contract",
             runtime_skill_path("empath-boundary"),
         ),
-        "empath.guidance": _uncached_key_value_table(empath, "Guidance", runtime_skill_path("empath-boundary")),
+        "empath.guidance": _uncached_key_value_table(
+            empath, "Guidance", runtime_skill_path("empath-boundary")
+        ),
         "ancestral.activation": extract_keyword_section(
             ancestral, "Activation Signals"
         ),
         "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring", runtime_skill_path("ancestral-patterns")),
-        "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance", runtime_skill_path("ancestral-patterns")),
+        "ancestral.scoring": _uncached_key_value_table(
+            ancestral, "Scoring", runtime_skill_path("ancestral-patterns")
+        ),
+        "ancestral.guidance": _uncached_key_value_table(
+            ancestral, "Guidance", runtime_skill_path("ancestral-patterns")
+        ),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(
             somatic,
             "Runtime detection contract",
             runtime_skill_path("somatic-wellbeing"),
         ),
-        "somatic.guidance": _uncached_key_value_table(somatic, "Guidance", runtime_skill_path("somatic-wellbeing")),
-        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring", runtime_skill_path("pattern-mapper")),
-        "pattern.guidance": _uncached_key_value_table(pattern, "Runtime guidance", runtime_skill_path("pattern-mapper")),
+        "somatic.guidance": _uncached_key_value_table(
+            somatic, "Guidance", runtime_skill_path("somatic-wellbeing")
+        ),
+        "pattern.scoring": _uncached_key_value_table(
+            pattern, "Scoring", runtime_skill_path("pattern-mapper")
+        ),
+        "pattern.guidance": _uncached_key_value_table(
+            pattern, "Runtime guidance", runtime_skill_path("pattern-mapper")
+        ),
     }
 
 
