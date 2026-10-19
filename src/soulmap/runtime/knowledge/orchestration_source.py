@@ -77,6 +77,17 @@ def _orchestration_value_keys() -> dict[str, str]:
     return {str(label): str(key) for label, key in values.items()}
 
 
+def _orchestration_secondary_layer_keys() -> dict[str, str]:
+    """Load lower-case IDs for secondary layers, separate from primary frameworks."""
+    config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    values = config.get("orchestration_secondary_layer_keys", {})
+    if not isinstance(values, dict):
+        raise ValueError("Orchestration secondary layer keys must be a JSON object.")
+    return {str(label): str(key) for label, key in values.items()}
+
+
 def _orchestration_blocked_keys() -> dict[str, str]:
     """Load the lower-case framework IDs used by the blocked column."""
     config = json.loads(
@@ -111,6 +122,11 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
     blocked_aliases = (
         _orchestration_blocked_keys() if heading == "Primary priority" else {}
     )
+    secondary_aliases = (
+        _orchestration_secondary_layer_keys()
+        if heading in {"Secondary priority", "Intensity fallback"}
+        else {}
+    )
     for line in section.splitlines():
         stripped = line.strip()
         if not stripped.startswith("|") or not stripped.endswith("|"):
@@ -121,6 +137,10 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
             cell_aliases = aliases
             if heading == "Primary priority" and index == 3:
                 cell_aliases = blocked_aliases
+            elif (
+                heading == "Secondary priority" and index == 1
+            ) or (heading == "Intensity fallback" and index == 3):
+                cell_aliases = secondary_aliases
             cells.append(_runtime_cell(cell.strip().replace("\\|", "|"), cell_aliases))
         if not cells or all(not cell for cell in cells):
             continue
