@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import cast
 
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime classification contract"
@@ -42,6 +44,12 @@ _QUOTED_RE = re.compile(r'"([^"]+)"')
 
 
 def _literal_config(body: str) -> dict[str, object]:
+    key_config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    category_keys = key_config.get("scope_category_keys", {})
+    if not isinstance(category_keys, dict):
+        raise ValueError("Scope category keys must be a JSON object.")
     packs = list(_PACK_RE.finditer(body))
     expected = {
         "Whitelist tier 1": "WHITELIST_TIER1",
@@ -70,7 +78,9 @@ def _literal_config(body: str) -> dict[str, object]:
             phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
             if not phrases:
                 raise ValueError(f"Scope category {group.group('group')} is empty.")
-            parsed[group.group("group")] = phrases
+            display_name = group.group("group")
+            category = str(category_keys.get(display_name, display_name))
+            parsed[category] = phrases
         values[expected[pack.group("pack")]] = parsed
     return values
 

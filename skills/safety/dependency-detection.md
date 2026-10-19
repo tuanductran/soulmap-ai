@@ -207,9 +207,9 @@ Clause boundary markers:
 
 | Level | Recommendation |
 | :--- | :--- |
-| HIGH_DEPENDENCY | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
-| MODERATE_DEPENDENCY | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
-| LOW_DEPENDENCY | No significant dependency signals detected. Continue normal reflective engagement. |
+| High dependency | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
+| Moderate dependency | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
+| Low dependency | No significant dependency signals detected. Continue normal reflective engagement. |
 
 ## Guidance
 

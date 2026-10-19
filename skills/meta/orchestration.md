@@ -67,8 +67,8 @@ These short instructions are normative content contracts. Their wording is part 
 
 | Level | Primary framework | Mode | Allowed secondary layers |
 | :--- | :--- | :--- | :--- |
-| HIGH | DE_ESCALATION | SANCTUARY | anger, bypass, somatic |
-| MODERATE | DE_ESCALATION | MIRROR | meaning_integration, inner_parts |
+| HIGH | De-escalation | SANCTUARY | anger, bypass, somatic |
+| MODERATE | De-escalation | MIRROR | Meaning Integration, Inner Parts |
 
 These are fallback routes only. Primary-priority rules still win when their conditions
 match. HIGH always uses its fallback primary; MODERATE uses its fallback only when no
@@ -82,23 +82,23 @@ First matching rule wins. Empty cells mean the condition is not required.
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | GRIEF | SANCTUARY | direction, shadow, existential, synthesis | true | false |
 | 2 | EXISTENTIAL | MIRROR | direction, shadow | true | false |
-| 3 | INNER_PARTS | MIRROR | direction, shadow | false | true |
+| 3 | Inner Parts | MIRROR | direction, shadow | false | true |
 | 4 | DIRECTION | MIRROR | shadow | true | false |
-| 5 | CREATIVE_DROUGHT | MIRROR |  | false | false |
-| 6 | PERFECTIONISM_PARALYSIS | MIRROR |  | false | false |
+| 5 | Creative Drought | MIRROR |  | false | false |
+| 6 | Perfectionism Paralysis | MIRROR |  | false | false |
 | 7 | SHADOW | MIRROR |  | false | false |
-| 8 | ANCESTRAL_PATTERNS | MIRROR |  | false | false |
-| 9 | FEAR_OF_VISIBILITY | MIRROR |  | false | false |
-| 10 | EMPATH_BOUNDARY | MIRROR |  | false | false |
-| 11 | DARK_NIGHT_OF_SOUL | SANCTUARY |  | false | false |
-| 12 | SOUL_NOURISHMENT | MIRROR |  | false | false |
-| 13 | DIVINE_GUIDANCE | MIRROR |  | false | false |
-| 14 | SACRED_POLARITY | MIRROR |  | false | false |
-| 15 | SPIRITUAL_PURPOSE | MIRROR |  | false | false |
-| 16 | SOULMATE_LONGING | MIRROR |  | false | false |
-| 17 | PARTNERSHIP_PATTERNS | MIRROR |  | false | false |
-| 18 | INTEGRATION_CELEBRATION | MIRROR |  | false | true |
-| 19 | MEANING_INTEGRATION | MIRROR |  | false | false |
+| 8 | Ancestral Patterns | MIRROR |  | false | false |
+| 9 | Fear of Visibility | MIRROR |  | false | false |
+| 10 | Empath Boundary | MIRROR |  | false | false |
+| 11 | Dark Night of the Soul | SANCTUARY |  | false | false |
+| 12 | Soul Nourishment | MIRROR |  | false | false |
+| 13 | Divine Guidance | MIRROR |  | false | false |
+| 14 | Sacred Polarity | MIRROR |  | false | false |
+| 15 | Spiritual Purpose | MIRROR |  | false | false |
+| 16 | Soulmate Longing | MIRROR |  | false | false |
+| 17 | Partnership Patterns | MIRROR |  | false | false |
+| 18 | Integration and Celebration | MIRROR |  | false | true |
+| 19 | Meaning Integration | MIRROR |  | false | false |
 | 20 | SYNTHESIS | MIRROR |  | false | false |
 | 21 | PATTERN | MIRROR |  | false | false |
 
@@ -183,13 +183,13 @@ layer maximum per response.
 | `anger` | Anger signals present alongside primary framework |
 | `bypass` | Spiritual bypass signals present alongside primary framework |
 | `somatic` | Body sensation or biometric signals present |
-| `meaning_integration` | Insight moment detected within grief, existential, or direction |
-| `inner_parts` | Inner conflict present at moderate intensity, when no insight moment takes the layer first |
+| `Meaning Integration` | Insight moment detected within grief, existential, or direction |
+| `Inner Parts` | Inner conflict present at moderate intensity, when no insight moment takes the layer first |
 
 Do NOT activate a secondary layer if it would override or compete with the primary.
 It supplements only.
 
-`inner_parts` supplements only at moderate intensity. Rule 2 below forbids parts
+`Inner Parts` supplements only at moderate intensity. Rule 2 below forbids parts
 work when intensity is HIGH, where no secondary layer is offered at all.
 
 ### Phase 5, template routing
@@ -226,10 +226,10 @@ The following combinations are valid:
 | Primary | Valid Secondary | Notes |
 | :--- | :--- | :--- |
 | Mirror | anger, bypass, somatic | Most flexible combination |
-| De-escalation | somatic, anger, bypass, inner_parts, meaning_integration | Ground first, then move into the layer gently |
-| Grief | meaning_integration | Only after user signals readiness |
-| Existential | meaning_integration | Only if insight is present |
-| Direction | meaning_integration | Only if values insight emerges |
+| De-escalation | somatic, anger, bypass, Inner Parts, Meaning Integration | Ground first, then move into the layer gently |
+| Grief | Meaning Integration | Only after user signals readiness |
+| Existential | Meaning Integration | Only if insight is present |
+| Direction | Meaning Integration | Only if values insight emerges |
 | Inner Parts | none | Parts work requires full focus |
 | Shadow | none | Shadow work requires full focus |
 | Crisis | none | No secondary layers in crisis |

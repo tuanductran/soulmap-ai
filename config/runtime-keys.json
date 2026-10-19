@@ -1,0 +1,219 @@
+{
+  "markdown_key_labels": {
+    "skills/frameworks/anger-companion.md": {
+      "Guidance": {
+        "Self-directed anger": "self_anger"
+      }
+    },
+    "skills/frameworks/shadow-patterns.md": {
+      "Guidance": {
+        "External frustration": "external_frustration"
+      }
+    },
+    "skills/frameworks/life-direction.md": {
+      "Scoring": {
+        "Meaning void": "meaning_void",
+        "Should versus want": "should_vs_want"
+      },
+      "Runtime guidance": {
+        "No direction signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/existential-companion.md": {
+      "Guidance": {
+        "Identity shift": "identity_shift",
+        "Meaning depth": "meaning_depth",
+        "Endings and grief": "endings_grief",
+        "Larger questions": "larger_questions",
+        "Detection summary": "detected_prefix",
+        "Additional guidance": "detected_suffix"
+      }
+    },
+    "skills/frameworks/grief-companion.md": {
+      "Guidance": {
+        "Detection summary": "detected_prefix",
+        "Additional guidance": "detected_suffix"
+      }
+    },
+    "skills/frameworks/meaning-integration.md": {
+      "Guidance": {
+        "Hold first": "hold_first",
+        "When it appears": "when_it_appears",
+        "Notice earlier": "noticing_earlier",
+        "Different response": "different_response",
+        "Detection summary": "detected_prefix",
+        "Additional guidance": "detected_suffix"
+      }
+    },
+    "skills/frameworks/inner-parts.md": {
+      "Guidance": {
+        "No conflict detected": "not_detected",
+        "Conflict detected": "detected",
+        "Suggested parts": "detected_parts_suffix"
+      }
+    },
+    "skills/frameworks/pattern-mapper.md": {
+      "Runtime guidance": {
+        "No signal detected": "not_detected",
+        "Insufficient history": "insufficient_history"
+      }
+    },
+    "skills/soulmate/soulmate-longing.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/empath-boundary.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/divine-guidance.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/soul-nourishment.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/creative-drought.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/spiritual-purpose.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/fear-of-visibility.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/dark-night-of-soul.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/ancestral-patterns.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/soulmate/partnership-patterns.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/perfectionism-paralysis.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/integration-celebration.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/sacred-feminine-masculine.md": {
+      "Guidance": {
+        "No signal detected": "not_detected"
+      }
+    },
+    "skills/frameworks/conversation-synthesis.md": {
+      "Response guidance": {
+        "Insufficient history": "insufficient_data",
+        "Insufficient recurring themes": "insufficient_themes",
+        "Single-session opening": "session_opening",
+        "Longitudinal opening": "longitudinal_opening",
+        "Emotional theme": "emotional_theme",
+        "Value theme": "value_theme",
+        "Conflict theme": "conflict_theme",
+        "Return ownership": "ownership_return",
+        "Recommendation": "recommendation"
+      }
+    },
+    "skills/frameworks/somatic-wellbeing.md": {
+      "Guidance": {
+        "Biometric signal": "BIOMETRIC",
+        "Body sensation": "BODY_SENSATION",
+        "Somatic invitation": "SOMATIC_INVITATION"
+      }
+    },
+    "skills/spiritual/spiritual-discernment.md": {
+      "Guidance": {
+        "Dismissing pain": "dismissing_pain",
+        "Premature acceptance": "premature_acceptance",
+        "Spiritual inflation": "spiritual_inflation",
+        "Bypassing accountability": "bypassing_accountability"
+      }
+    },
+    "skills/safety/dependency-detection.md": {
+      "Guidance": {
+        "High dependency": "HIGH_DEPENDENCY",
+        "Moderate dependency": "MODERATE_DEPENDENCY",
+        "Low dependency": "LOW_DEPENDENCY"
+      }
+    }
+  },
+  "stage_classifier_memory_minimums": {
+    "session_count_ge_10": "Minimum stage when session count is at least 10",
+    "prior_pattern_recognition": "Minimum stage when a prior session showed pattern recognition",
+    "prior_breakthrough": "Minimum stage when a prior session showed a breakthrough"
+  },
+  "markdown_value_labels": {
+    "skills/frameworks/life-direction.md": {
+      "Lens signals": {
+        "Should versus want, comparison": "should_vs_want, comparison"
+      }
+    }
+  },
+  "theme_heading_keys": {
+    "Not enough": "not_enough",
+    "Freedom versus safety": "freedom_vs_safety",
+    "Creativity depth": "creativity_depth",
+    "Seen versus hidden": "seen_vs_hidden",
+    "Closeness versus distance": "closeness_vs_distance",
+    "Knowing versus avoiding": "knowing_vs_avoiding",
+    "Change versus familiar": "change_vs_familiar",
+    "Giving versus receiving": "giving_vs_receiving"
+  },
+  "orchestration_value_keys": {
+    "De-escalation": "DE_ESCALATION",
+    "Inner Parts": "INNER_PARTS",
+    "Creative Drought": "CREATIVE_DROUGHT",
+    "Perfectionism Paralysis": "PERFECTIONISM_PARALYSIS",
+    "Ancestral Patterns": "ANCESTRAL_PATTERNS",
+    "Fear of Visibility": "FEAR_OF_VISIBILITY",
+    "Empath Boundary": "EMPATH_BOUNDARY",
+    "Dark Night of the Soul": "DARK_NIGHT_OF_SOUL",
+    "Soul Nourishment": "SOUL_NOURISHMENT",
+    "Divine Guidance": "DIVINE_GUIDANCE",
+    "Sacred Polarity": "SACRED_POLARITY",
+    "Spiritual Purpose": "SPIRITUAL_PURPOSE",
+    "Soulmate Longing": "SOULMATE_LONGING",
+    "Partnership Patterns": "PARTNERSHIP_PATTERNS",
+    "Integration and Celebration": "INTEGRATION_CELEBRATION",
+    "Meaning Integration": "MEANING_INTEGRATION"
+  },
+  "scope_category_keys": {
+    "Self-awareness": "self_awareness",
+    "Psychological patterns": "psychological_patterns",
+    "Inner work": "inner_work",
+    "Personal philosophy": "personal_philosophy",
+    "Work and purpose": "work_and_purpose",
+    "Money and identity": "money_and_identity",
+    "Ambition and meaning": "ambition_and_meaning",
+    "Technology and awareness": "technology_and_awareness",
+    "Professional advice": "professional_advice",
+    "News and current events": "news_and_current_events",
+    "Specialized skill instruction": "specialized_skill_instruction",
+    "Practical tasks": "practical_tasks",
+    "Identity confirmation": "identity_confirmation",
+    "Harmful spirituality": "harmful_spirituality",
+    "System extraction": "system_extraction"
+  }
+}

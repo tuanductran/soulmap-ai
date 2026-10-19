@@ -7,11 +7,13 @@ keyword sets, weights, thresholds, or recency multipliers in Python.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import cast
 
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _STAGE_RE = re.compile(r"^### Stage (?P<number>[1-6]), (?P<name>.+?)\s*$", re.MULTILINE)
@@ -84,15 +86,10 @@ def _runtime_contract(text: str) -> dict[str, object]:
         if row.group("setting").strip().lower() != "setting"
     ]
     values = dict(rows)
-    memory_settings = {
-        "session_count_ge_10": "Minimum stage when session count is at least 10",
-        "prior_pattern_recognition": (
-            "Minimum stage when a prior session showed pattern recognition"
-        ),
-        "prior_breakthrough": (
-            "Minimum stage when a prior session showed a breakthrough"
-        ),
-    }
+    key_config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    memory_settings = key_config["stage_classifier_memory_minimums"]
     required = {
         *memory_settings.values(),
         "Close score delta",

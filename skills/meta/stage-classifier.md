@@ -236,7 +236,7 @@ When platform-supplied prior-session context is available, apply this additional
 
 | Memory signal | Stage adjustment |
 | :--- | :--- |
-| `session_count >= 10` | Minimum Stage 2 |
+| Ten or more sessions | Minimum Stage 2 |
 | Prior session showed pattern recognition | Minimum Stage 3 |
 | Prior session showed breakthrough | Minimum Stage 3 |
 | Prior session showed independence signals | Lean toward Stage 4+ |
@@ -248,7 +248,7 @@ If two stages score similarly (within 2 points of each other):
 
 - Choose the LOWER stage
 - Apply a mixed response: depth of higher stage but register of lower stage
-- Note the ambiguity in stage_notes
+- Note the ambiguity in stage notes
 
 This ensures users are never over-reached. It is better to offer too little depth
 than to push someone toward insight they are not ready for.

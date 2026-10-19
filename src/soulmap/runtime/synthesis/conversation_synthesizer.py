@@ -312,7 +312,7 @@ def synthesize(
             template = _rules().response_guidance["value_theme"]
         else:
             template = _rules().response_guidance["conflict_theme"]
-        theme_descriptions.append(template.format(theme=readable))
+        theme_descriptions.append(f"{template} {readable}.")
 
     synthesis_frame = (
         opening
@@ -323,15 +323,12 @@ def synthesize(
     )
 
     recommendation = (
-        _rules()
-        .response_guidance["recommendation"]
-        .format(
-            count=len(top_3),
-            longitudinal_notice=(
-                "Longitudinal data available. " if is_longitudinal else ""
-            ),
-            themes=", ".join(f"{d}:{t}" for d, t, _ in top_3),
-        )
+        f"Synthesis ready. {len(top_3)} recurring theme(s) identified. "
+        + ("Longitudinal data available. " if is_longitudinal else "")
+        + _rules().response_guidance["recommendation"]
+        + " Themes detected: "
+        + ", ".join(f"{domain}: {theme}" for domain, theme, _ in top_3)
+        + "."
     )
 
     return {

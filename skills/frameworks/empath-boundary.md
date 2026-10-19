@@ -192,7 +192,7 @@ with people context ("being around people", "after being with", "family gatherin
 
 | Result | Guidance |
 | :--- | :--- |
-| not_detected | No empath signal. Continue standard pipeline. |
+| No signal detected | No empath signal. Continue standard pipeline. |
 | detected | The user describes an empath-boundary concern. Use empath-boundary.md (P8d) to reflect their felt sense of dispersion, acknowledge what their sensitivity may make possible, and locate the specific burden without confirming literal energy transfer. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
 
 ### Secondary signal groups

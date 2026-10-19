@@ -10,9 +10,11 @@ higher level.
 
 from __future__ import annotations
 
+import json
 import re
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 
 @lru_cache(maxsize=128)
@@ -227,12 +229,55 @@ def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...],
     return extract_table_rows(_read_markdown_text(markdown_path), heading)
 
 
+@lru_cache(maxsize=1)
+def _runtime_key_registry() -> dict[str, Any]:
+    """Load Python-facing identifiers from the dedicated runtime config."""
+    config_path = default_skill_path("config/runtime-keys.json")
+    payload = json.loads(config_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("Runtime key configuration must be a JSON object.")
+    labels = payload.get("markdown_key_labels", {})
+    values = payload.get("markdown_value_labels", {})
+    if not isinstance(labels, dict) or not isinstance(values, dict):
+        raise ValueError("Runtime key and value labels must be JSON objects.")
+    return payload
+
+
 def load_key_value_table(markdown_path: Path, heading: str) -> dict[str, str]:
-    """Load a strict two-column Markdown knowledge contract."""
+    """Load a two-column Markdown table using key identifiers from config.
+
+    Markdown's first column is a human-readable label. Runtime key names are
+    owned by config/runtime-keys.json and mapped to those labels here.
+    """
     rows = load_table_rows(markdown_path, heading)
     if not rows or any(len(row) != 2 for row in rows):
         raise ValueError(f"Knowledge table {heading!r} must contain two columns.")
-    values = {row[0]: row[1] for row in rows}
+    root = default_skill_path("skills").parent.resolve()
+    try:
+        relative_path = markdown_path.resolve().relative_to(root).as_posix()
+    except ValueError as exc:
+        raise ValueError("Runtime key table must be inside the repository.") from exc
+    registry = _runtime_key_registry()
+    by_source = registry.get("markdown_key_labels", {}).get(relative_path, {})
+    by_heading = by_source.get(heading, {}) if isinstance(by_source, dict) else {}
+    display_to_key = (
+        {str(label): str(key) for label, key in by_heading.items()}
+        if isinstance(by_heading, dict)
+        else {}
+    )
+    value_source = registry.get("markdown_value_labels", {}).get(relative_path, {})
+    value_heading = (
+        value_source.get(heading, {}) if isinstance(value_source, dict) else {}
+    )
+    display_to_value = (
+        {str(label): str(value) for label, value in value_heading.items()}
+        if isinstance(value_heading, dict)
+        else {}
+    )
+    values = {
+        display_to_key.get(row[0], row[0]): display_to_value.get(row[1], row[1])
+        for row in rows
+    }
     if len(values) != len(rows) or any(not value for value in values.values()):
         raise ValueError(f"Knowledge table {heading!r} contains invalid entries.")
     return values

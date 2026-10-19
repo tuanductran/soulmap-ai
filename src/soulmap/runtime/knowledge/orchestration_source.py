@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime execution contract"
@@ -64,6 +66,27 @@ def _contract_body(text: str) -> str:
     return text[start:end]
 
 
+def _orchestration_value_keys() -> dict[str, str]:
+    """Load stable routing identifiers from the dedicated runtime config."""
+    config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    values = config.get("orchestration_value_keys", {})
+    if not isinstance(values, dict):
+        raise ValueError("Orchestration value keys must be a JSON object.")
+    return {str(label): str(key) for label, key in values.items()}
+
+
+def _runtime_cell(value: str, aliases: dict[str, str]) -> str:
+    """Resolve readable Markdown labels to config-owned runtime identifiers."""
+    if value in aliases:
+        return aliases[value]
+    parts = [part.strip() for part in value.split(",")]
+    if len(parts) > 1 and any(part in aliases for part in parts):
+        return ", ".join(aliases.get(part, part) for part in parts)
+    return value
+
+
 def _table_rows(body: str, heading: str) -> list[list[str]]:
     match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
@@ -73,11 +96,15 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
     if next_section:
         section = section[: next_section.start()]
     rows: list[list[str]] = []
+    aliases = _orchestration_value_keys()
     for line in section.splitlines():
         stripped = line.strip()
         if not stripped.startswith("|") or not stripped.endswith("|"):
             continue
-        cells = [cell.strip().replace("\\|", "|") for cell in stripped[1:-1].split("|")]
+        cells = [
+            _runtime_cell(cell.strip().replace("\\|", "|"), aliases)
+            for cell in stripped[1:-1].split("|")
+        ]
         if not cells or all(not cell for cell in cells):
             continue
         if all(set(cell) <= {":", "-", " "} for cell in cells):

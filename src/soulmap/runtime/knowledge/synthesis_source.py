@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
+from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Runtime detection contract"
@@ -100,12 +102,19 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
     )
     if match is None:
         raise ValueError(f"Synthesis theme section {heading!r} is missing.")
+    key_config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    heading_keys = key_config.get("theme_heading_keys", {})
+    if not isinstance(heading_keys, dict):
+        raise ValueError("Synthesis theme heading keys must be a JSON object.")
     groups: dict[str, tuple[str, ...]] = {}
     current: str | None = None
     for line in match.group("body").splitlines():
         stripped = line.strip()
         if stripped.startswith("#### "):
-            group_name = stripped[5:].strip().lower()
+            display_name = stripped[5:].strip()
+            group_name = str(heading_keys.get(display_name, display_name.lower()))
             current = group_name
             groups[group_name] = ()
         elif current is not None:

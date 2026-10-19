@@ -116,11 +116,17 @@ def detect_inner_conflict(
 
     primary_type = conflict_types[0] if conflict_types else "general"
 
-    recommendation = _GUIDANCE["detected"].format(primary_type=primary_type)
+    recommendation = (
+        _GUIDANCE["detected"] + f" Primary conflict type: {primary_type}."
+    )
 
     if parts_suggested:
-        recommendation += " " + _GUIDANCE["detected_parts_suffix"].format(
-            parts=", ".join(parts_suggested)
+        recommendation += (
+            " "
+            + _GUIDANCE["detected_parts_suffix"]
+            + " "
+            + ", ".join(parts_suggested)
+            + "."
         )
 
     return {
