@@ -305,18 +305,18 @@ def default_skill_path(relative_path: str) -> Path:
     import os
 
     rel = Path(relative_path)
+    env_root = os.environ.get("SOULMAP_REPO_ROOT")
+    if env_root:
+        candidate = Path(env_root) / rel
+        if candidate.exists():
+            return candidate
+
     if rel == Path("config/runtime-keys.json"):
         packaged_config = (
             Path(__file__).resolve().parents[1] / "config" / "runtime-keys.json"
         )
         if packaged_config.is_file():
             return packaged_config
-
-    env_root = os.environ.get("SOULMAP_REPO_ROOT")
-    if env_root:
-        candidate = Path(env_root) / rel
-        if candidate.exists():
-            return candidate
 
     for base in (Path(__file__).resolve(), Path.cwd().resolve()):
         for parent in (base, *base.parents):
