@@ -58,15 +58,21 @@ def _table_values(body: str) -> dict[str, int]:
     )
     if section is None:
         raise ValueError("Synthesis detection thresholds are missing.")
+    key_config = json.loads(
+        default_skill_path("config/runtime-keys.json").read_text(encoding="utf-8")
+    )
+    threshold_keys = key_config.get("synthesis_threshold_keys", {})
+    if not isinstance(threshold_keys, dict):
+        raise ValueError("Synthesis threshold keys must be a JSON object.")
     values: dict[str, int] = {}
     for match in _THRESHOLD_RE.finditer(section.group("body")):
-        key = re.sub(r"[^a-z0-9]+", "_", match.group("name").strip().lower()).strip("_")
+        display_name = match.group("name").strip()
+        key = threshold_keys.get(display_name)
+        if not isinstance(key, str):
+            raise ValueError(
+                f"Synthesis threshold {display_name!r} has no runtime key mapping."
+            )
         values[key] = int(match.group("value"))
-    aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
-    normalized_values: dict[str, int] = {}
-    for key, value in values.items():
-        normalized_values[str(aliases.get(key, key))] = value
-    values = normalized_values
     required = {
         "minimum_user_messages",
         "automatic_synthesis_user_messages",
