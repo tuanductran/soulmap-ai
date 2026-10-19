@@ -168,5 +168,5 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 | Result | Guidance |
 | :--- | :--- |
 | Biometric signal | Acknowledge the user's concern. Do not infer emotion or cause from the metric. Check for medical urgency first; if none is indicated and reflection seems welcome, offer an optional question. Use somatic-wellbeing.md. |
-| Body sensation | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic_wellbeing.md. |
+| Body sensation | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic-wellbeing.md. |
 | Somatic invitation | User is in their head / disconnected. Offer one somatic anchor first: 'Can you take one slow breath with me right now?' or 'Can you feel your feet on the floor?' Then continue with active framework. |
