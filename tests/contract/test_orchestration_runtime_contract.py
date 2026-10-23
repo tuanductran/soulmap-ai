@@ -1,6 +1,7 @@
 """Verify the orchestration Markdown exposes valid executable routing values."""
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def test_orchestration_runtime_contract_loads() -> None:
@@ -57,10 +58,10 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
 
     assert rules.runtime_instructions == {
         "Stage 1 override": "Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework.",
-        "HIGH intensity": "SANCTUARY MODE. Activate the emotional-deescalation protocol: acknowledge → ground → normalize. No 5-step framework. No inquiry question. 2-4 sentences maximum.",
+        "HIGH intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences.",
         "MODERATE intensity": "Hold the framework lightly and slow the conversation before deeper reflection.",
-        "MIRROR fallback": "MIRROR mode: use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
-        "PEER fallback": "PEER mode: dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
+        "MIRROR fallback": "Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
+        "PEER fallback": "Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
     }
 
 
