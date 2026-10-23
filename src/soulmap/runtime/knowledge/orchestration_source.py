@@ -6,6 +6,15 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.knowledge.labels import (
+    BLOCKEDFRAMEWORK_NAMES,
+    FRAMEWORK_NAMES,
+    INSTRUCTION_NAMES,
+    INTENSITY_NAMES,
+    MODE_NAMES,
+    SECONDARY_NAMES,
+    map_label,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Routing policy"
@@ -88,85 +97,6 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
     return rows
 
 
-_FRAMEWORK_NAMES = {
-    "Grief": "GRIEF",
-    "Existential": "EXISTENTIAL",
-    "Inner Parts": "INNER_PARTS",
-    "Direction": "DIRECTION",
-    "De-escalation": "DE_ESCALATION",
-    "Creative Drought": "CREATIVE_DROUGHT",
-    "Perfectionism Paralysis": "PERFECTIONISM_PARALYSIS",
-    "Shadow": "SHADOW",
-    "Ancestral Patterns": "ANCESTRAL_PATTERNS",
-    "Fear of Visibility": "FEAR_OF_VISIBILITY",
-    "Empath Boundary": "EMPATH_BOUNDARY",
-    "Dark Night of the Soul": "DARK_NIGHT_OF_SOUL",
-    "Soul Nourishment": "SOUL_NOURISHMENT",
-    "Divine Guidance": "DIVINE_GUIDANCE",
-    "Sacred Polarity": "SACRED_POLARITY",
-    "Spiritual Purpose": "SPIRITUAL_PURPOSE",
-    "Soulmate Longing": "SOULMATE_LONGING",
-    "Partnership Patterns": "PARTNERSHIP_PATTERNS",
-    "Integration and Celebration": "INTEGRATION_CELEBRATION",
-    "Meaning Integration": "MEANING_INTEGRATION",
-    "Synthesis": "SYNTHESIS",
-    "Pattern": "PATTERN",
-}
-_MODE_NAMES = {
-    "Sanctuary": "SANCTUARY",
-    "Mirror": "MIRROR",
-    "Peer": "PEER",
-    "De-escalation": "DE_ESCALATION",
-}
-_SECONDARY_NAMES = {
-    "Anger": "anger",
-    "Spiritual bypass": "bypass",
-    "Somatic": "somatic",
-    "Meaning Integration": "meaning_integration",
-    "Inner Parts": "inner_parts",
-}
-_BLOCKED_FRAMEWORK_NAMES = {
-    "Grief": "grief",
-    "Existential": "existential",
-    "Inner Parts": "inner_parts",
-    "Direction": "direction",
-    "Creative Drought": "creative_drought",
-    "Perfectionism Paralysis": "perfectionism_paralysis",
-    "Shadow": "shadow",
-    "Ancestral Patterns": "ancestral_patterns",
-    "Fear of Visibility": "fear_of_visibility",
-    "Empath Boundary": "empath_boundary",
-    "Dark Night of the Soul": "dark_night",
-    "Soul Nourishment": "soul_nourishment",
-    "Divine Guidance": "divine_guidance",
-    "Sacred Polarity": "sacred_polarity",
-    "Spiritual Purpose": "spiritual_purpose",
-    "Soulmate Longing": "soulmate_longing",
-    "Partnership Patterns": "partnership_patterns",
-    "Integration and Celebration": "integration_celebration",
-    "Meaning Integration": "meaning_integration",
-    "Synthesis": "synthesis",
-    "Pattern": "pattern",
-}
-_INTENSITY_NAMES = {"High": "HIGH", "Moderate": "MODERATE"}
-_INSTRUCTION_NAMES = {
-    "Stage 1 override": "Stage 1 override",
-    "High emotional intensity": "HIGH intensity",
-    "Moderate emotional intensity": "MODERATE intensity",
-    "Mirror mode fallback": "MIRROR fallback",
-    "Peer mode fallback": "PEER fallback",
-}
-
-
-def _mapped(value: str, mapping: dict[str, str], key: str) -> str:
-    try:
-        return mapping[value]
-    except KeyError as exc:
-        raise ValueError(
-            f"{key} contains unknown plain-language value {value!r}."
-        ) from exc
-
-
 def _require_bool(value: str, key: str) -> bool:
     choices = {
         "true": True,
@@ -210,13 +140,13 @@ def _parse_primary_priority(
         _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                framework=_mapped(
-                    framework, _FRAMEWORK_NAMES, "Primary framework priority"
+                framework=map_label(
+                    framework, FRAMEWORK_NAMES, "Primary framework priority"
                 ),
-                mode=_mapped(mode, _MODE_NAMES, "Primary framework priority"),
+                mode=map_label(mode, MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
-                    _mapped(
-                        item.strip(), _BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
+                    map_label(
+                        item.strip(), _BLOCKEDFRAMEWORK_NAMES, "Blocked frameworks"
                     )
                     for item in blocked.split(",")
                     if item.strip()
@@ -244,11 +174,11 @@ def _parse_intensity_fallback(
         level, framework, mode, allowed = row
         rules.append(
             IntensityFallbackRule(
-                level=_mapped(level, _INTENSITY_NAMES, "Intensity fallback"),
-                framework=_mapped(framework, _FRAMEWORK_NAMES, "Intensity fallback"),
-                mode=_mapped(mode, _MODE_NAMES, "Intensity fallback"),
+                level=map_label(level, INTENSITY_NAMES, "Intensity fallback"),
+                framework=map_label(framework, FRAMEWORK_NAMES, "Intensity fallback"),
+                mode=map_label(mode, MODE_NAMES, "Intensity fallback"),
                 allowed_secondary=tuple(
-                    _mapped(item.strip(), _SECONDARY_NAMES, "Allowed secondary layers")
+                    map_label(item.strip(), SECONDARY_NAMES, "Allowed secondary layers")
                     for item in allowed.split(",")
                     if item.strip()
                 ),
@@ -269,7 +199,7 @@ def _parse_secondary_priority(
         _, name = row
         rules.append(
             SecondaryPriorityRule(
-                name=_mapped(name, _SECONDARY_NAMES, "Secondary layer priority"),
+                name=map_label(name, SECONDARY_NAMES, "Secondary layer priority"),
             )
         )
     return tuple(rules)
@@ -303,13 +233,13 @@ def load_orchestration_rules() -> OrchestrationRules:
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    required_instruction_labels = set(_INSTRUCTION_NAMES)
+    required_instruction_labels = set(INSTRUCTION_NAMES)
     if set(runtime_instructions) != required_instruction_labels or any(
         not value for value in runtime_instructions.values()
     ):
         raise ValueError("Orchestration mode guidance is incomplete.")
     runtime_instructions = {
-        _INSTRUCTION_NAMES[label]: value
+        INSTRUCTION_NAMES[label]: value
         for label, value in runtime_instructions.items()
     }
 
