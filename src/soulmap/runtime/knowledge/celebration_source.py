@@ -11,9 +11,10 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.labels import CELEBRATION_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime detection contract"
+_CONTRACT_HEADING = "Detection policy"
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,7 +40,7 @@ def _contract_body(text: str) -> str:
         re.MULTILINE,
     )
     if match is None:
-        raise ValueError("Celebration runtime contract is missing.")
+        raise ValueError("Celebration detection policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
@@ -131,12 +132,16 @@ def _literal_config(body: str) -> dict[str, object]:
 
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
-    """Read and validate the runtime contract from shipped Markdown."""
+    """Read and validate the detection policy from shipped Markdown."""
     path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
     groups = load_labeled_groups(path, "Detection signals")
-    guidance = load_key_value_table(path, "Guidance")
+    guidance_labels = load_key_value_table(path, "Guidance")
+    guidance = {
+        map_label(label, CELEBRATION_GUIDANCE_NAMES, "Celebration guidance"): value
+        for label, value in guidance_labels.items()
+    }
     required_guidance = {"not_detected", "detected", "closing"}
     if not required_guidance <= guidance.keys():
         raise ValueError("Celebration guidance configuration is incomplete.")
