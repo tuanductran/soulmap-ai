@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+import ast
 import re
 
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime.knowledge import labels
 from soulmap.runtime.source_registry import _registry, runtime_skill_path
 
 _IDENTIFIER_RE = re.compile(
     r"(?<![A-Za-z0-9_])(?:[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+|"
     r"[a-z][a-z0-9]*(?:_[a-z0-9]+)+)(?![A-Za-z0-9_])"
 )
-_PLACEHOLDER_RE = re.compile(r"\{[A-Za-z_][A-Za-z0-9_]*\}")
+_TABLE_CELL_RE = re.compile(r"^\s*\|\s*([^|]+?)\s*\|", re.MULTILINE)
 
 
 def _registered_section(text: str, heading: str) -> str:
@@ -22,25 +24,39 @@ def _registered_section(text: str, heading: str) -> str:
         return ""
     level = len(match.group("marks"))
     body_start = match.end()
-    next_heading = re.search(rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE)
+    next_heading = re.search(
+        rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE
+    )
     body_end = body_start + next_heading.start() if next_heading else len(text)
     return text[body_start:body_end]
 
 
-def _python_runtime_tokens() -> tuple[set[str], set[str]]:
+def _label_mapping_values() -> set[str]:
+    values: set[str] = set()
+    for name, mapping in vars(labels).items():
+        if name.endswith("_NAMES") and isinstance(mapping, dict):
+            values.update(value for value in mapping.values() if isinstance(value, str))
+    return values
+
+
+def _format_placeholders() -> set[str]:
     runtime_root = REPO_ROOT / "src/soulmap/runtime"
-    identifiers: set[str] = set()
     placeholders: set[str] = set()
     for path in runtime_root.rglob("*.py"):
-        source = path.read_text(encoding="utf-8")
-        identifiers.update(_IDENTIFIER_RE.findall(source))
-        placeholders.update(_PLACEHOLDER_RE.findall(source))
-    return identifiers, placeholders
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            if not isinstance(node.func, ast.Attribute) or node.func.attr != "format":
+                continue
+            placeholders.update(f"{{{keyword.arg}}}" for keyword in node.keywords if keyword.arg)
+    return placeholders
 
 
-def test_python_owned_identifiers_and_placeholders_do_not_leak_into_skill_sections() -> None:
-    """Registered Skill sections use reader-facing labels, not Python-owned tokens."""
-    identifiers, placeholders = _python_runtime_tokens()
+def test_python_owned_labels_and_format_fields_do_not_leak_into_skill_sections() -> None:
+    """Python runtime labels stay in Python; Skills expose reader-facing content."""
+    internal_labels = _label_mapping_values()
+    placeholders = _format_placeholders()
     registry = _registry()
     findings: list[str] = []
 
@@ -52,19 +68,36 @@ def test_python_owned_identifiers_and_placeholders_do_not_leak_into_skill_sectio
             section = _registered_section(text, heading)
             if not section:
                 continue
-            for token in identifiers:
-                if re.search(
-                    rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
-                    section,
-                ):
-                    line = text[: text.find(section)].count("\n") + 1
-                    findings.append(f"{path.relative_to(REPO_ROOT)}:{line}: {heading}: {token}")
-            for token in placeholders:
-                if token in section:
-                    line = text[: text.find(section)].count("\n") + 1
-                    findings.append(f"{path.relative_to(REPO_ROOT)}:{line}: {heading}: {token}")
+
+            for line_number, line in enumerate(section.splitlines(), 1):
+                stripped = line.strip()
+                if stripped.startswith("|"):
+                    for cell in _TABLE_CELL_RE.findall(line):
+                        cell = cell.strip()
+                        if cell in internal_labels:
+                            findings.append(
+                                f"{path.relative_to(REPO_ROOT)}:{heading}: "
+                                f"table label {cell!r}"
+                            )
+                else:
+                    for token in internal_labels:
+                        if "_" in token and re.search(
+                            rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
+                            line,
+                        ):
+                            findings.append(
+                                f"{path.relative_to(REPO_ROOT)}:{heading}: "
+                                f"Python label {token!r}"
+                            )
+
+                for token in placeholders:
+                    if token in line:
+                        findings.append(
+                            f"{path.relative_to(REPO_ROOT)}:{heading}: "
+                            f"Python format field {token!r}"
+                        )
 
     assert not findings, (
-        "Python-owned identifier/placeholder tokens appear in registered Skill sections:\n"
+        "Python-owned labels/format fields appear in registered Skill sections:\n"
         + "\n".join(sorted(set(findings)))
     )
