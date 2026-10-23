@@ -71,7 +71,9 @@ def _literal_config(body: str) -> dict[str, object]:
             phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
             if not phrases:
                 raise ValueError(f"Scope category {group.group('group')} is empty.")
-            parsed[map_label(group.group("group"), SCOPE_CATEGORY_NAMES, "Scope category")] = phrases
+            parsed[
+                map_label(group.group("group"), SCOPE_CATEGORY_NAMES, "Scope category")
+            ] = phrases
         values[expected[pack.group("pack")]] = parsed
     return values
 
