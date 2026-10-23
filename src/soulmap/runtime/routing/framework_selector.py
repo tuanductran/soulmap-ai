@@ -431,7 +431,7 @@ async def select_framework_async(
             "mode": "MIRROR",
             "context": {"stage": 1, "stage_override": True},
             "instruction": (
-                orchestration_rules.runtime_instructions["Stage 1 override"]
+                orchestration_rules.runtime_instructions["stage_1_override"]
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -492,7 +492,7 @@ async def select_framework_async(
             ),
             "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
-            "instruction": orchestration_rules.runtime_instructions["HIGH intensity"],
+            "instruction": orchestration_rules.runtime_instructions["high_emotional_intensity"],
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
         if selection["secondary_layer"] not in fallback.allowed_secondary:
@@ -601,7 +601,7 @@ async def select_framework_async(
             "mode": fallback.mode,
             "context": intensity,
             "instruction": (
-                orchestration_rules.runtime_instructions["MODERATE intensity"]
+                orchestration_rules.runtime_instructions["moderate_emotional_intensity"]
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
@@ -857,9 +857,9 @@ async def select_framework_async(
         "mode": mode,
         "context": {"stage": current_stage},
         "instruction": (
-            orchestration_rules.runtime_instructions["MIRROR fallback"]
+            orchestration_rules.runtime_instructions["mirror_mode_fallback"]
             if mode == "MIRROR"
-            else orchestration_rules.runtime_instructions["PEER fallback"]
+            else orchestration_rules.runtime_instructions["peer_mode_fallback"]
         ),
         "blocked": [],
     }
