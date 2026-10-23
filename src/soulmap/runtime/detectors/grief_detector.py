@@ -23,7 +23,7 @@ _GRIEF_GROUPS = load_labeled_groups(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("grief-companion"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("grief-companion"), "Guidance")
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
