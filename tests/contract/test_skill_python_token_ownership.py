@@ -20,9 +20,7 @@ def _registered_section(text: str, heading: str) -> str:
         return ""
     level = len(match.group("marks"))
     body_start = match.end()
-    next_heading = re.search(
-        rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE
-    )
+    next_heading = re.search(rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE)
     body_end = body_start + next_heading.start() if next_heading else len(text)
     return text[body_start:body_end]
 
