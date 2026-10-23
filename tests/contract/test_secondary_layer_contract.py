@@ -14,7 +14,7 @@ import ast
 import re
 from pathlib import Path
 
-from soulmap.runtime.knowledge.orchestration_source import _SECONDARY_NAMES
+from soulmap.runtime.knowledge.labels import SECONDARY_NAMES
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ORCHESTRATION = REPO_ROOT / "skills" / "meta" / "orchestration.md"
@@ -64,7 +64,7 @@ def _emittable_layers() -> set[str]:
                     found |= _resulting_strings(node.value)
     return {
         label
-        for label, internal_name in _SECONDARY_NAMES.items()
+        for label, internal_name in SECONDARY_NAMES.items()
         if internal_name in found
     }
 
