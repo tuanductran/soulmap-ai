@@ -162,7 +162,9 @@ def _mapped(value: str, mapping: dict[str, str], key: str) -> str:
     try:
         return mapping[value]
     except KeyError as exc:
-        raise ValueError(f"{key} contains unknown plain-language value {value!r}.") from exc
+        raise ValueError(
+            f"{key} contains unknown plain-language value {value!r}."
+        ) from exc
 
 
 def _require_bool(value: str, key: str) -> bool:
