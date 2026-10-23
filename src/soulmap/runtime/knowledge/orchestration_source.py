@@ -57,7 +57,7 @@ class OrchestrationRules:
 def _contract_body(text: str) -> str:
     match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
-        raise ValueError("Orchestration runtime execution contract is missing.")
+        raise ValueError("Orchestration routing policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
@@ -112,13 +112,41 @@ _FRAMEWORK_NAMES = {
     "Synthesis": "SYNTHESIS",
     "Pattern": "PATTERN",
 }
-_MODE_NAMES = {"Sanctuary": "SANCTUARY", "Mirror": "MIRROR", "Peer": "PEER", "De-escalation": "DE_ESCALATION"}
+_MODE_NAMES = {
+    "Sanctuary": "SANCTUARY",
+    "Mirror": "MIRROR",
+    "Peer": "PEER",
+    "De-escalation": "DE_ESCALATION",
+}
 _SECONDARY_NAMES = {
     "Anger": "anger",
     "Spiritual bypass": "bypass",
     "Somatic": "somatic",
     "Meaning Integration": "meaning_integration",
     "Inner Parts": "inner_parts",
+}
+_BLOCKED_FRAMEWORK_NAMES = {
+    "Grief": "grief",
+    "Existential": "existential",
+    "Inner Parts": "inner_parts",
+    "Direction": "direction",
+    "Creative Drought": "creative_drought",
+    "Perfectionism Paralysis": "perfectionism_paralysis",
+    "Shadow": "shadow",
+    "Ancestral Patterns": "ancestral_patterns",
+    "Fear of Visibility": "fear_of_visibility",
+    "Empath Boundary": "empath_boundary",
+    "Dark Night of the Soul": "dark_night",
+    "Soul Nourishment": "soul_nourishment",
+    "Divine Guidance": "divine_guidance",
+    "Sacred Polarity": "sacred_polarity",
+    "Spiritual Purpose": "spiritual_purpose",
+    "Soulmate Longing": "soulmate_longing",
+    "Partnership Patterns": "partnership_patterns",
+    "Integration and Celebration": "integration_celebration",
+    "Meaning Integration": "meaning_integration",
+    "Synthesis": "synthesis",
+    "Pattern": "pattern",
 }
 _INTENSITY_NAMES = {"High": "HIGH", "Moderate": "MODERATE"}
 _INSTRUCTION_NAMES = {
@@ -138,7 +166,14 @@ def _mapped(value: str, mapping: dict[str, str], key: str) -> str:
 
 
 def _require_bool(value: str, key: str) -> bool:
-    choices = {"true": True, "false": False, "required": True, "not required": False, "allowed": True, "not allowed": False}
+    choices = {
+        "true": True,
+        "false": False,
+        "required": True,
+        "not required": False,
+        "allowed": True,
+        "not allowed": False,
+    }
     normalized = value.strip().casefold()
     if normalized not in choices:
         raise ValueError(f"{key} must use a recognized plain-language choice.")
@@ -173,10 +208,14 @@ def _parse_primary_priority(
         _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                framework=_mapped(framework, _FRAMEWORK_NAMES, "Primary framework priority"),
+                framework=_mapped(
+                    framework, _FRAMEWORK_NAMES, "Primary framework priority"
+                ),
                 mode=_mapped(mode, _MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
-                    _mapped(item.strip(), _FRAMEWORK_NAMES, "Blocked frameworks") for item in blocked.split(",") if item.strip()
+                    _mapped(item.strip(), _BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks")
+                    for item in blocked.split(",")
+                    if item.strip()
                 ),
                 insight_secondary=_require_bool(
                     insight_secondary, "PRIMARY_PRIORITY.insight_secondary"
@@ -205,7 +244,9 @@ def _parse_intensity_fallback(
                 framework=_mapped(framework, _FRAMEWORK_NAMES, "Intensity fallback"),
                 mode=_mapped(mode, _MODE_NAMES, "Intensity fallback"),
                 allowed_secondary=tuple(
-                    _mapped(item.strip(), _SECONDARY_NAMES, "Allowed secondary layers") for item in allowed.split(",") if item.strip()
+                    _mapped(item.strip(), _SECONDARY_NAMES, "Allowed secondary layers")
+                    for item in allowed.split(",")
+                    if item.strip()
                 ),
             )
         )
@@ -264,7 +305,8 @@ def load_orchestration_rules() -> OrchestrationRules:
     ):
         raise ValueError("Orchestration mode guidance is incomplete.")
     runtime_instructions = {
-        _INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
+        _INSTRUCTION_NAMES[label]: value
+        for label, value in runtime_instructions.items()
     }
 
     primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
