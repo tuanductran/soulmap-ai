@@ -160,3 +160,13 @@ def test_detector_bindings_reject_unknown_names() -> None:
         _primary_detector_binding("UNKNOWN")
     with pytest.raises(ValueError, match="Unknown secondary detector binding"):
         _secondary_detector_binding("unknown")
+
+
+def test_routing_policy_uses_human_readable_names() -> None:
+    text = runtime_skill_path("orchestration").read_text(encoding="utf-8")
+    policy = text.split("## Routing policy", 1)[1].split("## Decision Tree", 1)[0]
+
+    for token in ("DE_ESCALATION", "INNER_PARTS", "meaning_integration", "inner_parts"):
+        assert token not in policy
+    assert "| High | De-escalation | Sanctuary |" in policy
+    assert "| 1 | Grief | Sanctuary |" in policy
