@@ -14,6 +14,8 @@ import ast
 import re
 from pathlib import Path
 
+from soulmap.runtime.knowledge.orchestration_source import _SECONDARY_NAMES
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ORCHESTRATION = REPO_ROOT / "skills" / "meta" / "orchestration.md"
 SELECTOR = (
@@ -26,7 +28,9 @@ def _documented_layers() -> set[str]:
     text = ORCHESTRATION.read_text(encoding="utf-8")
     section = text.split("| Secondary Layer | Activate When |", 1)[1]
     section = section.split("\nDo NOT activate", 1)[0]
-    return set(re.findall(r"^\| `([a-z_]+)` \|", section, re.MULTILINE))
+    return set(re.findall(r"^\| ([^|]+?) \|", section, re.MULTILINE)) - {
+        "Secondary Layer"
+    }
 
 
 def _resulting_strings(node: ast.expr) -> set[str]:
@@ -55,7 +59,11 @@ def _emittable_layers() -> set[str]:
             for target in node.targets:
                 if isinstance(target, ast.Name) and target.id == "secondary":
                     found |= _resulting_strings(node.value)
-    return found
+    return {
+        label
+        for label, internal_name in _SECONDARY_NAMES.items()
+        if internal_name in found
+    }
 
 
 def test_every_emittable_secondary_layer_is_documented() -> None:
