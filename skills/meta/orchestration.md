@@ -60,18 +60,18 @@ These short instructions are normative content contracts. Their wording is part 
 | Stage 1 override | Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework. |
 | High emotional intensity | Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences. |
 | Moderate emotional intensity | Hold the framework lightly and slow the conversation before deeper reflection. |
-| Mirror mode fallback | Use use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure. |
+| Mirror mode fallback | Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure. |
 | Peer mode fallback | Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format. |
 
 ### Intensity fallback
 
 | Level | Primary framework | Mode | Allowed secondary layers |
 | :--- | :--- | :--- | :--- |
-| High | DE_ESCALATION | Sanctuary | Anger, Spiritual bypass, Somatic |
-| Moderate | DE_ESCALATION | Mirror | Meaning Integration, Inner Parts |
+| High | De-escalation | Sanctuary | Anger, Spiritual bypass, Somatic |
+| Moderate | De-escalation | Mirror | Meaning Integration, Inner Parts |
 
 These are fallback routes only. Primary-priority rules still win when their conditions
-match. HIGH always uses its fallback primary; MODERATE uses its fallback only when no
+match. High always uses its fallback primary; Moderate uses its fallback only when no
 primary-priority rule matches.
 
 ### Primary framework priority
