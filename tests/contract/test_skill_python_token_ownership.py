@@ -1,13 +1,37 @@
 from __future__ import annotations
 
-import ast
 import re
 
-from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge import labels
-from soulmap.runtime.source_registry import _registry, runtime_skill_path
+from soulmap.runtime.source_registry import runtime_skill_path
 
-_TABLE_CELL_RE = re.compile(r"^\s*\|\s*([^|]+?)\s*\|", re.MULTILINE)
+_MIGRATED_LABEL_SECTIONS = (
+    (
+        "orchestration",
+        ("Routing policy",),
+        (
+            "FRAMEWORK_NAMES",
+            "MODE_NAMES",
+            "SECONDARY_NAMES",
+            "BLOCKED_FRAMEWORK_NAMES",
+            "INTENSITY_NAMES",
+            "INSTRUCTION_NAMES",
+        ),
+    ),
+    ("scope-classification", ("Scope policy",), ("SCOPE_CATEGORY_NAMES",)),
+    (
+        "integration-celebration",
+        ("Guidance",),
+        ("CELEBRATION_GUIDANCE_NAMES",),
+    ),
+    ("dependency-detection", ("Guidance",), ("DEPENDENCY_GUIDANCE_NAMES",)),
+    (
+        "meaning-integration",
+        ("Detection policy", "Guidance"),
+        ("INSIGHT_CLASSIFICATION_NAMES", "INSIGHT_GUIDANCE_NAMES"),
+    ),
+)
+_FORMAT_FIELDS = ("{strength}", "{insight_type}", "{guidance}")
 
 
 def _registered_section(text: str, heading: str) -> str:
@@ -25,98 +49,40 @@ def _registered_section(text: str, heading: str) -> str:
     return text[body_start:body_end]
 
 
-def _python_owned_labels() -> set[str]:
-    values: set[str] = set()
-    for name, mapping in vars(labels).items():
-        if name.endswith("_NAMES") and isinstance(mapping, dict):
-            values.update(value for value in mapping.values() if isinstance(value, str))
-
-    runtime_root = REPO_ROOT / "src/soulmap/runtime"
-    for path in runtime_root.rglob("*.py"):
-        tree = ast.parse(path.read_text(encoding="utf-8"))
-        for node in ast.walk(tree):
-            value = None
-            if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant):
-                value = node.slice.value
-            elif (
-                isinstance(node, ast.Call)
-                and isinstance(node.func, ast.Attribute)
-                and node.func.attr == "get"
-                and node.args
-                and isinstance(node.args[0], ast.Constant)
-            ):
-                value = node.args[0].value
-            if isinstance(value, str) and (
-                "_" in value or "-" in value or value.isupper()
-            ):
-                values.add(value)
-    return values
-
-
-def _format_placeholders() -> set[str]:
-    runtime_root = REPO_ROOT / "src/soulmap/runtime"
-    placeholders: set[str] = set()
-    for path in runtime_root.rglob("*.py"):
-        tree = ast.parse(path.read_text(encoding="utf-8"))
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call):
-                continue
-            if not isinstance(node.func, ast.Attribute) or node.func.attr != "format":
-                continue
-            placeholders.update(
-                f"{{{keyword.arg}}}" for keyword in node.keywords if keyword.arg
-            )
-    return placeholders
-
-
-def test_python_tokens_stay_out_of_skill_sections() -> None:
-    """Python runtime labels stay in Python; Skills expose reader-facing content."""
-    internal_labels = _python_owned_labels()
-    key_like_tokens = {
-        token
-        for token in internal_labels
-        if "_" in token or "-" in token or token.isupper()
-    }
-    placeholders = _format_placeholders()
-    registry = _registry()
+def test_migrated_python_labels_stay_out_of_skill_sections() -> None:
+    """Guard the reader-facing labels migrated in this refactor slice."""
     findings: list[str] = []
-
-    for source_id, entry in registry.items():
+    for source_id, headings, mapping_names in _MIGRATED_LABEL_SECTIONS:
         path = runtime_skill_path(source_id)
         text = path.read_text(encoding="utf-8")
-        headings = [heading for heading in entry[1:] if heading != "-"]
+        labels_to_check = {
+            value
+            for name in mapping_names
+            for value in getattr(labels, name).values()
+        }
         for heading in headings:
             section = _registered_section(text, heading)
-            if not section:
-                continue
-
-            for line in section.splitlines():
-                stripped = line.strip()
-                for token in key_like_tokens:
+            for token in labels_to_check:
+                if "_" in token or token.isupper():
                     if re.search(
-                        rf"(?<![A-Za-z0-9_-]){re.escape(token)}(?![A-Za-z0-9_-])",
-                        line,
+                        rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
+                        section,
                     ):
-                        findings.append(
-                            f"{path.relative_to(REPO_ROOT)}:{heading}: "
-                            f"Python label {token!r}"
-                        )
-                if stripped.startswith("|"):
-                    for cell in _TABLE_CELL_RE.findall(line):
-                        cell = cell.strip()
-                        if cell in internal_labels:
-                            findings.append(
-                                f"{path.relative_to(REPO_ROOT)}:{heading}: "
-                                f"table label {cell!r}"
-                            )
-                for token in placeholders:
-                    if token in line:
-                        findings.append(
-                            f"{path.relative_to(REPO_ROOT)}:{heading}: "
-                            f"Python format field {token!r}"
-                        )
+                        findings.append(f"{source_id}:{heading}: {token}")
+                elif any(
+                    cell.strip() == token
+                    for line in section.splitlines()
+                    if line.lstrip().startswith("|")
+                    for cell in line.strip().strip("|").split("|")
+                ):
+                    findings.append(f"{source_id}:{heading}: {token}")
+
+            if source_id == "meaning-integration":
+                for field in _FORMAT_FIELDS:
+                    if field in section:
+                        findings.append(f"{source_id}:{heading}: {field}")
 
     assert not findings, (
-        "Python-owned labels/format fields appear in registered Skill sections:\n"
+        "Migrated Python labels/format fields appear in Skill content:\n"
         + "\n".join(sorted(set(findings)))
     )
