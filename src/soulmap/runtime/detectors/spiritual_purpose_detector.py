@@ -23,7 +23,7 @@ SPIRITUAL_PURPOSE_SIGNALS = load_keyword_section(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("spiritual-purpose"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("spiritual-purpose"), "Guidance")
 
