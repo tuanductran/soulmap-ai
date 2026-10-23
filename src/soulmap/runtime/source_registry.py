@@ -194,7 +194,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "dependency-detection": (
         "skills/safety/dependency-detection.md",
         "Detection signals",
-        "Runtime detection contract",
+        "Detection policy",
         "Guidance",
     ),
 }
