@@ -56,9 +56,7 @@ def test_migrated_python_labels_stay_out_of_skill_sections() -> None:
         path = runtime_skill_path(source_id)
         text = path.read_text(encoding="utf-8")
         labels_to_check = {
-            value
-            for name in mapping_names
-            for value in getattr(labels, name).values()
+            value for name in mapping_names for value in getattr(labels, name).values()
         }
         for heading in headings:
             section = _registered_section(text, heading)
