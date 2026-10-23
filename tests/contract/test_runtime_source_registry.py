@@ -21,7 +21,7 @@ def test_runtime_registry_resolves_known_domain_source() -> None:
     path = runtime_skill_path("grief-companion")
     assert path == REPO_ROOT / "skills/frameworks/grief-companion.md"
     assert (
-        runtime_section("grief-companion", "contract") == "Runtime detection contract"
+        runtime_section("grief-companion", "contract") == "Detection policy"
     )
     assert runtime_skill_path("shadow-patterns") != runtime_skill_path(
         "self-compassion"
