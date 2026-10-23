@@ -67,7 +67,7 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
             empath, "People-context signals"
         ),
         "empath.contract": _uncached_key_value_table(
-            empath, "Runtime detection contract"
+            empath, "Detection policy"
         ),
         "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
         "ancestral.activation": extract_keyword_section(
@@ -78,7 +78,7 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(
-            somatic, "Runtime detection contract"
+            somatic, "Detection policy"
         ),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
         "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
@@ -96,14 +96,14 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "empath.activation": load_keyword_section(empath, "Activation Signals"),
         "empath.drain": load_keyword_section(empath, "Drain signals"),
         "empath.people_context": load_keyword_section(empath, "People-context signals"),
-        "empath.contract": load_key_value_table(empath, "Runtime detection contract"),
+        "empath.contract": load_key_value_table(empath, "Detection policy"),
         "empath.guidance": load_key_value_table(empath, "Guidance"),
         "ancestral.activation": load_keyword_section(ancestral, "Activation Signals"),
         "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
         "ancestral.scoring": load_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": load_key_value_table(somatic, "Runtime detection contract"),
+        "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
         "pattern.scoring": load_key_value_table(pattern, "Scoring"),
         "pattern.guidance": load_key_value_table(pattern, "Runtime guidance"),
@@ -130,14 +130,14 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "empath.activation": keyword(empath, "Activation Signals"),
         "empath.drain": keyword(empath, "Drain signals"),
         "empath.people_context": keyword(empath, "People-context signals"),
-        "empath.contract": table(empath, "Runtime detection contract"),
+        "empath.contract": table(empath, "Detection policy"),
         "empath.guidance": table(empath, "Guidance"),
         "ancestral.activation": keyword(ancestral, "Activation Signals"),
         "ancestral.groups": groups(ancestral, "Detection signals"),
         "ancestral.scoring": table(ancestral, "Scoring"),
         "ancestral.guidance": table(ancestral, "Guidance"),
         "somatic.groups": groups(somatic, "Detection signals"),
-        "somatic.contract": table(somatic, "Runtime detection contract"),
+        "somatic.contract": table(somatic, "Detection policy"),
         "somatic.guidance": table(somatic, "Guidance"),
         "pattern.scoring": table(pattern, "Scoring"),
         "pattern.guidance": table(pattern, "Runtime guidance"),
