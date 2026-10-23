@@ -270,7 +270,7 @@ major life disruption).
 Stage regression is possible in life but should not be triggered by a single message.
 Require two or more messages showing lower-stage signals before downgrading.
 
-## Runtime enforcement contract
+## Stage classification policy
 
 The operational stage-classification policy is authored in this section. These values are normative for stage classification.
 
