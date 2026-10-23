@@ -198,7 +198,7 @@ Pattern language:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational ancestral-pattern detection policy.
 
