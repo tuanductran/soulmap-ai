@@ -8,7 +8,7 @@ from functools import lru_cache
 
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime execution contract"
+_CONTRACT_HEADING = "Routing policy"
 
 
 @dataclass(frozen=True, slots=True)
@@ -185,7 +185,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     path = runtime_skill_path("orchestration")
     body = _contract_body(path.read_text(encoding="utf-8"))
 
-    scalar_rows = _table_rows(body, "Scalar settings")
+    scalar_rows = _table_rows(body, "Operational limits")
     scalars = {row[0]: row[1] for row in scalar_rows if len(row) == 2}
     required_scalars = {
         "Stage 1 override max user messages",
@@ -203,7 +203,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     if strength not in {"emerging", "strong"}:
         raise ValueError("Breakthrough minimum insight strength is invalid.")
 
-    instruction_rows = _table_rows(body, "Runtime instructions")
+    instruction_rows = _table_rows(body, "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
@@ -219,8 +219,8 @@ def load_orchestration_rules() -> OrchestrationRules:
     ):
         raise ValueError("Orchestration runtime instructions are incomplete.")
 
-    primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
-    secondary = _parse_secondary_priority(_table_rows(body, "Secondary priority"))
+    primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
+    secondary = _parse_secondary_priority(_table_rows(body, "Secondary layer priority"))
     intensity_fallback = _parse_intensity_fallback(
         _table_rows(body, "Intensity fallback")
     )
