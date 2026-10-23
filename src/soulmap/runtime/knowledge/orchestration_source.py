@@ -88,10 +88,60 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
     return rows
 
 
+_FRAMEWORK_NAMES = {
+    "Grief": "GRIEF",
+    "Existential": "EXISTENTIAL",
+    "Inner Parts": "INNER_PARTS",
+    "Direction": "DIRECTION",
+    "Creative Drought": "CREATIVE_DROUGHT",
+    "Perfectionism Paralysis": "PERFECTIONISM_PARALYSIS",
+    "Shadow": "SHADOW",
+    "Ancestral Patterns": "ANCESTRAL_PATTERNS",
+    "Fear of Visibility": "FEAR_OF_VISIBILITY",
+    "Empath Boundary": "EMPATH_BOUNDARY",
+    "Dark Night of the Soul": "DARK_NIGHT_OF_SOUL",
+    "Soul Nourishment": "SOUL_NOURISHMENT",
+    "Divine Guidance": "DIVINE_GUIDANCE",
+    "Sacred Polarity": "SACRED_POLARITY",
+    "Spiritual Purpose": "SPIRITUAL_PURPOSE",
+    "Soulmate Longing": "SOULMATE_LONGING",
+    "Partnership Patterns": "PARTNERSHIP_PATTERNS",
+    "Integration and Celebration": "INTEGRATION_CELEBRATION",
+    "Meaning Integration": "MEANING_INTEGRATION",
+    "Synthesis": "SYNTHESIS",
+    "Pattern": "PATTERN",
+}
+_MODE_NAMES = {"Sanctuary": "SANCTUARY", "Mirror": "MIRROR", "Peer": "PEER", "De-escalation": "DE_ESCALATION"}
+_SECONDARY_NAMES = {
+    "Anger": "anger",
+    "Spiritual bypass": "bypass",
+    "Somatic": "somatic",
+    "Meaning Integration": "meaning_integration",
+    "Inner Parts": "inner_parts",
+}
+_INTENSITY_NAMES = {"High": "HIGH", "Moderate": "MODERATE"}
+_INSTRUCTION_NAMES = {
+    "Stage 1 override": "Stage 1 override",
+    "High emotional intensity": "HIGH intensity",
+    "Moderate emotional intensity": "MODERATE intensity",
+    "Mirror mode fallback": "MIRROR fallback",
+    "Peer mode fallback": "PEER fallback",
+}
+
+
+def _mapped(value: str, mapping: dict[str, str], key: str) -> str:
+    try:
+        return mapping[value]
+    except KeyError as exc:
+        raise ValueError(f"{key} contains unknown plain-language value {value!r}.") from exc
+
+
 def _require_bool(value: str, key: str) -> bool:
-    if value not in {"true", "false"}:
-        raise ValueError(f"{key} must be true or false.")
-    return value == "true"
+    choices = {"true": True, "false": False, "required": True, "not required": False, "allowed": True, "not allowed": False}
+    normalized = value.strip().casefold()
+    if normalized not in choices:
+        raise ValueError(f"{key} must use a recognized plain-language choice.")
+    return choices[normalized]
 
 
 def _require_positive_int(value: str, key: str) -> int:
