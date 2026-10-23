@@ -26,8 +26,8 @@ def test_celebration_guidance_uses_plain_language_labels() -> None:
     assert "| Not detected |" in text
     assert "| Detected |" in text
     assert "| Closing |" in text
-    for implementation_label in ("not_detected", "detected |", "closing |"):
-        assert implementation_label not in text
+    for implementation_row in ("| not_detected |", "| detected |", "| closing |"):
+        assert implementation_row not in text
     assert set(load_celebration_rules().guidance) == {
         "not_detected",
         "detected",
