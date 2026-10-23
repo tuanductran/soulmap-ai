@@ -31,7 +31,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.source_registry import runtime_skill_path
 
 Benchmark = Callable[[], object]
-TABLE_HEADINGS = ("Scoring", "Runtime guidance")
+TABLE_HEADINGS = ("Scoring", "Guidance")
 
 
 def _uncached_key_value_table(text: str, heading: str) -> dict[str, str]:
@@ -82,7 +82,7 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         ),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
         "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": _uncached_key_value_table(pattern, "Runtime guidance"),
+        "pattern.guidance": _uncached_key_value_table(pattern, "Guidance"),
     }
 
 
@@ -106,7 +106,7 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
         "pattern.scoring": load_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": load_key_value_table(pattern, "Runtime guidance"),
+        "pattern.guidance": load_key_value_table(pattern, "Guidance"),
     }
 
 
@@ -140,7 +140,7 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "somatic.contract": table(somatic, "Detection policy"),
         "somatic.guidance": table(somatic, "Guidance"),
         "pattern.scoring": table(pattern, "Scoring"),
-        "pattern.guidance": table(pattern, "Runtime guidance"),
+        "pattern.guidance": table(pattern, "Guidance"),
     }
 
 
