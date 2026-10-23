@@ -66,9 +66,7 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "empath.people_context": extract_keyword_section(
             empath, "People-context signals"
         ),
-        "empath.contract": _uncached_key_value_table(
-            empath, "Detection policy"
-        ),
+        "empath.contract": _uncached_key_value_table(empath, "Detection policy"),
         "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
         "ancestral.activation": extract_keyword_section(
             ancestral, "Activation Signals"
@@ -77,9 +75,7 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": _uncached_key_value_table(
-            somatic, "Detection policy"
-        ),
+        "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
         "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
         "pattern.guidance": _uncached_key_value_table(pattern, "Guidance"),
