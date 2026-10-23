@@ -28,8 +28,11 @@ def _documented_layers() -> set[str]:
     text = ORCHESTRATION.read_text(encoding="utf-8")
     section = text.split("| Secondary Layer | Activate When |", 1)[1]
     section = section.split("\nDo NOT activate", 1)[0]
-    return set(re.findall(r"^\| ([^|]+?) \|", section, re.MULTILINE)) - {
-        "Secondary Layer"
+    return {
+        label.strip()
+        for label in re.findall(r"^\| ([^|]+?) \|", section, re.MULTILINE)
+        if label.strip() != "Secondary Layer"
+        and not set(label.strip()) <= {":", "-", " "}
     }
 
 
