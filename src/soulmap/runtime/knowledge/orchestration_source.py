@@ -172,10 +172,10 @@ def _parse_primary_priority(
         _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                framework=_require_str(framework, "PRIMARY_PRIORITY.framework"),
-                mode=_require_str(mode, "PRIMARY_PRIORITY.mode"),
+                framework=_mapped(framework, _FRAMEWORK_NAMES, "Primary framework priority"),
+                mode=_mapped(mode, _MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
-                    item.strip() for item in blocked.split(",") if item.strip()
+                    _mapped(item.strip(), _FRAMEWORK_NAMES, "Blocked frameworks") for item in blocked.split(",") if item.strip()
                 ),
                 insight_secondary=_require_bool(
                     insight_secondary, "PRIMARY_PRIORITY.insight_secondary"
@@ -200,11 +200,11 @@ def _parse_intensity_fallback(
         level, framework, mode, allowed = row
         rules.append(
             IntensityFallbackRule(
-                level=_require_str(level, "INTENSITY_FALLBACK.level"),
-                framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
-                mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
+                level=_mapped(level, _INTENSITY_NAMES, "Intensity fallback"),
+                framework=_mapped(framework, _FRAMEWORK_NAMES, "Intensity fallback"),
+                mode=_mapped(mode, _MODE_NAMES, "Intensity fallback"),
                 allowed_secondary=tuple(
-                    item.strip() for item in allowed.split(",") if item.strip()
+                    _mapped(item.strip(), _SECONDARY_NAMES, "Allowed secondary layers") for item in allowed.split(",") if item.strip()
                 ),
             )
         )
@@ -223,7 +223,7 @@ def _parse_secondary_priority(
         _, name = row
         rules.append(
             SecondaryPriorityRule(
-                name=_require_str(name, "SECONDARY_PRIORITY.name"),
+                name=_mapped(name, _SECONDARY_NAMES, "Secondary layer priority"),
             )
         )
     return tuple(rules)
