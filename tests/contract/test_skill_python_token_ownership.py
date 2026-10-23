@@ -71,7 +71,7 @@ def _format_placeholders() -> set[str]:
     return placeholders
 
 
-def test_python_owned_labels_and_format_fields_do_not_leak_into_skill_sections() -> None:
+def test_python_tokens_stay_out_of_skill_sections() -> None:
     """Python runtime labels stay in Python; Skills expose reader-facing content."""
     internal_labels = _python_owned_labels()
     key_like_tokens = {
