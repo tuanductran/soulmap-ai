@@ -380,7 +380,7 @@ Pattern requires 2+ user messages with matching signals before activating.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 This section defines executable detection policy for recurring-pattern detection. Pattern
 knowledge remains above; this section only makes the runtime scoring and activation
@@ -396,7 +396,7 @@ contract explicit.
 | Minimum user messages | 2 |
 | Combination threshold | 2 |
 
-### Runtime guidance
+### Guidance
 
 | State | Recommendation |
 | :--- | :--- |
