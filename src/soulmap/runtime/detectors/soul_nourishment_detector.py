@@ -23,7 +23,7 @@ SOUL_NOURISHMENT_SIGNALS = load_keyword_section(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("soul-nourishment"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("soul-nourishment"), "Guidance")
 
