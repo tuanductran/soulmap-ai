@@ -183,13 +183,13 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "skills/frameworks/life-direction.md",
         "Detection signals",
         "Detection policy",
-        "Runtime guidance",
+        "Guidance",
     ),
     "pattern-mapper": (
         "skills/frameworks/pattern-mapper.md",
         "Pattern 1",
         "Detection policy",
-        "Runtime guidance",
+        "Guidance",
     ),
     "dependency-detection": (
         "skills/safety/dependency-detection.md",
