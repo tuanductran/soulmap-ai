@@ -257,17 +257,14 @@ def load_orchestration_rules() -> OrchestrationRules:
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    required_instructions = {
-        "Stage 1 override",
-        "HIGH intensity",
-        "MODERATE intensity",
-        "MIRROR fallback",
-        "PEER fallback",
-    }
-    if set(runtime_instructions) != required_instructions or any(
+    required_instruction_labels = set(_INSTRUCTION_NAMES)
+    if set(runtime_instructions) != required_instruction_labels or any(
         not value for value in runtime_instructions.values()
     ):
-        raise ValueError("Orchestration runtime instructions are incomplete.")
+        raise ValueError("Orchestration mode guidance is incomplete.")
+    runtime_instructions = {
+        _INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
+    }
 
     primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
     secondary = _parse_secondary_priority(_table_rows(body, "Secondary layer priority"))
