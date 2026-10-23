@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.source_registry import _registry, runtime_skill_path
