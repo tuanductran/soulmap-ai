@@ -86,7 +86,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "scope-classification": (
         "skills/safety/whitelist-blacklist-system.md",
         "-",
-        "Runtime classification contract",
+        "Scope policy",
         "-",
     ),
     "stage-classifier": (
