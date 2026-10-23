@@ -305,7 +305,7 @@ Post-reflection validation, user confirming something that was reflected back:
   celebration closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational insight-detection policy.
 
