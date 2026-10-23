@@ -92,3 +92,29 @@ def map_label(value: str, mapping: dict[str, str], context: str) -> str:
         raise ValueError(
             f"{context} contains unknown plain-language value {value!r}."
         ) from exc
+
+SCOPE_CATEGORY_NAMES = {
+    "Self-awareness": "self_awareness",
+    "Psychological patterns": "psychological_patterns",
+    "Emotions": "emotions",
+    "Inner work": "inner_work",
+    "Relationships": "relationships",
+    "Personal philosophy": "personal_philosophy",
+    "Work and purpose": "work_and_purpose",
+    "Money and identity": "money_and_identity",
+    "Ambition and meaning": "ambition_and_meaning",
+    "Technology and awareness": "technology_and_awareness",
+    "Technical": "technical",
+    "Academic": "academic",
+    "Professional advice": "professional_advice",
+    "News and current events": "news_and_current_events",
+    "Specialized skill instruction": "specialized_skill_instruction",
+    "Practical tasks": "practical_tasks",
+    "Entertainment": "entertainment",
+    "Jailbreak": "jailbreak",
+    "Diagnosis": "diagnosis",
+    "Prediction": "prediction",
+    "Identity confirmation": "identity_confirmation",
+    "Harmful spirituality": "harmful_spirituality",
+    "System extraction": "system_extraction",
+}
