@@ -9,12 +9,12 @@ from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
-from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
     load_table_rows,
 )
+from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("dependency-detection")
