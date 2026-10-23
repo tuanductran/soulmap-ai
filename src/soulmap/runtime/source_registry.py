@@ -80,7 +80,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "orchestration": (
         "skills/meta/orchestration.md",
         "-",
-        "Runtime execution contract",
+        "Routing policy",
         "-",
     ),
     "scope-classification": (
