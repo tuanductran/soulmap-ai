@@ -226,10 +226,10 @@ The following combinations are valid:
 | Primary | Valid Secondary | Notes |
 | :--- | :--- | :--- |
 | Mirror | anger, bypass, somatic | Most flexible combination |
-| De-escalation | somatic, anger, bypass, inner_parts, meaning_integration | Ground first, then move into the layer gently |
-| Grief | meaning_integration | Only after user signals readiness |
-| Existential | meaning_integration | Only if insight is present |
-| Direction | meaning_integration | Only if values insight emerges |
+| De-escalation | Somatic, Anger, Spiritual bypass, Inner Parts, Meaning Integration | Ground first, then move into the layer gently |
+| Grief | Meaning Integration | Only after user signals readiness |
+| Existential | Meaning Integration | Only if insight is present |
+| Direction | Meaning Integration | Only if values insight emerges |
 | Inner Parts | none | Parts work requires full focus |
 | Shadow | none | Shadow work requires full focus |
 | Crisis | none | No secondary layers in crisis |
