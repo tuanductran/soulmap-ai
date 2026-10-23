@@ -7,10 +7,6 @@ from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime.knowledge import labels
 from soulmap.runtime.source_registry import _registry, runtime_skill_path
 
-_IDENTIFIER_RE = re.compile(
-    r"(?<![A-Za-z0-9_])(?:[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+|"
-    r"[a-z][a-z0-9]*(?:_[a-z0-9]+)+)(?![A-Za-z0-9_])"
-)
 _TABLE_CELL_RE = re.compile(r"^\s*\|\s*([^|]+?)\s*\|", re.MULTILINE)
 
 
@@ -31,11 +27,31 @@ def _registered_section(text: str, heading: str) -> str:
     return text[body_start:body_end]
 
 
-def _label_mapping_values() -> set[str]:
+def _python_owned_labels() -> set[str]:
     values: set[str] = set()
     for name, mapping in vars(labels).items():
         if name.endswith("_NAMES") and isinstance(mapping, dict):
             values.update(value for value in mapping.values() if isinstance(value, str))
+
+    runtime_root = REPO_ROOT / "src/soulmap/runtime"
+    for path in runtime_root.rglob("*.py"):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            value = None
+            if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant):
+                value = node.slice.value
+            elif (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Attribute)
+                and node.func.attr == "get"
+                and node.args
+                and isinstance(node.args[0], ast.Constant)
+            ):
+                value = node.args[0].value
+            if isinstance(value, str) and (
+                "_" in value or "-" in value or value.isupper()
+            ):
+                values.add(value)
     return values
 
 
@@ -49,13 +65,20 @@ def _format_placeholders() -> set[str]:
                 continue
             if not isinstance(node.func, ast.Attribute) or node.func.attr != "format":
                 continue
-            placeholders.update(f"{{{keyword.arg}}}" for keyword in node.keywords if keyword.arg)
+            placeholders.update(
+                f"{{{keyword.arg}}}" for keyword in node.keywords if keyword.arg
+            )
     return placeholders
 
 
 def test_python_owned_labels_and_format_fields_do_not_leak_into_skill_sections() -> None:
     """Python runtime labels stay in Python; Skills expose reader-facing content."""
-    internal_labels = _label_mapping_values()
+    internal_labels = _python_owned_labels()
+    key_like_tokens = {
+        token
+        for token in internal_labels
+        if "_" in token or "-" in token or token.isupper()
+    }
     placeholders = _format_placeholders()
     registry = _registry()
     findings: list[str] = []
@@ -69,8 +92,17 @@ def test_python_owned_labels_and_format_fields_do_not_leak_into_skill_sections()
             if not section:
                 continue
 
-            for line_number, line in enumerate(section.splitlines(), 1):
+            for line in section.splitlines():
                 stripped = line.strip()
+                for token in key_like_tokens:
+                    if re.search(
+                        rf"(?<![A-Za-z0-9_-]){re.escape(token)}(?![A-Za-z0-9_-])",
+                        line,
+                    ):
+                        findings.append(
+                            f"{path.relative_to(REPO_ROOT)}:{heading}: "
+                            f"Python label {token!r}"
+                        )
                 if stripped.startswith("|"):
                     for cell in _TABLE_CELL_RE.findall(line):
                         cell = cell.strip()
@@ -79,17 +111,6 @@ def test_python_owned_labels_and_format_fields_do_not_leak_into_skill_sections()
                                 f"{path.relative_to(REPO_ROOT)}:{heading}: "
                                 f"table label {cell!r}"
                             )
-                else:
-                    for token in internal_labels:
-                        if "_" in token and re.search(
-                            rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
-                            line,
-                        ):
-                            findings.append(
-                                f"{path.relative_to(REPO_ROOT)}:{heading}: "
-                                f"Python label {token!r}"
-                            )
-
                 for token in placeholders:
                     if token in line:
                         findings.append(
