@@ -14,7 +14,12 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
 )
-from soulmap.runtime.knowledge.labels import (\n    INSIGHT_CLASSIFICATION_NAMES,\n    INSIGHT_GUIDANCE_NAMES,\n    map_label,\n)\nfrom soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+from soulmap.runtime.knowledge.labels import (
+    INSIGHT_CLASSIFICATION_NAMES,
+    INSIGHT_GUIDANCE_NAMES,
+    map_label,
+)
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/meaning-integration.md,
 # "## Detection signals". Nothing is hardcoded here.
