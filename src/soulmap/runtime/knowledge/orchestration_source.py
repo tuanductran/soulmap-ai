@@ -146,7 +146,7 @@ def _parse_primary_priority(
                 mode=map_label(mode, MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
                     map_label(
-                        item.strip(), _BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
+                        item.strip(), BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
                     )
                     for item in blocked.split(",")
                     if item.strip()
