@@ -23,7 +23,7 @@ _SOMATIC_GROUPS = load_labeled_groups(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("somatic-wellbeing"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("somatic-wellbeing"), "Guidance")
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
