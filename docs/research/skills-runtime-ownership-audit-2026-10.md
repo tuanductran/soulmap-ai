@@ -9,23 +9,23 @@
 
 ## Classification rules
 
-1. **Runtime-parsed contract** — Python reads structured content and turns it into runtime configuration, thresholds, patterns, or routing decisions. This is data for Python even though the source format is Markdown.
-2. **Runtime knowledge source** — a runtime detector or knowledge loader reads the file, typically extracting domain signal groups, labels, patterns, or scoring inputs.
-3. **Structure / build / prompt source** — the file is consumed by packaging, skill composition, source mapping, or as an AI-facing instruction; it is not confirmed here as a Python-parsed decision table.
-4. **Knowledge-only candidate** — no direct runtime consumer was identified in the inspected source registry/runtime loaders. This does not mean the file is unused by Claude, packaging, tests, or other tools.
+1. **Runtime-parsed contract** - Python reads structured content and turns it into runtime configuration, thresholds, patterns, or routing decisions. This is data for Python even though the source format is Markdown.
+2. **Runtime knowledge source** - a runtime detector or knowledge loader reads the file, typically extracting domain signal groups, labels, patterns, or scoring inputs.
+3. **Structure / build / prompt source** - the file is consumed by packaging, skill composition, source mapping, or as an AI-facing instruction; it is not confirmed here as a Python-parsed decision table.
+4. **Knowledge-only candidate** - no direct runtime consumer was identified in the inspected source registry/runtime loaders. This does not mean the file is unused by Claude, packaging, tests, or other tools.
 
 ## Confirmed architecture findings
 
 ### Structured Markdown is currently executable runtime configuration
 
-- `skills/meta/stage-classifier.md` is parsed by `src/soulmap/runtime/knowledge/stage_classifier.py`. The parser reads stage headings, keyword lists, thresholds, recency multipliers, and the “Runtime enforcement contract” settings/role/recommendation tables.
+- `skills/meta/stage-classifier.md` is parsed by `src/soulmap/runtime/knowledge/stage_classifier.py`. The parser reads stage headings, keyword lists, thresholds, recency multipliers, and the "Runtime enforcement contract" settings/role/recommendation tables.
 - `skills/meta/orchestration.md` is parsed by `src/soulmap/runtime/knowledge/orchestration_source.py`. It reads scalar settings, runtime instructions, primary/secondary priority tables, and intensity fallbacks.
 - `skills/safety/dependency-detection.md` supplies regex patterns and context-exclusion rows consumed by `src/soulmap/runtime/detectors/dependency_detector.py`.
 - `skills/frameworks/integration-celebration.md` supplies score weights consumed by `src/soulmap/runtime/knowledge/celebration_source.py`.
 - `skills/meta/framework-template-map.md` is consumed by the framework/template routing source.
 - Additional detector-specific Markdown files are loaded through the runtime knowledge/source registry; see the per-file matrix below.
 
-**Interpretation:** these files are not “pure prose” from Python’s perspective. Their content is part of the runtime interface. A table heading, row label, threshold, regex, or setting can be a de-facto schema/identifier when code looks it up by that exact text. The Markdown format itself is not the problem; the ownership contract is.
+**Interpretation:** these files are not "pure prose" from Python's perspective. Their content is part of the runtime interface. A table heading, row label, threshold, regex, or setting can be a de-facto schema/identifier when code looks it up by that exact text. The Markdown format itself is not the problem; the ownership contract is.
 
 ### Not every underscore or code-looking phrase is a Python key
 
