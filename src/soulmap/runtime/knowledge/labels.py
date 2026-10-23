@@ -76,11 +76,11 @@ DEPENDENCY_GUIDANCE_NAMES = {
     "Low dependency": "LOW_DEPENDENCY",
 }
 INSTRUCTION_NAMES = {
-    "Stage 1 override": "Stage 1 override",
-    "High emotional intensity": "HIGH intensity",
-    "Moderate emotional intensity": "MODERATE intensity",
-    "Mirror mode fallback": "MIRROR fallback",
-    "Peer mode fallback": "PEER fallback",
+    "Stage 1 override": "stage_1_override",
+    "High emotional intensity": "high_emotional_intensity",
+    "Moderate emotional intensity": "moderate_emotional_intensity",
+    "Mirror mode fallback": "mirror_mode_fallback",
+    "Peer mode fallback": "peer_mode_fallback",
 }
 
 
