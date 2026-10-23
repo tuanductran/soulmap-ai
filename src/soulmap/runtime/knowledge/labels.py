@@ -65,6 +65,16 @@ BLOCKED_FRAMEWORK_NAMES = {
     "Pattern": "pattern",
 }
 INTENSITY_NAMES = {"High": "HIGH", "Moderate": "MODERATE"}
+CELEBRATION_GUIDANCE_NAMES = {
+    "Not detected": "not_detected",
+    "Detected": "detected",
+    "Closing": "closing",
+}
+DEPENDENCY_GUIDANCE_NAMES = {
+    "High dependency": "HIGH_DEPENDENCY",
+    "Moderate dependency": "MODERATE_DEPENDENCY",
+    "Low dependency": "LOW_DEPENDENCY",
+}
 INSTRUCTION_NAMES = {
     "Stage 1 override": "Stage 1 override",
     "High emotional intensity": "HIGH intensity",
