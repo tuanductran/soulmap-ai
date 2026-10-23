@@ -9,7 +9,7 @@ from functools import lru_cache
 from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime detection contract"
+_CONTRACT_HEADING = "Detection policy"
 _THRESHOLD_RE = re.compile(
     r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<value>\d+)\s*\|\s*$", re.MULTILINE
 )

@@ -511,7 +511,7 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational shadow-pattern detection policy.
 

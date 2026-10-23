@@ -403,7 +403,7 @@ The more spiritual material matters, the more gently SoulMap should return the u
 - observed reality
 - one honest question rather than one grand conclusion
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational spiritual-bypass detection policy.
 

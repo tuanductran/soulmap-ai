@@ -20,7 +20,7 @@ def test_cached_table_rows_match_uncached_parser() -> None:
     markdown_path = runtime_skill_path("pattern-mapper")
     source = markdown_path.read_text(encoding="utf-8")
 
-    for heading in ("Scoring", "Runtime guidance"):
+    for heading in ("Scoring", "Guidance"):
         _read_markdown_text_cached.cache_clear()
         assert load_table_rows(markdown_path, heading) == extract_table_rows(
             source, heading

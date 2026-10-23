@@ -1,6 +1,7 @@
 """Verify the orchestration Markdown exposes valid executable routing values."""
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def test_orchestration_runtime_contract_loads() -> None:
@@ -56,11 +57,11 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
     rules = load_orchestration_rules()
 
     assert rules.runtime_instructions == {
-        "Stage 1 override": "Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework.",
-        "HIGH intensity": "SANCTUARY MODE. Activate the emotional-deescalation protocol: acknowledge → ground → normalize. No 5-step framework. No inquiry question. 2-4 sentences maximum.",
-        "MODERATE intensity": "Hold the framework lightly and slow the conversation before deeper reflection.",
-        "MIRROR fallback": "MIRROR mode: use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
-        "PEER fallback": "PEER mode: dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
+        "stage_1_override": "Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework.",
+        "high_emotional_intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences.",
+        "moderate_emotional_intensity": "Hold the framework lightly and slow the conversation before deeper reflection.",
+        "mirror_mode_fallback": "Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
+        "peer_mode_fallback": "Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
     }
 
 
@@ -159,3 +160,13 @@ def test_detector_bindings_reject_unknown_names() -> None:
         _primary_detector_binding("UNKNOWN")
     with pytest.raises(ValueError, match="Unknown secondary detector binding"):
         _secondary_detector_binding("unknown")
+
+
+def test_routing_policy_uses_human_readable_names() -> None:
+    text = runtime_skill_path("orchestration").read_text(encoding="utf-8")
+    policy = text.split("## Routing policy", 1)[1].split("## Decision Tree", 1)[0]
+
+    for token in ("DE_ESCALATION", "INNER_PARTS", "meaning_integration", "inner_parts"):
+        assert token not in policy
+    assert "| High | De-escalation | Sanctuary |" in policy
+    assert "| 1 | Grief | Sanctuary |" in policy

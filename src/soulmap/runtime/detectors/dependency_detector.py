@@ -14,6 +14,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
     load_table_rows,
 )
+from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("dependency-detection")
@@ -30,7 +31,11 @@ _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
 )
 
 _SCORING = load_key_value_table(_SOURCE, "Scoring")
-_GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
+_GUIDANCE_LABELS = load_key_value_table(_SOURCE, "Guidance")
+_GUIDANCE = {
+    map_label(label, DEPENDENCY_GUIDANCE_NAMES, "Dependency guidance"): value
+    for label, value in _GUIDANCE_LABELS.items()
+}
 _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues

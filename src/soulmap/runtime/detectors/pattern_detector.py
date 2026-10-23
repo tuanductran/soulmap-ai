@@ -18,7 +18,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 PATTERN_SIGNALS = load_pattern_signals(runtime_skill_path("pattern-mapper"))
 _PATTERN_RULES = load_key_value_table(runtime_skill_path("pattern-mapper"), "Scoring")
 _PATTERN_GUIDANCE = load_key_value_table(
-    runtime_skill_path("pattern-mapper"), "Runtime guidance"
+    runtime_skill_path("pattern-mapper"), "Guidance"
 )
 
 

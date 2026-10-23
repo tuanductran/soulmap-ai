@@ -23,7 +23,7 @@ DIVINE_GUIDANCE_SIGNALS = load_keyword_section(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("divine-guidance"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("divine-guidance"), "Guidance")
 

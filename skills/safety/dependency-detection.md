@@ -1,16 +1,15 @@
 ---
 name: "dependency-detection"
-description: "Canonical runtime knowledge for detecting unhealthy AI dependency signals and applying the dependency response contract."
+description: "Canonical knowledge for recognizing unhealthy AI dependency signals and responding in a way that preserves user agency."
 version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
 # Dependency Detection
 
-This source is the canonical knowledge surface for the dependency detector. Runtime
-Python may normalize input, load these values, score them, apply thresholds, and
-enforce the resulting response contract. It must not duplicate the signal lexicon,
-regular expressions, thresholds, or recommendation wording below.
+This document defines the language signals, scoring guidance, thresholds, and response
+principles for recognizing unhealthy AI dependency. Apply these rules consistently and
+redirect toward the user's real-world agency and support when dependency signals are strong.
 
 ## Detection signals
 
@@ -188,7 +187,7 @@ Clause boundary markers:
 - "and i"
 - ", i"
 
-## Runtime detection contract
+## Detection policy
 
 ### Scoring
 
@@ -207,9 +206,9 @@ Clause boundary markers:
 
 | Level | Recommendation |
 | :--- | :--- |
-| HIGH_DEPENDENCY | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
-| MODERATE_DEPENDENCY | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
-| LOW_DEPENDENCY | No significant dependency signals detected. Continue normal reflective engagement. |
+| High dependency | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
+| Moderate dependency | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
+| Low dependency | No significant dependency signals detected. Continue normal reflective engagement. |
 
 ## Guidance
 

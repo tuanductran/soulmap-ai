@@ -26,7 +26,7 @@ PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
 BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
 _RULES = load_key_value_table(
     runtime_skill_path("inner-parts"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(
     runtime_skill_path("inner-parts"),

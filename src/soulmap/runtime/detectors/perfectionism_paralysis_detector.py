@@ -28,7 +28,7 @@ PERFECTIONISM_SIGNALS = load_keyword_section(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("perfectionism-paralysis"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(
     runtime_skill_path("perfectionism-paralysis"),

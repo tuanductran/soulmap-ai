@@ -221,7 +221,7 @@ The runtime detection contract below is the executable source of truth for synth
 activation. It defines both explicit request signals and the structural thresholds.
 
 Do not maintain a second phrase list or a separate message-count rule here. If the
-activation policy changes, update **Runtime detection contract** and its runtime tests
+activation policy changes, update **Detection policy** and its runtime tests
 together.
 
 ## Paired template
@@ -236,7 +236,7 @@ together.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following operational configuration is normative knowledge for synthesis detection.
 Changes to these values must be made here and covered by focused contract tests.

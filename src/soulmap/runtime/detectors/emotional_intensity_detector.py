@@ -22,7 +22,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 # in that file are for crisis_detector's own separate, careful sync pass.)
 _RULES = load_key_value_table(
     runtime_skill_path("emotional-deescalation"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(
     runtime_skill_path("emotional-deescalation"), "Guidance"

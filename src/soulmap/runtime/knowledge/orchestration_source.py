@@ -6,9 +6,18 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.knowledge.labels import (
+    BLOCKED_FRAMEWORK_NAMES,
+    FRAMEWORK_NAMES,
+    INSTRUCTION_NAMES,
+    INTENSITY_NAMES,
+    MODE_NAMES,
+    SECONDARY_NAMES,
+    map_label,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime execution contract"
+_CONTRACT_HEADING = "Routing policy"
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,7 +66,7 @@ class OrchestrationRules:
 def _contract_body(text: str) -> str:
     match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
-        raise ValueError("Orchestration runtime execution contract is missing.")
+        raise ValueError("Orchestration routing policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
@@ -89,9 +98,18 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
 
 
 def _require_bool(value: str, key: str) -> bool:
-    if value not in {"true", "false"}:
-        raise ValueError(f"{key} must be true or false.")
-    return value == "true"
+    choices = {
+        "true": True,
+        "false": False,
+        "required": True,
+        "not required": False,
+        "allowed": True,
+        "not allowed": False,
+    }
+    normalized = value.strip().casefold()
+    if normalized not in choices:
+        raise ValueError(f"{key} must use a recognized plain-language choice.")
+    return choices[normalized]
 
 
 def _require_positive_int(value: str, key: str) -> int:
@@ -122,10 +140,16 @@ def _parse_primary_priority(
         _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                framework=_require_str(framework, "PRIMARY_PRIORITY.framework"),
-                mode=_require_str(mode, "PRIMARY_PRIORITY.mode"),
+                framework=map_label(
+                    framework, FRAMEWORK_NAMES, "Primary framework priority"
+                ),
+                mode=map_label(mode, MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
-                    item.strip() for item in blocked.split(",") if item.strip()
+                    map_label(
+                        item.strip(), BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
+                    )
+                    for item in blocked.split(",")
+                    if item.strip()
                 ),
                 insight_secondary=_require_bool(
                     insight_secondary, "PRIMARY_PRIORITY.insight_secondary"
@@ -150,11 +174,13 @@ def _parse_intensity_fallback(
         level, framework, mode, allowed = row
         rules.append(
             IntensityFallbackRule(
-                level=_require_str(level, "INTENSITY_FALLBACK.level"),
-                framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
-                mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
+                level=map_label(level, INTENSITY_NAMES, "Intensity fallback"),
+                framework=map_label(framework, FRAMEWORK_NAMES, "Intensity fallback"),
+                mode=map_label(mode, MODE_NAMES, "Intensity fallback"),
                 allowed_secondary=tuple(
-                    item.strip() for item in allowed.split(",") if item.strip()
+                    map_label(item.strip(), SECONDARY_NAMES, "Allowed secondary layers")
+                    for item in allowed.split(",")
+                    if item.strip()
                 ),
             )
         )
@@ -173,7 +199,7 @@ def _parse_secondary_priority(
         _, name = row
         rules.append(
             SecondaryPriorityRule(
-                name=_require_str(name, "SECONDARY_PRIORITY.name"),
+                name=map_label(name, SECONDARY_NAMES, "Secondary layer priority"),
             )
         )
     return tuple(rules)
@@ -185,7 +211,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     path = runtime_skill_path("orchestration")
     body = _contract_body(path.read_text(encoding="utf-8"))
 
-    scalar_rows = _table_rows(body, "Scalar settings")
+    scalar_rows = _table_rows(body, "Operational limits")
     scalars = {row[0]: row[1] for row in scalar_rows if len(row) == 2}
     required_scalars = {
         "Stage 1 override max user messages",
@@ -203,24 +229,21 @@ def load_orchestration_rules() -> OrchestrationRules:
     if strength not in {"emerging", "strong"}:
         raise ValueError("Breakthrough minimum insight strength is invalid.")
 
-    instruction_rows = _table_rows(body, "Runtime instructions")
+    instruction_rows = _table_rows(body, "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    required_instructions = {
-        "Stage 1 override",
-        "HIGH intensity",
-        "MODERATE intensity",
-        "MIRROR fallback",
-        "PEER fallback",
-    }
-    if set(runtime_instructions) != required_instructions or any(
+    required_instruction_labels = set(INSTRUCTION_NAMES)
+    if set(runtime_instructions) != required_instruction_labels or any(
         not value for value in runtime_instructions.values()
     ):
-        raise ValueError("Orchestration runtime instructions are incomplete.")
+        raise ValueError("Orchestration mode guidance is incomplete.")
+    runtime_instructions = {
+        INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
+    }
 
-    primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
-    secondary = _parse_secondary_priority(_table_rows(body, "Secondary priority"))
+    primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
+    secondary = _parse_secondary_priority(_table_rows(body, "Secondary layer priority"))
     intensity_fallback = _parse_intensity_fallback(
         _table_rows(body, "Intensity fallback")
     )
