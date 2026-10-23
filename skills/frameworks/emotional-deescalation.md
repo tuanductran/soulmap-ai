@@ -302,7 +302,7 @@ Physical overwhelm, the body registering distress before words catch up:
 - **How to close:** `skills/voice/session-rituals.md` (Crisis closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
