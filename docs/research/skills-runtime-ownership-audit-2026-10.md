@@ -68,7 +68,7 @@ Legend:
 | `skills/frameworks/creative-drought.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/dark-night-of-soul.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/divine-guidance.md` | R-SOURCE | Detector-specific knowledge source. |
-| `skills/frameworks/emotional-deescalation.md` | REVIEW | Safety-adjacent guidance; do not alter without consumer and safety review. |
+| `skills/frameworks/emotional-deescalation.md` | R-SOURCE | Registered runtime detection source; safety-adjacent, so preserve semantics. |
 | `skills/frameworks/empath-boundary.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/existential-companion.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/fear-of-visibility.md` | R-SOURCE | Detector-specific knowledge source. |
@@ -77,13 +77,13 @@ Legend:
 | `skills/frameworks/inner-parts.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/integration-celebration.md` | R-CONTRACT | Celebration weights/configuration are parsed by Python. |
 | `skills/frameworks/life-direction.md` | R-SOURCE | Direction detector/knowledge loader consumes structured signal content. |
-| `skills/frameworks/meaning-integration.md` | CONTENT | Framework guidance; no direct Python data consumer confirmed. |
+| `skills/frameworks/meaning-integration.md` | R-SOURCE | Registered runtime detection source. |
 | `skills/frameworks/money-self-worth.md` | CONTENT | Framework guidance; no direct Python data consumer confirmed. |
 | `skills/frameworks/pattern-mapper.md` | R-SOURCE | Python extracts structured pattern knowledge/sections. |
 | `skills/frameworks/perfectionism-paralysis.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/relationship-reflection.md` | CONTENT | Framework guidance; no direct Python data consumer confirmed. |
 | `skills/frameworks/sacred-feminine-masculine.md` | R-SOURCE | Detector-specific knowledge source. |
-| `skills/frameworks/self-compassion.md` | CONTENT | Framework guidance; no direct Python data consumer confirmed. |
+| `skills/frameworks/self-compassion.md` | R-SOURCE | Registered runtime detection signal source; no separate contract/guidance section is registered. |
 | `skills/frameworks/shadow-patterns.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/somatic-wellbeing.md` | R-SOURCE | Detector-specific knowledge source. |
 | `skills/frameworks/soul-nourishment.md` | R-SOURCE | Detector-specific knowledge source. |
@@ -108,7 +108,7 @@ Legend:
 | `skills/safety/ethics-safety.md` | REVIEW | Safety/ethics guidance; no blanket edits. |
 | `skills/safety/prompt-injection-defense.md` | REVIEW | Security guidance; preserve exact behavioral protections. |
 | `skills/safety/trauma-language.md` | REVIEW | Safety-adjacent language guidance. |
-| `skills/safety/whitelist-blacklist-system.md` | REVIEW | Contract-like safety vocabulary; confirm runtime consumer for each table before changing. |
+| `skills/safety/whitelist-blacklist-system.md` | R-CONTRACT | Registered source for Python's runtime classification contract; preserve safety semantics. |
 | `skills/soulmate/numerology-connection-lens.md` | CONTENT | Domain knowledge; no direct Python data consumer confirmed. |
 | `skills/soulmate/partnership-patterns.md` | R-SOURCE | Partnership-pattern detector/knowledge source. |
 | `skills/soulmate/soulmate-longing.md` | R-SOURCE | Soulmate-longing detector/knowledge source. |
