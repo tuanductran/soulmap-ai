@@ -330,7 +330,7 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational existential-detection policy.
 
