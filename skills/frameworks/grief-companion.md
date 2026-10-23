@@ -259,7 +259,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Detection policy
+## Runtime detection contract
 
 | Rule | Value |
 | :--- | :--- |
