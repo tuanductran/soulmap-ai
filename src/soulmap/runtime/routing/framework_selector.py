@@ -492,7 +492,9 @@ async def select_framework_async(
             ),
             "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
-            "instruction": orchestration_rules.runtime_instructions["high_emotional_intensity"],
+            "instruction": orchestration_rules.runtime_instructions[
+                "high_emotional_intensity"
+            ],
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
         if selection["secondary_layer"] not in fallback.allowed_secondary:
