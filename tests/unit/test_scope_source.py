@@ -1,5 +1,5 @@
-from soulmap.runtime.knowledge.scope_source import load_scope_rules
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+from soulmap.runtime.knowledge.scope_source import load_scope_rules
 
 
 def test_scope_rules_match_markdown_contract() -> None:
