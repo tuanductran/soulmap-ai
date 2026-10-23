@@ -12,7 +12,7 @@ _TABLE_CELL_RE = re.compile(r"^\s*\|\s*([^|]+?)\s*\|", re.MULTILINE)
 
 def _registered_section(text: str, heading: str) -> str:
     match = re.search(
-        rf"^(?P<marks>#{1,6})\s+{re.escape(heading)}\s*$",
+        rf"^(?P<marks>#{{1,6}})\s+{re.escape(heading)}\s*$",
         text,
         re.MULTILINE,
     )
