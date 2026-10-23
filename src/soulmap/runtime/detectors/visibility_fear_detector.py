@@ -26,7 +26,7 @@ SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
 PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
 _RULES = load_key_value_table(
     runtime_skill_path("fear-of-visibility"),
-    "Runtime detection contract",
+    "Detection policy",
 )
 _GUIDANCE = load_key_value_table(runtime_skill_path("fear-of-visibility"), "Guidance")
 
