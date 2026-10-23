@@ -93,6 +93,7 @@ def map_label(value: str, mapping: dict[str, str], context: str) -> str:
             f"{context} contains unknown plain-language value {value!r}."
         ) from exc
 
+
 SCOPE_CATEGORY_NAMES = {
     "Self-awareness": "self_awareness",
     "Psychological patterns": "psychological_patterns",
