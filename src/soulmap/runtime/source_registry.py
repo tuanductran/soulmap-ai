@@ -92,7 +92,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "stage-classifier": (
         "skills/meta/stage-classifier.md",
         "-",
-        "Runtime enforcement contract",
+        "Stage classification policy",
         "-",
     ),
     "grief-companion": (
