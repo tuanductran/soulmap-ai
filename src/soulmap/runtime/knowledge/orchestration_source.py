@@ -93,6 +93,7 @@ _FRAMEWORK_NAMES = {
     "Existential": "EXISTENTIAL",
     "Inner Parts": "INNER_PARTS",
     "Direction": "DIRECTION",
+    "De-escalation": "DE_ESCALATION",
     "Creative Drought": "CREATIVE_DROUGHT",
     "Perfectionism Paralysis": "PERFECTIONISM_PARALYSIS",
     "Shadow": "SHADOW",
