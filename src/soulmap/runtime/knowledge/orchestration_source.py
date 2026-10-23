@@ -239,8 +239,7 @@ def load_orchestration_rules() -> OrchestrationRules:
     ):
         raise ValueError("Orchestration mode guidance is incomplete.")
     runtime_instructions = {
-        INSTRUCTION_NAMES[label]: value
-        for label, value in runtime_instructions.items()
+        INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
     }
 
     primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
