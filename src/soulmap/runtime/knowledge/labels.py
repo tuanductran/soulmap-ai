@@ -119,3 +119,17 @@ SCOPE_CATEGORY_NAMES = {
     "Harmful spirituality": "harmful_spirituality",
     "System extraction": "system_extraction",
 }
+
+INSIGHT_CLASSIFICATION_NAMES = {
+    "Notice it earlier": "noticing_earlier",
+    "When it appears": "when_it_appears",
+    "Consider a different response": "different_response",
+}
+INSIGHT_GUIDANCE_NAMES = {
+    "Hold the insight first": "hold_first",
+    "When it appears": "when_it_appears",
+    "Notice it earlier": "noticing_earlier",
+    "Consider a different response": "different_response",
+    "Detected prefix": "detected_prefix",
+    "Detected suffix": "detected_suffix",
+}
