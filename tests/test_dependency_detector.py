@@ -6,6 +6,7 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import analyze_dependency
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def _user(content: str) -> dict[str, str]:
@@ -441,3 +442,15 @@ def test_single_quoted_multi_sentence_text_remains_excluded() -> None:
     assert result["level"] == "LOW_DEPENDENCY"
     assert result["score"] == 0
     assert result["signals"] == []
+
+
+def test_dependency_guidance_uses_plain_language_labels() -> None:
+    text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
+    guidance = text.split("### Guidance", 1)[1].split("\n## Guidance", 1)[0]
+
+    assert "| High dependency |" in guidance
+    assert "| Moderate dependency |" in guidance
+    assert "| Low dependency |" in guidance
+    assert "HIGH_DEPENDENCY" not in guidance
+    assert "MODERATE_DEPENDENCY" not in guidance
+    assert "LOW_DEPENDENCY" not in guidance
