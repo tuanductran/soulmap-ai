@@ -98,7 +98,7 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
     "grief-companion": (
         "skills/frameworks/grief-companion.md",
         "Detection signals",
-        "Runtime detection contract",
+        "Detection policy",
         "Guidance",
     ),
     "inner-parts": (
