@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.labels import (
-    BLOCKEDFRAMEWORK_NAMES,
+    BLOCKED_FRAMEWORK_NAMES,
     FRAMEWORK_NAMES,
     INSTRUCTION_NAMES,
     INTENSITY_NAMES,
@@ -146,7 +146,7 @@ def _parse_primary_priority(
                 mode=map_label(mode, MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
                     map_label(
-                        item.strip(), _BLOCKEDFRAMEWORK_NAMES, "Blocked frameworks"
+                        item.strip(), _BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
                     )
                     for item in blocked.split(",")
                     if item.strip()
