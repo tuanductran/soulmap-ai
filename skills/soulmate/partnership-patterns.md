@@ -107,7 +107,7 @@ Never, under any framing or user pressure:
 - "That pattern is worth noticing. What it means about the right next step is yours
   to decide, not something I can hand you."
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
