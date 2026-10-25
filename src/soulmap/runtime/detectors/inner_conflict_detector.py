@@ -120,8 +120,9 @@ def detect_inner_conflict(
     recommendation = f"Inner conflict detected ({primary_type}). " + _GUIDANCE["detected"]
 
     if parts_suggested:
-        recommendation += " " + _GUIDANCE["detected_parts_suffix"].format(
-            parts=", ".join(parts_suggested)
+        recommendation += (
+            f" Likely parts present: {', '.join(parts_suggested)}. "
+            + _GUIDANCE["detected_parts_suffix"]
         )
 
     return {
