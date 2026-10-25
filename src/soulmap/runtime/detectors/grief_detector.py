@@ -115,12 +115,8 @@ def detect_grief(
 
     detected_type = grief_type or "acute"
     recommendation = (
-        _GUIDANCE["detected_prefix"].format(
-            grief_type=detected_type,
-            guidance=_GUIDANCE.get(detected_type, ""),
-        )
-        + " "
-        + _GUIDANCE["detected_suffix"]
+        f"{_GUIDANCE['detected_prefix']} {detected_type}. "
+        f"{_GUIDANCE.get(detected_type, '')} {_GUIDANCE['detected_suffix']}"
     )
 
     return {
