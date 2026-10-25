@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_non_empty_str_field,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_labeled_groups,
 )
@@ -25,7 +26,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("somatic-wellbeing"),
     "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("somatic-wellbeing"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("somatic-wellbeing"))
 BODY_SENSATION = _SOMATIC_GROUPS["body sensation language"]
 SOMATIC_INVITATION = _SOMATIC_GROUPS["somatic invitation"]
 BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
