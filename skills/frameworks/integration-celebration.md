@@ -210,8 +210,7 @@ Recognized progress, catching an old pattern and responding differently:
 - "i chose differently"
 - "i responded differently"
 
-Score threshold: 2. Mixed pain signals ("I did it but I feel empty") reduce the score
-and may prevent this framework from activating.
+A minimum score is required before this framework activates. Mixed pain signals ("I did it but I feel empty") reduce the score and may prevent activation.
 
 ## Paired template
 
@@ -232,18 +231,11 @@ and may prevent this framework from activating.
 
 This policy describes the signals and scoring used to recognize meaningful positive change. Apply it alongside the framework guidance above.
 
-### Scoring
+### Scoring approach
 
-| Setting | Value |
-| :--- | :--- |
-| Score weight: win or completion | 3 |
-| Score weight: relief after difficulty | 3 |
-| Score weight: gratitude | 2 |
-| Score weight: recognized progress | 2 |
-| Detection threshold | 2 |
-| Negative override penalty | 2 |
-| Strong-signal threshold | 4 |
-| Confirmation score | 2 |
+The runtime weighs evidence of completion, relief, gratitude, and recognized progress.
+Mixed pain signals can reduce the score or prevent activation. Exact weights and
+thresholds are implementation details owned by Python.
 
 ### Negative overrides
 
