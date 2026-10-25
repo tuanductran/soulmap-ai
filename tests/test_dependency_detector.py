@@ -454,3 +454,29 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "HIGH_DEPENDENCY" not in guidance
     assert "MODERATE_DEPENDENCY" not in guidance
     assert "LOW_DEPENDENCY" not in guidance
+
+
+
+def test_executable_dependency_rules_are_not_stored_in_skill_markdown() -> None:
+    text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
+
+    assert "## Regex patterns" not in text
+    assert r"\b" not in text
+    assert "Dependency keyword weight" not in text
+    assert "High dependency threshold" not in text
+    assert "| Context group | Comma ends scope |" not in text
+
+
+def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None:
+    phrases = (
+        "Only you    really understand me.",
+        "Only you    truly understand me.",
+        "You're the only one who    really understands me.",
+        "You are the only one who    really understands me.",
+        "You're the only one who    truly understands me.",
+        "You are the only one who    truly understands me.",
+    )
+
+    for phrase in phrases:
+        result = analyze_dependency([_user(phrase)])
+        assert any("dependency_pattern" in signal for signal in result["signals"]), phrase
