@@ -45,9 +45,17 @@ _MIGRATED_LABEL_SECTIONS = (
     ("pattern-mapper", ("Guidance",), ("RUNTIME_GUIDANCE_NAMES",)),
     ("life-direction", ("Detection policy", "Guidance"), ("RUNTIME_GUIDANCE_NAMES",)),
     ("spiritual-discernment", ("Guidance",), ("RUNTIME_GUIDANCE_NAMES",)),
-    ("existential-companion", ("Detection policy", "Guidance"), ("RUNTIME_GUIDANCE_NAMES",)),
+    (
+        "existential-companion",
+        ("Detection policy", "Guidance"),
+        ("RUNTIME_GUIDANCE_NAMES",),
+    ),
     ("shadow-patterns", ("Guidance",), ("RUNTIME_GUIDANCE_NAMES",)),
-    ("conversation-synthesis", ("Detection policy", "Response guidance"), ("RUNTIME_GUIDANCE_NAMES",)),
+    (
+        "conversation-synthesis",
+        ("Detection policy", "Response guidance"),
+        ("RUNTIME_GUIDANCE_NAMES",),
+    ),
     (
         "meaning-integration",
         ("Detection policy", "Guidance"),
@@ -59,7 +67,12 @@ _FORMAT_FIELDS_BY_SOURCE = {
     "inner-parts": ("{primary_type}", "{parts}"),
     "grief-companion": ("{grief_type}", "{guidance}"),
     "existential-companion": ("{territory}", "{guidance}"),
-    "conversation-synthesis": ("{theme}", "{count}", "{longitudinal_notice}", "{themes}"),
+    "conversation-synthesis": (
+        "{theme}",
+        "{count}",
+        "{longitudinal_notice}",
+        "{themes}",
+    ),
 }
 
 
@@ -93,7 +106,9 @@ def test_migrated_python_labels_stay_out_of_skill_sections() -> None:
         for heading in headings:
             section = _registered_section(text, heading)
             prose = "\n".join(
-                line for line in section.splitlines() if not line.lstrip().startswith("|")
+                line
+                for line in section.splitlines()
+                if not line.lstrip().startswith("|")
             )
             table_keys = {
                 line.strip().strip("|").split("|", 1)[0].strip()
