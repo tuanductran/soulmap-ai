@@ -135,6 +135,8 @@ INSIGHT_GUIDANCE_NAMES = {
 }
 
 RUNTIME_GUIDANCE_NAMES = {
+    "Meaning void": "meaning_void",
+    "Should versus want": "should_vs_want",
     "Emotional theme suffix": "emotional_theme_suffix",
     "Value theme suffix": "value_theme_suffix",
     "Conflict theme suffix": "conflict_theme_suffix",
