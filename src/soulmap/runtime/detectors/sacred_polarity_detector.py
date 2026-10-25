@@ -27,7 +27,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("sacred-feminine-masculine"),
     "Detection policy",
 )
-_GUIDANCE = load_key_value_table(
+_GUIDANCE = load_runtime_guidance(
     runtime_skill_path("sacred-feminine-masculine"),
     "Guidance",
 )
