@@ -105,7 +105,8 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
     for line in match.group("body").splitlines():
         stripped = line.strip()
         if stripped.startswith("#### "):
-            group_name = stripped[5:].strip().lower()
+            group_label = stripped[5:].strip()
+            group_name = RUNTIME_GUIDANCE_NAMES.get(group_label, group_label.lower())
             current = group_name
             groups[group_name] = ()
         elif current is not None:
