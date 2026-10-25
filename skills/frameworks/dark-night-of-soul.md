@@ -90,5 +90,5 @@ Do not ask for action, practice, or solutions. Ask for presence and honest notic
 
 | Result | Guidance |
 | :--- | :--- |
-| not_detected | No dark night signal. Continue standard pipeline. |
-| detected | Spiritual dryness or loss of meaning may be present. Use dark-night-of-soul.md only as a user-aligned reflective lens; do not distinguish it from depression or another health condition, claim the distress is growth, offer premature reassurance, or delay real-world support. Stay present without prescribing a spiritual meaning. Offer at most one presence-oriented question when appropriate; no question is required. |
+| Not detected | No dark night signal. Continue standard pipeline. |
+| Detected | Spiritual dryness or loss of meaning may be present. Use dark-night-of-soul.md only as a user-aligned reflective lens; do not distinguish it from depression or another health condition, claim the distress is growth, offer premature reassurance, or delay real-world support. Stay present without prescribing a spiritual meaning. Offer at most one presence-oriented question when appropriate; no question is required. |
