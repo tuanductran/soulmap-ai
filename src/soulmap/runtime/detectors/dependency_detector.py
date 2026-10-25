@@ -8,18 +8,7 @@ import sys
 from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
 
-from soulmap.runtime.detectors.dependency_rules import (
-    CONTEXT_EXCLUSION_POLICY as _CONTEXT_EXCLUSION_POLICY,
-    DECISION_SEEKING_WEIGHT as _DECISION_SEEKING_WEIGHT,
-    DEPENDENCY_KEYWORD_WEIGHT as _DEPENDENCY_KEYWORD_WEIGHT,
-    DEPENDENCY_PATTERNS as _DEPENDENCY_PATTERNS,
-    DEPENDENCY_REGEX_WEIGHT as _DEPENDENCY_REGEX_WEIGHT,
-    HIGH_DEPENDENCY_THRESHOLD as _HIGH_DEPENDENCY_THRESHOLD,
-    HIGH_MESSAGE_VOLUME_BONUS as _HIGH_MESSAGE_VOLUME_BONUS,
-    HIGH_MESSAGE_VOLUME_THRESHOLD as _HIGH_MESSAGE_VOLUME_THRESHOLD,
-    ISOLATION_SIGNAL_WEIGHT as _ISOLATION_SIGNAL_WEIGHT,
-    MODERATE_DEPENDENCY_THRESHOLD as _MODERATE_DEPENDENCY_THRESHOLD,
-)
+from soulmap.runtime.detectors import dependency_rules as _dependency_rules
 from soulmap.runtime.io.text_normalization import normalize_message_text
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
@@ -27,6 +16,17 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
+_CONTEXT_EXCLUSION_POLICY = _dependency_rules.CONTEXT_EXCLUSION_POLICY
+_DECISION_SEEKING_WEIGHT = _dependency_rules.DECISION_SEEKING_WEIGHT
+_DEPENDENCY_KEYWORD_WEIGHT = _dependency_rules.DEPENDENCY_KEYWORD_WEIGHT
+_DEPENDENCY_PATTERNS = _dependency_rules.DEPENDENCY_PATTERNS
+_DEPENDENCY_REGEX_WEIGHT = _dependency_rules.DEPENDENCY_REGEX_WEIGHT
+_HIGH_DEPENDENCY_THRESHOLD = _dependency_rules.HIGH_DEPENDENCY_THRESHOLD
+_HIGH_MESSAGE_VOLUME_BONUS = _dependency_rules.HIGH_MESSAGE_VOLUME_BONUS
+_HIGH_MESSAGE_VOLUME_THRESHOLD = _dependency_rules.HIGH_MESSAGE_VOLUME_THRESHOLD
+_ISOLATION_SIGNAL_WEIGHT = _dependency_rules.ISOLATION_SIGNAL_WEIGHT
+_MODERATE_DEPENDENCY_THRESHOLD = _dependency_rules.MODERATE_DEPENDENCY_THRESHOLD
 
 _SOURCE = runtime_skill_path("dependency-detection")
 _SIGNAL_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
