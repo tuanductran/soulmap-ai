@@ -7,7 +7,10 @@ import sys
 from typing import cast
 
 from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json_value
-from soulmap.runtime.knowledge.keyword_lists import load_key_value_table, load_runtime_guidance
+from soulmap.runtime.knowledge.keyword_lists import (
+    load_key_value_table,
+    load_runtime_guidance,
+)
 from soulmap.runtime.knowledge.pattern_source import load_pattern_signals
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
