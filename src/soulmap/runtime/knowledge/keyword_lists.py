@@ -281,3 +281,16 @@ def load_runtime_guidance(
         map_label(label, RUNTIME_GUIDANCE_NAMES, f"{markdown_path.name}:{heading}"): value
         for label, value in raw_values.items()
     }
+
+
+
+def load_mapped_key_value_table(
+    markdown_path: Path, heading: str, mapping: dict[str, str]
+) -> dict[str, str]:
+    """Load a key/value table while mapping human labels to runtime names.
+
+    Unmapped natural-language keys remain unchanged; known display labels are
+    translated through the centralized Python mapping.
+    """
+    values = load_key_value_table(markdown_path, heading)
+    return {mapping.get(key, key): value for key, value in values.items()}
