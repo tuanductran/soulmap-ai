@@ -7,9 +7,9 @@ license: Complete terms in LICENSE
 
 # Dependency Detection
 
-This document defines the language signals, scoring guidance, thresholds, and response
-principles for recognizing unhealthy AI dependency. Apply these rules consistently and
-redirect toward the user's real-world agency and support when dependency signals are strong.
+This document defines the language signals, context cues, and response principles for
+recognizing unhealthy AI dependency. The runtime applies its Python-owned scoring rules;
+this guide keeps the detection meaning and response guidance understandable to AI users.
 
 ## Detection signals
 
