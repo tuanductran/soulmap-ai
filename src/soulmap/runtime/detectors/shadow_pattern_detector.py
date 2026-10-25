@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_keyword_section,
 )
@@ -40,7 +41,7 @@ PERFECTIONISM_SIGNALS = load_keyword_section(
 )
 SELF_CRITIC_SIGNALS = load_keyword_section(_SELF_COMPASSION_PATH, "Detection signals")
 _SHADOW_SCORING = load_key_value_table(_SHADOW_PATH, "Scoring")
-_SHADOW_GUIDANCE = load_key_value_table(_SHADOW_PATH, "Guidance")
+_SHADOW_GUIDANCE = load_runtime_guidance(_SHADOW_PATH)
 
 
 HistoryMessage = dict[str, str]
