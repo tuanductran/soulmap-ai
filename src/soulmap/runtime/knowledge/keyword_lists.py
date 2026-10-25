@@ -283,6 +283,7 @@ def load_runtime_guidance(
         for label, value in raw_values.items()
     }
 
+
 def load_mapped_key_value_table(
     markdown_path: Path, heading: str, mapping: dict[str, str]
 ) -> dict[str, str]:
@@ -293,4 +294,3 @@ def load_mapped_key_value_table(
     """
     values = load_key_value_table(markdown_path, heading)
     return {mapping.get(key, key): value for key, value in values.items()}
-
