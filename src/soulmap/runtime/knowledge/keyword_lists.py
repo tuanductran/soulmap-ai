@@ -265,7 +265,6 @@ def default_skill_path(relative_path: str) -> Path:
     )
 
 
-
 def load_runtime_guidance(
     markdown_path: Path, heading: str = "Guidance"
 ) -> dict[str, str]:
@@ -283,7 +282,6 @@ def load_runtime_guidance(
         ): value
         for label, value in raw_values.items()
     }
-
 
 
 def load_mapped_key_value_table(
