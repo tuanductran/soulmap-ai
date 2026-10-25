@@ -300,11 +300,11 @@ Changes to these values must be made here and covered by focused contract tests.
 | Insufficient themes | Not enough recurring themes detected for synthesis. Continue standard response. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
 | Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
-| Emotional theme | An emotional thread of {theme} - it appeared in several different things you shared. |
-| Value theme | Something that seems to matter to you - {theme} - keeps appearing, even when the topic changes. |
-| Conflict theme | A recurring tension around {theme} - it surfaced in more than one place. |
+| Emotional theme | An emotional thread of |
+| Value theme | Something that seems to matter to you |
+| Conflict theme | A recurring tension around |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| Recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
+| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences plus a specific anchor to something the user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
