@@ -32,7 +32,9 @@ HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
 _EXISTENTIAL_SCORING = load_key_value_table(
     runtime_skill_path("existential-companion"), "Scoring"
 )
-_EXISTENTIAL_GUIDANCE = load_runtime_guidance(runtime_skill_path("existential-companion"))
+_EXISTENTIAL_GUIDANCE = load_runtime_guidance(
+    runtime_skill_path("existential-companion")
+)
 
 
 HistoryMessage = dict[str, str]
