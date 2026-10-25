@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
+from soulmap.runtime.knowledge.keyword_lists import load_key_value_table, load_runtime_guidance
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
@@ -137,5 +137,5 @@ def load_synthesis_rules() -> SynthesisRules:
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
         conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
-        response_guidance=load_key_value_table(path, "Response guidance"),
+        response_guidance=load_runtime_guidance(path, "Response guidance"),
     )
