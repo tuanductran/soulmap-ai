@@ -272,7 +272,7 @@ Require two or more messages showing lower-stage signals before downgrading.
 
 ## Stage classification policy
 
-The operational stage-classification policy is authored in this section. These values are normative for stage classification.
+Use the following stage roles and response recommendations alongside the signal patterns and readiness guidance above.
 
 ### Enforcement settings
 
