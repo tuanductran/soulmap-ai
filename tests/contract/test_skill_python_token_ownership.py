@@ -118,7 +118,7 @@ def test_migrated_python_labels_stay_out_of_skill_sections() -> None:
             for token in labels_to_check:
                 if token in table_keys:
                     findings.append(f"{source_id}:{heading}: {token}")
-                if ("_" in token or token.isupper()) and re.search(
+                if ("_" in token or "-" in token or token.isupper()) and re.search(
                     rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
                     prose,
                 ):
