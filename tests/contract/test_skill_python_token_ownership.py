@@ -66,7 +66,7 @@ _FORMAT_FIELDS_BY_SOURCE = {
 def _registered_section(text: str, heading: str) -> str:
     matches = list(
         re.finditer(
-            rf"^(?P<marks>#{1,6})\s+{re.escape(heading)}\s*$",
+            rf"^(?P<marks>#{{1,6}})\s+{re.escape(heading)}\s*$",
             text,
             re.MULTILINE,
         )
