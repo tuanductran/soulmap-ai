@@ -10,11 +10,11 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_runtime_guidance,
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
