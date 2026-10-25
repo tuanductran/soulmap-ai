@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_keyword_section,
 )
@@ -25,7 +26,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("soulmate-longing"),
     "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("soulmate-longing"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("soulmate-longing"))
 
 
 HistoryMessage = dict[str, str]
