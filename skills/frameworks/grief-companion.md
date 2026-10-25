@@ -282,5 +282,5 @@ Complicated grief, grief stuck, unresolved, or contested:
 | Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
 | Ambiguous loss | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
 | Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
-| Detected prefix | Activate grief-companion.md. Type: {grief_type}. {guidance} |
+| Detected prefix | Activate grief-companion.md. Identify the detected grief type and use its corresponding guidance. |
 | Detected suffix | Retrieve grief questions from the deep-inquiry bank: the 'Grief Questions' section. |
