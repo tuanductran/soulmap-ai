@@ -479,4 +479,6 @@ def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None
 
     for phrase in phrases:
         result = analyze_dependency([_user(phrase)])
-        assert any("dependency_pattern" in signal for signal in result["signals"]), phrase
+        assert any("dependency_pattern" in signal for signal in result["signals"]), (
+            phrase
+        )
