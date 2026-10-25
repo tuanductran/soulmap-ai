@@ -135,6 +135,9 @@ INSIGHT_GUIDANCE_NAMES = {
 }
 
 RUNTIME_GUIDANCE_NAMES = {
+    "Emotional theme suffix": "emotional_theme_suffix",
+    "Value theme suffix": "value_theme_suffix",
+    "Conflict theme suffix": "conflict_theme_suffix",
     "Active": "active",
     "Residual": "residual",
     "Hold the insight first": "hold_first",
