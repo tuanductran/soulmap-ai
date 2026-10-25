@@ -400,7 +400,7 @@ contract explicit.
 
 | State | Recommendation |
 | :--- | :--- |
-| insufficient_history | Only one user message. Listen and be present. Do not name patterns yet. |
-| not_detected | No strong pattern signals detected yet. Continue listening. Do not name a pattern; wait for more data. |
-| combination | Name the primary pattern first, then gently note the connection. Use the pattern-combination reflection language from this skill. |
-| detected | Use the reflection language from this skill, name the primary pattern with curiosity, and follow with a pattern-specific inquiry question. |
+| Insufficient history | Only one user message. Listen and be present. Do not name patterns yet. |
+| Not detected | No strong pattern signals detected yet. Continue listening. Do not name a pattern; wait for more data. |
+| Combination | Name the primary pattern first, then gently note the connection. Use the pattern-combination reflection language from this skill. |
+| Detected | Use the reflection language from this skill, name the primary pattern with curiosity, and follow with a pattern-specific inquiry question. |
