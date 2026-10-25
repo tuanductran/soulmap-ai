@@ -278,7 +278,9 @@ def load_runtime_guidance(
 
     raw_values = load_key_value_table(markdown_path, heading)
     return {
-        map_label(label, RUNTIME_GUIDANCE_NAMES, f"{markdown_path.name}:{heading}"): value
+        map_label(
+            label, RUNTIME_GUIDANCE_NAMES, f"{markdown_path.name}:{heading}"
+        ): value
         for label, value in raw_values.items()
     }
 
