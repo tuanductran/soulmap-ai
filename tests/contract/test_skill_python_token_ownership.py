@@ -70,7 +70,7 @@ def _registered_section(text: str, heading: str) -> str:
         re.MULTILINE,
     )
     if match is None:
-        return ""
+        raise AssertionError(f"Expected Skill heading {heading!r} was not found.")
     level = len(match.group("marks"))
     body_start = match.end()
     next_heading = re.search(rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE)
@@ -89,18 +89,20 @@ def test_migrated_python_labels_stay_out_of_skill_sections() -> None:
         }
         for heading in headings:
             section = _registered_section(text, heading)
+            prose = "\n".join(
+                line for line in section.splitlines() if not line.lstrip().startswith("|")
+            )
+            table_keys = {
+                line.strip().strip("|").split("|", 1)[0].strip()
+                for line in section.splitlines()
+                if line.lstrip().startswith("|")
+            }
             for token in labels_to_check:
-                if "_" in token or token.isupper():
-                    if re.search(
-                        rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
-                        section,
-                    ):
-                        findings.append(f"{source_id}:{heading}: {token}")
-                elif any(
-                    cell.strip() == token
-                    for line in section.splitlines()
-                    if line.lstrip().startswith("|")
-                    for cell in line.strip().strip("|").split("|")
+                if token in table_keys:
+                    findings.append(f"{source_id}:{heading}: {token}")
+                if ("_" in token or token.isupper()) and re.search(
+                    rf"(?<![A-Za-z0-9_]){re.escape(token)}(?![A-Za-z0-9_])",
+                    prose,
                 ):
                     findings.append(f"{source_id}:{heading}: {token}")
 
