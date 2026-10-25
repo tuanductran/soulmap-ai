@@ -64,13 +64,16 @@ _FORMAT_FIELDS_BY_SOURCE = {
 
 
 def _registered_section(text: str, heading: str) -> str:
-    match = re.search(
-        rf"^(?P<marks>#{{1,6}})\s+{re.escape(heading)}\s*$",
-        text,
-        re.MULTILINE,
+    matches = list(
+        re.finditer(
+            rf"^(?P<marks>#{1,6})\\s+{re.escape(heading)}\\s*$",
+            text,
+            re.MULTILINE,
+        )
     )
-    if match is None:
+    if not matches:
         raise AssertionError(f"Expected Skill heading {heading!r} was not found.")
+    match = matches[-1]
     level = len(match.group("marks"))
     body_start = match.end()
     next_heading = re.search(rf"^#{{1,{level}}}\s+", text[body_start:], re.MULTILINE)
