@@ -6,6 +6,7 @@ def test_celebration_rules_use_python_owned_scoring() -> None:
     rules = load_celebration_rules()
     text = runtime_skill_path("integration-celebration").read_text(encoding="utf-8")
 
+    assert "### Scoring\n" not in text
     assert "Score weight: win or completion" not in text
     assert "Detection threshold" not in text
     assert "Strong-signal threshold" not in text
