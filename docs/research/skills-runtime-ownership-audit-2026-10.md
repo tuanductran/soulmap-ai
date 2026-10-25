@@ -30,6 +30,7 @@
 ### Not every underscore or code-looking phrase is a Python key
 
 The audit must distinguish:
+
 - natural-language semantic labels used by a skill as ordinary content;
 - placeholders intended for AI-facing templates, such as `{theme}` or `{guidance}`;
 - parser section names and table labels that Python explicitly consumes;
@@ -44,6 +45,7 @@ No changes were made to `safety.py`, `crisis_detector.py`, `CRISIS_TIER1`, `CRIS
 ## File-by-file matrix (75 files)
 
 Legend:
+
 - **R-CONTRACT**: confirmed Python-parsed runtime contract / structured runtime data.
 - **R-SOURCE**: runtime knowledge source or detector input; Python consumer is known from the source registry or detector/loader.
 - **AI/BUILD**: primarily AI-facing instruction or packaging/composition source; no Python decision-table consumer confirmed in this audit.
