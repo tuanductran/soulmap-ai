@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.keyword_lists import (
     load_runtime_guidance,
     load_key_value_table,
@@ -89,7 +90,9 @@ def detect_existential(
     signal_map = [
         (name, signal_sources[name], signal_weights[name])
         for name in (
-            item.strip()
+            map_label(
+                item.strip(), RUNTIME_GUIDANCE_NAMES, "Existential territory priority"
+            )
             for item in _EXISTENTIAL_SCORING["Territory priority"].split(";")
             if item.strip()
         )
