@@ -351,7 +351,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "used to be"
 - "mourning"
 
-#### not_enough
+#### Not enough
 
 - "not enough"
 - "not good enough"
@@ -363,7 +363,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "failure"
 - "failing"
 
-#### freedom_vs_safety
+#### Freedom vs. safety
 
 - "trapped"
 - "stuck"
@@ -456,7 +456,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "don't want to lose"
 - "afraid to lose"
 
-#### creativity_depth
+#### Creativity depth
 
 - "creative"
 - "depth"
@@ -470,7 +470,7 @@ Changes to these values must be made here and covered by focused contract tests.
 
 ### Recurring inner-conflict signals
 
-#### seen_vs_hidden
+#### Seen vs. hidden
 
 - "want to be seen"
 - "afraid to be seen"
@@ -479,7 +479,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "hide"
 - "show"
 
-#### closeness_vs_distance
+#### Closeness vs. distance
 
 - "want connection"
 - "push away"
@@ -488,7 +488,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "afraid of closeness"
 - "want to be close but"
 
-#### knowing_vs_avoiding
+#### Knowing vs. avoiding
 
 - "i know but"
 - "i see it but"
@@ -496,7 +496,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "part of me knows"
 - "choose not to look"
 
-#### change_vs_familiar
+#### Change vs. familiar
 
 - "want to change"
 - "keep going back"
@@ -505,7 +505,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "familiar even though"
 - "known even if"
 
-#### giving_vs_receiving
+#### Giving vs. receiving
 
 - "give so much"
 - "never receive"
