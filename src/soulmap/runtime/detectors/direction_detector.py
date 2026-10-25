@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_labeled_groups,
 )
@@ -21,7 +22,7 @@ _DIRECTION_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
 _DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
 _DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
-_DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
+_DIRECTION_GUIDANCE = load_runtime_guidance(_SOURCE)
 
 LOSTNESS_SIGNALS = _DIRECTION_GROUPS["lostness"]
 SHOULD_SIGNALS = _DIRECTION_GROUPS["should vs. want"]
