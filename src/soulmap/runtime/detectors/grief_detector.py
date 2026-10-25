@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_labeled_groups,
 )
@@ -25,7 +26,7 @@ _RULES = load_key_value_table(
     runtime_skill_path("grief-companion"),
     "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("grief-companion"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("grief-companion"))
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
