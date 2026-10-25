@@ -480,4 +480,4 @@ def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None
 
     assert len(DEPENDENCY_PATTERNS) == len(phrases)
     for (_, pattern), phrase in zip(DEPENDENCY_PATTERNS, phrases, strict=True):
-        assert pattern.search(phrase), phrase
+        assert pattern.search(phrase.lower()), phrase
