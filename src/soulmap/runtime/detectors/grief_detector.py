@@ -13,6 +13,7 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -23,9 +24,9 @@ _GRIEF_GROUPS = load_labeled_groups(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("grief-companion"),
-    "Runtime detection contract",
+    "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("grief-companion"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("grief-companion"))
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
@@ -114,12 +115,8 @@ def detect_grief(
 
     detected_type = grief_type or "acute"
     recommendation = (
-        _GUIDANCE["detected_prefix"].format(
-            grief_type=detected_type,
-            guidance=_GUIDANCE.get(detected_type, ""),
-        )
-        + " "
-        + _GUIDANCE["detected_suffix"]
+        f"{_GUIDANCE['detected_prefix']} {detected_type}. "
+        f"{_GUIDANCE.get(detected_type, '')} {_GUIDANCE['detected_suffix']}"
     )
 
     return {

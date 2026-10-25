@@ -14,6 +14,11 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.labels import (
+    INSIGHT_CLASSIFICATION_NAMES,
+    INSIGHT_GUIDANCE_NAMES,
+    map_label,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/meaning-integration.md,
@@ -29,17 +34,28 @@ POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
 _INSIGHT_SCORING = load_key_value_table(
     runtime_skill_path("meaning-integration"), "Scoring"
 )
-_INSIGHT_CLASSIFICATION = load_key_value_table(
+_INSIGHT_CLASSIFICATION_LABELS = load_key_value_table(
     runtime_skill_path("meaning-integration"),
     "Insight classification signals",
 )
+_INSIGHT_CLASSIFICATION = {
+    map_label(label, INSIGHT_CLASSIFICATION_NAMES, "Insight classification"): value
+    for label, value in _INSIGHT_CLASSIFICATION_LABELS.items()
+}
 _INSIGHT_VALIDATION = load_key_value_table(
     runtime_skill_path("meaning-integration"),
     "Reflection-validation signals",
 )
-_INSIGHT_GUIDANCE = load_key_value_table(
+_INSIGHT_GUIDANCE_LABELS = load_key_value_table(
     runtime_skill_path("meaning-integration"), "Guidance"
 )
+_INSIGHT_GUIDANCE = {
+    map_label(label, INSIGHT_GUIDANCE_NAMES, "Insight guidance"): value
+    for label, value in _INSIGHT_GUIDANCE_LABELS.items()
+}
+_INSIGHT_CLASSIFICATION_DISPLAY_NAMES = {
+    value: label for label, value in INSIGHT_CLASSIFICATION_NAMES.items()
+}
 
 
 def _phrases(value: str) -> tuple[str, ...]:
@@ -55,8 +71,10 @@ HistoryMessage = dict[str, str]
 
 def _classify_insight_type(msg: str) -> str:
     """Determine the integration question type from knowledge-authored signals."""
-    for insight_type in _INSIGHT_SCORING["Classification priority"].split(";"):
-        key = insight_type.strip()
+    for label in _INSIGHT_SCORING["Classification priority"].split(";"):
+        key = map_label(
+            label.strip(), INSIGHT_CLASSIFICATION_NAMES, "Classification priority"
+        )
         if any(signal in msg for signal in _phrases(_INSIGHT_CLASSIFICATION[key])):
             return key
     return "hold_first"  # Default: let the insight breathe before anything else.
@@ -138,14 +156,13 @@ def detect_insight(
     integration_guidance = _INSIGHT_GUIDANCE.get(
         insight_type, _INSIGHT_GUIDANCE["hold_first"]
     )
+    display_type = _INSIGHT_CLASSIFICATION_DISPLAY_NAMES.get(
+        insight_type, "Hold the insight first"
+    )
     recommendation = (
-        _INSIGHT_GUIDANCE["detected_prefix"].format(
-            strength=strength,
-            insight_type=insight_type,
-            guidance=integration_guidance,
-        )
-        + " "
-        + _INSIGHT_GUIDANCE["detected_suffix"]
+        f"{_INSIGHT_GUIDANCE['detected_prefix']} "
+        f"Strength: {strength}. Type: {display_type}. "
+        f"{integration_guidance} {_INSIGHT_GUIDANCE['detected_suffix']}"
     )
 
     return {

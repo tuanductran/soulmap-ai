@@ -380,7 +380,7 @@ Pattern requires 2+ user messages with matching signals before activating.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 This section defines executable detection policy for recurring-pattern detection. Pattern
 knowledge remains above; this section only makes the runtime scoring and activation
@@ -396,11 +396,11 @@ contract explicit.
 | Minimum user messages | 2 |
 | Combination threshold | 2 |
 
-### Runtime guidance
+### Guidance
 
 | State | Recommendation |
 | :--- | :--- |
-| insufficient_history | Only one user message. Listen and be present. Do not name patterns yet. |
-| not_detected | No strong pattern signals detected yet. Continue listening. Do not name a pattern; wait for more data. |
-| combination | Name the primary pattern first, then gently note the connection. Use the pattern-combination reflection language from this skill. |
-| detected | Use the reflection language from this skill, name the primary pattern with curiosity, and follow with a pattern-specific inquiry question. |
+| Insufficient history | Only one user message. Listen and be present. Do not name patterns yet. |
+| Not detected | No strong pattern signals detected yet. Continue listening. Do not name a pattern; wait for more data. |
+| Combination | Name the primary pattern first, then gently note the connection. Use the pattern-combination reflection language from this skill. |
+| Detected | Use the reflection language from this skill, name the primary pattern with curiosity, and follow with a pattern-specific inquiry question. |

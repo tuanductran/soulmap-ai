@@ -6,6 +6,8 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import analyze_dependency
+from soulmap.runtime.detectors.dependency_rules import DEPENDENCY_PATTERNS
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def _user(content: str) -> dict[str, str]:
@@ -441,3 +443,41 @@ def test_single_quoted_multi_sentence_text_remains_excluded() -> None:
     assert result["level"] == "LOW_DEPENDENCY"
     assert result["score"] == 0
     assert result["signals"] == []
+
+
+def test_dependency_guidance_uses_plain_language_labels() -> None:
+    text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
+    guidance = text.split("### Guidance", 1)[1].split("\n## Guidance", 1)[0]
+
+    assert "| High dependency |" in guidance
+    assert "| Moderate dependency |" in guidance
+    assert "| Low dependency |" in guidance
+    assert "HIGH_DEPENDENCY" not in guidance
+    assert "MODERATE_DEPENDENCY" not in guidance
+    assert "LOW_DEPENDENCY" not in guidance
+
+
+def test_executable_dependency_rules_are_not_stored_in_skill_markdown() -> None:
+    text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
+
+    assert "## Regex patterns" not in text
+    assert "### Scoring\n" not in text
+    assert r"\b" not in text
+    assert "Dependency keyword weight" not in text
+    assert "High dependency threshold" not in text
+    assert "| Context group | Comma ends scope |" not in text
+
+
+def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None:
+    phrases = (
+        "Only you    really understand me.",
+        "Only you    truly understand me.",
+        "You're the only one who    really understands me.",
+        "You are the only one who    really understands me.",
+        "You're the only one who    truly understands me.",
+        "You are the only one who    truly understands me.",
+    )
+
+    assert len(DEPENDENCY_PATTERNS) == len(phrases)
+    for (_, pattern), phrase in zip(DEPENDENCY_PATTERNS, phrases, strict=True):
+        assert pattern.search(phrase.lower()), phrase

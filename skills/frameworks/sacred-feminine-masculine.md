@@ -81,7 +81,7 @@ Do not prescribe balance. Invite awareness and honoring of both.
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
@@ -92,5 +92,5 @@ Do not prescribe balance. Invite awareness and honoring of both.
 
 | Result | Guidance |
 | :--- | :--- |
-| not_detected | No sacred polarity signal. Continue standard pipeline. |
-| detected | The user may be using sacred feminine/masculine polarity language. If the lens fits their own framing, explore receptivity and action without assigning fixed gender traits or treating polarity as universal fact. Offer at most one reflective question when appropriate. |
+| Not detected | No sacred polarity signal. Continue standard pipeline. |
+| Detected | The user may be using sacred feminine/masculine polarity language. If the lens fits their own framing, explore receptivity and action without assigning fixed gender traits or treating polarity as universal fact. Offer at most one reflective question when appropriate. |

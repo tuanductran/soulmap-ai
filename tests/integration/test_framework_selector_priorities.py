@@ -443,9 +443,9 @@ def test_orchestration_contract_rejects_missing_sections() -> None:
     )
 
     body = _contract_body(
-        "## Runtime execution contract\n\n"
-        "### Scalar settings\n\n| Setting | Value |\n| --- | --- |\n"
+        "## Routing policy\n\n"
+        "### Operational limits\n\n| Setting | Value |\n| --- | --- |\n"
         "| Stage 1 override max user messages | 2 |\n"
     )
-    with pytest.raises(ValueError, match="Primary priority"):
-        _table_rows(body, "Primary priority")
+    with pytest.raises(ValueError, match="Primary framework priority"):
+        _table_rows(body, "Primary framework priority")

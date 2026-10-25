@@ -14,6 +14,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_keyword_section,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -32,9 +33,7 @@ HistoryMessage = dict[str, str]
 _ANCESTRAL_SCORING = load_key_value_table(
     runtime_skill_path("ancestral-patterns"), "Scoring"
 )
-_ANCESTRAL_GUIDANCE = load_key_value_table(
-    runtime_skill_path("ancestral-patterns"), "Guidance"
-)
+_ANCESTRAL_GUIDANCE = load_runtime_guidance(runtime_skill_path("ancestral-patterns"))
 
 
 def detect_ancestral(

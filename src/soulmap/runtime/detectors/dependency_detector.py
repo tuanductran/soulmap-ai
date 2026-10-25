@@ -8,13 +8,25 @@ import sys
 from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
 
+from soulmap.runtime.detectors import dependency_rules as _dependency_rules
 from soulmap.runtime.io.text_normalization import normalize_message_text
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
-    load_table_rows,
 )
+from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
+_CONTEXT_EXCLUSION_POLICY = _dependency_rules.CONTEXT_EXCLUSION_POLICY
+_DECISION_SEEKING_WEIGHT = _dependency_rules.DECISION_SEEKING_WEIGHT
+_DEPENDENCY_KEYWORD_WEIGHT = _dependency_rules.DEPENDENCY_KEYWORD_WEIGHT
+_DEPENDENCY_PATTERNS = _dependency_rules.DEPENDENCY_PATTERNS
+_DEPENDENCY_REGEX_WEIGHT = _dependency_rules.DEPENDENCY_REGEX_WEIGHT
+_HIGH_DEPENDENCY_THRESHOLD = _dependency_rules.HIGH_DEPENDENCY_THRESHOLD
+_HIGH_MESSAGE_VOLUME_BONUS = _dependency_rules.HIGH_MESSAGE_VOLUME_BONUS
+_HIGH_MESSAGE_VOLUME_THRESHOLD = _dependency_rules.HIGH_MESSAGE_VOLUME_THRESHOLD
+_ISOLATION_SIGNAL_WEIGHT = _dependency_rules.ISOLATION_SIGNAL_WEIGHT
+_MODERATE_DEPENDENCY_THRESHOLD = _dependency_rules.MODERATE_DEPENDENCY_THRESHOLD
 
 _SOURCE = runtime_skill_path("dependency-detection")
 _SIGNAL_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
@@ -22,36 +34,19 @@ _DEPENDENCY_KEYWORDS = _SIGNAL_GROUPS["dependency keywords"]
 _DECISION_SEEKING = _SIGNAL_GROUPS["decision-seeking phrases"]
 _ISOLATION_SIGNALS = _SIGNAL_GROUPS["isolation signals"]
 
-_PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
-_DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
-    (row[0], re.compile(row[1].strip(chr(96))))
-    for row in _PATTERN_ROWS
-    if len(row) >= 2
-)
-
-_SCORING = load_key_value_table(_SOURCE, "Scoring")
-_GUIDANCE = load_key_value_table(_SOURCE, "Guidance")
+_GUIDANCE_LABELS = load_key_value_table(_SOURCE, "Guidance")
+_GUIDANCE = {
+    map_label(label, DEPENDENCY_GUIDANCE_NAMES, "Dependency guidance"): value
+    for label, value in _GUIDANCE_LABELS.items()
+}
 _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
 )
-_CONTEXT_EXCLUSION_POLICY = {
-    row[0].lower(): row[1].strip().lower() == "yes"
-    for row in load_table_rows(_SOURCE, "Context exclusion policy")
-    if len(row) >= 2
-}
 _CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
 _CLAUSE_BOUNDARY_CUES = tuple(
     cue for cues in _CLAUSE_BOUNDARY_GROUPS.values() for cue in cues
 )
-_DEPENDENCY_KEYWORD_WEIGHT = int(_SCORING["Dependency keyword weight"])
-_DEPENDENCY_REGEX_WEIGHT = int(_SCORING["Dependency regex weight"])
-_DECISION_SEEKING_WEIGHT = int(_SCORING["Decision-seeking weight"])
-_ISOLATION_SIGNAL_WEIGHT = int(_SCORING["Isolation signal weight"])
-_HIGH_MESSAGE_VOLUME_THRESHOLD = int(_SCORING["High message volume threshold"])
-_HIGH_MESSAGE_VOLUME_BONUS = int(_SCORING["High message volume bonus"])
-_HIGH_DEPENDENCY_THRESHOLD = int(_SCORING["High dependency threshold"])
-_MODERATE_DEPENDENCY_THRESHOLD = int(_SCORING["Moderate dependency threshold"])
 _APOSTROPHE_ELISIONS = re.compile(
     r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\b",
     re.IGNORECASE,

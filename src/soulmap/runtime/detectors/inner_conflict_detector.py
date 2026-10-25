@@ -13,6 +13,7 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -26,9 +27,9 @@ PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
 BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
 _RULES = load_key_value_table(
     runtime_skill_path("inner-parts"),
-    "Runtime detection contract",
+    "Detection policy",
 )
-_GUIDANCE = load_key_value_table(
+_GUIDANCE = load_runtime_guidance(
     runtime_skill_path("inner-parts"),
     "Guidance",
 )
@@ -116,11 +117,14 @@ def detect_inner_conflict(
 
     primary_type = conflict_types[0] if conflict_types else "general"
 
-    recommendation = _GUIDANCE["detected"].format(primary_type=primary_type)
+    recommendation = (
+        f"Inner conflict detected ({primary_type}). " + _GUIDANCE["detected"]
+    )
 
     if parts_suggested:
-        recommendation += " " + _GUIDANCE["detected_parts_suffix"].format(
-            parts=", ".join(parts_suggested)
+        recommendation += (
+            f" Likely parts present: {', '.join(parts_suggested)}. "
+            + _GUIDANCE["detected_parts_suffix"]
         )
 
     return {

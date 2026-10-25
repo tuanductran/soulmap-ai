@@ -263,3 +263,34 @@ def default_skill_path(relative_path: str) -> Path:
         f"Could not locate {relative_path}; set SOULMAP_REPO_ROOT or run from "
         "within the soulmap-ai repo."
     )
+
+
+def load_runtime_guidance(
+    markdown_path: Path, heading: str = "Guidance"
+) -> dict[str, str]:
+    """Load human-readable guidance labels and normalize them in Python.
+
+    Skill Markdown keeps labels readable for people importing SoulMap. Stable
+    runtime identifiers are defined centrally in knowledge.labels.
+    """
+    from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
+
+    raw_values = load_key_value_table(markdown_path, heading)
+    return {
+        map_label(
+            label, RUNTIME_GUIDANCE_NAMES, f"{markdown_path.name}:{heading}"
+        ): value
+        for label, value in raw_values.items()
+    }
+
+
+def load_mapped_key_value_table(
+    markdown_path: Path, heading: str, mapping: dict[str, str]
+) -> dict[str, str]:
+    """Load a key/value table while mapping human labels to runtime names.
+
+    Unmapped natural-language keys remain unchanged; known display labels are
+    translated through the centralized Python mapping.
+    """
+    values = load_key_value_table(markdown_path, heading)
+    return {mapping.get(key, key): value for key, value in values.items()}

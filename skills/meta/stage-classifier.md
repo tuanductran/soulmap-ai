@@ -236,7 +236,7 @@ When platform-supplied prior-session context is available, apply this additional
 
 | Memory signal | Stage adjustment |
 | :--- | :--- |
-| `session_count >= 10` | Minimum Stage 2 |
+| When the session count reaches 10 or more | Minimum Stage 2 |
 | Prior session showed pattern recognition | Minimum Stage 3 |
 | Prior session showed breakthrough | Minimum Stage 3 |
 | Prior session showed independence signals | Lean toward Stage 4+ |
@@ -248,7 +248,7 @@ If two stages score similarly (within 2 points of each other):
 
 - Choose the LOWER stage
 - Apply a mixed response: depth of higher stage but register of lower stage
-- Note the ambiguity in stage_notes
+- Note the ambiguity in stage notes
 
 This ensures users are never over-reached. It is better to offer too little depth
 than to push someone toward insight they are not ready for.
@@ -270,9 +270,9 @@ major life disruption).
 Stage regression is possible in life but should not be triggered by a single message.
 Require two or more messages showing lower-stage signals before downgrading.
 
-## Runtime enforcement contract
+## Stage classification policy
 
-The operational stage-classification policy is authored in this section. These values are normative for stage classification.
+Use the following stage roles and response recommendations alongside the signal patterns and readiness guidance above.
 
 ### Enforcement settings
 
