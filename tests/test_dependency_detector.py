@@ -456,7 +456,6 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "LOW_DEPENDENCY" not in guidance
 
 
-
 def test_executable_dependency_rules_are_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
