@@ -19,7 +19,9 @@ DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ),
     (
         "you are the only one who understands me (really)",
-        re.compile(r"\byou\s+are\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b"),
+        re.compile(
+            r"\byou\s+are\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b"
+        ),
     ),
     (
         "you're the only one who understands me (truly)",
@@ -27,7 +29,9 @@ DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ),
     (
         "you are the only one who understands me (truly)",
-        re.compile(r"\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b"),
+        re.compile(
+            r"\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b"
+        ),
     ),
 )
 
