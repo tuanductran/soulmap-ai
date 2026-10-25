@@ -393,8 +393,8 @@ runtime may execute these values, but must not duplicate them.
 | Signal group | Weight |
 | :--- | ---: |
 | lostness | 3 |
-| meaning_void | 3 |
-| should_vs_want | 2 |
+| Meaning void | 3 |
+| Should versus want | 2 |
 | comparison | 2 |
 | transition | 2 |
 | misalignment | 2 |
@@ -411,7 +411,7 @@ runtime may execute these values, but must not duplicate them.
 | :--- | :--- |
 | meaning | meaning |
 | energy | energy |
-| respect | should_vs_want, comparison |
+| respect | Should versus want, comparison |
 | misalignment | misalignment |
 | default | none |
 
