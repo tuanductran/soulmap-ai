@@ -93,8 +93,8 @@ Isolation signals:
 ## Strong dependency expressions
 
 Recognize language that frames the assistant as uniquely understanding the user,
-including variations of “only you really understand me” and “you are the only one who
-truly understands me.” Executable matching patterns belong to the Python detector;
+including variations of "only you really understand me" and "you are the only one who
+truly understands me." Executable matching patterns belong to the Python detector;
 this guide describes the meaning of those expressions, not a regular-expression API.
 
 ## Context exclusion cues
