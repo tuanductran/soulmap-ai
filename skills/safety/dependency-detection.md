@@ -90,16 +90,12 @@ Isolation signals:
 - "rather talk to you than"
 - "you are easier to talk to than"
 
-## Regex patterns
+## Strong dependency expressions
 
-| Label | Pattern |
-| :--- | :--- |
-| only you understand me (really) | `\bonly you\s+really\s+understand(?:s)?\s+me\b` |
-| only you understand me (truly) | `\bonly you\s+truly\s+understand(?:s)?\s+me\b` |
-| you're the only one who understands me (really) | `\byou're\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b` |
-| you are the only one who understands me (really) | `\byou\s+are\s+the\s+only\s+one\s+who\s+really\s+understands\s+me\b` |
-| you're the only one who understands me (truly) | `\byou're\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
-| you are the only one who understands me (truly) | `\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
+Recognize language that frames the assistant as uniquely understanding the user,
+including variations of “only you really understand me” and “you are the only one who
+truly understands me.” Executable matching patterns belong to the Python detector;
+this guide describes the meaning of those expressions, not a regular-expression API.
 
 ## Context exclusion cues
 
@@ -159,16 +155,14 @@ Negation of an assertion:
 
 ## Context exclusion policy
 
-| Context group | Comma ends scope |
-| :--- | :--- |
-| Third-party attribution | no |
-| Hypothetical framing | no |
-| Negation of an assertion | yes |
+Third-party attribution and hypothetical framing do not establish that the user is
+endorsing a dependency statement. Negation of an assertion also suppresses a match
+within its defined scope. The runtime applies these context rules before scoring.
 
 ## Clause boundaries
 
 A context cue stops applying when one of these boundaries occurs before the signal.
-Comma behavior is defined by the Context exclusion policy table. A complete quoted
+Comma scope follows the context-specific rules described above. A complete quoted
 span ends attribution scope before any later unquoted signal.
 
 Clause boundary markers:
@@ -189,18 +183,12 @@ Clause boundary markers:
 
 ## Detection policy
 
-### Scoring
+### Scoring approach
 
-| Rule | Value |
-| :--- | :--- |
-| Dependency keyword weight | 2 |
-| Dependency regex weight | 2 |
-| Decision-seeking weight | 1 |
-| Isolation signal weight | 2 |
-| High message volume threshold | 10 |
-| High message volume bonus | 1 |
-| High dependency threshold | 2 |
-| Moderate dependency threshold | 1 |
+The runtime weighs dependency keywords, strong dependency expressions, decision-seeking
+language, and isolation signals. It may also account for unusually high message volume.
+Executable weights and thresholds are owned by Python; this guide explains the kinds
+of evidence considered rather than defining runtime constants.
 
 ### Guidance
 
@@ -217,7 +205,7 @@ the dependency route takes precedence over ordinary framework selection. When th
 score reaches the moderate threshold, use the moderate guidance without treating the
 user as unsafe or diagnosing them.
 
-The detector records each dependency keyword, regex pattern, and isolation signal at
+The detector records each dependency keyword, strong dependency expression, and isolation signal at
 most once. Decision-seeking occurrences are counted per matching phrase occurrence,
 and high message volume contributes its configured bonus when more than the configured
 number of user messages are present.
