@@ -135,6 +135,10 @@ INSIGHT_GUIDANCE_NAMES = {
 }
 
 RUNTIME_GUIDANCE_NAMES = {
+    "Hold the insight first": "hold_first",
+    "When it appears": "when_it_appears",
+    "Notice it earlier": "noticing_earlier",
+    "Consider a different response": "different_response",
     "Not detected": "not_detected",
     "Detected": "detected",
     "Detected prefix": "detected_prefix",
