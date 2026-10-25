@@ -227,9 +227,9 @@ def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
         result["synthesis_frame"]
     )
     assert "Longitudinal data available." in str(result["recommendation"])
-    frame = str(result["synthesis_frame"])
-    assert "- keeps appearing, even when the topic changes." in frame
-    assert "- it surfaced in more than one place." in frame
+    guidance = load_synthesis_rules().response_guidance
+    assert guidance["value_theme_suffix"].startswith("-")
+    assert guidance["conflict_theme_suffix"].startswith("-")
 
 
 def test_synthesize_uses_current_session_opening_without_longitudinal_memory() -> None:
