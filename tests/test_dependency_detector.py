@@ -460,6 +460,7 @@ def test_executable_dependency_rules_are_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
     assert "## Regex patterns" not in text
+    assert "### Scoring\n" not in text
     assert r"\b" not in text
     assert "Dependency keyword weight" not in text
     assert "High dependency threshold" not in text
