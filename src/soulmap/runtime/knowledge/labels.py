@@ -135,6 +135,8 @@ INSIGHT_GUIDANCE_NAMES = {
 }
 
 RUNTIME_GUIDANCE_NAMES = {
+    "Active": "active",
+    "Residual": "residual",
     "Hold the insight first": "hold_first",
     "When it appears": "when_it_appears",
     "Notice it earlier": "noticing_earlier",
