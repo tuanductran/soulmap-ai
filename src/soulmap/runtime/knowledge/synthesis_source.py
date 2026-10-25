@@ -6,6 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
 from soulmap.runtime.knowledge.keyword_lists import load_key_value_table, load_runtime_guidance
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
