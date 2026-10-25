@@ -71,8 +71,8 @@ def _quoted_bullets(body: str) -> tuple[str, ...]:
 
 
 def _knowledge_lists(body: str) -> dict[str, tuple[str, ...]]:
-    """Load semantic signal lists authored for AI-facing guidance."""
-    return {
+    """Load and validate semantic signal lists authored for AI-facing guidance."""
+    values = {
         "NEGATIVE_OVERRIDES": _quoted_bullets(
             _section_body(body, "Negative overrides")
         ),
@@ -83,6 +83,10 @@ def _knowledge_lists(body: str) -> dict[str, tuple[str, ...]]:
             _section_body(body, "Confirmation assistant anchors")
         ),
     }
+    for key, items in values.items():
+        if not items or not all(isinstance(item, str) and item for item in items):
+            raise ValueError(f"Celebration setting {key} is invalid.")
+    return values
 
 
 @lru_cache(maxsize=1)
