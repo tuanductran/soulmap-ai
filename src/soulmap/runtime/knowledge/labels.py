@@ -184,5 +184,6 @@ RUNTIME_GUIDANCE_NAMES = {
     "Tracking": "tracking",
     "Self-directed anger": "self_anger",
     "Other-directed anger": "other_anger",
+    "Other anger": "other_anger",
     "Combination": "combination",
 }
