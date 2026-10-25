@@ -135,6 +135,14 @@ INSIGHT_GUIDANCE_NAMES = {
 }
 
 RUNTIME_GUIDANCE_NAMES = {
+    "Not enough": "not_enough",
+    "Freedom vs. safety": "freedom_vs_safety",
+    "Creativity depth": "creativity_depth",
+    "Seen vs. hidden": "seen_vs_hidden",
+    "Closeness vs. distance": "closeness_vs_distance",
+    "Knowing vs. avoiding": "knowing_vs_avoiding",
+    "Change vs. familiar": "change_vs_familiar",
+    "Giving vs. receiving": "giving_vs_receiving",
     "Meaning void": "meaning_void",
     "Should versus want": "should_vs_want",
     "Emotional theme suffix": "emotional_theme_suffix",
