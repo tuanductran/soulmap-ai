@@ -303,7 +303,7 @@ Changes to these values must be made here and covered by focused contract tests.
 | Emotional theme | An emotional thread of |
 | Value theme | Something that seems to matter to you |
 | Conflict theme | A recurring tension around |
-| Emotional theme suffix | — it appeared in several different things you shared. |
+| Emotional theme suffix | - it appeared in several different things you shared. |
 | Value theme suffix | keeps appearing, even when the topic changes. |
 | Conflict theme suffix | surfaced in more than one place. |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
