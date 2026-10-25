@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_runtime_guidance,
     load_key_value_table,
     load_keyword_section,
 )
@@ -35,7 +36,7 @@ GENUINE_INTEGRATION = load_keyword_section(
 )
 
 _BYPASS_SCORING = load_key_value_table(_DISCERNMENT_PATH, "Scoring")
-_BYPASS_GUIDANCE = load_key_value_table(_DISCERNMENT_PATH, "Guidance")
+_BYPASS_GUIDANCE = load_runtime_guidance(_DISCERNMENT_PATH)
 
 HistoryMessage = dict[str, str]
 
