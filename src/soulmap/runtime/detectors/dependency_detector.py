@@ -64,9 +64,7 @@ _CONTEXT_POLICY_ROWS = load_table_rows(_SOURCE, "Context exclusion policy")
 if (
     not _CONTEXT_POLICY_ROWS
     or any(
-        len(row) != 2
-        or not row[0]
-        or row[1].strip().lower() not in {"yes", "no"}
+        len(row) != 2 or not row[0] or row[1].strip().lower() not in {"yes", "no"}
         for row in _CONTEXT_POLICY_ROWS
     )
     or len({row[0].lower() for row in _CONTEXT_POLICY_ROWS})
@@ -74,8 +72,7 @@ if (
 ):
     raise ValueError("Dependency context policy must contain unique yes/no rows.")
 _CONTEXT_EXCLUSION_POLICY = {
-    row[0].lower(): row[1].strip().lower() == "yes"
-    for row in _CONTEXT_POLICY_ROWS
+    row[0].lower(): row[1].strip().lower() == "yes" for row in _CONTEXT_POLICY_ROWS
 }
 if set(_CONTEXT_EXCLUSION_POLICY) != set(_CONTEXT_EXCLUSION_GROUPS):
     raise ValueError("Dependency context policy must cover every context cue group.")
