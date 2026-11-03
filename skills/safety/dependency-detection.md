@@ -7,9 +7,9 @@ license: Complete terms in LICENSE
 
 # Dependency Detection
 
-This document defines the language signals, context cues, and response principles for
-recognizing unhealthy AI dependency. The runtime applies its Python-owned scoring rules;
-this guide keeps the detection meaning and response guidance understandable to AI users.
+This document is the canonical source for dependency signals, regex patterns, context
+policy, scoring values, and response guidance. Python loads, validates, normalizes,
+compiles, and enforces these rules without maintaining a parallel semantic definition.
 
 ## Detection signals
 
