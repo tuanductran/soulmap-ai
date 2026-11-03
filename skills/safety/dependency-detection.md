@@ -187,8 +187,19 @@ Clause boundary markers:
 
 The runtime weighs dependency keywords, strong dependency expressions, decision-seeking
 language, and isolation signals. It may also account for unusually high message volume.
-Executable weights and thresholds are owned by Python; this guide explains the kinds
-of evidence considered rather than defining runtime constants.
+The values below are the canonical scoring policy. Python loads, validates, and applies
+them; it does not define a duplicate scoring policy.
+
+| Setting | Value |
+| :--- | :--- |
+| Dependency keyword weight | 2 |
+| Dependency regex weight | 2 |
+| Decision-seeking weight | 1 |
+| Isolation signal weight | 2 |
+| High message volume threshold | 10 |
+| High message volume bonus | 1 |
+| High dependency threshold | 2 |
+| Moderate dependency threshold | 1 |
 
 ### Guidance
 
