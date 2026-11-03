@@ -6,6 +6,7 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import (
+    _CONTEXT_EXCLUSION_POLICY,
     _DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
@@ -468,6 +469,14 @@ def test_dependency_knowledge_is_loaded_from_skill_markdown() -> None:
     assert "High dependency threshold" in text
     assert "| Context group | Comma ends scope |" in text
     assert r"\b" in text
+
+
+def test_markdown_owned_context_policy_preserves_comma_scope() -> None:
+    assert _CONTEXT_EXCLUSION_POLICY == {
+        "third-party attribution": False,
+        "hypothetical framing": False,
+        "negation of an assertion": True,
+    }
 
 
 def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> None:
