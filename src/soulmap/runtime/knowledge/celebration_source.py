@@ -15,17 +15,6 @@ from soulmap.runtime.knowledge.labels import CELEBRATION_GUIDANCE_NAMES, map_lab
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
-_SCORE_WEIGHTS = {
-    "win or completion": 3,
-    "relief after difficulty": 3,
-    "gratitude": 2,
-    "recognized progress": 2,
-}
-_DETECTION_THRESHOLD = 2
-_NEGATIVE_OVERRIDE_PENALTY = 2
-_STRENGTH_THRESHOLD = 4
-_CONFIRMATION_SCORE = 2
-
 
 @dataclass(frozen=True, slots=True)
 class CelebrationRules:
@@ -95,6 +84,17 @@ def load_celebration_rules() -> CelebrationRules:
     path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _knowledge_lists(body)
+    scoring = load_key_value_table(path, "Scoring approach")
+
+    def scoring_value(label: str) -> int:
+        try:
+            value = int(scoring[label])
+        except (KeyError, ValueError) as exc:
+            raise ValueError(f"Celebration scoring setting {label!r} is invalid.") from exc
+        if value < 0:
+            raise ValueError(f"Celebration scoring setting {label!r} cannot be negative.")
+        return value
+
     groups = load_labeled_groups(path, "Detection signals")
     guidance_labels = load_key_value_table(path, "Guidance")
     guidance = {
@@ -105,11 +105,16 @@ def load_celebration_rules() -> CelebrationRules:
     if not required_guidance <= guidance.keys():
         raise ValueError("Celebration guidance configuration is incomplete.")
     return CelebrationRules(
-        score_weights=_SCORE_WEIGHTS,
-        threshold=_DETECTION_THRESHOLD,
-        negative_override_penalty=_NEGATIVE_OVERRIDE_PENALTY,
-        strength_threshold=_STRENGTH_THRESHOLD,
-        confirmation_score=_CONFIRMATION_SCORE,
+        score_weights={
+            "win or completion": scoring_value("Win or completion weight"),
+            "relief after difficulty": scoring_value("Relief after difficulty weight"),
+            "gratitude": scoring_value("Gratitude weight"),
+            "recognized progress": scoring_value("Recognized progress weight"),
+        },
+        threshold=scoring_value("Detection threshold"),
+        negative_override_penalty=scoring_value("Negative override penalty"),
+        strength_threshold=scoring_value("Strength threshold"),
+        confirmation_score=scoring_value("Confirmation score"),
         negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
         confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
         confirmation_assistant_anchors=cast(
