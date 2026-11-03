@@ -6,7 +6,7 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import (
-    _DEPENDENCY_PATTERNS,
+    __DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
@@ -480,6 +480,6 @@ def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> No
         "You are the only one who    truly understands me.",
     )
 
-    assert len(DEPENDENCY_PATTERNS) == len(phrases)
-    for (_, pattern), phrase in zip(DEPENDENCY_PATTERNS, phrases, strict=True):
+    assert len(_DEPENDENCY_PATTERNS) == len(phrases)
+    for (_, pattern), phrase in zip(_DEPENDENCY_PATTERNS, phrases, strict=True):
         assert pattern.search(phrase.lower()), phrase
