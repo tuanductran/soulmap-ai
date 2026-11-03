@@ -18,6 +18,7 @@ from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_labe
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTEXT_EXCLUSION_POLICY = _dependency_rules.CONTEXT_EXCLUSION_POLICY
+_DEPENDENCY_PATTERNS = _dependency_rules.DEPENDENCY_PATTERNS
 
 _SOURCE = runtime_skill_path("dependency-detection")
 _SCORING = load_key_value_table(_SOURCE, "Scoring approach")
