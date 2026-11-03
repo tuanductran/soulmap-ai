@@ -1,4 +1,4 @@
-# SoulMap Skills Runtime Ownership Audit (2026-10)
+# SoulMap skills runtime ownership audit (2026-10)
 
 ## Scope and source of truth
 
