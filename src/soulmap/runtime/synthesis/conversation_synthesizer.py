@@ -315,7 +315,7 @@ def synthesize(
         else:
             template = _rules().response_guidance["conflict_theme"]
             suffix = _rules().response_guidance["conflict_theme_suffix"]
-        theme_descriptions.append(f"{template} {readable}{suffix}")
+        theme_descriptions.append(f"{template} {readable} {suffix}")
 
     synthesis_frame = (
         opening
