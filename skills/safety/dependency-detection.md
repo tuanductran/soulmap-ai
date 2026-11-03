@@ -90,12 +90,19 @@ Isolation signals:
 - "rather talk to you than"
 - "you are easier to talk to than"
 
-## Strong dependency expressions
+## Regex patterns
 
-Recognize language that frames the assistant as uniquely understanding the user,
-including variations of "only you really understand me" and "you are the only one who
-truly understands me." Executable matching patterns belong to the Python detector;
-this guide describes the meaning of those expressions, not a regular-expression API.
+These expressions extend the dependency keyword list with flexible whitespace
+matching. Python compiles and applies the patterns without changing their meaning.
+
+| Label | Pattern |
+| :--- | :--- |
+| only you understand me (really) | `\\bonly you\\s+really\\s+understand(?:s)?\\s+me\\b` |
+| only you understand me (truly) | `\\bonly you\\s+truly\\s+understand(?:s)?\\s+me\\b` |
+| you're the only one who understands me (really) | `\\byou're\\s+the\\s+only\\s+one\\s+who\\s+really\\s+understands\\s+me\\b` |
+| you are the only one who understands me (really) | `\\byou\\s+are\\s+the\\s+only\\s+one\\s+who\\s+really\\s+understands\\s+me\\b` |
+| you're the only one who understands me (truly) | `\\byou're\\s+the\\s+only\\s+one\\s+who\\s+truly\\s+understands\\s+me\\b` |
+| you are the only one who understands me (truly) | `\\byou\\s+are\\s+the\\s+only\\s+one\\s+who\\s+truly\\s+understands\\s+me\\b` |
 
 ## Context exclusion cues
 
@@ -158,6 +165,12 @@ Negation of an assertion:
 Third-party attribution and hypothetical framing do not establish that the user is
 endorsing a dependency statement. Negation of an assertion also suppresses a match
 within its defined scope. The runtime applies these context rules before scoring.
+
+| Context group | Comma ends scope |
+| :--- | :--- |
+| Third-party attribution | no |
+| Hypothetical framing | no |
+| Negation of an assertion | yes |
 
 ## Clause boundaries
 
