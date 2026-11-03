@@ -19,7 +19,9 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("dependency-detection")
 _PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
-if any(len(row) != 2 or not row[0] or not row[1] for row in _PATTERN_ROWS):
+if not _PATTERN_ROWS or any(
+    len(row) != 2 or not row[0] or not row[1] for row in _PATTERN_ROWS
+):
     raise ValueError("Dependency regex patterns must contain a label and pattern.")
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
     (label, re.compile(pattern.strip(chr(96)))) for label, pattern in _PATTERN_ROWS
@@ -58,11 +60,25 @@ _GUIDANCE = {
     for label, value in _GUIDANCE_LABELS.items()
 }
 _CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
+_CONTEXT_POLICY_ROWS = load_table_rows(_SOURCE, "Context exclusion policy")
+if (
+    not _CONTEXT_POLICY_ROWS
+    or any(
+        len(row) != 2
+        or not row[0]
+        or row[1].strip().lower() not in {"yes", "no"}
+        for row in _CONTEXT_POLICY_ROWS
+    )
+    or len({row[0].lower() for row in _CONTEXT_POLICY_ROWS})
+    != len(_CONTEXT_POLICY_ROWS)
+):
+    raise ValueError("Dependency context policy must contain unique yes/no rows.")
 _CONTEXT_EXCLUSION_POLICY = {
     row[0].lower(): row[1].strip().lower() == "yes"
-    for row in load_table_rows(_SOURCE, "Context exclusion policy")
-    if len(row) == 2
+    for row in _CONTEXT_POLICY_ROWS
 }
+if set(_CONTEXT_EXCLUSION_POLICY) != set(_CONTEXT_EXCLUSION_GROUPS):
+    raise ValueError("Dependency context policy must cover every context cue group.")
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
 )
