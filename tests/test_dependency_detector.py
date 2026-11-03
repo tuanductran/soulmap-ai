@@ -5,8 +5,10 @@ skills/safety/dependency-detection.md and exercised here as behavioral
 regression cases.
 """
 
-from soulmap.runtime.detectors.dependency_detector import analyze_dependency
-from soulmap.runtime.detectors.dependency_rules import DEPENDENCY_PATTERNS
+from soulmap.runtime.detectors.dependency_detector import (
+    _DEPENDENCY_PATTERNS,
+    analyze_dependency,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -457,18 +459,18 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "LOW_DEPENDENCY" not in guidance
 
 
-def test_executable_dependency_rules_are_not_stored_in_skill_markdown() -> None:
+def test_dependency_knowledge_is_loaded_from_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
-    assert "## Regex patterns" not in text
-    assert "### Scoring\n" not in text
-    assert r"\b" not in text
-    assert "Dependency keyword weight" not in text
-    assert "High dependency threshold" not in text
-    assert "| Context group | Comma ends scope |" not in text
+    assert "## Regex patterns" in text
+    assert "### Scoring approach" in text
+    assert "Dependency keyword weight" in text
+    assert "High dependency threshold" in text
+    assert "| Context group | Comma ends scope |" in text
+    assert r"\b" in text
 
 
-def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None:
+def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> None:
     phrases = (
         "Only you    really understand me.",
         "Only you    truly understand me.",
