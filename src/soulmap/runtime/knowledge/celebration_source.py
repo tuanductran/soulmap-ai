@@ -90,9 +90,13 @@ def load_celebration_rules() -> CelebrationRules:
         try:
             value = int(scoring[label])
         except (KeyError, ValueError) as exc:
-            raise ValueError(f"Celebration scoring setting {label!r} is invalid.") from exc
+            raise ValueError(
+                f"Celebration scoring setting {label!r} is invalid."
+            ) from exc
         if value < 0:
-            raise ValueError(f"Celebration scoring setting {label!r} cannot be negative.")
+            raise ValueError(
+                f"Celebration scoring setting {label!r} cannot be negative."
+            )
         return value
 
     groups = load_labeled_groups(path, "Detection signals")
