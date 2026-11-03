@@ -383,7 +383,7 @@ Transition, moving between one chapter of life and the next:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 This section defines executable detection policy for the Life Direction detector. The
 runtime may execute these values, but must not duplicate them.
@@ -393,8 +393,8 @@ runtime may execute these values, but must not duplicate them.
 | Signal group | Weight |
 | :--- | ---: |
 | lostness | 3 |
-| meaning_void | 3 |
-| should_vs_want | 2 |
+| Meaning void | 3 |
+| Should versus want | 2 |
 | comparison | 2 |
 | transition | 2 |
 | misalignment | 2 |
@@ -411,7 +411,7 @@ runtime may execute these values, but must not duplicate them.
 | :--- | :--- |
 | meaning | meaning |
 | energy | energy |
-| respect | should_vs_want, comparison |
+| respect | Should versus want, comparison |
 | misalignment | misalignment |
 | default | none |
 
@@ -425,9 +425,9 @@ runtime may execute these values, but must not duplicate them.
 | misalignment | help locate the gap between values and current life |
 | default | start with what feels meaningful as the opening lens |
 
-### Runtime guidance
+### Guidance
 
 | State | Recommendation |
 | :--- | :--- |
-| not_detected | No direction signals detected. Continue standard pipeline. |
-| detected | Life direction uncertainty detected. Activate Life Direction Clarifier. Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. Use one lens at a time. Offer at most one reflective question about what kind of life feels honest to the user when appropriate; do not force a question. |
+| Not detected | No direction signals detected. Continue standard pipeline. |
+| Detected | Life direction uncertainty detected. Activate Life Direction Clarifier. Explore VALUES, not options. Do NOT suggest a direction or validate a leaning. Use one lens at a time. Offer at most one reflective question about what kind of life feels honest to the user when appropriate; do not force a question. |

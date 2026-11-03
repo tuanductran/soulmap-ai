@@ -221,7 +221,7 @@ The runtime detection contract below is the executable source of truth for synth
 activation. It defines both explicit request signals and the structural thresholds.
 
 Do not maintain a second phrase list or a separate message-count rule here. If the
-activation policy changes, update **Runtime detection contract** and its runtime tests
+activation policy changes, update **Detection policy** and its runtime tests
 together.
 
 ## Paired template
@@ -236,7 +236,7 @@ together.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following operational configuration is normative knowledge for synthesis detection.
 Changes to these values must be made here and covered by focused contract tests.
@@ -296,15 +296,18 @@ Changes to these values must be made here and covered by focused contract tests.
 
 | Key | Guidance |
 | :--- | :--- |
-| insufficient_data | Not enough conversation history for synthesis. Continue standard response. Check again after the configured minimum user-message threshold. |
-| insufficient_themes | Not enough recurring themes detected for synthesis. Continue standard response. |
-| session_opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
-| longitudinal_opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
-| emotional_theme | An emotional thread of {theme} - it appeared in several different things you shared. |
-| value_theme | Something that seems to matter to you - {theme} - keeps appearing, even when the topic changes. |
-| conflict_theme | A recurring tension around {theme} - it surfaced in more than one place. |
-| ownership_return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
+| Insufficient data | Not enough conversation history for synthesis. Continue standard response. Check again after the configured minimum user-message threshold. |
+| Insufficient themes | Not enough recurring themes detected for synthesis. Continue standard response. |
+| Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
+| Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
+| Emotional theme | An emotional thread of |
+| Value theme | Something that seems to matter to you |
+| Conflict theme | A recurring tension around |
+| Emotional theme suffix | - it appeared in several different things you shared. |
+| Value theme suffix | - keeps appearing, even when the topic changes. |
+| Conflict theme suffix | - it surfaced in more than one place. |
+| Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
+| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences plus a specific anchor to something the user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
@@ -348,7 +351,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "used to be"
 - "mourning"
 
-#### not_enough
+#### Not enough
 
 - "not enough"
 - "not good enough"
@@ -360,7 +363,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "failure"
 - "failing"
 
-#### freedom_vs_safety
+#### Freedom vs. safety
 
 - "trapped"
 - "stuck"
@@ -453,7 +456,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "don't want to lose"
 - "afraid to lose"
 
-#### creativity_depth
+#### Creativity depth
 
 - "creative"
 - "depth"
@@ -467,7 +470,7 @@ Changes to these values must be made here and covered by focused contract tests.
 
 ### Recurring inner-conflict signals
 
-#### seen_vs_hidden
+#### Seen vs. hidden
 
 - "want to be seen"
 - "afraid to be seen"
@@ -476,7 +479,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "hide"
 - "show"
 
-#### closeness_vs_distance
+#### Closeness vs. distance
 
 - "want connection"
 - "push away"
@@ -485,7 +488,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "afraid of closeness"
 - "want to be close but"
 
-#### knowing_vs_avoiding
+#### Knowing vs. avoiding
 
 - "i know but"
 - "i see it but"
@@ -493,7 +496,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "part of me knows"
 - "choose not to look"
 
-#### change_vs_familiar
+#### Change vs. familiar
 
 - "want to change"
 - "keep going back"
@@ -502,7 +505,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "familiar even though"
 - "known even if"
 
-#### giving_vs_receiving
+#### Giving vs. receiving
 
 - "give so much"
 - "never receive"

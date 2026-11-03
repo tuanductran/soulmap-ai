@@ -308,11 +308,14 @@ def synthesize(
         readable = theme_name.replace("_", " ")
         if domain == "emotional":
             template = _rules().response_guidance["emotional_theme"]
+            suffix = _rules().response_guidance["emotional_theme_suffix"]
         elif domain == "values":
             template = _rules().response_guidance["value_theme"]
+            suffix = _rules().response_guidance["value_theme_suffix"]
         else:
             template = _rules().response_guidance["conflict_theme"]
-        theme_descriptions.append(template.format(theme=readable))
+            suffix = _rules().response_guidance["conflict_theme_suffix"]
+        theme_descriptions.append(f"{template} {readable} {suffix}")
 
     synthesis_frame = (
         opening
@@ -323,15 +326,9 @@ def synthesize(
     )
 
     recommendation = (
-        _rules()
-        .response_guidance["recommendation"]
-        .format(
-            count=len(top_3),
-            longitudinal_notice=(
-                "Longitudinal data available. " if is_longitudinal else ""
-            ),
-            themes=", ".join(f"{d}:{t}" for d, t, _ in top_3),
-        )
+        f"Synthesis ready. {len(top_3)} recurring theme(s) identified. "
+        + ("Longitudinal data available. " if is_longitudinal else "")
+        + _rules().response_guidance["recommendation"]
     )
 
     return {

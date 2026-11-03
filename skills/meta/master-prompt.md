@@ -91,7 +91,7 @@ First match wins. Never combine two primary frameworks.
 | Lower | Pattern | Same arc across 2+ stories |
 | Default | Mirror | Default, nothing else triggered |
 
-One optional secondary layer only: anger / bypass / somatic / meaning_integration / inner_parts.
+One optional secondary layer only: anger / bypass / somatic / meaning integration / inner parts.
 
 ### Step 4, apply hard response ceilings
 

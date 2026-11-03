@@ -13,6 +13,7 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_keyword_section,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -23,9 +24,9 @@ DARK_NIGHT_SIGNALS = load_keyword_section(
 )
 _RULES = load_key_value_table(
     runtime_skill_path("dark-night-of-soul"),
-    "Runtime detection contract",
+    "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("dark-night-of-soul"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("dark-night-of-soul"))
 
 
 HistoryMessage = dict[str, str]

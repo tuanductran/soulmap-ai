@@ -6,10 +6,11 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.keyword_lists import load_key_value_table
+from soulmap.runtime.knowledge.keyword_lists import load_runtime_guidance
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime detection contract"
+_CONTRACT_HEADING = "Detection policy"
 _THRESHOLD_RE = re.compile(
     r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<value>\d+)\s*\|\s*$", re.MULTILINE
 )
@@ -105,7 +106,8 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
     for line in match.group("body").splitlines():
         stripped = line.strip()
         if stripped.startswith("#### "):
-            group_name = stripped[5:].strip().lower()
+            group_label = stripped[5:].strip()
+            group_name = RUNTIME_GUIDANCE_NAMES.get(group_label, group_label.lower())
             current = group_name
             groups[group_name] = ()
         elif current is not None:
@@ -137,5 +139,5 @@ def load_synthesis_rules() -> SynthesisRules:
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
         conflict_themes=_theme_groups(body, "Recurring inner-conflict"),
-        response_guidance=load_key_value_table(path, "Response guidance"),
+        response_guidance=load_runtime_guidance(path, "Response guidance"),
     )

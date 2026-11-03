@@ -87,6 +87,9 @@ def test_parts_suggested_returns_at_most_three_archetypes() -> None:
     parts = cast(list[str], result["parts_suggested"])
     assert len(parts) <= 3
     assert all(isinstance(p, str) for p in parts)
+    recommendation = str(result["recommendation"])
+    assert recommendation.count("Likely parts present:") == 1
+    assert "Likely parts are present." not in recommendation
 
 
 def test_parts_suggested_is_empty_when_no_archetype_signals_present() -> None:

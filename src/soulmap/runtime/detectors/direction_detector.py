@@ -13,15 +13,20 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_mapped_key_value_table,
+    load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("life-direction")
 _DIRECTION_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
-_DIRECTION_RULES = load_key_value_table(_SOURCE, "Scoring")
+_DIRECTION_RULES = load_mapped_key_value_table(
+    _SOURCE, "Scoring", RUNTIME_GUIDANCE_NAMES
+)
 _DIRECTION_LENS_SIGNALS = load_key_value_table(_SOURCE, "Lens signals")
 _DIRECTION_LENS = load_key_value_table(_SOURCE, "Lens routing")
-_DIRECTION_GUIDANCE = load_key_value_table(_SOURCE, "Runtime guidance")
+_DIRECTION_GUIDANCE = load_runtime_guidance(_SOURCE)
 
 LOSTNESS_SIGNALS = _DIRECTION_GROUPS["lostness"]
 SHOULD_SIGNALS = _DIRECTION_GROUPS["should vs. want"]
@@ -49,7 +54,8 @@ def _suggest_lens(msg: str) -> str:
             continue
         signals = []
         for group in groups.split(","):
-            signals.extend(signal_map.get(group.strip(), ()))
+            normalized_group = RUNTIME_GUIDANCE_NAMES.get(group.strip(), group.strip())
+            signals.extend(signal_map.get(normalized_group, ()))
         if any(signal in msg for signal in signals):
             return _DIRECTION_LENS[lens]
     return _DIRECTION_LENS["default"]
