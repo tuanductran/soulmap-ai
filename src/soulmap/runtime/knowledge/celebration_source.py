@@ -80,7 +80,7 @@ def _knowledge_lists(body: str) -> dict[str, tuple[str, ...]]:
 
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
-    """Load semantic signal lists and combine them with Python-owned scoring rules."""
+    """Load and validate celebration rules from canonical Markdown knowledge."""
     path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _knowledge_lists(body)
