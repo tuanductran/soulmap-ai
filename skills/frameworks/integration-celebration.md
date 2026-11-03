@@ -234,8 +234,19 @@ This policy describes the signals and scoring used to recognize meaningful posit
 ### Scoring approach
 
 The runtime weighs evidence of completion, relief, gratitude, and recognized progress.
-Mixed pain signals can reduce the score or prevent activation. Exact weights and
-thresholds are implementation details owned by Python.
+Mixed pain signals can reduce the score or prevent activation. The values below are
+the canonical scoring policy; Python loads, validates, and applies them.
+
+| Setting | Value |
+| :--- | :--- |
+| Win or completion weight | 3 |
+| Relief after difficulty weight | 3 |
+| Gratitude weight | 2 |
+| Recognized progress weight | 2 |
+| Detection threshold | 2 |
+| Negative override penalty | 2 |
+| Strength threshold | 4 |
+| Confirmation score | 2 |
 
 ### Negative overrides
 
