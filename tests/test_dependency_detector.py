@@ -6,7 +6,7 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import (
-    __DEPENDENCY_PATTERNS,
+    _DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
