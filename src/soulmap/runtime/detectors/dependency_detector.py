@@ -22,8 +22,7 @@ _PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
 if any(len(row) != 2 or not row[0] or not row[1] for row in _PATTERN_ROWS):
     raise ValueError("Dependency regex patterns must contain a label and pattern.")
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
-    (label, re.compile(pattern.strip(chr(96))))
-    for label, pattern in _PATTERN_ROWS
+    (label, re.compile(pattern.strip(chr(96)))) for label, pattern in _PATTERN_ROWS
 )
 
 _SCORING = load_key_value_table(_SOURCE, "Scoring approach")
