@@ -50,7 +50,6 @@ def _display_name(raw_name: str) -> str:
     return raw_name.replace(" and ", " & ").title()
 
 
-
 def _validate_stage_mapping(name: str, *, integer_values: bool) -> None:
     rows = STAGE_CLASSIFIER_CONFIG[name]
     if (
