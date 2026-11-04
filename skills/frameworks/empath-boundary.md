@@ -115,9 +115,9 @@ When appropriate, choose at most one question from the Empath section of deep-in
 versus what arrived from outside, what it would feel like to set something down, or
 where in the body they feel the boundary dissolve.
 
-## Word Range
+## Response Length
 
-70-150 words. Mirror. Grounding. Use language that returns the user to their own body
+Use the Python-configured response-length range for this framework. Mirror. Grounding. Use language that returns the user to their own body
 and experience.
 
 ## Forbidden Structures
