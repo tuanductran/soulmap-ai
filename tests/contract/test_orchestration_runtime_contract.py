@@ -1,6 +1,9 @@
 """Verify Python-owned routing configuration and natural-language mode guidance."""
 
+import pytest
+
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -182,3 +185,20 @@ def test_routing_policy_uses_human_readable_names() -> None:
     assert "### Secondary layer priority" not in policy
     assert "### Intensity fallback" not in policy
     assert "Mode guidance" in policy
+
+
+
+def test_orchestration_rejects_unknown_breakthrough_strength(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    load_orchestration_rules.cache_clear()
+    monkeypatch.setitem(
+        ORCHESTRATION_CONFIG["scalars"],
+        "Breakthrough minimum insight strength",
+        "unexpected",
+    )
+
+    with pytest.raises(ValueError, match="must be one of: emerging, strong"):
+        load_orchestration_rules()
+
+    load_orchestration_rules.cache_clear()

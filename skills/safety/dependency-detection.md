@@ -116,18 +116,19 @@ phrase should not be treated as a diagnosis or as proof of dependency.
 
 | Level | Recommendation |
 | :--- | :--- |
-| High dependency | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
+| High dependency | Acknowledge the feeling, state SoulMap's limit honestly, and clearly point toward a specific real person or real-world support. Ask at most one question only when appropriate and welcome; the redirect remains a clear statement when no question is appropriate. |
 | Moderate dependency | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
 | Low dependency | No significant dependency signals detected. Continue normal reflective engagement. |
 
 ## Guidance
 
-Dependency is a safety-priority signal. When the score reaches the high threshold,
-the dependency route takes precedence over ordinary framework selection. When the
-score reaches the moderate threshold, use the moderate guidance without treating the
-user as unsafe or diagnosing them.
+Dependency is a safety-priority signal. Clear dependency keywords, strong dependency
+expressions, and isolation language can warrant a protective redirect before ordinary
+framework selection. Interpret every signal in context; decision-seeking language and
+message frequency are supporting evidence, not standalone proof of dependency. Weaker
+or mixed signals call for gentle guidance that returns agency to the user without
+treating them as unsafe or diagnosing them.
 
-The detector records each dependency keyword, strong dependency expression, and isolation signal at
-most once. Decision-seeking occurrences are counted per matching phrase occurrence,
-and high message volume contributes its configured bonus when more than the configured
-number of user messages are present.
+The detector records each dependency keyword, strong dependency expression, and
+isolation signal at most once. Decision-seeking occurrences are considered in context,
+alongside the user's broader language and conversation history.

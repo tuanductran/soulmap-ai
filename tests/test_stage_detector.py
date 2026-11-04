@@ -172,3 +172,21 @@ def test_stage_classifier_rejects_recency_window_length_mismatch(
         ValueError, match="must be positive and cover the recent message window"
     ):
         parse_stage_classifier(source)
+
+
+
+@pytest.mark.parametrize(
+    "missing_key", ["prior_pattern_recognition", "prior_breakthrough"]
+)
+def test_stage_classifier_rejects_missing_required_memory_minimum(
+    monkeypatch: pytest.MonkeyPatch, missing_key: str
+) -> None:
+    source = runtime_skill_path("stage-classifier").read_text(encoding="utf-8")
+    memory_minimums = dict(STAGE_CLASSIFIER_CONFIG["memory_minimums"])
+    memory_minimums.pop(missing_key)
+    monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "memory_minimums", memory_minimums)
+
+    with pytest.raises(
+        ValueError, match="prior_pattern_recognition and prior_breakthrough"
+    ):
+        parse_stage_classifier(source)

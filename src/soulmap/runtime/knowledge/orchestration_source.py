@@ -128,6 +128,13 @@ def _require_str(value: str, key: str) -> str:
     return value
 
 
+def _require_choice(value: str, key: str, choices: frozenset[str]) -> str:
+    if not isinstance(value, str) or value not in choices:
+        allowed = ", ".join(sorted(choices))
+        raise ValueError(f"{key} must be one of: {allowed}.")
+    return value
+
+
 def _parse_primary_priority(
     rows: list[list[str]],
 ) -> tuple[PrimaryPriorityRule, ...]:
@@ -261,9 +268,10 @@ def load_orchestration_rules() -> OrchestrationRules:
             scalars["Stage 1 override max user messages"],
             "Stage 1 override max user messages",
         ),
-        breakthrough_min_strength=_require_str(
+        breakthrough_min_strength=_require_choice(
             scalars["Breakthrough minimum insight strength"],
             "Breakthrough minimum insight strength",
+            frozenset({"emerging", "strong"}),
         ),
         phase_1_safety_before_framework_selection=_require_bool(
             scalars["Phase 1 safety checks before framework selection"],

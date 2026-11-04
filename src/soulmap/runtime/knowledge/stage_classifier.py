@@ -175,9 +175,11 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         )
 
     memory_minimums = STAGE_CLASSIFIER_CONFIG["memory_minimums"]
+    required_memory_keys = ("prior_pattern_recognition", "prior_breakthrough")
     if (
         not isinstance(memory_minimums, dict)
         or not memory_minimums
+        or any(key not in memory_minimums for key in required_memory_keys)
         or any(
             not isinstance(key, str)
             or not key.strip()
@@ -186,7 +188,10 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
             for key, value in memory_minimums.items()
         )
     ):
-        raise ValueError("Stage memory minimums must be non-negative integer mappings.")
+        raise ValueError(
+            "Stage memory minimums must include prior_pattern_recognition and "
+            "prior_breakthrough and contain only non-negative integer values."
+        )
 
     if not (
         1
