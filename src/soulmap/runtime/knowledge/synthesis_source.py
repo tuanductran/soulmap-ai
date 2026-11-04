@@ -1,4 +1,4 @@
-"""Load conversation-synthesis detection knowledge from Markdown."""
+"""Combine Python-owned synthesis limits with semantic Markdown knowledge."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ _CONTRACT_HEADING = "Detection policy"
 
 @dataclass(frozen=True, slots=True)
 class SynthesisRules:
-    """Executable configuration authored in conversation-synthesis.md."""
+    """Runtime limits and semantic synthesis knowledge."""
 
     minimum_user_messages: int
     automatic_user_messages: int
@@ -23,6 +23,9 @@ class SynthesisRules:
     max_themes: int
     max_anchors: int
     max_longitudinal: int
+    minimum_theme_occurrences: int
+    minimum_sessions_for_longitudinal: int
+    max_memory_themes: int
     explicit_requests: tuple[str, ...]
     emotional_themes: dict[str, tuple[str, ...]]
     value_themes: dict[str, tuple[str, ...]]
@@ -89,7 +92,7 @@ def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
 
 @lru_cache(maxsize=1)
 def load_synthesis_rules() -> SynthesisRules:
-    """Read and validate the runtime contract from shipped Markdown."""
+    """Load Python-owned limits and validate semantic Markdown knowledge."""
     path = runtime_skill_path("conversation-synthesis")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = DETECTOR_CONFIG["conversation_synthesis"]
@@ -100,6 +103,9 @@ def load_synthesis_rules() -> SynthesisRules:
         max_themes=values["max_themes"],
         max_anchors=values["max_anchors"],
         max_longitudinal=values["max_longitudinal"],
+        minimum_theme_occurrences=values["minimum_theme_occurrences"],
+        minimum_sessions_for_longitudinal=values["minimum_sessions_for_longitudinal"],
+        max_memory_themes=values["max_memory_themes"],
         explicit_requests=_quoted_bullets(body, "Explicit request signals"),
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
