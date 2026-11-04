@@ -132,8 +132,13 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
         for k, v in emotional_scores.items()
         if v["score"] >= _rules().minimum_theme_occurrences
     }
-    recurring_values = {k: v for k, v in values_scores.items() if v["score"] >= 2}
-    recurring_conflicts = {k: v for k, v in conflict_scores.items() if v["score"] >= 2}
+    minimum_occurrences = _rules().minimum_theme_occurrences
+    recurring_values = {
+        k: v for k, v in values_scores.items() if v["score"] >= minimum_occurrences
+    }
+    recurring_conflicts = {
+        k: v for k, v in conflict_scores.items() if v["score"] >= minimum_occurrences
+    }
 
     top_emotional = sorted(recurring_emotional.items(), key=lambda x: -x[1]["score"])[
         : _rules().max_themes
