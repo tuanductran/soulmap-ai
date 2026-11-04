@@ -3,11 +3,11 @@ from __future__ import annotations
 import pytest
 
 from soulmap.runtime.knowledge.runtime_config import STAGE_CLASSIFIER_CONFIG
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 from soulmap.runtime.knowledge.stage_classifier import (
     load_stage_classifier,
     parse_stage_classifier,
 )
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 
