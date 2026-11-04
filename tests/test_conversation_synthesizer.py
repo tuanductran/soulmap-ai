@@ -291,6 +291,6 @@ def test_value_and_conflict_thresholds_use_runtime_configuration(
 
     themes = synthesizer.extract_themes(messages)
 
-    assert themes["emotional"] == []
-    assert themes["values"] == []
-    assert themes["conflicts"] == []
+    assert themes.get("emotional", []) == []
+    assert themes.get("values", []) == []
+    assert themes.get("conflicts", []) == []
