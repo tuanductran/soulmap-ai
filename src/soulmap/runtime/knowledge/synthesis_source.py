@@ -13,6 +13,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
 
+
 @dataclass(frozen=True, slots=True)
 class SynthesisRules:
     """Runtime limits and semantic synthesis knowledge."""
