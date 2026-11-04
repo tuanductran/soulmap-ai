@@ -128,7 +128,9 @@ def test_prompt_markdown_does_not_restate_python_owned_runtime_thresholds() -> N
             )
 
 
-def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limits() -> (\n    None\n):
+def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limits() -> (
+    None
+):
     checks = {
         "skills/meta/framework-template-map.md": [
             r"\b\d+\s*-\s*\d+\s*words\b",
