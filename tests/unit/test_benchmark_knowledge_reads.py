@@ -15,7 +15,6 @@ from scripts.benchmark_knowledge_reads import (
 )
 from soulmap.runtime.knowledge.keyword_lists import _read_markdown_text_cached
 
-
 WORKLOAD = {
     "source": "skills/frameworks/meaning-integration.md",
     "headings": ["Insight classification signals", "Reflection-validation signals"],
