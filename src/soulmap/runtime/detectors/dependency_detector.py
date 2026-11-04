@@ -9,8 +9,8 @@ from bisect import bisect_left, bisect_right
 from dataclasses import dataclass
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
-from soulmap.runtime.knowledge.keyword_lists import load_key_value_table, load_labeled_groups
 from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
+from soulmap.runtime.knowledge.keyword_lists import load_key_value_table, load_labeled_groups
 from soulmap.runtime.knowledge.runtime_config import (
     DEPENDENCY_CLAUSE_BOUNDARIES,
     DEPENDENCY_CONTEXT_CUES,
