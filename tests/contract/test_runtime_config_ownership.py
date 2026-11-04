@@ -229,19 +229,37 @@ def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
 
 
 def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
-    paths = (
-        "skills/frameworks/emotional-deescalation.md",
-        "skills/meta/framework-template-map.md",
-        "skills/meta/master-prompt.md",
-        "skills/meta/orchestration.md",
+    skills_root = Path(__file__).resolve().parents[2] / "skills"
+    runtime_state_tokens = (
+        "MIRROR",
+        "HIGH",
+        "MODERATE",
+        "NORMAL",
+        "PEER",
+        "BLOCK",
+        "CLEAR",
     )
-    runtime_state_tokens = ("MIRROR", "HIGH", "MODERATE", "NORMAL", "PEER")
-    for path in paths:
-        content = default_skill_path(path).read_text(encoding="utf-8")
+    for path in sorted(skills_root.rglob("*.md")):
+        content = path.read_text(encoding="utf-8")
         for token in runtime_state_tokens:
-            assert token not in content, (
-                f"{path} contains Python-facing state token {token!r}"
+            assert not re.search(rf"\b{token}\b", content), (
+                f"{path.relative_to(skills_root)} contains Python-facing "
+                f"state token {token!r}"
             )
+
+
+def test_dependency_response_ceiling_matches_runtime_configuration() -> None:
+    dependency = next(
+        row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Dependency"
+    )
+    content = default_skill_path(
+        "skills/voice/response-calibrator.md"
+    ).read_text(encoding="utf-8")
+    expected = rf"^\|\s*Dependency\s*\|\s*{re.escape(dependency[2])}\s+words\b"
+    assert re.search(expected, content, re.MULTILINE), (
+        "response-calibrator.md must preserve the Python-owned Dependency "
+        f"word range {dependency[2]!r}"
+    )
 
 
 def test_framework_template_registry_is_complete_and_collision_free() -> None:

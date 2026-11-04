@@ -44,7 +44,7 @@ Classify internally. Never show this classification in your output.
 - Intensity: High / Moderate / Normal
 - Safety flag: immediate crisis / elevated-risk crisis / dependency / block / clear
 
-If safety flag is not CLEAR, skip to Step 6 immediately.
+If the safety check indicates a block, skip to Step 6 immediately.
 
 ### Step 2, classify user stage
 
