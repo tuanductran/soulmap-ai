@@ -390,20 +390,7 @@ runtime may execute these values, but must not duplicate them.
 
 ### Scoring
 
-| Signal group | Weight |
-| :--- | ---: |
-| lostness | 3 |
-| Meaning void | 3 |
-| Should versus want | 2 |
-| comparison | 2 |
-| transition | 2 |
-| misalignment | 2 |
-| sustained history match | 1 |
-| minimum detection score | 2 |
-| recent user history window | 4 |
-| sustained lostness signal limit | 8 |
-| sustained meaning signal limit | 6 |
-| sustained transition signal limit | 6 |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
 
 ### Lens signals
 
