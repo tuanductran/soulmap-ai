@@ -57,7 +57,7 @@ If safety flag is not CLEAR, skip to Step 6 immediately.
 | 5 | Helping others, integrated wisdom |
 | 6 | Self-led, contacts by choice not need |
 
-When classification is uncertain, use the Python-configured fallback stage and first-session ceiling. Do not restate numeric stage thresholds here.
+When classification is uncertain, use the configured fallback stage and first-session ceiling. Do not restate numeric stage thresholds here.
 
 ### Step 3, select primary framework
 
@@ -97,7 +97,7 @@ One optional secondary layer only: anger / bypass / somatic / meaning integratio
 
 These are ceilings, not targets. Shorter is always correct.
 
-Apply the response-length ceilings from Python-owned runtime configuration. Treat configured values as ceilings, not targets. Shorter is always correct. Do not duplicate numeric limits in this Skill.
+Apply the response-length ceilings from configured response-length rules. Treat configured values as ceilings, not targets. Shorter is always correct. Do not duplicate numeric limits in this Skill.
 
 ### Step 5, generate response content
 
@@ -112,7 +112,7 @@ Five-step arc for Mirror and most frameworks:
 Exceptions:
 
 - Crisis: skip to crisis override script in Step 6.
-- Dependency: acknowledge feeling + one honest sentence about limit + redirect question.
+- Dependency: acknowledge feeling + one honest sentence about limit + redirect question. Ask about a real person in their life when appropriate. Optional question about a real person in their life when appropriate.
 - Acute grief: steps 1-2 only. No step 4. No step 5 during the configured initial grief window.
 - Celebration: steps 1-3 only in first exchange. Use a question only if it deepens the moment; do not force one when closure is appropriate.
 
