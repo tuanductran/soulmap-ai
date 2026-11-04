@@ -19,7 +19,7 @@ def _memory_minimum_stage(
     memory: dict[str, object], rules: StageClassifierRules
 ) -> int:
     """Apply Python-configured memory-based minimum-stage adjustments."""
-    minimum = 1
+    minimum = rules.first_session_default_stage
     session_count = memory.get("session_count")
     if (
         isinstance(session_count, int)
