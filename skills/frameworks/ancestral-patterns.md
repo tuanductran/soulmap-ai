@@ -204,11 +204,7 @@ The following values define the operational ancestral-pattern detection policy.
 
 ### Scoring
 
-| Rule | Value |
-| :--- | :--- |
-| Direct ancestral-signal weight | 3 |
-| Parent-reference plus pattern-language weight | 2 |
-| Minimum detection score | 2 |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
 
 ### Guidance
 
