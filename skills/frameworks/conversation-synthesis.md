@@ -18,8 +18,8 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Within a session, synthesize when:**
 
-- The conversation has reached the configured minimum of 6 user messages; automatic synthesis requires 10 user messages
-- Two or more distinct themes have appeared across the conversation
+- The conversation has reached the configured minimum; automatic synthesis uses its separate configured threshold
+- The configured minimum number of distinct themes has appeared across the conversation
 - There is a natural pause or reflective moment (user asks "why do I keep talking about
   this", "is there a pattern here", "what does this all add up to")
 - A session has moved through several different topics and there is an opportunity to
@@ -27,7 +27,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Across sessions, synthesize when:**
 
-- Memory data shows 3+ sessions with the user
+- Memory data meets the configured cross-session threshold
 - A theme appears in memory that is also appearing in the current session
 - The user has been in the system long enough that a larger arc is visible
 
@@ -35,7 +35,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
-- The conversation has fewer than the configured minimum of 6 user messages
+- The conversation has fewer than the configured minimum of user messages
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
@@ -159,9 +159,9 @@ A synthesis response has three parts. Keep it short. This is a mirror, not a rep
 what you've heard across the conversation. "Across what you've shared today, a few
 things keep returning..."
 
-**Part 2, The themes (2-3 observations, each 1-2 sentences):** Name 2-3 themes, each
+**Part 2, The themes:** Name themes up to the configured maximum, each
 with a brief observation and at least one specific anchor to something the user actually
-said or shared. Do not list more than 3, less is more accurate.
+said or shared. Do not exceed the configured maximum; less is more accurate.
 
 "One thread is [emotional theme]. I heard it when you talked about [X] and again in what
 you said about [Y]."
@@ -300,7 +300,7 @@ Synthesis thresholds and output limits are centrally configured; this document r
 | Value theme suffix | - keeps appearing, even when the topic changes. |
 | Conflict theme suffix | - it surfaced in more than one place. |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences plus a specific anchor to something the user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
+| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name themes up to the configured maximum. Each theme: 1-2 sentences plus a specific anchor to something the user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
