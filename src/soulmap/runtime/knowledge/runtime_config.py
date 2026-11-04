@@ -3,6 +3,8 @@
 from typing import Any
 
 STAGE_CLASSIFIER_CONFIG: dict[str, Any] = {
+    "recent_message_window": 5,
+    "memory_session_count_threshold": 10,
     "keyword_weights": [[1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 3]],
     "thresholds": [[1, 0], [2, 4], [3, 6], [4, 8], [5, 10], [6, 12]],
     "recency_multipliers": [0.5, 1, 1.5, 2, 3],
