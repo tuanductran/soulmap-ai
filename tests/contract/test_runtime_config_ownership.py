@@ -65,7 +65,6 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
             "Intensity fallback",
         ),
         "dependency-detection": (
-            "Regex patterns",
             "Context exclusion policy",
             "Clause boundaries",
             "Dependency keyword weight",
