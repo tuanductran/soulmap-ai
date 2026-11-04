@@ -31,7 +31,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.source_registry import runtime_skill_path
 
 Benchmark = Callable[[], object]
-TABLE_HEADINGS = ("Scoring", "Guidance")
+TABLE_HEADINGS = ("Insight classification signals", "Reflection-validation signals")
 
 
 def _uncached_key_value_table(text: str, heading: str) -> dict[str, str]:
@@ -53,13 +53,13 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
             "empath-boundary",
             "ancestral-patterns",
             "somatic-wellbeing",
-            "pattern-mapper",
+            "meaning-integration",
         )
     }
     empath = sources["empath-boundary"]
     ancestral = sources["ancestral-patterns"]
     somatic = sources["somatic-wellbeing"]
-    pattern = sources["pattern-mapper"]
+    insight = sources["meaning-integration"]
     return {
         "empath.activation": extract_keyword_section(empath, "Activation Signals"),
         "empath.drain": extract_keyword_section(empath, "Drain signals"),
@@ -77,8 +77,8 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
-        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": _uncached_key_value_table(pattern, "Guidance"),
+        "insight.classification": _uncached_key_value_table(insight, "Insight classification signals"),
+        "insight.validation": _uncached_key_value_table(insight, "Reflection-validation signals"),
     }
 
 
@@ -87,7 +87,7 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
     empath = runtime_skill_path("empath-boundary")
     ancestral = runtime_skill_path("ancestral-patterns")
     somatic = runtime_skill_path("somatic-wellbeing")
-    pattern = runtime_skill_path("pattern-mapper")
+    insight = runtime_skill_path("meaning-integration")
     return {
         "empath.activation": load_keyword_section(empath, "Activation Signals"),
         "empath.drain": load_keyword_section(empath, "Drain signals"),
@@ -101,8 +101,8 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
-        "pattern.scoring": load_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": load_key_value_table(pattern, "Guidance"),
+        "insight.classification": load_key_value_table(insight, "Insight classification signals"),
+        "insight.validation": load_key_value_table(insight, "Reflection-validation signals"),
     }
 
 
@@ -135,8 +135,8 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "somatic.groups": groups(somatic, "Detection signals"),
         "somatic.contract": table(somatic, "Detection policy"),
         "somatic.guidance": table(somatic, "Guidance"),
-        "pattern.scoring": table(pattern, "Scoring"),
-        "pattern.guidance": table(pattern, "Guidance"),
+        "insight.classification": table(insight, "Insight classification signals"),
+        "insight.validation": table(insight, "Reflection-validation signals"),
     }
 
 
@@ -340,7 +340,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         "processor": platform.processor(),
         "parameters": {"warmups": warmups, "iterations": iterations},
         "workload": {
-            "source": "skills/frameworks/pattern-mapper.md",
+            "source": "skills/frameworks/meaning-integration.md",
             "headings": list(TABLE_HEADINGS),
             "detector_sources": [
                 "skills/frameworks/empath-boundary.md",
@@ -352,7 +352,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                 "Includes the original two-table microbenchmark and a representative "
                 "detector knowledge workload spanning keyword sections, labeled "
                 "groups, and key/value tables from empath, ancestral, somatic, and "
-                "pattern-mapper Markdown. Cached and uncached outputs are compared "
+                meaning-integration Markdown. Cached and uncached outputs are compared "
                 "before timing. Samples are interleaved; setup is outside timed samples."
             ),
             "comparison_note": (
