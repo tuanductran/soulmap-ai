@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import cast
 
 from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
@@ -270,3 +271,22 @@ def test_synthesis_response_policy_is_markdown_authored() -> None:
     assert result["synthesis_ready"] is True
     assert "These threads are yours" in str(result["synthesis_frame"])
     assert "Activate Conversation Pattern Synthesizer" in str(result["recommendation"])
+
+
+def test_value_and_conflict_thresholds_use_runtime_configuration(monkeypatch) -> None:
+    rules = load_synthesis_rules()
+    monkeypatch.setattr(
+        synthesizer, "_rules", lambda: replace(rules, minimum_theme_occurrences=3)
+    )
+    messages = _user_messages(
+        [
+            "I feel lonely and my own path matters. I want connection but pull away.",
+            "I feel lonely and my own path matters. I want connection but pull away.",
+        ]
+    )
+
+    themes = synthesizer.extract_themes(messages)
+
+    assert themes["emotional"] == []
+    assert themes["values"] == []
+    assert themes["conflicts"] == []
