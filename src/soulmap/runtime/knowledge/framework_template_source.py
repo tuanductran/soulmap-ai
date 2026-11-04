@@ -27,7 +27,19 @@ def _key(value: str) -> str:
 @lru_cache(maxsize=1)
 def load_template_rules() -> tuple[TemplateRule, ...]:
     """Load deterministic output constraints from Python-owned configuration."""
-    return tuple(TemplateRule(*row) for row in FRAMEWORK_TEMPLATE_ROWS)
+    if not FRAMEWORK_TEMPLATE_ROWS or any(
+        not isinstance(row, list)
+        or len(row) != 5
+        or any(not isinstance(value, str) or not value.strip() for value in row)
+        for row in FRAMEWORK_TEMPLATE_ROWS
+    ):
+        raise ValueError("Framework template rows must contain five non-empty strings.")
+
+    rules = tuple(TemplateRule(*row) for row in FRAMEWORK_TEMPLATE_ROWS)
+    framework_names = [rule.framework.strip().casefold() for rule in rules]
+    if len(set(framework_names)) != len(framework_names):
+        raise ValueError("Framework template names must be unique.")
+    return rules
 
 
 def resolve_template(

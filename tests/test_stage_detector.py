@@ -24,6 +24,9 @@ def test_stage_classifier_loads_the_shipped_contract() -> None:
         "prior_pattern_recognition": 3,
         "prior_breakthrough": 3,
     }
+    assert set(rules.thresholds) == set(range(1, 7))
+    assert set(rules.stage_roles) == set(range(1, 7))
+    assert set(rules.stage_recommendations) == set(range(1, 7))
 
 
 def test_stage_classifier_rejects_missing_stage() -> None:
@@ -144,3 +147,15 @@ def test_destabilization_allows_stage_regression() -> None:
     )
 
     assert result["stage"] == 1
+
+
+
+def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
+    rules = load_stage_classifier()
+    source = "\n".join(
+        f"### Stage {1 if index == 5 else stage.number}, {stage.name.lower()}"
+        for index, stage in enumerate(rules.stages)
+    )
+
+    with pytest.raises(ValueError, match="stages 1 through 6 exactly once"):
+        parse_stage_classifier(source)

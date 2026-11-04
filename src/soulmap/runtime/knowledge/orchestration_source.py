@@ -159,6 +159,9 @@ def _parse_primary_priority(
                 ),
             )
         )
+    frameworks = [rule.framework for rule in rules]
+    if len(set(frameworks)) != len(frameworks):
+        raise ValueError("PRIMARY_PRIORITY frameworks must be unique.")
     return tuple(rules)
 
 
@@ -184,6 +187,9 @@ def _parse_intensity_fallback(
                 ),
             )
         )
+    levels = [rule.level for rule in rules]
+    if len(set(levels)) != len(levels):
+        raise ValueError("INTENSITY_FALLBACK levels must be unique.")
     return tuple(rules)
 
 
@@ -202,6 +208,9 @@ def _parse_secondary_priority(
                 name=map_label(name, SECONDARY_NAMES, "Secondary layer priority"),
             )
         )
+    names = [rule.name for rule in rules]
+    if len(set(names)) != len(names):
+        raise ValueError("SECONDARY_PRIORITY names must be unique.")
     return tuple(rules)
 
 
@@ -215,8 +224,10 @@ def load_orchestration_rules() -> OrchestrationRules:
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    if set(runtime_instructions) != set(INSTRUCTION_NAMES) or any(
-        not value for value in runtime_instructions.values()
+    if (
+        len(runtime_instructions) != len(instruction_rows)
+        or set(runtime_instructions) != set(INSTRUCTION_NAMES)
+        or any(not value for value in runtime_instructions.values())
     ):
         raise ValueError("Orchestration mode guidance is incomplete.")
     runtime_instructions = {
@@ -224,7 +235,25 @@ def load_orchestration_rules() -> OrchestrationRules:
     }
 
     config = ORCHESTRATION_CONFIG
+    expected_config_keys = {
+        "scalars",
+        "intensity_fallback",
+        "primary_priority",
+        "secondary_priority",
+    }
+    if set(config) != expected_config_keys:
+        raise ValueError("Orchestration configuration keys are incomplete or unused.")
+
     scalars = config["scalars"]
+    expected_scalar_keys = {
+        "Stage 1 override max user messages",
+        "Breakthrough minimum insight strength",
+        "Phase 1 safety checks before framework selection",
+        "Template routing required before delivery",
+        "Peer minimum stage",
+    }
+    if set(scalars) != expected_scalar_keys:
+        raise ValueError("Orchestration scalar configuration keys are incomplete or unused.")
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
             scalars["Stage 1 override max user messages"],

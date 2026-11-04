@@ -12,6 +12,15 @@ def test_orchestration_runtime_contract_loads() -> None:
     assert rules.phase_1_safety_before_framework_selection is True
     assert rules.template_routing_required is True
     assert rules.peer_min_stage == 5
+    assert len({rule.framework for rule in rules.primary_priority}) == len(
+        rules.primary_priority
+    )
+    assert len({rule.name for rule in rules.secondary_priority}) == len(
+        rules.secondary_priority
+    )
+    assert len({rule.level for rule in rules.intensity_fallback}) == len(
+        rules.intensity_fallback
+    )
     assert [
         (rule.level, rule.framework, rule.mode) for rule in rules.intensity_fallback
     ] == [

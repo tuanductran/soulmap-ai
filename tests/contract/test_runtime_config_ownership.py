@@ -2,6 +2,7 @@
 
 import re
 
+from soulmap.runtime.knowledge.framework_template_source import load_template_rules
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_config import (
     CELEBRATION_SCORING,
@@ -221,3 +222,19 @@ def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
         assert re.search(pattern, content, re.IGNORECASE) is None, (
             f"conversation-synthesis.md still duplicates runtime limits: {pattern}"
         )
+
+
+
+def test_framework_template_registry_is_complete_and_collision_free() -> None:
+    rules = load_template_rules()
+    framework_names = [rule.framework.strip().casefold() for rule in rules]
+
+    assert len(rules) == 31
+    assert len(set(framework_names)) == len(framework_names)
+    assert all(
+        rule.mode.strip()
+        and rule.word_range.strip()
+        and rule.question_rule.strip()
+        and rule.source_file.strip()
+        for rule in rules
+    )
