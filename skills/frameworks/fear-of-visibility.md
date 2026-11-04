@@ -225,11 +225,7 @@ Public expression:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Direct visibility-fear weight | 3 |
-| Shrinking plus public-expression weight | 2 |
-| Minimum detection score | 2 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
