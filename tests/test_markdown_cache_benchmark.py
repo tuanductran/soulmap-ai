@@ -76,7 +76,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
         "benchmarks": {
             "warm": {"median_seconds": 1.0},
             "bad": {"median_seconds": 0.0},
-        }
+        },
     }
     current: dict[str, Any] = {
         "schema_version": 2,
@@ -85,7 +85,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
             "warm": {"median_seconds": 1.2},
             "bad": {"median_seconds": 1.0},
             "new": {"median_seconds": 0.5},
-        }
+        },
     }
 
     comparisons = compare_reports(baseline, current)
