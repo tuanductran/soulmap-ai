@@ -30,7 +30,7 @@ The orchestrator receives:
 - cross-session memory data (optional, defaults to empty)
 - the classified user journey stage (1-6, from stage-classifier.md)
 
-If the user's stage has not yet been classified, use the Python-configured fallback stage until classification can be completed.
+If the user's stage has not yet been classified, use the configured fallback stage until classification can be completed.
 
 ## Routing policy
 
@@ -148,7 +148,7 @@ how much depth is appropriate.
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
 | PEER | User meets the configured peer-stage threshold | Equal exchange, light structure, co-exploration |
 
-**PEER mode activation rule:** When the user meets the Python-configured peer-stage
+**PEER mode activation rule:** When the user meets the configured peer-stage
 threshold and the selected primary framework is Mirror, upgrade the mode to PEER.
 Mirror becomes co-exploration rather than guided reflection.
 
