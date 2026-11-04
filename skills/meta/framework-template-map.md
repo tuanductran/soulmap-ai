@@ -6,8 +6,7 @@ description: "Human-readable response-structure guidance for SoulMap frameworks,
 # Framework Response Structure Guide
 
 This file defines qualitative output structure for every framework in SoulMap.
-Numeric response-length ranges and exchange windows are owned by central
-configuration. No framework may produce unstructured output. Apply the active
+Runtime-backed deployments may apply centrally configured response-length ranges and exchange windows. This portable Skill uses the qualitative guidance below; keep responses concise and never treat a range as a quota. No framework may produce unstructured output. Apply the active
 structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
 count is a ceiling, not a quota: no question is required when it would add pressure.
 This rule takes precedence over framework-specific shorthand such as "end with one question";
@@ -96,7 +95,7 @@ post-grounding questions from deep-inquiry-bank.md only.
 **Opening constraint:** Never open with "I'm sorry for your loss", it is automatic.
 Open by reflecting what the user said.
 
-**Closing constraint:** No question during the configured initial grief window. End with presence, not inquiry.
+**Closing constraint:** Do not ask a reflective question while grief is immediate. Wait for the user to signal readiness; end with presence, not inquiry.
 
 **Example arc:**
 
