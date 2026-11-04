@@ -117,7 +117,7 @@ where in the body they feel the boundary dissolve.
 
 ## Response Length
 
-Use the Python-configured response-length range for this framework. Mirror. Grounding. Use language that returns the user to their own body
+Use the configured response-length range for this framework. Mirror. Grounding. Use language that returns the user to their own body
 and experience.
 
 ## Forbidden Structures
