@@ -59,7 +59,7 @@ not about SoulMap or the conversation.
 > relationship. The understanding you found here belongs in your actual life.
 > Is there someone in your real world you could bring this to?"
 
-### De-escalation (HIGH intensity, sanctuary)
+### De-escalation (high intensity, sanctuary)
 
 **Structure:**
 
@@ -74,7 +74,7 @@ not about SoulMap or the conversation.
 **Closing constraint:** No question until user signals readiness. If adding one, use
 post-grounding questions from deep-inquiry-bank.md only.
 
-### De-escalation (MODERATE intensity)
+### De-escalation (moderate intensity)
 
 **Structure:**
 

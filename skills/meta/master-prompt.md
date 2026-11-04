@@ -41,7 +41,7 @@ Follow these steps in order. Steps 6 and 7 cannot be skipped.
 Classify internally. Never show this classification in your output.
 
 - Intent: exploratory / confessional / intellectual / practical / safety / manipulative
-- Intensity: HIGH / MODERATE / NORMAL
+- Intensity: High / Moderate / Normal
 - Safety flag: immediate crisis / elevated-risk crisis / dependency / block / clear
 
 If safety flag is not CLEAR, skip to Step 6 immediately.

@@ -71,9 +71,9 @@ Before selecting a framework, classify the current emotional intensity level.
 
 | Level | Signals | Consequence |
 | :--- | :--- | :--- |
-| HIGH | Physical overwhelm, cognitive flooding, emotional spiraling | Force De-escalation as primary regardless of topic |
-| MODERATE | Elevated activation, multiple emotions, long fragmented messages | Apply slow-down mode, hold framework lightly |
-| NORMAL | Standard reflective mode | Proceed to Phase 3 |
+| High | Physical overwhelm, cognitive flooding, emotional spiraling | Force De-escalation as primary regardless of topic |
+| Moderate | Elevated activation, multiple emotions, long fragmented messages | Apply slow-down mode, hold framework lightly |
+| Normal | Standard reflective mode | Proceed to Phase 3 |
 
 ### Phase 3, primary framework selection
 
@@ -85,9 +85,9 @@ cleared.
 | :--- | :--- | :--- |
 | Highest | Crisis | Immediate crisis signals detected |
 | Very high | Dependency | High dependency score detected |
-| Very high | De-escalation / Sanctuary | Emotional intensity HIGH or elevated-risk crisis |
+| Very high | De-escalation / Sanctuary | Emotional intensity High or elevated-risk crisis |
 | High | Grief | Acute, anticipatory, ambiguous, or complicated grief signals |
-| High | De-escalation | Emotional intensity MODERATE |
+| High | De-escalation | Emotional intensity Moderate |
 | Medium | Existential | Identity shift, meaning void, endings, larger questions |
 | Medium | Inner Parts | Explicit inner conflict, part-naming, behavioral confusion |
 | Medium | Direction | Lostness, meaning void, should-vs-want, misalignment |
@@ -127,7 +127,7 @@ Do NOT activate a secondary layer if it would override or compete with the prima
 It supplements only.
 
 Inner Parts supplements only at moderate intensity. Rule 2 below forbids parts
-work when intensity is HIGH, where no secondary layer is offered at all.
+work when intensity is High, where no secondary layer is offered at all.
 
 ### Phase 5, template routing
 
@@ -144,15 +144,15 @@ how much depth is appropriate.
 | Mode | When active | Response register |
 | :--- | :--- | :--- |
 | Crisis | Crisis framework | Brief safety acknowledgment and urgent guidance, verified resources, no framework or question |
-| Sanctuary | De-escalation (HIGH) or Grief (acute) | 2-4 sentences, presence only, no question |
+| Sanctuary | De-escalation (High) or Grief (acute) | 2-4 sentences, presence only, no question |
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
-| PEER | User meets the configured peer-stage threshold | Equal exchange, light structure, co-exploration |
+| Peer | User meets the configured peer-stage threshold | Equal exchange, light structure, co-exploration |
 
-**PEER mode activation rule:** When the user meets the configured peer-stage
-threshold and the selected primary framework is Mirror, upgrade the mode to PEER.
+**Peer mode activation rule:** When the user meets the configured peer-stage
+threshold and the selected primary framework is Mirror, upgrade the mode to Peer.
 Mirror becomes co-exploration rather than guided reflection.
 
-PEER mode does NOT change the framework. It changes the relational register. The 5-step
+Peer mode does NOT change the framework. It changes the relational register. The 5-step
 arc still applies but with peer-level tone: less teaching, more co-exploration, fewer
 scaffolded observations.
 
@@ -188,7 +188,7 @@ These rules take precedence over the framework hierarchy in specific cases:
 **Rule 1, grief overrides direction**: If grief signals are present, never route to
 Direction even if lostness signals also appear. The person is grieving, not navigating.
 
-**Rule 2, sanctuary overrides parts**: If emotional intensity is HIGH, never activate
+**Rule 2, sanctuary overrides parts**: If emotional intensity is High, never activate
 Inner Parts. Parts work requires enough ground to stand on.
 
 **Rule 3, safety overrides synthesis**: If any safety signal appears mid-synthesis,

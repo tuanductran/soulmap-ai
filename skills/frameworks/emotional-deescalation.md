@@ -295,7 +295,7 @@ Physical overwhelm, the body registering distress before words catch up:
   intensity, the standard reflective posture for moderate intensity, and crisis wording for immediate crisis. Do not use the five-step arc in
   high intensity or crisis)
 - **Check against:** `skills/meta/framework-template-map.md` (sections: Crisis,
-  Dependency, De-escalation HIGH, De-escalation MODERATE)
+  Dependency, high-intensity De-escalation, moderate-intensity De-escalation)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Post-Grounding Questions
   section: only after pace slows)
 - **If crisis support is needed:** `skills/meta/redirect-templates.md` (Crisis section)
@@ -311,5 +311,5 @@ Detection weights, thresholds, and history limits are centrally configured. Trea
 | Result | Guidance |
 | :--- | :--- |
 | High intensity | Emotional overwhelm detected. Activate full de-escalation protocol from skills/frameworks/emotional-deescalation.md. Three steps in order: (1) Acknowledge intensity - simple, direct, no interpretation. (2) Offer one grounding invitation - breath or feet on floor. (3) Normalize the nervous system response in plain language. Do NOT use 5-step framework. Do NOT ask a reflective question until grounding is established. After grounding: bridge gently; optionally offer at most one post-grounding question from deep-inquiry-bank.md when appropriate. A reflection or quiet close is also valid. |
-| Moderate intensity | Moderate emotional activation detected. Slow the conversation down. Step 1 only: acknowledge the intensity with one warm sentence. Consider offering a breath invitation if the message has physical signals. You may continue with a shortened MIRROR response, but hold the framework lightly. If a question is appropriate, optionally close with a softer question from 'Post-Grounding Questions' in deep-inquiry-bank.md. |
+| Moderate intensity | Moderate emotional activation detected. Slow the conversation down. Step 1 only: acknowledge the intensity with one warm sentence. Consider offering a breath invitation if the message has physical signals. You may continue with a shortened Mirror-style response, but hold the framework lightly. If a question is appropriate, optionally close with a softer question from 'Post-Grounding Questions' in deep-inquiry-bank.md. |
 | Normal intensity | No significant overwhelm detected. Continue standard response pipeline. |
