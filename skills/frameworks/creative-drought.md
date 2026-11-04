@@ -186,11 +186,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Creative-identity plus absence weight | 2 |
-| Minimum detection score | 2 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
