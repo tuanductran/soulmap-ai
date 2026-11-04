@@ -5,7 +5,7 @@ on:
     paths:
       - ".github/workflows/knowledge-cache-benchmark.yml"
       - "scripts/benchmark_knowledge_reads.py"
-      - "tests/test_benchmark_knowledge_reads.py"
+      - "tests/test_markdown_cache_benchmark.py"
       - "src/soulmap/runtime/knowledge/keyword_lists.py"
       - "src/soulmap/runtime/knowledge/pattern_source.py"
       - "src/soulmap/runtime/source_registry.py"
@@ -22,7 +22,7 @@ on:
     paths:
       - ".github/workflows/knowledge-cache-benchmark.yml"
       - "scripts/benchmark_knowledge_reads.py"
-      - "tests/test_benchmark_knowledge_reads.py"
+      - "tests/test_markdown_cache_benchmark.py"
       - "src/soulmap/runtime/knowledge/keyword_lists.py"
       - "src/soulmap/runtime/knowledge/pattern_source.py"
       - "src/soulmap/runtime/source_registry.py"
@@ -68,7 +68,7 @@ jobs:
         run: uv sync --locked --python 3.11
 
       - name: Verify cache semantics and benchmark harness
-        run: uv run pytest -q tests/test_benchmark_knowledge_reads.py
+        run: uv run pytest -q tests/test_markdown_cache_benchmark.py
 
       - name: Run interleaved Markdown read benchmark
         run: >-
