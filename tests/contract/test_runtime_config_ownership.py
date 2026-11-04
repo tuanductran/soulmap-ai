@@ -6,6 +6,7 @@ from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_config import (
     CELEBRATION_SCORING,
     DEPENDENCY_SCORING,
+    DETECTOR_CONFIG,
     FRAMEWORK_TEMPLATE_ROWS,
     ORCHESTRATION_CONFIG,
     STAGE_CLASSIFIER_CONFIG,
@@ -24,6 +25,14 @@ def test_runtime_configuration_is_centralized_in_python() -> None:
     assert len(DEPENDENCY_SCORING) == 8
     assert len(CELEBRATION_SCORING) == 8
     assert len(FRAMEWORK_TEMPLATE_ROWS) == 31
+    assert len(DETECTOR_CONFIG) == 24
+    assert DETECTOR_CONFIG["grief"]["Sustained history threshold"] == 2
+    assert DETECTOR_CONFIG["conversation_synthesis"]["minimum_user_messages"] == 6
+    assert DETECTOR_CONFIG["conversation_synthesis"]["automatic_user_messages"] == 10
+    assert all(
+        values and all(isinstance(value, int) for value in values.values())
+        for values in DETECTOR_CONFIG.values()
+    )
 
 
 def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> None:
@@ -154,4 +163,59 @@ def test_framework_source_markdown_does_not_restate_template_ranges() -> None:
         )
         assert re.search(r"first\s+2-3\s+exchanges", content, re.IGNORECASE) is None, (
             f"{path} still duplicates the configured acute-grief exchange window"
+        )
+
+
+def test_detector_numeric_policy_tables_are_python_owned() -> None:
+    detector_sources = (
+        "skills/frameworks/anger-companion.md",
+        "skills/frameworks/ancestral-patterns.md",
+        "skills/frameworks/creative-drought.md",
+        "skills/frameworks/dark-night-of-soul.md",
+        "skills/frameworks/divine-guidance.md",
+        "skills/frameworks/emotional-deescalation.md",
+        "skills/frameworks/empath-boundary.md",
+        "skills/frameworks/existential-companion.md",
+        "skills/frameworks/fear-of-visibility.md",
+        "skills/frameworks/grief-companion.md",
+        "skills/frameworks/inner-parts.md",
+        "skills/frameworks/meaning-integration.md",
+        "skills/frameworks/perfectionism-paralysis.md",
+        "skills/soulmate/partnership-patterns.md",
+        "skills/frameworks/pattern-mapper.md",
+        "skills/frameworks/sacred-feminine-masculine.md",
+        "skills/frameworks/shadow-patterns.md",
+        "skills/frameworks/somatic-wellbeing.md",
+        "skills/soulmate/soulmate-longing.md",
+        "skills/frameworks/soul-nourishment.md",
+        "skills/spiritual/spiritual-discernment.md",
+        "skills/frameworks/spiritual-purpose.md",
+        "skills/frameworks/life-direction.md",
+        "skills/frameworks/conversation-synthesis.md",
+    )
+    numeric_policy_row = re.compile(
+        r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE
+    )
+    for path in detector_sources:
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        assert numeric_policy_row.search(content) is None, (
+            f"{path} still contains a Python-consumed numeric policy table"
+        )
+
+
+def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
+    content = default_skill_path(
+        "skills/frameworks/conversation-synthesis.md"
+    ).read_text(encoding="utf-8")
+    forbidden_patterns = (
+        r"\b6 user messages\b",
+        r"\b10 user messages\b",
+        r"\b3\+ sessions\b",
+        r"two or more distinct themes",
+        r"name 2-3 themes",
+        r"do not list more than 3",
+    )
+    for pattern in forbidden_patterns:
+        assert re.search(pattern, content, re.IGNORECASE) is None, (
+            f"conversation-synthesis.md still duplicates runtime limits: {pattern}"
         )
