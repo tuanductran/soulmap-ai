@@ -72,7 +72,6 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
             ancestral, "Activation Signals"
         ),
         "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
@@ -96,7 +95,6 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "empath.guidance": load_key_value_table(empath, "Guidance"),
         "ancestral.activation": load_keyword_section(ancestral, "Activation Signals"),
         "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": load_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": load_key_value_table(somatic, "Detection policy"),
@@ -130,7 +128,6 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "empath.guidance": table(empath, "Guidance"),
         "ancestral.activation": keyword(ancestral, "Activation Signals"),
         "ancestral.groups": groups(ancestral, "Detection signals"),
-        "ancestral.scoring": table(ancestral, "Scoring"),
         "ancestral.guidance": table(ancestral, "Guidance"),
         "somatic.groups": groups(somatic, "Detection signals"),
         "somatic.contract": table(somatic, "Detection policy"),
