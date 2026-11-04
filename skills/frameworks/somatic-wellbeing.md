@@ -156,12 +156,7 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Biometric context weight | 3 |
-| Body sensation weight | 2 |
-| Somatic invitation weight | 1 |
-| Minimum detection score | 1 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
