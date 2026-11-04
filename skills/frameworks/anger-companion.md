@@ -208,16 +208,7 @@ The following values define the operational anger-detection policy.
 
 ### Scoring
 
-| Rule | Value |
-| :--- | :--- |
-| Active anger weight | 3 |
-| Self-directed anger weight | 3 |
-| Residual anger weight | 2 |
-| Sustained active anger bonus | 2 |
-| Minimum detection score | 2 |
-| Sustained history window | 3 |
-| Sustained active-signal limit | 8 |
-| Sustained history threshold | 2 |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
 
 ### Guidance
 
