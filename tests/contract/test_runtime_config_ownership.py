@@ -7,6 +7,7 @@ from soulmap.runtime.knowledge.runtime_config import (
     CELEBRATION_SCORING,
     DEPENDENCY_SCORING,
     DETECTOR_CONFIG,
+    DETECTOR_PRIORITY_CONFIG,
     FRAMEWORK_TEMPLATE_ROWS,
     ORCHESTRATION_CONFIG,
     STAGE_CLASSIFIER_CONFIG,
@@ -26,6 +27,7 @@ def test_runtime_configuration_is_centralized_in_python() -> None:
     assert len(CELEBRATION_SCORING) == 8
     assert len(FRAMEWORK_TEMPLATE_ROWS) == 31
     assert len(DETECTOR_CONFIG) == 24
+    assert set(DETECTOR_PRIORITY_CONFIG) == {"existential", "insight"}
     assert DETECTOR_CONFIG["grief"]["Sustained history threshold"] == 2
     assert DETECTOR_CONFIG["conversation_synthesis"]["minimum_user_messages"] == 6
     assert DETECTOR_CONFIG["conversation_synthesis"]["automatic_user_messages"] == 10
