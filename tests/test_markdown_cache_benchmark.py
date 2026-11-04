@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 from scripts import benchmark_knowledge_reads as benchmark
 from scripts.benchmark_knowledge_reads import compare_reports, run_suite, summarize
 from soulmap.runtime.knowledge.keyword_lists import (
