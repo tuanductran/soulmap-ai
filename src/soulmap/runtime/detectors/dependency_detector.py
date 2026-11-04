@@ -53,8 +53,7 @@ if not _DEPENDENCY_REGEX_TABLE or any(
         "Dependency regex patterns must contain a label and inline-code pattern."
     )
 _DEPENDENCY_REGEX_ROWS = tuple(
-    (label, expression[1:-1])
-    for label, expression in _DEPENDENCY_REGEX_TABLE
+    (label, expression[1:-1]) for label, expression in _DEPENDENCY_REGEX_TABLE
 )
 if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
     _DEPENDENCY_REGEX_ROWS
