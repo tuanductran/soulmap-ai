@@ -191,13 +191,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Paralysis signal weight | 3 |
-| General perfectionism weight | 1 |
-| Persistence bonus | 1 |
-| Minimum detection score | 2 |
-| History window | 4 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
