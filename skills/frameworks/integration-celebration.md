@@ -78,7 +78,7 @@ generic. Use questions from the Celebration section of the deep inquiry bank.
 
 ## Word Range
 
-Use the configured response-length range. Mirror (light). No lists. No bullet points inside the response.
+Keep the response concise and proportionate to the celebration framework. Mirror (light). No lists. No bullet points inside the response.
 
 ## Forbidden Structures
 
