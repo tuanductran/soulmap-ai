@@ -11,11 +11,11 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_labeled_groups,
     load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/existential-companion.md,
@@ -29,9 +29,7 @@ LARGER_QUESTIONS = _EXISTENTIAL_GROUPS["larger philosophical questions"]
 ENDINGS_GRIEF = _EXISTENTIAL_GROUPS["endings and transitions"]
 MEANING_DEPTH = _EXISTENTIAL_GROUPS["depth of meaning"]
 HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
-_EXISTENTIAL_SCORING = load_key_value_table(
-    runtime_skill_path("existential-companion"), "Scoring"
-)
+_EXISTENTIAL_SCORING = DETECTOR_CONFIG["existential"]
 _EXISTENTIAL_GUIDANCE = load_runtime_guidance(
     runtime_skill_path("existential-companion")
 )
