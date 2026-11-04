@@ -336,22 +336,8 @@ The following values define the operational existential-detection policy.
 
 ### Scoring
 
-| Rule | Value |
-| :--- | :--- |
-| Identity-shift weight | 3 |
-| Meaning-depth weight | 3 |
-| Endings-grief weight | 3 |
-| Larger-questions weight | 3 |
-| Holding-question weight | 2 |
-| Sustained-territory bonus | 2 |
-| Minimum detection score | 2 |
-| Recent user history window | 4 |
-| Sustained identity signal limit | 6 |
-| Sustained meaning signal limit | 6 |
-| Sustained endings signal limit | 4 |
-| Sustained larger-question signal limit | 4 |
-| Sustained history threshold | 2 |
-| Territory priority | Identity shift; Meaning depth; Endings grief; Larger questions; Holding |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Territory priority: Identity shift, Meaning depth, Endings grief, Larger questions, Holding .
 
 ### Guidance
 
