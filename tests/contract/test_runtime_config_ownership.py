@@ -249,12 +249,10 @@ def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
 
 
 def test_dependency_response_ceiling_matches_runtime_configuration() -> None:
-    dependency = next(
-        row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Dependency"
+    dependency = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Dependency")
+    content = default_skill_path("skills/voice/response-calibrator.md").read_text(
+        encoding="utf-8"
     )
-    content = default_skill_path(
-        "skills/voice/response-calibrator.md"
-    ).read_text(encoding="utf-8")
     expected = rf"^\|\s*Dependency\s*\|\s*{re.escape(dependency[2])}\s+words\b"
     assert re.search(expected, content, re.MULTILINE), (
         "response-calibrator.md must preserve the Python-owned Dependency "
