@@ -119,9 +119,9 @@ When appropriate, choose at most one question from the Perfectionism section of 
 perfectionism is protecting, what it would mean if the thing were imperfect and
 released, or what the earliest memory of "not good enough" was.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not give advice. Do not name what they should do.
+Use the Python-configured response-length range for this framework. Mirror. Do not give advice. Do not name what they should do.
 
 ## Forbidden Structures
 
