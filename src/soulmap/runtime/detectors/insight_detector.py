@@ -19,7 +19,10 @@ from soulmap.runtime.knowledge.labels import (
     INSIGHT_GUIDANCE_NAMES,
     map_label,
 )
-from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
+from soulmap.runtime.knowledge.runtime_config import (
+    DETECTOR_CONFIG,
+    DETECTOR_PRIORITY_CONFIG,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/meaning-integration.md,
@@ -33,6 +36,7 @@ EMERGING_INSIGHT = _INSIGHT_GROUPS["emerging insight"]
 SELF_APPLICATION = _INSIGHT_GROUPS["self-application"]
 POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
 _INSIGHT_SCORING = DETECTOR_CONFIG["insight"]
+_INSIGHT_PRIORITY = DETECTOR_PRIORITY_CONFIG["insight"]
 _INSIGHT_CLASSIFICATION_LABELS = load_key_value_table(
     runtime_skill_path("meaning-integration"),
     "Insight classification signals",
@@ -70,7 +74,7 @@ HistoryMessage = dict[str, str]
 
 def _classify_insight_type(msg: str) -> str:
     """Determine the integration question type from knowledge-authored signals."""
-    for label in _INSIGHT_SCORING["Classification priority"].split(";"):
+    for label in _INSIGHT_PRIORITY["Classification priority"].split(";"):
         key = map_label(
             label.strip(), INSIGHT_CLASSIFICATION_NAMES, "Classification priority"
         )
