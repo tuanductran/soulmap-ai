@@ -182,11 +182,7 @@ with people context ("being around people", "after being with", "family gatherin
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Drain plus people-context weight | 2 |
-| Minimum detection score | 2 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
