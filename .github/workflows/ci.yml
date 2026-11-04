@@ -171,6 +171,34 @@ jobs:
         run: uv sync --locked --python 3.11
       - name: Build Library distribution artifacts
         run: uv run soulmap library-manifest
+      - name: Build Python wheel and source distribution
+        run: uv build --wheel --sdist --out-dir dist/python
+      - name: Verify Python distribution contents
+        run: |
+          uv run python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          import zipfile
+
+          output = Path("dist/python")
+          wheels = list(output.glob("*.whl"))
+          sdists = list(output.glob("*.tar.gz"))
+          assert len(wheels) == 1, f"Expected one wheel, found {len(wheels)}"
+          assert len(sdists) == 1, f"Expected one sdist, found {len(sdists)}"
+
+          with zipfile.ZipFile(wheels[0]) as archive:
+              names = set(archive.namelist())
+              assert "soulmap/__init__.py" in names
+              assert any(name.endswith(".dist-info/METADATA") for name in names)
+
+          with tarfile.open(sdists[0], "r:gz") as archive:
+              names = set(archive.getnames())
+              assert any(name.endswith("/src/soulmap/__init__.py") for name in names)
+              assert any(name.endswith("/pyproject.toml") for name in names)
+
+          print(f"PASS Python wheel: {wheels[0]}")
+          print(f"PASS Python source distribution: {sdists[0]}")
+          PY
       - name: Verify build outputs and SHA-256 integrity
         run: |
           test -f dist/soulmap-ai.zip
@@ -187,5 +215,7 @@ jobs:
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
+            dist/python/*.whl
+            dist/python/*.tar.gz
           if-no-files-found: error
           retention-days: 30
