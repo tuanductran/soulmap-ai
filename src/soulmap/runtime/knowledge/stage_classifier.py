@@ -88,7 +88,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         recency_multipliers=tuple(STAGE_CLASSIFIER_CONFIG["recency_multipliers"]),
         memory_minimums=dict(STAGE_CLASSIFIER_CONFIG["memory_minimums"]),
         close_score_delta=float(STAGE_CLASSIFIER_CONFIG["close_score_delta"]),
-        first_session_default_stage=int(STAGE_CLASSIFIER_CONFIG["first_session_default_stage"]),
+        first_session_default_stage=int(
+            STAGE_CLASSIFIER_CONFIG["first_session_default_stage"]
+        ),
         first_session_max_stage=int(STAGE_CLASSIFIER_CONFIG["first_session_max_stage"]),
         anti_regression_min_lower_stage_messages=int(
             STAGE_CLASSIFIER_CONFIG["anti_regression_min_lower_stage_messages"]

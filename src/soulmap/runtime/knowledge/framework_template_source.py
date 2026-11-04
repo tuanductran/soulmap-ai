@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.runtime_config import FRAMEWORK_TEMPLATE_ROWS
+
 
 @dataclass(frozen=True, slots=True)
 class TemplateRule:

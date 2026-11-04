@@ -25,7 +25,6 @@ If no stage clears the minimum threshold, default to Stage 1.
 For each user message (most recent 5), score against the keyword sets below.
 Apply the recency multiplier:
 
-
 ### Stage 1, arrival and awakening
 
 **Keyword signals:**

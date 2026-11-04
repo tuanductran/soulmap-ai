@@ -227,16 +227,20 @@ def load_orchestration_rules() -> OrchestrationRules:
     scalars = config["scalars"]
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
-            scalars["Stage 1 override max user messages"], "Stage 1 override max user messages"
+            scalars["Stage 1 override max user messages"],
+            "Stage 1 override max user messages",
         ),
         breakthrough_min_strength=_require_str(
-            scalars["Breakthrough minimum insight strength"], "Breakthrough minimum insight strength"
+            scalars["Breakthrough minimum insight strength"],
+            "Breakthrough minimum insight strength",
         ),
         phase_1_safety_before_framework_selection=_require_bool(
-            scalars["Phase 1 safety checks before framework selection"], "Phase 1 safety checks before framework selection"
+            scalars["Phase 1 safety checks before framework selection"],
+            "Phase 1 safety checks before framework selection",
         ),
         template_routing_required=_require_bool(
-            scalars["Template routing required before delivery"], "Template routing required before delivery"
+            scalars["Template routing required before delivery"],
+            "Template routing required before delivery",
         ),
         primary_priority=_parse_primary_priority(config["primary_priority"]),
         secondary_priority=_parse_secondary_priority(config["secondary_priority"]),
