@@ -118,7 +118,7 @@ Choose based on where the user's energy is moving.
 
 ## Response Length
 
-Use the configured response-length range for this framework. Mirror. Do not rush. Let the response breathe.
+Keep the response concise and proportionate to this framework. Mirror. Do not rush. Let the response breathe.
 
 ## Forbidden Structures
 
