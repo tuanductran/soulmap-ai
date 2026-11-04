@@ -122,7 +122,7 @@ is afraid the drought means.
 
 ## Response Length
 
-Use the configured response-length range for this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
+Keep the response concise and proportionate to this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
 
 ## Forbidden Structures
 
