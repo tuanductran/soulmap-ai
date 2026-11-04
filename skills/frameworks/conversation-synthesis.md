@@ -243,14 +243,7 @@ Changes to these values must be made here and covered by focused contract tests.
 
 ### Detection thresholds
 
-| Setting | Value |
-|---|---:|
-| Minimum user messages to synthesize | 6 |
-| Automatic synthesis user messages | 10 |
-| Minimum distinct recurring themes for automatic synthesis | 2 |
-| Maximum themes returned | 3 |
-| Maximum anchors per theme | 2 |
-| Maximum longitudinal themes | 3 |
+Synthesis thresholds and output limits are centrally configured; this document retains semantic themes and response guidance.
 
 ### Explicit request signals
 
