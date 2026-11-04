@@ -600,8 +600,8 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
     },
     "life_direction": {
         "lostness": 3,
-        "Meaning void": 3,
-        "Should versus want": 2,
+        "meaning_void": 3,
+        "should_vs_want": 2,
         "comparison": 2,
         "transition": 2,
         "misalignment": 2,

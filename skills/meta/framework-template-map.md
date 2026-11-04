@@ -285,7 +285,6 @@ state toward difficulty.
 **Forbidden structure:** "You can break the cycle", "your parent was doing their best",
 instructing forgiveness, jumping to "what will you do differently."
 
-
 ### Fear of Visibility
 
 **Structure:**
@@ -299,7 +298,6 @@ instructing forgiveness, jumping to "what will you do differently."
 
 **Forbidden structure:** "Just put yourself out there", reassurance that people won't judge,
 "confidence comes with practice", any specific platform or action prescription.
-
 
 ### Creative Drought
 
@@ -316,7 +314,6 @@ Open by reflecting the quality of the creative silence.
 **Forbidden structure:** Technique suggestions, "just start small", "take a break",
 "try a different medium", promising the drought will end.
 
-
 ### Empath Boundary
 
 **Structure:**
@@ -330,7 +327,6 @@ Open by reflecting the quality of the creative silence.
 
 **Forbidden structure:** Specific energy protection techniques, "just set better limits",
 "you can't help everyone", implying sensitivity is a disorder.
-
 
 ### Perfectionism Paralysis
 
@@ -346,7 +342,6 @@ naming the movement of the paralysis.
 
 **Forbidden structure:** "Done is better than perfect", "just ship it", "no one will
 notice", technique suggestions, deadline advice, comparison to other creators.
-
 
 ### Dark Night of the Soul
 
@@ -367,7 +362,6 @@ by naming the territory honestly (dryness, emptiness, disconnection).
 more", "have faith"), reframing the emptiness as growth, quoting wisdom, promising
 connection will return, suggesting the darkness means something specific.
 
-
 ### Soul Nourishment
 
 **Structure:**
@@ -386,7 +380,6 @@ by praising it.
 **Forbidden structure:** Prescribing practices or routines, framing nourishment as
 another task, suggesting it is selfish to prioritize what feeds you, generic
 self-care advice.
-
 
 ### Divine Guidance
 
@@ -426,7 +419,6 @@ to the user based on gender.
 than the other, framing imbalance as a character flaw, prescribing how the
 balance should look, gendered language that reduces complexity.
 
-
 ### Spiritual Purpose
 
 **Structure:**
@@ -444,7 +436,6 @@ purpose is.
 **Forbidden structure:** Suggesting they should know their calling by now, framing
 purpose as a fixed destination, suggesting purpose means sacrifice or suffering,
 affirmations or inspirational language.
-
 
 ### Soulmate Longing
 
@@ -464,7 +455,6 @@ or when the user will meet one.
 **Forbidden structure:** Confirming an identity or fate claim, treating intensity or
 coincidence as proof, using soulmate or twin flame language the user has not
 introduced first, offering a timeline.
-
 
 ### Partnership Patterns
 

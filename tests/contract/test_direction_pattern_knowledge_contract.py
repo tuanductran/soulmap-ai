@@ -1,23 +1,23 @@
 from soulmap.runtime.detectors import direction_detector, pattern_detector
 
 
-def test_direction_scoring_uses_markdown_authored_weights() -> None:
+def test_direction_scoring_uses_python_owned_weights() -> None:
     original = dict(direction_detector._DIRECTION_RULES)
     try:
         direction_detector._DIRECTION_RULES.update(
             {
-                "lostness": "7",
-                "meaning_void": "3",
-                "should_vs_want": "2",
-                "comparison": "2",
-                "transition": "2",
-                "misalignment": "2",
-                "minimum detection score": "7",
-                "sustained history match": "1",
-                "recent user history window": "4",
-                "sustained lostness signal limit": "8",
-                "sustained meaning signal limit": "6",
-                "sustained transition signal limit": "6",
+                "lostness": 7,
+                "meaning_void": 3,
+                "should_vs_want": 2,
+                "comparison": 2,
+                "transition": 2,
+                "misalignment": 2,
+                "minimum detection score": 7,
+                "sustained history match": 1,
+                "recent user history window": 4,
+                "sustained lostness signal limit": 8,
+                "sustained meaning signal limit": 6,
+                "sustained transition signal limit": 6,
             }
         )
         result = direction_detector.detect_direction_need("i feel lost")
@@ -28,16 +28,31 @@ def test_direction_scoring_uses_markdown_authored_weights() -> None:
         direction_detector._DIRECTION_RULES.update(original)
 
 
-def test_pattern_scoring_uses_markdown_authored_weights() -> None:
+def test_direction_runtime_config_keys_match_signal_identifiers() -> None:
+    assert direction_detector._DIRECTION_RULES["meaning_void"] == 3
+    assert direction_detector._DIRECTION_RULES["should_vs_want"] == 2
+
+    meaning = direction_detector.detect_direction_need("nothing feels meaningful")
+    assert meaning["direction_detected"] is True
+    assert meaning["type"] == "meaning_void"
+    assert meaning["score"] == 3
+
+    obligation = direction_detector.detect_direction_need("supposed to be happy")
+    assert obligation["direction_detected"] is True
+    assert obligation["type"] == "should_vs_want"
+    assert obligation["score"] == 2
+
+
+def test_pattern_scoring_uses_python_owned_weights() -> None:
     original = dict(pattern_detector._PATTERN_RULES)
     try:
         pattern_detector._PATTERN_RULES.update(
             {
-                "Keyword signal weight": "7",
-                "Cycle phrase weight": "3",
-                "Minimum pattern score": "7",
-                "Minimum user messages": "2",
-                "Combination threshold": "2",
+                "Keyword signal weight": 7,
+                "Cycle phrase weight": 3,
+                "Minimum pattern score": 7,
+                "Minimum user messages": 2,
+                "Combination threshold": 2,
             }
         )
         result = pattern_detector.detect_patterns(
