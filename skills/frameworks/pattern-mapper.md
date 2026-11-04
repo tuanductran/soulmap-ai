@@ -388,13 +388,7 @@ contract explicit.
 
 ### Scoring
 
-| Setting | Value |
-| :--- | ---: |
-| Keyword signal weight | 2 |
-| Cycle phrase weight | 3 |
-| Minimum pattern score | 2 |
-| Minimum user messages | 2 |
-| Combination threshold | 2 |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
 
 ### Guidance
 
