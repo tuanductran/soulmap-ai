@@ -187,7 +187,6 @@ def test_routing_policy_uses_human_readable_names() -> None:
     assert "Mode guidance" in policy
 
 
-
 def test_orchestration_rejects_unknown_breakthrough_strength(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

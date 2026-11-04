@@ -174,7 +174,6 @@ def test_stage_classifier_rejects_recency_window_length_mismatch(
         parse_stage_classifier(source)
 
 
-
 @pytest.mark.parametrize(
     "missing_key", ["prior_pattern_recognition", "prior_breakthrough"]
 )
