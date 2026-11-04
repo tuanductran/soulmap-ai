@@ -168,7 +168,9 @@ def _valid_median(results: dict[str, Any], name: str) -> float | None:
 
 
 
-def _workload_signature(report: dict[str, Any]) -> tuple[str, tuple[str, ...], tuple[str, ...]] | None:
+def _workload_signature(
+    report: dict[str, Any],
+) -> tuple[str, tuple[str, ...], tuple[str, ...]] | None:
     """Return stable workload identity fields required for safe report comparison."""
     workload = report.get("workload")
     if not isinstance(workload, dict):
@@ -209,8 +211,14 @@ def compare_reports(
 
     comparisons: dict[str, dict[str, Any]] = {}
     names = sorted(set(baseline_results) | set(current_results))
-    if baseline_workload is None or current_workload is None or baseline_workload != current_workload:
-        reason = "workload metadata is missing or differs between reports"
+    if (
+        baseline.get("schema_version") != current.get("schema_version")
+        or baseline.get("schema_version") != 2
+        or baseline_workload is None
+        or current_workload is None
+        or baseline_workload != current_workload
+    ):
+        reason = "benchmark schema or workload metadata is missing or differs between reports"
         return {
             name: {
                 "status": "invalid",
@@ -375,7 +383,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         _read_markdown_text_cached.cache_clear()
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "created_at": datetime.now(UTC).isoformat(),
         "repository": "tuanductran/soulmap-ai",
         "python_version": sys.version,
