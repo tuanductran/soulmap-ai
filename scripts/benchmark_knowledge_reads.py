@@ -256,7 +256,7 @@ def _measure_interleaved(
 
 def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
     """Run interleaved cache benchmarks for tables and detector knowledge."""
-    markdown_path = runtime_skill_path("pattern-mapper")
+    markdown_path = runtime_skill_path("meaning-integration")
 
     # Refuse to report timings if cache-backed production loaders change meaning.
     expected_knowledge = _uncached_detector_knowledge_loads()
