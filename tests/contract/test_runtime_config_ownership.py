@@ -91,3 +91,29 @@ def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
         assert re.search(pattern, content, re.IGNORECASE) is None, (
             f"stage-classifier.md still duplicates runtime policy: {pattern}"
         )
+
+
+def test_prompt_markdown_does_not_restate_python_owned_runtime_thresholds() -> None:
+    forbidden_patterns = {
+        "skills/meta/master-prompt.md": [
+            r"default to stage\s+1 if unclear",
+            r"never exceed stage\s+3 in the first session",
+            r"\b(?:40|60|70|80|100|140|200|220) words\b",
+            r"first\s+3 exchanges",
+            r"2\+ stories",
+        ],
+        "skills/meta/orchestration.md": [
+            r"default to stage\s+1",
+            r"dependency score\s*>=\s*2",
+            r"repeat signals across\s+2\+ stories",
+            r"stage\s+5 or above",
+            r"stage is\s+5 or higher",
+            r"first or second",
+        ],
+    }
+    for path, patterns in forbidden_patterns.items():
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        for pattern in patterns:
+            assert re.search(pattern, content, re.IGNORECASE) is None, (
+                f"{path} still duplicates Python-owned runtime policy: {pattern}"
+            )
