@@ -337,7 +337,6 @@ The following values define the operational existential-detection policy.
 ### Scoring
 
 Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
-Territory priority: Identity shift, Meaning depth, Endings grief, Larger questions, Holding .
 
 ### Guidance
 
