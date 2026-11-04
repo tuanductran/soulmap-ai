@@ -120,7 +120,7 @@ remain okay.
 
 ## Response Length
 
-Use the configured response-length range for this framework. Mirror. Spacious. Do not fill the space, let the user feel the
+Keep the response concise and proportionate to this framework. Mirror. Spacious. Do not fill the space, let the user feel the
 room that is being made for them.
 
 ## Forbidden Structures
