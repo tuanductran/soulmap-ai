@@ -312,7 +312,6 @@ The following values define the operational insight-detection policy.
 ### Scoring
 
 Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
-Classification priority: Notice it earlier, When it appears, Consider a different response .
 
 ### Insight classification signals
 
