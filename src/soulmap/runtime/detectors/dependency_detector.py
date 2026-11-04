@@ -40,12 +40,22 @@ if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
 ):
     raise ValueError("Dependency scoring configuration is incomplete or invalid.")
 
-_DEPENDENCY_REGEX_ROWS = load_table_rows(_SOURCE, "Strong dependency expressions")
-if not _DEPENDENCY_REGEX_ROWS or any(
-    len(row) != 2 or not row[0].strip() or not row[1].strip()
-    for row in _DEPENDENCY_REGEX_ROWS
+_DEPENDENCY_REGEX_TABLE = load_table_rows(_SOURCE, "Strong dependency expressions")
+if not _DEPENDENCY_REGEX_TABLE or any(
+    len(row) != 2
+    or not row[0].strip()
+    or len(row[1]) < 2
+    or not row[1].startswith("`")
+    or not row[1].endswith("`")
+    for row in _DEPENDENCY_REGEX_TABLE
 ):
-    raise ValueError("Dependency regex patterns must contain a label and pattern.")
+    raise ValueError(
+        "Dependency regex patterns must contain a label and inline-code pattern."
+    )
+_DEPENDENCY_REGEX_ROWS = tuple(
+    (label, expression[1:-1])
+    for label, expression in _DEPENDENCY_REGEX_TABLE
+)
 if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
     _DEPENDENCY_REGEX_ROWS
 ):
