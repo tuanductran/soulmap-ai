@@ -335,7 +335,10 @@ def test_skill_guidance_does_not_expose_python_owned_scoring_or_thresholds() -> 
     orchestration = default_skill_path("skills/meta/orchestration.md").read_text(
         encoding="utf-8"
     )
-    assert "Clear dependency evidence appears in the user's own language or context" in orchestration
+    assert (
+        "Clear dependency evidence appears in the user's own language or context"
+        in orchestration
+    )
 
 
 def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> None:
