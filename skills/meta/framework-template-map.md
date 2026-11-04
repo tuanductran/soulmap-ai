@@ -6,7 +6,7 @@ description: "Human-readable response-structure guidance for SoulMap frameworks,
 # Framework Response Structure Guide
 
 This file defines qualitative output structure for every framework in SoulMap.
-Numeric response-length ranges and exchange windows are owned by Python runtime
+Numeric response-length ranges and exchange windows are owned by central
 configuration. No framework may produce unstructured output. Apply the active
 structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
 count is a ceiling, not a quota: no question is required when it would add pressure.
