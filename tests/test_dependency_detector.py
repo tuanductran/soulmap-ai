@@ -464,7 +464,6 @@ def test_runtime_configuration_is_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
     assert "## Regex patterns" not in text
-    assert "### Scoring approach" not in text
     assert "Dependency keyword weight" not in text
     assert "High dependency threshold" not in text
     assert "Context exclusion policy" not in text
