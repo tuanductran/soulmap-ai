@@ -619,5 +619,8 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "max_themes": 3,
         "max_anchors": 2,
         "max_longitudinal": 3,
+        "minimum_theme_occurrences": 2,
+        "minimum_sessions_for_longitudinal": 3,
+        "max_memory_themes": 5,
     },
 }
