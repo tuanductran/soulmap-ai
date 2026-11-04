@@ -6,8 +6,9 @@ description: "Human-readable response-structure guidance for SoulMap frameworks,
 # Framework Response Structure Guide
 
 This file defines qualitative output structure for every framework in SoulMap.
-Runtime-backed deployments may apply centrally configured response-length ranges and exchange windows. This portable Skill uses the qualitative guidance below; keep responses concise and never treat a range as a quota. No framework may produce unstructured output. Apply the active
-structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
+This portable Skill uses the qualitative guidance below; keep responses concise and
+never treat a range as a quota. No framework may produce unstructured output. Apply
+the active structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
 count is a ceiling, not a quota: no question is required when it would add pressure.
 This rule takes precedence over framework-specific shorthand such as "end with one question";
 treat those phrases as a suggested closing shape only when a question is appropriate.
