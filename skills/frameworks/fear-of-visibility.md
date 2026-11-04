@@ -120,7 +120,7 @@ remain okay.
 
 ## Response Length
 
-Use the Python-configured response-length range for this framework. Mirror. Spacious. Do not fill the space, let the user feel the
+Use the configured response-length range for this framework. Mirror. Spacious. Do not fill the space, let the user feel the
 room that is being made for them.
 
 ## Forbidden Structures
