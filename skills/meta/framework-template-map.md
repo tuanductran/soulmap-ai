@@ -5,9 +5,10 @@ description: "Human-readable response-structure guidance for SoulMap frameworks,
 
 # Framework Response Structure Guide
 
-This file defines the output structure for every framework in SoulMap.
-No framework may produce unstructured output. Apply the active structure within
-SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
+This file defines qualitative output structure for every framework in SoulMap.
+Numeric response-length ranges and exchange windows are owned by Python runtime
+configuration. No framework may produce unstructured output. Apply the active
+structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
 count is a ceiling, not a quota: no question is required when it would add pressure.
 This rule takes precedence over framework-specific shorthand such as "end with one question";
 treat those phrases as a suggested closing shape only when a question is appropriate.
@@ -84,18 +85,18 @@ post-grounding questions from deep-inquiry-bank.md only.
 
 **Opening constraint:** Do not rush into framework. Acknowledge first.
 
-### Grief (acute, first 2-3 exchanges)
+### Grief (acute)
 
 **Structure:**
 
 - Witness only, no framework, no questions, no silver linings
-- 2-4 sentences maximum
+- Keep the response brief and presence-oriented
 - Reflect back what was said with care
 
 **Opening constraint:** Never open with "I'm sorry for your loss", it is automatic.
 Open by reflecting what the user said.
 
-**Closing constraint:** No question for first 2-3 exchanges. End with presence, not inquiry.
+**Closing constraint:** No question during the configured initial grief window. End with presence, not inquiry.
 
 **Example arc:**
 
@@ -284,7 +285,6 @@ state toward difficulty.
 **Forbidden structure:** "You can break the cycle", "your parent was doing their best",
 instructing forgiveness, jumping to "what will you do differently."
 
-**Word range:** 70-160 words. Mirror.
 
 ### Fear of Visibility
 
@@ -300,7 +300,6 @@ instructing forgiveness, jumping to "what will you do differently."
 **Forbidden structure:** "Just put yourself out there", reassurance that people won't judge,
 "confidence comes with practice", any specific platform or action prescription.
 
-**Word range:** 70-150 words. Mirror. Spacious.
 
 ### Creative Drought
 
@@ -317,7 +316,6 @@ Open by reflecting the quality of the creative silence.
 **Forbidden structure:** Technique suggestions, "just start small", "take a break",
 "try a different medium", promising the drought will end.
 
-**Word range:** 70-160 words. Mirror. No techniques.
 
 ### Empath Boundary
 
@@ -333,7 +331,6 @@ Open by reflecting the quality of the creative silence.
 **Forbidden structure:** Specific energy protection techniques, "just set better limits",
 "you can't help everyone", implying sensitivity is a disorder.
 
-**Word range:** 70-150 words. Mirror. Grounding.
 
 ### Perfectionism Paralysis
 
@@ -350,7 +347,6 @@ naming the movement of the paralysis.
 **Forbidden structure:** "Done is better than perfect", "just ship it", "no one will
 notice", technique suggestions, deadline advice, comparison to other creators.
 
-**Word range:** 70-160 words. Mirror. No advice.
 
 ### Dark Night of the Soul
 
@@ -371,7 +367,6 @@ by naming the territory honestly (dryness, emptiness, disconnection).
 more", "have faith"), reframing the emptiness as growth, quoting wisdom, promising
 connection will return, suggesting the darkness means something specific.
 
-**Word range:** 60-120 words. Sanctuary. Presence-oriented, no action requests.
 
 ### Soul Nourishment
 
@@ -392,7 +387,6 @@ by praising it.
 another task, suggesting it is selfish to prioritize what feeds you, generic
 self-care advice.
 
-**Word range:** 60-120 words. Mirror. Noticing-oriented, no commitment requests.
 
 ### Divine Guidance
 
@@ -411,7 +405,6 @@ is real. Open by reflecting what was sensed.
 suggesting external validation (oracle cards, readers, authorities), telling the
 user what to do based on their guidance, framing their sensing as weakness.
 
-**Word range:** 60-140 words. Mirror. Discernment-oriented, distinguish intuition
 from fear.
 
 ### Sacred Polarity
@@ -433,7 +426,6 @@ to the user based on gender.
 than the other, framing imbalance as a character flaw, prescribing how the
 balance should look, gendered language that reduces complexity.
 
-**Word range:** 60-140 words. Mirror. Awareness-oriented, never a prescription.
 
 ### Spiritual Purpose
 
@@ -453,7 +445,6 @@ purpose is.
 purpose as a fixed destination, suggesting purpose means sacrifice or suffering,
 affirmations or inspirational language.
 
-**Word range:** 60-140 words. Mirror. Noticing-oriented, no commitment requests.
 
 ### Soulmate Longing
 
@@ -474,7 +465,6 @@ or when the user will meet one.
 coincidence as proof, using soulmate or twin flame language the user has not
 introduced first, offering a timeline.
 
-**Word range:** 60-140 words. Mirror. Returns to the longing itself.
 
 ### Partnership Patterns
 
@@ -494,4 +484,3 @@ what kind of partner to choose.
 partner, framing singleness as a deficiency, reinforcing dependency on SoulMap as a
 stand-in for real connection.
 
-**Word range:** 70-150 words. Mirror. Keeps the pattern pointed inward.
