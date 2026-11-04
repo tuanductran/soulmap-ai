@@ -254,7 +254,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
-  No questions during the configured initial acute-grief window in acute grief)
+  Grief questions should not be offered during the configured initial acute-grief window.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
