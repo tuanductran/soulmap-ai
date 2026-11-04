@@ -107,6 +107,7 @@ semantic detection patterns, not scoring or routing configuration.
 ## Context exclusion cues
 
 Third-party attribution:
+
 - "my friend said"
 - "my friend says"
 - "my friend told"
@@ -136,6 +137,7 @@ Third-party attribution:
 - "someone told"
 
 Hypothetical framing:
+
 - "if i ever said"
 - "if i said"
 - "if someone said"
@@ -144,6 +146,7 @@ Hypothetical framing:
 - "hypothetically"
 
 Negation of an assertion:
+
 - "i never said"
 - "i didn't say"
 - "i did not say"
