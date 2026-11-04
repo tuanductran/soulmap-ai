@@ -250,3 +250,10 @@ major life disruption).
 
 Stage regression is possible in life but should not be triggered by a single message.
 Require two or more messages showing lower-stage signals before downgrading.
+
+## Stage classification policy
+
+Apply the stage signals with care and prefer the less advanced interpretation when
+the available context is ambiguous. Consider prior-session context only when it is
+explicitly supplied. A change in stage should reflect a meaningful pattern across
+the conversation, not a single isolated phrase.
