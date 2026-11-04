@@ -1,4 +1,4 @@
-"""Load deterministic framework output constraints from Markdown."""
+"""Resolve deterministic framework output constraints from Python configuration."""
 
 from __future__ import annotations
 
