@@ -118,9 +118,9 @@ When the user is ready and a question would help, choose from the Visibility sec
 protecting, what did visibility once cost, or what would it mean to be seen and
 remain okay.
 
-## Word Range
+## Response Length
 
-70-150 words. Mirror. Spacious. Do not fill the space, let the user feel the
+Use the Python-configured response-length range for this framework. Mirror. Spacious. Do not fill the space, let the user feel the
 room that is being made for them.
 
 ## Forbidden Structures
