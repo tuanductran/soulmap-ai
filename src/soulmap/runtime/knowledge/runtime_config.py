@@ -236,7 +236,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
     [
         "Dependency",
         "Mirror",
-        "60-100",
+        "60-80",
         "At most one, last if used, real-world redirect",
         "emotional-deescalation.md",
     ],
