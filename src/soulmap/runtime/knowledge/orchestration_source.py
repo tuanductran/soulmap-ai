@@ -253,7 +253,9 @@ def load_orchestration_rules() -> OrchestrationRules:
         "Peer minimum stage",
     }
     if set(scalars) != expected_scalar_keys:
-        raise ValueError("Orchestration scalar configuration keys are incomplete or unused.")
+        raise ValueError(
+            "Orchestration scalar configuration keys are incomplete or unused."
+        )
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
             scalars["Stage 1 override max user messages"],

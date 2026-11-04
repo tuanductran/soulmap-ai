@@ -149,7 +149,6 @@ def test_destabilization_allows_stage_regression() -> None:
     assert result["stage"] == 1
 
 
-
 def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
     rules = load_stage_classifier()
     source = "\n".join(

@@ -53,10 +53,14 @@ def _display_name(raw_name: str) -> str:
 
 def _validate_stage_mapping(name: str, *, integer_values: bool) -> None:
     rows = STAGE_CLASSIFIER_CONFIG[name]
-    if not isinstance(rows, list) or len(rows) != 6 or any(
-        not isinstance(row, list) or len(row) != 2 for row in rows
+    if (
+        not isinstance(rows, list)
+        or len(rows) != 6
+        or any(not isinstance(row, list) or len(row) != 2 for row in rows)
     ):
-        raise ValueError(f"Stage configuration {name!r} must contain six key/value rows.")
+        raise ValueError(
+            f"Stage configuration {name!r} must contain six key/value rows."
+        )
 
     stage_numbers = [row[0] for row in rows]
     if (
@@ -64,13 +68,19 @@ def _validate_stage_mapping(name: str, *, integer_values: bool) -> None:
         or len(set(stage_numbers)) != 6
         or set(stage_numbers) != set(range(1, 7))
     ):
-        raise ValueError(f"Stage configuration {name!r} must map each stage exactly once.")
+        raise ValueError(
+            f"Stage configuration {name!r} must map each stage exactly once."
+        )
 
     if integer_values:
         if any(type(row[1]) is not int or row[1] < 0 for row in rows):
-            raise ValueError(f"Stage configuration {name!r} values must be non-negative integers.")
+            raise ValueError(
+                f"Stage configuration {name!r} values must be non-negative integers."
+            )
     elif any(not isinstance(row[1], str) or not row[1].strip() for row in rows):
-        raise ValueError(f"Stage configuration {name!r} values must be non-empty strings.")
+        raise ValueError(
+            f"Stage configuration {name!r} values must be non-empty strings."
+        )
 
 
 def parse_stage_classifier(text: str) -> StageClassifierRules:
@@ -97,7 +107,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         "stage_recommendations",
     }
     if set(STAGE_CLASSIFIER_CONFIG) != expected_config_keys:
-        raise ValueError("Stage classifier configuration keys are incomplete or unused.")
+        raise ValueError(
+            "Stage classifier configuration keys are incomplete or unused."
+        )
 
     for name in ("keyword_weights", "thresholds"):
         _validate_stage_mapping(name, integer_values=True)
@@ -141,25 +153,36 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
     ):
         value = STAGE_CLASSIFIER_CONFIG[name]
         if type(value) is not int or value < 1:
-            raise ValueError(f"Stage configuration {name!r} must be a positive integer.")
+            raise ValueError(
+                f"Stage configuration {name!r} must be a positive integer."
+            )
 
     close_score_delta = STAGE_CLASSIFIER_CONFIG["close_score_delta"]
     if type(close_score_delta) not in (int, float) or close_score_delta < 0:
         raise ValueError("Stage close_score_delta must be a non-negative number.")
 
     recency_multipliers = STAGE_CLASSIFIER_CONFIG["recency_multipliers"]
-    if not isinstance(recency_multipliers, list) or not recency_multipliers or any(
-        type(value) not in (int, float) or value <= 0 for value in recency_multipliers
+    if (
+        not isinstance(recency_multipliers, list)
+        or not recency_multipliers
+        or any(
+            type(value) not in (int, float) or value <= 0
+            for value in recency_multipliers
+        )
     ):
         raise ValueError("Stage recency multipliers must be positive numbers.")
 
     memory_minimums = STAGE_CLASSIFIER_CONFIG["memory_minimums"]
-    if not isinstance(memory_minimums, dict) or not memory_minimums or any(
-        not isinstance(key, str)
-        or not key.strip()
-        or type(value) is not int
-        or value < 0
-        for key, value in memory_minimums.items()
+    if (
+        not isinstance(memory_minimums, dict)
+        or not memory_minimums
+        or any(
+            not isinstance(key, str)
+            or not key.strip()
+            or type(value) is not int
+            or value < 0
+            for key, value in memory_minimums.items()
+        )
     ):
         raise ValueError("Stage memory minimums must be non-negative integer mappings.")
 
@@ -169,7 +192,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         <= STAGE_CLASSIFIER_CONFIG["first_session_max_stage"]
         <= 6
     ):
-        raise ValueError("First-session stage bounds must be ordered within stages 1 through 6.")
+        raise ValueError(
+            "First-session stage bounds must be ordered within stages 1 through 6."
+        )
 
     return StageClassifierRules(
         stages=tuple(stages),

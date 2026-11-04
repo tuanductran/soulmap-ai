@@ -224,7 +224,6 @@ def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
         )
 
 
-
 def test_framework_template_registry_is_complete_and_collision_free() -> None:
     rules = load_template_rules()
     framework_names = [rule.framework.strip().casefold() for rule in rules]
