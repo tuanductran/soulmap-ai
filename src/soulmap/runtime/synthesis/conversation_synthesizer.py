@@ -127,7 +127,7 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
                         conflict_scores[conflict]["anchors"].append(msg_idx)
                     break
 
-    recurring_emotional = {k: v for k, v in emotional_scores.items() if v["score"] >= 2}
+    recurring_emotional = {k: v for k, v in emotional_scores.items() if v["score"] >= _rules().minimum_theme_occurrences}
     recurring_values = {k: v for k, v in values_scores.items() if v["score"] >= 2}
     recurring_conflicts = {k: v for k, v in conflict_scores.items() if v["score"] >= 2}
 
@@ -187,7 +187,7 @@ def merge_memory_themes(
             current_theme_names.add(theme_data["theme"])
 
     longitudinal = []
-    for mem_theme in memory_themes[:5]:
+    for mem_theme in memory_themes[: _rules().max_memory_themes]:
         if not isinstance(mem_theme, str):
             continue
         theme_lower = mem_theme.lower().replace("-", "_")
@@ -276,7 +276,7 @@ def synthesize(
 
     total_themes = len(emotional_themes) + len(value_themes) + len(conflict_themes)
 
-    if total_themes < 2:
+    if total_themes < _rules().minimum_recurring_themes:
         return {
             "synthesis_ready": False,
             "reason": "insufficient_recurring_themes",
@@ -287,7 +287,7 @@ def synthesize(
     is_longitudinal = bool(themes.get("longitudinal"))
     session_count = themes.get("session_count", 1)
 
-    if is_longitudinal and session_count >= 3:
+    if is_longitudinal and session_count >= _rules().minimum_sessions_for_longitudinal:
         opening = _rules().response_guidance["longitudinal_opening"]
     else:
         opening = _rules().response_guidance["session_opening"]
@@ -301,10 +301,10 @@ def synthesize(
         all_themes.append(("conflicts", t["theme"], t["score"]))
 
     all_themes.sort(key=lambda x: -x[2])
-    top_3 = all_themes[:3]
+    top_themes = all_themes[: _rules().max_themes]
 
     theme_descriptions = []
-    for domain, theme_name, _score in top_3:
+    for domain, theme_name, _score in top_themes:
         readable = theme_name.replace("_", " ")
         if domain == "emotional":
             template = _rules().response_guidance["emotional_theme"]
@@ -326,7 +326,7 @@ def synthesize(
     )
 
     recommendation = (
-        f"Synthesis ready. {len(top_3)} recurring theme(s) identified. "
+        f"Synthesis ready. {len(top_themes)} recurring theme(s) identified. "
         + ("Longitudinal data available. " if is_longitudinal else "")
         + _rules().response_guidance["recommendation"]
     )
@@ -339,7 +339,7 @@ def synthesize(
             "conflicts": themes.get("conflicts", []),
             "longitudinal": themes.get("longitudinal", []),
         },
-        "top_themes": top_3,
+        "top_themes": top_themes,
         "is_longitudinal": is_longitudinal,
         "synthesis_frame": synthesis_frame,
         "recommendation": recommendation,
