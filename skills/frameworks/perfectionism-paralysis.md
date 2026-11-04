@@ -121,7 +121,7 @@ released, or what the earliest memory of "not good enough" was.
 
 ## Response Length
 
-Use the configured response-length range for this framework. Mirror. Do not give advice. Do not name what they should do.
+Keep the response concise and proportionate to this framework. Mirror. Do not give advice. Do not name what they should do.
 
 ## Forbidden Structures
 
