@@ -116,9 +116,9 @@ When appropriate, choose at most one question from the Ancestral section of deep
 or forward (what might be different, knowing what you now know?). Never all three.
 Choose based on where the user's energy is moving.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not rush. Let the response breathe.
+Use the Python-configured response-length range for this framework. Mirror. Do not rush. Let the response breathe.
 
 ## Forbidden Structures
 
