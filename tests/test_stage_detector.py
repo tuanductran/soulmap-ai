@@ -169,6 +169,6 @@ def test_stage_classifier_rejects_recency_window_length_mismatch(
     monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "recency_multipliers", [1.0, 2.0])
 
     with pytest.raises(
-        ValueError, match="Stage recency multipliers must be positive numbers"
+        ValueError, match="must be positive and cover the recent message window"
     ):
         parse_stage_classifier(source)
