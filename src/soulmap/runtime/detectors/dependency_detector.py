@@ -58,7 +58,9 @@ if not DEPENDENCY_CONTEXT_CUES or any(
 if set(DEPENDENCY_CONTEXT_POLICY) != set(DEPENDENCY_CONTEXT_CUES) or any(
     type(value) is not bool for value in DEPENDENCY_CONTEXT_POLICY.values()
 ):
-    raise ValueError("Dependency context policy must cover every cue group with booleans.")
+    raise ValueError(
+        "Dependency context policy must cover every cue group with booleans."
+    )
 
 if not DEPENDENCY_CLAUSE_BOUNDARIES or any(
     not boundary.strip() for boundary in DEPENDENCY_CLAUSE_BOUNDARIES

@@ -478,7 +478,9 @@ def test_python_owned_dependency_configuration_is_complete() -> None:
     assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
     assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
     assert _CLAUSE_BOUNDARY_CUES
-    assert all(type(value) is int and value >= 0 for value in DEPENDENCY_SCORING.values())
+    assert all(
+        type(value) is int and value >= 0 for value in DEPENDENCY_SCORING.values()
+    )
 
 
 def test_python_owned_context_policy_preserves_comma_scope() -> None:
