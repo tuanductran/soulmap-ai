@@ -1,7 +1,7 @@
 ---
 paths:
   - src/soulmap/runtime/detectors/*_detector.py
-  - src/soulmap/runtime/config/**/*.py
+  - src/soulmap/runtime/knowledge/runtime_config.py
   - tests/unit/test_*_detector.py
 ---
 
@@ -27,7 +27,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.config import (
+from soulmap.runtime.knowledge.runtime_config import (
     CONFIG_CONSTANT_NAME,
     ANOTHER_CONFIG_CONSTANT,
 )
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 - Start with docstring describing purpose
 - Use `from __future__ import annotations` for forward compatibility
 - Import from `soulmap.runtime.io.cli_payload` for stdin/stdout handling
-- Import config constants from `soulmap.runtime.config`
+- Import runtime policy from `soulmap.runtime.knowledge.runtime_config`
 - Define type hints using `HistoryMessage = dict[str, str]`
 - Name the main function descriptively, for example `analyze_dependency` or
   `detect_crisis`
