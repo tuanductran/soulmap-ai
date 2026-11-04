@@ -76,8 +76,12 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
-        "insight.classification": _uncached_key_value_table(insight, "Insight classification signals"),
-        "insight.validation": _uncached_key_value_table(insight, "Reflection-validation signals"),
+        "insight.classification": _uncached_key_value_table(
+            insight, "Insight classification signals"
+        ),
+        "insight.validation": _uncached_key_value_table(
+            insight, "Reflection-validation signals"
+        ),
     }
 
 
@@ -99,8 +103,12 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
         "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
-        "insight.classification": load_key_value_table(insight, "Insight classification signals"),
-        "insight.validation": load_key_value_table(insight, "Reflection-validation signals"),
+        "insight.classification": load_key_value_table(
+            insight, "Insight classification signals"
+        ),
+        "insight.validation": load_key_value_table(
+            insight, "Reflection-validation signals"
+        ),
     }
 
 
