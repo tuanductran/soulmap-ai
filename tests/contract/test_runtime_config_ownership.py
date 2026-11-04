@@ -235,7 +235,7 @@ def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
     for path in paths:
         content = default_skill_path(path).read_text(encoding="utf-8")
         for token in runtime_state_tokens:
-            assert re.search(rf"\\b{token}\\b", content) is None, (
+            assert token not in content, (
                 f"{path} contains Python-facing state token {token!r}"
             )
 
