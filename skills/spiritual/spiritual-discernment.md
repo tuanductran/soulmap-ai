@@ -409,15 +409,7 @@ The following values define the operational spiritual-bypass detection policy.
 
 ### Scoring
 
-| Rule | Value |
-| :--- | :--- |
-| Dismissing-pain weight | 2 |
-| Premature-acceptance weight | 2 |
-| Spiritual-inflation weight | 2 |
-| Accountability-bypass weight | 2 |
-| Genuine-integration minimum signals | 2 |
-| Genuine-integration score reduction | 2 |
-| Minimum detection score | 2 |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
 
 ### Guidance
 
