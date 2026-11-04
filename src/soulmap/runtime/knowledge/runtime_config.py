@@ -434,7 +434,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
 ]
 
 
-DETECTOR_CONFIG: dict[str, dict[str, int]] = {
+DETECTOR_CONFIG: dict[str, dict[str, int | str]] = {
     "anger": {
         "Active anger weight": 3,
         "Self-directed anger weight": 3,
@@ -495,6 +495,7 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "Sustained endings signal limit": 4,
         "Sustained larger-question signal limit": 4,
         "Sustained history threshold": 2,
+        "Territory priority": "Identity shift; Meaning depth; Endings grief; Larger questions; Holding",
     },
     "fear_of_visibility": {
         "Direct visibility-fear weight": 3,
@@ -534,6 +535,7 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "Strong insight minimum score": 4,
         "Validation history window": 3,
         "Validation maximum user word count": 30,
+        "Classification priority": "Notice it earlier; When it appears; Consider a different response",
     },
     "partnership_patterns": {
         "Activation signal weight": 3,
