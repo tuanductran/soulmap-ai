@@ -17,10 +17,10 @@ from soulmap.runtime.source_registry import runtime_skill_path
 
 def test_cached_table_rows_match_uncached_parser() -> None:
     """Caching must not change parsed table content for benchmark workloads."""
-    markdown_path = runtime_skill_path("pattern-mapper")
+    markdown_path = runtime_skill_path("meaning-integration")
     source = markdown_path.read_text(encoding="utf-8")
 
-    for heading in ("Scoring", "Guidance"):
+    for heading in ("Insight classification signals", "Reflection-validation signals"):
         _read_markdown_text_cached.cache_clear()
         assert load_table_rows(markdown_path, heading) == extract_table_rows(
             source, heading
