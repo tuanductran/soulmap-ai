@@ -434,7 +434,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
 ]
 
 
-DETECTOR_CONFIG: dict[str, dict[str, int | str]] = {
+DETECTOR_CONFIG: dict[str, dict[str, int]] = {
     "anger": {
         "Active anger weight": 3,
         "Self-directed anger weight": 3,
@@ -495,7 +495,6 @@ DETECTOR_CONFIG: dict[str, dict[str, int | str]] = {
         "Sustained endings signal limit": 4,
         "Sustained larger-question signal limit": 4,
         "Sustained history threshold": 2,
-        "Territory priority": "Identity shift; Meaning depth; Endings grief; Larger questions; Holding",
     },
     "fear_of_visibility": {
         "Direct visibility-fear weight": 3,
@@ -535,7 +534,6 @@ DETECTOR_CONFIG: dict[str, dict[str, int | str]] = {
         "Strong insight minimum score": 4,
         "Validation history window": 3,
         "Validation maximum user word count": 30,
-        "Classification priority": "Notice it earlier; When it appears; Consider a different response",
     },
     "partnership_patterns": {
         "Activation signal weight": 3,
@@ -624,5 +622,15 @@ DETECTOR_CONFIG: dict[str, dict[str, int | str]] = {
         "minimum_theme_occurrences": 2,
         "minimum_sessions_for_longitudinal": 3,
         "max_memory_themes": 5,
+    },
+}
+
+
+DETECTOR_PRIORITY_CONFIG: dict[str, dict[str, str]] = {
+    "existential": {
+        "Territory priority": "Identity shift; Meaning depth; Endings grief; Larger questions; Holding",
+    },
+    "insight": {
+        "Classification priority": "Notice it earlier; When it appears; Consider a different response",
     },
 }
