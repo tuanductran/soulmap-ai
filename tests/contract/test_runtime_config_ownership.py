@@ -257,3 +257,19 @@ def test_framework_template_registry_is_complete_and_collision_free() -> None:
         and rule.source_file.strip()
         for rule in rules
     )
+
+
+def test_portable_skill_does_not_depend_on_unshipped_runtime_configuration() -> None:
+    for path in ("skills/meta/master-prompt.md", "skills/meta/framework-template-map.md"):
+        content = default_skill_path(path).read_text(encoding="utf-8").lower()
+        forbidden = (
+            "configured response-length rules",
+            "configured initial grief window",
+            "configured dependency response-length ceiling",
+            "runtime_config.py",
+            "src/soulmap/runtime/",
+        )
+        for phrase in forbidden:
+            assert phrase not in content, (
+                f"{path} depends on unshipped runtime configuration: {phrase}"
+            )
