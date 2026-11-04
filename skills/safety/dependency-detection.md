@@ -90,7 +90,6 @@ Isolation signals:
 - "rather talk to you than"
 - "you are easier to talk to than"
 
-
 ### Strong dependency expressions
 
 These expressions capture emphatic forms of the dependency signals above. They are
