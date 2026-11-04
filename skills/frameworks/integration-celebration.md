@@ -78,7 +78,7 @@ generic. Use questions from the Celebration section of the deep inquiry bank.
 
 ## Word Range
 
-60-140 words. Mirror (light). No lists. No bullet points inside the response.
+Use the Python-configured response-length range. Mirror (light). No lists. No bullet points inside the response.
 
 ## Forbidden Structures
 
