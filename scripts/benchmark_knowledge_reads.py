@@ -346,13 +346,13 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
                 "skills/frameworks/empath-boundary.md",
                 "skills/frameworks/ancestral-patterns.md",
                 "skills/frameworks/somatic-wellbeing.md",
-                "skills/frameworks/pattern-mapper.md",
+                "skills/frameworks/meaning-integration.md",
             ],
             "description": (
                 "Includes the original two-table microbenchmark and a representative "
                 "detector knowledge workload spanning keyword sections, labeled "
                 "groups, and key/value tables from empath, ancestral, somatic, and "
-                meaning-integration Markdown. Cached and uncached outputs are compared "
+                "meaning-integration Markdown. Cached and uncached outputs are compared "
                 "before timing. Samples are interleaved; setup is outside timed samples."
             ),
             "comparison_note": (
