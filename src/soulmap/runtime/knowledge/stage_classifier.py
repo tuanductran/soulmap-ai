@@ -32,6 +32,8 @@ class StageClassifierRules:
     """Validated runtime stage rules."""
 
     stages: tuple[StageRule, ...]
+    recent_message_window: int
+    memory_session_count_threshold: int
     thresholds: dict[int, int]
     recency_multipliers: tuple[float, ...]
     memory_minimums: dict[str, int]
@@ -84,6 +86,10 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
 
     return StageClassifierRules(
         stages=tuple(stages),
+        recent_message_window=int(STAGE_CLASSIFIER_CONFIG["recent_message_window"]),
+        memory_session_count_threshold=int(
+            STAGE_CLASSIFIER_CONFIG["memory_session_count_threshold"]
+        ),
         thresholds=dict(STAGE_CLASSIFIER_CONFIG["thresholds"]),
         recency_multipliers=tuple(STAGE_CLASSIFIER_CONFIG["recency_multipliers"]),
         memory_minimums=dict(STAGE_CLASSIFIER_CONFIG["memory_minimums"]),
