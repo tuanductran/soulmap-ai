@@ -117,7 +117,7 @@ where in the body they feel the boundary dissolve.
 
 ## Response Length
 
-Use the configured response-length range for this framework. Mirror. Grounding. Use language that returns the user to their own body
+Keep the response concise and proportionate to this framework. Mirror. Grounding. Use language that returns the user to their own body
 and experience.
 
 ## Forbidden Structures
