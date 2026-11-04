@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_labeled_groups,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/grief-companion.md,
@@ -22,10 +22,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 _GRIEF_GROUPS = load_labeled_groups(
     runtime_skill_path("grief-companion"), "Detection signals"
 )
-_RULES = load_key_value_table(
-    runtime_skill_path("grief-companion"),
-    "Detection policy",
-)
+_RULES = DETECTOR_CONFIG["grief"]
 _GUIDANCE = load_runtime_guidance(runtime_skill_path("grief-companion"))
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
