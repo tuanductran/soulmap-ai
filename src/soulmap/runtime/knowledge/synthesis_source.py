@@ -8,13 +8,10 @@ from functools import lru_cache
 
 from soulmap.runtime.knowledge.keyword_lists import load_runtime_guidance
 from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
-_THRESHOLD_RE = re.compile(
-    r"^\|\s*(?P<name>[^|]+?)\s*\|\s*(?P<value>\d+)\s*\|\s*$", re.MULTILINE
-)
-
 
 @dataclass(frozen=True, slots=True)
 class SynthesisRules:
@@ -45,36 +42,6 @@ def _contract_body(text: str) -> str:
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
     return text[start:end]
-
-
-def _table_values(body: str) -> dict[str, int]:
-    section = re.search(
-        r"### Detection thresholds(?P<body>.*?)(?=\n### |\Z)",
-        body,
-        re.DOTALL,
-    )
-    if section is None:
-        raise ValueError("Synthesis detection thresholds are missing.")
-    values: dict[str, int] = {}
-    for match in _THRESHOLD_RE.finditer(section.group("body")):
-        key = re.sub(r"[^a-z0-9]+", "_", match.group("name").strip().lower()).strip("_")
-        values[key] = int(match.group("value"))
-    aliases = {"minimum_user_messages_to_synthesize": "minimum_user_messages"}
-    normalized_values: dict[str, int] = {}
-    for key, value in values.items():
-        normalized_values[str(aliases.get(key, key))] = value
-    values = normalized_values
-    required = {
-        "minimum_user_messages",
-        "automatic_synthesis_user_messages",
-        "minimum_distinct_recurring_themes_for_automatic_synthesis",
-        "maximum_themes_returned",
-        "maximum_anchors_per_theme",
-        "maximum_longitudinal_themes",
-    }
-    if set(values) != required:
-        raise ValueError("Synthesis detection thresholds are incomplete.")
-    return values
 
 
 def _quoted_bullets(section: str, heading: str) -> tuple[str, ...]:
@@ -125,16 +92,14 @@ def load_synthesis_rules() -> SynthesisRules:
     """Read and validate the runtime contract from shipped Markdown."""
     path = runtime_skill_path("conversation-synthesis")
     body = _contract_body(path.read_text(encoding="utf-8"))
-    values = _table_values(body)
+    values = DETECTOR_CONFIG["conversation_synthesis"]
     return SynthesisRules(
-        minimum_user_messages=int(values["minimum_user_messages"]),
-        automatic_user_messages=int(values["automatic_synthesis_user_messages"]),
-        minimum_recurring_themes=int(
-            values["minimum_distinct_recurring_themes_for_automatic_synthesis"]
-        ),
-        max_themes=int(values["maximum_themes_returned"]),
-        max_anchors=int(values["maximum_anchors_per_theme"]),
-        max_longitudinal=int(values["maximum_longitudinal_themes"]),
+        minimum_user_messages=values["minimum_user_messages"],
+        automatic_user_messages=values["automatic_user_messages"],
+        minimum_recurring_themes=values["minimum_recurring_themes"],
+        max_themes=values["max_themes"],
+        max_anchors=values["max_anchors"],
+        max_longitudinal=values["max_longitudinal"],
         explicit_requests=_quoted_bullets(body, "Explicit request signals"),
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
