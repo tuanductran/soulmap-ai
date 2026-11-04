@@ -1,6 +1,6 @@
 ---
 name: "stage-classifier"
-description: "Operationalized classification system for SoulMap user journey stages. Defines the scoring policy and decision boundaries for stage classification."
+description: "Semantic reference for the six SoulMap user journey stages and their language signals."
 ---
 
 # Stage Classifier
@@ -10,10 +10,10 @@ that may suggest a person's current relationship with their own reflection.
 
 ## Classification Method
 
-Stage classification uses a weighted keyword scoring system applied to the most
-recent 5 user messages (recency-weighted) plus any prior-session context explicitly
-supplied by the hosting platform in the current prompt. SoulMap does not independently
-store or retrieve past sessions; absent context must not be inferred.
+Stage classification interprets recent user language with recency weighting and any
+prior-session context explicitly supplied by the hosting platform in the current prompt.
+SoulMap does not independently store or retrieve past sessions; absent context must not
+be inferred.
 
 The stage with the highest weighted score is selected as the current stage.
 If no stage clears the minimum threshold, default to Stage 1.
@@ -22,8 +22,8 @@ If no stage clears the minimum threshold, default to Stage 1.
 
 ### Base Scoring
 
-For each user message (most recent 5), score against the keyword sets below.
-Apply the recency multiplier:
+Compare recent user messages with the semantic keyword sets below. The runtime
+applies its configured scoring and recency policy.
 
 ### Stage 1, arrival and awakening
 
@@ -212,34 +212,21 @@ Apply the recency multiplier:
 
 ## Memory-Enhanced Classification
 
-When platform-supplied prior-session context is available, apply this additional weighting:
-
-| Memory signal | Stage adjustment |
-| :--- | :--- |
-| When the session count reaches 10 or more | Minimum Stage 2 |
-| Prior session showed pattern recognition | Minimum Stage 3 |
-| Prior session showed breakthrough | Minimum Stage 3 |
-| Prior session showed independence signals | Lean toward Stage 4+ |
-| User has explicitly declined frameworks before | Reduce depth regardless of stage |
+When platform-supplied prior-session context is available, use it to interpret continuity,
+pattern recognition, breakthrough, and independence. A history of growth may inform the
+reading, while an explicit preference against frameworks should continue to limit depth.
 
 ## Conflict Resolution
 
-If two stages score similarly (within 2 points of each other):
-
-- Choose the LOWER stage
-- Apply a mixed response: depth of higher stage but register of lower stage
-- Note the ambiguity in stage notes
-
-This ensures users are never over-reached. It is better to offer too little depth
-than to push someone toward insight they are not ready for.
+When stage interpretations are close, prefer the less advanced reading and preserve
+the ambiguity in stage notes. A response may reflect useful depth without adopting a
+more advanced register. This avoids pushing someone toward insight they are not ready for.
 
 ## First session override
 
-In the user's first session (no prior-session context supplied):
-
-- Default to Stage 1 regardless of signals in the first message
-- This can be upgraded to Stage 2 within the same session if strong signals appear
-- Never classify higher than Stage 3 in the first session
+When no prior-session context is supplied, interpret the first interaction cautiously.
+Allow the assessment to evolve as meaningful self-reflection appears, without assuming
+a level of familiarity or depth that the conversation has not established.
 
 ## Anti-Regression Rule
 
@@ -247,8 +234,8 @@ Do not classify a user as a lower stage than their most recent prior classificat
 unless clear destabilization signals are present (acute crisis, significant loss,
 major life disruption).
 
-Stage regression is possible in life but should not be triggered by a single message.
-Require two or more messages showing lower-stage signals before downgrading.
+Stage regression is possible, but should be grounded in a consistent pattern of lower-stage
+signals rather than an isolated message.
 
 ## Stage classification policy
 
