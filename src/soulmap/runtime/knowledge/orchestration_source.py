@@ -78,7 +78,7 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
     if match is None:
         raise ValueError(f"Orchestration section {heading!r} is missing.")
     section = body[match.end() :]
-    next_section = re.search(r"^###\s+", section, re.MULTILINE)
+    next_section = re.search(r"^#{1,3}\s+", section, re.MULTILINE)
     if next_section:
         section = section[: next_section.start()]
     rows: list[list[str]] = []
@@ -207,34 +207,15 @@ def _parse_secondary_priority(
 
 @lru_cache(maxsize=1)
 def load_orchestration_rules() -> OrchestrationRules:
-    """Read and validate executable routing values from shipped Markdown."""
+    """Load natural-language guidance and Python-owned routing configuration."""
+    from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
+
     path = runtime_skill_path("orchestration")
-    body = _contract_body(path.read_text(encoding="utf-8"))
-
-    scalar_rows = _table_rows(body, "Operational limits")
-    scalars = {row[0]: row[1] for row in scalar_rows if len(row) == 2}
-    required_scalars = {
-        "Stage 1 override max user messages",
-        "Breakthrough minimum insight strength",
-        "Phase 1 safety checks before framework selection",
-        "Template routing required before delivery",
-        "Peer minimum stage",
-    }
-    if set(scalars) != required_scalars:
-        raise ValueError("Orchestration scalar settings are incomplete.")
-    strength = _require_str(
-        scalars["Breakthrough minimum insight strength"],
-        "Breakthrough minimum insight strength",
-    )
-    if strength not in {"emerging", "strong"}:
-        raise ValueError("Breakthrough minimum insight strength is invalid.")
-
-    instruction_rows = _table_rows(body, "Mode guidance")
+    instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
     runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    required_instruction_labels = set(INSTRUCTION_NAMES)
-    if set(runtime_instructions) != required_instruction_labels or any(
+    if set(runtime_instructions) != set(INSTRUCTION_NAMES) or any(
         not value for value in runtime_instructions.values()
     ):
         raise ValueError("Orchestration mode guidance is incomplete.")
@@ -242,31 +223,26 @@ def load_orchestration_rules() -> OrchestrationRules:
         INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
     }
 
-    primary = _parse_primary_priority(_table_rows(body, "Primary framework priority"))
-    secondary = _parse_secondary_priority(_table_rows(body, "Secondary layer priority"))
-    intensity_fallback = _parse_intensity_fallback(
-        _table_rows(body, "Intensity fallback")
-    )
+    config = ORCHESTRATION_CONFIG
+    scalars = config["scalars"]
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
-            scalars["Stage 1 override max user messages"],
-            "Stage 1 override max user messages",
+            scalars["Stage 1 override max user messages"], "Stage 1 override max user messages"
         ),
-        breakthrough_min_strength=strength,
+        breakthrough_min_strength=_require_str(
+            scalars["Breakthrough minimum insight strength"], "Breakthrough minimum insight strength"
+        ),
         phase_1_safety_before_framework_selection=_require_bool(
-            scalars["Phase 1 safety checks before framework selection"],
-            "Phase 1 safety checks before framework selection",
+            scalars["Phase 1 safety checks before framework selection"], "Phase 1 safety checks before framework selection"
         ),
         template_routing_required=_require_bool(
-            scalars["Template routing required before delivery"],
-            "Template routing required before delivery",
+            scalars["Template routing required before delivery"], "Template routing required before delivery"
         ),
-        primary_priority=primary,
-        secondary_priority=secondary,
-        intensity_fallback=intensity_fallback,
+        primary_priority=_parse_primary_priority(config["primary_priority"]),
+        secondary_priority=_parse_secondary_priority(config["secondary_priority"]),
+        intensity_fallback=_parse_intensity_fallback(config["intensity_fallback"]),
         peer_min_stage=_require_positive_int(
-            scalars["Peer minimum stage"],
-            "Peer minimum stage",
+            scalars["Peer minimum stage"], "Peer minimum stage"
         ),
         runtime_instructions=runtime_instructions,
     )

@@ -6,15 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
-
-_ROW_RE = re.compile(
-    r"^\|\s*(?P<framework>[^|]+?)\s*\|\s*(?P<mode>[^|]+?)\s*\|\s*"
-    r"(?P<word_range>[^|]+?)\s*\|\s*(?P<question_rule>[^|]+?)\s*\|\s*"
-    r"(?P<source_file>[^|]+?)\s*\|\s*$",
-    re.MULTILINE,
-)
-
+from soulmap.runtime.knowledge.runtime_config import FRAMEWORK_TEMPLATE_ROWS
 
 @dataclass(frozen=True, slots=True)
 class TemplateRule:
@@ -33,22 +25,8 @@ def _key(value: str) -> str:
 
 @lru_cache(maxsize=1)
 def load_template_rules() -> tuple[TemplateRule, ...]:
-    """Read and validate the core framework/template mapping table."""
-    path = runtime_skill_path("framework-template-map")
-    text = path.read_text(encoding="utf-8")
-    rules = tuple(
-        TemplateRule(
-            framework=match.group("framework").strip(),
-            mode=match.group("mode").strip(),
-            word_range=match.group("word_range").strip(),
-            question_rule=match.group("question_rule").strip(),
-            source_file=match.group("source_file").strip(),
-        )
-        for match in _ROW_RE.finditer(text)
-    )
-    if not rules:
-        raise ValueError("Framework template mapping table is missing.")
-    return rules
+    """Load deterministic output constraints from Python-owned configuration."""
+    return tuple(TemplateRule(*row) for row in FRAMEWORK_TEMPLATE_ROWS)
 
 
 def resolve_template(

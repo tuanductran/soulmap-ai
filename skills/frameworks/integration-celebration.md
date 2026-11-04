@@ -231,23 +231,6 @@ A minimum score is required before this framework activates. Mixed pain signals 
 
 This policy describes the signals and scoring used to recognize meaningful positive change. Apply it alongside the framework guidance above.
 
-### Scoring approach
-
-The runtime weighs evidence of completion, relief, gratitude, and recognized progress.
-Mixed pain signals can reduce the score or prevent activation. The values below are
-the canonical scoring policy; Python loads, validates, and applies them.
-
-| Setting | Value |
-| :--- | :--- |
-| Win or completion weight | 3 |
-| Relief after difficulty weight | 3 |
-| Gratitude weight | 2 |
-| Recognized progress weight | 2 |
-| Detection threshold | 2 |
-| Negative override penalty | 2 |
-| Strength threshold | 4 |
-| Confirmation score | 2 |
-
 ### Negative overrides
 
 - "but i'm still"

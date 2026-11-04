@@ -1,4 +1,4 @@
-"""Verify the orchestration Markdown exposes valid executable routing values."""
+"""Verify Python-owned routing configuration and natural-language mode guidance."""
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
@@ -168,5 +168,8 @@ def test_routing_policy_uses_human_readable_names() -> None:
 
     for token in ("DE_ESCALATION", "INNER_PARTS", "meaning_integration", "inner_parts"):
         assert token not in policy
-    assert "| High | De-escalation | Sanctuary |" in policy
-    assert "| 1 | Grief | Sanctuary |" in policy
+    assert "### Operational limits" not in policy
+    assert "### Primary framework priority" not in policy
+    assert "### Secondary layer priority" not in policy
+    assert "### Intensity fallback" not in policy
+    assert "Mode guidance" in policy

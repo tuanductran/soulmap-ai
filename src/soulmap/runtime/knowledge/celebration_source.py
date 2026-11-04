@@ -12,6 +12,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
 )
 from soulmap.runtime.knowledge.labels import CELEBRATION_GUIDANCE_NAMES, map_label
+from soulmap.runtime.knowledge.runtime_config import CELEBRATION_SCORING
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
@@ -85,7 +86,7 @@ def load_celebration_rules() -> CelebrationRules:
     path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _knowledge_lists(body)
-    scoring = load_key_value_table(path, "Scoring approach")
+    scoring = CELEBRATION_SCORING
 
     def scoring_value(label: str) -> int:
         try:

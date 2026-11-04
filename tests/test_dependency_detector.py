@@ -460,18 +460,17 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "LOW_DEPENDENCY" not in guidance
 
 
-def test_dependency_knowledge_is_loaded_from_skill_markdown() -> None:
+def test_runtime_configuration_is_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
-    assert "## Regex patterns" in text
-    assert "### Scoring approach" in text
-    assert "Dependency keyword weight" in text
-    assert "High dependency threshold" in text
-    assert "| Context group | Comma ends scope |" in text
-    assert r"\b" in text
+    assert "## Regex patterns" not in text
+    assert "### Scoring approach" not in text
+    assert "Dependency keyword weight" not in text
+    assert "High dependency threshold" not in text
+    assert "Context exclusion policy" not in text
 
 
-def test_markdown_owned_context_policy_preserves_comma_scope() -> None:
+def test_python_owned_context_policy_preserves_comma_scope() -> None:
     assert _CONTEXT_EXCLUSION_POLICY == {
         "third-party attribution": False,
         "hypothetical framing": False,
@@ -479,7 +478,7 @@ def test_markdown_owned_context_policy_preserves_comma_scope() -> None:
     }
 
 
-def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> None:
+def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None:
     phrases = (
         "Only you    really understand me.",
         "Only you    truly understand me.",

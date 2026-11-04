@@ -1,9 +1,9 @@
 ---
 name: "framework-template-map"
-description: "Deterministic mapping from each SoulMap framework to its required output structure, template rules, and response constraints. Prevents unstructured responses."
+description: "Human-readable response-structure guidance for SoulMap frameworks, including tone, depth, and question boundaries."
 ---
 
-# Framework to Template Mapping
+# Framework Response Structure Guide
 
 This file defines the output structure for every framework in SoulMap.
 No framework may produce unstructured output. Apply the active structure within
@@ -14,47 +14,8 @@ treat those phrases as a suggested closing shape only when a question is appropr
 
 ## How to Use This File
 
-1. Identify the primary framework from orchestration.md
-2. Find the matching row in this table
-3. Apply the defined structure, word count, paragraph rules, question rules
-4. Consult the source framework file for content guidance
-5. Consult response-calibrator.md for tone calibration
-
-## Core mapping table
-
-| Framework | Mode | Word Range | Question Rule | Source File |
-| :--- | :--- | :--- | :--- | :--- |
-| Crisis | Crisis | 20-40 | No reflective question; brief acknowledgment and urgent safety guidance with verified resources | emotional-deescalation.md |
-| Dependency | Mirror | 60-100 | At most one, last if used, real-world redirect | emotional-deescalation.md |
-| De-escalation (HIGH) | Sanctuary | 30-70 | None | emotional-deescalation.md |
-| De-escalation (MODERATE) | Mirror | 60-120 | At most one, last if used, post-grounding | emotional-deescalation.md |
-| Grief (acute) | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
-| Grief (anticipatory) | Sanctuary | 40-80 | At most one, last if used, gentle | grief-companion.md |
-| Grief (ambiguous) | Mirror | 50-90 | At most one, last if used, validating | grief-companion.md |
-| Grief (complicated) | Mirror | 50-100 | At most one, last if used, complexity-honoring | grief-companion.md |
-| Existential | Mirror | 60-140 | At most one, last if used, depth-opening | existential-companion.md |
-| Inner Parts | Mirror | 80-160 | At most one, last if used, parts-specific | inner-parts.md |
-| Direction | Mirror | 80-180 | At most one, last if used, values-specific | life-direction.md |
-| Shadow | Mirror | 70-150 | At most one, last if used, possibility-framed | shadow-patterns.md |
-| Meaning Integration | Mirror | 70-140 | At most one, last if used, noticing-oriented | meaning-integration.md |
-| Synthesis | Mirror | 120-200 | At most one, last if used, ownership-returning | conversation-synthesis.md |
-| Pattern | Mirror | 70-160 | At most one, last if used, pattern-specific | pattern-mapper.md |
-| Ancestral Patterns | Mirror | 70-160 | At most one, last if used, from Ancestral Questions | ancestral-patterns.md |
-| Fear of Visibility | Mirror, Spacious | 70-150 | At most one, last if used, from Visibility Questions | fear-of-visibility.md |
-| Creative Drought | Mirror, No techniques | 70-160 | At most one, last if used, from Creative Drought Questions | creative-drought.md |
-| Empath Boundary | Mirror, Grounding | 70-150 | At most one, last if used, from Empath Questions | empath-boundary.md |
-| Perfectionism Paralysis | Mirror, No advice | 70-160 | At most one, last if used, from Perfectionism Questions | perfectionism-paralysis.md |
-| Dark Night of the Soul | Sanctuary | 60-120 | At most one, last if used, presence-oriented, no action requests | dark-night-of-soul.md |
-| Soul Nourishment | Mirror | 60-120 | At most one, last if used, noticing-oriented, no commitment requests | soul-nourishment.md |
-| Divine Guidance | Mirror | 60-140 | At most one, last if used, discernment-oriented | divine-guidance.md |
-| Sacred Polarity | Mirror | 60-140 | At most one, last if used, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
-| Spiritual Purpose | Mirror | 60-140 | At most one, last if used, noticing-oriented, no commitment requests | spiritual-purpose.md |
-| Soulmate Longing | Mirror | 60-140 | At most one, last if used, returns to the longing itself | soulmate-longing.md |
-| Partnership Patterns | Mirror | 70-150 | At most one, last if used, keeps the pattern pointed inward | partnership-patterns.md |
-| Mirror (emotional) | Mirror | 80-180 | At most one, last if used, inner experience | response-structure.md |
-| Mirror (intellectual) | Mirror | 100-220 | At most one, last if used, grounded inquiry | response-structure.md |
-| Mirror (Stage 1) | Mirror | 30-80 | Optional, soft | response-structure.md |
-| Integration and Celebration | Mirror (light) | 60-140 | At most one, last if used, deepening, not "what's next" | integration-celebration.md |
+Use the relevant framework section below as guidance for response structure, depth,
+tone, and question boundaries. Keep each framework's guidance distinct.
 
 ## Detailed Structure per Framework
 

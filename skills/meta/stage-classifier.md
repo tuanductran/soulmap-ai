@@ -5,9 +5,8 @@ description: "Operationalized classification system for SoulMap user journey sta
 
 # Stage Classifier
 
-This file converts the 6-stage user journey model from `user-journey-stages.md`
-into an actionable classification system. The orchestrator calls this at Step 2 of
-the execution pipeline.
+This file describes the six stages of the user journey and the language signals
+that may suggest a person's current relationship with their own reflection.
 
 ## Classification Method
 
@@ -26,28 +25,10 @@ If no stage clears the minimum threshold, default to Stage 1.
 For each user message (most recent 5), score against the keyword sets below.
 Apply the recency multiplier:
 
-| Message position | Multiplier |
-| :--- | :--- |
-| Current message | 3x |
-| Previous message | 2x |
-| 2 messages back | 1.5x |
-| 3 messages back | 1x |
-| 4 messages back | 0.5x |
-
-### Minimum Thresholds
-
-| Stage | Minimum score to classify | Notes |
-| :--- | :--- | :--- |
-| 1 | 0 (default) | No signals needed |
-| 2 | 4 | At least 2 distinct signals |
-| 3 | 6 | Pattern language must be present |
-| 4 | 8 | Trust/autonomy signals required |
-| 5 | 10 | Multiple integration signals |
-| 6 | 12 | Self-led language required |
 
 ### Stage 1, arrival and awakening
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i don't know"
 - "i'm lost"
@@ -81,7 +62,7 @@ Apply the recency multiplier:
 
 ### Stage 2, honest recognition
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "maybe i"
 - "i think i might"
@@ -110,7 +91,7 @@ Apply the recency multiplier:
 
 ### Stage 3, pattern recognition and coherence
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "pattern"
 - "i always do this"
@@ -144,7 +125,7 @@ Apply the recency multiplier:
 
 ### Stage 4, inner authority
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i trust myself"
 - "i know what i need"
@@ -175,7 +156,7 @@ Apply the recency multiplier:
 
 ### Stage 5, embodied wisdom
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i've learned"
 - "i now understand"
@@ -205,7 +186,7 @@ Apply the recency multiplier:
 
 ### Stage 6, self-led navigation
 
-**Keyword signals (weight: 3 each):**
+**Keyword signals:**
 
 - "i don't need to figure this out"
 - "i already know"
@@ -269,41 +250,3 @@ major life disruption).
 
 Stage regression is possible in life but should not be triggered by a single message.
 Require two or more messages showing lower-stage signals before downgrading.
-
-## Stage classification policy
-
-Use the following stage roles and response recommendations alongside the signal patterns and readiness guidance above.
-
-### Enforcement settings
-
-| Setting | Value |
-| :--- | :--- |
-| Minimum stage when session count is at least 10 | 2 |
-| Minimum stage when a prior session showed pattern recognition | 3 |
-| Minimum stage when a prior session showed a breakthrough | 3 |
-| Close score delta | 2 |
-| First session default stage | 1 |
-| First session maximum stage | 3 |
-| Anti-regression minimum lower-stage messages | 2 |
-
-### Stage roles
-
-| Stage | Role |
-| :--- | :--- |
-| 1 | Sanctuary and witness - presence over wisdom |
-| 2 | Mirror with gentle reflection |
-| 3 | Mirror for pattern archaeology |
-| 4 | Witness to their growing authority |
-| 5 | Peer in conversation |
-| 6 | Witness to their becoming |
-
-### Stage recommendations
-
-| Stage | Recommendation |
-| :--- | :--- |
-| 1 | Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead. |
-| 2 | Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one. |
-| 3 | Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok. |
-| 4 | Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching. |
-| 5 | Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role. |
-| 6 | Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming. |
