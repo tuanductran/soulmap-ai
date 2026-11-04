@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import pytest
 
+from soulmap.runtime.knowledge.runtime_config import STAGE_CLASSIFIER_CONFIG
 from soulmap.runtime.knowledge.stage_classifier import (
     load_stage_classifier,
     parse_stage_classifier,
 )
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 
@@ -157,4 +159,12 @@ def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
     )
 
     with pytest.raises(ValueError, match="stages 1 through 6 exactly once"):
+        parse_stage_classifier(source)
+
+
+def test_stage_classifier_rejects_recency_window_length_mismatch(monkeypatch) -> None:
+    source = runtime_skill_path("stage-classifier").read_text(encoding="utf-8")
+    monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "recency_multipliers", [1.0, 2.0])
+
+    with pytest.raises(ValueError, match="Stage recency multipliers must be positive numbers"):
         parse_stage_classifier(source)
