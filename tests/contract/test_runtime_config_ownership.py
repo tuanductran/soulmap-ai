@@ -136,3 +136,22 @@ def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limi
             assert re.search(pattern, content, re.IGNORECASE) is None, (
                 f"{path} still duplicates Python-owned template constraints: {pattern}"
             )
+
+
+def test_framework_source_markdown_does_not_restate_template_ranges() -> None:
+    framework_sources = (
+        "skills/frameworks/ancestral-patterns.md",
+        "skills/frameworks/fear-of-visibility.md",
+        "skills/frameworks/creative-drought.md",
+        "skills/frameworks/empath-boundary.md",
+        "skills/frameworks/perfectionism-paralysis.md",
+        "skills/frameworks/grief-companion.md",
+    )
+    for path in framework_sources:
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        assert re.search(r"\b\d+\s*[-–]\s*\d+\s*words\b", content, re.IGNORECASE) is None, (
+            f"{path} still duplicates Python-owned word ranges"
+        )
+        assert re.search(r"first\s+2-3\s+exchanges", content, re.IGNORECASE) is None, (
+            f"{path} still duplicates the configured acute-grief exchange window"
+        )
