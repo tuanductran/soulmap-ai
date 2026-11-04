@@ -74,17 +74,18 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
                 f"{skill} still contains runtime configuration: {phrase}"
             )
 
+
 def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
     content = default_skill_path(
         "skills/meta/stage-classifier.md"
     ).read_text(encoding="utf-8")
     forbidden_patterns = [
-        r"most recent\\s+\\d+\\s+user messages",
-        r"within\\s+\\d+\\s+points",
-        r"session count.{0,40}\\d+",
+        r"most recent\s+\d+\s+user messages",
+        r"within\s+\d+\s+points",
+        r"session count.{0,40}\d+",
         r"two or more messages.{0,80}downgrad",
-        r"first session.{0,100}(?:default|maximum|higher than)\\s+stage\\s+\\d+",
-        r"first \\d+[-–]\\d+ exchanges",
+        r"first session.{0,100}(?:default|maximum|higher than)\s+stage\s+\d+",
+        r"first \d+[-–]\d+ exchanges",
     ]
     for pattern in forbidden_patterns:
         assert re.search(pattern, content, re.IGNORECASE) is None, (
