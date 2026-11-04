@@ -19,6 +19,7 @@ from soulmap.runtime.knowledge.labels import (
     INSIGHT_GUIDANCE_NAMES,
     map_label,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/meaning-integration.md,
@@ -31,9 +32,7 @@ EXPLICIT_INSIGHT = _INSIGHT_GROUPS["explicit insight"]
 EMERGING_INSIGHT = _INSIGHT_GROUPS["emerging insight"]
 SELF_APPLICATION = _INSIGHT_GROUPS["self-application"]
 POST_REFLECTION = _INSIGHT_GROUPS["post-reflection validation"]
-_INSIGHT_SCORING = load_key_value_table(
-    runtime_skill_path("meaning-integration"), "Scoring"
-)
+_INSIGHT_SCORING = DETECTOR_CONFIG["insight"]
 _INSIGHT_CLASSIFICATION_LABELS = load_key_value_table(
     runtime_skill_path("meaning-integration"),
     "Insight classification signals",
