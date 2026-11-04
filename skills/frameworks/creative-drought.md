@@ -122,7 +122,7 @@ is afraid the drought means.
 
 ## Response Length
 
-Use the Python-configured response-length range for this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
+Use the configured response-length range for this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
 
 ## Forbidden Structures
 
