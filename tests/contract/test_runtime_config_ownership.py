@@ -292,3 +292,17 @@ def test_portable_skills_do_not_depend_on_unshipped_runtime_configuration() -> N
                 f"{path.relative_to(skills_root)} depends on unshipped "
                 f"runtime configuration: {phrase}"
             )
+
+
+def test_dependency_context_cues_are_markdown_owned() -> None:
+    from soulmap.runtime.knowledge import runtime_config
+    from soulmap.runtime.knowledge.keyword_lists import load_labeled_groups
+    from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_CONTEXT_POLICY
+    from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+
+    assert not hasattr(runtime_config, "DEPENDENCY_CONTEXT_CUES")
+    groups = load_labeled_groups(
+        runtime_skill_path("dependency-detection"), "Context exclusion cues"
+    )
+    assert set(groups) == set(DEPENDENCY_CONTEXT_POLICY)
+    assert all(groups.values())

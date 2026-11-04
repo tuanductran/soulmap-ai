@@ -104,6 +104,54 @@ semantic detection patterns, not scoring or routing configuration.
 | you're the only one who understands me (truly) | `\byou're\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 | you are the only one who understands me (truly) | `\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 
+## Context exclusion cues
+
+Third-party attribution:
+- "my friend said"
+- "my friend says"
+- "my friend told"
+- "my sister said"
+- "my sister says"
+- "my sister told"
+- "my brother said"
+- "my brother says"
+- "my brother told"
+- "my coworker said"
+- "my coworker says"
+- "my coworker told"
+- "my colleague said"
+- "my colleague says"
+- "my colleague told"
+- "my partner said"
+- "my partner says"
+- "my partner told"
+- "my roommate said"
+- "my roommate says"
+- "my roommate told"
+- "my client said"
+- "my client says"
+- "my client told"
+- "someone said"
+- "someone says"
+- "someone told"
+
+Hypothetical framing:
+- "if i ever said"
+- "if i said"
+- "if someone said"
+- "what would count as"
+- "in a fictional example"
+- "hypothetically"
+
+Negation of an assertion:
+- "i never said"
+- "i didn't say"
+- "i did not say"
+- "i don't feel that"
+- "i do not feel that"
+- "i don't think that"
+- "i do not think that"
+
 ## Detection policy
 
 ### Scoring approach

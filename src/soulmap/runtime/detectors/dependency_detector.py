@@ -17,7 +17,6 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_config import (
     DEPENDENCY_CLAUSE_BOUNDARIES,
-    DEPENDENCY_CONTEXT_CUES,
     DEPENDENCY_CONTEXT_POLICY,
     DEPENDENCY_SCORING,
 )
@@ -60,12 +59,13 @@ if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
 ):
     raise ValueError("Dependency regex pattern labels must be unique.")
 
-if not DEPENDENCY_CONTEXT_CUES or any(
+_CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
+if not _CONTEXT_EXCLUSION_GROUPS or any(
     not group.strip() or not cues or any(not cue.strip() for cue in cues)
-    for group, cues in DEPENDENCY_CONTEXT_CUES.items()
+    for group, cues in _CONTEXT_EXCLUSION_GROUPS.items()
 ):
     raise ValueError("Dependency context cues must contain non-empty groups and cues.")
-if set(DEPENDENCY_CONTEXT_POLICY) != set(DEPENDENCY_CONTEXT_CUES) or any(
+if set(DEPENDENCY_CONTEXT_POLICY) != set(_CONTEXT_EXCLUSION_GROUPS) or any(
     type(value) is not bool for value in DEPENDENCY_CONTEXT_POLICY.values()
 ):
     raise ValueError(
@@ -99,7 +99,6 @@ _GUIDANCE = {
     map_label(label, DEPENDENCY_GUIDANCE_NAMES, "Dependency guidance"): value
     for label, value in _GUIDANCE_LABELS.items()
 }
-_CONTEXT_EXCLUSION_GROUPS = DEPENDENCY_CONTEXT_CUES
 _CONTEXT_EXCLUSION_POLICY = DEPENDENCY_CONTEXT_POLICY
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
