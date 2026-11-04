@@ -16,7 +16,7 @@ SoulMap does not independently store or retrieve past sessions; absent context m
 be inferred.
 
 The stage with the highest weighted score is selected as the current stage.
-If no stage clears the minimum threshold, default to Stage 1.
+When signals are insufficient, prefer a conservative interpretation.
 
 ## Scoring Algorithm
 
@@ -53,7 +53,7 @@ applies its configured scoring and recency policy.
 
 **Orchestrator behavior at Stage 1:**
 
-- Presence only, no frameworks in first 1-2 exchanges
+- Presence first; avoid introducing frameworks before the conversation is ready
 - Minimal questions
 - Sanctuary or shallow Mirror only
 - No pattern or shadow work
