@@ -163,6 +163,7 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
     recency_multipliers = STAGE_CLASSIFIER_CONFIG["recency_multipliers"]
     if (
         not isinstance(recency_multipliers, list)
+        or len(recency_multipliers) != STAGE_CLASSIFIER_CONFIG["recent_message_window"]
         or not recency_multipliers
         or any(
             type(value) not in (int, float) or value <= 0
