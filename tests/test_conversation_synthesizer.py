@@ -91,7 +91,7 @@ def test_merge_memory_themes_handles_invalid_or_empty_memory_values() -> None:
     )
 
 
-def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
+def test_synthesis_rules_combine_python_config_and_semantic_markdown() -> None:
     rules = load_synthesis_rules()
 
     assert rules.minimum_user_messages == 6
@@ -100,6 +100,9 @@ def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
     assert rules.max_themes == 3
     assert rules.max_anchors == 2
     assert rules.max_longitudinal == 3
+    assert rules.minimum_theme_occurrences == 2
+    assert rules.minimum_sessions_for_longitudinal == 3
+    assert rules.max_memory_themes == 5
     assert "can you synthesize" in rules.explicit_requests
     assert "session_opening" in rules.response_guidance
     assert "recommendation" in rules.response_guidance
