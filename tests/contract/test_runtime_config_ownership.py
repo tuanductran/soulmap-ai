@@ -195,9 +195,7 @@ def test_detector_numeric_policy_tables_are_python_owned() -> None:
         "skills/frameworks/life-direction.md",
         "skills/frameworks/conversation-synthesis.md",
     )
-    numeric_policy_row = re.compile(
-        r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE
-    )
+    numeric_policy_row = re.compile(r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE)
     for path in detector_sources:
         content = default_skill_path(path).read_text(encoding="utf-8")
         assert numeric_policy_row.search(content) is None, (
