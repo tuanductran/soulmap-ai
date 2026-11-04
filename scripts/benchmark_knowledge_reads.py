@@ -167,7 +167,6 @@ def _valid_median(results: dict[str, Any], name: str) -> float | None:
     return median if math.isfinite(median) and median > 0.0 else None
 
 
-
 def _workload_signature(
     report: dict[str, Any],
 ) -> tuple[str, tuple[str, ...], tuple[str, ...]] | None:
