@@ -12,8 +12,8 @@ from soulmap.runtime.detectors.dependency_detector import (
     _DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
-from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_SCORING
 from soulmap.runtime.knowledge.keyword_lists import load_table_rows
+from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_SCORING
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -481,6 +481,9 @@ def test_dependency_regex_patterns_are_loaded_from_canonical_markdown() -> None:
         label for label, _ in _DEPENDENCY_PATTERNS
     )
     assert len({label.casefold() for label, _ in rows}) == len(rows)
+
+
+def test_python_owned_dependency_scoring_and_context_configuration_is_complete() -> None:
     assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
     assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
     assert _CLAUSE_BOUNDARY_CUES
