@@ -468,16 +468,7 @@ Avoidant part:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Explicit-conflict weight | 3 |
-| Self-dialogue weight | 2 |
-| Part-naming weight | 2 |
-| Behavioral-confusion weight | 2 |
-| Historical explicit-conflict bonus | 1 |
-| Minimum detection score | 2 |
-| History window | 3 |
-| Historical signal limit | 8 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
