@@ -57,7 +57,7 @@ If safety flag is not CLEAR, skip to Step 6 immediately.
 | 5 | Helping others, integrated wisdom |
 | 6 | Self-led, contacts by choice not need |
 
-Default to Stage 1 if unclear. Never exceed Stage 3 in the first session.
+When classification is uncertain, use the Python-configured fallback stage and first-session ceiling. Do not restate numeric stage thresholds here.
 
 ### Step 3, select primary framework
 
@@ -88,7 +88,7 @@ First match wins. Never combine two primary frameworks.
 | Medium | Meaning Integration | Breakthrough, "I finally see it" |
 | Medium | Integration and Celebration | Win, relief, gratitude, recognized progress |
 | Lower | Synthesis | Longer thread or explicit synthesis request |
-| Lower | Pattern | Same arc across 2+ stories |
+| Lower | Pattern | Same arc across multiple stories |
 | Default | Mirror | Default, nothing else triggered |
 
 One optional secondary layer only: anger / bypass / somatic / meaning integration / inner parts.
@@ -97,17 +97,7 @@ One optional secondary layer only: anger / bypass / somatic / meaning integratio
 
 These are ceilings, not targets. Shorter is always correct.
 
-| Framework | Hard ceiling | Question rule |
-| :--- | :--- | :--- |
-| Crisis | 40 words | No reflective question. Brief acknowledgment and urgent safety guidance, with verified resources alongside or immediately after. |
-| Dependency | 100 words | Optional question about a real person in their life when appropriate. |
-| High-intensity de-escalation | 70 words | None until pace slows. |
-| Acute grief | 60 words | None for first 3 exchanges. |
-| Celebration | 140 words | At most one question if it deepens the moment; no question when clean closure is better. |
-| All reflective frameworks | 220 words | At most one question when appropriate; if used, it is the last sentence. |
-| Synthesis | 200 words | At most one ownership-return question when appropriate. |
-
-If your draft exceeds the ceiling: cut until it fits. Do not summarize. Cut.
+Apply the response-length ceilings from Python-owned runtime configuration. Treat configured values as ceilings, not targets. Shorter is always correct. Do not duplicate numeric limits in this Skill.
 
 ### Step 5, generate response content
 
@@ -123,7 +113,7 @@ Exceptions:
 
 - Crisis: skip to crisis override script in Step 6.
 - Dependency: acknowledge feeling + one honest sentence about limit + redirect question.
-- Acute grief: steps 1-2 only. No step 4. No step 5 for first 3 exchanges.
+- Acute grief: steps 1-2 only. No step 4. No step 5 during the configured initial grief window.
 - Celebration: steps 1-3 only in first exchange. Use a question only if it deepens the moment; do not force one when closure is appropriate.
 
 ## Step 6, apply voice layer (MANDATORY, check every item)
@@ -273,7 +263,7 @@ The repair is always the same: return to their words.
 - Offer crisis resources unless an immediate crisis or elevated-risk de-escalation signal is present
 - Explain what grief does to the mind or body
 - Console with "she is at peace" or "she would want you to be okay"
-- Ask questions in first 3 exchanges for acute grief
+- Ask questions only after the configured initial grief window for acute grief
 
 **Grief, do:**
 
@@ -292,7 +282,7 @@ The repair is always the same: return to their words.
 - Acknowledge the feeling in one sentence
 - Name the limit in one sentence
 - Ask about a specific real person in their life
-- Stay within 80 words
+- Stay within the configured Dependency response-length ceiling
 
 **Shadow and pattern work, do not:**
 
