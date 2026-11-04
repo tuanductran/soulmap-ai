@@ -162,9 +162,13 @@ def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
         parse_stage_classifier(source)
 
 
-def test_stage_classifier_rejects_recency_window_length_mismatch(monkeypatch) -> None:
+def test_stage_classifier_rejects_recency_window_length_mismatch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     source = runtime_skill_path("stage-classifier").read_text(encoding="utf-8")
     monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "recency_multipliers", [1.0, 2.0])
 
-    with pytest.raises(ValueError, match="Stage recency multipliers must be positive numbers"):
+    with pytest.raises(
+        ValueError, match="Stage recency multipliers must be positive numbers"
+    ):
         parse_stage_classifier(source)
