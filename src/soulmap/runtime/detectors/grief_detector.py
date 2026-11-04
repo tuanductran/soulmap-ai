@@ -98,7 +98,9 @@ def detect_grief(
             + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])]
             + AMBIGUOUS_LOSS[: int(_RULES["Ambiguous history signal limit"])]
         )
-        if sum(1 for m in recent if any(p in m for p in all_grief)) >= int(\n            _RULES["Sustained history threshold"]\n        ):
+        if sum(1 for m in recent if any(p in m for p in all_grief)) >= int(
+            _RULES["Sustained history threshold"]
+        ):
             score += int(_RULES["Sustained grief weight"])
             signals.append("sustained_grief_across_messages")
 
