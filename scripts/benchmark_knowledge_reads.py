@@ -66,7 +66,6 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "empath.people_context": extract_keyword_section(
             empath, "People-context signals"
         ),
-        "empath.contract": _uncached_key_value_table(empath, "Detection policy"),
         "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
         "ancestral.activation": extract_keyword_section(
             ancestral, "Activation Signals"
@@ -74,7 +73,6 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
         "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
         "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
         "insight.classification": _uncached_key_value_table(
             insight, "Insight classification signals"
@@ -95,13 +93,11 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
         "empath.activation": load_keyword_section(empath, "Activation Signals"),
         "empath.drain": load_keyword_section(empath, "Drain signals"),
         "empath.people_context": load_keyword_section(empath, "People-context signals"),
-        "empath.contract": load_key_value_table(empath, "Detection policy"),
         "empath.guidance": load_key_value_table(empath, "Guidance"),
         "ancestral.activation": load_keyword_section(ancestral, "Activation Signals"),
         "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
         "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
         "insight.classification": load_key_value_table(
             insight, "Insight classification signals"
@@ -132,13 +128,11 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "empath.activation": keyword(empath, "Activation Signals"),
         "empath.drain": keyword(empath, "Drain signals"),
         "empath.people_context": keyword(empath, "People-context signals"),
-        "empath.contract": table(empath, "Detection policy"),
         "empath.guidance": table(empath, "Guidance"),
         "ancestral.activation": keyword(ancestral, "Activation Signals"),
         "ancestral.groups": groups(ancestral, "Detection signals"),
         "ancestral.guidance": table(ancestral, "Guidance"),
         "somatic.groups": groups(somatic, "Detection signals"),
-        "somatic.contract": table(somatic, "Detection policy"),
         "somatic.guidance": table(somatic, "Guidance"),
         "insight.classification": table(insight, "Insight classification signals"),
         "insight.validation": table(insight, "Reflection-validation signals"),
@@ -173,6 +167,29 @@ def _valid_median(results: dict[str, Any], name: str) -> float | None:
     return median if math.isfinite(median) and median > 0.0 else None
 
 
+
+def _workload_signature(report: dict[str, Any]) -> tuple[str, tuple[str, ...], tuple[str, ...]] | None:
+    """Return stable workload identity fields required for safe report comparison."""
+    workload = report.get("workload")
+    if not isinstance(workload, dict):
+        return None
+    source = workload.get("source")
+    headings = workload.get("headings")
+    detector_sources = workload.get("detector_sources")
+    if (
+        not isinstance(source, str)
+        or not source
+        or not isinstance(headings, list)
+        or not headings
+        or not all(isinstance(item, str) and item for item in headings)
+        or not isinstance(detector_sources, list)
+        or not detector_sources
+        or not all(isinstance(item, str) and item for item in detector_sources)
+    ):
+        return None
+    return source, tuple(headings), tuple(detector_sources)
+
+
 def compare_reports(
     baseline: dict[str, Any], current: dict[str, Any]
 ) -> dict[str, dict[str, Any]]:
@@ -181,6 +198,8 @@ def compare_reports(
     Missing benchmark names and invalid medians are explicitly not comparable,
     never treated as zero change, and never trigger the regression gate.
     """
+    baseline_workload = _workload_signature(baseline)
+    current_workload = _workload_signature(current)
     baseline_results = baseline.get("benchmarks", {})
     current_results = current.get("benchmarks", {})
     if not isinstance(baseline_results, dict):
@@ -189,7 +208,19 @@ def compare_reports(
         current_results = {}
 
     comparisons: dict[str, dict[str, Any]] = {}
-    for name in sorted(set(baseline_results) | set(current_results)):
+    names = sorted(set(baseline_results) | set(current_results))
+    if baseline_workload is None or current_workload is None or baseline_workload != current_workload:
+        reason = "workload metadata is missing or differs between reports"
+        return {
+            name: {
+                "status": "invalid",
+                "direction": "not_comparable",
+                "reason": reason,
+            }
+            for name in names
+        }
+
+    for name in names:
         before = _valid_median(baseline_results, name)
         after = _valid_median(current_results, name)
         if before is None or after is None:
@@ -257,6 +288,14 @@ def _measure_interleaved(
 def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
     """Run interleaved cache benchmarks for tables and detector knowledge."""
     markdown_path = runtime_skill_path("meaning-integration")
+
+    source_text = markdown_path.read_text(encoding="utf-8")
+    expected_tables = {
+        heading: extract_table_rows(source_text, heading) for heading in TABLE_HEADINGS
+    }
+    if any(not rows for rows in expected_tables.values()):
+        missing = [heading for heading, rows in expected_tables.items() if not rows]
+        raise ValueError(f"Benchmark source is missing required tables: {missing}")
 
     # Refuse to report timings if cache-backed production loaders change meaning.
     expected_knowledge = _uncached_detector_knowledge_loads()
