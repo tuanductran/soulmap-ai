@@ -254,7 +254,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
-  no questions during the configured initial acute-grief window in acute grief)
+  No questions during the configured initial acute-grief window in acute grief)
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
@@ -278,7 +278,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 
 | Result | Guidance |
 | :--- | :--- |
-| Acute grief | Sanctuary only. no questions during the configured initial acute-grief window. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| Acute grief | Sanctuary only. No questions during the configured initial acute-grief window. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
 | Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
 | Ambiguous loss | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
 | Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
