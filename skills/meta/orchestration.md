@@ -131,8 +131,9 @@ work when intensity is HIGH, where no secondary layer is offered at all.
 
 ### Phase 5, template routing
 
-Route to the correct output template from framework-template-map.md. The mapping
-is deterministic. No unstructured output is permitted.
+Use the matching framework section in framework-template-map.md as response-
+structure guidance. Keep the response aligned with the selected framework; do not
+produce an unstructured output.
 
 ## Response mode assignment
 
