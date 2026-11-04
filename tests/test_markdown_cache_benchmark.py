@@ -69,6 +69,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
         ],
     }
     baseline: dict[str, Any] = {
+        "schema_version": 2,
         "workload": workload,
         "benchmarks": {
             "warm": {"median_seconds": 1.0},
@@ -76,6 +77,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
         }
     }
     current: dict[str, Any] = {
+        "schema_version": 2,
         "workload": workload,
         "benchmarks": {
             "warm": {"median_seconds": 1.2},
@@ -94,6 +96,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
 
 def test_compare_reports_rejects_changed_workload_identity() -> None:
     baseline = {
+        "schema_version": 2,
         "workload": {
             "source": "skills/frameworks/pattern-mapper.md",
             "headings": ["Insight classification signals", "Reflection-validation signals"],
@@ -102,6 +105,7 @@ def test_compare_reports_rejects_changed_workload_identity() -> None:
         "benchmarks": {"warm": {"median_seconds": 1.0}},
     }
     current = {
+        "schema_version": 2,
         "workload": {
             "source": "skills/frameworks/meaning-integration.md",
             "headings": ["Insight classification signals", "Reflection-validation signals"],
@@ -129,7 +133,7 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
     """The benchmark entrypoint must execute and report each comparison mode."""
     report = run_suite(warmups=0, iterations=1)
 
-    assert report["schema_version"] == 1
+    assert report["schema_version"] == 2
     assert report["parameters"] == {"warmups": 0, "iterations": 1}
     assert report["workload"]["source"] == "skills/frameworks/meaning-integration.md"
     assert set(report["workload"]["headings"]) == set(benchmark.TABLE_HEADINGS)
@@ -151,3 +155,31 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
     ]
     assert "Path.resolve()" in timing_scope
     assert "Path.stat()" in timing_scope
+
+
+def test_compare_reports_rejects_legacy_benchmark_schema() -> None:
+    workload = {
+        "source": "skills/frameworks/meaning-integration.md",
+        "headings": ["Insight classification signals", "Reflection-validation signals"],
+        "detector_sources": [
+            "skills/frameworks/empath-boundary.md",
+            "skills/frameworks/ancestral-patterns.md",
+            "skills/frameworks/somatic-wellbeing.md",
+            "skills/frameworks/meaning-integration.md",
+        ],
+    }
+    baseline = {
+        "schema_version": 1,
+        "workload": workload,
+        "benchmarks": {"warm": {"median_seconds": 1.0}},
+    }
+    current = {
+        "schema_version": 2,
+        "workload": workload,
+        "benchmarks": {"warm": {"median_seconds": 0.5}},
+    }
+
+    comparison = compare_reports(baseline, current)
+
+    assert comparison["warm"]["status"] == "invalid"
+    assert "schema" in comparison["warm"]["reason"]
