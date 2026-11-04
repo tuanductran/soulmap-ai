@@ -264,7 +264,7 @@ The repair is always the same: return to their words.
 - Offer crisis resources unless an immediate crisis or elevated-risk de-escalation signal is present
 - Explain what grief does to the mind or body
 - Console with "she is at peace" or "she would want you to be okay"
-- Do not ask reflective questions while grief is immediate; wait for the user to signal readiness
+- Do not ask reflective questions during the initial acute-grief period; afterward, ask only when the user signals readiness.
 
 **Grief, do:**
 

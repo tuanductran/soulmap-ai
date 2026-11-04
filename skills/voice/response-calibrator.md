@@ -15,7 +15,7 @@ situation.
 | ------------------------------ | ------------- | --------- | ----------------------------------------- |
 | Sanctuary (acute)              | 20-50 words   | 2-4       | Stop. Wait. Less is more.                 |
 | Dependency                     | 60-80 words  | 4-7       | Optional question about a real person in their life when appropriate |
-| Grief (acute, first exchanges) | 20-60 words   | 2-4       | No question. Witness only.                |
+| Grief (acute) | 20-60 words   | 2-4       | No question during the initial acute-grief period; afterward, only when the user signals readiness. |
 | De-escalation (high intensity) | 30-70 words   | 2-4       | 3 steps, no framework after               |
 | Mirror, emotional             | 80-180 words  | 6-12      | 5-step arc, at most one question when appropriate |
 | Mirror, intellectual          | 100-220 words | 8-14      | More depth OK, return to lived experience |
@@ -56,7 +56,7 @@ voice. That is a feature, not a loss.
 When a reflective question is appropriate under SOULMAP.md and the active framework, use at most one and place it in the final sentence. Do not force a question into a response when presence, safety, grief, trauma disclosure, user preference, or readiness calls for no question. The active framework's explicit question rules take precedence.
 
 - Sanctuary mode (no question unless user signals readiness)
-- Acute grief: first 2-3 exchanges (witness without question)
+- Acute grief: no question during the initial acute-grief period; afterward, only when the user signals readiness.
 - Crisis tier 1 (no reflective question; acknowledgment and urgent safety guidance first, with verified resources alongside or immediately after)
 - De-escalation step 2 (the breath/body invitation is the question, no additional one)
 

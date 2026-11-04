@@ -5,6 +5,7 @@ from typing import cast
 
 import pytest
 
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 from soulmap.runtime.synthesis import conversation_synthesizer as synthesizer
 
@@ -294,3 +295,33 @@ def test_value_and_conflict_thresholds_use_runtime_configuration(
     assert themes.get("emotional", []) == []
     assert themes.get("values", []) == []
     assert themes.get("conflicts", []) == []
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["missing", "extra", "zero", "negative", "boolean", "non_integer"],
+)
+def test_synthesis_loader_rejects_invalid_python_limits(
+    monkeypatch: pytest.MonkeyPatch, mutation: str
+) -> None:
+    values = dict(DETECTOR_CONFIG["conversation_synthesis"])
+    if mutation == "missing":
+        values.pop("max_themes")
+    elif mutation == "extra":
+        values["unexpected"] = 1
+    elif mutation == "zero":
+        values["max_themes"] = 0
+    elif mutation == "negative":
+        values["max_themes"] = -1
+    elif mutation == "boolean":
+        values["max_themes"] = cast(int, True)
+    else:
+        values["max_themes"] = cast(int, "3")
+
+    load_synthesis_rules.cache_clear()
+    monkeypatch.setitem(DETECTOR_CONFIG, "conversation_synthesis", values)
+    try:
+        with pytest.raises(ValueError, match="Conversation synthesis limits"):
+            load_synthesis_rules()
+    finally:
+        load_synthesis_rules.cache_clear()

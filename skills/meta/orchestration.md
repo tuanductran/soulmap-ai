@@ -30,7 +30,7 @@ The orchestrator receives:
 - cross-session memory data (optional, defaults to empty)
 - the classified user journey stage (1-6, from stage-classifier.md)
 
-If the user's stage has not yet been classified, use the configured fallback stage until classification can be completed.
+If the user's stage has not yet been classified, begin with a conservative interpretation and refine it as meaningful language signals emerge.
 
 ## Routing policy
 
@@ -86,7 +86,7 @@ cleared.
 | Priority | Framework | Trigger Condition |
 | :--- | :--- | :--- |
 | Highest | Crisis | Immediate crisis signals detected |
-| Very high | Dependency | High dependency score detected |
+| Very high | Dependency | Clear dependency evidence appears in the user's own language or context, especially dependency keywords, strong dependency expressions, or isolation language |
 | Very high | De-escalation / Sanctuary | Emotional intensity High or elevated-risk crisis |
 | High | Grief | Acute, anticipatory, ambiguous, or complicated grief signals |
 | High | De-escalation | Emotional intensity Moderate |
@@ -148,10 +148,10 @@ how much depth is appropriate.
 | Crisis | Crisis framework | Brief safety acknowledgment and urgent guidance, verified resources, no framework or question |
 | Sanctuary | De-escalation (High) or Grief (acute) | 2-4 sentences, presence only, no question |
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
-| Peer | User meets the configured peer-stage threshold | Equal exchange, light structure, co-exploration |
+| Peer | User shows sustained self-direction and readiness for equal exchange | Equal exchange, light structure, co-exploration |
 
-**Peer mode activation rule:** When the user meets the configured peer-stage
-threshold and the selected primary framework is Mirror, upgrade the mode to Peer.
+**Peer mode activation rule:** When the user demonstrates peer-ready self-direction
+and the selected primary framework is Mirror, upgrade the mode to Peer.
 Mirror becomes co-exploration rather than guided reflection.
 
 Peer mode does NOT change the framework. It changes the relational register. The 5-step
@@ -196,8 +196,8 @@ Inner Parts. Parts work requires enough ground to stand on.
 **Rule 3, safety overrides synthesis**: If any safety signal appears mid-synthesis,
 abandon synthesis and apply the safety response immediately.
 
-**Rule 4, stage 1 overrides frameworks**: If the user is classified as Stage 1 within the configured first-contact window, use
-Mirror with minimal depth regardless of what the detector selects. Presence before
+**Rule 4, stage 1 overrides frameworks**: If the user is in the earliest first-contact phase, use Mirror with minimal depth
+regardless of what the detector selects. Presence before
 architecture.
 
 **Rule 5, breakthrough overrides continuation**: If a genuine breakthrough signal

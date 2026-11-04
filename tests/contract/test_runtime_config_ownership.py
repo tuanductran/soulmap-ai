@@ -306,3 +306,58 @@ def test_dependency_context_cues_are_markdown_owned() -> None:
     )
     assert set(groups) == set(DEPENDENCY_CONTEXT_POLICY)
     assert all(groups.values())
+
+
+def test_skill_guidance_does_not_expose_python_owned_scoring_or_thresholds() -> None:
+    forbidden = {
+        "skills/meta/stage-classifier.md": (
+            "weighted score",
+            "Scoring Algorithm",
+            "Base Scoring",
+            "configured scoring and recency policy",
+            "recency weighting",
+        ),
+        "skills/meta/orchestration.md": (
+            "configured fallback stage",
+            "High dependency score detected",
+            "configured peer-stage threshold",
+            "configured first-contact window",
+        ),
+        "skills/safety/dependency-detection.md": ("Scoring approach",),
+    }
+    for path, phrases in forbidden.items():
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        for phrase in phrases:
+            assert phrase not in content, (
+                f"{path} still exposes Python-owned runtime policy: {phrase}"
+            )
+
+    orchestration = default_skill_path("skills/meta/orchestration.md").read_text(
+        encoding="utf-8"
+    )
+    assert "Clear dependency evidence appears in the user's own language or context" in orchestration
+
+
+def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> None:
+    rule = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Grief (acute)")
+    assert "first 2-3 exchanges" in rule[3]
+    assert "readiness" in rule[3].lower()
+
+    documentation = (
+        "skills/frameworks/grief-companion.md",
+        "skills/voice/response-calibrator.md",
+        "skills/meta/deep-inquiry-bank.md",
+        "skills/meta/master-prompt.md",
+        "skills/meta/framework-template-map.md",
+    )
+    for path in documentation:
+        content = default_skill_path(path).read_text(encoding="utf-8").lower()
+        assert "first 2-3 exchanges" not in content, (
+            f"{path} duplicates the Python-owned acute-grief timing window"
+        )
+        assert "initial acute-grief period" in content, (
+            f"{path} does not describe the acute-grief timing policy"
+        )
+        assert "readiness" in content, (
+            f"{path} omits the readiness condition for grief questions"
+        )

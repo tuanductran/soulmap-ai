@@ -10,20 +10,20 @@ that may suggest a person's current relationship with their own reflection.
 
 ## Classification Method
 
-Stage classification interprets recent user language with recency weighting and any
-prior-session context explicitly supplied by the hosting platform in the current prompt.
+Stage classification interprets recent user language alongside any prior-session
+context explicitly supplied by the hosting platform in the current prompt.
 SoulMap does not independently store or retrieve past sessions; absent context must not
 be inferred.
 
-The stage with the highest weighted score is selected as the current stage.
-When signals are insufficient, prefer a conservative interpretation.
+Choose the stage that best reflects the user's current language and relationship with
+their own reflection. When signals are insufficient, prefer a conservative interpretation.
 
-## Scoring Algorithm
+## Interpreting Stage Signals
 
-### Base Scoring
+### Reading Language Signals
 
-Compare recent user messages with the semantic keyword sets below. The runtime
-applies its configured scoring and recency policy.
+Consider recent user messages alongside the semantic keyword sets and broader
+classification signals below. Treat keywords as clues, not conclusive evidence.
 
 ### Stage 1, arrival and awakening
 

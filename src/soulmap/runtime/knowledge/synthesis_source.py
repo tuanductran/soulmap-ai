@@ -12,6 +12,19 @@ from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Detection policy"
+_SYNTHESIS_LIMIT_KEYS = frozenset(
+    {
+        "minimum_user_messages",
+        "automatic_user_messages",
+        "minimum_recurring_themes",
+        "max_themes",
+        "max_anchors",
+        "max_longitudinal",
+        "minimum_theme_occurrences",
+        "minimum_sessions_for_longitudinal",
+        "max_memory_themes",
+    }
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -96,7 +109,16 @@ def load_synthesis_rules() -> SynthesisRules:
     """Load Python-owned limits and validate semantic Markdown knowledge."""
     path = runtime_skill_path("conversation-synthesis")
     body = _contract_body(path.read_text(encoding="utf-8"))
-    values = DETECTOR_CONFIG["conversation_synthesis"]
+    values = DETECTOR_CONFIG.get("conversation_synthesis")
+    if (
+        not isinstance(values, dict)
+        or set(values) != _SYNTHESIS_LIMIT_KEYS
+        or any(type(value) is not int or value < 1 for value in values.values())
+    ):
+        raise ValueError(
+            "Conversation synthesis limits must contain exactly the expected "
+            "positive integer keys."
+        )
     return SynthesisRules(
         minimum_user_messages=values["minimum_user_messages"],
         automatic_user_messages=values["automatic_user_messages"],

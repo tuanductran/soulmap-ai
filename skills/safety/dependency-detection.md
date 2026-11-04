@@ -157,7 +157,7 @@ Negation of an assertion:
 
 ## Detection policy
 
-### Scoring approach
+### Interpreting dependency signals
 
 Consider dependency keywords, strong dependency expressions, decision-seeking
 language, isolation signals, and unusually high message volume together. A single

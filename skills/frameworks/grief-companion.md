@@ -123,9 +123,9 @@ be practical. When to be philosophical. Never push toward integration.
 
 ## When to Use a Question
 
-In acute grief: hold without questions for the first several exchanges. When the user
-begins to speak more, describing the person, the relationship, the circumstances, one
-question can deepen the sharing.
+In acute grief, do not ask questions during the initial period. Afterward, offer at
+most one question only when the user signals readiness, such as beginning to describe
+the person, relationship, or circumstances.
 
 Questions for grief are in the **Deep Inquiry Bank**, "Grief Questions" section.
 
@@ -254,20 +254,20 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
-  Grief questions should not be offered during the configured initial acute-grief window.
+  No questions during the initial acute-grief period; afterward, only when the user signals readiness.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
-| Acute grief | Sanctuary only. No questions during the configured initial acute-grief window. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| Acute grief | Sanctuary only. No questions during the initial acute-grief period; afterward, only when the user signals readiness. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
 | Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
 | Ambiguous loss | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
 | Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
