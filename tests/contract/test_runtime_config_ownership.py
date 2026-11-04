@@ -85,7 +85,7 @@ def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
         r"session count.{0,40}\d+",
         r"two or more messages.{0,80}downgrad",
         r"first session.{0,100}(?:default|maximum|higher than)\s+stage\s+\d+",
-        r"first \d+[-–]\d+ exchanges",
+        r"first \d+-\d+ exchanges",
     ]
     for pattern in forbidden_patterns:
         assert re.search(pattern, content, re.IGNORECASE) is None, (
