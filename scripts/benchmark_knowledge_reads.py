@@ -111,7 +111,7 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
     empath = runtime_skill_path("empath-boundary")
     ancestral = runtime_skill_path("ancestral-patterns")
     somatic = runtime_skill_path("somatic-wellbeing")
-    pattern = runtime_skill_path("pattern-mapper")
+    insight = runtime_skill_path("meaning-integration")
 
     def keyword(path: Path, heading: str) -> tuple[str, ...]:
         return extract_keyword_section(path.read_text(encoding="utf-8"), heading)
