@@ -13,6 +13,7 @@ from soulmap.runtime.detectors.dependency_detector import (
     analyze_dependency,
 )
 from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_SCORING
+from soulmap.runtime.knowledge.keyword_lists import load_table_rows
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -463,18 +464,23 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "LOW_DEPENDENCY" not in guidance
 
 
-def test_runtime_configuration_is_not_stored_in_skill_markdown() -> None:
+def test_executable_dependency_configuration_is_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
-    assert "## Regex patterns" not in text
     assert "Dependency keyword weight" not in text
     assert "High dependency threshold" not in text
     assert "Context exclusion policy" not in text
 
 
-def test_python_owned_dependency_configuration_is_complete() -> None:
-    assert len(_DEPENDENCY_PATTERNS) == 6
-    assert len({label.casefold() for label, _ in _DEPENDENCY_PATTERNS}) == 6
+def test_dependency_regex_patterns_are_loaded_from_canonical_markdown() -> None:
+    source = runtime_skill_path("dependency-detection")
+    rows = load_table_rows(source, "Strong dependency expressions")
+
+    assert len(rows) == 6
+    assert tuple(label for label, _ in rows) == tuple(
+        label for label, _ in _DEPENDENCY_PATTERNS
+    )
+    assert len({label.casefold() for label, _ in rows}) == len(rows)
     assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
     assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
     assert _CLAUSE_BOUNDARY_CUES
@@ -491,7 +497,7 @@ def test_python_owned_context_policy_preserves_comma_scope() -> None:
     }
 
 
-def test_python_owned_dependency_patterns_preserve_whitespace_variants() -> None:
+def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> None:
     phrases = (
         "Only you    really understand me.",
         "Only you    truly understand me.",
