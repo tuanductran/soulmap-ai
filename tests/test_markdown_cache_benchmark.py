@@ -94,23 +94,33 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
     assert comparisons["new"]["status"] == "invalid"
 
 
-def test_compare_reports_rejects_changed_workload_identity() -> None:
+@pytest.mark.parametrize("changed_field", ["source", "detector_sources"])
+def test_compare_reports_rejects_changed_workload_identity(
+    changed_field: str,
+) -> None:
+    workload = {
+        "source": "skills/frameworks/meaning-integration.md",
+        "headings": ["Insight classification signals", "Reflection-validation signals"],
+        "detector_sources": [
+            "skills/frameworks/empath-boundary.md",
+            "skills/frameworks/ancestral-patterns.md",
+            "skills/frameworks/somatic-wellbeing.md",
+            "skills/frameworks/meaning-integration.md",
+        ],
+    }
+    changed_workload = dict(workload)
+    if changed_field == "source":
+        changed_workload["source"] = "skills/frameworks/pattern-mapper.md"
+    else:
+        changed_workload["detector_sources"] = ["skills/frameworks/pattern-mapper.md"]
     baseline = {
         "schema_version": 2,
-        "workload": {
-            "source": "skills/frameworks/pattern-mapper.md",
-            "headings": ["Insight classification signals", "Reflection-validation signals"],
-            "detector_sources": ["skills/frameworks/pattern-mapper.md"],
-        },
+        "workload": workload,
         "benchmarks": {"warm": {"median_seconds": 1.0}},
     }
     current = {
         "schema_version": 2,
-        "workload": {
-            "source": "skills/frameworks/meaning-integration.md",
-            "headings": ["Insight classification signals", "Reflection-validation signals"],
-            "detector_sources": ["skills/frameworks/meaning-integration.md"],
-        },
+        "workload": changed_workload,
         "benchmarks": {"warm": {"median_seconds": 0.5}},
     }
 
