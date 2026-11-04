@@ -304,19 +304,7 @@ Physical overwhelm, the body registering distress before words catch up:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Physical overwhelm weight | 3 |
-| Cognitive flooding weight | 2 |
-| Emotional flooding weight | 2 |
-| Pacing signal weight | 1 |
-| Long message word threshold | 200 |
-| Long message weight | 1 |
-| Exclamation threshold | 3 |
-| Exclamation weight | 1 |
-| Escalation weight | 2 |
-| High intensity threshold | 5 |
-| Moderate intensity threshold | 2 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
