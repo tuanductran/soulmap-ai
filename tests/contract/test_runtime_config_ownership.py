@@ -1,5 +1,7 @@
 """Keep Python-owned executable configuration out of shipped Skill Markdown."""
 
+import re
+
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 from soulmap.runtime.knowledge.runtime_config import (
     CELEBRATION_SCORING,
@@ -14,6 +16,10 @@ def test_runtime_configuration_is_centralized_in_python() -> None:
     assert len(STAGE_CLASSIFIER_CONFIG["thresholds"]) == 6
     assert STAGE_CLASSIFIER_CONFIG["recent_message_window"] == 5
     assert STAGE_CLASSIFIER_CONFIG["memory_session_count_threshold"] == 10
+    assert STAGE_CLASSIFIER_CONFIG["first_session_default_stage"] == 1
+    assert STAGE_CLASSIFIER_CONFIG["first_session_max_stage"] == 3
+    assert STAGE_CLASSIFIER_CONFIG["close_score_delta"] == 2
+    assert STAGE_CLASSIFIER_CONFIG["anti_regression_min_lower_stage_messages"] == 2
     assert len(ORCHESTRATION_CONFIG["primary_priority"]) == 21
     assert len(DEPENDENCY_SCORING) == 8
     assert len(CELEBRATION_SCORING) == 8
@@ -67,3 +73,20 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
             assert phrase not in content, (
                 f"{skill} still contains runtime configuration: {phrase}"
             )
+
+def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
+    content = default_skill_path(
+        "skills/meta/stage-classifier.md"
+    ).read_text(encoding="utf-8")
+    forbidden_patterns = [
+        r"most recent\\s+\\d+\\s+user messages",
+        r"within\\s+\\d+\\s+points",
+        r"session count.{0,40}\\d+",
+        r"two or more messages.{0,80}downgrad",
+        r"first session.{0,100}(?:default|maximum|higher than)\\s+stage\\s+\\d+",
+        r"first \\d+[-–]\\d+ exchanges",
+    ]
+    for pattern in forbidden_patterns:
+        assert re.search(pattern, content, re.IGNORECASE) is None, (
+            f"stage-classifier.md still duplicates runtime policy: {pattern}"
+        )
