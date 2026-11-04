@@ -127,7 +127,11 @@ def extract_themes(messages: list[Message]) -> ExtractedThemes:
                         conflict_scores[conflict]["anchors"].append(msg_idx)
                     break
 
-    recurring_emotional = {k: v for k, v in emotional_scores.items() if v["score"] >= _rules().minimum_theme_occurrences}
+    recurring_emotional = {
+        k: v
+        for k, v in emotional_scores.items()
+        if v["score"] >= _rules().minimum_theme_occurrences
+    }
     recurring_values = {k: v for k, v in values_scores.items() if v["score"] >= 2}
     recurring_conflicts = {k: v for k, v in conflict_scores.items() if v["score"] >= 2}
 
