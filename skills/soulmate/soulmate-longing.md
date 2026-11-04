@@ -117,10 +117,7 @@ reflect what is asking for that confirmation instead of answering it.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
