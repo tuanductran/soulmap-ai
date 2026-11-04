@@ -12,6 +12,8 @@ from soulmap.runtime.knowledge.runtime_config import (
 
 def test_runtime_configuration_is_centralized_in_python() -> None:
     assert len(STAGE_CLASSIFIER_CONFIG["thresholds"]) == 6
+    assert STAGE_CLASSIFIER_CONFIG["recent_message_window"] == 5
+    assert STAGE_CLASSIFIER_CONFIG["memory_session_count_threshold"] == 10
     assert len(ORCHESTRATION_CONFIG["primary_priority"]) == 21
     assert len(DEPENDENCY_SCORING) == 8
     assert len(CELEBRATION_SCORING) == 8
@@ -25,6 +27,13 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
             "Enforcement settings",
             "Stage roles",
             "Stage recommendations",
+            "most recent 5 user messages",
+            "most recent five user messages",
+            "within 2 points",
+            "10 or more",
+            "two or more messages showing lower-stage signals",
+            "Never classify higher than Stage 3",
+            "Default to Stage 1 regardless of signals",
         ),
         "orchestration": (
             "Operational limits",
