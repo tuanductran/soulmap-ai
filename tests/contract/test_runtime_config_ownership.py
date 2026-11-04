@@ -1,6 +1,7 @@
 """Keep Python-owned executable configuration out of shipped Skill Markdown."""
 
 import re
+from pathlib import Path
 
 from soulmap.runtime.knowledge.framework_template_source import load_template_rules
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
@@ -259,17 +260,20 @@ def test_framework_template_registry_is_complete_and_collision_free() -> None:
     )
 
 
-def test_portable_skill_does_not_depend_on_unshipped_runtime_configuration() -> None:
-    for path in ("skills/meta/master-prompt.md", "skills/meta/framework-template-map.md"):
-        content = default_skill_path(path).read_text(encoding="utf-8").lower()
-        forbidden = (
-            "configured response-length rules",
-            "configured initial grief window",
-            "configured dependency response-length ceiling",
-            "runtime_config.py",
-            "src/soulmap/runtime/",
-        )
+def test_portable_skills_do_not_depend_on_unshipped_runtime_configuration() -> None:
+    skills_root = Path(__file__).resolve().parents[2] / "skills"
+    forbidden = (
+        "configured response-length rules",
+        "configured response-length range",
+        "configured initial grief window",
+        "configured dependency response-length ceiling",
+        "runtime_config.py",
+        "src/soulmap/runtime/",
+    )
+    for path in skills_root.rglob("*.md"):
+        content = path.read_text(encoding="utf-8").lower()
         for phrase in forbidden:
             assert phrase not in content, (
-                f"{path} depends on unshipped runtime configuration: {phrase}"
+                f"{path.relative_to(skills_root)} depends on unshipped "
+                f"runtime configuration: {phrase}"
             )
