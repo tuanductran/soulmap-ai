@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass
+import re
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.runtime_config import FRAMEWORK_TEMPLATE_ROWS
