@@ -120,9 +120,9 @@ When appropriate, choose at most one question from the Creative Drought section 
 the silence feels like, what changed before the drought began, or what the person
 is afraid the drought means.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not offer techniques. Do not list practices. Reflect only.
+Use the Python-configured response-length range for this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
 
 ## Forbidden Structures
 
