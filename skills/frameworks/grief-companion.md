@@ -261,18 +261,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Acute grief weight | 3 |
-| Anticipatory grief weight | 2 |
-| Ambiguous loss weight | 2 |
-| Complicated grief weight | 2 |
-| Sustained grief weight | 2 |
-| Minimum detection score | 2 |
-| Recent user history window | 4 |
-| Acute history signal limit | 8 |
-| Anticipatory history signal limit | 4 |
-| Ambiguous history signal limit | 4 |
+Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
