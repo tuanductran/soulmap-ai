@@ -6,10 +6,13 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import (
+    _CLAUSE_BOUNDARY_CUES,
+    _CONTEXT_EXCLUSION_GROUPS,
     _CONTEXT_EXCLUSION_POLICY,
     _DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
+from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_SCORING
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -467,6 +470,15 @@ def test_runtime_configuration_is_not_stored_in_skill_markdown() -> None:
     assert "Dependency keyword weight" not in text
     assert "High dependency threshold" not in text
     assert "Context exclusion policy" not in text
+
+
+def test_python_owned_dependency_configuration_is_complete() -> None:
+    assert len(_DEPENDENCY_PATTERNS) == 6
+    assert len({label.casefold() for label, _ in _DEPENDENCY_PATTERNS}) == 6
+    assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
+    assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
+    assert _CLAUSE_BOUNDARY_CUES
+    assert all(type(value) is int and value >= 0 for value in DEPENDENCY_SCORING.values())
 
 
 def test_python_owned_context_policy_preserves_comma_scope() -> None:

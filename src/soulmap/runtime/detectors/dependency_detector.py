@@ -25,6 +25,46 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("dependency-detection")
 
+_REQUIRED_DEPENDENCY_SCORING = {
+    "Dependency keyword weight",
+    "Dependency regex weight",
+    "Decision-seeking weight",
+    "Isolation signal weight",
+    "High message volume threshold",
+    "High message volume bonus",
+    "High dependency threshold",
+    "Moderate dependency threshold",
+}
+if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
+    type(value) is not int or value < 0 for value in DEPENDENCY_SCORING.values()
+):
+    raise ValueError("Dependency scoring configuration is incomplete or invalid.")
+
+if not DEPENDENCY_REGEX_PATTERNS or any(
+    len(row) != 2 or not row[0].strip() or not row[1].strip()
+    for row in DEPENDENCY_REGEX_PATTERNS
+):
+    raise ValueError("Dependency regex patterns must contain a label and pattern.")
+if len({label.casefold() for label, _ in DEPENDENCY_REGEX_PATTERNS}) != len(
+    DEPENDENCY_REGEX_PATTERNS
+):
+    raise ValueError("Dependency regex pattern labels must be unique.")
+
+if not DEPENDENCY_CONTEXT_CUES or any(
+    not group.strip() or not cues or any(not cue.strip() for cue in cues)
+    for group, cues in DEPENDENCY_CONTEXT_CUES.items()
+):
+    raise ValueError("Dependency context cues must contain non-empty groups and cues.")
+if set(DEPENDENCY_CONTEXT_POLICY) != set(DEPENDENCY_CONTEXT_CUES) or any(
+    type(value) is not bool for value in DEPENDENCY_CONTEXT_POLICY.values()
+):
+    raise ValueError("Dependency context policy must cover every cue group with booleans.")
+
+if not DEPENDENCY_CLAUSE_BOUNDARIES or any(
+    not boundary.strip() for boundary in DEPENDENCY_CLAUSE_BOUNDARIES
+):
+    raise ValueError("Dependency clause boundaries must be non-empty.")
+
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
     (label, re.compile(pattern)) for label, pattern in DEPENDENCY_REGEX_PATTERNS
 )

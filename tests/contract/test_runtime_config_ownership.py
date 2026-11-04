@@ -33,7 +33,7 @@ def test_runtime_configuration_is_centralized_in_python() -> None:
     assert DETECTOR_CONFIG["conversation_synthesis"]["automatic_user_messages"] == 10
     assert all(
         values
-        and all(isinstance(value, int | str) and value for value in values.values())
+        and all(type(value) is int for value in values.values())
         for values in DETECTOR_CONFIG.values()
     )
 

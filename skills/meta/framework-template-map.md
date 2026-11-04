@@ -473,4 +473,3 @@ what kind of partner to choose.
 **Forbidden structure:** Promising that changing the pattern will produce a
 partner, framing singleness as a deficiency, reinforcing dependency on SoulMap as a
 stand-in for real connection.
-
