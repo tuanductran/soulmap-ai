@@ -58,13 +58,25 @@ def test_summarize_reports_median_and_single_sample_dispersion() -> None:
 
 def test_compare_reports_flags_only_comparable_median_changes() -> None:
     """Missing or invalid benchmark baselines must remain non-comparable."""
+    workload = {
+        "source": "skills/frameworks/meaning-integration.md",
+        "headings": ["Insight classification signals", "Reflection-validation signals"],
+        "detector_sources": [
+            "skills/frameworks/empath-boundary.md",
+            "skills/frameworks/ancestral-patterns.md",
+            "skills/frameworks/somatic-wellbeing.md",
+            "skills/frameworks/meaning-integration.md",
+        ],
+    }
     baseline: dict[str, Any] = {
+        "workload": workload,
         "benchmarks": {
             "warm": {"median_seconds": 1.0},
             "bad": {"median_seconds": 0.0},
         }
     }
     current: dict[str, Any] = {
+        "workload": workload,
         "benchmarks": {
             "warm": {"median_seconds": 1.2},
             "bad": {"median_seconds": 1.0},
@@ -78,6 +90,30 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
     assert abs(comparisons["warm"]["change_pct"] - 20.0) < 1e-9
     assert comparisons["bad"]["status"] == "invalid"
     assert comparisons["new"]["status"] == "invalid"
+
+
+def test_compare_reports_rejects_changed_workload_identity() -> None:
+    baseline = {
+        "workload": {
+            "source": "skills/frameworks/pattern-mapper.md",
+            "headings": ["Insight classification signals", "Reflection-validation signals"],
+            "detector_sources": ["skills/frameworks/pattern-mapper.md"],
+        },
+        "benchmarks": {"warm": {"median_seconds": 1.0}},
+    }
+    current = {
+        "workload": {
+            "source": "skills/frameworks/meaning-integration.md",
+            "headings": ["Insight classification signals", "Reflection-validation signals"],
+            "detector_sources": ["skills/frameworks/meaning-integration.md"],
+        },
+        "benchmarks": {"warm": {"median_seconds": 0.5}},
+    }
+
+    comparison = compare_reports(baseline, current)
+
+    assert comparison["warm"]["status"] == "invalid"
+    assert "workload metadata" in comparison["warm"]["reason"]
 
 
 def test_cached_detector_knowledge_matches_uncached_parsing() -> None:
@@ -95,6 +131,8 @@ def test_benchmark_suite_emits_all_expected_workloads() -> None:
 
     assert report["schema_version"] == 1
     assert report["parameters"] == {"warmups": 0, "iterations": 1}
+    assert report["workload"]["source"] == "skills/frameworks/meaning-integration.md"
+    assert set(report["workload"]["headings"]) == set(benchmark.TABLE_HEADINGS)
     assert set(report["benchmarks"]) == {
         "uncached_two_table_reads",
         "cold_cache_two_table_loads",
