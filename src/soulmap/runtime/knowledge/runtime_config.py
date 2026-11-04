@@ -420,7 +420,7 @@ DEPENDENCY_CONTEXT_CUES: dict[str, list[str]] = {
     ]
 }
 
-DEPENDENCY_CONTEXT_POLICY: dict[str, int] = {
+DEPENDENCY_CONTEXT_POLICY: dict[str, bool] = {
     "third-party attribution": False,
     "hypothetical framing": False,
     "negation of an assertion": True
