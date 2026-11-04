@@ -12,13 +12,13 @@ from soulmap.runtime.io.text_normalization import normalize_message_text
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_table_rows,
 )
 from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_config import (
     DEPENDENCY_CLAUSE_BOUNDARIES,
     DEPENDENCY_CONTEXT_CUES,
     DEPENDENCY_CONTEXT_POLICY,
-    DEPENDENCY_REGEX_PATTERNS,
     DEPENDENCY_SCORING,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
@@ -40,13 +40,14 @@ if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
 ):
     raise ValueError("Dependency scoring configuration is incomplete or invalid.")
 
-if not DEPENDENCY_REGEX_PATTERNS or any(
+_DEPENDENCY_REGEX_ROWS = load_table_rows(_SOURCE, "Strong dependency expressions")
+if not _DEPENDENCY_REGEX_ROWS or any(
     len(row) != 2 or not row[0].strip() or not row[1].strip()
-    for row in DEPENDENCY_REGEX_PATTERNS
+    for row in _DEPENDENCY_REGEX_ROWS
 ):
     raise ValueError("Dependency regex patterns must contain a label and pattern.")
-if len({label.casefold() for label, _ in DEPENDENCY_REGEX_PATTERNS}) != len(
-    DEPENDENCY_REGEX_PATTERNS
+if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
+    _DEPENDENCY_REGEX_ROWS
 ):
     raise ValueError("Dependency regex pattern labels must be unique.")
 
@@ -68,7 +69,7 @@ if not DEPENDENCY_CLAUSE_BOUNDARIES or any(
     raise ValueError("Dependency clause boundaries must be non-empty.")
 
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
-    (label, re.compile(pattern)) for label, pattern in DEPENDENCY_REGEX_PATTERNS
+    (label, re.compile(pattern)) for label, pattern in _DEPENDENCY_REGEX_ROWS
 )
 _DECISION_SEEKING_WEIGHT = DEPENDENCY_SCORING["Decision-seeking weight"]
 _DEPENDENCY_KEYWORD_WEIGHT = DEPENDENCY_SCORING["Dependency keyword weight"]
