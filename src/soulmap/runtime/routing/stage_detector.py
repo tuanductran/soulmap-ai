@@ -107,7 +107,7 @@ def detect_stage(
     ]
     rules = load_stage_classifier()
     if not user_messages:
-        selected_stage = 1
+        selected_stage = rules.first_session_default_stage
         score = 0.0
         confidence = "DEFAULT"
         signals: dict[int, list[str]] | list[str] = []
