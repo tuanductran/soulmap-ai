@@ -1,4 +1,4 @@
-"""Load executable orchestration rules from the orchestration Markdown contract."""
+"""Load natural-language orchestration guidance and Python-owned routing rules."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ _CONTRACT_HEADING = "Routing policy"
 
 @dataclass(frozen=True, slots=True)
 class PrimaryPriorityRule:
-    """One knowledge-authored primary routing rule."""
+    """One Python-configured primary routing rule."""
 
     framework: str
     mode: str
@@ -40,7 +40,7 @@ class SecondaryPriorityRule:
 
 @dataclass(frozen=True, slots=True)
 class IntensityFallbackRule:
-    """Knowledge-authored fallback for an emotional intensity level."""
+    """Configured fallback for an emotional intensity level."""
 
     level: str
     framework: str
@@ -50,7 +50,7 @@ class IntensityFallbackRule:
 
 @dataclass(frozen=True, slots=True)
 class OrchestrationRules:
-    """Executable routing values authored in orchestration.md."""
+    """Validated executable routing values."""
 
     stage_1_max_user_messages: int
     breakthrough_min_strength: str
