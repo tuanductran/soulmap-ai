@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from typing import cast
 
 import pytest
-from typing import cast
 
 from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 from soulmap.runtime.synthesis import conversation_synthesizer as synthesizer
