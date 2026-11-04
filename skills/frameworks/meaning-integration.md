@@ -311,18 +311,8 @@ The following values define the operational insight-detection policy.
 
 ### Scoring
 
-| Rule | Value |
-| :--- | :--- |
-| Explicit insight weight | 3 |
-| Emerging insight weight | 2 |
-| Self-application weight | 2 |
-| Post-reflection validation weight | 2 |
-| Validation-of-reflection bonus | 3 |
-| Minimum detection score | 2 |
-| Strong insight minimum score | 4 |
-| Validation history window | 3 |
-| Validation maximum user word count | 30 |
-| Classification priority | Notice it earlier; When it appears; Consider a different response |
+Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Classification priority: Notice it earlier, When it appears, Consider a different response .
 
 ### Insight classification signals
 
