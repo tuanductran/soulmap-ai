@@ -170,7 +170,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
             for value in recency_multipliers
         )
     ):
-        raise ValueError("Stage recency multipliers must be positive and cover the recent message window.")
+        raise ValueError(
+            "Stage recency multipliers must be positive and cover the recent message window."
+        )
 
     memory_minimums = STAGE_CLASSIFIER_CONFIG["memory_minimums"]
     if (
