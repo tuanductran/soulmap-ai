@@ -122,12 +122,12 @@ def test_prompt_markdown_does_not_restate_python_owned_runtime_thresholds() -> N
 def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limits() -> None:
     checks = {
         "skills/meta/framework-template-map.md": [
-            r"\b\d+\s*[-–]\s*\d+\s*words\b",
+            r"\b\d+\s*-\s*\d+\s*words\b",
             r"first\s+2-3\s+exchanges",
             r"no question for first\s+2-3\s+exchanges",
         ],
         "skills/frameworks/integration-celebration.md": [
-            r"\b\d+\s*[-–]\s*\d+\s*words\b",
+            r"\b\d+\s*-\s*\d+\s*words\b",
         ],
     }
     for path, patterns in checks.items():
@@ -149,7 +149,7 @@ def test_framework_source_markdown_does_not_restate_template_ranges() -> None:
     )
     for path in framework_sources:
         content = default_skill_path(path).read_text(encoding="utf-8")
-        assert re.search(r"\b\d+\s*[-–]\s*\d+\s*words\b", content, re.IGNORECASE) is None, (
+        assert re.search(r"\b\d+\s*-\s*\d+\s*words\b", content, re.IGNORECASE) is None, (
             f"{path} still duplicates Python-owned word ranges"
         )
         assert re.search(r"first\s+2-3\s+exchanges", content, re.IGNORECASE) is None, (
