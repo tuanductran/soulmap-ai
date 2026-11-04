@@ -329,10 +329,10 @@ The repair is always the same: return to their words.
 
 ## Response length quick reference
 
-Use the exact word ranges and question rules in
-skills/meta/framework-template-map.md and skills/voice/response-calibrator.md.
-Those files are the canonical response-length contracts. When a framework-specific
-range is narrower than the general Mirror range, the framework-specific range wins.
+Use the framework-specific response structure and question boundaries in
+skills/meta/framework-template-map.md, alongside the voice guidance in
+skills/voice/response-calibrator.md. Follow the selected framework's constraints
+without forcing a question or extending a response beyond what the user's context needs.
 
 When in doubt, stay toward the shorter end of the applicable range.
 
