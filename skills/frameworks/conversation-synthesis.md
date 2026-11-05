@@ -215,6 +215,10 @@ The user is always free to say "that doesn't quite fit", and that response is as
 valuable as agreement. It means they are looking at their own story and correcting the
 mirror.
 
+## Detection signals
+
+The phrases and themes below are examples of how a user may invite a synthesis. Treat them as cues for reflection, not proof that a pattern exists.
+
 ## Paired template
 
 - **Response shape:** `skills/meta/response-structure.md` (Mirror: Synthesis uses
