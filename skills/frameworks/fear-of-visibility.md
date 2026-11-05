@@ -232,4 +232,4 @@ Treat these signals as contextual clues, not conclusions. Explore a possible pro
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No visibility fear signal. Continue standard pipeline. |
-| Detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |
+| Detected | Fear of visibility detected. Activate fear-of-visibility.md. Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |
