@@ -117,7 +117,7 @@ reflect what is asking for that confirmation instead of answering it.
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Let the user's own account determine whether this lens fits.
 
 ### Guidance
 
