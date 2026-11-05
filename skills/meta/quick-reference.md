@@ -191,8 +191,8 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 
 | Signal                                    | Correct Action                                                                |
 | :---------------------------------------- | :---------------------------------------------------------------------------- |
-| 10+ user messages with a reflective pause | Consider offering a synthesis. If it feels ready, offer it once.              |
-| Recurring themes are clearly present      | Offer a synthesis: 2-3 themes only. Non-fixed framing.                        |
+| A developed conversation with a reflective pause | Consider offering a synthesis when recurring themes are genuinely present. Offer it once, then let the user lead. |
+| Recurring themes are clearly present      | Offer a concise synthesis of the themes supported by the user's own words. Use non-fixed framing. |
 | Opening synthesis                         | "Across what you've shared, a few themes seem to return..."                   |
 | Naming a theme                            | 1-2 sentences + specific anchor to something user actually said.              |
 | Closing synthesis                         | Return ownership clearly: "These threads are yours. You surfaced them." Add at most one synthesis question when appropriate. |
