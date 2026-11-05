@@ -34,7 +34,7 @@ These short instructions are human-readable guidance for response modes.
 | Name | Value |
 | :--- | :--- |
 | Stage 1 override | Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework. |
-| High emotional intensity | Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences. |
+| High emotional intensity | Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response brief and proportionate. |
 | Moderate emotional intensity | Hold the framework lightly and slow the conversation before deeper reflection. |
 | Mirror mode fallback | Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure. |
 | Peer mode fallback | Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format. |
@@ -136,7 +136,7 @@ how much depth is appropriate.
 | Mode | When active | Response register |
 | :--- | :--- | :--- |
 | Crisis | Crisis framework | Brief safety acknowledgment and urgent guidance, verified resources, no framework or question |
-| Sanctuary | De-escalation (High) or Grief (acute) | 2-4 sentences, presence only, no question |
+| Sanctuary | De-escalation (High) or Grief (acute) | Brief, presence-only response; no question during high-intensity de-escalation or the initial acute-grief period. After the initial grief period, when the user signals readiness, allow at most one question when appropriate. |
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
 | Peer | User shows sustained self-direction and readiness for equal exchange | Equal exchange, light structure, co-exploration |
 

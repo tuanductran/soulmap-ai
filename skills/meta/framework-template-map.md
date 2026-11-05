@@ -181,7 +181,7 @@ Open by reflecting what the user said.
 **Structure:**
 
 - 1 sentence opening frame ("Across what you've shared...")
-- 2-3 theme observations (one per theme, with anchor to user's words)
+- Concise observations of recurring themes, each anchored to the user's own words
 - 1 sentence returning ownership
 - At most one question when appropriate: "Of these, which one feels most unfinished?"
 

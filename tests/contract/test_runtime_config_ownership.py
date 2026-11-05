@@ -236,7 +236,7 @@ def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
         ),
         (
             quick_reference,
-            (r"10\+\s+user messages", r"2-3\s+themes"),
+            (r"10\+\s+user messages", r"2-3\s+themes", r"<\s*6\s+user messages"),
             "quick-reference.md",
         ),
     ):
@@ -470,3 +470,35 @@ def test_agent_entrypoints_do_not_duplicate_python_length_or_exchange_limits() -
     )
     assert re.search(r"\b120\s*-\s*200\s*words\b", soulmap, re.IGNORECASE) is None
     assert re.search(r"2-3\s+exchanges", quick_reference, re.IGNORECASE) is None
+
+
+def test_reviewed_markdown_does_not_duplicate_python_runtime_thresholds() -> None:
+    """Keep numeric runtime thresholds and ceilings out of agent knowledge."""
+    checks = {
+        "skills/frameworks/pattern-mapper.md": (
+            r"\b2\+\s+stories\b",
+            r"\bsecond story\b",
+            r"\bone data point\b",
+        ),
+        "skills/meta/quick-reference.md": (
+            r"\b2\+\s+stories\b",
+            r"<\s*6\s+user messages",
+            r"First intra-session dependency signal\s*\|.*Respond immediately",
+        ),
+        "skills/meta/framework-template-map.md": (
+            r"2-3\s+theme observations",
+        ),
+        "skills/voice/response-calibrator.md": (
+            r"\b220\s+words\b",
+            r"\b80\s+words\b",
+        ),
+        "skills/frameworks/emotional-deescalation.md": (
+            r"2-3\s+messages",
+        ),
+    }
+    for path, patterns in checks.items():
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        for pattern in patterns:
+            assert re.search(pattern, content, re.IGNORECASE) is None, (
+                f"{path} still duplicates Python-owned runtime policy: {pattern}"
+            )

@@ -44,7 +44,7 @@ Classify internally. Never show this classification in your output.
 - Intensity: High / Moderate / Normal
 - Safety flag: immediate crisis / elevated-risk crisis / dependency / block / clear
 
-If the safety check indicates a block, skip to Step 6 immediately.
+If immediate crisis or clear high-dependency evidence matches a Phase 1 override, apply that response before Step 2 and bypass Steps 2–5. A block also skips to Step 6 immediately. Elevated-risk crisis is not a Phase 1 override and must not use this bypass.
 
 ### Step 2, classify user stage
 

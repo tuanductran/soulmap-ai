@@ -71,7 +71,7 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
 
     assert rules.runtime_instructions == {
         "stage_1_override": "Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework.",
-        "high_emotional_intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences.",
+        "high_emotional_intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response brief and proportionate.",
         "moderate_emotional_intensity": "Hold the framework lightly and slow the conversation before deeper reflection.",
         "mirror_mode_fallback": "Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
         "peer_mode_fallback": "Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
@@ -203,3 +203,22 @@ def test_orchestration_rejects_unknown_breakthrough_strength(
         load_orchestration_rules()
 
     load_orchestration_rules.cache_clear()
+
+
+def test_phase_one_safety_overrides_precede_framework_selection() -> None:
+    """Keep immediate crisis and high dependency ahead of framework selection."""
+    master_prompt = runtime_skill_path("master-prompt").read_text(encoding="utf-8")
+    step_one = master_prompt.split("### Step 1", 1)[1].split("### Step 2", 1)[0]
+    assert "immediate crisis" in step_one.lower()
+    assert "high-dependency evidence" in step_one.lower()
+    assert "bypass Steps 2–5" in step_one
+    assert "Elevated-risk crisis is not a Phase 1 override" in step_one
+
+    orchestration = runtime_skill_path("orchestration").read_text(encoding="utf-8")
+    sanctuary_row = next(
+        line for line in orchestration.splitlines() if line.startswith("| Sanctuary |")
+    )
+    assert "initial acute-grief period" in sanctuary_row
+    assert "signals readiness" in sanctuary_row
+    assert "at most one question" in sanctuary_row
+    assert "2-4 sentences" not in sanctuary_row

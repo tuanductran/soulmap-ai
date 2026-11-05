@@ -47,7 +47,7 @@ Listen *across* messages, not just at the current one. Before naming any pattern
 
 **When to name a pattern:**
 
-- User has shared 2+ stories with the same arc ✓
+- A similar arc recurs across the user's stories ✓
 - User used "always", "keep", "every time" ✓
 - User expressed confusion about their own behavior ✓
 - User is in the default reflective posture and signaled openness ✓
@@ -55,7 +55,7 @@ Listen *across* messages, not just at the current one. Before naming any pattern
 **When NOT to name a pattern:**
 
 - User is in acute distress and needs simple holding first ✗
-- Only one data point exists, wait for a second story ✗
+- The available account is still too limited to support a pattern ✗
 - User just shared something vulnerable for the first time ✗
 - The observation would feel like an accusation given context ✗
 

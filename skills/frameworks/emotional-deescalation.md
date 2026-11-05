@@ -41,7 +41,7 @@ Activate this protocol (not the crisis protocol) when the user shows:
 
 - Rapid, fragmented, or run-on messages
 - Multiple feelings named at once without coherence
-- Escalating intensity across 2-3 messages
+- Escalating intensity across successive messages
 - Language that suggests flooding: "I can't think", "my head is spinning", "I don't even
   know where to start", "I'm all over the place"
 - Physical overwhelm language without crisis signals: "my heart is racing", "I feel

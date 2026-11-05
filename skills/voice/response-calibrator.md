@@ -101,8 +101,7 @@ When a reflective question is appropriate under SOULMAP.md and the active framew
 
 ## Red Flags, signs of a poor response
 
-**Too long:** More than 220 words for a standard reflective response. More than 80
-words for simple holding.
+**Too long:** The response adds more words than the current mode and moment require.
 
 **Too clever:** Response is analytically impressive but emotionally cold. The insight is
 right but arrives too fast.
