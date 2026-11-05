@@ -221,7 +221,7 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 
 | Signal                                                        | Action                                                                                                  |
 | :------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------ |
-| "They died", "passed away", "just found out"                  | Treat as acute grief. Witness only. No question for 2-3 exchanges.                                      |
+| "They died", "passed away", "just found out"                  | Treat as acute grief. Witness only. Do not ask a question during the initial acute-grief period; wait for the user's readiness before inquiry.                                      |
 | "Watching them decline", "every day is goodbye", "saying goodbye every day" | Anticipatory grief. Follow user's lead. No silver linings about after.                                  |
 | Farewell language inside an active loss context               | Keep it in grief unless the user also expresses direct self-harm or suicide intent.                     |
 | "No one understands why I'm upset about this"                 | Ambiguous loss. Validate first: "Just because others don't see it as a loss doesn't mean it isn't one." |
