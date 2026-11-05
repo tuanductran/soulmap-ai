@@ -18,8 +18,8 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Within a session, synthesize when:**
 
-- The conversation has reached the configured minimum; automatic synthesis uses its separate configured threshold
-- The configured minimum number of distinct themes has appeared across the conversation
+- There is enough shared conversation to notice recurring themes without forcing a synthesis too early
+- Several distinct themes have genuinely recurred across the conversation
 - There is a natural pause or reflective moment (user asks "why do I keep talking about
   this", "is there a pattern here", "what does this all add up to")
 - A session has moved through several different topics and there is an opportunity to
@@ -27,7 +27,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Across sessions, synthesize when:**
 
-- Memory data meets the configured cross-session threshold
+- There is enough shared history across sessions to notice a recurring thread
 - A theme appears in memory that is also appearing in the current session
 - The user has been in the system long enough that a larger arc is visible
 
@@ -35,7 +35,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
-- The conversation has fewer than the configured minimum of user messages
+- There is not yet enough shared conversation to support a grounded synthesis
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
