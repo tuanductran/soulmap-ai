@@ -20,9 +20,9 @@ Evidence about AI-companion overreliance comes from different methods and should
 - Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
-SoulMap has no cross-session memory bonding, active dependency protection that
-responds on the first signal, and a response contract that requires every response to
-leave the user less dependent than before.
+SoulMap has no cross-session memory bonding and uses active dependency
+protection that responds on the first signal. Its response guidance aims to return
+agency to the user rather than encourage dependence.
 
 ### Reddit-Documented Overreliance and Possessive Behavior Patterns
 
@@ -73,10 +73,10 @@ intra-session signal rather than waiting for harm to accumulate, and no persona
 layer is permitted to frame user distance, disengagement, or account inactivity as
 something the AI experiences emotionally. This directly targets the guilt-inducing
 and possessive dynamics documented above. The closing principle (return ownership,
-send attention back to life) is the structural opposite of a guilt-based farewell,
-and the response contract's banned-phrase list rejects the specific patterns named
-above (framing a user leaving as losing a relationship, or pleading with a user not
-to go) before a response can reach the user.
+send attention back to life) is the structural opposite of a guilt-based farewell.
+A banned-phrase check can flag the specific patterns named above (framing a user
+leaving as losing a relationship, or pleading with a user not to go) when response
+text is checked.
 
 ### Transparency as a Core Design Requirement
 
@@ -133,9 +133,9 @@ validation's cost to users' own judgment.
 Reflective, non-directive language is a product-design choice grounded in SoulMap's doctrine. The current source list in this file does not substantiate broad comparative claims that non-directive approaches always improve long-term self-efficacy or that self-generated insights reliably produce more action than recommendations. Do not use those claims in public copy without identifying and checking the relevant primary studies.
 
 **How SoulMap is different:**
-SoulMap's entire response architecture is non-directive. The one-question rule,
-the mirror principle, and the forbidden language list (no "should," "need to," "try
-to") operationalize this at every response.
+SoulMap's response guidance is non-directive. The one-question rule, the
+mirror principle, and the forbidden language list (no "should," "need to," "try
+to") guide response design.
 
 ## Evidence and citation discipline
 
