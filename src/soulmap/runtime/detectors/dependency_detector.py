@@ -39,6 +39,7 @@ if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
 ):
     raise ValueError("Dependency scoring configuration is incomplete or invalid.")
 
+
 def _validate_dependency_regex_table(
     rows: list[tuple[str, str]],
 ) -> tuple[tuple[str, str], ...]:
