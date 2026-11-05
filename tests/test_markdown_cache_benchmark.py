@@ -100,6 +100,7 @@ def test_compare_reports_flags_only_comparable_median_changes() -> None:
 def test_compare_reports_rejects_changed_workload_identity(
     changed_field: str,
 ) -> None:
+    """Reject benchmark comparisons when workload identity changes."""
     workload = {
         "source": "skills/frameworks/meaning-integration.md",
         "headings": ["Insight classification signals", "Reflection-validation signals"],
