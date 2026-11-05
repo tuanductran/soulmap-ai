@@ -513,11 +513,7 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 
 ## Detection policy
 
-The following values define the operational shadow-pattern detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these cues to explore possible protective intentions without assigning a fixed pattern. Keep every reflection tentative and grounded in the user's account.
 
 ### Guidance
 
