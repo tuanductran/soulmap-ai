@@ -187,7 +187,7 @@ Inner Parts. Parts work requires enough ground to stand on.
 abandon synthesis and apply the safety response immediately.
 
 **Rule 4, stage 1 overrides frameworks**: If the user is in the earliest first-contact phase, use Mirror with minimal depth
-regardless of what the detector selects. Presence before
+regardless of which reflective framework would otherwise seem to fit. Presence before
 architecture.
 
 **Rule 5, breakthrough overrides continuation**: If a genuine breakthrough signal
