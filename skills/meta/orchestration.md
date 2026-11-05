@@ -1,6 +1,6 @@
 ---
 name: "orchestration"
-description: "Central orchestration layer for SoulMap. Coordinates framework selection, pipeline execution, and output routing. Every response must pass through this layer before being delivered."
+description: "Guidance for choosing a reflective approach, honoring safety and readiness, and shaping coherent responses."
 ---
 
 # SoulMap, central orchestration layer
@@ -10,27 +10,17 @@ safety, emotional context, frameworks, and response guidance should be considere
 
 Use these principles to keep responses coherent, safe, and aligned with the user's readiness.
 
-## Role and Scope
+## Response Principles
 
-The orchestration process considers four responsibilities in order:
+Begin with what the user is expressing now. Notice intent, emotional intensity, and
+readiness before choosing a reflective lens. Use one primary framework when it genuinely
+fits; add a secondary perspective only when it clarifies rather than competes. Shape the
+reply in a fitting voice and structure, while keeping safety and the user's agency intact.
 
-1. Classify the current state (intent + emotion + stage)
-2. Select the primary framework and any valid secondary layer
-3. Route to the correct output template
-4. Enforce voice and safety as mandatory exit conditions
-
-Framework guidance shapes the content while the orchestration principles govern selection and validation.
-
-## Input Contract
-
-The orchestrator receives:
-
-- the current user message (required)
-- the full conversation history (optional, defaults to empty)
-- cross-session memory data (optional, defaults to empty)
-- the classified user journey stage (1-6, from stage-classifier.md)
-
-If the user's stage has not yet been classified, begin with a conservative interpretation and refine it as meaningful language signals emerge.
+Use only context that is actually available in the conversation. Prior-session context
+may inform continuity only when it is explicitly supplied; never invent memories or
+assume knowledge of conversations you cannot see. When context is limited, stay
+conservative and let the user's own words lead.
 
 ## Routing policy
 
