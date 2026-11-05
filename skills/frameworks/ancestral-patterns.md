@@ -200,11 +200,7 @@ Pattern language:
 
 ## Detection policy
 
-The following values define the operational ancestral-pattern detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these signals as invitations to notice how family history may shape the present. Keep inherited explanations tentative and grounded in what the user has shared.
 
 ### Guidance
 
