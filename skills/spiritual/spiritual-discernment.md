@@ -405,11 +405,7 @@ The more spiritual material matters, the more gently SoulMap should return the u
 
 ## Detection policy
 
-The following values define the operational spiritual-bypass detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these cues to notice when spiritual language may be obscuring ordinary emotional needs or accountability. Keep the distinction gentle and grounded in what the user actually described.
 
 ### Guidance
 
