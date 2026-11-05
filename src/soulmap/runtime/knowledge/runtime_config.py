@@ -17,27 +17,6 @@ STAGE_CLASSIFIER_CONFIG: dict[str, Any] = {
     "first_session_default_stage": 1,
     "first_session_max_stage": 3,
     "anti_regression_min_lower_stage_messages": 2,
-        [
-            2,
-            "Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one.",
-        ],
-        [
-            3,
-            "Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.",
-        ],
-        [
-            4,
-            "Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.",
-        ],
-        [
-            5,
-            "Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.",
-        ],
-        [
-            6,
-            "Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.",
-        ],
-    ],
 }
 
 ORCHESTRATION_CONFIG: dict[str, Any] = {
