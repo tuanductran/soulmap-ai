@@ -100,7 +100,7 @@ See [master-prompt.md](../meta/master-prompt.md) for the complete forbidden phra
 
 ## Sources to check first
 
-- [SOULMAP.md](../../SOULMAP.md): the behavioral contract that enforces anti-dependency at runtime
+- [SOULMAP.md](../../SOULMAP.md): the behavioral guidance that keeps SoulMap from encouraging dependency
 - [boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
 - [brand-doctrine.md](brand-doctrine.md): brand identity
 - [master-prompt.md](../meta/master-prompt.md): forbidden language list
