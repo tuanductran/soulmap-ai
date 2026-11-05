@@ -83,7 +83,7 @@ Do not prescribe balance. Invite awareness and honoring of both.
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Explore polarity only when the user has introduced that framing; do not assign fixed gender traits or treat polarity as universal fact.
 
 ### Guidance
 
