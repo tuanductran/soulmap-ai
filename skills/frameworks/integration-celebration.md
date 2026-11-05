@@ -210,7 +210,7 @@ Recognized progress, catching an old pattern and responding differently:
 - "i chose differently"
 - "i responded differently"
 
-A minimum score is required before this framework activates. Mixed pain signals ("I did it but I feel empty") reduce the score and may prevent activation.
+Mixed pain signals ("I did it but I feel empty") matter as much as the positive change. Acknowledge both without rushing to celebrate or declaring the experience resolved.
 
 ## Paired template
 
@@ -229,7 +229,7 @@ A minimum score is required before this framework activates. Mixed pain signals 
 
 ## Detection policy
 
-This policy describes the signals and scoring used to recognize meaningful positive change. Apply it alongside the framework guidance above.
+The cues below help distinguish meaningful positive change from a celebration that may be premature or mixed with unresolved pain. Use them alongside the reflective guidance above.
 
 ### Negative overrides
 
