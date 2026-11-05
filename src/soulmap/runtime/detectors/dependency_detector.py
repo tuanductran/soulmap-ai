@@ -39,21 +39,27 @@ if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
 ):
     raise ValueError("Dependency scoring configuration is incomplete or invalid.")
 
+def _validate_dependency_regex_table(
+    rows: list[tuple[str, str]],
+) -> tuple[tuple[str, str], ...]:
+    """Validate labeled inline-code regex rows and return their raw expressions."""
+    if not rows or any(
+        len(row) != 2
+        or not row[0].strip()
+        or len(row[1]) < 2
+        or not row[1].startswith("`")
+        or not row[1].endswith("`")
+        or not row[1][1:-1].strip()
+        for row in rows
+    ):
+        raise ValueError(
+            "Dependency regex patterns must contain a label and inline-code pattern."
+        )
+    return tuple((label, expression[1:-1]) for label, expression in rows)
+
+
 _DEPENDENCY_REGEX_TABLE = load_table_rows(_SOURCE, "Strong dependency expressions")
-if not _DEPENDENCY_REGEX_TABLE or any(
-    len(row) != 2
-    or not row[0].strip()
-    or len(row[1]) < 2
-    or not row[1].startswith("`")
-    or not row[1].endswith("`")
-    for row in _DEPENDENCY_REGEX_TABLE
-):
-    raise ValueError(
-        "Dependency regex patterns must contain a label and inline-code pattern."
-    )
-_DEPENDENCY_REGEX_ROWS = tuple(
-    (label, expression[1:-1]) for label, expression in _DEPENDENCY_REGEX_TABLE
-)
+_DEPENDENCY_REGEX_ROWS = _validate_dependency_regex_table(_DEPENDENCY_REGEX_TABLE)
 if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
     _DEPENDENCY_REGEX_ROWS
 ):
