@@ -307,11 +307,7 @@ Post-reflection validation, user confirming something that was reflected back:
 
 ## Detection policy
 
-The following values define the operational insight-detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+The signals below help notice when an insight may be ready for gentle integration. Treat confirmation as resonance with the reflection, not proof that the interpretation is objectively true.
 
 ### Insight classification signals
 
@@ -330,7 +326,7 @@ First matching type wins in the order: notice it earlier, when it appears, consi
 | Assistant integration triggers | pattern that may appear; part of you that; sometimes when; i wonder if |
 | User validation | yes; exactly; resonates; right; true; that's it; that fits; spot on |
 
-The validation bonus applies only when an assistant integration trigger occurred within the configured history window and the current user message contains a validation phrase within the configured word limit.
+A user's confirmation is most meaningful when it responds to a specific reflection offered in the conversation. Keep the reflection tentative and let the user decide whether it fits.
 
 ### Guidance
 
