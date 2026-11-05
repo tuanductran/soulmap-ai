@@ -168,14 +168,14 @@ Paralysis-specific signals, not starting, not finishing, not releasing:
 - "i almost sent it but"
 - "i keep deleting and starting over"
 
-General perfectionism signals, secondary scoring:
+General perfectionism signals:
 
 - "has to be perfect"
 - "if it's not perfect"
 - "if it is not perfect"
 - "can't start until"
 
-History bonus: repeated not-ready signals across prior turns adds extra weight.
+Repeated hesitation across the conversation can provide useful context; do not infer a pattern from a single moment of delay.
 
 ## Paired template
 
@@ -191,7 +191,7 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Name the specific shape of the stop only when it fits the user's account.
 
 ### Guidance
 
