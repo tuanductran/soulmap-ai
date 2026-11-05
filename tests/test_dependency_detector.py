@@ -534,6 +534,6 @@ def test_dependency_regex_table_accepts_non_empty_patterns() -> None:
         _validate_dependency_regex_table,
     )
 
-    assert _validate_dependency_regex_table([("support", "`only you understand me`")]) == (
-        ("support", "only you understand me"),
-    )
+    assert _validate_dependency_regex_table(
+        [("support", "`only you understand me`")]
+    ) == (("support", "only you understand me"),)
