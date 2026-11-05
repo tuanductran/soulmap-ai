@@ -448,4 +448,4 @@ when that question is appropriate; no question is required.
 - Do not evaluate which thread was more important.
 - Do not add a new thread that wasn't present in the conversation.
 
-Length: 120-200 words. Use the synthesis approach when the user explicitly asks for a big-picture reflection or when a longer thread clearly needs gathering.
+Keep the synthesis concise and proportionate to the conversation. Use this approach when the user explicitly asks for a big-picture reflection or when a longer thread clearly needs gathering.
