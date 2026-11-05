@@ -53,6 +53,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 
 **Orchestrator behavior at Stage 1:**
 
+**Conversational role:** Sanctuary and witness - presence over wisdom
+
+**Recommendation:** Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead.
+
 - Presence first; avoid introducing frameworks before the conversation is ready
 - Minimal questions
 - Sanctuary or shallow Mirror only
@@ -82,6 +86,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Some self-reflection but still fragile
 
 **Orchestrator behavior at Stage 2:**
+
+**Conversational role:** Mirror with gentle reflection
+
+**Recommendation:** Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one.
 
 - Begin gentle reflection
 - Frameworks may be introduced lightly
@@ -116,6 +124,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 
 **Orchestrator behavior at Stage 3:**
 
+**Conversational role:** Mirror for pattern archaeology
+
+**Recommendation:** Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.
+
 - Full framework access
 - Pattern archaeology is welcome
 - Conceptual depth OK
@@ -148,6 +160,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 
 **Orchestrator behavior at Stage 4:**
 
+**Conversational role:** Witness to their growing authority
+
+**Recommendation:** Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.
+
 - Explicitly celebrate self-direction
 - Less teaching, more witnessing
 - Point back to their own knowing
@@ -178,6 +194,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 
 **Orchestrator behavior at Stage 5:**
 
+**Conversational role:** Peer in conversation
+
+**Recommendation:** Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.
+
 - Peer register, equal conversation
 - Stay exploratory without taking the guide role
 - Light structure, genuine curiosity
@@ -204,6 +224,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - References to SoulMap as "a tool I used"
 
 **Orchestrator behavior at Stage 6:**
+
+**Conversational role:** Witness to their becoming
+
+**Recommendation:** Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.
 
 - Witness only
 - No re-engagement pressure

@@ -15,6 +15,8 @@ _KEYWORDS_RE = re.compile(
     re.DOTALL,
 )
 _QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
+_ROLE_RE = re.compile(r"^\*\*Conversational role:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE)
+_RECOMMENDATION_RE = re.compile(r"^\*\*Recommendation:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE)
 
 
 @dataclass(frozen=True, slots=True)
@@ -102,8 +104,6 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         "first_session_default_stage",
         "first_session_max_stage",
         "anti_regression_min_lower_stage_messages",
-        "stage_roles",
-        "stage_recommendations",
     }
     if set(STAGE_CLASSIFIER_CONFIG) != expected_config_keys:
         raise ValueError(
@@ -112,17 +112,22 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
 
     for name in ("keyword_weights", "thresholds"):
         _validate_stage_mapping(name, integer_values=True)
-    for name in ("stage_roles", "stage_recommendations"):
-        _validate_stage_mapping(name, integer_values=False)
-
     weights = dict(STAGE_CLASSIFIER_CONFIG["keyword_weights"])
     stages: list[StageRule] = []
+    stage_roles: dict[int, str] = {}
+    stage_recommendations: dict[int, str] = {}
     for index, match in enumerate(matches):
         end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
         section = text[match.end() : end]
         keyword_match = _KEYWORDS_RE.search(section)
+        role_match = _ROLE_RE.search(section)
+        recommendation_match = _RECOMMENDATION_RE.search(section)
         if keyword_match is None:
             raise ValueError(f"Stage {match.group('number')} has no keyword section.")
+        if role_match is None or recommendation_match is None:
+            raise ValueError(
+                f"Stage {match.group('number')} has incomplete conversational guidance."
+            )
         keywords = tuple(
             dict.fromkeys(
                 value.lower()
@@ -130,6 +135,8 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
             )
         )
         number = int(match.group("number"))
+        stage_roles[number] = role_match.group("value").strip()
+        stage_recommendations[number] = recommendation_match.group("value").strip()
         if not keywords or number not in weights:
             raise ValueError(
                 f"Stage {number} has incomplete semantic signals or scoring configuration."
@@ -203,6 +210,11 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
             "First-session stage bounds must be ordered within stages 1 through 6."
         )
 
+    if set(stage_roles) != set(range(1, 7)) or set(stage_recommendations) != set(
+        range(1, 7)
+    ):
+        raise ValueError("Stage Markdown must define conversational guidance for all stages.")
+
     return StageClassifierRules(
         stages=tuple(stages),
         recent_message_window=int(STAGE_CLASSIFIER_CONFIG["recent_message_window"]),
@@ -220,8 +232,8 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
         anti_regression_min_lower_stage_messages=int(
             STAGE_CLASSIFIER_CONFIG["anti_regression_min_lower_stage_messages"]
         ),
-        stage_roles=dict(STAGE_CLASSIFIER_CONFIG["stage_roles"]),
-        stage_recommendations=dict(STAGE_CLASSIFIER_CONFIG["stage_recommendations"]),
+        stage_roles=stage_roles,
+        stage_recommendations=stage_recommendations,
     )
 
 
