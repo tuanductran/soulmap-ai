@@ -473,6 +473,7 @@ def test_executable_dependency_configuration_is_not_stored_in_skill_markdown() -
 
 
 def test_dependency_regex_patterns_are_loaded_from_canonical_markdown() -> None:
+    """Verify dependency regex patterns load from canonical Markdown."""
     source = runtime_skill_path("dependency-detection")
     rows = load_table_rows(source, "Strong dependency expressions")
 
@@ -486,6 +487,7 @@ def test_dependency_regex_patterns_are_loaded_from_canonical_markdown() -> None:
 def test_python_owned_dependency_scoring_and_context_configuration_is_complete() -> (
     None
 ):
+    """Verify dependency scoring and context policy are fully configured."""
     assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
     assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
     assert _CLAUSE_BOUNDARY_CUES
@@ -518,6 +520,7 @@ def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> No
 
 
 def test_dependency_regex_table_rejects_empty_or_whitespace_patterns() -> None:
+    """Reject dependency regex rows with empty patterns."""
     import pytest
 
     from soulmap.runtime.detectors.dependency_detector import (
