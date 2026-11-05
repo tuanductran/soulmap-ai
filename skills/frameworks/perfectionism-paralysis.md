@@ -198,7 +198,7 @@ Treat these signals as contextual clues, not conclusions. Name the specific shap
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No perfectionism paralysis signal. Continue standard pipeline. |
-| Detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Explore a possible protective function only if it fits the user's account; do not present it as fact. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
+| Detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md. Name the specific shape of the stop. Explore a possible protective function only if it fits the user's account; do not present it as fact. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
 
 ### Persistence signal group
 
