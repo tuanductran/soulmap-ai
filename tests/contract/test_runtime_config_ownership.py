@@ -420,6 +420,9 @@ def test_agent_markdown_does_not_expose_python_implementation_details() -> None:
         "operational spiritual-bypass detection policy",
         "executable source of truth for synthesis",
         "runtime may execute these values",
+        "a minimum score is required",
+        "signals and scoring used",
+        "reduce the bypass score",
     )
     for path in markdown_paths:
         content = path.read_text(encoding="utf-8").casefold()
