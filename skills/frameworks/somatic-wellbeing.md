@@ -156,7 +156,7 @@ Somatic activates as a secondary layer modifier within Mirror mode.
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat bodily signals as context for curiosity, never as proof of an emotional cause or a diagnosis.
 
 ### Guidance
 
