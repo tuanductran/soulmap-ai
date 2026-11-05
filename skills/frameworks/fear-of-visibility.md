@@ -225,7 +225,7 @@ Public expression:
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Explore a possible protective intention only when it fits the user's account.
 
 ### Guidance
 
