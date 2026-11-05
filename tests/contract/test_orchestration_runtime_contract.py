@@ -8,6 +8,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def test_orchestration_runtime_contract_loads() -> None:
+    """Verify the shipped orchestration contract loads successfully."""
     rules = load_orchestration_rules()
 
     assert rules.stage_1_max_user_messages == 2
@@ -175,6 +176,7 @@ def test_detector_bindings_reject_unknown_names() -> None:
 
 
 def test_routing_policy_uses_human_readable_names() -> None:
+    """Verify routing output uses human-readable labels."""
     text = runtime_skill_path("orchestration").read_text(encoding="utf-8")
     policy = text.split("## Routing policy", 1)[1].split("## Decision Tree", 1)[0]
 
