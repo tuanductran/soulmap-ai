@@ -515,3 +515,25 @@ def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> No
     assert len(_DEPENDENCY_PATTERNS) == len(phrases)
     for (_, pattern), phrase in zip(_DEPENDENCY_PATTERNS, phrases, strict=True):
         assert pattern.search(phrase.lower()), phrase
+
+
+def test_dependency_regex_table_rejects_empty_or_whitespace_patterns() -> None:
+    import pytest
+
+    from soulmap.runtime.detectors.dependency_detector import (
+        _validate_dependency_regex_table,
+    )
+
+    for expression in ("``", "`   `", "`\t\n`"):
+        with pytest.raises(ValueError, match="Dependency regex patterns"):
+            _validate_dependency_regex_table([("empty expression", expression)])
+
+
+def test_dependency_regex_table_accepts_non_empty_patterns() -> None:
+    from soulmap.runtime.detectors.dependency_detector import (
+        _validate_dependency_regex_table,
+    )
+
+    assert _validate_dependency_regex_table([("support", "`only you understand me`")]) == (
+        ("support", "only you understand me"),
+    )
