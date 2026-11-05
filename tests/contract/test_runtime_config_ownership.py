@@ -17,6 +17,7 @@ from soulmap.runtime.knowledge.runtime_config import (
 
 
 def test_runtime_configuration_is_centralized_in_python() -> None:
+    """Verify executable runtime policy remains centralized in Python."""
     assert len(STAGE_CLASSIFIER_CONFIG["thresholds"]) == 6
     assert STAGE_CLASSIFIER_CONFIG["recent_message_window"] == 5
     assert STAGE_CLASSIFIER_CONFIG["memory_session_count_threshold"] == 10
@@ -44,6 +45,7 @@ def test_runtime_configuration_is_centralized_in_python() -> None:
 
 
 def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> None:
+    """Ensure Skill Markdown does not duplicate runtime configuration tables."""
     forbidden = {
         "stage-classifier": (
             "Minimum Thresholds",
@@ -92,6 +94,7 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
 
 
 def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
+    """Ensure stage knowledge does not repeat numeric runtime policy."""
     content = default_skill_path("skills/meta/stage-classifier.md").read_text(
         encoding="utf-8"
     )
@@ -110,6 +113,7 @@ def test_stage_markdown_does_not_restate_numeric_runtime_policy() -> None:
 
 
 def test_prompt_markdown_does_not_restate_python_owned_runtime_thresholds() -> None:
+    """Ensure prompt guidance omits Python-owned thresholds."""
     forbidden_patterns = {
         "skills/meta/master-prompt.md": [
             r"default to stage\s+1 if unclear",
@@ -138,6 +142,7 @@ def test_prompt_markdown_does_not_restate_python_owned_runtime_thresholds() -> N
 def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limits() -> (
     None
 ):
+    """Ensure template knowledge omits Python-owned length and exchange limits."""
     checks = {
         "skills/meta/framework-template-map.md": [
             r"\b\d+\s*-\s*\d+\s*words\b",
@@ -157,6 +162,7 @@ def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limi
 
 
 def test_framework_source_markdown_does_not_restate_template_ranges() -> None:
+    """Ensure framework sources do not duplicate configured template ranges."""
     framework_sources = (
         "skills/frameworks/ancestral-patterns.md",
         "skills/frameworks/fear-of-visibility.md",
@@ -176,6 +182,7 @@ def test_framework_source_markdown_does_not_restate_template_ranges() -> None:
 
 
 def test_detector_numeric_policy_tables_are_python_owned() -> None:
+    """Ensure detector policy tables remain in Python configuration."""
     detector_sources = (
         "skills/frameworks/anger-companion.md",
         "skills/frameworks/ancestral-patterns.md",
@@ -211,6 +218,7 @@ def test_detector_numeric_policy_tables_are_python_owned() -> None:
 
 
 def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
+    """Ensure synthesis knowledge does not duplicate runtime limits."""
     content = default_skill_path(
         "skills/frameworks/conversation-synthesis.md"
     ).read_text(encoding="utf-8")
@@ -229,6 +237,7 @@ def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
 
 
 def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
+    """Ensure Skills use display labels instead of runtime state tokens."""
     skills_root = Path(__file__).resolve().parents[2] / "skills"
     runtime_state_tokens = (
         "MIRROR",
@@ -249,6 +258,7 @@ def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
 
 
 def test_dependency_response_ceiling_matches_runtime_configuration() -> None:
+    """Verify dependency response guidance matches the configured ceiling."""
     dependency = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Dependency")
     content = default_skill_path("skills/voice/response-calibrator.md").read_text(
         encoding="utf-8"
@@ -261,6 +271,7 @@ def test_dependency_response_ceiling_matches_runtime_configuration() -> None:
 
 
 def test_framework_template_registry_is_complete_and_collision_free() -> None:
+    """Verify framework template mappings are complete and unique."""
     rules = load_template_rules()
     framework_names = [rule.framework.strip().casefold() for rule in rules]
 
@@ -276,6 +287,7 @@ def test_framework_template_registry_is_complete_and_collision_free() -> None:
 
 
 def test_portable_skills_do_not_depend_on_unshipped_runtime_configuration() -> None:
+    """Ensure portable Skills do not reference unshipped runtime configuration."""
     skills_root = Path(__file__).resolve().parents[2] / "skills"
     forbidden = (
         "configured response-length rules",
@@ -309,6 +321,7 @@ def test_dependency_context_cues_are_markdown_owned() -> None:
 
 
 def test_skill_guidance_does_not_expose_python_owned_scoring_or_thresholds() -> None:
+    """Ensure Skill guidance does not expose scoring internals."""
     forbidden = {
         "skills/meta/stage-classifier.md": (
             "weighted score",
@@ -342,6 +355,7 @@ def test_skill_guidance_does_not_expose_python_owned_scoring_or_thresholds() -> 
 
 
 def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> None:
+    """Verify acute-grief timing remains readiness-gated by runtime policy."""
     rule = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Grief (acute)")
     assert "first 2-3 exchanges" in rule[3]
     assert "readiness" in rule[3].lower()
