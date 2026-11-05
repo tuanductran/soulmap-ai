@@ -28,6 +28,8 @@ def test_stage_classifier_loads_the_shipped_contract() -> None:
     }
     assert set(rules.thresholds) == set(range(1, 7))
     assert set(rules.stage_roles) == set(range(1, 7))
+    assert "stage_roles" not in STAGE_CLASSIFIER_CONFIG
+    assert "stage_recommendations" not in STAGE_CLASSIFIER_CONFIG
     assert set(rules.stage_recommendations) == set(range(1, 7))
     assert rules.stage_roles[1] == "Sanctuary and witness - presence over wisdom"
     assert rules.stage_recommendations[1] == (

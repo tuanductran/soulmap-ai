@@ -15,8 +15,12 @@ _KEYWORDS_RE = re.compile(
     re.DOTALL,
 )
 _QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
-_ROLE_RE = re.compile(r"^\*\*Conversational role:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE)
-_RECOMMENDATION_RE = re.compile(r"^\*\*Recommendation:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE)
+_ROLE_RE = re.compile(
+    r"^\*\*Conversational role:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE
+)
+_RECOMMENDATION_RE = re.compile(
+    r"^\*\*Recommendation:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -213,7 +217,9 @@ def parse_stage_classifier(text: str) -> StageClassifierRules:
     if set(stage_roles) != set(range(1, 7)) or set(stage_recommendations) != set(
         range(1, 7)
     ):
-        raise ValueError("Stage Markdown must define conversational guidance for all stages.")
+        raise ValueError(
+            "Stage Markdown must define conversational guidance for all stages."
+        )
 
     return StageClassifierRules(
         stages=tuple(stages),
