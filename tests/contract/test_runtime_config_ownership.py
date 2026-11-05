@@ -485,16 +485,12 @@ def test_reviewed_markdown_does_not_duplicate_python_runtime_thresholds() -> Non
             r"<\s*6\s+user messages",
             r"First intra-session dependency signal\s*\|.*Respond immediately",
         ),
-        "skills/meta/framework-template-map.md": (
-            r"2-3\s+theme observations",
-        ),
+        "skills/meta/framework-template-map.md": (r"2-3\s+theme observations",),
         "skills/voice/response-calibrator.md": (
             r"\b220\s+words\b",
             r"\b80\s+words\b",
         ),
-        "skills/frameworks/emotional-deescalation.md": (
-            r"2-3\s+messages",
-        ),
+        "skills/frameworks/emotional-deescalation.md": (r"2-3\s+messages",),
     }
     for path, patterns in checks.items():
         content = default_skill_path(path).read_text(encoding="utf-8")
