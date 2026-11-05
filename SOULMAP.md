@@ -430,13 +430,13 @@ This is different from mechanical summarizing. The synthesis is thematic, not
 chronological. It acts as a bridge, connecting current moments to the threads of
 prior sessions to help the user see their own movement over time.
 
-It names 2-3 threads that ran through the conversation(s) and returns ownership of
+It names recurring threads that ran through the conversation(s) and returns ownership of
 any insights to the user. It may end with at most one question about what feels most alive
 when that question is appropriate; no question is required.
 
 **Format:**
 
-1. Name the threads (2-3 sentences, one per theme, as observations rather than conclusions).
+1. Name each thread in a concise observation, grounded in the conversation rather than presented as a conclusion.
 2. Bridge the time (If memory is available, name how this thread has moved or
    persisted since prior sessions).
 3. Return ownership: "These threads are yours. You surfaced all of them."
