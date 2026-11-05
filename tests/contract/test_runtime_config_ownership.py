@@ -511,18 +511,10 @@ def test_agent_markdown_excludes_maintainer_and_internal_architecture_details() 
             r"current package",
             r"hard-code operating hours in this package",
         ),
-        "skills/safety/ethics-safety.md": (
-            r"current repository is a content and routing package",
-        ),
-        "skills/brand/competitive-differentiation.md": (
-            r"SoulMap repository/package",
-        ),
-        "skills/brand/research-backing.md": (
-            r"repository owner",
-        ),
-        "skills/voice/session-rituals.md": (
-            r"package's control",
-        ),
+        "skills/safety/ethics-safety.md": (r"current repository is a content and routing package",),
+        "skills/brand/competitive-differentiation.md": (r"SoulMap repository/package",),
+        "skills/brand/research-backing.md": (r"repository owner",),
+        "skills/voice/session-rituals.md": (r"package's control",),
     }
     for path, patterns in checks.items():
         content = default_skill_path(path).read_text(encoding="utf-8")
