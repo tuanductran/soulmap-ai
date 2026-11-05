@@ -6,6 +6,7 @@ import json
 import re
 import sys
 from bisect import bisect_left, bisect_right
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
@@ -41,7 +42,7 @@ if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
 
 
 def _validate_dependency_regex_table(
-    rows: list[tuple[str, str]],
+    rows: Sequence[tuple[str, ...]],
 ) -> tuple[tuple[str, str], ...]:
     """Validate labeled inline-code regex rows and return their raw expressions."""
     if not rows or any(
