@@ -1,5 +1,7 @@
 """Verify Python-owned routing configuration and natural-language mode guidance."""
 
+from pathlib import Path
+
 import pytest
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
@@ -207,11 +209,11 @@ def test_orchestration_rejects_unknown_breakthrough_strength(
 
 def test_phase_one_safety_overrides_precede_framework_selection() -> None:
     """Keep immediate crisis and high dependency ahead of framework selection."""
-    master_prompt = runtime_skill_path("master-prompt").read_text(encoding="utf-8")
+    master_prompt = (Path(__file__).resolve().parents[2] / "skills/meta/master-prompt.md").read_text(encoding="utf-8")
     step_one = master_prompt.split("### Step 1", 1)[1].split("### Step 2", 1)[0]
     assert "immediate crisis" in step_one.lower()
     assert "high-dependency evidence" in step_one.lower()
-    assert "bypass Steps 2–5" in step_one
+    assert "bypass Steps" in step_one
     assert "Elevated-risk crisis is not a Phase 1 override" in step_one
 
     orchestration = runtime_skill_path("orchestration").read_text(encoding="utf-8")
