@@ -498,3 +498,35 @@ def test_reviewed_markdown_does_not_duplicate_python_runtime_thresholds() -> Non
             assert re.search(pattern, content, re.IGNORECASE) is None, (
                 f"{path} still duplicates Python-owned runtime policy: {pattern}"
             )
+
+
+def test_agent_markdown_excludes_maintainer_and_internal_architecture_details() -> None:
+    """Keep maintainer workflow and internal implementation notes out of agent Markdown."""
+    checks = {
+        "SOULMAP.md": (
+            r"response contract validation layer",
+            r"enforced mechanically",
+            r"## SKILL\.md expectations",
+            r"## Knowledge package consistency",
+            r"current package",
+            r"hard-code operating hours in this package",
+        ),
+        "skills/safety/ethics-safety.md": (
+            r"current repository is a content and routing package",
+        ),
+        "skills/brand/competitive-differentiation.md": (
+            r"SoulMap repository/package",
+        ),
+        "skills/brand/research-backing.md": (
+            r"repository owner",
+        ),
+        "skills/voice/session-rituals.md": (
+            r"package's control",
+        ),
+    }
+    for path, patterns in checks.items():
+        content = default_skill_path(path).read_text(encoding="utf-8")
+        for pattern in patterns:
+            assert re.search(pattern, content, re.IGNORECASE) is None, (
+                f"{path} exposes maintainer or internal architecture detail: {pattern}"
+            )

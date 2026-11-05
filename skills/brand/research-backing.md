@@ -171,7 +171,7 @@ nice-to-have features, they are the foundation of responsible AI companion desig
 
 1. Verify the citation is accurate and current using the latest published version.
 2. Check the claim against the actual study findings, not headlines.
-3. Have any press or investor materials reviewed by the repository owner before
+3. Have any press or investor materials reviewed by the project owner before
    publishing.
 
 ## Regulatory and policy context
