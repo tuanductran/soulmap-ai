@@ -145,8 +145,8 @@ def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limi
     """Ensure template knowledge omits Python-owned length and exchange limits."""
     checks = {
         "skills/voice/response-calibrator.md": [
-            r"\\b\\d+\\s*-\\s*\\d+\\s*words\\b",
-            r"\\b\\d+\\s*-\\s*\\d+\\s*sentences\\b",
+            r"\b\d+\s*-\s*\d+\s*words\b",
+            r"\b\d+\s*-\s*\d+\s*sentences\b",
         ],
         "skills/meta/framework-template-map.md": [
             r"\b\d+\s*-\s*\d+\s*words\b",
@@ -261,15 +261,15 @@ def test_skill_markdown_uses_display_labels_not_runtime_state_tokens() -> None:
             )
 
 
-def test_dependency_response_ceiling_matches_runtime_configuration() -> None:
-    """Verify dependency response guidance matches the configured ceiling."""
+def test_dependency_response_ceiling_is_python_owned() -> None:
+    """Keep the configured dependency response ceiling out of agent Markdown."""
     dependency = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Dependency")
     content = default_skill_path("skills/voice/response-calibrator.md").read_text(
         encoding="utf-8"
     )
-    expected = rf"^\|\s*Dependency\s*\|\s*{re.escape(dependency[2])}\s+words\b"
-    assert re.search(expected, content, re.MULTILINE), (
-        "response-calibrator.md must preserve the Python-owned Dependency "
+    expected = rf"\b{re.escape(dependency[2])}\s+words\b"
+    assert re.search(expected, content, re.IGNORECASE) is None, (
+        "response-calibrator.md duplicates the Python-owned Dependency "
         f"word range {dependency[2]!r}"
     )
 
@@ -447,5 +447,5 @@ def test_agent_entrypoints_do_not_duplicate_python_length_or_exchange_limits() -
     quick_reference = default_skill_path("skills/meta/quick-reference.md").read_text(
         encoding="utf-8"
     )
-    assert re.search(r"\\b120\\s*-\\s*200\\s*words\\b", soulmap, re.IGNORECASE) is None
-    assert re.search(r"2-3\\s+exchanges", quick_reference, re.IGNORECASE) is None
+    assert re.search(r"\b120\s*-\s*200\s*words\b", soulmap, re.IGNORECASE) is None
+    assert re.search(r"2-3\s+exchanges", quick_reference, re.IGNORECASE) is None
