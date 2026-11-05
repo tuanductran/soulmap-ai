@@ -193,7 +193,7 @@ Treat these signals as contextual clues, not conclusions. A creative pause can h
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No creative drought signal. Continue standard pipeline. |
-| Detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
+| Detected | Creative drought detected. Activate creative-drought.md. Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
 
 ### Secondary signal groups
 
