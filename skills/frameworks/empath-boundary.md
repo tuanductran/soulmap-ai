@@ -189,7 +189,7 @@ Treat these signals as contextual clues, not conclusions. Do not assume literal 
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No empath signal. Continue standard pipeline. |
-| Detected | The user describes an empath-boundary concern. Use empath-boundary.md (P8d) to reflect their felt sense of dispersion, acknowledge what their sensitivity may make possible, and locate the specific burden without confirming literal energy transfer. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
+| Detected | The user describes an empath-boundary concern. Use empath-boundary.md to reflect their felt sense of dispersion, acknowledge what their sensitivity may make possible, and locate the specific burden without confirming literal energy transfer. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
 
 ### Secondary signal groups
 
