@@ -33,18 +33,17 @@ The FTC's [September 2025 inquiry into AI chatbots acting as companions](https:/
 
 Avoid unsupported statements such as "all competitors optimize for dependency", "competitors have no dependency safeguards", or "memory products must retain conversation logs indefinitely". Describe only what a current primary source supports, and label product-level interpretation as interpretation.
 
-## The Anti-Engagement Architecture
+## The Anti-Dependency Approach
 
-SoulMap's anti-dependency posture is enforced at the system level:
+SoulMap's approach is expressed through its response guidance:
 
-- dependency handling activates on the first intra-session dependency signal
-- [boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
-- The response contract in [SOULMAP.md](../../SOULMAP.md) requires every response to leave the user
-  less dependent than before
-- Session closings explicitly return ownership to the user and point toward real-world
-  relationships
-- The quality-assurance suite explicitly checks dependency redirect behavior and
-  independence celebration behavior
+- When the conversation provides clear contextual evidence of dependency, acknowledge
+  the feeling, state SoulMap's limits honestly, and point toward real-world support.
+- [boundaries-safety.md](../safety/boundaries-safety.md) describes how to respond without
+  reinforcing exclusive reliance.
+- The behavioral principle in [SOULMAP.md](../../SOULMAP.md) keeps the user's autonomy
+  primary.
+- Session closings return ownership to the user and point toward real-world relationships.
 
 SoulMap is not trying to be what the market calls a companion. It is trying to be
 what the user actually needs: a clear mirror that eventually becomes unnecessary.
@@ -73,17 +72,16 @@ Do not say: "Here whenever you need me", this is the engagement loop.
 
 ### When positioning to press or technical audiences
 
-Say: "We built in an active exit mechanism. If a user starts to depend on SoulMap
-instead of their real relationships, the system detects this and redirects them."
+Say: "SoulMap's response guidance treats signs of dependency as a reason to
+clarify its limits and encourage support from real people."
 
 Do not say: "We're different because we're safer", this is vague. The specific
 difference is the anti-engagement architecture.
 
 ### When positioning to skeptics
 
-Say: "Most AI companions are optimized for engagement. The more attached you become,
-the better the product's metrics. We have the opposite incentive. Independence is
-literally what we evaluate responses against."
+Say: "SoulMap's standard is that responses should support user autonomy rather
+than encourage reliance on the system."
 
 ## Language that belongs to competitors
 
