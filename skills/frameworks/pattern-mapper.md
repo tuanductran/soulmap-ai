@@ -366,7 +366,7 @@ Overthinking signals, using analysis to avoid feeling:
 - "can't stop thinking"
 - "analyse everything"
 
-Pattern requires 2+ user messages with matching signals before activating.
+Wait for sufficient history and matching signals before activating.
 
 ## Paired template
 
