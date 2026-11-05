@@ -85,7 +85,7 @@ Do not ask them to commit or act. Ask them to notice and discern.
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Explore spiritual interpretations only as possibilities, never as verified messages or instructions.
 
 ### Guidance
 
