@@ -317,7 +317,7 @@ The signals below help notice when an insight may be ready for gentle integratio
 | When it appears | when does; when do i; where does; where do i; what situations; what triggers; always happens when |
 | Consider a different response | what would i do; what could i do; different response; respond differently; handle it; next time |
 
-First matching type wins in the order: notice it earlier, when it appears, consider a different response. If none matches, hold the insight first.
+If none of these types fits the user's words, hold the insight first.
 
 ### Reflection-validation signals
 
