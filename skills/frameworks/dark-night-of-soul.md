@@ -81,7 +81,7 @@ Do not ask for action, practice, or solutions. Ask for presence and honest notic
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Do not romanticize distress or assume that suffering is evidence of spiritual growth.
 
 ### Guidance
 
