@@ -215,15 +215,6 @@ The user is always free to say "that doesn't quite fit", and that response is as
 valuable as agreement. It means they are looking at their own story and correcting the
 mirror.
 
-## Detection signals
-
-The runtime detection contract below is the executable source of truth for synthesis
-activation. It defines both explicit request signals and the structural thresholds.
-
-Do not maintain a second phrase list or a separate message-count rule here. If the
-activation policy changes, update **Detection policy** and its runtime tests
-together.
-
 ## Paired template
 
 - **Response shape:** `skills/meta/response-structure.md` (Mirror: Synthesis uses
@@ -238,12 +229,7 @@ together.
 
 ## Detection policy
 
-The following operational configuration is normative knowledge for synthesis detection.
-Changes to these values must be made here and covered by focused contract tests.
-
-### Detection thresholds
-
-Synthesis thresholds and output limits are centrally configured; this document retains semantic themes and response guidance.
+The phrases and themes below are cues that a reflective synthesis may be useful. They are invitations to notice recurring meaning, not proof that a pattern exists.
 
 ### Explicit request signals
 
@@ -289,7 +275,7 @@ Synthesis thresholds and output limits are centrally configured; this document r
 
 | Key | Guidance |
 | :--- | :--- |
-| Insufficient data | Not enough conversation history for synthesis. Continue standard response. Check again after the configured minimum user-message threshold. |
+| Insufficient data | There is not enough shared history or recurrence yet. Continue ordinary reflection and revisit only if several themes genuinely return. |
 | Insufficient themes | Not enough recurring themes detected for synthesis. Continue standard response. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
 | Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
@@ -300,7 +286,7 @@ Synthesis thresholds and output limits are centrally configured; this document r
 | Value theme suffix | - keeps appearing, even when the topic changes. |
 | Conflict theme suffix | - it surfaced in more than one place. |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name themes up to the configured maximum. Each theme: 1-2 sentences plus a specific anchor to something the user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
+| Recommendation | Use Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md when recurring themes are genuinely present. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name a small number of themes, each with a concise reflection and a specific anchor in the user's own words. End by returning ownership and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
