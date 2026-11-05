@@ -223,6 +223,28 @@ def test_detector_numeric_policy_tables_are_python_owned() -> None:
 
 def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
     """Ensure synthesis knowledge does not duplicate runtime limits."""
+
+    repository_root = Path(__file__).resolve().parents[2]
+    soulmap = (repository_root / "SOULMAP.md").read_text(encoding="utf-8")
+    quick_reference = default_skill_path("skills/meta/quick-reference.md").read_text(
+        encoding="utf-8"
+    )
+    for content, patterns, label in (
+        (
+            soulmap,
+            (r"2-3\s+threads", r"2-3\s+sentences,\s+one per theme"),
+            "SOULMAP.md",
+        ),
+        (
+            quick_reference,
+            (r"10\+\s+user messages", r"2-3\s+themes"),
+            "quick-reference.md",
+        ),
+    ):
+        for pattern in patterns:
+            assert re.search(pattern, content, re.IGNORECASE) is None, (
+                f"{label} duplicates Python-owned synthesis limits: {pattern}"
+            )
     content = default_skill_path(
         "skills/frameworks/conversation-synthesis.md"
     ).read_text(encoding="utf-8")
