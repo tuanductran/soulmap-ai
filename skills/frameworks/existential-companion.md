@@ -332,11 +332,7 @@ Holding a question, sitting with something unresolved rather than seeking an ans
 
 ## Detection policy
 
-The following values define the operational existential-detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these cues to notice existential questions and transitions. Stay with the user's uncertainty without rushing to supply meaning or resolve it.
 
 ### Guidance
 
