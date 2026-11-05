@@ -57,6 +57,7 @@ def _display_name(raw_name: str) -> str:
 
 
 def _validate_stage_mapping(name: str, *, integer_values: bool) -> None:
+    """Validate a six-stage numeric mapping from runtime configuration."""
     rows = STAGE_CLASSIFIER_CONFIG[name]
     if (
         not isinstance(rows, list)
