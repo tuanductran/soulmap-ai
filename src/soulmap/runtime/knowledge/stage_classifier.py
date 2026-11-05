@@ -14,7 +14,16 @@ _KEYWORDS_RE = re.compile(
     r"\*\*Keyword signals:\*\*(?P<body>.*?)(?=\n\*\*Classification signals:\*\*|\Z)",
     re.DOTALL,
 )
-_QUOTED_RE = re.compile(r'^- "([^"]+)"\s*(frozen=True, slots=True)
+_QUOTED_RE = re.compile(r'^- "([^"]+)"\s*$', re.MULTILINE)
+_STAGE_ROLE_RE = re.compile(
+    r"^\*\*Stage role:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE
+)
+_STAGE_RECOMMENDATION_RE = re.compile(
+    r"^\*\*Runtime recommendation:\*\*\s*(?P<value>.+?)\s*$", re.MULTILINE
+)
+
+
+@dataclass(frozen=True, slots=True)
 class StageRule:
     """Executable scoring rules for one user-journey stage."""
 
