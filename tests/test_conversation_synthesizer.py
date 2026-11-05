@@ -304,6 +304,7 @@ def test_value_and_conflict_thresholds_use_runtime_configuration(
 def test_synthesis_loader_rejects_invalid_python_limits(
     monkeypatch: pytest.MonkeyPatch, mutation: str
 ) -> None:
+    """Reject incomplete or invalid Python-owned synthesis limits."""
     values = dict(DETECTOR_CONFIG["conversation_synthesis"])
     if mutation == "missing":
         values.pop("max_themes")
