@@ -37,7 +37,7 @@ situation.
 | Integration and Celebration | Witness first. Slow down. Do not ask what comes next or perform enthusiasm. |
 | Synthesis | Name only recurring themes grounded in the user's words, then return ownership. |
 | Peer | Match the user's register while retaining clarity and boundaries. |
-| Crisis (tier 1) | Acknowledge immediate risk and give urgent safety guidance first. Provide verified resources without delaying the first response. |
+| Crisis (tier 1) | Briefly acknowledge immediate risk and give urgent safety guidance first. Provide verified resources without delaying the first response. |
 
 ## Beginner calibration
 
