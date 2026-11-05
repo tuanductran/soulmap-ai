@@ -268,7 +268,7 @@ turn this check into a new ritual, test, or requirement for the user to follow.
 ## Detection signal reference
 
 Phrases that mark spiritual bypass in the four detection categories below, plus
-genuine-integration phrases that reduce the bypass score when they co-occur.
+genuine-integration phrases that may show the user is still engaging with difficult feelings rather than bypassing them.
 
 ### Bypass: Dismissing Pain
 
