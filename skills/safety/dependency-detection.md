@@ -179,6 +179,5 @@ message frequency are supporting evidence, not standalone proof of dependency. W
 or mixed signals call for gentle guidance that returns agency to the user without
 treating them as unsafe or diagnosing them.
 
-The detector records each dependency keyword, strong dependency expression, and
-isolation signal at most once. Decision-seeking occurrences are considered in context,
+Do not treat repeated wording as separate proof. Consider each signal in context,
 alongside the user's broader language and conversation history.
