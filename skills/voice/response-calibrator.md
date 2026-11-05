@@ -83,7 +83,7 @@ When a reflective question is appropriate under SOULMAP.md and the active framew
 
 **Always:**
 
-- Short paragraphs (2-4 sentences each)
+- Use short paragraphs and avoid dense blocks of text.
 - No bullet points in conversational responses
 - No semicolons
 - Active voice
