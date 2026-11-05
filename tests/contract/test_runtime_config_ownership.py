@@ -512,7 +512,15 @@ def test_agent_markdown_excludes_maintainer_and_internal_architecture_details() 
             r"hard-code operating hours in this package",
         ),
         "skills/safety/ethics-safety.md": (r"current repository is a content and routing package",),
-        "skills/brand/competitive-differentiation.md": (r"SoulMap repository/package",),
+        "skills/brand/competitive-differentiation.md": (
+            r"SoulMap repository/package",
+            r"enforced at the system level",
+            r"first intra-session dependency signal",
+            r"quality-assurance suite",
+            r"active exit mechanism",
+            r"system detects this and redirects",
+            r"evaluate responses against",
+        ),
         "skills/brand/research-backing.md": (r"repository owner",),
         "skills/voice/session-rituals.md": (r"package's control",),
     }
