@@ -204,11 +204,7 @@ Anger activates as a secondary layer modifier, not a primary framework.
 
 ## Detection policy
 
-The following values define the operational anger-detection policy.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these cues to distinguish active, inward, and lingering anger. Meet the emotion before exploring what it may be protecting; do not assume a cause.
 
 ### Guidance
 
