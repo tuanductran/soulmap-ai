@@ -468,7 +468,7 @@ Avoidant part:
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Name only the parts that are evident in the user's own words, and do not take sides.
 
 ### Guidance
 
