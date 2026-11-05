@@ -3310,7 +3310,7 @@
       "skills/meta/orchestration.md"
     ],
     "source_markers": {
-      "skills/frameworks/conversation-synthesis.md": "The configured minimum number of distinct themes has appeared across the conversation"
+      "skills/frameworks/conversation-synthesis.md": "Several distinct themes have genuinely recurred across the conversation"
     },
     "items": [
       {
