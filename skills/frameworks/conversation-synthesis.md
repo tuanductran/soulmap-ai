@@ -159,9 +159,9 @@ A synthesis response has three parts. Keep it short. This is a mirror, not a rep
 what you've heard across the conversation. "Across what you've shared today, a few
 things keep returning..."
 
-**Part 2, The themes:** Name themes up to the configured maximum, each
+**Part 2, The themes:** Name a small number of recurring themes, each
 with a brief observation and at least one specific anchor to something the user actually
-said or shared. Do not exceed the configured maximum; less is more accurate.
+said or shared. Prefer a grounded reflection over adding another theme for completeness.
 
 "One thread is [emotional theme]. I heard it when you talked about [X] and again in what
 you said about [Y]."
@@ -290,7 +290,7 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 | Value theme suffix | - keeps appearing, even when the topic changes. |
 | Conflict theme suffix | - it surfaced in more than one place. |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| Recommendation | Use Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md when recurring themes are genuinely present. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name a small number of themes, each with a concise reflection and a specific anchor in the user's own words. End by returning ownership and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
+| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md when recurring themes are genuinely present. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name a small number of themes, each with a concise reflection and a specific anchor in the user's own words. End by returning ownership and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
