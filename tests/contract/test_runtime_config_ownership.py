@@ -223,7 +223,6 @@ def test_detector_numeric_policy_tables_are_python_owned() -> None:
 
 def test_synthesis_markdown_does_not_duplicate_numeric_runtime_limits() -> None:
     """Ensure synthesis knowledge does not duplicate runtime limits."""
-
     repository_root = Path(__file__).resolve().parents[2]
     soulmap = (repository_root / "SOULMAP.md").read_text(encoding="utf-8")
     quick_reference = default_skill_path("skills/meta/quick-reference.md").read_text(
