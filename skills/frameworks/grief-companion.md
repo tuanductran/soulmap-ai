@@ -259,7 +259,7 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
@@ -278,9 +278,9 @@ Complicated grief, grief stuck, unresolved, or contested:
 
 | Result | Guidance |
 | :--- | :--- |
-| acute | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
-| anticipatory | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
-| ambiguous | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
-| complicated | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
-| detected_prefix | Activate grief-companion.md. Type: {grief_type}. {guidance} |
-| detected_suffix | Retrieve grief questions from the deep-inquiry bank: the 'Grief Questions' section. |
+| Acute grief | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
+| Ambiguous loss | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
+| Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
+| Detected prefix | Activate grief-companion.md. Type: |
+| Detected suffix | Retrieve grief questions from the deep-inquiry bank: the 'Grief Questions' section. |

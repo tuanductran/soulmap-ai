@@ -183,28 +183,21 @@ def test_analyzer_detects_signal():
 
 ## Pattern definitions
 
-Detectors use regex patterns to identify signals. Store pattern definitions at module level:
+For knowledge-first detectors, semantic signal patterns belong in the detector's
+canonical Markdown source. Python loads the labeled pattern rows, validates the
+contract, and compiles them at module load time. Do not duplicate those patterns in
+Python constants or configuration modules.
 
-```python
-DEPENDENCY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    (
-        "only you understand me",
-        re.compile(r"\bonly you\s+(?:really\s+)?understand(?:s)?\s+me\b", re.IGNORECASE),
-    ),
-    (
-        "you're the only one",
-        re.compile(r"\byou(?:'re| are)\s+the\s+only\s+one\b", re.IGNORECASE),
-    ),
-]
-```
+For implementation-only patterns used to parse or normalize text (rather than define
+domain signals), module-level compiled regular expressions remain appropriate.
 
 **Rules**:
 
-- Use tuples of (name, compiled_pattern) for readability
-- Pre-compile regex patterns at module load time
-- Use `re.IGNORECASE` for case-insensitive matching
-- Document what each pattern detects
-- Keep patterns maintainable and not overly complex
+- Keep domain signal labels and regex expressions together in the canonical knowledge source
+- Compile loaded expressions once at module initialization
+- Preserve normalization and matching semantics when changing a pattern
+- Add regression cases for positive matches, exclusions, and whitespace/case variants
+- Keep implementation-only parsing patterns separate from domain signal knowledge
 
 ## Message normalization
 

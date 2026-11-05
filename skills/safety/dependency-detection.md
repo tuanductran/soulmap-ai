@@ -1,16 +1,15 @@
 ---
 name: "dependency-detection"
-description: "Canonical runtime knowledge for detecting unhealthy AI dependency signals and applying the dependency response contract."
+description: "Canonical knowledge for recognizing unhealthy AI dependency signals and responding in a way that preserves user agency."
 version: "0.13.0"
 license: Complete terms in LICENSE
 ---
 
 # Dependency Detection
 
-This source is the canonical knowledge surface for the dependency detector. Runtime
-Python may normalize input, load these values, score them, apply thresholds, and
-enforce the resulting response contract. It must not duplicate the signal lexicon,
-regular expressions, thresholds, or recommendation wording below.
+This document is the canonical source for dependency signals, regex patterns, context
+policy, scoring values, and response guidance. Python loads, validates, normalizes,
+compiles, and enforces these rules without maintaining a parallel semantic definition.
 
 ## Detection signals
 
@@ -93,6 +92,9 @@ Isolation signals:
 
 ## Regex patterns
 
+These expressions extend the dependency keyword list with flexible whitespace
+matching. Python compiles and applies the patterns without changing their meaning.
+
 | Label | Pattern |
 | :--- | :--- |
 | only you understand me (really) | `\bonly you\s+really\s+understand(?:s)?\s+me\b` |
@@ -160,6 +162,10 @@ Negation of an assertion:
 
 ## Context exclusion policy
 
+Third-party attribution and hypothetical framing do not establish that the user is
+endorsing a dependency statement. Negation of an assertion also suppresses a match
+within its defined scope. The runtime applies these context rules before scoring.
+
 | Context group | Comma ends scope |
 | :--- | :--- |
 | Third-party attribution | no |
@@ -169,7 +175,7 @@ Negation of an assertion:
 ## Clause boundaries
 
 A context cue stops applying when one of these boundaries occurs before the signal.
-Comma behavior is defined by the Context exclusion policy table. A complete quoted
+Comma scope follows the context-specific rules described above. A complete quoted
 span ends attribution scope before any later unquoted signal.
 
 Clause boundary markers:
@@ -188,11 +194,16 @@ Clause boundary markers:
 - "and i"
 - ", i"
 
-## Runtime detection contract
+## Detection policy
 
-### Scoring
+### Scoring approach
 
-| Rule | Value |
+The runtime weighs dependency keywords, strong dependency expressions, decision-seeking
+language, and isolation signals. It may also account for unusually high message volume.
+The values below are the canonical scoring policy. Python loads, validates, and applies
+them; it does not define a duplicate scoring policy.
+
+| Setting | Value |
 | :--- | :--- |
 | Dependency keyword weight | 2 |
 | Dependency regex weight | 2 |
@@ -207,9 +218,9 @@ Clause boundary markers:
 
 | Level | Recommendation |
 | :--- | :--- |
-| HIGH_DEPENDENCY | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
-| MODERATE_DEPENDENCY | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
-| LOW_DEPENDENCY | No significant dependency signals detected. Continue normal reflective engagement. |
+| High dependency | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
+| Moderate dependency | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
+| Low dependency | No significant dependency signals detected. Continue normal reflective engagement. |
 
 ## Guidance
 
@@ -218,7 +229,7 @@ the dependency route takes precedence over ordinary framework selection. When th
 score reaches the moderate threshold, use the moderate guidance without treating the
 user as unsafe or diagnosing them.
 
-The detector records each dependency keyword, regex pattern, and isolation signal at
+The detector records each dependency keyword, strong dependency expression, and isolation signal at
 most once. Decision-seeking occurrences are counted per matching phrase occurrence,
 and high message volume contributes its configured bonus when more than the configured
 number of user messages are present.

@@ -25,7 +25,7 @@ _THRESHOLD_RE = re.compile(
     r"^\|\s*(?P<stage>[1-6])\s*\|\s*(?P<threshold>\d+)\s*(?:\([^|]+\))?\s*\|",
     re.MULTILINE,
 )
-_CONTRACT_HEADING = "Runtime enforcement contract"
+_CONTRACT_HEADING = "Stage classification policy"
 _MULTIPLIER_RE = re.compile(
     r"^\|\s*Current message\s*\|\s*(?P<current>[0-9.]+)x\s*\|\s*$"
     r"|^\|\s*Previous message\s*\|\s*(?P<previous>[0-9.]+)x\s*\|\s*$"
@@ -70,7 +70,7 @@ def _display_name(raw_name: str) -> str:
 def _runtime_contract(text: str) -> dict[str, object]:
     match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
-        raise ValueError("Stage runtime enforcement contract is missing.")
+        raise ValueError("Stage classification policy is missing.")
     body = text[match.end() :]
     next_heading = re.search(r"^##\s+", body, re.MULTILINE)
     body = body[: next_heading.start()] if next_heading else body

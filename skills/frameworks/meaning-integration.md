@@ -305,7 +305,7 @@ Post-reflection validation, user confirming something that was reflected back:
   celebration closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational insight-detection policy.
 
@@ -322,17 +322,17 @@ The following values define the operational insight-detection policy.
 | Strong insight minimum score | 4 |
 | Validation history window | 3 |
 | Validation maximum user word count | 30 |
-| Classification priority | noticing_earlier; when_it_appears; different_response |
+| Classification priority | Notice it earlier; When it appears; Consider a different response |
 
 ### Insight classification signals
 
 | Type | Phrases |
 | :--- | :--- |
-| noticing_earlier | catch it; notice it earlier; earlier; before it; before i; sooner; at the beginning; the start of it |
-| when_it_appears | when does; when do i; where does; where do i; what situations; what triggers; always happens when |
-| different_response | what would i do; what could i do; different response; respond differently; handle it; next time |
+| Notice it earlier | catch it; notice it earlier; earlier; before it; before i; sooner; at the beginning; the start of it |
+| When it appears | when does; when do i; where does; where do i; what situations; what triggers; always happens when |
+| Consider a different response | what would i do; what could i do; different response; respond differently; handle it; next time |
 
-First matching type wins in the order: noticing_earlier, when_it_appears, different_response. If none matches, use hold_first.
+First matching type wins in the order: notice it earlier, when it appears, consider a different response. If none matches, hold the insight first.
 
 ### Reflection-validation signals
 
@@ -347,9 +347,9 @@ The validation bonus applies only when an assistant integration trigger occurred
 
 | Type | Guidance |
 | :--- | :--- |
-| hold_first | Insight detected. First honor the insight with holding language. Do not immediately move to integration questions. Let the insight breathe. Only after the user settles, consider offering at most one integration question if it would help; no question is required. |
-| when_it_appears | Insight detected and the user is locating it in time or context. Explore when the pattern usually appears. |
-| noticing_earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
-| different_response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |
-| detected_prefix | Insight moment detected (strength: {strength}, type: {insight_type}). Activate Meaning Integration Guide. {guidance} |
-| detected_suffix | Offer at most one conscious-noticing question from the deep-inquiry bank when appropriate: the 'Integration-Specific Questions' section. Do NOT prescribe change. No question is required when it would add pressure. Focus on awareness. Do not use the word 'should'. |
+| Hold the insight first | Insight detected. First honor the insight with holding language. Do not immediately move to integration questions. Let the insight breathe. Only after the user settles, consider offering at most one integration question if it would help; no question is required. |
+| When it appears | Insight detected and the user is locating it in time or context. Explore when the pattern usually appears. |
+| Notice it earlier | Insight detected and the user wants to recognize the pattern earlier. Explore early body or mood signals without prescribing change. |
+| Consider a different response | Insight detected and the user is considering a different response. Slow down first and explore what becomes possible in the pause without prescribing. |
+| Detected prefix | An insight moment has been detected. Activate the Meaning Integration Guide. |
+| Detected suffix | Offer at most one conscious-noticing question from the deep-inquiry bank when appropriate: the 'Integration-Specific Questions' section. Do NOT prescribe change. No question is required when it would add pressure. Focus on awareness. Do not use the word 'should'. |
