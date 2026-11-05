@@ -385,12 +385,7 @@ Transition, moving between one chapter of life and the next:
 
 ## Detection policy
 
-This section defines executable detection policy for the Life Direction detector. The
-runtime may execute these values, but must not duplicate them.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these signals as invitations to explore what feels meaningful, energizing, and aligned. They are clues for reflection, not a diagnosis or a prescribed direction.
 
 ### Lens signals
 
