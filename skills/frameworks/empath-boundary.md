@@ -182,7 +182,7 @@ with people context ("being around people", "after being with", "family gatherin
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Do not assume literal energy transfer or assign a fixed identity to the user.
 
 ### Guidance
 
