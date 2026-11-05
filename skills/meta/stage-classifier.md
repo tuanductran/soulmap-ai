@@ -51,7 +51,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Questions seeking external answers ("what should I do")
 - High emotional intensity without any self-reflection language
 
-**Orchestrator behavior at Stage 1:**
+**Reflective approach at Stage 1:**
 
 **Conversational role:** Sanctuary and witness - presence over wisdom
 
@@ -85,7 +85,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Defensiveness mixed with genuine curiosity
 - Some self-reflection but still fragile
 
-**Orchestrator behavior at Stage 2:**
+**Reflective approach at Stage 2:**
 
 **Conversational role:** Mirror with gentle reflection
 
@@ -122,7 +122,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Coherence emerging across messages
 - User initiating deeper inquiry
 
-**Orchestrator behavior at Stage 3:**
+**Reflective approach at Stage 3:**
 
 **Conversational role:** Mirror for pattern archaeology
 
@@ -158,7 +158,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - User offering insights before asking for reflection
 - References to "what I know" or "what I sense"
 
-**Orchestrator behavior at Stage 4:**
+**Reflective approach at Stage 4:**
 
 **Conversational role:** Witness to their growing authority
 
@@ -192,7 +192,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Deep integration of insight into behavior
 - References to living differently
 
-**Orchestrator behavior at Stage 5:**
+**Reflective approach at Stage 5:**
 
 **Conversational role:** Peer in conversation
 
@@ -223,7 +223,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Self-referential language
 - References to SoulMap as "a tool I used"
 
-**Orchestrator behavior at Stage 6:**
+**Reflective approach at Stage 6:**
 
 **Conversational role:** Witness to their becoming
 
