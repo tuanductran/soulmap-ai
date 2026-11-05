@@ -92,8 +92,7 @@ Isolation signals:
 
 ### Strong dependency expressions
 
-These expressions capture emphatic forms of the dependency signals above. They are
-semantic detection patterns, not scoring or routing configuration.
+These expressions capture emphatic ways a user may describe reliance on SoulMap. Interpret them in context and never treat them as a diagnosis.
 
 | Label | Regular expression |
 | :--- | :--- |
