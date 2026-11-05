@@ -378,3 +378,46 @@ def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> No
         assert "readiness" in content, (
             f"{path} omits the readiness condition for grief questions"
         )
+
+
+def test_agent_markdown_does_not_expose_python_implementation_details() -> None:
+    """Keep shipped knowledge free of Python-owned runtime implementation notes."""
+    repository_root = Path(__file__).resolve().parents[2]
+    markdown_paths = [
+        *sorted((repository_root / "skills").rglob("*.md")),
+        repository_root / "SOULMAP.md",
+        repository_root / "SKILL.md",
+    ]
+    forbidden_phrases = (
+        "runtime detection contract",
+        "executable detection policy",
+        "runtime scoring",
+        "scoring weights and thresholds are centrally configured",
+        "detection weights, thresholds, and history limits are centrally configured",
+        "configured history window",
+        "configured word limit",
+        "configured maximum",
+        "configured minimum user-message threshold",
+        "no dedicated phrase-matching detector",
+        "the ai model applies this framework through language understanding",
+        "signals from other detectors",
+        "runtime framing-marker scanner",
+        "runtime blocking and refusal wording coverage",
+        "scoring or routing configuration",
+        "secondary scoring",
+        "adds extra weight",
+        "operational configuration is normative knowledge",
+        "covered by focused contract tests",
+        "operational insight-detection policy",
+        "operational shadow-pattern detection policy",
+        "operational spiritual-bypass detection policy",
+        "executable source of truth for synthesis",
+        "runtime may execute these values",
+    )
+    for path in markdown_paths:
+        content = path.read_text(encoding="utf-8").casefold()
+        for phrase in forbidden_phrases:
+            assert phrase not in content, (
+                f"{path.relative_to(repository_root)} exposes Python implementation "
+                f"details through {phrase!r}"
+            )
