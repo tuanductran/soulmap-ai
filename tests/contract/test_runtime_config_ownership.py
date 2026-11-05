@@ -423,7 +423,7 @@ def test_agent_markdown_does_not_expose_python_implementation_details() -> None:
     )
     for path in markdown_paths:
         content = path.read_text(encoding="utf-8").casefold()
-        assert re.search(r"\\bP\\d+[a-z]\\b", content, re.IGNORECASE) is None, (
+        assert re.search(r"\bP\d+[a-z]\b", content, re.IGNORECASE) is None, (
             f"{path.relative_to(repository_root)} exposes a machine framework identifier"
         )
         for phrase in forbidden_phrases:
