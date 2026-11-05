@@ -158,6 +158,7 @@ def test_destabilization_allows_stage_regression() -> None:
 
 
 def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
+    """Reject duplicate stage numbers in the Markdown classifier."""
     rules = load_stage_classifier()
     source = "\n".join(
         f"### Stage {1 if index == 5 else stage.number}, {stage.name.lower()}"
