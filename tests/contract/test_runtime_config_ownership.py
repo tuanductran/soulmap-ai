@@ -48,8 +48,6 @@ def test_skill_markdown_contains_no_python_runtime_configuration_tables() -> Non
         "stage-classifier": (
             "Minimum Thresholds",
             "Enforcement settings",
-            "Stage roles",
-            "Stage recommendations",
             "most recent 5 user messages",
             "most recent five user messages",
             "within 2 points",
@@ -364,3 +362,15 @@ def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> No
         assert "readiness" in content, (
             f"{path} omits the readiness condition for grief questions"
         )
+
+
+def test_stage_roles_and_recommendations_are_loaded_from_markdown() -> None:
+    from soulmap.runtime.knowledge.stage_classifier import load_stage_classifier
+
+    assert "stage_roles" not in STAGE_CLASSIFIER_CONFIG
+    assert "stage_recommendations" not in STAGE_CLASSIFIER_CONFIG
+    rules = load_stage_classifier()
+    assert set(rules.stage_roles) == set(range(1, 7))
+    assert set(rules.stage_recommendations) == set(range(1, 7))
+    assert rules.stage_roles[1] == "Sanctuary and witness - presence over wisdom"
+    assert rules.stage_recommendations[6].startswith("Witness only.")
