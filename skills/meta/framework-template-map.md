@@ -96,7 +96,7 @@ post-grounding questions from deep-inquiry-bank.md only.
 **Opening constraint:** Never open with "I'm sorry for your loss", it is automatic.
 Open by reflecting what the user said.
 
-**Closing constraint:** Do not ask a reflective question during the initial acute-grief period. After that, wait for the user to signal readiness; end with presence, not inquiry.
+**Closing constraint:** Do not ask a reflective question during the initial acute-grief period. Once that initial period has passed, a question is still not automatic: wait for the user to signal readiness, ask no more than one question only when readiness is clear, and otherwise end with presence.
 
 **Example arc:**
 
