@@ -144,6 +144,10 @@ def test_template_markdown_does_not_restate_python_owned_length_or_exchange_limi
 ):
     """Ensure template knowledge omits Python-owned length and exchange limits."""
     checks = {
+        "skills/voice/response-calibrator.md": [
+            r"\\b\\d+\\s*-\\s*\\d+\\s*words\\b",
+            r"\\b\\d+\\s*-\\s*\\d+\\s*sentences\\b",
+        ],
         "skills/meta/framework-template-map.md": [
             r"\b\d+\s*-\s*\d+\s*words\b",
             r"first\s+2-3\s+exchanges",
@@ -434,3 +438,14 @@ def test_agent_markdown_does_not_expose_python_implementation_details() -> None:
                 f"{path.relative_to(repository_root)} exposes Python implementation "
                 f"details through {phrase!r}"
             )
+
+
+def test_agent_entrypoints_do_not_duplicate_python_length_or_exchange_limits() -> None:
+    """Keep runtime-owned response lengths and grief windows out of Markdown."""
+    repository_root = Path(__file__).resolve().parents[2]
+    soulmap = (repository_root / "SOULMAP.md").read_text(encoding="utf-8")
+    quick_reference = default_skill_path("skills/meta/quick-reference.md").read_text(
+        encoding="utf-8"
+    )
+    assert re.search(r"\\b120\\s*-\\s*200\\s*words\\b", soulmap, re.IGNORECASE) is None
+    assert re.search(r"2-3\\s+exchanges", quick_reference, re.IGNORECASE) is None
