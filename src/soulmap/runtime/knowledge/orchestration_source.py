@@ -74,6 +74,7 @@ def _contract_body(text: str) -> str:
 
 
 def _table_rows(body: str, heading: str) -> list[list[str]]:
+    """Extract rows from a named Markdown table section."""
     match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
         raise ValueError(f"Orchestration section {heading!r} is missing.")
@@ -129,6 +130,7 @@ def _require_str(value: str, key: str) -> str:
 
 
 def _require_choice(value: str, key: str, choices: frozenset[str]) -> str:
+    """Validate a value against the supported choices."""
     if not isinstance(value, str) or value not in choices:
         allowed = ", ".join(sorted(choices))
         raise ValueError(f"{key} must be one of: {allowed}.")
@@ -138,6 +140,7 @@ def _require_choice(value: str, key: str, choices: frozenset[str]) -> str:
 def _parse_primary_priority(
     rows: list[list[str]],
 ) -> tuple[PrimaryPriorityRule, ...]:
+    """Parse and validate primary framework priority rows."""
     if not rows:
         raise ValueError("PRIMARY_PRIORITY must be a non-empty table.")
     rules: list[PrimaryPriorityRule] = []
@@ -175,6 +178,7 @@ def _parse_primary_priority(
 def _parse_intensity_fallback(
     rows: list[list[str]],
 ) -> tuple[IntensityFallbackRule, ...]:
+    """Parse and validate intensity fallback rows."""
     if not rows:
         raise ValueError("INTENSITY_FALLBACK must be a non-empty table.")
     rules: list[IntensityFallbackRule] = []
@@ -203,6 +207,7 @@ def _parse_intensity_fallback(
 def _parse_secondary_priority(
     rows: list[list[str]],
 ) -> tuple[SecondaryPriorityRule, ...]:
+    """Parse and validate secondary-layer priority rows."""
     if not rows:
         raise ValueError("SECONDARY_PRIORITY must be a non-empty table.")
     rules: list[SecondaryPriorityRule] = []
