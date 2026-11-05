@@ -272,5 +272,5 @@ This policy describes the signals and scoring used to recognize meaningful posit
 | Key | Value |
 | :--- | :--- |
 | Not detected | No celebration signal detected. Continue standard pipeline. |
-| Detected | Activate integration-celebration.md (P9b). Use the framework's four-step arc and the type-specific guidance already defined in this Markdown source. Do not perform enthusiasm. Do not open with exclamation. Do not immediately ask what is next. |
+| Detected | Activate integration-celebration.md. Use the framework's four-step arc and the type-specific guidance already defined in this Markdown source. Do not perform enthusiasm. Do not open with exclamation. Do not immediately ask what is next. |
 | Closing | Close with one agency-preserving question from deep-inquiry-bank.md. Use the Breakthrough and Celebration Closing section of session-rituals.md for the closing ritual. |
