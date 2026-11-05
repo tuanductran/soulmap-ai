@@ -382,13 +382,7 @@ Wait for sufficient history and matching signals before activating.
 
 ## Detection policy
 
-This section defines executable detection policy for recurring-pattern detection. Pattern
-knowledge remains above; this section only makes the runtime scoring and activation
-contract explicit.
-
-### Scoring
-
-Scoring weights and thresholds are centrally configured; this document retains semantic signals and qualitative guidance.
+Use these signals to notice recurring patterns without treating them as proof. A pattern is useful only when it fits the user's account and can be explored tentatively.
 
 ### Guidance
 
