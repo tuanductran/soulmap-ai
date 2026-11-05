@@ -511,7 +511,9 @@ def test_agent_markdown_excludes_maintainer_and_internal_architecture_details() 
             r"current package",
             r"hard-code operating hours in this package",
         ),
-        "skills/safety/ethics-safety.md": (r"current repository is a content and routing package",),
+        "skills/safety/ethics-safety.md": (
+            r"current repository is a content and routing package",
+        ),
         "skills/brand/competitive-differentiation.md": (
             r"SoulMap repository/package",
             r"enforced at the system level",
