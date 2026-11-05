@@ -304,7 +304,7 @@ Physical overwhelm, the body registering distress before words catch up:
 
 ## Detection policy
 
-Detection weights, thresholds, and history limits are centrally configured. Treat signals as contextual clues, not conclusions.
+Treat these signals as contextual clues, not conclusions. Let the user's expressed intensity and readiness guide the pace of the response.
 
 ### Guidance
 
