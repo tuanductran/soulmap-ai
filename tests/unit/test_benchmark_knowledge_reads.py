@@ -118,6 +118,7 @@ def test_run_suite_leaves_markdown_cache_empty() -> None:
 
 
 def test_invalid_baseline_never_trips_regression_gate(tmp_path: Path) -> None:
+    """Ensure invalid benchmark baselines cannot trigger the regression gate."""
     names = (
         "uncached_two_table_reads",
         "cold_cache_two_table_loads",
