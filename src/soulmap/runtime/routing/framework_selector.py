@@ -353,8 +353,9 @@ async def select_framework_async(
             "context": dep,
             "instruction": (
                 "Dependency redirect. Use DEP_REDIRECT from "
-                "skills/frameworks/emotional-deescalation.md. Warm, direct, "
-                "one question pointing toward real-world support."
+                "skills/frameworks/emotional-deescalation.md. Warm and direct; "
+                "clearly point toward real-world support. A question is optional; "
+                "ask at most one only when appropriate and welcome."
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -567,7 +568,14 @@ async def select_framework_async(
                     else None
                 ),
                 "mode": grief_rule.mode,
-                "context": grief,
+                "context": {
+                    **grief,
+                    # Acute grief stays question-free for the first 2-3 user
+                    # exchanges. Readiness must also be present in the user's words.
+                    "grief_readiness": (
+                        user_count + 1 > 3 and bool(insight.get("insight_detected"))
+                    ),
+                },
                 "instruction": grief.get("recommendation", ""),
                 "blocked": list(grief_rule.blocked),
             }
@@ -834,11 +842,19 @@ async def select_framework_async(
             if rule.insight_secondary and res["insight"].get("insight_detected")
             else None
         )
+        context = dict(result)
+        if rule.framework == "GRIEF":
+            # Count the current user message as the current exchange. A question
+            # becomes eligible only after the first three exchanges and when
+            # the insight detector sees readiness in the user's own words.
+            context["grief_readiness"] = (
+                user_count + 1 > 3 and bool(res["insight"].get("insight_detected"))
+            )
         selection = {
             "primary_framework": rule.framework,
             "secondary_layer": secondary,
             "mode": rule.mode,
-            "context": result,
+            "context": context,
             "instruction": result.get("recommendation", ""),
             "blocked": list(rule.blocked),
         }
