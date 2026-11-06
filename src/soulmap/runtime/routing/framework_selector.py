@@ -50,8 +50,8 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_memory_fields,
 )
 from soulmap.runtime.knowledge.framework_template_source import resolve_template
-from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
