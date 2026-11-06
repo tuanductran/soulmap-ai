@@ -96,13 +96,13 @@ def detect_grief(
     first_acute = next(
         (
             index
-            for index, prior in enumerate(recent)
+            for index, prior in enumerate(user_history)
             if any(p in prior for p in ACUTE_GRIEF)
         ),
         None,
     )
     acute_exchange_count = (
-        len(recent) - first_acute + 1
+        len(user_history) - first_acute + 1
         if first_acute is not None
         else int(any(phrase in msg for phrase in ACUTE_GRIEF))
     )

@@ -126,6 +126,26 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
     assert result["acute_exchange_count"] == 3
 
 
+def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "assistant", "content": "I am sorry for your loss."},
+        {"role": "user", "content": "I miss her every day."},
+        {"role": "user", "content": "I keep remembering her voice."},
+        {"role": "user", "content": "The house feels quiet."},
+        {"role": "user", "content": "I started writing down memories."},
+        {"role": "user", "content": "I feel more ready to talk."},
+    ]
+
+    result = detect_grief(
+        "My mother died last week, and I have been thinking about what she meant to me.",
+        history,
+    )
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 8
+
+
 def test_sustained_grief_across_history_boosts_score() -> None:
     history = [
         {"role": "user", "content": "He died last week and I can't stop crying."},
