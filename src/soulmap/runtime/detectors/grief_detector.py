@@ -42,9 +42,9 @@ def _affirmative_readiness(message: str) -> bool:
         return False
     return not bool(
         re.search(
-            r"\\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
-            r"\\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
-            r"\\bnot sure\\b.{0,40}\\bready\\b",
+            r"\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
+            r"\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
+            r"\bnot sure\\b.{0,40}\\bready\\b",
             message,
         )
     )
