@@ -265,36 +265,44 @@ def synthesize(
         for item in analysis_history
         if isinstance(item, dict) and item.get("role") == "user"
     )
+    rules = _rules()
+    explicit_request = any(
+        phrase in message.lower().strip() for phrase in rules.explicit_requests
+    )
 
-    if user_count < _rules().minimum_user_messages:
+    themes: ExtractedThemes = extract_themes(analysis_history)
+    if memory:
+        themes = merge_memory_themes(themes, memory)
+
+    session_count = themes.get("session_count", 1)
+    is_longitudinal = bool(themes.get("longitudinal")) and (
+        isinstance(session_count, int)
+        and session_count >= rules.minimum_sessions_for_longitudinal
+    )
+    supported_request = explicit_request or is_longitudinal
+
+    if user_count < rules.minimum_user_messages and not supported_request:
         return {
             "synthesis_ready": False,
             "reason": "insufficient_data",
-            "themes": {},
-            "recommendation": _rules().response_guidance["insufficient_data"],
+            "themes": themes,
+            "recommendation": rules.response_guidance["insufficient_data"],
         }
-
-    themes: ExtractedThemes = extract_themes(analysis_history)
-
-    if memory:
-        themes = merge_memory_themes(themes, memory)
 
     emotional_themes = themes.get("emotional", [])
     value_themes = themes.get("values", [])
     conflict_themes = themes.get("conflicts", [])
-
     total_themes = len(emotional_themes) + len(value_themes) + len(conflict_themes)
+    minimum_themes = 1 if supported_request else rules.minimum_recurring_themes
 
-    if total_themes < _rules().minimum_recurring_themes:
+    if total_themes < minimum_themes:
         return {
             "synthesis_ready": False,
             "reason": "insufficient_recurring_themes",
             "themes": themes,
-            "recommendation": _rules().response_guidance["insufficient_themes"],
+            "recommendation": rules.response_guidance["insufficient_themes"],
         }
 
-    is_longitudinal = bool(themes.get("longitudinal"))
-    session_count = themes.get("session_count", 1)
 
     if is_longitudinal and session_count >= _rules().minimum_sessions_for_longitudinal:
         opening = _rules().response_guidance["longitudinal_opening"]
