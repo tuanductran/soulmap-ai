@@ -546,6 +546,8 @@ When appropriate, offer at most one question; if used, it is the closing sentenc
 
 Do not ask questions during the initial acute-grief period. After that period, offer
 at most one question, and only when the user has clearly signaled readiness to explore.
+This waiting period does not apply to anticipatory, ambiguous, or complicated grief;
+offer a question earlier only when the user has capacity and it fits their experience.
 
 ### Acute grief, when user begins to share
 
