@@ -62,7 +62,12 @@ def test_recommendation_warns_against_assigning_gender_when_framed() -> None:
 def test_prior_user_polarity_framing_enables_later_signal() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
-        [{"role": "user", "content": "I explicitly value the balance of receptivity and action."}],
+        [
+            {
+                "role": "user",
+                "content": "I explicitly value the balance of receptivity and action.",
+            }
+        ],
     )
 
     assert result["sacred_polarity_detected"] is True
