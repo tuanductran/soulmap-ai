@@ -22,10 +22,10 @@ def test_only_know_how_to_do_signal_is_detected() -> None:
     assert result["score"] == 3
 
 
-def test_cant_set_boundaries_signal_is_detected() -> None:
+def test_boundary_difficulty_without_polarity_framing_is_not_detected() -> None:
     result = detect_sacred_polarity("I can't set boundaries.")
 
-    assert result["sacred_polarity_detected"] is True
+    assert result["sacred_polarity_detected"] is False
 
 
 def test_neutral_message_is_not_misclassified() -> None:
@@ -48,11 +48,31 @@ def test_case_and_punctuation_do_not_prevent_detection() -> None:
     assert result["sacred_polarity_detected"] is True
 
 
-def test_recommendation_warns_against_assigning_gender() -> None:
-    result = detect_sacred_polarity("I can't set boundaries.")
+def test_recommendation_warns_against_assigning_gender_when_framed() -> None:
+    result = detect_sacred_polarity(
+        "I only know how to do, I don't know how to just be."
+    )
 
     assert result["sacred_polarity_detected"] is True
     assert "gender" in cast(str, result["recommendation"]).lower()
+
+
+def test_prior_user_polarity_framing_enables_later_signal() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "I struggle to balance receptivity and action."}],
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
+def test_boundary_difficulty_without_current_or_prior_framing_stays_inactive() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "Work has been stressful."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
 
 
 def test_recommendation_present_when_not_detected() -> None:
