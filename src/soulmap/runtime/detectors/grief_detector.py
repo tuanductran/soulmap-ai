@@ -48,6 +48,7 @@ def _affirmative_readiness(message: str) -> bool:
     )
     return not bool(negated_or_uncertain)
 
+
 def _acute_loss_anchor(text: str) -> str | None:
     """Return the most specific Markdown-authored explicit loss anchor."""
     anchors = [
