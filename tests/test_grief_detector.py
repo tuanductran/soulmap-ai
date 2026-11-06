@@ -182,6 +182,24 @@ def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
     assert result["acute_exchange_count"] == 1
 
 
+def test_negated_grief_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        "My mother died last week. I'm not ready to talk about what happened."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
+def test_uncertain_grief_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        "My mother died last week. I don't know if I'm ready to talk about what happened."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
 def test_grief_specific_readiness_is_loaded_from_markdown() -> None:
     result = detect_grief("I've been thinking about what she meant to me.")
 
