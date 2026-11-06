@@ -279,8 +279,8 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 
 | Key | Guidance |
 | :--- | :--- |
-| Insufficient data | There is not enough shared history or recurrence yet. Continue ordinary reflection and revisit only if several themes genuinely return. |
-| Insufficient themes | Not enough recurring themes detected for synthesis. Continue standard response. |
+| Insufficient data | Continue ordinary reflection when there is not enough shared history. An explicit user request or a supported longitudinal pattern may justify synthesis earlier; never invent themes when the available words do not support one. |
+| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit request or one supported longitudinal thread does not require several distinct themes. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
 | Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
 | Emotional theme | An emotional thread of |
