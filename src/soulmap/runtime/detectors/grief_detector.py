@@ -114,12 +114,17 @@ def detect_grief(
         ),
         None,
     )
+    readiness_detected = any(phrase in msg for phrase in _READINESS_SIGNALS)
+    current_turn_continues_grief = readiness_detected or any(
+        phrase in msg for phrase in history_grief_signals
+    )
     acute_exchange_count = (
-        len(current_grief_sequence) - first_acute + 1
+        len(current_grief_sequence)
+        - first_acute
+        + int(current_turn_continues_grief)
         if first_acute is not None
         else int(any(phrase in msg for phrase in ACUTE_GRIEF))
     )
-    readiness_detected = any(phrase in msg for phrase in _READINESS_SIGNALS)
 
     if history:
         all_grief = (
