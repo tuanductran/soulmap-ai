@@ -203,6 +203,23 @@ def test_synthesize_includes_current_message_with_prior_history() -> None:
     assert themes["values"] == [{"theme": "autonomy", "score": 2, "anchors": [1, 5]}]
 
 
+def test_synthesize_allows_explicit_request_with_short_longitudinal_history() -> None:
+    history = _user_messages(
+        [
+            "I feel lonely and my own path matters.",
+        ]
+    )
+    result = synthesizer.synthesize(
+        "Can you synthesize what keeps returning? I feel lonely and my own path matters.",
+        history,
+        {"recurring_themes": ["loneliness", "autonomy"], "session_count": 4},
+    )
+
+    assert result["synthesis_ready"] is True
+    assert result["is_longitudinal"] is True
+    assert len(cast(list[object], result["top_themes"])) >= 1
+
+
 def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
     history = _user_messages(
         [
