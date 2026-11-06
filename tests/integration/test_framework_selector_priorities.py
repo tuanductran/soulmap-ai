@@ -130,7 +130,9 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
     assert data["mode"] == "SANCTUARY"
 
 
-def test_framework_selector_accepts_grief_specific_readiness_after_initial_period() -> None:
+def test_framework_selector_accepts_grief_specific_readiness_after_initial_period() -> (
+    None
+):
     history = [
         {"role": "user", "content": "My mother died last week."},
         {"role": "user", "content": "I miss her every day."},
