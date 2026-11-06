@@ -67,11 +67,10 @@ def _grief_question_allowed(
 ) -> bool:
     """Allow a post-readiness question only after the initial acute-grief exchanges."""
     exchange_count = grief.get("acute_exchange_count")
+    exchange_window = DETECTOR_CONFIG["grief"]["Initial acute exchange window"]
     return (
         isinstance(exchange_count, int)
-        and exchange_count > int(
-            DETECTOR_CONFIG["grief"]["Initial acute exchange window"]
-        )
+        and exchange_count > exchange_window
         and (
             bool(grief.get("readiness_detected"))
             or bool(insight.get("insight_detected"))
