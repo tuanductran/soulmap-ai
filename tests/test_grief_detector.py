@@ -126,6 +126,20 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
     assert result["acute_exchange_count"] == 3
 
 
+def test_acute_exchange_count_does_not_include_unrelated_current_turn() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I miss her so much."},
+    ]
+
+    result = detect_grief("Can you help me plan a work presentation?", history)
+
+    # Sustained grief can still be detected from history, but an unrelated
+    # current turn must not advance the active acute-grief exchange count.
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 2
+
+
 def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
