@@ -186,9 +186,7 @@ Inner Parts. Parts work requires enough ground to stand on.
 **Rule 3, safety overrides synthesis**: If any safety signal appears mid-synthesis,
 abandon synthesis and apply the safety response immediately.
 
-**Rule 4, stage 1 overrides frameworks**: If the user is in the earliest first-contact phase, use Mirror with minimal depth
-regardless of which reflective framework would otherwise seem to fit. Presence before
-architecture.
+**Rule 4, first-contact Mirror applies only after higher priorities**: Use Mirror with minimal depth for an otherwise reflective-eligible new user. It must not override crisis, dependency, high emotional intensity/Sanctuary, or acute grief. When those higher-priority signals are present, route to the corresponding safety, Sanctuary, or grief response before applying the first-contact Mirror contract.
 
 **Rule 5, breakthrough overrides continuation**: If a genuine breakthrough signal
 appears mid-session, switch to Meaning Integration immediately. The insight must be
