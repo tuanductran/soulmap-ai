@@ -99,13 +99,38 @@ def detect_grief(
     history_grief_signals = (
         ACUTE_GRIEF + ANTICIPATORY_GRIEF + AMBIGUOUS_LOSS + COMPLICATED_GRIEF
     )
+    def acute_loss_anchor(text: str) -> str | None:
+        """Return the most specific Markdown-authored explicit loss anchor."""
+        anchors = [
+            phrase
+            for phrase in ACUTE_GRIEF
+            if phrase in text
+            and "my " in phrase
+            and any(marker in phrase for marker in ("died", "passed away", "lost"))
+        ]
+        return max(anchors, key=len) if anchors else None
+
+    current_loss_anchor = acute_loss_anchor(msg)
     current_grief_sequence: list[str] = []
+    active_loss_anchor: str | None = None
     for prior in reversed(user_history):
-        if any(phrase in prior for phrase in history_grief_signals):
-            current_grief_sequence.append(prior)
-        else:
+        if not any(phrase in prior for phrase in history_grief_signals):
             break
+        prior_loss_anchor = acute_loss_anchor(prior)
+        if prior_loss_anchor:
+            if active_loss_anchor is None:
+                active_loss_anchor = prior_loss_anchor
+            elif prior_loss_anchor != active_loss_anchor:
+                break
+        current_grief_sequence.append(prior)
     current_grief_sequence.reverse()
+    if (
+        current_loss_anchor
+        and active_loss_anchor
+        and current_loss_anchor != active_loss_anchor
+    ):
+        # A newly named loss starts its own acute-grief exchange window.
+        current_grief_sequence = []
     first_acute = next(
         (
             index
