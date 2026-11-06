@@ -152,7 +152,6 @@ def test_framework_selector_accepts_grief_specific_readiness_after_initial_perio
     assert data["context"]["grief_readiness"] is True
 
 
-
 def test_framework_selector_keeps_initial_grief_window_question_free() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
@@ -169,6 +168,7 @@ def test_framework_selector_keeps_initial_grief_window_question_free() -> None:
     assert data["primary_framework"] == "GRIEF"
     assert data["mode"] == "SANCTUARY"
     assert data["context"]["grief_readiness"] is False
+
 
 def test_framework_selector_treats_goodbye_grief_phrase_as_grief_not_crisis() -> None:
     payload = {
