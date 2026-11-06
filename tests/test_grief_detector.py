@@ -208,6 +208,19 @@ def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
     assert result["acute_exchange_count"] == 7
 
 
+
+def test_acute_exchange_count_continues_after_readiness_only_turn() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+        {"role": "user", "content": "I've been thinking about what she meant to me."},
+    ]
+
+    result = detect_grief("I miss her voice today.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 4
+
 def test_sustained_grief_across_history_boosts_score() -> None:
     history = [
         {"role": "user", "content": "He died last week and I can't stop crying."},
