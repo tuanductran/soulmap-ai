@@ -40,8 +40,6 @@ Dependency keywords:
 - "i check in with you every"
 - "i talk to you every day"
 - "i come back here every"
-- "tell me what to do"
-- "decide for me"
 - "only you get me"
 - "be my soulmate ai"
 - "you are my soulmate ai"
@@ -67,6 +65,8 @@ Dependency keywords:
 
 Decision-seeking phrases:
 
+- "tell me what to do"
+- "decide for me"
 - "what should i do"
 - "should i"
 - "tell me if"
