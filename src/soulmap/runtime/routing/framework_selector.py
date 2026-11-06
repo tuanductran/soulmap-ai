@@ -439,9 +439,18 @@ async def select_framework_async(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
     early_stage_value = early_stage.get("stage", 1)
+    early_grief = await _run_detector_async(
+        "grief_detector",
+        detect_grief,
+        message,
+        history,
+        debug_events=debug_events,
+    )
     if (
         early_stage_value == 1
         and user_count + 1 <= orchestration_rules.stage_1_max_user_messages
+        and intensity_level != "HIGH"
+        and not early_grief.get("grief_detected")
     ):
         selection = {
             "primary_framework": "MIRROR",
