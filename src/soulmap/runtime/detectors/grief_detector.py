@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 from soulmap.runtime.io.cli_payload import (
@@ -33,6 +34,20 @@ AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
 COMPLICATED_GRIEF = _GRIEF_GROUPS["complicated grief"]
 
 HistoryMessage = dict[str, str]
+
+
+def _affirmative_readiness(message: str) -> bool:
+    """Reject readiness phrases negated or qualified by the user's wording."""
+    if not any(phrase in message for phrase in _READINESS_SIGNALS):
+        return False
+    return not bool(
+        re.search(
+            r"\\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
+            r"\\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
+            r"\\bnot sure\\b.{0,40}\\bready\\b",
+            message,
+        )
+    )
 
 
 def _acute_loss_anchor(text: str) -> str | None:
@@ -144,7 +159,7 @@ def detect_grief(
         ),
         None,
     )
-    readiness_detected = any(phrase in msg for phrase in _READINESS_SIGNALS)
+    readiness_detected = _affirmative_readiness(msg)
     current_turn_continues_grief = readiness_detected or any(
         phrase in msg for phrase in history_grief_signals
     )
