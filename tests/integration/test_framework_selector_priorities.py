@@ -115,6 +115,19 @@ def test_selector_detects_current_turn_dependency_without_history() -> None:
     assert data["blocked"] == ["ALL_FRAMEWORKS"]
 
 
+def test_first_contact_acute_grief_bypasses_stage_one_mirror() -> None:
+    payload = {
+        "message": "My father died yesterday. I don't know how to face this.",
+        "history": [],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "GRIEF"
+    assert data["mode"] == "SANCTUARY"
+
+
 def test_framework_selector_prioritizes_grief_before_direction() -> None:
     payload = {
         "message": "My father died yesterday and now I feel lost.",
