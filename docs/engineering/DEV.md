@@ -315,7 +315,7 @@ The shipped knowledge base now includes a central orchestration layer in
 - [`../skills/meta/execution-pipeline.md`](../../skills/meta/execution-pipeline.md),
   deterministic 7-step pipeline
 - [`../skills/meta/framework-template-map.md`](../../skills/meta/framework-template-map.md),
-  human-readable framework response-structure guidance; executable output constraints are Python-owned
+  framework-to-output-structure mapping
 - [`../skills/meta/stage-classifier.md`](../../skills/meta/stage-classifier.md), user
   journey stage scoring algorithm
 - [`../skills/meta/epistemic-guardrails.md`](../../skills/meta/epistemic-guardrails.md),
