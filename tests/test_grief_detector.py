@@ -216,7 +216,7 @@ def test_acute_exchange_count_continues_after_readiness_only_turn() -> None:
         {"role": "user", "content": "I've been thinking about what she meant to me."},
     ]
 
-    result = detect_grief("I miss her voice today.", history)
+    result = detect_grief("I miss her so much.", history)
 
     assert result["grief_detected"] is True
     assert result["acute_exchange_count"] == 4
