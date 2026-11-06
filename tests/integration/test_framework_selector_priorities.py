@@ -140,7 +140,7 @@ def test_framework_selector_accepts_grief_specific_readiness_after_initial_perio
         {"role": "user", "content": "I don't know how to do this without her."},
     ]
     payload = {
-        "message": "I've been thinking about what she meant to me.",
+        "message": "My mother died last week. I've been thinking about what she meant to me.",
         "history": history,
         "memory": {},
     }
