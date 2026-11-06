@@ -119,9 +119,7 @@ def detect_grief(
         phrase in msg for phrase in history_grief_signals
     )
     acute_exchange_count = (
-        len(current_grief_sequence)
-        - first_acute
-        + int(current_turn_continues_grief)
+        len(current_grief_sequence) - first_acute + int(current_turn_continues_grief)
         if first_acute is not None
         else int(any(phrase in msg for phrase in ACUTE_GRIEF))
     )
