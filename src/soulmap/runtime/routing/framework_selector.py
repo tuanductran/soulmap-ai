@@ -857,9 +857,7 @@ async def select_framework_async(
             # Count the current user message as the current exchange. A question
             # becomes eligible only after the first three exchanges and when
             # the insight detector sees readiness in the user's own words.
-            context["grief_readiness"] = _grief_question_allowed(
-                result, res["insight"]
-            )
+            context["grief_readiness"] = _grief_question_allowed(result, res["insight"])
         selection = {
             "primary_framework": rule.framework,
             "secondary_layer": secondary,

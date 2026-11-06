@@ -94,7 +94,11 @@ def detect_grief(
     ]
     recent = user_history[-int(_RULES["Recent user history window"]) :]
     first_acute = next(
-        (index for index, prior in enumerate(recent) if any(p in prior for p in ACUTE_GRIEF)),
+        (
+            index
+            for index, prior in enumerate(recent)
+            if any(p in prior for p in ACUTE_GRIEF)
+        ),
         None,
     )
     acute_exchange_count = (
