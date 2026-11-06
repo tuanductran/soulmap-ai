@@ -40,15 +40,13 @@ def _affirmative_readiness(message: str) -> bool:
     """Reject readiness phrases negated or qualified by the user's wording."""
     if not any(phrase in message for phrase in _READINESS_SIGNALS):
         return False
-    return not bool(
-        re.search(
-            r"\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
-            r"\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
-            r"\bnot sure\\b.{0,40}\\bready\\b",
-            message,
-        )
+    negated_or_uncertain = re.search(
+        r"\\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
+        r"\\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
+        r"\\bnot sure\\b.{0,40}\\bready\\b",
+        message,
     )
-
+    return not bool(negated_or_uncertain)
 
 def _acute_loss_anchor(text: str) -> str | None:
     """Return the most specific Markdown-authored explicit loss anchor."""
