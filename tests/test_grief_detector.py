@@ -98,10 +98,12 @@ def test_acute_exchange_count_starts_at_first_acute_grief_signal() -> None:
         {"role": "assistant", "content": "That sounds tiring."},
         {"role": "user", "content": "My mother died last week."},
         {"role": "assistant", "content": "I am sorry for your loss."},
-        {"role": "user", "content": "I keep remembering her voice."},
+        {"role": "user", "content": "My dog died yesterday, and I keep remembering her voice."},
     ]
 
-    result = detect_grief("I have been thinking about what she meant to me.", history)
+    result = detect_grief(
+        "I have been thinking about what she meant to me.", history
+    )
 
     assert result["grief_detected"] is True
     assert result["acute_exchange_count"] == 3
@@ -111,10 +113,12 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
     history = [
         {"role": "user", "content": "I had a difficult week at work."},
         {"role": "user", "content": "My mother died last week."},
-        {"role": "user", "content": "I keep remembering her voice."},
+        {"role": "user", "content": "My dog died yesterday, and I keep remembering her voice."},
     ]
 
-    result = detect_grief("I have been thinking about what she meant to me.", history)
+    result = detect_grief(
+        "I have been thinking about what she meant to me.", history
+    )
 
     assert result["grief_detected"] is True
     assert result["acute_exchange_count"] == 3
