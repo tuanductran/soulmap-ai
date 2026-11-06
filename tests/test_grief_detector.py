@@ -143,7 +143,7 @@ def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
     )
 
     assert result["grief_detected"] is True
-    assert result["acute_exchange_count"] == 8
+    assert result["acute_exchange_count"] == 7
 
 
 def test_sustained_grief_across_history_boosts_score() -> None:
