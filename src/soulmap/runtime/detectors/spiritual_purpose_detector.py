@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/spiritual-purpose.md,
@@ -22,10 +22,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 SPIRITUAL_PURPOSE_SIGNALS = load_keyword_section(
     runtime_skill_path("spiritual-purpose"), "Activation Signals"
 )
-_RULES = load_key_value_table(
-    runtime_skill_path("spiritual-purpose"),
-    "Detection policy",
-)
+_RULES = DETECTOR_CONFIG["spiritual_purpose"]
 _GUIDANCE = load_runtime_guidance(runtime_skill_path("spiritual-purpose"))
 
 

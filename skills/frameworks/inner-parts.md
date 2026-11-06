@@ -468,16 +468,7 @@ Avoidant part:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Explicit-conflict weight | 3 |
-| Self-dialogue weight | 2 |
-| Part-naming weight | 2 |
-| Behavioral-confusion weight | 2 |
-| Historical explicit-conflict bonus | 1 |
-| Minimum detection score | 2 |
-| History window | 3 |
-| Historical signal limit | 8 |
+Treat these signals as contextual clues, not conclusions. Name only the parts that are evident in the user's own words, and do not take sides.
 
 ### Guidance
 

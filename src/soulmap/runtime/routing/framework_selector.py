@@ -51,6 +51,7 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.framework_template_source import resolve_template
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
@@ -59,6 +60,22 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _grief_question_allowed(
+    grief: dict[str, object], insight: dict[str, object]
+) -> bool:
+    """Allow a post-readiness question only after the initial acute-grief exchanges."""
+    exchange_count = grief.get("acute_exchange_count")
+    exchange_window = DETECTOR_CONFIG["grief"]["Initial acute exchange window"]
+    return (
+        isinstance(exchange_count, int)
+        and exchange_count > exchange_window
+        and (
+            bool(grief.get("readiness_detected"))
+            or bool(insight.get("insight_detected"))
+        )
+    )
 
 
 def _analyze_synthesis(
@@ -353,8 +370,9 @@ async def select_framework_async(
             "context": dep,
             "instruction": (
                 "Dependency redirect. Use DEP_REDIRECT from "
-                "skills/frameworks/emotional-deescalation.md. Warm, direct, "
-                "one question pointing toward real-world support."
+                "skills/frameworks/emotional-deescalation.md. Warm and direct; "
+                "clearly point toward real-world support. A question is optional; "
+                "ask at most one only when appropriate and welcome."
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -421,9 +439,18 @@ async def select_framework_async(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
     early_stage_value = early_stage.get("stage", 1)
+    early_grief = await _run_detector_async(
+        "grief_detector",
+        detect_grief,
+        message,
+        history,
+        debug_events=debug_events,
+    )
     if (
         early_stage_value == 1
         and user_count + 1 <= orchestration_rules.stage_1_max_user_messages
+        and intensity_level != "HIGH"
+        and not early_grief.get("grief_detected")
     ):
         selection = {
             "primary_framework": "MIRROR",
@@ -567,7 +594,12 @@ async def select_framework_async(
                     else None
                 ),
                 "mode": grief_rule.mode,
-                "context": grief,
+                "context": {
+                    **grief,
+                    # Acute grief stays question-free for the first 2-3 user
+                    # exchanges. Readiness must also be present in the user's words.
+                    "grief_readiness": _grief_question_allowed(grief, insight),
+                },
                 "instruction": grief.get("recommendation", ""),
                 "blocked": list(grief_rule.blocked),
             }
@@ -834,11 +866,17 @@ async def select_framework_async(
             if rule.insight_secondary and res["insight"].get("insight_detected")
             else None
         )
+        context = dict(result)
+        if rule.framework == "GRIEF":
+            # Count only the current contiguous grief sequence. A question becomes
+            # eligible after the initial exchanges when grief-specific or general
+            # insight readiness appears in the user's own words.
+            context["grief_readiness"] = _grief_question_allowed(result, res["insight"])
         selection = {
             "primary_framework": rule.framework,
             "secondary_layer": secondary,
             "mode": rule.mode,
-            "context": result,
+            "context": context,
             "instruction": result.get("recommendation", ""),
             "blocked": list(rule.blocked),
         }

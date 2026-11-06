@@ -307,22 +307,7 @@ Post-reflection validation, user confirming something that was reflected back:
 
 ## Detection policy
 
-The following values define the operational insight-detection policy.
-
-### Scoring
-
-| Rule | Value |
-| :--- | :--- |
-| Explicit insight weight | 3 |
-| Emerging insight weight | 2 |
-| Self-application weight | 2 |
-| Post-reflection validation weight | 2 |
-| Validation-of-reflection bonus | 3 |
-| Minimum detection score | 2 |
-| Strong insight minimum score | 4 |
-| Validation history window | 3 |
-| Validation maximum user word count | 30 |
-| Classification priority | Notice it earlier; When it appears; Consider a different response |
+The signals below help notice when an insight may be ready for gentle integration. Treat confirmation as resonance with the reflection, not proof that the interpretation is objectively true.
 
 ### Insight classification signals
 
@@ -332,7 +317,7 @@ The following values define the operational insight-detection policy.
 | When it appears | when does; when do i; where does; where do i; what situations; what triggers; always happens when |
 | Consider a different response | what would i do; what could i do; different response; respond differently; handle it; next time |
 
-First matching type wins in the order: notice it earlier, when it appears, consider a different response. If none matches, hold the insight first.
+If none of these types fits the user's words, hold the insight first.
 
 ### Reflection-validation signals
 
@@ -341,7 +326,7 @@ First matching type wins in the order: notice it earlier, when it appears, consi
 | Assistant integration triggers | pattern that may appear; part of you that; sometimes when; i wonder if |
 | User validation | yes; exactly; resonates; right; true; that's it; that fits; spot on |
 
-The validation bonus applies only when an assistant integration trigger occurred within the configured history window and the current user message contains a validation phrase within the configured word limit.
+A user's confirmation is most meaningful when it responds to a specific reflection offered in the conversation. Keep the reflection tentative and let the user decide whether it fits.
 
 ### Guidance
 

@@ -49,7 +49,7 @@ def test_safety_gate_checks_dependency_in_current_message_with_empty_history() -
     assert selection["primary_framework"] == "DEPENDENCY"
 
 
-def test_safety_gate_counts_repeated_current_decision_turn() -> None:
+def test_safety_gate_does_not_override_repeated_decision_only_turn() -> None:
     message = "Help me decide."
     result = apply_safety_gate(
         message,
@@ -58,10 +58,8 @@ def test_safety_gate_counts_repeated_current_decision_turn() -> None:
         {"primary_framework": "MIRROR", "mode": "MIRROR"},
     )
 
-    assert result["status"] == "OVERRIDE"
-    assert result["reason"] == "high_dependency"
-    selection = cast(dict[str, object], result["selection"])
-    assert selection["primary_framework"] == "DEPENDENCY"
+    assert result["status"] == "PASS"
+    assert result["reason"] == "no_override"
 
 
 def test_safety_gate_does_not_block_benign_instructions_language() -> None:

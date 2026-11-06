@@ -79,8 +79,9 @@ def apply_safety_gate(
                 "context": dependency,
                 "instruction": (
                     "Dependency redirect. Use DEP_REDIRECT from "
-                    "skills/frameworks/emotional-deescalation.md. Warm, direct, one "
-                    "question pointing toward real-world support."
+                    "skills/frameworks/emotional-deescalation.md. Warm and direct; "
+                    "clearly point toward real-world support. A question is optional; "
+                    "ask at most one only when appropriate and welcome."
                 ),
                 "blocked": ["ALL_FRAMEWORKS"],
             },

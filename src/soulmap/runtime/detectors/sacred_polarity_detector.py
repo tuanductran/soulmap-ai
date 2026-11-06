@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/sacred-feminine-masculine.md,
@@ -23,10 +23,11 @@ SACRED_POLARITY_SIGNALS = load_keyword_section(
     runtime_skill_path("sacred-feminine-masculine"),
     "Activation Signals",
 )
-_RULES = load_key_value_table(
+POLARITY_FRAMING_SIGNALS = load_keyword_section(
     runtime_skill_path("sacred-feminine-masculine"),
-    "Detection policy",
+    "Explicit Polarity Framing",
 )
+_RULES = DETECTOR_CONFIG["sacred_polarity"]
 _GUIDANCE = load_runtime_guidance(
     runtime_skill_path("sacred-feminine-masculine"),
     "Guidance",
@@ -40,14 +41,24 @@ def detect_sacred_polarity(
 ) -> dict[str, object]:
     """Detect the user exploring balance of receptivity and action, surrender and will."""
     msg = message.lower().strip()
+    prior_user_text = " ".join(
+        item.get("content", "").lower()
+        for item in (history or [])
+        if isinstance(item, dict) and item.get("role") == "user"
+    )
+    framing_context = f"{prior_user_text} {msg}"
+    has_user_polarity_frame = any(
+        phrase in framing_context for phrase in POLARITY_FRAMING_SIGNALS
+    )
     signals: list[str] = []
     score = 0
 
-    for phrase in SACRED_POLARITY_SIGNALS:
-        if phrase in msg:
-            score += int(_RULES["Activation signal weight"])
-            signals.append(f"sacred_polarity: '{phrase}'")
-            break
+    if has_user_polarity_frame:
+        for phrase in SACRED_POLARITY_SIGNALS:
+            if phrase in msg:
+                score += int(_RULES["Activation signal weight"])
+                signals.append(f"sacred_polarity: '{phrase}'")
+                break
 
     if score < int(_RULES["Minimum detection score"]):
         return {

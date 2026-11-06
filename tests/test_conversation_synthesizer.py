@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import cast
 
+import pytest
+
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.synthesis_source import load_synthesis_rules
 from soulmap.runtime.synthesis import conversation_synthesizer as synthesizer
 
@@ -91,7 +95,7 @@ def test_merge_memory_themes_handles_invalid_or_empty_memory_values() -> None:
     )
 
 
-def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
+def test_synthesis_rules_combine_python_config_and_semantic_markdown() -> None:
     rules = load_synthesis_rules()
 
     assert rules.minimum_user_messages == 6
@@ -100,6 +104,9 @@ def test_synthesis_rules_are_loaded_from_runtime_markdown_contract() -> None:
     assert rules.max_themes == 3
     assert rules.max_anchors == 2
     assert rules.max_longitudinal == 3
+    assert rules.minimum_theme_occurrences == 2
+    assert rules.minimum_sessions_for_longitudinal == 3
+    assert rules.max_memory_themes == 5
     assert "can you synthesize" in rules.explicit_requests
     assert "session_opening" in rules.response_guidance
     assert "recommendation" in rules.response_guidance
@@ -196,6 +203,23 @@ def test_synthesize_includes_current_message_with_prior_history() -> None:
     assert themes["values"] == [{"theme": "autonomy", "score": 2, "anchors": [1, 5]}]
 
 
+def test_synthesize_allows_explicit_request_with_short_longitudinal_history() -> None:
+    history = _user_messages(
+        [
+            "I feel lonely and my own path matters.",
+        ]
+    )
+    result = synthesizer.synthesize(
+        "Can you synthesize what keeps returning? I feel lonely and my own path matters.",
+        history,
+        {"recurring_themes": ["loneliness", "autonomy"], "session_count": 4},
+    )
+
+    assert result["synthesis_ready"] is True
+    assert result["is_longitudinal"] is True
+    assert len(cast(list[object], result["top_themes"])) >= 1
+
+
 def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
     history = _user_messages(
         [
@@ -267,3 +291,55 @@ def test_synthesis_response_policy_is_markdown_authored() -> None:
     assert result["synthesis_ready"] is True
     assert "These threads are yours" in str(result["synthesis_frame"])
     assert "Activate Conversation Pattern Synthesizer" in str(result["recommendation"])
+
+
+def test_value_and_conflict_thresholds_use_runtime_configuration(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    rules = load_synthesis_rules()
+    monkeypatch.setattr(
+        synthesizer, "_rules", lambda: replace(rules, minimum_theme_occurrences=3)
+    )
+    messages = _user_messages(
+        [
+            "I feel lonely and my own path matters. I want connection but pull away.",
+            "I feel lonely and my own path matters. I want connection but pull away.",
+        ]
+    )
+
+    themes = synthesizer.extract_themes(messages)
+
+    assert themes.get("emotional", []) == []
+    assert themes.get("values", []) == []
+    assert themes.get("conflicts", []) == []
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["missing", "extra", "zero", "negative", "boolean", "non_integer"],
+)
+def test_synthesis_loader_rejects_invalid_python_limits(
+    monkeypatch: pytest.MonkeyPatch, mutation: str
+) -> None:
+    """Reject incomplete or invalid Python-owned synthesis limits."""
+    values = dict(DETECTOR_CONFIG["conversation_synthesis"])
+    if mutation == "missing":
+        values.pop("max_themes")
+    elif mutation == "extra":
+        values["unexpected"] = 1
+    elif mutation == "zero":
+        values["max_themes"] = 0
+    elif mutation == "negative":
+        values["max_themes"] = -1
+    elif mutation == "boolean":
+        values["max_themes"] = cast(int, True)
+    else:
+        values["max_themes"] = cast(int, "3")
+
+    load_synthesis_rules.cache_clear()
+    monkeypatch.setitem(DETECTOR_CONFIG, "conversation_synthesis", values)
+    try:
+        with pytest.raises(ValueError, match="Conversation synthesis limits"):
+            load_synthesis_rules()
+    finally:
+        load_synthesis_rules.cache_clear()

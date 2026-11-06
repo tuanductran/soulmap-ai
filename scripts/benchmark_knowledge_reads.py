@@ -31,7 +31,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 from soulmap.runtime.source_registry import runtime_skill_path
 
 Benchmark = Callable[[], object]
-TABLE_HEADINGS = ("Scoring", "Guidance")
+TABLE_HEADINGS = ("Insight classification signals", "Reflection-validation signals")
 
 
 def _uncached_key_value_table(text: str, heading: str) -> dict[str, str]:
@@ -53,32 +53,33 @@ def _uncached_detector_knowledge_loads() -> dict[str, object]:
             "empath-boundary",
             "ancestral-patterns",
             "somatic-wellbeing",
-            "pattern-mapper",
+            "meaning-integration",
         )
     }
     empath = sources["empath-boundary"]
     ancestral = sources["ancestral-patterns"]
     somatic = sources["somatic-wellbeing"]
-    pattern = sources["pattern-mapper"]
+    insight = sources["meaning-integration"]
     return {
         "empath.activation": extract_keyword_section(empath, "Activation Signals"),
         "empath.drain": extract_keyword_section(empath, "Drain signals"),
         "empath.people_context": extract_keyword_section(
             empath, "People-context signals"
         ),
-        "empath.contract": _uncached_key_value_table(empath, "Detection policy"),
         "empath.guidance": _uncached_key_value_table(empath, "Guidance"),
         "ancestral.activation": extract_keyword_section(
             ancestral, "Activation Signals"
         ),
         "ancestral.groups": extract_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": _uncached_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": _uncached_key_value_table(ancestral, "Guidance"),
         "somatic.groups": extract_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": _uncached_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": _uncached_key_value_table(somatic, "Guidance"),
-        "pattern.scoring": _uncached_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": _uncached_key_value_table(pattern, "Guidance"),
+        "insight.classification": _uncached_key_value_table(
+            insight, "Insight classification signals"
+        ),
+        "insight.validation": _uncached_key_value_table(
+            insight, "Reflection-validation signals"
+        ),
     }
 
 
@@ -87,22 +88,23 @@ def _cached_detector_knowledge_loads() -> dict[str, object]:
     empath = runtime_skill_path("empath-boundary")
     ancestral = runtime_skill_path("ancestral-patterns")
     somatic = runtime_skill_path("somatic-wellbeing")
-    pattern = runtime_skill_path("pattern-mapper")
+    insight = runtime_skill_path("meaning-integration")
     return {
         "empath.activation": load_keyword_section(empath, "Activation Signals"),
         "empath.drain": load_keyword_section(empath, "Drain signals"),
         "empath.people_context": load_keyword_section(empath, "People-context signals"),
-        "empath.contract": load_key_value_table(empath, "Detection policy"),
         "empath.guidance": load_key_value_table(empath, "Guidance"),
         "ancestral.activation": load_keyword_section(ancestral, "Activation Signals"),
         "ancestral.groups": load_labeled_groups(ancestral, "Detection signals"),
-        "ancestral.scoring": load_key_value_table(ancestral, "Scoring"),
         "ancestral.guidance": load_key_value_table(ancestral, "Guidance"),
         "somatic.groups": load_labeled_groups(somatic, "Detection signals"),
-        "somatic.contract": load_key_value_table(somatic, "Detection policy"),
         "somatic.guidance": load_key_value_table(somatic, "Guidance"),
-        "pattern.scoring": load_key_value_table(pattern, "Scoring"),
-        "pattern.guidance": load_key_value_table(pattern, "Guidance"),
+        "insight.classification": load_key_value_table(
+            insight, "Insight classification signals"
+        ),
+        "insight.validation": load_key_value_table(
+            insight, "Reflection-validation signals"
+        ),
     }
 
 
@@ -111,7 +113,7 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
     empath = runtime_skill_path("empath-boundary")
     ancestral = runtime_skill_path("ancestral-patterns")
     somatic = runtime_skill_path("somatic-wellbeing")
-    pattern = runtime_skill_path("pattern-mapper")
+    insight = runtime_skill_path("meaning-integration")
 
     def keyword(path: Path, heading: str) -> tuple[str, ...]:
         return extract_keyword_section(path.read_text(encoding="utf-8"), heading)
@@ -126,17 +128,14 @@ def _uncached_detector_loader_calls() -> dict[str, object]:
         "empath.activation": keyword(empath, "Activation Signals"),
         "empath.drain": keyword(empath, "Drain signals"),
         "empath.people_context": keyword(empath, "People-context signals"),
-        "empath.contract": table(empath, "Detection policy"),
         "empath.guidance": table(empath, "Guidance"),
         "ancestral.activation": keyword(ancestral, "Activation Signals"),
         "ancestral.groups": groups(ancestral, "Detection signals"),
-        "ancestral.scoring": table(ancestral, "Scoring"),
         "ancestral.guidance": table(ancestral, "Guidance"),
         "somatic.groups": groups(somatic, "Detection signals"),
-        "somatic.contract": table(somatic, "Detection policy"),
         "somatic.guidance": table(somatic, "Guidance"),
-        "pattern.scoring": table(pattern, "Scoring"),
-        "pattern.guidance": table(pattern, "Guidance"),
+        "insight.classification": table(insight, "Insight classification signals"),
+        "insight.validation": table(insight, "Reflection-validation signals"),
     }
 
 
@@ -168,6 +167,30 @@ def _valid_median(results: dict[str, Any], name: str) -> float | None:
     return median if math.isfinite(median) and median > 0.0 else None
 
 
+def _workload_signature(
+    report: dict[str, Any],
+) -> tuple[str, tuple[str, ...], tuple[str, ...]] | None:
+    """Return stable workload identity fields required for safe report comparison."""
+    workload = report.get("workload")
+    if not isinstance(workload, dict):
+        return None
+    source = workload.get("source")
+    headings = workload.get("headings")
+    detector_sources = workload.get("detector_sources")
+    if (
+        not isinstance(source, str)
+        or not source
+        or not isinstance(headings, list)
+        or not headings
+        or not all(isinstance(item, str) and item for item in headings)
+        or not isinstance(detector_sources, list)
+        or not detector_sources
+        or not all(isinstance(item, str) and item for item in detector_sources)
+    ):
+        return None
+    return source, tuple(headings), tuple(detector_sources)
+
+
 def compare_reports(
     baseline: dict[str, Any], current: dict[str, Any]
 ) -> dict[str, dict[str, Any]]:
@@ -176,6 +199,8 @@ def compare_reports(
     Missing benchmark names and invalid medians are explicitly not comparable,
     never treated as zero change, and never trigger the regression gate.
     """
+    baseline_workload = _workload_signature(baseline)
+    current_workload = _workload_signature(current)
     baseline_results = baseline.get("benchmarks", {})
     current_results = current.get("benchmarks", {})
     if not isinstance(baseline_results, dict):
@@ -184,7 +209,25 @@ def compare_reports(
         current_results = {}
 
     comparisons: dict[str, dict[str, Any]] = {}
-    for name in sorted(set(baseline_results) | set(current_results)):
+    names = sorted(set(baseline_results) | set(current_results))
+    if (
+        baseline.get("schema_version") != current.get("schema_version")
+        or baseline.get("schema_version") != 2
+        or baseline_workload is None
+        or current_workload is None
+        or baseline_workload != current_workload
+    ):
+        reason = "benchmark schema or workload metadata is missing or differs between reports"
+        return {
+            name: {
+                "status": "invalid",
+                "direction": "not_comparable",
+                "reason": reason,
+            }
+            for name in names
+        }
+
+    for name in names:
         before = _valid_median(baseline_results, name)
         after = _valid_median(current_results, name)
         if before is None or after is None:
@@ -251,7 +294,15 @@ def _measure_interleaved(
 
 def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
     """Run interleaved cache benchmarks for tables and detector knowledge."""
-    markdown_path = runtime_skill_path("pattern-mapper")
+    markdown_path = runtime_skill_path("meaning-integration")
+
+    source_text = markdown_path.read_text(encoding="utf-8")
+    expected_tables = {
+        heading: extract_table_rows(source_text, heading) for heading in TABLE_HEADINGS
+    }
+    if any(not rows for rows in expected_tables.values()):
+        missing = [heading for heading, rows in expected_tables.items() if not rows]
+        raise ValueError(f"Benchmark source is missing required tables: {missing}")
 
     # Refuse to report timings if cache-backed production loaders change meaning.
     expected_knowledge = _uncached_detector_knowledge_loads()
@@ -331,7 +382,7 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         _read_markdown_text_cached.cache_clear()
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "created_at": datetime.now(UTC).isoformat(),
         "repository": "tuanductran/soulmap-ai",
         "python_version": sys.version,
@@ -340,19 +391,19 @@ def run_suite(*, warmups: int, iterations: int) -> dict[str, Any]:
         "processor": platform.processor(),
         "parameters": {"warmups": warmups, "iterations": iterations},
         "workload": {
-            "source": "skills/frameworks/pattern-mapper.md",
+            "source": "skills/frameworks/meaning-integration.md",
             "headings": list(TABLE_HEADINGS),
             "detector_sources": [
                 "skills/frameworks/empath-boundary.md",
                 "skills/frameworks/ancestral-patterns.md",
                 "skills/frameworks/somatic-wellbeing.md",
-                "skills/frameworks/pattern-mapper.md",
+                "skills/frameworks/meaning-integration.md",
             ],
             "description": (
                 "Includes the original two-table microbenchmark and a representative "
                 "detector knowledge workload spanning keyword sections, labeled "
                 "groups, and key/value tables from empath, ancestral, somatic, and "
-                "pattern-mapper Markdown. Cached and uncached outputs are compared "
+                "meaning-integration Markdown. Cached and uncached outputs are compared "
                 "before timing. Samples are interleaved; setup is outside timed samples."
             ),
             "comparison_note": (

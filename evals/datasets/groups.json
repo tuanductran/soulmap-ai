@@ -3310,7 +3310,7 @@
       "skills/meta/orchestration.md"
     ],
     "source_markers": {
-      "skills/frameworks/conversation-synthesis.md": "Two or more distinct themes have appeared across the conversation"
+      "skills/frameworks/conversation-synthesis.md": "Several distinct themes have genuinely recurred across the conversation"
     },
     "items": [
       {
@@ -3381,7 +3381,7 @@
       "skills/meta/orchestration.md"
     ],
     "source_markers": {
-      "skills/frameworks/pattern-mapper.md": "User has shared 2+ stories with the same arc ✓"
+      "skills/frameworks/pattern-mapper.md": "A similar arc recurs across the user's stories ✓"
     },
     "items": [
       {

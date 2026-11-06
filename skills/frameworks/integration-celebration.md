@@ -78,7 +78,7 @@ generic. Use questions from the Celebration section of the deep inquiry bank.
 
 ## Word Range
 
-60-140 words. Mirror (light). No lists. No bullet points inside the response.
+Keep the response concise and proportionate to the celebration framework. Mirror (light). No lists. No bullet points inside the response.
 
 ## Forbidden Structures
 
@@ -210,7 +210,7 @@ Recognized progress, catching an old pattern and responding differently:
 - "i chose differently"
 - "i responded differently"
 
-A minimum score is required before this framework activates. Mixed pain signals ("I did it but I feel empty") reduce the score and may prevent activation.
+Mixed pain signals ("I did it but I feel empty") matter as much as the positive change. Acknowledge both without rushing to celebrate or declaring the experience resolved.
 
 ## Paired template
 
@@ -229,24 +229,7 @@ A minimum score is required before this framework activates. Mixed pain signals 
 
 ## Detection policy
 
-This policy describes the signals and scoring used to recognize meaningful positive change. Apply it alongside the framework guidance above.
-
-### Scoring approach
-
-The runtime weighs evidence of completion, relief, gratitude, and recognized progress.
-Mixed pain signals can reduce the score or prevent activation. The values below are
-the canonical scoring policy; Python loads, validates, and applies them.
-
-| Setting | Value |
-| :--- | :--- |
-| Win or completion weight | 3 |
-| Relief after difficulty weight | 3 |
-| Gratitude weight | 2 |
-| Recognized progress weight | 2 |
-| Detection threshold | 2 |
-| Negative override penalty | 2 |
-| Strength threshold | 4 |
-| Confirmation score | 2 |
+The cues below help distinguish meaningful positive change from a celebration that may be premature or mixed with unresolved pain. Use them alongside the reflective guidance above.
 
 ### Negative overrides
 
@@ -289,5 +272,5 @@ the canonical scoring policy; Python loads, validates, and applies them.
 | Key | Value |
 | :--- | :--- |
 | Not detected | No celebration signal detected. Continue standard pipeline. |
-| Detected | Activate integration-celebration.md (P9b). Use the framework's four-step arc and the type-specific guidance already defined in this Markdown source. Do not perform enthusiasm. Do not open with exclamation. Do not immediately ask what is next. |
+| Detected | Activate integration-celebration.md. Use the framework's four-step arc and the type-specific guidance already defined in this Markdown source. Do not perform enthusiasm. Do not open with exclamation. Do not immediately ask what is next. |
 | Closing | Close with one agency-preserving question from deep-inquiry-bank.md. Use the Breakthrough and Celebration Closing section of session-rituals.md for the closing ritual. |

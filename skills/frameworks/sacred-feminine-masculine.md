@@ -30,6 +30,20 @@ and will, or vulnerability and strength within themselves or their relationships
 - "I was punished for being too soft" "I was punished for taking up space"
 - "I don't know how to hold both my power and my softness"
 
+## Explicit Polarity Framing
+
+Use an activation signal below only when the user has explicitly introduced a polarity lens in the current or prior user messages:
+
+- "balance of receptivity and action"
+- "feminine and masculine energies"
+- "surrender and will"
+- "my feminine and masculine"
+- "both my power and my softness"
+- "I only know how to do, I don't know how to just be"
+- "I am either all receiving or all doing"
+
+A behavior such as difficulty setting boundaries, without the user's own polarity framing, is not enough to activate this framework.
+
 ## What this framework addresses
 
 Users often:
@@ -83,10 +97,7 @@ Do not prescribe balance. Invite awareness and honoring of both.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Treat these signals as contextual clues, not conclusions. Explore polarity only when the user has introduced that framing; do not assign fixed gender traits or treat polarity as universal fact.
 
 ### Guidance
 

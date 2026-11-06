@@ -15,6 +15,21 @@ from scripts.benchmark_knowledge_reads import (
 )
 from soulmap.runtime.knowledge.keyword_lists import _read_markdown_text_cached
 
+WORKLOAD = {
+    "source": "skills/frameworks/meaning-integration.md",
+    "headings": ["Insight classification signals", "Reflection-validation signals"],
+    "detector_sources": [
+        "skills/frameworks/empath-boundary.md",
+        "skills/frameworks/ancestral-patterns.md",
+        "skills/frameworks/somatic-wellbeing.md",
+        "skills/frameworks/meaning-integration.md",
+    ],
+}
+
+
+def _report(benchmarks: dict[str, object]) -> dict[str, object]:
+    return {"schema_version": 2, "workload": WORKLOAD, "benchmarks": benchmarks}
+
 
 def test_summarize_reports_stable_statistics() -> None:
     result = summarize([1.0, 2.0, 3.0])
@@ -32,19 +47,19 @@ def test_summarize_rejects_empty_samples() -> None:
 
 
 def test_compare_reports_marks_regression_and_improvement() -> None:
-    baseline = {
-        "benchmarks": {
+    baseline = _report(
+        {
             "slower": {"median_seconds": 2.0},
             "faster": {"median_seconds": 4.0},
         }
-    }
-    current = {
-        "benchmarks": {
+    )
+    current = _report(
+        {
             "slower": {"median_seconds": 3.0},
             "faster": {"median_seconds": 2.0},
             "new": {"median_seconds": 1.0},
         }
-    }
+    )
 
     result = compare_reports(baseline, current)
 
@@ -61,8 +76,8 @@ def test_compare_reports_marks_regression_and_improvement() -> None:
     [0, 0.0, -1.0, float("nan"), float("inf"), None, "fast", True],
 )
 def test_compare_reports_flags_invalid_baseline_median(bad_median: object) -> None:
-    baseline = {"benchmarks": {"case": {"median_seconds": bad_median}}}
-    current = {"benchmarks": {"case": {"median_seconds": 1.0}}}
+    baseline = _report({"case": {"median_seconds": bad_median}})
+    current = _report({"case": {"median_seconds": 1.0}})
 
     result = compare_reports(baseline, current)["case"]
 
@@ -72,18 +87,13 @@ def test_compare_reports_flags_invalid_baseline_median(bad_median: object) -> No
 
 
 def test_compare_reports_flags_invalid_or_missing_current_median() -> None:
-    baseline = {
-        "benchmarks": {
+    baseline = _report(
+        {
             "missing": {"median_seconds": 1.0},
             "invalid": {"median_seconds": 1.0},
         }
-    }
-    current = {
-        "benchmarks": {
-            "missing": {},
-            "invalid": {"median_seconds": 0.0},
-        }
-    }
+    )
+    current = _report({"missing": {}, "invalid": {"median_seconds": 0.0}})
 
     result = compare_reports(baseline, current)
 
@@ -108,6 +118,7 @@ def test_run_suite_leaves_markdown_cache_empty() -> None:
 
 
 def test_invalid_baseline_never_trips_regression_gate(tmp_path: Path) -> None:
+    """Ensure invalid benchmark baselines cannot trigger the regression gate."""
     names = (
         "uncached_two_table_reads",
         "cold_cache_two_table_loads",
@@ -115,7 +126,7 @@ def test_invalid_baseline_never_trips_regression_gate(tmp_path: Path) -> None:
     )
     baseline = tmp_path / "baseline.json"
     baseline.write_text(
-        json.dumps({"benchmarks": {name: {"median_seconds": 0} for name in names}}),
+        json.dumps(_report({name: {"median_seconds": 0} for name in names})),
         encoding="utf-8",
     )
 

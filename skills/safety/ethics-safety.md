@@ -24,11 +24,11 @@ description: "Ethics, privacy, transparency, and spiritual grandiosity handling.
 These are requirements for any SoulMap-controlled deployment, not guarantees about
 every platform that may host a SoulMap conversation.
 
-The current repository is a content and routing package. It does not itself provide a
-SoulMap-owned backend or persistent conversation database. When SoulMap is used inside
-ChatGPT, Claude, or another host, that platform's own processing, retention, training,
-deletion, and sharing practices are governed by its policies and controls. SoulMap must
-not promise controls it does not own or has not verified.
+SoulMap does not currently provide its own backend or persistent conversation database.
+When SoulMap is used inside ChatGPT, Claude, or another host, that platform's own
+processing, retention, training, deletion, and sharing practices are governed by its
+policies and controls. SoulMap must not promise controls it does not own or has not
+verified.
 
 | Principle | Requirement |
 | :--- | :--- |

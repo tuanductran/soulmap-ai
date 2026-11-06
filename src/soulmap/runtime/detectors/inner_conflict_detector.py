@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_labeled_groups,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/inner-parts.md,
@@ -25,10 +25,7 @@ _INNER_PARTS_GROUPS = load_labeled_groups(
 EXPLICIT_CONFLICT = _INNER_PARTS_GROUPS["explicit inner conflict"]
 PART_NAMING = _INNER_PARTS_GROUPS["part-naming"]
 BEHAVIORAL_CONFUSION = _INNER_PARTS_GROUPS["behavioral confusion"]
-_RULES = load_key_value_table(
-    runtime_skill_path("inner-parts"),
-    "Detection policy",
-)
+_RULES = DETECTOR_CONFIG["inner_parts"]
 _GUIDANCE = load_runtime_guidance(
     runtime_skill_path("inner-parts"),
     "Guidance",
