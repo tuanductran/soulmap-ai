@@ -61,6 +61,18 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
 _LOGGER = logging.getLogger(__name__)
 
 
+def _grief_question_allowed(
+    grief: dict[str, object], insight: dict[str, object]
+) -> bool:
+    """Allow a post-readiness question only after the initial acute-grief exchanges."""
+    exchange_count = grief.get("acute_exchange_count")
+    return (
+        isinstance(exchange_count, int)
+        and exchange_count > 3
+        and bool(insight.get("insight_detected"))
+    )
+
+
 def _analyze_synthesis(
     message: str,
     history: list[dict[str, str]],
@@ -572,9 +584,7 @@ async def select_framework_async(
                     **grief,
                     # Acute grief stays question-free for the first 2-3 user
                     # exchanges. Readiness must also be present in the user's words.
-                    "grief_readiness": (
-                        user_count + 1 > 3 and bool(insight.get("insight_detected"))
-                    ),
+                    "grief_readiness": _grief_question_allowed(grief, insight),
                 },
                 "instruction": grief.get("recommendation", ""),
                 "blocked": list(grief_rule.blocked),
@@ -847,8 +857,8 @@ async def select_framework_async(
             # Count the current user message as the current exchange. A question
             # becomes eligible only after the first three exchanges and when
             # the insight detector sees readiness in the user's own words.
-            context["grief_readiness"] = (
-                user_count + 1 > 3 and bool(res["insight"].get("insight_detected"))
+            context["grief_readiness"] = _grief_question_allowed(
+                result, res["insight"]
             )
         selection = {
             "primary_framework": rule.framework,

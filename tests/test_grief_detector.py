@@ -92,6 +92,34 @@ def test_grief_plus_direction_seeking_still_registers_as_grief() -> None:
     assert result["grief_type"] == "acute"
 
 
+def test_acute_exchange_count_starts_at_first_acute_grief_signal() -> None:
+    history = [
+        {"role": "user", "content": "I had a difficult week at work."},
+        {"role": "assistant", "content": "That sounds tiring."},
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "assistant", "content": "I am sorry for your loss."},
+        {"role": "user", "content": "I keep remembering her voice."},
+    ]
+
+    result = detect_grief("I have been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 3
+
+
+def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
+    history = [
+        {"role": "user", "content": "I had a difficult week at work."},
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I keep remembering her voice."},
+    ]
+
+    result = detect_grief("I have been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 3
+
+
 def test_sustained_grief_across_history_boosts_score() -> None:
     history = [
         {"role": "user", "content": "He died last week and I can't stop crying."},

@@ -44,8 +44,8 @@ def detect_grief(
 
     Args:
         message: The user's current message.
-        history: Prior turns. Accepted for a uniform detector signature and
-            not used, since grief is read from the current message.
+        history: Prior turns, used to measure sustained grief and the number of
+            user exchanges since the first acute-grief signal.
 
     Returns:
         A dict with ``grief_detected``, ``grief_type``, ``score``,
@@ -87,12 +87,23 @@ def detect_grief(
                 grief_type = "complicated"
             break
 
+    user_history = [
+        item["content"].lower()
+        for item in (history or [])
+        if isinstance(item, dict) and item.get("role") == "user"
+    ]
+    recent = user_history[-int(_RULES["Recent user history window"]) :]
+    first_acute = next(
+        (index for index, prior in enumerate(recent) if any(p in prior for p in ACUTE_GRIEF)),
+        None,
+    )
+    acute_exchange_count = (
+        len(recent) - first_acute + 1
+        if first_acute is not None
+        else int(any(phrase in msg for phrase in ACUTE_GRIEF))
+    )
+
     if history:
-        recent = [
-            m["content"].lower()
-            for m in history
-            if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_RULES["Recent user history window"]) :]
         all_grief = (
             ACUTE_GRIEF[: int(_RULES["Acute history signal limit"])]
             + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])]
@@ -110,6 +121,7 @@ def detect_grief(
             "grief_type": None,
             "score": score,
             "signals": [],
+            "acute_exchange_count": acute_exchange_count,
         }
 
     detected_type = grief_type or "acute"
@@ -123,6 +135,7 @@ def detect_grief(
         "grief_type": detected_type,
         "score": score,
         "signals": signals,
+        "acute_exchange_count": acute_exchange_count,
         "recommendation": recommendation,
     }
 
