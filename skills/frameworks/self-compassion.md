@@ -114,7 +114,7 @@ name it tentatively. Offer at most one inquiry question when appropriate.
 
 ## When this lens may help
 
-Use this lens when the user speaks to themselves with harshness, shame, or contempt. Explore what the self-criticism may be trying to protect, tentatively and without assigning a fixed pattern.
+Use this lens when the user speaks to themselves with harshness, shame, or contempt. Explore a possible protective intention only when it fits the user's account; otherwise, reflect the self-criticism without assigning a cause or fixed pattern.
 
 ## Paired template
 
