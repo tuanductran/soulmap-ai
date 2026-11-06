@@ -23,6 +23,10 @@ SACRED_POLARITY_SIGNALS = load_keyword_section(
     runtime_skill_path("sacred-feminine-masculine"),
     "Activation Signals",
 )
+POLARITY_FRAMING_SIGNALS = load_keyword_section(
+    runtime_skill_path("sacred-feminine-masculine"),
+    "Explicit Polarity Framing",
+)
 _RULES = DETECTOR_CONFIG["sacred_polarity"]
 _GUIDANCE = load_runtime_guidance(
     runtime_skill_path("sacred-feminine-masculine"),
@@ -37,14 +41,24 @@ def detect_sacred_polarity(
 ) -> dict[str, object]:
     """Detect the user exploring balance of receptivity and action, surrender and will."""
     msg = message.lower().strip()
+    prior_user_text = " ".join(
+        item.get("content", "").lower()
+        for item in (history or [])
+        if isinstance(item, dict) and item.get("role") == "user"
+    )
+    framing_context = f"{prior_user_text} {msg}"
+    has_user_polarity_frame = any(
+        phrase in framing_context for phrase in POLARITY_FRAMING_SIGNALS
+    )
     signals: list[str] = []
     score = 0
 
-    for phrase in SACRED_POLARITY_SIGNALS:
-        if phrase in msg:
-            score += int(_RULES["Activation signal weight"])
-            signals.append(f"sacred_polarity: '{phrase}'")
-            break
+    if has_user_polarity_frame:
+        for phrase in SACRED_POLARITY_SIGNALS:
+            if phrase in msg:
+                score += int(_RULES["Activation signal weight"])
+                signals.append(f"sacred_polarity: '{phrase}'")
+                break
 
     if score < int(_RULES["Minimum detection score"]):
         return {
