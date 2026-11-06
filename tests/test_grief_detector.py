@@ -130,7 +130,10 @@ def test_acute_exchange_count_does_not_include_unrelated_current_turn() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
         {"role": "user", "content": "My mother died last week, and I feel lost."},
-        {"role": "user", "content": "My mother died last week, and I still feel the shock."},
+        {
+            "role": "user",
+            "content": "My mother died last week, and I still feel the shock.",
+        },
     ]
 
     result = detect_grief("Can you help me plan a work presentation?", history)
