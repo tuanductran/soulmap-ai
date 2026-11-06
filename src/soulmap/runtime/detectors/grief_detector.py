@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
+    load_keyword_section,
     load_labeled_groups,
     load_runtime_guidance,
 )
@@ -23,7 +24,9 @@ _GRIEF_GROUPS = load_labeled_groups(
     runtime_skill_path("grief-companion"), "Detection signals"
 )
 _RULES = DETECTOR_CONFIG["grief"]
-_GUIDANCE = load_runtime_guidance(runtime_skill_path("grief-companion"))
+_SKILL_PATH = runtime_skill_path("grief-companion")
+_READINESS_SIGNALS = load_keyword_section(_SKILL_PATH, "Readiness signals")
+_GUIDANCE = load_runtime_guidance(_SKILL_PATH)
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
@@ -93,19 +96,30 @@ def detect_grief(
         if isinstance(item, dict) and item.get("role") == "user"
     ]
     recent = user_history[-int(_RULES["Recent user history window"]) :]
+    history_grief_signals = (
+        ACUTE_GRIEF + ANTICIPATORY_GRIEF + AMBIGUOUS_LOSS + COMPLICATED_GRIEF
+    )
+    current_grief_sequence: list[str] = []
+    for prior in reversed(user_history):
+        if any(phrase in prior for phrase in history_grief_signals):
+            current_grief_sequence.append(prior)
+        else:
+            break
+    current_grief_sequence.reverse()
     first_acute = next(
         (
             index
-            for index, prior in enumerate(user_history)
-            if any(p in prior for p in ACUTE_GRIEF)
+            for index, prior in enumerate(current_grief_sequence)
+            if any(phrase in prior for phrase in ACUTE_GRIEF)
         ),
         None,
     )
     acute_exchange_count = (
-        len(user_history) - first_acute + 1
+        len(current_grief_sequence) - first_acute + 1
         if first_acute is not None
         else int(any(phrase in msg for phrase in ACUTE_GRIEF))
     )
+    readiness_detected = any(phrase in msg for phrase in _READINESS_SIGNALS)
 
     if history:
         all_grief = (
@@ -126,6 +140,7 @@ def detect_grief(
             "score": score,
             "signals": [],
             "acute_exchange_count": acute_exchange_count,
+            "readiness_detected": readiness_detected,
         }
 
     detected_type = grief_type or "acute"
@@ -140,6 +155,7 @@ def detect_grief(
         "score": score,
         "signals": signals,
         "acute_exchange_count": acute_exchange_count,
+        "readiness_detected": readiness_detected,
         "recommendation": recommendation,
     }
 

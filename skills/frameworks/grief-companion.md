@@ -137,6 +137,18 @@ from Grief Companion toward mirror-mode reflection or meaning integration.
 
 Never force this transition. Let the user lead it.
 
+## Readiness signals
+
+The user is beginning to make meaning of the loss or describe the relationship:
+
+- "I've been thinking about what they meant to me"
+- "I've been thinking about what she meant to me"
+- "I've been thinking about what he meant to me"
+- "I'm starting to understand something about this"
+- "I am starting to understand something about this"
+- "I'm beginning to talk about them"
+- "I'm ready to talk about what happened"
+
 ## Detection signals
 
 Acute grief, loss just happened or recently named:

@@ -126,6 +126,25 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
     assert result["acute_exchange_count"] == 3
 
 
+def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I miss her every day."},
+        {"role": "user", "content": "Can you help me plan a work presentation?"},
+    ]
+
+    result = detect_grief("My dog died yesterday, and I feel lost.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 1
+
+
+def test_grief_specific_readiness_is_loaded_from_markdown() -> None:
+    result = detect_grief("I've been thinking about what she meant to me.")
+
+    assert result["readiness_detected"] is True
+
+
 def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},

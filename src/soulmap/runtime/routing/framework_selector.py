@@ -69,7 +69,10 @@ def _grief_question_allowed(
     return (
         isinstance(exchange_count, int)
         and exchange_count > 3
-        and bool(insight.get("insight_detected"))
+        and (
+            bool(grief.get("readiness_detected"))
+            or bool(insight.get("insight_detected"))
+        )
     )
 
 
@@ -854,9 +857,9 @@ async def select_framework_async(
         )
         context = dict(result)
         if rule.framework == "GRIEF":
-            # Count the current user message as the current exchange. A question
-            # becomes eligible only after the first three exchanges and when
-            # the insight detector sees readiness in the user's own words.
+            # Count only the current contiguous grief sequence. A question becomes
+            # eligible after the initial exchanges when grief-specific or general
+            # insight readiness appears in the user's own words.
             context["grief_readiness"] = _grief_question_allowed(result, res["insight"])
         selection = {
             "primary_framework": rule.framework,
