@@ -303,7 +303,6 @@ def synthesize(
             "recommendation": rules.response_guidance["insufficient_themes"],
         }
 
-
     if is_longitudinal and session_count >= _rules().minimum_sessions_for_longitudinal:
         opening = _rules().response_guidance["longitudinal_opening"]
     else:
