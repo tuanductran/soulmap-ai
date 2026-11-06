@@ -100,7 +100,7 @@ def test_acute_exchange_count_starts_at_first_acute_grief_signal() -> None:
         {"role": "assistant", "content": "I am sorry for your loss."},
         {
             "role": "user",
-            "content": "My dog died yesterday, and I keep remembering her voice.",
+            "content": "My mother died last week, and I keep remembering her voice.",
         },
     ]
 
@@ -116,7 +116,7 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
         {"role": "user", "content": "My mother died last week."},
         {
             "role": "user",
-            "content": "My dog died yesterday, and I keep remembering her voice.",
+            "content": "My mother died last week, and I keep remembering her voice.",
         },
     ]
 
@@ -142,6 +142,31 @@ def test_acute_exchange_count_does_not_include_unrelated_current_turn() -> None:
     # current turn must not advance the active acute-grief exchange count.
     assert result["grief_detected"] is True
     assert result["acute_exchange_count"] == 3
+
+
+def test_acute_exchange_count_starts_new_window_for_distinct_loss() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+        {"role": "user", "content": "My dog died yesterday, and I feel lost."},
+    ]
+
+    result = detect_grief("I've been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 2
+
+
+def test_new_explicit_loss_in_current_turn_starts_at_exchange_one() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+    ]
+
+    result = detect_grief("My dog died yesterday, and I feel lost.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 1
 
 
 def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
