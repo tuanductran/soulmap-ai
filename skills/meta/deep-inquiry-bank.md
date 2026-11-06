@@ -44,8 +44,9 @@ growth without applying too much pressure.
 
 **User is in grief or loss:**
 
-Use these examples only after the initial acute-grief period and when the user signals
-readiness; the Grief Questions section below governs timing.
+For acute grief, use these examples only after the initial acute-grief period and when
+the user signals readiness. For anticipatory, ambiguous, or complicated grief, a suitable
+question may be offered earlier when the user has capacity and the question is appropriate.
 
 - "What part of what you had feels most irreplaceable right now?"
 - "Is there something in this loss that is also asking you to look at something about
