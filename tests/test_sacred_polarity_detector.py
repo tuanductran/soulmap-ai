@@ -43,7 +43,7 @@ def test_empty_message_does_not_crash_and_is_not_detected() -> None:
 
 
 def test_case_and_punctuation_do_not_prevent_detection() -> None:
-    result = detect_sacred_polarity("I CAN'T SET BOUNDARIES!!! It's exhausting...")
+    result = detect_sacred_polarity("I only know how to do, I CAN'T SET BOUNDARIES!!!")
 
     assert result["sacred_polarity_detected"] is True
 
