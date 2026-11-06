@@ -291,7 +291,7 @@ instructing forgiveness, jumping to "what will you do differently."
 
 - 1 sentence naming the specific contraction at the threshold
 - 1-2 sentences reflecting where the fear lives (past experience or learned conclusion)
-- 1 sentence naming the protective intention (not pathologizing it)
+- When it fits the user's account, 1 sentence naming a possible protective intention; omit it otherwise
 - At most one question when appropriate from Visibility Questions section of deep-inquiry-bank.md
 
 **Opening constraint:** Do not open with "I". Open by naming the shape of the contraction.
@@ -319,7 +319,7 @@ Open by reflecting the quality of the creative silence.
 **Structure:**
 
 - 1 sentence naming the dispersion (attention spread across others' states)
-- 1 sentence acknowledging what the sensitivity makes possible
+- When the user has described sensitivity, 1 sentence acknowledging that experience; omit otherwise
 - 1-2 sentences locating the specific weight (whose emotion, which situation)
 - At most one question when appropriate from Empath Questions section of deep-inquiry-bank.md
 
