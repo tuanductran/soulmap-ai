@@ -43,7 +43,9 @@ def test_empty_message_does_not_crash_and_is_not_detected() -> None:
 
 
 def test_case_and_punctuation_do_not_prevent_detection() -> None:
-    result = detect_sacred_polarity("I ONLY KNOW HOW TO DO, I DON'T KNOW HOW TO JUST BE!!!")
+    result = detect_sacred_polarity(
+        "I ONLY KNOW HOW TO DO, I DON'T KNOW HOW TO JUST BE!!!"
+    )
 
     assert result["sacred_polarity_detected"] is True
 
