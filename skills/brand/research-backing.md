@@ -20,9 +20,10 @@ Evidence about AI-companion overreliance comes from different methods and should
 - Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
-SoulMap has no cross-session memory bonding and uses active dependency
-protection that responds on the first signal. Its response guidance aims to return
-agency to the user rather than encourage dependence.
+SoulMap has no cross-session memory bonding. Its response guidance interprets
+dependency signals in context, states its limits when clear evidence warrants it,
+and points users toward specific real people or real-world support while returning
+agency to the user.
 
 ### Reddit-Documented Overreliance and Possessive Behavior Patterns
 
@@ -68,12 +69,14 @@ describing their own overreliance on Character.AI.
   disengage from the app.
 
 **How SoulMap is different:**
-SoulMap's dependency-detection and hard exit protocol activate on the first
-intra-session signal rather than waiting for harm to accumulate, and no persona
-layer is permitted to frame user distance, disengagement, or account inactivity as
-something the AI experiences emotionally. This directly targets the guilt-inducing
-and possessive dynamics documented above. The closing principle (return ownership,
-send attention back to life) is the structural opposite of a guilt-based farewell.
+SoulMap's dependency guidance interprets signals in context rather than treating a
+single phrase as proof. When clear dependency evidence warrants a protective
+response, it states the system's limits and points users toward real-world support.
+Its persona guidance does not frame user distance, disengagement, or account
+inactivity as something the AI experiences emotionally. This directly targets the
+guilt-inducing and possessive dynamics documented above. The closing principle
+(return ownership, send attention back to life) is the structural opposite of a
+guilt-based farewell.
 A banned-phrase check can flag the specific patterns named above (framing a user
 leaving as losing a relationship, or pleading with a user not to go) when response
 text is checked.
