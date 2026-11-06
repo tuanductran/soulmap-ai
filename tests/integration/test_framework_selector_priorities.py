@@ -135,9 +135,9 @@ def test_framework_selector_accepts_grief_specific_readiness_after_initial_perio
 ):
     history = [
         {"role": "user", "content": "My mother died last week."},
-        {"role": "user", "content": "I miss her every day."},
-        {"role": "user", "content": "I keep remembering her voice."},
-        {"role": "user", "content": "The house feels quiet without her."},
+        {"role": "user", "content": "I miss her so much."},
+        {"role": "user", "content": "I still cannot believe she is gone."},
+        {"role": "user", "content": "I don't know how to do this without her."},
     ]
     payload = {
         "message": "I've been thinking about what she meant to me.",

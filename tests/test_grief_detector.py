@@ -129,7 +129,7 @@ def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
 def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
-        {"role": "user", "content": "I miss her every day."},
+        {"role": "user", "content": "I miss her so much."},
         {"role": "user", "content": "Can you help me plan a work presentation?"},
     ]
 
@@ -149,11 +149,11 @@ def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
         {"role": "assistant", "content": "I am sorry for your loss."},
-        {"role": "user", "content": "I miss her every day."},
-        {"role": "user", "content": "I keep remembering her voice."},
-        {"role": "user", "content": "The house feels quiet."},
-        {"role": "user", "content": "I started writing down memories."},
-        {"role": "user", "content": "I feel more ready to talk."},
+        {"role": "user", "content": "I miss her so much."},
+        {"role": "user", "content": "I still cannot believe she is gone."},
+        {"role": "user", "content": "I can't accept it."},
+        {"role": "user", "content": "I am still in shock."},
+        {"role": "user", "content": "I don't know how to do this without her."},
     ]
 
     result = detect_grief(
