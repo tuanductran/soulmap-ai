@@ -109,7 +109,11 @@ def detect_grief(
     ]
     recent = user_history[-int(_RULES["Recent user history window"]) :]
     history_grief_signals = (
-        ACUTE_GRIEF + ANTICIPATORY_GRIEF + AMBIGUOUS_LOSS + COMPLICATED_GRIEF
+        ACUTE_GRIEF
+        + ANTICIPATORY_GRIEF
+        + AMBIGUOUS_LOSS
+        + COMPLICATED_GRIEF
+        + _READINESS_SIGNALS
     )
     current_loss_anchor = _acute_loss_anchor(msg)
     current_grief_sequence: list[str] = []
