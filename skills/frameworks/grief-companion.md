@@ -123,9 +123,9 @@ be practical. When to be philosophical. Never push toward integration.
 
 ## When to Use a Question
 
-In acute grief: hold without questions for the first several exchanges. When the user
-begins to speak more, describing the person, the relationship, the circumstances, one
-question can deepen the sharing.
+In acute grief, do not ask questions during the initial period. Afterward, offer at
+most one question only when the user signals readiness, such as beginning to describe
+the person, relationship, or circumstances.
 
 Questions for grief are in the **Deep Inquiry Bank**, "Grief Questions" section.
 
@@ -136,6 +136,18 @@ When the user begins to make meaning, "I've been thinking about what they meant 
 from Grief Companion toward mirror-mode reflection or meaning integration.
 
 Never force this transition. Let the user lead it.
+
+## Readiness signals
+
+The user is beginning to make meaning of the loss or describe the relationship:
+
+- "I've been thinking about what they meant to me"
+- "I've been thinking about what she meant to me"
+- "I've been thinking about what he meant to me"
+- "I'm starting to understand something about this"
+- "I am starting to understand something about this"
+- "I'm beginning to talk about them"
+- "I'm ready to talk about what happened"
 
 ## Detection signals
 
@@ -254,31 +266,20 @@ Complicated grief, grief stuck, unresolved, or contested:
 - **Output constraints:** `skills/meta/framework-template-map.md` (sections: Grief
   acute, Grief anticipatory, Grief ambiguous, Grief complicated)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Grief Questions section:
-  no questions for first 2-3 exchanges in acute grief)
+  No questions during the initial acute-grief period; afterward, only when the user signals readiness.
 - **Redirect if out of scope:** `skills/meta/redirect-templates.md`
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Acute grief weight | 3 |
-| Anticipatory grief weight | 2 |
-| Ambiguous loss weight | 2 |
-| Complicated grief weight | 2 |
-| Sustained grief weight | 2 |
-| Minimum detection score | 2 |
-| Recent user history window | 4 |
-| Acute history signal limit | 8 |
-| Anticipatory history signal limit | 4 |
-| Ambiguous history signal limit | 4 |
+Treat signals as contextual clues, not conclusions.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
-| Acute grief | Sanctuary only. No questions for first 2-3 exchanges. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
+| Acute grief | Sanctuary only. No questions during the initial acute-grief period; afterward, only when the user signals readiness. Witness the loss. Use grief language from skills/frameworks/grief-companion.md. |
 | Anticipatory grief | Gentle witness. Follow the user's lead. One question when appropriate. No silver linings about what comes after. |
 | Ambiguous loss | VALIDATE first: 'Just because others don't see it as a loss doesn't mean it isn't one.' Then witness. |
 | Complicated grief | Hold both feelings at once. Do not try to resolve complexity. 'It's possible to grieve someone and be angry at them at the same time.' |
