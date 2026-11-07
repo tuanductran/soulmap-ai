@@ -71,12 +71,6 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
         "Detection policy",
         "Guidance",
     ),
-    "framework-template-map": (
-        "skills/meta/framework-template-map.md",
-        "-",
-        "-",
-        "-",
-    ),
     "orchestration": (
         "skills/meta/orchestration.md",
         "-",
