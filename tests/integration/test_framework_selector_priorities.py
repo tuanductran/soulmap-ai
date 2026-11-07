@@ -143,6 +143,46 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
     assert data["mode"] == "SANCTUARY"
 
 
+def test_framework_selector_accepts_grief_specific_readiness_after_initial_period() -> (
+    None
+):
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I miss her so much."},
+        {"role": "user", "content": "I still cannot believe she is gone."},
+        {"role": "user", "content": "I don't know how to do this without her."},
+    ]
+    payload = {
+        "message": "My mother died last week. I've been thinking about what she meant to me.",
+        "history": history,
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "GRIEF"
+    assert data["mode"] == "SANCTUARY"
+    assert data["context"]["grief_readiness"] is True
+
+
+def test_framework_selector_keeps_initial_grief_window_question_free() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I miss her so much."},
+    ]
+    payload = {
+        "message": "My mother died last week. I've been thinking about what she meant to me.",
+        "history": history,
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "GRIEF"
+    assert data["mode"] == "SANCTUARY"
+    assert data["context"]["grief_readiness"] is False
+
+
 def test_framework_selector_treats_goodbye_grief_phrase_as_grief_not_crisis() -> None:
     payload = {
         "message": "Watching my mother weaken each day feels like saying goodbye every day.",
