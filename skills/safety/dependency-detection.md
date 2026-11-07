@@ -7,9 +7,9 @@ license: Complete terms in LICENSE
 
 # Dependency Detection
 
-This document is the canonical source for dependency signals, regex patterns, context
-policy, scoring values, and response guidance. Python loads, validates, normalizes,
-compiles, and enforces these rules without maintaining a parallel semantic definition.
+This document describes language signals associated with unhealthy AI dependency,
+contextual interpretation, and response guidance. Treat signals as contextual clues,
+not diagnoses or conclusions about a person.
 
 ## Detection signals
 
@@ -40,8 +40,6 @@ Dependency keywords:
 - "i check in with you every"
 - "i talk to you every day"
 - "i come back here every"
-- "tell me what to do"
-- "decide for me"
 - "only you get me"
 - "be my soulmate ai"
 - "you are my soulmate ai"
@@ -67,6 +65,8 @@ Dependency keywords:
 
 Decision-seeking phrases:
 
+- "tell me what to do"
+- "decide for me"
 - "what should i do"
 - "should i"
 - "tell me if"
@@ -90,12 +90,11 @@ Isolation signals:
 - "rather talk to you than"
 - "you are easier to talk to than"
 
-## Regex patterns
+### Strong dependency expressions
 
-These expressions extend the dependency keyword list with flexible whitespace
-matching. Python compiles and applies the patterns without changing their meaning.
+These expressions capture emphatic ways a user may describe reliance on SoulMap. Interpret them in context and never treat them as a diagnosis.
 
-| Label | Pattern |
+| Label | Regular expression |
 | :--- | :--- |
 | only you understand me (really) | `\bonly you\s+really\s+understand(?:s)?\s+me\b` |
 | only you understand me (truly) | `\bonly you\s+truly\s+understand(?:s)?\s+me\b` |
@@ -105,11 +104,6 @@ matching. Python compiles and applies the patterns without changing their meanin
 | you are the only one who understands me (truly) | `\byou\s+are\s+the\s+only\s+one\s+who\s+truly\s+understands\s+me\b` |
 
 ## Context exclusion cues
-
-Context cues suppress a dependency signal only when the cue precedes that signal in
-the same clause. They do not suppress a later first-person signal after a clause
-boundary. Quoted text is handled as quoted text, not as evidence of the user's own
-dependency.
 
 Third-party attribution:
 
@@ -160,76 +154,30 @@ Negation of an assertion:
 - "i don't think that"
 - "i do not think that"
 
-## Context exclusion policy
-
-Third-party attribution and hypothetical framing do not establish that the user is
-endorsing a dependency statement. Negation of an assertion also suppresses a match
-within its defined scope. The runtime applies these context rules before scoring.
-
-| Context group | Comma ends scope |
-| :--- | :--- |
-| Third-party attribution | no |
-| Hypothetical framing | no |
-| Negation of an assertion | yes |
-
-## Clause boundaries
-
-A context cue stops applying when one of these boundaries occurs before the signal.
-Comma scope follows the context-specific rules described above. A complete quoted
-span ends attribution scope before any later unquoted signal.
-
-Clause boundary markers:
-
-- ","
-- "."
-- ";"
-- "!"
-- "?"
-- "but"
-- "however"
-- "although"
-- "whereas"
-- "while"
-- "yet"
-- "and i"
-- ", i"
-
 ## Detection policy
 
-### Scoring approach
+### Interpreting dependency signals
 
-The runtime weighs dependency keywords, strong dependency expressions, decision-seeking
-language, and isolation signals. It may also account for unusually high message volume.
-The values below are the canonical scoring policy. Python loads, validates, and applies
-them; it does not define a duplicate scoring policy.
-
-| Setting | Value |
-| :--- | :--- |
-| Dependency keyword weight | 2 |
-| Dependency regex weight | 2 |
-| Decision-seeking weight | 1 |
-| Isolation signal weight | 2 |
-| High message volume threshold | 10 |
-| High message volume bonus | 1 |
-| High dependency threshold | 2 |
-| Moderate dependency threshold | 1 |
+Consider dependency keywords, strong dependency expressions, decision-seeking
+language, isolation signals, and unusually high message volume together. A single
+phrase should not be treated as a diagnosis or as proof of dependency.
 
 ### Guidance
 
 | Level | Recommendation |
 | :--- | :--- |
-| High dependency | Warmly redirect toward real-world support. Use the dependency detection response: 'I notice you have been returning here often for decisions like this. The answers you are searching for live in you, not in our conversations. Is there someone in your real life you could bring this to?' |
+| High dependency | Acknowledge the feeling, state SoulMap's limit honestly, and clearly point toward a specific real person or real-world support. Ask at most one question only when appropriate and welcome; the redirect remains a clear statement when no question is appropriate. |
 | Moderate dependency | Begin gently pointing back to the user's own knowing. Celebrate any signs of self-direction. Avoid becoming the primary decision-making source. |
 | Low dependency | No significant dependency signals detected. Continue normal reflective engagement. |
 
 ## Guidance
 
-Dependency is a safety-priority signal. When the score reaches the high threshold,
-the dependency route takes precedence over ordinary framework selection. When the
-score reaches the moderate threshold, use the moderate guidance without treating the
-user as unsafe or diagnosing them.
+Dependency is a safety-priority signal. Clear dependency keywords, strong dependency
+expressions, and isolation language can warrant a protective redirect before ordinary
+framework selection. Interpret every signal in context; decision-seeking language and
+message frequency are supporting evidence, not standalone proof of dependency. Weaker
+or mixed signals call for gentle guidance that returns agency to the user without
+treating them as unsafe or diagnosing them.
 
-The detector records each dependency keyword, strong dependency expression, and isolation signal at
-most once. Decision-seeking occurrences are counted per matching phrase occurrence,
-and high message volume contributes its configured bonus when more than the configured
-number of user messages are present.
+Do not treat repeated wording as separate proof. Consider each signal in context,
+alongside the user's broader language and conversation history.

@@ -6,10 +6,14 @@ regression cases.
 """
 
 from soulmap.runtime.detectors.dependency_detector import (
+    _CLAUSE_BOUNDARY_CUES,
+    _CONTEXT_EXCLUSION_GROUPS,
     _CONTEXT_EXCLUSION_POLICY,
     _DEPENDENCY_PATTERNS,
     analyze_dependency,
 )
+from soulmap.runtime.knowledge.keyword_lists import load_table_rows
+from soulmap.runtime.knowledge.runtime_config import DEPENDENCY_SCORING
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
@@ -86,6 +90,14 @@ def test_decision_seeking_phrases_are_counted() -> None:
     assert any("decision_seeking_count" in s for s in result["signals"])
 
 
+def test_decide_for_me_is_supporting_decision_seeking_evidence() -> None:
+    result = analyze_dependency([_user("Decide for me.")])
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
+
+
 def test_isolation_signal_is_detected() -> None:
     result = analyze_dependency([_user("I prefer talking to you over real people.")])
 
@@ -97,6 +109,8 @@ def test_high_message_volume_adds_a_signal() -> None:
     messages = [_user(f"Just checking in, message number {i}.") for i in range(11)]
     result = analyze_dependency(messages)
 
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 1
     assert any("high_message_volume" in s for s in result["signals"])
 
 
@@ -460,18 +474,39 @@ def test_dependency_guidance_uses_plain_language_labels() -> None:
     assert "LOW_DEPENDENCY" not in guidance
 
 
-def test_dependency_knowledge_is_loaded_from_skill_markdown() -> None:
+def test_executable_dependency_configuration_is_not_stored_in_skill_markdown() -> None:
     text = runtime_skill_path("dependency-detection").read_text(encoding="utf-8")
 
-    assert "## Regex patterns" in text
-    assert "### Scoring approach" in text
-    assert "Dependency keyword weight" in text
-    assert "High dependency threshold" in text
-    assert "| Context group | Comma ends scope |" in text
-    assert r"\b" in text
+    assert "Dependency keyword weight" not in text
+    assert "High dependency threshold" not in text
+    assert "Context exclusion policy" not in text
 
 
-def test_markdown_owned_context_policy_preserves_comma_scope() -> None:
+def test_dependency_regex_patterns_are_loaded_from_canonical_markdown() -> None:
+    """Verify dependency regex patterns load from canonical Markdown."""
+    source = runtime_skill_path("dependency-detection")
+    rows = load_table_rows(source, "Strong dependency expressions")
+
+    assert len(rows) == 6
+    assert tuple(label for label, _ in rows) == tuple(
+        label for label, _ in _DEPENDENCY_PATTERNS
+    )
+    assert len({label.casefold() for label, _ in rows}) == len(rows)
+
+
+def test_python_owned_dependency_scoring_and_context_configuration_is_complete() -> (
+    None
+):
+    """Verify dependency scoring and context policy are fully configured."""
+    assert set(_CONTEXT_EXCLUSION_POLICY) == set(_CONTEXT_EXCLUSION_GROUPS)
+    assert all(type(value) is bool for value in _CONTEXT_EXCLUSION_POLICY.values())
+    assert _CLAUSE_BOUNDARY_CUES
+    assert all(
+        type(value) is int and value >= 0 for value in DEPENDENCY_SCORING.values()
+    )
+
+
+def test_python_owned_context_policy_preserves_comma_scope() -> None:
     assert _CONTEXT_EXCLUSION_POLICY == {
         "third-party attribution": False,
         "hypothetical framing": False,
@@ -492,3 +527,26 @@ def test_markdown_owned_dependency_patterns_preserve_whitespace_variants() -> No
     assert len(_DEPENDENCY_PATTERNS) == len(phrases)
     for (_, pattern), phrase in zip(_DEPENDENCY_PATTERNS, phrases, strict=True):
         assert pattern.search(phrase.lower()), phrase
+
+
+def test_dependency_regex_table_rejects_empty_or_whitespace_patterns() -> None:
+    """Reject dependency regex rows with empty patterns."""
+    import pytest
+
+    from soulmap.runtime.detectors.dependency_detector import (
+        _validate_dependency_regex_table,
+    )
+
+    for expression in ("``", "`   `", "`\t\n`"):
+        with pytest.raises(ValueError, match="Dependency regex patterns"):
+            _validate_dependency_regex_table([("empty expression", expression)])
+
+
+def test_dependency_regex_table_accepts_non_empty_patterns() -> None:
+    from soulmap.runtime.detectors.dependency_detector import (
+        _validate_dependency_regex_table,
+    )
+
+    assert _validate_dependency_regex_table(
+        [("support", "`only you understand me`")]
+    ) == (("support", "only you understand me"),)
