@@ -82,10 +82,7 @@ Do not ask for commitment or practice. Ask for awareness and honoring.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Treat these signals as contextual clues, not conclusions. Let the user's own account determine whether this lens fits.
 
 ### Guidance
 
