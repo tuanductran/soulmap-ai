@@ -56,7 +56,7 @@ def test_orchestration_configuration_has_expected_sections() -> None:
         for row in ORCHESTRATION_CONFIG["primary_priority"]
     )
     assert all(
-        isinstance(row, list) and len(row) == 3
+        isinstance(row, list) and len(row) == 4
         for row in ORCHESTRATION_CONFIG["intensity_fallback"]
     )
     assert all(
