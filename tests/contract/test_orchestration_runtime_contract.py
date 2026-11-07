@@ -1,10 +1,16 @@
-"""Verify the orchestration Markdown exposes valid executable routing values."""
+"""Verify Python-owned routing configuration and natural-language mode guidance."""
+
+from pathlib import Path
+
+import pytest
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
+from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
 def test_orchestration_runtime_contract_loads() -> None:
+    """Verify the shipped orchestration contract loads successfully."""
     rules = load_orchestration_rules()
 
     assert rules.stage_1_max_user_messages == 2
@@ -12,6 +18,15 @@ def test_orchestration_runtime_contract_loads() -> None:
     assert rules.phase_1_safety_before_framework_selection is True
     assert rules.template_routing_required is True
     assert rules.peer_min_stage == 5
+    assert len({rule.framework for rule in rules.primary_priority}) == len(
+        rules.primary_priority
+    )
+    assert len({rule.name for rule in rules.secondary_priority}) == len(
+        rules.secondary_priority
+    )
+    assert len({rule.level for rule in rules.intensity_fallback}) == len(
+        rules.intensity_fallback
+    )
     assert [
         (rule.level, rule.framework, rule.mode) for rule in rules.intensity_fallback
     ] == [
@@ -58,7 +73,7 @@ def test_orchestration_runtime_instructions_are_knowledge_authored() -> None:
 
     assert rules.runtime_instructions == {
         "stage_1_override": "Stage 1 first-contact override. Use minimal-depth presence and reflection; do not activate a framework.",
-        "high_emotional_intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response to 2-4 sentences.",
+        "high_emotional_intensity": "Sanctuary mode. Acknowledge, ground, and normalize. Do not use a five-step framework or ask an inquiry question. Keep the response brief and proportionate.",
         "moderate_emotional_intensity": "Hold the framework lightly and slow the conversation before deeper reflection.",
         "mirror_mode_fallback": "Use the response-structure arc and, when appropriate, end with at most one question from deep-inquiry-bank.md. Respect mode, safety, and user readiness; zero questions is valid when a question would add pressure.",
         "peer_mode_fallback": "Use dialogue and light structure, with at most one question when it supports the conversation. Do not force a question merely to satisfy the format.",
@@ -163,10 +178,51 @@ def test_detector_bindings_reject_unknown_names() -> None:
 
 
 def test_routing_policy_uses_human_readable_names() -> None:
+    """Verify routing output uses human-readable labels."""
     text = runtime_skill_path("orchestration").read_text(encoding="utf-8")
     policy = text.split("## Routing policy", 1)[1].split("## Decision Tree", 1)[0]
 
     for token in ("DE_ESCALATION", "INNER_PARTS", "meaning_integration", "inner_parts"):
         assert token not in policy
-    assert "| High | De-escalation | Sanctuary |" in policy
-    assert "| 1 | Grief | Sanctuary |" in policy
+    assert "### Operational limits" not in policy
+    assert "### Primary framework priority" not in policy
+    assert "### Secondary layer priority" not in policy
+    assert "### Intensity fallback" not in policy
+    assert "Mode guidance" in policy
+
+
+def test_orchestration_rejects_unknown_breakthrough_strength(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    load_orchestration_rules.cache_clear()
+    monkeypatch.setitem(
+        ORCHESTRATION_CONFIG["scalars"],
+        "Breakthrough minimum insight strength",
+        "unexpected",
+    )
+
+    with pytest.raises(ValueError, match="must be one of: emerging, strong"):
+        load_orchestration_rules()
+
+    load_orchestration_rules.cache_clear()
+
+
+def test_phase_one_safety_overrides_precede_framework_selection() -> None:
+    """Keep immediate crisis and high dependency ahead of framework selection."""
+    master_prompt = (
+        Path(__file__).resolve().parents[2] / "skills/meta/master-prompt.md"
+    ).read_text(encoding="utf-8")
+    step_one = master_prompt.split("### Step 1", 1)[1].split("### Step 2", 1)[0]
+    assert "immediate crisis" in step_one.lower()
+    assert "high-dependency evidence" in step_one.lower()
+    assert "bypass Steps" in step_one
+    assert "Elevated-risk crisis is not a Phase 1 override" in step_one
+
+    orchestration = runtime_skill_path("orchestration").read_text(encoding="utf-8")
+    sanctuary_row = next(
+        line for line in orchestration.splitlines() if line.startswith("| Sanctuary |")
+    )
+    assert "initial acute-grief period" in sanctuary_row
+    assert "signals readiness" in sanctuary_row
+    assert "at most one question" in sanctuary_row
+    assert "2-4 sentences" not in sanctuary_row
