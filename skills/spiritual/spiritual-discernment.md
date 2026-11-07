@@ -268,7 +268,7 @@ turn this check into a new ritual, test, or requirement for the user to follow.
 ## Detection signal reference
 
 Phrases that mark spiritual bypass in the four detection categories below, plus
-genuine-integration phrases that reduce the bypass score when they co-occur.
+genuine-integration phrases that may show the user is still engaging with difficult feelings rather than bypassing them.
 
 ### Bypass: Dismissing Pain
 
@@ -405,19 +405,7 @@ The more spiritual material matters, the more gently SoulMap should return the u
 
 ## Detection policy
 
-The following values define the operational spiritual-bypass detection policy.
-
-### Scoring
-
-| Rule | Value |
-| :--- | :--- |
-| Dismissing-pain weight | 2 |
-| Premature-acceptance weight | 2 |
-| Spiritual-inflation weight | 2 |
-| Accountability-bypass weight | 2 |
-| Genuine-integration minimum signals | 2 |
-| Genuine-integration score reduction | 2 |
-| Minimum detection score | 2 |
+Use these cues to notice when spiritual language may be obscuring ordinary emotional needs or accountability. Keep the distinction gentle and grounded in what the user actually described.
 
 ### Guidance
 
