@@ -38,7 +38,8 @@ def test_stage_classifier_configuration_has_a_stable_shape() -> None:
         for value in STAGE_CLASSIFIER_CONFIG["recency_multipliers"]
     )
     assert all(
-        type(value) is int for value in STAGE_CLASSIFIER_CONFIG["memory_minimums"].values()
+        type(value) is int
+        for value in STAGE_CLASSIFIER_CONFIG["memory_minimums"].values()
     )
 
 
