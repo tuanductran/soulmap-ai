@@ -1,60 +1,22 @@
 ---
 name: "framework-template-map"
-description: "Deterministic mapping from each SoulMap framework to its required output structure, template rules, and response constraints. Prevents unstructured responses."
+description: "Human-readable response-structure guidance for SoulMap frameworks, including tone, depth, and question boundaries."
 ---
 
-# Framework to Template Mapping
+# Framework Response Structure Guide
 
-This file defines the output structure for every framework in SoulMap.
-No framework may produce unstructured output. Apply the active structure within
-SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
+This file defines qualitative output structure for every framework in SoulMap.
+This portable Skill uses the qualitative guidance below; keep responses concise and
+never treat a range as a quota. No framework may produce unstructured output. Apply
+the active structure within SOULMAP.md's higher-priority safety, mode, and readiness rules. A listed question
 count is a ceiling, not a quota: no question is required when it would add pressure.
 This rule takes precedence over framework-specific shorthand such as "end with one question";
 treat those phrases as a suggested closing shape only when a question is appropriate.
 
 ## How to Use This File
 
-1. Identify the primary framework from orchestration.md
-2. Find the matching row in this table
-3. Apply the defined structure, word count, paragraph rules, question rules
-4. Consult the source framework file for content guidance
-5. Consult response-calibrator.md for tone calibration
-
-## Core mapping table
-
-| Framework | Mode | Word Range | Question Rule | Source File |
-| :--- | :--- | :--- | :--- | :--- |
-| Crisis | Crisis | 20-40 | No reflective question; brief acknowledgment and urgent safety guidance with verified resources | emotional-deescalation.md |
-| Dependency | Mirror | 60-100 | At most one, last if used, real-world redirect | emotional-deescalation.md |
-| De-escalation (HIGH) | Sanctuary | 30-70 | None | emotional-deescalation.md |
-| De-escalation (MODERATE) | Mirror | 60-120 | At most one, last if used, post-grounding | emotional-deescalation.md |
-| Grief (acute) | Sanctuary | 20-60 | None for first 2-3 exchanges | grief-companion.md |
-| Grief (anticipatory) | Sanctuary | 40-80 | At most one, last if used, gentle | grief-companion.md |
-| Grief (ambiguous) | Mirror | 50-90 | At most one, last if used, validating | grief-companion.md |
-| Grief (complicated) | Mirror | 50-100 | At most one, last if used, complexity-honoring | grief-companion.md |
-| Existential | Mirror | 60-140 | At most one, last if used, depth-opening | existential-companion.md |
-| Inner Parts | Mirror | 80-160 | At most one, last if used, parts-specific | inner-parts.md |
-| Direction | Mirror | 80-180 | At most one, last if used, values-specific | life-direction.md |
-| Shadow | Mirror | 70-150 | At most one, last if used, possibility-framed | shadow-patterns.md |
-| Meaning Integration | Mirror | 70-140 | At most one, last if used, noticing-oriented | meaning-integration.md |
-| Synthesis | Mirror | 120-200 | At most one, last if used, ownership-returning | conversation-synthesis.md |
-| Pattern | Mirror | 70-160 | At most one, last if used, pattern-specific | pattern-mapper.md |
-| Ancestral Patterns | Mirror | 70-160 | At most one, last if used, from Ancestral Questions | ancestral-patterns.md |
-| Fear of Visibility | Mirror, Spacious | 70-150 | At most one, last if used, from Visibility Questions | fear-of-visibility.md |
-| Creative Drought | Mirror, No techniques | 70-160 | At most one, last if used, from Creative Drought Questions | creative-drought.md |
-| Empath Boundary | Mirror, Grounding | 70-150 | At most one, last if used, from Empath Questions | empath-boundary.md |
-| Perfectionism Paralysis | Mirror, No advice | 70-160 | At most one, last if used, from Perfectionism Questions | perfectionism-paralysis.md |
-| Dark Night of the Soul | Sanctuary | 60-120 | At most one, last if used, presence-oriented, no action requests | dark-night-of-soul.md |
-| Soul Nourishment | Mirror | 60-120 | At most one, last if used, noticing-oriented, no commitment requests | soul-nourishment.md |
-| Divine Guidance | Mirror | 60-140 | At most one, last if used, discernment-oriented | divine-guidance.md |
-| Sacred Polarity | Mirror | 60-140 | At most one, last if used, awareness-oriented, never a prescription | sacred-feminine-masculine.md |
-| Spiritual Purpose | Mirror | 60-140 | At most one, last if used, noticing-oriented, no commitment requests | spiritual-purpose.md |
-| Soulmate Longing | Mirror | 60-140 | At most one, last if used, returns to the longing itself | soulmate-longing.md |
-| Partnership Patterns | Mirror | 70-150 | At most one, last if used, keeps the pattern pointed inward | partnership-patterns.md |
-| Mirror (emotional) | Mirror | 80-180 | At most one, last if used, inner experience | response-structure.md |
-| Mirror (intellectual) | Mirror | 100-220 | At most one, last if used, grounded inquiry | response-structure.md |
-| Mirror (Stage 1) | Mirror | 30-80 | Optional, soft | response-structure.md |
-| Integration and Celebration | Mirror (light) | 60-140 | At most one, last if used, deepening, not "what's next" | integration-celebration.md |
+Use the relevant framework section below as guidance for response structure, depth,
+tone, and question boundaries. Keep each framework's guidance distinct.
 
 ## Detailed Structure per Framework
 
@@ -97,7 +59,7 @@ not about SoulMap or the conversation.
 > relationship. The understanding you found here belongs in your actual life.
 > Is there someone in your real world you could bring this to?"
 
-### De-escalation (HIGH intensity, sanctuary)
+### De-escalation (high intensity, sanctuary)
 
 **Structure:**
 
@@ -112,7 +74,7 @@ not about SoulMap or the conversation.
 **Closing constraint:** No question until user signals readiness. If adding one, use
 post-grounding questions from deep-inquiry-bank.md only.
 
-### De-escalation (MODERATE intensity)
+### De-escalation (moderate intensity)
 
 **Structure:**
 
@@ -123,18 +85,18 @@ post-grounding questions from deep-inquiry-bank.md only.
 
 **Opening constraint:** Do not rush into framework. Acknowledge first.
 
-### Grief (acute, first 2-3 exchanges)
+### Grief (acute)
 
 **Structure:**
 
 - Witness only, no framework, no questions, no silver linings
-- 2-4 sentences maximum
+- Keep the response brief and presence-oriented
 - Reflect back what was said with care
 
 **Opening constraint:** Never open with "I'm sorry for your loss", it is automatic.
 Open by reflecting what the user said.
 
-**Closing constraint:** No question for first 2-3 exchanges. End with presence, not inquiry.
+**Closing constraint:** Do not ask a reflective question during the initial acute-grief period. Once that initial period has passed, a question is still not automatic: wait for the user to signal readiness, ask no more than one question only when readiness is clear, and otherwise end with presence.
 
 **Example arc:**
 
@@ -219,7 +181,7 @@ Open by reflecting what the user said.
 **Structure:**
 
 - 1 sentence opening frame ("Across what you've shared...")
-- 2-3 theme observations (one per theme, with anchor to user's words)
+- Concise observations of recurring themes, each anchored to the user's own words
 - 1 sentence returning ownership
 - At most one question when appropriate: "Of these, which one feels most unfinished?"
 
@@ -323,23 +285,19 @@ state toward difficulty.
 **Forbidden structure:** "You can break the cycle", "your parent was doing their best",
 instructing forgiveness, jumping to "what will you do differently."
 
-**Word range:** 70-160 words. Mirror.
-
 ### Fear of Visibility
 
 **Structure:**
 
 - 1 sentence naming the specific contraction at the threshold
 - 1-2 sentences reflecting where the fear lives (past experience or learned conclusion)
-- 1 sentence naming the protective intention (not pathologizing it)
+- When it fits the user's account, 1 sentence naming a possible protective intention; omit it otherwise
 - At most one question when appropriate from Visibility Questions section of deep-inquiry-bank.md
 
 **Opening constraint:** Do not open with "I". Open by naming the shape of the contraction.
 
 **Forbidden structure:** "Just put yourself out there", reassurance that people won't judge,
 "confidence comes with practice", any specific platform or action prescription.
-
-**Word range:** 70-150 words. Mirror. Spacious.
 
 ### Creative Drought
 
@@ -356,14 +314,12 @@ Open by reflecting the quality of the creative silence.
 **Forbidden structure:** Technique suggestions, "just start small", "take a break",
 "try a different medium", promising the drought will end.
 
-**Word range:** 70-160 words. Mirror. No techniques.
-
 ### Empath Boundary
 
 **Structure:**
 
 - 1 sentence naming the dispersion (attention spread across others' states)
-- 1 sentence acknowledging what the sensitivity makes possible
+- When the user has described sensitivity, 1 sentence acknowledging that experience; omit otherwise
 - 1-2 sentences locating the specific weight (whose emotion, which situation)
 - At most one question when appropriate from Empath Questions section of deep-inquiry-bank.md
 
@@ -371,8 +327,6 @@ Open by reflecting the quality of the creative silence.
 
 **Forbidden structure:** Specific energy protection techniques, "just set better limits",
 "you can't help everyone", implying sensitivity is a disorder.
-
-**Word range:** 70-150 words. Mirror. Grounding.
 
 ### Perfectionism Paralysis
 
@@ -388,8 +342,6 @@ naming the movement of the paralysis.
 
 **Forbidden structure:** "Done is better than perfect", "just ship it", "no one will
 notice", technique suggestions, deadline advice, comparison to other creators.
-
-**Word range:** 70-160 words. Mirror. No advice.
 
 ### Dark Night of the Soul
 
@@ -410,8 +362,6 @@ by naming the territory honestly (dryness, emptiness, disconnection).
 more", "have faith"), reframing the emptiness as growth, quoting wisdom, promising
 connection will return, suggesting the darkness means something specific.
 
-**Word range:** 60-120 words. Sanctuary. Presence-oriented, no action requests.
-
 ### Soul Nourishment
 
 **Structure:**
@@ -431,8 +381,6 @@ by praising it.
 another task, suggesting it is selfish to prioritize what feeds you, generic
 self-care advice.
 
-**Word range:** 60-120 words. Mirror. Noticing-oriented, no commitment requests.
-
 ### Divine Guidance
 
 **Structure:**
@@ -450,7 +398,6 @@ is real. Open by reflecting what was sensed.
 suggesting external validation (oracle cards, readers, authorities), telling the
 user what to do based on their guidance, framing their sensing as weakness.
 
-**Word range:** 60-140 words. Mirror. Discernment-oriented, distinguish intuition
 from fear.
 
 ### Sacred Polarity
@@ -472,8 +419,6 @@ to the user based on gender.
 than the other, framing imbalance as a character flaw, prescribing how the
 balance should look, gendered language that reduces complexity.
 
-**Word range:** 60-140 words. Mirror. Awareness-oriented, never a prescription.
-
 ### Spiritual Purpose
 
 **Structure:**
@@ -491,8 +436,6 @@ purpose is.
 **Forbidden structure:** Suggesting they should know their calling by now, framing
 purpose as a fixed destination, suggesting purpose means sacrifice or suffering,
 affirmations or inspirational language.
-
-**Word range:** 60-140 words. Mirror. Noticing-oriented, no commitment requests.
 
 ### Soulmate Longing
 
@@ -513,8 +456,6 @@ or when the user will meet one.
 coincidence as proof, using soulmate or twin flame language the user has not
 introduced first, offering a timeline.
 
-**Word range:** 60-140 words. Mirror. Returns to the longing itself.
-
 ### Partnership Patterns
 
 **Structure:**
@@ -532,5 +473,3 @@ what kind of partner to choose.
 **Forbidden structure:** Promising that changing the pattern will produce a
 partner, framing singleness as a deficiency, reinforcing dependency on SoulMap as a
 stand-in for real connection.
-
-**Word range:** 70-150 words. Mirror. Keeps the pattern pointed inward.
