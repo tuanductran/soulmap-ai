@@ -92,6 +92,153 @@ def test_grief_plus_direction_seeking_still_registers_as_grief() -> None:
     assert result["grief_type"] == "acute"
 
 
+def test_acute_exchange_count_starts_at_first_acute_grief_signal() -> None:
+    history = [
+        {"role": "user", "content": "I had a difficult week at work."},
+        {"role": "assistant", "content": "That sounds tiring."},
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "assistant", "content": "I am sorry for your loss."},
+        {
+            "role": "user",
+            "content": "My mother died last week, and I keep remembering her voice.",
+        },
+    ]
+
+    result = detect_grief("I've been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 3
+
+
+def test_acute_exchange_count_does_not_include_pre_grief_messages() -> None:
+    history = [
+        {"role": "user", "content": "I had a difficult week at work."},
+        {"role": "user", "content": "My mother died last week."},
+        {
+            "role": "user",
+            "content": "My mother died last week, and I keep remembering her voice.",
+        },
+    ]
+
+    result = detect_grief("I've been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 3
+
+
+def test_acute_exchange_count_does_not_include_unrelated_current_turn() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+        {
+            "role": "user",
+            "content": "My mother died last week, and I still feel the shock.",
+        },
+    ]
+
+    result = detect_grief("Can you help me plan a work presentation?", history)
+
+    # Sustained grief can still be detected from history, but an unrelated
+    # current turn must not advance the active acute-grief exchange count.
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 3
+
+
+def test_acute_exchange_count_starts_new_window_for_distinct_loss() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+        {"role": "user", "content": "My dog died yesterday, and I feel lost."},
+    ]
+
+    result = detect_grief("I've been thinking about what she meant to me.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 2
+
+
+def test_new_explicit_loss_in_current_turn_starts_at_exchange_one() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+    ]
+
+    result = detect_grief("My dog died yesterday, and I feel lost.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 1
+
+
+def test_acute_exchange_count_resets_after_unrelated_user_turns() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "I miss her so much."},
+        {"role": "user", "content": "Can you help me plan a work presentation?"},
+    ]
+
+    result = detect_grief("My dog died yesterday, and I feel lost.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 1
+
+
+def test_negated_grief_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        "My mother died last week. I'm not ready to talk about what happened."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
+def test_uncertain_grief_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        "My mother died last week. I don't know if I'm ready to talk about what happened."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
+def test_grief_specific_readiness_is_loaded_from_markdown() -> None:
+    result = detect_grief("I've been thinking about what she meant to me.")
+
+    assert result["readiness_detected"] is True
+
+
+def test_acute_exchange_count_survives_the_recent_scoring_window() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "assistant", "content": "I am sorry for your loss."},
+        {"role": "user", "content": "I miss her so much."},
+        {"role": "user", "content": "I still cannot believe she is gone."},
+        {"role": "user", "content": "I can't accept it."},
+        {"role": "user", "content": "I am still in shock."},
+        {"role": "user", "content": "I don't know how to do this without her."},
+    ]
+
+    result = detect_grief(
+        "My mother died last week, and I've been thinking about what she meant to me.",
+        history,
+    )
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 7
+
+
+def test_acute_exchange_count_continues_after_readiness_only_turn() -> None:
+    history = [
+        {"role": "user", "content": "My mother died last week."},
+        {"role": "user", "content": "My mother died last week, and I feel lost."},
+        {"role": "user", "content": "I've been thinking about what she meant to me."},
+    ]
+
+    result = detect_grief("I miss her so much.", history)
+
+    assert result["grief_detected"] is True
+    assert result["acute_exchange_count"] == 4
+
+
 def test_sustained_grief_across_history_boosts_score() -> None:
     history = [
         {"role": "user", "content": "He died last week and I can't stop crying."},
