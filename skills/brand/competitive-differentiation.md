@@ -27,24 +27,23 @@ the specific claim.
 | Replika | Its [privacy policy](https://replika.com/legal/privacy/en) says conversation data and preferences are processed to provide individualized conversations and allow the companion to learn from interactions. Its [memory help article](https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work) describes memory layers and personalization over time. | This alone does not establish the company's internal engagement metrics, user outcomes, or whether specific safeguards are absent. |
 | Character.AI | Its [privacy policy](https://support.character.ai/hc/en-us/articles/39030432883099-Privacy-Policy) describes using information to operate, improve, and personalize the service. Its [training-data documentation](https://support.character.ai/hc/en-us/articles/47703013822875-Training-Data-Documentation) says user interaction data is among sources used for model development. | These disclosures do not establish that every feature is designed to create dependency or that the product lacks a particular safety mechanism. |
 | Pi / Inflection AI | Its [privacy policy](https://pi.ai/privacy), last updated 11 August 2026, describes using information to provide, maintain, improve, and personalize services, and says users may opt out of model training in account settings. | This does not prove that engagement is the sole or primary optimization objective, nor does it establish the absence of dependency safeguards. |
-| SoulMap | The SoulMap repository/package has no SoulMap-owned backend or persistent conversation database. Its doctrine explicitly prioritizes user autonomy and reduced dependency. | This is not a claim about the data retention or privacy practices of ChatGPT or any other platform that may host a SoulMap conversation. |
+| SoulMap | SoulMap does not currently provide its own backend or persistent conversation database. Its doctrine explicitly prioritizes user autonomy and reduced dependency. | This is not a claim about the data retention or privacy practices of ChatGPT or any other platform that may host a SoulMap conversation. |
 
 The FTC's [September 2025 inquiry into AI chatbots acting as companions](https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions) sought information from seven companies about engagement monetization, safety evaluation, user inputs, and data practices. It was an information-gathering inquiry, not a finding that every named company engaged in wrongdoing.
 
 Avoid unsupported statements such as "all competitors optimize for dependency", "competitors have no dependency safeguards", or "memory products must retain conversation logs indefinitely". Describe only what a current primary source supports, and label product-level interpretation as interpretation.
 
-## The Anti-Engagement Architecture
+## The Anti-Dependency Approach
 
-SoulMap's anti-dependency posture is enforced at the system level:
+SoulMap's approach is expressed through its response guidance:
 
-- dependency handling activates on the first intra-session dependency signal
-- [boundaries-safety.md](../safety/boundaries-safety.md) defines a hard redirect protocol
-- The response contract in [SOULMAP.md](../../SOULMAP.md) requires every response to leave the user
-  less dependent than before
-- Session closings explicitly return ownership to the user and point toward real-world
-  relationships
-- The quality-assurance suite explicitly checks dependency redirect behavior and
-  independence celebration behavior
+- When the conversation provides clear contextual evidence of dependency, acknowledge
+  the feeling, state SoulMap's limits honestly, and point toward real-world support.
+- [boundaries-safety.md](../safety/boundaries-safety.md) describes how to respond without
+  reinforcing exclusive reliance.
+- The behavioral principle in [SOULMAP.md](../../SOULMAP.md) keeps the user's autonomy
+  primary.
+- Session closings return ownership to the user and point toward real-world relationships.
 
 SoulMap is not trying to be what the market calls a companion. It is trying to be
 what the user actually needs: a clear mirror that eventually becomes unnecessary.
@@ -73,17 +72,16 @@ Do not say: "Here whenever you need me", this is the engagement loop.
 
 ### When positioning to press or technical audiences
 
-Say: "We built in an active exit mechanism. If a user starts to depend on SoulMap
-instead of their real relationships, the system detects this and redirects them."
+Say: "SoulMap's response guidance treats signs of dependency as a reason to
+clarify its limits and encourage support from real people."
 
 Do not say: "We're different because we're safer", this is vague. The specific
 difference is the anti-engagement architecture.
 
 ### When positioning to skeptics
 
-Say: "Most AI companions are optimized for engagement. The more attached you become,
-the better the product's metrics. We have the opposite incentive. Independence is
-literally what we evaluate responses against."
+Say: "SoulMap's standard is that responses should support user autonomy rather
+than encourage reliance on the system."
 
 ## Language that belongs to competitors
 
@@ -100,7 +98,7 @@ See [master-prompt.md](../meta/master-prompt.md) for the complete forbidden phra
 
 ## Sources to check first
 
-- [SOULMAP.md](../../SOULMAP.md): the behavioral contract that enforces anti-dependency at runtime
+- [SOULMAP.md](../../SOULMAP.md): the behavioral guidance that keeps SoulMap from encouraging dependency
 - [boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
 - [brand-doctrine.md](brand-doctrine.md): brand identity
 - [master-prompt.md](../meta/master-prompt.md): forbidden language list
