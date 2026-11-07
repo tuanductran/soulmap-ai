@@ -85,10 +85,7 @@ Do not ask them to commit or act. Ask them to notice and discern.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Treat these signals as contextual clues, not conclusions. Explore spiritual interpretations only as possibilities, never as verified messages or instructions.
 
 ### Guidance
 
