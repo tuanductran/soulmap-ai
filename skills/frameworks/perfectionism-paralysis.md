@@ -119,9 +119,9 @@ When appropriate, choose at most one question from the Perfectionism section of 
 perfectionism is protecting, what it would mean if the thing were imperfect and
 released, or what the earliest memory of "not good enough" was.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not give advice. Do not name what they should do.
+Keep the response concise and proportionate to this framework. Mirror. Do not give advice. Do not name what they should do.
 
 ## Forbidden Structures
 
@@ -168,14 +168,14 @@ Paralysis-specific signals, not starting, not finishing, not releasing:
 - "i almost sent it but"
 - "i keep deleting and starting over"
 
-General perfectionism signals, secondary scoring:
+General perfectionism signals:
 
 - "has to be perfect"
 - "if it's not perfect"
 - "if it is not perfect"
 - "can't start until"
 
-History bonus: repeated not-ready signals across prior turns adds extra weight.
+Repeated hesitation across the conversation can provide useful context; do not infer a pattern from a single moment of delay.
 
 ## Paired template
 
@@ -191,20 +191,14 @@ History bonus: repeated not-ready signals across prior turns adds extra weight.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Paralysis signal weight | 3 |
-| General perfectionism weight | 1 |
-| Persistence bonus | 1 |
-| Minimum detection score | 2 |
-| History window | 4 |
+Treat these signals as contextual clues, not conclusions. Name the specific shape of the stop only when it fits the user's account.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No perfectionism paralysis signal. Continue standard pipeline. |
-| Detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md (P7c). Name the specific shape of the stop. Explore a possible protective function only if it fits the user's account; do not present it as fact. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
+| Detected | Perfectionism paralysis detected. Activate perfectionism-paralysis.md. Name the specific shape of the stop. Explore a possible protective function only if it fits the user's account; do not present it as fact. Do NOT advise 'just ship it' or offer techniques. End with one perfectionism question from deep-inquiry-bank.md (Perfectionism Questions section). |
 
 ### Persistence signal group
 
