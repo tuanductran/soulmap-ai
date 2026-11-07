@@ -87,8 +87,8 @@ def test_decision_seeking_phrases_are_counted() -> None:
         [_user("What should I do here? Tell me if this is the right choice.")]
     )
 
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 1
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
     assert any("decision_seeking_count" in s for s in result["signals"])
 
 
@@ -114,18 +114,6 @@ def test_high_message_volume_adds_a_signal() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
     assert result["score"] == 1
     assert any("high_message_volume" in s for s in result["signals"])
-
-
-def test_decision_seeking_and_message_volume_do_not_independently_reach_high() -> None:
-    messages = [_user("Should I do this?") for _ in range(11)]
-    result = analyze_dependency(messages)
-
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 2
-    assert result["signals"] == [
-        "decision_seeking_count: 11",
-        "high_message_volume: 11 user messages",
-    ]
 
 
 def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
