@@ -381,8 +381,8 @@ def test_current_message_is_counted_when_text_repeats_last_user_turn() -> None:
 
     result = analyze_dependency(history, current_message=message)
 
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 1
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
 
 
@@ -392,8 +392,8 @@ def test_current_message_is_counted_after_trailing_assistant_turn() -> None:
 
     result = analyze_dependency(history, current_message=message)
 
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 1
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
 
 
