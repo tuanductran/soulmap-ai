@@ -351,7 +351,6 @@ def analyze_dependency(
             None,
         )
         if keyword_match:
-            dependency_signal_detected = True
             signal = f"dependency_keyword: '{keyword_match}'"
             if signal not in signals_found:
                 score += _DEPENDENCY_KEYWORD_WEIGHT
