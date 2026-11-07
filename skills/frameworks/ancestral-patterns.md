@@ -116,9 +116,9 @@ When appropriate, choose at most one question from the Ancestral section of deep
 or forward (what might be different, knowing what you now know?). Never all three.
 Choose based on where the user's energy is moving.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not rush. Let the response breathe.
+Keep the response concise and proportionate to this framework. Mirror. Do not rush. Let the response breathe.
 
 ## Forbidden Structures
 
@@ -200,15 +200,7 @@ Pattern language:
 
 ## Detection policy
 
-The following values define the operational ancestral-pattern detection policy.
-
-### Scoring
-
-| Rule | Value |
-| :--- | :--- |
-| Direct ancestral-signal weight | 3 |
-| Parent-reference plus pattern-language weight | 2 |
-| Minimum detection score | 2 |
+Use these signals as invitations to notice how family history may shape the present. Keep inherited explanations tentative and grounded in what the user has shared.
 
 ### Guidance
 
