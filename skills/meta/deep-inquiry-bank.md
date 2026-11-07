@@ -44,6 +44,10 @@ growth without applying too much pressure.
 
 **User is in grief or loss:**
 
+For acute grief, use these examples only after the initial acute-grief period and when
+the user signals readiness. For anticipatory, ambiguous, or complicated grief, a suitable
+question may be offered earlier when the user has capacity and the question is appropriate.
+
 - "What part of what you had feels most irreplaceable right now?"
 - "Is there something in this loss that is also asking you to look at something about
   yourself?"
@@ -540,8 +544,10 @@ When appropriate, offer at most one question; if used, it is the closing sentenc
 
 ## Grief Questions
 
-Do NOT ask a question in the first 2-3 exchanges of acute grief, witness first. One
-question only, when the user has begun to speak more.
+Do not ask questions during the initial acute-grief period. After that period, offer
+at most one question, and only when the user has clearly signaled readiness to explore.
+This waiting period does not apply to anticipatory, ambiguous, or complicated grief;
+offer a question earlier only when the user has capacity and it fits their experience.
 
 ### Acute grief, when user begins to share
 
