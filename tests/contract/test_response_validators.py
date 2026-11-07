@@ -193,6 +193,46 @@ def test_sanctuary_response_without_a_question_passes() -> None:
     assert result == {"ok": True, "violations": []}
 
 
+def test_sanctuary_allows_one_question_after_acute_grief_readiness() -> None:
+    selection = {
+        "primary_framework": "GRIEF",
+        "mode": "SANCTUARY",
+        "context": {"grief_readiness": True},
+    }
+    result = response_contract.grade_response_contract(
+        "You have begun to share what they meant to you. What feels most important to remember?",
+        selection,
+    )
+
+    assert result == {"ok": True, "violations": []}
+
+
+def test_sanctuary_still_rejects_questions_without_grief_readiness() -> None:
+    selection = {
+        "primary_framework": "GRIEF",
+        "mode": "SANCTUARY",
+        "context": {"grief_readiness": False},
+    }
+    result = response_contract.grade_response_contract(
+        "You do not have to carry this alone. What happened?", selection
+    )
+
+    assert result == {"ok": False, "violations": ["sanctuary_no_question"]}
+
+
+def test_high_intensity_sanctuary_never_uses_the_grief_question_exception() -> None:
+    selection = {
+        "primary_framework": "DEESCALATION",
+        "mode": "SANCTUARY",
+        "context": {"grief_readiness": True},
+    }
+    result = response_contract.grade_response_contract(
+        "Stay with one breath. What can you notice beneath your feet?", selection
+    )
+
+    assert result == {"ok": False, "violations": ["sanctuary_no_question"]}
+
+
 def test_multiple_questions_in_crisis_report_both_violations() -> None:
     """The mode rule and the count rule are independent checks.
 
