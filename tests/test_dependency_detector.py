@@ -97,7 +97,7 @@ def test_decide_for_me_remains_a_high_priority_dependency_signal() -> None:
 
     assert result["level"] == "HIGH_DEPENDENCY"
     assert result["score"] == 2
-    assert result["signals"] == ['dependency_keyword: "decide for me"']
+    assert result["signals"] == ["dependency_keyword: 'decide for me'"]
 
 
 def test_isolation_signal_is_detected() -> None:
