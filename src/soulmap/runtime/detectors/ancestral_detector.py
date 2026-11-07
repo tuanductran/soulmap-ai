@@ -11,11 +11,11 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_labeled_groups,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/ancestral-patterns.md,
@@ -30,9 +30,7 @@ PARENT_SIGNALS = _ANCESTRAL_GROUPS["parent references"]
 PATTERN_SIGNALS = _ANCESTRAL_GROUPS["pattern language"]
 
 HistoryMessage = dict[str, str]
-_ANCESTRAL_SCORING = load_key_value_table(
-    runtime_skill_path("ancestral-patterns"), "Scoring"
-)
+_ANCESTRAL_SCORING = DETECTOR_CONFIG["ancestral"]
 _ANCESTRAL_GUIDANCE = load_runtime_guidance(runtime_skill_path("ancestral-patterns"))
 
 
