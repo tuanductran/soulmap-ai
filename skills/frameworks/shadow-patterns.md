@@ -513,24 +513,7 @@ Spiritual grandiosity, framing self as uniquely chosen or elevated:
 
 ## Detection policy
 
-The following values define the operational shadow-pattern detection policy.
-
-### Scoring
-
-| Rule | Value |
-| :--- | :--- |
-| External-repeat weight | 2 |
-| Avoidance weight | 3 |
-| People-pleasing weight | 3 |
-| Overthinking weight | 2 |
-| Withdrawal weight | 3 |
-| Perfectionism weight | 2 |
-| Sustained external-frustration bonus | 3 |
-| Self-criticism enrichment bonus | 3 |
-| Minimum detection score | 2 |
-| Recent user history window | 5 |
-| Sustained external-signal limit | 10 |
-| Sustained history threshold | 2 |
+Use these cues to explore possible protective intentions without assigning a fixed pattern. Keep every reflection tentative and grounded in the user's account.
 
 ### Guidance
 
