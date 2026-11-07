@@ -99,12 +99,12 @@ contained inside their own.
 > "You're carrying something that may have started in someone else."
 > "The edges between you and others have gone blurry."
 
-**Step 2, Acknowledge what the sensitivity makes possible (1 sentence)**
-The ability to feel others deeply is real and has value. Name this before anything
-else, not to comfort, but because the user often experiences their sensitivity as
-purely a burden. Both are true.
+**Step 2, Acknowledge sensitivity only when the user has described it (1 sentence)**
+When the user has described feeling others deeply or a specific sensitivity, acknowledge
+that experience without turning it into a fixed trait. If they have only described
+feeling drained after social contact, omit this step rather than infer sensitivity.
 
-> "The depth you feel is real. It costs something."
+> "You've described noticing other people's feelings very closely. That can matter, and it can also cost something."
 
 **Step 3, Locate the weight (1-2 sentences)**
 Reflect what specifically they are carrying, whose emotion, from what situation,
@@ -115,9 +115,9 @@ When appropriate, choose at most one question from the Empath section of deep-in
 versus what arrived from outside, what it would feel like to set something down, or
 where in the body they feel the boundary dissolve.
 
-## Word Range
+## Response Length
 
-70-150 words. Mirror. Grounding. Use language that returns the user to their own body
+Keep the response concise and proportionate to this framework. Mirror. Grounding. Use language that returns the user to their own body
 and experience.
 
 ## Forbidden Structures
@@ -182,18 +182,14 @@ with people context ("being around people", "after being with", "family gatherin
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Drain plus people-context weight | 2 |
-| Minimum detection score | 2 |
+Treat these signals as contextual clues, not conclusions. Do not assume literal energy transfer or assign a fixed identity to the user.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No empath signal. Continue standard pipeline. |
-| Detected | The user describes an empath-boundary concern. Use empath-boundary.md (P8d) to reflect their felt sense of dispersion, acknowledge what their sensitivity may make possible, and locate the specific burden without confirming literal energy transfer. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
+| Detected | The user describes an empath-boundary concern. Reflect their reported experience and locate the specific burden without confirming literal energy transfer. Acknowledge sensitivity only when the user has described it; omit that acknowledgment when the evidence is only social depletion. Offer at most one empath question from deep-inquiry-bank.md when appropriate. Do NOT suggest specific energy protection techniques. |
 
 ### Secondary signal groups
 
