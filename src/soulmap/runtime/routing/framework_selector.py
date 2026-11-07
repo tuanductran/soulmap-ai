@@ -522,15 +522,16 @@ async def select_framework_async(
                 debug_events=debug_events,
             ),
             "grief": (
-            asyncio.sleep(0, result=early_grief)
-            if early_grief
-            else _run_detector_async(
-                "grief_detector",
-                detect_grief,
-                message,
-                history,
-                debug_events=debug_events,
-            )
+                asyncio.sleep(0, result=early_grief)
+                if early_grief
+                else _run_detector_async(
+                    "grief_detector",
+                    detect_grief,
+                    message,
+                    history,
+                    debug_events=debug_events,
+                )
+            ),
         ),
             "conflict": _run_detector_async(
                 "inner_conflict_detector",
@@ -626,15 +627,16 @@ async def select_framework_async(
 
     tasks = {
         "grief": (
-                asyncio.sleep(0, result=early_grief)
-                if early_grief
-                else _run_detector_async(
-                    "grief_detector",
-                    detect_grief,
-                    message,
-                    history,
-                    debug_events=debug_events,
-                )
+            asyncio.sleep(0, result=early_grief)
+            if early_grief
+            else _run_detector_async(
+                "grief_detector",
+                detect_grief,
+                message,
+                history,
+                debug_events=debug_events,
+            )
+        ),
             ),
         "conflict": _run_detector_async(
             "inner_conflict_detector",
