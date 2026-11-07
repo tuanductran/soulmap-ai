@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import pytest
 
+from soulmap.runtime.knowledge.runtime_config import STAGE_CLASSIFIER_CONFIG
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 from soulmap.runtime.knowledge.stage_classifier import (
     load_stage_classifier,
     parse_stage_classifier,
@@ -24,6 +26,15 @@ def test_stage_classifier_loads_the_shipped_contract() -> None:
         "prior_pattern_recognition": 3,
         "prior_breakthrough": 3,
     }
+    assert set(rules.thresholds) == set(range(1, 7))
+    assert set(rules.stage_roles) == set(range(1, 7))
+    assert "stage_roles" not in STAGE_CLASSIFIER_CONFIG
+    assert "stage_recommendations" not in STAGE_CLASSIFIER_CONFIG
+    assert set(rules.stage_recommendations) == set(range(1, 7))
+    assert rules.stage_roles[1] == "Sanctuary and witness - presence over wisdom"
+    assert rules.stage_recommendations[1] == (
+        "Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead."
+    )
 
 
 def test_stage_classifier_rejects_missing_stage() -> None:
@@ -144,3 +155,44 @@ def test_destabilization_allows_stage_regression() -> None:
     )
 
     assert result["stage"] == 1
+
+
+def test_stage_classifier_rejects_duplicate_stage_numbers() -> None:
+    """Reject duplicate stage numbers in the Markdown classifier."""
+    rules = load_stage_classifier()
+    source = "\n".join(
+        f"### Stage {1 if index == 5 else stage.number}, {stage.name.lower()}"
+        for index, stage in enumerate(rules.stages)
+    )
+
+    with pytest.raises(ValueError, match="stages 1 through 6 exactly once"):
+        parse_stage_classifier(source)
+
+
+def test_stage_classifier_rejects_recency_window_length_mismatch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    source = runtime_skill_path("stage-classifier").read_text(encoding="utf-8")
+    monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "recency_multipliers", [1.0, 2.0])
+
+    with pytest.raises(
+        ValueError, match="must be positive and cover the recent message window"
+    ):
+        parse_stage_classifier(source)
+
+
+@pytest.mark.parametrize(
+    "missing_key", ["prior_pattern_recognition", "prior_breakthrough"]
+)
+def test_stage_classifier_rejects_missing_required_memory_minimum(
+    monkeypatch: pytest.MonkeyPatch, missing_key: str
+) -> None:
+    source = runtime_skill_path("stage-classifier").read_text(encoding="utf-8")
+    memory_minimums = dict(STAGE_CLASSIFIER_CONFIG["memory_minimums"])
+    memory_minimums.pop(missing_key)
+    monkeypatch.setitem(STAGE_CLASSIFIER_CONFIG, "memory_minimums", memory_minimums)
+
+    with pytest.raises(
+        ValueError, match="prior_pattern_recognition and prior_breakthrough"
+    ):
+        parse_stage_classifier(source)
