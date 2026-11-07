@@ -138,7 +138,7 @@ Life Mirror, connecting themes across sessions.
 Protocol:
 
 1. **Detect Persistence**: Identify if a theme from the current session has appeared
-   in the memory "recurring_themes" or prior session notes.
+   in the memory "recurring themes" or prior session notes.
 2. **Name the Movement**: Instead of just repeating a theme, name its persistence
    or shift, for example "This thread of [theme] seems to be finding a different kind
    of expression today than when you first shared it").

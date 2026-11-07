@@ -13,7 +13,9 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/existential-companion.md,
@@ -30,8 +32,8 @@ HOLDING_QUESTIONS = _EXISTENTIAL_GROUPS["holding a question"]
 _EXISTENTIAL_SCORING = load_key_value_table(
     runtime_skill_path("existential-companion"), "Scoring"
 )
-_EXISTENTIAL_GUIDANCE = load_key_value_table(
-    runtime_skill_path("existential-companion"), "Guidance"
+_EXISTENTIAL_GUIDANCE = load_runtime_guidance(
+    runtime_skill_path("existential-companion")
 )
 
 
@@ -90,7 +92,9 @@ def detect_existential(
     signal_map = [
         (name, signal_sources[name], signal_weights[name])
         for name in (
-            item.strip()
+            map_label(
+                item.strip(), RUNTIME_GUIDANCE_NAMES, "Existential territory priority"
+            )
             for item in _EXISTENTIAL_SCORING["Territory priority"].split(";")
             if item.strip()
         )
@@ -150,11 +154,8 @@ def detect_existential(
         territory, _EXISTENTIAL_GUIDANCE["general"]
     )
     recommendation = (
-        _EXISTENTIAL_GUIDANCE["detected_prefix"].format(
-            territory=territory, guidance=territory_guidance
-        )
-        + " "
-        + _EXISTENTIAL_GUIDANCE["detected_suffix"]
+        f"{_EXISTENTIAL_GUIDANCE['detected_prefix']} {territory}. "
+        f"{territory_guidance} {_EXISTENTIAL_GUIDANCE['detected_suffix']}"
     )
 
     return {

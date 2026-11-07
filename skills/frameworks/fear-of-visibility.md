@@ -223,7 +223,7 @@ Public expression:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
@@ -235,5 +235,5 @@ Public expression:
 
 | Result | Guidance |
 | :--- | :--- |
-| not_detected | No visibility fear signal. Continue standard pipeline. |
-| detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |
+| Not detected | No visibility fear signal. Continue standard pipeline. |
+| Detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |

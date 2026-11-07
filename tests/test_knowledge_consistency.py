@@ -553,7 +553,7 @@ def test_markdown_table_contract_loader_reads_rows_and_key_values(
 ) -> None:
     path = tmp_path / "skill.md"
     path.write_text(
-        "## Runtime detection contract\n\n"
+        "## Detection policy\n\n"
         "### Scoring\n\n"
         "| Rule | Value |\n| :--- | :--- |\n"
         "| Minimum detection score | 2 |\n"
@@ -576,7 +576,7 @@ def test_markdown_table_contract_loader_rejects_non_two_column_key_value_table(
 ) -> None:
     path = tmp_path / "skill.md"
     path.write_text(
-        "## Runtime detection contract\n\n"
+        "## Detection policy\n\n"
         "### Guidance\n\n"
         "| Key | Value | Extra |\n| :--- | :--- | :--- |\n"
         "| one | two | three |\n",

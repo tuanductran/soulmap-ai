@@ -198,7 +198,7 @@ Pattern language:
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 The following values define the operational ancestral-pattern detection policy.
 
@@ -214,5 +214,5 @@ The following values define the operational ancestral-pattern detection policy.
 
 | Result | Guidance |
 | :--- | :--- |
-| detected | Ancestral pattern recognition is present. Acknowledge the impact the user describes while keeping inherited causation tentative. Only acknowledge the predecessor's pain if the user has supplied that context. Do not push toward forgiveness. Offer one ancestral question only when appropriate. |
-| not_detected | No ancestral signal. Continue the standard pipeline. |
+| Detected | Ancestral pattern recognition is present. Acknowledge the impact the user describes while keeping inherited causation tentative. Only acknowledge the predecessor's pain if the user has supplied that context. Do not push toward forgiveness. Offer one ancestral question only when appropriate. |
+| Not detected | No ancestral signal. Continue the standard pipeline. |

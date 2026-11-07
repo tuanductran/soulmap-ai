@@ -353,8 +353,9 @@ async def select_framework_async(
             "context": dep,
             "instruction": (
                 "Dependency redirect. Use DEP_REDIRECT from "
-                "skills/frameworks/emotional-deescalation.md. Warm, direct, "
-                "one question pointing toward real-world support."
+                "skills/frameworks/emotional-deescalation.md. Warm and direct; "
+                "clearly point toward real-world support. A question is optional; "
+                "ask at most one only when appropriate and welcome."
             ),
             "blocked": ["ALL_FRAMEWORKS"],
         }
@@ -421,21 +422,31 @@ async def select_framework_async(
         1 for item in history if isinstance(item, dict) and item.get("role") == "user"
     )
     early_stage_value = early_stage.get("stage", 1)
+    early_grief: dict[str, object] = {}
     if (
         early_stage_value == 1
         and user_count + 1 <= orchestration_rules.stage_1_max_user_messages
+        and intensity_level != "HIGH"
     ):
-        selection = {
-            "primary_framework": "MIRROR",
-            "secondary_layer": None,
-            "mode": "MIRROR",
-            "context": {"stage": 1, "stage_override": True},
-            "instruction": (
-                orchestration_rules.runtime_instructions["Stage 1 override"]
-            ),
-            "blocked": ["ALL_FRAMEWORKS"],
-        }
-        return _finish(message, history, memory, selection, debug_events)
+        early_grief = await _run_detector_async(
+            "grief_detector",
+            detect_grief,
+            message,
+            history,
+            debug_events=debug_events,
+        )
+        if not early_grief.get("grief_detected"):
+            selection = {
+                "primary_framework": "MIRROR",
+                "secondary_layer": None,
+                "mode": "MIRROR",
+                "context": {"stage": 1, "stage_override": True},
+                "instruction": (
+                    orchestration_rules.runtime_instructions["stage_1_override"]
+                ),
+                "blocked": ["ALL_FRAMEWORKS"],
+            }
+            return _finish(message, history, memory, selection, debug_events)
 
     if intensity_level == "HIGH" or crisis_tier == 2:
         fallback = next(
@@ -492,7 +503,9 @@ async def select_framework_async(
             ),
             "mode": fallback.mode,
             "context": {"intensity": intensity, "crisis": crisis},
-            "instruction": orchestration_rules.runtime_instructions["HIGH intensity"],
+            "instruction": orchestration_rules.runtime_instructions[
+                "high_emotional_intensity"
+            ],
             "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
         }
         if selection["secondary_layer"] not in fallback.allowed_secondary:
@@ -508,12 +521,16 @@ async def select_framework_async(
                 history,
                 debug_events=debug_events,
             ),
-            "grief": _run_detector_async(
-                "grief_detector",
-                detect_grief,
-                message,
-                history,
-                debug_events=debug_events,
+            "grief": (
+                asyncio.sleep(0, result=early_grief)
+                if early_grief
+                else _run_detector_async(
+                    "grief_detector",
+                    detect_grief,
+                    message,
+                    history,
+                    debug_events=debug_events,
+                )
             ),
             "conflict": _run_detector_async(
                 "inner_conflict_detector",
@@ -601,19 +618,23 @@ async def select_framework_async(
             "mode": fallback.mode,
             "context": intensity,
             "instruction": (
-                orchestration_rules.runtime_instructions["MODERATE intensity"]
+                orchestration_rules.runtime_instructions["moderate_emotional_intensity"]
             ),
             "blocked": ["direction", "existential", "synthesis"],
         }
         return _finish(message, history, memory, selection, debug_events)
 
     tasks = {
-        "grief": _run_detector_async(
-            "grief_detector",
-            detect_grief,
-            message,
-            history,
-            debug_events=debug_events,
+        "grief": (
+            asyncio.sleep(0, result=early_grief)
+            if early_grief
+            else _run_detector_async(
+                "grief_detector",
+                detect_grief,
+                message,
+                history,
+                debug_events=debug_events,
+            )
         ),
         "conflict": _run_detector_async(
             "inner_conflict_detector",
@@ -832,11 +853,12 @@ async def select_framework_async(
             if rule.insight_secondary and res["insight"].get("insight_detected")
             else None
         )
+        context = dict(result)
         selection = {
             "primary_framework": rule.framework,
             "secondary_layer": secondary,
             "mode": rule.mode,
-            "context": result,
+            "context": context,
             "instruction": result.get("recommendation", ""),
             "blocked": list(rule.blocked),
         }
@@ -857,9 +879,9 @@ async def select_framework_async(
         "mode": mode,
         "context": {"stage": current_stage},
         "instruction": (
-            orchestration_rules.runtime_instructions["MIRROR fallback"]
+            orchestration_rules.runtime_instructions["mirror_mode_fallback"]
             if mode == "MIRROR"
-            else orchestration_rules.runtime_instructions["PEER fallback"]
+            else orchestration_rules.runtime_instructions["peer_mode_fallback"]
         ),
         "blocked": [],
     }

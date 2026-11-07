@@ -11,14 +11,15 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
 )
+from soulmap.runtime.knowledge.labels import CELEBRATION_GUIDANCE_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime detection contract"
+_CONTRACT_HEADING = "Detection policy"
 
 
 @dataclass(frozen=True, slots=True)
 class CelebrationRules:
-    """Executable detection configuration authored in integration-celebration.md."""
+    """Runtime scoring rules plus semantic signal lists from Markdown."""
 
     score_weights: dict[str, int]
     threshold: int
@@ -39,24 +40,11 @@ def _contract_body(text: str) -> str:
         re.MULTILINE,
     )
     if match is None:
-        raise ValueError("Celebration runtime contract is missing.")
+        raise ValueError("Celebration detection policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
     return text[start:end]
-
-
-_ROW_RE = re.compile(
-    r"^\|\s*(?P<setting>[^|]+?)\s*\|\s*(?P<value>[^|]*?)\s*\|\s*$", re.MULTILINE
-)
-
-
-def _table_rows(body: str) -> list[tuple[str, str]]:
-    return [
-        (match.group("setting").strip(), match.group("value").strip())
-        for match in _ROW_RE.finditer(body)
-        if match.group("setting").strip().lower() != "setting"
-    ]
 
 
 def _section_body(body: str, heading: str) -> str:
@@ -72,80 +60,66 @@ def _quoted_bullets(body: str) -> tuple[str, ...]:
     return tuple(dict.fromkeys(re.findall(r'^- "([^"]+)"\s*$', body, re.MULTILINE)))
 
 
-def _literal_config(body: str) -> dict[str, object]:
-    scoring = dict(_table_rows(_section_body(body, "Scoring")))
-    required = {
-        "Detection threshold",
-        "Negative override penalty",
-        "Strong-signal threshold",
-        "Confirmation score",
+def _knowledge_lists(body: str) -> dict[str, tuple[str, ...]]:
+    """Load and validate semantic signal lists authored for AI-facing guidance."""
+    values = {
+        "NEGATIVE_OVERRIDES": _quoted_bullets(
+            _section_body(body, "Negative overrides")
+        ),
+        "CONFIRMATION_SIGNALS": _quoted_bullets(
+            _section_body(body, "Confirmation signals")
+        ),
+        "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(
+            _section_body(body, "Confirmation assistant anchors")
+        ),
     }
-    if not required <= scoring.keys():
-        raise ValueError("Celebration scoring configuration is incomplete.")
-    try:
-        values: dict[str, object] = {
-            "SCORE_WEIGHTS": {
-                key.removeprefix("Score weight: "): int(value)
-                for key, value in scoring.items()
-                if key.startswith("Score weight: ")
-            },
-            "THRESHOLD": int(scoring["Detection threshold"]),
-            "NEGATIVE_OVERRIDE_PENALTY": int(scoring["Negative override penalty"]),
-            "STRENGTH_THRESHOLD": int(scoring["Strong-signal threshold"]),
-            "CONFIRMATION_SCORE": int(scoring["Confirmation score"]),
-            "NEGATIVE_OVERRIDES": _quoted_bullets(
-                _section_body(body, "Negative overrides")
-            ),
-            "CONFIRMATION_SIGNALS": _quoted_bullets(
-                _section_body(body, "Confirmation signals")
-            ),
-            "CONFIRMATION_ASSISTANT_ANCHORS": _quoted_bullets(
-                _section_body(body, "Confirmation assistant anchors")
-            ),
-        }
-    except (KeyError, ValueError) as exc:
-        raise ValueError("Celebration runtime configuration is invalid.") from exc
-    weights = values["SCORE_WEIGHTS"]
-    if (
-        not isinstance(weights, dict)
-        or not weights
-        or any(
-            not isinstance(k, str) or not isinstance(v, int) for k, v in weights.items()
-        )
-    ):
-        raise ValueError("Celebration score weights are invalid.")
-    for key in (
-        "NEGATIVE_OVERRIDES",
-        "CONFIRMATION_SIGNALS",
-        "CONFIRMATION_ASSISTANT_ANCHORS",
-    ):
-        value = values[key]
-        if (
-            not isinstance(value, tuple)
-            or not value
-            or not all(isinstance(item, str) and item for item in value)
-        ):
+    for key, items in values.items():
+        if not items or not all(isinstance(item, str) and item for item in items):
             raise ValueError(f"Celebration setting {key} is invalid.")
     return values
 
 
 @lru_cache(maxsize=1)
 def load_celebration_rules() -> CelebrationRules:
-    """Read and validate the runtime contract from shipped Markdown."""
+    """Load and validate celebration rules from canonical Markdown knowledge."""
     path = runtime_skill_path("integration-celebration")
     body = _contract_body(path.read_text(encoding="utf-8"))
-    values = _literal_config(body)
+    values = _knowledge_lists(body)
+    scoring = load_key_value_table(path, "Scoring approach")
+
+    def scoring_value(label: str) -> int:
+        try:
+            value = int(scoring[label])
+        except (KeyError, ValueError) as exc:
+            raise ValueError(
+                f"Celebration scoring setting {label!r} is invalid."
+            ) from exc
+        if value < 0:
+            raise ValueError(
+                f"Celebration scoring setting {label!r} cannot be negative."
+            )
+        return value
+
     groups = load_labeled_groups(path, "Detection signals")
-    guidance = load_key_value_table(path, "Guidance")
+    guidance_labels = load_key_value_table(path, "Guidance")
+    guidance = {
+        map_label(label, CELEBRATION_GUIDANCE_NAMES, "Celebration guidance"): value
+        for label, value in guidance_labels.items()
+    }
     required_guidance = {"not_detected", "detected", "closing"}
     if not required_guidance <= guidance.keys():
         raise ValueError("Celebration guidance configuration is incomplete.")
     return CelebrationRules(
-        score_weights=cast(dict[str, int], values["SCORE_WEIGHTS"]),
-        threshold=cast(int, values["THRESHOLD"]),
-        negative_override_penalty=cast(int, values["NEGATIVE_OVERRIDE_PENALTY"]),
-        strength_threshold=cast(int, values["STRENGTH_THRESHOLD"]),
-        confirmation_score=cast(int, values["CONFIRMATION_SCORE"]),
+        score_weights={
+            "win or completion": scoring_value("Win or completion weight"),
+            "relief after difficulty": scoring_value("Relief after difficulty weight"),
+            "gratitude": scoring_value("Gratitude weight"),
+            "recognized progress": scoring_value("Recognized progress weight"),
+        },
+        threshold=scoring_value("Detection threshold"),
+        negative_override_penalty=scoring_value("Negative override penalty"),
+        strength_threshold=scoring_value("Strength threshold"),
+        confirmation_score=scoring_value("Confirmation score"),
         negative_overrides=cast(tuple[str, ...], values["NEGATIVE_OVERRIDES"]),
         confirmation_signals=cast(tuple[str, ...], values["CONFIRMATION_SIGNALS"]),
         confirmation_assistant_anchors=cast(

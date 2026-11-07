@@ -13,6 +13,7 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -26,9 +27,9 @@ SHRINKING_SIGNALS = _VISIBILITY_GROUPS["shrinking"]
 PUBLIC_EXPRESSION_SIGNALS = _VISIBILITY_GROUPS["public expression"]
 _RULES = load_key_value_table(
     runtime_skill_path("fear-of-visibility"),
-    "Runtime detection contract",
+    "Detection policy",
 )
-_GUIDANCE = load_key_value_table(runtime_skill_path("fear-of-visibility"), "Guidance")
+_GUIDANCE = load_runtime_guidance(runtime_skill_path("fear-of-visibility"))
 
 
 HistoryMessage = dict[str, str]

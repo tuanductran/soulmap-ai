@@ -18,8 +18,8 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Within a session, synthesize when:**
 
-- The conversation has reached the configured minimum of 6 user messages; automatic synthesis requires 10 user messages
-- Two or more distinct themes have appeared across the conversation
+- There is enough shared conversation to notice recurring themes without forcing a synthesis too early
+- Several distinct themes have genuinely recurred across the conversation
 - There is a natural pause or reflective moment (user asks "why do I keep talking about
   this", "is there a pattern here", "what does this all add up to")
 - A session has moved through several different topics and there is an opportunity to
@@ -27,7 +27,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 **Across sessions, synthesize when:**
 
-- Memory data shows 3+ sessions with the user
+- There is enough shared history across sessions to notice a recurring thread
 - A theme appears in memory that is also appearing in the current session
 - The user has been in the system long enough that a larger arc is visible
 
@@ -35,7 +35,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
-- The conversation has fewer than the configured minimum of 6 user messages
+- There is not yet enough shared conversation to support a grounded synthesis
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
@@ -159,9 +159,9 @@ A synthesis response has three parts. Keep it short. This is a mirror, not a rep
 what you've heard across the conversation. "Across what you've shared today, a few
 things keep returning..."
 
-**Part 2, The themes (2-3 observations, each 1-2 sentences):** Name 2-3 themes, each
+**Part 2, The themes:** Name a small number of recurring themes, each
 with a brief observation and at least one specific anchor to something the user actually
-said or shared. Do not list more than 3, less is more accurate.
+said or shared. Prefer a grounded reflection over adding another theme for completeness.
 
 "One thread is [emotional theme]. I heard it when you talked about [X] and again in what
 you said about [Y]."
@@ -217,12 +217,7 @@ mirror.
 
 ## Detection signals
 
-The runtime detection contract below is the executable source of truth for synthesis
-activation. It defines both explicit request signals and the structural thresholds.
-
-Do not maintain a second phrase list or a separate message-count rule here. If the
-activation policy changes, update **Runtime detection contract** and its runtime tests
-together.
+The phrases and themes below are examples of how a user may invite a synthesis. Treat them as cues for reflection, not proof that a pattern exists.
 
 ## Paired template
 
@@ -236,21 +231,9 @@ together.
 - **How to close:** `skills/voice/session-rituals.md` (Closing section)
 - **Tone support:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
-The following operational configuration is normative knowledge for synthesis detection.
-Changes to these values must be made here and covered by focused contract tests.
-
-### Detection thresholds
-
-| Setting | Value |
-|---|---:|
-| Minimum user messages to synthesize | 6 |
-| Automatic synthesis user messages | 10 |
-| Minimum distinct recurring themes for automatic synthesis | 2 |
-| Maximum themes returned | 3 |
-| Maximum anchors per theme | 2 |
-| Maximum longitudinal themes | 3 |
+The phrases and themes below are cues that a reflective synthesis may be useful. They are invitations to notice recurring meaning, not proof that a pattern exists.
 
 ### Explicit request signals
 
@@ -296,15 +279,18 @@ Changes to these values must be made here and covered by focused contract tests.
 
 | Key | Guidance |
 | :--- | :--- |
-| insufficient_data | Not enough conversation history for synthesis. Continue standard response. Check again after the configured minimum user-message threshold. |
-| insufficient_themes | Not enough recurring themes detected for synthesis. Continue standard response. |
-| session_opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
-| longitudinal_opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
-| emotional_theme | An emotional thread of {theme} - it appeared in several different things you shared. |
-| value_theme | Something that seems to matter to you - {theme} - keeps appearing, even when the topic changes. |
-| conflict_theme | A recurring tension around {theme} - it surfaced in more than one place. |
-| ownership_return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| recommendation | Synthesis ready. {count} recurring theme(s) identified. {longitudinal_notice}Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name 2-3 themes max. Each theme: 1-2 sentences + specific anchor to something user said. End with ownership return and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. Themes detected: {themes}. |
+| Insufficient data | Continue ordinary reflection when there is not enough shared history. An explicit user request or a supported longitudinal pattern may justify synthesis earlier; never invent themes when the available words do not support one. |
+| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit request or one supported longitudinal thread does not require several distinct themes. |
+| Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
+| Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
+| Emotional theme | An emotional thread of |
+| Value theme | Something that seems to matter to you |
+| Conflict theme | A recurring tension around |
+| Emotional theme suffix | - it appeared in several different things you shared. |
+| Value theme suffix | - keeps appearing, even when the topic changes. |
+| Conflict theme suffix | - it surfaced in more than one place. |
+| Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
+| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md when recurring themes are genuinely present. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name a small number of themes, each with a concise reflection and a specific anchor in the user's own words. End by returning ownership and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
 
 ### Recurring emotional theme signals
 
@@ -348,7 +334,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "used to be"
 - "mourning"
 
-#### not_enough
+#### Not enough
 
 - "not enough"
 - "not good enough"
@@ -360,7 +346,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "failure"
 - "failing"
 
-#### freedom_vs_safety
+#### Freedom vs. safety
 
 - "trapped"
 - "stuck"
@@ -453,7 +439,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "don't want to lose"
 - "afraid to lose"
 
-#### creativity_depth
+#### Creativity depth
 
 - "creative"
 - "depth"
@@ -467,7 +453,7 @@ Changes to these values must be made here and covered by focused contract tests.
 
 ### Recurring inner-conflict signals
 
-#### seen_vs_hidden
+#### Seen vs. hidden
 
 - "want to be seen"
 - "afraid to be seen"
@@ -476,7 +462,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "hide"
 - "show"
 
-#### closeness_vs_distance
+#### Closeness vs. distance
 
 - "want connection"
 - "push away"
@@ -485,7 +471,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "afraid of closeness"
 - "want to be close but"
 
-#### knowing_vs_avoiding
+#### Knowing vs. avoiding
 
 - "i know but"
 - "i see it but"
@@ -493,7 +479,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "part of me knows"
 - "choose not to look"
 
-#### change_vs_familiar
+#### Change vs. familiar
 
 - "want to change"
 - "keep going back"
@@ -502,7 +488,7 @@ Changes to these values must be made here and covered by focused contract tests.
 - "familiar even though"
 - "known even if"
 
-#### giving_vs_receiving
+#### Giving vs. receiving
 
 - "give so much"
 - "never receive"

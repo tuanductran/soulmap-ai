@@ -42,7 +42,7 @@ uv run python scripts/benchmark_knowledge_reads.py \
 
 ## Workload and interpretation
 
-The harness loads the `Scoring` and `Runtime guidance` tables from the canonical
+The harness loads the `Scoring` and `Guidance` tables from the canonical
 `skills/frameworks/pattern-mapper.md` source in three modes:
 
 - **Uncached:** read the Markdown file independently for each table.

@@ -13,6 +13,7 @@ from soulmap.runtime.io.cli_payload import (
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
+    load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
@@ -25,9 +26,7 @@ ACTIVE_ANGER = _ANGER_GROUPS["active anger"]
 SELF_ANGER = _ANGER_GROUPS["self-directed anger"]
 RESIDUAL_ANGER = _ANGER_GROUPS["residual anger"]
 _ANGER_SCORING = load_key_value_table(runtime_skill_path("anger-companion"), "Scoring")
-_ANGER_GUIDANCE = load_key_value_table(
-    runtime_skill_path("anger-companion"), "Guidance"
-)
+_ANGER_GUIDANCE = load_runtime_guidance(runtime_skill_path("anger-companion"))
 
 
 HistoryMessage = dict[str, str]

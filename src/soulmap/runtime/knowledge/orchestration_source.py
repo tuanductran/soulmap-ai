@@ -1,4 +1,4 @@
-"""Load executable orchestration rules from the orchestration Markdown contract."""
+"""Load natural-language orchestration guidance and Python-owned routing rules."""
 
 from __future__ import annotations
 
@@ -6,14 +6,23 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.knowledge.labels import (
+    BLOCKED_FRAMEWORK_NAMES,
+    FRAMEWORK_NAMES,
+    INSTRUCTION_NAMES,
+    INTENSITY_NAMES,
+    MODE_NAMES,
+    SECONDARY_NAMES,
+    map_label,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime execution contract"
+_CONTRACT_HEADING = "Routing policy"
 
 
 @dataclass(frozen=True, slots=True)
 class PrimaryPriorityRule:
-    """One knowledge-authored primary routing rule."""
+    """One Python-configured primary routing rule."""
 
     framework: str
     mode: str
@@ -31,7 +40,7 @@ class SecondaryPriorityRule:
 
 @dataclass(frozen=True, slots=True)
 class IntensityFallbackRule:
-    """Knowledge-authored fallback for an emotional intensity level."""
+    """Configured fallback for an emotional intensity level."""
 
     level: str
     framework: str
@@ -41,7 +50,7 @@ class IntensityFallbackRule:
 
 @dataclass(frozen=True, slots=True)
 class OrchestrationRules:
-    """Executable routing values authored in orchestration.md."""
+    """Validated executable routing values."""
 
     stage_1_max_user_messages: int
     breakthrough_min_strength: str
@@ -57,7 +66,7 @@ class OrchestrationRules:
 def _contract_body(text: str) -> str:
     match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
-        raise ValueError("Orchestration runtime execution contract is missing.")
+        raise ValueError("Orchestration routing policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
@@ -65,11 +74,12 @@ def _contract_body(text: str) -> str:
 
 
 def _table_rows(body: str, heading: str) -> list[list[str]]:
+    """Extract rows from a named Markdown table section."""
     match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
         raise ValueError(f"Orchestration section {heading!r} is missing.")
     section = body[match.end() :]
-    next_section = re.search(r"^###\s+", section, re.MULTILINE)
+    next_section = re.search(r"^#{1,3}\s+", section, re.MULTILINE)
     if next_section:
         section = section[: next_section.start()]
     rows: list[list[str]] = []
@@ -89,9 +99,18 @@ def _table_rows(body: str, heading: str) -> list[list[str]]:
 
 
 def _require_bool(value: str, key: str) -> bool:
-    if value not in {"true", "false"}:
-        raise ValueError(f"{key} must be true or false.")
-    return value == "true"
+    choices = {
+        "true": True,
+        "false": False,
+        "required": True,
+        "not required": False,
+        "allowed": True,
+        "not allowed": False,
+    }
+    normalized = value.strip().casefold()
+    if normalized not in choices:
+        raise ValueError(f"{key} must use a recognized plain-language choice.")
+    return choices[normalized]
 
 
 def _require_positive_int(value: str, key: str) -> int:
@@ -110,9 +129,18 @@ def _require_str(value: str, key: str) -> str:
     return value
 
 
+def _require_choice(value: str, key: str, choices: frozenset[str]) -> str:
+    """Validate a value against the supported choices."""
+    if not isinstance(value, str) or value not in choices:
+        allowed = ", ".join(sorted(choices))
+        raise ValueError(f"{key} must be one of: {allowed}.")
+    return value
+
+
 def _parse_primary_priority(
     rows: list[list[str]],
 ) -> tuple[PrimaryPriorityRule, ...]:
+    """Parse and validate primary framework priority rows."""
     if not rows:
         raise ValueError("PRIMARY_PRIORITY must be a non-empty table.")
     rules: list[PrimaryPriorityRule] = []
@@ -122,10 +150,16 @@ def _parse_primary_priority(
         _, framework, mode, blocked, insight_secondary, no_insight = row
         rules.append(
             PrimaryPriorityRule(
-                framework=_require_str(framework, "PRIMARY_PRIORITY.framework"),
-                mode=_require_str(mode, "PRIMARY_PRIORITY.mode"),
+                framework=map_label(
+                    framework, FRAMEWORK_NAMES, "Primary framework priority"
+                ),
+                mode=map_label(mode, MODE_NAMES, "Primary framework priority"),
                 blocked=tuple(
-                    item.strip() for item in blocked.split(",") if item.strip()
+                    map_label(
+                        item.strip(), BLOCKED_FRAMEWORK_NAMES, "Blocked frameworks"
+                    )
+                    for item in blocked.split(",")
+                    if item.strip()
                 ),
                 insight_secondary=_require_bool(
                     insight_secondary, "PRIMARY_PRIORITY.insight_secondary"
@@ -135,12 +169,16 @@ def _parse_primary_priority(
                 ),
             )
         )
+    frameworks = [rule.framework for rule in rules]
+    if len(set(frameworks)) != len(frameworks):
+        raise ValueError("PRIMARY_PRIORITY frameworks must be unique.")
     return tuple(rules)
 
 
 def _parse_intensity_fallback(
     rows: list[list[str]],
 ) -> tuple[IntensityFallbackRule, ...]:
+    """Parse and validate intensity fallback rows."""
     if not rows:
         raise ValueError("INTENSITY_FALLBACK must be a non-empty table.")
     rules: list[IntensityFallbackRule] = []
@@ -150,20 +188,26 @@ def _parse_intensity_fallback(
         level, framework, mode, allowed = row
         rules.append(
             IntensityFallbackRule(
-                level=_require_str(level, "INTENSITY_FALLBACK.level"),
-                framework=_require_str(framework, "INTENSITY_FALLBACK.framework"),
-                mode=_require_str(mode, "INTENSITY_FALLBACK.mode"),
+                level=map_label(level, INTENSITY_NAMES, "Intensity fallback"),
+                framework=map_label(framework, FRAMEWORK_NAMES, "Intensity fallback"),
+                mode=map_label(mode, MODE_NAMES, "Intensity fallback"),
                 allowed_secondary=tuple(
-                    item.strip() for item in allowed.split(",") if item.strip()
+                    map_label(item.strip(), SECONDARY_NAMES, "Allowed secondary layers")
+                    for item in allowed.split(",")
+                    if item.strip()
                 ),
             )
         )
+    levels = [rule.level for rule in rules]
+    if len(set(levels)) != len(levels):
+        raise ValueError("INTENSITY_FALLBACK levels must be unique.")
     return tuple(rules)
 
 
 def _parse_secondary_priority(
     rows: list[list[str]],
 ) -> tuple[SecondaryPriorityRule, ...]:
+    """Parse and validate secondary-layer priority rows."""
     if not rows:
         raise ValueError("SECONDARY_PRIORITY must be a non-empty table.")
     rules: list[SecondaryPriorityRule] = []
@@ -173,63 +217,67 @@ def _parse_secondary_priority(
         _, name = row
         rules.append(
             SecondaryPriorityRule(
-                name=_require_str(name, "SECONDARY_PRIORITY.name"),
+                name=map_label(name, SECONDARY_NAMES, "Secondary layer priority"),
             )
         )
+    names = [rule.name for rule in rules]
+    if len(set(names)) != len(names):
+        raise ValueError("SECONDARY_PRIORITY names must be unique.")
     return tuple(rules)
 
 
 @lru_cache(maxsize=1)
 def load_orchestration_rules() -> OrchestrationRules:
-    """Read and validate executable routing values from shipped Markdown."""
-    path = runtime_skill_path("orchestration")
-    body = _contract_body(path.read_text(encoding="utf-8"))
+    """Load natural-language guidance and Python-owned routing configuration."""
+    from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 
-    scalar_rows = _table_rows(body, "Scalar settings")
-    scalars = {row[0]: row[1] for row in scalar_rows if len(row) == 2}
-    required_scalars = {
+    path = runtime_skill_path("orchestration")
+    instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
+    if not instruction_rows:
+        raise ValueError("Runtime instructions must be a non-empty table.")
+    runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
+    if (
+        len(runtime_instructions) != len(instruction_rows)
+        or set(runtime_instructions) != set(INSTRUCTION_NAMES)
+        or any(not value for value in runtime_instructions.values())
+    ):
+        raise ValueError("Orchestration mode guidance is incomplete.")
+    runtime_instructions = {
+        INSTRUCTION_NAMES[label]: value for label, value in runtime_instructions.items()
+    }
+
+    config = ORCHESTRATION_CONFIG
+    expected_config_keys = {
+        "scalars",
+        "intensity_fallback",
+        "primary_priority",
+        "secondary_priority",
+    }
+    if set(config) != expected_config_keys:
+        raise ValueError("Orchestration configuration keys are incomplete or unused.")
+
+    scalars = config["scalars"]
+    expected_scalar_keys = {
         "Stage 1 override max user messages",
         "Breakthrough minimum insight strength",
         "Phase 1 safety checks before framework selection",
         "Template routing required before delivery",
         "Peer minimum stage",
     }
-    if set(scalars) != required_scalars:
-        raise ValueError("Orchestration scalar settings are incomplete.")
-    strength = _require_str(
-        scalars["Breakthrough minimum insight strength"],
-        "Breakthrough minimum insight strength",
-    )
-    if strength not in {"emerging", "strong"}:
-        raise ValueError("Breakthrough minimum insight strength is invalid.")
-
-    instruction_rows = _table_rows(body, "Runtime instructions")
-    if not instruction_rows:
-        raise ValueError("Runtime instructions must be a non-empty table.")
-    runtime_instructions = {row[0]: row[1] for row in instruction_rows if len(row) == 2}
-    required_instructions = {
-        "Stage 1 override",
-        "HIGH intensity",
-        "MODERATE intensity",
-        "MIRROR fallback",
-        "PEER fallback",
-    }
-    if set(runtime_instructions) != required_instructions or any(
-        not value for value in runtime_instructions.values()
-    ):
-        raise ValueError("Orchestration runtime instructions are incomplete.")
-
-    primary = _parse_primary_priority(_table_rows(body, "Primary priority"))
-    secondary = _parse_secondary_priority(_table_rows(body, "Secondary priority"))
-    intensity_fallback = _parse_intensity_fallback(
-        _table_rows(body, "Intensity fallback")
-    )
+    if set(scalars) != expected_scalar_keys:
+        raise ValueError(
+            "Orchestration scalar configuration keys are incomplete or unused."
+        )
     return OrchestrationRules(
         stage_1_max_user_messages=_require_positive_int(
             scalars["Stage 1 override max user messages"],
             "Stage 1 override max user messages",
         ),
-        breakthrough_min_strength=strength,
+        breakthrough_min_strength=_require_choice(
+            scalars["Breakthrough minimum insight strength"],
+            "Breakthrough minimum insight strength",
+            frozenset({"emerging", "strong"}),
+        ),
         phase_1_safety_before_framework_selection=_require_bool(
             scalars["Phase 1 safety checks before framework selection"],
             "Phase 1 safety checks before framework selection",
@@ -238,12 +286,11 @@ def load_orchestration_rules() -> OrchestrationRules:
             scalars["Template routing required before delivery"],
             "Template routing required before delivery",
         ),
-        primary_priority=primary,
-        secondary_priority=secondary,
-        intensity_fallback=intensity_fallback,
+        primary_priority=_parse_primary_priority(config["primary_priority"]),
+        secondary_priority=_parse_secondary_priority(config["secondary_priority"]),
+        intensity_fallback=_parse_intensity_fallback(config["intensity_fallback"]),
         peer_min_stage=_require_positive_int(
-            scalars["Peer minimum stage"],
-            "Peer minimum stage",
+            scalars["Peer minimum stage"], "Peer minimum stage"
         ),
         runtime_instructions=runtime_instructions,
     )

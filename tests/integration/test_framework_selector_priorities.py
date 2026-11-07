@@ -115,6 +115,19 @@ def test_selector_detects_current_turn_dependency_without_history() -> None:
     assert data["blocked"] == ["ALL_FRAMEWORKS"]
 
 
+def test_first_contact_acute_grief_bypasses_stage_one_mirror() -> None:
+    payload = {
+        "message": "My father died yesterday. I don't know how to face this.",
+        "history": [],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "GRIEF"
+    assert data["mode"] == "SANCTUARY"
+
+
 def test_framework_selector_prioritizes_grief_before_direction() -> None:
     payload = {
         "message": "My father died yesterday and now I feel lost.",
@@ -443,9 +456,9 @@ def test_orchestration_contract_rejects_missing_sections() -> None:
     )
 
     body = _contract_body(
-        "## Runtime execution contract\n\n"
-        "### Scalar settings\n\n| Setting | Value |\n| --- | --- |\n"
+        "## Routing policy\n\n"
+        "### Operational limits\n\n| Setting | Value |\n| --- | --- |\n"
         "| Stage 1 override max user messages | 2 |\n"
     )
-    with pytest.raises(ValueError, match="Primary priority"):
-        _table_rows(body, "Primary priority")
+    with pytest.raises(ValueError, match="Primary framework priority"):
+        _table_rows(body, "Primary framework priority")

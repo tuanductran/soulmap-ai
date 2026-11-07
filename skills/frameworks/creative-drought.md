@@ -184,7 +184,7 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 - **Closing ritual:** `skills/voice/session-rituals.md` (Closing section)
 - **Voice calibration:** `skills/voice/response-calibrator.md`
 
-## Runtime detection contract
+## Detection policy
 
 | Rule | Value |
 | :--- | :--- |
@@ -196,8 +196,8 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 
 | Result | Guidance |
 | :--- | :--- |
-| not_detected | No creative drought signal. Continue standard pipeline. |
-| detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
+| Not detected | No creative drought signal. Continue standard pipeline. |
+| Detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
 
 ### Secondary signal groups
 

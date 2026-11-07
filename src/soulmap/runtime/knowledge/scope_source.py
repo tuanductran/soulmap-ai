@@ -7,9 +7,10 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import cast
 
+from soulmap.runtime.knowledge.labels import SCOPE_CATEGORY_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-_CONTRACT_HEADING = "Runtime classification contract"
+_CONTRACT_HEADING = "Scope policy"
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,7 +30,7 @@ def _contract_body(text: str) -> str:
         re.MULTILINE,
     )
     if match is None:
-        raise ValueError("Scope runtime classification contract is missing.")
+        raise ValueError("Scope policy is missing.")
     start = match.end()
     next_heading = re.search(r"^##\s+", text[start:], re.MULTILINE)
     end = start + next_heading.start() if next_heading else len(text)
@@ -70,7 +71,9 @@ def _literal_config(body: str) -> dict[str, object]:
             phrases = _QUOTED_RE.findall(pack_body[group.end() : group_end])
             if not phrases:
                 raise ValueError(f"Scope category {group.group('group')} is empty.")
-            parsed[group.group("group")] = phrases
+            parsed[
+                map_label(group.group("group"), SCOPE_CATEGORY_NAMES, "Scope category")
+            ] = phrases
         values[expected[pack.group("pack")]] = parsed
     return values
 
@@ -81,7 +84,7 @@ def _freeze(value: dict[str, list[str]]) -> dict[str, tuple[str, ...]]:
 
 @lru_cache(maxsize=1)
 def load_scope_rules() -> ScopeRules:
-    """Read and validate the runtime contract from shipped Markdown."""
+    """Read and validate the scope policy from shipped Markdown."""
     path = runtime_skill_path("scope-classification")
     body = _contract_body(path.read_text(encoding="utf-8"))
     values = _literal_config(body)
