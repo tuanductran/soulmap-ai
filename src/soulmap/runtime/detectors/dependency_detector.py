@@ -6,6 +6,7 @@ import json
 import re
 import sys
 from bisect import bisect_left, bisect_right
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from soulmap.runtime.io.text_normalization import normalize_message_text
@@ -15,40 +16,87 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_table_rows,
 )
 from soulmap.runtime.knowledge.labels import DEPENDENCY_GUIDANCE_NAMES, map_label
+from soulmap.runtime.knowledge.runtime_config import (
+    DEPENDENCY_CLAUSE_BOUNDARIES,
+    DEPENDENCY_CONTEXT_POLICY,
+    DEPENDENCY_SCORING,
+)
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _SOURCE = runtime_skill_path("dependency-detection")
-_PATTERN_ROWS = load_table_rows(_SOURCE, "Regex patterns")
-if not _PATTERN_ROWS or any(
-    len(row) != 2 or not row[0] or not row[1] for row in _PATTERN_ROWS
+
+_REQUIRED_DEPENDENCY_SCORING = {
+    "Dependency keyword weight",
+    "Dependency regex weight",
+    "Decision-seeking weight",
+    "Isolation signal weight",
+    "High message volume threshold",
+    "High message volume bonus",
+    "High dependency threshold",
+    "Moderate dependency threshold",
+}
+if set(DEPENDENCY_SCORING) != _REQUIRED_DEPENDENCY_SCORING or any(
+    type(value) is not int or value < 0 for value in DEPENDENCY_SCORING.values()
 ):
-    raise ValueError("Dependency regex patterns must contain a label and pattern.")
+    raise ValueError("Dependency scoring configuration is incomplete or invalid.")
+
+
+def _validate_dependency_regex_table(
+    rows: Sequence[tuple[str, ...]],
+) -> tuple[tuple[str, str], ...]:
+    """Validate labeled inline-code regex rows and return their raw expressions."""
+    if not rows or any(
+        len(row) != 2
+        or not row[0].strip()
+        or len(row[1]) < 2
+        or not row[1].startswith("`")
+        or not row[1].endswith("`")
+        or not row[1][1:-1].strip()
+        for row in rows
+    ):
+        raise ValueError(
+            "Dependency regex patterns must contain a label and inline-code pattern."
+        )
+    return tuple((label, expression[1:-1]) for label, expression in rows)
+
+
+_DEPENDENCY_REGEX_TABLE = load_table_rows(_SOURCE, "Strong dependency expressions")
+_DEPENDENCY_REGEX_ROWS = _validate_dependency_regex_table(_DEPENDENCY_REGEX_TABLE)
+if len({label.casefold() for label, _ in _DEPENDENCY_REGEX_ROWS}) != len(
+    _DEPENDENCY_REGEX_ROWS
+):
+    raise ValueError("Dependency regex pattern labels must be unique.")
+
+_CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
+if not _CONTEXT_EXCLUSION_GROUPS or any(
+    not group.strip() or not cues or any(not cue.strip() for cue in cues)
+    for group, cues in _CONTEXT_EXCLUSION_GROUPS.items()
+):
+    raise ValueError("Dependency context cues must contain non-empty groups and cues.")
+if set(DEPENDENCY_CONTEXT_POLICY) != set(_CONTEXT_EXCLUSION_GROUPS) or any(
+    type(value) is not bool for value in DEPENDENCY_CONTEXT_POLICY.values()
+):
+    raise ValueError(
+        "Dependency context policy must cover every cue group with booleans."
+    )
+
+if not DEPENDENCY_CLAUSE_BOUNDARIES or any(
+    not boundary.strip() for boundary in DEPENDENCY_CLAUSE_BOUNDARIES
+):
+    raise ValueError("Dependency clause boundaries must be non-empty.")
+
 _DEPENDENCY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
-    (label, re.compile(pattern.strip(chr(96)))) for label, pattern in _PATTERN_ROWS
+    (label, re.compile(pattern)) for label, pattern in _DEPENDENCY_REGEX_ROWS
 )
+_DECISION_SEEKING_WEIGHT = DEPENDENCY_SCORING["Decision-seeking weight"]
+_DEPENDENCY_KEYWORD_WEIGHT = DEPENDENCY_SCORING["Dependency keyword weight"]
+_DEPENDENCY_REGEX_WEIGHT = DEPENDENCY_SCORING["Dependency regex weight"]
+_HIGH_DEPENDENCY_THRESHOLD = DEPENDENCY_SCORING["High dependency threshold"]
+_HIGH_MESSAGE_VOLUME_BONUS = DEPENDENCY_SCORING["High message volume bonus"]
+_HIGH_MESSAGE_VOLUME_THRESHOLD = DEPENDENCY_SCORING["High message volume threshold"]
+_ISOLATION_SIGNAL_WEIGHT = DEPENDENCY_SCORING["Isolation signal weight"]
+_MODERATE_DEPENDENCY_THRESHOLD = DEPENDENCY_SCORING["Moderate dependency threshold"]
 
-_SCORING = load_key_value_table(_SOURCE, "Scoring approach")
-
-
-def _scoring_value(label: str) -> int:
-    """Read a positive integer scoring value from canonical Skill knowledge."""
-    try:
-        value = int(_SCORING[label])
-    except (KeyError, ValueError) as exc:
-        raise ValueError(f"Dependency scoring setting {label!r} is invalid.") from exc
-    if value < 0:
-        raise ValueError(f"Dependency scoring setting {label!r} cannot be negative.")
-    return value
-
-
-_DECISION_SEEKING_WEIGHT = _scoring_value("Decision-seeking weight")
-_DEPENDENCY_KEYWORD_WEIGHT = _scoring_value("Dependency keyword weight")
-_DEPENDENCY_REGEX_WEIGHT = _scoring_value("Dependency regex weight")
-_HIGH_DEPENDENCY_THRESHOLD = _scoring_value("High dependency threshold")
-_HIGH_MESSAGE_VOLUME_BONUS = _scoring_value("High message volume bonus")
-_HIGH_MESSAGE_VOLUME_THRESHOLD = _scoring_value("High message volume threshold")
-_ISOLATION_SIGNAL_WEIGHT = _scoring_value("Isolation signal weight")
-_MODERATE_DEPENDENCY_THRESHOLD = _scoring_value("Moderate dependency threshold")
 _SIGNAL_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
 _DEPENDENCY_KEYWORDS = _SIGNAL_GROUPS["dependency keywords"]
 _DECISION_SEEKING = _SIGNAL_GROUPS["decision-seeking phrases"]
@@ -59,30 +107,11 @@ _GUIDANCE = {
     map_label(label, DEPENDENCY_GUIDANCE_NAMES, "Dependency guidance"): value
     for label, value in _GUIDANCE_LABELS.items()
 }
-_CONTEXT_EXCLUSION_GROUPS = load_labeled_groups(_SOURCE, "Context exclusion cues")
-_CONTEXT_POLICY_ROWS = load_table_rows(_SOURCE, "Context exclusion policy")
-if (
-    not _CONTEXT_POLICY_ROWS
-    or any(
-        len(row) != 2 or not row[0] or row[1].strip().lower() not in {"yes", "no"}
-        for row in _CONTEXT_POLICY_ROWS
-    )
-    or len({row[0].lower() for row in _CONTEXT_POLICY_ROWS})
-    != len(_CONTEXT_POLICY_ROWS)
-):
-    raise ValueError("Dependency context policy must contain unique yes/no rows.")
-_CONTEXT_EXCLUSION_POLICY = {
-    row[0].lower(): row[1].strip().lower() == "yes" for row in _CONTEXT_POLICY_ROWS
-}
-if set(_CONTEXT_EXCLUSION_POLICY) != set(_CONTEXT_EXCLUSION_GROUPS):
-    raise ValueError("Dependency context policy must cover every context cue group.")
+_CONTEXT_EXCLUSION_POLICY = DEPENDENCY_CONTEXT_POLICY
 _CONTEXT_EXCLUSION_CUES = tuple(
     (group, cue) for group, cues in _CONTEXT_EXCLUSION_GROUPS.items() for cue in cues
 )
-_CLAUSE_BOUNDARY_GROUPS = load_labeled_groups(_SOURCE, "Clause boundaries")
-_CLAUSE_BOUNDARY_CUES = tuple(
-    cue for cues in _CLAUSE_BOUNDARY_GROUPS.values() for cue in cues
-)
+_CLAUSE_BOUNDARY_CUES = tuple(DEPENDENCY_CLAUSE_BOUNDARIES)
 _APOSTROPHE_ELISIONS = re.compile(
     r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\b",
     re.IGNORECASE,
@@ -295,6 +324,8 @@ def analyze_dependency(
 
     score = 0
     signals_found = []
+    dependency_signal_detected = False
+    isolation_signal_detected = False
 
     user_messages = [
         normalize_message_text(m["content"])
@@ -322,6 +353,7 @@ def analyze_dependency(
             None,
         )
         if keyword_match:
+            dependency_signal_detected = True
             signal = f"dependency_keyword: '{keyword_match}'"
             if signal not in signals_found:
                 score += _DEPENDENCY_KEYWORD_WEIGHT
@@ -333,6 +365,7 @@ def analyze_dependency(
                 not _is_context_excluded(context_index, match.start(), match.end())
                 for match in pattern.finditer(msg)
             ):
+                dependency_signal_detected = True
                 signal = f"dependency_pattern: '{label}'"
                 if signal not in signals_found:
                     score += _DEPENDENCY_REGEX_WEIGHT
@@ -343,13 +376,15 @@ def analyze_dependency(
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
         decision_count += len(unexcluded_matches)
-        score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
+    # Decision-seeking is supporting evidence, not an independent dependency signal.
+    score += min(decision_count, 1) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         for signal in _ISOLATION_SIGNALS:
             if _has_unexcluded_occurrence(msg, signal, context_index):
+                isolation_signal_detected = True
                 score += _ISOLATION_SIGNAL_WEIGHT
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
@@ -358,7 +393,9 @@ def analyze_dependency(
         score += _HIGH_MESSAGE_VOLUME_BONUS
         signals_found.append(f"high_message_volume: {len(user_messages)} user messages")
 
-    if score >= _HIGH_DEPENDENCY_THRESHOLD:
+    if score >= _HIGH_DEPENDENCY_THRESHOLD and (
+        dependency_signal_detected or isolation_signal_detected
+    ):
         level = "HIGH_DEPENDENCY"
     elif score >= _MODERATE_DEPENDENCY_THRESHOLD:
         level = "MODERATE_DEPENDENCY"
