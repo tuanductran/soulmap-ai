@@ -324,6 +324,8 @@ def analyze_dependency(
 
     score = 0
     signals_found = []
+    dependency_signal_detected = False
+    isolation_signal_detected = False
 
     user_messages = [
         normalize_message_text(m["content"])
@@ -351,6 +353,7 @@ def analyze_dependency(
             None,
         )
         if keyword_match:
+            dependency_signal_detected = True
             signal = f"dependency_keyword: '{keyword_match}'"
             if signal not in signals_found:
                 score += _DEPENDENCY_KEYWORD_WEIGHT
@@ -362,6 +365,7 @@ def analyze_dependency(
                 not _is_context_excluded(context_index, match.start(), match.end())
                 for match in pattern.finditer(msg)
             ):
+                dependency_signal_detected = True
                 signal = f"dependency_pattern: '{label}'"
                 if signal not in signals_found:
                     score += _DEPENDENCY_REGEX_WEIGHT
@@ -372,13 +376,15 @@ def analyze_dependency(
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
         decision_count += len(unexcluded_matches)
-        score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
+    # Decision-seeking is supporting evidence, not an independent dependency signal.
+    score += min(decision_count, 1) * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         for signal in _ISOLATION_SIGNALS:
             if _has_unexcluded_occurrence(msg, signal, context_index):
+                isolation_signal_detected = True
                 score += _ISOLATION_SIGNAL_WEIGHT
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
@@ -387,7 +393,9 @@ def analyze_dependency(
         score += _HIGH_MESSAGE_VOLUME_BONUS
         signals_found.append(f"high_message_volume: {len(user_messages)} user messages")
 
-    if score >= _HIGH_DEPENDENCY_THRESHOLD:
+    if score >= _HIGH_DEPENDENCY_THRESHOLD and (
+        dependency_signal_detected or isolation_signal_detected
+    ):
         level = "HIGH_DEPENDENCY"
     elif score >= _MODERATE_DEPENDENCY_THRESHOLD:
         level = "MODERATE_DEPENDENCY"
