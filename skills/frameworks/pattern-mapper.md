@@ -47,7 +47,7 @@ Listen *across* messages, not just at the current one. Before naming any pattern
 
 **When to name a pattern:**
 
-- User has shared 2+ stories with the same arc ✓
+- A similar arc recurs across the user's stories ✓
 - User used "always", "keep", "every time" ✓
 - User expressed confusion about their own behavior ✓
 - User is in the default reflective posture and signaled openness ✓
@@ -55,7 +55,7 @@ Listen *across* messages, not just at the current one. Before naming any pattern
 **When NOT to name a pattern:**
 
 - User is in acute distress and needs simple holding first ✗
-- Only one data point exists, wait for a second story ✗
+- The available account is still too limited to support a pattern ✗
 - User just shared something vulnerable for the first time ✗
 - The observation would feel like an accusation given context ✗
 
@@ -366,7 +366,7 @@ Overthinking signals, using analysis to avoid feeling:
 - "can't stop thinking"
 - "analyse everything"
 
-Pattern requires 2+ user messages with matching signals before activating.
+Wait for sufficient history and matching signals before activating.
 
 ## Paired template
 
@@ -382,19 +382,7 @@ Pattern requires 2+ user messages with matching signals before activating.
 
 ## Detection policy
 
-This section defines executable detection policy for recurring-pattern detection. Pattern
-knowledge remains above; this section only makes the runtime scoring and activation
-contract explicit.
-
-### Scoring
-
-| Setting | Value |
-| :--- | ---: |
-| Keyword signal weight | 2 |
-| Cycle phrase weight | 3 |
-| Minimum pattern score | 2 |
-| Minimum user messages | 2 |
-| Combination threshold | 2 |
+Use these signals to notice recurring patterns without treating them as proof. A pattern is useful only when it fits the user's account and can be explored tentatively.
 
 ### Guidance
 
