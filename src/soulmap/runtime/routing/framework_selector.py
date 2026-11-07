@@ -532,7 +532,6 @@ async def select_framework_async(
                     debug_events=debug_events,
                 )
             ),
-        ),
             "conflict": _run_detector_async(
                 "inner_conflict_detector",
                 detect_inner_conflict,
@@ -637,7 +636,6 @@ async def select_framework_async(
                 debug_events=debug_events,
             )
         ),
-            ),
         "conflict": _run_detector_async(
             "inner_conflict_detector",
             detect_inner_conflict,
