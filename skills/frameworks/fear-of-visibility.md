@@ -107,20 +107,21 @@ This fear has a location, a past experience, a family message, a learned conclus
 about what happens when you are visible. Reflect what the user has brought without
 inventing a cause.
 
-**Step 3, Name the intention of the protection (1 sentence)**
-The pull-back is protecting something real. Name it without pathologizing it.
+**Step 3, Name a possible protective intention when it fits (1 sentence)**
+When a protective intention fits the user's account, name it tentatively without
+pathologizing it. Otherwise, omit this step.
 
-> "The part that pulls you back has been keeping something safe."
-> "Going invisible has been a way of staying whole."
+> "Perhaps the part that pulls you back is trying to keep something safe."
+> "Going invisible may be a way of trying to stay safe."
 
 **Step 4, Optional question (last sentence if used)**
 When the user is ready and a question would help, choose from the Visibility section of deep-inquiry-bank.md. Direction: what is the fear
 protecting, what did visibility once cost, or what would it mean to be seen and
 remain okay.
 
-## Word Range
+## Response Length
 
-70-150 words. Mirror. Spacious. Do not fill the space, let the user feel the
+Keep the response concise and proportionate to this framework. Mirror. Spacious. Do not fill the space, let the user feel the
 room that is being made for them.
 
 ## Forbidden Structures
@@ -225,15 +226,11 @@ Public expression:
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Direct visibility-fear weight | 3 |
-| Shrinking plus public-expression weight | 2 |
-| Minimum detection score | 2 |
+Treat these signals as contextual clues, not conclusions. Explore a possible protective intention only when it fits the user's account.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No visibility fear signal. Continue standard pipeline. |
-| Detected | Fear of visibility detected. Activate fear-of-visibility.md (P8c). Name the specific contraction and the possible protective intention without assuming its origin. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |
+| Detected | Fear of visibility detected. Activate fear-of-visibility.md. Name the specific contraction. When it fits the user's account, name a possible protective intention without assuming its origin; otherwise omit it. Do NOT push toward action or sharing. Offer at most one visibility question when appropriate; no question is required. |
