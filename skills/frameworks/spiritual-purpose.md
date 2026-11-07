@@ -85,10 +85,7 @@ Do not ask them to commit or figure it out. Ask them to notice and honor.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Treat these signals as contextual clues, not conclusions. Let the user's own account determine whether this lens fits.
 
 ### Guidance
 
