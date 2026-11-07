@@ -1,7 +1,7 @@
 ---
 paths:
   - src/soulmap/runtime/detectors/*_detector.py
-  - src/soulmap/runtime/config/**/*.py
+  - src/soulmap/runtime/knowledge/runtime_config.py
   - tests/unit/test_*_detector.py
 ---
 
@@ -27,7 +27,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.config import (
+from soulmap.runtime.knowledge.runtime_config import (
     CONFIG_CONSTANT_NAME,
     ANOTHER_CONFIG_CONSTANT,
 )
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 - Start with docstring describing purpose
 - Use `from __future__ import annotations` for forward compatibility
 - Import from `soulmap.runtime.io.cli_payload` for stdin/stdout handling
-- Import config constants from `soulmap.runtime.config`
+- Import runtime policy from `soulmap.runtime.knowledge.runtime_config`
 - Define type hints using `HistoryMessage = dict[str, str]`
 - Name the main function descriptively, for example `analyze_dependency` or
   `detect_crisis`
@@ -91,19 +91,18 @@ Example return value:
 }
 ```
 
-## Threshold conventions
+## Threshold and scoring ownership
 
-For knowledge-first detectors, the registered Markdown runtime source owns semantic
-thresholds and scoring values. Python may parse, normalize, and enforce those values,
-but must not create a parallel source of truth in `src/soulmap/runtime/config/`.
+The repository contract assigns executable thresholds, weights, numeric ceilings,
+recency values, and routing tables to Python-owned runtime configuration in
+`src/soulmap/runtime/knowledge/runtime_config.py`. Markdown remains the canonical
+source for semantic signals, qualitative guidance, and user-facing behavioral meaning.
 
-For example, dependency thresholds are defined in
-`skills/safety/dependency-detection.md`. Update that canonical source, preserve its
-runtime contract, and validate the change through the relevant eval suite.
-
-Only use Python configuration constants when the existing architecture explicitly
-assigns that value to runtime configuration; do not migrate Markdown-owned knowledge
-into Python for stylistic consistency.
+When changing executable policy, update the corresponding Python configuration and
+its validation tests. When changing semantic signals or qualitative guidance, update
+the registered Markdown source and its contract tests. Do not create duplicate numeric
+sources of truth in Markdown, and do not move semantic knowledge into Python merely
+for stylistic consistency.
 
 ## Secondary scoring patterns
 
