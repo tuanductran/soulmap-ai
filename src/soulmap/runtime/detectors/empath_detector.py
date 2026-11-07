@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/empath-boundary.md,
@@ -22,10 +22,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 EMPATH_SIGNALS = load_keyword_section(
     runtime_skill_path("empath-boundary"), "Activation Signals"
 )
-_RULES = load_key_value_table(
-    runtime_skill_path("empath-boundary"),
-    "Detection policy",
-)
+_RULES = DETECTOR_CONFIG["empath"]
 _GUIDANCE = load_runtime_guidance(runtime_skill_path("empath-boundary"))
 
 
