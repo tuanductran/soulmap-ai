@@ -112,13 +112,9 @@ you?"
 **Instead:** Acknowledge the harshness. If a protective intention fits the user's account,
 name it tentatively. Offer at most one inquiry question when appropriate.
 
-## Detection signals
+## When this lens may help
 
-No dedicated phrase-matching detector. Routes via default Mirror. The AI model applies
-this framework through language understanding when reading the skill package.
-
-Signals from other detectors that may co-activate: self-directed anger, perfectionism,
-people-pleasing signals picked up by the pattern detector.
+Use this lens when the user speaks to themselves with harshness, shame, or contempt. Explore a possible protective intention only when it fits the user's account; otherwise, reflect the self-criticism without assigning a cause or fixed pattern.
 
 ## Paired template
 
