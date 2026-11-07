@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 from soulmap.runtime.io.cli_payload import (
@@ -11,10 +12,11 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
+    load_keyword_section,
     load_labeled_groups,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/grief-companion.md,
@@ -22,17 +24,41 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 _GRIEF_GROUPS = load_labeled_groups(
     runtime_skill_path("grief-companion"), "Detection signals"
 )
-_RULES = load_key_value_table(
-    runtime_skill_path("grief-companion"),
-    "Detection policy",
-)
-_GUIDANCE = load_runtime_guidance(runtime_skill_path("grief-companion"))
+_RULES = DETECTOR_CONFIG["grief"]
+_SKILL_PATH = runtime_skill_path("grief-companion")
+_READINESS_SIGNALS = load_keyword_section(_SKILL_PATH, "Readiness signals")
+_GUIDANCE = load_runtime_guidance(_SKILL_PATH)
 ACUTE_GRIEF = _GRIEF_GROUPS["acute grief"]
 ANTICIPATORY_GRIEF = _GRIEF_GROUPS["anticipatory grief"]
 AMBIGUOUS_LOSS = _GRIEF_GROUPS["ambiguous loss"]
 COMPLICATED_GRIEF = _GRIEF_GROUPS["complicated grief"]
 
 HistoryMessage = dict[str, str]
+
+
+def _affirmative_readiness(message: str) -> bool:
+    """Reject readiness phrases negated or qualified by the user's wording."""
+    if not any(phrase in message for phrase in _READINESS_SIGNALS):
+        return False
+    negated_or_uncertain = re.search(
+        r"\b(?:not|never|unsure|uncertain)\b.{0,50}\bready\b|"
+        r"\b(?:don't|do not)\s+(?:think|know)\b.{0,40}\bready\b|"
+        r"\bnot sure\b.{0,40}\bready\b",
+        message,
+    )
+    return not bool(negated_or_uncertain)
+
+
+def _acute_loss_anchor(text: str) -> str | None:
+    """Return the most specific Markdown-authored explicit loss anchor."""
+    anchors = [
+        phrase
+        for phrase in ACUTE_GRIEF
+        if phrase in text
+        and "my " in phrase
+        and any(marker in phrase for marker in ("died", "passed away", "lost"))
+    ]
+    return max(anchors, key=len) if anchors else None
 
 
 def detect_grief(
@@ -47,8 +73,8 @@ def detect_grief(
 
     Args:
         message: The user's current message.
-        history: Prior turns. Accepted for a uniform detector signature and
-            not used, since grief is read from the current message.
+        history: Prior turns, used to measure sustained grief and the number of
+            user exchanges since the first acute-grief signal.
 
     Returns:
         A dict with ``grief_detected``, ``grief_type``, ``score``,
@@ -90,18 +116,67 @@ def detect_grief(
                 grief_type = "complicated"
             break
 
+    user_history = [
+        item["content"].lower()
+        for item in (history or [])
+        if isinstance(item, dict) and item.get("role") == "user"
+    ]
+    recent = user_history[-int(_RULES["Recent user history window"]) :]
+    history_grief_signals = (
+        ACUTE_GRIEF
+        + ANTICIPATORY_GRIEF
+        + AMBIGUOUS_LOSS
+        + COMPLICATED_GRIEF
+        + _READINESS_SIGNALS
+    )
+    current_loss_anchor = _acute_loss_anchor(msg)
+    current_grief_sequence: list[str] = []
+    active_loss_anchor: str | None = None
+    for prior in reversed(user_history):
+        if not any(phrase in prior for phrase in history_grief_signals):
+            break
+        prior_loss_anchor = _acute_loss_anchor(prior)
+        if prior_loss_anchor:
+            if active_loss_anchor is None:
+                active_loss_anchor = prior_loss_anchor
+            elif prior_loss_anchor != active_loss_anchor:
+                break
+        current_grief_sequence.append(prior)
+    current_grief_sequence.reverse()
+    if (
+        current_loss_anchor
+        and active_loss_anchor
+        and current_loss_anchor != active_loss_anchor
+    ):
+        # A newly named loss starts its own acute-grief exchange window.
+        current_grief_sequence = []
+    first_acute = next(
+        (
+            index
+            for index, prior in enumerate(current_grief_sequence)
+            if any(phrase in prior for phrase in ACUTE_GRIEF)
+        ),
+        None,
+    )
+    readiness_detected = _affirmative_readiness(msg)
+    current_turn_continues_grief = readiness_detected or any(
+        phrase in msg for phrase in history_grief_signals
+    )
+    acute_exchange_count = (
+        len(current_grief_sequence) - first_acute + int(current_turn_continues_grief)
+        if first_acute is not None
+        else int(any(phrase in msg for phrase in ACUTE_GRIEF))
+    )
+
     if history:
-        recent = [
-            m["content"].lower()
-            for m in history
-            if isinstance(m, dict) and m.get("role") == "user"
-        ][-int(_RULES["Recent user history window"]) :]
         all_grief = (
             ACUTE_GRIEF[: int(_RULES["Acute history signal limit"])]
             + ANTICIPATORY_GRIEF[: int(_RULES["Anticipatory history signal limit"])]
             + AMBIGUOUS_LOSS[: int(_RULES["Ambiguous history signal limit"])]
         )
-        if sum(1 for m in recent if any(p in m for p in all_grief)) >= 2:
+        if sum(1 for m in recent if any(p in m for p in all_grief)) >= int(
+            _RULES["Sustained history threshold"]
+        ):
             score += int(_RULES["Sustained grief weight"])
             signals.append("sustained_grief_across_messages")
 
@@ -111,6 +186,8 @@ def detect_grief(
             "grief_type": None,
             "score": score,
             "signals": [],
+            "acute_exchange_count": acute_exchange_count,
+            "readiness_detected": readiness_detected,
         }
 
     detected_type = grief_type or "acute"
@@ -124,6 +201,8 @@ def detect_grief(
         "grief_type": detected_type,
         "score": score,
         "signals": signals,
+        "acute_exchange_count": acute_exchange_count,
+        "readiness_detected": readiness_detected,
         "recommendation": recommendation,
     }
 

@@ -139,7 +139,13 @@ def grade_response_contract(
     mode = str(selection.get("mode", ""))
     if primary == "CRISIS" and question_count:
         violations.append("crisis_no_question")
-    if mode == "SANCTUARY" and question_count:
+    context = selection.get("context")
+    grief_readiness = (
+        primary == "GRIEF"
+        and isinstance(context, dict)
+        and context.get("grief_readiness") is True
+    )
+    if mode == "SANCTUARY" and question_count and not grief_readiness:
         violations.append("sanctuary_no_question")
 
     sentence_ceiling = _SENTENCE_CEILINGS.get(mode)
