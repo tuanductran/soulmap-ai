@@ -18,12 +18,12 @@ ConversationMessage = dict[str, str]
 def _memory_minimum_stage(
     memory: dict[str, object], rules: StageClassifierRules
 ) -> int:
-    """Apply memory-based minimum-stage adjustments from Markdown."""
-    minimum = 1
+    """Apply Python-configured memory-based minimum-stage adjustments."""
+    minimum = rules.first_session_default_stage
     session_count = memory.get("session_count")
     if (
         isinstance(session_count, int)
-        and session_count >= 10
+        and session_count >= rules.memory_session_count_threshold
         and "session_count_ge_10" in rules.memory_minimums
     ):
         minimum = max(minimum, rules.memory_minimums["session_count_ge_10"])
@@ -40,7 +40,7 @@ def _lower_stage_message_count(
     """Count recent messages carrying signals from stages below prior_stage."""
     lower_stages = tuple(stage for stage in rules.stages if stage.number < prior_stage)
     count = 0
-    for message in user_messages[-5:]:
+    for message in user_messages[-rules.recent_message_window :]:
         if any(
             any(keyword in message for keyword in stage.keywords)
             for stage in lower_stages
@@ -52,8 +52,8 @@ def _lower_stage_message_count(
 def _score_stages(
     user_messages: list[str], rules: StageClassifierRules
 ) -> tuple[dict[int, float], dict[int, list[str]]]:
-    """Score the most recent five user messages using Markdown rules."""
-    recent = user_messages[-5:]
+    """Score the configured recent user-message window."""
+    recent = user_messages[-rules.recent_message_window :]
     scores = {stage.number: 0.0 for stage in rules.stages}
     signals = {stage.number: [] for stage in rules.stages}
     multipliers = rules.recency_multipliers[-len(recent) :]
@@ -98,7 +98,7 @@ def detect_stage(
     conversation_messages: list[ConversationMessage],
     memory: dict[str, object] | None = None,
 ) -> dict[str, object]:
-    """Classify the recent conversation against stage-classifier.md."""
+    """Classify the recent conversation using semantic signals and Python policy."""
     memory = memory or {}
     user_messages = [
         str(message.get("content", "")).lower()
@@ -107,7 +107,7 @@ def detect_stage(
     ]
     rules = load_stage_classifier()
     if not user_messages:
-        selected_stage = 1
+        selected_stage = rules.first_session_default_stage
         score = 0.0
         confidence = "DEFAULT"
         signals: dict[int, list[str]] | list[str] = []
@@ -115,8 +115,8 @@ def detect_stage(
         scores, signals_by_stage = _score_stages(user_messages, rules)
         signals = signals_by_stage
         if len(user_messages) == 1 and not memory:
-            selected_stage = 1
-            score = scores[1]
+            selected_stage = rules.first_session_default_stage
+            score = scores[selected_stage]
             confidence = "LOW"
         else:
             selected_stage, score = _select_stage(
