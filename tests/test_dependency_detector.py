@@ -92,12 +92,12 @@ def test_decision_seeking_phrases_are_counted() -> None:
     assert any("decision_seeking_count" in s for s in result["signals"])
 
 
-def test_decide_for_me_is_supporting_decision_seeking_evidence() -> None:
+def test_decide_for_me_remains_a_high_priority_dependency_signal() -> None:
     result = analyze_dependency([_user("Decide for me.")])
 
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 1
-    assert result["signals"] == ["decision_seeking_count: 1"]
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ['dependency_keyword: "decide for me"']
 
 
 def test_isolation_signal_is_detected() -> None:
