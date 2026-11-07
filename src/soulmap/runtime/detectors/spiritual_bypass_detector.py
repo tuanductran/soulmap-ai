@@ -11,10 +11,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/spiritual/spiritual-discernment.md,
@@ -35,7 +35,7 @@ GENUINE_INTEGRATION = load_keyword_section(
     _DISCERNMENT_PATH, "Genuine Integration Signals"
 )
 
-_BYPASS_SCORING = load_key_value_table(_DISCERNMENT_PATH, "Scoring")
+_BYPASS_SCORING = DETECTOR_CONFIG["spiritual_bypass"]
 _BYPASS_GUIDANCE = load_runtime_guidance(_DISCERNMENT_PATH)
 
 HistoryMessage = dict[str, str]
