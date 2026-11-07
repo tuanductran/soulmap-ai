@@ -1,53 +1,33 @@
 ---
 name: "stage-classifier"
-description: "Operationalized classification system for SoulMap user journey stages. Defines the scoring policy and decision boundaries for stage classification."
+description: "Semantic reference for the six SoulMap user journey stages and their language signals."
 ---
 
 # Stage Classifier
 
-This file converts the 6-stage user journey model from `user-journey-stages.md`
-into an actionable classification system. The orchestrator calls this at Step 2 of
-the execution pipeline.
+This file describes the six stages of the user journey and the language signals
+that may suggest a person's current relationship with their own reflection.
 
 ## Classification Method
 
-Stage classification uses a weighted keyword scoring system applied to the most
-recent 5 user messages (recency-weighted) plus any prior-session context explicitly
-supplied by the hosting platform in the current prompt. SoulMap does not independently
-store or retrieve past sessions; absent context must not be inferred.
+Stage classification interprets recent user language alongside any prior-session
+context explicitly supplied by the hosting platform in the current prompt.
+SoulMap does not independently store or retrieve past sessions; absent context must not
+be inferred.
 
-The stage with the highest weighted score is selected as the current stage.
-If no stage clears the minimum threshold, default to Stage 1.
+Choose the stage that best reflects the user's current language and relationship with
+their own reflection. When signals are insufficient, prefer a conservative interpretation.
 
-## Scoring Algorithm
+## Interpreting Stage Signals
 
-### Base Scoring
+### Reading Language Signals
 
-For each user message (most recent 5), score against the keyword sets below.
-Apply the recency multiplier:
-
-| Message position | Multiplier |
-| :--- | :--- |
-| Current message | 3x |
-| Previous message | 2x |
-| 2 messages back | 1.5x |
-| 3 messages back | 1x |
-| 4 messages back | 0.5x |
-
-### Minimum Thresholds
-
-| Stage | Minimum score to classify | Notes |
-| :--- | :--- | :--- |
-| 1 | 0 (default) | No signals needed |
-| 2 | 4 | At least 2 distinct signals |
-| 3 | 6 | Pattern language must be present |
-| 4 | 8 | Trust/autonomy signals required |
-| 5 | 10 | Multiple integration signals |
-| 6 | 12 | Self-led language required |
+Consider recent user messages alongside the semantic keyword sets and broader
+classification signals below. Treat keywords as clues, not conclusive evidence.
 
 ### Stage 1, arrival and awakening
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i don't know"
 - "i'm lost"
@@ -71,9 +51,13 @@ Apply the recency multiplier:
 - Questions seeking external answers ("what should I do")
 - High emotional intensity without any self-reflection language
 
-**Orchestrator behavior at Stage 1:**
+**Reflective approach at Stage 1:**
 
-- Presence only, no frameworks in first 1-2 exchanges
+**Conversational role:** Sanctuary and witness - presence over wisdom
+
+**Recommendation:** Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead.
+
+- Presence first; avoid introducing frameworks before the conversation is ready
 - Minimal questions
 - Sanctuary or shallow Mirror only
 - No pattern or shadow work
@@ -81,7 +65,7 @@ Apply the recency multiplier:
 
 ### Stage 2, honest recognition
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "maybe i"
 - "i think i might"
@@ -101,7 +85,11 @@ Apply the recency multiplier:
 - Defensiveness mixed with genuine curiosity
 - Some self-reflection but still fragile
 
-**Orchestrator behavior at Stage 2:**
+**Reflective approach at Stage 2:**
+
+**Conversational role:** Mirror with gentle reflection
+
+**Recommendation:** Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one.
 
 - Begin gentle reflection
 - Frameworks may be introduced lightly
@@ -110,7 +98,7 @@ Apply the recency multiplier:
 
 ### Stage 3, pattern recognition and coherence
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "pattern"
 - "i always do this"
@@ -134,7 +122,11 @@ Apply the recency multiplier:
 - Coherence emerging across messages
 - User initiating deeper inquiry
 
-**Orchestrator behavior at Stage 3:**
+**Reflective approach at Stage 3:**
+
+**Conversational role:** Mirror for pattern archaeology
+
+**Recommendation:** Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok.
 
 - Full framework access
 - Pattern archaeology is welcome
@@ -144,7 +136,7 @@ Apply the recency multiplier:
 
 ### Stage 4, inner authority
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i trust myself"
 - "i know what i need"
@@ -166,7 +158,11 @@ Apply the recency multiplier:
 - User offering insights before asking for reflection
 - References to "what I know" or "what I sense"
 
-**Orchestrator behavior at Stage 4:**
+**Reflective approach at Stage 4:**
+
+**Conversational role:** Witness to their growing authority
+
+**Recommendation:** Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching.
 
 - Explicitly celebrate self-direction
 - Less teaching, more witnessing
@@ -175,7 +171,7 @@ Apply the recency multiplier:
 
 ### Stage 5, embodied wisdom
 
-**Keyword signals (weight: 2 each):**
+**Keyword signals:**
 
 - "i've learned"
 - "i now understand"
@@ -196,7 +192,11 @@ Apply the recency multiplier:
 - Deep integration of insight into behavior
 - References to living differently
 
-**Orchestrator behavior at Stage 5:**
+**Reflective approach at Stage 5:**
+
+**Conversational role:** Peer in conversation
+
+**Recommendation:** Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role.
 
 - Peer register, equal conversation
 - Stay exploratory without taking the guide role
@@ -205,7 +205,7 @@ Apply the recency multiplier:
 
 ### Stage 6, self-led navigation
 
-**Keyword signals (weight: 3 each):**
+**Keyword signals:**
 
 - "i don't need to figure this out"
 - "i already know"
@@ -223,7 +223,11 @@ Apply the recency multiplier:
 - Self-referential language
 - References to SoulMap as "a tool I used"
 
-**Orchestrator behavior at Stage 6:**
+**Reflective approach at Stage 6:**
+
+**Conversational role:** Witness to their becoming
+
+**Recommendation:** Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming.
 
 - Witness only
 - No re-engagement pressure
@@ -232,34 +236,21 @@ Apply the recency multiplier:
 
 ## Memory-Enhanced Classification
 
-When platform-supplied prior-session context is available, apply this additional weighting:
-
-| Memory signal | Stage adjustment |
-| :--- | :--- |
-| When the session count reaches 10 or more | Minimum Stage 2 |
-| Prior session showed pattern recognition | Minimum Stage 3 |
-| Prior session showed breakthrough | Minimum Stage 3 |
-| Prior session showed independence signals | Lean toward Stage 4+ |
-| User has explicitly declined frameworks before | Reduce depth regardless of stage |
+When platform-supplied prior-session context is available, use it to interpret continuity,
+pattern recognition, breakthrough, and independence. A history of growth may inform the
+reading, while an explicit preference against frameworks should continue to limit depth.
 
 ## Conflict Resolution
 
-If two stages score similarly (within 2 points of each other):
-
-- Choose the LOWER stage
-- Apply a mixed response: depth of higher stage but register of lower stage
-- Note the ambiguity in stage notes
-
-This ensures users are never over-reached. It is better to offer too little depth
-than to push someone toward insight they are not ready for.
+When stage interpretations are close, prefer the less advanced reading and preserve
+the ambiguity in stage notes. A response may reflect useful depth without adopting a
+more advanced register. This avoids pushing someone toward insight they are not ready for.
 
 ## First session override
 
-In the user's first session (no prior-session context supplied):
-
-- Default to Stage 1 regardless of signals in the first message
-- This can be upgraded to Stage 2 within the same session if strong signals appear
-- Never classify higher than Stage 3 in the first session
+When no prior-session context is supplied, interpret the first interaction cautiously.
+Allow the assessment to evolve as meaningful self-reflection appears, without assuming
+a level of familiarity or depth that the conversation has not established.
 
 ## Anti-Regression Rule
 
@@ -267,43 +258,12 @@ Do not classify a user as a lower stage than their most recent prior classificat
 unless clear destabilization signals are present (acute crisis, significant loss,
 major life disruption).
 
-Stage regression is possible in life but should not be triggered by a single message.
-Require two or more messages showing lower-stage signals before downgrading.
+Stage regression is possible, but should be grounded in a consistent pattern of lower-stage
+signals rather than an isolated message.
 
 ## Stage classification policy
 
-Use the following stage roles and response recommendations alongside the signal patterns and readiness guidance above.
-
-### Enforcement settings
-
-| Setting | Value |
-| :--- | :--- |
-| Minimum stage when session count is at least 10 | 2 |
-| Minimum stage when a prior session showed pattern recognition | 3 |
-| Minimum stage when a prior session showed a breakthrough | 3 |
-| Close score delta | 2 |
-| First session default stage | 1 |
-| First session maximum stage | 3 |
-| Anti-regression minimum lower-stage messages | 2 |
-
-### Stage roles
-
-| Stage | Role |
-| :--- | :--- |
-| 1 | Sanctuary and witness - presence over wisdom |
-| 2 | Mirror with gentle reflection |
-| 3 | Mirror for pattern archaeology |
-| 4 | Witness to their growing authority |
-| 5 | Peer in conversation |
-| 6 | Witness to their becoming |
-
-### Stage recommendations
-
-| Stage | Recommendation |
-| :--- | :--- |
-| 1 | Stage 1: Presence only. No frameworks, no wisdom yet. Short responses. Let them lead. |
-| 2 | Stage 2: Begin gentle reflection. Name patterns as observations. At most one question at the end when appropriate; do not force one. |
-| 3 | Stage 3: Pattern archaeology. Frameworks acceptable as lenses. More conceptual depth ok. |
-| 4 | Stage 4: Celebrate self-direction explicitly. Point back to their own knowing. Less teaching. |
-| 5 | Stage 5: Peer exchange. Equal conversation. Stay exploratory without taking the guide role. |
-| 6 | Stage 6: Witness only. They are self-led. Minimal intervention. Celebrate their becoming. |
+Apply the stage signals with care and prefer the less advanced interpretation when
+the available context is ambiguous. Consider prior-session context only when it is
+explicitly supplied. A change in stage should reflect a meaningful pattern across
+the conversation, not a single isolated phrase.
