@@ -179,5 +179,7 @@ message frequency are supporting evidence, not standalone proof of dependency. W
 or mixed signals call for gentle guidance that returns agency to the user without
 treating them as unsafe or diagnosing them.
 
-Do not treat repeated wording as separate proof. Consider each signal in context,
-alongside the user's broader language and conversation history.
+Do not treat duplicate keyword, regex, or isolation matches as separate proof.
+Repeated decision-seeking across user turns remains supporting evidence, not standalone
+proof of dependency. Consider every signal alongside the user's broader language and
+conversation history.
