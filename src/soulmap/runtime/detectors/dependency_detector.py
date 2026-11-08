@@ -370,12 +370,16 @@ def analyze_dependency(
                     signals_found.append(signal)
                 break
 
-    decision_phrases: set[str] = set()
+    decision_count = 0
+    decision_phrase_counts: dict[str, int] = {}
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
-        decision_phrases.update(phrase for _, _, phrase in unexcluded_matches)
-    decision_count = len(decision_phrases)
-    score += decision_count * _DECISION_SEEKING_WEIGHT
+        decision_count += len(unexcluded_matches)
+        score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
+        for _, _, phrase in unexcluded_matches:
+            decision_phrase_counts[phrase] = decision_phrase_counts.get(phrase, 0) + 1
+    if any(count >= 2 for count in decision_phrase_counts.values()):
+        has_protective_signal = True
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
