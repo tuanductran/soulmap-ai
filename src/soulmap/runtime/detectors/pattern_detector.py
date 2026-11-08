@@ -39,9 +39,7 @@ def detect_patterns(conversation_messages: list) -> dict:
         if isinstance(m, dict) and m.get("role") == "user"
     ]
 
-    minimum_matching_messages = int(
-        _PATTERN_RULES["Minimum matching user messages"]
-    )
+    minimum_matching_messages = int(_PATTERN_RULES["Minimum matching user messages"])
     if len(user_messages) < minimum_matching_messages:
         return {
             "patterns_detected": [],
