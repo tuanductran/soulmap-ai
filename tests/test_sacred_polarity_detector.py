@@ -82,6 +82,34 @@ def test_boundary_difficulty_without_current_or_prior_framing_stays_inactive() -
     assert result["sacred_polarity_detected"] is False
 
 
+def test_negated_prior_polarity_mention_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I don't relate to feminine and masculine energies.",
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_quoted_prior_polarity_mention_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": 'Someone mentioned "feminine and masculine energies".',
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
 def test_recommendation_present_when_not_detected() -> None:
     result = detect_sacred_polarity("I went to the gym today.")
 
