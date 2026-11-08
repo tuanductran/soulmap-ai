@@ -134,6 +134,7 @@ def test_repeated_decision_phrase_in_one_turn_is_moderate() -> None:
     assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
 
+
 def test_distinct_decision_seeking_phrases_alone_remain_moderate() -> None:
     """Distinct advice-seeking phrases are supporting evidence, not proof of dependency."""
     result = analyze_dependency(
