@@ -302,6 +302,7 @@ def _unexcluded_decision_seeking_matches(
             occupied_until = end
     return selected
 
+
 def analyze_dependency(
     conversation_messages: list, *, current_message: str | None = None
 ) -> dict:
