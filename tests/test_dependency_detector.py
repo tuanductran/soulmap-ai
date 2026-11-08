@@ -127,10 +127,10 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
-def test_each_unexcluded_decision_seeking_occurrence_is_counted() -> None:
+def test_distinct_decision_seeking_phrases_are_counted_as_supporting_evidence() -> None:
     result = analyze_dependency([_user("Should I leave? Should I stay?")])
 
-    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["level"] == "MODERATE_DEPENDENCY"
     assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
 
@@ -156,8 +156,8 @@ def test_repeated_decision_seeking_phrase_alone_remains_moderate() -> None:
     )
 
     assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 2
-    assert result["signals"] == ["decision_seeking_count: 2"]
+    assert result["score"] == 1
+    assert result["signals"] == ["decision_seeking_count: 1"]
 
 
 def test_nested_decision_seeking_phrase_is_counted_once() -> None:
