@@ -46,7 +46,7 @@ _NEGATED_POLARITY_FRAME = re.compile(
 
 def _is_quoted_span(text: str, start: int, end: int) -> bool:
     """Return whether a framing phrase is enclosed in quotation marks."""
-    for opening, closing in (('"', '"'), ("“", "”"), ("‘", "’")):
+    for opening, closing in (('"', '"'), ("“", "”")):
         quote_start = text.rfind(opening, 0, start + 1)
         quote_end = text.find(closing, end)
         if quote_start < 0 or quote_end < 0:
