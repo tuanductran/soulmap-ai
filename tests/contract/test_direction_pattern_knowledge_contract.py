@@ -58,7 +58,7 @@ def test_pattern_scoring_uses_python_owned_weights() -> None:
         result = pattern_detector.detect_patterns(
             [
                 {"role": "user", "content": "people always leave"},
-                {"role": "user", "content": "it keeps happening"},
+                {"role": "user", "content": "people always leave again"},
             ]
         )
         assert result["patterns_detected"][0]["score"] == 7
