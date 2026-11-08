@@ -180,6 +180,6 @@ or mixed signals call for gentle guidance that returns agency to the user withou
 treating them as unsafe or diagnosing them.
 
 Do not treat duplicate keyword, regex, or isolation matches as separate proof.
-Repeated decision-seeking across user turns remains supporting evidence, not standalone
-proof of dependency. Consider every signal alongside the user's broader language and
+A repeated decision-seeking phrase across distinct user turns can warrant a protective
+redirect; repetition within one message or distinct one-off advice phrases alone cannot. Consider every signal alongside the user's broader language and
 conversation history.
