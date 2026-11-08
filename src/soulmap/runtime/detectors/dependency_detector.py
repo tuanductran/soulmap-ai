@@ -284,24 +284,25 @@ def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
 
 def _unexcluded_decision_seeking_matches(
     message: str, context_index: _ContextIndex
-) -> list[tuple[int, int]]:
-    """Count decision-seeking spans once, preferring longer overlapping phrases."""
+) -> list[tuple[int, int, str]]:
+    """Count decision-seeking spans once, retaining their canonical phrase."""
     candidates = [
-        (match.start(), match.end())
+        (match.start(), match.end(), phrase)
         for phrase in _DECISION_SEEKING
         for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
         if not _is_context_excluded(context_index, match.start(), match.end())
     ]
-    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
+    candidates.sort(
+        key=lambda span: (span[0], -(span[1] - span[0]), span[1], span[2])
+    )
 
-    selected: list[tuple[int, int]] = []
+    selected: list[tuple[int, int, str]] = []
     occupied_until = -1
-    for start, end in candidates:
+    for start, end, phrase in candidates:
         if start >= occupied_until:
-            selected.append((start, end))
+            selected.append((start, end, phrase))
             occupied_until = end
     return selected
-
 
 def analyze_dependency(
     conversation_messages: list, *, current_message: str | None = None
