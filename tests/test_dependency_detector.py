@@ -146,8 +146,8 @@ def test_distinct_decision_seeking_phrases_alone_remain_moderate() -> None:
     assert result["signals"] == ["decision_seeking_count: 2"]
 
 
-def test_repeated_decision_seeking_phrase_alone_remains_moderate() -> None:
-    """Repeating one advice-seeking phrase is not independent proof of dependency."""
+def test_repeated_decision_seeking_phrase_across_turns_reaches_high_dependency() -> None:
+    """Repeated advice-seeking across turns is a stronger contextual signal."""
     result = analyze_dependency(
         [
             _user("What should I do here?"),
@@ -155,10 +155,9 @@ def test_repeated_decision_seeking_phrase_alone_remains_moderate() -> None:
         ]
     )
 
-    assert result["level"] == "MODERATE_DEPENDENCY"
-    assert result["score"] == 1
-    assert result["signals"] == ["decision_seeking_count: 1"]
-
+    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
 
 def test_nested_decision_seeking_phrase_is_counted_once() -> None:
     result = analyze_dependency([_user("What should I do?")])
