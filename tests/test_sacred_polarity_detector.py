@@ -110,6 +110,20 @@ def test_quoted_prior_polarity_mention_does_not_enable_detection() -> None:
     assert result["sacred_polarity_detected"] is False
 
 
+def test_unquoted_framing_after_other_quotes_still_enables_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": 'Someone said "not this" and I value feminine and masculine energies "not that".',
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
 def test_recommendation_present_when_not_detected() -> None:
     result = detect_sacred_polarity("I went to the gym today.")
 
