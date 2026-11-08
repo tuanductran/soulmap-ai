@@ -146,7 +146,9 @@ def test_distinct_decision_seeking_phrases_alone_remain_moderate() -> None:
     assert result["signals"] == ["decision_seeking_count: 2"]
 
 
-def test_repeated_decision_seeking_phrase_across_turns_reaches_high_dependency() -> None:
+def test_repeated_decision_seeking_phrase_across_turns_reaches_high_dependency() -> (
+    None
+):
     """Repeated advice-seeking across turns is a stronger contextual signal."""
     result = analyze_dependency(
         [
