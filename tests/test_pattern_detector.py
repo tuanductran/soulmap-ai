@@ -82,7 +82,7 @@ def test_two_distinct_patterns_are_reported_as_combination() -> None:
             _user("People always leave, they always leave eventually."),
             _user("They always leave before I can trust them."),
             _user("I always worry about what they think, always checking."),
-            _user("I keep checking what they think and worry about approval."),
+            _user("I was worried they'd think badly of me, and I kept checking."),
         ]
     )
 
