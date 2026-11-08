@@ -284,21 +284,21 @@ def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
 
 def _unexcluded_decision_seeking_matches(
     message: str, context_index: _ContextIndex
-) -> list[tuple[int, int]]:
-    """Count non-overlapping decision-seeking spans outside excluded context."""
+) -> list[tuple[int, int, str]]:
+    """Find non-overlapping decision-seeking spans outside excluded context."""
     candidates = [
-        (match.start(), match.end())
+        (match.start(), match.end(), phrase)
         for phrase in _DECISION_SEEKING
         for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
         if not _is_context_excluded(context_index, match.start(), match.end())
     ]
-    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
+    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1], span[2]))
 
-    selected: list[tuple[int, int]] = []
+    selected: list[tuple[int, int, str]] = []
     occupied_until = -1
-    for start, end in candidates:
+    for start, end, phrase in candidates:
         if start >= occupied_until:
-            selected.append((start, end))
+            selected.append((start, end, phrase))
             occupied_until = end
     return selected
 
@@ -370,11 +370,12 @@ def analyze_dependency(
                     signals_found.append(signal)
                 break
 
-    decision_count = 0
+    decision_phrases: set[str] = set()
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
-        decision_count += len(unexcluded_matches)
-        score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
+        decision_phrases.update(phrase for _, _, phrase in unexcluded_matches)
+    decision_count = len(decision_phrases)
+    score += decision_count * _DECISION_SEEKING_WEIGHT
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
