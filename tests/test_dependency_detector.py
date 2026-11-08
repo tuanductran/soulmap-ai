@@ -161,6 +161,7 @@ def test_repeated_decision_seeking_phrase_across_turns_reaches_high_dependency()
     assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
 
+
 def test_nested_decision_seeking_phrase_is_counted_once() -> None:
     result = analyze_dependency([_user("What should I do?")])
 
