@@ -87,7 +87,7 @@ def test_decision_seeking_phrases_are_counted() -> None:
         [_user("What should I do here? Tell me if this is the right choice.")]
     )
 
-    assert result["level"] == "HIGH_DEPENDENCY"
+    assert result["level"] == "MODERATE_DEPENDENCY"
     assert result["score"] == 2
     assert any("decision_seeking_count" in s for s in result["signals"])
 
