@@ -135,6 +135,17 @@ def test_each_unexcluded_decision_seeking_occurrence_is_counted() -> None:
     assert result["signals"] == ["decision_seeking_count: 2"]
 
 
+def test_distinct_decision_seeking_phrases_alone_remain_moderate() -> None:
+    """Distinct advice-seeking phrases are supporting evidence, not proof of dependency."""
+    result = analyze_dependency(
+        [_user("What should I do here? Tell me if this is the right choice.")]
+    )
+
+    assert result["level"] == "MODERATE_DEPENDENCY"
+    assert result["score"] == 2
+    assert result["signals"] == ["decision_seeking_count: 2"]
+
+
 def test_nested_decision_seeking_phrase_is_counted_once() -> None:
     result = analyze_dependency([_user("What should I do?")])
 
