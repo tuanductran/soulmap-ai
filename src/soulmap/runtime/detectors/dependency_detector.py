@@ -323,6 +323,7 @@ def analyze_dependency(
         messages.append({"role": "user", "content": current_message})
 
     score = 0
+    has_protective_signal = False
     signals_found = []
 
     user_messages = [
@@ -354,6 +355,7 @@ def analyze_dependency(
             signal = f"dependency_keyword: '{keyword_match}'"
             if signal not in signals_found:
                 score += _DEPENDENCY_KEYWORD_WEIGHT
+                has_protective_signal = True
                 signals_found.append(signal)
             continue
 
@@ -365,6 +367,7 @@ def analyze_dependency(
                 signal = f"dependency_pattern: '{label}'"
                 if signal not in signals_found:
                     score += _DEPENDENCY_REGEX_WEIGHT
+                    has_protective_signal = True
                     signals_found.append(signal)
                 break
 
@@ -380,6 +383,7 @@ def analyze_dependency(
         for signal in _ISOLATION_SIGNALS:
             if _has_unexcluded_occurrence(msg, signal, context_index):
                 score += _ISOLATION_SIGNAL_WEIGHT
+                has_protective_signal = True
                 if signal not in signals_found:
                     signals_found.append(f"isolation_signal: '{signal}'")
 
@@ -387,7 +391,7 @@ def analyze_dependency(
         score += _HIGH_MESSAGE_VOLUME_BONUS
         signals_found.append(f"high_message_volume: {len(user_messages)} user messages")
 
-    if score >= _HIGH_DEPENDENCY_THRESHOLD:
+    if score >= _HIGH_DEPENDENCY_THRESHOLD and has_protective_signal:
         level = "HIGH_DEPENDENCY"
     elif score >= _MODERATE_DEPENDENCY_THRESHOLD:
         level = "MODERATE_DEPENDENCY"
