@@ -51,7 +51,7 @@ def test_pattern_scoring_uses_python_owned_weights() -> None:
                 "Keyword signal weight": 7,
                 "Cycle phrase weight": 3,
                 "Minimum pattern score": 7,
-                "Minimum user messages": 2,
+                "Minimum matching user messages": 2,
                 "Combination threshold": 2,
             }
         )
