@@ -284,24 +284,23 @@ def _is_context_excluded(index: _ContextIndex, start: int, end: int) -> bool:
 
 def _unexcluded_decision_seeking_matches(
     message: str, context_index: _ContextIndex
-) -> list[tuple[int, int, str]]:
-    """Count decision-seeking spans once, retaining their canonical phrase."""
+) -> list[tuple[int, int]]:
+    """Count non-overlapping decision-seeking spans outside excluded context."""
     candidates = [
-        (match.start(), match.end(), phrase)
+        (match.start(), match.end())
         for phrase in _DECISION_SEEKING
         for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
         if not _is_context_excluded(context_index, match.start(), match.end())
     ]
-    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1], span[2]))
+    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1]))
 
-    selected: list[tuple[int, int, str]] = []
+    selected: list[tuple[int, int]] = []
     occupied_until = -1
-    for start, end, phrase in candidates:
+    for start, end in candidates:
         if start >= occupied_until:
-            selected.append((start, end, phrase))
+            selected.append((start, end))
             occupied_until = end
     return selected
-
 
 def analyze_dependency(
     conversation_messages: list, *, current_message: str | None = None
@@ -372,15 +371,10 @@ def analyze_dependency(
                 break
 
     decision_count = 0
-    decision_phrase_counts: dict[str, int] = {}
     for msg, context_index in zip(user_messages, context_indexes, strict=True):
         unexcluded_matches = _unexcluded_decision_seeking_matches(msg, context_index)
         decision_count += len(unexcluded_matches)
         score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
-        for _, _, phrase in unexcluded_matches:
-            decision_phrase_counts[phrase] = decision_phrase_counts.get(phrase, 0) + 1
-    if any(count >= 2 for count in decision_phrase_counts.values()):
-        has_protective_signal = True
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
 
