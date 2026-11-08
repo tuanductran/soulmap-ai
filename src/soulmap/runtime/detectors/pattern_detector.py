@@ -39,7 +39,10 @@ def detect_patterns(conversation_messages: list) -> dict:
         if isinstance(m, dict) and m.get("role") == "user"
     ]
 
-    if len(user_messages) < int(_PATTERN_RULES["Minimum user messages"]):
+    minimum_matching_messages = int(
+        _PATTERN_RULES["Minimum matching user messages"]
+    )
+    if len(user_messages) < minimum_matching_messages:
         return {
             "patterns_detected": [],
             "primary_pattern": None,
@@ -50,8 +53,15 @@ def detect_patterns(conversation_messages: list) -> dict:
 
     scores = dict.fromkeys(PATTERN_SIGNALS, 0)
     signals_found = {pattern: [] for pattern in PATTERN_SIGNALS}
+    matching_message_counts = dict.fromkeys(PATTERN_SIGNALS, 0)
 
     full_text = " ".join(user_messages)
+    for user_message in user_messages:
+        for pattern_id, data in PATTERN_SIGNALS.items():
+            if any(keyword in user_message for keyword in data.keywords) or any(
+                phrase in user_message for phrase in data.cycle_phrases
+            ):
+                matching_message_counts[pattern_id] += 1
 
     for pattern_id, data in PATTERN_SIGNALS.items():
         for kw in data.keywords:
@@ -76,7 +86,10 @@ def detect_patterns(conversation_messages: list) -> dict:
             "soulmap_role": PATTERN_SIGNALS[pid].soulmap_role,
         }
         for pid in scores
-        if scores[pid] >= int(_PATTERN_RULES["Minimum pattern score"])
+        if (
+            scores[pid] >= int(_PATTERN_RULES["Minimum pattern score"])
+            and matching_message_counts[pid] >= minimum_matching_messages
+        )
     ]
 
     detected.sort(key=lambda x: -x["score"])
