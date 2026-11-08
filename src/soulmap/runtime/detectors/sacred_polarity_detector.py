@@ -37,9 +37,9 @@ _GUIDANCE = load_runtime_guidance(
 HistoryMessage = dict[str, str]
 
 _NEGATED_POLARITY_FRAME = re.compile(
-    r"\\b(?:don't|do not|never|can't|cannot)\\s+(?:really\\s+)?"
+    r"\b(?:don't|do not|never|can't|cannot)\s+(?:really\s+)?"
     r"(?:relate to|identify with|resonate with|believe in|use|subscribe to|"
-    r"feel connected to)\\s+(?:the\\s+)?$",
+    r"feel connected to)\s+(?:the\s+)?$",
     re.IGNORECASE,
 )
 
