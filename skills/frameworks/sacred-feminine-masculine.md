@@ -42,7 +42,7 @@ Use an activation signal below only when the user has explicitly introduced a po
 - "I only know how to do, I don't know how to just be"
 - "I am either all receiving or all doing"
 
-A behavior such as difficulty setting boundaries, without the user's own polarity framing, is not enough to activate this framework.
+A behavior such as difficulty setting boundaries, without the user's own polarity framing, is not enough to activate this framework. A negated, rejected, or merely quoted mention of polarity language is not an affirmative framing signal.
 
 ## What this framework addresses
 
