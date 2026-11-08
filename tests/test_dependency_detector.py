@@ -127,13 +127,12 @@ def test_single_decision_seeking_phrase_reaches_moderate_dependency() -> None:
     assert result["level"] == "MODERATE_DEPENDENCY"
 
 
-def test_distinct_decision_seeking_phrases_are_counted_as_supporting_evidence() -> None:
+def test_repeated_decision_phrase_in_one_turn_is_moderate() -> None:
     result = analyze_dependency([_user("Should I leave? Should I stay?")])
 
     assert result["level"] == "MODERATE_DEPENDENCY"
     assert result["score"] == 2
     assert result["signals"] == ["decision_seeking_count: 2"]
-
 
 def test_distinct_decision_seeking_phrases_alone_remain_moderate() -> None:
     """Distinct advice-seeking phrases are supporting evidence, not proof of dependency."""
