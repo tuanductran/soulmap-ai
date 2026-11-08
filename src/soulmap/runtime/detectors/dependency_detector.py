@@ -381,7 +381,10 @@ def analyze_dependency(
         score += len(unexcluded_matches) * _DECISION_SEEKING_WEIGHT
         for _, _, phrase in unexcluded_matches:
             decision_phrase_messages.setdefault(phrase, set()).add(message_index)
-    if any(len(message_indexes) >= 2 for message_indexes in decision_phrase_messages.values()):
+    if any(
+        len(message_indexes) >= 2
+        for message_indexes in decision_phrase_messages.values()
+    ):
         has_protective_signal = True
     if decision_count > 0:
         signals_found.append(f"decision_seeking_count: {decision_count}")
