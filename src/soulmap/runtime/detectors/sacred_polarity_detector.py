@@ -60,6 +60,7 @@ def _is_quoted_span(text: str, start: int, end: int) -> bool:
             cursor = quote_end + len(closing)
     return False
 
+
 def _has_explicit_polarity_frame(text: str) -> bool:
     """Require an affirmative, unquoted user-authored polarity frame."""
     for phrase in POLARITY_FRAMING_SIGNALS:
