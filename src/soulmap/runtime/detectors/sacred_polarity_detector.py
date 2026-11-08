@@ -46,15 +46,19 @@ _NEGATED_POLARITY_FRAME = re.compile(
 
 def _is_quoted_span(text: str, start: int, end: int) -> bool:
     """Return whether a framing phrase is enclosed in quotation marks."""
-    for opening, closing in (('"', '"'), ("“", "”")):
-        quote_start = text.rfind(opening, 0, start + 1)
-        quote_end = text.find(closing, end)
-        if quote_start < 0 or quote_end < 0:
-            continue
-        if text.find(closing, quote_start + len(opening), start) < 0:
-            return True
+    for opening, closing in (('"', '"'), ("“", "”"), (chr(0x2018), chr(0x2019))):
+        cursor = 0
+        while True:
+            quote_start = text.find(opening, cursor)
+            if quote_start < 0:
+                break
+            quote_end = text.find(closing, quote_start + len(opening))
+            if quote_end < 0:
+                break
+            if quote_start < start and end <= quote_end:
+                return True
+            cursor = quote_end + len(closing)
     return False
-
 
 def _has_explicit_polarity_frame(text: str) -> bool:
     """Require an affirmative, unquoted user-authored polarity frame."""
