@@ -41,6 +41,16 @@ def test_single_keyword_across_two_messages_is_detected() -> None:
     assert result["primary_pattern"] is not None
 
 
+def test_one_signal_message_plus_unrelated_message_does_not_name_pattern() -> None:
+    result = detect_patterns(
+        [_user("People always leave."), _user("I went to the beach yesterday.")]
+    )
+
+    assert result["wait_for_more"] is False
+    assert result["patterns_detected"] == []
+    assert result["primary_pattern"] is None
+
+
 def test_cycle_phrase_scores_higher_than_a_single_keyword() -> None:
     """A cycle phrase alone crosses the detection threshold.
 
