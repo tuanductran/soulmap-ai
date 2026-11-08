@@ -292,9 +292,7 @@ def _unexcluded_decision_seeking_matches(
         for match in re.finditer(rf"(?<!\w){re.escape(phrase)}(?!\w)", message)
         if not _is_context_excluded(context_index, match.start(), match.end())
     ]
-    candidates.sort(
-        key=lambda span: (span[0], -(span[1] - span[0]), span[1], span[2])
-    )
+    candidates.sort(key=lambda span: (span[0], -(span[1] - span[0]), span[1], span[2]))
 
     selected: list[tuple[int, int, str]] = []
     occupied_until = -1
