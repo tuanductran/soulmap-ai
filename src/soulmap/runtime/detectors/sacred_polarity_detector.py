@@ -38,14 +38,14 @@ HistoryMessage = dict[str, str]
 
 _NEGATED_POLARITY_FRAME = re.compile(
     r"\b(?:"
-    r"(?:don't|don’t|do not|never|can't|can’t|cannot)\s+(?:really\s+)?"
+    r"(?:don't|don\u2019t|do not|never|can't|can\u2019t|cannot)\s+(?:really\s+)?"
     r"(?:think|believe|relate to|identify with|resonate with|use|subscribe to|"
     r"feel connected to)"
     r"|not\s+into"
     r"|no\s+longer(?:\s+(?:think|believe(?:\s+in)?|relate to|identify with|"
     r"resonate with|use|subscribe to|feel connected to))?"
     r"|reject(?:s|ed)?"
-    r"|(?:isn't|isn’t|is not)\s+about"
+    r"|(?:isn't|isn\u2019t|is not)\s+about"
     r")\s+(?:that\s+)?(?:(?:the\s+)?(?:concept|idea|notion|framework|lens)"
     r"\s+of\s+)?(?:the\s+)?$",
     re.IGNORECASE,
