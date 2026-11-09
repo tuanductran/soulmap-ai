@@ -96,6 +96,34 @@ def test_negated_prior_polarity_mention_does_not_enable_detection() -> None:
     assert result["sacred_polarity_detected"] is False
 
 
+def test_negated_conceptual_polarity_framing_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I don't resonate with the concept of feminine and masculine energies.",
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_negated_idea_framing_with_curly_apostrophe_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I don’t identify with the idea of feminine and masculine energies.",
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
 def test_quoted_prior_polarity_mention_does_not_enable_detection() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
