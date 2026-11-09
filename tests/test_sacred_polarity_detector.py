@@ -116,7 +116,7 @@ def test_negated_idea_framing_with_curly_apostrophe_does_not_enable_detection() 
         [
             {
                 "role": "user",
-                "content": "I don’t identify with the idea of feminine and masculine energies.",
+                "content": "I don\u2019t identify with the idea of feminine and masculine energies.",
             }
         ],
     )
