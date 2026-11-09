@@ -138,6 +138,44 @@ def test_think_negation_does_not_enable_polarity_detection() -> None:
     assert result["sacred_polarity_detected"] is False
 
 
+def test_qualified_think_negation_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": (
+                    "I don't think, given what I have experienced, feminine and "
+                    "masculine energies apply to me."
+                ),
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_affirmative_framing_after_qualified_rejection_enables_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": (
+                    "I don't think, given what I have experienced, feminine and "
+                    "masculine energies apply to me."
+                ),
+            },
+            {
+                "role": "user",
+                "content": "I now find the balance of receptivity and action useful.",
+            },
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
 def test_not_into_negation_does_not_enable_polarity_detection() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
