@@ -47,7 +47,8 @@ _NEGATED_POLARITY_FRAME = re.compile(
     r"|reject(?:s|ed)?"
     r"|(?:isn't|isn\u2019t|is not)\s+about"
     r")"
-    r"(?:,\s*(?:given|considering|based on|in light of|after|from)\b[^.!?]{1,80})?\s+(?:that\s+)?(?:(?:the\s+)?(?:concept|idea|notion|framework|lens)"
+    r"(?:,\s*(?:given|considering|based on|in light of|after|from)\b"
+    r"[^.!?]{1,80})?\s+(?:that\s+)?(?:(?:the\s+)?(?:concept|idea|notion|framework|lens)"
     r"\s+of\s+)?(?:the\s+)?$",
     re.IGNORECASE,
 )
