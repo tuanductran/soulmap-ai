@@ -124,6 +124,63 @@ def test_negated_idea_framing_with_curly_apostrophe_does_not_enable_detection() 
     assert result["sacred_polarity_detected"] is False
 
 
+def test_think_negation_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "I don't think feminine and masculine energies apply to me."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_not_into_negation_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "I'm not into feminine and masculine energies."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_no_longer_negation_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "I no longer believe in feminine and masculine energies."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_rejection_verb_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "I reject the idea of feminine and masculine energies."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_isnt_about_negation_does_not_enable_polarity_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{"role": "user", "content": "My experience isn't about feminine and masculine energies."}],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_affirmative_frame_after_negated_mention_still_enables_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [{
+            "role": "user",
+            "content": "I don't relate to feminine and masculine energies, but I value feminine and masculine energies.",
+        }],
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
 def test_quoted_prior_polarity_mention_does_not_enable_detection() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
