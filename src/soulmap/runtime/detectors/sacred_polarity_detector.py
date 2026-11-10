@@ -29,6 +29,13 @@ POLARITY_FRAMING_SIGNALS = load_keyword_section(
     "Explicit Polarity Framing",
 )
 _RULES = DETECTOR_CONFIG["sacred_polarity"]
+_REJECTED_POLARITY_FRAME_SUFFIX = re.compile(
+    r"^\\s*(?:do(?:n't| not)|does(?:n't| not)|are(?:n't| not)|is(?:n't| not)|"
+    r"cannot|can't|can\\u2019t|won't|will not)\\s+(?:really\\s+)?"
+    r"(?:apply|fit|describe|represent|reflect|resonate|matter|suit)\\b",
+    re.IGNORECASE,
+)
+
 _GUIDANCE = load_runtime_guidance(
     runtime_skill_path("sacred-feminine-masculine"),
     "Guidance",
@@ -56,7 +63,8 @@ _NEGATED_POLARITY_FRAME = re.compile(
 
 def _is_quoted_span(text: str, start: int, end: int) -> bool:
     """Return whether a framing phrase is enclosed in quotation marks."""
-    for opening, closing in (('"', '"'), ("“", "”"), (chr(0x2018), chr(0x2019))):
+    quote_pairs = (('"', '"'), ("“", "”"), (chr(0x2018), chr(0x2019)))
+    for opening, closing in quote_pairs:
         cursor = 0
         while True:
             quote_start = text.find(opening, cursor)
@@ -68,6 +76,20 @@ def _is_quoted_span(text: str, start: int, end: int) -> bool:
             if quote_start < start and end <= quote_end:
                 return True
             cursor = quote_end + len(closing)
+
+    # ASCII apostrophes are quote delimiters only at token boundaries; this
+    # excludes contractions such as "I'm" and "don't".
+    opening_quotes = [
+        match.start()
+        for match in re.finditer(r"(?<!\\w)'(?=\\S)", text)
+    ]
+    for quote_start in opening_quotes:
+        closing_match = re.search(r"(?<=\\S)'(?!\\w)", text[quote_start + 1 :])
+        if closing_match is None:
+            continue
+        quote_end = quote_start + 1 + closing_match.start()
+        if quote_start < start and end <= quote_end:
+            return True
     return False
 
 
@@ -79,6 +101,9 @@ def _has_explicit_polarity_frame(text: str) -> bool:
                 continue
             prefix = text[max(0, match.start() - 100) : match.start()]
             if _NEGATED_POLARITY_FRAME.search(prefix):
+                continue
+            following_clause = re.split(r"[,;.!?]", text[match.end() :], maxsplit=1)[0]
+            if _REJECTED_POLARITY_FRAME_SUFFIX.search(following_clause):
                 continue
             return True
     return False
