@@ -279,3 +279,13 @@ def test_recommendation_present_when_not_detected() -> None:
 
     assert result["sacred_polarity_detected"] is False
     assert result["recommendation"]
+
+def test_affirmative_frame_after_qualified_rejection_in_same_message_enables_detection() -> None:
+    result = detect_sacred_polarity(
+        "I don't think, given this, feminine and masculine energies apply to me, "
+        "but I now find the balance of receptivity and action useful. "
+        "I only know how to do, I don't know how to just be."
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
