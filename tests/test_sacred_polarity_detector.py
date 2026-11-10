@@ -287,7 +287,50 @@ def test_affirmative_frame_after_qualified_rejection_in_same_message_enables_det
     result = detect_sacred_polarity(
         "I don't think, given this, feminine and masculine energies apply to me, "
         "but I now find the balance of receptivity and action useful. "
-        "I only know how to do, I don't know how to just be."
+        "I can't set boundaries."
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
+
+def test_rejected_polarity_frame_after_phrase_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "Feminine and masculine energies don't apply to me.",
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_ascii_single_quoted_polarity_frame_does_not_enable_detection() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I'm repeating 'feminine and masculine energies'.",
+            }
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_contraction_apostrophe_does_not_hide_unquoted_polarity_frame() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I'm exploring feminine and masculine energies.",
+            }
+        ],
     )
 
     assert result["sacred_polarity_detected"] is True
