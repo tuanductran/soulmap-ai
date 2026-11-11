@@ -228,6 +228,16 @@ def test_quoted_readiness_does_not_hide_the_users_own_readiness() -> None:
     assert result["readiness_detected"] is True
 
 
+def test_users_own_readiness_after_reported_speech_is_accepted() -> None:
+    result = detect_grief(
+        "My mother died last week. My friend said I'm not ready, "
+        "but I'm beginning to talk about them."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is True
+
+
 def test_grief_specific_readiness_is_loaded_from_markdown() -> None:
     result = detect_grief("I've been thinking about what she meant to me.")
 
