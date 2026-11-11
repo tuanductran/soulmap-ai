@@ -37,13 +37,13 @@ HistoryMessage = dict[str, str]
 
 
 _APOSTROPHE_ELISIONS = re.compile(
-    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\\b",
+    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\b",
     re.IGNORECASE,
 )
 _READINESS_ATTRIBUTION = re.compile(
-    r"\\b(?:my\\s+\\w+|a\\s+\\w+|someone|somebody|he|she|they|the\\s+\\w+)\\s+"
+    r"\b(?:my\s+\w+|a\s+\w+|someone|somebody|he|she|they|the\s+\w+)\s+"
     r"(?:said|says|told me|tells me|mentioned|mentions|wrote|writes|texted|messaged|"
-    r"asked|asks|reported|explained|shared|replied|responded)\\b",
+    r"asked|asks|reported|explained|shared|replied|responded)\b",
     re.IGNORECASE,
 )
 
@@ -107,9 +107,9 @@ def _affirmative_readiness(message: str) -> bool:
     """Accept only the user's own affirmative, unquoted readiness language."""
     unquoted_message = _without_quoted_text(message)
     negated_or_uncertain = re.compile(
-        r"\\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
-        r"\\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
-        r"\\bnot sure\\b.{0,40}\\bready\\b"
+        r"\b(?:not|never|unsure|uncertain)\b.{0,50}\bready\b|"
+        r"\b(?:don't|do not)\s+(?:think|know)\b.{0,40}\bready\b|"
+        r"\bnot sure\b.{0,40}\bready\b"
     )
 
     for phrase in _READINESS_SIGNALS:
