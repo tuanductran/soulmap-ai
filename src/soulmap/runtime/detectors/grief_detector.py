@@ -123,7 +123,7 @@ def _affirmative_readiness(message: str) -> bool:
             )
             clause_prefix = prefix[clause_start + 1 :]
             attribution_scope = re.split(
-                r"\\b(?:but|however|although|yet|and i)\\b",
+                r"\b(?:but|however|although|yet|and i)\b",
                 clause_prefix,
             )[-1]
             if _READINESS_ATTRIBUTION.search(attribution_scope):
