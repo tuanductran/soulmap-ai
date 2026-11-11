@@ -74,11 +74,12 @@ describing their own overreliance on Character.AI.
 SoulMap's dependency guidance interprets signals in context rather than treating a
 single phrase as proof. When clear dependency evidence warrants a protective
 response, it states the system's limits and points users toward real-world support.
-Its persona guidance does not frame user distance, disengagement, or account
-inactivity as something the AI experiences emotionally. This directly targets the
-guilt-inducing and possessive dynamics documented above. The closing principle
-(return ownership, send attention back to life) is the structural opposite of a
-guilt-based farewell.
+Its persona guidance discourages pseudo-intimacy and language that simulates a
+bond, while the master prompt bans dependency-building closings. These design
+choices are relevant to the guilt-inducing and possessive dynamics documented
+above, but they do not establish that such dynamics are prevented in every
+interaction. The closing principle (return ownership, send attention back to life)
+is intended as an alternative to a guilt-based farewell.
 A banned-phrase check can flag the specific patterns named above (framing a user
 leaving as losing a relationship, or pleading with a user not to go) when response
 text is checked.
@@ -155,8 +156,9 @@ to") guide response design.
 
 ### What you can say
 
-"Research and qualitative reports document risks related to emotional overreliance
-and memory-based personalization in some AI-companion contexts. SoulMap's response
+"Research and qualitative reports document emotional-overreliance concerns, while
+public product documentation describes memory-based personalization in some
+AI-companion contexts. SoulMap's response
 guidance is designed to support user autonomy and encourage real-world support
 when clear dependency evidence warrants it. This is a design intent, not evidence
 of a guaranteed outcome."
