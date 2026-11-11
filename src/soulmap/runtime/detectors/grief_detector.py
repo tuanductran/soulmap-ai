@@ -100,6 +100,10 @@ def _without_quoted_text(message: str) -> str:
     characters = list(message)
     for start, end in _quoted_spans(message):
         characters[start:end] = [" "] * (end - start)
+        if end > start:
+            # Keep a clause boundary so reported speech cannot bleed into the
+            # user's own statement that follows the quotation.
+            characters[end - 1] = "."
     return "".join(characters)
 
 
