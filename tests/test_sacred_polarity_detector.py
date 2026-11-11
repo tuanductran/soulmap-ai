@@ -295,7 +295,7 @@ def test_affirmative_frame_after_qualified_rejection_in_same_message_enables_det
 
 def test_rejected_polarity_frame_after_phrase_does_not_enable_detection() -> None:
     result = detect_sacred_polarity(
-        "I can't set boundaries.",
+        "I only know how to do, I don't know how to just be.",
         [
             {
                 "role": "user",
@@ -309,7 +309,7 @@ def test_rejected_polarity_frame_after_phrase_does_not_enable_detection() -> Non
 
 def test_ascii_single_quoted_polarity_frame_does_not_enable_detection() -> None:
     result = detect_sacred_polarity(
-        "I can't set boundaries.",
+        "I only know how to do, I don't know how to just be.",
         [
             {
                 "role": "user",
@@ -323,7 +323,7 @@ def test_ascii_single_quoted_polarity_frame_does_not_enable_detection() -> None:
 
 def test_contraction_apostrophe_does_not_hide_unquoted_polarity_frame() -> None:
     result = detect_sacred_polarity(
-        "I can't set boundaries.",
+        "I only know how to do, I don't know how to just be.",
         [
             {
                 "role": "user",
