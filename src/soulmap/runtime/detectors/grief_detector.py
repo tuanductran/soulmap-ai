@@ -122,7 +122,11 @@ def _affirmative_readiness(message: str) -> bool:
                 prefix.rfind(";"),
             )
             clause_prefix = prefix[clause_start + 1 :]
-            if _READINESS_ATTRIBUTION.search(clause_prefix):
+            attribution_scope = re.split(
+                r"\\b(?:but|however|although|yet|and i)\\b",
+                clause_prefix,
+            )[-1]
+            if _READINESS_ATTRIBUTION.search(attribution_scope):
                 continue
             clause = unquoted_message[clause_start + 1 : match.end()]
             if not negated_or_uncertain.search(clause):
