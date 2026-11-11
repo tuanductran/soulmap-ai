@@ -434,7 +434,7 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "Keyword signal weight": 2,
         "Cycle phrase weight": 3,
         "Minimum pattern score": 2,
-        "Minimum user messages": 2,
+        "Minimum matching user messages": 2,
         "Combination threshold": 2,
     },
     "perfectionism_paralysis": {

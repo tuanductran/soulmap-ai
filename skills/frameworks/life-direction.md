@@ -385,25 +385,7 @@ Transition, moving between one chapter of life and the next:
 
 ## Detection policy
 
-This section defines executable detection policy for the Life Direction detector. The
-runtime may execute these values, but must not duplicate them.
-
-### Scoring
-
-| Signal group | Weight |
-| :--- | ---: |
-| lostness | 3 |
-| Meaning void | 3 |
-| Should versus want | 2 |
-| comparison | 2 |
-| transition | 2 |
-| misalignment | 2 |
-| sustained history match | 1 |
-| minimum detection score | 2 |
-| recent user history window | 4 |
-| sustained lostness signal limit | 8 |
-| sustained meaning signal limit | 6 |
-| sustained transition signal limit | 6 |
+Use these signals as invitations to explore what feels meaningful, energizing, and aligned. They are clues for reflection, not a diagnosis or a prescribed direction.
 
 ### Lens signals
 

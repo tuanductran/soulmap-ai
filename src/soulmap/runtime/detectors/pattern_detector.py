@@ -8,10 +8,10 @@ from typing import cast
 
 from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json_value
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.pattern_source import load_pattern_signals
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/pattern-mapper.md.
@@ -19,7 +19,7 @@ from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 # phrases, SoulMap role guidance, reflection language) is hardcoded here —
 # it is parsed from the Markdown skill so the two can never drift apart.
 PATTERN_SIGNALS = load_pattern_signals(runtime_skill_path("pattern-mapper"))
-_PATTERN_RULES = load_key_value_table(runtime_skill_path("pattern-mapper"), "Scoring")
+_PATTERN_RULES = DETECTOR_CONFIG["pattern"]
 _PATTERN_GUIDANCE = load_runtime_guidance(runtime_skill_path("pattern-mapper"))
 
 
@@ -39,7 +39,8 @@ def detect_patterns(conversation_messages: list) -> dict:
         if isinstance(m, dict) and m.get("role") == "user"
     ]
 
-    if len(user_messages) < int(_PATTERN_RULES["Minimum user messages"]):
+    minimum_matching_messages = int(_PATTERN_RULES["Minimum matching user messages"])
+    if len(user_messages) < minimum_matching_messages:
         return {
             "patterns_detected": [],
             "primary_pattern": None,
@@ -50,8 +51,15 @@ def detect_patterns(conversation_messages: list) -> dict:
 
     scores = dict.fromkeys(PATTERN_SIGNALS, 0)
     signals_found = {pattern: [] for pattern in PATTERN_SIGNALS}
+    matching_message_counts = dict.fromkeys(PATTERN_SIGNALS, 0)
 
     full_text = " ".join(user_messages)
+    for user_message in user_messages:
+        for pattern_id, data in PATTERN_SIGNALS.items():
+            if any(keyword in user_message for keyword in data.keywords) or any(
+                phrase in user_message for phrase in data.cycle_phrases
+            ):
+                matching_message_counts[pattern_id] += 1
 
     for pattern_id, data in PATTERN_SIGNALS.items():
         for kw in data.keywords:
@@ -76,7 +84,10 @@ def detect_patterns(conversation_messages: list) -> dict:
             "soulmap_role": PATTERN_SIGNALS[pid].soulmap_role,
         }
         for pid in scores
-        if scores[pid] >= int(_PATTERN_RULES["Minimum pattern score"])
+        if (
+            scores[pid] >= int(_PATTERN_RULES["Minimum pattern score"])
+            and matching_message_counts[pid] >= minimum_matching_messages
+        )
     ]
 
     detected.sort(key=lambda x: -x["score"])
