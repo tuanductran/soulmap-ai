@@ -2,18 +2,13 @@ from soulmap.runtime.knowledge.celebration_source import load_celebration_rules
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 
-def test_celebration_rules_load_scoring_from_markdown() -> None:
+def test_celebration_rules_load_python_owned_scoring() -> None:
     rules = load_celebration_rules()
     text = runtime_skill_path("integration-celebration").read_text(encoding="utf-8")
 
-    assert "| Win or completion weight | 3 |" in text
-    assert "| Relief after difficulty weight | 3 |" in text
-    assert "| Gratitude weight | 2 |" in text
-    assert "| Recognized progress weight | 2 |" in text
-    assert "| Detection threshold | 2 |" in text
-    assert "| Negative override penalty | 2 |" in text
-    assert "| Strength threshold | 4 |" in text
-    assert "| Confirmation score | 2 |" in text
+    assert "### Scoring approach" not in text
+    assert "Win or completion weight" not in text
+    assert "Detection threshold" not in text
 
     assert rules.score_weights == {
         "win or completion": 3,
