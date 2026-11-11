@@ -212,4 +212,4 @@ Use these cues to distinguish active, inward, and lingering anger. Meet the emot
 | :--- | :--- |
 | Active | Active anger is present. Meet the anger before exploring it. Explore what it may protect and the need beneath it only when the user's account provides enough context; otherwise, stay with the emotion without assigning a cause. |
 | Self anger | Anger is turned inward. Use self-compassion as the primary frame. Treat the anger as potentially carrying grief, fear, or perfectionism rather than as a conclusion. |
-| Residual | Residual anger has been held for some time. Acknowledge the weight of carrying it, then explore what the anger is still protecting and what remains unresolved. |
+| Residual | Residual anger has been held for some time. Acknowledge the weight of carrying it. Explore what it may still be protecting or what may remain unresolved only when the user's account provides enough context; otherwise, stay with the emotion. |
