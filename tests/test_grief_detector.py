@@ -202,7 +202,7 @@ def test_uncertain_grief_readiness_does_not_set_readiness() -> None:
 
 def test_quoted_third_party_readiness_does_not_set_readiness() -> None:
     result = detect_grief(
-        'My mother died last week. My friend said, "I\\'m ready to talk about what happened."'
+        'My mother died last week. My friend said, "I\'m ready to talk about what happened."'
     )
 
     assert result["grief_detected"] is True
@@ -220,7 +220,7 @@ def test_reported_unquoted_third_party_readiness_does_not_set_readiness() -> Non
 
 def test_quoted_readiness_does_not_hide_the_users_own_readiness() -> None:
     result = detect_grief(
-        'My mother died last week. My friend said, "I\\'m ready to talk about what happened." '
+        'My mother died last week. My friend said, "I\'m ready to talk about what happened." '
         "I'm beginning to talk about them."
     )
 
