@@ -31,7 +31,7 @@ POLARITY_FRAMING_SIGNALS = load_keyword_section(
 _RULES = DETECTOR_CONFIG["sacred_polarity"]
 _REJECTED_POLARITY_FRAME_SUFFIX = re.compile(
     r"^\s*(?:do(?:n't| not)|does(?:n't| not)|are(?:n't| not)|is(?:n't| not)|"
-    r"cannot|can't|can\u2019t|won't|will not)\s+(?:really\\s+)?"
+    r"cannot|can't|can\u2019t|won't|will not)\s+(?:really\s+)?"
     r"(?:apply|fit|describe|represent|reflect|resonate|matter|suit)\b",
     re.IGNORECASE,
 )
