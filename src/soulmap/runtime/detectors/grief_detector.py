@@ -36,17 +36,98 @@ COMPLICATED_GRIEF = _GRIEF_GROUPS["complicated grief"]
 HistoryMessage = dict[str, str]
 
 
+_APOSTROPHE_ELISIONS = re.compile(
+    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\\b",
+    re.IGNORECASE,
+)
+_READINESS_ATTRIBUTION = re.compile(
+    r"\\b(?:my\\s+\\w+|a\\s+\\w+|someone|somebody|he|she|they|the\\s+\\w+)\\s+"
+    r"(?:said|says|told me|tells me|mentioned|mentions|wrote|writes|texted|messaged|"
+    r"asked|asks|reported|explained|shared|replied|responded)\\b",
+    re.IGNORECASE,
+)
+
+
+def _quoted_spans(message: str) -> list[tuple[int, int]]:
+    """Return quoted spans while leaving contractions intact."""
+    spans: list[tuple[int, int]] = []
+    start: int | None = None
+    closing: str | None = None
+
+    for index, char in enumerate(message):
+        if closing is None:
+            if char in {'"', chr(0x201C), chr(0x2018)}:
+                start = index
+                closing = {
+                    '"': '"',
+                    chr(0x201C): chr(0x201D),
+                    chr(0x2018): chr(0x2019),
+                }[char]
+            elif (
+                char == "'"
+                and (index == 0 or not message[index - 1].isalnum())
+                and index + 1 < len(message)
+                and not message[index + 1].isspace()
+                and not message[index + 1].isdigit()
+                and not _APOSTROPHE_ELISIONS.match(message[index:])
+            ):
+                start = index
+                closing = "'"
+            continue
+
+        if char != closing and not (closing == chr(0x2019) and char == "'"):
+            continue
+        if (
+            char == "'"
+            and index > 0
+            and index + 1 < len(message)
+            and message[index - 1].isalnum()
+            and message[index + 1].isalnum()
+        ):
+            continue
+        if start is not None:
+            spans.append((start, index + 1))
+        start = None
+        closing = None
+
+    if start is not None:
+        spans.append((start, len(message)))
+    return spans
+
+
+def _without_quoted_text(message: str) -> str:
+    """Mask quotations so another person's words cannot establish readiness."""
+    characters = list(message)
+    for start, end in _quoted_spans(message):
+        characters[start:end] = [" "] * (end - start)
+    return "".join(characters)
+
+
 def _affirmative_readiness(message: str) -> bool:
-    """Reject readiness phrases negated or qualified by the user's wording."""
-    if not any(phrase in message for phrase in _READINESS_SIGNALS):
-        return False
-    negated_or_uncertain = re.search(
-        r"\b(?:not|never|unsure|uncertain)\b.{0,50}\bready\b|"
-        r"\b(?:don't|do not)\s+(?:think|know)\b.{0,40}\bready\b|"
-        r"\bnot sure\b.{0,40}\bready\b",
-        message,
+    """Accept only the user's own affirmative, unquoted readiness language."""
+    unquoted_message = _without_quoted_text(message)
+    negated_or_uncertain = re.compile(
+        r"\\b(?:not|never|unsure|uncertain)\\b.{0,50}\\bready\\b|"
+        r"\\b(?:don't|do not)\\s+(?:think|know)\\b.{0,40}\\bready\\b|"
+        r"\\bnot sure\\b.{0,40}\\bready\\b"
     )
-    return not bool(negated_or_uncertain)
+
+    for phrase in _READINESS_SIGNALS:
+        for match in re.finditer(re.escape(phrase), unquoted_message):
+            prefix = unquoted_message[: match.start()]
+            clause_start = max(
+                prefix.rfind("."),
+                prefix.rfind("!"),
+                prefix.rfind("?"),
+                prefix.rfind(";"),
+            )
+            clause_prefix = prefix[clause_start + 1 :]
+            if _READINESS_ATTRIBUTION.search(clause_prefix):
+                continue
+            clause = unquoted_message[clause_start + 1 : match.end()]
+            if not negated_or_uncertain.search(clause):
+                return True
+    return False
 
 
 def _acute_loss_anchor(text: str) -> str | None:
