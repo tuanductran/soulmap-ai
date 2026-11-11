@@ -30,9 +30,9 @@ POLARITY_FRAMING_SIGNALS = load_keyword_section(
 )
 _RULES = DETECTOR_CONFIG["sacred_polarity"]
 _REJECTED_POLARITY_FRAME_SUFFIX = re.compile(
-    r"^\\s*(?:do(?:n't| not)|does(?:n't| not)|are(?:n't| not)|is(?:n't| not)|"
-    r"cannot|can't|can\\u2019t|won't|will not)\\s+(?:really\\s+)?"
-    r"(?:apply|fit|describe|represent|reflect|resonate|matter|suit)\\b",
+    r"^\s*(?:do(?:n't| not)|does(?:n't| not)|are(?:n't| not)|is(?:n't| not)|"
+    r"cannot|can't|can\u2019t|won't|will not)\s+(?:really\\s+)?"
+    r"(?:apply|fit|describe|represent|reflect|resonate|matter|suit)\b",
     re.IGNORECASE,
 )
 
@@ -79,9 +79,9 @@ def _is_quoted_span(text: str, start: int, end: int) -> bool:
 
     # ASCII apostrophes are quote delimiters only at token boundaries; this
     # excludes contractions such as "I'm" and "don't".
-    opening_quotes = [match.start() for match in re.finditer(r"(?<!\\w)'(?=\\S)", text)]
+    opening_quotes = [match.start() for match in re.finditer(r"(?<!\w)'(?=\S)", text)]
     for quote_start in opening_quotes:
-        closing_match = re.search(r"(?<=\\S)'(?!\\w)", text[quote_start + 1 :])
+        closing_match = re.search(r"(?<=\S)'(?!\w)", text[quote_start + 1 :])
         if closing_match is None:
             continue
         quote_end = quote_start + 1 + closing_match.start()
