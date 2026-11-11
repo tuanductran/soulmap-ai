@@ -293,7 +293,6 @@ def test_affirmative_frame_after_qualified_rejection_in_same_message_enables_det
     assert result["sacred_polarity_detected"] is True
 
 
-
 def test_rejected_polarity_frame_after_phrase_does_not_enable_detection() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
