@@ -142,7 +142,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
         "Grief (acute)",
         "Sanctuary",
         "20-60",
-        "No question during the first 2-3 exchanges; afterward, only when the user signals readiness",
+        "No question during the initial acute-grief period; afterward, only when the user signals readiness",
         "grief-companion.md",
     ],
     [

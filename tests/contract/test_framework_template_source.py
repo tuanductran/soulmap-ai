@@ -25,3 +25,11 @@ def test_template_contract_resolves_stage_one_mirror() -> None:
 def test_template_contract_resolves_moderate_de_escalation() -> None:
     template = resolve_template("DE_ESCALATION", "MIRROR")
     assert template["name"] == "De-escalation (MODERATE)"
+
+
+def test_template_contract_keeps_acute_grief_question_readiness_based() -> None:
+    template = resolve_template("GRIEF", "SANCTUARY", {"grief_type": "acute"})
+    assert template["name"] == "Grief (acute)"
+    assert template["question_rule"] == (
+        "No question during the initial acute-grief period; afterward, only when the user signals readiness"
+    )
