@@ -39,8 +39,6 @@ Use an activation signal below only when the user has explicitly introduced a po
 - "surrender and will"
 - "my feminine and masculine"
 - "both my power and my softness"
-- "I only know how to do, I don't know how to just be"
-- "I am either all receiving or all doing"
 
 A behavior such as difficulty setting boundaries, without the user's own polarity framing, is not enough to activate this framework. A negated, rejected, or merely quoted mention of polarity language is not an affirmative framing signal.
 
