@@ -164,9 +164,7 @@ For every spiritual reference in a metaphor-safe category, verify:
 - Is the claim phrased as possibility not fact?
 - Does the reference connect to the user's lived experience?
 
-If any of these three are absent, add the missing element during authored review or
-response-evaluation review. This is not currently a complete runtime framing-marker
-scanner.
+If any of these three are absent, add the missing element before using the spiritual reference. Keep the claim tentative and connected to the user's lived experience.
 
 ### Check 4, bypass detection
 
@@ -177,9 +175,7 @@ Scan for spiritual language being used to:
 - Rationalize harm done by or to the user
 - Skip grief or crisis response
 
-If spiritual language is bypassing a genuine emotional need, flag it and rewrite to
-hold the emotion first before any spiritual framing. Runtime blocking and refusal
-wording coverage remain subject to the partial/enforced statuses in the safety matrix.
+If spiritual language is bypassing a genuine emotional need, hold the emotion first. Do not let symbolic framing replace direct safety guidance, accountability, or appropriate professional support.
 
 ### Check 5, identity installation check
 
