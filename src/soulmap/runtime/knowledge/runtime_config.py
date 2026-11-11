@@ -142,7 +142,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
         "Grief (acute)",
         "Sanctuary",
         "20-60",
-        "No question during the first 2-3 exchanges; afterward, only when the user signals readiness",
+        "No question during the initial acute-grief period; afterward, only when the user signals readiness",
         "grief-companion.md",
     ],
     [
@@ -434,7 +434,7 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "Keyword signal weight": 2,
         "Cycle phrase weight": 3,
         "Minimum pattern score": 2,
-        "Minimum user messages": 2,
+        "Minimum matching user messages": 2,
         "Combination threshold": 2,
     },
     "perfectionism_paralysis": {
