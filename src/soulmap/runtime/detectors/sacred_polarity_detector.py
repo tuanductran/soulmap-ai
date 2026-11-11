@@ -90,20 +90,27 @@ def _is_quoted_span(text: str, start: int, end: int) -> bool:
     return False
 
 
-def _has_explicit_polarity_frame(text: str) -> bool:
-    """Require an affirmative, unquoted user-authored polarity frame."""
+def _polarity_frame_status(text: str) -> bool | None:
+    """Return the user's latest explicit stance, or None when no stance appears."""
+    mentions: list[tuple[int, bool]] = []
     for phrase in POLARITY_FRAMING_SIGNALS:
         for match in re.finditer(re.escape(phrase), text, re.IGNORECASE):
             if _is_quoted_span(text, match.start(), match.end()):
                 continue
+
             prefix = text[max(0, match.start() - 100) : match.start()]
-            if _NEGATED_POLARITY_FRAME.search(prefix):
-                continue
             following_clause = re.split(r"[,;.!?]", text[match.end() :], maxsplit=1)[0]
-            if _REJECTED_POLARITY_FRAME_SUFFIX.search(following_clause):
-                continue
-            return True
-    return False
+            is_rejected = _NEGATED_POLARITY_FRAME.search(prefix) is not None
+            is_rejected = is_rejected or (
+                _REJECTED_POLARITY_FRAME_SUFFIX.search(following_clause) is not None
+            )
+            mentions.append((match.start(), not is_rejected))
+
+    if not mentions:
+        return None
+
+    mentions.sort(key=lambda mention: mention[0])
+    return mentions[-1][1]
 
 
 def detect_sacred_polarity(
@@ -117,9 +124,11 @@ def detect_sacred_polarity(
         if isinstance(item, dict) and item.get("role") == "user"
     ]
     user_texts.append(message)
-    has_user_polarity_frame = any(
-        _has_explicit_polarity_frame(text) for text in user_texts
-    )
+    has_user_polarity_frame = False
+    for user_text in user_texts:
+        frame_status = _polarity_frame_status(user_text)
+        if frame_status is not None:
+            has_user_polarity_frame = frame_status
     signals: list[str] = []
     score = 0
 
