@@ -76,6 +76,46 @@ def test_prior_user_polarity_framing_enables_later_signal() -> None:
     assert result["sacred_polarity_detected"] is True
 
 
+def test_latest_user_rejection_overrides_earlier_affirmative_framing() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I value the balance of receptivity and action.",
+            },
+            {
+                "role": "user",
+                "content": "I no longer relate to feminine and masculine energies.",
+            },
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is False
+
+
+def test_later_affirmative_framing_restores_user_selected_lens() -> None:
+    result = detect_sacred_polarity(
+        "I can't set boundaries.",
+        [
+            {
+                "role": "user",
+                "content": "I value the balance of receptivity and action.",
+            },
+            {
+                "role": "user",
+                "content": "I no longer relate to feminine and masculine energies.",
+            },
+            {
+                "role": "user",
+                "content": "I now find the balance of receptivity and action useful.",
+            },
+        ],
+    )
+
+    assert result["sacred_polarity_detected"] is True
+
+
 def test_boundary_difficulty_without_current_or_prior_framing_stays_inactive() -> None:
     result = detect_sacred_polarity(
         "I can't set boundaries.",
