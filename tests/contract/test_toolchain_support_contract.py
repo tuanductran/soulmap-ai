@@ -53,7 +53,7 @@ RESEARCH_LABELS = {
 }
 
 
-SETUP_UV_SHA = "1c37ad07a6a961277cf70c0d37d6f313000f5884"
+SETUP_UV_SHA = "68559e99cc807c1eb7e9238fd43a15bba460eec2"
 
 
 def test_python_floor_and_ci_baseline_are_aligned() -> None:
