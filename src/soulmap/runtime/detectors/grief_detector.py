@@ -126,14 +126,25 @@ def _affirmative_readiness(message: str) -> bool:
                 prefix.rfind(";"),
             )
             clause_prefix = prefix[clause_start + 1 :]
-            attribution_scope = re.split(
-                r"\b(?:but|however|although|yet|and i)\b",
-                clause_prefix,
-            )[-1]
+            contrast_markers = list(
+                re.finditer(r"\b(?:but|however|although|yet|and i)\b", clause_prefix)
+            )
+            subclause_start = (
+                clause_start + 1 + contrast_markers[-1].end()
+                if contrast_markers
+                else clause_start + 1
+            )
+            attribution_scope = unquoted_message[subclause_start : match.start()]
             if _READINESS_ATTRIBUTION.search(attribution_scope):
                 continue
-            clause = unquoted_message[clause_start + 1 : match.end()]
-            if not negated_or_uncertain.search(clause):
+            clause_end_candidates = [
+                position
+                for punctuation in ".!?"
+                if (position := unquoted_message.find(punctuation, match.end())) >= 0
+            ]
+            clause_end = min(clause_end_candidates, default=len(unquoted_message))
+            subclause = unquoted_message[subclause_start:clause_end]
+            if not negated_or_uncertain.search(subclause):
                 return True
     return False
 
