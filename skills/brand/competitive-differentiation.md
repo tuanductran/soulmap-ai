@@ -75,7 +75,7 @@ Say: "SoulMap's response guidance treats signs of dependency as a reason to
 clarify its limits and encourage support from real people."
 
 Do not say: "We're different because we're safer", this is vague. The specific
-difference is the anti-engagement architecture.
+distinction is the autonomy-focused response guidance described above.
 
 ### When positioning to skeptics
 
