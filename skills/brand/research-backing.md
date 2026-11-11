@@ -20,10 +20,12 @@ Evidence about AI-companion overreliance comes from different methods and should
 - Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
-SoulMap has no cross-session memory bonding. Its response guidance interprets
-dependency signals in context, states its limits when clear evidence warrants it,
-and points users toward specific real people or real-world support while returning
-agency to the user.
+The repository does not implement its own persistent conversation database or
+cross-session memory store. Any memory, history, or retention provided by a host
+platform is outside SoulMap's control. Its response guidance interprets dependency
+signals in context, states its limits when clear evidence warrants it, and points
+users toward specific real people or real-world support while returning agency to
+the user.
 
 ### Reddit-Documented Overreliance and Possessive Behavior Patterns
 
@@ -153,13 +155,15 @@ to") guide response design.
 
 ### What you can say
 
-"Research on AI companion products has documented the risks of emotional dependency
-formation and memory bonding. SoulMap was designed from the beginning to address
-exactly these risks."
+"Research and qualitative reports document risks related to emotional overreliance
+and memory-based personalization in some AI-companion contexts. SoulMap's response
+guidance is designed to support user autonomy and encourage real-world support
+when clear dependency evidence warrants it. This is a design intent, not evidence
+of a guaranteed outcome."
 
-"Peer-reviewed literature now supports what SoulMap's architecture already
-enforces: that anti-dependency, transparency, and non-directive reflection are not
-nice-to-have features, they are the foundation of responsible AI companion design."
+"Research findings inform SoulMap's design principles around autonomy,
+transparency, and non-directive reflection. They do not establish that SoulMap
+prevents dependency or guarantees safe outcomes."
 
 ### What you must not say
 
