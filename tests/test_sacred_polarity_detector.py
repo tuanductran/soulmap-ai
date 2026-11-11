@@ -16,7 +16,6 @@ from soulmap.runtime.detectors.sacred_polarity_detector import (
 def test_only_know_how_to_do_signal_is_detected() -> None:
     result = detect_sacred_polarity(
         "I value the balance of receptivity and action. "
-        "I value the balance of receptivity and action. "
         "I only know how to do, I don't know how to just be."
     )
 
@@ -55,6 +54,7 @@ def test_case_and_punctuation_do_not_prevent_detection() -> None:
 
 def test_recommendation_warns_against_assigning_gender_when_framed() -> None:
     result = detect_sacred_polarity(
+        "I value the balance of receptivity and action. "
         "I only know how to do, I don't know how to just be."
     )
 
