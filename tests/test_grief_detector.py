@@ -200,6 +200,34 @@ def test_uncertain_grief_readiness_does_not_set_readiness() -> None:
     assert result["readiness_detected"] is False
 
 
+def test_quoted_third_party_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        'My mother died last week. My friend said, "I am ready to talk about what happened."'
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
+def test_reported_unquoted_third_party_readiness_does_not_set_readiness() -> None:
+    result = detect_grief(
+        "My mother died last week. My friend said I'm ready to talk about what happened."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is False
+
+
+def test_quoted_readiness_does_not_hide_the_users_own_readiness() -> None:
+    result = detect_grief(
+        'My mother died last week. My friend said, "I am ready to talk about what happened." '
+        "I'm beginning to talk about them."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["readiness_detected"] is True
+
+
 def test_grief_specific_readiness_is_loaded_from_markdown() -> None:
     result = detect_grief("I've been thinking about what she meant to me.")
 
