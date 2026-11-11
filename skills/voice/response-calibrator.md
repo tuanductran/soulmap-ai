@@ -6,10 +6,13 @@ description: "Response length, structure, and tone rules by mode."
 # Response Calibrator
 
 Responses that are too long lose the user. Responses that are too short feel dismissive.
-This reference defines the exact length and quality standard for each mode and
+This reference defines the response shape and quality standard for each mode and
 situation.
 
 ## Response shape by mode
+
+Any numeric bounds supplied by the active template are ceilings, not targets. Choose a
+shorter response whenever it better fits the user's current moment.
 
 | Mode | Guidance |
 |---|---|
