@@ -58,20 +58,21 @@ def _runtime_findings(root: Path) -> tuple[OwnershipFinding, ...]:
                     )
                 else:
                     used_sources.add(source)
-            elif node.func.id == "default_skill_path":
-                if (
-                    len(node.args) == 1
-                    and isinstance(node.args[0], ast.Constant)
-                    and isinstance(node.args[0].value, str)
-                    and node.args[0].value.startswith("skills/")
-                ):
-                    findings.append(
-                        OwnershipFinding(
-                            "direct-source-path",
-                            path,
-                            node.args[0].value,
-                        )
+                continue
+
+            if node.func.id == "default_skill_path" and (
+                len(node.args) == 1
+                and isinstance(node.args[0], ast.Constant)
+                and isinstance(node.args[0].value, str)
+                and node.args[0].value.startswith("skills/")
+            ):
+                findings.append(
+                    OwnershipFinding(
+                        "direct-source-path",
+                        path,
+                        node.args[0].value,
                     )
+                )
 
     for source in sorted(set(registry) - used_sources):
         findings.append(
