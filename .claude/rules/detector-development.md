@@ -109,34 +109,35 @@ for stylistic consistency.
 Some signals contribute partial scores. Use this pattern:
 
 ```python
+_RULES = DETECTOR_CONFIG["your_detector"]
 score = 0
 signals_found = []
 
 # Pattern 1: Keyword match (low confidence)
 for pattern_name, pattern_regex in PATTERNS:
     if pattern_regex.search(msg):
-        score += 10
+        score += _RULES["Keyword match weight"]
         signals_found.append(pattern_name)
 
 # Pattern 2: Semantic structure (medium confidence)
 if has_structure_x(msg):
-    score += 20
+    score += _RULES["Semantic structure weight"]
     signals_found.append("structure_x_detected")
 
 # Pattern 3: Context from history (high confidence)
 if recent_messages_show_y():
-    score += 30
+    score += _RULES["History context weight"]
     signals_found.append("context_confirms_signal")
 
-# Cap at 100
-score = min(score, 100)
+# Apply the configured score ceiling
+score = min(score, _RULES["Maximum score"])
 ```
 
 **Rules**:
 
 - Combine multiple weak signals into a single higher confidence score
 - Later signals can amplify or override earlier ones
-- Always cap the final score at a reasonable maximum (typically 100)
+- If a detector needs a score ceiling, define it in Python runtime configuration and apply that configured value; do not hardcode a generic maximum
 - Document the weighting rationale in code comments
 
 ## Integration methods
