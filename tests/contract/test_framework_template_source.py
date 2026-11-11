@@ -27,7 +27,6 @@ def test_template_contract_resolves_moderate_de_escalation() -> None:
     assert template["name"] == "De-escalation (MODERATE)"
 
 
-
 def test_template_contract_keeps_acute_grief_question_readiness_based() -> None:
     template = resolve_template("GRIEF", "SANCTUARY", {"grief_type": "acute"})
     assert template["name"] == "Grief (acute)"
