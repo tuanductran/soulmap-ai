@@ -79,10 +79,7 @@ def _is_quoted_span(text: str, start: int, end: int) -> bool:
 
     # ASCII apostrophes are quote delimiters only at token boundaries; this
     # excludes contractions such as "I'm" and "don't".
-    opening_quotes = [
-        match.start()
-        for match in re.finditer(r"(?<!\\w)'(?=\\S)", text)
-    ]
+    opening_quotes = [match.start() for match in re.finditer(r"(?<!\\w)'(?=\\S)", text)]
     for quote_start in opening_quotes:
         closing_match = re.search(r"(?<=\\S)'(?!\\w)", text[quote_start + 1 :])
         if closing_match is None:
