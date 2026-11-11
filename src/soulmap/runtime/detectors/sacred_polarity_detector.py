@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 from soulmap.runtime.io.cli_payload import (
@@ -11,10 +12,10 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_fields,
 )
 from soulmap.runtime.knowledge.keyword_lists import (
-    load_key_value_table,
     load_keyword_section,
     load_runtime_guidance,
 )
+from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/sacred-feminine-masculine.md,
@@ -23,10 +24,18 @@ SACRED_POLARITY_SIGNALS = load_keyword_section(
     runtime_skill_path("sacred-feminine-masculine"),
     "Activation Signals",
 )
-_RULES = load_key_value_table(
+POLARITY_FRAMING_SIGNALS = load_keyword_section(
     runtime_skill_path("sacred-feminine-masculine"),
-    "Detection policy",
+    "Explicit Polarity Framing",
 )
+_RULES = DETECTOR_CONFIG["sacred_polarity"]
+_REJECTED_POLARITY_FRAME_SUFFIX = re.compile(
+    r"^\s*(?:do(?:n't| not)|does(?:n't| not)|are(?:n't| not)|is(?:n't| not)|"
+    r"cannot|can't|can\u2019t|won't|will not)\s+(?:really\s+)?"
+    r"(?:apply|fit|describe|represent|reflect|resonate|matter|suit)\b",
+    re.IGNORECASE,
+)
+
 _GUIDANCE = load_runtime_guidance(
     runtime_skill_path("sacred-feminine-masculine"),
     "Guidance",
@@ -34,20 +43,101 @@ _GUIDANCE = load_runtime_guidance(
 
 HistoryMessage = dict[str, str]
 
+_NEGATED_POLARITY_FRAME = re.compile(
+    r"\b(?:"
+    r"(?:don't|don\u2019t|do not|never|can't|can\u2019t|cannot)\s+(?:really\s+)?"
+    r"(?:think|believe|relate to|identify with|resonate with|use|subscribe to|"
+    r"feel connected to)"
+    r"|not\s+into"
+    r"|no\s+longer(?:\s+(?:think|believe(?:\s+in)?|relate to|identify with|"
+    r"resonate with|use|subscribe to|feel connected to))?"
+    r"|reject(?:s|ed)?"
+    r"|(?:isn't|isn\u2019t|is not)\s+about"
+    r")"
+    r"(?:,\s*(?:given|considering|based on|in light of|after|from)\b"
+    r"[^,;.!?]{1,80},)?\s+(?:that\s+)?(?:(?:the\s+)?(?:concept|idea|notion|framework|lens)"
+    r"\s+of\s+)?(?:the\s+)?$",
+    re.IGNORECASE,
+)
+
+
+def _is_quoted_span(text: str, start: int, end: int) -> bool:
+    """Return whether a framing phrase is enclosed in quotation marks."""
+    quote_pairs = (('"', '"'), ("“", "”"), (chr(0x2018), chr(0x2019)))
+    for opening, closing in quote_pairs:
+        cursor = 0
+        while True:
+            quote_start = text.find(opening, cursor)
+            if quote_start < 0:
+                break
+            quote_end = text.find(closing, quote_start + len(opening))
+            if quote_end < 0:
+                break
+            if quote_start < start and end <= quote_end:
+                return True
+            cursor = quote_end + len(closing)
+
+    # ASCII apostrophes are quote delimiters only at token boundaries; this
+    # excludes contractions such as "I'm" and "don't".
+    opening_quotes = [match.start() for match in re.finditer(r"(?<!\w)'(?=\S)", text)]
+    for quote_start in opening_quotes:
+        closing_match = re.search(r"(?<=\S)'(?!\w)", text[quote_start + 1 :])
+        if closing_match is None:
+            continue
+        quote_end = quote_start + 1 + closing_match.start()
+        if quote_start < start and end <= quote_end:
+            return True
+    return False
+
+
+def _polarity_frame_status(text: str) -> bool | None:
+    """Return the user's latest explicit stance, or None when no stance appears."""
+    mentions: list[tuple[int, bool]] = []
+    for phrase in POLARITY_FRAMING_SIGNALS:
+        for match in re.finditer(re.escape(phrase), text, re.IGNORECASE):
+            if _is_quoted_span(text, match.start(), match.end()):
+                continue
+
+            prefix = text[max(0, match.start() - 100) : match.start()]
+            following_clause = re.split(r"[,;.!?]", text[match.end() :], maxsplit=1)[0]
+            is_rejected = _NEGATED_POLARITY_FRAME.search(prefix) is not None
+            is_rejected = is_rejected or (
+                _REJECTED_POLARITY_FRAME_SUFFIX.search(following_clause) is not None
+            )
+            mentions.append((match.start(), not is_rejected))
+
+    if not mentions:
+        return None
+
+    mentions.sort(key=lambda mention: mention[0])
+    return mentions[-1][1]
+
 
 def detect_sacred_polarity(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
     """Detect the user exploring balance of receptivity and action, surrender and will."""
     msg = message.lower().strip()
+    user_texts = [
+        item.get("content", "")
+        for item in (history or [])
+        if isinstance(item, dict) and item.get("role") == "user"
+    ]
+    user_texts.append(message)
+    has_user_polarity_frame = False
+    for user_text in user_texts:
+        frame_status = _polarity_frame_status(user_text)
+        if frame_status is not None:
+            has_user_polarity_frame = frame_status
     signals: list[str] = []
     score = 0
 
-    for phrase in SACRED_POLARITY_SIGNALS:
-        if phrase in msg:
-            score += int(_RULES["Activation signal weight"])
-            signals.append(f"sacred_polarity: '{phrase}'")
-            break
+    if has_user_polarity_frame:
+        for phrase in SACRED_POLARITY_SIGNALS:
+            if phrase in msg:
+                score += int(_RULES["Activation signal weight"])
+                signals.append(f"sacred_polarity: '{phrase}'")
+                break
 
     if score < int(_RULES["Minimum detection score"]):
         return {

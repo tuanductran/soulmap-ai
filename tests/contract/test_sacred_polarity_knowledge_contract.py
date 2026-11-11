@@ -12,6 +12,7 @@ def test_sacred_polarity_scoring_is_knowledge_authored(
         sacred_polarity_detector._RULES, "Activation signal weight", "7"
     )
     result = sacred_polarity_detector.detect_sacred_polarity(
-        sacred_polarity_detector.SACRED_POLARITY_SIGNALS[0]
+        f"{sacred_polarity_detector.SACRED_POLARITY_SIGNALS[0]}. "
+        "I value the balance of receptivity and action."
     )
     assert result["score"] == 7
