@@ -50,8 +50,7 @@ what the user actually needs: a clear mirror that eventually becomes unnecessary
 
 ## The One-Sentence Differentiation
 
-> Every other AI companion is designed to become more important to you over time.
-> SoulMap is designed to become less important.
+> SoulMap is designed to support user autonomy rather than encourage ongoing reliance on the system.
 
 ## Research Backing
 
