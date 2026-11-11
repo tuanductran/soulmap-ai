@@ -13,7 +13,7 @@ drift into contradiction.
 Applies to:
 
 - Chat responses
-- Agent runtime behavior
+- Live conversation behavior
 - Reflection frameworks
 - Safety and dependency handling
 
@@ -63,7 +63,7 @@ Rules:
 
 When two documents feel in tension, use this order:
 
-1. Runtime safety and response rules for live chat
+1. Safety and response guidance for live conversations
 2. Public brand messaging canon
 3. Public content strategy
 4. Internal strategy and planning language
