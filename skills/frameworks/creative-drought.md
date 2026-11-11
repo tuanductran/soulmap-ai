@@ -120,9 +120,9 @@ When appropriate, choose at most one question from the Creative Drought section 
 the silence feels like, what changed before the drought began, or what the person
 is afraid the drought means.
 
-## Word Range
+## Response Length
 
-70-160 words. Mirror. Do not offer techniques. Do not list practices. Reflect only.
+Keep the response concise and proportionate to this framework. Mirror. Do not offer techniques. Do not list practices. Reflect only.
 
 ## Forbidden Structures
 
@@ -186,18 +186,14 @@ Secondary combination: creative identity language ("my writing", "as a creator",
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Creative-identity plus absence weight | 2 |
-| Minimum detection score | 2 |
+Treat these signals as contextual clues, not conclusions. A creative pause can have many meanings; let the user's own account guide the reflection.
 
 ### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No creative drought signal. Continue standard pipeline. |
-| Detected | Creative drought detected. Activate creative-drought.md (P7b). Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
+| Detected | Creative drought detected. Activate creative-drought.md. Name the specific quality of the silence. Do NOT offer techniques or practices. Reflect the user's description without assigning a hidden message or predicting growth. Offer at most one creative-drought question from deep-inquiry-bank.md when appropriate; no question is required. |
 
 ### Secondary signal groups
 
