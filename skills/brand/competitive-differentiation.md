@@ -54,7 +54,7 @@ what the user actually needs: a clear mirror that eventually becomes unnecessary
 
 ## Research Backing
 
-Peer-reviewed literature now validates the problem SoulMap is designed to solve.
+Research on AI companions documents several risks relevant to SoulMap's design.
 See [research-backing.md](research-backing.md) for citations and how to use them in copy.
 
 ## What to say and what not to say
