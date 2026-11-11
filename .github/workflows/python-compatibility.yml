@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 30
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
-      SOULMAP_PYTEST_SCOPE: focused
+      SOULMAP_PYTEST_SCOPE: full
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -38,7 +38,7 @@ jobs:
       - name: Install dev dependencies
         run: uv sync --locked --python ${{ matrix.python-version }}
 
-      - name: Run focused test suite
+      - name: Run full test suite
         run: uv run python scripts/pytest_diagnostics.py
 
       - name: Run safety red-team dataset

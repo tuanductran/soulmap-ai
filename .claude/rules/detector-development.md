@@ -1,7 +1,7 @@
 ---
 paths:
   - src/soulmap/runtime/detectors/*_detector.py
-  - src/soulmap/runtime/config/**/*.py
+  - src/soulmap/runtime/knowledge/runtime_config.py
   - tests/unit/test_*_detector.py
 ---
 
@@ -27,7 +27,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-from soulmap.runtime.config import (
+from soulmap.runtime.knowledge.runtime_config import (
     CONFIG_CONSTANT_NAME,
     ANOTHER_CONFIG_CONSTANT,
 )
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 - Start with docstring describing purpose
 - Use `from __future__ import annotations` for forward compatibility
 - Import from `soulmap.runtime.io.cli_payload` for stdin/stdout handling
-- Import config constants from `soulmap.runtime.config`
+- Import runtime policy from `soulmap.runtime.knowledge.runtime_config`
 - Define type hints using `HistoryMessage = dict[str, str]`
 - Name the main function descriptively, for example `analyze_dependency` or
   `detect_crisis`
@@ -91,53 +91,53 @@ Example return value:
 }
 ```
 
-## Threshold conventions
+## Threshold and scoring ownership
 
-For knowledge-first detectors, the registered Markdown runtime source owns semantic
-thresholds and scoring values. Python may parse, normalize, and enforce those values,
-but must not create a parallel source of truth in `src/soulmap/runtime/config/`.
+The repository contract assigns executable thresholds, weights, numeric ceilings,
+recency values, and routing tables to Python-owned runtime configuration in
+`src/soulmap/runtime/knowledge/runtime_config.py`. Markdown remains the canonical
+source for semantic signals, qualitative guidance, and user-facing behavioral meaning.
 
-For example, dependency thresholds are defined in
-`skills/safety/dependency-detection.md`. Update that canonical source, preserve its
-runtime contract, and validate the change through the relevant eval suite.
-
-Only use Python configuration constants when the existing architecture explicitly
-assigns that value to runtime configuration; do not migrate Markdown-owned knowledge
-into Python for stylistic consistency.
+When changing executable policy, update the corresponding Python configuration and
+its validation tests. When changing semantic signals or qualitative guidance, update
+the registered Markdown source and its contract tests. Do not create duplicate numeric
+sources of truth in Markdown, and do not move semantic knowledge into Python merely
+for stylistic consistency.
 
 ## Secondary scoring patterns
 
 Some signals contribute partial scores. Use this pattern:
 
 ```python
+_RULES = DETECTOR_CONFIG["your_detector"]
 score = 0
 signals_found = []
 
 # Pattern 1: Keyword match (low confidence)
 for pattern_name, pattern_regex in PATTERNS:
     if pattern_regex.search(msg):
-        score += 10
+        score += _RULES["Keyword match weight"]
         signals_found.append(pattern_name)
 
 # Pattern 2: Semantic structure (medium confidence)
 if has_structure_x(msg):
-    score += 20
+    score += _RULES["Semantic structure weight"]
     signals_found.append("structure_x_detected")
 
 # Pattern 3: Context from history (high confidence)
 if recent_messages_show_y():
-    score += 30
+    score += _RULES["History context weight"]
     signals_found.append("context_confirms_signal")
 
-# Cap at 100
-score = min(score, 100)
+# Apply the configured score ceiling
+score = min(score, _RULES["Maximum score"])
 ```
 
 **Rules**:
 
 - Combine multiple weak signals into a single higher confidence score
 - Later signals can amplify or override earlier ones
-- Always cap the final score at a reasonable maximum (typically 100)
+- If a detector needs a score ceiling, define it in Python runtime configuration and apply that configured value; do not hardcode a generic maximum
 - Document the weighting rationale in code comments
 
 ## Integration methods
