@@ -211,14 +211,9 @@ Never use the words "anxious attachment", "avoidant attachment", or "disorganize
 attachment", these are clinical labels that can feel like a diagnosis and stop the
 exploration.
 
-## Detection signals
+## When this lens may help
 
-No dedicated phrase-matching detector. Routes via default Mirror when no
-higher-priority framework fires. The AI model applies this framework through
-language understanding when reading the skill package.
-
-Signals from other detectors that may indicate relationship content: inner conflict
-language, repeat external frustrations, lostness connected to a specific person.
+Use this lens when the user describes recurring relationship experiences, inner conflict, or repeated frustration with a particular person. Keep attention on the user's own experience; avoid diagnosing attachment styles.
 
 ## Paired template
 

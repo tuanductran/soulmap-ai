@@ -145,9 +145,7 @@ It is noticing:
 
 ## Detection signals
 
-No dedicated phrase-matching detector. Operates as a secondary lens modifier within
-Mirror mode, not a primary framework. The AI model applies this framework when
-feminine or masculine energy language appears in the user's message.
+Use this as a secondary reflective lens only when the user has introduced feminine or masculine energy language. Do not impose polarity as a primary frame or assign fixed gender traits.
 
 ## Paired template
 

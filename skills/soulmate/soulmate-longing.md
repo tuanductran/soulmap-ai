@@ -117,10 +117,7 @@ reflect what is asking for that confirmation instead of answering it.
 
 ## Detection policy
 
-| Rule | Value |
-| :--- | :--- |
-| Activation signal weight | 3 |
-| Minimum detection score | 3 |
+Treat these signals as contextual clues, not conclusions. Let the user's own account determine whether this lens fits.
 
 ### Guidance
 
