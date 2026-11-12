@@ -31,9 +31,7 @@ def test_users_own_statement_after_contrast_is_preserved() -> None:
 
 
 def test_vietnamese_reported_speech_is_masked() -> None:
-    masked = mask_third_party_attribution(
-        "Mẹ tôi nói tôi đang rất tức giận."
-    )
+    masked = mask_third_party_attribution("Mẹ tôi nói tôi đang rất tức giận.")
 
     assert "rất tức giận" not in masked
 
@@ -48,9 +46,7 @@ def test_contractions_and_apostrophe_elisions_are_preserved() -> None:
 
 
 def test_unclosed_quote_masks_the_remaining_text() -> None:
-    masked = mask_third_party_attribution(
-        'My friend wrote, "I cannot think straight'
-    )
+    masked = mask_third_party_attribution('My friend wrote, "I cannot think straight')
 
     assert "cannot think straight" not in masked
 
@@ -69,6 +65,7 @@ def test_trailing_speech_attribution_masks_the_quote() -> None:
 
     assert "overwhelmed" not in masked
     assert "heart is racing" not in masked
+
 
 def test_unrelated_later_attribution_does_not_mask_user_quote() -> None:
     masked = mask_third_party_attribution(
