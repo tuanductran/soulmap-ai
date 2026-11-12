@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
     load_runtime_guidance,
@@ -51,7 +52,9 @@ def check_escalation(history: list[HistoryMessage]) -> bool:
         messages are available to compare.
     """
     user_msgs = [
-        m["content"] for m in history if isinstance(m, dict) and m.get("role") == "user"
+        mask_third_party_attribution(m["content"])
+        for m in history
+        if isinstance(m, dict) and m.get("role") == "user"
     ][-3:]
 
     if len(user_msgs) < 2:
@@ -62,7 +65,7 @@ def check_escalation(history: list[HistoryMessage]) -> bool:
         lengths[i] <= lengths[i + 1] for i in range(len(lengths) - 1)
     )
 
-    late_msg = user_msgs[-1].lower()
+    late_msg = user_msgs[-1]
     has_intensity = any(word in late_msg for word in INTENSITY_MODIFIERS)
 
     return escalating_length and has_intensity
@@ -85,7 +88,7 @@ def detect_intensity(
     Returns:
         A dict with ``level``, ``signals``, ``action``, and ``guidance``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message)
     signals_found = []
     score = 0
 

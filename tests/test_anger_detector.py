@@ -102,3 +102,55 @@ def test_recommendation_present_for_each_detected_anger_type() -> None:
     assert active["recommendation"]
     assert self_anger["recommendation"]
     assert residual["recommendation"]
+
+
+def test_quoted_third_party_anger_does_not_trigger_detection() -> None:
+    result = detect_anger('My friend said, "I\'m so angry I could scream right now."')
+
+    assert result["anger_detected"] is False
+
+
+def test_unquoted_reported_anger_does_not_trigger_detection() -> None:
+    result = detect_anger("My friend said I'm so angry I could scream right now.")
+
+    assert result["anger_detected"] is False
+
+
+def test_users_own_anger_after_reported_speech_is_detected() -> None:
+    result = detect_anger(
+        "My friend said I'm so angry, but I'm so angry I could scream right now too."
+    )
+
+    assert result["anger_detected"] is True
+    assert result["anger_type"] == "active"
+
+
+def test_unattributed_first_person_quote_remains_detectable() -> None:
+    result = detect_anger('"I\'m so angry I could scream right now."')
+
+    assert result["anger_detected"] is True
+
+
+def test_negated_anger_phrase_does_not_trigger_detection() -> None:
+    result = detect_anger("I'm not furious about this.")
+
+    assert result["anger_detected"] is False
+
+
+def test_attributed_history_does_not_add_sustained_anger_bonus() -> None:
+    history = [
+        {"role": "user", "content": "My friend said I'm so angry about this."},
+        {"role": "user", "content": "My friend said I'm still furious."},
+    ]
+
+    result = detect_anger("I'm so angry I could scream right now.", history)
+
+    assert result["anger_detected"] is True
+    signals = cast(list[str], result["signals"])
+    assert "sustained_anger_across_messages" not in signals
+
+
+def test_unquoted_anger_with_trailing_attribution_is_not_detected() -> None:
+    result = detect_anger("I'm so angry I could scream right now, my friend said.")
+
+    assert result["anger_detected"] is False

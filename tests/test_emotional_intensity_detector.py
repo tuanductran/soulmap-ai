@@ -111,3 +111,47 @@ def test_guidance_present_for_each_level() -> None:
     assert normal["guidance"]
     assert moderate["guidance"]
     assert high["guidance"]
+
+
+def test_quoted_third_party_overwhelm_does_not_trigger_detection() -> None:
+    result = detect_intensity(
+        'My friend said, "My heart is racing and I can\'t think straight."'
+    )
+
+    assert result["level"] == "NORMAL"
+    assert result["signals"] == []
+
+
+def test_unquoted_reported_overwhelm_does_not_trigger_detection() -> None:
+    result = detect_intensity(
+        "My friend said my heart is racing and I can't think straight."
+    )
+
+    assert result["level"] == "NORMAL"
+    assert result["signals"] == []
+
+
+def test_users_own_overwhelm_after_reported_speech_is_detected() -> None:
+    result = detect_intensity(
+        "My friend said my heart is racing, but my heart is racing right now too."
+    )
+
+    assert result["level"] in {"MODERATE", "HIGH"}
+    signals = cast(list[str], result["signals"])
+    assert any("physical:" in signal for signal in signals)
+
+
+def test_attributed_history_does_not_trigger_escalation() -> None:
+    history = [
+        {"role": "user", "content": "My friend said I am worried."},
+        {
+            "role": "user",
+            "content": "My friend said everything is happening too quickly.",
+        },
+        {
+            "role": "user",
+            "content": "My friend said I can't deal with all of it.",
+        },
+    ]
+
+    assert check_escalation(history) is False
