@@ -74,3 +74,12 @@ def test_unrelated_later_attribution_does_not_mask_user_quote() -> None:
 
     assert "overwhelmed" in masked
     assert "heart is racing" in masked
+
+
+def test_hypothetical_third_party_speech_is_masked() -> None:
+    masked = mask_third_party_attribution(
+        "Hypothetically, my friend might say I am overwhelmed and my heart is racing."
+    )
+
+    assert "overwhelmed" not in masked
+    assert "heart is racing" not in masked
