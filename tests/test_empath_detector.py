@@ -74,3 +74,21 @@ def test_recommendation_present_when_detected() -> None:
 
     assert result["empath_detected"] is True
     assert result["recommendation"]
+
+
+def test_attributed_third_party_empath_signal_does_not_trigger() -> None:
+    result = detect_empath_overwhelm(
+        'My sister said, "I feel what others feel and feel drained after being with people."'
+    )
+
+    assert result["empath_detected"] is False
+    assert result["score"] == 0
+    assert result["signals"] == []
+
+
+def test_user_empath_signal_after_attributed_quote_is_preserved() -> None:
+    result = detect_empath_overwhelm(
+        'My sister said, "I feel what others feel." I feel what others feel too.'
+    )
+
+    assert result["empath_detected"] is True

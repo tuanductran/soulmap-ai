@@ -64,3 +64,21 @@ def test_guidance_present_for_each_detected_mode() -> None:
     assert body["guidance"]
     assert biometric["guidance"]
     assert invitation["guidance"]
+
+
+def test_attributed_third_party_body_sensation_does_not_trigger() -> None:
+    result = detect_somatic(
+        'My partner said, "My chest is tight and my heart is racing."'
+    )
+
+    assert result["somatic_detected"] is False
+    assert result["mode"] is None
+
+
+def test_user_body_sensation_after_attributed_quote_is_preserved() -> None:
+    result = detect_somatic(
+        'My partner said, "My chest is tight." My chest is tight too.'
+    )
+
+    assert result["somatic_detected"] is True
+    assert result["mode"] == "BODY_SENSATION"

@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_non_empty_str_field,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
     load_runtime_guidance,
@@ -45,7 +46,7 @@ def detect_somatic(message: str) -> dict[str, object]:
         A dict with ``somatic_detected``, ``mode``, ``score``, ``signals``,
         and ``recommendation``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message)
     signals = []
     score = 0
     mode = None
