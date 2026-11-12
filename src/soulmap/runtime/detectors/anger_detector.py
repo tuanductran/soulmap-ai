@@ -15,8 +15,8 @@ from soulmap.runtime.knowledge.keyword_lists import (
     load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/anger-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
