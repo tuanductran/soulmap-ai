@@ -119,10 +119,7 @@ def mask_third_party_attribution(message: str) -> str:
         boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
         span_end = boundary.start() if boundary else len(unquoted)
         reported_content = unquoted[match.end() : span_end].strip()
-        if (
-            attributed_prefix.rstrip().endswith((",", ":"))
-            and not reported_content
-        ):
+        if attributed_prefix.rstrip().endswith((",", ":")) and not reported_content:
             characters[clause_start + 1 : match.start()] = [" "] * (
                 match.start() - clause_start - 1
             )
