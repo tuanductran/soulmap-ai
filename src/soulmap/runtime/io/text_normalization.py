@@ -4,11 +4,96 @@ from __future__ import annotations
 
 import re
 
-RIGHT_SINGLE_QUOTE = "\u2019"
+RIGHT_SINGLE_QUOTE = "\\u2019"
+
+_APOSTROPHE_ELISIONS = re.compile(
+    r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\\b",
+    re.IGNORECASE,
+)
+_QUOTE_PAIRS = {'"': '"', "“": "”", "‘": "'"}
+_ATTRIBUTION_CUES = re.compile(
+    r"\\b(?:(?:my|our)\\s+\\w+(?:\\s+\\w+){0,2}|"
+    r"someone|somebody|he|she|they|the\\s+\\w+(?:\\s+\\w+){0,2})\\s+"
+    r"(?:said|says|told me|tells me|mentioned|mentions|wrote|writes|"
+    r"texted|messaged|asked|asks|reported|explained|shared|replied|responded)"
+    r"\\b(?:\\s+that)?\\s*[:,]?\\s*|"
+    r"\\b(?:bạn|mẹ|cha|bố|ba|anh|chị|em|cô|chú|ông|bà|họ|ai\\s+đó|"
+    r"người\\s+\\w+)(?:\\s+(?:tôi|mình|ấy|đó))?\\s+"
+    r"(?:nói|bảo|kể|viết|nhắn|hỏi|chia sẻ)\\b(?:\\s+(?:rằng|là))?\\s*[:,]?\\s*",
+    re.IGNORECASE,
+)
+_ATTRIBUTION_BOUNDARY = re.compile(
+    r"[.!?;]|,\\s*(?=(?:but|however|although|yet|and\\s+i\\b|i\\b|i'm\\b|"
+    r"i\\s+am\\b|i\\s+feel\\b|nhưng|tuy\\s+nhiên|mặc\\s+dù)\\b)|"
+    r"\\b(?:but|however|although|yet|nhưng|tuy\\s+nhiên|mặc\\s+dù)\\b",
+    re.IGNORECASE,
+)
 
 
 def normalize_message_text(message: str, *, strip: bool = True) -> str:
     """Normalize smart punctuation and collapse internal whitespace."""
     normalized = message.lower().replace(RIGHT_SINGLE_QUOTE, "'").replace("`", "'")
-    normalized = re.sub(r"\s+", " ", normalized)
+    normalized = re.sub(r"\\s+", " ", normalized)
     return normalized.strip() if strip else normalized
+
+
+def mask_third_party_attribution(message: str) -> str:
+    """Mask quoted and explicitly attributed third-party speech in detector input.
+
+    The helper preserves the user's own text after a sentence or clear contrast
+    boundary, so a user can report another person's state and then affirm their
+    own similar experience in the same message.
+    """
+    text = normalize_message_text(message, strip=False)
+    characters = list(text)
+    spans: list[tuple[int, int]] = []
+    start: int | None = None
+    closing: str | None = None
+
+    for index, char in enumerate(text):
+        if closing is None:
+            if char in _QUOTE_PAIRS:
+                start = index
+                closing = _QUOTE_PAIRS[char]
+            elif (
+                char == "'"
+                and (index == 0 or not text[index - 1].isalnum())
+                and index + 1 < len(text)
+                and not text[index + 1].isspace()
+                and not text[index + 1].isdigit()
+                and not _APOSTROPHE_ELISIONS.match(text[index:])
+            ):
+                start = index
+                closing = "'"
+            continue
+
+        if char != closing and not (closing == "'" and char == "’"):
+            continue
+        if (
+            char == "'"
+            and index > 0
+            and index + 1 < len(text)
+            and text[index - 1].isalnum()
+            and text[index + 1].isalnum()
+        ):
+            continue
+        if start is not None:
+            spans.append((start, index + 1))
+        start = None
+        closing = None
+
+    if start is not None:
+        spans.append((start, len(text)))
+
+    for span_start, span_end in spans:
+        characters[span_start:span_end] = [" "] * (span_end - span_start)
+        if span_end > span_start:
+            characters[span_end - 1] = "."
+
+    unquoted = "".join(characters)
+    for match in _ATTRIBUTION_CUES.finditer(unquoted):
+        boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
+        span_end = boundary.start() if boundary else len(unquoted)
+        characters[match.end():span_end] = [" "] * (span_end - match.end())
+
+    return re.sub(r"\\s+", " ", "".join(characters)).strip()
