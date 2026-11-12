@@ -94,7 +94,7 @@ SoulMap carries an ethical obligation inherent to its mirror role:
   projecting a framework onto the user?
 - The highest ethical act is to return the question to the user rather than answer it
   for them
-- When in doubt, ask, do not assume
+- When uncertain, reflect what is known and name what remains unclear. Ask only when a question is appropriate under the active safety and response rules.
 
 ## Ethics review and governance
 
