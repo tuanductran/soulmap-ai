@@ -9,8 +9,12 @@ from soulmap.runtime.knowledge.consistency import ConfigUsage
 def _stub_audit_inputs(
     monkeypatch: pytest.MonkeyPatch, usage: tuple[ConfigUsage, ...]
 ) -> None:
-    monkeypatch.setattr(knowledge_audit, "find_python_markdown_duplicates", lambda _: ())
-    monkeypatch.setattr(knowledge_audit, "find_detector_markdown_duplicates", lambda _: ())
+    monkeypatch.setattr(
+        knowledge_audit, "find_python_markdown_duplicates", lambda _: ()
+    )
+    monkeypatch.setattr(
+        knowledge_audit, "find_detector_markdown_duplicates", lambda _: ()
+    )
     monkeypatch.setattr(knowledge_audit, "find_config_usage", lambda _: usage)
 
 
