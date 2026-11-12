@@ -126,3 +126,8 @@ def test_users_own_anger_after_reported_speech_is_detected() -> None:
 
     assert result["anger_detected"] is True
     assert result["anger_type"] == "active"
+
+def test_unattributed_first_person_quote_remains_detectable() -> None:
+    result = detect_anger('"I\'m so angry I could scream right now."')
+
+    assert result["anger_detected"] is True
