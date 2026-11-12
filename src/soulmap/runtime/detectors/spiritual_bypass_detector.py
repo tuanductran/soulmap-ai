@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 
@@ -52,7 +54,7 @@ def detect_bypass(
 
     Returns secondary_layer flag  -  never primary framework.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals = []
     score = 0
     bypass_type = None
