@@ -1,8 +1,7 @@
-"""Markdown parsing helpers shared by the repository checkers.
+"""Compatibility helpers for repository Markdown tooling.
 
-Centralizes file discovery, front-matter parsing, GitHub anchor slugging, and
-reference extraction so the link checker, case checker, and contract validators
-all read Markdown the same way.
+Shared parsing primitives live in ``soulmap.runtime.io.markdown``. This module
+retains developer-tooling path resolution helpers and re-exports the shared API.
 """
 
 from __future__ import annotations
