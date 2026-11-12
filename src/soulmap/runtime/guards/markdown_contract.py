@@ -11,12 +11,11 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from soulmap.devtools.support.markdown import (
+from soulmap.runtime.io.markdown import (
     FenceTracker,
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
-    iter_markdown_files,
     iter_markdown_references,
     parse_yaml_front_matter,
     split_markdown_link_target,
@@ -96,7 +95,9 @@ _GITHUB_RESERVED_FILENAMES = frozenset(
 
 
 def _iter_markdown_files(root: Path) -> list[Path]:
-    return iter_markdown_files(root)
+    """Discover Markdown files without importing developer tooling."""
+    excluded = {".git", ".venv", "dist", "node_modules", ".ruff_cache", ".pytest_cache"}
+    return sorted(path for path in root.rglob("*.md") if not (set(path.parts) & excluded))
 
 
 def _package_version(repo_root: Path) -> str | None:
