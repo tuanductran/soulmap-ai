@@ -25,6 +25,7 @@ from soulmap.runtime.io.markdown import (
     strip_inline_markup,
 )
 
+
 def resolve_markdown_inputs(
     repo_root: Path, inputs: list[str] | None = None
 ) -> list[Path]:
@@ -70,6 +71,7 @@ def resolve_markdown_inputs(
             md_files.append(candidate)
 
     return sorted(md_files)
+
 
 def resolve_local_markdown_target(
     *,
