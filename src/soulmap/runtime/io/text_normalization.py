@@ -10,7 +10,7 @@ _APOSTROPHE_ELISIONS = re.compile(
     r"'(?:cause|em|til|round|bout|n|tis|twas|twere|twill|kay|course|cept)\b",
     re.IGNORECASE,
 )
-_QUOTE_PAIRS = {'"': '"', "“": "”", "‘": "'"}
+_QUOTE_PAIRS = {'"': '"', "\u201c": "\u201d", "\u2018": "'"}
 _ATTRIBUTION_CUES = re.compile(
     r"\b(?:(?:my|our)\s+\w+(?:\s+\w+){0,2}|"
     r"someone|somebody|he|she|they|the\s+\w+(?:\s+\w+){0,2})\s+"
