@@ -131,7 +131,6 @@ def test_detected_pattern_entry_has_expected_shape() -> None:
     assert entry["score"] >= 2
 
 
-
 def test_attributed_third_party_pattern_signals_do_not_trigger_detection() -> None:
     result = detect_patterns(
         [
