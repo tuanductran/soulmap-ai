@@ -1,5 +1,7 @@
 """Regression coverage for attribution in history-aware detectors and stage routing."""
 
+from typing import cast
+
 from soulmap.runtime.detectors.existential_detector import detect_existential
 from soulmap.runtime.detectors.perfectionism_paralysis_detector import (
     detect_perfectionism_paralysis,
@@ -87,7 +89,8 @@ def test_attributed_history_does_not_supply_perfectionism_persistence() -> None:
     )
 
     assert result["perfectionism_paralysis_detected"] is False
-    assert "pattern_persistence_in_history" not in result["signals"]
+    signals = cast(list[str], result["signals"])
+    assert "pattern_persistence_in_history" not in signals
 
 
 def test_attributed_history_does_not_enable_sacred_polarity_frame() -> None:
