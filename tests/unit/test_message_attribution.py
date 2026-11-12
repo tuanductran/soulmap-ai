@@ -104,3 +104,19 @@ def test_trailing_reporter_with_complement_does_not_mask_users_clause() -> None:
 
     assert "overwhelmed" in masked
     assert "she was upset" not in masked
+
+
+def test_possessive_section_labels_are_not_treated_as_attribution() -> None:
+    for message in (
+        "My situation: I feel completely lost.",
+        "My dilemma: Part of me wants to leave.",
+    ):
+        assert mask_third_party_attribution(message) == message.lower()
+
+
+def test_possessive_person_labels_still_mask_attributed_speech() -> None:
+    masked = mask_third_party_attribution(
+        "My sister: I feel completely lost and do not know what I want."
+    )
+
+    assert "completely lost" not in masked

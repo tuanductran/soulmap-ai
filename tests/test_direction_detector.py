@@ -177,3 +177,41 @@ def test_recommendation_never_prescribes_a_direction() -> None:
     assert result["direction_detected"] is True
     recommendation = cast(str, result["recommendation"])
     assert "Do NOT suggest a direction" in recommendation
+
+
+def test_attributed_third_party_lostness_does_not_trigger_direction() -> None:
+    result = detect_direction_need(
+        'My friend said, "I feel completely lost and do not know what I want."'
+    )
+
+    assert result["direction_detected"] is False
+    assert result["signals"] == []
+    assert result["suggested_lens"] is None
+
+
+def test_user_direction_signal_after_attributed_quote_is_preserved() -> None:
+    result = detect_direction_need(
+        'My friend said, "I feel completely lost." I feel completely lost too.'
+    )
+
+    assert result["direction_detected"] is True
+    assert result["type"] == "lostness"
+
+
+def test_attributed_direction_in_history_does_not_add_sustained_score() -> None:
+    history = [
+        {
+            "role": "user",
+            "content": 'my friend said, "i feel completely lost and do not know what i want."',
+        }
+    ]
+    result = detect_direction_need("I made coffee this morning.", history)
+
+    assert result["direction_detected"] is False
+    assert result["score"] == 0
+
+
+def test_my_situation_section_label_preserves_user_lostness() -> None:
+    result = detect_direction_need("My situation: I feel completely lost.")
+
+    assert result["direction_detected"] is True
