@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 import re
-
 from dataclasses import dataclass
-
 from urllib.parse import unquote
 
 from markdown_it import MarkdownIt
@@ -20,6 +18,7 @@ _UNSAFE_MD_LINK_RE = re.compile(
 )
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 _MARKDOWN_PARSER = MarkdownIt("commonmark")
+
 
 @dataclass(frozen=True)
 class MarkdownReference:
@@ -37,6 +36,7 @@ class MarkdownReference:
     label: str
     target: str
     is_image: bool = False
+
 
 @dataclass(frozen=True)
 class MarkdownHeadingAnchor:
