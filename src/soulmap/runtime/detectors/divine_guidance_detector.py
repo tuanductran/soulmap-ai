@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
     load_runtime_guidance,
@@ -33,7 +34,7 @@ def detect_divine_guidance(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
     """Detect the user trying to discern inner knowing from fear or projection."""
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals: list[str] = []
     score = 0
 

@@ -29,7 +29,7 @@ _ATTRIBUTION_CUES = re.compile(
     re.IGNORECASE,
 )
 _ATTRIBUTION_BOUNDARY = re.compile(
-    r"[.!?;]|,\s*(?=(?:but|however|although|yet|and\s+i\b|i\b|i'm\b|"
+    r"[.!?;]|,\s*(?=(?:but|however|although|yet|and\s+i\b|i\s+(?:also|too|feel\s+(?:the\s+same|that\s+too))|"
     r"i\s+am\b|i\s+feel\b|nhưng|tuy\s+nhiên|mặc\s+dù)\b)|"
     r"\b(?:but|however|although|yet|nhưng|tuy\s+nhiên|mặc\s+dù)\b",
     re.IGNORECASE,

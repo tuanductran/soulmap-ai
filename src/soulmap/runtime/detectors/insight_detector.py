@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
@@ -100,7 +101,7 @@ def detect_insight(
         A dict with ``insight_detected``, ``strength``, ``insight_type``,
         ``signals``, and ``recommendation``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals_found = []
     score = 0
 
