@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
@@ -69,7 +70,7 @@ def detect_direction_need(
                    signals (list), suggested_lens (str), presentation (str),
                    recommendation (str)
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message)
     signals_found = []
     score = 0
     direction_types = []
@@ -94,7 +95,7 @@ def detect_direction_need(
 
     if history:
         recent_user = [
-            m["content"].lower()
+            mask_third_party_attribution(m["content"])
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_DIRECTION_RULES["recent user history window"]) :]
