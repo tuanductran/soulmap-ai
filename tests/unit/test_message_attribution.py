@@ -92,8 +92,6 @@ def test_unquoted_speech_with_trailing_attribution_is_masked() -> None:
 
 
 def test_trailing_attribution_does_not_cross_a_sentence_boundary() -> None:
-    masked = mask_third_party_attribution(
-        "I am overwhelmed. My friend said hello."
-    )
+    masked = mask_third_party_attribution("I am overwhelmed. My friend said hello.")
 
     assert "overwhelmed" in masked
