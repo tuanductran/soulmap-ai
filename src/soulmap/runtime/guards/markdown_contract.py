@@ -68,8 +68,8 @@ _BANNED_UNICODE = {
     "\u00a0": "U+00A0 NO-BREAK SPACE (use regular space)",
 }
 
-@dataclass(frozen=True)
 
+@dataclass(frozen=True)
 class Issue:
     """One Markdown contract violation.
 
@@ -93,8 +93,10 @@ _GITHUB_RESERVED_FILENAMES = frozenset(
     }
 )
 
+
 def _iter_markdown_files(root: Path) -> list[Path]:
     return iter_markdown_files(root)
+
 
 def _package_version(repo_root: Path) -> str | None:
     """Return the repository package version without adding a TOML dependency."""
@@ -106,6 +108,7 @@ def _package_version(repo_root: Path) -> str | None:
         if match:
             return match.group(1)
     return None
+
 
 def _front_matter_block(lines: list[str]) -> list[str]:
     """Return the raw lines inside the front-matter block, excluding delimiters.
@@ -124,6 +127,7 @@ def _front_matter_block(lines: list[str]) -> list[str]:
     except ValueError:
         return []
     return lines[1:end]
+
 
 def _front_matter_issues(
     path: Path,
@@ -214,8 +218,10 @@ def _front_matter_issues(
 
     return issues
 
+
 def _is_integration_guide(rel: Path) -> bool:
     return rel.parts[:2] == ("docs", "integrations")
+
 
 def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     """Check one Markdown file against the repository content contract.
@@ -506,6 +512,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
 
     return issues
 
+
 def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
     """Report a detection phrase listed twice inside the same labeled group.
 
@@ -558,6 +565,7 @@ def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
 
     return issues
 
+
 def check_repo(repo_root: Path) -> list[Issue]:
     """Check every Markdown file in the repository.
 
@@ -572,6 +580,7 @@ def check_repo(repo_root: Path) -> list[Issue]:
     for path in _iter_markdown_files(repo_root):
         issues.extend(check_markdown_file(path, repo_root))
     return issues
+
 
 def main(argv: list[str] | None = None) -> int:
     """Run the Markdown contract check from the command line.
