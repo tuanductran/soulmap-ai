@@ -129,3 +129,22 @@ def test_unattributed_first_person_quote_remains_detectable() -> None:
     result = detect_anger('"I\'m so angry I could scream right now."')
 
     assert result["anger_detected"] is True
+
+
+def test_negated_anger_phrase_does_not_trigger_detection() -> None:
+    result = detect_anger("I'm not so angry I could scream right now.")
+
+    assert result["anger_detected"] is False
+
+
+def test_attributed_history_does_not_add_sustained_anger_bonus() -> None:
+    history = [
+        {"role": "user", "content": "My friend said I'm so angry about this."},
+        {"role": "user", "content": "My friend said I'm still furious."},
+    ]
+
+    result = detect_anger("I'm so angry I could scream right now.", history)
+
+    assert result["anger_detected"] is True
+    signals = cast(list[str], result["signals"])
+    assert "sustained_anger_across_messages" not in signals
