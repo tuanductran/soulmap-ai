@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from soulmap.runtime.io.text_normalization import mask_third_party_attribution
-
 import json
 import re
 import sys
+
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
