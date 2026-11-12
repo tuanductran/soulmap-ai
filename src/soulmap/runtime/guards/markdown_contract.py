@@ -16,8 +16,8 @@ from soulmap.runtime.io.markdown import (
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
-    iter_markdown_references,
     iter_markdown_files,
+    iter_markdown_references,
     parse_yaml_front_matter,
     split_markdown_link_target,
 )
