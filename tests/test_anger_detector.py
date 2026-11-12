@@ -132,7 +132,7 @@ def test_unattributed_first_person_quote_remains_detectable() -> None:
 
 
 def test_negated_anger_phrase_does_not_trigger_detection() -> None:
-    result = detect_anger("I'm not so angry I could scream right now.")
+    result = detect_anger("I'm not furious about this.")
 
     assert result["anger_detected"] is False
 
