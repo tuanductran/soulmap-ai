@@ -108,6 +108,6 @@ def mask_third_party_attribution(message: str) -> str:
     for match in _ATTRIBUTION_CUES.finditer(unquoted):
         boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
         span_end = boundary.start() if boundary else len(unquoted)
-        characters[match.end():span_end] = [" "] * (span_end - match.end())
+        characters[match.end() : span_end] = [" "] * (span_end - match.end())
 
     return re.sub(r"\s+", " ", "".join(characters)).strip()
