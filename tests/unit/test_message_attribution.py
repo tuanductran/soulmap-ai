@@ -120,3 +120,21 @@ def test_possessive_person_labels_still_mask_attributed_speech() -> None:
     )
 
     assert "completely lost" not in masked
+
+
+def test_reported_speech_keeps_following_first_person_clause_attributed() -> None:
+    masked = mask_third_party_attribution(
+        "My friend said I've lost my voice, I don't know what I want to say."
+    )
+
+    assert "lost my voice" not in masked
+    assert "don't know what i want to say" not in masked
+
+
+def test_user_statement_after_explicit_contrast_is_preserved() -> None:
+    masked = mask_third_party_attribution(
+        "My friend said I am overwhelmed, but I feel overwhelmed too."
+    )
+
+    assert "overwhelmed" not in masked.split("but", maxsplit=1)[0]
+    assert "but i feel overwhelmed too" in masked
