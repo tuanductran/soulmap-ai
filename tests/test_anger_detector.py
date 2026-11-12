@@ -102,3 +102,27 @@ def test_recommendation_present_for_each_detected_anger_type() -> None:
     assert active["recommendation"]
     assert self_anger["recommendation"]
     assert residual["recommendation"]
+
+def test_quoted_third_party_anger_does_not_trigger_detection() -> None:
+    result = detect_anger(
+        'My friend said, "I\'m so angry I could scream right now."'
+    )
+
+    assert result["anger_detected"] is False
+
+
+def test_unquoted_reported_anger_does_not_trigger_detection() -> None:
+    result = detect_anger(
+        "My friend said I'm so angry I could scream right now."
+    )
+
+    assert result["anger_detected"] is False
+
+
+def test_users_own_anger_after_reported_speech_is_detected() -> None:
+    result = detect_anger(
+        "My friend said I'm so angry, but I'm so angry I could scream right now too."
+    )
+
+    assert result["anger_detected"] is True
+    assert result["anger_type"] == "active"
