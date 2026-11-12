@@ -94,7 +94,10 @@ def mask_third_party_attribution(message: str) -> str:
             prefix.rfind("?"),
             prefix.rfind(";"),
         )
-        if _ATTRIBUTION_CUES.search(prefix[clause_start + 1 :]):
+        suffix = text[span_end:]
+        is_attributed = _ATTRIBUTION_CUES.search(prefix[clause_start + 1 :]) is not None
+        is_attributed = is_attributed or _ATTRIBUTION_CUES.search(suffix) is not None
+        if is_attributed:
             characters[span_start:span_end] = [" "] * (span_end - span_start)
             if span_end > span_start:
                 characters[span_end - 1] = "."
