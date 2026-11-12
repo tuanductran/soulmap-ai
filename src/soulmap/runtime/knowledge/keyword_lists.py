@@ -98,6 +98,7 @@ def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
 
     return tuple(dict.fromkeys(phrases))
 
+
 def load_keyword_section(markdown_path: Path, heading: str) -> tuple[str, ...]:
     """Read a Markdown file and extract one section's quoted phrases.
 
@@ -135,7 +136,7 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
         - "i can breathe again"
 
     Returns a dict keyed by the lowercased text before the first comma (or the
-    whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...) }``.
+    whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...)}``.
     """
     section_lines = _section_content(text, heading)
     if not section_lines:
@@ -160,6 +161,7 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
             groups.setdefault(current_label, [])
 
     return {k: tuple(dict.fromkeys(v)) for k, v in groups.items()}
+
 
 def load_labeled_groups(
     markdown_path: Path, heading: str
@@ -206,6 +208,7 @@ def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
         if in_table:
             rows.append(cells)
     return tuple(rows)
+
 
 def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...], ...]:
     """Read a Markdown knowledge file and extract one contract table."""
