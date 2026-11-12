@@ -376,3 +376,15 @@ def test_quoted_historical_loss_does_not_extend_grief_sequence() -> None:
 
     assert result["grief_detected"] is False
     assert result["acute_exchange_count"] == 0
+
+
+def test_repeated_attributed_history_does_not_create_sustained_grief() -> None:
+    history = [
+        {"role": "user", "content": "My friend told me my mother died yesterday."},
+        {"role": "user", "content": "My friend said my mother died last week."},
+    ]
+
+    result = detect_grief("Can you help me plan a work presentation?", history)
+
+    assert result["grief_detected"] is False
+    assert result["acute_exchange_count"] == 0
