@@ -138,3 +138,19 @@ def test_users_own_overwhelm_after_reported_speech_is_detected() -> None:
 
     assert result["level"] in {"MODERATE", "HIGH"}
     assert any("physical:" in signal for signal in result["signals"])
+
+
+def test_attributed_history_does_not_trigger_escalation() -> None:
+    history = [
+        {"role": "user", "content": "My friend said I am worried."},
+        {
+            "role": "user",
+            "content": "My friend said everything is happening too quickly.",
+        },
+        {
+            "role": "user",
+            "content": "My friend said I can't deal with all of it.",
+        },
+    ]
+
+    assert check_escalation(history) is False
