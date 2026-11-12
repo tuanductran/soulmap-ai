@@ -19,8 +19,21 @@ _UNSAFE_MD_LINK_RE = re.compile(
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 _MARKDOWN_PARSER = MarkdownIt("commonmark")
 
+_EXCLUDED_DIRS = {
+    ".git",
+    ".venv",
+    "dist",
+    "node_modules",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".cache",
+    ".npm",
+    ".yarn",
+    ".pnpm-store",
+}
 
 @dataclass(frozen=True)
+
 class MarkdownReference:
     """One Markdown link or image found in a file.
 
@@ -37,8 +50,8 @@ class MarkdownReference:
     target: str
     is_image: bool = False
 
-
 @dataclass(frozen=True)
+
 class MarkdownHeadingAnchor:
     """One heading and the anchor GitHub will generate for it.
 
@@ -101,6 +114,32 @@ class FenceTracker:
             self._marker_len = 0
             return True
         return True
+
+def iter_markdown_files(repo_root: Path) -> list[Path]:
+    """Collect every Markdown file under a directory.
+
+    Skips version-control, virtual-environment, build, and package-cache
+    directories, and deduplicates paths that resolve to the same file through
+    a symlink.
+
+    Args:
+        repo_root: Directory to search recursively.
+
+    Returns:
+        Sorted Markdown file paths, as found rather than resolved.
+    """
+    md_files: list[Path] = []
+    seen_resolved: set[Path] = set()
+    for path in repo_root.rglob("*.md"):
+        parts = set(path.parts)
+        if parts & _EXCLUDED_DIRS:
+            continue
+        resolved = path.resolve()
+        if resolved in seen_resolved:
+            continue
+        seen_resolved.add(resolved)
+        md_files.append(path)
+    return sorted(md_files)
 
 def parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
     """Parse a minimal YAML front-matter block.
@@ -420,4 +459,3 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
                 known.add(key)
 
     return references
-
