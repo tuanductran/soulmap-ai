@@ -10,7 +10,6 @@ from typing import cast
 from soulmap.runtime.detectors.anger_detector import detect_anger
 
 
-
 def test_active_anger_is_detected_and_typed_correctly() -> None:
     result = detect_anger("I'm so angry I could scream right now.")
 
@@ -104,6 +103,7 @@ def test_recommendation_present_for_each_detected_anger_type() -> None:
     assert self_anger["recommendation"]
     assert residual["recommendation"]
 
+
 def test_quoted_third_party_anger_does_not_trigger_detection() -> None:
     result = detect_anger(
         'My friend said, "I\'m so angry I could scream right now."'
@@ -127,6 +127,7 @@ def test_users_own_anger_after_reported_speech_is_detected() -> None:
 
     assert result["anger_detected"] is True
     assert result["anger_type"] == "active"
+
 
 def test_unattributed_first_person_quote_remains_detectable() -> None:
     result = detect_anger('"I\'m so angry I could scream right now."')
