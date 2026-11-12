@@ -137,7 +137,8 @@ def test_users_own_overwhelm_after_reported_speech_is_detected() -> None:
     )
 
     assert result["level"] in {"MODERATE", "HIGH"}
-    assert any("physical:" in signal for signal in result["signals"])
+    signals = cast(list[str], result["signals"])
+    assert any("physical:" in signal for signal in signals)
 
 
 def test_attributed_history_does_not_trigger_escalation() -> None:
