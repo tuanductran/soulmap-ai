@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 
@@ -56,7 +58,7 @@ def detect_shadow_patterns(
         Dict with: shadow_detected (bool), patterns_found (list),
                    is_external_frustration (bool), recommendation (str)
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     patterns_found = []
     external_frustration = False
     score = 0
@@ -96,7 +98,7 @@ def detect_shadow_patterns(
 
     if history:
         recent_user = [
-            m["content"].lower()
+            mask_third_party_attribution(m["content"]).lower()
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_SHADOW_SCORING["Recent user history window"]) :]
