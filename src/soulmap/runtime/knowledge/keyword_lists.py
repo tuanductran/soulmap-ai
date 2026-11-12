@@ -42,8 +42,18 @@ def _heading_level(line: str) -> int | None:
 
 def _section_content(text: str, heading: str) -> tuple[str, ...]:
     """Return lines below an exact heading up to its next peer or parent."""
-    section_lines = _section_content(text, heading)
-    if not section_lines:
+    lines = text.splitlines()
+    target_level: int | None = None
+    start = None
+
+    for idx, line in enumerate(lines):
+        level = _heading_level(line)
+        if level is not None and line.strip()[level:].strip() == heading:
+            target_level = level
+            start = idx + 1
+            break
+
+    if start is None or target_level is None:
         return ()
 
     content: list[str] = []
@@ -88,7 +98,6 @@ def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
 
     return tuple(dict.fromkeys(phrases))
 
-
 def load_keyword_section(markdown_path: Path, heading: str) -> tuple[str, ...]:
     """Read a Markdown file and extract one section's quoted phrases.
 
@@ -126,7 +135,7 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
         - "i can breathe again"
 
     Returns a dict keyed by the lowercased text before the first comma (or the
-    whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...)}``.
+    whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...) }``.
     """
     section_lines = _section_content(text, heading)
     if not section_lines:
@@ -152,7 +161,6 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
 
     return {k: tuple(dict.fromkeys(v)) for k, v in groups.items()}
 
-
 def load_labeled_groups(
     markdown_path: Path, heading: str
 ) -> dict[str, tuple[str, ...]]:
@@ -175,16 +183,8 @@ def load_labeled_groups(
 
 def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
     """Extract data rows from the first Markdown table under a heading."""
-    lines = text.splitlines()
-    target_level: int | None = None
-    start = None
-    for idx, line in enumerate(lines):
-        level = _heading_level(line)
-        if level is not None and line.strip()[level:].strip() == heading:
-            target_level = level
-            start = idx + 1
-            break
-    if start is None or target_level is None:
+    section_lines = _section_content(text, heading)
+    if not section_lines:
         return ()
 
     rows: list[tuple[str, ...]] = []
@@ -206,7 +206,6 @@ def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
         if in_table:
             rows.append(cells)
     return tuple(rows)
-
 
 def load_table_rows(markdown_path: Path, heading: str) -> tuple[tuple[str, ...], ...]:
     """Read a Markdown knowledge file and extract one contract table."""
