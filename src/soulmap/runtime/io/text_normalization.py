@@ -116,13 +116,16 @@ def mask_third_party_attribution(message: str) -> str:
             prefix.rfind(";"),
         )
         attributed_prefix = prefix[clause_start + 1 :]
-        if attributed_prefix.rstrip().endswith((",", ":")):
+        boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
+        span_end = boundary.start() if boundary else len(unquoted)
+        reported_content = unquoted[match.end() : span_end].strip()
+        if (
+            attributed_prefix.rstrip().endswith((",", ":"))
+            and not reported_content
+        ):
             characters[clause_start + 1 : match.start()] = [" "] * (
                 match.start() - clause_start - 1
             )
-
-        boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
-        span_end = boundary.start() if boundary else len(unquoted)
         characters[match.end() : span_end] = [" "] * (span_end - match.end())
 
     return re.sub(r"\s+", " ", "".join(characters)).strip()
