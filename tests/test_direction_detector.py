@@ -199,10 +199,12 @@ def test_user_direction_signal_after_attributed_quote_is_preserved() -> None:
 
 
 def test_attributed_direction_in_history_does_not_add_sustained_score() -> None:
-    history = [{
-        "role": "user",
-        "content": 'My friend said, "I feel completely lost and do not know what I want."',
-    }]
+    history = [
+        {
+            "role": "user",
+            "content": 'My friend said, "I feel completely lost and do not know what I want."',
+        }
+    ]
     result = detect_direction_need("I made coffee this morning.", history)
 
     assert result["direction_detected"] is False
