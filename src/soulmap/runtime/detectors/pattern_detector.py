@@ -7,6 +7,7 @@ import sys
 from typing import cast
 
 from soulmap.runtime.io.cli_payload import print_json_error, read_stdin_json_value
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_runtime_guidance,
 )
@@ -34,7 +35,7 @@ def detect_patterns(conversation_messages: list) -> dict:
                    combination (bool), recommendation (str), wait_for_more (bool)
     """
     user_messages = [
-        m["content"].lower()
+        mask_third_party_attribution(m["content"])
         for m in conversation_messages
         if isinstance(m, dict) and m.get("role") == "user"
     ]
