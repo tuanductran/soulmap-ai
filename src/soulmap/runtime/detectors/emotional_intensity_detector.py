@@ -65,7 +65,7 @@ def check_escalation(history: list[HistoryMessage]) -> bool:
         lengths[i] <= lengths[i + 1] for i in range(len(lengths) - 1)
     )
 
-    late_msg = mask_third_party_attribution(user_msgs[-1])
+    late_msg = user_msgs[-1]
     has_intensity = any(word in late_msg for word in INTENSITY_MODIFIERS)
 
     return escalating_length and has_intensity
