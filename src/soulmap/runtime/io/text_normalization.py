@@ -22,7 +22,10 @@ _ATTRIBUTION_CUES = re.compile(
     r"\b(?:bạn|mẹ|cha|bố|ba|anh|chị|em|cô|chú|ông|bà|họ|ai\s+đó|"
     r"người\s+\w+)(?:\s+(?:tôi|mình|ấy|đó))?\s+"
     r"(?:nói|bảo|kể|viết|nhắn|hỏi|chia sẻ)\b(?:\s+(?:rằng|là))?\s*[:,]?\s*|"
-    r"\b(?:my|our)\s+(?:friend|sister|brother|mother|father|mom|dad|parent|partner|spouse|husband|wife|colleague|coworker|boss|manager|therapist|teacher|doctor|neighbor|roommate|son|daughter|child|grandmother|grandfather)\s*:\s*|\b(?:he|she|they)\s*:\s*",
+    r"\b(?:my|our)\s+(?:friend|sister|brother|mother|father|mom|dad|parent|partner|spouse|"
+    r"husband|wife|colleague|coworker|boss|manager|therapist|teacher|doctor|"
+    r"neighbor|roommate|son|daughter|child|grandmother|grandfather)\s*:\s*|"
+    r"\b(?:he|she|they)\s*:\s*,
     re.IGNORECASE,
 )
 _ATTRIBUTION_BOUNDARY = re.compile(
