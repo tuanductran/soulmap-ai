@@ -54,7 +54,6 @@ def test_neutral_message_is_not_misclassified_as_conflict() -> None:
     result = detect_inner_conflict("I went for a walk and then made dinner.")
 
     assert result["conflict_detected"] is False
-    assert result["score"] == 0
     assert result["type"] is None
     assert result["signals"] == []
     assert result["parts_suggested"] == []
@@ -156,6 +155,7 @@ def test_attributed_conflict_in_history_does_not_boost_current_turn() -> None:
     result = detect_inner_conflict("I went for a walk this morning.", history)
 
     assert result["conflict_detected"] is False
+    assert result["score"] == 0
 
 
 def test_my_dilemma_section_label_preserves_user_conflict() -> None:
