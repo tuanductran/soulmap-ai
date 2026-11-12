@@ -138,3 +138,46 @@ def test_user_statement_after_explicit_contrast_is_preserved() -> None:
 
     assert "overwhelmed" not in masked.split("but", maxsplit=1)[0]
     assert "but i feel overwhelmed too" in masked
+
+
+def test_attributed_thoughts_and_beliefs_are_masked() -> None:
+    masked = mask_third_party_attribution(
+        "My friend thinks I feel spiritually empty and disconnected from everything."
+    )
+
+    assert "feel spiritually empty" not in masked
+    assert "disconnected from everything" not in masked
+
+
+def test_vietnamese_attributed_thought_is_masked() -> None:
+    masked = mask_third_party_attribution(
+        "Mẹ tôi nghĩ rằng tôi cảm thấy trống rỗng và mất kết nối."
+    )
+
+    assert "cảm thấy trống rỗng" not in masked
+    assert "mất kết nối" not in masked
+
+
+def test_multiple_speakers_with_cognitive_attribution_are_masked() -> None:
+    masked = mask_third_party_attribution(
+        "My friend said I feel spiritually empty. "
+        "My sister believes I have lost my faith."
+    )
+
+    assert "spiritually empty" not in masked
+    assert "lost my faith" not in masked
+
+
+def test_user_authored_statement_after_cognitive_attribution_is_preserved() -> None:
+    masked = mask_third_party_attribution(
+        "My friend thinks I feel spiritually empty, but I feel spiritually empty too."
+    )
+
+    assert "spiritually empty" not in masked.split("but", maxsplit=1)[0]
+    assert "but i feel spiritually empty too" in masked
+
+
+def test_descriptive_feels_statement_is_not_treated_as_attribution() -> None:
+    message = "My writing feels completely empty lately."
+
+    assert mask_third_party_attribution(message) == message.lower()
