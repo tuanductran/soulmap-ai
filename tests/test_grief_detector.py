@@ -5,7 +5,6 @@ from typing import cast
 from soulmap.runtime.detectors.grief_detector import detect_grief
 
 
-
 def test_acute_grief_is_detected_and_typed_correctly() -> None:
     result = detect_grief("My mother died yesterday. I still cannot believe it.")
 
@@ -342,6 +341,7 @@ def test_near_miss_phrasing_without_loss_language_is_not_grief() -> None:
     result = detect_grief("I'm worried my dog might be getting sick soon.")
 
     assert result["grief_detected"] is False
+
 
 def test_quoted_third_party_loss_does_not_trigger_current_grief() -> None:
     result = detect_grief(
