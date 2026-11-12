@@ -95,3 +95,12 @@ def test_trailing_attribution_does_not_cross_a_sentence_boundary() -> None:
     masked = mask_third_party_attribution("I am overwhelmed. My friend said hello.")
 
     assert "overwhelmed" in masked
+
+
+def test_trailing_reporter_with_complement_does_not_mask_users_clause() -> None:
+    masked = mask_third_party_attribution(
+        "I am overwhelmed, my friend said she was upset."
+    )
+
+    assert "overwhelmed" in masked
+    assert "she was upset" not in masked
