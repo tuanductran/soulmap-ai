@@ -125,3 +125,31 @@ def test_recommendation_present_but_neutral_when_no_conflict_detected() -> None:
 
     assert result["conflict_detected"] is False
     assert "no inner conflict signals detected" in str(result["recommendation"]).lower()
+
+
+def test_attributed_third_party_conflict_does_not_trigger_or_suggest_parts() -> None:
+    result = detect_inner_conflict(
+        'My sister said, "Part of me wants to leave, but another part is scared."'
+    )
+
+    assert result["conflict_detected"] is False
+    assert result["signals"] == []
+    assert result["parts_suggested"] == []
+
+
+def test_user_conflict_after_attributed_quote_is_preserved() -> None:
+    result = detect_inner_conflict(
+        'My sister said, "Part of me wants to leave." I feel torn too.'
+    )
+
+    assert result["conflict_detected"] is True
+
+
+def test_attributed_conflict_in_history_does_not_boost_current_turn() -> None:
+    history = [{
+        "role": "user",
+        "content": 'My sister said, "Part of me wants to leave, but another part is scared."',
+    }]
+    result = detect_inner_conflict("I went for a walk this morning.", history)
+
+    assert result["conflict_detected"] is False
