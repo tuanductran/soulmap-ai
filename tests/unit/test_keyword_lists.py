@@ -4,6 +4,9 @@ import pytest
 
 from soulmap.runtime.knowledge.keyword_lists import (
     _read_markdown_text_cached,
+    extract_keyword_section,
+    extract_labeled_groups,
+    extract_table_rows,
     load_key_value_table,
     load_keyword_section,
 )
@@ -54,3 +57,35 @@ def test_markdown_cache_invalidates_when_file_changes(tmp_path: Path) -> None:
     assert load_keyword_section(path, "Signals") == (
         "new phrase with different length",
     )
+
+
+def test_section_extractors_share_heading_boundaries() -> None:
+    signals = (
+        "## Root\n\n"
+        "### Detection signals\n\n"
+        "Active anger:\n\n"
+        '- "inside phrase"\n\n'
+        "#### Supporting detail\n\n"
+        '- "nested phrase"\n\n'
+        "### Later section\n\n"
+        '- "outside phrase"\n'
+    )
+
+    assert extract_keyword_section(signals, "Detection signals") == (
+        "inside phrase",
+        "nested phrase",
+    )
+    assert extract_labeled_groups(signals, "Detection signals") == {
+        "active anger": ("inside phrase", "nested phrase")
+    }
+
+    table = (
+        "## Contracts\n\n"
+        "### Scoring\n\n"
+        "| Rule | Value |\n"
+        "| --- | --- |\n"
+        "| Weight | 2 |\n\n"
+        "### Other\n\n"
+        "| Ignore | 3 |\n"
+    )
+    assert extract_table_rows(table, "Scoring") == (("Weight", "2"),)
