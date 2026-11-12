@@ -5,13 +5,12 @@ from __future__ import annotations
 import json
 import sys
 
-from soulmap.runtime.io.text_normalization import mask_third_party_attribution
-
 from soulmap.runtime.io.cli_payload import (
     print_json_error,
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.celebration_source import load_celebration_rules
 
 _RULES = load_celebration_rules()
