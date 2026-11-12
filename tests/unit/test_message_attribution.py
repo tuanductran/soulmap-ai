@@ -83,3 +83,17 @@ def test_hypothetical_third_party_speech_is_masked() -> None:
 
     assert "overwhelmed" not in masked
     assert "heart is racing" not in masked
+
+
+def test_unquoted_speech_with_trailing_attribution_is_masked() -> None:
+    masked = mask_third_party_attribution("I am overwhelmed, my friend said.")
+
+    assert "overwhelmed" not in masked
+
+
+def test_trailing_attribution_does_not_cross_a_sentence_boundary() -> None:
+    masked = mask_third_party_attribution(
+        "I am overwhelmed. My friend said hello."
+    )
+
+    assert "overwhelmed" in masked
