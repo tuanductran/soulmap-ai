@@ -344,9 +344,7 @@ def test_near_miss_phrasing_without_loss_language_is_not_grief() -> None:
 
 
 def test_quoted_third_party_loss_does_not_trigger_current_grief() -> None:
-    result = detect_grief(
-        'My friend said, "My mother died yesterday."'
-    )
+    result = detect_grief('My friend said, "My mother died yesterday."')
 
     assert result["grief_detected"] is False
 
