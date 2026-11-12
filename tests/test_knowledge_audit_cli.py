@@ -1,21 +1,25 @@
 from pathlib import Path
 
+import pytest
+
 from soulmap.devtools.audit import knowledge as knowledge_audit
 from soulmap.runtime.knowledge.consistency import ConfigUsage
 
 
-def _stub_audit_inputs(monkeypatch, root: Path, usage: tuple[ConfigUsage, ...]) -> None:
+def _stub_audit_inputs(
+    monkeypatch: pytest.MonkeyPatch, usage: tuple[ConfigUsage, ...]
+) -> None:
     monkeypatch.setattr(knowledge_audit, "find_python_markdown_duplicates", lambda _: ())
     monkeypatch.setattr(knowledge_audit, "find_detector_markdown_duplicates", lambda _: ())
     monkeypatch.setattr(knowledge_audit, "find_config_usage", lambda _: usage)
 
 
 def test_knowledge_audit_fails_on_unallowlisted_orphaned_config(
-    tmp_path: Path, monkeypatch, capsys
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     config_path = tmp_path / "src/soulmap/runtime/config/meaning.py"
     usage = (ConfigUsage(config_path, "ORPHANED", ()),)
-    _stub_audit_inputs(monkeypatch, tmp_path, usage)
+    _stub_audit_inputs(monkeypatch, usage)
 
     result = knowledge_audit.main(["--root", str(tmp_path)])
 
@@ -26,7 +30,7 @@ def test_knowledge_audit_fails_on_unallowlisted_orphaned_config(
 
 
 def test_knowledge_audit_accepts_exact_orphan_allowlist_entry(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     config_path = tmp_path / "src/soulmap/runtime/config/meaning.py"
     usage = (ConfigUsage(config_path, "ORPHANED", ()),)
