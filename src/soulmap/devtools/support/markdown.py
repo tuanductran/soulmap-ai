@@ -40,7 +40,6 @@ _EXCLUDED_DIRS = {
 }
 
 
-
 def iter_markdown_files(repo_root: Path) -> list[Path]:
     """Collect every Markdown file under a directory.
 
