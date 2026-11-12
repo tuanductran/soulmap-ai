@@ -33,7 +33,7 @@ _ATTRIBUTION_BOUNDARY = re.compile(
 
 def normalize_message_text(message: str, *, strip: bool = True) -> str:
     """Normalize smart punctuation and collapse internal whitespace."""
-    normalized = message.lower().replace(RIGHT_SINGLE_QUOTE, "'").replace(chr(96), "'")
+    normalized = message.lower().replace(RIGHT_SINGLE_QUOTE, "'").replace("`", "'")
     normalized = re.sub(r"\s+", " ", normalized)
     return normalized.strip() if strip else normalized
 
@@ -94,9 +94,11 @@ def mask_third_party_attribution(message: str) -> str:
             prefix.rfind("?"),
             prefix.rfind(";"),
         )
-        suffix = text[span_end:]
+        suffix = text[span_end:].lstrip()
+        if suffix.startswith((",", ":", ";")):
+            suffix = suffix[1:].lstrip()
         is_attributed = _ATTRIBUTION_CUES.search(prefix[clause_start + 1 :]) is not None
-        is_attributed = is_attributed or _ATTRIBUTION_CUES.search(suffix) is not None
+        is_attributed = is_attributed or _ATTRIBUTION_CUES.match(suffix) is not None
         if is_attributed:
             characters[span_start:span_end] = [" "] * (span_end - span_start)
             if span_end > span_start:
