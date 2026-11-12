@@ -105,17 +105,13 @@ def test_recommendation_present_for_each_detected_anger_type() -> None:
 
 
 def test_quoted_third_party_anger_does_not_trigger_detection() -> None:
-    result = detect_anger(
-        'My friend said, "I\'m so angry I could scream right now."'
-    )
+    result = detect_anger('My friend said, "I\'m so angry I could scream right now."')
 
     assert result["anger_detected"] is False
 
 
 def test_unquoted_reported_anger_does_not_trigger_detection() -> None:
-    result = detect_anger(
-        "My friend said I'm so angry I could scream right now."
-    )
+    result = detect_anger("My friend said I'm so angry I could scream right now.")
 
     assert result["anger_detected"] is False
 
