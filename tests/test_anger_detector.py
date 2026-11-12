@@ -148,3 +148,9 @@ def test_attributed_history_does_not_add_sustained_anger_bonus() -> None:
     assert result["anger_detected"] is True
     signals = cast(list[str], result["signals"])
     assert "sustained_anger_across_messages" not in signals
+
+
+def test_unquoted_anger_with_trailing_attribution_is_not_detected() -> None:
+    result = detect_anger("I'm so angry I could scream right now, my friend said.")
+
+    assert result["anger_detected"] is False
