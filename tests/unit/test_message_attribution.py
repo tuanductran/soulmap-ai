@@ -175,3 +175,10 @@ def test_user_authored_statement_after_cognitive_attribution_is_preserved() -> N
 
     assert "spiritually empty" not in masked.split("but", maxsplit=1)[0]
     assert "but i feel spiritually empty too" in masked
+
+
+
+def test_descriptive_feels_statement_is_not_treated_as_attribution() -> None:
+    message = "My writing feels completely empty lately."
+
+    assert mask_third_party_attribution(message) == message.lower()
