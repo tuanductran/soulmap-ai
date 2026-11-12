@@ -40,24 +40,29 @@ def _heading_level(line: str) -> int | None:
     return len(match.group(1)) if match else None
 
 
+def _section_content(text: str, heading: str) -> tuple[str, ...]:
+    """Return lines below an exact heading up to its next peer or parent."""
+    section_lines = _section_content(text, heading)
+    if not section_lines:
+        return ()
+
+    content: list[str] = []
+    for line in lines[start:]:
+        level = _heading_level(line)
+        if level is not None and level <= target_level:
+            break
+        content.append(line)
+    return tuple(content)
+
+
 def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
     """Collect quoted phrases from bullets under an exact Markdown heading.
 
     Stops at the next heading whose level is <= the target heading's level.
     Returns an empty tuple if the heading is not found.
     """
-    lines = text.splitlines()
-    target_level: int | None = None
-    start = None
-
-    for idx, line in enumerate(lines):
-        level = _heading_level(line)
-        if level is not None and line.strip()[level:].strip() == heading:
-            target_level = level
-            start = idx + 1
-            break
-
-    if start is None or target_level is None:
+    section_lines = _section_content(text, heading)
+    if not section_lines:
         return ()
 
     phrases: list[str] = []
@@ -69,10 +74,7 @@ def extract_keyword_section(text: str, heading: str) -> tuple[str, ...]:
             phrases.extend(m.lower() for m in _QUOTED_RE.findall(joined))
             bullet_buffer.clear()
 
-    for line in lines[start:]:
-        level = _heading_level(line)
-        if level is not None and level <= target_level:
-            break
+    for line in section_lines:
         stripped = line.strip()
         if stripped.startswith("- "):
             flush()
@@ -126,27 +128,14 @@ def extract_labeled_groups(text: str, heading: str) -> dict[str, tuple[str, ...]
     Returns a dict keyed by the lowercased text before the first comma (or the
     whole label line if there's no comma) — e.g. ``{"win": (...), "relief": (...)}``.
     """
-    lines = text.splitlines()
-    target_level: int | None = None
-    start = None
-
-    for idx, line in enumerate(lines):
-        level = _heading_level(line)
-        if level is not None and line.strip()[level:].strip() == heading:
-            target_level = level
-            start = idx + 1
-            break
-
-    if start is None or target_level is None:
+    section_lines = _section_content(text, heading)
+    if not section_lines:
         return {}
 
     groups: dict[str, list[str]] = {}
     current_label: str | None = None
 
-    for line in lines[start:]:
-        level = _heading_level(line)
-        if level is not None and level <= target_level:
-            break
+    for line in section_lines:
         stripped = line.strip()
         if not stripped:
             continue
@@ -200,10 +189,7 @@ def extract_table_rows(text: str, heading: str) -> tuple[tuple[str, ...], ...]:
 
     rows: list[tuple[str, ...]] = []
     in_table = False
-    for line in lines[start:]:
-        level = _heading_level(line)
-        if level is not None and level <= target_level:
-            break
+    for line in section_lines:
         stripped = line.strip()
         if not stripped:
             if in_table:
