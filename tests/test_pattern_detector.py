@@ -129,3 +129,41 @@ def test_detected_pattern_entry_has_expected_shape() -> None:
     }
     assert isinstance(entry["score"], int)
     assert entry["score"] >= 2
+
+
+
+def test_attributed_third_party_pattern_signals_do_not_trigger_detection() -> None:
+    result = detect_patterns(
+        [
+            _user('My friend said, "People always leave."'),
+            _user("My friend told me people always leave eventually."),
+        ]
+    )
+
+    assert result["patterns_detected"] == []
+    assert result["primary_pattern"] is None
+    assert result["combination"] is False
+
+
+def test_one_attributed_report_does_not_count_as_a_user_pattern_signal() -> None:
+    result = detect_patterns(
+        [
+            _user("My friend said, 'People always leave.'"),
+            _user("People always leave."),
+        ]
+    )
+
+    assert result["patterns_detected"] == []
+    assert result["primary_pattern"] is None
+
+
+def test_user_authored_pattern_signals_remain_detectable() -> None:
+    result = detect_patterns(
+        [
+            _user("People always leave."),
+            _user("I don't know why they always leave."),
+        ]
+    )
+
+    patterns = cast(list[dict[str, object]], result["patterns_detected"])
+    assert any(pattern["pattern"] == "abandonment_loop" for pattern in patterns)
