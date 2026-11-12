@@ -16,7 +16,7 @@ _ATTRIBUTION_CUES = re.compile(
     r"someone|somebody|he|she|they|the\s+\w+(?:\s+\w+){0,2})\s+"
     r"(?:said|says|told me|tells me|mentioned|mentions|wrote|writes|"
     r"texted|messaged|asked|asks|reported|explained|shared|replied|responded|"
-    r"think|thinks|thought|believe|believes|believed|feel|feels|felt|"
+    r"think|thinks|thought|believe|believes|believed|"
     r"(?:may|might|could|would)\s+(?:say|tell me|mention|write|text|ask|"
     r"report|explain|share|reply|respond))"
     r"\b(?:\s+that)?\s*[:,]?\s*|"
