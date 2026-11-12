@@ -16,6 +16,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 
 # Single source of truth: skills/frameworks/anger-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
@@ -51,7 +52,7 @@ def detect_anger(
         A dict with ``anger_detected``, ``anger_type``, ``score``,
         ``signals``, and ``recommendation``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message)
     signals = []
     score = 0
     anger_type = None
@@ -81,7 +82,7 @@ def detect_anger(
 
     if history and anger_type == "active":
         recent = [
-            m["content"].lower()
+            mask_third_party_attribution(m["content"])
             for m in history
             if isinstance(m, dict) and m.get("role") == "user"
         ][-int(_ANGER_SCORING["Sustained history window"]) :]
