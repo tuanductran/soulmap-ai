@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 
@@ -100,7 +102,7 @@ def detect_insight(
         A dict with ``insight_detected``, ``strength``, ``insight_type``,
         ``signals``, and ``recommendation``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals_found = []
     score = 0
 
