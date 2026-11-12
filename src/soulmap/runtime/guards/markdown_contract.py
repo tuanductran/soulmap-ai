@@ -1,4 +1,4 @@
-"""Lightweight GitHub-flavored Markdown contract checks (no external deps).
+"""Lightweight GitHub-flavored Markdown contract checks.
 
 This module is intentionally conservative: it checks for issues that commonly break
 rendering or navigation on GitHub (bad headings, unclosed fences, broken links).
@@ -11,7 +11,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from soulmap.devtools.support.markdown import (
+from soulmap.runtime.io.markdown import (
     FenceTracker,
     extract_heading_anchors,
     is_external_markdown_target,
