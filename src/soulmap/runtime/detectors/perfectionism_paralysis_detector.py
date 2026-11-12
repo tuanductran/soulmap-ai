@@ -10,6 +10,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_keyword_section,
     load_runtime_guidance,
@@ -45,7 +46,7 @@ def detect_perfectionism_paralysis(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
     """Detect perfectionism operating as a stop - paralysis at the threshold of starting or releasing."""
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals: list[str] = []
     score = 0
 
@@ -79,7 +80,7 @@ def detect_perfectionism_paralysis(
             signals.append("pattern_persistence_in_message")
         elif history:
             hist_text = " ".join(
-                m.get("content", "").lower()
+                mask_third_party_attribution(m.get("content", "")).lower()
                 for m in history[-int(_RULES["History window"]) :]
                 if isinstance(m, dict) and m.get("role") == "user"
             )
