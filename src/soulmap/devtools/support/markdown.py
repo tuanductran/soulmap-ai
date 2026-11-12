@@ -7,7 +7,6 @@ all read Markdown the same way.
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -19,53 +18,12 @@ from soulmap.runtime.io.markdown import (
     is_external_markdown_target,
     iter_disallowed_markdown_references,
     iter_markdown_references,
+    iter_markdown_files,
     parse_yaml_front_matter,
     slugify_github_anchor,
     split_markdown_link_target,
     strip_inline_markup,
 )
-
-
-_EXCLUDED_DIRS = {
-    ".git",
-    ".venv",
-    "dist",
-    "node_modules",
-    ".ruff_cache",
-    ".pytest_cache",
-    ".cache",
-    ".npm",
-    ".yarn",
-    ".pnpm-store",
-}
-
-
-def iter_markdown_files(repo_root: Path) -> list[Path]:
-    """Collect every Markdown file under a directory.
-
-    Skips version-control, virtual-environment, build, and package-cache
-    directories, and deduplicates paths that resolve to the same file through
-    a symlink.
-
-    Args:
-        repo_root: Directory to search recursively.
-
-    Returns:
-        Sorted Markdown file paths, as found rather than resolved.
-    """
-    md_files: list[Path] = []
-    seen_resolved: set[Path] = set()
-    for path in repo_root.rglob("*.md"):
-        parts = set(path.parts)
-        if parts & _EXCLUDED_DIRS:
-            continue
-        resolved = path.resolve()
-        if resolved in seen_resolved:
-            continue
-        seen_resolved.add(resolved)
-        md_files.append(path)
-    return sorted(md_files)
-
 
 def resolve_markdown_inputs(
     repo_root: Path, inputs: list[str] | None = None
@@ -112,20 +70,6 @@ def resolve_markdown_inputs(
             md_files.append(candidate)
 
     return sorted(md_files)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def resolve_local_markdown_target(
     *,
