@@ -209,7 +209,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  - {path.relative_to(root)}")
     if orphaned:
         print(
-            "\\nKnowledge config-usage guard failed: "
+            "\nKnowledge config-usage guard failed: "
             f"{len(orphaned)} orphaned config constant(s) are not allowlisted."
         )
         for item in orphaned:
