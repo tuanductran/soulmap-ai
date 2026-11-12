@@ -114,6 +114,7 @@ def test_ambiguous_short_message_without_signals_is_not_direction() -> None:
     result = detect_direction_need("ok")
 
     assert result["direction_detected"] is False
+    assert result["score"] == 0
 
 
 def test_single_weak_signal_below_threshold_is_not_direction() -> None:
@@ -202,9 +203,15 @@ def test_attributed_direction_in_history_does_not_add_sustained_score() -> None:
     history = [
         {
             "role": "user",
-            "content": 'My friend said, "I feel completely lost and do not know what I want."',
+            "content": 'my friend said, "i feel completely lost and do not know what i want."',
         }
     ]
     result = detect_direction_need("I made coffee this morning.", history)
 
     assert result["direction_detected"] is False
+
+
+def test_my_situation_section_label_preserves_user_lostness() -> None:
+    result = detect_direction_need("My situation: I feel completely lost.")
+
+    assert result["direction_detected"] is True
