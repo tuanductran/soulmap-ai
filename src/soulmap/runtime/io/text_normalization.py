@@ -117,9 +117,9 @@ def mask_third_party_attribution(message: str) -> str:
         )
         attributed_prefix = prefix[clause_start + 1 :]
         if attributed_prefix.rstrip().endswith((",", ":")):
-            characters[clause_start + 1 : match.start()] = [
-                " "
-            ] * (match.start() - clause_start - 1)
+            characters[clause_start + 1 : match.start()] = [" "] * (
+                match.start() - clause_start - 1
+            )
 
         boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
         span_end = boundary.start() if boundary else len(unquoted)
