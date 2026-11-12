@@ -18,6 +18,7 @@ from soulmap.runtime.knowledge.keyword_lists import (
 )
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 
 # Single source of truth: skills/frameworks/grief-companion.md,
 # "## Detection signals". Nothing is hardcoded here.
@@ -180,7 +181,8 @@ def detect_grief(
         A dict with ``grief_detected``, ``grief_type``, ``score``,
         ``signals``, and ``recommendation``.
     """
-    msg = message.lower().strip()
+    raw_msg = message.lower().strip()
+    msg = mask_third_party_attribution(raw_msg)
     signals = []
     score = 0
     grief_type = None
@@ -217,7 +219,7 @@ def detect_grief(
             break
 
     user_history = [
-        item["content"].lower()
+        mask_third_party_attribution(item["content"])
         for item in (history or [])
         if isinstance(item, dict) and item.get("role") == "user"
     ]
@@ -258,7 +260,7 @@ def detect_grief(
         ),
         None,
     )
-    readiness_detected = _affirmative_readiness(msg)
+    readiness_detected = _affirmative_readiness(raw_msg)
     current_turn_continues_grief = readiness_detected or any(
         phrase in msg for phrase in history_grief_signals
     )
