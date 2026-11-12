@@ -33,8 +33,8 @@ _EXCLUDED_DIRS = {
     ".pnpm-store",
 }
 
-@dataclass(frozen=True)
 
+@dataclass(frozen=True)
 class MarkdownReference:
     """One Markdown link or image found in a file.
 
@@ -51,8 +51,8 @@ class MarkdownReference:
     target: str
     is_image: bool = False
 
-@dataclass(frozen=True)
 
+@dataclass(frozen=True)
 class MarkdownHeadingAnchor:
     """One heading and the anchor GitHub will generate for it.
 
@@ -66,6 +66,7 @@ class MarkdownHeadingAnchor:
     slug: str
     title: str
     line: int
+
 
 class FenceTracker:
     """Track fenced-code-block state across lines using CommonMark fence rules.
@@ -116,6 +117,7 @@ class FenceTracker:
             return True
         return True
 
+
 def iter_markdown_files(repo_root: Path) -> list[Path]:
     """Collect every Markdown file under a directory.
 
@@ -141,6 +143,7 @@ def iter_markdown_files(repo_root: Path) -> list[Path]:
         seen_resolved.add(resolved)
         md_files.append(path)
     return sorted(md_files)
+
 
 def parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
     """Parse a minimal YAML front-matter block.
@@ -181,6 +184,7 @@ def parse_yaml_front_matter(lines: list[str]) -> dict[str, str] | None:
             data[key] = value
     return data
 
+
 def strip_inline_markup(text: str) -> str:
     """Reduce a line of Markdown to its visible text.
 
@@ -200,6 +204,7 @@ def strip_inline_markup(text: str) -> str:
     text = text.replace("_", "")
     text = text.replace("~", "")
     return " ".join(text.split())
+
 
 def slugify_github_anchor(text: str) -> str:
     """Build the anchor slug GitHub generates for a heading.
@@ -221,6 +226,7 @@ def slugify_github_anchor(text: str) -> str:
     text = re.sub(r"\s+", "-", text)
     text = re.sub(r"-{2,}", "-", text).strip("-")
     return text or "section"
+
 
 def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
     """List every ATX heading in a file with its generated anchor.
@@ -256,6 +262,7 @@ def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
 
     return anchors
 
+
 def split_markdown_link_target(target: str) -> tuple[str, str | None]:
     """Split a link destination into its path and fragment.
 
@@ -276,6 +283,7 @@ def split_markdown_link_target(target: str) -> tuple[str, str | None]:
         return "", cleaned[1:] or None
     return cleaned, None
 
+
 def is_external_markdown_target(target: str) -> bool:
     """Report whether a link destination points outside the repository.
 
@@ -289,6 +297,7 @@ def is_external_markdown_target(target: str) -> bool:
     lower = target.strip().strip("<>").lower()
     return lower.startswith(("http://", "https://", "mailto:", "tel:"))
 
+
 def _token_attribute(token: object, name: str) -> str | None:
     attrs = getattr(token, "attrs", None)
     if not isinstance(attrs, dict):
@@ -296,9 +305,11 @@ def _token_attribute(token: object, name: str) -> str | None:
     value = attrs.get(name)
     return value if isinstance(value, str) else None
 
+
 def _inline_token_label(token: object) -> str:
     content = getattr(token, "content", "")
     return content if isinstance(content, str) else ""
+
 
 def _reference_line(
     lines: list[str],
@@ -312,6 +323,7 @@ def _reference_line(
         if marker in lines[line_no - 1]:
             return line_no
     return start_line
+
 
 def _raw_reference_target(
     lines: list[str],
@@ -335,10 +347,12 @@ def _raw_reference_target(
             return candidate
     return parsed_target
 
+
 def _markdown_source(lines: list[str]) -> str:
     if any(line.endswith(("\n", "\r")) for line in lines):
         return "".join(lines)
     return "\n".join(lines)
+
 
 def iter_disallowed_markdown_references(
     lines: list[str],
@@ -360,6 +374,7 @@ def iter_disallowed_markdown_references(
             )
 
     return references
+
 
 def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
     """Extract parsed Markdown links and images outside code blocks.
