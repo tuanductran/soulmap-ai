@@ -10,6 +10,7 @@ from typing import cast
 from soulmap.runtime.detectors.anger_detector import detect_anger
 
 
+
 def test_active_anger_is_detected_and_typed_correctly() -> None:
     result = detect_anger("I'm so angry I could scream right now.")
 
