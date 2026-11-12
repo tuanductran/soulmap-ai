@@ -34,7 +34,7 @@ def test_knowledge_audit_accepts_exact_orphan_allowlist_entry(
 ) -> None:
     config_path = tmp_path / "src/soulmap/runtime/config/meaning.py"
     usage = (ConfigUsage(config_path, "ORPHANED", ()),)
-    _stub_audit_inputs(monkeypatch, tmp_path, usage)
+    _stub_audit_inputs(monkeypatch, usage)
 
     result = knowledge_audit.main(
         [
@@ -54,7 +54,7 @@ def test_knowledge_audit_does_not_fail_for_active_config(
     config_path = tmp_path / "src/soulmap/runtime/config/meaning.py"
     consumer = tmp_path / "src/soulmap/runtime/detectors/example.py"
     usage = (ConfigUsage(config_path, "ACTIVE", (consumer,)),)
-    _stub_audit_inputs(monkeypatch, tmp_path, usage)
+    _stub_audit_inputs(monkeypatch, usage)
 
     result = knowledge_audit.main(["--root", str(tmp_path)])
 
