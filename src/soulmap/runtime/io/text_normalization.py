@@ -25,7 +25,7 @@ _ATTRIBUTION_CUES = re.compile(
     r"\b(?:my|our)\s+(?:friend|sister|brother|mother|father|mom|dad|parent|partner|spouse|"
     r"husband|wife|colleague|coworker|boss|manager|therapist|teacher|doctor|"
     r"neighbor|roommate|son|daughter|child|grandmother|grandfather)\s*:\s*|"
-    r"\b(?:he|she|they)\s*:\s*,
+    r"\b(?:he|she|they)\s*:\s*",
     re.IGNORECASE,
 )
 _ATTRIBUTION_BOUNDARY = re.compile(
