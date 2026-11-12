@@ -158,12 +158,32 @@ def main(argv: list[str] | None = None) -> int:
         type=int,
         help="Fail when semantic knowledge duplicates exceed this threshold.",
     )
+    parser.add_argument(
+        "--allow-orphaned-config",
+        action="append",
+        default=[],
+        metavar="PATH::CONSTANT",
+        help=(
+            "Explicitly allow an orphaned config constant by repo-relative "
+            "path and name (repeatable)."
+        ),
+    )
     args = parser.parse_args(argv)
 
     root = args.root.resolve()
     duplicates = find_python_markdown_duplicates(root)
     detector_duplicates = find_detector_markdown_duplicates(root)
     usage = find_config_usage(root)
+    allowed_orphans = set(args.allow_orphaned_config)
+    orphaned = tuple(
+        item
+        for item in usage
+        if item.is_orphaned
+        and (
+            f"{item.python_path.relative_to(root).as_posix()}::{item.constant}"
+            not in allowed_orphans
+        )
+    )
     implementation_references = find_markdown_implementation_references(root)
     print(_format_inventory(duplicates, root))
     print("\nDetector knowledge-drift audit")
@@ -187,6 +207,17 @@ def main(argv: list[str] | None = None) -> int:
     print(f"implementation references: {len(implementation_references)}")
     for path in implementation_references:
         print(f"  - {path.relative_to(root)}")
+    if orphaned:
+        print(
+            "\nKnowledge config-usage guard failed: "
+            f"{len(orphaned)} orphaned config constant(s) are not allowlisted."
+        )
+        for item in orphaned:
+            print(
+                f"  - {item.python_path.relative_to(root).as_posix()}::{item.constant}"
+            )
+        return 1
+
     if args.max_knowledge_duplicates is not None:
         duplicate_count = sum(
             duplicate.classification == "knowledge_duplicate"
