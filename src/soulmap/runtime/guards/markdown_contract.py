@@ -84,6 +84,7 @@ class Issue:
     line: int
     message: str
 
+
 # Filenames GitHub only recognizes with underscores. Each is a fixed external
 # contract, not a style choice, so the kebab-case rule above skips them.
 _GITHUB_RESERVED_FILENAMES = frozenset(
