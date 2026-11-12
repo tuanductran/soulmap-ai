@@ -12,14 +12,14 @@ from soulmap.runtime.detectors.partnership_patterns_detector import (
 from soulmap.runtime.detectors.soul_nourishment_detector import detect_soul_nourishment
 from soulmap.runtime.detectors.soulmate_longing_detector import detect_soulmate_longing
 from soulmap.runtime.detectors.spiritual_bypass_detector import detect_bypass
-from soulmap.runtime.detectors.spiritual_purpose_detector import detect_spiritual_purpose
+from soulmap.runtime.detectors.spiritual_purpose_detector import (
+    detect_spiritual_purpose,
+)
 
 
 def test_attributed_third_party_signals_do_not_trigger_detectors() -> None:
     assert (
-        detect_ancestral("My friend said this runs in my family.")[
-            "ancestral_detected"
-        ]
+        detect_ancestral("My friend said this runs in my family.")["ancestral_detected"]
         is False
     )
     assert (
@@ -71,9 +71,7 @@ def test_attributed_third_party_signals_do_not_trigger_detectors() -> None:
         is False
     )
     assert (
-        detect_celebration("My friend said I finally did it.")[
-            "celebration_detected"
-        ]
+        detect_celebration("My friend said I finally did it.")["celebration_detected"]
         is False
     )
     assert (
@@ -86,8 +84,7 @@ def test_attributed_third_party_signals_do_not_trigger_detectors() -> None:
 
 def test_user_authored_signal_after_reported_speech_remains_detectable() -> None:
     result = detect_dark_night(
-        "My friend said I feel spiritually empty, "
-        "but I feel spiritually empty too."
+        "My friend said I feel spiritually empty, but I feel spiritually empty too."
     )
 
     assert result["dark_night_detected"] is True
