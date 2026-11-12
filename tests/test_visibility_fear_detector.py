@@ -19,9 +19,7 @@ def test_visibility_fear_uses_markdown_secondary_groups() -> None:
 
 
 def test_attributed_third_party_visibility_fear_does_not_trigger() -> None:
-    result = detect_visibility_fear(
-        'My friend said, "I am afraid to post."'
-    )
+    result = detect_visibility_fear('My friend said, "I am afraid to post."')
 
     assert result["visibility_fear_detected"] is False
     assert result["score"] == 0
