@@ -78,7 +78,8 @@ def test_recommendation_present_when_detected() -> None:
 
 def test_attributed_third_party_empath_signal_does_not_trigger() -> None:
     result = detect_empath_overwhelm(
-        'My sister said, "I absorb everyone\'s emotions and feel drained after being with people."'
+        'My sister said, "I absorb everyone\'s emotions '
+        'and feel drained after being with people."'
     )
 
     assert result["empath_detected"] is False
