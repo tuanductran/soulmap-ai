@@ -3,7 +3,6 @@
 from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 
 
-
 def test_quoted_third_party_speech_is_masked() -> None:
     masked = mask_third_party_attribution(
         'My friend said, "I am overwhelmed and my heart is racing."'
@@ -55,12 +54,12 @@ def test_unclosed_quote_masks_the_remaining_text() -> None:
 
     assert "cannot think straight" not in masked
 
+
 def test_unattributed_quote_is_preserved_as_possible_user_language() -> None:
     masked = mask_third_party_attribution('"I am overwhelmed and my heart is racing."')
 
     assert "overwhelmed" in masked
     assert "heart is racing" in masked
-
 
 
 def test_trailing_speech_attribution_masks_the_quote() -> None:
