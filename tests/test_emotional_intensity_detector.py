@@ -16,6 +16,7 @@ from soulmap.runtime.detectors.emotional_intensity_detector import (
 )
 
 
+
 def test_check_escalation_uses_markdown_intensity_modifiers() -> None:
     history = [
         {"role": "user", "content": "I am worried"},
