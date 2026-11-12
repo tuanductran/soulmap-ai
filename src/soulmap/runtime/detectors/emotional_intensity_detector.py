@@ -10,12 +10,12 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.keyword_lists import (
     load_labeled_groups,
     load_runtime_guidance,
 )
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
-from soulmap.runtime.io.text_normalization import mask_third_party_attribution
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 # Single source of truth: skills/frameworks/emotional-deescalation.md,
