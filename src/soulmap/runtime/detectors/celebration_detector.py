@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 
@@ -51,7 +53,7 @@ def detect_celebration(
         ``celebration_type``, ``score``, ``signals``,
         ``has_negative_override``, and ``recommendation``.
     """
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals_found: list[str] = []
     score = 0
 
