@@ -16,7 +16,6 @@ from soulmap.runtime.detectors.emotional_intensity_detector import (
 )
 
 
-
 def test_check_escalation_uses_markdown_intensity_modifiers() -> None:
     history = [
         {"role": "user", "content": "I am worried"},
@@ -112,6 +111,7 @@ def test_guidance_present_for_each_level() -> None:
     assert normal["guidance"]
     assert moderate["guidance"]
     assert high["guidance"]
+
 
 def test_quoted_third_party_overwhelm_does_not_trigger_detection() -> None:
     result = detect_intensity(
