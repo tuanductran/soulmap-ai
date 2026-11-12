@@ -341,3 +341,39 @@ def test_near_miss_phrasing_without_loss_language_is_not_grief() -> None:
     result = detect_grief("I'm worried my dog might be getting sick soon.")
 
     assert result["grief_detected"] is False
+
+def test_quoted_third_party_loss_does_not_trigger_current_grief() -> None:
+    result = detect_grief(
+        'My friend said, "My mother died yesterday."'
+    )
+
+    assert result["grief_detected"] is False
+
+
+def test_unquoted_reported_loss_does_not_trigger_current_grief() -> None:
+    result = detect_grief("My friend told me my mother died yesterday.")
+
+    assert result["grief_detected"] is False
+
+
+def test_users_own_loss_after_reported_speech_is_detected() -> None:
+    result = detect_grief(
+        "My friend said my mother died yesterday, but my mother died yesterday too."
+    )
+
+    assert result["grief_detected"] is True
+    assert result["grief_type"] == "acute"
+
+
+def test_quoted_historical_loss_does_not_extend_grief_sequence() -> None:
+    history = [
+        {
+            "role": "user",
+            "content": 'My friend said, "My mother died yesterday."',
+        }
+    ]
+
+    result = detect_grief("Can you help me plan a work presentation?", history)
+
+    assert result["grief_detected"] is False
+    assert result["acute_exchange_count"] == 0
