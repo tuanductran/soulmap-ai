@@ -69,3 +69,11 @@ def test_trailing_speech_attribution_masks_the_quote() -> None:
 
     assert "overwhelmed" not in masked
     assert "heart is racing" not in masked
+
+def test_unrelated_later_attribution_does_not_mask_user_quote() -> None:
+    masked = mask_third_party_attribution(
+        '"I am overwhelmed and my heart is racing." Later, my friend said hello.'
+    )
+
+    assert "overwhelmed" in masked
+    assert "heart is racing" in masked
