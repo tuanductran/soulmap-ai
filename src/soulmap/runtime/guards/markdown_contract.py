@@ -1,4 +1,4 @@
-"""Lightweight GitHub-flavored Markdown contract checks (no external deps).
+"""Lightweight GitHub-flavored Markdown contract checks.
 
 This module is intentionally conservative: it checks for issues that commonly break
 rendering or navigation on GitHub (bad headings, unclosed fences, broken links).
@@ -96,8 +96,21 @@ _GITHUB_RESERVED_FILENAMES = frozenset(
 
 def _iter_markdown_files(root: Path) -> list[Path]:
     """Discover Markdown files without importing developer tooling."""
-    excluded = {".git", ".venv", "dist", "node_modules", ".ruff_cache", ".pytest_cache"}
-    return sorted(path for path in root.rglob("*.md") if not (set(path.parts) & excluded))
+    excluded = {
+        ".git",
+        ".venv",
+        "dist",
+        "node_modules",
+        ".ruff_cache",
+        ".pytest_cache",
+        ".cache",
+        ".npm",
+        ".yarn",
+        ".pnpm-store",
+    }
+    return sorted(
+        path for path in root.rglob("*.md") if not (set(path.parts) & excluded)
+    )
 
 
 def _package_version(repo_root: Path) -> str | None:
