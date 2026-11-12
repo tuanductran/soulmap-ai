@@ -49,7 +49,7 @@ def test_knowledge_audit_accepts_exact_orphan_allowlist_entry(
 
 
 def test_knowledge_audit_does_not_fail_for_active_config(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     config_path = tmp_path / "src/soulmap/runtime/config/meaning.py"
     consumer = tmp_path / "src/soulmap/runtime/detectors/example.py"
