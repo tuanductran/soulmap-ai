@@ -214,8 +214,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         for item in orphaned:
             print(
-                "  - "
-                f"{item.python_path.relative_to(root).as_posix()}::{item.constant}"
+                f"  - {item.python_path.relative_to(root).as_posix()}::{item.constant}"
             )
         return 1
 
