@@ -19,7 +19,8 @@ _ATTRIBUTION_CUES = re.compile(
     r"\b(?:\s+that)?\s*[:,]?\s*|"
     r"\b(?:bạn|mẹ|cha|bố|ba|anh|chị|em|cô|chú|ông|bà|họ|ai\s+đó|"
     r"người\s+\w+)(?:\s+(?:tôi|mình|ấy|đó))?\s+"
-    r"(?:nói|bảo|kể|viết|nhắn|hỏi|chia sẻ)\b(?:\s+(?:rằng|là))?\s*[:,]?\s*",
+    r"(?:nói|bảo|kể|viết|nhắn|hỏi|chia sẻ)\b(?:\s+(?:rằng|là))?\s*[:,]?\s*|"
+    r"\b(?:my|our)\s+\w+(?:\s+\w+){0,2}\s*:\s*|\b(?:he|she|they)\s*:\s*",
     re.IGNORECASE,
 )
 _ATTRIBUTION_BOUNDARY = re.compile(
@@ -40,13 +41,13 @@ def normalize_message_text(message: str, *, strip: bool = True) -> str:
 def mask_third_party_attribution(message: str) -> str:
     """Mask quoted and explicitly attributed third-party speech in detector input.
 
-    The helper preserves the user's own text after a sentence or clear contrast
-    boundary, so a user can report another person's state and then affirm their
-    own similar experience in the same message.
+    Unattributed quotations remain intact because they may be the user's own
+    words. The user's own text after a sentence or clear contrast boundary is
+    preserved when another person's speech is reported in the same message.
     """
     text = normalize_message_text(message, strip=False)
     characters = list(text)
-    spans: list[tuple[int, int]] = []
+    quote_spans: list[tuple[int, int]] = []
     start: int | None = None
     closing: str | None = None
 
@@ -78,17 +79,25 @@ def mask_third_party_attribution(message: str) -> str:
         ):
             continue
         if start is not None:
-            spans.append((start, index + 1))
+            quote_spans.append((start, index + 1))
         start = None
         closing = None
 
     if start is not None:
-        spans.append((start, len(text)))
+        quote_spans.append((start, len(text)))
 
-    for span_start, span_end in spans:
-        characters[span_start:span_end] = [" "] * (span_end - span_start)
-        if span_end > span_start:
-            characters[span_end - 1] = "."
+    for span_start, span_end in quote_spans:
+        prefix = text[:span_start]
+        clause_start = max(
+            prefix.rfind("."),
+            prefix.rfind("!"),
+            prefix.rfind("?"),
+            prefix.rfind(";"),
+        )
+        if _ATTRIBUTION_CUES.search(prefix[clause_start + 1 :]):
+            characters[span_start:span_end] = [" "] * (span_end - span_start)
+            if span_end > span_start:
+                characters[span_end - 1] = "."
 
     unquoted = "".join(characters)
     for match in _ATTRIBUTION_CUES.finditer(unquoted):
