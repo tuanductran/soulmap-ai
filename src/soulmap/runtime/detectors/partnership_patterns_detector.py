@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 
@@ -33,7 +35,7 @@ def detect_partnership_patterns(
     message: str, history: list[HistoryMessage] | None = None
 ) -> dict[str, object]:
     """Detect a recurring pattern specific to dating or partner-seeking."""
-    msg = message.lower().strip()
+    msg = mask_third_party_attribution(message).lower().strip()
     signals: list[str] = []
     score = 0
 
