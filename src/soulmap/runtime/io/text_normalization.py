@@ -108,6 +108,19 @@ def mask_third_party_attribution(message: str) -> str:
 
     unquoted = "".join(characters)
     for match in _ATTRIBUTION_CUES.finditer(unquoted):
+        prefix = unquoted[: match.start()]
+        clause_start = max(
+            prefix.rfind("."),
+            prefix.rfind("!"),
+            prefix.rfind("?"),
+            prefix.rfind(";"),
+        )
+        attributed_prefix = prefix[clause_start + 1 :]
+        if attributed_prefix.rstrip().endswith((",", ":")):
+            characters[clause_start + 1 : match.start()] = [
+                " "
+            ] * (match.start() - clause_start - 1)
+
         boundary = _ATTRIBUTION_BOUNDARY.search(unquoted, match.end())
         span_end = boundary.start() if boundary else len(unquoted)
         characters[match.end() : span_end] = [" "] * (span_end - match.end())
