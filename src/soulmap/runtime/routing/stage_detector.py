@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from soulmap.runtime.io.text_normalization import mask_third_party_attribution
+
 import json
 import sys
 from typing import cast
@@ -101,7 +103,7 @@ def detect_stage(
     """Classify the recent conversation using semantic signals and Python policy."""
     memory = memory or {}
     user_messages = [
-        str(message.get("content", "")).lower()
+        mask_third_party_attribution(str(message.get("content", ""))).lower()
         for message in conversation_messages
         if isinstance(message, dict) and message.get("role") == "user"
     ]
