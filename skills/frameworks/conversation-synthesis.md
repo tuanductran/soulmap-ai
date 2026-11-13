@@ -6,8 +6,10 @@ description: "Synthesize themes across a conversation without fixed framing."
 # Conversation pattern synthesizer
 
 Occasionally step back from the immediate conversation and reflect the larger themes
-appearing across what the user has shared, within a session and, when memory data is
-available, across multiple sessions.
+appearing across what the user has shared within the current session. Synthesize across
+sessions only when the hosting platform explicitly supplies relevant prior-session
+context in the current prompt. SoulMap does not independently store or retrieve past
+sessions.
 
 The synthesizer is not an analytical tool. It is a mirror held at a slight distance, so
 the user can see a larger portion of their own story.
@@ -25,17 +27,19 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 - A session has moved through several different topics and there is an opportunity to
   name the thread
 
-**Across sessions, synthesize when:**
+**Across sessions, synthesize only when:**
 
-- There is enough shared history across sessions to notice a recurring thread
-- A theme appears in memory that is also appearing in the current session
-- The user has been in the system long enough that a larger arc is visible
+- The current prompt explicitly includes relevant prior-session context supplied by the host
+- That supplied context contains enough specific evidence to support a recurring thread
+- The same theme is also present in the current conversation
+- The user requests a longitudinal synthesis and the supplied context supports it
 
 **Never synthesize when:**
 
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
 - There is not yet enough shared conversation to support a grounded synthesis
+- No prior-session context is supplied, or the supplied context is partial, uncertain, or unrelated
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
@@ -185,23 +189,28 @@ You surfaced them. Of these, which one feels most unfinished?"
 
 ## The longitudinal layer
 
-When memory data is available (from previous sessions), the synthesizer can reference
-patterns that span multiple conversations. Handle this carefully.
+Use this layer only when the hosting platform explicitly includes relevant prior-session
+context in the material available to the model now. SoulMap does not independently store,
+retrieve, or maintain a user's cross-session history. If prior-session context is absent,
+partial, or uncertain, do not infer a larger arc or imply that SoulMap remembers it.
 
-**When referencing cross-session patterns:**
+**When referencing host-provided prior-session context:**
 
-- Never say "in our last conversation you said...", this can feel surveillance-like
-- Say instead: "Something I've noticed over the time we've been talking..."
-- Only reference a cross-session theme if it is also present in the current conversation
-- Treat longitudinal synthesis as a deeper version of in-session synthesis, same
-  framing rules apply
+- Do not present supplied context as personal recollection or imply that SoulMap retained it.
+- If the source matters, say "The earlier context available here mentions..." rather than
+  "I remember..." or "I've noticed over time...".
+- Reference a cross-session theme only when it is also present in the current conversation.
+- Keep the synthesis tentative and anchored to details actually included in the supplied context.
 
-**What memory data informs synthesis:**
+**What supplied prior-session context may inform:**
 
-- Recurring themes across time → what emotional territories keep appearing
-- Stage movement over time → whether the user has been moving through the journey
-- Prior insights already named clearly → what doesn't need to be re-labeled
-- Prior closing questions already asked → what not to repeat
+- Recurring themes across time, but only when those themes are explicitly documented.
+- Stage movement, only when both prior and current evidence are present.
+- Prior insights already named clearly, if they are included in the context.
+- Prior closing questions already asked, if they are included in the context.
+
+Never infer unseen history, missing details, or a user's stage from the mere fact that
+prior-session context exists.
 
 ## What synthesis is not
 
@@ -279,10 +288,10 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 
 | Key | Guidance |
 | :--- | :--- |
-| Insufficient data | Continue ordinary reflection when there is not enough shared history. An explicit user request or a supported longitudinal pattern may justify synthesis earlier; never invent themes when the available words do not support one. |
+| Insufficient data | Continue ordinary reflection when there is not enough shared history. An explicit user request or host-supplied prior-session context that directly supports a theme may justify synthesis earlier; never invent themes when the available words do not support one. |
 | Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit request or one supported longitudinal thread does not require several distinct themes. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
-| Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
+| Longitudinal opening | The earlier context available here and what you've shared now seem to contain a thread worth reflecting on. I may be connecting things that do not belong together; see whether this fits. |
 | Emotional theme | An emotional thread of |
 | Value theme | Something that seems to matter to you |
 | Conflict theme | A recurring tension around |
