@@ -33,7 +33,7 @@ The implementation in `src/soulmap/devtools/audit/knowledge.py`:
 
 - inventories Python/Markdown phrase overlaps and detector/Markdown exact overlaps;
 - reports Python configuration constants as active or orphaned based on static references;
-- identifies implementation references in shipped knowledge Markdown;
+- identifies implementation references in Markdown under `skills/`, `templates/`, and `frameworks/`;
 - can enforce a maximum number of knowledge duplicates.
 
 It is a configuration/phrase-drift audit. It is not the source-registry ownership audit.
