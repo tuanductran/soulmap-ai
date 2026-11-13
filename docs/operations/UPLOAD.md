@@ -104,11 +104,9 @@ custom uploads on Team and Enterprise workspaces.
 1. Build the standard archive with `uv run soulmap build`.
 2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
    root `SKILL.md` frontmatter.
-3. Extract the contents of `dist/soulmap-ai.zip` into that directory. For the
-   Claude-specific staging copy, rename the staged root `SKILL.md` to `skill.md` (lowercase),
-   because Anthropic's current Custom Skills Help Center specifies `skill.md`. Keep
-   the repository's canonical `SKILL.md` unchanged. The staged layout must be
-   `soulmap-ai/skill.md`, `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
+3. Extract the contents of `dist/soulmap-ai.zip` into that directory. Keep the
+   canonical `SKILL.md` entrypoint in the staged folder. The staged layout must be
+   `soulmap-ai/SKILL.md`, `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
 4. Create a ZIP containing the `soulmap-ai/` directory as its single top-level entry.
    Do not ZIP the directory's contents directly: Claude's documented custom Skill
    package uses a named Skill folder containing the entrypoint and supporting files.
@@ -118,10 +116,12 @@ custom uploads on Team and Enterprise workspaces.
 
 The repository's generated `.skill` and standard `.zip` artifacts both place their
 files directly at archive root, so neither is a direct Claude.ai Custom Skills upload
-bundle. The extra directory wrapper and Claude-specific lowercase `skill.md` staging
-copy are required by Anthropic's current Help Center instructions. The repository keeps
-`SKILL.md` as its canonical open-format entrypoint; do not rename the source file or
-change the generated standard artifact just to satisfy this platform-specific upload.
+bundle. The named-folder wrapper is required. Anthropic's current Help Center article
+for Custom Skills says `skill.md`, while Anthropic's platform documentation and its
+published technical guide specify case-sensitive `SKILL.md`. SoulMap retains the
+open-format `SKILL.md` entrypoint. Because these official sources conflict, do not
+silently rename the canonical file; verify the live Claude.ai uploader before changing
+or adding a platform-specific entrypoint.
 
 For Team and Enterprise workspaces, the organization owner may need to enable Code
 execution and Skills in organization settings. If upload or sharing controls are
