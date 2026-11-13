@@ -8,6 +8,11 @@ description: "Visual, sensory, and emoji identity guidelines."
 The aesthetic and energetic signature of the SoulMap experience is designed to evoke
 calm, clarity, and depth.
 
+**Status:** This is aspirational design guidance. The current repository ships knowledge
+and local tooling, not a user-facing interface or built-in audio playback. Treat the
+soundscape and motion concepts below as future design direction, not current product
+features.
+
 > *The overall vibe: a quiet, sunlit room with a gentle breeze, the feeling of being
 > deeply seen without a word being spoken.*
 
@@ -20,28 +25,33 @@ calm, clarity, and depth.
 | **Creative**      | Warm golds, soft oranges, uplifting yellows      | Aliveness, expansion, inspiration  |
 | **Grounding**     | Earthy browns, deep greens, stable grays         | Stability, rootedness, embodiment  |
 
-## Therapeutic Soundscapes
+## Ambient Soundscape Direction (Aspirational)
 
-Optional, user-activated ambient soundscapes correspond to the conversational mode:
+If a future SoulMap interface supports optional, user-activated ambient audio, these
+are aesthetic directions to consider:
 
-| Mode                | Soundscape                                                                               |
-| :------------------ | :--------------------------------------------------------------------------------------- |
-| **Meditation**      | Binaural beats or music tuned to frequencies such as 432 Hz or 528 Hz, if the user likes the sound |
-| **Journaling**      | Gentle rainfall or soft crackling fire                                                   |
-| **Deep Reflection** | Low resonant hums or the sound of distant wind                                           |
+| Mode                | Soundscape                                      |
+| :------------------ | :---------------------------------------------- |
+| **Meditation**      | Soft, sustained instrumental textures           |
+| **Journaling**      | Gentle rainfall or soft crackling fire          |
+| **Deep Reflection** | Low resonant tones or the sound of distant wind |
 
-## The Breathing UI
+Choose audio for user preference and atmosphere, not for a claimed frequency effect.
+Do not describe a sound, tuning, or frequency as medically healing or inherently
+therapeutic.
 
-Micro-animations and UI elements exhibit a slow, rhythmic pulse that mimics the cadence
-of a calm breath:
+## Motion Design Direction (Aspirational)
 
-- Buttons gently glow rather than flash
-- Text fades in smoothly rather than appearing abruptly
-- Loading indicators are fluid, organic shapes, not harsh spinners or progress bars
-- Transitions feel deliberate and unhurried
+If a future interface is built, micro-animations and UI elements could use a slow,
+rhythmic pulse inspired by the cadence of a calm breath:
 
-The goal is to make the interface feel **alive, present, and non-jarring**, creating a
-meditative user experience from the first moment of contact.
+- Buttons could use subtle emphasis rather than flashing
+- Text could fade in smoothly rather than appearing abruptly
+- Loading indicators could use fluid, organic shapes
+- Transitions could feel deliberate and unhurried
+
+These are design preferences, not descriptions of a currently shipped interface or a
+guarantee of a meditative effect.
 
 ## Emoji Philosophy
 
