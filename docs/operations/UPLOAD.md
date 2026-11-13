@@ -128,6 +128,14 @@ check the official upload guide before a large import.
 Official reference:
 [Upload files to Claude](https://support.claude.com/en/articles/8241126-upload-files-to-claude)
 
+## Gemini
+
+Gemini's Gems-to-Skills transition has separate migration steps, age eligibility,
+file-size limits, and unsupported archive formats. Do not assume the Claude-oriented
+`.skill` archive can be uploaded directly as a Gemini Skill. Follow the
+[Gemini Skills lifecycle and migration guide](../integrations/README.md#gemini-gems-transitioning-to-skills)
+for the current supported workflow and verify the live interface before deployment.
+
 ## Any agent with Skills support
 
 Agent Skills are an open format built around a portable skill folder with
