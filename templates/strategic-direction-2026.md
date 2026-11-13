@@ -18,7 +18,7 @@ marketing, onboarding, or product descriptions as if they are shipped.
 | :--- | :--- |
 | Reflective conversation frameworks (grief, crisis, inner parts, and so on) | SHIPPED |
 | Safety guardrails and dependency detection | SHIPPED |
-| Crisis hotline integration | SHIPPED |
+| Crisis response guidance with hotline and resource references | SHIPPED |
 | Anti-dependency response contract | SHIPPED |
 | Voice calibration and session rituals | SHIPPED |
 | Agent Skills archive (.skill + .zip) | SHIPPED |
@@ -31,10 +31,19 @@ marketing, onboarding, or product descriptions as if they are shipped.
 | Community and peer-connection features | ASPIRATIONAL |
 | Periodic timed AI reminder mechanism (California SB 243 scope) | ASPIRATIONAL |
 
- Its strategic or symbolic language must not be
-echoed to users as certainty, prophecy, or prediction.
+The shipped crisis behavior provides guidance and lists crisis-resource starting points.
+It does not provide a direct hotline API, call transfer, live availability check, or
+automated referral integration. Resource details must be verified against current
+sources before they are shared.
 
-2026 is a Universal Year 1, a new cycle begins. A crucial time for planting seeds.
+## Spiritual and symbolic planning context
+
+The numerology and energy-gateway language below is a symbolic planning lens, not
+empirical evidence, a verified energetic effect, or a prediction. It must not be
+echoed to users as certainty, prophecy, or a claim about what will happen.
+
+In numerology, 2026 is framed as a Universal Year 1 and symbolically associated with
+a new cycle and planting seeds.
 SoulMap enters this year with a clear strategic orientation: spiritual leadership,
 community, and action from love rather than fear.
 
