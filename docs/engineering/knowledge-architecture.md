@@ -17,9 +17,10 @@ knowledge files and their contract sections. The loader utilities in
 Python data structures. The registry itself is internal runtime metadata and is
 intentionally excluded from the shipped knowledge archives.
 
-This means there is one place to edit a detection phrase. The runtime reflects
-the skill files automatically, so detection behavior and documented framework
-knowledge cannot silently drift apart.
+For registry-backed, Markdown-driven detectors, each phrase has a canonical source
+section that the runtime loads, reducing drift between detection inputs and documented
+knowledge. This does not describe every detector: crisis signals remain in static
+Python language packs and crisis-detector constants, as documented below.
 
 ## How detectors load knowledge
 
