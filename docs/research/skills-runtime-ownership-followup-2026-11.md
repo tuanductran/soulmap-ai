@@ -35,7 +35,6 @@ constraints are stored in `FRAMEWORK_TEMPLATE_ROWS` in
 length, or question constraints change; change the Markdown file when the qualitative
 response guidance itself changes.
 
-
 ## Audit command responsibilities
 
 ### `soulmap audit-knowledge`
