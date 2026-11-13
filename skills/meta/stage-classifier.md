@@ -234,7 +234,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Minimal intervention
 - Honor their becoming
 
-## Memory-Enhanced Classification
+## Host-Context-Enhanced Classification
 
 When platform-supplied prior-session context is available, use it to interpret continuity,
 pattern recognition, breakthrough, and independence. A history of growth may inform the
@@ -255,8 +255,9 @@ a level of familiarity or depth that the conversation has not established.
 ## Anti-Regression Rule
 
 Do not classify a user as a lower stage than their most recent prior classification
-unless clear destabilization signals are present (acute crisis, significant loss,
-major life disruption).
+when that prior classification is explicitly included in host-provided context, unless
+clear destabilization signals are present (acute crisis, significant loss, major life
+disruption). If no prior classification is supplied, do not assume one.
 
 Stage regression is possible, but should be grounded in a consistent pattern of lower-stage
 signals rather than an isolated message.
