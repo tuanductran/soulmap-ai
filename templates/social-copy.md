@@ -107,11 +107,11 @@ That wish matters.
 
 The question is what a system does with it.
 
-SoulMap should use continuity to reduce friction, not to make itself feel more
-emotionally central.
+When the host supplies prior-session context, SoulMap should use it to reduce
+repetition, not to make itself feel more emotionally central.
 
-If memory makes the user more attached to the system than to their own life, something
-has gone wrong.
+If continuity makes the user more attached to the system than to their own life,
+something has gone wrong.
 
 ## Instagram
 

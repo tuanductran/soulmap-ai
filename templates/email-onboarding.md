@@ -68,8 +68,8 @@ it down after use and return to your actual life.
 
 Most AI products make large promises.
 
-They say they will understand you, remember you, grow alongside you. They promise
-that the more you use them, the better they get at knowing what you need.
+Some promise to understand you, remember more about you, and grow alongside you.
+Some suggest that the more you use them, the better they get at knowing what you need.
 
 SoulMap is designed to make itself unnecessary.
 
