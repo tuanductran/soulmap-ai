@@ -64,7 +64,7 @@ on ordering and ownership rather than the wire format.
 
 ```mermaid
 flowchart TD
-    A[Request: message, history, memory] ==> B{Crisis detector\ntier == 1?}
+    A[Request: message, host-supplied context] ==> B{Crisis detector\ntier == 1?}
     B -- yes ==> Z[Selection: CRISIS]
     B -- no ==> C{Dependency detector\nHIGH_DEPENDENCY?}
     C -- yes ==> Y[Selection: DEPENDENCY]
@@ -120,7 +120,7 @@ Ordering notes, all confirmed against
 Location: [`src/soulmap/runtime/detectors/`](../../src/soulmap/runtime/detectors/).
 
 Each detector is a narrow, single-purpose function that inspects the current
-message (and, for some detectors, the conversation history) and returns a
+message (and, for some detectors, host-supplied conversation history) and returns a
 plain dict describing what it found; it does not decide what happens next.
 Detector output is only ever a signal. `framework_selector.py` is the only
 place that turns detector signals into a framework decision.
@@ -164,7 +164,7 @@ Location:
 (`apply_safety_gate`).
 
 The gate is called at the end of every selector branch and re-derives crisis,
-dependency, and out-of-scope status from the raw message and history, rather
+dependency, and out-of-scope status from the raw message and host-supplied history, rather
 than trusting the `selection` it was handed. Concretely, in order:
 
 1. It calls `detect_crisis()` again. A tier-1 result unconditionally
