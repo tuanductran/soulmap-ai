@@ -39,7 +39,7 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 - User still needs simple holding or is in acute distress
 - Emotional intensity is high
 - There is not yet enough shared conversation to support a grounded synthesis
-- No prior-session context is supplied, or the supplied context is partial, uncertain, or unrelated
+- A cross-session synthesis is unsupported because prior-session context is absent, partial, uncertain, or unrelated; in-session synthesis may still use the current conversation
 - A synthesis was already offered in this session, offer it once, then let the user
   lead
 
