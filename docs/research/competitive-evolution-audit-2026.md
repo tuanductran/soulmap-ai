@@ -7,6 +7,15 @@ records the research and the reasoning, not just the conclusion, so a future
 maintainer can see why an idea was accepted or rejected rather than only that it
 was.
 
+## Historical scope
+
+> This report is a research snapshot dated 2026-08-30. Its architecture descriptions and
+> non-goals record the repository as understood during that audit; they are not current
+> implementation or routing instructions. For the current ownership and route model, see
+> [the repository contract](../engineering/repo-contract.md),
+> [the Library/framework boundary](../engineering/library-vs-framework.md), and
+> [the November 2026 runtime ownership follow-up](skills-runtime-ownership-followup-2026-11.md).
+
 ## Executive summary
 
 SoulMap's strongest competitive position is not a missing feature. It is the set
@@ -43,17 +52,23 @@ Already established doctrine, not re-derived here at length. Summarized from
 * **Knowledge model:** a small, hand-authored, safety-reviewed Markdown corpus
   under `skills/`, functioning as deterministic routing targets for a
   rule-based Python selector, not an embedded corpus for open-ended retrieval.
-* **Memory model:** none, by design. No cross-session memory bonding.
-  The former experimental memory layer was removed because it was not part of
-  the core product promise. Every session starts fresh.
+* **SoulMap-controlled memory:** no persistent conversation database or memory
+  service is provided by this repository. A host platform may still surface prior-session
+  context or memory; that data is outside SoulMap's storage and retention control. The
+  continuity contract in `skills/meta/session-continuity.md` permits only the context
+  actually supplied by the platform and forbids treating fragments as a full session.
+  The former experimental SoulMap-owned memory layer was removed because it was not part
+  of the core product promise.
 * **Agent model:** not an agent in the tool-calling sense. `framework_selector.py`
   is a deterministic dispatcher over ~27 named outcomes; it does not plan, does
   not call external tools, and does not decide its own next action.
-* **Architecture invariant:** Library (`src/soulmap/runtime/{knowledge,guards,routing,io,config}/`)
-  is the stable substrate; Framework (`skills/frameworks/<name>.md` plus
-  `<name>_detector.py`) is the swappable unit. A new capability is either a new
-  Framework pair or it does not belong in the runtime.
-* **Non-goals, explicit and current:** no web app, no public API service, no
+* **Architecture model recorded at this audit date:** Library
+  (`src/soulmap/runtime/{knowledge,guards,routing,io,config}/`) was treated as the
+  stable substrate, while a primary Framework was described as a Markdown source plus
+  a detector. That simplified pair model is historical, not a current one-to-one rule:
+  current repository guidance distinguishes primary routed frameworks from supporting
+  lenses and secondary-layer knowledge.
+* **Non-goals recorded at the audit date (2026-08-30):** no web app, no public API service, no
   database layer, no auth/account system, no background jobs, no additional
   platform adapters beyond the current four, no new framework not required by
   current doctrine (`maintenance-boundary.md`).
@@ -129,10 +144,10 @@ Applying Phase 10's classification to every candidate this audit considered:
 
 | Candidate | Classification | Reasoning |
 | --- | --- | --- |
-| Persistent memory (any form) | INTENTIONALLY ABSENT | Directly conflicts with Rule 1 (anti-dependency) and the documented no-memory-bonding boundary |
+| SoulMap-controlled persistent memory service | INTENTIONALLY ABSENT | The project does not own a cross-session store; host-platform memory/context remains outside its control and is handled by the session-continuity protocol |
 | Open-corpus RAG retrieval | INTENTIONALLY ABSENT | Would replace curated, safety-reviewed knowledge with probabilistic retrieval over arbitrary content, undermining the safety-review guarantee the whole knowledge base depends on |
 | Autonomous tool use / agent planning | INTENTIONALLY ABSENT | `maintenance-boundary.md` explicitly rejects background jobs, infra-heavy deployment logic, and scope beyond the current Claude-first flow |
-| Temporal/contradiction modeling for memory | NOT APPLICABLE | There is no memory to model contradictions in |
+| Temporal/contradiction modeling for a SoulMap-owned memory store | NOT APPLICABLE | The repository does not maintain a persistent memory store; any host-provided context is not stored or reconciled by SoulMap |
 | MCP-style tool discovery | NOT APPLICABLE | SoulMap has no external tools to discover |
 | Multi-user workspace isolation | NOT APPLICABLE | No account system by design |
 | Naming the existing Skill structure's alignment with progressive disclosure | MISSING BUT NOT NEEDED AS CODE, WORTH ONE DOC NOTE | The behavior already exists and is already correct; only the cross-reference was missing |
@@ -182,10 +197,12 @@ Cross-checked against Anthropic's own documented Agent Skills model
 * **Level 2 (full body on activation):** the shipped root `SKILL.md`'s workflow
   sections already point to specific files to read next rather than inlining
   everything. Confirmed already correct.
-* **Level 3 (referenced files on demand):** the Framework-pair pattern
-  (`docs/engineering/library-vs-framework.md`) already treats each
-  `skills/frameworks/<name>.md` as a file loaded only when its detector fires.
-  Confirmed already correct.
+* **Level 3 (referenced files on demand):** the primary-framework pattern
+  described at the audit date treated each routed knowledge source as a file loaded
+  when its route activated. Current file roles are more explicit: primary routes,
+  secondary layers, and supporting lenses are not interchangeable. See
+  `docs/engineering/library-vs-framework.md` for the current rule. This research
+  snapshot is not the route registry.
 
 SoulMap's Skill layer already implements the pattern this research names.
 Nothing in the repository states that alignment explicitly, which is the one
@@ -232,12 +249,14 @@ added.
 
 ### KEEP
 
-* No persistent memory, no cross-session bonding, single-user, local
-  knowledge base with no backend.
+* No SoulMap-controlled persistent memory store or cross-session memory bonding. Host
+  platforms may surface prior context under their own memory and privacy controls.
+  The knowledge base remains local to the host's use of the shipped artifact; there is
+  no SoulMap-operated backend.
 * Deterministic, auditable routing (`framework_selector.py`) over probabilistic
   retrieval.
-* The Library-vs-Framework boundary and the one-file-pair-per-framework
-  discipline.
+* The primary-route versus supporting-lens boundary; do not impose a one-file-pair rule
+  on every knowledge file.
 * The independent, defense-in-depth safety gate re-derivation (ADR 0001).
 * The source-marker-verified eval suite as the standard for adding any new
   routing behavior.
@@ -253,8 +272,8 @@ added.
 
 ### DO NOT ADD
 
-* Persistent or long-term memory in any form, including "lightweight"
-  preference caching.
+* A SoulMap-controlled persistent or long-term memory store, including "lightweight"
+  preference caching. Host-platform memory remains outside this repository's control.
 * Vector-embedded retrieval over `skills/` or any other corpus.
 * MCP server or client integration, or any external tool-calling capability.
 * Multi-user accounts, workspaces, or authentication.

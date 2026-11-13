@@ -20,9 +20,11 @@ application framework built on it (Next.js) already exists inside SoulMap:
 
 - **Library** - the reusable substrate every framework depends on. Stable,
   domain-agnostic, changes rarely.
-- **Framework** - one reflective knowledge module (grief, anger, existential,
-  pattern-mapper, ...) plus its detector. New ones ship often, each one is
-  swappable/removable without touching the Library.
+- **Primary routed framework** - an independently selectable response route, backed by
+  semantic Markdown knowledge and a Python-owned detector/routing binding. Its executable
+  scoring and routing configuration remains in Python.
+- **Supporting lens or secondary layer** - reusable knowledge that enriches an already
+  selected primary route. It does not automatically become an independent primary route.
 
 A new framework should never need to duplicate Markdown-loading, scoring
 plumbing, or safety-gate wiring. If it does, that logic belongs in the
@@ -54,19 +56,30 @@ they are protected modules per
 [`adr/0001-layered-crisis-detection.md`](adr/0001-layered-crisis-detection.md)
 and must not be treated as one swappable framework among many.
 
-## What is Framework (add freely, one file pair per framework)
+## Primary routed frameworks and supporting knowledge
 
-Every framework follows the same two-file shape:
+A primary routed framework is a normal, independently selectable framework route the
+selector can return as `primary_framework`. Crisis and dependency short-circuits are
+protected Library-level safety overrides, not swappable framework files. Its runtime role is defined by Python-owned labels, detector
+bindings, routing configuration, and the registered knowledge-source mapping. The
+relevant implementation contracts live in:
 
-```text
-skills/frameworks/<framework>.md         source of truth: detection signals,
-                                          reflective guidance, recommendation text
-src/soulmap/runtime/detectors/<framework>_detector.py
-                                          loads signals from the Markdown file,
-                                          scores them, returns a typed result
-```
+- `src/soulmap/runtime/knowledge/labels.py` for reader-label mappings;
+- `src/soulmap/runtime/routing/framework_selector.py` for primary and secondary
+  detector bindings and selection order;
+- `src/soulmap/runtime/knowledge/runtime_config.py` for executable scoring, routing,
+  and deterministic template configuration (`FRAMEWORK_TEMPLATE_ROWS`);
+- `skills/meta/framework-template-map.md` for qualitative, AI-facing response-structure
+  guidance; it is not the deterministic runtime template mapping;
+- `src/soulmap/runtime/knowledge/runtime_registry.py` for registered Markdown sources.
 
-Current framework sources under `skills/frameworks/` are:
+The `skills/frameworks/` directory is a knowledge-file inventory, not a one-to-one
+detector registry. It contains primary framework sources as well as secondary guidance
+and supporting lenses. A filename, folder, or presence of a `Detection signals`
+section does not by itself mean that the file has an independent primary route or needs
+a dedicated detector.
+
+Current Markdown files under `skills/frameworks/` include:
 
 - ancestral-patterns
 - anger-companion
@@ -95,38 +108,35 @@ Current framework sources under `skills/frameworks/` are:
 - soul-nourishment
 - spiritual-purpose
 
-Each has a corresponding runtime detector, although detector module names may be normalized rather than matching the Markdown filename literally. The authoritative source-to-runtime mapping is `src/soulmap/runtime/source_registry.py`.
+This list is a directory inventory only. Some entries are supporting lenses or
+secondary-layer guidance; the authoritative primary/secondary routing relationships
+must be read from the current Python mappings and selector, not inferred from this list.
 
-`skills/soulmate/` is the concrete example of the analogy in the previous
-section: a framework built on top of existing frameworks the way an
-application framework builds on a UI library, rather than duplicating them.
-Its two primary files, `soulmate-longing.md` and `partnership-patterns.md`,
-follow the exact same two-file shape as every other framework. Its third
-file, `numerology-connection-lens.md`, is a topic lens with no detector, the
-same category `relationship-reflection.md` belongs to, applied only after a
-primary framework is already active.
+`skills/soulmate/` illustrates the same distinction: `soulmate-longing.md` and
+`partnership-patterns.md` are independently routed primary knowledge sources, while
+`numerology-connection-lens.md` is a supporting topic lens with no independent primary
+detector. `skills/frameworks/relationship-reflection.md` is also supporting guidance
+that may be used after a primary route is active.
 
-## The authoring rule for new frameworks
+## Authoring rule
 
-When adding framework N+1:
+When adding a new primary routed framework:
 
-1. Write `skills/frameworks/<name>.md` with a `## Detection signals` section.
-   This is the only place phrase lists live, per
-   [`knowledge-architecture.md`](knowledge-architecture.md).
-2. Write `src/soulmap/runtime/detectors/<name>_detector.py` that loads from
-   that Markdown file via the existing `runtime/knowledge/` loaders. Do not
-   hand-roll a new Markdown parser.
-3. Route through the existing `framework_selector.py`. Do not add a
-   framework-specific bypass of `_apply_safety_gate`.
-4. Validate output through the existing `runtime/guards/` layer. Do not add a
-   framework-specific response validator.
-5. Add `tests/test_<name>_detector.py` and a source-backed entry in
-   `evals/datasets/groups.json`.
+1. Confirm that the need is not already served by an existing route or supporting lens.
+2. Add semantic activation signals and reflective guidance to the registered Markdown
+   source. Do not place executable scoring weights or thresholds in Markdown.
+3. Add or extend the detector and Python-owned routing/configuration only when a new
+   primary route is genuinely required.
+4. Preserve the existing selector order and independent safety-gate path.
+5. Add source-backed eval coverage and the appropriate template mapping.
 
-If a step above feels like it requires new Library code (a new loader
-capability, a new guard rule), that change belongs in the Library layer and
-should be reviewed as such - it affects every framework, not just the new
-one - rather than being special-cased inside the new detector.
+When adding a supporting lens or secondary guidance, do not create a new primary route,
+detector, priority row, or template mapping by default. Link the knowledge from the
+appropriate canonical guidance and test only the contract it actually owns.
+
+If a change requires new Library code (a loader capability, shared guard rule, or routing
+primitive), review it as a Library change because it affects more than one knowledge
+module.
 
 ## Related documentation
 
