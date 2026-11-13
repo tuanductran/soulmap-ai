@@ -273,7 +273,7 @@ duplication.
 
 `uv run soulmap audit-knowledge-ownership` checks that runtime consumers resolve
 literal source identifiers through the central source registry. It flags unregistered
-or unconsumed registry entries and direct Markdown-path lookups that bypass the registry.
+or unconsumed registry entries and direct `default_skill_path("skills/...")` calls that bypass the registry.
 
 ## Shared Python helpers
 
