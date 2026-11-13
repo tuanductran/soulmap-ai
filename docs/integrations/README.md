@@ -39,7 +39,7 @@ interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-ski
 
 **Legacy platform path.**
 
-As of 2026-11-13, new GPT creation and publishing are unavailable on personal
+As of 2026-11-14, new GPT creation and publishing are unavailable on personal
 ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
 be editable when the account, plan, and permissions allow it. New creation is
 also restricted in affected managed workspaces.
