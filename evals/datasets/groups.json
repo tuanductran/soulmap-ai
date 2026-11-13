@@ -1620,7 +1620,7 @@
       "SOULMAP.md"
     ],
     "source_markers": {
-      "skills/meta/session-continuity.md": "What Not to Do With Memory Data"
+      "skills/meta/session-continuity.md": "What not to do with prior-session context"
     },
     "items": [
       {
