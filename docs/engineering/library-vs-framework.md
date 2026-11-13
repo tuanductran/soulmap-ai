@@ -58,16 +58,19 @@ and must not be treated as one swappable framework among many.
 
 ## Primary routed frameworks and supporting knowledge
 
-A primary routed framework is a distinct value the selector can return as
-`primary_framework`. Its runtime role is defined by Python-owned labels, detector
+A primary routed framework is a normal, independently selectable framework route the
+selector can return as `primary_framework`. Crisis and dependency short-circuits are
+protected Library-level safety overrides, not swappable framework files. Its runtime role is defined by Python-owned labels, detector
 bindings, routing configuration, and the registered knowledge-source mapping. The
 relevant implementation contracts live in:
 
 - `src/soulmap/runtime/knowledge/labels.py` for reader-label mappings;
 - `src/soulmap/runtime/routing/framework_selector.py` for primary and secondary
   detector bindings and selection order;
-- `src/soulmap/runtime/knowledge/runtime_config.py` for executable scoring and
-  routing configuration;
+- `src/soulmap/runtime/knowledge/runtime_config.py` for executable scoring, routing,
+  and deterministic template configuration (`FRAMEWORK_TEMPLATE_ROWS`);
+- `skills/meta/framework-template-map.md` for qualitative, AI-facing response-structure
+  guidance; it is not the deterministic runtime template mapping;
 - `src/soulmap/runtime/knowledge/runtime_registry.py` for registered Markdown sources.
 
 The `skills/frameworks/` directory is a knowledge-file inventory, not a one-to-one
