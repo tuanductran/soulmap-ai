@@ -24,20 +24,18 @@ meaning and burnout. Slightly longer form. Intellectual tone welcome.
 **Tone:** Grounded, direct, thoughtful. Founder voice appropriate here. Not
 inspirational poster. Not corporate. Real.
 
-### Post: What most AI companions will not tell you
+### Post: Why SoulMap does not treat return visits as the goal
 
-Most AI companions are designed to become more important to you over time.
+An AI companion can become more central to a person's routine when its design
+rewards repeated interaction. SoulMap's documented response guidance takes a
+different position: support the user's autonomy and avoid encouraging reliance on
+the system.
 
-They learn your preferences. They build emotional continuity. They measure success
-by whether you return.
+The guidance is built around a practical question: does this response support the
+user's own judgment, or make the system more central?
 
-SoulMap is built the other way around.
-
-Every response is evaluated against one question: does this leave the user more
-connected to their own knowing, or more reliant on me?
-
-If you become less dependent on SoulMap over time, that is the success condition.
-Not a problem to fix.
+A user needing SoulMap less over time is consistent with the project's stated
+success principle. It is not a problem to fix.
 
 What would it mean to use a tool that is genuinely trying to make itself unnecessary?
 
@@ -53,7 +51,7 @@ destiny.
 What it will do is reflect your words back with enough clarity that you can hear
 what you already know.
 
-That is a smaller promise than most AI products make. It is also a more honest one.
+That is a deliberately bounded promise. It is also an honest one.
 
 ### Post: Why I built the anti-dependency rule in at the system level
 
@@ -128,9 +126,8 @@ reflective question or a quiet statement, not a call to action.
 
 ### Caption: The mirror
 
-Most tools try to become indispensable to you.
-
-SoulMap tries to make itself unnecessary.
+SoulMap is not meant to become indispensable. Its stated purpose is to support
+reflection without encouraging ongoing reliance.
 
 It is built to reflect what you already carry, not to give you something new
 to depend on.
@@ -182,20 +179,19 @@ You, more honest with yourself, more grounded, more yours.
 
 ### Tweet: Core stance
 
-Every AI companion on the market is optimized for you to return.
+A product can optimize for repeat visits. SoulMap's stated design principle is
+different: support user autonomy rather than ongoing reliance.
 
-SoulMap is optimized for you to need it less.
-
-One of these is easier to build a business around.
+That is a harder principle to measure than engagement, but it is the one this
+project chooses to prioritize.
 
 ### Tweet: Anti-dependency as architecture
 
-SoulMap is designed to interrupt dependency, not reward it.
+SoulMap's response guidance is designed to recognize dependency signals in context,
+state the system's limits when warranted, and encourage real-world support.
 
-If a user starts relying on it instead of their real relationships, SoulMap names that
-shift and redirects, warmly but without hesitation.
-
-This is not a disclaimer. It is a feature.
+This is not a claim that every interaction can be classified perfectly. It is a
+boundary the product is built to uphold.
 
 ### Tweet: On certainty
 
@@ -219,9 +215,9 @@ A smaller promise. A more honest one.
 
 ### Tweet: The real success metric
 
-The success condition for SoulMap is a user who needs it less over time.
-
-That is it. That is the metric.
+The intended success principle is a user who can rely more on their own judgment
+and less on the system over time. This is a design goal, not a currently measured
+product metric.
 
 ## Hashtag Guidelines
 
