@@ -25,6 +25,17 @@ A Markdown table may still be parsed when it intentionally supplies semantic phr
 
 The values in the Python configuration are not duplicated in the Markdown sources as the authoritative runtime configuration. Keep future edits on the correct side of this boundary.
 
+### Template response guidance
+
+`skills/meta/framework-template-map.md` is qualitative, AI-facing response-structure
+guidance. It is not the deterministic runtime template map. The executable output
+constraints are stored in `FRAMEWORK_TEMPLATE_ROWS` in
+`src/soulmap/runtime/knowledge/runtime_config.py` and loaded by
+`framework_template_source.py`. Change the Python rows when deterministic mode,
+length, or question constraints change; change the Markdown file when the qualitative
+response guidance itself changes.
+
+
 ## Audit command responsibilities
 
 ### `soulmap audit-knowledge`
