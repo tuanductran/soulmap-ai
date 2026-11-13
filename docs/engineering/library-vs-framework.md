@@ -44,7 +44,8 @@ and are not part of the SoulMap distribution. See the [Agent Skills overview](ht
 
 | Module | Role |
 | --- | --- |
-| `src/soulmap/runtime/knowledge/` | Markdown loaders that turn `skills/` content into runtime data structures. See its own docstring: Python here never hardcodes clinical/reflective content |
+| `src/soulmap/runtime/knowledge/` | Markdown loaders that turn `skills/` content into runtime data structures; Python here does not author semantic clinical/reflective knowledge | 
+| `src/soulmap/runtime/knowledge/runtime_config.py` | Python-owned executable weights, thresholds, priorities, policy switches, and deterministic runtime configuration |
 | `src/soulmap/runtime/guards/` | Response contract, Markdown contract, and resource sanitizer validation, shared by every framework's output |
 | `src/soulmap/runtime/routing/` | `framework_selector.py`, the single place that decides which framework/detector runs, and that always reaches `_apply_safety_gate` |
 | `src/soulmap/runtime/io/` | Shared text normalization and CLI payload helpers, used by every detector |
@@ -141,6 +142,6 @@ module.
 ## Related documentation
 
 - [`repo-contract.md`](repo-contract.md), the top-level structural source of truth
-- [`knowledge-architecture.md`](knowledge-architecture.md), the Markdown-first rule this boundary depends on
+- [`knowledge-architecture.md`](knowledge-architecture.md), the Markdown/Python ownership rule this boundary depends on
 - [`safety-architecture.md`](safety-architecture.md), the request pipeline the Library layer implements
 - [`known-limitations.md`](known-limitations.md), why crisis/dependency are Library and not Framework
