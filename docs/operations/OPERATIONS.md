@@ -89,7 +89,7 @@ Review these before approving release behavior:
 
 - [`../engineering/repo-contract.md`](../engineering/repo-contract.md)
 - [`../engineering/safety-enforcement-matrix.md`](../engineering/safety-enforcement-matrix.md)
-- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
+- [`../../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 - [`../integrations/README.md`](../integrations/README.md#compatibility-policy) when a change affects an active platform deployment
 
 Keep `uv run python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team
