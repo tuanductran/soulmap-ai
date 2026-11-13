@@ -14,21 +14,29 @@ implementation, docs, tests, packaging, and local AI workflow layers.
 
 Prefer the smallest correct change that makes the system more coherent.
 
-## Source-of-truth order
+## Source-of-truth boundaries
 
-When files appear to overlap, resolve them in this order:
+Use the authoritative source for the kind of information being changed:
 
-1. `SOULMAP.md`, baseline SoulMap doctrine and shipped package contract
-2. Shipped knowledge under `skills/` (`src/soulmap/runtime/` owns internal runtime contracts;
-   `templates/` is internal-only and not shipped)
-3. `docs/engineering/`, repository structure and maintenance contract
-4. `src/soulmap/runtime/` and `src/soulmap/devtools/`, executable behavior and tooling
-5. `tests/` and `evals/datasets/`, verification of observable behavior
-6. `.claude/rules/`, repo-local working rules
-7. `.claude/skills/`, repeatable maintainer workflows
-8. `.claude/prompts/`, reusable maintenance prompts
+1. `SOULMAP.md` defines baseline doctrine and the shipped package contract.
+2. `skills/` owns semantic knowledge and qualitative AI-facing guidance.
+3. `src/soulmap/runtime/` owns executable configuration and implementation:
+   normalization, routing, validation, safety enforcement, and deterministic constraints.
+4. `tests/` and `evals/datasets/` verify observable behavior and regression contracts.
+5. `docs/` explains the architecture, operations, and public integration workflows; it must
+   describe the implementation accurately but does not override executable behavior.
+6. `.claude/rules/`, `.claude/skills/`, and `.claude/prompts/` define repository-local
+   maintainer workflows only. They do not override product doctrine or runtime contracts.
+7. `templates/` is internal-only and is not shipped.
 
-If two layers conflict, preserve the higher layer and narrow or rewrite the lower one.
+Core principle: **Knowledge defines behavior. Python executes, normalizes, routes,
+validates, and enforces knowledge.** Do not duplicate semantic knowledge in Python or
+executable runtime values in Markdown as competing authoritative sources.
+
+For continuity, the runtime may use only prior-session context explicitly supplied by
+the host in the current invocation. SoulMap does not independently store or retrieve
+conversation history. The repository's default is no conversation collection or
+retention; external deployment operators own any independent data-processing decisions.
 
 ## Non-negotiable principles
 
