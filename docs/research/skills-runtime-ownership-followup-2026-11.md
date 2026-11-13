@@ -2,7 +2,7 @@
 
 ## Scope and source of truth
 
-- Audited ref: `main` at `5547b10022aabae09889f932e2c8bdf9fb3948e1`.
+- Audited ref: `main` at `2fd59638d3cc3568ce3572fae490fed8ee65fd2b`.
 - Current inventory: 75 Markdown files under `skills/**/*.md`.
 - This is a focused follow-up to the October 2026 file-by-file audit. It verifies the current ownership split for the main runtime contracts and the behavior of both ownership audit commands.
 - Evidence reviewed: `runtime_config.py`, the stage/orchestration/celebration knowledge loaders, `dependency_detector.py`, the corresponding Markdown sources, `audit/knowledge.py`, and `audit/ownership.py`.
