@@ -26,9 +26,9 @@ uv run soulmap dev              # verify and extract both
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
 
-Upload `dist/soulmap-ai.skill` through Claude's Skills interface. If the
-upload dialog requires a `.zip` extension, rename the archive without changing
-its contents.
+Claude's upload flow expects a ZIP file. Make a copy of
+`dist/soulmap-ai.skill` named `soulmap-ai-claude-upload.zip`, preserving its
+contents, then upload that ZIP through Claude's Skills interface.
 
 ## ChatGPT (Custom GPT, legacy transition)
 
