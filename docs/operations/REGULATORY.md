@@ -52,7 +52,7 @@ Under §1804, where the referenced age-assurance rules are not in effect, the op
 
 **SoulMap relevance:** the repository does not establish a deployed age-assurance mechanism or a minor-specific product contract capable of enforcing Article 48. The deployed host's use of history and memory must be reviewed against the prohibition on using personal or health information from a prior session or information acquired more than twelve hours earlier. The repository cannot establish whether the statutory definitions, exceptions, or territorial rules cover a particular deployment; that requires product-level legal and technical review.
 
-Primary sources: [New York Assembly - S9051-B / Chapter 368 of 2026 status and text](https://www.nyassembly.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=S09051&term=2025) · [New York Senate - Article 47](https://www.nysenate.gov/legislation/laws/GBS/A47)
+Primary sources: [New York Senate - codified General Business Law Article 48](https://www.nysenate.gov/legislation/laws/GBS/A48) · [New York Assembly - S9051-B / Chapter 368 of 2026 status and text](https://www.nyassembly.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=S09051&term=2025)
 
 ### Connecticut - Public Act 26-15
 
