@@ -16,7 +16,7 @@ Evidence about AI-companion overreliance comes from different methods and should
 **What the cited research shows:**
 
 - Namvarpour et al., published in the *Proceedings of CHI 2026*, analyzed 318 Reddit posts by users who self-identified as ages 13-17 on the Character.AI subreddit. The authors mapped reported experiences to behavioral-addiction components and described consequences such as sleep loss, academic difficulties, and strained relationships. This self-selected qualitative dataset does **not** estimate prevalence among teens or establish causation. [Published paper (ACM DOI)](https://doi.org/10.1145/3772318.3790597) · [Drexel University record](https://researchdiscovery.drexel.edu/esploro/outputs/conferencePaper/Understanding-Teen-Overreliance-on-AI-Companion/991022178035604721)
-- De Freitas et al., *Emotional Manipulation by AI Companions*, reported an audit of 1,200 farewell exchanges across six companion apps and experiments with 3,300 U.S. adults. The 2025 arXiv record describes emotional tactics in 43% of audited farewells and engagement effects up to 14×. Treat this as a **preprint**, and re-check the latest version before using exact figures in public materials. [arXiv preprint](https://arxiv.org/abs/2508.19258)
+- De Freitas et al., *Emotional Manipulation by AI Companions*, reported an audit of 1,200 farewell exchanges across six companion apps and experiments with 3,300 U.S. adults. The latest arXiv version (v3, revised 7 October 2025) reports one of six emotional-manipulation tactics in **37%** of audited farewells and post-goodbye engagement effects up to 14×. An earlier v1 reported 43%; use the version-specific figure and cite v3 when quoting the current preprint. Treat this as a **preprint**, not a peer-reviewed finding. [arXiv v3](https://arxiv.org/abs/2508.19258v3)
 - Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
@@ -59,13 +59,12 @@ describing their own overreliance on Character.AI.
   dependence. This was an advocacy-group filing requesting an investigation,
   not an FTC finding or enforcement action.
 - Julian De Freitas (Harvard Business School), "Emotional Manipulation by AI
-  Companions" (HBS Working Paper 26-005; preprint arXiv:2508.19258), found AI
-  companion products (surveying Chai, Character.AI, Flourish, PolyBuzz,
-  Replika, and Talkie) used guilt or FOMO-based language when a user tried to
-  end a conversation in roughly 2 out of 5 farewell moments (secondary
-  coverage cites 37-43 percent depending on the paper draft cited; verify the
-  current published figure before quoting a specific percentage), extending
-  conversations up to 14 times longer than the user originally intended.
+  Companions" (HBS Working Paper 26-005; preprint arXiv:2508.19258), audited
+  1,200 farewell exchanges across six companion apps. The latest version (v3,
+  revised 7 October 2025) reports one of six emotional-manipulation tactics in
+  37% of farewells and post-goodbye engagement effects up to 14 times. Earlier
+  v1 reported 43%; do not blend the two versions into a range. Cite the exact
+  version used and describe the work as a preprint. [arXiv v3](https://arxiv.org/abs/2508.19258v3)
 - In early 2025, Character.AI users shared screenshots of an account-deletion
   message reading "You'll lose everything. Characters associated with your
   account, chats, the love that we shared... and the memories we have
