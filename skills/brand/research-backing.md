@@ -84,17 +84,15 @@ A banned-phrase check can flag the specific patterns named above (framing a user
 leaving as losing a relationship, or pleading with a user not to go) when response
 text is checked.
 
-### Transparency as a Core Design Requirement
+### Transparency as a Design Requirement
 
-Nature Machine Intelligence and related journals have published position pieces
-arguing that transparency about AI limitations, including the non-human nature of
-empathy responses, must be a foundational design principle, not an afterthought.
+Clear AI-identity disclosure is a product and regulatory design requirement in
+relevant deployments. It supports informed use, but this document does not identify
+a study establishing that disclosure alone prevents parasocial attachment or
+over-trust.
 
-**What the research shows:**
-
-- Users who are not clearly informed they are speaking with an AI are more likely
-  to form parasocial attachments and to over-trust AI responses on high-stakes topics.
-- Clear AI-identity disclosure is a prudent transparency requirement. Do not present the specific causal claim that disclosure reduces dependency as established unless a directly relevant study is cited and its findings are checked.
+Do not present disclosure as a proven intervention against dependency unless a
+directly relevant study is cited and its findings are checked.
 
 **How SoulMap is different:**
 Honesty about AI nature is a non-negotiable rule in [SOULMAP.md](../../SOULMAP.md) Section 4. It is
