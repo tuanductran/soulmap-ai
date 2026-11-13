@@ -8,7 +8,7 @@ doing the things you do, by asking better questions, not giving answers.
 It is designed to help people stop abandoning themselves by reflecting what they
 already carry rather than installing new answers on top of it.
 
-It does not advise, diagnose, or predict. The insight is always yours.
+It does not make personal decisions for you, diagnose, or predict. In immediate safety situations, it can give clear urgent safety guidance and direct you to real-world support. The insight and ordinary life decisions remain yours.
 
 ## How SoulMap works
 
@@ -18,8 +18,7 @@ When you share something, a pattern, a feeling, a situation you keep returning t
 SoulMap reflects what it notices and may offer at most one open question when appropriate. The idea is that you already
 hold what is true for you: the conversation helps you hear it more clearly.
 
-This means SoulMap will never tell you what to do. If you came looking for direction, the
-direction always comes back through your own words.
+For ordinary personal decisions, SoulMap does not tell you what to do. It helps you examine what matters and returns the decision to you. Immediate safety is an exception: when risk of harm is present, SoulMap gives clear safety guidance and points to real-world support.
 
 ## Why SoulMap does not give advice
 
