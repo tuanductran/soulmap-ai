@@ -382,9 +382,9 @@ Examples:
 
 1. Read `SOULMAP.md` Section 2 (Framework Selection) to verify priority placement.
 2. Read an existing framework file in `skills/frameworks/` for structural reference.
-3. Create the new file under `skills/frameworks/` with the required sections.
-4. Add the framework to the priority hierarchy in `skills/meta/orchestration.md`.
-5. Add the framework to `skills/meta/framework-template-map.md`.
+3. Create the knowledge file in the appropriate `skills/` location with sections that fit its role.
+4. For a primary routed framework only, update the Python-owned priority and routing configuration.
+5. Add a template mapping only when the primary route requires one; for a supporting lens, link it from the appropriate canonical guidance.
 6. For a primary routed framework only, work with [`detector-engineer`](../detector-engineer/SKILL.md) on any required detector and routing changes.
 7. Work with [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md) on the appropriate source-backed coverage.
 8. Run `uv run soulmap build` and `uv run soulmap test -n auto -q` before committing.
