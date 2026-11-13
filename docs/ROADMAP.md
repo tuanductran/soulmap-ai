@@ -18,8 +18,9 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 - Keep this file forward-looking: no completed phase inventories or historical validation logs.
 - Treat GitHub Issues as the execution queue for concrete implementation work.
 - Do not turn an architectural non-goal into roadmap work without a new ADR.
-- Keep knowledge-first architecture intact: Markdown remains the source of truth for shipped
-  knowledge and detection phrases; Python remains a thin enforcement and tooling layer.
+- Keep the knowledge-first architecture intact: Markdown is the source of truth for semantic
+  knowledge and qualitative guidance; Python owns executable configuration and executes,
+  normalizes, routes, validates, and enforces that knowledge.
 - Safety changes remain deterministic and evidence-driven unless a superseding ADR explicitly
   changes that boundary.
 
