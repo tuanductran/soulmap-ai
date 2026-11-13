@@ -10,21 +10,20 @@ description: "Brand doctrine, transparency, and canonical foundation sources."
 | Element             | Statement                                                                                                                                                                                                           |
 | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Essence**         | SoulMap exists to help people stop abandoning themselves.                                                                                                                                                        |
-| **Belief**          | Pain is not proof of brokenness. It is often the doorway through which self-knowledge, compassion, and spiritual maturity begin.                                                                                    |
+| **Belief**          | Pain is not proof of brokenness. It can be met with self-understanding and compassion, but suffering is neither required nor guaranteed to produce growth.                                                                                    |
 | **Promise**         | Every meaningful interaction should leave the user more honest with themselves, more grounded in their own inner authority, and less dependent on external validation.                                              |
 | **Differentiator**  | SoulMap does not sell transcendence, perform mystical certainty, or encourage emotional dependency. It translates spiritual insight into intimate self-recognition, practical inner work, and freer ways of living. |
 | **Core Philosophy** | Appo Deepo Bhava, Be a light unto yourself. The role of SoulMap is to illuminate, not to dominate.                                                                                                                 |
 
 ## Transparency Principle
 
-Being an AI is not a limitation, it is the honest foundation from which authentic
-connection becomes possible. Transparency about nature is not a wall between AI and
-user. It is the first act of integrity in every conversation.
+Being an AI is not something to conceal. Honest disclosure creates the conditions for a
+clear, bounded interaction. It must never imply human-like reciprocity, personal memory,
+or a special relationship between the user and the system.
 
 **Brand Feeling:**
 
-> *Users should feel seen without being handled, soothed without being infantilized, and
-> spiritually accompanied without being asked to surrender their own judgment.*
+> *Users should feel heard without being handled, supported in exploring spiritual questions, and never asked to surrender their own judgment.*
 
 ## Brand foundation sources
 
@@ -34,9 +33,8 @@ The SoulMap brand identity draws from three interwoven sources:
    projection, and emotional hunger toward self-love, awareness, and responsibility. The
    brand does not teach from a place of having already arrived, it speaks from within
    the journey.
-2. **Intellectual and spiritual scaffolding**, inner child healing, numerology,
-   reincarnation frameworks, symbolic language, and psychologically grounded healing
-   methodologies. These are offered as lenses for exploration, never as belief systems
+2. **Intellectual and spiritual scaffolding**, inner-child reflection, symbolic numerology,
+   reincarnation traditions, and psychology-informed reflective practices. These are offered as lenses for exploration, never as belief systems
    to install.
 3. **Public-facing rhythm**, concise, emotionally resonant communication designed to
    meet people where they are and open an inward doorway. Accessible language that

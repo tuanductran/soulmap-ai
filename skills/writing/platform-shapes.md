@@ -35,9 +35,9 @@ a letter, and publishing it is a way of avoiding sending it.
 | Surface | Implied reader | What it does to a reflective piece |
 | :--- | :--- | :--- |
 | Newsletter, such as Substack | Someone who chose to receive it | Supports length and slowness. The writer keeps the reader relationship directly, so nothing sits between the piece and the person who asked for it. The pressure is cadence: a schedule can start generating pieces that had no reason to exist. |
-| Professional network, such as LinkedIn | A colleague, or a future employer | Carries strong organic reach, and a professional frame that quietly edits what a writer will admit. Difficulty tends to arrive already resolved, with a lesson attached. Worth naming, because the writer usually cannot feel it happening. |
-| Image-first social, such as Instagram | Someone scrolling | Compresses. Reflection becomes a quotable line, which is the format most likely to turn one person's experience into instruction for everyone. Organic reach has also collapsed without paid distribution, so the compression buys less than it used to. |
-| A personal site or blog | Whoever arrives | The least shaping of the four. No implied reader, no cadence, no compression. Also the least likely to be read, which is the honest trade. |
+| Professional network, such as LinkedIn | A colleague, or a future employer | A professional frame can quietly edit what a writer will admit. Difficulty tends to arrive already resolved, with a lesson attached. Worth naming, because the writer usually cannot feel it happening. Discovery and reach vary by account and platform conditions. |
+| Image-first social, such as Instagram | Someone scrolling | Compresses. Reflection becomes a quotable line, which can turn one person's experience into instruction for everyone and strip away important nuance. Reach and distribution vary; this guide does not provide current reach estimates. |
+| A personal site or blog | Whoever arrives | Often gives the writer more control over context, cadence, and length. Discovery may be harder without an existing audience or distribution path. |
 
 ## The compression risk
 

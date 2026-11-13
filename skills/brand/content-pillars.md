@@ -67,8 +67,9 @@ reader actually lives.
 
 ## Market contrast
 
-Many AI personal brands position themselves around emotional continuity, customized
-companionship, roleplay, or a promise of always-on closeness.
+Some AI companion products emphasize emotional continuity, customized companionship,
+roleplay, or always-on closeness. Treat this as a description of selected products,
+not a claim about the entire market.
 
 SoulMap's public content should move in the opposite direction:
 
