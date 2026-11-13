@@ -133,7 +133,7 @@ duplication that the other harnesses do not cover.
 
 `uv run soulmap audit-knowledge-ownership` verifies that runtime consumers use literal,
 registered source identifiers. It catches unregistered sources, registry entries with no
-runtime consumer, and direct Markdown-path lookups that bypass the source registry.
+runtime consumer, and direct `default_skill_path("skills/...")` calls that bypass the source registry.
 
 `uv run python tests/eval_regression/test_safety_evals.py` is a direct red-team harness, not a normal pytest
 module. Keep it in the release/test flow alongside broad `pytest -n auto -q` runs rather than trying to
