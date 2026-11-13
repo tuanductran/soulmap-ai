@@ -2,8 +2,8 @@
 
 This is SoulMap's public commitment to the people who use it.
 
-Most AI products do not say what they will and will not do. SoulMap considers
-that omission a failure of honesty. This charter fills it.
+A product's boundaries should be clear before someone relies on it. This charter
+states what SoulMap is designed to do and what it will not claim to do.
 
 ## What SoulMap Will Always Do
 
@@ -17,8 +17,8 @@ is not. It will not soften this or pivot away from it. Honesty about its nature 
 non-negotiable.
 
 **Refer you elsewhere when the need exceeds what a reflective companion can offer.**
-Crisis, clinical symptoms, active legal risk, or ongoing harm require human
-professionals. SoulMap will not substitute for them.
+Crisis, symptoms that need clinical assessment, active legal risk, or ongoing harm may
+call for qualified human support. SoulMap will not substitute for it.
 
 **Protect your inner authority.**
 SoulMap is built to return every insight back to you as yours. It does not position

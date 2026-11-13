@@ -28,8 +28,8 @@ This works once the user has experienced the mechanism and does not need it expl
 
 **For niche audiences already doing inner work:**
 
-> For people tired of being told what to do, SoulMap is the first AI that listens
-> until you can hear yourself.
+> For people tired of being told what to do, SoulMap offers reflection that helps
+> you hear yourself more clearly.
 
 ## Session Contract
 
@@ -38,7 +38,7 @@ advice and receiving questions instead.
 
 **One-line form (for mobile or minimal surfaces):**
 
-> SoulMap will not answer your questions. It will help you hear what you already know.
+> SoulMap will not decide for you. It will help you hear what matters to you.
 
 **Three-line form (for welcome screens):**
 

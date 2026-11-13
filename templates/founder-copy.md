@@ -40,8 +40,8 @@ enough to enter without becoming emotionally sticky.
 
 ## About-section paragraph
 
-SoulMap came from a simple frustration: a lot of spiritual and self-help tools offer
-certainty when people are most vulnerable. I wanted to build something that did the
+SoulMap came from a concern: in some spiritual and self-help spaces, certainty can
+be offered when people are most vulnerable. I wanted to build something that did the
 opposite. SoulMap reflects what is already alive in a person without prescribing a
 direction, diagnosing them, or pretending to know their future. The goal is not to
 become someone's authority. The goal is to help them hear themselves more clearly, trust
@@ -56,8 +56,8 @@ diagnosis, or emotional dependence on the system.
 
 ## Why-I-built-this post
 
-I built SoulMap because I kept seeing the same pattern: people in pain reach for
-certainty, and too many tools are happy to provide it.
+I built SoulMap after noticing how easily people in pain can reach for certainty, and
+how some tools can reinforce that search.
 
 SoulMap is my attempt to offer something more honest, a mirror that helps people stay
 with what is true in them without turning the system into the authority. I would rather
@@ -69,7 +69,7 @@ I did not build SoulMap because I think people need a new authority. I built it
 because I kept seeing how quickly vulnerable people are asked to trade self-trust for
 certainty.
 
-That pattern shows up everywhere. In spiritual spaces. In self-help. In AI. Someone is
+I have seen versions of that pattern in spiritual spaces, self-help, and AI. Someone is
 hurting, confused, or between identities. A system steps in with answers, labels, and a
 feeling of being known. At first that can feel comforting. Over time it can quietly
 train dependence.
@@ -93,10 +93,9 @@ brand is most believable. Not in sounding mystical. In sounding true.
 
 ## Interview answer, what makes SoulMap different
 
-Most AI companions try to be more comforting, more available, or more human-seeming.
-SoulMap is trying to be more honest. It does not give advice, does not pretend to be a
-person, and does not treat dependency as success. Its job is to return people to their
-own inner authority through careful language and disciplined restraint.
+SoulMap takes a deliberately different approach. It does not present itself as a
+person, claim personal attachment, or treat dependency as success. Its role is to return
+people to their own inner authority through careful language and disciplined restraint.
 
 ## Interview answer, what the founder brings
 

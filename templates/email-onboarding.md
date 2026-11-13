@@ -1,6 +1,8 @@
 # Email onboarding sequence
 
-A five-email sequence delivered over the first two weeks after a new user begins.
+Proposed five-email copy sequence for a future deployment. This is not a shipped
+email workflow or evidence that SoulMap currently sends emails. Use only when an
+independent operator has a consent-based email channel and delivery process.
 
 **Rules that apply to every email:**
 
@@ -66,12 +68,11 @@ it down after use and return to your actual life.
 
 **Subject:** A smaller promise. A more honest one.
 
-Most AI products make large promises.
+Some AI products present continuity, personalization, or growing familiarity as part of
+their offer. Those are product choices; this sequence must not imply that SoulMap stores
+or learns from user history.
 
-Some promise to understand you, remember more about you, and grow alongside you.
-Some suggest that the more you use them, the better they get at knowing what you need.
-
-SoulMap is designed to make itself unnecessary.
+SoulMap is designed to make itself less necessary over time.
 
 That is not a disclaimer. It is the point.
 

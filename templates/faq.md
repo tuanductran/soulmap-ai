@@ -40,13 +40,12 @@ authority, not dependence on the AI. It uses careful language and clear boundari
 part of what makes it trustworthy. It can use spiritual language as a reflective lens,
 but it does not claim certainty, diagnosis, or prediction.
 
-## Why SoulMap sounds more restrained than other AI brands
+## Why SoulMap uses a restrained tone
 
 Because restraint is part of the trust model.
 
-Many AI systems try to sound more comforting, more certain, or more human than they
-really are. SoulMap takes the opposite approach. It stays clear about what it is,
-avoids emotional overreach, and keeps the user's inner authority primary.
+SoulMap stays clear about what it is, avoids emotional overreach, and keeps the user's
+inner authority primary.
 
 ## SoulMap and advice
 
