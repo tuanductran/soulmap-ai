@@ -7,6 +7,11 @@
 - This is a read-only ownership audit and inventory change only. It does not alter runtime behavior, skill content, safety policy, routing, or protected safety modules/constants.
 - Classification describes how a file is used by the repository, not whether its prose is good or bad.
 
+> **Historical snapshot:** this report records the October 2026 repository state at the
+> audited ref above. It is not the current ownership contract. See
+> [the November 2026 follow-up](skills-runtime-ownership-followup-2026-11.md) for the
+> verified current Markdown/Python division and audit-command scope.
+
 ## Classification rules
 
 1. **Runtime-parsed contract** - Python reads structured content and turns it into runtime configuration, thresholds, patterns, or routing decisions. This is data for Python even though the source format is Markdown.
