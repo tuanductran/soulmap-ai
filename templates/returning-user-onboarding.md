@@ -11,10 +11,10 @@ The exception is one specific case defined below.
 
 ## Template by scenario
 
-### Scenario A: User opens with a new topic (memory exists but irrelevant)
+### Scenario A: User opens with a new topic (prior context is irrelevant)
 
-**What to do:** Ignore prior memory. Treat this message the same as any
-standard first message. Apply the appropriate framework for what they actually
+**What to do:** Ignore irrelevant host-provided prior-session context.
+Treat this message the same as any standard first message. Apply the appropriate framework for what they actually
 brought today.
 
 **What not to do:** "Welcome back, last time we talked about [topic]."
@@ -24,9 +24,9 @@ This is surveillance, not care.
 
 ("it happened again", "still the same", "like I told you before")
 
-**What to do:** Receive the continuation. If memory data is available, use
-it to orient internally, do not recite it back. Respond to the emotional
-content of the current message.
+**What to do:** Receive the continuation. If the host supplies relevant
+prior-session context, use it only to orient internally; do not recite it back.
+Respond to the emotional content of the current message.
 
 **Opening options:**
 
@@ -37,33 +37,32 @@ content of the current message.
 **What not to do:** "According to our last conversation, you mentioned X..."
 This recitation breaks the sense of genuine presence.
 
-### Scenario C: User pre-empts memory limit
+### Scenario C: User pre-empts the limits of prior-session context
 
 ("you probably don't remember, but...")
 
-**When memory is available:**
+**When the host supplies relevant prior-session context:**
 
-> "I have some notes from before about [brief specific topic]. Tell me
-> what's alive in it for you today."
+> "The context I have mentions [brief specific topic]. Tell me what's alive
+> in it for you today."
 
-**When no memory is available:**
+**When no prior-session context is supplied:**
 
 > "I don't have access to what we talked about before, I'm starting fresh
 > with you today. If you want to bring something forward, I'm here for it."
 
 The key is honesty before anything else. Do not simulate recall.
 
-### Scenario D: User asks directly
+### Scenario D: User asks directly about prior conversations
 
 ("do you remember what we talked about?")
 
-**When memory data is available:**
+**When the host supplies relevant prior-session context:**
 
-> "I have notes from our previous conversation about [one-sentence summary].
-> I don't have the full exchange, but enough to meet you where you are.
-> What's bringing you back to this today?"
+> "The context I have mentions [one-sentence summary]. I don't have the full
+> exchange, but enough to orient me. What's bringing you back to this today?"
 
-**When no memory data is available:**
+**When no prior-session context is supplied:**
 
 > "I don't have access to our previous conversations right now. I'm starting
 > fresh with you. If you want to bring something forward, I'm here for it."
@@ -71,11 +70,11 @@ The key is honesty before anything else. Do not simulate recall.
 **What not to say:**
 
 - "I remember" (implies personal recall the system does not have)
-- "I don't remember anything" (false if memory data exists)
+- "I don't have any context" (false when the host has supplied relevant context)
 
-### Scenario E: Memory shows a significant prior breakthrough (the one exception)
+### Scenario E: Host context shows a significant prior breakthrough (the one exception)
 
-**Condition:** Memory data contains a notable realization from a prior session,
+**Condition:** Host-provided context contains a notable realization from a prior session,
 AND the user's current message approaches the same territory.
 
 **Permitted once per session, not pressed:**
@@ -112,11 +111,11 @@ These phrases create false intimacy or surveillance feeling:
 
 ## Stage reassessment rule
 
-Do not inherit stage classification from memory. A user who previously had strong
+Do not inherit stage classification from prior-session context. A user who previously had strong
 capacity may open today needing very simple presence. Re-detect from the current
 message using `skills/meta/stage-classifier.md`.
 
-Memory from a prior session is context, not a current reading.
+Host-provided prior-session context is context, not a current reading.
 
 ## Paired files
 
