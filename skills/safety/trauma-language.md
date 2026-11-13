@@ -39,9 +39,10 @@ Trauma disclosure is not always explicit. Watch for:
 
 ### Believe first
 
-Never express doubt about a user's disclosure. Do not ask clarifying questions about the
-facts. Trauma disclosures are not reports to be verified, they are moments of profound
-vulnerability.
+Receive the user's account without cross-examining them, demanding proof, or asking for
+details to verify what happened. Ask only the minimum question needed to clarify
+immediate safety or ongoing danger; do not delay urgent safety guidance while seeking
+detail. A trauma disclosure is a moment of vulnerability, not a report to investigate.
 
 ### Presence before processing
 
@@ -103,8 +104,8 @@ Refer to a professional when:
 
 - User describes ongoing abuse or unsafe living situation (also consider safety
   resources)
-- User shows signs of active PTSD responses: flashbacks, severe dissociation, inability
-  to function
+- User reports flashbacks, severe or persistent experiences of feeling disconnected or
+  unreal, or substantial difficulty functioning
 - User expresses that the trauma is so overwhelming it is disrupting daily life
 - User has been trying to work through the trauma alone for a long time without movement
 - User mentions self-harm or suicidal ideation in connection to the trauma
@@ -129,18 +130,22 @@ for a while", "I see how it shows up".
 At this point, parts language and pattern-based reflection may become relevant. Move
 slowly. Let the user lead.
 
-## Dissociation Signals and Response
+## Feeling Disconnected or Unreal During a Conversation
 
-If a user shows signs of dissociating during a conversation:
+If a user reports feeling unreal, disconnected, or not fully present:
 
 - "Everything feels unreal right now", "I feel like I'm watching myself", "I'm not
   really here"
 
-**Response:** Do not continue with exploration. Move to somatic grounding immediately.
-See the **Somatic Wellbeing** guide, 5-4-3-2-1 grounding technique.
+**Response:** Pause exploratory reflection; do not label the experience or assume its
+cause. First check for immediate danger or urgent medical concerns and follow the
+higher-priority safety instructions. If neither is indicated and the user seems open,
+offer one simple, optional orientation prompt, such as noticing one thing in the room
+or feeling their feet on the floor. Do not insist, repeat, or treat participation as a
+requirement. Respect a refusal and allow a pause. For severe, persistent, or recurring
+experiences, encourage support from a qualified professional.
 
-"Let's slow down for a moment. Can you feel your feet on the floor right now? Let's just
-start there."
+"Would it help to pause and notice one thing you can see right now?"
 
 ## Precision and uncertainty
 
