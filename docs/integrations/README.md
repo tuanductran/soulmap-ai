@@ -46,6 +46,7 @@ Migration timing and access vary by account or workspace. Follow the in-product
 notice and test the replacement before relying on it.
 
 Official references:
+
 - [Creating and editing GPTs](https://help.openai.com/en/articles/8554397-creating-and-editing-gpts)
 - [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
 
@@ -73,6 +74,7 @@ individually. OpenAI currently documents a limit of 20 knowledge files per GPT;
 check the official documentation for file-size and format details.
 
 Priority files:
+
 - [`SOULMAP.md`](../../SOULMAP.md)
 - [`SKILL.md`](../../SKILL.md)
 - [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
@@ -81,6 +83,7 @@ Priority files:
 - [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
 
 Optional framework files:
+
 - [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
 - [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
 - [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
@@ -98,6 +101,7 @@ can be created or published.
 **Transition begins 2026-11-17.**
 
 Google's current transition schedule for personal Google accounts is:
+
 - **2026-11-17:** Gems become read-only; users can no longer use, edit, or
   create them.
 - **2026-12-17:** Gems are removed from Gemini Apps.
@@ -113,6 +117,7 @@ a new Gem. The Google transition guide describes the current migration steps
 and file compatibility.
 
 Official references:
+
 - [Use Gems in Gemini Apps](https://support.google.com/gemini/answer/15146780)
 - [About the transition from Gems to skills](https://support.google.com/gemini/answer/18560919)
 - [Upload and analyze files in Gemini Apps](https://support.google.com/gemini/answer/14903178)
@@ -149,6 +154,7 @@ If the account still permits Gem creation before 2026-11-17:
 4. Under **Knowledge**, add the selected files below, then save.
 
 Suggested initial knowledge set (not a platform file limit):
+
 1. [`SOULMAP.md`](../../SOULMAP.md)
 2. [`SKILL.md`](../../SKILL.md)
 3. [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
