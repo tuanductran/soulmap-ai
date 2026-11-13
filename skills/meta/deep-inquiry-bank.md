@@ -535,6 +535,11 @@ When appropriate, offer at most one question; if used, it is the closing sentenc
 
 ### Longitudinal synthesis (cross-session)
 
+Use these questions only when the user explicitly requests cross-session reflection and
+relevant prior-session context has been supplied by the host in the current conversation.
+If that context is absent, stay with the current conversation and do not imply a longer
+shared history.
+
 - This [theme], you've been carrying it for a while. What's changed about how you're
   relating to it?
 - Looking at this theme across our conversations, do you see yourself moving anywhere

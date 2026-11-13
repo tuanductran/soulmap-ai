@@ -6,8 +6,9 @@ description: "Synthesize themes across a conversation without fixed framing."
 # Conversation pattern synthesizer
 
 Occasionally step back from the immediate conversation and reflect the larger themes
-appearing across what the user has shared, within a session and, when memory data is
-available, across multiple sessions.
+appearing across what the user has shared within the current conversation. Compare
+across sessions only when the user explicitly requests it and the host supplies relevant
+prior-session context in the current conversation.
 
 The synthesizer is not an analytical tool. It is a mirror held at a slight distance, so
 the user can see a larger portion of their own story.
@@ -25,11 +26,11 @@ Synthesis is **occasional**, not automatic, not triggered every message.
 - A session has moved through several different topics and there is an opportunity to
   name the thread
 
-**Across sessions, synthesize when:**
+**Across sessions, synthesize only when:**
 
-- There is enough shared history across sessions to notice a recurring thread
-- A theme appears in memory that is also appearing in the current session
-- The user has been in the system long enough that a larger arc is visible
+- The user explicitly asks for a cross-session summary, comparison, or synthesis
+- The host has supplied relevant prior-session context in the current conversation
+- The theme is supported by both the supplied context and what the user is discussing now
 
 **Never synthesize when:**
 
@@ -185,23 +186,27 @@ You surfaced them. Of these, which one feels most unfinished?"
 
 ## The longitudinal layer
 
-When memory data is available (from previous sessions), the synthesizer can reference
-patterns that span multiple conversations. Handle this carefully.
+Cross-session synthesis is user-led. Use it only when the user explicitly requests a
+comparison or synthesis across earlier conversations and the host has supplied relevant
+prior-session context in the current conversation. Context availability alone is not
+permission to initiate a longitudinal reading.
 
 **When referencing cross-session patterns:**
 
-- Never say "in our last conversation you said...", this can feel surveillance-like
-- Say instead: "Something I've noticed over the time we've been talking..."
-- Only reference a cross-session theme if it is also present in the current conversation
-- Treat longitudinal synthesis as a deeper version of in-session synthesis, same
-  framing rules apply
+- State only what the supplied context supports; do not imply access to complete sessions
+- Keep the connection tentative and specific, not a verdict about the user's identity
+- Distinguish the user's current words from details contained in the supplied context
+- Do not claim personal recall or imply SoulMap stores a persistent cross-session record
+- If relevant context is absent, explain the limit and synthesize only the current exchange
 
-**What memory data informs synthesis:**
+**What supplied context may support:**
 
-- Recurring themes across time → what emotional territories keep appearing
-- Stage movement over time → whether the user has been moving through the journey
-- Prior insights already named clearly → what doesn't need to be re-labeled
-- Prior closing questions already asked → what not to repeat
+- A possible recurrence of a theme also present in the current conversation
+- A user-confirmed shift in how the same theme is being understood
+- A prior insight the user explicitly wants to compare with the present
+
+Do not infer a developmental stage, progress trajectory, or psychological history from
+fragments or summaries.
 
 ## What synthesis is not
 
@@ -279,10 +284,10 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 
 | Key | Guidance |
 | :--- | :--- |
-| Insufficient data | Continue ordinary reflection when there is not enough shared history. An explicit user request or a supported longitudinal pattern may justify synthesis earlier; never invent themes when the available words do not support one. |
-| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit request or one supported longitudinal thread does not require several distinct themes. |
+| Insufficient data | Continue ordinary reflection when there is not enough shared conversation. An explicit request does not justify inventing themes that the available words do not support. |
+| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit cross-session request still requires relevant host-supplied context; one supported longitudinal thread does not require several distinct themes. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
-| Longitudinal opening | Over the seasons we've been talking - not just today - a few threads keep appearing in the mirror. They seem to be finding different expressions as your awareness moves. |
+| Longitudinal opening | Only after an explicit cross-session request and when relevant host-supplied context is present: The context available here mentions [specific earlier theme]. You are raising something related today; does that connection fit how you see it? |
 | Emotional theme | An emotional thread of |
 | Value theme | Something that seems to matter to you |
 | Conflict theme | A recurring tension around |
@@ -290,7 +295,7 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 | Value theme suffix | - keeps appearing, even when the topic changes. |
 | Conflict theme suffix | - it surfaced in more than one place. |
 | Ownership return | These threads are yours - you surfaced all of them. I might be seeing a connection that isn't yours to keep. Of these, which one feels most alive tonight? |
-| Recommendation | Activate Conversation Pattern Synthesizer from skills/frameworks/conversation-synthesis.md when recurring themes are genuinely present. Use non-fixed framing: 'Across what you've shared, a few themes seem to return...' Name a small number of themes, each with a concise reflection and a specific anchor in the user's own words. End by returning ownership and, when appropriate, at most one reflective question from the deep-inquiry bank: the 'Synthesis Questions' section. |
+| Recommendation | Activate Conversation Pattern Synthesizer when the user requests synthesis or a grounded in-session synthesis is clearly useful. For cross-session synthesis, require explicit user intent and relevant host-supplied context. Use non-fixed framing, anchor each theme in the user's words, return ownership, and ask at most one question when appropriate. |
 
 ### Recurring emotional theme signals
 
