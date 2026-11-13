@@ -42,8 +42,8 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_fields,
 )
-# The dependency threshold is loaded from the canonical Markdown source:
-# skills/safety/dependency-detection.md
+# Semantic signal phrases are loaded from the registered Markdown source.
+# Executable scoring weights and thresholds are owned by Python runtime config.
 
 
 def analyze_dependency(conversation_messages: list) -> dict:
@@ -140,16 +140,22 @@ if recent_messages_show_pattern(messages):
 
 Thresholds define when a detector's score triggers a framework override.
 
-For knowledge-first detectors, thresholds are authored in the detector's registered
-Markdown runtime source. Python loads those values and applies them; it must not create
-a second threshold source in src/soulmap/runtime/config/.
+Semantic signal phrases, regex patterns, and qualitative response guidance belong in the
+registered Markdown source. Executable scoring weights, thresholds, numeric ceilings,
+recency multipliers, and routing priorities belong in Python-owned runtime configuration
+under `src/soulmap/runtime/knowledge/runtime_config.py`.
+
+Before tuning a detector, inspect its Python configuration, loader, tests, and evals.
+Do not add numeric scoring values to Markdown or duplicate a Python-owned value in a
+Markdown table. Update Markdown only when the semantic signals or qualitative guidance
+change.
 
 ### Tune thresholds based on evals
 
 1. Run `uv run soulmap eval-groups` to see which tests fail
-2. If detector scores are too high or low, adjust the threshold in the detector's canonical Markdown source
+2. If detector scores are too high or low, adjust the relevant Python-owned runtime configuration value and its validation tests
 3. Re-run evals to verify the fix
-4. Document threshold rationale in the runtime contract section
+4. Keep Markdown focused on the meaning of the signal and the response guidance; record executable configuration rationale alongside the Python configuration and tests
 
 ## Scoring best practices
 
@@ -325,9 +331,9 @@ for norm_msg in normalized_messages:
 ## Workflow
 
 1. Read `.claude/rules/detector-development.md` before writing any code.
-2. Read the detector's registered Markdown runtime source first; extend its canonical knowledge rather than duplicating semantic signals or thresholds in Python.
+2. Read the detector's registered Markdown runtime source for semantic signals and qualitative guidance; read the Python runtime configuration for executable weights and thresholds.
 3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
-4. Add detector knowledge to the registered Markdown runtime source; Python should only load and enforce it.
+4. Keep semantic signals in Markdown and executable scoring or routing configuration in Python. Do not duplicate either source of truth.
 5. Integrate the detector call into `src/soulmap/runtime/routing/framework_selector.py` at the correct priority.
 6. Add eval cases to `evals/datasets/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
 7. Run `uv run soulmap test -n auto -q` and `uv run soulmap eval-groups` before pushing.
@@ -337,7 +343,7 @@ for norm_msg in normalized_messages:
 A detector is done when:
 
 - It preserves the detector-specific return contract established by the implementation and tests
-- Semantic signals and thresholds remain in the registered Markdown runtime source; Python configuration is used only for values explicitly owned by runtime configuration
+- Semantic signals and qualitative guidance remain in Markdown; executable scoring weights, thresholds, and routing settings remain in Python-owned configuration
 - It is called at the correct priority in `src/soulmap/runtime/routing/framework_selector.py`
 - At least one eval case in `evals/datasets/groups.json` covers its primary signal
 - `uv run soulmap test -n auto -q` passes with no regressions
