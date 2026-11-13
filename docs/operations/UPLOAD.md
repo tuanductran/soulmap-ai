@@ -36,9 +36,11 @@ standard skill folder.
 Claude-oriented archive containing the same core knowledge files as the standard ZIP,
 plus the full `.claude-plugin/` directory preserved as-is.
 
-Use this when you need to keep Claude plugin metadata bundled with the knowledge files.
-Treat `.claude-plugin/` as opaque metadata during packaging and upload. Do not edit,
-rewrite, or flatten it as part of the build.
+Use this only when a consumer explicitly expects `.claude-plugin/` metadata. Do not
+assume this archive is the direct upload file for Claude.ai Custom Skills: that upload
+requires a ZIP containing a named Skill directory, with the Skill entrypoint inside it.
+Treat `.claude-plugin/` as opaque metadata during packaging; do not edit, rewrite, or
+flatten it as part of the build.
 
 For the local packaging-only role of this folder, see
 [`.claude-plugin/README.md`](../../.claude-plugin/README.md).
@@ -99,20 +101,33 @@ custom uploads on Team and Enterprise workspaces.
 
 ### Custom Skills
 
-1. Build the artifacts with `uv run soulmap build`.
-2. Use `dist/soulmap-ai.skill`, which preserves the Claude plugin metadata.
-3. Claude's upload flow expects a ZIP file. Rename a copy of the `.skill` archive to
-   `soulmap-ai-claude-upload.zip` without changing its contents.
-4. In Claude, open **Customize → Skills**, select **+ → + Create skill → Upload a skill**,
-   and upload the ZIP file.
-5. Enable the uploaded Skill in the Skills list.
+1. Build the standard archive with `uv run soulmap build`.
+2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
+   root `SKILL.md` frontmatter.
+3. Extract the contents of `dist/soulmap-ai.zip` into that directory. The staged
+   layout must be `soulmap-ai/SKILL.md`, `soulmap-ai/SOULMAP.md`, and
+   `soulmap-ai/skills/`.
+4. Create a ZIP containing the `soulmap-ai/` directory as its single top-level entry.
+   Do not ZIP the directory's contents directly: Claude rejects archives with the
+   Skill files placed at the ZIP root.
+5. In Claude, open **Customize → Skills**, select **+ → + Create skill → Upload a skill**,
+   and upload the newly packaged ZIP.
+6. Enable the uploaded Skill in the Skills list and test representative prompts.
+
+The repository's generated `.skill` and standard `.zip` artifacts both place their
+files directly at archive root, so neither is a direct Claude.ai Custom Skills upload
+bundle. The extra directory wrapper is required. Anthropic's Help Center describes the
+entrypoint as `skill.md`, while its platform documentation and the Agent Skills format
+use `SKILL.md`; SoulMap currently ships `SKILL.md`. If the live uploader rejects that
+casing, verify the platform's current requirement before creating a renamed copy.
 
 For Team and Enterprise workspaces, the organization owner may need to enable Code
 execution and Skills in organization settings. If the upload or sharing controls are
 missing, check the workspace policy and role permissions.
 
 Official reference:
-[Use Skills in Claude](https://support.%63laude.com/en/articles/12512180)
+[Use Skills in Claude](https://support.%63laude.com/en/articles/12512180) and
+[How to create custom skills](https://support.%63laude.com/en/articles/12512198)
 
 ### Claude conversations and Project knowledge
 
