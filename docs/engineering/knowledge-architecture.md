@@ -4,13 +4,18 @@ For how this knowledge-loading layer fits into the full request pipeline
 alongside routing and safety enforcement, see
 [`docs/engineering/safety-architecture.md`](safety-architecture.md).
 
-Detectors in `src/soulmap/runtime/` load phrase lists and runtime contracts from Markdown
-skill files at import time. Most current detectors resolve stable source identifiers
-through the repository-internal `src/soulmap/runtime/source_registry.py`; the registry maps
-those identifiers to shipped knowledge files and their contract sections. The loader
-utilities in `src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown
-structure and Python data structures. The registry itself is internal runtime metadata
-and is intentionally excluded from the shipped knowledge archives.
+Detectors in `src/soulmap/runtime/` combine semantic knowledge from Markdown skill
+files with executable policy owned by Python. Markdown remains the source for many
+human-authored signal phrases, regex patterns, and response guidance. Numeric weights,
+thresholds, scoring rules, routing priorities, and policy toggles that control execution
+belong in `src/soulmap/runtime/knowledge/runtime_config.py`.
+
+Most current detectors resolve stable source identifiers through the repository-internal
+`src/soulmap/runtime/source_registry.py`; the registry maps those identifiers to shipped
+knowledge files and their contract sections. The loader utilities in
+`src/soulmap/runtime/knowledge/` provide the parsing layer between Markdown structure and
+Python data structures. The registry itself is internal runtime metadata and is
+intentionally excluded from the shipped knowledge archives.
 
 This means there is one place to edit a detection phrase. The runtime reflects
 the skill files automatically, so detection behavior and documented framework
@@ -41,19 +46,24 @@ The stable mapping between runtime consumers and Markdown sources is centralized
 second knowledge base. Detector code should consume stable source identifiers rather
 than duplicating repository paths.
 
-The `soulmap audit-knowledge` command independently verifies Python config ownership by
-tracing runtime imports and cross-referencing them against Markdown content. The
-separate `soulmap audit-knowledge-ownership` command verifies the broader ownership
-boundary across runtime consumers and package membership. It is
-the authoritative, up-to-date record of which constants are active, which are
-orphaned, and which Markdown file owns which detection phrases. Trust the tool
-over any static document.
+The `soulmap audit-knowledge` command reports Python configuration usage and orphaned
+constants, detects duplicate phrases between Python and Markdown, and flags exact phrase
+overlaps between detector code and Markdown knowledge. It does not replace the
+source-registry audit.
+
+The separate `soulmap audit-knowledge-ownership` command checks the runtime source
+boundary: calls to `runtime_skill_path()` must use literal identifiers registered in
+`source_registry.py`; registered sources must have runtime consumers; and direct
+`default_skill_path()` calls that bypass the registry are reported. This command does
+not audit package membership or the complete build-artifact boundary.
 
 ## Ownership audit
 
-`audit-knowledge-ownership` is intentionally broader than phrase duplication. It verifies
-that runtime Markdown consumers use registered source identifiers and that package
-tooling shares one canonical shipped-member contract. Domain classification is maintained as framework discovery metadata rather than as a separate filesystem layer.
+The ownership audit is intentionally distinct from phrase-duplication checks. It
+verifies that runtime Markdown consumers resolve sources through the central registry
+and that the registry has neither unregistered references nor unused entries. Domain
+classification is maintained as framework discovery metadata rather than as a separate
+filesystem layer.
 
 ## Protected modules
 
@@ -97,8 +107,9 @@ The default answer to migrating these modules is no.
 These rules apply to any future change to detection phrase lists, loader utilities,
 or the Markdown sections that back them:
 
-- Audit before changing. Run `soulmap audit-knowledge` to establish the current
-  state before touching any phrase list or loader.
+- Audit before changing. Run `soulmap audit-knowledge` for config/phrase drift and
+  `soulmap audit-knowledge-ownership` for source-registry boundaries before touching
+  any phrase list or loader.
 - The repository is the source of truth. This document and prior summaries are not
   a substitute for running the audit tooling and reading the current code.
 - Runtime evidence is required. A phrase or constant must have a confirmed Markdown
