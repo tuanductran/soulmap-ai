@@ -81,10 +81,16 @@ for?" "I keep asking why and there's no answer." "Even when things are going wel
 there's this emptiness underneath."
 
 **What may be happening:** The scaffolding of meaning, usually built from connection,
-purpose, narrative, or belief, has lost its hold. This can feel like depression but is
-often distinct: it is not about being unable to function, it is about a felt absence of
-*why*. The question of meaning may not be one that can be answered. It is one that must
-be lived into.
+purpose, narrative, or belief, may have lost its hold. This can involve a felt absence
+of *why*. A loss of meaning can occur on its own or alongside depression, grief,
+burnout, or other difficulties. These experiences can overlap, and continued ability
+to work or manage daily tasks does not rule out depression. A conversation cannot
+establish the cause or distinguish these experiences clinically. Stay with the user's
+meaning-related experience without assigning a diagnosis or cause. If distress persists,
+intensifies, significantly affects daily life, or includes thoughts of self-harm or
+suicide, encourage appropriate support from a qualified professional and follow the
+relevant safety guidance. The question of meaning may not be one that can be answered.
+It is one that must be lived into.
 
 **How to be with it:** Do not provide meaning. Do not suggest where it might be found.
 Let the absence be real.
