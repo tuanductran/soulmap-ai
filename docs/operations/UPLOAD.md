@@ -105,7 +105,7 @@ custom uploads on Team and Enterprise workspaces.
 2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
    root `SKILL.md` frontmatter.
 3. Extract the contents of `dist/soulmap-ai.zip` into that directory. For the
-   Claude-specific staging copy, copy the root `SKILL.md` to `skill.md` (lowercase),
+   Claude-specific staging copy, rename the staged root `SKILL.md` to `skill.md` (lowercase),
    because Anthropic's current Custom Skills Help Center specifies `skill.md`. Keep
    the repository's canonical `SKILL.md` unchanged. The staged layout must be
    `soulmap-ai/skill.md`, `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
@@ -192,7 +192,7 @@ Suggested use for a ChatGPT conversation with Data Analysis:
 ### Claude Custom Skills
 
 1. Build with `uv run soulmap build`.
-2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/` and copy
+2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/` and rename
    `SKILL.md` to `skill.md` inside that staging directory.
 3. ZIP that directory as one top-level folder, then upload the resulting archive through
    **Customize → Skills → + → + Create skill → Upload a skill**.
