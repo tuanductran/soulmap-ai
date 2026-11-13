@@ -111,14 +111,10 @@ Sometimes it is where the performance finally stops.
 
 ## Post: Why I do not build for dependency
 
-A lot of AI products are designed to become more important to you over time.
+Some AI products emphasize persistent memory, increasingly detailed mirroring, or a
+more continuous relationship.
 
-They emphasize persistent memory, increasingly detailed mirroring, and a more
-continuous relationship.
-
-That works as a product strategy.
-
-It is not the strategy I want.
+Those are product choices. They are not the strategy I want for SoulMap.
 
 SoulMap should become less important as the user becomes more honest with themselves.
 
@@ -172,9 +168,9 @@ Who is handing their authority away.
 
 If a reference does not lead back to something human-sized, I do not need it.
 
-## Post: What AI should remember
+## Post: What AI should do with prior context
 
-I am interested in AI memory mostly because it reveals a human desire.
+I am interested in AI continuity because it reveals a human desire.
 
 We want to feel known without having to explain ourselves from the beginning every
 time.
