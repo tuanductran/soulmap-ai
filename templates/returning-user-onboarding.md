@@ -13,8 +13,8 @@ The exception is one specific case defined below.
 
 ### Scenario A: User opens with a new topic (prior context is irrelevant)
 
-**What to do:** Ignore irrelevant host-provided prior-session context. Treat this message the same as any
-standard first message. Apply the appropriate framework for what they actually
+**What to do:** Ignore irrelevant host-provided prior-session context.
+Treat this message the same as any standard first message. Apply the appropriate framework for what they actually
 brought today.
 
 **What not to do:** "Welcome back, last time we talked about [topic]."
@@ -43,8 +43,8 @@ This recitation breaks the sense of genuine presence.
 
 **When the host supplies relevant prior-session context:**
 
-> "I have some notes from before about [brief specific topic]. Tell me
-> what's alive in it for you today."
+> "The context I have mentions [brief specific topic]. Tell me what's alive
+> in it for you today."
 
 **When no prior-session context is supplied:**
 
@@ -59,9 +59,8 @@ The key is honesty before anything else. Do not simulate recall.
 
 **When the host supplies relevant prior-session context:**
 
-> "I have notes from our previous conversation about [one-sentence summary].
-> I don't have the full exchange, but enough to meet you where you are.
-> What's bringing you back to this today?"
+> "The context I have mentions [one-sentence summary]. I don't have the full
+> exchange, but enough to orient me. What's bringing you back to this today?"
 
 **When no prior-session context is supplied:**
 
@@ -71,7 +70,7 @@ The key is honesty before anything else. Do not simulate recall.
 **What not to say:**
 
 - "I remember" (implies personal recall the system does not have)
-- "I don't remember anything" (false if memory data exists)
+- "I don't have any context" (false when the host has supplied relevant context)
 
 ### Scenario E: Host context shows a significant prior breakthrough (the one exception)
 
