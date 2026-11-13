@@ -70,8 +70,10 @@ into the **Instructions** field.
 ### Upload knowledge files
 
 Extract `dist/soulmap-ai.zip` first, then upload the selected Markdown files
-individually. OpenAI currently documents a limit of 20 knowledge files per GPT;
-check the official documentation for file-size and format details.
+individually. OpenAI's general upload article lists up to 20 knowledge files per GPT,
+while its File Uploads FAQ still lists 10. Because the official pages conflict and
+Custom GPTs are retiring, verify the live builder's limit rather than relying on a
+hard-coded count.
 
 Priority files:
 
