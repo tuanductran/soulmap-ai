@@ -111,7 +111,7 @@ execution and Skills in organization settings. If the upload or sharing controls
 missing, check the workspace policy and role permissions.
 
 Official reference:
-[Use Skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+[Use Skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-%63laude)
 
 ### Claude conversations and Project knowledge
 
@@ -126,7 +126,7 @@ Markdown files that the Project needs. Supported file types and size limits can 
 check the official upload guide before a large import.
 
 Official reference:
-[Upload files to Claude](https://support.claude.com/en/articles/8241126-upload-files-to-claude)
+[Upload files to Claude](https://support.claude.com/en/articles/8241126-upload-files-to-%63laude)
 
 ## Gemini
 
