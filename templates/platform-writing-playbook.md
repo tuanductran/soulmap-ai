@@ -38,8 +38,10 @@ Two more that carry over unchanged:
 
 ## Surface notes
 
-Platform behavior changes, so treat every specific below as dated and re-check it
-before planning around it. Reviewed 2026-09-02.
+Platform behavior, distribution, and audience composition change. The notes below are
+qualitative editorial-fit hypotheses, not measured reach rankings or current platform
+performance data. Validate audience and distribution assumptions with current
+first-party analytics before allocating effort. Reviewed 2026-11-13.
 
 ### Newsletter
 
@@ -54,28 +56,29 @@ Publish when there is something to say. An empty week is on brand.
 
 ### Professional network
 
-Strongest organic reach of the major surfaces, and a real audience for the grounded
-inner work pillar. The frame is the problem: the surface rewards difficulty told as a
-resolved arc with a takeaway attached, which is the exact shape the no-advice rule
-forbids.
+A plausible fit for the grounded inner-work pillar when the intended audience is
+professionally oriented. Do not assume that the platform rewards any single narrative
+format; inspect current audience response and keep the no-advice rule intact.
 
-Usable, with the takeaway removed. If a draft cannot survive losing its lesson, it was
-written for the platform rather than for the reader.
+Use it when the piece can stand without a prescriptive takeaway. If a draft cannot
+survive losing its lesson, it was written for the platform rather than for the reader.
 
 ### Image-first social
 
-Highest compression, lowest fit. A reflection reduced to a quotable line loses the
-qualifications that keep it honest, and what remains reads as instruction.
+Short-form visual surfaces impose strong compression. A reflection reduced to a
+quotable line can lose the qualifications that keep it honest, and what remains may
+read as instruction.
 
-Organic reach has also collapsed without paid distribution, so the compression is no
-longer buying much. Use for the relational honesty pillar where a scene genuinely
-fits a short form, and accept that most pillar material will not.
+Use only when a scene genuinely fits a short form without stripping away necessary
+context. Do not assume organic reach is low or high without checking current
+first-party analytics.
 
 ### Owned site
 
-No implied reader, no cadence pressure, no compression. Also the least discovery. Best
-used as the permanent home a piece points back to, rather than as the place a piece is
-found.
+An owned site allows a piece to retain its full context without feed-driven cadence
+pressure. Discovery depends on distribution, search visibility, and the site's actual
+audience; do not assume it is inherently high or low. It can serve as a durable home
+for a piece when that is useful.
 
 ## Working order
 
