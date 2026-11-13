@@ -271,6 +271,10 @@ independence posture.
 Markdown knowledge base to catch unused constants and Python/Markdown phrase
 duplication.
 
+`uv run soulmap audit-knowledge-ownership` checks that runtime consumers resolve
+literal source identifiers through the central source registry. It flags unregistered
+or unconsumed registry entries and direct Markdown-path lookups that bypass the registry.
+
 ## Shared Python helpers
 
 When editing detector CLIs or lightweight module entrypoints, prefer the shared helpers
