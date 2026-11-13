@@ -29,6 +29,25 @@ This skill helps you author frameworks that are:
 - Testable through the eval suite
 - Referenced correctly by source markers in eval groups
 
+## Choose the knowledge type first
+
+Before authoring, decide whether the new file is a **primary routed framework** or
+**supporting knowledge**.
+
+- A primary routed framework is an independently selectable primary response route. It
+  needs a registered detector/routing binding, a priority position, a template mapping,
+  and source-backed eval coverage. Check the current Python routing and configuration
+  before proposing a new route.
+- A supporting lens or secondary layer enriches a primary framework that is already
+  active. It does not need its own primary detector, priority row, or template mapping.
+  Examples include relationship reflection, money and self-worth, self-compassion,
+  numerology connection, and secondary anger or somatic guidance.
+- A file's directory or filename does not determine its runtime role. Follow
+  [the Library/framework boundary](../../../docs/engineering/library-vs-framework.md)
+  and the current runtime mappings.
+
+Do not create a new primary route merely because a topic deserves a useful knowledge file.
+
 ## Framework file location
 
 New frameworks live here: `skills/frameworks/` (use kebab-case filename matching the framework name).
@@ -66,9 +85,11 @@ description: "Self-compassion language for shame, self-criticism, and the inner 
 ---
 ```
 
-## Required sections
+## Required sections for primary routed frameworks
 
-Every framework must have these sections:
+The following sections define the contract for a new or substantially revised primary
+routed framework. Supporting lenses should use the sections that fit their role; do not
+force a detector-facing contract onto a file that is not independently routed.
 
 ### Activation Signals
 
@@ -198,51 +219,33 @@ rather than shifting into parts language.
 
 ## Framework integration
 
-### Register in detector system
+### Primary routed framework
 
-Your framework needs a detector that identifies when to activate it. After writing the framework file:
+For a new independently selectable primary route:
 
-1. Create or update a detector in `src/soulmap/runtime/detectors/your_framework_detector.py`
-2. Add it to the framework selector in `src/soulmap/runtime/routing/framework_selector.py`
-3. Reference it from `detector-engineer` skill if creating new detector patterns
+1. Confirm that the need is distinct and not already served by an existing primary
+   framework or supporting lens.
+2. Add or extend a detector only when the routing contract requires new detection.
+   Follow the existing detector-specific callable and output contract; do not assume
+   one Markdown file always maps one-to-one to one detector.
+3. Keep semantic signals and qualitative guidance in the registered Markdown source.
+   Keep executable scoring weights, thresholds, priority values, and routing settings in
+   Python-owned runtime configuration.
+4. Register the primary route and its detector binding through the existing routing
+   and knowledge architecture. Preserve safety priority and the independent safety gate.
+5. Add a framework-template mapping and source-backed eval coverage for the new route.
 
-### Add test coverage
+### Supporting lens or secondary layer
 
-Create eval test cases in `evals/datasets/groups.json`:
+For a supporting knowledge file:
 
-```json
-{
-  "g": "Your Framework, Core Signal",
-  "cat": "your_cat",
-  "sources": [
-    "skills/frameworks/your_framework.md",
-    "skills/meta/quick-reference.md"
-  ],
-  "source_markers": {
-    "skills/frameworks/your_framework.md": "Signal from 'Activation Signals' section"
-  },
-  "items": [
-    {
-      "t": "user input that triggers your framework",
-      "note": "Testing core signal",
-      "expect_primary_framework": "YOUR_FRAMEWORK_NAME",
-      "expect_mode": "YOUR_FRAMEWORK_NAME",
-      "expect_safety_status": "PASS",
-      "expect_safety_reason": "no_override"
-    }
-  ]
-}
-```
-
-### Update quick reference (if applicable)
-
-If the framework should appear in `skills/meta/quick-reference.md`, add an entry:
-
-```markdown
-| Your Framework | Signal | Example |
-|---|---|---|
-| Your Framework | User describes [signal] | "I don't know what my life is for" |
-```
+- Do not add a primary detector, priority row, or independent framework-template mapping
+  unless the product decision explicitly promotes it to a primary route.
+- Link it from the appropriate primary framework, quick reference, or other canonical
+  guidance so it can be used when relevant.
+- Keep its scope and relationship to existing frameworks explicit.
+- Add or update contract/eval coverage only where the file has a testable behavior or
+  source-reference requirement.
 
 ## Writing quality standards
 
@@ -361,17 +364,19 @@ Have another contributor review:
 
 ## Naming conventions
 
-- Framework file name: lowercase with hyphens (`skills/frameworks/framework-name.md`)
-- Keep the front-matter `name` aligned with the kebab-case filename.
-- Use reader-facing framework labels in Markdown; machine identifiers and routing mappings belong in Python.
+- Use a lowercase kebab-case Markdown filename.
+- Keep the front-matter `name` aligned with the filename stem.
+- Use reader-facing framework labels in Markdown; machine identifiers and routing
+  mappings belong in Python.
+- Do not infer primary-route status from the directory name alone.
 
 Examples:
 
-| File | Constant | Category |
-|------|----------|----------|
-| `inner-parts.md` | `INNER_PARTS` | `wl6` |
-| `shadow-patterns.md` | `SHADOW` | `wl8` |
-| `emotional-deescalation.md` | Crisis and de-escalation knowledge | `crisis` |
+| File | Role |
+|------|------|
+| `emotional-deescalation.md` | Crisis and de-escalation knowledge |
+| `grief-companion.md` | Primary grief framework |
+| `relationship-reflection.md` | Supporting relationship lens |
 
 ## Workflow
 
@@ -386,16 +391,23 @@ Examples:
 
 ## Definition of done
 
-A framework file is done when:
+A primary routed framework is done when:
 
-- YAML frontmatter has a valid `name` matching the filename stem
-- `## Activation Signals` section is present with observable detection language
-- `## Response Structure` section defines the arc and word count range
-- `## Paired template` section references the correct template and inquiry bank section
-- If it is a primary routed framework, its detector binding, priority, template mapping, and eval coverage are present and verified
-- If it is a supporting lens or secondary layer, it is linked from the appropriate canonical guidance and is not misrepresented as an independently routed framework
-- No detector or routing machinery was added solely because a Markdown knowledge file was created
-- `uv run soulmap build` includes the new file without error
+- YAML front matter has a valid `name` matching the filename stem
+- `## Activation Signals` describes observable detection language
+- `## Response Structure` defines the response arc and appropriate length boundaries
+- `## Paired template` references the correct template and inquiry-bank section
+- Its detector binding, priority, and template mapping are present and verified
+- At least one eval group covers its primary activation signal
+- `uv run soulmap build` and the relevant tests pass
+
+A supporting lens or secondary layer is done when:
+
+- Its scope and relationship to existing primary frameworks are explicit
+- It is linked from the appropriate canonical guidance
+- It does not claim or imply an independent primary route without a routing contract
+- Any source-reference or behavior contract it owns is covered by the relevant checks
+- `uv run soulmap build` and relevant Markdown QA checks pass
 
 ## Relationship to other skills
 
