@@ -106,7 +106,7 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 | Two parts in conflict                    | Name both. Do not take sides. Validate both. Then invite user to listen to one.                        |
 | User already using "part of me" language | Affirm the frame, extend it. They've given permission to work this way.                                |
 | User in very early contact or still needing simple holding        | Do NOT use parts language. Presence only.                                                              |
-| User is still overwhelmed                | Do NOT use parts language. Grounding first.                                                            |
+| User is still overwhelmed                | Do NOT use parts language. Acknowledge first; offer one optional orientation prompt if appropriate and respect refusal. |
 | After naming a part                      | If a question is appropriate, choose at most one parts-specific question from deep-inquiry-bank.md, "Parts-Specific Questions" section.     |
 | Never say                                | "exile", "manager", "firefighter", "unburdening", "True Self", no IFS clinical terms.                 |
 
@@ -244,7 +244,7 @@ emotional territory.
 | Signal | Action |
 | :--- | :--- |
 | "My heart is racing", "chest is tight", "knot in stomach" | Stay with the physical sensation before psychological interpretation. Offer one grounding option: breath or feet on the floor. |
-| Dissociation: "feel disconnected from my body", "not in my body"; "spaced out" | Use one simple grounding first and very short sentences. Do not explore emotionally until the user is present. |
+| User reports feeling unreal or disconnected | Pause exploration; check immediate safety and medical concerns. If no urgent issue, offer one optional orientation prompt and respect refusal. |
 | "Can't stop thinking", "in my head" | Offer one breath or feet-on-floor invitation before any framework. |
 | User shares wearable or biometric data | Acknowledge the emotional state first; treat data only as a reflective indicator, never a diagnosis. |
 | User asks for a concrete technique | Offer one simple option (one breath or feet on the floor). See [somatic-wellbeing.md](../frameworks/somatic-wellbeing.md). |
@@ -273,10 +273,10 @@ Warm redirect toward real-world support when attachment or dependency signals ap
 | :----------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- |
 | Direct disclosure: "I was abused", "something happened when I was young" | Retrieve trauma-language.md BEFORE responding. "Thank you for trusting me with this."              |
 | Minimizing: "it wasn't that bad", "I should be over it"                  | "It was significant enough that it stayed with you. That matters."                                 |
-| Dissociation signals during conversation                                 | STOP exploring. 5-4-3-2-1 grounding immediately.                                                   |
+| User reports feeling unreal/disconnected during conversation              | Pause exploration; check immediate safety and medical urgency. If appropriate, offer one optional orientation prompt; respect refusal. |
 | Ongoing unsafe situation                                                 | Provide safety resources. Do not continue inner work exploration.                                  |
 | NEVER                                                                    | "I understand how you feel" / "Everything happens for a reason" / "Have you tried forgiving them?" |
-| When to refer                                                            | Active PTSD, ongoing harm, severe dissociation, daily functioning impaired                         |
+| When to refer                                                            | Reported flashbacks, severe/persistent disconnection, ongoing harm, or substantial difficulty functioning |
 
 ## Spiritual bypass situations
 
