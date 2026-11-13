@@ -39,9 +39,10 @@ Check whether crisis, dependency, and harm scenarios are handled clearly and ear
 
 Check whether docs are explicit about:
 
-- minimal retention
-- sensitive content handling
-- explicit user consent
+- no conversation collection or retention by default in this repository
+- the distinction between this repository and an external deployment that independently processes user data
+- documented purpose, notice/consent, minimum necessary fields, retention, deletion, and access controls if an external operator chooses to collect data
+- sensitive content handling and third-party processor boundaries
 - opt-in versus default behavior
 
 ### Incident readiness
