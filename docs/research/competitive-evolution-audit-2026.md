@@ -52,9 +52,13 @@ Already established doctrine, not re-derived here at length. Summarized from
 * **Knowledge model:** a small, hand-authored, safety-reviewed Markdown corpus
   under `skills/`, functioning as deterministic routing targets for a
   rule-based Python selector, not an embedded corpus for open-ended retrieval.
-* **Memory model:** none, by design. No cross-session memory bonding.
-  The former experimental memory layer was removed because it was not part of
-  the core product promise. Every session starts fresh.
+* **SoulMap-controlled memory:** no persistent conversation database or memory
+  service is provided by this repository. A host platform may still surface prior-session
+  context or memory; that data is outside SoulMap's storage and retention control. The
+  continuity contract in `skills/meta/session-continuity.md` permits only the context
+  actually supplied by the platform and forbids treating fragments as a full session.
+  The former experimental SoulMap-owned memory layer was removed because it was not part
+  of the core product promise.
 * **Agent model:** not an agent in the tool-calling sense. `framework_selector.py`
   is a deterministic dispatcher over ~27 named outcomes; it does not plan, does
   not call external tools, and does not decide its own next action.
@@ -140,10 +144,10 @@ Applying Phase 10's classification to every candidate this audit considered:
 
 | Candidate | Classification | Reasoning |
 | --- | --- | --- |
-| Persistent memory (any form) | INTENTIONALLY ABSENT | Directly conflicts with Rule 1 (anti-dependency) and the documented no-memory-bonding boundary |
+| SoulMap-controlled persistent memory service | INTENTIONALLY ABSENT | The project does not own a cross-session store; host-platform memory/context remains outside its control and is handled by the session-continuity protocol |
 | Open-corpus RAG retrieval | INTENTIONALLY ABSENT | Would replace curated, safety-reviewed knowledge with probabilistic retrieval over arbitrary content, undermining the safety-review guarantee the whole knowledge base depends on |
 | Autonomous tool use / agent planning | INTENTIONALLY ABSENT | `maintenance-boundary.md` explicitly rejects background jobs, infra-heavy deployment logic, and scope beyond the current Claude-first flow |
-| Temporal/contradiction modeling for memory | NOT APPLICABLE | There is no memory to model contradictions in |
+| Temporal/contradiction modeling for a SoulMap-owned memory store | NOT APPLICABLE | The repository does not maintain a persistent memory store; any host-provided context is not stored or reconciled by SoulMap |
 | MCP-style tool discovery | NOT APPLICABLE | SoulMap has no external tools to discover |
 | Multi-user workspace isolation | NOT APPLICABLE | No account system by design |
 | Naming the existing Skill structure's alignment with progressive disclosure | MISSING BUT NOT NEEDED AS CODE, WORTH ONE DOC NOTE | The behavior already exists and is already correct; only the cross-reference was missing |
@@ -245,12 +249,14 @@ added.
 
 ### KEEP
 
-* No persistent memory, no cross-session bonding, single-user, local
-  knowledge base with no backend.
+* No SoulMap-controlled persistent memory store or cross-session memory bonding. Host
+  platforms may surface prior context under their own memory and privacy controls.
+  The knowledge base remains local to the host's use of the shipped artifact; there is
+  no SoulMap-operated backend.
 * Deterministic, auditable routing (`framework_selector.py`) over probabilistic
   retrieval.
-* The Library-vs-Framework boundary and the one-file-pair-per-framework
-  discipline.
+* The primary-route versus supporting-lens boundary; do not impose a one-file-pair rule
+  on every knowledge file.
 * The independent, defense-in-depth safety gate re-derivation (ADR 0001).
 * The source-marker-verified eval suite as the standard for adding any new
   routing behavior.
@@ -266,8 +272,8 @@ added.
 
 ### DO NOT ADD
 
-* Persistent or long-term memory in any form, including "lightweight"
-  preference caching.
+* A SoulMap-controlled persistent or long-term memory store, including "lightweight"
+  preference caching. Host-platform memory remains outside this repository's control.
 * Vector-embedded retrieval over `skills/` or any other corpus.
 * MCP server or client integration, or any external tool-calling capability.
 * Multi-user accounts, workspaces, or authentication.
