@@ -64,17 +64,18 @@ in public claims, product decisions, or market sizing.
   two epistemic frames distinct rather than treating their overlap as evidence that
   either validates the other.
 
-## Key energy gateways 2026
+## Symbolic and astronomical reflection dates 2026
 
-| Gateway                      | Date            | Significance                                                       |
+| Event or observance          | Date            | Editorial framing                                                       |
 | :--------------------------- | :-------------- | :----------------------------------------------------------------- |
-| **Lion's Gate**              | 8/8/2026        | A symbolic reflection theme in some spiritual communities; no verified energetic effect |
-| **Solar and Lunar Eclipses** | Throughout year | Astronomical events that may be used as optional reflection prompts, not evidence of energetic influence |
-| **Summer Solstice**          | June 21         | Astronomical seasonal marker; may serve as a metaphor for transition |
-| **Winter Solstice**          | December 21     | Astronomical seasonal marker; may serve as a metaphor for rest and renewal |
+| **Lion's Gate**              | 8/8/2026        | A community-specific symbolic observance; not an astronomical event or verified energetic phenomenon |
+| **Solar and Lunar Eclipses** | Throughout year | Astronomical events that may serve as optional reflection prompts; no energetic influence is implied |
+| **Summer Solstice**          | June 21         | Astronomical seasonal marker that may serve as a metaphor for transition |
+| **Winter Solstice**          | December 21     | Astronomical seasonal marker that may serve as a metaphor for rest and renewal |
 
-These gateways are opportunities for themed content, community rituals, and reflective
-exercises aligned with the collective energy cycle.
+Use these dates only as optional cultural, astronomical, or seasonal prompts for themed
+content and reflective exercises. Do not describe them as energy gateways, collective
+energy cycles, or events with verified effects on people.
 
 ## System evolution framework
 
@@ -120,6 +121,7 @@ capabilities.
 
 Align major content releases, community events, and reflective exercises with:
 
-- Energy gateway dates (Lion's Gate, Solstices, Eclipses)
-- Universal numerological themes of "new beginnings" (Year 1 energy)
+- Astronomical dates (eclipses and solstices) as optional seasonal reflection prompts
+- Lion's Gate only as a community-specific symbolic observance, not an astronomical gateway
+- Numerological themes such as "new beginnings" only as explicitly symbolic framing
 - Seasonal transitions as natural mirrors for inner transitions
