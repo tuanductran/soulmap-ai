@@ -44,7 +44,7 @@ and are not part of the SoulMap distribution. See the [Agent Skills overview](ht
 
 | Module | Role |
 | --- | --- |
-| `src/soulmap/runtime/knowledge/` | Markdown loaders that turn `skills/` content into runtime data structures; Python here does not author semantic clinical/reflective knowledge | 
+| `src/soulmap/runtime/knowledge/` | Markdown loaders that turn `skills/` content into runtime data structures; Python here does not author semantic clinical/reflective knowledge |
 | `src/soulmap/runtime/knowledge/runtime_config.py` | Python-owned executable weights, thresholds, priorities, policy switches, and deterministic runtime configuration |
 | `src/soulmap/runtime/guards/` | Response contract, Markdown contract, and resource sanitizer validation, shared by every framework's output |
 | `src/soulmap/runtime/routing/` | `framework_selector.py`, the single place that decides which framework/detector runs, and that always reaches `_apply_safety_gate` |
