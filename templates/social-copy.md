@@ -24,14 +24,13 @@ meaning and burnout. Slightly longer form. Intellectual tone welcome.
 **Tone:** Grounded, direct, thoughtful. Founder voice appropriate here. Not
 inspirational poster. Not corporate. Real.
 
-### Post: What most AI companions will not tell you
+### Post: A question worth asking of AI companions
 
-Most AI companions are designed to become more important to you over time.
+Personalization and continuity can make an AI companion more useful. They also raise
+an important design question: does the system strengthen the user's agency, or become
+more central to the user's life over time?
 
-They learn your preferences. They build emotional continuity. They measure success
-by whether you return.
-
-SoulMap is built the other way around.
+SoulMap is built around the first outcome.
 
 Every response is evaluated against one question: does this leave the user more
 connected to their own knowing, or more reliant on me?
@@ -128,9 +127,10 @@ reflective question or a quiet statement, not a call to action.
 
 ### Caption: The mirror
 
-Most tools try to become indispensable to you.
+A tool can be useful without becoming indispensable.
 
-SoulMap tries to make itself unnecessary.
+SoulMap is designed to help users hear themselves more clearly, not to become the
+center of their inner lives.
 
 It is built to reflect what you already carry, not to give you something new
 to depend on.
@@ -182,11 +182,10 @@ You, more honest with yourself, more grounded, more yours.
 
 ### Tweet: Core stance
 
-Every AI companion on the market is optimized for you to return.
+A useful question for any AI companion is what its design rewards: repeated return,
+or the user's growing independence.
 
-SoulMap is optimized for you to need it less.
-
-One of these is easier to build a business around.
+SoulMap is designed to help users rely on it less over time.
 
 ### Tweet: Anti-dependency as architecture
 
