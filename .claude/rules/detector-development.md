@@ -11,7 +11,11 @@ Use these conventions when writing or extending Python detector modules.
 
 ## Module structure
 
-Detector modules should follow the established local pattern, but the public callable and result semantics are detector-specific. Use the closest existing detector as the template rather than imposing a universal interface.\n\nFor example, dependency detection exposes `analyze_dependency()` and returns dependency-specific levels. Crisis detection has its own safety contract.\n\nA common CLI shape is:
+Detector modules should follow the established local pattern, but the public callable and result semantics are detector-specific. Use the closest existing detector as the template rather than imposing a universal interface.
+
+For example, dependency detection exposes `analyze_dependency()` and returns dependency-specific levels. Crisis detection has its own safety contract.
+
+A common CLI shape is:
 
 ```python
 """Brief description of what this detector scores."""
