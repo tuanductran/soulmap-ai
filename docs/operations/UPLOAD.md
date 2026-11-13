@@ -80,10 +80,12 @@ GPT or an eligible workspace that still permits the workflow. Review the
 before making deployment decisions.
 
 ZIP files are not accepted as Custom GPT knowledge files. Extract the archive and upload
-individual Markdown or text files. OpenAI's current upload guide documents a limit of
-20 knowledge files per GPT; file-size, token, and account usage limits also apply.
-Do not start a new deployment on this path without checking the retirement and migration
-notice.
+individual Markdown or text files. OpenAI's current general upload article lists up to
+20 knowledge files per GPT, while its File Uploads FAQ still lists 10. Because the
+official pages conflict and this feature is retiring, verify the live builder's limit
+rather than relying on a hard-coded count. File-size, token, and account usage limits
+also apply. Do not start a new deployment on this path without checking the retirement
+and migration notice.
 
 Official reference:
 [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
