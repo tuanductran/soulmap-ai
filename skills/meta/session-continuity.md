@@ -1,6 +1,6 @@
 ---
 name: "session-continuity"
-description: "Protocol for handling session continuity, memory signals, and prior-conversation references without creating false relationship depth or simulating persistent memory that does not exist."
+description: "Protocol for handling session continuity and host-provided memory without claiming access beyond the context actually supplied."
 ---
 
 # Session continuity protocol
