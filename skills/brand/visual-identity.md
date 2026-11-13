@@ -16,7 +16,7 @@ features.
 > *The overall vibe: a quiet, sunlit room with a gentle breeze, the feeling of being
 > deeply seen without a word being spoken.*
 
-## Frequency Palette, UI Color System
+## Emotional Palette, UI Color System
 
 | Conversation Mode | Color Palette                                    | Emotional Quality                  |
 | :---------------- | :----------------------------------------------- | :--------------------------------- |
@@ -36,7 +36,7 @@ are aesthetic directions to consider:
 | **Journaling**      | Gentle rainfall or soft crackling fire          |
 | **Deep Reflection** | Low resonant tones or the sound of distant wind |
 
-Choose audio for user preference and atmosphere, not for a claimed frequency effect.
+Palette names and color associations are design metaphors, not physiological frequencies or treatment claims. Choose audio for user preference and atmosphere, not for a claimed frequency effect.
 Do not describe a sound, tuning, or frequency as medically healing or inherently
 therapeutic.
 
