@@ -18,16 +18,16 @@ was.
 
 ## Executive summary
 
-SoulMap's strongest competitive position is not a missing feature. It is the set
-of capabilities many products in the reviewed categories emphasize, while SoulMap
-deliberately keeps a narrower scope: a SoulMap-owned persistent conversation store,
-open-corpus retrieval, and autonomous tool-using agent behavior are not part of the
-product. That boundary is documented in the repository's doctrine and maintenance
-contract, not inferred from competitor marketing. The comparison below uses a mix of
-first-party documentation and secondary analysis; it is not a hands-on benchmark or an
-exhaustive survey. The sources illustrate different product categories, but do not
-establish that every competitor follows the same model or that temporal memory is an
-industry-wide unsolved problem.
+SoulMap's competitive positioning is primarily about deliberate scope, not feature
+parity. Many products in the reviewed categories emphasize persistent memory,
+open-corpus retrieval, or autonomous tool use. SoulMap intentionally does not provide
+a SoulMap-owned persistent conversation store, open-corpus retrieval, or autonomous
+tool-using agent behavior. That boundary is documented in the repository's doctrine
+and maintenance contract, not inferred from competitor marketing. The comparison
+below uses a mix of first-party documentation and secondary analysis; it is not a
+hands-on benchmark or an exhaustive survey. The sources illustrate different product
+categories, but do not establish that every competitor follows the same model or that
+temporal memory is an industry-wide unsolved problem.
 
 One implementation-worthy finding did surface, and it is small: SoulMap's Skill
 layer already matches Anthropic's own documented progressive-disclosure model
@@ -103,8 +103,8 @@ SoulMap scored zero.
 | Skill progressive disclosure | Matches the documented pattern | N/A | N/A | Documented origin of the pattern | Already aligned, undocumented as such |
 | Autonomous tool use / planning | Absent, by design | Partial (Letta) | Partial | Depends on host | Would make SoulMap agent-centric, against `maintenance-boundary.md` |
 | Temporal / contradiction-aware memory | N/A, no SoulMap-owned store to reconcile | A third-party comparison identifies a limitation in one Mem0 architecture | N/A | N/A | Not a SoulMap requirement; this desk review does not establish an industry-wide gap |
-| Response safety contract enforced independently of routing | Core capability (`response_safety_gate.py`, ADR 0001) | Not typically separated | Not typically separated | N/A | Genuine SoulMap strength, not commonly matched |
-| Evaluation suite tied to source content | Core capability (238-item `eval-groups`, source-marker checks) | Not publicly documented at this granularity | Not typically documented | N/A | Genuine SoulMap strength |
+| Response safety contract enforced independently of routing | Core capability (`response_safety_gate.py`, ADR 0001) | Not established by the sources reviewed | Not established by the sources reviewed | N/A | Documented defense-in-depth design in SoulMap; no competitor-absence claim |
+| Evaluation suite tied to source content | Core capability (238-item `eval-groups`, source-marker checks) | Not publicly documented at this granularity | Not assessed in this desk review | N/A | A documented internal quality control; not a comparative benchmark |
 | Multi-user / workspace isolation | N/A, single-user local knowledge base | N/A | Core capability | N/A | Out of scope; SoulMap has no account system by design |
 
 ## What competitors do better
@@ -221,22 +221,22 @@ scope, one clear "Do not use this skill for" pointer per skill file.
 `eval-groups` (238 items, 666 assertion checks, 252 source checks, 51 source-marker
 checks), `eval-responses`, `eval-markdown-contracts`, and the safety eval
 regression suite (79 cases) already cover routing correctness, response
-structure, doctrine-to-Markdown sync, and safety-category coverage. This is
-more granular than the retrieval-hit-rate evaluation typical of the RAG
-systems researched, because SoulMap's routing is deterministic and therefore
-checkable exactly, not just approximately. No gap found.
+structure, doctrine-to-Markdown sync, and safety-category coverage. This provides deterministic contract coverage for SoulMap's routing and source
+references. It measures a different property from retrieval-hit-rate metrics; this
+report does not compare the completeness or rigor of the RAG systems' own evaluation
+suites. No gap found.
 
 ## Personal AI vs. generic AI audit
 
-What makes SoulMap genuinely personal is not stored data about the person. It
-is a fixed, curated set of reflective lenses applied to whatever the person
-brings to a single conversation, with a hard structural requirement that using
-SoulMap more should not become the goal. Within this limited comparison set, the products reviewed emphasize persistent
-context, document retrieval, or broader tool capability. That does not establish
-that every competitor differentiates in the same way. SoulMap's intended
-differentiation is architectural restraint applied to a narrow, safety-reviewed
-domain; whether that position is commercially defensible requires separate
-market and user research.
+What makes SoulMap personal is not a SoulMap-owned profile or conversation store. It
+is a curated set of reflective lenses applied to the current exchange and any relevant
+prior-session context explicitly supplied by the host, with a structural requirement
+that using SoulMap more should not become the goal. Within this limited comparison
+set, the products reviewed emphasize persistent context, document retrieval, or
+broader tool capability. That does not establish that every competitor differentiates
+in the same way. SoulMap's intended differentiation is architectural restraint applied
+to a narrow, safety-reviewed domain; whether that position is commercially defensible
+requires separate market and user research.
 
 ## Python and documentation changes made
 
