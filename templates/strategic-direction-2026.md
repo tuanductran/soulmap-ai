@@ -18,11 +18,12 @@ marketing, onboarding, or product descriptions as if they are shipped.
 | :--- | :--- |
 | Reflective conversation frameworks (grief, crisis, inner parts, and so on) | SHIPPED |
 | Safety guardrails and dependency detection | SHIPPED |
-| Crisis hotline integration | SHIPPED |
-| Anti-dependency response contract | SHIPPED |
-| Voice calibration and session rituals | SHIPPED |
+| Tier 1 crisis detection and safety routing | SHIPPED |
+| Region-appropriate crisis resource guidance and static starting points (no live hotline integration) | GUIDANCE ONLY |
+| Anti-dependency response guidance and bounded runtime checks | SHIPPED |
+| Voice/persona guidance and session ritual knowledge files | SHIPPED |
 | Agent Skills archive (.skill + .zip) | SHIPPED |
-| Spiritual layer (numerology, chakras as reflective lens) | SHIPPED |
+| Spiritual and numerology knowledge files (symbolic reflection only; not factual or predictive capability) | SHIPPED |
 | Wearable / biometric context-aware somatic support (real-time) | ASPIRATIONAL |
 | Calendar integration for mindful scheduling | ASPIRATIONAL |
 | Quarterly Expert Council review of interaction logs | ASPIRATIONAL |
@@ -31,39 +32,55 @@ marketing, onboarding, or product descriptions as if they are shipped.
 | Community and peer-connection features | ASPIRATIONAL |
 | Periodic timed AI reminder mechanism (California SB 243 scope) | ASPIRATIONAL |
 
- Its strategic or symbolic language must not be
-echoed to users as certainty, prophecy, or prediction.
+**Status definitions:** SHIPPED means the repository contains the documented
+knowledge, guidance, or runtime capability; it does not imply clinical validation
+or a guaranteed outcome. GUIDANCE ONLY means the repository contains instructions
+or static reference material, not a live external integration.
 
-2026 is a Universal Year 1, a new cycle begins. A crucial time for planting seeds.
-SoulMap enters this year with a clear strategic orientation: spiritual leadership,
-community, and action from love rather than fear.
+**Epistemic boundary:** Numerology, chakras, energy gateways, and similar language
+in this document are symbolic or spiritual framing. They are not scientific facts,
+verified causal explanations, predictions, or claims about a user's identity or
+future. This framing must not be echoed to users as certainty, prophecy, or
+prediction.
 
-## Global spiritual trends shaping the context
+Within that symbolic framework, 2026 may be described as a Universal Year 1 and a
+metaphor for new beginnings. This is a numerological interpretation, not an
+empirical property of the calendar.
 
-- AI is increasingly integrated into spiritual practice, supporting meditation,
-  analyzing numerology, and offering reflective companionship
-- Online spiritual communities are growing rapidly, users seek belonging alongside
-  insight
-- Vipassana and Anapanasati meditation are rising in mainstream popularity
-- Yoga and somatic healing methods are increasingly integrated into spiritual practice
-- The boundary between spirituality and psychology is growing increasingly permeable -
-  users expect both depth and grounded practicality
+## Strategic context hypotheses (not verified market research)
+
+The following are planning hypotheses for content exploration, not established
+market-wide trends. Validate them with current, relevant evidence before using them
+in public claims, product decisions, or market sizing.
+
+- Some audiences may be interested in AI-supported meditation, numerology, or
+  reflective companionship.
+- Online spiritual communities may offer belonging as well as insight; audience
+  needs vary by community and platform.
+- Vipassana, Anapanasati, yoga, and somatic practices may be relevant themes for
+  selected audiences; this document does not establish their growth rates or
+  mainstream adoption.
+- Some users may seek both psychological language and spiritual meaning. Keep the
+  two epistemic frames distinct rather than treating their overlap as evidence that
+  either validates the other.
 
 ## Key energy gateways 2026
 
 | Gateway                      | Date            | Significance                                                       |
 | :--------------------------- | :-------------- | :----------------------------------------------------------------- |
-| **Lion's Gate**              | 8/8/2026        | Peak activation, the most potent manifestation portal of the year |
-| **Solar and Lunar Eclipses** | Throughout year | Important dates for threshold work, release, and new beginnings    |
-| **Summer Solstice**          | June 21         | Energy transition point, peak aliveness and expansion             |
-| **Winter Solstice**          | December 21     | Energy transition point, the turning toward inner light           |
+| **Lion's Gate**              | 8/8/2026        | A symbolic reflection theme in some spiritual communities; no verified energetic effect |
+| **Solar and Lunar Eclipses** | Throughout year | Astronomical events that may be used as optional reflection prompts, not evidence of energetic influence |
+| **Summer Solstice**          | June 21         | Astronomical seasonal marker; may serve as a metaphor for transition |
+| **Winter Solstice**          | December 21     | Astronomical seasonal marker; may serve as a metaphor for rest and renewal |
 
 These gateways are opportunities for themed content, community rituals, and reflective
 exercises aligned with the collective energy cycle.
 
 ## System evolution framework
 
-SoulMap is designed to evolve alongside its users through **Reflective Learning**:
+A future **Reflective Learning** capability could improve response guidance through
+evaluated feedback. The following describes a planning assumption, not a verified
+deployed learning system:
 
 - Rather than mimicking user behavior, the system analyzes interaction patterns to
   identify its own communication blind spots and opportunities for deeper inquiry
@@ -71,9 +88,11 @@ SoulMap is designed to evolve alongside its users through **Reflective Learning*
   answers
 - Dynamic adjustment of challenge intensity based on the user's detected emotional state
 
-**Quarterly Expert Review:** Anonymized interaction logs are reviewed by a council of
-psychology and spiritual experts to ensure responses remain aligned with core ethical
-principles and do not drift into ungrounded territory.
+**Quarterly Expert Review (ASPIRATIONAL):** A future review process could use
+appropriately governed, privacy-protective evaluation material and qualified
+independent reviewers. The repository does not currently establish that anonymized
+interaction logs are collected or reviewed by an expert council. Do not describe
+this review as an operating process.
 
 ## Ecosystem integration roadmap
 
