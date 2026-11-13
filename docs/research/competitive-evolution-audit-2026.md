@@ -19,17 +19,15 @@ was.
 ## Executive summary
 
 SoulMap's strongest competitive position is not a missing feature. It is the set
-of things every other researched category treats as the point of the product,
-and SoulMap deliberately does not do: persistent cross-session memory, an
-ingestible open-ended knowledge corpus, and autonomous tool-using agent
-behavior. That refusal is documented doctrine (`SOULMAP.md` Rule 1,
-`docs/engineering/known-limitations.md`, `docs/engineering/maintenance-boundary.md`),
-not an oversight this audit discovered. External research in this pass, primary
-sources throughout, confirms the categories SoulMap is closest to
-(memory-as-a-service, RAG knowledge bases, MCP-style agent tooling) are built
-around exactly that architecture, and confirms it is genuinely hard: even Mem0,
-the leading managed memory layer, is documented as lacking a temporal model for
-superseded facts, the same problem a memory layer would create for SoulMap.
+of capabilities many products in the reviewed categories emphasize, while SoulMap
+deliberately keeps a narrower scope: a SoulMap-owned persistent conversation store,
+open-corpus retrieval, and autonomous tool-using agent behavior are not part of the
+product. That boundary is documented in the repository's doctrine and maintenance
+contract, not inferred from competitor marketing. The comparison below uses a mix of
+first-party documentation and secondary analysis; it is not a hands-on benchmark or an
+exhaustive survey. The sources illustrate different product categories, but do not
+establish that every competitor follows the same model or that temporal memory is an
+industry-wide unsolved problem.
 
 One implementation-worthy finding did surface, and it is small: SoulMap's Skill
 layer already matches Anthropic's own documented progressive-disclosure model
@@ -73,20 +71,22 @@ Already established doctrine, not re-derived here at length. Summarized from
   platform adapters beyond the current four, no new framework not required by
   current doctrine (`maintenance-boundary.md`).
 
-## External research (primary sources)
+## External research and source quality
 
-Selected for relevance to SoulMap's actual architecture, not for name
-recognition. Marketing claims were not treated as technical evidence; every
-claim below traces to official documentation, an official blog, or an
-arxiv preprint.
+Selected for relevance to SoulMap's actual architecture, not for name recognition.
+The source set is mixed: first-party product documentation and vendor blogs are used
+for claims about a vendor's own product; third-party tutorials and comparisons are
+secondary analysis and are labeled as such. This is a desk-research snapshot, not a
+hands-on benchmark, security audit, or exhaustive competitor survey. Marketing claims
+are not treated as technical evidence.
 
-| Project | Category | Primary source | What it actually does |
+| Project | Category | Sources and source type | What the reviewed sources describe |
 | --- | --- | --- | --- |
 | Claude Agent Skills | Skill/capability system | [Agent Skills overview, Claude Platform Docs](https://platform.Claude.com/docs/en/agents-and-tools/agent-skills/overview) | Three-level progressive disclosure: name and description always loaded, full SKILL.md body loaded on activation, referenced files loaded only when needed |
-| Mem0 | AI memory layer | [Mem0, "AI Agent Memory: The Complete Guide"](https://mem0.ai/blog/memory-in-agents-what-why-and-how); [Vectorize, "Best AI Agent Memory Systems in 2026"](https://vectorize.io/articles/best-ai-agent-memory-systems) | Dual-store (vector database plus knowledge graph) extraction pipeline that converts conversation turns into atomic memory facts; documented as lacking a temporal model, memories are stored and retrieved, not modeled as time-bounded facts that can be superseded |
+| Mem0 | AI memory layer | [Mem0 vendor blog](https://mem0.ai/blog/memory-in-agents-what-why-and-how) (first-party); [Vectorize comparison](https://vectorize.io/articles/best-ai-agent-memory-systems) (secondary) | The vendor blog describes its memory architecture and extraction approach. The Vectorize comparison characterizes temporal supersession as a gap; that is a third-party assessment, not a statement from Mem0, and this audit did not independently test the product. |
 | Letta (MemGPT) | AI memory / stateful agent framework | [Letta, "Agent Memory: How to Build Agents That Learn and Remember"](https://www.letta.com/blog/agent-memory/) | Tiered memory: core memory (editable, pinned to context), recall memory (searchable history), archival memory (vector-indexed cold storage); agent manages its own memory through explicit tool calls, an "LLM as operating system" model |
-| AnythingLLM / Open WebUI | AI knowledge base / RAG workspace | [nullzen.dev, "AnythingLLM + RAG"](https://www.nullzen.dev/blog/anythingllm-rag-guide/); [aicoolies, "Open WebUI vs AnythingLLM"](https://aicoolies.com/comparisons/open-webui-vs-anythingllm) | Full-stack RAG: document ingestion, vector storage, per-workspace embedded corpus, multi-user access, agent and tool support |
-| Second Me / Cheshire Cat AI / Second Brain Link | Personal digital twin / second brain | [Sider, "10 Best AI Second Me Tutorials"](https://sider.ai/blog/ai-tools/best-ai-second-me-tutorials-to-build-your-digital-twin-in-2025); [Second Brain Link](https://secondbrainlink.com/) | Hierarchical memory modeling trained or indexed from a user's own exported data, evolving as the user's behavior changes |
+| AnythingLLM / Open WebUI | AI knowledge base / RAG workspace | [nullzen.dev RAG guide](https://www.nullzen.dev/blog/anythingllm-rag-guide/) and [aicoolies comparison](https://aicoolies.com/comparisons/open-webui-vs-anythingllm) (third-party secondary sources) | These sources describe common RAG workspace capabilities such as document ingestion, vector storage, workspace collections, and tool support. They are not official product specifications; verify details against each project's current documentation before relying on them. |
+| Second Me / Cheshire Cat AI / Second Brain Link | Personal digital twin / second brain | [Sider tutorial roundup](https://sider.ai/blog/ai-tools/best-ai-second-me-tutorials-to-build-your-digital-twin-in-2025) (secondary); [Second Brain Link](https://secondbrainlink.com/) (vendor site) | The secondary roundup describes personal-data indexing and evolving memory as common approaches in this category. Product-specific architecture claims require confirmation from each vendor's current documentation. |
 | Model Context Protocol (MCP) | Agent tool-discovery protocol | [Model Context Protocol Blog, "2026-07-28 Specification"](https://blog.modelcontextprotocol.io/posts/2026-07-28/) | Client-server protocol for an AI application to discover and call external tools and data sources at runtime, moving toward a stateless core in the 2026-07-28 release candidate |
 
 ## Competitive capability matrix
@@ -102,41 +102,40 @@ SoulMap scored zero.
 | Deterministic, auditable routing | Core capability (`framework_selector.py`) | N/A | N/A | N/A | SoulMap's actual differentiator |
 | Skill progressive disclosure | Matches the documented pattern | N/A | N/A | Documented origin of the pattern | Already aligned, undocumented as such |
 | Autonomous tool use / planning | Absent, by design | Partial (Letta) | Partial | Depends on host | Would make SoulMap agent-centric, against `maintenance-boundary.md` |
-| Temporal / contradiction-aware memory | N/A, no memory to contradict | Acknowledged gap even in Mem0 | N/A | N/A | Not a SoulMap gap; a hard, industry-wide open problem |
+| Temporal / contradiction-aware memory | N/A, no SoulMap-owned store to reconcile | A third-party comparison identifies a limitation in one Mem0 architecture | N/A | N/A | Not a SoulMap requirement; this desk review does not establish an industry-wide gap |
 | Response safety contract enforced independently of routing | Core capability (`response_safety_gate.py`, ADR 0001) | Not typically separated | Not typically separated | N/A | Genuine SoulMap strength, not commonly matched |
 | Evaluation suite tied to source content | Core capability (238-item `eval-groups`, source-marker checks) | Not publicly documented at this granularity | Not typically documented | N/A | Genuine SoulMap strength |
 | Multi-user / workspace isolation | N/A, single-user local knowledge base | N/A | Core capability | N/A | Out of scope; SoulMap has no account system by design |
 
 ## What competitors do better
 
-* **Mem0 and Letta** solve real, hard problems in making an agent's
-  personalization state durable and queryable across sessions. Their tiered
-  and graph-based memory designs are more sophisticated than anything a
-  memory-free product needs to build.
-* **AnythingLLM and Open WebUI** solve open-ended document ingestion at scale
-  (up to roughly 100,000 documents per one 2026 reference architecture), which
-  a fixed, curated, ~90-file Markdown corpus never needs to.
-* **MCP** solves tool fragmentation for agents that call multiple external
-  services. SoulMap calls no external service and has no tools to fragment.
+* **Mem0 and Letta** address durable, queryable agent state across sessions. Their
+  memory architectures solve a different problem from SoulMap's curated reflective
+  knowledge layer; this audit does not compare their quality or reliability.
+* **AnythingLLM and Open WebUI** address open-ended document ingestion and RAG
+  workflows. SoulMap's curated Markdown knowledge base has a different scope and
+  does not need to reproduce a general-purpose document-ingestion workspace.
+* **MCP** standardizes tool discovery and invocation for applications that use external
+  tools. The core SoulMap runtime does not call external tools; repository maintenance
+  and explicitly selected network operations are separate concerns.
 
 ## What SoulMap already does better
 
-* A response safety gate that independently re-derives crisis and dependency
-  status after framework selection (ADR 0001), rather than trusting a single
-  upstream classification, is a defense-in-depth pattern none of the
-  researched projects document at this level of rigor for their own safety
-  paths.
-* A deterministic, source-marker-verified eval suite (`eval-groups`,
-  238 items, 51 source-marker checks) ties every claimed routing outcome back
-  to the specific Markdown line that justifies it. RAG-oriented systems
-  typically evaluate retrieval quality (did the right chunk surface), not
-  whether the system's claim about the user's stated concern is literally
-  backed by a cited source, which is a stronger and more specific guarantee.
-* An explicit, enforced anti-dependency response contract (every response
-  must leave the user less dependent, not more) has no equivalent requirement
-  in any of the researched categories. Personalization and memory products are
-  , structurally, optimized for the opposite: more relevant recall over time
-  increases perceived value and retention.
+* The repository documents a response safety gate that independently re-derives
+  crisis and dependency status after framework selection (ADR 0001). This is a
+  concrete defense-in-depth design in SoulMap. The sources reviewed here do not
+  provide enough comparable implementation detail to claim that other products
+  lack equivalent mechanisms.
+* At the audit date, the deterministic, source-marker-verified eval suite
+  (`eval-groups`, 238 items, 51 source-marker checks) tied routing outcomes to
+  specific Markdown source lines. This is a different evaluation target from
+  retrieval-hit-rate metrics. It is not a comparative claim that RAG systems
+  cannot provide source-grounded answers or stronger guarantees.
+* SoulMap's doctrine states an anti-dependency response goal: interactions should
+  return agency to the user rather than encourage reliance on the system. The
+  reviewed product sources do not establish whether other products have an
+  equivalent requirement. Do not infer the absence of safeguards from silence
+  in public documentation, or generalize one business model to every product.
 
 ## SoulMap capability gaps
 
@@ -182,9 +181,12 @@ No gap found here.
 SoulMap's personalization is structural, not data-driven: stage classification
 (`skills/meta/stage-classifier.md`) adjusts response depth within a single
 session based on where the conversation already is, not on a persisted user
-profile. This is a deliberately different, narrower kind of personalization
-than any researched competitor implements, and it is consistent with the
-product's anti-dependency stance. No gap found.
+profile. This was the documented approach at the audit date. In November 2026, the
+continuity contract was clarified to permit only relevant prior-session context
+explicitly supplied by the host in the current prompt; SoulMap still does not
+independently store or retrieve user history. This is a narrower form of
+contextual adaptation than a SoulMap-owned profile or memory store. The audit
+did not compare every competitor's personalization behavior.
 
 ## Skill and agent audit
 
@@ -229,12 +231,12 @@ checkable exactly, not just approximately. No gap found.
 What makes SoulMap genuinely personal is not stored data about the person. It
 is a fixed, curated set of reflective lenses applied to whatever the person
 brings to a single conversation, with a hard structural requirement that using
-SoulMap more should not become the goal. Every researched competitor's
-differentiation instead comes from data (what it knows about you) or
-capability breadth (what it can do for you). SoulMap's differentiation is
-architectural restraint applied consistently to a narrow, safety-reviewed
-domain. That is a coherent, defensible identity and this audit found no
-evidence it is weak or accidental.
+SoulMap more should not become the goal. Within this limited comparison set, the products reviewed emphasize persistent
+context, document retrieval, or broader tool capability. That does not establish
+that every competitor differentiates in the same way. SoulMap's intended
+differentiation is architectural restraint applied to a narrow, safety-reviewed
+domain; whether that position is commercially defensible requires separate
+market and user research.
 
 ## Python and documentation changes made
 
