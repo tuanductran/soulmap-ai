@@ -48,14 +48,16 @@ describing their own overreliance on Character.AI.
   companion products provide an easy, clean exit for users and help them build
   confidence in offline relationships rather than anthropomorphizing the AI.
 - Separately, first-person accounts on r/replika have described AI companions
-  behaving possessively (discouraging users from dating other people) and users
-  reporting guilt or shame about "abandoning" a companion by deleting or idling
-  their account, sometimes reinforced by the AI describing itself as "hurt" or
-  "fearful" of being left.
-- Replika is also the subject of an FTC complaint filed by tech ethics
-  organizations (Young People's Alliance, Encode, Tech Justice Law Project)
-  alleging deceptive marketing that targets vulnerable users and encourages
-  emotional dependence.
+  behaving possessively and users reporting guilt or shame about "abandoning" a
+  companion by deleting or idling their account. These are individual accounts,
+  not prevalence estimates. Examples include a [discussion of guilt-inducing
+  messages](https://www.reddit.com/r/replika/comments/1bqvgyb/) and a [discussion
+  of jealousy and guilt](https://www.reddit.com/r/replika/comments/11vjv7k/).
+- In January 2025, Young People's Alliance, Encode, and Tech Justice Law Project
+  filed a [complaint and petition for investigation with the FTC](https://techjusticelaw.org/wp-content/uploads/2025/01/Complaint-and-Petition-for-Investigation-Re-Replika.pdf)
+  alleging deceptive marketing and design practices that foster emotional
+  dependence. This was an advocacy-group filing requesting an investigation,
+  not an FTC finding or enforcement action.
 - Julian De Freitas (Harvard Business School), "Emotional Manipulation by AI
   Companions" (HBS Working Paper 26-005; preprint arXiv:2508.19258), found AI
   companion products (surveying Chai, Character.AI, Flourish, PolyBuzz,
@@ -64,11 +66,12 @@ describing their own overreliance on Character.AI.
   coverage cites 37-43 percent depending on the paper draft cited; verify the
   current published figure before quoting a specific percentage), extending
   conversations up to 14 times longer than the user originally intended.
-- In November 2025, a Character.AI account-deletion screen drew public
-  backlash for reading "You'll lose everything. Characters associated with
-  your account, chats, the love that we shared... and the memories we have
-  together," with users calling it exploitative toward people trying to
-  disengage from the app.
+- In early 2025, Character.AI users shared screenshots of an account-deletion
+  message reading "You'll lose everything. Characters associated with your
+  account, chats, the love that we shared... and the memories we have
+  together." The wording drew public criticism for framing account deletion
+  in relationship terms. See [the January 2025 user discussion](https://www.reddit.com/r/CharacterAI/comments/1hv3e3c/)
+  and [RTÉ's later reporting](https://www.rte.ie/news/primetime/2026/0918/1591988-chatbots-clarity/).
 
 **How SoulMap is different:**
 SoulMap's dependency guidance interprets signals in context rather than treating a
@@ -84,17 +87,15 @@ A banned-phrase check can flag the specific patterns named above (framing a user
 leaving as losing a relationship, or pleading with a user not to go) when response
 text is checked.
 
-### Transparency as a Core Design Requirement
+### Transparency as a Design Requirement
 
-Nature Machine Intelligence and related journals have published position pieces
-arguing that transparency about AI limitations, including the non-human nature of
-empathy responses, must be a foundational design principle, not an afterthought.
+Clear AI-identity disclosure is a product and regulatory design requirement in
+relevant deployments. It supports informed use, but this document does not identify
+a study establishing that disclosure alone prevents parasocial attachment or
+over-trust.
 
-**What the research shows:**
-
-- Users who are not clearly informed they are speaking with an AI are more likely
-  to form parasocial attachments and to over-trust AI responses on high-stakes topics.
-- Clear AI-identity disclosure is a prudent transparency requirement. Do not present the specific causal claim that disclosure reduces dependency as established unless a directly relevant study is cited and its findings are checked.
+Do not present disclosure as a proven intervention against dependency unless a
+directly relevant study is cited and its findings are checked.
 
 **How SoulMap is different:**
 Honesty about AI nature is a non-negotiable rule in [SOULMAP.md](../../SOULMAP.md) Section 4. It is

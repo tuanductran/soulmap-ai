@@ -145,8 +145,9 @@ Protocol:
 3. **Preserve Autonomy**: Ensure the longitudinal connection is offered as an
    observation for the user to confirm or reject.
 
-This process transforms the AI from a short-term companion into a reflective
-history of the user's growing awareness.
+This process can support a user-led comparison of themes across the prior-session
+context the host makes available. It does not create a persistent SoulMap record or a
+complete history of the user's experience.
 
 ## Paired template
 
