@@ -285,9 +285,9 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 | Key | Guidance |
 | :--- | :--- |
 | Insufficient data | Continue ordinary reflection when there is not enough shared conversation. An explicit request does not justify inventing themes that the available words do not support. |
-| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit request or one supported longitudinal thread does not require several distinct themes. |
+| Insufficient themes | No grounded theme is available to reflect yet. Continue the standard response rather than inventing a pattern. An explicit cross-session request still requires relevant host-supplied context; one supported longitudinal thread does not require several distinct themes. |
 | Session opening | Across what you've shared today, a few threads have surfaced that feel worth staying with. |
-| Longitudinal opening | The context available here mentions [specific earlier theme]. You are raising something related today; does that connection fit how you see it? |
+| Longitudinal opening | Only after an explicit cross-session request and when relevant host-supplied context is present: The context available here mentions [specific earlier theme]. You are raising something related today; does that connection fit how you see it? |
 | Emotional theme | An emotional thread of |
 | Value theme | Something that seems to matter to you |
 | Conflict theme | A recurring tension around |
