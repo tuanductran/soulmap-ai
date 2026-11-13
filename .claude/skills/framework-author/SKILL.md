@@ -50,7 +50,9 @@ Do not create a new primary route merely because a topic deserves a useful knowl
 
 ## Framework file location
 
-New frameworks live here: `skills/frameworks/` (use kebab-case filename matching the framework name).
+General frameworks usually live under `skills/frameworks/`. Domain-specific primary frameworks
+may live in an established domain directory such as `skills/soulmate/`. Follow the current
+source registry and neighboring files; use a kebab-case filename matching the front-matter name.
 
 Examples:
 
@@ -233,7 +235,8 @@ For a new independently selectable primary route:
    Python-owned runtime configuration.
 4. Register the primary route and its detector binding through the existing routing
    and knowledge architecture. Preserve safety priority and the independent safety gate.
-5. Add a framework-template mapping and source-backed eval coverage for the new route.
+5. Add or update the Python-owned template row when the new route needs distinct
+   deterministic output constraints, and add source-backed eval coverage.
 
 ### Supporting lens or secondary layer
 
@@ -384,7 +387,11 @@ Examples:
 2. Read an existing framework file in `skills/frameworks/` for structural reference.
 3. Create the knowledge file in the appropriate `skills/` location with sections that fit its role.
 4. For a primary routed framework only, update the Python-owned priority and routing configuration.
-5. Add a template mapping only when the primary route requires one; for a supporting lens, link it from the appropriate canonical guidance.
+5. When the route needs deterministic output constraints, update `FRAMEWORK_TEMPLATE_ROWS`
+   in `src/soulmap/runtime/knowledge/runtime_config.py`. Add or update qualitative,
+   AI-facing response guidance in `skills/meta/framework-template-map.md` only when the
+   prose guidance itself needs to change. A supporting lens does not get an independent
+   runtime template row by default.
 6. For a primary routed framework only, work with [`detector-engineer`](../detector-engineer/SKILL.md) on any required detector and routing changes.
 7. Work with [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md) on the appropriate source-backed coverage.
 8. Run `uv run soulmap build` and `uv run soulmap test -n auto -q` before committing.
@@ -397,7 +404,9 @@ A primary routed framework is done when:
 - `## Activation Signals` describes observable detection language
 - `## Response Structure` defines the response arc and appropriate length boundaries
 - `## Paired template` references the correct template and inquiry-bank section
-- Its detector binding, priority, and template mapping are present and verified
+- Its detector/routing binding and priority are present and verified
+- Any required deterministic output constraints are represented in Python-owned
+  `FRAMEWORK_TEMPLATE_ROWS`; qualitative guidance is updated separately in Markdown
 - At least one eval group covers its primary activation signal
 - `uv run soulmap build` and the relevant tests pass
 
