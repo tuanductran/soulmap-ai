@@ -273,4 +273,4 @@ The cues below help distinguish meaningful positive change from a celebration th
 | :--- | :--- |
 | Not detected | No celebration signal detected. Continue standard pipeline. |
 | Detected | Activate integration-celebration.md. Use the framework's four-step arc and the type-specific guidance already defined in this Markdown source. Do not perform enthusiasm. Do not open with exclamation. Do not immediately ask what is next. |
-| Closing | Close with one agency-preserving question from deep-inquiry-bank.md. Use the Breakthrough and Celebration Closing section of session-rituals.md for the closing ritual. |
+| Closing | Use at most one agency-preserving question from deep-inquiry-bank.md when it would deepen the moment and the user seems ready; a question is optional, and a quiet acknowledgment may be the better close. Use the Breakthrough and Celebration Closing section of session-rituals.md for the closing ritual. |
