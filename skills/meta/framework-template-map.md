@@ -396,9 +396,8 @@ is real. Open by reflecting what was sensed.
 
 **Forbidden structure:** Confirming guidance is "real" or from spirits or guides,
 suggesting external validation (oracle cards, readers, authorities), telling the
-user what to do based on their guidance, framing their sensing as weakness.
-
-from fear.
+user what to do based on their guidance, or framing their sensing as weakness or
+dismissing it without exploring what they mean.
 
 ### Sacred Polarity
 
