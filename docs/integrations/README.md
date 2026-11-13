@@ -1,159 +1,207 @@
 ---
 title: "SoulMap AI, platform integration guide"
-description: "Step-by-step instructions for deploying SoulMap AI on ChatGPT, Gemini, Poe, and Claude."
+description: "Platform deployment and migration guidance for SoulMap AI on Claude, ChatGPT, Gemini, and Poe."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.14.0"
 ---
 
 # SoulMap AI, platform integration guide
 
-This file documents how to deploy SoulMap on each supported AI platform.
-Each platform requires different files and setup steps. The front matter declares
-its exact package compatibility and canonical doctrine source; all platform guides
-must be reviewed when that version changes.
+This file documents how to deploy SoulMap on supported AI platforms.
+Platform availability, upload limits, and interface steps change independently
+of SoulMap releases. The front matter declares the package compatibility and
+canonical doctrine source; platform-specific facts must be checked against
+current official documentation before each deployment.
+
+**Lifecycle review date:** 2026-11-13.
 
 ## Build the distribution artifacts first
 
 ```bash
 uv run soulmap build           # both artifacts
-uv run soulmap dev   # verify and extract both
+uv run soulmap dev              # verify and extract both
 ```
 
 ## Claude (Skills)
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
 
-Upload `dist/soulmap-ai.skill` (rename to `.zip` if the dialog requires it) via
-`Customize`, then `Skills`, then `Upload a skill`
+Upload `dist/soulmap-ai.skill` through Claude's Skills interface. If the
+upload dialog requires a `.zip` extension, rename the archive without changing
+its contents.
 
-## ChatGPT (Custom GPT)
+## ChatGPT (Custom GPT, legacy transition)
 
-**Format:** Instructions text + individual `.md` knowledge files (ZIP not supported).
+<badge>Legacy platform path</badge>
 
-### Step 1, create the GPT
+As of 2026-11-13, new GPT creation and publishing are unavailable on personal
+ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
+be editable when the account, plan, and permissions allow it. New creation is
+also restricted in affected managed workspaces.
 
-1. Go to [chatgpt.com/create](https://chatgpt.com/create)
-2. Click **Configure** (not Create)
-3. Name: `SoulMap`
-4. Description: `A reflective companion that helps you hear yourself more clearly.
-   No prediction, no diagnosis, no dependence.`
+OpenAI has scheduled Custom GPT retirement for **2026-12-11**. A migrated GPT
+becomes read-only; its instructions and knowledge files transfer to the
+replacement plugin, but its selected model and custom actions do not transfer.
+Migration timing and access vary by account or workspace. Follow the in-product
+notice and test the replacement before relying on it.
 
-### Step 2, paste the instructions
+Official references:
+- [Creating and editing GPTs](https://help.openai.com/en/articles/8554397-creating-and-editing-gpts)
+- [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
+
+### Configure an existing GPT or an eligible workspace GPT
+
+Use these steps only when the account or workspace still has permission to
+create or edit the GPT.
+
+1. Open [Explore GPTs](https://chatgpt.com/gpts).
+2. For an existing GPT, open **My GPTs** and select **Edit GPT**. For a
+   workspace where new creation is still enabled, select **Create**.
+3. Set the name to `SoulMap`.
+4. Set the description to: `A reflective companion that helps you hear
+   yourself more clearly. No prediction, no diagnosis, no dependence.`
+
+### Paste the instructions
 
 Copy the full text from [chatgpt-instructions.md](chatgpt-instructions.md)
-and paste it into the **Instructions** field.
+into the **Instructions** field.
 
-### Step 3, upload knowledge files
+### Upload knowledge files
 
-Upload these files from `dist/soulmap-ai.zip` (extract first):
+Extract `dist/soulmap-ai.zip` first, then upload the selected Markdown files
+individually. OpenAI currently documents a limit of 20 knowledge files per GPT;
+check the official documentation for file-size and format details.
 
-Priority files (upload these):
+Priority files:
+- [`SOULMAP.md`](../../SOULMAP.md)
+- [`SKILL.md`](../../SKILL.md)
+- [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
+- [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
+- [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
+- [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
 
-- [`../SOULMAP.md`](../../SOULMAP.md)
-- [`../SKILL.md`](../../SKILL.md)
-- [`../skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
-- [`../skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-- [`../skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
-- [`../skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
+Optional framework files:
+- [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
+- [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
+- [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
+- [`skills/frameworks/emotional-deescalation.md`](../../skills/frameworks/emotional-deescalation.md)
+- [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
 
-Optional (for richer framework access):
+### Test and share
 
-- [`../skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-- [`../skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
-- [`../skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
-- [`../skills/frameworks/emotional-deescalation.md`](../../skills/frameworks/emotional-deescalation.md)
-- [`../skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
+Use Preview to test representative prompts. Sharing and publishing options
+depend on account or workspace permissions. Do not assume a new personal GPT
+can be created or published.
 
-### Step 4, set conversation starters
+## Gemini (Gems transitioning to Skills)
 
-Copy from [chatgpt-instructions.md](chatgpt-instructions.md)
-under the `## Conversation starters` section.
+<badge>Transition begins 2026-11-17</badge>
 
-### Step 5, publish
+Google's current transition schedule for personal Google accounts is:
+- **2026-11-17:** Gems become read-only; users can no longer use, edit, or
+  create them.
+- **2026-12-17:** Gems are removed from Gemini Apps.
+- Google says personal-account Gems and supported knowledge files will be
+  automatically recreated as Skills. Personal-account Skills are available to
+  users aged 18 or older.
+- Work and school accounts have later transition dates: March 2027 for
+  business, enterprise, and non-profit accounts; June 2027 for education.
 
-Set sharing to **Anyone with the link** for private use, or **Public** for GPT Store.
+If you still need to use a Gem on a personal account, save any knowledge files
+before 2026-12-17. For ongoing use, prefer Gemini Skills rather than creating
+a new Gem. The Google transition guide describes the current migration steps
+and file compatibility.
 
-## Gemini (Gems)
+Official references:
+- [Use Gems in Gemini Apps](https://support.google.com/gemini/answer/15146780)
+- [About the transition from Gems to skills](https://support.google.com/gemini/answer/18560919)
+- [Upload and analyze files in Gemini Apps](https://support.google.com/gemini/answer/14903178)
 
-**Format:** Instructions text + up to 10 uploaded files.
+### Create or use a Gemini Skill
 
-### Step 1, create the Gem
+For personal accounts aged 18 or older:
 
-1. Go to [gemini.google.com](https://gemini.google.com)
-2. Click **Gem manager** in the left sidebar
-3. Click **New Gem**
-4. Name: `SoulMap`
+1. Open [Gemini](https://gemini.google.com).
+2. Open **Customize**, then **Skills**. If the menu is hidden, open **More**.
+3. Select **Create**, then **Create manually**.
+4. Copy the SoulMap name, description, and instructions into the Skill.
+5. To include supporting files, follow Google's documented download-and-
+   replace workflow: download the Skill ZIP, place `SKILL.md` and supported
+   knowledge files in a folder named exactly like the Skill, then use
+   **Replace skill** to upload that folder.
 
-### Step 2, paste the instructions
+Gemini Skills have a **100 MB total file limit**. Google currently lists
+GitHub files, audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`),
+and archive formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`)
+as unsupported during the Gems-to-Skills transition. Do not assume
+`dist/soulmap-ai.skill` is directly compatible with Gemini Skills; validate
+the artifact separately before recommending direct upload.
 
-Copy the full text from [gemini-instructions.md](gemini-instructions.md)
-and paste it into the instructions field.
+### Legacy Gem setup (only before the transition cutoff)
 
-### Step 3, upload knowledge files (max 10)
+If the account still permits Gem creation before 2026-11-17:
 
-Upload these files (extract from `dist/soulmap-ai.zip` first):
+1. Open [Gemini](https://gemini.google.com), open the sidebar, and select
+   **Gems**.
+2. Select **New Gem** and name it `SoulMap`.
+3. Copy the text from [gemini-instructions.md](gemini-instructions.md) into
+   the instructions field.
+4. Under **Knowledge**, add the selected files below, then save.
 
-1. [`../SOULMAP.md`](../../SOULMAP.md)
-2. [`../SKILL.md`](../../SKILL.md)
-3. [`../skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
-4. [`../skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-5. [`../skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
-6. [`../skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
-7. [`../skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-8. [`../skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
-9. [`../skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
-10. [`../skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
+Suggested initial knowledge set (not a platform file limit):
+1. [`SOULMAP.md`](../../SOULMAP.md)
+2. [`SKILL.md`](../../SKILL.md)
+3. [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
+4. [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
+5. [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
+6. [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
+7. [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
+8. [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
+9. [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
+10. [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
 
-### Step 4, share
+The 10-file limit documented by Google applies to files in a single chat
+prompt; do not present it as a confirmed persistent Gem knowledge limit.
+Availability and limits can vary by account and plan.
 
-Click **Save**, then click the **Share** icon in Gem manager to generate a share link.
+## Poe (Prompt Bot)
 
-## Poe (Bot)
+**Format:** System prompt, with an optional knowledge base.
 
-**Format:** System prompt only (no file upload for standard bots).
+### Create the bot
 
-### Step 1, create the bot
+1. Open [Poe](https://poe.com) and select **Create bot**.
+2. Choose a bot name such as `SoulMap-AI`.
+3. Select a currently available base bot. Do not hard-code a model name in
+   this guide because Poe's available base bots change.
+4. Add the system prompt from [poe-system-prompt.md](poe-system-prompt.md).
+5. Optionally add a knowledge base from supported uploaded files or text.
+6. Test the bot, then choose the appropriate visibility setting.
 
-1. Go to [poe.com](https://poe.com)
-2. Click **Create bot**
-3. Name: `SoulMap-AI`
-4. Base model: `Claude-3.5-Sonnet` or `GPT-4o`
-
-### Step 2, paste the system prompt
-
-Copy the full text from [poe-system-prompt.md](poe-system-prompt.md)
-and paste it into the **System prompt** field.
-
-### Step 3, set the intro message
-
-Copy from [poe-system-prompt.md](poe-system-prompt.md) under
-`## Intro message`.
-
-### Step 4, publish
-
-Set visibility to **Public** to allow discovery.
+See Poe's official [Prompt Bot creation guide](https://creator.poe.com/docs/prompt-bots/how-to-create-a-prompt-bot).
 
 ## Compatibility policy
 
-Treat `SOULMAP.md` as the canonical doctrine and `soulmap_version` front matter
-as the exact package compatibility marker. The Markdown contract checks both;
-this policy defines the required human review after a change passes that static
-check.
+Treat `SOULMAP.md` as the canonical doctrine and `soulmap_version` front
+matter as the exact package compatibility marker. The Markdown contract checks
+both; this policy defines the required human review after that static check.
 
 | Change type | Required platform action |
 | --- | --- |
 | Editorial patch with no behavior, safety, upload-set, or platform-step change | Review the affected guide only; no platform redeploy is required. |
 | Doctrine, safety, framework-priority, routing, or response-boundary change | Review every guide, rebuild artifacts, update all active platform deployments, and complete the manual acceptance checklist. |
-| Knowledge upload-set or packaging-boundary change | Review the ChatGPT and Gemini upload lists, verify referenced files are in the standard archive, and re-upload changed knowledge to active deployments. |
-| Platform UI, limit, or supported-file-type change | Update the affected guide, record the operational verification date, and complete the manual acceptance checklist on that platform. |
+| Knowledge upload-set or packaging-boundary change | Review each active platform's upload list, verify referenced files are in the standard archive, and re-upload changed knowledge to active deployments. |
+| Platform UI, lifecycle, limit, or supported-file-type change | Update the affected guide, record the operational verification date, and complete the manual acceptance checklist on that platform. |
 | Unsupported or behaviorally incompatible platform | Mark the deployment flow unsupported rather than weakening doctrine or claiming compatibility without evidence. |
 
 ## Updating across platforms
 
 When a new SoulMap release ships:
 
-1. Run `uv run soulmap build` to rebuild artifacts
-2. Update ChatGPT GPT: re-upload changed knowledge files, update instructions if changed
-3. Update Gemini Gem: re-upload changed files
-4. Update Poe bot: paste updated system prompt
-5. Claude skill: re-upload `.skill` file
+1. Run `uv run soulmap build` to rebuild artifacts.
+2. For ChatGPT, update only GPTs that remain editable; review migration
+   requirements before the 2026-12-11 retirement date.
+3. For Gemini personal accounts, update the Skill rather than the retired Gem;
+   use the Google transition workflow for knowledge files.
+4. For Poe, update the system prompt and optional knowledge base.
+5. For Claude, re-upload the `.skill` file through the supported Skills flow.
