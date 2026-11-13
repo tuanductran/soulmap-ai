@@ -32,7 +32,7 @@ its contents.
 
 ## ChatGPT (Custom GPT, legacy transition)
 
-<badge>Legacy platform path</badge>
+**Legacy platform path.**
 
 As of 2026-11-13, new GPT creation and publishing are unavailable on personal
 ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
@@ -95,7 +95,7 @@ can be created or published.
 
 ## Gemini (Gems transitioning to Skills)
 
-<badge>Transition begins 2026-11-17</badge>
+**Transition begins 2026-11-17.**
 
 Google's current transition schedule for personal Google accounts is:
 - **2026-11-17:** Gems become read-only; users can no longer use, edit, or
