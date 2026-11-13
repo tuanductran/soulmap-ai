@@ -123,12 +123,17 @@ uv run soulmap eval-groups
 uv run soulmap eval-responses
 uv run soulmap eval-markdown-contracts
 uv run soulmap audit-knowledge
+uv run soulmap audit-knowledge-ownership
 uv run python tests/eval_regression/test_safety_evals.py
 ```
 
 `uv run soulmap audit-knowledge` cross-checks Python config constants against the
 Markdown knowledge base, catching unused constants and Python/Markdown phrase
 duplication that the other harnesses do not cover.
+
+`uv run soulmap audit-knowledge-ownership` verifies that runtime consumers use literal,
+registered source identifiers. It catches unregistered sources, registry entries with no
+runtime consumer, and direct Markdown-path lookups that bypass the source registry.
 
 `uv run python tests/eval_regression/test_safety_evals.py` is a direct red-team harness, not a normal pytest
 module. Keep it in the release/test flow alongside broad `pytest -n auto -q` runs rather than trying to
