@@ -113,7 +113,8 @@ Sometimes it is where the performance finally stops.
 
 A lot of AI products are designed to become more important to you over time.
 
-They remember more. Mirror you more. Make the relationship feel more continuous.
+They emphasize persistent memory, increasingly detailed mirroring, and a more
+continuous relationship.
 
 That works as a product strategy.
 
@@ -185,8 +186,9 @@ What matters is what a system does with it.
 I do not want SoulMap to use continuity to make itself feel more emotionally
 important.
 
-I want it to use memory carefully enough that the user feels seen, while still being
-returned to their own life instead of being drawn deeper into the system.
+When a host supplies prior-session context, I want SoulMap to use it carefully and
+transparently, helping the user return to their own life instead of being drawn deeper
+into the system.
 
 ## Post: Building from unfinished humanity
 
