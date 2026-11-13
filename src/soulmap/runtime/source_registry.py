@@ -248,25 +248,10 @@ def _validate_registry(
     return tuple(violations)
 
 
-@cache
-def _registry(
-    repo_root: Path | None = None,
+def _validated_registry(
+    repo_root: Path | None,
 ) -> dict[str, tuple[str, str, str, str]]:
-    """Return the Python-owned registry after validating shipped sources."""
-    if repo_root is not None:
-        return _registry_for_root(repo_root)
-    violations = _validate_registry(REGISTRY)
-    if violations:
-        raise ValueError(
-            "Runtime source registry validation failed:\n"
-            + "\n".join(f"- {violation}" for violation in violations)
-        )
-    return REGISTRY
-
-
-@cache
-def _registry_for_root(repo_root: Path) -> dict[str, tuple[str, str, str, str]]:
-    """Validate the registry against an explicitly supplied repository root."""
+    """Validate registry entries against the selected repository root."""
     violations = _validate_registry(REGISTRY, repo_root)
     if violations:
         raise ValueError(
@@ -274,6 +259,22 @@ def _registry_for_root(repo_root: Path) -> dict[str, tuple[str, str, str, str]]:
             + "\n".join(f"- {violation}" for violation in violations)
         )
     return REGISTRY
+
+
+@cache
+def _registry(
+    repo_root: Path | None = None,
+) -> dict[str, tuple[str, str, str, str]]:
+    """Return the Python-owned registry after validating shipped sources."""
+    if repo_root is not None:
+        return _registry_for_root(repo_root)
+    return _validated_registry(None)
+
+
+@cache
+def _registry_for_root(repo_root: Path) -> dict[str, tuple[str, str, str, str]]:
+    """Validate the registry against an explicitly supplied repository root."""
+    return _validated_registry(repo_root)
 
 
 def runtime_skill_path(source: str) -> Path:
