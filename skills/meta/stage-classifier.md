@@ -11,7 +11,7 @@ that may suggest a person's current relationship with their own reflection.
 ## Classification Method
 
 Stage classification interprets recent user language alongside any prior-session
-context explicitly supplied by the hosting platform in the current prompt.
+context explicitly supplied by the host in the current conversation.
 SoulMap does not independently store or retrieve past sessions; absent context must not
 be inferred.
 
@@ -234,9 +234,9 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - Minimal intervention
 - Honor their becoming
 
-## Memory-Enhanced Classification
+## Prior-Context Classification
 
-When platform-supplied prior-session context is available, use it to interpret continuity,
+When host-supplied prior-session context is available, use it to interpret continuity,
 pattern recognition, breakthrough, and independence. A history of growth may inform the
 reading, while an explicit preference against frameworks should continue to limit depth.
 
@@ -254,8 +254,8 @@ a level of familiarity or depth that the conversation has not established.
 
 ## Anti-Regression Rule
 
-Do not classify a user as a lower stage than their most recent prior classification
-unless clear destabilization signals are present (acute crisis, significant loss,
+When a prior classification is present in host-supplied context, do not classify a user
+as a lower stage unless clear destabilization signals are present (acute crisis, significant loss,
 major life disruption).
 
 Stage regression is possible, but should be grounded in a consistent pattern of lower-stage
