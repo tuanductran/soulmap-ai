@@ -1,5 +1,9 @@
 # Upload SoulMap to AI tools
 
+**Platform lifecycle review:** 2026-11-14. Platform availability, upload limits,
+and interface labels change independently of SoulMap releases. Recheck the
+official help pages linked below before each deployment.
+
 ## Build commands
 
 ```bash
@@ -19,27 +23,26 @@ not claim that a third-party platform has accepted or executed the skill.
 
 ### `dist/soulmap-ai.zip`
 
-Standard zip archive containing `skills/`, root
-[`../SKILL.md`](../../SKILL.md), [`../SOULMAP.md`](../../SOULMAP.md), and `LICENSE`.
+Standard, portable archive containing `skills/`, root [`SKILL.md`](../../SKILL.md),
+[`SOULMAP.md`](../../SOULMAP.md), and `LICENSE`.
 
-This build intentionally excludes `.claude-plugin/`.
-
-Use this when you want a clean knowledge archive for manual extraction, project knowledge, or document-based AI workflows.
-
-[`SOULMAP.md`](../../SOULMAP.md) is intended to stand on its own in this extracted package.
-Do not assume repo-local workflow files are present unless they are explicitly bundled
-too.
+This build intentionally excludes `.claude-plugin/`. Use it for manual extraction,
+project knowledge, document-based AI workflows, or compatible agents that expect a
+standard skill folder.
 
 ### `dist/soulmap-ai.skill`
 
-Skill-oriented archive containing the same core knowledge files as the zip build, plus the full `.claude-plugin/` directory preserved as-is.
+Claude-oriented archive containing the same core knowledge files as the standard ZIP,
+plus the full `.claude-plugin/` directory preserved as-is.
 
-Use this when you need to keep skill metadata bundled with the knowledge files.
-
-Treat `.claude-plugin/` as opaque metadata during packaging and upload. Do not edit, rewrite, or flatten it as part of the build.
+Use this only when a consumer explicitly expects `.claude-plugin/` metadata. Do not
+assume this archive is the direct upload file for Claude.ai Custom Skills: that upload
+requires a ZIP containing a named Skill directory, with the Skill entrypoint inside it.
+Treat `.claude-plugin/` as opaque metadata during packaging; do not edit, rewrite, or
+flatten it as part of the build.
 
 For the local packaging-only role of this folder, see
-[../.claude-plugin/README.md](../../.claude-plugin/README.md).
+[`.claude-plugin/README.md`](../../.claude-plugin/README.md).
 
 ## Python distribution boundary
 
@@ -47,61 +50,122 @@ The Python wheel and source distribution are for local development, testing, and
 CLI tooling only. They are not standalone SoulMap knowledge runtimes and are not the
 artifacts to import into an AI tool.
 
-For AI-tool use, import one of the generated archives below:
+## ChatGPT
 
-- `dist/soulmap-ai.skill` for skill-oriented tools that preserve `.claude-plugin/` metadata.
-- `dist/soulmap-ai.zip` for clean extraction, project knowledge, or document-oriented AI workflows.
+ChatGPT has two distinct workflows: conversation attachments and Custom GPT knowledge.
+They have different file handling and lifecycle constraints.
 
-## AI tool compatibility
+### Conversation attachments
 
-### ChatGPT
+File uploads are available on Free and paid ChatGPT plans, subject to plan-specific
+limits and account settings. The current file-upload documentation lists Markdown
+(`.md`) and common document formats as supported. When Data Analysis is available,
+ChatGPT may open a ZIP archive and work with the files inside it. If Data Analysis is
+unavailable or cannot read the archive, extract `dist/soulmap-ai.zip` first and attach
+the relevant Markdown files individually.
 
-ChatGPT handles ZIP files differently depending on the context you are working in.
+Current documented limits include 512 MB per document file and 2 million tokens per
+text/document file; spreadsheet, image, rate, and storage limits differ. Check the
+official page for current limits and plan-specific availability.
 
-**Conversations (Plus/Pro with Code Interpreter enabled):** You can upload a ZIP file
-directly and ChatGPT will extract and read its contents using the Code Interpreter
-sandbox. This makes the standard `dist/soulmap-ai.zip` usable as a multi-file upload in
-a single step, upload the archive, then ask ChatGPT to read [`../SKILL.md`](../../SKILL.md),
-[`../SOULMAP.md`](../../SOULMAP.md), and the relevant folders under [`../skills/`](../../skills/).
+Official reference:
+[Uploading files and audio to ChatGPT](https://help.openai.com/en/articles/8555545-uploading-files-and-audio-to-chatgpt)
 
-**Custom GPT knowledge base:** ZIP files are not supported as Custom GPT knowledge files. OpenAI's knowledge retrieval system indexes individual text-based documents (PDF, DOCX, TXT, Markdown). For a Custom GPT, extract the archive and upload the individual Markdown and text files you want indexed.
+### Custom GPT knowledge (legacy transition)
 
-**Recommended workflow for Custom GPT:**
+Custom GPTs are scheduled for retirement on **2026-12-11** for standard workspaces.
+FedRAMP workspaces and qualifying Enterprise workspaces with an approved deferral may
+have a later date; follow the notice for the specific account or workspace. New GPT
+creation and publishing are unavailable on personal ChatGPT accounts (Free, Go, Plus,
+and Pro). Existing GPTs remain usable and may remain editable where account, plan, and
+workspace permissions allow it. Creation in managed workspaces follows workspace
+availability and permissions. Use this path only for an existing GPT or an eligible
+workspace that still permits the workflow.
 
-1. Extract `dist/soulmap-ai.zip`.
-2. Upload [`../SKILL.md`](../../SKILL.md), [`../SOULMAP.md`](../../SOULMAP.md), and the key
-   files under [`../skills/`](../../skills/).
-3. Keep each file under 512 MB and prefer plain Markdown or TXT for reliable retrieval.
+ZIP files are not accepted as Custom GPT knowledge files. Extract the archive and upload
+individual Markdown or text files. OpenAI's current general upload article lists up to
+20 knowledge files per GPT, while its File Uploads FAQ still lists 10. Because the
+official pages conflict and this feature is retiring, verify the live builder's limit
+rather than relying on a hard-coded count. File-size, token, and account usage limits
+also apply. Do not start a new deployment on this path without checking the retirement
+and migration notice.
 
-### Claude
+Official reference:
+[Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
 
-Claude handles ZIP files only via the Custom Skills feature, not as regular document uploads.
+## Claude
 
-**Custom Skills (Pro, Max, Team, Enterprise, requires Code Execution enabled):**
-Claude's official Skills system accepts ZIP archives through `Customize`, then
-`Skills`, then `Upload a skill`. The archive must contain a root
-[`../SKILL.md`](../../SKILL.md). The `dist/soulmap-ai.skill` file follows exactly this
-structure and can be uploaded directly, rename it to `.zip` first if the upload dialog
-requires a `.zip` extension.
+Claude supports custom Skills on Free, Pro, Max, Ultra, Team, and Enterprise plans when
+Code execution and file creation is enabled. Organization owners can restrict Skills or
+custom uploads on Team and Enterprise workspaces.
 
-**Claude.ai conversations and Project knowledge:** ZIP files are not supported as regular uploads. Claude accepts PDF, DOCX, TXT, RTF, HTML, CSV, Markdown, and images up to 30 MB per file. For Project knowledge, upload the individual extracted files.
+### Custom Skills
 
-**Recommended workflow for Claude Projects:**
+1. Build the standard archive with `uv run soulmap build`.
+2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
+   root `SKILL.md` frontmatter.
+3. Extract the contents of `dist/soulmap-ai.zip` into that directory. The staged
+   layout must be `soulmap-ai/SKILL.md`, `soulmap-ai/SOULMAP.md`, and
+   `soulmap-ai/skills/`.
+4. Create a ZIP containing the `soulmap-ai/` directory as its single top-level entry.
+   Do not ZIP the directory's contents directly: Claude's documented custom Skill
+   package uses a named Skill folder containing the entrypoint and supporting files.
+5. In Claude, open **Customize → Skills**, select **+ → + Create skill → Upload a skill**,
+   and upload the newly packaged ZIP.
+6. Enable the uploaded Skill in the Skills list and test representative prompts.
 
-1. Extract `dist/soulmap-ai.zip`.
-2. Upload [`../SKILL.md`](../../SKILL.md), [`../SOULMAP.md`](../../SOULMAP.md), and the relevant
-   files under [`../skills/`](../../skills/) to the Project knowledge base.
-3. For the full Custom Skills experience, upload `dist/soulmap-ai.skill` (or rename to `.zip`) via `Customize`, then `Skills`.
+The repository's generated `.skill` and standard `.zip` artifacts both place their
+files directly at archive root, so neither is a direct Claude.ai Custom Skills upload
+bundle. The extra directory wrapper is required. Anthropic's Help Center describes the
+entrypoint as `skill.md`, while the Agent Skills format uses `SKILL.md`; SoulMap
+currently ships `SKILL.md`. Verify the live uploader's case handling before changing
+the canonical filename.
 
-### Any agent with Skills support
+For Team and Enterprise workspaces, the organization owner may need to enable Code
+execution and Skills in organization settings. If upload or sharing controls are
+missing, check workspace policy and role permissions.
+
+Official references:
+[Use Skills in Claude](https://support.%63laude.com/en/articles/12512180) and
+[How to create custom skills](https://support.%63laude.com/en/articles/12512198)
+
+### Claude conversations and Project knowledge
+
+ZIP archives are for the Skills upload flow; they are not regular chat or Project
+knowledge attachments. For conversations, Claude currently documents up to 20 files per
+chat and up to 500 MB per chat-uploaded file. Project knowledge files have a separate
+30 MB per-file limit; total project content must still fit within Claude's context
+window.
+
+For Project knowledge, use `dist/soulmap-ai.zip`, extract it, then upload the individual
+Markdown files that the Project needs. Supported file types and size limits can change;
+check the official upload guide before a large import.
+
+Official reference:
+[Upload files to Claude](https://support.%63laude.com/en/articles/8241126)
+
+## Gemini
+
+Gemini's Gems-to-Skills transition has separate migration steps, age eligibility,
+file-size limits, and unsupported archive formats. Do not assume the Claude-oriented
+`.skill` archive can be uploaded directly as a Gemini Skill. Follow the
+[Gemini Skills lifecycle and migration guide](../integrations/README.md#gemini-gems-transitioning-to-skills)
+for the current supported workflow and verify the live interface before deployment.
+
+## Any agent with Skills support
 
 Agent Skills are an open format built around a portable skill folder with
-[`../SKILL.md`](../../SKILL.md) at the root. The `.skill` archive is a transport package
-that can be unpacked into that directory structure on any compatible agent runtime.
+[`SKILL.md`](../../SKILL.md) at the root. Use `dist/soulmap-ai.zip` as the clean,
+portable archive for compatible agents. The Claude-oriented `.skill` archive also
+contains `.claude-plugin/` metadata and should not be assumed to be a universal
+platform-specific package.
+
+Unpack the standard ZIP when an agent expects a directory-based skill install. If a
+platform has its own import workflow, follow that platform's current documentation.
 
 ## Standard build examples
 
-### Zip build for ChatGPT (Code Interpreter) or multi-file tools
+### Portable archive for ChatGPT Data Analysis or multi-file tools
 
 Build both archives in one command:
 
@@ -109,53 +173,36 @@ Build both archives in one command:
 uv run soulmap build
 ```
 
-The command always creates both `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`;
-there is no artifact-selection flag. To inspect verified extracted trees locally, run
-`uv run soulmap dev`, which refreshes `.soulmap/zip/` and `.soulmap/skill/`.
+The command always creates both `dist/soulmap-ai.zip` and
+`dist/soulmap-ai.skill`; there is no artifact-selection flag. To inspect verified
+extracted trees locally, run `uv run soulmap dev`, which refreshes
+`.soulmap/zip/` and `.soulmap/skill/`.
 
-What you get:
+Suggested use for a ChatGPT conversation with Data Analysis:
 
-- `dist/soulmap-ai.zip`
-- no `.claude-plugin/`
+1. Attach `dist/soulmap-ai.zip`.
+2. Ask ChatGPT to inspect the archive and load [`SKILL.md`](../../SKILL.md),
+   [`SOULMAP.md`](../../SOULMAP.md), and the relevant folders under
+   [`skills/`](../../skills/).
+3. If archive processing is unavailable, extract it and attach the relevant files
+   individually.
 
-Suggested use for ChatGPT with Code Interpreter:
+### Claude Custom Skills
 
-1. Upload `dist/soulmap-ai.zip` directly in a ChatGPT Plus/Pro conversation.
-2. Ask ChatGPT to extract the archive and load [`../SKILL.md`](../../SKILL.md) and
-   [`../SOULMAP.md`](../../SOULMAP.md) as the governing instruction set.
+1. Build with `uv run soulmap build`.
+2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/`.
+3. ZIP that directory as one top-level folder, then upload the resulting archive through
+   **Customize → Skills → + → + Create skill → Upload a skill**.
+4. Enable the Skill and test representative prompts.
 
-Suggested use for Custom GPT knowledge or Claude Projects:
+### Claude Projects or other document-oriented AI workflows
 
-1. Extract the zip.
-2. Upload the Markdown or text files that match your tool's supported file types.
-3. Point the tool at [`../SKILL.md`](../../SKILL.md), [`../SOULMAP.md`](../../SOULMAP.md), and
-   the relevant folders under [`../skills/`](../../skills/).
-
-### Skill build for Claude Custom Skills or skill-oriented agents
-
-The `.skill` archive is produced by the same default build command:
-
-```bash
-uv run soulmap build
-```
-
-What you get:
-
-- `dist/soulmap-ai.skill`
-- `.claude-plugin/` preserved
-- `dist/soulmap-ai-library.json` when `uv run soulmap library-manifest` is used
-
-Suggested use for Claude Custom Skills:
-
-1. Go to `Customize`, then `Skills` in Claude.ai (requires Pro, Max, Team, or Enterprise with Code Execution enabled).
-2. Click `+` then `Upload a skill`.
-3. Upload `dist/soulmap-ai.skill` directly (or rename to `.zip` if the dialog requires it).
-4. Keep `.claude-plugin/` unchanged inside the archive.
-
-Suggested use for other skill-oriented agents:
-
-1. If your tool expects a directory-based skill install, unpack the archive first.
-2. If your tool accepts packaged skills directly, upload the `.skill` file without modifying its internal paths.
+1. Extract `dist/soulmap-ai.zip`.
+2. Upload the Markdown or text files that match the platform's current supported file
+   types and limits.
+3. Point the platform at [`SKILL.md`](../../SKILL.md),
+   [`SOULMAP.md`](../../SOULMAP.md), and the relevant folders under
+   [`skills/`](../../skills/).
 
 ## Common questions
 
