@@ -7,6 +7,15 @@ records the research and the reasoning, not just the conclusion, so a future
 maintainer can see why an idea was accepted or rejected rather than only that it
 was.
 
+## Historical scope
+
+> This report is a research snapshot dated 2026-08-30. Its architecture descriptions and
+> non-goals record the repository as understood during that audit; they are not current
+> implementation or routing instructions. For the current ownership and route model, see
+> [the repository contract](../engineering/repo-contract.md),
+> [the Library/framework boundary](../engineering/library-vs-framework.md), and
+> [the November 2026 runtime ownership follow-up](skills-runtime-ownership-followup-2026-11.md).
+
 ## Executive summary
 
 SoulMap's strongest competitive position is not a missing feature. It is the set
@@ -49,11 +58,13 @@ Already established doctrine, not re-derived here at length. Summarized from
 * **Agent model:** not an agent in the tool-calling sense. `framework_selector.py`
   is a deterministic dispatcher over ~27 named outcomes; it does not plan, does
   not call external tools, and does not decide its own next action.
-* **Architecture invariant:** Library (`src/soulmap/runtime/{knowledge,guards,routing,io,config}/`)
-  is the stable substrate; Framework (`skills/frameworks/<name>.md` plus
-  `<name>_detector.py`) is the swappable unit. A new capability is either a new
-  Framework pair or it does not belong in the runtime.
-* **Non-goals, explicit and current:** no web app, no public API service, no
+* **Architecture model recorded at this audit date:** Library
+  (`src/soulmap/runtime/{knowledge,guards,routing,io,config}/`) was treated as the
+  stable substrate, while a primary Framework was described as a Markdown source plus
+  a detector. That simplified pair model is historical, not a current one-to-one rule:
+  current repository guidance distinguishes primary routed frameworks from supporting
+  lenses and secondary-layer knowledge.
+* **Non-goals recorded at the audit date (2026-08-30):** no web app, no public API service, no
   database layer, no auth/account system, no background jobs, no additional
   platform adapters beyond the current four, no new framework not required by
   current doctrine (`maintenance-boundary.md`).
@@ -182,10 +193,12 @@ Cross-checked against Anthropic's own documented Agent Skills model
 * **Level 2 (full body on activation):** the shipped root `SKILL.md`'s workflow
   sections already point to specific files to read next rather than inlining
   everything. Confirmed already correct.
-* **Level 3 (referenced files on demand):** the Framework-pair pattern
-  (`docs/engineering/library-vs-framework.md`) already treats each
-  `skills/frameworks/<name>.md` as a file loaded only when its detector fires.
-  Confirmed already correct.
+* **Level 3 (referenced files on demand):** the primary-framework pattern
+  described at the audit date treated each routed knowledge source as a file loaded
+  when its route activated. Current file roles are more explicit: primary routes,
+  secondary layers, and supporting lenses are not interchangeable. See
+  `docs/engineering/library-vs-framework.md` for the current rule. This research
+  snapshot is not the route registry.
 
 SoulMap's Skill layer already implements the pattern this research names.
 Nothing in the repository states that alignment explicitly, which is the one
