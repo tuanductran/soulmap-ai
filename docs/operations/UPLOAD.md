@@ -104,9 +104,11 @@ custom uploads on Team and Enterprise workspaces.
 1. Build the standard archive with `uv run soulmap build`.
 2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
    root `SKILL.md` frontmatter.
-3. Extract the contents of `dist/soulmap-ai.zip` into that directory. The staged
-   layout must be `soulmap-ai/SKILL.md`, `soulmap-ai/SOULMAP.md`, and
-   `soulmap-ai/skills/`.
+3. Extract the contents of `dist/soulmap-ai.zip` into that directory. For the
+   Claude-specific staging copy, copy the root `SKILL.md` to `skill.md` (lowercase),
+   because Anthropic's current Custom Skills Help Center specifies `skill.md`. Keep
+   the repository's canonical `SKILL.md` unchanged. The staged layout must be
+   `soulmap-ai/skill.md`, `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
 4. Create a ZIP containing the `soulmap-ai/` directory as its single top-level entry.
    Do not ZIP the directory's contents directly: Claude's documented custom Skill
    package uses a named Skill folder containing the entrypoint and supporting files.
@@ -116,10 +118,10 @@ custom uploads on Team and Enterprise workspaces.
 
 The repository's generated `.skill` and standard `.zip` artifacts both place their
 files directly at archive root, so neither is a direct Claude.ai Custom Skills upload
-bundle. The extra directory wrapper is required. Anthropic's Help Center describes the
-entrypoint as `skill.md`, while the Agent Skills format uses `SKILL.md`; SoulMap
-currently ships `SKILL.md`. Verify the live uploader's case handling before changing
-the canonical filename.
+bundle. The extra directory wrapper and Claude-specific lowercase `skill.md` staging
+copy are required by Anthropic's current Help Center instructions. The repository keeps
+`SKILL.md` as its canonical open-format entrypoint; do not rename the source file or
+change the generated standard artifact just to satisfy this platform-specific upload.
 
 For Team and Enterprise workspaces, the organization owner may need to enable Code
 execution and Skills in organization settings. If upload or sharing controls are
@@ -190,7 +192,8 @@ Suggested use for a ChatGPT conversation with Data Analysis:
 ### Claude Custom Skills
 
 1. Build with `uv run soulmap build`.
-2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/`.
+2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/` and copy
+   `SKILL.md` to `skill.md` inside that staging directory.
 3. ZIP that directory as one top-level folder, then upload the resulting archive through
    **Customize → Skills → + → + Create skill → Upload a skill**.
 4. Enable the Skill and test representative prompts.
