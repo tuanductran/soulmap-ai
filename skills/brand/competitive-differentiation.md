@@ -15,8 +15,8 @@ of a successful interaction. This is a statement about SoulMap's own design, not
 claim that every other companion product shares one internal business model.
 
 The following comparison uses publicly documented product and privacy statements as
-evidence. It is not an independent audit of competitor systems. Product features and
-policies change, so use dated primary sources and do not infer internal motives,
+evidence. It is not an independent audit of competitor systems. **Source snapshot checked:
+2026-11-13.** Product features and policies change, so use dated primary sources and do not infer internal motives,
 engagement metrics, or the absence of safeguards unless a source directly establishes
 the specific claim.
 
@@ -24,8 +24,8 @@ the specific claim.
 
 | Product | What its public documentation says | What this does not establish |
 | :--- | :--- | :--- |
-| Replika | Its [privacy policy](https://replika.com/legal/privacy/en) says conversation data and preferences are processed to provide individualized conversations and allow the companion to learn from interactions. Its [memory help article](https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work) describes memory layers and personalization over time. | This alone does not establish the company's internal engagement metrics, user outcomes, or whether specific safeguards are absent. |
-| Character.AI | Its [privacy policy](https://support.character.ai/hc/en-us/articles/39030432883099-Privacy-Policy) describes using information to operate, improve, and personalize the service. Its [training-data documentation](https://support.character.ai/hc/en-us/articles/47703013822875-Training-Data-Documentation) says user interaction data is among sources used for model development. | These disclosures do not establish that every feature is designed to create dependency or that the product lacks a particular safety mechanism. |
+| Replika | Its [privacy policy](https://replika.com/legal/privacy/en) (last updated 28 October 2026) says conversation data and preferences are processed to provide individualized conversations and allow the companion to learn from interactions. Its [memory help article](https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work) describes layered memories and personalization over time. | This alone does not establish the company's internal engagement metrics, user outcomes, or whether specific safeguards are absent. |
+| Character.AI | Its [privacy policy](https://support.character.ai/hc/en-us/articles/39030432883099-Privacy-Policy) (page updated 29 October 2025) describes use of information to operate, improve, and personalize the service. The [training-data documentation](https://support.character.ai/hc/en-us/articles/47703013822875-Training-Data-Documentation), updated 11 March 2026, lists user text and interaction data among model-development sources. A separate [1 July 2026 policy-update summary](https://support.character.ai/hc/en-us/articles/52413773269019-Update-Privacy-Policy-and-Regional-Privacy-Disclosures) says the policy was updated to explain initial model-training history and that a specific past processing activity is no longer performed; it also describes a user opt-out for training and improvement. Because these sources have different dates and scopes, do not collapse them into a broader claim without rechecking the current binding disclosures. | These disclosures do not establish that every feature is designed to create dependency or that the product lacks a particular safety mechanism. |
 | Pi / Inflection AI | Its [privacy policy](https://pi.ai/privacy), last updated 11 August 2026, describes using information to provide, maintain, improve, and personalize services, and says users may opt out of model training in account settings. | This does not prove that engagement is the sole or primary optimization objective, nor does it establish the absence of dependency safeguards. |
 | SoulMap | SoulMap does not currently provide its own backend or persistent conversation database. Its doctrine explicitly prioritizes user autonomy and reduced dependency. | This is not a claim about the data retention or privacy practices of ChatGPT or any other platform that may host a SoulMap conversation. |
 

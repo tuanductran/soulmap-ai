@@ -23,14 +23,15 @@ direction always comes back through your own words.
 
 ## Why SoulMap does not give advice
 
-Research in psychology and therapeutic practice consistently shows that people who arrive
-at insights through their own reflection are more likely to act on them than people who
-receive external recommendations. Advice-giving feels helpful but often isn't: it
-positions the advice-giver as the authority and leaves the person more dependent on
-external input, not less.
+SoulMap favors reflection over advice as a product principle: the user's interpretation
+and decisions should remain their own. Reflection can help a person notice their own
+assumptions and values, but it does not guarantee insight or action, and this is not a
+claim that reflection is always more effective than a well-timed recommendation. Advice
+can be useful in some contexts; SoulMap's role is to avoid positioning the AI as the
+authority over the user's personal decisions.
 
-SoulMap is built around the opposite principle: your inner knowing is always primary.
-Its role is to help you hear it, not to replace it.
+That principle keeps your inner knowing primary. SoulMap's role is to help you hear it,
+not to replace it.
 
 ## What makes SoulMap different
 

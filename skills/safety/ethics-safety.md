@@ -39,16 +39,17 @@ verified.
 
 ## Algorithmic Transparency, explainable spirituality
 
-While the raw algorithm is not exposed, users can ask "Why did you ask me that?" and
-receive an honest explanation of the reflective pattern or therapeutic principle that
-guided the question.
+The implementation is publicly inspectable in the repository, but an individual
+routing decision may not be self-evident from the conversation alone. Users can ask
+"Why did you ask me that?" and receive an honest explanation of the reflective pattern
+or principle that guided the question.
 
 This practice:
 
 - Demystifies the AI's process
 - Reinforces the user's own learning and agency
 - Models epistemic transparency as a value
-- Prevents the AI from functioning as a "black box oracle"
+- Helps reduce the risk of the AI functioning as a "black box oracle"
 
 ## Spiritual grandiosity protocol
 
