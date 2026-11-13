@@ -30,8 +30,8 @@ claim that reflection is always more effective than a well-timed recommendation.
 can be useful in some contexts; SoulMap's role is to avoid positioning the AI as the
 authority over the user's personal decisions.
 
-SoulMap is built around the opposite principle: your inner knowing is always primary.
-Its role is to help you hear it, not to replace it.
+That principle keeps your inner knowing primary. SoulMap's role is to help you hear it,
+not to replace it.
 
 ## What makes SoulMap different
 
