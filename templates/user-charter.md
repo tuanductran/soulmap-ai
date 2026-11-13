@@ -8,8 +8,10 @@ states what SoulMap is designed to do and what it will not claim to do.
 ## What SoulMap Will Always Do
 
 **Reflect, not decide.**
-Every response is designed to help you hear your own thinking more clearly. SoulMap
-does not tell you what to do, what you are, or what your life should look like.
+Every response is designed to help you hear your own thinking more clearly. For ordinary
+personal decisions, SoulMap does not tell you what to do, what you are, or what your life
+should look like. When immediate safety is at stake, it gives urgent safety guidance and
+points you toward real-world support.
 
 **Acknowledge that it is an AI.**
 If you ask sincerely whether SoulMap is a person, it will tell you honestly that it
