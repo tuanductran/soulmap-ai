@@ -34,8 +34,8 @@ whether a proposed change is consistent with the project's design.
 | Limitation | Category | Section |
 | --- | --- | --- |
 | Python does not generate AI responses | Intentional design | [AI response generation](#ai-response-generation) |
-| Markdown owns all knowledge content | Intentional design | [Markdown knowledge ownership](#markdown-knowledge-ownership) |
-| Python is orchestration only | Intentional design | [Python runtime responsibilities](#python-runtime-responsibilities) |
+| Markdown owns semantic knowledge and qualitative guidance | Intentional design | [Markdown knowledge ownership](#markdown-knowledge-ownership) |
+| Python owns executable configuration and enforcement | Intentional design | [Python runtime responsibilities](#python-runtime-responsibilities) |
 | Safety enforcement is deterministic only | Intentional design | [Safety enforcement boundaries](#safety-enforcement-boundaries) |
 | Exactly one primary framework per request | Intentional design | [Routing boundaries](#routing-boundaries) |
 | Only two shipping artifact formats | Implementation boundary | [Packaging boundaries](#packaging-boundaries) |
@@ -58,17 +58,20 @@ returns.
 
 ### Why it exists
 
-SoulMap follows a knowledge-first architecture. The content of a response -
-its wording, tone, and emotional register - belongs to Markdown under `skills/`
-and `SOULMAP.md`, not to executable Python. Generating responses in Python would
-couple content decisions to code changes, making it impossible to update
-SoulMap's voice or doctrine without modifying and re-testing the runtime.
+SoulMap follows a knowledge-first architecture. The underlying language model
+generates response text. Markdown under `skills/` and `SOULMAP.md` owns the
+semantic knowledge, qualitative response guidance, voice, and doctrine that
+shape that text. Python owns executable configuration and enforcement, including
+scoring weights, thresholds, routing priorities, policy switches, and deterministic
+response constraints. Python executes, normalizes, routes, validates, and enforces
+the knowledge; it does not generate the response itself.
 
 ### Why it is intentional
 
-The hard boundary between "Python enforces" and "Markdown defines" is what
-makes the system auditable. Every constraint on response structure can be
-read in a Markdown file without reading Python source.
+The boundary is explicit: Markdown defines semantic knowledge and human-readable
+guidance; Python owns executable configuration and enforcement. Qualitative
+response guidance is reviewable in Markdown, while deterministic constraints
+and their enforcement remain inspectable in Python and its tests.
 
 ### Benefits
 
@@ -119,41 +122,45 @@ a validator requires a rewrite.
 
 ### What it is
 
-Detection phrases, framework response structures, voice rules, safety
-doctrine, and brand guidance all live in `skills/` or `SOULMAP.md` as
-Markdown. Python reads these files at import time but never originates their
-content.
+Semantic detection phrases, domain concepts, framework guidance, voice rules,
+safety doctrine, and brand guidance live in `skills/` or `SOULMAP.md` as
+Markdown. Python parses and applies those semantic inputs. Executable runtime
+configuration - including scoring weights, thresholds, routing priorities,
+policy switches, and deterministic response constraints - is Python-owned and
+must not be duplicated in Markdown as an authoritative configuration source.
 
 ### Why it exists
 
-The core architectural principle is: one place to make a content change, one
-tool to verify it took effect. If detection phrases lived in Python, a
-maintainer editing SoulMap's tone would need to understand both the Markdown
-and the Python data structures that load from it. That duplication creates
-silent drift: the Markdown says one thing, the runtime does another.
+The core architectural principle is one authoritative source for each kind of
+knowledge or executable value. Change semantic phrases and qualitative guidance
+in Markdown; change weights, thresholds, routing priorities, policy switches,
+and deterministic constraints in Python. Duplicating either value across both
+surfaces creates silent drift between documentation and runtime behavior.
 
 ### Why it is intentional
 
-Markdown ownership is the foundation that makes `soulmap audit-knowledge`
-meaningful. The audit tool traces runtime imports and cross-references them
-against Markdown content. That cross-reference is only possible because there
-is exactly one authoritative location per piece of content.
+`soulmap audit-knowledge` checks phrase/configuration drift; it is not a complete
+ownership or packaging audit. `soulmap audit-knowledge-ownership` checks source
+registry usage and direct-path bypasses. Read the current parser and consumer when
+classifying a Markdown section, and use packaging/artifact verification for claims
+about what ships. Each semantic phrase and executable value should still have one
+authoritative source.
 
 ### Benefits
 
-- A content change only touches a Markdown file.
-- The `soulmap audit-knowledge` command verifies ownership automatically.
-- Contributors without Python expertise can review and modify behavioral content.
-- Detection behavior and documented framework knowledge cannot silently drift apart.
+- Semantic phrase and qualitative guidance changes belong in Markdown.
+- Executable weights, thresholds, priorities, switches, and deterministic constraints belong in Python.
+- Contributors can review behavioral knowledge in Markdown without needing to own runtime implementation.
+- The audit commands and tests detect specific classes of drift; they do not replace reading the relevant parser, consumer, and packaging contract.
 
 ### Implementation boundary
 
 ```mermaid
 flowchart LR
-    A["skills/ (Markdown)"] -- loaded at import time --> B["src/soulmap/runtime/knowledge/"]
-    B -- parsed phrase lists --> C["src/soulmap/runtime/detectors/"]
-    C -- signals --> D["src/soulmap/runtime/routing/framework_selector.py"]
-    D -- instruction string --> E[LLM]
+    A["skills/ and SOULMAP.md\nsemantic knowledge + guidance"] --> B["Python knowledge loaders\nparse + normalize"]
+    C["Python-owned runtime configuration\nweights, thresholds, priorities"] --> D["Detectors + routing + guards\nexecute + validate + enforce"]
+    B --> D
+    D -- instruction contract --> E[LLM]
 ```
 
 The one intentional exception is crisis detection, which uses hardcoded
@@ -175,6 +182,7 @@ below.
 
 - `src/soulmap/runtime/knowledge/keyword_lists.py`
 - `src/soulmap/runtime/knowledge/pattern_source.py`
+- `src/soulmap/runtime/knowledge/runtime_config.py` - Python-owned executable configuration
 - shipped knowledge under `skills/` - runtime integration contracts are internal and not distributed
 
 ---
@@ -200,10 +208,11 @@ environment-dependent.
 ### Why it is intentional
 
 The split also enforces a contribution discipline: if a contributor finds
-themselves editing Python to change what SoulMap says or believes rather than
-how it routes or validates, that is a signal the change belongs in Markdown
-instead. `SOULMAP.md` names this boundary explicitly under "Knowledge file
-usage."
+themselves editing Python to change semantic phrases, qualitative framework
+guidance, voice, or doctrine, that is a signal the change belongs in Markdown.
+Changes to executable weights, thresholds, priorities, policy switches, and
+deterministic constraints belong in Python. `SOULMAP.md` names the broader
+knowledge-first boundary under "Knowledge file usage."
 
 ### Benefits
 
@@ -218,7 +227,8 @@ usage."
 | `src/soulmap/runtime/detectors/` | Signal detection from message text | Deciding what a signal means for routing |
 | `src/soulmap/runtime/routing/` | Framework selection and priority | Generating the response for the selected framework |
 | `src/soulmap/runtime/guards/` | Response structure and content safety validation | Rewriting or generating response text |
-| `src/soulmap/runtime/knowledge/` | Parsing Markdown phrase lists into Python data | Authoring those phrase lists |
+| `src/soulmap/runtime/knowledge/` | Parsing and normalizing semantic Markdown knowledge | Authoring semantic knowledge or owning executable policy values |
+| `src/soulmap/runtime/knowledge/runtime_config.py` | Python-owned executable configuration for runtime policy and deterministic behavior | Duplicating authoritative runtime values in Markdown |
 | `src/soulmap/devtools/` | CLI tooling: format, lint, eval, build | Product behavior |
 
 ### Related documentation
@@ -678,20 +688,22 @@ they are the operational expression of the architectural boundaries.
 
 ### Content changes belong in Markdown
 
-If a change modifies what SoulMap says, how it detects a signal, what phrases
-trigger a framework, or what voice rules apply, the change belongs in
-`skills/` or `SOULMAP.md`. It does not belong in Python.
+If a change modifies semantic phrases, framework knowledge, qualitative response
+guidance, voice, or doctrine, it belongs in `skills/` or `SOULMAP.md`.
 
-If a contributor finds themselves editing runtime Python to change what
-SoulMap says or believes rather than how it routes or validates, that is a
-signal the change belongs in Markdown instead.
+If a change modifies executable scoring weights, thresholds, routing priorities,
+policy switches, or deterministic response constraints, it belongs in Python.
+Do not duplicate those runtime values in Markdown. The language model generates
+response text; Python executes, normalizes, routes, validates, and enforces the
+knowledge contract.
 
 ### Audit before changing the knowledge layer
 
-Before modifying any detection phrase list or Markdown section that backs a
-detector, run `soulmap audit-knowledge` to establish the current state.
-Verify Markdown ownership by reading the consuming detector's loading code,
-not by inferring it from a constant's name.
+Before modifying a semantic phrase list or Markdown section consumed by a
+detector, run `soulmap audit-knowledge` and inspect the actual parser and consumer.
+After source-registry changes, also run `soulmap audit-knowledge-ownership`.
+Neither command verifies the complete shipped artifact; use the packaging and
+artifact-verification checks for that boundary.
 
 ### Crisis detection changes require explicit sign-off
 
@@ -746,7 +758,7 @@ but no implementation plan exists for any of them at this time.
 | LLM response quality evaluation in CI | Requires LLM inference and non-deterministic scoring; outside the regression gate purpose of the eval suite |
 | Framework combination (two active primary frameworks) | Violates `SOULMAP.md` doctrine; makes routing and testing ambiguous |
 | Dynamic language expansion without static phrase review | Crisis detection requires human authorship; automated translation is not a substitute |
-| Python-generated response content | Violates the knowledge-first architecture; all content belongs in Markdown |
+| Python-generated response content | Violates the knowledge-first architecture; the language model generates responses, Markdown provides semantic knowledge and guidance, and Python enforces executable contracts |
 | Per-language framework routing | Framework selection is language-unaware by design; safety detection provides the multilingual layer |
 | Markdown-loaded crisis detection | Protected-module policy; default answer is no pending safety evaluation evidence |
 

@@ -1,27 +1,57 @@
 # Operations Guide
 
-This document turns the repo's safety and privacy promises into an operating checklist.
+This document is an operating checklist for people who deploy SoulMap AI inside
+a chat product, custom assistant, or wrapper around this repository's knowledge
+base. It does not describe a service operated by this repository.
 
-## Scope
+## Scope and deployment boundary
 
-Use this guide when SoulMap AI is deployed inside a chat product, custom assistant, or
-any wrapper around the knowledge base in this repo.
+The repository provides Markdown knowledge, local Python tooling, and
+distribution artifacts. It does not provide a SoulMap-operated server, account
+system, backend, or conversation store. In a standard platform deployment, the
+host platform governs conversation processing and retention; see
+[the privacy statement](PRIVACY.md).
+
+This guide's data-handling controls apply only when an independent deployment
+operator builds or configures a wrapper that actually processes user data.
+They do not authorize SoulMap or a host platform to collect data, and they do
+not imply that the repository itself receives or stores conversations.
 
 ## Data handling
 
-### Minimum retention stance
+### Default: do not collect or retain conversations
 
-- Store the least amount of conversation data needed for product reliability.
-- Avoid retaining raw conversations by default when a shorter-lived derived signal will
-  do.
-- Separate product analytics from reflective conversation content whenever possible.
+- Do not add conversation logging, analytics, or persistent storage by default.
+- Use synthetic evaluation cases from `evals/` for testing and QA.
+- Do not treat transient platform context or host-managed history as a
+  SoulMap-owned memory store.
+
+### If an external deployment independently processes user data
+
+Before enabling collection or retention, the deployment operator must document
+the specific operational purpose, the data fields required, the applicable
+notice and consent requirements, the retention period, deletion process,
+access controls, and any third-party processors. Collect only what is necessary
+for that stated purpose.
+
+- Avoid retaining raw transcripts when a less sensitive, shorter-lived signal
+  is sufficient.
+- Keep analytics separate from reflective conversation content.
+- Define a deletion and incident-response path before storing any transcript.
+- Do not imply that these controls are provided by this repository or by
+  SoulMap itself; they belong to the operator of the deployed service.
 
 ### Sensitive content handling
 
-- Treat crisis language, trauma disclosures, spiritual beliefs, and dependency signals
-  as high-sensitivity content.
-- Limit access to raw transcripts to people with a clear operational need.
-- Prefer redacted examples for testing, QA, and incident review.
+If an external operator actually processes user data:
+
+- Treat crisis language, trauma disclosures, spiritual beliefs, and dependency
+  signals as high-sensitivity content.
+- Restrict access to raw transcripts to people with a documented operational
+  need.
+- Prefer synthetic or redacted examples for testing, QA, and incident review.
+- Do not copy sensitive user content into issue trackers, analytics, or
+  general-purpose logs.
 
 ## Human review
 
@@ -59,7 +89,7 @@ Review these before approving release behavior:
 
 - [`../engineering/repo-contract.md`](../engineering/repo-contract.md)
 - [`../engineering/safety-enforcement-matrix.md`](../engineering/safety-enforcement-matrix.md)
-- [`../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
+- [`../../templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 - [`../integrations/README.md`](../integrations/README.md#compatibility-policy) when a change affects an active platform deployment
 
 Keep `uv run python tests/eval_regression/test_safety_evals.py` in this checklist as a direct detector red-team

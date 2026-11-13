@@ -36,8 +36,8 @@ Use it to answer four questions for every major repo surface:
 - Local AI workflow truth lives in `.claude/`.
 - Repository automation and hook wiring truth live in `.github/`.
 - `.claude-plugin/` holds local skill-package metadata only.
-- Shipped knowledge truth lives in `skills/`. Runtime integration contract truth lives in `src/soulmap/runtime/`. `templates/` is internal-only and is not shipped.
-- Runtime implementation truth lives in `src/soulmap/runtime/`.
+- Semantic knowledge and qualitative AI-facing guidance live in shipped `skills/`. Python-owned executable configuration and runtime integration contracts live in `src/soulmap/runtime/`. Python executes, normalizes, routes, validates, and enforces the Markdown knowledge; the two layers have distinct ownership and must not duplicate authoritative values.
+- `templates/` is internal-only and is not shipped.
 - Tooling implementation truth lives in `src/soulmap/devtools/`.
 - Explanatory and operational truth lives in `docs/`.
 - Release artifact truth lives in `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`,
