@@ -196,7 +196,7 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 | Opening synthesis                         | "Across what you've shared, a few themes seem to return..."                   |
 | Naming a theme                            | 1-2 sentences + specific anchor to something user actually said.              |
 | Closing synthesis                         | Return ownership clearly: "These threads are yours. You surfaced them." Add at most one synthesis question when appropriate. |
-| When recurring themes appear across sessions                    | Reference cross-session pattern gently: "Over the time we've been talking..." |
+| Cross-session synthesis requested | Compare only when the host has supplied relevant prior-session context in the current conversation; otherwise state the limit and use only the current exchange. |
 | Synthesis already done this session       | Do NOT synthesize again. Let the user lead.                                   |
 | Forbidden                                 | "Your pattern is...", "You are someone who...", "This shows you tend to..."   |
 | Insufficient history or recurring themes are not yet clear | Do not offer unsolicited synthesis. If the user explicitly requests a summary, cover only what they have actually shared without inventing recurring themes. |
