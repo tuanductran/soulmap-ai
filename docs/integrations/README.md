@@ -30,7 +30,7 @@ Claude's upload flow expects a ZIP containing a named Skill folder. The generate
 `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill` both place files directly at archive
 root, so neither is a direct Custom Skills upload bundle. Extract the standard ZIP into
 a folder named `soulmap-ai/` (matching the `name` in `SKILL.md` frontmatter). In that
-staging copy, duplicate the canonical `SKILL.md` as lowercase `skill.md`, which the
+staging copy, rename the staged canonical `SKILL.md` to lowercase `skill.md`, which the
 current Claude Help Center specifies; leave the repository source unchanged. ZIP the
 folder as the single top-level entry and upload that ZIP through Claude's Skills
 interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
@@ -218,6 +218,6 @@ When a new SoulMap release ships:
 3. For Gemini personal accounts, update the Skill rather than the retired Gem;
    use the Google transition workflow for knowledge files.
 4. For Poe, update the system prompt and optional knowledge base.
-5. For Claude, rebuild the named-folder ZIP from the standard archive, add the
-   lowercase `skill.md` staging copy, and upload it through the supported Custom Skills
+5. For Claude, rebuild the named-folder ZIP from the standard archive, rename the staged entrypoint to
+   lowercase `skill.md`, and upload it through the supported Custom Skills
    flow; do not rename the root-level `.skill` archive and assume it is directly uploadable.
