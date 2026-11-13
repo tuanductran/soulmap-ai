@@ -138,9 +138,10 @@ For personal accounts aged 18 or older:
 Gemini Skills have a **100 MB total file limit**. Google currently lists
 GitHub files, audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`),
 and archive formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`)
-as unsupported during the Gems-to-Skills transition. Do not assume
-`dist/soulmap-ai.skill` is directly compatible with Gemini Skills; validate
-the artifact separately before recommending direct upload.
+as unsupported **knowledge-file sources** during the Gems-to-Skills transition.
+This does not replace the separate Skill ZIP import workflow described above.
+Do not assume `dist/soulmap-ai.skill` is directly compatible with Gemini Skills;
+validate the artifact separately before recommending direct upload.
 
 ### Legacy Gem setup (only before the transition cutoff)
 
