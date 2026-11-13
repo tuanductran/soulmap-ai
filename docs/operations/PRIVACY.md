@@ -23,18 +23,26 @@ practices.
 
 ## What this repository does handle
 
-If you run SoulMap AI's local Python tooling, any input you provide is processed
-locally on your machine. Nothing is transmitted to any SoulMap AI server, because
-there is none.
+If you run SoulMap AI's local Python tooling, inputs handled by the local command are
+processed on your machine. The project does not send conversation inputs to a
+SoulMap-operated server because no such server exists.
+
+Some explicitly networked operations do contact third-party endpoints. Examples include
+opt-in external link checking, package installation, and GitHub Actions or API operations.
+Those requests serve the selected operation; they are not a SoulMap conversation-storage
+service. Review the relevant third-party service's current terms and privacy policy when
+using those features.
 
 Evaluation tooling (`uv run soulmap eval-responses`) uses synthetic test cases defined
 in `evals/`. It does not use real user data.
 
 ## Dependencies
 
-SoulMap AI's Python dependencies are listed in `pyproject.toml`. No dependency sends
-telemetry or user data as part of this project's usage. All tools (Ruff, Pyright,
-pytest) operate entirely locally.
+SoulMap AI's Python dependencies are listed in `pyproject.toml`. This repository does
+not implement a SoulMap-operated telemetry or conversation-upload service. This
+statement is not a certification of every third-party dependency's telemetry or network
+behavior; consult the relevant tool and service documentation for its current settings
+and practices.
 
 ## Security
 
