@@ -17,15 +17,44 @@ Input: a JSON object via stdin:
 {
   "message": "string",
   "history": [{"role": "user|assistant", "content": "string"}],
-  "memory": {}
+  "memory": {
+    "session_count": 0,
+    "prior_stage": null,
+    "prior_session_showed_pattern_recognition": false,
+    "prior_session_showed_breakthrough": false,
+    "destabilization_signals": [],
+    "recurring_themes": []
+  }
 }
 ```
 
 Contract: `message` is the current user turn. `history` contains prior turns
-only and must exclude the current message. Dependency analysis appends the
-current message exactly once. Repeated text is not proof that two entries are
-the same turn; identical consecutive user messages must still be evaluated as
-separate turns.
+within the current conversation only and must exclude the current message.
+Dependency analysis appends the current message exactly once. Repeated text is
+not proof that two entries are the same turn; identical consecutive user
+messages must still be evaluated as separate turns.
+
+The `memory` key is a legacy CLI field name for optional **host-supplied
+prior-session context**. It is a per-invocation input, not a SoulMap-managed
+store: the runtime does not persist, retrieve, or update conversation history.
+When the host has no reliable prior-session context, omit the field or pass
+`{}`. Do not synthesize missing values or infer history.
+
+Recognized optional fields:
+
+| Field | Expected value | Runtime use |
+| --- | --- | --- |
+| `session_count` | Non-negative integer | Stage classification and the longitudinal synthesis threshold. |
+| `prior_stage` | Integer from 1 to 6 | Prior-stage comparison when the host supplies a reliable previous classification. |
+| `prior_session_showed_pattern_recognition` | Boolean | Stage minimum adjustment based on explicitly supplied prior context. |
+| `prior_session_showed_breakthrough` | Boolean | Stage minimum adjustment based on explicitly supplied prior context. |
+| `destabilization_signals` | List; an empty list means no supplied signal | Allows the stage regression guard to recognize host-supplied destabilization evidence. |
+| `recurring_themes` | List of theme-name strings | Conversation synthesis may use a supplied theme only when it also appears in the current conversation. |
+
+The stage detector consumes the stage-related fields; the conversation
+synthesizer consumes `session_count` and `recurring_themes`. The independent
+response safety gate does not use this object to infer crisis or dependency:
+it re-checks the current message and the supplied in-conversation history.
 
 Output: a JSON object to stdout:
 
