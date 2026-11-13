@@ -40,7 +40,7 @@ verified.
 ## Algorithmic Transparency, explainable spirituality
 
 While the raw algorithm is not exposed, users can ask "Why did you ask me that?" and
-receive an honest explanation of the reflective pattern or therapeutic principle that
+receive an honest explanation of the reflective pattern or principle that
 guided the question.
 
 This practice:
