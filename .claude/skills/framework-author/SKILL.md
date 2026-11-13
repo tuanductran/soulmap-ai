@@ -362,8 +362,8 @@ Have another contributor review:
 ## Naming conventions
 
 - Framework file name: lowercase with hyphens (`skills/frameworks/framework-name.md`)
-- Framework constant name: uppercase with underscores (`FRAMEWORK_NAME`)
-- Category code in evals: short, memorable (`wl1`, `crisis`, `existential`)
+- Keep the front-matter `name` aligned with the kebab-case filename.
+- Use reader-facing framework labels in Markdown; machine identifiers and routing mappings belong in Python.
 
 Examples:
 
@@ -371,7 +371,7 @@ Examples:
 |------|----------|----------|
 | `inner-parts.md` | `INNER_PARTS` | `wl6` |
 | `shadow-patterns.md` | `SHADOW` | `wl8` |
-| `crisis.md` | `CRISIS` | `crisis` |
+| `emotional-deescalation.md` | Crisis and de-escalation knowledge | `crisis` |
 
 ## Workflow
 
@@ -380,8 +380,8 @@ Examples:
 3. Create the new file under `skills/frameworks/` with the required sections.
 4. Add the framework to the priority hierarchy in `skills/meta/orchestration.md`.
 5. Add the framework to `skills/meta/framework-template-map.md`.
-6. Work with [`detector-engineer`](../detector-engineer/SKILL.md) to implement the detector.
-7. Work with [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md) to add eval coverage.
+6. For a primary routed framework only, work with [`detector-engineer`](../detector-engineer/SKILL.md) on any required detector and routing changes.
+7. Work with [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md) on the appropriate source-backed coverage.
 8. Run `uv run soulmap build` and `uv run soulmap test -n auto -q` before committing.
 
 ## Definition of done
@@ -392,8 +392,9 @@ A framework file is done when:
 - `## Activation Signals` section is present with observable detection language
 - `## Response Structure` section defines the arc and word count range
 - `## Paired template` section references the correct template and inquiry bank section
-- A corresponding detector exists in `src/soulmap/runtime/detectors/` or is planned
-- At least one eval group in `evals/datasets/groups.json` covers the primary activation signal
+- If it is a primary routed framework, its detector binding, priority, template mapping, and eval coverage are present and verified
+- If it is a supporting lens or secondary layer, it is linked from the appropriate canonical guidance and is not misrepresented as an independently routed framework
+- No detector or routing machinery was added solely because a Markdown knowledge file was created
 - `uv run soulmap build` includes the new file without error
 
 ## Relationship to other skills
