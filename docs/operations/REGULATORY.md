@@ -7,7 +7,7 @@ description: "Current, source-backed reference for AI-companion regulation relev
 
 This document is an operational reference, not legal advice. It records enacted requirements and official regulatory guidance that may be relevant to SoulMap AI's architecture. Applicability depends on the product, deployment model, jurisdiction, user population, and other facts. Obtain qualified legal review before making a compliance determination.
 
-**Last reviewed:** 2026-10-11
+**Last reviewed:** 2026-11-13
 
 ## Important distinction
 
@@ -32,51 +32,67 @@ California SB 243 (Chapter 677, Statutes of 2025) became effective January 1, 20
 
 Primary source: [California Legislature, SB 243 bill history and chaptered text](https://leginfo.legislature.ca.gov/faces/billHistoryClient.xhtml?bill_id=202520260SB243)
 
-### New York
+### New York - General Business Law Article 47 (AI Companion Models)
 
-New York Assembly Bill A06767 (2025-2026) proposed requirements for AI companions, including crisis protocols and notices concerning the non-human nature of the system. The bill **died in the Senate on January 7, 2026**; it should therefore not be described as an enacted New York companion-chatbot requirement in this document.
+Article 47 is in effect from November 5, 2025. It was enacted through the 2025 state budget, separately from Assembly Bill A06767. Section 1700 defines an "AI companion" by reference to a system designed to simulate a sustained human or human-like relationship through a combination of retaining prior-interaction or preference information for personalization and ongoing engagement, unsolicited emotion-based questions, and sustained dialogue about personal matters; statutory exclusions also apply. Whether a particular SoulMap deployment falls within that definition requires product-specific analysis. For covered AI companions, §1701 requires a protocol making reasonable efforts to detect and address user expressions of suicidal ideation or self-harm, including notification referring the user to crisis service providers. Under §1702, the AI-identity notice is due at the beginning of an interaction; the statute says this notice need not be provided more than once per day, and requires a further notice at least every three hours during continuing interactions.
 
-**SoulMap relevance:** retain New York as a legislative-watch item rather than an active compliance requirement unless a later enacted measure is identified and verified.
+Assembly Bill A06767 did die in the Senate on January 7, 2026, but that status does **not** mean New York lacks an enacted AI-companion law: Article 47 is already in effect.
 
-Primary source: [New York State Assembly bill status](https://assembly.ny.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=A06767&term=)
+**SoulMap relevance:** the crisis detector and safety doctrine are relevant design evidence, not proof of statutory compliance. The repository has no general timed-notification runtime or deployed-surface mechanism to establish the daily interaction-start notice and three-hour continuing-interaction cadence. This remains an implementation gap to assess at the deployed product layer.
+
+Primary sources: [New York State Senate - General Business Law Article 47](https://www.nysenate.gov/legislation/laws/GBS/A47) · [New York Governor - AI companion safeguards effective November 5, 2025](https://www.governor.ny.gov/news/governor-hochul-pens-letter-ai-companion-companies-notifying-them-safeguard-requirements-are) · [New York Assembly - A06767 status](https://www.nyassembly.gov/leg/?Actions=Y&Memo=Y&Text=Y&bn=A06767)
+
+### New York - General Business Law Article 48 (Unsafe AI Companion Features for Minors)
+
+S9051-B (same as A10379-C), Chapter 368 of 2026, was signed on October 28, 2026 and takes effect January 1, 2027. It adds Article 48. Under §1800(5), a "covered AI companion" is a generative AI system with a natural-language interface, including writing or sound, that provides ongoing, adaptive responses to user inputs; this scope is broader than Article 47's sustained-relationship definition and expressly includes, but is not limited to, an AI companion as defined there. For covered users in New York, §1801 generally prohibits an operator from providing unsafe AI-companion features unless the user is not a covered minor and the operator has used the legally permitted method to determine that status. A "covered minor" is a covered user whom the operator actually knows to be a minor. Section 1801(2) contains narrow purpose-based exceptions for strictly limited customer-service, efficiency/research/technical-assistance, and internal business uses; these should not be assumed to cover a general-purpose companion.
+
+The statutory unsafe-feature definition in §1800(8) covers outputs or design features that: present the companion as a real or fictional human, alive, or as experiencing human emotions; imply a personal, professional, or authority relationship; frame outputs as the companion's personal opinions or emotional appeals; flatter or engage in sycophancy; initiate unsolicited emotion-based questions or content; use personal or mental/physical-health information acquired more than twelve hours earlier or in any previous user session; deceive minors about the companion's mechanical, non-sentient nature or simulate companionship/interpersonal relationships in ways identified by regulation; promote or facilitate suicide, self-harm, disordered eating, unlawful drug/alcohol use or abuse; encourage secrecy, isolation, or avoiding professional/adult help; prioritize engagement over safety guardrails; or generate, describe, or facilitate sexually explicit conduct or child sexual abuse material.
+
+Under §1804, where the referenced age-assurance rules are not in effect, the operator must use a reasonable method that guards against circumvention and minimizes retention. An operator may rely on self-declaration only when the user declares minor status; an adult-status self-declaration alone is not a permissible method. More than one method must be offered, including at least one that does not rely on government-issued ID or allows user anonymity. Age-assurance data generally may be used only for the age determination and must be deleted immediately after the attempt, subject to legal-retention exceptions. Section 1805 limits the article to conduct occurring wholly or partly in New York, with an express rule for users physically outside the state.
+
+**SoulMap relevance:** the repository does not establish a deployed age-assurance mechanism or a minor-specific product contract capable of enforcing Article 48. The deployed host's use of history and memory must be reviewed against the prohibition on using personal or health information from a prior session or information acquired more than twelve hours earlier. The repository cannot establish whether the statutory definitions, exceptions, or territorial rules cover a particular deployment; that requires product-level legal and technical review.
+
+Primary sources: [New York Senate - codified General Business Law Article 48](https://www.nysenate.gov/legislation/laws/GBS/A48) · [New York Assembly - S9051-B / Chapter 368 of 2026 status and text](https://www.nyassembly.gov/leg/?Actions=Y&Memo=Y&Summary=Y&Text=Y&Votes=Y&bn=S09051&term=2025)
 
 ### Connecticut - Public Act 26-15
 
-Connecticut's 2026 Public Act 26-15, "An Act Concerning Online Safety," was enacted in May 2026. Sections 4-6 create AI-companion requirements effective January 1, 2027. Among other provisions, the act addresses evidence-based detection and response for suicide, self-harm, and imminent physical violence; requires a public description of the relevant protocol; restricts an AI companion from presenting itself as human; and establishes disclosure cadences and additional safeguards for users under 18.
+Connecticut's 2026 Public Act 26-15, "An Act Concerning Online Safety," was enacted in May 2026. Sections 4-6 create AI-companion requirements effective January 1, 2027. Section 5 requires an evidence-based protocol to detect user expressions clearly indicating suicide, self-harm, or imminent physical violence; prevent outputs encouraging those acts; refer users to appropriate mental-health evaluation and treatment resources (including 988); and, after a further qualifying expression following referral, refer to mental-health services consistently with clinical best practices. The protocol must be posted prominently on the operator's website. The act also prohibits the companion from claiming to be human or contradicting its AI disclosure.
+
+Where a reasonable user could believe they are interacting with a human, the operator must provide a clear notice either in static written form visible throughout the interaction, or at the beginning of the first interaction in a 24-hour period and then at least hourly during continuous interactions for users under 18 or every three hours for adults. Section 6 adds protections where the operator knows or has reason to believe the user is under 18, including safeguards against encouragement of self-harm, suicide, violence, disordered eating, unlawful alcohol/drug use, discouraging help-seeking, romantic/erotic/sexual interaction, and manipulative techniques intended to prolong engagement or foster inappropriate emotional dependence. It also requires tools for minor users and their parents or legal guardians to manage screen time and account settings. Any mental-health-service functionality for minors is subject to additional clinical-accountability, disclosure, accessibility, and non-substitution conditions.
 
 Other sections of the same act have different effective dates and cover subjects such as AI subscriptions, automated employment-related decision technologies, and provenance data. Those provisions should not be treated as companion-chatbot requirements unless their scope actually covers the deployed product.
 
-**SoulMap relevance:** the repository's crisis detector, dependency safeguards, and AI-identity boundaries are relevant evidence of design intent, but they are not a legal conclusion of compliance. Connecticut's statutory cadence is deployment- and user-dependent and cannot be satisfied by a static doctrine document alone.
+**SoulMap relevance:** the repository's crisis detector, dependency safeguards, and AI-identity boundaries are relevant evidence of design intent, but they are not a legal conclusion of compliance. The statutory notice cadence and minor-specific safeguards require product-surface and user-age controls; a static doctrine document alone cannot satisfy them.
 
 Primary source: [Connecticut General Assembly, Public Act 26-15](https://www.cga.ct.gov/2026/act/pa/pdf/2026PA-00015-R00SB-00005-PA.pdf)
 
 ## European Union - AI Act
 
-The EU AI Act entered into application on August 2, 2026, with different provisions taking effect on different dates. The Commission states that transparency obligations under Article 50 apply from August 2, 2026, including requirements for certain interactive AI systems to inform people when they are interacting with AI.
+The EU AI Act entered into force on August 1, 2024, and applies in stages. The majority of its rules, including Article 50 transparency obligations for relevant interactive AI systems, started applying on August 2, 2026. Earlier provisions applied from February 2, 2025 (including prohibitions and AI-literacy provisions) and August 2, 2025 (including general-purpose AI obligations).
 
 The AI Act does **not** say that AI systems interacting with emotionally distressed or otherwise vulnerable users are automatically high-risk. High-risk classification follows the specific scenarios in Article 6 and the relevant Annex criteria. The Commission's 2026 classification guidance describes those two Article 6 scenarios and provides examples of systems that do and do not fall within them.
 
-The Commission currently states that the rules for high-risk AI systems in Annex III apply from December 2, 2027, while high-risk AI systems embedded in regulated products have an extended date of August 2, 2028.
+The Commission's current implementation timeline states that rules for high-risk AI systems in Annex III apply from December 2, 2027, while high-risk AI systems embedded in regulated products have an extended date of August 2, 2028. The current timeline also lists December 2, 2026 for certain new prohibitions concerning non-consensual sexual deepfakes and child sexual abuse material, and a transition deadline for certain providers of synthetic-content systems already placed on the market before August 2, 2026 to comply with Article 50(2). Whether those synthetic-content duties apply depends on SoulMap's actual provider/deployer role and generated outputs.
 
-**SoulMap relevance:** the immediate EU issue most directly relevant to an interactive AI surface is transparency. Whether any additional AI Act obligations apply requires a product- and deployment-specific legal analysis. SoulMap should not describe itself as "high-risk" or "fully compliant" based solely on its emotional-support use case.
+**SoulMap relevance:** the immediate EU issue most directly relevant to an interactive AI surface is transparency. The December 2026 Article 50(2) transition also warrants a product-scope check if SoulMap provides a covered system that generates synthetic audio, image, video, or text. Whether any additional AI Act obligations apply requires product- and deployment-specific legal analysis. SoulMap should not describe itself as "high-risk" or "fully compliant" based solely on its emotional-support use case.
 
 Primary sources:
 
 - [European Commission - AI Act framework and application timeline](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
 - [European Commission - Article 50 transparency guidance](https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems)
 - [European Commission - high-risk classification guidance](https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems)
+- [European Commission AI Act Service Desk - current implementation timeline](https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act)
 
 ## SoulMap architecture and regulatory mapping
 
 | Topic | Current repository evidence | Regulatory interpretation |
 | :--- | :--- | :--- |
-| AI identity disclosure | Doctrine, runtime detection/routing, and eval coverage | Relevant to enacted transparency/disclosure requirements, but deployed-surface wording and cadence remain deployment-specific. |
-| Crisis detection and escalation | `src/soulmap/runtime/detectors/crisis_detector.py` plus safety doctrine/evals | Strong architectural evidence, but jurisdiction-specific legal sufficiency requires separate review. |
+| AI identity disclosure | Doctrine, runtime detection/routing, and eval coverage | New York Article 47 requires an interaction-start notice; the statute says that notice need not be provided more than once per day, and a further notice at least every three hours during continuing interactions; California and Connecticut have their own conditional disclosure rules and cadence. EU Article 50 transparency applies from August 2, 2026. A deployed-surface implementation and legal scope review remain necessary. |
+| Crisis detection and escalation | `src/soulmap/runtime/detectors/crisis_detector.py` plus safety doctrine/evals | Relevant to New York Article 47, California SB 243, and Connecticut PA 26-15; architectural evidence is not proof of jurisdiction-specific compliance. |
 | Anti-dependency safeguards | `dependency_detector.py`, response sanitization, safety evals | Relevant to companion-safety concerns; not a blanket statement of statutory compliance. |
 | No diagnosis / clinical overclaiming | Doctrine, runtime blocking, eval coverage | Supports product boundary; it is not itself a legal safe harbor. |
-| Timed AI reminders | No general timed-reminder runtime | Known gap for laws that require periodic notices in particular deployments. |
-| Minor-specific safeguards | No general minor-targeted deployment contract | Scope must be established before claiming that minor-specific statutory duties apply or are satisfied. |
-| Backend storage | See `docs/operations/PRIVACY.md` | Privacy and data-protection obligations require separate jurisdictional analysis. |
+| Timed AI reminders | No general timed-reminder runtime | Known gap for New York Article 47's start/three-hour notices and applicable California/Connecticut cadence requirements unless implemented by the deployed host surface. |
+| Minor-specific safeguards and age assurance | No general minor-targeted deployment or age-assurance contract | New York Article 48 takes effect January 1, 2027; California and Connecticut also impose minor-specific duties. Applicability and implementation must be assessed before deployment. |
 
 ## What this means for product and communications
 
