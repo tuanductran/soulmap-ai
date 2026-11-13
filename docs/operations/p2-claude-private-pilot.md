@@ -2,18 +2,20 @@
 
 ## Decision
 
-Claude Skills is the selected P2 pilot surface because SoulMap already has a Claude-first
-manual distribution path and a standard `dist/soulmap-ai.skill` artifact. This is a
-**private/test deployment pilot**, not a public launch, marketplace listing, API adapter
-or hosted service.
+Claude Skills is the selected P2 pilot surface because SoulMap has a Claude-first
+manual distribution workflow built from the standard knowledge archive. The generated
+`dist/soulmap-ai.skill` preserves plugin metadata but is not the direct Claude.ai Custom
+Skills upload bundle. This is a **private/test deployment pilot**, not a public launch,
+marketplace listing, API adapter or hosted service.
 
 ## Preconditions
 
 Before an operator uploads anything, record a named operator role, private/test workspace,
 SoulMap commit/version, artifact checksum and guide used. The operator must be able to
-remove the deployment or revoke its share link. Build and verify the standard artifact,
-then use the existing Claude upload instructions in
-[`docs/integrations/README.md`](../integrations/README.md#claude-skills).
+remove the deployment or revoke its share link. Build and verify the standard archive,
+then follow the named-folder ZIP and entrypoint-casing checks in
+[`docs/operations/UPLOAD.md`](UPLOAD.md#custom-skills). Do not assume the root-level
+`.skill` archive can be renamed and uploaded directly.
 
 Do not commit credentials, access tokens, private conversation transcripts or screenshots
 with personal data. Do not create a public share link before all acceptance scenarios
