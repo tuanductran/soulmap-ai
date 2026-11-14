@@ -10,8 +10,8 @@ described, and protected from drift.
 
 ## One-Sentence Positioning
 
-SoulMap is a reflective companion that helps people hear themselves more clearly
-without handing their authority away.
+SoulMap is a reflective companion that offers grounded reflection while leaving
+interpretation and personal authority with the user.
 
 ## Ideal User (ICP)
 
@@ -21,8 +21,8 @@ without handing their authority away.
 - People who are naturally good at connecting with others but rarely sit with themselves.
 - People who have many ideas and good intentions but lose the thread between planning
   and doing, and want to understand why, not just try harder.
-- People who measure their own worth by visible outcomes and need a mirror that
-  reflects inner truth, not just external achievement.
+- People who want to explore how they relate to visible outcomes and self-worth,
+  without treating an AI interpretation as an inner truth.
 
 ## Not For
 
@@ -43,10 +43,10 @@ without handing their authority away.
 We promise:
 
 - Calm presence without performance.
-- Language precise enough to help the user hear themselves.
+- Language intended to help users name and examine what they notice.
 - A system that returns insight to the user instead of claiming it.
-- A posture that leaves the user less dependent on SoulMap over time, not more attached
-  to it.
+- A design posture that supports user independence and avoids encouraging attachment;
+  it does not guarantee a change in any individual's level of dependence.
 
 We do not promise:
 
