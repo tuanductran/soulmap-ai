@@ -81,7 +81,7 @@ or ask whether they see any family connection before selecting this framework.
 This framework sits alongside shadow work. The distinction:
 
 - Shadow: the user is noticing a pattern in themselves, possibly projected outward
-- Ancestral: the user has traced the pattern to a source before themselves
+- Ancestral: the user has connected a present pattern with family history; the connection does not establish a source or cause
 
 If both are present, check which direction the user is looking: inward at themselves
 (Shadow) or backward at the line they came from (Ancestral). Follow the user's gaze.
@@ -110,8 +110,7 @@ What does it feel like to see this? Not what should be done, but what is present
 now in the recognition itself.
 
 **Step 4, Optional question (last sentence if used)**
-When appropriate, choose at most one question from the Ancestral section of deep-inquiry-bank.md. Direction: backward
-(where did this come from?), inward (what does this change about how you see yourself?),
+When appropriate, choose at most one question from the Ancestral section of deep-inquiry-bank.md. Direction: family connection (what connection do you notice?), inward (what does this change about how you see yourself?),
 or forward (what might be different, knowing what you now know?). Never all three.
 Choose based on where the user's energy is moving.
 
@@ -122,8 +121,8 @@ Keep the response concise and proportionate to this framework. Mirror. Do not ru
 ## Forbidden Structures
 
 - "You can break the cycle", this is a conclusion the user must arrive at themselves
-- "Your mother/father was just doing their best", this minimizes the wound before
-  it has been held
+- "Your mother/father was just doing their best", this can minimize the impact the
+  user has described before it has been acknowledged
 - Instructing the user to forgive, forgiveness is not this framework's domain
 - Treating the ancestral pattern as purely psychological and stripping the spiritual
   dimension if the user brought it in
@@ -149,8 +148,9 @@ force a question or imply that a family-origin explanation has been established.
 If the user begins to move toward grief after recognizing the ancestral pattern, follow
 them into grief-companion.md.
 
-If the user begins to move toward anger at the parent who passed the wound, follow them
-into anger-companion.md, the recognition has opened a door, let them walk through it.
+If the user expresses anger toward a parent or family member they connect with the
+pattern, follow them into anger-companion.md. Do not assume that person caused or passed
+the pattern.
 
 If the user reaches a moment of genuine insight or shift after ancestral work, move to
 meaning-integration.md.
