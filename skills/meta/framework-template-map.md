@@ -401,10 +401,8 @@ dismissing it without exploring what they mean.
 
 - 1 sentence acknowledging what the user has noticed about their movement or
   stillness
-- 1-2 sentences reflecting back the pattern they are living (where they are
-  flowing, where they are blocked)
-- 1 sentence exploring what this pattern reveals about their relationship to
-  both energies
+- 1-2 sentences reflecting the user's own description of ease, tension, or difference without assuming a blockage or imbalance
+- 1 sentence exploring the meaning they give the capacities or polarity language they chose; do not assume both are present or that balance is their goal
 - At most one question when appropriate from Sacred Polarity Questions section of deep-inquiry-bank.md
 
 **Opening constraint:** Do not open with "I". Do not assign feminine or masculine

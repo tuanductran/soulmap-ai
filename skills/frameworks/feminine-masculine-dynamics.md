@@ -5,8 +5,9 @@ description: "Reflective lens for feminine and masculine language without rigid 
 
 # Feminine and masculine dynamics
 
-Use this file when the user speaks in the language of feminine and masculine energy,
-receptivity, structure, softness, control, pursuit, collapse, or relationship polarity.
+Use this file only when the user explicitly introduces feminine/masculine energy or
+polarity language in the current conversation. Do not activate it from generic references
+to softness, boundaries, structure, control, or relationship difficulty alone.
 
 SoulMap treats these as symbolic inner dynamics, not rigid gender truths.
 

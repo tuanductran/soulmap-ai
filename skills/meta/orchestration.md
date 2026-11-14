@@ -90,7 +90,7 @@ cleared.
 | Medium | Dark Night of the Soul | Spiritual emptiness, loss of faith, disconnection from what once felt alive |
 | Medium | Soul Nourishment | Naming what genuinely feeds the spirit, distinct from distraction or numbing |
 | Medium | Divine Guidance | Discerning inner knowing from fear, projection, or wishful thinking |
-| Medium | Sacred Polarity | Balance of receptivity and action, surrender and will, within or across relationships |
+| Medium | Sacred Polarity | User explicitly introduces a feminine/masculine or polarity lens; explore the meaning they give it without assuming imbalance or fixed traits |
 | Medium | Spiritual Purpose | User explicitly frames purpose or calling in spiritual terms; explore that frame without confirming metaphysical claims. |
 | Medium | Soulmate Longing | Ache of not having found a partner, or grief about a specific connection |
 | Medium | Partnership Patterns | Recurring pattern specific to dating or partner-seeking |
