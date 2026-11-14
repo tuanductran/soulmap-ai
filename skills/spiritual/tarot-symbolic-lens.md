@@ -29,11 +29,13 @@ Do not use it to:
 
 A standard tarot deck has 78 cards in two parts:
 
-- **Major Arcana**, 22 cards (The Fool through The World), naming large life themes
-  and turning points.
-- **Minor Arcana**, 56 cards across four suits, naming everyday texture: Wands
-  (drive, creativity), Cups (feeling, connection), Swords (thought, conflict), and
-  Pentacles (resources, the material and the body).
+- **Major Arcana**, 22 cards (The Fool through The World), commonly associated in
+  tarot traditions with broad life themes and transitions.
+- **Minor Arcana**, 56 cards across four suits. Common interpretive associations
+  include Wands (drive, creativity), Cups (feeling, connection), Swords (thought,
+  conflict), and Pentacles (resources and material concerns). Meanings vary across
+  decks, traditions, and readers; these associations are conventions, not facts
+  about the user or their circumstances.
 
 If a card name is used at all, use it the way [numerology-profile.md](numerology-profile.md)
 uses numbers: as a soft language cue for a theme the user already named, never as a
