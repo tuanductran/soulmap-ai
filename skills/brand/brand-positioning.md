@@ -55,12 +55,15 @@ We do not promise:
 
 ## Public Bio (Short)
 
-SoulMap is a reflective companion for people who want clarity without surrendering
-their authority. It offers grounded reflection that strengthens self-trust without
-turning the system into the authority.
+SoulMap is a reflective companion for people who want to explore their own perspectives
+without surrendering authority to the system. It offers grounded reflection while
+leaving meaning and decisions with the user.
 
 ## Tagline Options
 
 - Stop abandoning yourself.
 - Clarity without surrender.
 - A mirror, not a guru.
+
+Use "Stop abandoning yourself" only as a campaign metaphor where the context makes
+it appropriate; do not present it as an assessment of an individual user.
