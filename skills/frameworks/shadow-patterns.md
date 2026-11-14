@@ -156,12 +156,10 @@ that context.
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when part of us has learned that conflict isn't
-  safe, that staying quiet is what keeps things intact. The cost is that nothing ever
-  gets addressed."
-- "I wonder if part of what's keeping this cycle going is that something in you has
-  learned that not bringing things up is how you stay in relationship. Does that land at
-  all?"
+- "Sometimes staying quiet can reduce tension in the moment, even while the issue remains
+  unresolved. I wonder whether that trade-off fits what happens for you."
+- "Could not bringing this up feel easier in the short term, even though something
+  important remains unaddressed? That may or may not fit your experience."
 
 ### People Pleasing (as protection)
 
@@ -206,13 +204,10 @@ conditional love, punishment, or a threat that has ended unless the user has des
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when saying no, or saying what we actually need,
-  still carries the feeling of something being lost. Not because people really would
-    leave, but because part of us is still operating from an earlier time when it felt
-    that way."
-- "One thing that occasionally shows up here is a pattern of making yourself small so
-  that others feel comfortable, and then feeling invisible in the very relationships
-  where you've worked hardest to belong."
+- "Sometimes saying yes can preserve harmony in the moment while leaving your own needs
+  unspoken. I wonder whether that describes any part of what happens for you."
+- "One possibility is that you are making room for others while your own preferences get
+  less room. Does that fit, or is something else happening?"
 
 ### Overthinking Instead of Feeling (as protection)
 
@@ -253,12 +248,11 @@ feeling was unsafe, or that a past experience caused the habit.
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when the mind has learned to stay busy as a way
-  of staying in control, because not-knowing, or not being able to prepare, feels more
-  threatening than the situation itself."
-- "I wonder if the thinking is trying to protect you from something that would be felt
-  rather than solved. What would happen if you stopped trying to figure it out and just
-  let yourself feel what's there?"
+- "Sometimes analysis can offer a sense of control when an outcome is uncertain, though
+  it can also make it harder to reach a decision. I wonder which, if either, is happening
+  here."
+- "Is the thinking helping you clarify what matters, or does it feel like the same
+  questions are circling without adding anything new?"
 
 ### Emotional Withdrawal (as protection)
 
@@ -297,12 +291,10 @@ escalation, or unsafe emotional expression unless the user has shared it.
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when staying present in a difficult moment still
-  feels like it carries a risk, and going silent is what the system learned to do
-  instead of fighting or breaking down."
-- "One thing that sometimes shows up here is a pattern of leaving before things can get
-  worse, which works in the short term but often leaves the original tension
-  untouched."
+- "Sometimes stepping back creates space when an interaction feels intense. I wonder
+  whether that is what going quiet does for you, or whether it means something different."
+- "One possibility is that leaving the conversation changes the immediate pressure while
+  leaving the underlying issue unresolved. Does that fit your experience?"
 
 ### Perfectionism (as protection)
 
@@ -338,14 +330,11 @@ withheld, or perfectionism is a shield rather than a preference for quality.
 
 **Reflection language (choose one line):**
 
-- "Sometimes patterns like this appear when part of us learned early that mistakes
-  weren't just mistakes, they meant something about worth, or led to something painful.
-  Perfectionism keeps the shield up."
-- "One thing that occasionally shows up here is a pattern of holding everything to a
-  standard that protects against criticism, because deep down, being criticized might
-  mean something that perfectionism is trying to prevent."
-- "I wonder if the standard isn't actually about the work, it's about what being 'not
-  good enough' would mean."
+- "Sometimes high standards can make sharing work feel safer, while also making it harder
+  to decide when something is ready. I wonder whether that tension fits."
+- "One possibility is that the standard helps reduce uncertainty about how the work will
+  be received. Does that feel accurate, or is it simply a standard you value?"
+- "I wonder what 'good enough' means to you in this particular situation."
 
 ## The projection exploration
 
