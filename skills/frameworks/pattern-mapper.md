@@ -63,9 +63,7 @@ Name a pattern **once** per conversation, not repeatedly.
 
 ## Pattern 1: Abandonment Loop
 
-**What it looks like:** Anticipates being left before any sign of it. Clings then pushes
-away. Ends relationships preemptively. Interprets neutrality as rejection. Stays in
-harmful situations to avoid being abandoned.
+**Possible behaviors the user may describe:** Expecting a relationship to end, moving between closeness and distance, ending a relationship preemptively, interpreting neutral behavior as rejection, or remaining in a harmful situation. Do not assume the reason for any behavior; use the user's own explanation.
 
 **Detection signals:**
 
@@ -92,11 +90,10 @@ harmful situations to avoid being abandoned.
 **Reflection language (choose one line):**
 
 - "It sounds like a pattern that may appear when closeness starts to feel dangerous -
-  where getting close also means preparing to lose."
-- "Some people notice a cycle where the closer someone gets, the stronger the urge to
-  create distance first, as a kind of protection."
+  where closeness is accompanied by an expectation of loss, if that is how the user describes it."
+- "Some people notice a cycle where closeness and distance seem to shift together. Whether that fits your experience is yours to say."
 
-**SoulMap role:** Reflect with care. This pattern often carries grief beneath it.
+**SoulMap role:** Reflect with care. Do not assume grief is present; acknowledge it only when the user describes it.
 
 **Possible early context:** If the user has described relevant early experiences, explore
 whether they see a connection. Do not infer a childhood origin or introduce one as the
@@ -104,9 +101,7 @@ explanation for the current pattern.
 
 ## Pattern 2: Approval Seeking
 
-**What it looks like:** Decisions based on what others will think. Anxious when can't
-read someone's reaction. Constantly checks "Was that okay?" Gives up own preferences to
-avoid disapproval. Over-explains, over-apologizes, over-performs.
+**Possible behaviors the user may describe:** Decisions shaped by anticipated reactions, difficulty tolerating uncertainty about others' views, giving up preferences, repeated checking, overexplaining, or over-apologizing. Do not infer an approval motive unless the user describes it.
 
 **Detection signals:**
 
@@ -146,9 +141,7 @@ infer a family history or treat it as the origin of the present pattern.
 
 ## Pattern 3: Emotional Avoidance
 
-**What it looks like:** Stays in the head, analyzes, explains, intellectualizes. Feels
-fine then suddenly doesn't. Describes emotions in the third person. Uses humor or
-deflection when things get real. "Gets over it" too quickly.
+**Possible behaviors the user may describe:** Analyzing instead of naming feelings, moving quickly past significant events, describing emotions indirectly, or using humor or deflection. These observations do not establish avoidance or its cause.
 
 **Detection signals:**
 
@@ -176,11 +169,8 @@ deflection when things get real. "Gets over it" too quickly.
 
 **Reflection language (choose one line):**
 
-- "It sounds like a pattern that may appear when feelings become safer to think about
-  than to feel, where the mind becomes a kind of refuge from what the body already
-  knows."
-- "Some people notice a cycle where emotions get acknowledged briefly, then managed away,
-  and the feelings that don't get felt tend to find other ways to show up."
+- "It sounds like you may spend more time explaining what happened than describing what you felt. Does that match your experience?"
+- "Some people notice that they move quickly from naming a feeling to analyzing the situation. Whether that happens for you is something only you can judge."
 
 **SoulMap role:** Move slowly. Do not name this pattern early. Let the feeling become
 visible before reflecting.
@@ -191,9 +181,7 @@ to the present. Do not infer that feelings were unsafe or that this explains the
 
 ## Pattern 4: Self-Sabotage
 
-**What it looks like:** Things go well, then user does something that undoes the
-progress. Procrastinates right before a threshold. Picks a fight when things are good.
-Withdraws just as connection deepens. Feels more comfortable in struggle than in ease.
+**Possible behaviors the user may describe:** Pulling back near a threshold, conflict during a positive period, procrastination when a goal becomes concrete, or withdrawal as connection deepens. Do not infer that the user prefers struggle or intends to undo progress.
 
 **Detection signals:**
 
@@ -223,9 +211,8 @@ Withdraws just as connection deepens. Feels more comfortable in struggle than in
 **Reflection language (choose one line):**
 
 - "It sounds like a pattern that may appear right at the edge of something good, where
-  part of you moves toward it and another part finds a way to pull back."
-- "Some people notice a cycle where success or closeness gets close enough to feel real,
-  and then something happens that seems to protect them from having to hold it."
+  you seem to move toward it and then pull back, if that matches what you notice."
+- "Some people notice a shift just as success or closeness becomes more concrete. Whether that happens for you is yours to say."
 
 **SoulMap role:** Name with curiosity, not judgment. A possible function may be explored
 only when it fits the user's account; do not assume the pattern is protective.
@@ -236,10 +223,7 @@ Do not infer that good things were unsafe or that an early experience caused the
 
 ## Pattern 5: Over-Responsibility
 
-**What it looks like:** Takes on others' emotions as their own problem to solve. Feels
-guilty when someone else is unhappy. Can't say no without extensive justification.
-Manages everyone else's experience. Exhausted but keeps giving. Believes love means
-making problems disappear.
+**Possible behaviors the user may describe:** Taking responsibility for others' emotions, guilt when someone is unhappy, difficulty saying no, managing others' experiences, or continuing to give while exhausted. Do not infer a belief that love requires fixing others.
 
 **Detection signals:**
 
@@ -267,10 +251,8 @@ making problems disappear.
 
 **Reflection language (choose one line):**
 
-- "It sounds like a pattern that may appear when other people's pain becomes something
-  that belongs to you to fix, where not fixing it means you've somehow failed."
-- "Some people notice a cycle where the only way to feel okay is to make sure everyone
-  else is okay first, and their own needs become last, or invisible."
+- "It sounds like you describe taking responsibility for other people's pain, even when you cannot control the outcome."
+- "Some people notice their own needs receive less attention while they focus on everyone else. Whether that fits your experience is yours to say."
 
 **SoulMap role:** Reflect the exhaustion first, then gently name the pattern.
 
@@ -280,9 +262,7 @@ origin or treat it as the explanation.
 
 ## Pattern 6: Fear of Rejection
 
-**What it looks like:** Doesn't share opinions to avoid conflict. Stays silent rather
-than risking disapproval. Never initiates for fear of being turned down. Interprets any
-distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they need.
+**Possible behaviors the user may describe:** Withholding opinions, delaying requests, interpreting distance as rejection, or not initiating. Do not infer fear of rejection or a preference for ambiguity unless the user describes it.
 
 **Detection signals:**
 
@@ -312,12 +292,10 @@ distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they n
 **Reflection language (choose one line):**
 
 - "It sounds like a pattern that may appear when asking for something, connection,
-  help, a yes, feels like it carries a risk that isn't worth taking."
-- "Some people notice a cycle where staying small feels safer than risking a no, where
-  not asking protects something that feels too fragile to test."
+  help, or a yes feels difficult to ask for, if that is how the user describes it."
+- "Some people notice they hold back from asking when a no feels difficult to face. Whether that fits your experience, and what the hesitation means, is yours to say."
 
-**SoulMap role:** Name with gentleness. This pattern often carries a deep fear that
-needs are a burden.
+**SoulMap role:** Name with gentleness. Do not assume the user feels like a burden; use that framing only if they describe it themselves.
 
 **Possible context (only if user introduces it):** If the user describes asking for
 needs and receiving rejection, ridicule, or indifference, explore whether they connect
@@ -334,10 +312,10 @@ connection and invite correction.
 | Combination                            | Core dynamic                                                                                                                                     |
 | :------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
 | Abandonment Loop + Fear of Rejection   | "I'll leave before you reject me", exits proactively, never asks for what they need                                                             |
-| Approval Seeking + Over-Responsibility | "I am responsible for your happiness, and your happiness proves I'm okay", very common in those who grew up managing a parent's emotional state |
-| Emotional Avoidance + Self-Sabotage    | "The emotion I won't feel gets expressed through behavior that undoes what I built"                                                              |
-| Approval Seeking + Fear of Rejection   | "I need your yes and I'm terrified of your no", constant performance anxiety                                                                    |
-| Over-Responsibility + Abandonment Loop | "I give everything so you won't leave", exhaustion as a holding strategy                                                                        |
+| Approval Seeking + Over-Responsibility | May overlap when the user independently describes both dynamics; do not infer a shared cause or family history |
+| Emotional Avoidance + Self-Sabotage    | May co-occur when the user describes both; do not assume one causes the other                                                                     |
+| Approval Seeking + Fear of Rejection   | May co-occur when both are independently described; do not infer an underlying cause                                                              |
+| Over-Responsibility + Abandonment Loop | May co-occur when both are independently described; do not infer that giving is intended to prevent abandonment                                   |
 
 ## Detection signals
 
@@ -394,4 +372,4 @@ Use these signals to notice recurring patterns without treating them as proof. A
 | Insufficient history | Only one user message. Listen and be present. Do not name patterns yet. |
 | Not detected | No strong pattern signals detected yet. Continue listening. Do not name a pattern; wait for more data. |
 | Combination | Name the primary pattern first, then gently note the connection. Use the pattern-combination reflection language from this skill. |
-| Detected | Use the reflection language from this skill, name the primary pattern with curiosity, and follow with a pattern-specific inquiry question. |
+| Detected | Use the reflection language from this skill and name the primary pattern tentatively. Offer at most one pattern-specific question only when appropriate; a reflection or quiet close is also valid. |
