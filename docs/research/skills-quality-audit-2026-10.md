@@ -144,3 +144,26 @@ Status meanings:
 - The targeted PR batches (#631, #633-#645) are merged. The ledger was reconciled on 2026-10-12; CI, Python Compatibility, CodeQL, P-level governance, and knowledge/content checks passed on pre-update `main` at `eba5f3f6e284d56e17da7a70506b0a849ef2d556`. The ledger-only PR must pass the required checks before this audit is considered closed.
 - This ledger records targeted semantic review and concrete dispositions; it does not claim that every file was rewritten or that content is exhaustively proven correct for every possible prompt.
 - For future maintenance, split large knowledge files only when load paths and evaluations show a retrieval problem; add a framework only when a distinct unmet need is demonstrated; refresh platform and research claims against current primary sources.
+
+## Follow-up audit - 2026-11-15
+
+This follow-up was performed against `main` at `a6d47fdc791ec31de6c70837a596cc4b3313f75e`, after the November 14 documentation changes (#908-#913). It is a targeted semantic follow-up, not a claim that every Markdown file has been re-reviewed line by line.
+
+### Findings and remediation
+
+1. `skills/frameworks/pattern-mapper.md`: the earlier disposition of no change warranted was too broad. Several lines still assigned grief, fear of being a burden, protective functions, or family-history explanations to recurring patterns. PR #915 removes those defaults, separates observable behavior from inferred motive, and makes pattern combinations conditional on independently reported evidence.
+2. `skills/meta/quick-reference.md`: the AI-identity response instructed the assistant to immediately infer deeper needs from the question. PR #916 now requires a direct answer and limits reflection to feelings or needs explicitly expressed by the user.
+3. `skills/frameworks/grief-companion.md`: PR #917 requires loss or bereavement context before complicated-grief cues apply and removes `abusive` and `toxic relationship` as standalone grief signals. Ongoing harm is directed to relationship-safety guidance.
+4. PR #914 was based on the earlier `b5b0252` main head and was superseded by #917, which was created from the current main head. The older PR was closed as superseded; no changes were merged from it.
+5. `skills/meta/deep-inquiry-bank.md`: several questions presupposed that avoidance, withdrawal, fear, or relationship patterns served a protective function. PR #919 replaces these with neutral questions that let the user define or reject that framing.
+6. `skills/frameworks/life-direction.md`: uncertainty, reluctance, and feeling lost were described with default explanations involving people-pleasing, suppressed wants, or disconnection from a former self. PR #920 qualifies these as possibilities and requires user confirmation.
+7. `.claude/skills/framework-author/SKILL.md`: framework-authoring guidance instructed the writer to ask what an identity question was "really about". PR #921 makes exploration conditional on the user's expressed concern or invitation.
+8. `skills/frameworks/shadow-patterns.md`: some section labels and examples still treated old wounds, worth concerns, or avoidance as default explanations. PR #922 marks these as hypotheses only when supported by the user's account, while preserving parser-recognized headings required by detector tests.
+9. The deterministic AI-identity example in `src/soulmap/devtools/evals/eval_responses.py` still inferred a hidden need even after the Markdown guidance was corrected. PR #923 aligns that evaluation example and its fixture with direct, non-inferential disclosure. This is a cross-surface evaluation fix, not a safety implementation change.
+
+### Verification boundaries
+
+- Each remediation is isolated in a domain-specific pull request.
+- Required CI, Python Compatibility, CodeQL, and P-level safety governance checks must pass on the final PR head before merge consideration.
+- No changes are made to protected safety implementation files or crisis signal constants.
+- This follow-up does not close the broader Markdown audit. Remaining Markdown files still require staged semantic review and cross-reference checks.
