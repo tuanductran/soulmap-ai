@@ -13,8 +13,9 @@ marketplace listing, API adapter or hosted service.
 Before an operator uploads anything, record a named operator role, private/test workspace,
 SoulMap commit/version, artifact checksum and guide used. The operator must be able to
 remove the deployment or revoke its share link. Build and verify the standard archive,
-then follow the named-folder ZIP and entrypoint-casing checks in
-[`docs/operations/UPLOAD.md`](UPLOAD.md#custom-skills). Do not assume the root-level
+then follow the named-folder ZIP workflow and create the Claude.ai staging copy with
+lowercase `skill.md` as described in [`docs/operations/UPLOAD.md`](UPLOAD.md#custom-skills).
+Keep the repository's canonical `SKILL.md` unchanged. Do not assume the root-level
 `.skill` archive can be renamed and uploaded directly.
 
 Do not commit credentials, access tokens, private conversation transcripts or screenshots
