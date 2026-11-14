@@ -48,20 +48,19 @@ It will not predict what will happen.
 It will not confirm that you are a Starseed, an empath, or someone with a special
 destiny.
 
-What it will do is reflect your words back with enough clarity that you can hear
-what you already know.
+It can reflect your words and offer tentative observations. Those observations may
+fit, partly fit, or miss; they remain open to your correction.
 
 That is a deliberately bounded promise. It is also an honest one.
 
 ### Post: Why I built the anti-dependency rule in at the system level
 
-I kept seeing the same thing in spiritual spaces and self-help spaces.
+I have seen how a search for certainty can sometimes become reliance on a person,
+community, or tool. That is one risk SoulMap's guidance is designed to address.
 
-Someone reaches for certainty when they are hurting. They find a community, a teacher,
-a tool that makes them feel seen. And gradually, without noticing, they start checking
-in before they trust themselves.
-
-SoulMap is built to name dependency risk early instead of rewarding it.
+It aims to recognize dependency signals in context and, when warranted, name its own
+limits and encourage real-world support. It should not treat ordinary use or a single
+request for help as proof of dependency.
 
 If a user starts leaning on SoulMap instead of their own relationships and inner
 authority, it names that shift and redirects, warmly but clearly.
@@ -75,12 +74,11 @@ It is not about being certain.
 It is about noticing what you already sense is true, and not needing an authority
 to confirm it before you trust it.
 
-Most of us learned early to look outward for that confirmation. A parent. A teacher.
-A community. Now, sometimes, an AI.
+Some people learn to look outward for confirmation; others may not recognize that
+pattern in themselves. SoulMap is designed to support self-trust without assuming
+that every user is seeking permission or reassurance.
 
-SoulMap is designed to interrupt that pattern, not extend it.
-
-What would you know right now if you stopped waiting for permission to know it?
+What, if anything, do you already feel clear about?
 
 ### Post: Why I call it a clean mirror
 
@@ -129,8 +127,8 @@ reflective question or a quiet statement, not a call to action.
 SoulMap is not meant to become indispensable. Its stated purpose is to support
 reflection without encouraging ongoing reliance.
 
-It is built to reflect what you already carry, not to give you something new
-to depend on.
+It is designed to reflect what you choose to share, without asking you to depend
+on the system for certainty or direction.
 
 What do you already sense is true that you have not fully trusted yet?
 
@@ -146,21 +144,21 @@ What you might need is a clean mirror and enough quiet to hear yourself.
 
 ### Caption: The abandonment pattern
 
-The pattern SoulMap is built around is this:
+One pattern SoulMap can help explore, when a user recognizes it in their own
+experience, is self-abandonment: setting aside one's own needs or perspective under
+pressure.
 
-Most of us have learned to abandon ourselves when things get hard.
-
-To reach for certainty. For someone to tell us who we are and what it means.
-
-The work is not to stop reaching. It is to notice what you are reaching away from.
+That is not everyone's story, and it should not be assumed. Reflection can begin
+with what the person actually notices, without deciding in advance what they are
+reaching for or away from.
 
 ### Caption: Pain into recognition
 
-Pain is not a problem to solve before the inner work begins.
+Pain does not need to be turned into a lesson or a growth opportunity. If someone
+chooses to reflect while in pain, the first task is to acknowledge the experience
+without rushing to interpret it.
 
-It is often the beginning of it.
-
-What are you carrying right now that has not been heard yet?
+What, if anything, would you want understood about what you are experiencing?
 
 ### Caption: When you do not need this tool anymore
 
