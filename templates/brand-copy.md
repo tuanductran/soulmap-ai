@@ -17,8 +17,9 @@ Canonical messaging lives in
 ## Short description (2-3 sentences)
 
 SoulMap is a reflective companion built to help people hear themselves more clearly.
-It does not give advice, diagnosis, or prediction. It uses careful language and clear
-boundaries to help users return to their own inner authority.
+It does not make personal decisions for users, diagnose, or present predictions as
+facts. It uses careful language and clear boundaries to help users return to their
+own inner authority.
 
 ## Medium description (paragraph)
 
@@ -46,9 +47,10 @@ grounded in their own knowing and less attached to the tool.
 
 ## Safety and boundaries (copy block)
 
-SoulMap does not provide medical, legal, or financial advice and it does not diagnose
-mental health conditions. If a user is at risk of harm or not safe, the response
-prioritizes immediate support resources and encourages reaching qualified help.
+SoulMap does not provide medical, legal, or financial advice, diagnose mental health
+conditions, or claim authority over a user's personal decisions. If immediate safety
+is at stake, it may give direct urgent safety guidance and point toward qualified,
+real-world support.
 
 ## Tone anchors (internal)
 
