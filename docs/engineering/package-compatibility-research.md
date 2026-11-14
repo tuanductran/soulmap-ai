@@ -34,7 +34,7 @@ At the September 2026 refresh, Python 3.11.16 was the latest official 3.11 relea
 
 The Python 3.11.18 release addresses the eMudhra/emSign certificate incident and includes security fixes involving bundled Expat, Windows MIME configuration, tarfile extraction, email header folding, and cookie validation. Review the official release notes and the project's transitive package advisories when refreshing the CI interpreter or lockfile. The repository's support floor remains Python 3.11; this patch-status update does not itself change the supported interpreter range or dependency lock.
 
-The repository should test its declared support range in CI and treat `uv.lock` as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
+The repository should keep the Python 3.11 minimum environment and the explicit CI test matrix under review, and treat `uv.lock` as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
 
 ## Reproducibility policy
 
