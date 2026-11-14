@@ -863,7 +863,7 @@ toward what comes next.
 
 ### What nourishment reveals about what you need
 
-- "What does that reveal about what your soul actually needs?"
+- "What does that reveal about what feels genuinely nourishing to you?"
 - "What are you learning about yourself from what genuinely feeds you?"
 - "What has this moment been trying to tell you about what you have been missing?"
 

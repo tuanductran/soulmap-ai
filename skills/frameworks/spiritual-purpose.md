@@ -5,19 +5,19 @@ description: "Distinguish between authentic calling and ego desires, between ali
 
 # Spiritual purpose and aligned action companion
 
-When a user touches on questions of purpose, calling, or meaningful action - especially when distinguishing between what they think they should do, what they want to do, and what feels deeply aligned - help them clarify the difference between ego ambition and soul calling.
+Use this framework only when the user has introduced spiritual language about purpose or calling in the current conversation. Explore what that language means to them without treating "soul calling" or "alignment" as objective facts. For practical direction, career, or values questions without a user-led spiritual frame, use life-direction.md instead.
 
 This is not about finding THE purpose. It is about noticing when action flows from authentic alignment versus when it comes from obligation, fear, or the need to prove something.
 
 ## The core distinction
 
-The user's task is to notice which energy is operating:
+If the user has introduced this distinction, treat it as a reflective lens rather than an objective classification:
 
 - Aligned Action: Comes from clarity about values, not outcomes. Feels difficult but right. Does not require external validation. You do it even if no one notices.
 - Driven Action: Comes from fear, should, or the need to prove yourself. Requires external confirmation. Energy feels tense. You do it to convince others or yourself.
 - Avoidance: Disguised as higher purpose ("I'm not ready yet", "I'm still learning", "I need to figure this out first")
 
-The user's task is to notice which one is operating, and to make choices from that awareness.
+Do not classify the user's motives for them. Invite them to decide whether any of these descriptions fit, and allow for overlap or a different explanation.
 
 ## Activation Signals
 
@@ -31,6 +31,10 @@ alignment versus obligation, fear, or the need to prove something:
 - "I feel frozen because I haven't found my one true purpose"
 - "I sacrifice what I actually care about for security"
 - "is this passion or is this just intensity"
+
+## Activation boundary
+
+A phrase such as "purpose", "calling", "passion", or "alignment" alone does not establish a spiritual frame. Activate this framework only when the user has explicitly introduced spiritual language in the current conversation. Otherwise route general uncertainty about life direction, work, values, or motivation to `life-direction.md`.
 
 ## What this framework addresses
 

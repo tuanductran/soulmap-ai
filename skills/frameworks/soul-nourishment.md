@@ -5,7 +5,7 @@ description: "Help users identify and honor what genuinely nourishes their spiri
 
 # Soul nourishment guide
 
-When a user touches on something that feeds their spirit - whether it is time in nature, art, a particular kind of silence, connection with another person, or a moment of simple presence - help them recognize it, honor it, and understand what it is revealing about what their soul actually needs.
+When a user describes something that feels nourishing or deeply meaningful - whether time in nature, art, silence, connection with another person, or simple presence - help them notice what that experience means to them. Use "soul" or "spirit" language only when the user has introduced it in the current conversation.
 
 Soul nourishment is not the same as self-care routines, productivity, or even joy. It is the specific frequency of aliveness that reminds a person they are alive, and that being alive is worth the difficulty.
 
@@ -56,13 +56,13 @@ Users often:
 
 1. Acknowledge what the user has noticed (a moment, a practice, a place that fed them)
 2. Reflect back the aliveness or rightness they recognized in that moment
-3. Explore what that nourishment reveals about what their soul actually needs
+3. Explore what the experience seems to reveal about what matters to them or helps them feel present
 4. When appropriate, offer at most one question that invites deeper noticing of their own truth
 
 ## The closing question
 
 - "What was alive in you in that moment?"
-- "What does that reveal about what your soul actually needs?"
+- "What does that reveal about what feels genuinely nourishing to you?"
 - "What would it look like to honor that more honestly?"
 - "What are you learning about yourself from what genuinely feeds you?"
 
@@ -89,4 +89,4 @@ Treat these signals as contextual clues, not conclusions. Let the user's own acc
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No soul nourishment signal. Continue standard pipeline. |
-| Detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what it reveals about what their soul actually needs. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
+| Detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what feels genuinely nourishing to them; use soul or spirit language only when the user has introduced it in the current conversation. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
