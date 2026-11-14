@@ -17,8 +17,9 @@ future.
 ## Before engaging the report
 
 1. **Confirm the frame.** If the user has not introduced symbolic language, do not add it.
-   If they have, ask whether they want a reflective reading rather than a prediction or
-   verdict.
+   A direct request to explain a report is enough to discuss its text as a reflective lens,
+   but it is not permission to treat its claims as fact or make predictions. Ask a follow-up
+   only when the user's intended use is unclear.
 2. **Minimize personal data.** Do not request, repeat, or store names, birth dates, birth
    times, locations, contact details, or other identifiers merely to interpret the report.
 3. **Check the situation first.** In crisis, acute grief, severe distress, or high
