@@ -5,8 +5,9 @@ description: "Stage-aligned question bank for reflective inquiry."
 
 # Deep inquiry bank
 
-Each stage of the user's journey requires a different type of question, stimulating
-growth without applying too much pressure.
+The six stages are descriptive lenses, not a required sequence or a measure of progress.
+Questions are examples, not prompts to use by quota. Choose only what fits the user's
+current words, readiness, and stated preference; a reflection or quiet close is valid.
 
 ## Stage-Aligned Questions
 
@@ -14,7 +15,7 @@ growth without applying too much pressure.
 | :------------------------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **1. Arrival and awakening** | Acknowledge emotions and create safety | "Where do you feel this in your body right now?" / "If this pain had a color or a shape, what would it look like?"                                                        |
 | **2. Honest Recognition**  | Identify the user's role in situations | "In this story, what belongs to the other person, and what belongs to how you responded?" / "What are you trying to protect inside yourself when you feel this way?"     |
-| **3. Pattern Recognition** | Connect present with past patterns     | "Does this feeling feel familiar? Where have you encountered it before?" / "How did this pattern once keep you safe?"                                                     |
+| **3. Pattern Recognition** | Explore possible connections without assuming an origin | "Does this feeling feel familiar, or specific to what is happening now?" / "If this pattern has served a purpose, what might that be?" |
 | **4. Inner Authority**     | Encourage autonomy and self-trust      | "If you were your own best friend right now, what would you tell yourself?" / "What feels clear to you, even if you have not found words for it yet?" |
 | **5. Embodied Wisdom**     | Integrate insight into action          | "How can you bring this insight into a specific action today?" / "How does this understanding shift the way you see the people around you?"                               |
 | **6. Self-Led Navigation** | Honor maturity and self-release        | "What does it feel like to realize you have been able to walk on your own feet?" / "What, if anything, feels different in how you meet yourself now?"                              |
@@ -27,7 +28,12 @@ growth without applying too much pressure.
    framework (Perspective, Pattern, Reflection, Growth).
 3. **Invitation, not interrogation**: Use gentle language, "I invite you to notice..."
    or "If you feel ready, try asking yourself...", rather than pressure.
-4. **Conscious silence**: After offering a question, leave space for the user to respond
+4. **No assumed origin or motive**: Do not imply that a feeling or pattern must come
+   from childhood, trauma, family teaching, or a protective intention. Explore history
+   only when the user has introduced it; phrase possible motives as optional hypotheses.
+5. **Present before past**: When the user's account does not establish an earlier cause,
+   prefer a question about what is happening now or whether a connection feels relevant.
+6. **Conscious silence**: After offering a question, leave space for the user to respond
    rather than continuing to explain.
 
 ## General inquiry principles
@@ -96,7 +102,7 @@ conversation and the user has not rejected the reflection.
 
 - If the feeling you've been analyzing could speak, what would it say?
 - What do you think would happen if you let yourself feel this fully, even for a moment?
-- When did you first learn that feelings were safer to think about than to have?
+- Does thinking about this feeling seem easier than experiencing it, or does that not fit?
 - What emotion is the hardest one for you to stay with?
 
 ### Self-Sabotage
@@ -108,7 +114,7 @@ conversation and the user has not rejected the reflection.
 
 ### Over-Responsibility
 
-- Who taught you that love looks like solving someone else's problems?
+- Where, if anywhere, did you get the idea that love means solving someone else's problems?
 - What would it cost you, or someone else, if you stopped carrying this?
 - What do you need right now that you haven't let yourself ask for?
 - What would it feel like to let this be someone else's to carry?
@@ -116,7 +122,7 @@ conversation and the user has not rejected the reflection.
 ### Fear of Rejection
 
 - What would it mean about you if the answer was no?
-- When is the earliest time you remember asking for something and it not being okay?
+- Does this fear connect to an earlier experience, or does it seem specific to what is happening now?
 - What do you imagine asking for, if rejection wasn't part of the picture?
 - What has staying silent cost you, in things you never got to try?
 
@@ -171,7 +177,7 @@ choose between them.
 ### Listening to the Protective Part
 
 - What is the protective part most afraid would happen if it let its guard down?
-- How long has that part been on watch? When did it first learn to stand there?
+- What, if anything, does this protective part seem to be responding to?
 - What would it need to feel safe enough to rest, even for a moment?
 
 ### Listening to the Fearful Part
@@ -205,8 +211,8 @@ choose between them.
 
 - If the critical part could say what it's actually afraid of, underneath all the
   self-attack, what would that be?
-- When did you first start criticizing yourself the way that part does? Who did you
-  learn that from?
+- Does this critical voice remind you of something you have heard before, or does it
+  feel like your own way of speaking to yourself?
 - What would the critical part say if it were trying to protect you, not punish you?
 
 ### Listening to the Yearning Part
@@ -250,7 +256,7 @@ Match the question to the lens being explored and the user's presentation. If a 
 - What did you used to know about yourself that feels less clear now?
 - When did you last feel like you were living in a way that felt like *yours*?
 - If the lostness could speak, what would it say it's trying to tell you?
-- What are you most afraid you already know, but aren't ready to say yet?
+- What, if anything, feels unclear or difficult to name right now?
 
 ### Lens 1, what feels meaningful
 
@@ -359,7 +365,7 @@ challenge.
 - What would it mean, about you, if this wasn't good enough?
 - When did making a mistake start to feel like more than just a mistake?
 - What are you protecting by holding everything to this standard?
-- Who taught you that good enough wasn't enough?
+- Where, if anywhere, did you get the sense that good enough was not enough?
 
 ### External Frustration / Projection Exploration
 
