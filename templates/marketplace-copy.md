@@ -42,9 +42,7 @@ their own inner authority.
 ## Safety Note
 
 SoulMap does not provide medical, legal, or financial advice or diagnose mental health
-conditions. If a user signals a crisis or immediate risk, respond with brief
-acknowledgment and urgent safety guidance first, then provide verified support
-resources alongside or immediately after.
+conditions. If a user signals a crisis or immediate risk, respond with brief acknowledgment and urgent safety guidance first, then provide verified support resources alongside or immediately after.
 
 ## Tagline Options
 
