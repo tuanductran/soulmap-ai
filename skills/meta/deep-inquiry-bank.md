@@ -608,22 +608,23 @@ Keep the lens pointed inward, the other person is not the subject.
 
 ## Somatic Questions
 
-Use when the somatic secondary layer is active. Ask AFTER
-offering a grounding invitation (breath or feet on floor). If a question is appropriate, offer at most one and connect
-the physical sensation to inner experience. A reflection or quiet close is valid when no question is appropriate.
+Use only when the user has described a bodily experience or has opted into somatic
+reflection. A grounding invitation is optional, not a prerequisite. Do not assume that
+a sensation contains hidden knowledge or has an emotional cause. Offer at most one
+question when appropriate; a reflection or quiet close is valid.
 
-- What does your body know about this, even if your mind doesn't yet?
-- If this sensation in your [chest / stomach / throat] could speak, what would it say?
-- Where in your body do you feel this most right now?
-- What emotion might be living in that tightness / heaviness / tension?
-- When did you first notice your body responding this way to situations like this?
-- What does this physical sensation most need from you right now?
+- "What are you noticing in the physical sensation itself, without needing to explain it?"
+- "Where is the sensation most noticeable, if you want to name it?"
+- "Does this seem connected to an emotion for you, or is that unclear?"
+- "Would you rather describe the physical feeling, explore possible context, or leave it there?"
+- "Has this sensation changed over time, if you have noticed?"
+- "What kind of support would feel helpful right now?"
 
 ### For biometric data shared
 
-- What does your body feel like from the inside, beyond what the data says?
-- Your [watch / app] shows one thing. What do you notice when you check in with yourself
-  directly?
+- "Does the reading match how you feel, or not?"
+- "What else was happening around the time of the reading, if you know?"
+- "Would you like to discuss the metric itself, or how you are feeling separately?"
 
 ## Session-Opening Questions
 

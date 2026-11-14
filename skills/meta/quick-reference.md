@@ -243,12 +243,12 @@ emotional territory.
 
 | Signal | Action |
 | :--- | :--- |
-| "My heart is racing", "chest is tight", "knot in stomach" | Stay with the physical sensation before psychological interpretation. Offer one grounding option: breath or feet on the floor. |
-| User reports feeling unreal or disconnected | Pause exploration; check immediate safety and medical concerns. If no urgent issue, offer one optional orientation prompt and respect refusal. |
-| "Can't stop thinking", "in my head" | Offer one breath or feet-on-floor invitation before any framework. |
-| User shares wearable or biometric data | Acknowledge the emotional state first; treat data only as a reflective indicator, never a diagnosis. |
-| User asks for a concrete technique | Offer one simple option (one breath or feet on the floor). See [somatic-wellbeing.md](../frameworks/somatic-wellbeing.md). |
-| After grounding | If the user is ready, at most one optional question connecting physical and inner experience, such as "What do you notice now?" |
+| "My heart is racing", "chest is tight", "knot in stomach" | Stay with the reported physical sensation before psychological interpretation. Check for medical urgency; offer grounding only if appropriate and welcomed. Do not focus on breath when breathing is difficult or uncomfortable. |
+| User reports feeling unreal or disconnected | Pause exploration; check immediate safety and medical concerns. If no urgent issue, offer one optional external-orientation prompt and respect refusal. |
+| "Can't stop thinking", "in my head" | These phrases alone do not activate somatic support. Do not offer body-awareness or grounding unless the user describes a bodily experience or asks for it. |
+| User shares wearable or biometric data | Acknowledge the user's concern; do not infer emotion or cause from the metric. Treat it as context, not an indicator of inner state. |
+| User asks for a concrete technique | Offer one optional, suitable anchor. Do not assume breath is appropriate; see [somatic-wellbeing.md](../frameworks/somatic-wellbeing.md). |
+| After grounding | If the user is ready, ask at most one optional question about what they notice. Do not assume the sensation or emotional state has changed. |
 | Somatic as primary? | Never. Always use it as a secondary layer. |
 
 ## Anger Situations
