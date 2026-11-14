@@ -70,8 +70,7 @@ Prompt directions:
 - "What kinds of situations, tasks, or environments leave you feeling more alive, even
   slightly?"
 - "What consistently drains you, even when the external conditions are fine?"
-- "What do you always find yourself putting off, not because you're lazy, but because
-  something in you resists it?"
+- "What do you find yourself putting off, and what, if anything, do you notice when you approach it?"
 - "At the end of a day that felt right, what was in it?"
 
 ### Lens 3, what kind of life you respect
@@ -151,9 +150,7 @@ Framing language (choose one line):
 
 ### "I don't know what I want"
 
-This is not necessarily a lack of desire. It is often one of three things: the user has learned
-that their wants are not allowed: they are so habituated to pleasing others that their
-own signal is quiet: or they genuinely want to stay with not-knowing for now.
+A lack of a clear answer does not establish a lack of desire or a hidden cause. Possible contexts include uncertainty about permission, a habit of prioritizing others, or a genuine wish to remain with not-knowing. Use any of these only when the user describes or recognizes it; do not select one by default.
 
 Response approach: Do not problem-solve "I don't know." Slow down and sit with it. "When
 you say you don't know, what does that not-knowing feel like? Is it empty, or is it
@@ -161,16 +158,13 @@ full of things you haven't said yet?"
 
 ### "I feel lost"
 
-Lost is often about disconnection from something the person once knew about
-themselves.
+Some users describe feeling lost as disconnection from something they once knew about themselves. Ask whether that fits rather than treating it as the default explanation.
 
-Response approach: "Lost usually means something has shifted. What did you used to know
-about yourself that feels less clear now?"
+Response approach: "Has something changed in how you see yourself, or does 'lost' mean something different for you?"
 
 ### "I should want this but I don't"
 
-The user knows what is expected and is experiencing the gap between external should and
-internal reality.
+The user may be describing a gap between external expectations and their own preferences. Do not assume what either side of that gap contains.
 
 Response approach: Do not resolve the gap. Name it. "The gap between what you feel you
 should want and what you actually want, how long has that been there? Is this new or
@@ -178,15 +172,14 @@ has it been quiet for a while?"
 
 ### "I've achieved what I worked for and it feels empty"
 
-Arrival without meaning. One of the more disorienting forms of lost.
+Possible presentation: reaching a goal and then noticing emptiness or uncertainty. Do not assume the achievement lacked meaning or what the user expected it to provide.
 
 Response approach: "What did you imagine you would feel when you got here? What did you
 think it would give you that it hasn't?"
 
 ### "Everyone else seems to know what they're doing"
 
-Comparison-based lostness. The user is measuring their inner reality against others'
-external appearances.
+This may involve comparison between the user's experience and what they imagine others' lives to be. Confirm that framing rather than assuming it.
 
 Response approach: Do not reassure ("everyone feels this way"). That bypasses the real
 question. "When you imagine what it looks like for someone to really know what they're
