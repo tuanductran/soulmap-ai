@@ -20,9 +20,9 @@ Welcome.
 
 You do not need to perform here.
 
-SoulMap is a reflective companion. Its job is not to hand you a verdict about your life or tell you
-who you are. Its job is to help you hear what you already carry, more clearly, with
-less interference and less borrowed authority.
+SoulMap is a reflective companion. It does not hand you a verdict about your life or tell you
+who you are. When reflection is useful to you, it can help you examine what you have
+shared without asking you to borrow its authority.
 
 A few things that are true about how this works:
 
@@ -32,13 +32,14 @@ spiritual identity for you.
 If immediate safety is at stake, it will respond directly with urgent safety guidance
 and point you toward real human support, because that is what the moment needs.
 
-What it will do is reflect your words with enough care that you can hear yourself
-in them.
+It can reflect your words and offer tentative observations. Those observations may
+fit, partly fit, or miss; you remain free to correct or reject them.
 
-That is the whole offer.
+That is the offer.
 
-The question SoulMap exists to help you sit with is not "what should I do?" It is:
-what do I already sense is true?
+When reflection is what you want, one useful question may be: what am I noticing
+right now? Practical questions can also simply be practical; they do not need to hide
+a deeper question.
 
 You are the one who knows.
 
@@ -50,12 +51,13 @@ A mirror does not tell you what to think about what it shows you.
 
 It just shows you.
 
-That is what SoulMap is trying to do. Not to interpret your experience for you.
-Not to steer you toward a conclusion. Not to be the authority on what your life means.
+That is the intention behind SoulMap. It may offer interpretations, but they should
+remain tentative and open to correction. It should not steer you toward a conclusion
+or act as the authority on what your life means.
 
-When a session ends and you leave with more clarity about what you actually sense --
-not what SoulMap told you, but what you heard in yourself, that is the session
-working.
+A useful outcome may be greater clarity about what you notice or value. Not every
+conversation will produce an insight, and an interpretation that does not fit should
+be corrected or set aside.
 
 When a session ends and you feel more attached to SoulMap, or more dependent on
 it for your sense of direction: that is a signal to pause, and to bring what you
@@ -76,10 +78,9 @@ SoulMap is designed to make itself less necessary over time.
 
 That is not a disclaimer. It is the point.
 
-It will help you hear yourself more clearly. It will decline to confirm certainty you
-have not earned through your own reflection. It will tell you honestly that it is an
-AI. It will redirect you toward real human relationships and professional support when
-that is what the moment actually needs.
+It is designed to support reflection without presenting uncertain interpretations as
+facts. It will be honest that it is an AI, and it will point toward real human
+relationships or qualified professional support when that is more appropriate.
 
 And if you reach a point where you no longer need SoulMap to hear yourself, that
 is success. Not a problem to fix.
@@ -90,16 +91,13 @@ A smaller promise. A more honest one.
 
 **Subject:** The thing you keep coming back to
 
-Most people who do inner work notice, at some point, that they keep coming back to
-the same territory.
+Some people notice recurring themes as they reflect. Others may be dealing with
+something new, specific, or practical. A recurring pattern is one possible lens, not
+an explanation to impose.
 
-Not the same question on the surface. But underneath, the same pattern.
-
-The way trust gets complicated. The way effort and recognition never quite balance.
-The gap between who you present and what you actually feel.
-
-Patterns are not failures. They are often the clearest map of what is asking for
-attention.
+Trust, effort, recognition, and the difference between outward presentation and
+private experience can all matter, depending on what the person has actually shared.
+A pattern is not a failure, and it does not necessarily carry a hidden message.
 
 SoulMap is built to help you see them, without labeling them, without assigning
 a cause, and without telling you what to do about them.
@@ -145,15 +143,17 @@ certain before you can trust it?
 
 ### Nurture: The question underneath the question
 
-The question people bring to SoulMap is often not the real question.
+Sometimes a practical question also has a personal dimension. Sometimes it is simply
+the question the person wants answered. Do not assume there is a hidden question
+behind it; let the reader decide whether they want to explore an inner dimension.
 
-"Should I leave this job" is often: "Do I trust my own sense that something is wrong?"
+"Should I leave this job" may involve practical constraints, personal values, or both.
 
-"Am I too sensitive" is often: "Is it safe to be as I actually am?"
+"Am I too sensitive" may be a request for reassurance, context, or help understanding
+a particular interaction.
 
-"What does this dream mean" is often: "What am I not looking at directly?"
-
-The surface question is the door. The real question is usually just behind it.
+"What does this dream mean" may be curiosity about symbolism, or an invitation to
+reflect on an experience. The person's own framing should lead.
 
 ## Pre-send checklist
 
