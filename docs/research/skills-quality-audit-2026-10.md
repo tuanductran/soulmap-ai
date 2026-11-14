@@ -160,10 +160,15 @@ This follow-up was performed against `main` at `e2a902574f1821204284fb5ab528d322
 7. `.claude/skills/framework-author/SKILL.md`: framework-authoring guidance instructed the writer to ask what an identity question was "really about". PR #921 makes exploration conditional on the user's expressed concern or invitation.
 8. `skills/frameworks/shadow-patterns.md`: some section labels and examples still treated old wounds, worth concerns, or avoidance as default explanations. PR #922 marks these as hypotheses only when supported by the user's account, preserves parser-recognized headings required by detector tests, and removes assumed emotional-withdrawal motives from the descriptive text.
 9. The deterministic AI-identity example in `src/soulmap/devtools/evals/eval_responses.py` still inferred a hidden need even after the Markdown guidance was corrected. PR #923 aligns that evaluation example and its fixture with direct, non-inferential disclosure. This is a cross-surface evaluation fix, not a safety implementation change.
+10. `skills/frameworks/ancestral-patterns.md`: some transition and inquiry language described a parent as the person who passed a wound. PR #924 makes the family connection user-described and keeps transmission or causation unproven.
+11. `skills/meta/deep-inquiry-bank.md` and `skills/meta/redirect-templates.md`: a prompt assumed the user had learned to read others' reactions, and some identity/out-of-scope redirects inferred a wish to be heard or a hidden question. PR #925 makes these prompts direct and optional.
+12. `skills/safety/whitelist-blacklist-system.md`: the harmful-spirituality refusal remains unchanged in substance; PR #926 replaces an "underneath the framework" phrase with a request to describe the concrete situation apart from its spiritual interpretation.
+13. The wider Markdown scan covered all 201 Markdown paths in the current repository tree: 75 under `skills/` and 126 elsewhere. Targeted phrase screening was followed by manual review of flagged excerpts; this was not a line-by-line editorial review of all 201 files. PR #927 updates three public-facing templates where copy implied SoulMap could identify a hidden meaning or assigned motives to readers.
 
 ### Verification boundaries
 
 - Each remediation is isolated in a domain-specific pull request.
 - Required CI, Python Compatibility, CodeQL, and P-level safety governance checks must pass on the final PR head before merge consideration.
 - No changes are made to protected safety implementation files or crisis signal constants.
-- This follow-up does not close the broader Markdown audit. Remaining Markdown files still require staged semantic review and cross-reference checks.
+- The 201-file Markdown screening is a targeted audit, not proof that every sentence has been semantically reviewed. Continue with staged line-level reviews of high-impact domains and cross-reference checks.
+- PRs #915, #918, and #922 were still open at the time of this ledger update; merge only after final-head checks and parser compatibility are verified.
