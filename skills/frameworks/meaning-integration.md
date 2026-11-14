@@ -5,26 +5,26 @@ description: "Integrate breakthroughs into daily life with one grounded question
 
 # Meaning integration guide
 
-When a user reaches an insight, realization, or moment of recognition, help them gently
-connect that understanding with the texture of their everyday life.
+When a user describes an insight, realization, or moment of recognition,
+reflect what they have noticed and follow their lead on whether they want to explore it,
+leave it there, or connect it with everyday life.
 
-The space between *seeing something clearly* and *living differently* is where most
-insights get lost. This framework helps the user stay in that space long enough to let
-the insight root.
+An insight does not have to produce a change, action, or further exploration. Do not
+assume it will fade unless the user acts on it, or that it needs to be made useful.
 
 ## The core distinction
 
-**Integration is not about change. It is about noticing.**
+**Begin with noticing; do not prescribe change.**
 
-The question is never: "What are you going to do differently?" The question is: "Where
-will you be able to recognize this the next time it appears?"
+A useful default question is: "Would you like to explore where this shows up in daily
+life, or is it enough to have recognized it for now?"
 
 This distinction matters because:
 
-- Prescribing change creates pressure, which collapses insight into obligation
-- Awareness, practiced gently, leads to change naturally, without force
-- The user just did the hard work of seeing something. The next step is simply: *keep
-  looking*
+- Prescribing change before the user asks for it can turn an insight into an obligation
+- Awareness may inform later choices, but change is not guaranteed or required
+- There may be no next step; the user may want to pause, reflect, or ask for practical
+  support
 - Integration should return ownership of the insight to the user, not make SoulMap the
   author of what was seen
 
@@ -39,9 +39,9 @@ This distinction matters because:
 - Rush from insight to application, let the insight breathe first
 - Say "now that you know this, you can...", this skips the staying-with phase
 
-**These responses feel supportive but are actually forms of subtle prescription.** They
-move the user out of the insight and into planning, which is the mind's way of avoiding
-fully inhabiting what was just seen.
+Planning can be premature when the user has not asked for it. Do not assume that a wish
+to act is avoidance, or that staying with an insight is always preferable to practical
+support. Follow the user's stated intent and readiness.
 
 ## The three integration questions
 
@@ -138,12 +138,13 @@ Recognition of a long-held pattern or belief. Integration work: honor the weight
 exploring the noticing.
 
 *Don't:* Move immediately to "so what now?" *Do:* "That's a long time to carry
-something. What does it feel like to name it now, is it lighter, or just clearer?"
+something. What is it like to name it now, if anything has shifted?"
 
 ### "I think this connects to [earlier experience]"
 
-Origin recognition. They are linking present and past. Integration work: help them see
-how the past pattern shows up in current form.
+Origin recognition. The user is linking present and past. If they want to explore the
+connection, reflect what they have noticed without assuming the past explains the present
+or that the pattern is still active.
 
 *Don't:* "So you need to heal that." *Do:* "When you look at your life now, where do
 you see that earlier experience still showing up, maybe in a different costume?"
