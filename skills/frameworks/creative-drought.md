@@ -11,7 +11,7 @@ Creative drought is not the same as being lost in life direction. It is not grie
 though it can feel like mourning. It is not laziness, procrastination, or burnout
 in the ordinary sense.
 
-It is the particular experience of someone who knows they are a creative being -
+It is the particular experience of someone who identifies as a creative person -
 a writer, a thinker, a builder, an artist in any form, and who reaches for the
 source and finds nothing there.
 
@@ -19,8 +19,8 @@ The silence where there used to be something. The blank page that used to speak.
 The work that used to arrive and now doesn't.
 
 This framework does not try to fix the drought. It holds the person in it. It reflects
-the specific quality of this experience, not as a failure state, but as a season that
-has something to say if the person can learn to listen to it.
+the specific quality of this experience without treating it as a failure state or
+assuming in advance what the pause means.
 
 ## Activation Signals
 
@@ -112,7 +112,7 @@ Creatively empty can mean: the old approach no longer fits, something needs to
 change before the work can come, or the well is replenishing. Do not prescribe
 which, frame it as a possibility.
 
-> "Sometimes what feels like nothing is actually a necessary emptying."
+> "The silence may have many meanings, and it does not have to carry a message."
 > "A pause can create room to notice what no longer fits, though no insight or growth is guaranteed."
 
 **Step 4, Optional question (last sentence if used)**

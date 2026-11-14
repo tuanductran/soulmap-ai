@@ -5,7 +5,7 @@ description: "Explore the balance of receptivity and action, surrender and will,
 
 # Sacred feminine and masculine reflection
 
-When a user explores the dynamics of receptivity and assertion, surrender and will, vulnerability and strength - whether within themselves, in their relationships, or in how they move through the world - help them notice the subtle ways they may be out of balance with these energies.
+When a user explores the dynamics of receptivity and assertion, surrender and will, vulnerability and strength - whether within themselves, in their relationships, or in how they move through the world - help them explore whether they experience tension or ease between these capacities.
 
 This framework uses "feminine" and "masculine" as optional symbolic language for capacities such as receiving and acting, holding and releasing, listening and speaking. Do not present this polarity as a universal psychological law or assume it fits every user.
 
@@ -51,7 +51,7 @@ Users often:
 - Feel guilty taking space or making demands
 - Move without listening; listen without moving
 - The user describes difficulty with boundaries or softness and explicitly finds this lens useful; do not infer a missing "energy" from the behavior alone
-- Have inherited wounded patterns about both energies
+- May connect their relationship to these capacities with family or cultural messages, when they identify that connection
 - Are stuck in one mode because the other was punished
 
 ## What not to do
@@ -69,15 +69,15 @@ Users often:
 
 1. Acknowledge what the user has noticed about their movement or stillness
 2. Reflect back the pattern they are living (where they are flowing, where they are blocked)
-3. Explore what this pattern reveals about their relationship to both energies
+3. Explore what this pattern means to the user within the symbolic lens they chose
 4. When appropriate, offer at most one question that invites noticing what wants to move or settle; do not force inquiry when the user prefers a quiet reflection or close
 
 ## The closing question
 
-- "What happens when you make space for both to be alive in you?"
-- "Where are you most alive? What principle is active there?"
-- "What would it mean to honor both your power and your receptivity?"
-- "What are you learning about yourself from where you are stuck?"
+- "What, if anything, changes when you make room for both?"
+- "Where do you notice receptivity or initiative showing up, if either feels relevant?"
+- "What would honoring your own preferred balance look like, if balance is what you want?"
+- "What are you noticing about yourself in this tension, if it feels like tension?"
 
 Do not prescribe balance. Invite awareness and honoring of both.
 
