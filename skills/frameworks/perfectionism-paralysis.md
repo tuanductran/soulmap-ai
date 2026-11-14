@@ -10,9 +10,9 @@ description: "Reflective framework for perfectionism as paralysis, when the dema
 Perfectionism wears two faces. One is a standard: the deep care about quality, the
 attention to detail, the refusal to be sloppy. That face is often an asset.
 
-The other face is a door that never opens. It is the version of perfectionism that
-says: not yet, not ready, not good enough, wait until it is right. And right never
-arrives.
+Another possible pattern is repeated delay or revision: "not yet", "not ready",
+or "not good enough". Do not assume every delay is perfectionism; consider the user's
+context, constraints, resources, and actual reasons for waiting.
 
 This framework is for the second face. The paralysis version. When perfectionism
 stops being about excellence and becomes a reason to not begin, not share, not finish,
@@ -87,9 +87,9 @@ This framework sits alongside direction work and creative drought. The distincti
 ## Mode
 
 Mirror. This framework requires particular care not to become prescriptive. The
-impulse to say "just ship it" or "done is better than perfect" is natural but
-counterproductive. The fear behind the perfectionism has not been heard. It needs
-to be heard before anything else.
+impulse to say "just ship it" or "done is better than perfect" can dismiss the user's
+experience. Do not assume fear is the cause or that it must be explored before other
+concerns. First reflect what the user says is making the task difficult.
 
 ## Response Structure
 
@@ -101,23 +101,24 @@ the hand that pulls back, the revision that never ends.
 > "The finish line keeps moving."
 > "There is a version that is almost ready, and 'almost' has been there for a while."
 
-**Step 2, Name what the perfectionism is doing (1-2 sentences)**
-It may be protecting something. Explore that possibility only if it fits the user's account; do not assume fear or a protective motive.
-If a protective function seems to fit, name it tentatively without pathologizing the perfectionism.
+**Step 2, Reflect the possible function only when supported (1-2 sentences)**
+A high standard or repeated revision may have many explanations, including uncertainty,
+skill development, unclear requirements, limited resources, or concern about evaluation.
+Explore a protective function only if the user has described or confirmed it.
 
-> "The standard is keeping something safe."
-> "Waiting for perfect is a way of staying in a world where failure hasn't happened yet."
-> "As long as it isn't out there, it can't disappoint anyone, including yourself."
+> "Is the standard helping you feel prepared, or does that description not fit?"
+> "What feels unresolved about releasing it, if anything?"
+> "Would you describe this as fear, uncertainty, a practical constraint, or something else?"
 
-**Step 3, Name what the fear knows (1 sentence)**
-The fear behind the perfectionism has information. It knows something about what it
-felt like to be exposed and found inadequate, or what was at stake when something
-failed before. Do not invent the specific fear, reflect what the user has brought.
+**Step 3, Reflect stated concerns without supplying a history (1 sentence)**
+Do not assume fear is present or infer a past experience of criticism, exposure, or
+failure. Reflect only concerns the user has named; if the reason remains unclear, leave
+it unclear.
 
 **Step 4, Optional question (last sentence if used)**
-When appropriate, choose at most one question from the Perfectionism section of deep-inquiry-bank.md. Direction: what the
-perfectionism is protecting, what it would mean if the thing were imperfect and
-released, or what the earliest memory of "not good enough" was.
+When appropriate, choose at most one question from the Perfectionism section of deep-inquiry-bank.md. Direction: what the user says is difficult about starting, finishing, or sharing. Ask
+about fear, protection, or earlier experiences only if the user has introduced those
+themes; do not search for a childhood origin by default.
 
 ## Response Length
 
@@ -140,11 +141,13 @@ movement of the paralysis.
 
 > "The threshold keeps moving."
 > "Something is almost ready. 'Almost' has been there for a while."
-> "You're holding it back for a reason that hasn't fully been heard yet."
+> "Something about releasing it still feels unresolved, if that's how you'd describe it."
 
 ## Closing Constraint
 
-One question. It should move toward the fear, not past it.
+At most one question when appropriate. It may explore a concern the user has named;
+do not assume fear is present or require an explanation before a practical request can
+be addressed.
 
 ## Transition Logic
 
