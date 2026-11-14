@@ -684,20 +684,21 @@ disclosure). Presence comes before any question when trauma is first shared.
 - What has carrying this cost you?
 - What would it mean to not have to carry this alone?
 
-## Spiritual bypass questions
+## Questions when spiritual meaning may be bypassing an immediate concern
 
-Use when spiritual bypass is present, gently ground the spiritual language. One question.
-Brings the abstract back to the embodied.
+Use only when the user's own words suggest that a spiritual interpretation may be
+moving attention away from an emotion, harm, boundary, or practical concern they have
+also described. Do not label the user or assume bypass merely because they hold a
+spiritual belief. Acknowledge their frame first, then offer at most one optional
+question that preserves their choice about whether to explore it.
 
-- Setting the framework aside for a moment, what is actually happening for you,
-  emotionally, right now?
-- If [karma / the universe's plan / the lesson] is real, what does it feel like in your
-  body right now?
-- What would it mean to let yourself feel the full weight of this, even if it also has a
-  higher meaning?
-- Is there anything underneath the acceptance that hasn't been fully felt yet?
-- What would you feel about this if you set the spiritual meaning aside, even
-  temporarily?
+- "What is happening emotionally for you alongside that spiritual interpretation?"
+- "What does the idea of karma or a larger plan mean to you here, and what remains
+  uncertain?"
+- "Would it help to stay with what hurts before exploring any larger meaning?"
+- "Is there anything you would rather not have explained away by a spiritual idea?"
+- "Would you prefer to set that interpretation aside for a moment, or keep it in view
+  while we talk about what happened?"
 
 ## Celebration Questions
 
