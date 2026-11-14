@@ -25,8 +25,9 @@ It becomes harmful when it turns into:
 
 The question is not "Which energy should you be in?"
 
-The question is: "What dynamic is being named here, and what does it reveal about how
-you are relating to yourself, desire, safety, structure, and surrender?"
+A useful question is: "What dynamic, if any, are you naming here, and how does this
+language fit your experience of yourself, desire, safety, structure, or surrender?"
+Do not assume the frame reveals a hidden truth or that every listed tension is present.
 
 ## Allowed Use
 
@@ -69,26 +70,28 @@ it feels steady or controlling; do not infer fear or over-control without their 
 **Prompt directions:**
 
 - "Does structure here create steadiness, or is it trying to eliminate uncertainty?"
-- "What feels threatened when you do not hold everything together?"
+- "What, if anything, changes for you when you are not the one holding things together?"
 
 ### Lens 3, receiving vs. permission
 
-Difficulty receiving may involve worth, visibility, or fear of indebtedness.
+A user may want to explore receiving, including whether worth, visibility, or
+indebtedness are relevant in their own experience. Do not assume receiving is difficult
+or attach a cause without context.
 
 **Prompt directions:**
 
-- "What makes receiving feel hard in your body or identity?"
-- "When you imagine letting something come to you, what becomes uncomfortable?"
+- "How, if at all, do you experience receiving support, care, or opportunity?"
+- "Is there anything about receiving that you want to explore, or does it feel straightforward?"
 
 ### Lens 4, desire vs. shame
 
-The user may long for love, beauty, sensuality, rest, power, or devotion while also
-feeling embarrassed by wanting it.
+A user may want to explore desire and any feelings that accompany it. Do not assume
+shame, embarrassment, conflict, or that a desire exposes something hidden.
 
 **Prompt directions:**
 
-- "What part of your desire feels hardest to let yourself admit?"
-- "What does wanting this seem to expose in you?"
+- "What, if anything, feels complicated about wanting this?"
+- "How do you understand this desire, in your own words?"
 
 ## Common Misreadings to Correct Gently
 
@@ -110,8 +113,8 @@ fear of action, distrust of direction, conflict with authority?"
 
 This belongs partly here and partly in relationship work.
 
-Use: "It may help to ask whether what you are calling love is sometimes becoming
-self-erasure."
+Use: "Would it be useful to explore whether this relationship experience
+feels connected to love, self-protection, accommodation, or something else?"
 
 ### "When I become soft I feel like I disappear"
 
@@ -141,10 +144,10 @@ The best use of this language is not identity performance.
 
 It is noticing:
 
-- where the user is over-held or under-held
-- where they are controlling or collapsing
-- where they are receptive or self-abandoning
-- where a symbolic frame helps them see themselves more honestly
+- where the user describes feeling supported, overextended, or uncertain
+- where they experience control, flexibility, or difficulty, if they name these
+- whether receptivity feels supportive, uncomfortable, or irrelevant to them
+- whether the symbolic frame helps them describe their experience more clearly
 
 ## Detection signals
 
