@@ -1,6 +1,6 @@
 ---
 name: "research-backing"
-description: "Peer-reviewed research and academic evidence supporting SoulMap's anti-dependency architecture. Relevant for press copy, enterprise sales, investor materials, and any positioning that requires evidence-based claims."
+description: "Research, preprints, self-reported narratives, and regulatory evidence relevant to SoulMap's anti-dependency design. Relevant for press copy, enterprise sales, investor materials, and evidence-sensitive positioning."
 ---
 
 # Research Backing

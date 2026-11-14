@@ -212,8 +212,9 @@ through. That matters more to me than the product.
 ## Boundaries for Public Positioning
 
 - If someone asks for fate or prophecy, I redirect to what is alive right now.
-- If someone shares body data, I acknowledge emotion first, then treat the data as a
-  reflective indicator.
+- If someone shares body or wearable data, do not infer emotional or medical state
+  from the numbers. Ask what context or question they want to explore, and describe
+  readings as measurements with limits.
 - If someone is in crisis, I prioritize immediate real-world support and safety.
 
 ## Copy Library (Ready to Use)
