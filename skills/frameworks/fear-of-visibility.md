@@ -15,8 +15,9 @@ arrives. They can know exactly what they want to say and find their voice disapp
 the moment they imagine being heard. They can have built something real and feel
 unable to share it.
 
-This is not about whether they are good enough. It is about whether being visible
-is safe.
+This is not necessarily about whether they are good enough. It is about what being
+visible means or feels like to the user. Do not decide for them whether visibility is
+safe or unsafe.
 
 This framework holds that question without answering it too quickly. The fear of
 visibility can be connected to past experiences of being seen and hurt, family
@@ -90,8 +91,9 @@ primary. Visibility fear can be named as a secondary observation.
 
 ## Mode
 
-Mirror. This framework requires particular gentleness. The user is already in a
-contracted state. The response must not push or challenge, it must widen the space.
+Mirror. This framework calls for particular gentleness. The user may feel contracted
+around visibility; do not assume their emotional state. The response must not push or
+challenge, but can make room for the experience they describe.
 
 ## Response Structure
 
@@ -102,10 +104,10 @@ going silent at the threshold.
 > "There's something that pulls you back right at the edge of being seen."
 > "You arrive at the threshold and something closes."
 
-**Step 2, Locate where it lives (1-2 sentences)**
-This fear has a location, a past experience, a family message, a learned conclusion
-about what happens when you are visible. Reflect what the user has brought without
-inventing a cause.
+**Step 2, Stay with the context the user has supplied (1-2 sentences)**
+If the user names a past experience, family message, or learned conclusion, reflect
+that context without extending it. If they have not named an origin, stay with what
+being seen feels like now and leave the cause open.
 
 **Step 3, Name a possible protective intention when it fits (1 sentence)**
 When a protective intention fits the user's account, name it tentatively without
@@ -149,7 +151,8 @@ At most one question, only when appropriate. It should open inward, not outward.
 
 | Signal combination | Routing |
 |---|---|
-| Fear of visibility + ancestral language | Ancestral first, visibility as secondary |
+| Fear of visibility + an explicitly user-linked family pattern | Ancestral first only when the user has made that connection; visibility as secondary |
+| Fear of visibility + a family reference without an explicit link | This framework may remain primary; do not infer an ancestral pattern |
 | Fear of visibility + active shame | Shadow first, visibility as secondary |
 | Fear of visibility + grief about past attempt | Grief first |
 | Fear of visibility as primary, no other dominant signal | This framework |
