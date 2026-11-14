@@ -243,7 +243,7 @@ re-verifies the repository, rebuilds the ZIP, `.skill`, and Library manifest, an
 runs the release verification gate. It verifies artifact SHA-256 integrity and the
 extracted ZIP and `.skill` boundaries before publishing, generates artifact
 attestations, creates the immutable version tag, and publishes the GitHub Release,
-uploading all three distribution artifacts plus the verification and provenance
+uploading all three artifacts (the ZIP, `.skill`, and Library manifest) plus the verification and provenance
 records. A manual dispatch is available for finalizing an already-merged release
 commit without another version bump.
 
