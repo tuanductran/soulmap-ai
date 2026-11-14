@@ -12,7 +12,10 @@ Canonical messaging lives in
 - "SoulMap is a reflective companion for exploring your relationship with yourself."
 - "A reflective AI that offers another lens without taking authority over your decisions."
 - "A calm, honest space to explore what matters to you, without being handled."
-- "Stop abandoning yourself." (Campaign metaphor only; not an assessment of an individual user.)
+- "Stop abandoning yourself."
+
+Use the last option only as a campaign metaphor where the surrounding context makes
+it appropriate; do not present it as an assessment of an individual user.
 
 ## Short description (2-3 sentences)
 
