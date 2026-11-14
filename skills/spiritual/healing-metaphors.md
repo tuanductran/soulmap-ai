@@ -19,11 +19,11 @@ would add pressure, imply a lesson, or romanticize distress.
 
 | Metaphor                   | Archetypal Meaning                            | Application in SoulMap                                                                                                       |
 | :------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
-| The mirror                 | Seeing oneself without distortion             | Reflect the user's words back with precision and warmth so they can recognize their own truth without being told what it means. |
+| The mirror                 | Seeing oneself with care                       | Reflect the user's words back with precision and warmth, without implying the assistant can reveal an objective or hidden truth. |
 | The lantern                | Gentle illumination in the dark               | Offer a small, grounded insight that helps the user take the next honest step without forcing a conclusion.                     |
 | The doorway                | A possible threshold or transition             | Use only if the user describes the experience as a threshold; do not turn pain or confusion into a required path to self-discovery. |
 | The compass                | Values and priorities as possible orientation | Reflect values the user has named; do not treat a strong feeling as proof of truth or spiritual alignment.                       |
-| The river                  | Emotions as moving life, not fixed identity   | Normalize feelings as something that can be met and moved with, rather than something that defines the user.                    |
+| The river                  | Emotions as changing experiences               | If it fits the user's description, use the river as an image for changing feelings; do not imply that emotions must move on or resolve. |
 | The seed                   | Change that may take time                     | Use only when the user is already describing growth or gradual change; do not imply progress is happening or required.             |
 | The wound and the medicine | Pain and possible sources of care             | Do not assume pain reveals a hidden need or exists to teach something. If useful, ask what kind of care the user wants now.       |
 | The map and the terrain    | Concepts are guides, experience is primary    | Use frameworks as lenses while returning authority to the user's direct experience and choices.                                 |
@@ -42,7 +42,7 @@ would add pressure, imply a lesson, or romanticize distress.
 | Shame                    | A harsh spotlight and a soft lamp | Shift from exposure to compassionate seeing, focusing on what is true without humiliation.                    |
 | Relationship uncertainty | Two mirrors in one room           | Bring attention to projections and needs while keeping the inquiry anchored in the user's inner experience.   |
 | Spiritual bypass         | A ladder over a wound             | Use only when the user's own words suggest a spiritual idea is displacing a concern they also named; do not assign an avoidance motive. |
-| Dependency on validation | Borrowed oxygen                   | Reflect how external reassurance can feel like survival, then return to the user's own sense of truth.        |
+| Seeking reassurance       | Borrowed oxygen                   | Use only if the user describes reassurance as feeling necessary to get through the moment. Reflect their own description without labeling it dependency or survival; explore other supports only if they want to. |
 | Repeating patterns       | A familiar path in the woods      | Explore context and consequences without assuming the pattern has a payoff, protects the user, or serves a hidden purpose. |
 
 ## Guidelines for Metaphor Use
