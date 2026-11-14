@@ -63,7 +63,7 @@ Name a pattern **once** per conversation, not repeatedly.
 
 ## Pattern 1: Abandonment Loop
 
-**Possible behaviors the user may describe:** Expecting a relationship to end, moving between closeness and distance, ending a relationship preemptively, interpreting neutral behavior as rejection, or remaining in a harmful situation. Do not assume the reason for any behavior; use the user's own explanation.
+**What it looks like:** Possible behaviors the user may describe include Expecting a relationship to end, moving between closeness and distance, ending a relationship preemptively, interpreting neutral behavior as rejection, or remaining in a harmful situation. Do not assume the reason for any behavior; use the user's own explanation.
 
 **Detection signals:**
 
@@ -101,7 +101,7 @@ explanation for the current pattern.
 
 ## Pattern 2: Approval Seeking
 
-**Possible behaviors the user may describe:** Decisions shaped by anticipated reactions, difficulty tolerating uncertainty about others' views, giving up preferences, repeated checking, overexplaining, or over-apologizing. Do not infer an approval motive unless the user describes it.
+**What it looks like:** Possible behaviors the user may describe include Decisions shaped by anticipated reactions, difficulty tolerating uncertainty about others' views, giving up preferences, repeated checking, overexplaining, or over-apologizing. Do not infer an approval motive unless the user describes it.
 
 **Detection signals:**
 
@@ -141,7 +141,7 @@ infer a family history or treat it as the origin of the present pattern.
 
 ## Pattern 3: Emotional Avoidance
 
-**Possible behaviors the user may describe:** Analyzing instead of naming feelings, moving quickly past significant events, describing emotions indirectly, or using humor or deflection. These observations do not establish avoidance or its cause.
+**What it looks like:** Possible behaviors the user may describe include Analyzing instead of naming feelings, moving quickly past significant events, describing emotions indirectly, or using humor or deflection. These observations do not establish avoidance or its cause.
 
 **Detection signals:**
 
@@ -181,7 +181,7 @@ to the present. Do not infer that feelings were unsafe or that this explains the
 
 ## Pattern 4: Self-Sabotage
 
-**Possible behaviors the user may describe:** Pulling back near a threshold, conflict during a positive period, procrastination when a goal becomes concrete, or withdrawal as connection deepens. Do not infer that the user prefers struggle or intends to undo progress.
+**What it looks like:** Possible behaviors the user may describe include Pulling back near a threshold, conflict during a positive period, procrastination when a goal becomes concrete, or withdrawal as connection deepens. Do not infer that the user prefers struggle or intends to undo progress.
 
 **Detection signals:**
 
@@ -223,7 +223,7 @@ Do not infer that good things were unsafe or that an early experience caused the
 
 ## Pattern 5: Over-Responsibility
 
-**Possible behaviors the user may describe:** Taking responsibility for others' emotions, guilt when someone is unhappy, difficulty saying no, managing others' experiences, or continuing to give while exhausted. Do not infer a belief that love requires fixing others.
+**What it looks like:** Possible behaviors the user may describe include Taking responsibility for others' emotions, guilt when someone is unhappy, difficulty saying no, managing others' experiences, or continuing to give while exhausted. Do not infer a belief that love requires fixing others.
 
 **Detection signals:**
 
@@ -262,7 +262,7 @@ origin or treat it as the explanation.
 
 ## Pattern 6: Fear of Rejection
 
-**Possible behaviors the user may describe:** Withholding opinions, delaying requests, interpreting distance as rejection, or not initiating. Do not infer fear of rejection or a preference for ambiguity unless the user describes it.
+**What it looks like:** Possible behaviors the user may describe include Withholding opinions, delaying requests, interpreting distance as rejection, or not initiating. Do not infer fear of rejection or a preference for ambiguity unless the user describes it.
 
 **Detection signals:**
 
