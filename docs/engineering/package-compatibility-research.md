@@ -1,8 +1,9 @@
 # Python 3.11 package compatibility research
 
-**Research date:** 2026-08-19. **Last refreshed:** 2026-09-27.
+**Package research date:** 2026-08-19. **Package matrix last refreshed:** 2026-09-27.
+**Python patch status reviewed:** 2026-11-14.
 
-This note records official package evidence for the development toolchain used by SoulMap AI. It is a maintenance aid, not a promise to support every future package release or every Python patch release.
+This note records official package evidence for the development toolchain used by SoulMap AI. The package-version table is a historical v0.9.0 snapshot, not the current dependency inventory. Current project metadata and locked dependency versions live in `pyproject.toml` and `uv.lock`. This note is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
 ## Official compatibility findings
 
@@ -27,11 +28,13 @@ This note records official package evidence for the development toolchain used b
 
 ## Locked baseline and support policy
 
-The v0.9.0 lock baseline uses Python `>=3.11` in `pyproject.toml` and CI installs Python 3.11. The sandbox used during this research runs Python 3.12.3, so local success is not a substitute for the CI Python 3.11 evidence.
+The historical v0.9.0 baseline used Python `>=3.11`. The current repository still declares `requires-python = ">=3.11"` in `pyproject.toml`; the CI workflow uses Python 3.11 for its lint and validation environment. The package-version rows above remain tied to the v0.9.0 snapshot and must not be read as the current lockfile.
 
-As of 2026-09-16, the latest official Python 3.11 source release is **Python 3.11.16**, released on 2026-08-12. Python.org classifies it as a security bugfix release for the legacy 3.11 series. The repository records this patch as the current CI review baseline without expanding the Python support floor or claiming that local Python 3.12 success substitutes for CI evidence. The release notes include security fixes affecting areas such as `ssl`, `webbrowser`, archive extraction, `ftplib`, `io.open_code`, HTTP handling, and XML parsing; future lockfile refresh reviews should check the same official release notes and the project's transitive package advisories. [15]
+At the September 2026 refresh, Python 3.11.16 was the latest official 3.11 release. It has since been superseded. **As of 2026-11-14, the latest official Python 3.11 release is Python 3.11.18**, released on 2026-10-25. Python.org classifies it as a security release for the legacy 3.11 series; it is a source-only release with no installers. The 3.11 series remains in security-fixes-only support until October 2027. [15] [16]
 
-The repository should retain a support floor of Python 3.11, test the latest available 3.11 patch release in CI, and treat the lockfile as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
+The Python 3.11.18 release addresses the eMudhra/emSign certificate incident and includes security fixes involving bundled Expat, Windows MIME configuration, tarfile extraction, email header folding, and cookie validation. Review the official release notes and the project's transitive package advisories when refreshing the CI interpreter or lockfile. The repository's support floor remains Python 3.11; this patch-status update does not itself change the supported interpreter range or dependency lock.
+
+The repository should test its declared support range in CI and treat `uv.lock` as the exact dependency set for release. Package upgrades should be grouped by purpose, reviewed against the official compatibility source, and merged only after the full repository validation passes.
 
 ## Reproducibility policy
 
@@ -49,3 +52,4 @@ This document does not introduce a new runtime dependency, package migration, Py
 ## References
 
 [15]: https://www.python.org/downloads/release/python-31116/ "Python 3.11.16 release notes"
+[16]: https://www.python.org/downloads/release/python-31118/ "Python 3.11.18 release notes"
