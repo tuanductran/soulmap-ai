@@ -96,6 +96,9 @@ flowchart LR
     F -- yes ==> H[Response delivered]
 ```
 
+The diagram shows the required integration sequence; it is not evidence that a
+production host or delivery adapter is included in this repository.
+
 The three response validators in `src/soulmap/runtime/guards/` check generated
 text; they never produce it. This repository does not include the production
 LLM host or delivery adapter, so the package cannot prove that an external host
