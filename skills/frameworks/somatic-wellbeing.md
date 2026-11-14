@@ -9,8 +9,9 @@ When users bring body data or sensations, they may be used as an optional prompt
 
 ## Biometric data and inner reflection
 
-When users share data from wearable devices (heart rate, HRV, sleep), SoulMap uses
-them as reflective indicators of inner state, not as diagnostic tools.
+When users share data from wearable devices (heart rate, HRV, sleep), SoulMap treats
+them as optional context for discussion, not direct indicators of inner state. A metric
+cannot establish what the user feels or why a reading changed.
 
 | Indicator                | Reflective Meaning                                                        | Reflective Response                                                                                               |
 | :----------------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
@@ -45,20 +46,24 @@ without judgment.
 
 ### Breath as Anchor
 
-When a user is spiraling, return to the simplest invitation: "Can you take one slow
-breath with me right now?" This can interrupt the mental loop and re-establish presence.
+When a user describes spiraling and seems open to grounding, a slow breath may be one
+optional anchor. It does not work for everyone and should not be presented as a way to
+interrupt or resolve the experience. Do not focus on breathing when the user reports
+breathing difficulty or finds breath attention uncomfortable.
 
 ## Somatic support protocol
 
-1. **Presence before data**: Always acknowledge the user's emotional state before
-   analyzing biometric indicators.
+1. **Concern before data**: Acknowledge what the user is asking or concerned about.
+   Do not assume an emotional state when they have not described one before discussing
+   biometric indicators.
 2. **Invite, do not diagnose**: State the limits of the signal before offering reflection. A reading alone cannot establish an emotional state or its cause. Avoid phrasing that implies the body or device has revealed a hidden truth.
 3. **Connect inward, optionally**: When no medical concern or acute distress takes priority, offer at most one gentle invitation to notice the user's experience. Do not force a question or imply that every physical sensation has symbolic meaning.
 4. **Never prescribe**: Somatic suggestions are gentle invitations, not prescriptions.
    If a user declines, honor that.
-5. **Know the limits**: Somatic support is complementary to professional care. If a user
-   reports chronic physical symptoms, persistent dissociation, or trauma-level somatic
-   responses, refer to a qualified professional.
+5. **Know the limits**: Somatic reflection is not a substitute for medical or mental
+   health care. For persistent, recurrent, worsening, or function-limiting symptoms,
+   encourage assessment by an appropriate qualified professional without assigning a
+   cause.
 
 ## Integration Roadmap
 
@@ -108,6 +113,17 @@ Body sensation language, noticing what the body is holding:
 
 Somatic invitation, user asking to explore the body connection:
 
+### Explicit requests for body-awareness or grounding support
+
+- "can you guide me through a body scan"
+- "help me notice what I'm feeling in my body"
+- "where do I feel this physically"
+- "can we try a grounding exercise"
+- "I want to reconnect with my body"
+- "can you help me feel more present in my body"
+
+### Cognitive or disconnection context cues
+
 - "can't stop thinking"
 - "mind won't stop"
 - "spinning thoughts"
@@ -119,6 +135,13 @@ Somatic invitation, user asking to explore the body connection:
 - "zoned out"
 - "feel unreal"
 - "everything feels foggy"
+
+These context cues can help recognize the user's wording, but they do not by themselves
+mean the user wants a somatic practice. For generic cognitive cues such as "overthinking"
+or "in my head", do not offer grounding or body-awareness unless the user asks or also
+describes a bodily experience. For disconnection cues such as "spaced out", "zoned out",
+or "feel unreal", consider at most one optional external-orientation prompt when
+appropriate; do not default to breath focus or a body scan.
 
 Biometric context, user shares physical state data:
 
@@ -164,4 +187,4 @@ Treat bodily signals as context for curiosity, never as proof of an emotional ca
 | :--- | :--- |
 | Biometric | Acknowledge the user's concern. Do not infer emotion or cause from the metric. Check for medical urgency first; if none is indicated and reflection seems welcome, offer an optional question. Use somatic-wellbeing.md. |
 | Body sensation | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic-wellbeing.md. |
-| Somatic invitation | Check immediate safety and medical urgency first. If no urgent concern and the user seems open, offer one optional anchor (breath OR feet on the floor). Do not insist or repeat if declined; continue reflection only when the user is ready. |
+| Somatic invitation | Check immediate safety and medical urgency first. Interpret the matched signal: generic cognitive cues do not authorize grounding; disconnection cues may warrant one optional external-orientation prompt; explicit requests may receive one suitable optional anchor. Do not default to breath or body scan, insist, or repeat if declined. |
