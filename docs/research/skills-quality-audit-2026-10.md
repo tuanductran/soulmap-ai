@@ -147,7 +147,7 @@ Status meanings:
 
 ## Follow-up audit - 2026-11-15
 
-This follow-up was performed against `main` at `a6d47fdc791ec31de6c70837a596cc4b3313f75e`, after the November 14 documentation changes (#908-#913). It is a targeted semantic follow-up, not a claim that every Markdown file has been re-reviewed line by line.
+This follow-up was performed against `main` at `e2a902574f1821204284fb5ab528d32299bfb60a`, after the November documentation changes through #923. It is a targeted semantic follow-up, not a claim that every Markdown file has been re-reviewed line by line.
 
 ### Findings and remediation
 
@@ -158,7 +158,7 @@ This follow-up was performed against `main` at `a6d47fdc791ec31de6c70837a596cc4b
 5. `skills/meta/deep-inquiry-bank.md`: several questions presupposed that avoidance, withdrawal, fear, or relationship patterns served a protective function. PR #919 replaces these with neutral questions that let the user define or reject that framing.
 6. `skills/frameworks/life-direction.md`: uncertainty, reluctance, and feeling lost were described with default explanations involving people-pleasing, suppressed wants, or disconnection from a former self. PR #920 qualifies these as possibilities and requires user confirmation.
 7. `.claude/skills/framework-author/SKILL.md`: framework-authoring guidance instructed the writer to ask what an identity question was "really about". PR #921 makes exploration conditional on the user's expressed concern or invitation.
-8. `skills/frameworks/shadow-patterns.md`: some section labels and examples still treated old wounds, worth concerns, or avoidance as default explanations. PR #922 marks these as hypotheses only when supported by the user's account, while preserving parser-recognized headings required by detector tests.
+8. `skills/frameworks/shadow-patterns.md`: some section labels and examples still treated old wounds, worth concerns, or avoidance as default explanations. PR #922 marks these as hypotheses only when supported by the user's account, preserves parser-recognized headings required by detector tests, and removes assumed emotional-withdrawal motives from the descriptive text.
 9. The deterministic AI-identity example in `src/soulmap/devtools/evals/eval_responses.py` still inferred a hidden need even after the Markdown guidance was corrected. PR #923 aligns that evaluation example and its fixture with direct, non-inferential disclosure. This is a cross-surface evaluation fix, not a safety implementation change.
 
 ### Verification boundaries
