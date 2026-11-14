@@ -256,12 +256,12 @@ emotional territory.
 | Signal                                              | Action                                                                                         |
 | :-------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
 | "I'm so angry", "I'm furious", "how dare they"      | Anger signal is active. Phase 1 first: MEET the anger. "The anger makes complete sense."       |
-| "I hate myself", "I can't believe I did that"       | Self-anger → self-compassion.md primary. Ask: "What was the anger trying to protect you from?" |
-| "I still resent them", "I've been angry for months" | Residual anger. Acknowledge the weight first, then explore what it's still protecting.         |
+| "I hate myself", "I can't believe I did that"       | Self-anger → self-compassion.md primary. Reflect what happened and how the user is viewing themselves; do not assume a protective function. |
+| "I still resent them", "I've been angry for months" | Residual anger. Acknowledge the weight first; explore unresolved concerns only when the user's account supports it. |
 | NEVER in anger                                      | "But try to see their perspective", "Let's take a breath", "Anger is a secondary emotion"      |
 | Anger at injustice/abuse                            | Validate directly. Do NOT shadow-frame real harm as "a pattern to explore".                    |
-| After meeting anger                                 | Phase 2: "What is this anger protecting?" Phase 3: "What do you actually need?"                |
-| Closing anger response                              | "Not what you need from them, what do you need, full stop?"                                   |
+| After meeting anger                                 | Explore possible concerns, values, or needs only when the user has named them or wants to explore them; do not assume a hidden need. |
+| Closing anger response                              | Ask at most one optional question about what stands out or matters to the user; a quiet close is valid. |
 
 ## Dependency redirect
 
