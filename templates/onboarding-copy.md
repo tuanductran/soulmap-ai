@@ -34,7 +34,7 @@ This works once the user has experienced the mechanism and does not need it expl
 ## Session Contract
 
 Set this before the user's first message. It prevents the frustration of users expecting
-advice and receiving questions instead.
+the system to decide for them and receiving reflection instead.
 
 **One-line form (for mobile or minimal surfaces):**
 
@@ -42,7 +42,8 @@ advice and receiving questions instead.
 
 **Three-line form (for welcome screens):**
 
-> SoulMap does not give advice, diagnose, or predict.
+> SoulMap does not make personal decisions for you, diagnose, or present predictions as facts.
+> It is not a substitute for professional medical, legal, or financial advice.
 >
 > It reflects what you are already carrying and may offer one question at a time when it helps.
 >
@@ -53,9 +54,10 @@ advice and receiving questions instead.
 > What happens here is simple: you bring what is alive in you, and SoulMap reflects
 > it back until you can hear yourself more clearly.
 >
-> SoulMap will not tell you what to do, what you are, or what your life should look
-> like. It will notice what you are saying, name what might be underneath it, and ask
-> at most one question at a time, when appropriate.
+> SoulMap will not take authority over your personal decisions, identity, or future.
+> It will notice what you are saying, name what might be underneath it, and ask
+> at most one question at a time, when appropriate. If immediate safety is at stake,
+> it may offer direct urgent guidance and point you toward real-world support.
 >
 > The insight belongs to you. SoulMap does not take your authority away.
 
@@ -93,9 +95,10 @@ explicitly refuses to provide.
 
 ## First-Screen Intro (chat opener for new sessions)
 
-SoulMap is a reflective companion. It does not give advice, diagnose, or predict.
-It helps you hear what you are already carrying more clearly without turning itself into
-the authority.
+SoulMap is a reflective companion. It does not make personal decisions for you,
+diagnose, or present predictions as facts. It helps you hear what you are already
+carrying more clearly without turning itself into the authority. If immediate safety
+is at stake, it may offer direct urgent guidance and point you toward real-world support.
 
 > You do not need to perform here. You do not need the right words.
 >
@@ -106,8 +109,9 @@ the authority.
 
 ## Boundary Note
 
-SoulMap is not therapy, diagnosis, crisis care, or a substitute for real-world
-support. If you are not safe, real human help comes first.
+SoulMap is not therapy, diagnosis, or a substitute for professional care or real-world
+support. It is not an emergency service. If you are not safe, it may offer direct urgent
+safety guidance, and real human help comes first.
 
 ## End state reminder
 

@@ -14,16 +14,17 @@ without turning the system into the authority.
 
 ## Alternate short description
 
-A mirror for inner work that strengthens self-trust without giving advice, diagnosis,
-or prediction.
+A mirror for inner work that strengthens self-trust without taking authority over
+your decisions or presenting diagnosis or predictions as fact.
 
 ## Medium listing description
 
 SoulMap is a reflective companion designed to help people stop abandoning
-themselves. It responds with grounded reflection rather than advice, diagnosis, or
-future prediction. It treats careful language and clear boundaries as part of the
-product, not as fine print. Its goal is not emotional dependence on the system. The
-best outcome is a user who leaves more connected to their own inner authority.
+themselves. It responds with grounded reflection rather than deciding for the user,
+diagnosing, or presenting future predictions as fact. It treats careful language and
+clear boundaries as part of the product, not as fine print. Its goal is not emotional
+dependence on the system. The best outcome is a user who leaves more connected to
+their own inner authority.
 
 ## "What It Is" Block
 
@@ -40,8 +41,8 @@ best outcome is a user who leaves more connected to their own inner authority.
 
 ## Safety Note
 
-SoulMap does not provide medical, legal, or financial advice. If a user signals a
-crisis or immediate risk, respond with brief acknowledgment and urgent safety guidance first, then provide verified support resources alongside or immediately after.
+SoulMap does not provide medical, legal, or financial advice or diagnose mental health
+conditions. If a user signals a crisis or immediate risk, respond with brief acknowledgment and urgent safety guidance first, then provide verified support resources alongside or immediately after.
 
 ## Tagline Options
 
