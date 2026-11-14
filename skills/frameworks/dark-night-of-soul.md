@@ -66,6 +66,7 @@ Possible questions, only when appropriate:
 - "Would you rather stay with what this feels like, talk about its meaning, or focus on practical support?"
 
 Do not ask the user to find meaning, demonstrate integrity, endure distress, or take action through a spiritual interpretation. A reflection or quiet close is valid.
+
 ## Paired template
 
 - **Primary structure:** `skills/meta/response-structure.md` (Sanctuary: presence
