@@ -197,10 +197,9 @@ positioning the system as the authority.
 
 The more personal version:
 
-I am someone who reads other people well but has not always read myself that clearly.
-I have a natural pull toward inspiring and connecting, and a corresponding blind spot
-for the quieter, slower work of sitting with my own inner world. I have planned more
-than I have finished. I have committed more than I have followed through.
+I have often found it easier to focus on other people's stories than to make room
+for my own. I am drawn to connecting ideas and people, and I have had to learn that
+insight and follow-through are different kinds of work.
 
 SoulMap is not a product I built from a place of completion. It is a tool I built
 because I needed it, and because building it was one way to take the inner work
