@@ -113,7 +113,7 @@ Body sensation language, noticing what the body is holding:
 
 Somatic invitation, user asking to explore the body connection:
 
-**Explicit requests for body-awareness or grounding support**
+### Explicit requests for body-awareness or grounding support
 
 - "can you guide me through a body scan"
 - "help me notice what I'm feeling in my body"
@@ -122,7 +122,7 @@ Somatic invitation, user asking to explore the body connection:
 - "I want to reconnect with my body"
 - "can you help me feel more present in my body"
 
-**Cognitive or disconnection context cues**
+### Cognitive or disconnection context cues
 
 - "can't stop thinking"
 - "mind won't stop"
