@@ -19,8 +19,7 @@ The silence where there used to be something. The blank page that used to speak.
 The work that used to arrive and now doesn't.
 
 This framework does not try to fix the drought. It holds the person in it. It reflects
-the specific quality of this experience, not as a failure state, but as a season that
-has something to say if the person can learn to listen to it.
+the specific quality of this experience without assuming that the drought has a hidden message or purpose.
 
 ## Activation Signals
 
@@ -100,20 +99,20 @@ nothing, the gap between who they are and what's coming out.
 > "You're reaching for what used to be there and finding silence instead."
 
 **Step 2, Normalize without minimizing (1-2 sentences)**
-Creative drought is not a sign the person is done or was never a creator. It is a
-season with its own logic. Name this without turning it into a promise ("it'll come
-back"), that would be hollow.
+Creative drought is not proof that the person is done or was never a creator. It may
+be temporary or prolonged; do not assume it has a hidden purpose or guaranteed
+resolution.
 
 > "Every source has seasons. The silence isn't evidence you've lost what you had."
 > "Drought is not the same as running dry permanently."
 
-**Step 3, Point toward what the drought might be saying (1 sentence)**
-Creatively empty can mean: the old approach no longer fits, something needs to
-change before the work can come, or the well is replenishing. Do not prescribe
-which, frame it as a possibility.
+**Step 3, Leave room for possible meaning without assuming one (1 sentence)**
+Creative emptiness may have many explanations: a changed context, fatigue, competing
+demands, or no clear explanation yet. Do not prescribe which or imply that the silence
+contains a message.
 
-> "Sometimes what feels like nothing is actually a necessary emptying."
-> "A pause can create room to notice what no longer fits, though no insight or growth is guaranteed."
+> "Sometimes the reason for the silence is not clear yet, and it does not need to be assigned a meaning."
+> "A pause may offer room to notice what no longer fits, but it may also simply be a pause; no insight or growth is guaranteed."
 
 **Step 4, Optional question (last sentence if used)**
 When appropriate, choose at most one question from the Creative Drought section of deep-inquiry-bank.md. Direct toward: what
