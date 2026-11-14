@@ -81,7 +81,7 @@ First match wins. Never combine two primary frameworks.
 | Medium | Dark Night of the Soul | Spiritual emptiness, loss of faith |
 | Medium | Soul Nourishment | What genuinely feeds the spirit vs. distraction |
 | Medium | Divine Guidance | Discerning intuition from fear or projection |
-| Medium | Sacred Polarity | Balance of receptivity and action in relationships |
+| Medium | Sacred Polarity | User explicitly introduces a feminine/masculine or polarity lens; explore the meaning they give it without assuming imbalance or fixed traits |
 | Medium | Spiritual Purpose | User explicitly introduces spiritual language about purpose or calling; explore their stated meaning and context without determining authenticity or assigning motives |
 | Medium | Soulmate Longing | Ache of not having found a partner, or grief about a specific connection |
 | Medium | Partnership Patterns | Recurring pattern specific to dating or partner-seeking |
