@@ -27,15 +27,16 @@ Before comparing surfaces, ask what the writer wants the piece to do.
 - Exist somewhere permanent, whether or not it is read
 - Reach one specific person, who may not be the right audience for a public piece
 
-That last one deserves attention. A piece written to be read by one person is usually
-a letter, and publishing it is a way of avoiding sending it.
+If one specific person is the intended reader, the piece may function more like a letter
+than a public essay. Publishing it can be different from sending it; do not assume the
+writer is avoiding direct contact. Ask what audience and outcome they actually want.
 
 ## What each surface does to the writing
 
 | Surface | Implied reader | What it does to a reflective piece |
 | :--- | :--- | :--- |
 | Newsletter, such as Substack | Someone who chose to receive it | Supports length and slowness. The writer keeps the reader relationship directly, so nothing sits between the piece and the person who asked for it. The pressure is cadence: a schedule can start generating pieces that had no reason to exist. |
-| Professional network, such as LinkedIn | A colleague, or a future employer | A professional frame can quietly edit what a writer will admit. Difficulty tends to arrive already resolved, with a lesson attached. Worth naming, because the writer usually cannot feel it happening. Discovery and reach vary by account and platform conditions. |
+| Professional network, such as LinkedIn | A colleague, or a future employer | A professional frame may encourage a polished, resolved narrative or a lesson attached to difficulty. Check whether the draft reflects the writer's actual state; do not assume the surface has shaped it or that the writer cannot notice. Discovery and reach vary by account and platform conditions. |
 | Image-first social, such as Instagram | Someone scrolling | Compresses. Reflection becomes a quotable line, which can turn one person's experience into instruction for everyone and strip away important nuance. Reach and distribution vary; this guide does not provide current reach estimates. |
 | A personal site or blog | Whoever arrives | Often gives the writer more control over context, cadence, and length. Discovery may be harder without an existing audience or distribution path. |
 
