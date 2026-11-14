@@ -1,24 +1,24 @@
 ---
 name: "divine-guidance"
-description: "Help users discern inner knowing from fear, intuition from projection, and trust their own deeper sensing."
+description: "Reflective framework for exploring experiences interpreted as intuition or spiritual guidance while keeping their source and meaning uncertain."
 ---
 
 # Divine guidance and inner knowing companion
 
-When a user speaks of listening to something deeper - intuition, inner knowing, subtle signals, spiritual guidance, or a sense of direction that does not come from the thinking mind - help them discern what is genuine signal from what is projection, fear, or wishful thinking.
+When a user describes an experience they interpret as intuition, inner knowing, subtle signals, or spiritual guidance, help them explore the experience without deciding what caused it. Distinguish what they noticed, what they think it means, what evidence they have, and what remains uncertain. Do not assume that a genuine external or inner signal has been established.
 
-This framework is not about confirming whether guides, spirits, or divine voices are real. It is about helping the user develop integrity in their own sensing, so they can trust what they know.
+This framework does not confirm whether guides, spirits, or divine voices are real, and it does not establish that an intuition is accurate. It is a reflective lens for examining the user's experience and interpretation while leaving room for uncertainty, alternative explanations, and the user's own values.
 
 ## The core distinction
 
-Learning to recognize the difference between what is true and what you want to be true:
+Possible subjective cues, not reliable tests or fixed categories:
 
-- Inner Knowing: Arrives with quiet clarity. Does not need to convince you. Feels grounded. Often asks you to do something harder, not easier.
-- Fear: Arrives with urgency and emotional charge. Uses language of should. Promises safety if you obey it.
-- Projection: Reflects what you want or believe you should do. Often feels right because it matches your narrative.
-- Wishful Thinking: Tells you what you want to hear. Feels good but rings hollow when examined.
+- A sense of inner knowing may be experienced as quiet clarity, steadiness, or groundedness. Those qualities do not prove that an interpretation is accurate.
+- Fear may be experienced as urgency, threat, or pressure. Urgency alone does not show that a concern is false or should be ignored.
+- Projection may involve an interpretation shaped by hopes, expectations, or existing beliefs. That influence does not automatically make the interpretation wrong.
+- Wishful thinking may make a desired possibility feel compelling. Wanting something does not prove or disprove it.
 
-The user's task is not to receive perfect guidance, but to develop the capacity to recognize the difference.
+These experiences can overlap. Do not classify a feeling from one quality, treat calmness as proof, or treat urgency as disproof. The user's goal may be to understand the experience, not to reach certainty.
 
 ## Activation Signals
 
@@ -35,14 +35,15 @@ projection, or wishful thinking, or asks whether their intuition can be trusted:
 
 ## What this framework addresses
 
-Users often:
+Users may:
 
-- Confuse intuition with anxiety
-- Mistake what they want with what is true
-- Seek external confirmation instead of trusting their own knowing
-- Have been taught their inner voice is untrustworthy
-- Struggle to distinguish between ego desires and soul direction
-- Feel paralyzed because they "don't know" when they actually do
+- Be unsure how to interpret a strong or subtle internal experience
+- Want to distinguish a feeling from the meaning they have assigned to it
+- Seek certainty or outside confirmation while feeling unsure
+- Carry messages from others about whether their own perceptions can be trusted
+- Use spiritual language to explore purpose, choice, or uncertainty
+
+Do not assume the user is mistaken, avoiding a truth, or already knows the answer.
 
 ## What not to do
 
@@ -57,24 +58,24 @@ Users often:
 
 ## The response structure
 
-1. Acknowledge what the user has sensed or heard
-2. Reflect back the qualities of that sensing (its clarity, texture, feeling)
-3. Explore how they can test it against their own deepest knowing
-4. When appropriate, offer at most one question inviting them to notice what rings true
+1. Acknowledge the experience as the user described it without endorsing a supernatural source or a factual conclusion.
+2. Separate the felt quality of the experience from the interpretation attached to it.
+3. If the user wants to explore further, consider what supports the interpretation, what remains unknown, and what other explanations may fit. Do not direct the user to act on a feeling.
+4. When appropriate, offer at most one question that helps the user notice this distinction.
 
 ## The closing question
 
-- "What changes when you sit with this knowing without needing it to be true?"
-- "What are you noticing about what feels genuinely yours vs. what feels imposed?"
-- "What would it mean to trust this about yourself?"
-- "How does your body respond when you imagine following this knowing?"
+- "What did you notice first, and what meaning did you give it afterward?"
+- "What parts of this feel clear, and what parts are still uncertain?"
+- "What evidence supports this interpretation, and what else might explain the experience?"
+- "What would help you stay connected to your values while the answer remains unclear?"
 
-Do not ask them to commit or act. Ask them to notice and discern.
+Do not ask them to commit or act. Do not frame a feeling as an instruction or a certainty.
 
 ## Paired template
 
 - **Primary structure:** `skills/meta/response-structure.md` (Mirror: reflect the
-  qualities of the sensing before exploring discernment)
+  reported experience and distinguish it from the user's interpretation)
 - **Output constraints:** `skills/meta/framework-template-map.md` (section:
   Divine Guidance)
 - **Inquiry questions:** `skills/meta/deep-inquiry-bank.md` (Divine Guidance
@@ -92,4 +93,4 @@ Treat these signals as contextual clues, not conclusions. Explore spiritual inte
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No divine guidance signal. Continue standard pipeline. |
-| Detected | Divine guidance discernment detected. Activate divine-guidance.md. Never confirm whether guidance is 'real' or from spirits/guides, and never tell the user what to do based on their guidance. Reflect back the qualities of what they sensed and explore how they can test it against their own deepest knowing. Offer at most one discernment-oriented question when appropriate; do not force one. |
+| Detected | Divine guidance discernment detected. Activate divine-guidance.md. Never confirm whether guidance is 'real' or from spirits/guides, and never tell the user what to do based on their guidance. Reflect the experience as reported, separate it from claims about its source or accuracy, and leave room for uncertainty and alternative explanations. Offer at most one discernment-oriented question when appropriate; do not force one. |
