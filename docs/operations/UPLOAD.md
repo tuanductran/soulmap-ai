@@ -83,10 +83,9 @@ availability and permissions. Use this path only for an existing GPT or an eligi
 workspace that still permits the workflow.
 
 ZIP files are not accepted as Custom GPT knowledge files. Extract the archive and upload
-individual Markdown or text files. OpenAI's current general upload article lists up to
-20 knowledge files per GPT, while its File Uploads FAQ still lists 10. Because the
-official pages conflict and this feature is retiring, verify the live builder's limit
-rather than relying on a hard-coded count. File-size, token, and account usage limits
+individual Markdown or text files. OpenAI's current GPT documentation lists up to 20 knowledge files per GPT. Because
+Custom GPTs are being retired and account/workspace availability varies, verify the
+live builder and migration notice before relying on this legacy path. File-size, token, and account usage limits
 also apply. Do not start a new deployment on this path without checking the retirement
 and migration notice.
 
@@ -104,9 +103,10 @@ custom uploads on Team and Enterprise workspaces.
 1. Build the standard archive with `uv run soulmap build`.
 2. Create a staging directory named `soulmap-ai`; this must match the `name` in the
    root `SKILL.md` frontmatter.
-3. Extract the contents of `dist/soulmap-ai.zip` into that directory. Keep the
-   canonical `SKILL.md` entrypoint in the staged folder. The staged layout must be
-   `soulmap-ai/SKILL.md`, `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
+3. Extract the contents of `dist/soulmap-ai.zip` into that directory. In this
+   Claude.ai staging copy only, rename `SKILL.md` to `skill.md`; leave the repository's
+   canonical `SKILL.md` unchanged. The staged layout must be `soulmap-ai/skill.md`,
+   `soulmap-ai/SOULMAP.md`, and `soulmap-ai/skills/`.
 4. Create a ZIP containing the `soulmap-ai/` directory as its single top-level entry.
    Do not ZIP the directory's contents directly: Claude's documented custom Skill
    package uses a named Skill folder containing the entrypoint and supporting files.
@@ -116,12 +116,11 @@ custom uploads on Team and Enterprise workspaces.
 
 The repository's generated `.skill` and standard `.zip` artifacts both place their
 files directly at archive root, so neither is a direct Claude.ai Custom Skills upload
-bundle. The named-folder wrapper is required. Anthropic's current Help Center article
-for Custom Skills says `skill.md`, while Anthropic's platform documentation and its
-published technical guide specify case-sensitive `SKILL.md`. SoulMap retains the
-open-format `SKILL.md` entrypoint. Because these official sources conflict, do not
-silently rename the canonical file; verify the live Claude.ai uploader before changing
-or adding a platform-specific entrypoint.
+bundle. The named-folder wrapper is required. For Claude.ai Custom Skills, Anthropic's
+Help Center explicitly requires a lowercase `skill.md` file. Anthropic's Claude API
+Skills documentation uses uppercase `SKILL.md` for the separate API upload workflow.
+These are different platform surfaces, not a reason to rename the repository's
+canonical file: apply the lowercase name only in the Claude.ai staging copy.
 
 For Team and Enterprise workspaces, the organization owner may need to enable Code
 execution and Skills in organization settings. If upload or sharing controls are
@@ -192,8 +191,9 @@ Suggested use for a ChatGPT conversation with Data Analysis:
 ### Claude Custom Skills
 
 1. Build with `uv run soulmap build`.
-2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/` and keep
-   the canonical `SKILL.md` entrypoint unchanged in that staging directory.
+2. Extract `dist/soulmap-ai.zip` into a directory named `soulmap-ai/` and rename
+   `SKILL.md` to `skill.md` in that Claude.ai staging copy only; keep the repository's
+   canonical `SKILL.md` unchanged.
 3. ZIP that directory as one top-level folder, then upload the resulting archive through
    **Customize → Skills → + → + Create skill → Upload a skill**.
 4. Enable the Skill and test representative prompts.
