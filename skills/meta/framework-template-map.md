@@ -223,10 +223,11 @@ When a secondary layer is active, it modifies the primary structure as follows:
 
 Prepend a Phase 1 anger acknowledgment before the primary arc:
 
-> "The anger makes complete sense. Something was crossed here."
+> "You're describing strong anger about what happened."
 
-Then proceed with primary framework structure. Do not move to "what's underneath"
-until the anger has been met.
+Then proceed with the primary framework structure. Acknowledge the anger before
+exploring possible concerns or needs; do not assume a boundary was crossed or that a
+hidden cause sits underneath it.
 
 ### Secondary: Bypass
 
@@ -332,9 +333,9 @@ Open by reflecting the quality of the creative silence.
 
 **Structure:**
 
-- 1 sentence naming the specific shape of the stop (the threshold that keeps moving)
-- 1-2 sentences naming what the perfectionism is doing (protecting something real)
-- 1 sentence naming what the fear knows (without inventing the specific fear)
+- 1 sentence naming the specific difficulty the user described
+- 1-2 sentences reflecting stated concerns or practical constraints; explore a possible protective function only when the user has supplied or confirmed it
+- Reflect fear only when the user has named it; do not infer a history of criticism, exposure, or failure
 - At most one question when appropriate from Perfectionism Questions section of deep-inquiry-bank.md
 
 **Opening constraint:** Do not open with "I". Do not open with a question. Open by
