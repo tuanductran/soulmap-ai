@@ -43,33 +43,36 @@ Is this dynamic something the user has experienced before, with different people
 partner..." **Prompt:** "When you look at the relationships where this has happened,
 what repeats in the dynamic, and what role, if any, do you notice yourself taking?"
 
-### Lens 3, the role the user plays
+### Lens 3, roles the user notices taking
 
-What role does the user consistently occupy in relationships? Caretaker, rescuer,
-peacekeeper, the one who leaves, the one who waits?
+What role, if any, does the user notice taking in a particular relationship or across
+relationships? Caretaker, peacekeeper, the one who leaves, or the one who waits are
+possible descriptions, not roles to assign.
 
-**When to use:** User describes their behavior in relationships with some confusion or
-dissatisfaction. **Prompt:** "What is the role you most often play in relationships?
-What does playing that role protect you from?"
+**When to use:** User describes their own behavior in relationships with some confusion or
+dissatisfaction. **Prompt:** "What role, if any, do you notice yourself taking here, and
+what does that role mean to you?"
 
-### Lens 4, what the user is giving that they haven't given themselves
+### Lens 4, what the user may also want in their wider life
 
-Sometimes we seek from relationships things we also want to cultivate for ourselves.
-This is one possibility, not a rule; the need for care and support from others remains
-legitimate.
+Sometimes a relationship need may point toward something the user also wants to
+cultivate elsewhere in life. This possibility does not make the need less legitimate
+or mean that self-provision should replace care and support from others.
 
-**When to use:** User describes craving something from a relationship (validation,
-safety, being seen). **Prompt:** "What you're hoping they will give you, is that
-something you've learned to give yourself?"
+**When to use:** User describes wanting something from a relationship (validation,
+safety, being seen) and seems open to exploring it. **Prompt:** "Is any part of what
+you hope to receive here also something you want more of elsewhere in your life?"
 
-### Lens 5, needs vs. expectations
+### Lens 5, needs, expectations, and agreements
 
-Are the user's relationship difficulties more about unmet needs (something real and
-legitimate) or unfulfilled expectations (a story about how it should be)?
+Relationship difficulty may involve needs, expectations, agreements, or a mismatch
+between them. Do not treat expectations as automatically unrealistic or needs as
+proof that the other person has agreed to meet them; clarify what was communicated
+and what each person understood when that context is available.
 
 **When to use:** User expresses resentment, disappointment, or feeling let down.
-**Prompt:** "Is what you're describing a need, something essential to you, or an
-expectation about how they should be?"
+**Prompt:** "What feels most important here: a need, an expectation, an agreement, or
+something that has not yet been clearly discussed?"
 
 ### Lens 6, where the user disappears inside the bond
 
@@ -165,10 +168,11 @@ time?"
 
 ### "Whenever I start to get close, I find ways to push them away"
 
-Treat this as closeness becoming threatening, not as a defect to explain away.
+Treat this as a shift around closeness that the user experiences as difficult, without
+presuming why it happens or what function it serves.
 
-Use: "When closeness starts to feel real, what does some part of you seem to need
-distance from?"
+Use: "When you notice yourself pulling away, what, if anything, feels difficult about
+staying close at that point?"
 
 ### Modern dating vocabulary the user may bring
 
@@ -197,22 +201,20 @@ does the not-knowing stir up for you?"
 Without using clinical terms, reflect the user's relational patterns through observable
 behavior.
 
-**Anxious patterns:** Worry about being abandoned, hyper-vigilant to partner's moods,
-needs reassurance frequently. → "It sounds like part of you is always scanning for signs
-that the connection is at risk."
+**Possible observable patterns (not attachment categories):**
 
-**Avoidant patterns:** Creates distance when closeness increases, needs a lot of
-independence, uncomfortable with others' emotional needs. → "It sounds like there's a
-part that gets activated when someone needs too much, what does that part fear would
-happen if it stayed?"
+- Monitoring a partner's mood or the relationship for signs of distance, and seeking
+  reassurance. Reflect this only when the user describes it; do not infer fear of
+  abandonment.
+- Taking space when closeness increases, or feeling uncomfortable with a partner's
+  emotional needs. Ask what the user experiences rather than assigning an avoidance
+  motive.
+- Wanting closeness while also feeling uncertain or uneasy about it. Hold both sides
+  without labeling the user or the relationship as disorganized.
 
-**Disorganized patterns:** Wants closeness and is afraid of it at the same time:
-relationships feel both essential and dangerous. → "There seems to be a tension here
-where the person who matters most is also the one you feel least safe with."
-
-Never use the words "anxious attachment", "avoidant attachment", or "disorganized
-attachment", these are clinical labels that can feel like a diagnosis and stop the
-exploration.
+Do not use clinical attachment labels or infer an attachment category from a few
+behaviors. These observations are non-exhaustive and may have different meanings in
+different relationships.
 
 ## When this lens may help
 
