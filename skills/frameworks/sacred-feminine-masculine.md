@@ -7,52 +7,46 @@ description: "Explore the balance of receptivity and action, surrender and will,
 
 When a user explores the dynamics of receptivity and assertion, surrender and will, vulnerability and strength - whether within themselves, in their relationships, or in how they move through the world - help them explore whether they experience tension or ease between these capacities.
 
-This framework uses "feminine" and "masculine" as optional symbolic language for capacities such as receiving and acting, holding and releasing, listening and speaking. Do not present this polarity as a universal psychological law or assume it fits every user.
+Some spiritual traditions use "feminine" and "masculine" as symbolic labels for capacities such as receiving and acting, holding and releasing, listening and speaking. These associations vary and are not universal psychological facts. Use them only when the user chooses this language; do not assign either quality to a person based on gender or assume the user wants to balance both.
 
 ## The core distinction
 
-**Feminine Principle:** Receptivity, presence, listening, allowing, being, flowing, making space
-
-**Masculine Principle:** Initiative, clarity, boundaries, action, moving, directing, holding form
-
-Neither is better within this lens. Some users find both descriptions useful; others do not identify with this polarity at all. Follow the user's own language rather than assuming both are present or required.
+Some traditions associate the term "feminine" with receptivity, presence, listening, and making space, and "masculine" with initiative, direction, boundaries, and action. These are tradition-specific symbolic associations, not fixed traits, biological facts, or requirements. Neither category is inherently better. Follow the user's own meanings, including when they reject the framework or find it unhelpful.
 
 ## Activation Signals
 
-Activate when the user explores the balance of receptivity and action, surrender
-and will, or vulnerability and strength within themselves or their relationships:
+The following experiences may be relevant to a broader discussion of agency, rest, boundaries, or vulnerability, but they are not activation signals for this polarity framework by themselves:
 
 - "I only know how to do, I don't know how to just be"
 - "I can't set boundaries", "I don't know how to soften"
 - "I feel guilty taking space", "I feel guilty making demands of others"
 - "I move without listening", "I listen without ever moving"
 - "I am either all receiving or all doing, there's no in between"
-- "I was punished for being too soft" "I was punished for taking up space"
+- "I was punished for being too soft", "I was punished for taking up space"
 - "I don't know how to hold both my power and my softness"
+
+Explore these experiences through the user's own language unless they explicitly introduce a polarity frame.
 
 ## Explicit Polarity Framing
 
-Use an activation signal below only when the user has explicitly introduced a polarity lens in the current or prior user messages:
+Activate this framework only when the user explicitly introduces feminine/masculine language or clearly names receptivity/action, surrender/will, or a comparable contrast as a polarity lens in the current conversation. Examples:
 
-- "balance of receptivity and action"
 - "feminine and masculine energies"
-- "surrender and will"
 - "my feminine and masculine"
-- "both my power and my softness"
+- "I want to explore the balance of receptivity and action as a polarity"
+- "I experience surrender and will as two opposing energies"
 
-A behavior such as difficulty setting boundaries, without the user's own polarity framing, is not enough to activate this framework. A negated, rejected, or merely quoted mention of polarity language is not an affirmative framing signal.
+A generic difficulty with boundaries, rest, vulnerability, initiative, or receiving is not enough. A negated, rejected, or merely quoted mention is not an affirmative framing signal. If the user introduces the language but does not want to explore it, do not activate the framework.
 
 ## What this framework addresses
 
-Users often:
+When the user explicitly chooses this lens, they may want to explore:
 
-- Polarize: All receiving or all doing
-- Mistake assertiveness for masculine and receptivity for weakness
-- Feel guilty taking space or making demands
-- Move without listening; listen without moving
-- The user describes difficulty with boundaries or softness and explicitly finds this lens useful; do not infer a missing "energy" from the behavior alone
-- May connect their relationship to these capacities with family or cultural messages, when they identify that connection
-- Are stuck in one mode because the other was punished
+- How they personally use receiving/action or softness/structure language
+- Whether family or cultural messages shape the meanings they give these terms, if they identify that connection
+- Whether the categories feel useful, limiting, or inaccurate
+
+Do not presume that the user is polarized, feels guilty, is stuck in one mode, or was punished for expressing a capacity.
 
 ## What not to do
 
@@ -68,18 +62,17 @@ Users often:
 ## The response structure
 
 1. Acknowledge what the user has noticed about their movement or stillness
-2. Reflect back the pattern they are living (where they are flowing, where they are blocked)
-3. Explore what this pattern means to the user within the symbolic lens they chose
+2. Reflect the experience the user described without assuming a blockage, imbalance, or hidden cause
+3. Explore what the language means to the user, including whether the polarity frame feels useful or not
 4. When appropriate, offer at most one question that invites noticing what wants to move or settle; do not force inquiry when the user prefers a quiet reflection or close
 
 ## The closing question
 
-- "What, if anything, changes when you make room for both?"
-- "Where do you notice receptivity or initiative showing up, if either feels relevant?"
-- "What would honoring your own preferred balance look like, if balance is what you want?"
-- "What are you noticing about yourself in this tension, if it feels like tension?"
+- "What do these terms mean in your own experience?"
+- "Does this polarity language help describe something you notice, or does it feel like a poor fit?"
+- "Is there a particular capacity you want to explore, without assuming you need to balance it with another?"
 
-Do not prescribe balance. Invite awareness and honoring of both.
+Do not prescribe balance, assume a tension, or imply that both capacities must be present. A reflection or quiet close is valid.
 
 ## Paired template
 
