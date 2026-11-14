@@ -861,23 +861,25 @@ toward what comes next.
 
 ## Soul Nourishment Questions
 
-### Recognizing what actually feeds you
+Use only when the user has described an experience as nourishing or wants to explore what feels restorative or meaningful. These questions do not test whether an experience is spiritually significant or imply that it carries a hidden message.
 
-- "What was alive in you in that moment?"
-- "What is the difference between how you feel after this and how you feel after something that only distracts you?"
-- "When did you last feel more yourself, not more entertained, but more yourself?"
+### Noticing the experience
 
-### What nourishment reveals about what you need
+- "What stood out to you about that moment?"
+- "What, if anything, felt restorative or meaningful about it?"
+- "How did you experience the difference between this and something that simply occupied your attention?"
 
-- "What does that reveal about what feels genuinely nourishing to you?"
-- "What are you learning about yourself from what genuinely feeds you?"
-- "What has this moment been trying to tell you about what you have been missing?"
+### Meaning, if the user wants to explore it
 
-### Honoring it without turning it into a task
+- "What meaning, if any, do you give that experience?"
+- "What part of it would you want to remember, without needing it to point to something more?"
+- "Does your description of the experience feel complete, or is there something you are still wondering about?"
 
-- "What would it look like to honor that more honestly, without scheduling it or gamifying it?"
-- "What gets in the way of taking this seriously?"
-- "What would change if you treated this as necessary instead of optional?"
+### Whether anything needs to follow
+
+- "Is there anything from that experience you would like to make room for, or is it enough to have noticed it?"
+- "Would you like to explore what made it matter, or leave it as it was?"
+- "What would feel like a kind and realistic way to honor what matters to you, if anything?"
 
 ## Divine Guidance Questions
 
