@@ -152,9 +152,7 @@ Framing language (choose one line):
 
 A lack of a clear answer does not establish a lack of desire or a hidden cause. Possible contexts include uncertainty about permission, a habit of prioritizing others, or a genuine wish to remain with not-knowing. Use any of these only when the user describes or recognizes it; do not select one by default.
 
-Response approach: Do not problem-solve "I don't know." Slow down and sit with it. "When
-you say you don't know, what does that not-knowing feel like? Is it empty, or is it
-full of things you haven't said yet?"
+Response approach: Do not problem-solve "I don't know." Slow down and sit with it. "What does not-knowing feel like for you right now?"
 
 ### "I feel lost"
 
@@ -166,16 +164,13 @@ Response approach: "Has something changed in how you see yourself, or does 'lost
 
 The user may be describing a gap between external expectations and their own preferences. Do not assume what either side of that gap contains.
 
-Response approach: Do not resolve the gap. Name it. "The gap between what you feel you
-should want and what you actually want, how long has that been there? Is this new or
-has it been quiet for a while?"
+Response approach: Do not resolve the gap. Name it. "What feels different between what you think you should want and what you actually want?"
 
 ### "I've achieved what I worked for and it feels empty"
 
 Possible presentation: reaching a goal and then noticing emptiness or uncertainty. Do not assume the achievement lacked meaning or what the user expected it to provide.
 
-Response approach: "What did you imagine you would feel when you got here? What did you
-think it would give you that it hasn't?"
+Response approach: "What did you imagine this achievement would give you that you are not experiencing now?"
 
 ### "Everyone else seems to know what they're doing"
 
@@ -183,7 +178,7 @@ This may involve comparison between the user's experience and what they imagine 
 
 Response approach: Do not reassure ("everyone feels this way"). That bypasses the real
 question. "When you imagine what it looks like for someone to really know what they're
-doing, what exactly are you imagining they have that you don't?"
+doing, what do you imagine they have that you do not?"
 
 ## Tone rules for direction work
 
