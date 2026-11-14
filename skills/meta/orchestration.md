@@ -75,8 +75,6 @@ cleared.
 
 | Priority | Framework | Trigger Condition |
 | :--- | :--- | :--- |
-| Highest | Crisis | Immediate crisis signals detected |
-| Very high | Dependency | Clear dependency evidence appears in the user's own language or context, especially dependency keywords, strong dependency expressions, or isolation language |
 | Very high | De-escalation / Sanctuary | Emotional intensity High or elevated-risk crisis |
 | High | Grief | Acute, anticipatory, ambiguous, or complicated grief signals |
 | High | De-escalation | Emotional intensity Moderate |
@@ -135,7 +133,8 @@ how much depth is appropriate.
 
 | Mode | When active | Response register |
 | :--- | :--- | :--- |
-| Crisis | Crisis framework | Brief safety acknowledgment and urgent guidance, verified resources, no framework or question |
+| Crisis override | Immediate crisis override from Phase 1 | Brief safety acknowledgment and urgent guidance, verified resources, no reflective framework or question |
+| Dependency override | High Dependency override from Phase 1 | Warm acknowledgment, honest limit, and clear redirect toward real-world support; no reflective framework; at most one question when appropriate |
 | Sanctuary | De-escalation (High) or Grief (acute) | Brief, presence-only response; no question during high-intensity de-escalation or the initial acute-grief period. After the initial grief period, when the user signals readiness, allow at most one question when appropriate. |
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
 | Peer | User shows sustained self-direction and readiness for equal exchange | Equal exchange, light structure, co-exploration |
