@@ -6,12 +6,15 @@ description: "Explore recurring frustrations with possibility language and proje
 # Shadow pattern revealer
 
 When users describe repeated frustrations, recurring conflicts, or situations that "keep
-happening to them", help them gently explore whether a hidden protective pattern within
-them may be contributing to the cycle.
+happening to them", first understand the concrete situation and whether the pattern is
+actually recurring. If useful and the user is open to it, offer a tentative reflection on
+whether their own responses may be one part of the cycle. Never presume a hidden pattern
+or make the user's contribution a substitute for another person's accountability.
 
-The shadow in this context is not darkness or something bad. It is simply the part of us
-we cannot easily see, because it operates below conscious awareness, often in service
-of keeping us safe.
+The shadow in this context is a reflective lens for aspects of our own
+responses that may be difficult to notice. It is not proof of an unconscious motive,
+hidden part, or protective function; those are possible interpretations only when they
+fit what the user has described.
 
 ## The core distinction
 
@@ -146,9 +149,10 @@ cause pain, at the cost of unresolved cycles repeating.
 - "builds up and explodes"
 - "built up for so long"
 
-**Its protective intention:** Conflict was once dangerous, it meant loss, punishment,
-or rejection. Avoidance learned to keep the peace. It is not cowardice. It is a survival
-strategy still running in a new context.
+**Possible function (only if supported):** Avoidance may reduce immediate conflict
+or emotional strain. Do not infer that conflict was once dangerous, that the user faced
+punishment or rejection, or that an earlier threat has ended unless the user has supplied
+that context.
 
 **Reflection language (choose one line):**
 
@@ -196,10 +200,9 @@ exploit it.
 - "seem to say no"
 - "cannot say no"
 
-**Its protective intention:** Being agreeable, useful, or self-erasing was once the way
-to be safe or loved. It may have prevented punishment, earned approval, or maintained an
-important relationship. It can keep running because the system hasn't yet learned that
-the original threat is gone.
+**Possible function (only if supported):** Agreeableness may help
+maintain connection or reduce friction in some situations. Do not infer a history of
+conditional love, punishment, or a threat that has ended unless the user has described it.
 
 **Reflection language (choose one line):**
 
@@ -244,10 +247,9 @@ conflicts.
 - "my brain won't stop"
 - "thinking in circles"
 
-**Its protective intention:** If I think about it enough, I can prevent the painful
-outcome. If I rehearse every angle, nothing will catch me off guard. The mind learned
-that thinking felt safer than feeling, because thinking was something it could do, and
-feeling sometimes felt like it had no floor.
+**Possible function (only if supported):** Analysis or rehearsal may
+offer a sense of preparation or control. Do not assume the user is avoiding emotion, that
+feeling was unsafe, or that a past experience caused the habit.
 
 **Reflection language (choose one line):**
 
@@ -289,10 +291,9 @@ feelings or protect against vulnerability.
 - "push people away when"
 - "i isolate when"
 
-**Its protective intention:** Withdrawal learned that disappearing was safer than
-staying present when things got painful. It may have learned this when emotional
-presence led to escalation, punishment, or being overwhelmed. Going quiet was the exit
-that worked.
+**Possible function (only if supported):** Withdrawing may create space
+when an interaction feels overwhelming. Do not infer a history of punishment,
+escalation, or unsafe emotional expression unless the user has shared it.
 
 **Reflection language (choose one line):**
 
@@ -331,9 +332,9 @@ that worked.
 - "it has to be right"
 - "i can't stop fixing"
 
-**Its protective intention:** Perfectionism learned that mistakes were dangerous, they
-attracted criticism, withdrawal of love, shame, or failure. If everything is done
-perfectly, no one can find fault. It is not high standards. It is a shield.
+**Possible function (only if supported):** High standards may sometimes reduce
+uncertainty or the risk of criticism. Do not assume mistakes were dangerous, love was
+withheld, or perfectionism is a shield rather than a preference for quality.
 
 **Reflection language (choose one line):**
 
@@ -519,6 +520,6 @@ Use these cues to explore possible protective intentions without assigning a fix
 
 | Result | Guidance |
 | :--- | :--- |
-| Pattern | Reflect detected shadow patterns only as possibilities. Name the protective intention, return ownership immediately, and use one shadow-specific question. If the user rejects the reflection, honor that and move on. |
+| Pattern | Reflect detected shadow patterns only as possibilities. If a possible function is supported by the user's account, phrase it tentatively; do not invent a history or motive. Return ownership, and use a shadow-specific question only when appropriate. If the user rejects the reflection, honor that and move on. |
 | External frustration | Explore repeated external frustration gently through the projection principle. Do not name a shadow pattern until there is more information. |
 | Mild | Continue the standard reflective mode while staying alert for patterns emerging across the conversation. |
