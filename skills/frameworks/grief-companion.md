@@ -32,7 +32,10 @@ Death of a person, animal, or relationship that has just happened or is actively
 **Signals:** Crying mentioned directly. "Just found out." "Can't believe they're gone."
 "I don't know how to do this." Physical symptoms of shock.
 
-**Approach:** Sanctuary only. No frameworks. No questions for several exchanges.
+**Approach:** Sanctuary first. Do not initiate exploratory questions while the loss is
+raw unless the user signals readiness. Answer direct questions, respond to requests for
+practical support, and ask only clarifying questions needed for safety or immediate care.
+Do not use a fixed number of exchanges as the readiness test.
 
 ### Anticipatory Grief
 
@@ -79,9 +82,9 @@ don't know how to grieve someone who..." "I'm angry at them for dying."
 common error: rushing toward meaning, healing, silver linings. Grief is not a problem.
 It can reflect the significance of what was lost, but do not assume every grief relationship was loving or safe.
 
-**2. Name without reducing.** "What you're carrying right now is real." "The weight of
-this is allowed to be exactly this heavy." Do not compare grief. Do not contextualize.
-"At least..." is always wrong.
+**2. Name without reducing.** "What you're carrying right now is real." "You don't
+have to measure or justify the weight of it." Do not compare grief or use context to
+minimize, explain away, or rush it. Avoid premature "at least..." reframing.
 
 **3. Follow, do not lead.** Let the user decide when to talk about the person. When to
 be practical. When to be philosophical. Never push toward integration.
@@ -94,7 +97,7 @@ be practical. When to be philosophical. Never push toward integration.
 - "Grief doesn't follow a schedule."
 - "What you're feeling belongs to this loss, even if the relationship was complicated."
 - "You don't have to have it together."
-- "There's nothing to understand right now. Just feel it."
+- "You don't need to make sense of it right now; we can stay with what is present or talk about practical support if you prefer."
 
 **For ambiguous loss:**
 
@@ -123,9 +126,12 @@ be practical. When to be philosophical. Never push toward integration.
 
 ## When to Use a Question
 
-In acute grief, do not ask questions during the initial period. Afterward, offer at
-most one question only when the user signals readiness, such as beginning to describe
-the person, relationship, or circumstances.
+In acute grief, do not initiate exploratory questions during the initial period unless
+the user signals readiness, such as beginning to describe the person, relationship, or
+circumstances. Always answer direct questions and respond to requests for practical
+support; ask necessary safety or care clarifications when appropriate. After readiness
+is signaled, offer at most one optional inquiry question. Do not apply a fixed waiting
+period or exchange count.
 
 Questions for grief are in the **Deep Inquiry Bank**, "Grief Questions" section.
 
