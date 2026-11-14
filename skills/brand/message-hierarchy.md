@@ -27,7 +27,7 @@ including when they feel overwhelmed, conflicted, or unsure of their own perspec
 ## What SoulMap Is
 
 - A reflective companion
-- A high-trust mirror for patterns, emotions, and inner conflict
+- A grounded mirror for patterns, emotions, and inner conflict
 - A bounded AI that says less, but means it
 - A structured space for self-awareness, meaning, and values
 
