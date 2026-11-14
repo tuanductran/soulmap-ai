@@ -60,8 +60,8 @@ question may be offered earlier when the user has capacity and the question is a
 
 **User is angry:**
 
-- "What is this anger protecting?"
-- "If you could say the most honest thing underneath this anger, what would it be?"
+- "What part of what happened is staying with you most?"
+- "What would you want understood about the situation, if anything?"
 
 **User feels stuck:**
 
@@ -176,15 +176,15 @@ choose between them.
 
 ### Listening to the Protective Part
 
-- What is the protective part most afraid would happen if it let its guard down?
-- What, if anything, does this protective part seem to be responding to?
-- What would it need to feel safe enough to rest, even for a moment?
+- What concern, if any, has the user associated with this perspective?
+- What, if anything, does this perspective seem to be responding to?
+- What would make this feel easier to explore, if anything?
 
 ### Listening to the Fearful Part
 
-- What is the fearful part protecting you from, specifically?
-- How old does this fear feel? Does it belong to now, or somewhere earlier?
-- If the fearful part could say one thing and know it would be heard, what would it say?
+- What concern is this fearful perspective pointing to, if any?
+- What feels uncertain or at stake from this perspective?
+- Does this feel connected to something happening now, or would you rather leave its origin open?
 
 ### Listening to the Hopeful Part
 
@@ -195,51 +195,41 @@ choose between them.
 
 ### Listening to the Tired Part
 
-- What has the tired part been carrying that it was never asked to carry?
-- What does the tired part most need right now, not solutions, just something simpler?
-- If the tired part could put something down, what would it choose first?
+- What has been taking the most energy lately?
+- What would feel supportive right now, if anything?
+- Is there anything you would like to pause or set aside for now?
 
 ### Listening to the Angry Part
 
-- What is the angry part protecting, what matters so much that it's worth this much
-  force?
-- What does the angry part most want you to understand about what happened?
-- If the anger could say what it actually needs, not what it wants to do, what would
-  it say?
+- What part of the situation is this anger responding to?
+- What would you most want understood about what happened?
+- Is there anything you want addressed, or is that not clear yet?
 
 ### Listening to the Critical Part
 
-- If the critical part could say what it's actually afraid of, underneath all the
-  self-attack, what would that be?
-- Does this critical voice remind you of something you have heard before, or does it
+- What do you notice about the standard or expectation in this self-talk?
+- Does this way of speaking remind you of something you have heard before, or does it
   feel like your own way of speaking to yourself?
-- What would the critical part say if it were trying to protect you, not punish you?
+- What would a less harsh way of expressing the same concern sound like, if useful?
 
 ### Listening to the Yearning Part
 
-- What does the yearning part most want to be seen for, not what you do, but who you
-  are?
-- Where has the yearning part been looking for what it needs? Has it been finding it?
-- What would feel like enough, for that part? Has it ever had that?
+- What would you most like others to understand about you?
+- What kind of connection or recognition matters to you, if any?
+- What would feel meaningful or sufficient to you in this situation?
 
 ### Listening to the Avoidant Part
 
-- What is the avoidant part most protecting you from feeling?
-- If the avoidant part stopped keeping you busy for one hour, what do you think you'd
-  feel?
-- What does the avoidant part know about that feeling that made it decide to keep you
-  away from it?
+- What feels difficult about staying with this topic right now, if anything?
+- Would you prefer to explore this now, pause, or leave it for another time?
+- What do you notice about the wish for distance, without needing to decide why it is there?
 
 ### When two parts are in conflict
 
-- Which of those two parts have you been listening to more, and which one have you been
-  trying to silence?
-- If you could speak directly to the part you've been fighting, what would you want it
-  to know?
-- What would it look like if both of those parts were allowed to exist at the same time,
-  without one winning?
-- Is there something the two parts actually agree on, even if they disagree about how
-  to get there?
+- Does one perspective feel more prominent right now, or do they show up in different moments?
+- What would you want each perspective to be understood for, if anything?
+- What would it look like to let both perspectives be present without requiring one to win?
+- Is there anything they seem to agree on, or is that not clear yet?
 
 ## Direction-specific questions
 
@@ -650,28 +640,27 @@ what the user brings. These are for when the opening is genuinely empty.
 Use after the anger signal is clearly active and Phase 1 (meeting the anger) is complete. One
 question when appropriate; if used, it is the closing sentence. Opens toward the need, not the target.
 
-### What the anger is protecting
+### Exploring what matters in anger
 
-- What is this anger protecting, what matters so much that it's worth this much force?
-- What does the anger most want you to understand about what was crossed?
-- If the anger could say what it actually needs, not what it wants to do, what would
-  it say?
-- What would need to be different for this to feel right? What does that difference
-  point to?
+Use only after acknowledging the anger and when the user is ready. Do not assume
+that anger proves a boundary was crossed or that a hidden need sits underneath it.
 
-### The need under the anger
+- "What part of what happened is staying with you most?"
+- "What matters to you in this situation, if anything?"
+- "What would you most want understood about the impact?"
+- "Is there anything you want addressed, or is that not clear yet?"
 
-- Not what you need from them, what do you need, full stop?
-- What would feel like justice here, not revenge, but genuine repair?
-- Is there a grief underneath the anger that hasn't had space yet?
-- What part of you was hoping they would be different?
+### Needs and possible repair
 
-### Chronic/residual anger
+- "What would feel fair or helpful from here, if anything?"
+- "Is there a need or value you want to name, or would you rather stay with what happened?"
+- "What would repair mean to you in this situation, if repair is possible or wanted?"
 
-- What keeps the anger alive, what would it mean to let it go?
-- Is there something that still hasn't been said to the person or situation this anger
-  is about?
-- What is the anger still protecting you from feeling?
+### Chronic or residual anger
+
+- "What still feels unresolved, if anything?"
+- "Is there something you would want to say or have acknowledged?"
+- "Would it help to explore what keeps this present, or leave that question open for now?"
 
 ## Trauma Questions
 
@@ -823,22 +812,27 @@ toward what comes next.
 
 ## Perfectionism Questions
 
-### What the perfectionism protects
+Use only when the user has described repeated delay, revision, or difficulty releasing
+work and wants to explore it. Do not assume fear, hidden protection, or a childhood
+origin; practical constraints and quality standards may be valid.
 
-- "What would happen if it were released imperfect and it wasn't received well?"
-- "What is 'good enough' protecting you from having to confront?"
-- "When was the first time you felt that what you made wasn't enough?"
+### Understanding the standard and the task
 
-### The threshold
+- "What does 'good enough' mean for this particular project?"
+- "What practical or personal concerns come up when you imagine releasing it?"
+- "What specifically happens when you reach the point of sharing or finishing?"
 
-- "What specifically happens when you arrive at the point of sharing it?"
-- "What does 'ready' actually look like to you, have you ever felt it?"
-- "If you knew no one would see it, could you finish it?"
+### Readiness and context
 
-### The fear behind the standard
+- "What would tell you that the work meets the requirements you care about?"
+- "Is there a real constraint that makes waiting useful right now?"
+- "Would it help to explore this further, or would practical planning be more useful?"
 
-- "Is the standard protecting you from failure, or protecting you from something else?"
-- "What would it mean about you if the thing you made was imperfect and public?"
+### If the user has named fear or evaluation concerns
+
+- "What feels at stake if the work is imperfect and public?"
+- "Is there a particular concern about how it may be received that you want to examine?"
+- "Would you like to connect this to an earlier experience, or keep the focus on the present?"
 
 ## Dark Night Questions
 
