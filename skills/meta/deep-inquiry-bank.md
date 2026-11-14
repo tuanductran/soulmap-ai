@@ -95,7 +95,7 @@ conversation and the user has not rejected the reflection.
 
 - Whose approval has mattered most to you, and did you ever really get it?
 - What do you imagine would happen if someone was genuinely displeased with you?
-- What part of you existed before you learned to read the room so carefully?
+- When did you first notice yourself paying close attention to others' reactions, if you can place it?
 - If you stopped tracking how people were reacting, what would you do differently?
 
 ### Emotional Avoidance
