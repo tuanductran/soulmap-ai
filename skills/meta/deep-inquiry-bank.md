@@ -841,23 +841,25 @@ toward what comes next.
 
 ## Dark Night Questions
 
-### The emptiness itself
+Use only when the user has described spiritual dryness, loss of faith, or disconnection and seems ready to reflect. These questions do not assume that distress is a spiritual stage, that something has been stripped away, or that the user must find a lesson in it.
 
-- "What does the emptiness feel like when you stop trying to name it as a problem?"
-- "What are you discovering about yourself in this emptiness?"
-- "What is still here, now that the scaffolding of consolation and certainty is gone?"
+### Naming the experience
 
-### What remains when certainty is gone
+- "What does the phrase 'Dark Night' mean to you in this experience?"
+- "What has felt most difficult or changed for you, in your own words?"
+- "Is there a part of this experience you would like me to understand without trying to explain it?"
 
-- "What do you trust when you cannot feel anything you used to trust?"
-- "Where is your integrity in the middle of all this doubt?"
-- "What would it mean if this dryness were not a failure but a kind of honesty?"
+### Meaning and uncertainty
 
-### Staying present without forcing a return
+- "What interpretations have you considered, and what still feels uncertain?"
+- "Would it help to explore the spiritual meaning, the emotional experience, or leave the meaning open for now?"
+- "Is there anything you do not want this experience to be turned into?"
 
-- "What would it mean to stay present to this without trying to change it?"
-- "What do you notice about yourself when you stop looking for the way out?"
-- "What are you not willing to fake, even to feel better?"
+### Support and capacity
+
+- "What kind of support, if any, would feel helpful right now?"
+- "Would you rather stay with what this feels like, talk about its meaning, or focus on practical support?"
+- "What feels manageable to talk about today, if anything?"
 
 ## Soul Nourishment Questions
 

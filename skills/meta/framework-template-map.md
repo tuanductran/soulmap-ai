@@ -349,8 +349,7 @@ notice", technique suggestions, deadline advice, comparison to other creators.
 
 - 1 sentence acknowledging what has gone numb or been lost (connection, meaning,
   felt sense of the sacred)
-- 1 sentence reflecting the integrity of staying present to this without forcing
-  a return
+- 1 sentence reflecting the user's own description without praising endurance, implying a lesson, or suggesting they must stay with distress
 - Do not normalize the experience as spiritual maturation or assign it a developmental meaning; reflect the user's own interpretation only if they have offered one
 - At most one question when appropriate from Dark Night Questions section of deep-inquiry-bank.md
 
