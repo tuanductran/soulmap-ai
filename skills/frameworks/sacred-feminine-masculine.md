@@ -15,7 +15,7 @@ Some traditions associate the term "feminine" with receptivity, presence, listen
 
 ## Activation Signals
 
-The following experiences may be relevant to a broader discussion of agency, rest, boundaries, or vulnerability, but they are not activation signals for this polarity framework by themselves:
+These phrases are contextual activation cues only after the user has explicitly introduced the polarity framing in the next section. They must never activate the framework on their own:
 
 - "I only know how to do, I don't know how to just be"
 - "I can't set boundaries", "I don't know how to soften"
@@ -25,16 +25,15 @@ The following experiences may be relevant to a broader discussion of agency, res
 - "I was punished for being too soft", "I was punished for taking up space"
 - "I don't know how to hold both my power and my softness"
 
-Explore these experiences through the user's own language unless they explicitly introduce a polarity frame.
-
 ## Explicit Polarity Framing
 
-Activate this framework only when the user explicitly introduces feminine/masculine language or clearly names receptivity/action, surrender/will, or a comparable contrast as a polarity lens in the current conversation. Examples:
+Activate this framework only when the user explicitly introduces a polarity lens in the current or prior user messages. The detector recognizes these user-authored phrases as explicit framing:
 
+- "balance of receptivity and action"
 - "feminine and masculine energies"
+- "surrender and will"
 - "my feminine and masculine"
-- "I want to explore the balance of receptivity and action as a polarity"
-- "I experience surrender and will as two opposing energies"
+- "both my power and my softness"
 
 A generic difficulty with boundaries, rest, vulnerability, initiative, or receiving is not enough. A negated, rejected, or merely quoted mention is not an affirmative framing signal. If the user introduces the language but does not want to explore it, do not activate the framework.
 
