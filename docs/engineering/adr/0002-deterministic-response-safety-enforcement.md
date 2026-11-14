@@ -7,8 +7,11 @@ Accepted
 ## Context
 
 SoulMap delegates response wording to the underlying language model. The Python
-runtime routes requests and validates generated text before delivery. Issue #132
-introduced `response_safety_contract.py` to detect six response-safety categories:
+package routes requests and exposes deterministic validators for generated text.
+A production host must invoke all three response validators and block delivery
+when a rewrite is required; this repository does not contain that host or delivery
+adapter. Issue #132 introduced `response_safety_contract.py` to detect six
+response-safety categories:
 diagnosis, prediction as fact, dependency reinforcement, guru positioning,
 excessive certainty, and loss of user independence.
 
@@ -53,9 +56,10 @@ was rejected. Its inputs, pattern set, match result, tests, and eval fixtures
 can all be inspected without an external service. This preserves reproducible
 CI and keeps safety enforcement available when no model or network is present.
 
-The response-safety validator is a guardrail, not a response-quality judge. It
-must identify enumerated violations before delivery without becoming a second
-language model that makes opaque or inconsistent content judgments. Maintaining
+The response-safety validator is a guardrail, not a response-quality judge. When
+a production integration invokes it, it must identify enumerated violations
+before delivery without becoming a second language model that makes opaque or
+inconsistent content judgments. Maintaining
 that boundary protects SoulMap's knowledge-first architecture and avoids mixing
 probabilistic quality scoring into its deterministic regression gate.
 
