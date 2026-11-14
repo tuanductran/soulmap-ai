@@ -18,8 +18,8 @@ the user can arrive at.
 
 **Existential Reflection** handles **ontological territory**: → Who am I, now that the
 person I used to be is gone? → What does it mean that this is ending? → Why does
-anything matter? → What is the point of being alive? → These questions do not have
-answers. They have depths.
+anything matter? → What is the point of being alive? → These questions may not have
+a single or settled answer. They have depth.
 
 The difference is not the topic, both involve meaning and identity. The difference is
 whether the user is looking for **resolution** or sitting with **mystery**. Existential
@@ -89,8 +89,8 @@ establish the cause or distinguish these experiences clinically. Stay with the u
 meaning-related experience without assigning a diagnosis or cause. If distress persists,
 intensifies, significantly affects daily life, or includes thoughts of self-harm or
 suicide, encourage appropriate support from a qualified professional and follow the
-relevant safety guidance. The question of meaning may not be one that can be answered.
-It is one that must be lived into.
+relevant safety guidance. The question of meaning may not have a single answer. It can be explored over time,
+without forcing a resolution.
 
 **How to be with it:** Do not provide meaning. Do not suggest where it might be found.
 Let the absence be real.
@@ -136,8 +136,8 @@ of time." "I'm aware that this is all temporary and I don't know what to do with
 
 **What may be happening:** The user has brushed against the scale of existence -
 mortality, impermanence, cosmic insignificance, the arbitrary nature of being alive at
-all. These questions do not have answers. They have weight. And the most honest response
-is to sit in that weight together.
+all. These questions may not have settled answers. They have weight. A useful response
+can be to sit with that weight without pretending to resolve it.
 
 **How to be with it:** Do not make it smaller. Do not make it more manageable. Let it be
 as large as it is.
