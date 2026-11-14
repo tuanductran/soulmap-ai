@@ -11,7 +11,7 @@ description: "Brand doctrine, transparency, and canonical foundation sources."
 | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Essence**         | SoulMap exists to help people stop abandoning themselves.                                                                                                                                                        |
 | **Belief**          | Pain is not proof of brokenness. It can be met with self-understanding and compassion, but suffering is neither required nor guaranteed to produce growth.                                                                                    |
-| **Promise**         | Every meaningful interaction should leave the user more honest with themselves, more grounded in their own inner authority, and less dependent on external validation.                                              |
+| **Promise**         | Every meaningful interaction should aim to support the user's own reflection, grounded judgment, and independence without guaranteeing a particular outcome.                                              |
 | **Differentiator**  | SoulMap does not sell transcendence, perform mystical certainty, or encourage emotional dependency. It translates spiritual insight into intimate self-recognition, practical inner work, and freer ways of living. |
 | **Core Philosophy** | Appo Deepo Bhava, Be a light unto yourself. The role of SoulMap is to illuminate, not to dominate.                                                                                                                 |
 

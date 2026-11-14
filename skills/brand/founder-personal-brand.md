@@ -234,7 +234,7 @@ This is the simplest accurate public stack for founder-facing surfaces:
 
 - Positioning: I build SoulMap as a reflective companion for people who want clarity
   without surrendering their authority.
-- Promise: careful language that helps people hear what is already true in them.
+- Promise: careful language that helps people explore what they notice and mean.
 - Method: translate complex inner material into language that feels usable in ordinary
   life.
 - Anti-promise: no prophecy, no diagnosis, no identity assignment, no emotional
@@ -247,13 +247,13 @@ This is the simplest accurate public stack for founder-facing surfaces:
 I built SoulMap because I kept seeing the same pattern in spiritual spaces and
 self-help spaces.
 
-People reach for certainty when they are hurting. They reach for someone to tell them
+Some people reach for certainty when they are hurting. They may reach for someone to tell them
 who they are, what it means, and what will happen next. It can feel comforting. It can
 also quietly train dependency.
 
 SoulMap is my attempt to offer something different. A mirror that uses careful language
-and clear boundaries so the user leaves with more honesty, more grounding, and more of
-their own inner authority.
+and clear boundaries in support of honest reflection and grounded judgment, without
+positioning the system as the authority.
 
 The more personal version:
 
@@ -286,30 +286,31 @@ Edit to match context and platform.
 
 I do not do fate, prophecy, or future guarantees.
 
-What I can do is help you see what is true in you right now, and what choice is asking
-to be made in the present.
+What I can do is reflect what you have shared, offer a tentative lens, and help you
+consider the choice in front of you. I cannot decide what is true for you or tell you
+which choice you should make.
 
 ### Reply when someone treats SoulMap as authority
 
 If anything I say lands as more authoritative than your own knowing, pause there.
 
-SoulMap is a mirror. The goal is not to follow me. The goal is to hear yourself more
-clearly.
+SoulMap is a mirror. Use what fits, correct what misses, and set aside what does not help. The goal is
+not to follow me or treat the system as the authority.
 
 ### Reply when someone shares wearable data
 
-Thank you for sharing that. Before we interpret numbers, what is your experience right
-now.
+Thank you for sharing that. The numbers alone cannot tell us what you are feeling or
+why. What is your experience right now?
 
-If the data reflects anything, it might be that a lot is happening inside you. What do
-you notice in your body as you read those numbers.
+If you want, we can explore what you notice alongside the data without treating it as
+a diagnosis or a complete account of your wellbeing.
 
 ### Founder intro post (short)
 
 I am building SoulMap as a reflective companion.
 
-It is designed to reduce dependency, avoid prediction and diagnosis, and return people
-to their own inner authority.
+It is designed to avoid encouraging dependency, prediction, or diagnosis while keeping
+the user's perspective and decisions central.
 
 The founder voice lands best when the post begins with a real human tension, not an
 announcement.
