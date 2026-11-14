@@ -240,11 +240,12 @@ release pull request. It does not publish the GitHub Release.
 **Release Finalize** (`.github/workflows/release-finalize.yml`) runs after a
 `release/prep-*` pull request is merged. It checks out the exact merge commit,
 re-verifies the repository, rebuilds the ZIP, `.skill`, and Library manifest, and
-runs the release verification gate. It verifies artifact SHA-256 integrity and the
-extracted ZIP and `.skill` boundaries before publishing, generates artifact
-attestations, creates the immutable version tag, and publishes the GitHub Release,
-uploading all three artifacts (the ZIP, `.skill`, and Library manifest) plus the verification and provenance
-records. A manual dispatch is available for finalizing an already-merged release
+runs the release verification gate. Before publishing, it performs:
+- Verifying artifact SHA-256 integrity.
+- Verifying extracted ZIP and `.skill` boundaries.
+- Generating artifact attestations and creating the immutable version tag.
+- Publishing the GitHub Release, uploading all three artifacts (the ZIP, `.skill`,
+  and Library manifest) plus the verification and provenance records. A manual dispatch is available for finalizing an already-merged release
 commit without another version bump.
 
 Before starting Release Prep, review:
