@@ -83,11 +83,11 @@ availability and permissions. Use this path only for an existing GPT or an eligi
 workspace that still permits the workflow.
 
 ZIP files are not accepted as Custom GPT knowledge files. Extract the archive and upload
-individual Markdown or text files. OpenAI's current GPT documentation lists up to 20 knowledge files per GPT. Because
-Custom GPTs are being retired and account/workspace availability varies, verify the
-live builder and migration notice before relying on this legacy path. File-size, token, and account usage limits
-also apply. Do not start a new deployment on this path without checking the retirement
-and migration notice.
+individual Markdown or text files. OpenAI's current GPT documentation lists up to 20
+knowledge files per GPT. Because Custom GPTs are being retired and account/workspace
+availability varies, verify the live builder and migration notice before relying on this
+legacy path. File-size, token, and account usage limits also apply. Do not start a new
+deployment on this path without checking the retirement and migration notice.
 
 Official reference:
 [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
@@ -127,8 +127,9 @@ execution and Skills in organization settings. If upload or sharing controls are
 missing, check workspace policy and role permissions.
 
 Official references:
-[Use Skills in Claude](https://support.%63laude.com/en/articles/12512180) and
-[How to create custom skills](https://support.%63laude.com/en/articles/12512198)
+[Use Skills in Claude](https://support.claude.com/en/articles/12512180) and
+[How to create custom skills](https://support.claude.com/en/articles/12512198) and
+[Claude API Skills documentation](https://platform.claude.com/docs/en/build-with-claude/skills-guide)
 
 ### Claude conversations and Project knowledge
 
@@ -143,7 +144,7 @@ Markdown files that the Project needs. Supported file types and size limits can 
 check the official upload guide before a large import.
 
 Official reference:
-[Upload files to Claude](https://support.%63laude.com/en/articles/8241126)
+[Upload files to Claude](https://support.claude.com/en/articles/8241126)
 
 ## Gemini
 
