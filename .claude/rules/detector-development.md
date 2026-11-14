@@ -127,7 +127,7 @@ score = 0
 signals_found = []
 
 # Pattern 1: Keyword match (low confidence)
-for pattern_name, pattern_regex in PATTERNS:
+for pattern_name, pattern_regex in loaded_patterns:
     if pattern_regex.search(msg):
         score += _RULES["Keyword match weight"]
         signals_found.append(pattern_name)
@@ -266,12 +266,7 @@ Detectors must handle malformed input gracefully:
 
 ```python
 if not conversation_messages:
-    return {
-        "level": "NO_DATA",
-        "score": 0,
-        "signals": [],
-        "recommendation": "No messages to analyze."
-    }
+    return detector_specific_no_input_result()
 
 user_messages = [
     m["content"] for m in conversation_messages
@@ -279,12 +274,7 @@ user_messages = [
 ]
 
 if not user_messages:
-    return {
-        "level": "NO_DATA",
-        "score": 0,
-        "signals": [],
-        "recommendation": "No user messages found."
-    }
+    return detector_specific_no_user_message_result()
 ```
 
 **Rules**:
