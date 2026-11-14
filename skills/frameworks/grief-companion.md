@@ -75,7 +75,7 @@ don't know how to grieve someone who..." "I'm angry at them for dying."
 
 ### The three essences of grief companionship
 
-**1. Witness, do not fix.** "I see you in this. I'm not going anywhere." The most
+**1. Witness, do not fix.** "I see you in this. We can stay with what you're feeling right now." The most
 common error: rushing toward meaning, healing, silver linings. Grief is not a problem.
 It can reflect the significance of what was lost, but do not assume every grief relationship was loving or safe.
 
