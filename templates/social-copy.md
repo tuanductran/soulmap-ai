@@ -96,7 +96,7 @@ the person it belongs to.
 
 The most interesting thing about AI memory is not the technology.
 
-It is the human wish underneath it.
+It is the human value of continuity.
 
 Some users value continuity because they do not want to repeat important context.
 That wish matters. The design question is how a system uses supplied context without
