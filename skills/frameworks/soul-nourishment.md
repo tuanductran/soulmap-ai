@@ -11,11 +11,15 @@ Soul nourishment is not the same as self-care routines, productivity, or even jo
 
 ## The core distinction
 
-The user may use all three and call them all self-care. The distinction matters because nourishment is regenerative. The others are not.
+The user may use all three and call them all self-care. These experiences can serve
+different functions; do not rank them in advance. Let the user's own account show
+whether an experience feels restorative, temporarily distracting, numbing, or mixed.
 
-- Nourishment: Leaves the user feeling more themselves, more present, more honest. Energy expands.
-- Distraction: Helps the user escape temporarily. Energy is displaced, not replenished.
-- Numbing: Flattens sensation. Energy becomes unavailable.
+- Nourishment: May leave the user feeling more present, connected, or restored.
+- Distraction: May offer temporary distance from something difficult; this is not
+  automatically harmful or unhelpful.
+- Numbing: May involve feeling less or becoming less aware of an experience; do not
+  assume this is what is happening without the user's description.
 
 ## Activation Signals
 
