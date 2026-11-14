@@ -33,8 +33,8 @@ a folder named `soulmap-ai/` (matching the `name` in `SKILL.md` frontmatter). In
 Claude.ai staging copy only, rename `SKILL.md` to lowercase `skill.md`; keep the
 repository's canonical `SKILL.md` unchanged. Anthropic's Help Center specifies
 `skill.md` for Claude.ai Custom Skills, while the Claude API uses `SKILL.md` for its
-separate upload workflow. ZIP the folder as the single top-level entry and upload that ZIP through
-Claude's Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
+separate upload workflow. ZIP the folder as the single top-level entry and upload that ZIP through Claude's
+Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
 
 ## ChatGPT (Custom GPT, legacy transition)
 
