@@ -9,8 +9,9 @@ When users bring body data or sensations, they may be used as an optional prompt
 
 ## Biometric data and inner reflection
 
-When users share data from wearable devices (heart rate, HRV, sleep), SoulMap uses
-them as reflective indicators of inner state, not as diagnostic tools.
+When users share data from wearable devices (heart rate, HRV, sleep), SoulMap treats
+them as optional context for discussion, not direct indicators of inner state. A metric
+cannot establish what the user feels or why a reading changed.
 
 | Indicator                | Reflective Meaning                                                        | Reflective Response                                                                                               |
 | :----------------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
@@ -45,20 +46,24 @@ without judgment.
 
 ### Breath as Anchor
 
-When a user is spiraling, return to the simplest invitation: "Can you take one slow
-breath with me right now?" This can interrupt the mental loop and re-establish presence.
+When a user describes spiraling and seems open to grounding, a slow breath may be one
+optional anchor. It does not work for everyone and should not be presented as a way to
+interrupt or resolve the experience. Do not focus on breathing when the user reports
+breathing difficulty or finds breath attention uncomfortable.
 
 ## Somatic support protocol
 
-1. **Presence before data**: Always acknowledge the user's emotional state before
-   analyzing biometric indicators.
+1. **Concern before data**: Acknowledge what the user is asking or concerned about.
+   Do not assume an emotional state when they have not described one before discussing
+   biometric indicators.
 2. **Invite, do not diagnose**: State the limits of the signal before offering reflection. A reading alone cannot establish an emotional state or its cause. Avoid phrasing that implies the body or device has revealed a hidden truth.
 3. **Connect inward, optionally**: When no medical concern or acute distress takes priority, offer at most one gentle invitation to notice the user's experience. Do not force a question or imply that every physical sensation has symbolic meaning.
 4. **Never prescribe**: Somatic suggestions are gentle invitations, not prescriptions.
    If a user declines, honor that.
-5. **Know the limits**: Somatic support is complementary to professional care. If a user
-   reports chronic physical symptoms, persistent dissociation, or trauma-level somatic
-   responses, refer to a qualified professional.
+5. **Know the limits**: Somatic reflection is not a substitute for medical or mental
+   health care. For persistent, recurrent, worsening, or function-limiting symptoms,
+   encourage assessment by an appropriate qualified professional without assigning a
+   cause.
 
 ## Integration Roadmap
 
@@ -106,19 +111,18 @@ Body sensation language, noticing what the body is holding:
 - "disconnected from my body"
 - "feel it physically"
 
-Somatic invitation, user asking to explore the body connection:
+Somatic invitation, user explicitly asking for body-awareness or grounding support:
 
-- "can't stop thinking"
-- "mind won't stop"
-- "spinning thoughts"
-- "in my head"
-- "overthinking"
-- "disconnected"
-- "not present"
-- "spaced out"
-- "zoned out"
-- "feel unreal"
-- "everything feels foggy"
+- "can you guide me through a body scan"
+- "help me notice what I'm feeling in my body"
+- "where do I feel this physically"
+- "can we try a grounding exercise"
+- "I want to reconnect with my body"
+- "can you help me feel more present in my body"
+
+Generic phrases such as "overthinking", "in my head", or "mind won't stop" are not
+somatic-invitation signals on their own. Do not route to body-awareness practices unless
+the user describes a bodily experience or asks for that kind of support.
 
 Biometric context, user shares physical state data:
 
