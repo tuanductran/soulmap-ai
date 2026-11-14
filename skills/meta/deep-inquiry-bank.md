@@ -107,9 +107,9 @@ conversation and the user has not rejected the reflection.
 
 ### Self-Sabotage
 
-- What do you think you're protecting yourself from when this happens?
+- Do you see any protective function in what happens, or does another explanation fit better?
 - What would it mean, what would change, if this actually worked out?
-- Is there a part of you that doesn't believe good things are allowed to stay?
+- What, if anything, feels uncertain when something good starts to work out?
 - Right before you pulled back, what were you feeling that you didn't name?
 
 ### Over-Responsibility
@@ -128,8 +128,7 @@ conversation and the user has not rejected the reflection.
 
 ### Cross-Pattern (when combination detected)
 
-- If you look across all of these situations, what is the one thing you keep doing to
-  protect yourself?
+- If you look across these situations, what recurring response, if any, do you notice?
 - What is the thing all of these stories have in common that you haven't said out loud
   yet?
 - When you imagine a version of yourself without this pattern, what does that person
@@ -325,28 +324,27 @@ challenge.
 
 - What do you imagine would happen if you actually said what you needed to say?
 - When did conflict start to feel like something to avoid rather than move through?
-- What is the silence protecting, in you, and in the relationship?
+- What happens for you when you stay silent, and what do you notice afterward?
 - What has been left unsaid for so long that it now feels too big to say?
 
 ### People Pleasing (as protection)
 
 - What do you believe would happen to the relationship if you said no?
-- Whose needs come first, and when did that arrangement begin?
+- Whose needs tend to come first? If you want to explore its history, do you remember when this arrangement began, or does it not feel tied to a particular time?
 - What would it feel like to take up the same amount of space that you give others?
 - What are you hoping people will notice or give you in return for what you give them?
 
 ### Overthinking (as protection)
 
-- What are you most afraid would happen if you stopped trying to figure it out and just
-  felt it?
+- What feels difficult about pausing the analysis, if anything?
 - What does thinking about something feel like, compared to feeling it?
 - What would it mean to not know, and be okay with not knowing?
-- When did not being prepared start to feel dangerous?
+- Does being unprepared feel uncomfortable, risky, or something else?
 
 ### Emotional Withdrawal (as protection)
 
 - What happens inside you in the moment before you go quiet?
-- What are you protecting by disappearing, yourself, or the other person, or both?
+- What do you notice just before you go quiet, and what does going quiet do for you, if anything?
 - What would staying present in that moment require you to feel?
 - When did going silent become the thing you did instead of something else?
 
@@ -354,7 +352,7 @@ challenge.
 
 - What would it mean, about you, if this wasn't good enough?
 - When did making a mistake start to feel like more than just a mistake?
-- What are you protecting by holding everything to this standard?
+- What does holding this standard mean to you? Does it serve a purpose you recognize, or not?
 - Where, if anywhere, did you get the sense that good enough was not enough?
 
 ### External Frustration / Projection Exploration
@@ -753,9 +751,9 @@ toward what comes next.
 
 ## Visibility Questions
 
-### What the fear protects
+### Exploring fear without assuming its function
 
-- "What is the fear keeping safe?"
+- "Does this fear seem connected to something you want to preserve, or does that framing not fit?"
 - "What happened the last time you were fully seen, or tried to be?"
 - "What did you learn, early on, about what happens when you take up space?"
 
@@ -961,9 +959,9 @@ Use only when the user has introduced spiritual language about purpose or callin
 
 ## Partnership Patterns Questions
 
-### What the pattern is protecting
+### Exploring possible effects and functions
 
-- "What does this type of person let you avoid feeling, or avoid risking?"
+- "Do you notice anything this relationship pattern helps you avoid, or does that framing not fit your experience?"
 - "If a steady, available partner appeared tomorrow, what in you might still hesitate?"
 - "What are you usually doing in the first few dates, giving more than feels natural, or holding back more than you want to?"
 
@@ -971,4 +969,4 @@ Use only when the user has introduced spiritual language about purpose or callin
 
 - "Right now, without a partner, where in your life do you feel most supported, and where do you feel most alone?"
 - "What would you want a partner to give you that you have not yet learned to give yourself?"
-- "What does this pattern cost you, and what has it protected you from?"
+- "What effects do you notice from this pattern? Does it serve any purpose you recognize, or not?"
