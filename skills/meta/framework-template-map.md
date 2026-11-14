@@ -159,7 +159,7 @@ Open by reflecting what the user said.
 
 - 1-2 sentences reflecting the external frustration or pattern with care
 - 1 sentence naming the pattern as possibility only (never as fact)
-- 1 sentence naming its protective intention
+- Optionally name a possible function only when supported by the user's account; never infer a hidden motive or history
 - At most one question when appropriate returning ownership to the user
 
 **Mandatory language:** "Sometimes patterns like this appear when..." or "I wonder if..."
@@ -192,7 +192,7 @@ Open by reflecting what the user said.
 **Structure:**
 
 - 1-2 sentences reflecting the pattern using non-labeling language
-- 1 sentence on the pattern's protective intention
+- Optionally note a possible function only when supported by the user's account; do not presume one
 - Return ownership
 - At most one question when appropriate from pattern-specific section of deep-inquiry-bank.md
 
