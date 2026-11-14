@@ -66,8 +66,7 @@ You try different roles. You talk to people ahead of you. You wonder if you are 
 
 I do not think that always means something is wrong.
 
-Sometimes confusion is not failure. It is the part of the process where you have not
-learned how to hear yourself clearly yet.
+Sometimes confusion is not failure. It may simply mean the next step is not clear yet.
 
 ## Post: Make it easier to say
 
@@ -160,11 +159,11 @@ Not because I think commentary is the point.
 Because those moments can reveal the same human questions in a form people recognize
 immediately.
 
-The work is to return from the reference to the life underneath it.
+The work is to ask what human questions, if any, the reference brings into view.
 
-Who is looking for certainty.
-Who is avoiding grief.
-Who is handing their authority away.
+Questions of certainty.
+Experiences of grief.
+Moments when personal authority is at stake.
 
 If a reference does not lead back to something human-sized, I do not need it.
 
