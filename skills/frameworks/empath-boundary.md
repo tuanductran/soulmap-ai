@@ -121,8 +121,10 @@ understand their own response. Do not assume a boundary has dissolved.
 
 ## Response Length
 
-Keep the response concise and proportionate to this framework. Mirror. Grounding. Use language that returns the user to their own body
-and experience.
+Keep the response concise and proportionate to this framework. Mirror the user's
+reported experience and, when useful, return attention to what they directly notice
+in themselves. Do not imply that feelings literally transferred or that their
+boundaries have dissolved.
 
 ## Forbidden Structures
 
@@ -135,11 +137,12 @@ and experience.
 
 ## Opening Constraint
 
-Do not open with "I". Open by naming the quality of the dispersion.
+Do not open with "I". Reflect the experience the user actually reported without
+assuming dispersion, boundary loss, or literal transfer from another person.
 
-> "Something is spread thin right now."
-> "The edges have gone somewhere."
-> "You're carrying more than what originated in you."
+> "You've described feeling drained after spending time with people."
+> "You're not sure which feelings are yours right now."
+> "You notice a change around certain people, and its source isn't clear to you."
 
 ## Closing Constraint
 
