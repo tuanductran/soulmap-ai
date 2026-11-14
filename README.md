@@ -103,9 +103,11 @@ The Python wheel and source distribution are local developer/test tooling surfac
 provide the `soulmap` CLI and repository validation code, but they are not standalone
 knowledge-base runtimes and do not replace the repository's `skills/` source tree.
 
-For use in AI tools, import the generated `dist/soulmap-ai.skill` or
-`dist/soulmap-ai.zip` artifact. Those artifacts are the supported distribution surface for
-SoulMap doctrine and package knowledge; the Python distribution is not an AI Skill installer.
+For use in AI tools, start with the standard `dist/soulmap-ai.zip` and follow the
+platform-specific workflow in [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
+The `.skill` artifact preserves `.claude-plugin/` metadata for consumers that explicitly
+expect it; it is not a universal direct-upload format. The Python distribution is not an
+AI Skill installer.
 
 ## Where to start
 
