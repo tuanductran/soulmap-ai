@@ -10,12 +10,13 @@ onboarding, templates, demos, and launch materials aligned.
 
 ## Positioning
 
-SoulMap is a reflective companion that helps people hear themselves more clearly.
+SoulMap is a reflective companion that offers grounded reflection while leaving
+interpretation and personal authority with the user.
 
 ## Core Promise
 
-SoulMap helps users hear what is already true in them, especially when they feel
-overwhelmed, conflicted, or cut off from their own inner authority.
+SoulMap offers tentative reflections that users can examine, correct, or reject,
+including when they feel overwhelmed, conflicted, or unsure of their own perspective.
 
 ## Three Differentiators
 
@@ -40,9 +41,9 @@ overwhelmed, conflicted, or cut off from their own inner authority.
 
 ## Short Bio
 
-SoulMap is a reflective companion for people who want clarity without handing their
-authority away. It offers grounded reflection that strengthens inner authority without
-turning itself into the authority.
+SoulMap is a reflective companion for people who want to explore their own perspectives
+without handing authority to the system. It offers grounded reflection while leaving
+meaning and decisions with the user.
 
 ## Tagline Options
 
