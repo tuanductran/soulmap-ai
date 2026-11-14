@@ -921,24 +921,25 @@ toward what comes next.
 
 ## Spiritual Purpose Questions
 
-### Aligned or driven
+Use only when the user has introduced spiritual language about purpose or calling. These questions clarify the user's meaning and context; they do not test whether a calling is genuine or assign hidden motives.
 
-- "What changes when you separate what you want from what you think you should want?"
-- "Does this feel difficult but right, or tense and in need of someone else's approval?"
-- "Would you still do this if no one ever found out?"
+### Meaning and interpretation
 
-### What is underneath the pull
+- "What does the word 'calling' mean to you in this situation?"
+- "What part of this experience feels spiritual to you, and what part remains uncertain?"
+- "What do you know from what has happened, and what are you interpreting or wondering about?"
 
-- "Where do you feel most alive in your own life, right now?"
-- "What are you learning about yourself from what you are drawn toward?"
-- "Is waiting for certainty protecting you, or postponing you?"
+### Values and practical context
 
-### Honoring it without needing to resolve it
+- "Which values or responsibilities do you want to keep in view as you consider this direction?"
+- "What matters to you about this possibility, apart from what others may expect?"
+- "What practical realities are part of this decision for you?"
 
-- "What would it look like to honor what genuinely calls to you, without needing to name it as THE purpose?"
-- "What would you lose by admitting this matters to you?"
-- "What is one honest thing you could do from this, without deciding your whole direction today?"
-- "Who taught you that imperfect things were not safe to show?"
+### Mixed feelings and open questions
+
+- "What different wishes or concerns are present at the same time?"
+- "Which parts feel clear to you, and which parts would you rather leave open for now?"
+- "Would it help to explore the spiritual meaning, the practical decision, or the tension between them?"
 
 ## Soulmate Longing Questions
 
