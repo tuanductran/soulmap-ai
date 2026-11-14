@@ -20,7 +20,7 @@ If useful to the user's own account, explore these as questions rather than cate
 
 Do not classify an action as "aligned" or "driven" based on how calm, difficult, energizing, or socially validated it feels. Those qualities may be worth noticing, but they do not establish the user's motives or the correctness of a decision.
 
-## Activation signals
+## Activation Signals
 
 Activate when the user questions how a spiritual understanding of purpose or calling relates to a direction they are considering:
 
@@ -91,6 +91,8 @@ Do not ask the user to commit or resolve their whole direction. Do not imply tha
 ## Detection policy
 
 Treat these signals as contextual clues, not conclusions. Activate only when the user has explicitly introduced spiritual language about purpose or calling in the current conversation. Do not infer a hidden spiritual motive from generic uncertainty about work, values, ambition, fear, or direction.
+
+### Guidance
 
 | Result | Guidance |
 | :--- | :--- |
