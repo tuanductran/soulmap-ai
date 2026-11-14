@@ -30,7 +30,7 @@ This skill helps you:
 
 ## Detector Anatomy
 
-Every detector has this structure:
+Use the following only as a common CLI illustration, not a universal detector structure:
 
 ```python
 """Score conversation history for signs of [signal]."""
@@ -84,42 +84,50 @@ Common fields where applicable:
 
 ### Pattern 1: Keyword and Regex Matching
 
-Use pre-compiled regex patterns defined at module level:
+Keep semantic phrases and regex expressions in the detector's registered Markdown
+source. Load them through the existing helpers in
+`soulmap.runtime.knowledge.keyword_lists`; compile loaded regex expressions in Python
+at module initialization, after validating the source rows.
 
 ```python
-SIGNAL_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    ("signal_name", re.compile(r"pattern here", re.IGNORECASE)),
-    ("another_signal", re.compile(r"another pattern", re.IGNORECASE)),
-]
+from soulmap.runtime.knowledge.keyword_lists import load_labeled_groups, load_table_rows
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
-# In analyze function:
-for pattern_name, pattern_regex in SIGNAL_PATTERNS:
-    if pattern_regex.search(normalized_message):
-        score += 10
-        signals_found.append(pattern_name)
+_SOURCE = runtime_skill_path("dependency-detection")
+_SIGNAL_GROUPS = load_labeled_groups(_SOURCE, "Detection signals")
+_KEYWORDS = _SIGNAL_GROUPS["dependency keywords"]
+_REGEX_ROWS = load_table_rows(_SOURCE, "Strong dependency expressions")
+_REGEX_PATTERNS = tuple(
+    (label, re.compile(expression.strip("`")))
+    for label, expression in _REGEX_ROWS
+)
 ```
 
 **Rules**:
 
-- Pre-compile patterns at module load (not in functions)
-- Use descriptive names for each pattern
-- Use `re.IGNORECASE` for human input matching
-- Store as tuple of (name, compiled_pattern)
+- Author semantic phrases and regex expressions in the registered Markdown source.
+- Use the source registry/runtime registry instead of hard-coded skill paths.
+- Validate the expected row shape and labels before compiling expressions.
+- Compile regex expressions once at module load, not inside the detection loop.
+- Keep numeric weights and thresholds in Python-owned runtime configuration.
 
 ### Pattern 2: Semantic Structure Analysis
 
-Detect patterns in sentence structure or word order:
+Load semantic marker groups from the registered Markdown source, then apply Python
+logic to evaluate how those markers appear in context:
 
 ```python
 def has_dependency_language(msg: str) -> bool:
-    """Check for exclusive reliance language."""
-    markers = ["only you", "no one else", "can't talk to anyone"]
-    return any(marker in msg.lower() for marker in markers)
+    """Check loaded exclusive-reliance markers in normalized user text."""
+    markers = _SIGNAL_GROUPS["dependency keywords"]
+    return any(marker in msg for marker in markers)
 
-if has_dependency_language(msg):
-    score += 20
-    signals_found.append("exclusive_reliance")
+if has_dependency_language(normalized_message):
+    score += DEPENDENCY_SCORING["Dependency keyword weight"]
+    signals_found.append("dependency_keyword")
 ```
+
+Do not copy the marker strings or semantic pattern inventory into Python.
 
 ### Pattern 3: Conversation History Context
 
@@ -184,45 +192,39 @@ score = min(score, 100)  # Cap at 100
 ### Handle edge cases
 
 ```python
-# No input
+# No input: preserve this detector's documented no-input result.
 if not messages:
-    return {"level": "NO_DATA", "score": 0, "signals": [], "recommendation": "..."}
+    return detector_specific_no_input_result()
 
-# Empty user messages
-user_messages = [m["content"] for m in messages if m.get("role") == "user"]
-if not user_messages:
-    return {"level": "NO_DATA", "score": 0, "signals": [], "recommendation": "..."}
-
-# Malformed entries
+# Malformed entries: use the existing input validator where the detector contract
+# requires a validated message history.
 for msg in messages:
     if not isinstance(msg, dict) or "content" not in msg:
         continue
 ```
 
+There is no universal `NO_DATA` result contract. Preserve the closest detector's
+actual behavior and test its exact return shape.
+
 ## Integration with Framework Selector
 
-Your detector integrates here in `src/soulmap/runtime/routing/framework_selector.py`:
+A new ordinary framework detector has more than one integration point. Inspect the
+current code and follow `.claude/rules/detector-development.md` before editing.
 
-```python
-from soulmap.runtime.detectors import your_detector
+- Add the detector import and execution at the correct phase in
+  `src/soulmap/runtime/routing/framework_selector.py`.
+- Add its semantic binding to `_PRIMARY_DETECTOR_BINDINGS` or the relevant secondary
+  binding; do not duplicate signal phrases in Python.
+- Keep priority guidance in `skills/meta/orchestration.md` and its executable
+  counterpart in `ORCHESTRATION_CONFIG`.
+- Put numeric weights and thresholds in `DETECTOR_CONFIG` when required.
+- Register the canonical Markdown source through the runtime registry when it is
+  consumed by the detector.
+- Add the required framework-template mapping and source-backed eval coverage.
 
-def select_framework(messages: list) -> str:
-    # ... crisis check first (highest priority) ...
-
-    # Your detector
-    result = your_detector.<detector_callable>(messages)
-    # Match the level values defined by that detector, not a generic enum.
-    if <detector-specific-high-signal>:
-        return "YOUR_FRAMEWORK"
-
-    # ... continue with other detectors ...
-```
-
-**Rules**:
-
-- Check detectors in priority order (defined in SOULMAP.md Section 2)
-- Higher-priority signals always override lower-priority ones
-- Each detector should handle its own edge cases gracefully
+Crisis detection and its independent safety-gate recheck are protected paths. Do not
+copy, reorder, bypass, or edit the crisis branch when adding an ordinary detector.
+Preserve the existing safety short-circuits and selector phases.
 
 ## Testing your detector
 
@@ -243,9 +245,9 @@ def test_no_false_positives():
     result = your_detector.<detector_callable>(messages)
     assert result["level"] == "<detector-specific-no-signal-level>"
 
-def test_no_data():
+def test_no_input():
     result = your_detector.<detector_callable>([])
-    assert result["level"] == "NO_DATA"
+    assert result == <detector-specific-no-input-result>
 ```
 
 ### Integration Tests via Evals
@@ -331,11 +333,11 @@ for norm_msg in normalized_messages:
 ## Workflow
 
 1. Read `.claude/rules/detector-development.md` before writing any code.
-2. Read the detector's registered Markdown runtime source for semantic signals and qualitative guidance; read the Python runtime configuration for executable weights and thresholds.
-3. Inspect the closest existing detector and tests, then follow their callable, output, and CLI contracts rather than inventing a universal detector interface.
-4. Keep semantic signals in Markdown and executable scoring or routing configuration in Python. Do not duplicate either source of truth.
-5. Integrate the detector call into `src/soulmap/runtime/routing/framework_selector.py` at the correct priority.
-6. Add eval cases to `evals/datasets/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
+2. Read the detector's registered Markdown source for semantic signals and qualitative guidance; read Python runtime configuration for executable weights and thresholds.
+3. Inspect the closest existing detector and its tests. Preserve its callable, input, output, and CLI contracts rather than inventing a universal interface.
+4. Keep semantic phrases and regex expressions in Markdown; keep executable scoring, thresholds, and routing configuration in Python.
+5. Integrate the ordinary detector through the current selector phase, semantic binding, orchestration configuration, and source registry as applicable. Do not edit protected crisis paths.
+6. Add source-backed eval cases to `evals/datasets/groups.json` using [`eval-suite-maintainer`](../eval-suite-maintainer/SKILL.md).
 7. Run `uv run soulmap test -n auto -q` and `uv run soulmap eval-groups` before pushing.
 
 ## Definition of done
