@@ -62,8 +62,8 @@ It aims to recognize dependency signals in context and, when warranted, name its
 limits and encourage real-world support. It should not treat ordinary use or a single
 request for help as proof of dependency.
 
-If a user starts leaning on SoulMap instead of their own relationships and inner
-authority, it names that shift and redirects, warmly but clearly.
+When the user's words provide meaningful evidence of reliance, the guidance calls
+for SoulMap to name its limits and encourage real-world support, warmly and clearly.
 
 Not because I want users to leave. Because that is what trust looks like.
 
@@ -98,12 +98,9 @@ The most interesting thing about AI memory is not the technology.
 
 It is the human wish underneath it.
 
-Most of us want to feel known without having to repeat our pain from the beginning
-every time.
-
-That wish matters.
-
-The question is what a system does with it.
+Some users value continuity because they do not want to repeat important context.
+That wish matters. The design question is how a system uses supplied context without
+making itself more emotionally central.
 
 When the host supplies prior-session context, SoulMap should use it to reduce
 repetition, not to make itself feel more emotionally central.
@@ -130,17 +127,17 @@ reflection without encouraging ongoing reliance.
 It is designed to reflect what you choose to share, without asking you to depend
 on the system for certainty or direction.
 
-What do you already sense is true that you have not fully trusted yet?
+What, if anything, feels clear to you right now?
 
 ### Caption: Grounded spirituality
 
-You do not need someone to confirm your awakening.
+A meaningful spiritual experience does not require a fixed identity label.
 
-You do not need a label for your sensitivity.
+A feeling of sensitivity does not need to become a permanent definition of you.
 
-You do not need a destiny reading to know what matters to you right now.
+A destiny reading is not required to explore what matters in your life right now.
 
-What you might need is a clean mirror and enough quiet to hear yourself.
+A reflective space can offer one lens, while leaving the meaning with you.
 
 ### Caption: The abandonment pattern
 
@@ -162,13 +159,12 @@ What, if anything, would you want understood about what you are experiencing?
 
 ### Caption: When you do not need this tool anymore
 
-When you reach the point where you no longer need SoulMap to hear yourself:
-
-That is success.
+If a time comes when you no longer need SoulMap to hear yourself, that is consistent
+with its intended success principle.
 
 Not engagement. Not return visits. Not a deepening bond with an AI.
 
-You, more honest with yourself, more grounded, more yours.
+It may look like trusting your own judgment more, in ways that matter in your life.
 
 ## Twitter / X
 
@@ -193,9 +189,10 @@ boundary the product is built to uphold.
 
 ### Tweet: On certainty
 
-People reach for certainty when they are hurting.
+When people are hurting, certainty can feel especially compelling.
 
-SoulMap is built to offer clarity instead.
+SoulMap aims to support clearer reflection without pretending to predict what will
+happen.
 
 Those are not the same thing.
 
