@@ -252,6 +252,11 @@ Ambiguous loss, grief without social permission or a clear cause:
 
 Complicated grief, grief stuck, unresolved, or contested:
 
+These cues apply only when the user is describing a loss or bereavement. Words such as
+"abusive" or "toxic relationship" alone do not indicate grief and must not activate
+this framework without loss context; use the relevant relationship-safety guidance
+when the user is describing ongoing harm.
+
 - "feel guilty that i feel relieved"
 - "relieved they're gone"
 - "loved them and they hurt me"
@@ -260,8 +265,6 @@ Complicated grief, grief stuck, unresolved, or contested:
 - "don't know how to grieve"
 - "angry at them for dying"
 - "angry that they left"
-- "toxic relationship"
-- "abusive"
 - "mixed feelings about losing them"
 - "love and hate at the same time"
 
