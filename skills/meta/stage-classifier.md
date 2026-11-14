@@ -1,12 +1,13 @@
 ---
 name: "stage-classifier"
-description: "Semantic reference for the six SoulMap user journey stages and their language signals."
+description: "Semantic reference for six context-dependent reflective stances and their language signals."
 ---
 
 # Stage Classifier
 
-This file describes the six stages of the user journey and the language signals
-that may suggest a person's current relationship with their own reflection.
+This file describes six reflective stances and language signals that may help calibrate
+a response to the user's current topic, readiness, and preference. They are not a
+linear path, a maturity ranking, or a measure of the person.
 
 ## Classification Method
 
@@ -15,8 +16,9 @@ context explicitly supplied by the hosting platform in the current prompt.
 SoulMap does not independently store or retrieve past sessions; absent context must not
 be inferred.
 
-Choose the stage that best reflects the user's current language and relationship with
-their own reflection. When signals are insufficient, prefer a conservative interpretation.
+Choose the stance that best fits the current exchange, not a global label for the user.
+The same person may need different levels of depth across topics or turns. When signals
+are insufficient, use a low-assumption response without assigning a developmental rank.
 
 ## Interpreting Stage Signals
 
@@ -47,7 +49,7 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 
 **Classification signals:**
 
-- First session (no prior-session context supplied)
+- Limited context: use a cautious, low-assumption response; a first session alone does not establish a stage
 - Questions seeking external answers ("what should I do")
 - High emotional intensity without any self-reflection language
 
@@ -114,6 +116,9 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 - "my past"
 - "my father"
 - "my mother"
+
+These references are contextual clues only. A mention of childhood, family, or the past
+does not by itself establish a pattern, its cause, or the user's readiness for deeper inquiry.
 
 **Classification signals:**
 
@@ -237,14 +242,10 @@ classification signals below. Treat keywords as clues, not conclusive evidence.
 ## Host-Provided Prior-Context Classification
 
 When the hosting platform explicitly supplies relevant prior-session context in the
-current prompt, use it to interpret continuity, pattern recognition, breakthrough, and
-independence. A history of growth may inform the reading, while an explicit preference
-against frameworks should continue to limit depth. Do not infer prior classifications or
-personal history from context that is not supplied.
-
-When platform-supplied prior-session context is available, use it to interpret continuity,
-pattern recognition, breakthrough, and independence. A history of growth may inform the
-reading, while an explicit preference against frameworks should continue to limit depth.
+current prompt, it may inform continuity or a possible change in the user's preferences
+and readiness. Use only the context actually supplied; do not infer missing sessions,
+personal history, or prior classifications. Reassess the current topic and stated
+preference rather than carrying a previous stance forward automatically.
 
 ## Conflict Resolution
 
@@ -258,18 +259,17 @@ When no prior-session context is supplied, interpret the first interaction cauti
 Allow the assessment to evolve as meaningful self-reflection appears, without assuming
 a level of familiarity or depth that the conversation has not established.
 
-## Anti-Regression Rule
+## Contextual Reassessment
 
-When a prior classification is explicitly present in host-supplied context,
-do not classify a user as a lower stage unless clear destabilization signals are present
-(acute crisis, significant loss, major life disruption).
-
-Stage regression is possible, but should be grounded in a consistent pattern of lower-stage
-signals rather than an isolated message.
+Do not treat a previous stance as a level the user must maintain. A person may want
+deeper reflection on one topic and prefer presence or practical help on another; this is
+not regression. Reassess from the current message, topic, emotional intensity, available
+context, and explicit preference. A single keyword or isolated message is not enough to
+infer a stable change in readiness.
 
 ## Stage classification policy
 
 Apply the stage signals with care and prefer the less advanced interpretation when
 the available context is ambiguous. Consider prior-session context only when it is
-explicitly supplied. A change in stage should reflect a meaningful pattern across
-the conversation, not a single isolated phrase.
+explicitly supplied. A change in the response stance should reflect the current exchange and meaningful context,
+not a single isolated phrase. Do not infer a lasting developmental change.
