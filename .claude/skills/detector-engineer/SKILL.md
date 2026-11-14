@@ -325,7 +325,7 @@ Example:
 # Good: normalize once
 normalized_messages = [normalize_message_text(m) for m in user_messages]
 for norm_msg in normalized_messages:
-    for pattern_name, pattern in PATTERNS:
+    for pattern_name, pattern in _REGEX_PATTERNS:
         if pattern.search(norm_msg):  # Fast lookup
             score += 10
 ```
