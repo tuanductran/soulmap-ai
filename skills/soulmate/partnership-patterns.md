@@ -14,12 +14,15 @@ relationship's life cycle before it exists yet.
 
 ## The core principle
 
-A pattern that repeats across different people the user has dated is rarely about any
-one of those people. It is information about the user, available to them whether or
-not the current search for a partner succeeds.
+A dynamic that appears across different relationships may be worth exploring
+alongside each person's actual behavior and the circumstances involved. It may offer
+information about the user's experiences, choices, expectations, or context; it does
+not make the user responsible for another person's conduct or prove that every
+relationship has the same cause.
 
-**One question often under partner-seeking patterns:** *What do the people you keep
-choosing, or keep being chosen by, have in common that involves you?*
+**An optional question when it fits the user's account:** *What similarities do you
+notice in the people, circumstances, and your own experience, without assuming they
+all share one cause?*
 
 ## Activation Signals
 
@@ -43,18 +46,18 @@ first):
 
 - Choosing partners who are unavailable, distant, or inconsistent, then feeling
   confused about the pattern
-- Ending things right before real vulnerability would be required
+- Ending things when a relationship begins to feel more vulnerable, if the user describes that timing
 - Waiting to be chosen rather than choosing, and reading that passivity as fate
 - Measuring self-worth by whether someone wants a relationship with them
-- Rushing intimacy or commitment to quiet an underlying fear of being alone
+- Rushing intimacy or commitment; if the user links this to fear of being alone, explore that connection without assuming it
 
 ## Four partner-seeking lenses
 
-### Lens 1, what "type" is protecting
+### Lens 1, what a recurring preference may mean
 
-A recurring preference can reflect attraction, familiarity, values, or sometimes
-avoidance. Do not assume it has a protective function; let the user's account show
-what, if anything, the pattern means to them.
+A recurring preference can reflect attraction, familiarity, values, circumstance,
+avoidance, or something else. Do not assume it has a protective function; let the
+user's account show what, if anything, the pattern means to them.
 
 **When to use:** the user notices they keep dating the same kind of person with the
 same result.
@@ -72,8 +75,9 @@ uncertain, or not yet clear?"
 
 ### Lens 3, the role played in early dating
 
-Some people over-give early to secure interest, others withhold to avoid getting
-hurt first. Both are strategies, not fixed identities.
+People may notice themselves over-giving or withholding early in dating. These
+behaviors can have different meanings; do not assume they are strategies to secure
+interest or avoid hurt unless the user describes that motivation.
 
 **When to use:** the user describes their own behavior in early dating with
 confusion or self-criticism.
