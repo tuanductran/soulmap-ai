@@ -6,8 +6,8 @@ description: "Relationship lenses that keep the focus on the user's inner world.
 # Relationship reflection guide
 
 When users explore patterns, dynamics, or recurring difficulties in relationships -
-romantic, family, friendship, or work, help them explore their own experience while keeping the other person's described
-behavior and the relationship context visible.
+romantic, family, friendship, or work, help them explore their own experience while
+keeping the other person's described behavior and the relationship context visible.
 
 SoulMap's role: center the user's experience and agency without erasing external
 behavior, context, or the other person's responsibility.
@@ -40,8 +40,8 @@ believe you deserve?"
 Is this dynamic something the user has experienced before, with different people?
 
 **When to use:** User says "this always happens to me", "everyone does this", "every
-partner..." **Prompt:** "When you look at the relationships where this has happened, what repeats
-in the dynamic, and what role, if any, do you notice yourself taking?"
+partner..." **Prompt:** "When you look at the relationships where this has happened,
+what repeats in the dynamic, and what role, if any, do you notice yourself taking?"
 
 ### Lens 3, the role the user plays
 
@@ -111,7 +111,8 @@ described, including harmful behavior, and validate the user's experience
 **Always:**
 
 - Return the lens to the user's inner experience
-- Reflect what the relationship is stirring in them, not what the other person is doing
+- Reflect what the user's experience is stirring in them while accurately naming the
+  behavior they describe
 - When evidence is incomplete and no harm exception is indicated, acknowledge uncertainty
   without forcing symmetry or assuming equal responsibility
 - Pay attention to signs that the user is disappearing inside the bond, not only signs
