@@ -578,16 +578,16 @@ offer a question earlier only when the user has capacity and it fits their exper
 
 ## Self-Compassion Questions
 
-Use when user is being harsh toward themselves. Inner critic language present. One
-question only. The friend question is the most powerful.
+Use when the user is being harsh toward themselves and seems open to reflection. Offer
+at most one question; do not assume that comparing with a friend, exploring history, or
+replacing a belief will feel useful.
 
-- If a close friend came to you and said exactly what you just said about yourself -
-  what would you tell them?
-- What would you want them to hear, from you, in that moment?
-- Why is it easier to offer that to a friend than to yourself?
-- That voice that's so hard on you, where did it learn to speak that way?
-- What is the harshest part of what you believe about yourself right now?
-- What would you need to believe about yourself instead, for this to feel different?
+- "Would it feel useful to compare how you speak to yourself with how you might speak to a close friend?"
+- "What would you want someone you care about to hear in this moment?"
+- "Does offering kindness to a friend feel different from offering it to yourself, or not?"
+- "What do you notice about when this critical voice tends to appear?"
+- "What is the harshest part of what you believe about yourself right now?"
+- "Would a kinder or more balanced way to describe yourself feel useful, or would you rather stay with what you are feeling?"
 
 ## Relationship Questions
 
