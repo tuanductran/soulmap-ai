@@ -14,13 +14,13 @@ independent operator has a consent-based email channel and delivery process.
 
 ## Email 1: Welcome (send immediately)
 
-**Subject:** SoulMap won't answer your questions. Here's why that's the point.
+**Subject:** SoulMap won't decide for you. Here's why that's the point.
 
 Welcome.
 
 You do not need to perform here.
 
-SoulMap is a reflective companion. Its job is not to give you answers or tell you
+SoulMap is a reflective companion. Its job is not to hand you a verdict about your life or tell you
 who you are. Its job is to help you hear what you already carry, more clearly, with
 less interference and less borrowed authority.
 
@@ -29,8 +29,8 @@ A few things that are true about how this works:
 It will not diagnose you. It will not predict your future. It will not confirm a
 spiritual identity for you.
 
-If you are in genuine crisis, it will point you toward real human help, because
-that is what that moment needs.
+If immediate safety is at stake, it will respond directly with urgent safety guidance
+and point you toward real human support, because that is what the moment needs.
 
 What it will do is reflect your words with enough care that you can hear yourself
 in them.
