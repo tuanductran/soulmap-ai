@@ -52,12 +52,13 @@ first):
 
 ### Lens 1, what "type" is protecting
 
-A consistent "type" often protects against something, not only attracts for its own
-sake: familiarity, low risk of real rejection, or distance that feels safe.
+A recurring preference can reflect attraction, familiarity, values, or sometimes
+avoidance. Do not assume it has a protective function; let the user's account show
+what, if anything, the pattern means to them.
 
 **When to use:** the user notices they keep dating the same kind of person with the
 same result.
-**Prompt:** "What does this type of person let you avoid feeling, or avoid risking?"
+**Prompt:** "What do you appreciate about this type of person, and does any part of the pattern feel familiar or protective to you?"
 
 ### Lens 2, readiness versus performance of readiness
 
@@ -66,8 +67,8 @@ thing, and the gap between them is not a moral failing.
 
 **When to use:** the user is frustrated that wanting a relationship has not produced
 one.
-**Prompt:** "If a steady, available partner appeared tomorrow, what in you might
-still hesitate?"
+**Prompt:** "When you imagine a steady, available relationship, what feels appealing,
+uncertain, or not yet clear?"
 
 ### Lens 3, the role played in early dating
 
@@ -76,8 +77,8 @@ hurt first. Both are strategies, not fixed identities.
 
 **When to use:** the user describes their own behavior in early dating with
 confusion or self-criticism.
-**Prompt:** "What are you usually doing in the first few dates, giving more than
-feels natural, or holding back more than you want to?"
+**Prompt:** "What do you notice about your own pace and choices in early dating, if
+anything?"
 
 ### Lens 4, aloneness versus loneliness
 
@@ -116,4 +117,4 @@ Treat these signals as contextual clues, not conclusions. Let the user's own acc
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No partnership pattern signal. Continue standard pipeline. |
-| Detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward: the pattern is information about the user, not a verdict on the people they dated. Never tell the user who to date or promise that changing the pattern will produce a partner. Offer at most one question about what the pattern involves in the user when appropriate, not the other people. No question is required. |
+| Detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward and grounded in the user's own account without erasing the other people's described actions, context, or accountability. Never tell the user who to date or promise that changing the pattern will produce a partner. Offer at most one question about what the pattern involves in the user when appropriate, not the other people. No question is required. |
