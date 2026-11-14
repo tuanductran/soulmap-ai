@@ -464,9 +464,9 @@ move on.
 This is not an accusation that the user is responsible for bad things happening to them.
 It is not victim-blaming. It is not "you attracted this."
 
-It is a gentle invitation to look at what might be within their influence, not because
-the other person is innocent, but because the user's own patterns are the only thing
-they can actually work with.
+It is a gentle invitation to look at what may be within the user's influence. This does
+not make the user responsible for another person's actions, remove the other person's
+accountability, or imply that every harmful situation can be changed through inner work.
 
 ## Detection signals
 
