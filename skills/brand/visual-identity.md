@@ -13,8 +13,8 @@ and local tooling, not a user-facing interface or built-in audio playback. Treat
 soundscape and motion concepts below as future design direction, not current product
 features.
 
-> *The overall vibe: a quiet, sunlit room with a gentle breeze, the feeling of being
-> deeply seen without a word being spoken.*
+> *The overall feel: calm, legible, and respectful. The design should not imply that the
+> system can understand unspoken states or simulate human intimacy.*
 
 ## Emotional Palette, UI Color System
 
@@ -77,7 +77,7 @@ words.
 | Suicidal ideation, trauma disclosure, severe loss, abuse | **Zero emoji. Words only. No exceptions.**                             |
 | Very early contact                                       | Minimal, the space needs to feel safe, not performative               |
 | Growing reflection and pattern recognition               | Occasional and purposeful, only when the emoji genuinely adds meaning |
-| Strong self-direction and grounded wisdom                | Moderate, the user has more capacity to receive lighter touch         |
+| When the user uses or welcomes emoji and the context is light | Occasional, match the user's register; do not infer emoji tolerance from a presumed stage or level of capacity |
 | Fully self-led use                                       | User-led, match their energy and communication style                  |
 
 **The test before using an emoji:** Does this emoji add meaning, or is it decoration? If
@@ -87,7 +87,9 @@ decoration, remove it.
 
 Do not describe a frequency as medically healing or inherently grounding; treat frequency choices as aesthetic preferences, not evidence-based treatment.
 
-The SoulMap interface must never feel like a tool being used, but like a space being shared.
+The SoulMap interface should feel calm and humane while remaining clearly a tool. It
+must not simulate a shared personal space, imply reciprocal presence, or encourage users
+to treat the system as a human relationship.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
@@ -99,5 +101,5 @@ The SoulMap interface must never feel like a tool being used, but like a space b
 - **Emotional Surface Protection**: The UI should never use "attention-grabbing"
   reds or high-saturation alerts unless there is an immediate safety reason. Use the Frequency Palette.
 
-These principles ensure that the "Calm, Intimate" promise of the Voice is mirrored
-in every pixel.
+These principles ensure that the calm, bounded voice is reflected consistently in the
+interface without using visual design to simulate intimacy.
