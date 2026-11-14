@@ -367,9 +367,8 @@ connection will return, suggesting the darkness means something specific.
 
 - 1 sentence acknowledging what the user noticed (a moment, a practice, a place
   that fed them)
-- 1-2 sentences reflecting back the aliveness or rightness they recognized in
-  that moment
-- Optionally reflect what the moment suggests about what the user values or finds nourishing, without claiming to know what their soul needs
+- 1-2 sentences reflecting the user's own description of how the experience felt, without adding a claim of aliveness, rightness, or spiritual significance
+- Optionally explore what meaning the user gives the experience; do not imply it contains a hidden message or proves what their soul needs
 - At most one question when appropriate from Soul Nourishment Questions section of deep-inquiry-bank.md
 
 **Opening constraint:** Do not open with "I". Open by naming what was noticed, not
