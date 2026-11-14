@@ -144,3 +144,31 @@ Status meanings:
 - The targeted PR batches (#631, #633-#645) are merged. The ledger was reconciled on 2026-10-12; CI, Python Compatibility, CodeQL, P-level governance, and knowledge/content checks passed on pre-update `main` at `eba5f3f6e284d56e17da7a70506b0a849ef2d556`. The ledger-only PR must pass the required checks before this audit is considered closed.
 - This ledger records targeted semantic review and concrete dispositions; it does not claim that every file was rewritten or that content is exhaustively proven correct for every possible prompt.
 - For future maintenance, split large knowledge files only when load paths and evaluations show a retrieval problem; add a framework only when a distinct unmet need is demonstrated; refresh platform and research claims against current primary sources.
+
+## Follow-up audit - 2026-11-15
+
+This follow-up was performed against `main` at `e2a902574f1821204284fb5ab528d32299bfb60a`, after the November documentation changes through #923. It is a targeted semantic follow-up, not a claim that every Markdown file has been re-reviewed line by line.
+
+### Findings and remediation
+
+1. `skills/frameworks/pattern-mapper.md`: the earlier disposition of no change warranted was too broad. Several lines still assigned grief, fear of being a burden, protective functions, or family-history explanations to recurring patterns. PR #915 removes those defaults, separates observable behavior from inferred motive, and makes pattern combinations conditional on independently reported evidence while preserving the parser-consumed `What it looks like` label.
+2. `skills/meta/quick-reference.md`: the AI-identity response instructed the assistant to immediately infer deeper needs from the question. PR #916 now requires a direct answer and limits reflection to feelings or needs explicitly expressed by the user.
+3. `skills/frameworks/grief-companion.md`: PR #917 requires loss or bereavement context before complicated-grief cues apply and removes `abusive` and `toxic relationship` as standalone grief signals. Ongoing harm is directed to relationship-safety guidance.
+4. PR #914 was based on the earlier `b5b0252` main head and was superseded by #917, which was created from the current main head. The older PR was closed as superseded; no changes were merged from it.
+5. `skills/meta/deep-inquiry-bank.md`: several questions presupposed that avoidance, withdrawal, fear, or relationship patterns served a protective function. PR #919 replaces these with neutral questions that let the user define or reject that framing.
+6. `skills/frameworks/life-direction.md`: uncertainty, reluctance, and feeling lost were described with default explanations involving people-pleasing, suppressed wants, or disconnection from a former self. PR #920 qualifies these as possibilities and requires user confirmation.
+7. `.claude/skills/framework-author/SKILL.md`: framework-authoring guidance instructed the writer to ask what an identity question was "really about". PR #921 makes exploration conditional on the user's expressed concern or invitation.
+8. `skills/frameworks/shadow-patterns.md`: some section labels and examples still treated old wounds, worth concerns, or avoidance as default explanations. PR #922 marks these as hypotheses only when supported by the user's account, preserves parser-recognized headings required by detector tests, and removes assumed emotional-withdrawal motives from the descriptive text.
+9. The deterministic AI-identity example in `src/soulmap/devtools/evals/eval_responses.py` still inferred a hidden need even after the Markdown guidance was corrected. PR #923 aligns that evaluation example and its fixture with direct, non-inferential disclosure. This is a cross-surface evaluation fix, not a safety implementation change.
+10. `skills/frameworks/ancestral-patterns.md`: some transition and inquiry language described a parent as the person who passed a wound. PR #924 makes the family connection user-described and keeps transmission or causation unproven.
+11. `skills/meta/deep-inquiry-bank.md` and `skills/meta/redirect-templates.md`: a prompt assumed the user had learned to read others' reactions, and some identity/out-of-scope redirects inferred a wish to be heard or a hidden question. PR #925 makes these prompts direct and optional.
+12. `skills/safety/whitelist-blacklist-system.md`: the harmful-spirituality refusal remains unchanged in substance; PR #926 replaces an "underneath the framework" phrase with a request to describe the concrete situation apart from its spiritual interpretation.
+13. The wider Markdown scan covered all 201 Markdown paths in the current repository tree: 75 under `skills/` and 126 elsewhere. Targeted phrase screening was followed by manual review of flagged excerpts; this was not a line-by-line editorial review of all 201 files. PR #927 updates three public-facing templates where copy implied SoulMap could identify a hidden meaning or assigned motives to readers.
+
+### Verification boundaries
+
+- Each remediation is isolated in a domain-specific pull request.
+- Required CI, Python Compatibility, CodeQL, and P-level safety governance checks must pass on the final PR head before merge consideration.
+- No changes are made to protected safety implementation files or crisis signal constants.
+- The 201-file Markdown screening is a targeted audit, not proof that every sentence has been semantically reviewed. Continue with staged line-level reviews of high-impact domains and cross-reference checks.
+- PRs #915, #924-#927, and #928 were merged only after their required checks succeeded and GitHub reported them mergeable. PR #922 was closed unmerged after its branch was rebased; #918 is the audit-ledger PR and remains subject to final-head checks.
