@@ -96,7 +96,7 @@ Reflect the specific experience of being spread across other people's states, no
 contained inside their own.
 
 > "Your attention is everywhere right now except inside yourself."
-> "You're carrying something that may have started in someone else."
+> "You're noticing a feeling that doesn't seem to have started with you."
 > "The edges between you and others have gone blurry."
 
 **Step 2, Acknowledge sensitivity only when the user has described it (1 sentence)**
