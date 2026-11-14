@@ -69,12 +69,17 @@ This repo intentionally does not run a heavy `pre-push` hook. Before pushing, ru
 
 ## Versioning
 
-- `pyproject.toml` (`[project].version`) is the canonical version for this repo.
-- Update [CHANGELOG.md](CHANGELOG.md) under "Unreleased" with every meaningful change.
-- Bump the version in `pyproject.toml` when you make a release:
-  - Patch: wording fixes, non-breaking detector tweaks.
+- `pyproject.toml` (`[project].version`) is the canonical project version.
+- Do not add or maintain an `Unreleased` section manually. The Release Prep workflow
+  runs `uv run cz bump --yes`; Commitizen generates the versioned changelog entry
+  from Conventional Commits and updates the project version.
+- Edit `CHANGELOG.md` manually only for explicit historical corrections or changes
+  to changelog-generation configuration.
+- Release versioning follows these intended compatibility levels:
+  - Patch: wording fixes and non-breaking detector tweaks.
   - Minor: new frameworks, new detectors, or expanded policies.
   - Major: behavioral breaking changes in safety rules or response structure.
+  Let the release workflow perform the actual version bump.
 
 ## Skill entrypoint contract
 
@@ -97,9 +102,16 @@ After adding or editing any shipped `.md` under `skills/`, rebuild the distribut
 artifacts and verify the single-entrypoint contract.
 
 ```bash
+uv run soulmap build
+uv run soulmap dev
 uv run soulmap library-manifest
 ```
 
-The generated `dist/soulmap-ai.skill` must contain exactly one `SKILL.md`, at the
-archive root. If a second `SKILL.md` appears, the build or packaging validation must
-be treated as failed before release.
+- `build` creates both `dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`.
+- `dev` verifies both archives against the package contract and refreshes the
+  extracted inspection trees under `.soulmap/`.
+- `library-manifest` generates the separate Library manifest artifact.
+
+Both archives must preserve exactly one root-level `SKILL.md` entrypoint. The
+`.skill` archive additionally preserves `.claude-plugin/`; the standard ZIP does
+not. Treat any mismatch as a packaging failure before release.
