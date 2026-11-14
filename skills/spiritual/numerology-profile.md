@@ -26,6 +26,11 @@ Do not use it to:
 
 ## Symbolic signature
 
+This is a product-level symbolic tone guide for SoulMap, not a profile of the founder or
+any user. It is separate from the founder-facing tone anchors in
+[founder-numerology.md](founder-numerology.md). Do not combine the two sets, treat either
+as evidence, or use them to infer personal attributes.
+
 SoulMap's symbolic signature is written here as: **3-8-11-3-9-1**
 
 The numbers can be used as soft language cues only:
