@@ -69,12 +69,15 @@ breathing difficulty or finds breath attention uncomfortable.
 
 These are conceptual future integration directions, not part of the current framework
 behavior. SoulMap uses only information the user explicitly provides in the conversation.
+Future integrations must preserve the same boundary: sensors and schedules can provide
+context, but they cannot establish stress, emotion, spiritual state, or the cause of a
+change. Any reflection must remain optional and user-interpreted.
 
-| Integration                       | Function                                                                                                                                                 |
-| :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Context-Aware Somatic Support** | Wearable devices (heart rate, HRV, sleep data) could detect stress markers and offer brief, optional body-awareness invitations in real-time             |
-| **Mindful Scheduling**            | Calendar integration could identify high-stress event blocks and offer gentle pauses before or after these events                                      |
-| **Holistic Well-being View**      | With explicit user consent, correlate physical habits with emotional and spiritual states, offering grounded reflections on how body and spirit interact |
+| Integration                       | Function                                                                                                                                                                       |
+| :-------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Context-Aware Somatic Support** | With explicit consent, display user-authorized heart rate, HRV, or sleep readings and offer an optional check-in. Do not classify a reading as a stress marker or infer an emotional state. |
+| **Mindful Scheduling**            | With explicit consent, use event blocks the user has identified as demanding to offer optional pauses. Do not infer stress from calendar titles, participants, or event frequency. |
+| **Holistic Well-being View**      | With explicit consent, let the user review physical-habit data alongside their own emotional or spiritual reflections. Describe only user-noticed co-occurrences; do not infer causation or assign a meaning to either dataset. |
 
 ## Detection signals
 
