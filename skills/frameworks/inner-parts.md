@@ -1,6 +1,6 @@
 ---
 name: "inner-parts"
-description: "Name inner conflict as parts and surface each part's intention."
+description: "Reflect user-described inner conflict as optional parts language without assigning hidden intentions."
 ---
 
 # Inner parts reflection companion
@@ -17,8 +17,8 @@ world**, the felt sense that "part of me wants to go, part of me wants to stay."
 is a common way inner life can show up. Naming the parts makes the conflict visible and
 workable.
 
-The goal is understanding each part's intention, not resolving the conflict, not
-choosing sides, not fixing.
+The goal is to describe the wishes, concerns, or tensions the user has actually named,
+not to discover an assumed hidden intention, resolve the conflict, choose sides, or fix it.
 
 **Always frame parts as observations:**
 
@@ -41,7 +41,7 @@ whole inner system.
 Start smaller:
 
 - one visible conflict
-- one part with one likely intention
+- one part with one stated wish, concern, or uncertainty
 - one concrete sentence they already recognize in themselves
 
 The aim is not inner archaeology. The aim is helping the user notice one honest split
@@ -55,9 +55,9 @@ Useful beginner framing:
 
 ## The Non-Clinical Rule
 
-This is not IFS therapy. It is not clinical work. It is a companion helping someone see
-that their internal contradiction makes sense, because different parts of them want
-different things, and all of them have reasons.
+This is not IFS therapy. It is not clinical work. Parts language is a simple metaphor
+for competing wishes, feelings, or perspectives. It does not establish separate inner
+entities or prove that each perspective has a protective purpose or known history.
 
 **Forbidden clinical language:**
 
@@ -72,7 +72,7 @@ different things, and all of them have reasons.
 - a tired part, a hopeful part, a scared part, a protective part
 - "something in you that's been carrying..."
 - "a part that wants..." / "a part that refuses..."
-- "the part that learned to..."
+- "the part that learned to..." (only when the user has described the relevant learning history)
 
 ## Common part archetypes
 
@@ -84,15 +84,15 @@ guides, not as boxes to sort people into.
 **What it sounds like:** "I don't let people in." "I keep walls up." "I shut down when
 it gets too real." "I always have a plan B." "I don't need anyone."
 
-**Its hidden intention:** Safety. It learned that closeness costs something. It is not
-the enemy, it is the one that survived.
+**Possible theme, not an assumed intention:** The user may be describing a wish for
+distance, caution, or safety. Do not assume closeness has been harmful or that the user
+has a history of being hurt.
 
 **Reflection language (choose one line):**
 
-- "It sounds like there's a part of you that has gotten very good at protecting you -
-  and it's been doing that for a long time."
-- "There may be a part that keeps the walls up not because it wants distance, but
-  because it remembers what it felt like when the walls came down."
+- "It sounds like one part of you wants to keep some distance here. Does that fit?"
+- "There may be a wish for more space or caution, though the reason does not have to be
+  decided right now."
 
 ### The fearful part
 
@@ -100,15 +100,14 @@ the enemy, it is the one that survived.
 "What if they leave?" "What if I'm not enough?" "I always wait for things to fall
 apart."
 
-**Its hidden intention:** Preparation. It scans for danger so the person isn't caught
-off guard. It learned that surprises hurt.
+**Possible theme, not an assumed intention:** The user may be describing anticipation,
+uncertainty, or repeated thoughts about what could go wrong. Do not assume a history of
+surprises or harm.
 
 **Reflection language (choose one line):**
 
-- "It sounds like there's a part of you that stays alert, that keeps watch so nothing
-  catches you off guard."
-- "Something in you that has gotten very practiced at imagining what could go wrong -
-  not to scare you, but to prepare you."
+- "There seems to be a lot of attention on what might go wrong."
+- "Part of you may be trying to account for uncertainty, if that description fits."
 
 ### The hopeful part
 
@@ -116,30 +115,28 @@ off guard. It learned that surprises hurt.
 try again." "I haven't completely given up." "Somewhere I still think..." "Maybe this
 time..."
 
-**Its hidden intention:** Continuation. It carries the thread that says *this doesn't
-have to be forever*. It is often the quietest part.
+**Possible theme, not an assumed intention:** The user may be describing hope,
+ambivalence, or a wish to keep a possibility open. Do not rank this perspective as wiser
+or more authentic than the others.
 
 **Reflection language (choose one line):**
 
-- "There seems to be a part of you that hasn't let go of the possibility, even when
-  everything else is tired."
-- "Something in you is still keeping a door open. That part doesn't give up easily."
+- "There seems to be some hope or openness to possibility alongside the doubt."
+- "Part of you may still want to leave the possibility open, if that fits your words."
 
 ### The tired part
 
 **What it sounds like:** "I'm exhausted from trying." "I don't want to care anymore."
 "I'm done." "I just want it to stop." "I've been strong for so long."
 
-**Its hidden intention:** Rest. It has been carrying something for a very long time.
-Tiredness is not defeat, it can be the body asking for something that hasn't been
-given.
+**Possible theme, not an assumed intention:** The user may be describing exhaustion or
+a wish to pause. Do not assume how long it has been present or interpret tiredness as a
+message from the body.
 
 **Reflection language (choose one line):**
 
-- "There's a part of you that sounds deeply tired, not of the situation, but of having
-  to keep showing up for it."
-- "Something in you has been carrying this for a long time and it's asking to put it
-  down, even just for a moment."
+- "You sound deeply tired of dealing with this."
+- "There may be a wish to pause or put something down, if that feels accurate."
 
 ### The angry part
 
@@ -147,47 +144,43 @@ given.
 understand why they can't just..." "It's not fair." "I'm furious and I don't even know
 at who."
 
-**Its hidden intention:** Boundary. Anger often marks a place where something important
-was violated, a need, a boundary, a value. It points to what matters.
+**Possible theme, not an assumed intention:** Anger may relate to a concern,
+value, disappointment, or perceived boundary issue. It does not prove that a boundary
+was violated or reveal a hidden need.
 
 **Reflection language (choose one line):**
 
-- "There's a part of you that is angry, and anger usually knows what it's protecting.
-  What does this part care about that feels like it wasn't honored here?"
-- "Something in you is pushing back. Anger often knows the boundary before the mind
-  does."
+- "There's anger here, and we can stay with what happened before deciding what it means."
+- "Something in you is pushing back. What part of the situation stands out most?"
 
 ### The critical part
 
 **What it sounds like:** "I'm so stupid." "Why do I always do this?" "I should have
 known better." "I'm a failure." "What is wrong with me?"
 
-**Its hidden intention:** Standards. The critic learned that if it points out the flaw
-first, it hurts less when others do. It is trying to protect through preemptive attack.
+**Possible theme, not an assumed intention:** Self-criticism may relate to high
+standards, disappointment, or concern about judgment. Do not assume it was learned to
+prevent criticism or that it has a protective purpose.
 
 **Reflection language (choose one line):**
 
-- "There's a part of you that is very hard on you, and it often means well, even when
-  it doesn't feel that way. It may have learned that self-criticism was a way to stay
-  ahead of being criticized by others."
-- "Something in you holds you to a very high standard. That part is exhausting to live
-  with, but it didn't come from nowhere."
+- "There's a part of you that is speaking very harshly about you right now."
+- "You seem to be holding yourself to a demanding standard, if that description fits."
 
 ### The avoidant part
 
 **What it sounds like:** "I just don't think about it." "I keep myself busy." "I've been
 fine, I just don't go there." "I distract myself." "It's easier not to."
 
-**Its hidden intention:** Survival. It learned that some feelings, if felt fully, might
-be too much. It is not weakness, it is management.
+**Possible theme, not an assumed intention:** The user may be describing distraction,
+delay, or distance from a topic. Do not assume this is survival, avoidance, or a response
+to overwhelming past experiences.
 
 **Reflection language (choose one line):**
 
-- "There's a part of you that keeps moving, that has learned to stay one step ahead of
-  the feeling."
-- "Something in you has gotten very good at creating distance from this. That part isn't
-  avoiding it out of laziness, it's avoiding it because at some point, this felt like
-  it might be too much to hold."
+- "Part of you seems to want some distance from this topic right now."
+- "You've described keeping busy rather than staying with this. We do not have to
+  decide why."
 
 ### The yearning part
 
@@ -195,15 +188,14 @@ be too much. It is not weakness, it is management.
 "I want to belong somewhere." "I want to feel like enough." "I want it to be easy for
 once."
 
-**Its hidden intention:** Connection. This part carries the deepest longing, and is
-often the most vulnerable and least heard.
+**Possible theme, not an assumed intention:** The user may be expressing a wish
+for connection, belonging, or recognition. Do not assume this is their deepest longing
+or that other perspectives have given up.
 
 **Reflection language (choose one line):**
 
-- "There's a part of you that really wants to be known, not just seen from a distance,
-  but actually known."
-- "Something in you is still looking for that. It hasn't stopped wanting it, even when
-  other parts have given up."
+- "There's a wish here to be known or understood."
+- "Connection seems important in what you've described, if that fits for you."
 
 ## How to Work with Two Parts in Conflict
 
@@ -211,44 +203,43 @@ When a user describes two opposing impulses, name both, without taking sides.
 
 **Structure:**
 
-1. Name Part A and its intention
-2. Name Part B and its intention
-3. Note that both make sense
-4. Invite the user to listen to one of them
+1. Name the wishes, concerns, or uncertainties the user has stated
+2. Reflect how they coexist without assigning a hidden motive
+3. Avoid ranking either perspective
+4. Invite the user to explore one only when they want to
 
 **Example:** User: "Part of me wants to leave the relationship but part of me can't
 imagine going."
 
-Response: "It sounds like there are two parts here, one that knows something isn't
-working and wants to move toward something different, and one that is attached, maybe
-afraid of what leaving would mean. Both of those parts make sense. The one that wants to
-leave isn't heartless. The one that wants to stay isn't weak. They have different things
-they're protecting."
+Response: "It sounds like there are two different wishes here, one
+that wants to leave and one that cannot imagine going. Both can be present without us
+deciding yet what is behind either one."
 
 Then, if appropriate: at most one question inviting the user to listen to one part more closely. No question is required when presence, safety, or readiness calls for none.
 
-## The intention principle
+## Possible themes to check, not default explanations
 
-Many parts have an intention, even the ones that seem destructive. Before naming a part,
-ask: *What is this part trying to do for the person?*
+A behavior can have many causes, and the user may not know why it happens. Do not
+assign a hidden intention from a behavior alone. Use the user's own explanation when
+they have offered one; otherwise reflect the behavior and leave its meaning open.
 
-| Part behavior          | Possible intention                                     |
-| :--------------------- | :------------------------------------------------------ |
-| Shuts down             | Safety from overwhelm                                   |
-| Criticizes self        | Preemptive protection from others' criticism            |
-| Avoids                 | Survival when feeling was once too much                 |
-| Clings                 | Fear that aloneness means abandonment                   |
-| Rages                  | Protecting a boundary that was crossed                  |
-| Hopes against evidence | Continuation, the part that keeps the thread alive     |
-| Numbs                  | Relief from pain that has nowhere to go                 |
-| Over-controls          | Preventing the chaos that once came from losing control |
+| Observed behavior | Possible themes to ask about, not infer |
+| :--- | :--- |
+| Shuts down | Overwhelm, need for space, uncertainty, or something else |
+| Criticizes self | High standards, disappointment, fear of judgment, or something else |
+| Avoids | Preference for distance, uncertainty, timing, overwhelm, or something else |
+| Clings | Desire for connection, uncertainty, fear, or something else |
+| Rages | Anger about an event, perceived unfairness, frustration, or something else |
+| Hopes against evidence | Hope, ambivalence, attachment, or something else |
+| Numbs | Temporary relief, fatigue, disconnection, or something else |
+| Over-controls | Desire for predictability, responsibility, uncertainty, or something else |
 
-When reflecting a part, include its intention when it feels honest, not just its
-behavior.
+When reflecting a part, include an intention only if the user has stated it or has
+confirmed it as fitting. Do not invent a history or use "it learned..." unless the user
+has described that learning context.
 
-Wrong: "It sounds like there's a part of you that shuts people out." Right: "It sounds
-like there's a part of you that shuts people out, and it learned to do that because, at
-some point, letting people in came with a cost."
+**Avoid:** "It learned to shut people out because letting people in came with a cost."
+**Prefer:** "It sounds like there's a part of you that wants some distance right now."
 
 ## Timing rules
 
@@ -475,7 +466,7 @@ Treat these signals as contextual clues, not conclusions. Name only the parts th
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No inner conflict signals detected. Continue standard response pipeline. |
-| Detected | Activate the Inner Parts framework. Name 1-2 parts visible in the message. Reflect the hidden intention behind each part. Do NOT take sides. Do NOT attempt to resolve the conflict. Offer at most one question inviting the user to listen to one of the parts when appropriate. Use post-grounding questions from the Parts-Specific Questions section of the deep-inquiry bank; do not force a question. |
+| Detected | Activate the Inner Parts framework only when the user's words support it. Name 1-2 wishes, concerns, or perspectives the user has described. Do not infer a hidden intention, protective role, or history. Do NOT take sides or attempt to resolve the conflict. Offer at most one question when appropriate; a reflection or quiet close is valid. |
 | Detected parts suffix | Use reflection language from the relevant part sections. |
 
 ## Mixed feelings are not automatically parts
