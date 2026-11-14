@@ -13,7 +13,7 @@ of SoulMap releases. The front matter declares the package compatibility and
 canonical doctrine source; platform-specific facts must be checked against
 current official documentation before each deployment.
 
-**Lifecycle review date:** 2026-11-13.
+**Lifecycle review date:** 2026-11-14.
 
 ## Build the distribution artifacts first
 
@@ -26,15 +26,21 @@ uv run soulmap dev              # verify and extract both
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
 
-Claude's upload flow expects a ZIP file. Make a copy of
-`dist/soulmap-ai.skill` named `soulmap-ai-claude-upload.zip`, preserving its
-contents, then upload that ZIP through Claude's Skills interface.
+Claude's upload flow expects a ZIP containing a named Skill folder. The generated
+`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill` both place files directly at archive
+root, so neither is a direct Custom Skills upload bundle. Extract the standard ZIP into
+a folder named `soulmap-ai/` (matching the `name` in `SKILL.md` frontmatter). In that
+Claude.ai staging copy only, rename `SKILL.md` to lowercase `skill.md`; keep the
+repository's canonical `SKILL.md` unchanged. Anthropic's Help Center specifies
+`skill.md` for Claude.ai Custom Skills, while the Claude API uses `SKILL.md` for its
+separate upload workflow. ZIP the folder as the single top-level entry and upload that ZIP through Claude's
+Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
 
 ## ChatGPT (Custom GPT, legacy transition)
 
 **Legacy platform path.**
 
-As of 2026-11-13, new GPT creation and publishing are unavailable on personal
+As of 2026-11-14, new GPT creation and publishing are unavailable on personal
 ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
 be editable when the account, plan, and permissions allow it. New creation is
 also restricted in affected managed workspaces.
@@ -70,10 +76,9 @@ into the **Instructions** field.
 ### Upload knowledge files
 
 Extract `dist/soulmap-ai.zip` first, then upload the selected Markdown files
-individually. OpenAI's general upload article lists up to 20 knowledge files per GPT,
-while its File Uploads FAQ still lists 10. Because the official pages conflict and
-Custom GPTs are retiring, verify the live builder's limit rather than relying on a
-hard-coded count.
+individually. OpenAI's current GPT documentation lists up to 20 knowledge files per
+GPT. Because Custom GPTs are being retired and account/workspace availability varies,
+verify the live builder and migration notice before relying on this legacy path.
 
 Priority files:
 
@@ -210,7 +215,11 @@ When a new SoulMap release ships:
 1. Run `uv run soulmap build` to rebuild artifacts.
 2. For ChatGPT, update only GPTs that remain editable; review migration
    requirements before the 2026-12-11 retirement date.
-3. For Gemini personal accounts, update the Skill rather than the retired Gem;
-   use the Google transition workflow for knowledge files.
+3. For personal Google accounts aged 18 or older, Gems become read-only when the
+   transition begins on 2026-11-17 and are removed on 2026-12-17. Use Google's
+   migration workflow; work and school account transitions are scheduled for 2027.
 4. For Poe, update the system prompt and optional knowledge base.
-5. For Claude, re-upload the `.skill` file through the supported Skills flow.
+5. For Claude.ai Custom Skills, rebuild the named-folder ZIP from the standard archive
+   and use lowercase `skill.md` in the staging copy; keep the repository's canonical
+   `SKILL.md` unchanged. Do not rename the root-level `.skill` archive and assume it
+   is directly uploadable. The Claude API uses the separate uppercase `SKILL.md` format.
