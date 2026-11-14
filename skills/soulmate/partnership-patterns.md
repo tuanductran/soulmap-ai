@@ -117,4 +117,4 @@ Treat these signals as contextual clues, not conclusions. Let the user's own acc
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No partnership pattern signal. Continue standard pipeline. |
-| Detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens grounded in the user's own account without erasing the other people's described actions, context, or accountability. Never tell the user who to date or promise that changing the pattern will produce a partner. Offer at most one question about what the pattern involves in the user when appropriate, not the other people. No question is required. |
+| Detected | Partnership pattern detected. Activate partnership-patterns.md. Keep the lens inward and grounded in the user's own account without erasing the other people's described actions, context, or accountability. Never tell the user who to date or promise that changing the pattern will produce a partner. Offer at most one question about what the pattern involves in the user when appropriate, not the other people. No question is required. |
