@@ -13,7 +13,7 @@ of SoulMap releases. The front matter declares the package compatibility and
 canonical doctrine source; platform-specific facts must be checked against
 current official documentation before each deployment.
 
-**Lifecycle review date:** 2026-11-13.
+**Lifecycle review date:** 2026-11-14.
 
 ## Build the distribution artifacts first
 
@@ -26,15 +26,21 @@ uv run soulmap dev              # verify and extract both
 
 **Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
 
-Claude's upload flow expects a ZIP file. Make a copy of
-`dist/soulmap-ai.skill` named `soulmap-ai-claude-upload.zip`, preserving its
-contents, then upload that ZIP through Claude's Skills interface.
+Claude's upload flow expects a ZIP containing a named Skill folder. The generated
+`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill` both place files directly at archive
+root, so neither is a direct Custom Skills upload bundle. Extract the standard ZIP into
+a folder named `soulmap-ai/` (matching the `name` in `SKILL.md` frontmatter). In that
+staging copy, keep `SKILL.md` at the folder root. Anthropic's Help Center currently
+says `skill.md`, while its platform docs and technical guide specify `SKILL.md`; because
+the official sources conflict, verify the live uploader rather than renaming the
+canonical file. ZIP the folder as the single top-level entry and upload that ZIP through
+Claude's Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
 
 ## ChatGPT (Custom GPT, legacy transition)
 
 **Legacy platform path.**
 
-As of 2026-11-13, new GPT creation and publishing are unavailable on personal
+As of 2026-11-14, new GPT creation and publishing are unavailable on personal
 ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
 be editable when the account, plan, and permissions allow it. New creation is
 also restricted in affected managed workspaces.
@@ -213,4 +219,7 @@ When a new SoulMap release ships:
 3. For Gemini personal accounts, update the Skill rather than the retired Gem;
    use the Google transition workflow for knowledge files.
 4. For Poe, update the system prompt and optional knowledge base.
-5. For Claude, re-upload the `.skill` file through the supported Skills flow.
+5. For Claude, rebuild the named-folder ZIP from the standard archive and upload it
+   through the supported Custom Skills flow; do not rename the root-level `.skill`
+   archive and assume it is directly uploadable. Verify the `SKILL.md`/`skill.md`
+   casing requirement against the live uploader.
