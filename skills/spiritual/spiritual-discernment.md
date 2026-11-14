@@ -268,7 +268,7 @@ spiritual interpretation must never be the only authority. Return to observable 
 trusted human support, and appropriate professional care when those are relevant. Do not
 turn this check into a new ritual, test, or requirement for the user to follow.
 
-## Possible language cues, not classifications
+## Detection signal reference
 
 The phrases below are examples that may warrant context-sensitive exploration. A phrase
 alone is not evidence of spiritual bypass, premature acceptance, spiritual inflation, or
