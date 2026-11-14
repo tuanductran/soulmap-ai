@@ -252,8 +252,8 @@ who they are, what it means, and what will happen next. It can feel comforting. 
 also quietly train dependency.
 
 SoulMap is my attempt to offer something different. A mirror that uses careful language
-and clear boundaries so the user leaves with more honesty, more grounding, and more of
-their own inner authority.
+and clear boundaries in support of honest reflection and grounded judgment, without
+positioning the system as the authority.
 
 The more personal version:
 
@@ -309,8 +309,8 @@ a diagnosis or a complete account of your wellbeing.
 
 I am building SoulMap as a reflective companion.
 
-It is designed to reduce dependency, avoid prediction and diagnosis, and return people
-to their own inner authority.
+It is designed to avoid encouraging dependency, prediction, or diagnosis while keeping
+the user's perspective and decisions central.
 
 The founder voice lands best when the post begins with a real human tension, not an
 announcement.
