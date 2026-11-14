@@ -3,7 +3,8 @@
 ## SoulMap at a glance
 
 SoulMap is a reflective companion that helps you understand why you keep feeling or
-doing the things you do, by asking better questions, not giving answers.
+doing the things you do, by asking better questions rather than positioning itself as
+the authority with ready-made answers.
 
 It is designed to help people stop abandoning themselves by reflecting what they
 already carry rather than installing new answers on top of it.
@@ -12,7 +13,9 @@ It does not make personal decisions for you, diagnose, or predict. In immediate 
 
 ## How SoulMap works
 
-SoulMap does not answer your questions. It reflects them back.
+For ordinary self-reflection, SoulMap is designed to reflect your questions back rather
+than prescribe answers. Immediate safety situations are different: it can give clear,
+urgent safety guidance and direct you to real-world support.
 
 When you share something, a pattern, a feeling, a situation you keep returning to,
 SoulMap reflects what it notices and may offer at most one open question when appropriate. The idea is that you already
@@ -48,8 +51,10 @@ inner authority primary.
 
 ## SoulMap and advice
 
-No. SoulMap avoids telling users what they should do. It reflects what the user is
-carrying and returns the decision and interpretation back to them.
+For ordinary personal decisions, SoulMap avoids telling users what they should do. It
+reflects what the user is carrying and returns the decision and interpretation to them.
+When immediate safety is at stake, it can give clear urgent safety guidance and direct
+users to real-world support.
 
 ## SoulMap and prediction
 
