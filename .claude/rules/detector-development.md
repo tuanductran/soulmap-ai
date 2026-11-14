@@ -11,9 +11,13 @@ Use these conventions when writing or extending Python detector modules.
 
 ## Module structure
 
-Detector modules should follow the established local pattern, but the public callable and result semantics are detector-specific. Use the closest existing detector as the template rather than imposing a universal interface.
+Detector modules should follow the established local pattern, but the public callable,
+input shape, and result semantics are detector-specific. Use the closest current,
+non-safety detector as the template rather than imposing a universal interface.
 
-For example, dependency detection exposes `analyze_dependency()` and returns dependency-specific levels. Crisis detection has its own safety contract.
+For example, dependency detection exposes `analyze_dependency()` and returns
+dependency-specific levels. Other detectors may return a different structure. Crisis
+detection is a protected safety path and is not a template for ordinary detector work.
 
 A common CLI shape is:
 
@@ -68,10 +72,15 @@ if __name__ == "__main__":
 - Start with docstring describing purpose
 - Use `from __future__ import annotations` for forward compatibility
 - Import from `soulmap.runtime.io.cli_payload` for stdin/stdout handling
-- Import runtime policy from `soulmap.runtime.knowledge.runtime_config`
-- Define type hints using `HistoryMessage = dict[str, str]`
-- Name the main function descriptively, for example `analyze_dependency` or
-  `detect_crisis`
+- Read the current detector and its tests before choosing imports, payload helpers,
+  types, or a public callable; the example above is illustrative, not a required
+  module template.
+- Import Python-owned executable policy from
+  `soulmap.runtime.knowledge.runtime_config` only when the detector needs it.
+- Use the repository's established message/history types and validation helpers
+  rather than introducing a parallel payload contract.
+- Name the public function for its actual behavior, for example
+  `analyze_dependency` or `detect_grief`.
 
 ## Scoring methods
 
@@ -148,20 +157,25 @@ score = min(score, _RULES["Maximum score"])
 
 ### Framework selector integration
 
-Add your detector to the framework selection chain in
-`src/soulmap/runtime/routing/framework_selector.py`:
+Do not add a detector by copying or editing the crisis branch. Crisis detection
+and its independent safety-gate recheck are protected paths.
 
-```python
-def select_framework(conversation_messages: list) -> str:
-    # ... existing priority checks ...
+For a new ordinary framework detector, inspect the current integration points before
+changing anything:
 
-    # Your detector here
-    crisis_result = crisis_detector.<crisis_detector_callable>(conversation_messages)
-    if <crisis-tier-1-condition>:
-        return "CRISIS"
+- the detector imports and execution phase in
+  `src/soulmap/runtime/routing/framework_selector.py`
+- the semantic framework binding in `_PRIMARY_DETECTOR_BINDINGS` (or the relevant
+  secondary binding)
+- the priority row in `skills/meta/orchestration.md` and its Python-owned executable
+  counterpart in `ORCHESTRATION_CONFIG`
+- numeric thresholds and weights in `DETECTOR_CONFIG`, when needed
+- the canonical Markdown source and `source_registry.py` mapping when the detector
+  loads knowledge from a registered skill section
+- framework template mapping and routing/evaluation coverage, where applicable
 
-    # Continue with other detectors
-```
+Preserve the existing order of safety short-circuits and selector phases. Do not
+introduce a second source of truth for priority, numeric policy, or semantic signals.
 
 ### CLI tool integration
 
@@ -276,6 +290,6 @@ if not user_messages:
 **Rules**:
 
 - Preserve the detector's established result contract and handle malformed input gracefully
-- Use `print_json_error()` for error messages to stdout
-- Return "NO_DATA" level when input is insufficient
-- Test edge cases: empty lists, malformed objects, missing fields
+- Use `print_json_error()` for CLI error payloads when the module exposes a CLI.
+- Preserve detector-specific no-input behavior rather than imposing a universal level.
+- Test malformed inputs and boundary cases covered by the detector's contract.
