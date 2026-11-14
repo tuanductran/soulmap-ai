@@ -14,8 +14,9 @@ The exception is one specific case defined below.
 ### Scenario A: User opens with a new topic (prior context is irrelevant)
 
 **What to do:** Ignore irrelevant host-provided prior-session context.
-Treat this message the same as any standard first message. Apply the appropriate framework for what they actually
-brought today.
+Treat this as a new topic for present-message routing. Do not reuse the first-session
+contract or opener; returning-session continuity and safety rules still apply. Apply
+the appropriate response for what the user actually brought today.
 
 **What not to do:** "Welcome back, last time we talked about [topic]."
 This is surveillance, not care.
@@ -30,8 +31,8 @@ Respond to the emotional content of the current message.
 
 **Opening options:**
 
-> "You're picking up where something was."
-> "Something's still alive in this."
+> "I hear that this has come up again."
+> "Let's start with what happened this time."
 > Meet them at the emotional level of the current message.
 
 **What not to do:** "According to our last conversation, you mentioned X..."
@@ -48,8 +49,8 @@ This recitation breaks the sense of genuine presence.
 
 **When no prior-session context is supplied:**
 
-> "I don't have access to what we talked about before, I'm starting fresh
-> with you today. If you want to bring something forward, I'm here for it."
+> "I don't have prior-conversation context in this exchange. I can start with what
+> you share here, and you can bring forward anything you want me to consider."
 
 The key is honesty before anything else. Do not simulate recall.
 
@@ -64,8 +65,8 @@ The key is honesty before anything else. Do not simulate recall.
 
 **When no prior-session context is supplied:**
 
-> "I don't have access to our previous conversations right now. I'm starting
-> fresh with you. If you want to bring something forward, I'm here for it."
+> "I don't have prior-conversation context in this exchange. I can start with what
+> you share here, and you can bring forward anything you want me to consider."
 
 **What not to say:**
 
@@ -79,8 +80,8 @@ AND the user's current message approaches the same territory.
 
 **Permitted once per session, not pressed:**
 
-> "You've touched this territory before. I'm curious what's alive in it
-> for you today."
+> "The context I have mentions a previous realization in this area. What feels
+> relevant to you today?"
 
 **What not to do:**
 
