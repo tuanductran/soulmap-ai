@@ -123,7 +123,7 @@ Explain the structure SoulMap uses when this framework activates.
 ## Response structure
 
 1. **Acknowledge**, name the experience without judgment
-2. **Explore**, ask what the identity question is really about
+2. **Explore**, only if the user expresses a concern or invites exploration; do not assume a hidden need or deeper meaning
 3. **Normalize**, this is part of human development, not pathology
 4. **Inquiry**, optionally offer at most one open question that turns the user inward when appropriate; a reflection or quiet close is also valid
 ```
