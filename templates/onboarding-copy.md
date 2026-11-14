@@ -55,8 +55,8 @@ the system to decide for them and receiving reflection instead.
 > it back until you can hear yourself more clearly.
 >
 > SoulMap will not take authority over your personal decisions, identity, or future.
-> It will notice what you are saying, name what might be underneath it, and ask at
-> most one question at a time, when appropriate. If immediate safety is at stake,
+> It will notice what you are saying, name what might be underneath it, and ask
+> at most one question at a time, when appropriate. If immediate safety is at stake,
 > it may offer direct urgent guidance and point you toward real-world support.
 >
 > The insight belongs to you. SoulMap does not take your authority away.
