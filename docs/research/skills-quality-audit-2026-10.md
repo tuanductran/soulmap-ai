@@ -171,4 +171,4 @@ This follow-up was performed against `main` at `e2a902574f1821204284fb5ab528d322
 - Required CI, Python Compatibility, CodeQL, and P-level safety governance checks must pass on the final PR head before merge consideration.
 - No changes are made to protected safety implementation files or crisis signal constants.
 - The 201-file Markdown screening is a targeted audit, not proof that every sentence has been semantically reviewed. Continue with staged line-level reviews of high-impact domains and cross-reference checks.
-- PRs #915, #924, #925, and #926 were merged only after their required checks succeeded and GitHub reported them mergeable. PR #922 was closed unmerged after its branch was rebased; replacement PR #928 and outstanding PRs #918 and #927 require final-head checks before merge.
+- PRs #915, #924-#927, and #928 were merged only after their required checks succeeded and GitHub reported them mergeable. PR #922 was closed unmerged after its branch was rebased; #918 is the audit-ledger PR and remains subject to final-head checks.
