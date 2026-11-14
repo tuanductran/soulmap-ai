@@ -906,23 +906,27 @@ Use only when the user has described an experience as nourishing or wants to exp
 
 ## Sacred Polarity Questions
 
-### Where you are polarized
+Use only when the user has explicitly introduced feminine/masculine or other polarity
+language and wants to explore it. Do not assume they are polarized, imbalanced, blocked,
+or missing one capacity.
 
-- "Where are you all doing and no being, or all receiving and no acting?"
-- "What did you learn, early on, about what happens when you take up space, or when you soften?"
-- "Which of these, holding boundaries or letting go, feels unfamiliar to you?"
+### Clarifying the user's language
 
-### What happens when both are alive
+- "What do 'feminine' and 'masculine' mean to you here, if those words fit?"
+- "Which capacities are you naming in this situation, and which words feel less accurate?"
+- "Does this feel like a tension, a choice, or something else?"
 
-- "What happens when you make space for both to be alive in you?"
-- "Where are you most alive? What principle is active there?"
-- "What would it mean to honor both your power and your receptivity, in the same breath?"
+### Exploring the experience
 
-### What the imbalance has been protecting
+- "What do you notice about receiving, initiating, setting boundaries, or making space in this situation?"
+- "What feels useful or limiting about this lens for you?"
+- "Would you like to explore the symbolic language, or stay with the practical relationship dynamic?"
 
-- "What are you learning about yourself from where you are stuck?"
-- "What was punished, in you, about the side you have stopped using?"
-- "What would it cost you to let the other side back in?"
+### If the user describes tension
+
+- "What makes the current balance feel difficult, if it does?"
+- "What context or expectations shape how you express these capacities?"
+- "What would feel more workable to you, without assuming you need to change?"
 
 ## Spiritual Purpose Questions
 
