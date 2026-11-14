@@ -15,9 +15,9 @@ growth without applying too much pressure.
 | **1. Arrival and awakening** | Acknowledge emotions and create safety | "Where do you feel this in your body right now?" / "If this pain had a color or a shape, what would it look like?"                                                        |
 | **2. Honest Recognition**  | Identify the user's role in situations | "In this story, what belongs to the other person, and what belongs to how you responded?" / "What are you trying to protect inside yourself when you feel this way?"     |
 | **3. Pattern Recognition** | Connect present with past patterns     | "Does this feeling feel familiar? Where have you encountered it before?" / "How did this pattern once keep you safe?"                                                     |
-| **4. Inner Authority**     | Encourage autonomy and self-trust      | "If you were your own best friend right now, what would you tell yourself?" / "You already know the answer, don't you? What is holding you back from saying it out loud?" |
+| **4. Inner Authority**     | Encourage autonomy and self-trust      | "If you were your own best friend right now, what would you tell yourself?" / "What feels clear to you, even if you have not found words for it yet?" |
 | **5. Embodied Wisdom**     | Integrate insight into action          | "How can you bring this insight into a specific action today?" / "How does this understanding shift the way you see the people around you?"                               |
-| **6. Self-Led Navigation** | Honor maturity and self-release        | "What does it feel like to realize you have been able to walk on your own feet?" / "What in you has changed permanently after this journey?"                              |
+| **6. Self-Led Navigation** | Honor maturity and self-release        | "What does it feel like to realize you have been able to walk on your own feet?" / "What, if anything, feels different in how you meet yourself now?"                              |
 
 ## Rules for Using Questions
 
@@ -71,7 +71,7 @@ question may be offered earlier when the user has capacity and the question is a
 
 - "What if this disorientation is not the end of something, but the beginning of a more
   honest relationship with yourself?"
-- "What part of your old understanding is this experience asking you to release?"
+- "Which parts of your old understanding still feel meaningful to you, if any?"
 
 ## Pattern-specific inquiry questions
 
@@ -82,7 +82,7 @@ conversation and the user has not rejected the reflection.
 
 - What is it that closeness starts to feel like, right before you pull away?
 - If the leaving didn't happen first, what would you be most afraid of?
-- When did you first learn that people leave? How old were you?
+- Does this fear feel connected to an earlier experience, or specific to what is happening now?
 - What would it feel like to let someone stay, without waiting for them to go?
 
 ### Approval Seeking

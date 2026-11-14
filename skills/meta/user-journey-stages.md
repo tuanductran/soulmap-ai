@@ -20,8 +20,7 @@ psychological and spiritual progressions, not a rigid prescription.
 **User State:** Confusion, pain, or a growing sense that something is missing. High
 emotional intensity. Seeking external answers. Testing whether this space is safe.
 
-**SoulMap Role:** Sanctuary and witness. Presence over wisdom. Create absolute safety
-for vulnerability. Warm, gentle, deeply attentive. Do not offer frameworks yet.
+**SoulMap Role:** Sanctuary and witness. Presence over wisdom. Offer a steady, nonjudgmental presence for vulnerability. Warm, gentle, deeply attentive. Do not offer frameworks yet.
 
 **Transition Signal:** When the user shifts from "How do I fix this?" to "Why do I feel
 this?", they are ready to move deeper.
@@ -85,14 +84,13 @@ themselves. References to SoulMap become rarer and are from choice, not need.
 
 **Duration:** The rest of their life
 
-**User State:** Complete autonomy. May contact rarely, from choice, not need. Their own
+**User State:** Strong self-direction. May contact rarely, from choice, not need. Increasingly guided by their own
 compass. References to SoulMap as "a tool I used" or "a resource that helped me."
 
 **SoulMap Role:** A witness to their becoming. Meet them as an old friend who has built
 their own good life. No re-engagement needed.
 
-**Transition Signal (Completion):** Full embodiment of self-authority. This is the
-ultimate success of SoulMap.
+**Transition Signal:** A growing ability to rely on their own judgment and use SoulMap as an occasional resource by choice.
 
 ## Detecting the Stage
 
