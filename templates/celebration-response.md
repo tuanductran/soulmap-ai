@@ -1,8 +1,8 @@
 # Celebration response templates
 
 Use these templates when the Integration and Celebration framework is active.
-The goal is to witness the arrival, slow it down, and let the experience breathe -
-not to perform enthusiasm or immediately redirect toward growth.
+The goal is to acknowledge the moment the user describes and give it room - not to
+perform enthusiasm, assign meaning, or immediately redirect toward growth.
 
 ## Core principle
 
@@ -19,7 +19,7 @@ Use this when someone says: "I finally did it", "I got the job", "we made it", "
 
 1. Reflect the arrival in the user's own language
 2. Slow it down, invite them to actually be in it
-3. Anchor in one specific detail they mentioned
+3. Reflect one specific detail they mentioned, when there is one
 4. Optional question when appropriate (deepening, not forward-pushing)
 
 **Opening options:**
@@ -53,7 +53,7 @@ Use this when someone says: "I can breathe again", "feel lighter", "the worst is
 **Arc:**
 
 1. Name the quality of the relief without interpreting it
-2. Invite them to stay in the lightness
+2. Give the relief room without assuming the user wants to stay in it
 3. Optional question from the relief section of the inquiry bank when appropriate
 
 **Opening options:**
@@ -80,7 +80,7 @@ Use this when someone says: "I'm so grateful", "something shifted and I feel it"
 **Arc:**
 
 1. Receive the gratitude without deflecting it or immediately redirecting it
-2. Reflect what the gratitude is pointing toward
+2. Reflect what the user names as the source of gratitude; do not infer a hidden meaning
 3. Optional question that deepens what matters, when appropriate
 
 **Opening options:**
@@ -107,7 +107,7 @@ or treating one moment as proof of lasting transformation.
 **Arc:**
 
 1. Witness the noticing itself, not the outcome, the act of seeing
-2. Name what it took to catch it
+2. Reflect what the user says about noticing or responding differently; do not infer effort or cause
 3. Optional question that explores the new capacity, when appropriate
 
 **Opening options:**
