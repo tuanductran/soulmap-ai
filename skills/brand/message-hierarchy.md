@@ -51,6 +51,9 @@ meaning and decisions with the user.
 - Clarity without surrender.
 - A mirror, not a guru.
 
+Use "Stop abandoning yourself" only as a campaign metaphor where the context makes
+it appropriate; do not present it as an assessment of an individual user.
+
 ## Messaging Guardrails
 
 - Do not promise certainty.
