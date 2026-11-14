@@ -17,8 +17,9 @@ cases, writing framework assertions, validating source markers, and running eval
 
 ## Mission
 
-The eval suite (`evals/datasets/`) is the executable source of truth for what behavior
-SoulMap must exhibit. This skill maintains that source of truth by:
+The eval suite (`evals/datasets/`) is an executable verification contract for the
+behavior defined by `SOULMAP.md` and the canonical knowledge files. This skill keeps
+those checks source-backed and aligned by:
 
 - Adding new test groups that represent real user inputs
 - Writing clear framework expectations backed by source documentation
