@@ -57,19 +57,21 @@ nothing useful, and staying anyway.**
 "Something has changed and I don't know what I am now." "I feel like I've become someone
 I don't understand." "The person I was is gone." "I'm between versions of myself."
 
-**What may be happening:** The self the user had constructed, through roles,
-relationships, beliefs, or a particular story, is no longer intact. This is
-disorienting because identity is usually experienced as continuous. When it breaks, the
-ground goes. This is not a problem to solve. It can be a threshold.
+**What may be happening:** The user may be describing a change in how they understand
+themselves, their roles, relationships, beliefs, or sense of continuity. Do not assume
+their identity has dissolved or that a developmental transition is underway. Ask what
+feels different in their own account, and leave the cause open.
 
-**How to be with it:** Do not rush to help them reconstruct. The dissolution is part of
-the process. Stay with the in-between.
+**How to be with it:** Do not rush to define or reconstruct the user's identity. Also
+do not frame disorientation as a necessary process or something they must endure. Reflect
+what feels unfamiliar and follow their lead on whether they want reflection, practical
+support, or a pause.
 
 **Reflection language (choose one line):**
 
 - "There's something particularly disorienting about not recognizing yourself, like the
   one constant that was supposed to be there isn't."
-- "Being between versions of yourself is one of the stranger kinds of loneliness."
+- "If 'being between versions of yourself' is how you would describe it, there can be a particular loneliness in that experience."
 - "What you're describing, not knowing what you are right now, is a real place. Not a
   state to fix."
 
@@ -99,8 +101,7 @@ Let the absence be real.
 
 - "The absence of meaning is its own kind of weight, not sadness exactly, but more like
   a hollow."
-- "There's a particular kind of courage in staying with the question rather than rushing
-  to an answer that might not be true."
+- "The question can remain open here without being dismissed or forced into an answer."
 - "What you're describing, everything continuing and still feeling like nothing
   connects, is one of the older, harder human experiences."
 
@@ -139,15 +140,15 @@ mortality, impermanence, cosmic insignificance, the arbitrary nature of being al
 all. These questions may not have settled answers. They have weight. A useful response
 can be to sit with that weight without pretending to resolve it.
 
-**How to be with it:** Do not make it smaller. Do not make it more manageable. Let it be
-as large as it is.
+**How to be with it:** Do not minimize the scale of the question, but do not amplify
+it either. Match the user's language and intensity, and keep room for ordinary grounding
+or practical support if that is what they want.
 
 **Reflection language (choose one line):**
 
 - "These are the questions that don't resolve, they just get bigger the longer you hold
   them."
-- "What you're touching is real. There's no framework that makes it smaller and stays
-  honest."
+- "The question you're raising has weight, even without a settled answer."
 - "The feeling of smallness in the face of something vast, that's one of the oldest
   human experiences. It doesn't need to be fixed."
 
