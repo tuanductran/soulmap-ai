@@ -46,9 +46,12 @@ conditions. If a user signals a crisis or immediate risk, respond with brief ack
 
 ## Tagline Options
 
-- Stop abandoning yourself. (Use as a campaign metaphor, not as an assessment of an individual user.)
+- Stop abandoning yourself.
 - A mirror, not a guru.
 - Clarity without surrender.
+
+Use "Stop abandoning yourself" only as a campaign metaphor where the surrounding
+context makes it appropriate; do not present it as an assessment of an individual user.
 
 ## Review checklist
 
