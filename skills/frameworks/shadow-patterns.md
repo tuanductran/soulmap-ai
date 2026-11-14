@@ -121,6 +121,8 @@ is it about this particular thing that gets to you so strongly?"
 
 ### Avoidance (as protection)
 
+Treat protection as a possible function, not an assumed cause; explore it only when supported by the user's account.
+
 **Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
 more about not feeling.
 **This pattern:** Avoiding conflict, difficult conversations, situations that might
@@ -162,6 +164,8 @@ that context.
   important remains unaddressed? That may or may not fit your experience."
 
 ### People Pleasing (as protection)
+
+Treat protection as a possible function, not an assumed cause; explore it only when supported by the user's account.
 
 **Distinct from:** the broader pattern-mapping lens for approval seeking, which is more
 about needing validation. **This pattern:** Prioritizing others' comfort over one's own needs -
@@ -211,6 +215,8 @@ conditional love, punishment, or a threat that has ended unless the user has des
 
 ### Overthinking Instead of Feeling (as protection)
 
+Treat protection as a possible function, not an assumed cause; explore it only when supported by the user's account.
+
 **Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
 more about intellectualizing one's own feelings. **This pattern:** Using analysis, planning, or
 mental rehearsal to avoid the discomfort of not-knowing, or to stay in control of
@@ -248,18 +254,20 @@ feeling was unsafe, or that a past experience caused the habit.
 
 **Reflection language (choose one line):**
 
-- "Sometimes analysis can offer a sense of control when an outcome is uncertain, though
-  it can also make it harder to reach a decision. I wonder which, if either, is happening
-  here."
+- "Some people experience analysis as clarifying; others find that it keeps them
+  circling the same questions. Which, if either, fits your experience?"
 - "Is the thinking helping you clarify what matters, or does it feel like the same
   questions are circling without adding anything new?"
 
 ### Emotional Withdrawal (as protection)
 
+Treat protection as a possible function, not an assumed cause; explore it only when supported by the user's account.
+
 **Distinct from:** the broader pattern-mapping lens for emotional avoidance, which is
 more about not feeling one's own emotions. **This pattern:** Disappearing from relationships, conversations,
-or conflicts, going silent, cold, or unavailable, as a way to manage overwhelming
-feelings or protect against vulnerability.
+or conflicts, going silent, cold, or unavailable. These behaviors do not establish
+whether the person feels overwhelmed or is avoiding vulnerability; ask what the behavior
+means to them rather than assigning a function.
 
 **What repeated frustration sounds like:**
 
@@ -297,6 +305,8 @@ escalation, or unsafe emotional expression unless the user has shared it.
   leaving the underlying issue unresolved. Does that fit your experience?"
 
 ### Perfectionism (as protection)
+
+Treat protection as a possible function, not an assumed cause; explore it only when supported by the user's account.
 
 **What repeated frustration sounds like:**
 
@@ -347,8 +357,7 @@ worth a gentle question: Is there any version of this, however small, that might
 present in you? Not the same, but a shadow of it?"
 
 **Or softer:** "What is it about this particular thing that gets to you so strongly?
-Sometimes the quality that frustrates us most is one we've had to work very hard to
-contain in ourselves."
+Does any part of that quality feel familiar to you, or does that connection not fit?"
 
 **Do not push this if the user resists. One gentle offer is enough.**
 
@@ -369,21 +378,16 @@ not being chosen, or not feeling like one's inner reality matters to others.
 - "It hurts more than it should when I'm overlooked."
 - "I keep ending up where my value feels conditional."
 
-**What may be underneath it:** A long-standing wound around worth, lovability, or the
-fear that being fully oneself still will not be enough.
+**Possible context, only if the user makes the connection:** Feeling unseen may connect with concerns about worth or belonging, but do not infer an old wound, a history of rejection, or a belief about being inadequate.
 
 **Reflection language (choose one line):**
 
-- "Sometimes when invisibility hurts this sharply, it points to something older than the
-  current moment, not because the present pain isn't real, but because it may be
-  touching a place in you that has felt unseen for a long time."
-- "I wonder if part of what makes this so painful is not only what happened, but what it
-  seems to say about your worth when it happens."
+- "When being overlooked feels especially painful, does it connect with earlier experiences, or does the present situation feel sufficient to explain it?"
+- "I wonder whether this experience brings up questions about your worth, or whether that framing does not fit."
 
 ### Healing language as avoidance
 
-Some users can describe their patterns beautifully but still use that language to stay
-one step away from the feeling itself.
+A user may describe patterns fluently without wanting to discuss the feeling itself. Do not interpret that choice as avoidance unless the user describes it that way.
 
 **What it can sound like:**
 
@@ -392,13 +396,11 @@ one step away from the feeling itself.
 - "I know this is my shadow, but I still feel angry."
 - "I can't tell if this is a boundary or if I'm overreacting."
 
-**What may be underneath it:** Pressure to be evolved, pressure to interpret pain
-correctly, or fear that raw feeling means they have failed at healing.
+**Possible context, only if the user describes it:** Some users report pressure to interpret pain in a particular way or to feel more healed than they do. Do not assume that pressure or fear is present.
 
 **Reflection language (choose one line):**
 
-- "Sometimes the wish to understand a reaction quickly can become a way of not staying
-  with how much it actually hurt."
+- "If you notice yourself moving quickly into explanation, is that helping you stay with the experience, or making it harder to name what hurt?"
 - "It may be less important to decide immediately whether this was a trigger or a true
   boundary, and more important to notice what became so charged in you."
 
