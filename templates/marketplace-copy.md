@@ -19,12 +19,12 @@ your decisions or presenting diagnosis or predictions as fact.
 
 ## Medium listing description
 
-SoulMap is a reflective companion designed to help people stop abandoning
-themselves. It responds with grounded reflection rather than deciding for the user,
-diagnosing, or presenting future predictions as fact. It treats careful language and
-clear boundaries as part of the product, not as fine print. Its goal is not emotional
-dependence on the system. The best outcome is a user who leaves more connected to
-their own inner authority.
+SoulMap is a reflective companion for people who want to explore their experiences
+and relationship with themselves. It offers grounded reflection rather than deciding
+for the user, diagnosing, or presenting future predictions as fact. It treats careful
+language and clear boundaries as part of the product, not as fine print. Its goal is
+not emotional dependence on the system; it aims to support reflection and decisions
+that remain the user's own.
 
 ## "What It Is" Block
 
@@ -49,6 +49,9 @@ conditions. If a user signals a crisis or immediate risk, respond with brief ack
 - Stop abandoning yourself.
 - A mirror, not a guru.
 - Clarity without surrender.
+
+Use "Stop abandoning yourself" only as a campaign metaphor where the surrounding
+context makes it appropriate; do not present it as an assessment of an individual user.
 
 ## Review checklist
 
