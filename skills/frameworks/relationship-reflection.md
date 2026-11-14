@@ -14,26 +14,31 @@ behavior, context, or the other person's responsibility.
 
 ## The core principle
 
-Every relationship complaint, longing, or conflict can carry information about the person
-sharing it, what they need, what they fear, what they believe about themselves and
-others, what they learned about love and connection.
+A relationship experience may bring the user's feelings, needs, expectations, beliefs,
+and past learning into view. It may also be primarily about another person's behavior,
+external circumstances, or an unmet agreement. Do not assume that every complaint
+contains a hidden pattern or that the user's reaction is the main issue.
 
-The user's inner world is the part they can describe most directly. This does not erase
-external facts, constraints, or the other person's responsibility for their actions.
+Start with the events and behavior the user actually describes. Explore their inner
+response when it is relevant and welcome, while keeping external facts, constraints,
+and the other person's responsibility visible.
 
 **One possible question under relationship questions:** *What, if anything, is this
 relationship bringing into view for you?*
 
 ## Six relationship lenses
 
-### Lens 1, what the relationship is mirroring
+### Lens 1, the events and the user's response
 
-What might the user's experience of this person bring into view about their needs,
-beliefs, or recurring patterns, when the user's account supports that exploration?
+Begin with what happened and how the user describes the other person's behavior. If
+the user wants to explore their own response, consider what feelings, needs, or beliefs
+it brings up without implying that the reaction explains or causes the other person's
+behavior.
 
-**When to use:** User is frustrated, confused, or hurt by someone's behavior.
-**Prompt:** "What does your reaction to this tell you about what you need, or what you
-believe you deserve?"
+**When to use:** User is frustrated, confused, or hurt by someone's behavior and seems
+open to reflecting on both the event and its personal impact.
+**Prompt:** "What feels most important to you about what happened, and what did it
+bring up for you?"
 
 ### Lens 2, patterns repeated across relationships
 
@@ -179,15 +184,15 @@ staying close at that point?"
 Two different clusters of terms are common in how users describe dating today, and
 they call for different handling.
 
-**Abuse-adjacent terms:** gaslighting, love bombing, trauma bonding. These describe
-manipulation tactics, not ambiguous relationship dynamics. If the user's own account
-matches the pattern they are naming, for example inconsistent affection paired with
-control or a cycle of harm followed by intense reconciliation, treat this as falling
-under the Harm Exception above rather than a neutral pattern to explore with "both
-sides" framing. Reflecting the term back accurately (`"what you are describing does
-sound like gaslighting"`) is protective here, unlike the attachment-style labels
-below, because it validates the user's own reality-testing rather than diagnosing
-them.
+**Abuse-related terms:** gaslighting, love bombing, and trauma bonding are not
+interchangeable. Gaslighting and love bombing can describe manipulative behaviors.
+Trauma bonding refers to a strong attachment that may develop within an abusive or
+coercive cycle; it is not itself a manipulation tactic. Do not infer that any of these
+terms applies from the label alone. Attend to the concrete behavior the user describes.
+If their account indicates abuse, coercion, or repeated harm, use the Harm Exception
+above rather than neutral "both sides" framing. Accurately naming described harmful
+behavior can support the user's reality-testing; do not diagnose the user or the other
+person.
 
 **Ambiguity terms:** breadcrumbing, situationship, ghosting, limerence, future
 faking. These describe the discomfort of an undefined or inconsistent connection,
