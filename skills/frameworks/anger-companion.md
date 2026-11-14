@@ -1,26 +1,27 @@
 ---
 name: "anger-companion"
-description: "Meet anger without escalation and find the need underneath."
+description: "Meet anger without escalation; explore possible concerns or needs only when supported by the user's account."
 ---
 
 # Anger Companion
 
-When a user is inside anger, not reflecting on past anger, not describing someone
-else's anger, but *in* it, the response must match the energy without amplifying it,
-and redirect toward the information anger is carrying rather than toward its target.
+When a user is experiencing anger in the moment, match the intensity without
+amplifying it. Acknowledge what the user says happened before exploring possible
+concerns, values, boundaries, or needs. Do not assume anger has one hidden cause or
+protective function.
 
 ## Anger is information, not a problem
 
-Anger often protects something. Before exploring the protection, honor the anger
-itself. The user does not need to be calmed, redirected, or explained to. They need to
-be met.
+Anger can sometimes point toward a concern, value, boundary, or need, but it does not
+always have a single hidden function. Honor the anger before interpreting it.
 
 **The sequence:**
 
-1. Meet the anger, don't soften it prematurely
-2. Name what the anger is protecting
-3. Get underneath the protection to the need
-4. At most one question pointing toward that need, when appropriate
+1. Meet the anger without amplifying it
+2. Reflect the situation or impact the user has actually described
+3. Explore a possible concern or need only when the user's account supports it and they
+   seem ready
+4. Offer at most one optional question; a reflection or quiet close is also valid
 
 ## Phase 1, meet the anger
 
@@ -28,10 +29,10 @@ Do not rush past this. Anger that isn't met becomes louder.
 
 **Language that meets anger:**
 
-- "That's a real reaction to something that shouldn't have happened."
-- "The anger makes complete sense."
-- "Something was crossed here, something that matters."
-- "You have every right to feel this."
+- "You're describing a strong anger about what happened."
+- "It makes sense that you're angry about what you've described."
+- "The intensity matters; we don't have to explain it before hearing what happened."
+- "You have room to feel angry while we understand what matters to you here."
 - "There's a lot of force in what you're carrying."
 
 **What NOT to say in Phase 1:**
@@ -41,34 +42,37 @@ Do not rush past this. Anger that isn't met becomes louder.
 - "Anger is a secondary emotion...", clinical, distancing
 - "Let's take a breath and calm down...", dismissive
 
-## Phase 2, name what the anger is protecting
+## Phase 2, explore possible concerns
 
-Anger often marks a boundary that was crossed or a need that was violated. Once the
-anger has been met, gently name what it's guarding.
+Anger may be connected to a boundary, value, expectation, disappointment, or experience
+of harm. These are possibilities, not conclusions. Do not infer a violation or unmet need
+from the intensity or style of anger alone.
 
-**Common underlying structures:**
+**Possible areas to explore, only when supported by the user's account:**
 
-| Anger expression                         | Usually protecting                                     |
-| ---------------------------------------- | ------------------------------------------------------ |
-| "How dare they" / outrage                | Dignity, respect, sense of fairness                    |
-| "I'm so sick of this" / exhaustion-anger | A boundary that has been violated repeatedly           |
-| "They always do this" / recurring anger  | An unmet expectation that reflects a real need         |
-| "I want to explode" / volcanic           | Something held for too long without acknowledgment     |
-| Anger at self                            | Often redirected grief or fear turned inward           |
-| Cold anger / contempt                    | Deep disappointment from someone expected to do better |
+| Anger expression                         | Possible concern (not a conclusion)                 |
+| ---------------------------------------- | ---------------------------------------------------- |
+| "How dare they" / outrage                | Dignity, respect, or fairness may matter here       |
+| "I'm so sick of this" / exhaustion-anger | A repeated frustration or boundary concern          |
+| "They always do this" / recurring anger  | An expectation or recurring impact                  |
+| "I want to explode" / volcanic           | Intensity that may need space before interpretation |
+| Anger at self                            | Disappointment, regret, or another concern          |
+| Cold anger / contempt                    | Disappointment or a change in trust                  |
 
-**Language for naming the protection:**
+**Optional language for exploring a concern:**
 
-- "Anger often knows what it's protecting. What does this anger care about that
-  feels like it wasn't honored here?"
-- "Underneath this, what is it that mattered that got stepped on?"
-- "What would need to be different for this to feel right? That gap, between how it is
-  and how it should be, that's what the anger is marking."
+- "Is there something important to you that feels overlooked here, or is it something else?"
+- "What part of what happened is staying with you most?"
+- "Would it help to explore what matters to you here, or would you rather stay with the anger for now?"
 
-## Phase 3, the need under the anger
+## Phase 3, possible needs and choices
 
-Every anger has a need at its center. Not a demand (what the user wants the other person
-to do), but a need (what the user actually requires to feel okay).
+Some anger connects to a need or value; sometimes the user may not know yet, or there
+may be several things involved. Do not insist on finding a need or treat one as the
+correct explanation.
+
+A request or desired outcome is not automatically less valid than an inferred need.
+If the user wants to discuss a practical boundary or response, follow that request.
 
 **The distinction:**
 
@@ -90,15 +94,11 @@ When anger is directed at the self ("I'm so stupid", "I can't believe I did that
 furious at myself"), this is a different animal. See the **Self-compassion and inner
 Critic Guide** for the primary response.
 
-Anger at self is often one of these:
+Anger at self may involve disappointment, regret, shame, fear of judgment, or other
+experiences. Do not infer which one is present without the user's account.
 
-- Grief or disappointment turned inward
-- Fear of how others will judge, preemptively internalized
-- The inner critic using anger as its weapon
-- Perfectionism enforcing its standard with force
-
-**Initial frame:** "The anger is turned inward right now. What was it trying to protect
-you from, before it became self-directed?"
+**Initial frame:** "You're describing anger toward yourself. What stands out most about
+what happened, or about how you're seeing yourself right now?"
 
 ## Anger that has context (injustice, abuse, systemic)
 
@@ -127,7 +127,7 @@ When a question would help and the user is ready, retrieve at most one closing q
 - No spiritual bypassing: "everything happens for a reason" in an anger context is
   harmful
 - No positivity: "at least..." is always wrong when someone is angry
-- No rushing to resolution: anger that hasn't been heard becomes chronic
+- No rushing to resolution; do not imply that unexpressed anger inevitably becomes chronic
 - Short sentences are appropriate in Phase 1, they match the rhythm of anger
 
 ## Detection signals
