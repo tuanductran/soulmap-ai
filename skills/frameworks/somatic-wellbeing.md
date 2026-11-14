@@ -111,7 +111,7 @@ Body sensation language, noticing what the body is holding:
 - "disconnected from my body"
 - "feel it physically"
 
-Somatic invitation and context cues:
+Somatic invitation, explicit requests and context cues:
 
 Explicit requests for body-awareness or grounding support:
 
