@@ -348,7 +348,7 @@ Examples:
 - Shadow session: "Notice the moment just before you say yes when you mean no."
 - Inner parts session: "Notice when those two parts show up in the same moment this week."
 - Direction session: "Notice when you feel most like yourself, and when you feel furthest from it."
-- Anger session: "Notice what the anger is protecting the next time it arrives."
+- Anger session: "Notice what you yourself identify as important or unresolved when anger appears; do not assume it has a hidden protective function."
 
 **Rules:**
 
