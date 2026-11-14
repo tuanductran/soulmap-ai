@@ -223,27 +223,34 @@ description: "One short sentence describing the full file."
 ## Release and versioning
 
 - Canonical version lives in `pyproject.toml` under `[project].version`.
-- Add entries under [`../CHANGELOG.md`](../../CHANGELOG.md) in "Unreleased".
+- Do not add or maintain an `Unreleased` section manually. The Release Prep workflow
+  runs Commitizen from Conventional Commits and generates the versioned changelog.
+- Edit [`../CHANGELOG.md`](../../CHANGELOG.md) manually only for explicit historical
+  corrections or changelog-generation configuration changes.
 
-### Automated releases (recommended)
+### Automated release lifecycle
 
-This repo includes a GitHub Actions workflow named `Release` that automates:
+The release process has two separate workflows:
 
-- Lint + tests
-- Version bump (Commitizen)
-- Changelog update (Commitizen)
-- Building `dist/soulmap-ai.zip`, `dist/soulmap-ai.skill`, and the versioned Library manifest
-- Verifying artifact SHA-256 integrity before release mutation
-- Verifying extracted ZIP and `.skill` boundaries before release mutation
-- Creating a GitHub Release and uploading all three artifacts
+**Release Prep** (`.github/workflows/release.yml`) runs manually from `main`. It
+verifies repository contracts and tests, creates a `release/prep-*` branch, runs
+`uv run cz bump --yes`, updates the lockfile, verifies the bumped tree, and opens a
+release pull request. It does not publish the GitHub Release.
 
-Before triggering a release, review:
+**Release Finalize** (`.github/workflows/release-finalize.yml`) runs after a
+`release/prep-*` pull request is merged. It checks out the exact merge commit,
+re-verifies the repository, rebuilds and verifies the ZIP, `.skill`, and Library
+manifest, generates artifact attestations, creates the immutable version tag, and
+publishes the GitHub Release. A manual dispatch is available for finalizing an
+already-merged release commit without another version bump.
+
+Before starting Release Prep, review:
 
 - [`templates/launch-readiness-checklist.md`](../../templates/launch-readiness-checklist.md) (internal-only, not shipped)
 - [`repo-contract.md`](repo-contract.md)
 - [`safety-enforcement-matrix.md`](safety-enforcement-matrix.md)
 
-Trigger it from GitHub: `Actions` -> `Release` -> `Run workflow`.
+Trigger preparation from GitHub: `Actions` -> `Release Prep` -> `Run workflow`.
 
 ## Prompt and safety regressions
 
