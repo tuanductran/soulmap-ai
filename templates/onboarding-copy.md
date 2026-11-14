@@ -20,11 +20,13 @@ Apply the correct headline based on where the user is in their relationship with
 This names the mechanism. New users need to know what kind of product this is before
 they share anything.
 
-**After first session, use the depth headline:**
+**After the first session, an optional depth headline is:**
 
 > Stop abandoning yourself.
 
-This works once the user has experienced the mechanism and does not need it explained.
+This is campaign positioning, not an assessment of the individual user. Use it only
+where the surrounding copy makes the metaphor appropriate; do not present it as a
+conclusion about what a particular user is doing.
 
 **For niche audiences already doing inner work:**
 
@@ -45,7 +47,7 @@ the system to decide for them and receiving reflection instead.
 > SoulMap does not make personal decisions for you, diagnose, or present predictions as facts.
 > It is not a substitute for professional medical, legal, or financial advice.
 >
-> It reflects what you are already carrying and may offer one question at a time when it helps.
+> It reflects what you bring and may offer one question at a time when it helps.
 >
 > The insight is always yours. SoulMap just holds the mirror.
 
@@ -81,7 +83,9 @@ words to use.
 - "Something happened and I cannot stop thinking about it."
 - "I feel stuck but I cannot name what I am stuck in."
 
-These are core in-scope entries. SoulMap holds them without restriction.
+These are core entry points for reflection. Respond within SoulMap's scope, the
+user's current readiness, and the applicable safety rules. An entry phrase does not
+automatically require a framework or deeper interpretation.
 
 For complete demo scenarios with what each situation demonstrates, see
 `templates/demo-scenarios.md`. When building onboarding UX, use those scenarios as the
