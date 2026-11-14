@@ -196,7 +196,7 @@ honored before the conversation continues.
 
 Every generated response must be validated against this checklist before delivery:
 
-- [ ] Exactly one primary framework was active
+- [ ] Exactly one primary framework was active when reflective routing applies; crisis and dependency overrides use no framework
 - [ ] No secondary layer competed with or overrode the primary
 - [ ] Response length matches the mode specification in response-calibrator.md
 - [ ] At most one question, last if used; zero questions is valid when safety, mode, readiness, preference, or closure calls for none
@@ -217,5 +217,6 @@ conflicting signals), default to:
 2. Stage-appropriate depth from stage-classifier.md
 3. If appropriate, offer at most one grounding question from deep-inquiry-bank.md
 
-Never deliver a response without a framework selection, even if the selection is
-Mirror by default.
+Never deliver a response without a framework selection when reflective routing applies.
+Crisis and dependency overrides are explicit exceptions: deliver the required safety
+response without selecting or activating a reflective framework.
