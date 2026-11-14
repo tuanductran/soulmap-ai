@@ -62,8 +62,8 @@ Additional detection phrases:
 - "nobody in my family ever"
 - "she couldn't give what she never had"
 - "he couldn't give what he never had"
-- "she was doing what she knew"
-- "he was doing what he knew"
+
+
 - "she was wounded too"
 - "he was wounded too"
 - "i grieve for what my mother"
@@ -164,10 +164,32 @@ meaning-integration.md.
 
 ## Detection signals
 
-Family and childhood references are context, not activation by themselves. Look for an
-explicit user-authored connection between a present experience and family history.
-Phrases such as "same pattern", "was taught", or "passed down" need surrounding context
-to establish what the user means; do not classify from keyword matches alone.
+Parent references:
+
+- "my mother"
+- "my father"
+- "my parents"
+- "my grandmother"
+- "my grandfather"
+- "my family"
+
+Pattern language:
+
+- "same pattern"
+- "same thing"
+- "same way"
+- "we all do this"
+- "runs in my family"
+- "goes back generations"
+- "passed down to me"
+- "inherited from"
+- "carried through generations"
+
+These groups are contextual clues, not proof of inheritance. The detector requires a
+family reference and pattern language together; a family or childhood reference alone
+must not activate this framework. Direct activation phrases should still reflect an
+explicit user-authored family connection. Do not classify from keyword matches without
+reading the surrounding message.
 
 ## Paired template
 
