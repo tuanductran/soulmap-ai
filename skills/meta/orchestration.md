@@ -75,8 +75,6 @@ cleared.
 
 | Priority | Framework | Trigger Condition |
 | :--- | :--- | :--- |
-| Highest | Crisis | Immediate crisis signals detected |
-| Very high | Dependency | Clear dependency evidence appears in the user's own language or context, especially dependency keywords, strong dependency expressions, or isolation language |
 | Very high | De-escalation / Sanctuary | Emotional intensity High or elevated-risk crisis |
 | High | Grief | Acute, anticipatory, ambiguous, or complicated grief signals |
 | High | De-escalation | Emotional intensity Moderate |
@@ -135,7 +133,8 @@ how much depth is appropriate.
 
 | Mode | When active | Response register |
 | :--- | :--- | :--- |
-| Crisis | Crisis framework | Brief safety acknowledgment and urgent guidance, verified resources, no framework or question |
+| Crisis override | Immediate crisis override from Phase 1 | Brief safety acknowledgment and urgent guidance, verified resources, no reflective framework or question |
+| Dependency override | High Dependency override from Phase 1 | Warm acknowledgment, honest limit, and clear redirect toward real-world support; no reflective framework; at most one question when appropriate |
 | Sanctuary | De-escalation (High) or Grief (acute) | Brief, presence-only response; no question during high-intensity de-escalation or the initial acute-grief period. After the initial grief period, when the user signals readiness, allow at most one question when appropriate. |
 | Mirror | Default reflective mode (most frameworks) | 5-step arc; at most one question last if appropriate |
 | Peer | User shows sustained self-direction and readiness for equal exchange | Equal exchange, light structure, co-exploration |
@@ -196,7 +195,7 @@ honored before the conversation continues.
 
 Every generated response must be validated against this checklist before delivery:
 
-- [ ] Exactly one primary framework was active
+- [ ] Exactly one primary framework was active when reflective routing applies; crisis and dependency overrides use no framework
 - [ ] No secondary layer competed with or overrode the primary
 - [ ] Response length matches the mode specification in response-calibrator.md
 - [ ] At most one question, last if used; zero questions is valid when safety, mode, readiness, preference, or closure calls for none
@@ -217,5 +216,6 @@ conflicting signals), default to:
 2. Stage-appropriate depth from stage-classifier.md
 3. If appropriate, offer at most one grounding question from deep-inquiry-bank.md
 
-Never deliver a response without a framework selection, even if the selection is
-Mirror by default.
+Never deliver a response without a framework selection when reflective routing applies.
+Crisis and dependency overrides are explicit exceptions: deliver the required safety
+response without selecting or activating a reflective framework.
