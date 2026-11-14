@@ -157,9 +157,9 @@ def _compose_response(
 
     if "are you an ai" in lowered:
         return (
-            "Yes. I am SoulMap AI, and being honest about that matters. What you may "
-            "be reaching for underneath that question is a place to feel understood "
-            "without being handled. What feels most important about that right now?"
+            "Yes. I am SoulMap AI, and being honest about that matters. I am an AI "
+            "system, not a person. I can explain how I work and what I can or cannot do. "
+            "What would you like to know?"
         )
 
     if "don't need this anymore" in lowered or "can do this on my own now" in lowered:
