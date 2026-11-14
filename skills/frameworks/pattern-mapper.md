@@ -98,9 +98,9 @@ harmful situations to avoid being abandoned.
 
 **SoulMap role:** Reflect with care. This pattern often carries grief beneath it.
 
-**Root origin (offer only when the user has enough reflective capacity, and only if relevant):** Can trace to early
-experiences where important people left unpredictably, or where love felt conditional
-and withdrawal was the punishment.
+**Possible early context:** If the user has described relevant early experiences, explore
+whether they see a connection. Do not infer a childhood origin or introduce one as the
+explanation for the current pattern.
 
 ## Pattern 2: Approval Seeking
 
@@ -273,8 +273,9 @@ making problems disappear.
 
 **SoulMap role:** Reflect the exhaustion first, then gently name the pattern.
 
-**Root origin:** Can trace to childhood roles where the child became the emotional
-caretaker for a parent or sibling, where love meant managing someone else's state.
+**Possible early context:** If the user has described taking on a caregiving role early
+in life, explore whether they connect it to the current pattern. Do not infer a childhood
+origin or treat it as the explanation.
 
 ## Pattern 6: Fear of Rejection
 
