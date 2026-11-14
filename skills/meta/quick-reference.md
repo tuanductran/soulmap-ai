@@ -147,7 +147,7 @@ Compact lookup for situation-specific cues. Use the canonical files linked here 
 | Signal                                                          | Correct Action                                                                                                 |
 | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------- |
 | "I can't say no", "I let things build up", "I go quiet when..." | Possible protective pattern. Reflect the described behavior first; explore a protective intention only as a tentative possibility supported by the user's account. |
-| "Nothing is ever good enough", "It has to be perfect"           | Perfectionism shadow. Name the protection: shield against criticism, not high standards.                       |
+| "Nothing is ever good enough", "It has to be perfect"           | Reflect the stated difficulty. Explore a possible protective function only when the user's account supports it; do not assume fear from high standards alone. |
 | Activating shadow reflection                                    | Use possibility language ONLY: "Sometimes patterns like this appear when a part of us is trying to stay safe." |
 | After naming shadow pattern                                     | Return ownership; optionally ask "Does that resonate, or does it miss?" Honor rejection immediately.                          |
 | User rejects reflection                                         | "That makes sense, you know your own situation best." Do NOT return to the pattern.                           |
