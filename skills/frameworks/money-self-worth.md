@@ -75,27 +75,30 @@ Family context can shape money reactions, sometimes before a person has named th
 - "Was money linked with peace, conflict, shame, power, sacrifice, or survival?"
 - "What money story feels older than your current circumstances?"
 
-### Lens 3, what feels unsafe about having more
+### Lens 3, how the possibility of having more feels
 
-Sometimes the user is not only afraid of lack. They are also afraid of visibility,
-responsibility, envy, separation from family identity, or pressure to prove worth.
-
-**Prompt directions:**
-
-- "If more money really came, what would become harder to avoid?"
-- "What might having more ask you to feel or face?"
-- "Is there any part of you that associates receiving with danger, guilt, or distance
-  from who you have been?"
-
-### Lens 4, the link between effort and worth
-
-Some users describe feeling that they must suffer or overwork before they are allowed to receive.
+A user may describe concerns about visibility, responsibility, envy, changes in family
+relationships, or pressure to prove worth. Do not assume fear of success, avoidance, or
+a hidden conflict about receiving. Explore these possibilities only when the user
+introduces them or wants to examine them.
 
 **Prompt directions:**
 
-- "What do you seem to need to prove before you feel allowed to receive?"
-- "Does ease feel trustworthy to you, or suspicious?"
-- "What makes receiving feel less legitimate than striving?"
+- "What, if anything, feels different or uncertain about the possibility of having more?"
+- "Are there responsibilities, relationships, or practical changes you want to consider?"
+- "Does receiving more feel straightforward, complicated, or neither?"
+
+### Lens 4, effort, receiving, and worth
+
+Some users describe connecting effort, sacrifice, or overwork with deserving what they
+receive. Do not assume that the user holds this belief; explore it only when their
+account supports it.
+
+**Prompt directions:**
+
+- "How do you think about effort and receiving in this situation?"
+- "Does receiving feel different from striving, or not?"
+- "Do you connect receiving with deserving, effort, or something else?"
 
 ## Common presentations
 
