@@ -12,28 +12,29 @@ different relationship with that voice rather than trying to silence it.
 Self-compassion is not positive thinking. It is the capacity to treat oneself with the
 same care one would offer a friend in the same situation.
 
-## The inner critic is not the enemy
+## The inner critic as a style of self-talk
 
-The inner critic may have learned its style in a particular context, but do not assume
-an origin or protective intention the user has not described. Offer that interpretation
-only as a possibility and only if it fits.
+Treat the inner critic as a way the user describes their self-talk, not as a separate
+entity with a known cause or purpose. Do not assume it began in childhood or developed
+to protect the user from criticism.
 
-**Frame:** "That voice may not be there to hurt you. It may have learned long ago that
-criticizing first was a way to stay ahead of being criticized by others. It may be
-trying to protect you, in the only way it learned."
+**Optional frame, only if the user has described or confirmed this possibility:**
+"Sometimes a critical voice is connected to concerns about standards or judgment. If
+that fits your experience, we can explore it; it is also okay not to assign it a purpose."
 
 ## Beginner entry rule
 
-When someone is new to inner work, shame is often the safest place to begin because it
-is already visible.
+When someone is new to inner work, begin with the self-talk or feeling they have
+actually named. Do not introduce shame as the assumed starting point or describe it as
+universally safe.
 
 Do not ask them to go deep immediately.
 
 Start with:
 
-- the sentence they are saying to themselves right now
-- the cost of that sentence
-- the smallest possible shift toward less violence
+- the sentence they are saying to themselves right now, if they want to examine it
+- how that language is affecting them, if they can identify an effect
+- whether a gentler way of speaking to themselves feels useful, without requiring it
 
 This framework should often come before shadow language when the user is attacking
 themselves. A person who is already collapsing under self-criticism does not need more
@@ -66,9 +67,9 @@ Signals:
 
 ## The three pillars (used as orientation, not framework)
 
-**1. Common humanity**, the pain of being flawed is something all humans share. "You're
-not the only person who has ever done this / felt this / failed at this. This is part of
-being human."
+**1. Common humanity**, difficulties, mistakes, and painful feelings are part of
+human experience. "You're not the only person who has ever done this / felt this / failed
+at this." Use this only when it helps, not to minimize the user's specific situation.
 
 **2. Mindful acknowledgment**, see the pain without exaggerating or suppressing it.
 "What you're feeling right now is real. You don't have to argue with it or push it
@@ -84,12 +85,11 @@ you?"
 
 - "Would you say that to someone you love if they were in the same situation?"
 - "What would a kinder version of that thought sound like?"
-- "That voice is loud. What is it actually afraid will happen if it stops?"
+- "That voice is loud. What do you notice about when it tends to appear?"
 
 **Naming the critic without shaming it:**
 
-- "That critical voice has been working overtime. What does it think would happen if it
-  rested?"
+- "That critical voice is very active right now. What tends to bring it up, if you have noticed?"
 - "What, if anything, does that critical voice seem to be trying to prevent?"
 - "That harshness toward yourself sounds well-practiced. When did it begin?"
 
@@ -98,7 +98,7 @@ you?"
 - "If a close friend came to you and said exactly what you just said about yourself -
   what would you tell them?"
 - "What would you want them to hear?"
-- "Why is it easier to offer that to a friend than to yourself?"
+- "Does offering that kindness to a friend feel different from offering it to yourself?"
 
 ## What Not to Do
 
@@ -106,8 +106,7 @@ you?"
 - "You're being too critical.", adds another criticism.
 - "Think positive.", toxic positivity, not self-compassion.
 - "You're doing great.", hollow reassurance.
-- Try to argue the user out of their self-criticism, engagement with the content just
-  strengthens it.
+- Try to argue the user out of their self-criticism; debating it can add another layer of judgment. Acknowledge the experience before exploring the thought..
 
 **Instead:** Acknowledge the harshness. If a protective intention fits the user's account,
 name it tentatively. Offer at most one inquiry question when appropriate.
@@ -119,7 +118,8 @@ Use this lens when the user speaks to themselves with harshness, shame, or conte
 ## Paired template
 
 - **Response shape:** `skills/meta/response-structure.md` (Mirror: acknowledge the
-  inner critic's intention before offering the friend question)
+  user's self-talk; explore a possible intention only when the user has supplied or
+  confirmed it, before offering the friend question)
 - **Check against:** `skills/meta/framework-template-map.md` (section: Mirror)
 - **Questions to draw from:** `skills/meta/deep-inquiry-bank.md` (Self-Compassion
   Questions section)
