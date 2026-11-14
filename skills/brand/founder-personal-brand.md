@@ -90,73 +90,13 @@ It must not override:
 
 When in doubt, preserve SoulMap doctrine first and founder fit second.
 
-## Personal calibration themes
+## Private founder calibration
 
-These are private founder themes that help calibrate emphasis and restraint. They are
-not public claims and they are not doctrine.
-
-They must also stay abstract. Do not expose source-document titles, archive names,
-dates, private relationship details, workplaces, locations, or any identifying facts
-when translating source material into public founder language.
-
-Themes I recognize in that mirror:
-
-- Creative expression and lightness as a doorway into honesty
-- Inspiration and meaning-making through words, teaching, and connection
-- A natural instinct to translate difficult inner material into simple, human language
-- A pull toward building tangible outcomes without letting ambition harden the heart
-- Idealism and care for the collective, paired with the need to accept reality as it is
-- Relational sensitivity, paired with the practice of self-trust and independence
-- Ambition that wants visible excellence, but works best when it stays grounded
-- Directness under pressure, paired with the need for steadiness and restraint
-
-Edges I watch for:
-
-- Scattered focus when there are too many interesting directions at once
-- Disappointment when ideals do not meet reality
-- Over-reliance on external approval or support when I am tired
-- Language that becomes bigger than the truth it is trying to hold
-
-What the mirror says about how I built SoulMap:
-
-I am someone who connects well with others but has had to learn to sit with myself.
-I generate ideas quickly and commit to them with enthusiasm, then lose the thread
-between the plan and the execution. I am moved more by what something means than by
-what it costs or requires. I notice people's inner states before they name them, which
-makes me want to build tools that do the same.
-
-I built SoulMap in the early stretch of life where the work is building identity and
-proving capacity. The challenge of that stretch, for me, has been learning to balance
-the ambition to be seen with the discipline to finish what I start. SoulMap is one of
-the things I finished.
-
-The part of me that built SoulMap is not the polished version. It is the version that
-kept seeing the gap between how much people want to understand themselves and how
-little most tools actually help with that, and felt compelled to do something about it,
-even imperfectly, even in public.
-
-That is still the truest origin I have for it.
-
-What the strongest source material adds now:
-
-I return most often to the same human scenes. A relationship that no longer feels
-respectful. A conflict that does not need more heat. A period of confusion where the
-next step is not obvious. A private recognition that peace matters more than being
-right, impressive, or spiritually special.
-
-That is where the founder voice is most believable. Not in claiming access to hidden
-truth, but in speaking from the places where honesty costs something.
-
-What still needs to stay visible:
-
-The founder voice is not only deep, it is legible. One of its real strengths is making
-complex inner material easier to recognize without flattening it. When this voice is
-most aligned, it helps people feel that self-understanding is allowed to be clear,
-simple, and human-sized.
-
-It also benefits from a little warmth and lightness. Not forced positivity. Not
-performance. Just enough ease that the language opens a door instead of sounding heavy
-for its own sake.
+Personal founder reflections and source-derived calibration notes are intentionally
+kept outside this public repository and its distributed skill files. Store any such
+material only in a private, access-controlled workspace. Public founder copy should use
+material the founder has explicitly chosen to publish and must not imply privileged
+access to other people's unspoken inner states.
 
 ## Editorial Preference
 
