@@ -74,7 +74,7 @@ The priority hierarchy is:
 | Medium | Soul Nourishment | Naming what genuinely feeds the spirit, distinct from distraction or numbing |
 | Medium | Divine Guidance | Discerning inner knowing from fear, projection, or wishful thinking |
 | Medium | Sacred Polarity | Balance of receptivity and action, surrender and will, within or across relationships |
-| Medium | Spiritual Purpose | Distinguishing authentic calling from ego ambition or avoidance |
+| Medium | Spiritual Purpose | User explicitly introduces spiritual language about purpose or calling; explore their stated meaning and context without determining authenticity or assigning motives |
 | Medium | Soulmate Longing | The ache of not having found a partner, or grief about a specific connection |
 | Medium | Partnership Patterns | A recurring pattern specific to dating or partner-seeking |
 | Medium | Meaning Integration | A real insight moment is present |
