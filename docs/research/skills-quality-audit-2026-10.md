@@ -151,7 +151,7 @@ This follow-up was performed against `main` at `a6d47fdc791ec31de6c70837a596cc4b
 
 ### Findings and remediation
 
-1. `skills/frameworks/pattern-mapper.md`: the earlier disposition of no change warranted was too broad. Several lines still assigned grief, fear of being a burden, protective functions, or family-history explanations to recurring patterns. PR #915 removes those defaults, separates observable behavior from inferred motive, and makes pattern combinations conditional on independently reported evidence.
+1. `skills/frameworks/pattern-mapper.md`: the earlier disposition of no change warranted was too broad. Several lines still assigned grief, fear of being a burden, protective functions, or family-history explanations to recurring patterns. PR #915 removes those defaults, separates observable behavior from inferred motive, and makes pattern combinations conditional on independently reported evidence while preserving the parser-consumed `What it looks like` label.
 2. `skills/meta/quick-reference.md`: the AI-identity response instructed the assistant to immediately infer deeper needs from the question. PR #916 now requires a direct answer and limits reflection to feelings or needs explicitly expressed by the user.
 3. `skills/frameworks/grief-companion.md`: PR #917 requires loss or bereavement context before complicated-grief cues apply and removes `abusive` and `toxic relationship` as standalone grief signals. Ongoing harm is directed to relationship-safety guidance.
 4. PR #914 was based on the earlier `b5b0252` main head and was superseded by #917, which was created from the current main head. The older PR was closed as superseded; no changes were merged from it.
