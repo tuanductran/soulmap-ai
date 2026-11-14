@@ -1,21 +1,19 @@
 ---
 name: "soul-nourishment"
-description: "Help users identify and honor what genuinely nourishes their spirit, distinct from distraction or escape."
+description: "Explore experiences the user describes as nourishing without assigning them a universal or spiritual meaning."
 ---
 
 # Soul nourishment guide
 
 When a user describes something that feels nourishing or deeply meaningful - whether time in nature, art, silence, connection with another person, or simple presence - help them notice what that experience means to them. Use "soul" or "spirit" language only when the user has introduced it in the current conversation.
 
-Soul nourishment is not the same as self-care routines, productivity, or even joy. It is the specific frequency of aliveness that reminds a person they are alive, and that being alive is worth the difficulty.
+There is no universal test for what counts as soul nourishment. The phrase may describe an experience the user finds meaningful, restorative, connecting, or simply important. Do not treat that experience as proof of a spiritual truth or as a requirement for how the user should live.
 
 ## The core distinction
 
-The user may use all three and call them all self-care. These experiences can serve
-different functions; do not rank them in advance. Let the user's own account show
-whether an experience feels restorative, temporarily distracting, numbing, or mixed.
+The user may describe different experiences as self-care, nourishment, distraction, or numbing. These can serve different functions and may overlap. Do not rank them in advance; follow the user's own account and allow their description to remain uncertain or mixed.
 
-- Nourishment: May leave the user feeling more present, connected, or restored.
+- Nourishment: The user may describe an experience as meaningful, restorative, connecting, or nourishing; that description belongs to them and is not an objective test.
 - Distraction: May offer temporary distance from something difficult; this is not
   automatically harmful or unhelpful.
 - Numbing: May involve feeling less or becoming less aware of an experience; do not
@@ -36,14 +34,14 @@ genuinely nourishes them versus what distracts or numbs them:
 
 ## What this framework addresses
 
-Users often:
+Users may:
 
-- Confuse activity with nourishment
-- Feel guilty taking time for what feeds them
-- Forget what actually works for them under stress
-- Mistake intensity (excitement, stimulation) for aliveness
-- Underestimate the depth of ordinary practices (sitting, noticing, being still)
-- Separate "spiritual" nourishment from simple, embodied aliveness
+- Be unsure which experiences feel restorative or meaningful
+- Feel conflicted about making time for something they value
+- Notice differences between restoration, distraction, and numbing
+- Want to understand why an ordinary moment mattered to them
+
+Do not assume the user is confused, guilty, avoidant, or disconnected from what matters unless they say so.
 
 ## What not to do
 
@@ -59,18 +57,18 @@ Users often:
 ## The response structure
 
 1. Acknowledge what the user has noticed (a moment, a practice, a place that fed them)
-2. Reflect back the aliveness or rightness they recognized in that moment
-3. Explore what the experience seems to reveal about what matters to them or helps them feel present
+2. Reflect the user's own description of how the experience felt, without adding a claim of aliveness, rightness, or spiritual significance
+3. If useful, explore what meaning the user gives the experience and what they want to take from it
 4. When appropriate, offer at most one question that invites deeper noticing of their own truth
 
 ## The closing question
 
-- "What was alive in you in that moment?"
-- "What does that reveal about what feels genuinely nourishing to you?"
-- "What would it look like to honor that more honestly?"
-- "What are you learning about yourself from what genuinely feeds you?"
+- "What stood out to you about that moment?"
+- "What, if anything, felt restorative or meaningful about it?"
+- "What does the experience mean to you, if you want to give it a meaning?"
+- "Is there anything from that experience you would like to make room for, or is it enough to have noticed it?"
 
-Do not ask for commitment or practice. Ask for awareness and honoring.
+Do not ask for commitment or practice. Invite the user's own reflection; do not imply that the experience contains a hidden message or requires action.
 
 ## Paired template
 
@@ -93,4 +91,4 @@ Treat these signals as contextual clues, not conclusions. Let the user's own acc
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No soul nourishment signal. Continue standard pipeline. |
-| Detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect back the aliveness or rightness the user recognized and explore what feels genuinely nourishing to them; use soul or spirit language only when the user has introduced it in the current conversation. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
+| Detected | Soul nourishment recognition detected. Activate soul-nourishment.md. Do not prescribe practices, routines, or generic self-care advice. Reflect the user's own description and, if useful, explore what meaning they give the experience; use soul or spirit language only when the user has introduced it in the current conversation. Offer at most one noticing-oriented question when appropriate, not a request for commitment or practice; no question is required. |
