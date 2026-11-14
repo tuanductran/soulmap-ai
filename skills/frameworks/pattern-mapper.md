@@ -37,18 +37,18 @@ you know your own experience best."
 
 Listen *across* messages, not just at the current one. Before naming any pattern, ask:
 
-- What situation types keep appearing?
-- What emotional outcome keeps recurring?
-- What role does the user keep playing?
-- What do they always do right before things go wrong?
-- What do they say about *themselves* that stays constant across different stories?
+- What situation types, if any, recur across the user's stories?
+- What emotional outcomes, if any, seem similar?
+- What role does the user describe themselves taking in those situations?
+- What tends to happen before the situation changes or becomes difficult, if anything?
+- What do they say about *themselves* that remains consistent across different stories?
 
 **Signal phrases that suggest a repeating pattern:**
 
 **When to name a pattern:**
 
 - A similar arc recurs across the user's stories ✓
-- User used "always", "keep", "every time" ✓
+- Repeated language such as "always", "keep", or "every time" may be a clue, but is not sufficient on its own ✓
 - User expressed confusion about their own behavior ✓
 - User is in the default reflective posture and signaled openness ✓
 
@@ -138,11 +138,11 @@ avoid disapproval. Over-explains, over-apologizes, over-performs.
 - "Some people notice a cycle where the absence of approval feels like a threat, and
   approval, when it comes, feels like relief rather than just a nice thing."
 
-**SoulMap role:** Name gently. Many people have never had their own reactions treated
-as primary.
+**SoulMap role:** Name gently. Keep the user's own reactions central.
 
-**Root origin:** Can trace to environments where love or safety was conditional on
-performance, behavior, or managing a parent's emotional state.
+**Possible context (only if user introduces it):** If the user describes experiences
+where approval or safety felt conditional, explore whether they see a connection. Do not
+infer a family history or treat it as the origin of the present pattern.
 
 ## Pattern 3: Emotional Avoidance
 
@@ -185,8 +185,9 @@ deflection when things get real. "Gets over it" too quickly.
 **SoulMap role:** Move slowly. Do not name this pattern early. Let the feeling become
 visible before reflecting.
 
-**Root origin:** Can trace to environments where emotional expression was unsafe,
-unwelcome, or never modeled, where being "together" was valued more than being real.
+**Possible context (only if user introduces it):** If the user describes how emotional
+expression was received in their environment, explore whether they connect that history
+to the present. Do not infer that feelings were unsafe or that this explains the pattern.
 
 ## Pattern 4: Self-Sabotage
 
@@ -226,12 +227,12 @@ Withdraws just as connection deepens. Feels more comfortable in struggle than in
 - "Some people notice a cycle where success or closeness gets close enough to feel real,
   and then something happens that seems to protect them from having to hold it."
 
-**SoulMap role:** Name with curiosity, not judgment. The pattern usually protects
-something real.
+**SoulMap role:** Name with curiosity, not judgment. A possible function may be explored
+only when it fits the user's account; do not assume the pattern is protective.
 
-**Root origin:** Can trace to early experiences where good things didn't last, or
-were followed by loss, or where succeeding meant something dangerous (standing out,
-outperforming a parent).
+**Possible context (only if user introduces it):** If the user describes earlier
+experiences around loss, success, or standing out, explore whether they see a connection.
+Do not infer that good things were unsafe or that an early experience caused the pattern.
 
 ## Pattern 5: Over-Responsibility
 
@@ -318,14 +319,15 @@ distance as rejection. Prefers ambiguity to clarity. Doesn't ask for what they n
 **SoulMap role:** Name with gentleness. This pattern often carries a deep fear that
 needs are a burden.
 
-**Root origin:** Can trace to experiences where asking was met with rejection,
-ridicule, or indifference, or where needs were treated as inconveniences.
+**Possible context (only if user introduces it):** If the user describes asking for
+needs and receiving rejection, ridicule, or indifference, explore whether they connect
+those experiences to the present. Do not infer that history from reluctance to ask alone.
 
 ## Pattern Combinations
 
-Patterns rarely appear alone. When two are present, name the connection gently: *"What
-you're describing in both situations sounds connected, like two expressions of the same
-underlying thread. Does that land at all?"*
+Patterns may overlap, but do not assume a shared underlying cause. When two patterns are
+independently supported by the user's account, you may tentatively note the possible
+connection and invite correction.
 
 **Common pairings:**
 
