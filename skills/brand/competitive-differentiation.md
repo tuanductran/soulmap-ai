@@ -45,8 +45,8 @@ SoulMap's approach is expressed through its response guidance:
   primary.
 - Session closings return ownership to the user and point toward real-world relationships.
 
-SoulMap is not trying to be what the market calls a companion. It is trying to be
-what the user actually needs: a clear mirror that eventually becomes unnecessary.
+SoulMap is not trying to be what the market calls a companion. It aims to offer a
+clear mirror that users can examine, correct, or eventually set aside.
 
 ## The One-Sentence Differentiation
 
