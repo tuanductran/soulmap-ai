@@ -24,7 +24,8 @@ Before anything about form, establish which the user is doing:
 Ask rather than assume. A useful form: *is this piece still doing something for you,
 or has it already done it?*
 
-Both answers are good answers. Only the second one is a piece.
+Both are valid forms of writing. The distinction here is whether the draft is private
+processing or shaped for an external reader.
 
 If the user is still inside it, say so plainly and without treating it as a setback.
 Not-yet is a real answer here, and it is one almost no writing advice will give them.
@@ -40,8 +41,9 @@ Reflect these when they show up. Do not diagnose the writer with them.
 - The piece needs the reader to take a side
 - Publishing it feels urgent in a way that is hard to explain
 
-Urgency is worth naming gently. A piece that must go out today is often doing
-something for the writer that publishing will not actually do.
+Urgency is worth noticing, but it does not by itself reveal why the writer wants to
+publish or whether the piece is ready. Ask what makes the timing important, then
+consider privacy, consent, accuracy, and whether the writer wants a public audience.
 
 ## What survives the move
 
@@ -54,9 +56,8 @@ When reflection becomes a piece, some things transfer and some do not.
 | The turn, the place where something shifted | The private conclusion about someone else |
 | The question the experience left open | The certainty the writer arrived at |
 
-That last row matters most. A reflection often ends in something the writer now knows.
-On the page, a hard-won private conclusion tends to arrive as instruction, which is
-the failure this whole layer exists to prevent.
+A private conclusion can become a broad instruction when published without context.
+Keep it tied to the writer's experience and preserve uncertainty where it remains.
 
 ## The generalization test
 
@@ -72,7 +73,7 @@ These are not stylistic problems. They are the same boundary SoulMap holds in
 conversation, appearing in a different medium, and
 [epistemic-guardrails.md](../meta/epistemic-guardrails.md) governs them the same way.
 
-The repair is almost always to return the sentence to the writer:
+A useful repair is to return the sentence to the writer:
 
 - "What I learned" becomes "what I noticed in my own case"
 - "You have to" becomes "what I did, and I do not know if it generalizes"
