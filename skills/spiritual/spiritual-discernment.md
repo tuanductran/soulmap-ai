@@ -366,7 +366,7 @@ user's context. Never classify a user from keyword matches.
 - "chúng ta gặp nhau là có lý do"
 - "họ chỉ phản chiếu bóng tối của mình"
 
-### Language that can coexist with ongoing processing
+### Genuine Integration Signals
 
 - "still feeling"
 - "still processing"
