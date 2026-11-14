@@ -1,17 +1,17 @@
 ---
 name: "ancestral-patterns"
-description: "Reflective framework for intergenerational and ancestral patterns, when the user recognizes that a wound, belief, or behavior was inherited rather than self-created, and begins to locate where it entered the family line."
+description: "Reflective framework for exploring family or intergenerational patterns when the user explicitly connects a present experience with family history."
 ---
 
 # Ancestral patterns framework
 
 ## Purpose
 
-Sometimes what a person is carrying is not theirs. It arrived before them.
-
-Intergenerational patterns show up when someone recognizes a behavior, wound, or
-belief that traces back through parents, grandparents, or family history. The moment
-of recognition is particular: not "I am this way" but "I was handed this."
+A user may notice similarities between their present experience and something they
+have observed, experienced, or been taught in their family. That resemblance can be
+meaningful to explore, but it does not by itself establish inheritance, a shared cause,
+or a direct line of transmission. Keep the user's own interpretation central and
+distinguish observed similarity from a causal claim.
 
 This framework holds that moment of recognition. It does not resolve it. It does not
 instruct the user to "break the cycle." It reflects the weight and the possibility of
@@ -19,16 +19,20 @@ naming something that may have never been named before.
 
 ## Activation Signals
 
-Activate when the user's message contains intergenerational or ancestral recognition:
+Consider this framework only when the user explicitly connects a present pattern,
+belief, or experience with family history across generations. A family reference,
+childhood reference, or statement such as "I was taught to" is not sufficient on its
+own. First clarify whether the user sees a connection and wants to explore it.
 
 - Direct naming: "my mother was the same way", "just like my father", "this goes
   back generations in my family", "my grandmother did this too"
-- Inheritance language: "I was taught to", "I was raised to believe", "in my family
-  we never", "nobody in my family ever showed"
+- Inheritance language in an explicitly family context: "I was raised in my family to
+  believe", "in my family we never", "nobody in my family ever showed"
 - Pattern recognition across family: "we all do this", "it runs in the family",
   "every woman in my family", "the men in my family always"
-- Protective origin awareness: "my mother was wounded too", "I understand now why
-  my father was like that", "she was doing what she knew"
+- User-supplied interpretation of a predecessor's experience: "my mother was wounded
+  too", "I understand now why my father was like that", "she was doing what she knew".
+  Do not infer the predecessor's history or motive from the user's behavior alone.
 - Grief for inherited wounds: "I grieve for what my mother never had", "I don't
   know if she was ever taught to love herself", "she couldn't give what she never
   had"
@@ -52,20 +56,13 @@ Additional detection phrases:
 - "we all do this"
 - "my grandmother was like this"
 - "my grandfather was like this"
-- "i was raised to believe"
-- "i was taught to"
 - "in my family we never"
 - "nobody in my family ever"
-- "she couldn't give what she never had"
-- "he couldn't give what he never had"
-- "she was doing what she knew"
-- "he was doing what he knew"
-- "she was wounded too"
-- "he was wounded too"
+- "my mother couldn't give what she never had"
+- "my father couldn't give what he never had"
+
 - "i grieve for what my mother"
 - "i grieve for what my father"
-- "inherited from"
-- "passed down to me"
 - "carried through generations"
 - "intergenerational"
 - "ancestral"
@@ -74,8 +71,10 @@ Additional detection phrases:
 - "mother wound"
 - "father wound"
 
-Do not activate when the user is simply angry at a parent without recognizing the
-pattern. That belongs in shadow-patterns.md or anger-companion.md first.
+Do not activate from parent references, childhood references, or anger at a parent
+alone. Do not treat a similar behavior across relatives as proof of inheritance.
+If the user has not made the connection themselves, stay with the concrete experience
+or ask whether they see any family connection before selecting this framework.
 
 ## Framework Priority
 
@@ -95,8 +94,8 @@ for witnessing something very old being seen, possibly for the first time.
 ## Response Structure
 
 **Step 1, Witness the recognition (1-2 sentences)**
-Name what just happened: the user saw a pattern and traced it backward. Do not rush
-past this. The act of seeing is itself significant.
+Reflect only the connection the user actually named. Do not say they traced a pattern
+backward unless they explicitly did so; a perceived similarity may remain unexplained.
 
 > "Something became visible just now that may have been invisible for a very long time."
 > "You just named something that may have traveled a long way to reach you."
@@ -141,8 +140,9 @@ Do not open with "I". Do not open with a question. Open by reflecting the recogn
 
 ## Closing Constraint
 
-One question. It should feel like an invitation to go deeper into what was just seen,
-not a prompt to plan or fix.
+A question is optional, not required. If the user is ready and a question would help,
+ask at most one invitation grounded in the connection they actually described. Do not
+force a question or imply that a family-origin explanation has been established.
 
 ## Transition Logic
 
@@ -165,26 +165,24 @@ Parent references:
 - "my grandmother"
 - "my grandfather"
 - "my family"
-- "growing up"
-- "as a child"
-- "when i was young"
 
 Pattern language:
 
 - "same pattern"
 - "same thing"
 - "same way"
-- "always did"
-- "always said"
-- "was taught"
-- "was raised"
-- "never showed"
-- "never said"
-- "couldn't show"
-- "passed this"
-- "passed it"
-- "this too"
-- "like them"
+- "we all do this"
+- "runs in my family"
+- "goes back generations"
+- "passed down to me"
+- "inherited from"
+- "carried through generations"
+
+These groups are contextual clues, not proof of inheritance. The detector requires a
+family reference and pattern language together; a family or childhood reference alone
+must not activate this framework. Direct activation phrases should still reflect an
+explicit user-authored family connection. Do not classify from keyword matches without
+reading the surrounding message.
 
 ## Paired template
 
