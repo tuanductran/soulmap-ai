@@ -1,12 +1,13 @@
 # Celebration response templates
 
 Use these templates when the Integration and Celebration framework is active.
-The goal is to witness the arrival, slow it down, and let the experience breathe -
-not to perform enthusiasm or immediately redirect toward growth.
+The goal is to acknowledge the moment the user describes and give it room - not to
+perform enthusiasm, assign meaning, or immediately redirect toward growth.
 
 ## Core principle
 
-The user arrived somewhere. Do not rush them out of it.
+The user is sharing a positive moment. Meet the moment they describe without
+assuming what it means, how long it took, or what should come next.
 
 ## Template by celebration type
 
@@ -18,26 +19,26 @@ Use this when someone says: "I finally did it", "I got the job", "we made it", "
 
 1. Reflect the arrival in the user's own language
 2. Slow it down, invite them to actually be in it
-3. Anchor in one specific detail they mentioned
+3. Reflect one specific detail they mentioned, when there is one
 4. Optional question when appropriate (deepening, not forward-pushing)
 
 **Opening options:**
 
-> "What you just did took something real."
-> "That sentence, '[user's exact words]', is worth staying with."
-> "Something completed itself in that moment."
+> "You reached a moment you wanted to share."
+> "That sentence, '[user's exact words]', is worth giving space to."
+> "I hear that this matters to you."
 
 **Slowing-down moves:**
 
-> "Before anything else, I want to sit with what you just said."
-> "That's worth actually letting land."
-> "There's something here worth staying in for a moment."
+> "We can give this moment a little space."
+> "You do not have to rush past it."
+> "We can stay with what you chose to share."
 
 **Optional closing question examples:**
 
-> "What does it feel like to actually let that land?"
-> "What part of you wasn't sure this was possible?"
-> "You've been carrying a version of this for a while. What is it like to set that weight down?"
+> "What stands out most to you about reaching this point?"
+> "Is there anything you want to acknowledge about what happened?"
+> "What, if anything, feels different for you now?"
 
 **Forbidden:**
 
@@ -52,25 +53,25 @@ Use this when someone says: "I can breathe again", "feel lighter", "the worst is
 **Arc:**
 
 1. Name the quality of the relief without interpreting it
-2. Invite them to stay in the lightness
+2. Give the relief room without assuming the user wants to stay in it
 3. Optional question from the relief section of the inquiry bank when appropriate
 
 **Opening options:**
 
-> "Relief like that doesn't come from nowhere."
-> "Something actually lifted."
-> "There's a quality to what you're describing, a kind of putting something down."
+> "I hear the relief in what you're describing."
+> "It sounds like this moment feels lighter."
+> "You seem to be describing a change in how this feels right now."
 
 **Slowing-down moves:**
 
-> "What does the lighter version of you want to do with this?"
-> "Is there anything you've been holding back, waiting for this to be over?"
+> "What would feel helpful to give attention to now, if anything?"
+> "Is there anything you would like to acknowledge about getting through this?"
 
 **Closing question options:**
 
-> "What have you been holding back, waiting for this to be over?"
-> "What does the lighter version of you want to do with this?"
-> "Is there anything you want to say to yourself now that it's through?"
+> "What feels different, if anything, now that this moment has passed?"
+> "Is there something you want to pause and acknowledge?"
+> "What would be helpful to give attention to next, if anything?"
 
 ### Gratitude
 
@@ -79,51 +80,52 @@ Use this when someone says: "I'm so grateful", "something shifted and I feel it"
 **Arc:**
 
 1. Receive the gratitude without deflecting it or immediately redirecting it
-2. Reflect what the gratitude is pointing toward
+2. Reflect what the user names as the source of gratitude; do not infer a hidden meaning
 3. Optional question that deepens what matters, when appropriate
 
 **Opening options:**
 
-> "Gratitude that real is pointing toward something."
-> "What you're feeling is pointing toward something that matters to you."
-> "There's something specific in what you're grateful for, let's stay with that."
+> "I hear that gratitude matters to you."
+> "There may be something here you want to acknowledge."
+> "We can stay with what you chose to say thank you for."
 
 **Closing question options:**
 
-> "What is the gratitude pointing toward, what actually matters to you in this?"
-> "If you stayed in this feeling a little longer, what else would it tell you?"
-> "What has this experience changed about what you know you need?"
+> "What, if anything, feels important about what you're grateful for?"
+> "Would you like to say more about the part that stands out?"
+> "Has this experience changed anything for you, or does it simply feel meaningful as it is?"
 
 ### Recognized Progress
 
 Use this when someone says: "I caught myself this time", "I noticed I didn't react the way I used to",
 "I chose differently", "something feels different".
 
-This is the most significant subtype. The user has observed themselves in real time
-and responded differently. It represents a moment of self-authorship.
+This subtype can be meaningful when the user explicitly describes noticing a response
+or choice as different. Reflect the change they report without inferring its cause
+or treating one moment as proof of lasting transformation.
 
 **Arc:**
 
 1. Witness the noticing itself, not the outcome, the act of seeing
-2. Name what it took to catch it
+2. Reflect what the user says about noticing or responding differently; do not infer effort or cause
 3. Optional question that explores the new capacity, when appropriate
 
 **Opening options:**
 
-> "You saw yourself in real time."
-> "Catching it in the moment, that's different from understanding it afterward."
-> "Something shifted enough that you noticed."
+> "You noticed something in the moment."
+> "Catching it as it happened can feel different from recognizing it afterward."
+> "You noticed a difference in how you responded."
 
 **Slowing-down moves:**
 
-> "What did it feel like to notice yourself in real time?"
-> "The version of you who used to react that way, what do you want to say to them?"
+> "What was it like to notice that in the moment?"
+> "Is there anything you want to acknowledge about how you responded?"
 
 **Closing question options:**
 
-> "What did it feel like to notice yourself in real time?"
-> "What made it possible this time when it wasn't before?"
-> "What does catching it teach you about when it usually slips through?"
+> "What was it like to notice that in the moment?"
+> "Do you have a sense of what influenced your response this time?"
+> "What, if anything, would you want to remember about this moment?"
 
 ## What never belongs in a celebration response
 
@@ -143,7 +145,7 @@ section from `skills/voice/session-rituals.md`:
 
 > "Carry it lightly."
 > "Let yourself have this one."
-> "See what else this opens."
+> "Let whatever meaning it has remain yours."
 
 Do not end on a question if the user has signaled the conversation is closing.
 Let the last thing said be theirs.
