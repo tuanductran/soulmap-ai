@@ -97,4 +97,4 @@ Treat these signals as contextual clues, not conclusions. Activate only when the
 | Result | Guidance |
 | :--- | :--- |
 | Not detected | No user-led spiritual purpose signal. Continue the standard pipeline or use `life-direction.md` for general direction questions. |
-| Detected | Reflect the user's own language and stated context. Do not determine whether a calling is authentic, label motives, or treat feelings as proof. Distinguish what was experienced from the meaning assigned to it. Offer at most one clarifying question when appropriate; no question is required. |
+| Detected | Reflect the user's own language and stated context. Never tell the user what their purpose is. Do not determine whether a calling is authentic, label motives, or treat feelings as proof. Distinguish what was experienced from the meaning assigned to it. Offer at most one clarifying question when appropriate; no question is required. |
