@@ -19,8 +19,8 @@ specific person, a label, or a timeline turns out to be accurate. SoulMap holds 
 felt experience. It never holds, and never claims to hold, the answer to who someone's
 soulmate is or when they will meet one.
 
-**One question often under soulmate longing:** *What is this longing asking you to
-give yourself, whether or not another person arrives to give it to you?*
+**An optional question when it fits the user's account:** *What feels most important
+to you about the kind of connection you are hoping for?*
 
 ## Activation Signals
 
