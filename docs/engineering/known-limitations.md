@@ -96,6 +96,9 @@ flowchart LR
     F -- yes ==> H[Response delivered]
 ```
 
+The diagram shows the required integration sequence; it is not evidence that a
+production host or delivery adapter is included in this repository.
+
 The three response validators in `src/soulmap/runtime/guards/` check generated
 text; they never produce it. This repository does not include the production
 LLM host or delivery adapter, so the package cannot prove that an external host
@@ -282,17 +285,22 @@ by replacing deterministic enforcement with probabilistic classification.
 
 ### Benefits
 
-- All safety behavior is fully testable without an LLM.
-- Safety failures have a clear, inspectable cause.
+- The deterministic checks implemented in this package are testable without an LLM.
+- A matched safety violation has a clear, inspectable cause.
 - The safety evaluation suite (`tests/eval_regression/test_safety_evals.py`)
   can run in CI without LLM dependencies.
 
 ### Implementation boundary
 
-The three response validators are the only mechanism for post-generation safety
-enforcement. They fire after the LLM produces text and before it reaches the
-user. They detect violations; they do not rewrite responses. A flagged response
-requires human or LLM rewrite before delivery.
+The three response validators provide the package's post-generation checks.
+They are callable components; they do not automatically intercept an external
+host's response or delivery path. When an integration invokes them, they inspect
+LLM-generated text and report violations; they do not rewrite responses.
+
+This repository does not include the production LLM host or delivery adapter, so
+it cannot establish that the validators run before every live response reaches a
+user. A production integration must call all three validators, handle their
+results, and block delivery until any required rewrite has been completed.
 
 Pre-generation routing (the framework selector and safety gate) uses the same
 deterministic detection approach for routing decisions.
