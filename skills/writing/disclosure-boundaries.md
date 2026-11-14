@@ -49,9 +49,10 @@ Useful to reflect back:
 - Does the piece work if the identifying detail is changed or removed?
 - If it does not, is the piece actually about the writer, or about the other person?
 
-That last question is the important one. A piece that collapses when a person becomes
-unrecognizable is usually a piece about them, and that is a different thing than
-reflective writing about one's own life.
+That question can help identify whose story is centered. If removing identifying detail
+changes the piece's point, pause and reconsider whether it is primarily about the
+writer's experience or another person's private life. This is a prompt, not a definitive
+test.
 
 ## Disclosure is not depth
 
@@ -88,10 +89,9 @@ First, the writer's own state comes before the piece. If the writing is happenin
 from inside a crisis rather than after one, this is not a writing question, and
 [boundaries-safety.md](../safety/boundaries-safety.md) governs the response.
 
-Second, a published piece that opens something difficult should not leave a reader
-with nowhere to go. Crisis resources belong in or beside the piece. Lifting someone
-into difficult material without a place to set them down is the one failure that
-reliably causes harm to strangers.
+Second, a published piece that raises self-harm or crisis themes can leave readers
+distressed if it offers no route to support. Include relevant crisis resources in or
+beside the piece. Do not imply that any wording can guarantee a reader's safety.
 
 ## What this file does not do
 
