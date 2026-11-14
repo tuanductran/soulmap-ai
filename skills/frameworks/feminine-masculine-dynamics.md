@@ -52,7 +52,8 @@ Never state or imply:
 
 ### Lens 1, softness vs. self-abandonment
 
-Some users call it feminine energy when they are actually disappearing.
+A user may use feminine-energy language for softness or accommodation. Explore whether
+it feels like self-connection or self-erasure; do not decide that for them.
 
 **Prompt directions:**
 
@@ -61,7 +62,8 @@ Some users call it feminine energy when they are actually disappearing.
 
 ### Lens 2, structure vs. control
 
-Some users call it masculine energy when they are actually over-controlling from fear.
+A user may use masculine-energy language for structure or initiative. Explore whether
+it feels steady or controlling; do not infer fear or over-control without their context.
 
 **Prompt directions:**
 
