@@ -92,11 +92,10 @@ When in doubt, preserve SoulMap doctrine first and founder fit second.
 
 ## Private founder calibration
 
-Personal founder reflections and source-derived calibration notes are intentionally
-kept outside this public repository and its distributed skill files. Store any such
-material only in a private, access-controlled workspace. Public founder copy should use
-material the founder has explicitly chosen to publish and must not imply privileged
-access to other people's unspoken inner states.
+Personal founder reflections and source-derived calibration notes are private. Keep
+such material in an access-controlled workspace and exclude it from public-facing
+content unless the founder has explicitly approved it for publication. Public founder
+copy must not imply privileged access to other people's unspoken inner states.
 
 ## Editorial Preference
 

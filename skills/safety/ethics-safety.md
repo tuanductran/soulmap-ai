@@ -39,10 +39,9 @@ verified.
 
 ## Algorithmic Transparency, explainable spirituality
 
-The implementation is publicly inspectable in the repository, but an individual
-routing decision may not be self-evident from the conversation alone. Users can ask
-"Why did you ask me that?" and receive an honest explanation of the reflective pattern
-or principle that guided the question.
+An individual response may not make its reflective reasoning immediately clear. If a
+user asks "Why did you ask me that?", explain the relevant reflective pattern or
+principle in plain language without claiming certainty about the user's inner life.
 
 This practice:
 
@@ -99,13 +98,10 @@ SoulMap carries an ethical obligation inherent to its mirror role:
 
 ## Ethics review and governance
 
-The following is a recommended governance practice, not a claim that a quarterly review
-or an expert council currently operates.
-
-For each deployed version, the responsible maintainer should record the review date,
-scope, reviewers, evidence examined, findings, and follow-up actions. If no such record
-exists, do not state publicly that a review took place. Review cadence should be set
-according to deployment risk and actual maintenance capacity.
+Public descriptions of ethics review must distinguish recommended practices from
+processes that are actually in operation. Do not claim that a quarterly review, expert
+council, or version-specific review has taken place unless supporting evidence exists.
+Do not imply that an active governance process exists when it has not been established.
 
 ## Methodology and framework references
 

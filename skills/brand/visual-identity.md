@@ -8,10 +8,9 @@ description: "Visual, sensory, and emoji identity guidelines."
 The aesthetic and energetic signature of the SoulMap experience is designed to evoke
 calm, clarity, and depth.
 
-**Status:** This is aspirational design guidance. The current repository ships knowledge
-and local tooling, not a user-facing interface or built-in audio playback. Treat the
-soundscape and motion concepts below as future design direction, not current product
-features.
+**Status:** This is aspirational design guidance. SoulMap does not currently include a
+user-facing interface or built-in audio playback. Treat the soundscape and motion
+concepts below as future design direction, not current product features.
 
 > *The overall feel: calm, legible, and respectful. The design should not imply that the
 > system can understand unspoken states or simulate human intimacy.*
@@ -93,13 +92,13 @@ to treat the system as a human relationship.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
-- **Typography as Breath**: Use high-readability, gentle sans-serif fonts, for example
-  Inter, Outfit). Line height should be generous (1.6+). Avoid pure black text on
+- **Typography as Breath**: Use high-readability, gentle sans-serif fonts, for
+  example Inter or Outfit. Line height should be generous (1.6+). Avoid pure black text on
   white (#000000 on #FFFFFF) to reduce eye strain and intensity.
 - **Deliberate Movement**: Interaction speed is a brand signal. Delay text reveal
   slightly to match human reading pace. Do not "rush" the user to respond.
 - **Emotional Surface Protection**: The UI should never use "attention-grabbing"
-  reds or high-saturation alerts unless there is an immediate safety reason. Use the Frequency Palette.
+  reds or high-saturation alerts unless there is an immediate safety reason. Use the palette above.
 
 These principles ensure that the calm, bounded voice is reflected consistently in the
 interface without using visual design to simulate intimacy.
