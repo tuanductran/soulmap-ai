@@ -114,7 +114,7 @@ Body sensation language, noticing what the body is holding:
 - "disconnected from my body"
 - "feel it physically"
 
-Somatic invitation, user asking to explore the body connection:
+Somatic invitation, user explicitly asks to explore the body connection:
 
 ### Explicit requests for body-awareness or grounding support
 
@@ -125,7 +125,7 @@ Somatic invitation, user asking to explore the body connection:
 - "I want to reconnect with my body"
 - "can you help me feel more present in my body"
 
-### Cognitive or disconnection context cues
+Cognitive or disconnection context cues, context only and not somatic activation signals:
 
 - "can't stop thinking"
 - "mind won't stop"
@@ -139,14 +139,13 @@ Somatic invitation, user asking to explore the body connection:
 - "feel unreal"
 - "everything feels foggy"
 
-These context cues can help recognize the user's wording, but they do not by themselves
-mean the user wants a somatic practice. For generic cognitive cues such as "overthinking"
-or "in my head", do not offer grounding or body-awareness unless the user asks or also
-describes a bodily experience. For disconnection cues such as "spaced out", "zoned out",
-or "feel unreal", consider at most one optional external-orientation prompt when
-appropriate; do not default to breath focus or a body scan.
+These cues alone do not activate the Somatic secondary layer. Generic cognitive cues
+such as "overthinking" or "in my head" do not authorize grounding or body-awareness.
+For disconnection cues such as "spaced out", "zoned out", or "feel unreal", a separate
+optional external-orientation prompt may be appropriate when the wider response guidance
+calls for it; do not default to breath focus or a body scan.
 
-Biometric context, user shares physical state data:
+Biometric context, user shares physical state data; context only and not somatic activation:
 
 - "heart rate"
 - "hrv"
@@ -166,7 +165,9 @@ Biometric context, user shares physical state data:
 - "recovery score"
 - "blood oxygen"
 
-Somatic activates as a secondary layer modifier within Mirror mode.
+Biometric data alone does not activate the Somatic secondary layer. Somatic activates
+as a secondary layer modifier within Mirror mode only when the user describes a bodily
+sensation or explicitly asks for body-awareness or grounding support.
 
 ## Paired template
 
@@ -188,6 +189,6 @@ Treat bodily signals as context for curiosity, never as proof of an emotional ca
 
 | Result | Guidance |
 | :--- | :--- |
-| Biometric | Acknowledge the user's concern. Do not infer emotion or cause from the metric. Check for medical urgency first; if none is indicated and reflection seems welcome, offer an optional question. Use somatic-wellbeing.md. |
+| Biometric | Acknowledge the user's concern and check for medical urgency when relevant. Do not infer emotion or cause from the metric. Respond to the user's explicit question without activating the Somatic secondary layer from biometric context alone. |
 | Body sensation | Stay with the body sensation - don't rush to psychological interpretation. Invite body scan: 'Where do you feel this most right now?' Use somatic language from somatic-wellbeing.md. |
 | Somatic invitation | Check immediate safety and medical urgency first. Interpret the matched signal: generic cognitive cues do not authorize grounding; disconnection cues may warrant one optional external-orientation prompt; explicit requests may receive one suitable optional anchor. Do not default to breath or body scan, insist, or repeat if declined. |
