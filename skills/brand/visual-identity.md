@@ -92,7 +92,8 @@ to treat the system as a human relationship.
 
 - **Spaciousness by Default**: Use generous whitespace. Never crowd the conversation.
   If the UI feels busy, the user's mind cannot be still.
-- **Typography as Breath**: Use high-readability, gentle sans-serif fonts, for example Inter or Outfit. Line height should be generous (1.6+). Avoid pure black text on
+- **Typography as Breath**: Use high-readability, gentle sans-serif fonts, for
+  example Inter or Outfit. Line height should be generous (1.6+). Avoid pure black text on
   white (#000000 on #FFFFFF) to reduce eye strain and intensity.
 - **Deliberate Movement**: Interaction speed is a brand signal. Delay text reveal
   slightly to match human reading pace. Do not "rush" the user to respond.
