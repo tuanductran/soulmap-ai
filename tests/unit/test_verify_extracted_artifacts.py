@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from soulmap.devtools.packaging import build_skill
+from soulmap.devtools.packaging.members import source_members
 
 SCRIPT = (
     Path(__file__).resolve().parents[2] / "scripts" / "verify_extracted_artifacts.py"
@@ -82,6 +83,22 @@ def test_verifier_rejects_missing_artifact(tmp_path: Path) -> None:
     assert "artifact not found" in result.stderr
 
 
+def _write_unvalidated_archives(root: Path) -> None:
+    """Create source-matching archives without invoking the build guard."""
+    for archive_name, include_plugin in (
+        ("soulmap-ai.zip", False),
+        ("soulmap-ai.skill", True),
+    ):
+        archive_path = root / "dist" / archive_name
+        archive_path.parent.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(
+            archive_path, "w", compression=zipfile.ZIP_DEFLATED
+        ) as archive:
+            members = source_members(root, include_plugin=include_plugin)
+            for member in sorted(members):
+                archive.write(root / member, arcname=member)
+
+
 def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) -> None:
     _build_valid_repo(tmp_path)
     _write(
@@ -89,8 +106,7 @@ def test_verifier_rejects_internal_reference_in_shipped_skill(tmp_path: Path) ->
         "skills/public.md",
         "This must not mention src/soulmap/runtime internals.\n",
     )
-    build_skill.build_zip(tmp_path)
-    build_skill.build_skill(tmp_path)
+    _write_unvalidated_archives(tmp_path)
 
     result = _run(tmp_path)
 

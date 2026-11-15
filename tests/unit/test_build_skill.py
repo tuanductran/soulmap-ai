@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from soulmap import cli as cli_tool
+from soulmap.devtools.checks.skills_boundary import audit_markdown
 from soulmap.devtools.packaging import build_skill as build_tool
 from soulmap.devtools.packaging import dev as dev_tool
 
@@ -70,6 +71,7 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
+    _write(root, ".claude-plugin/metadata.md", "Package metadata only.\n")
     _write(root, ".claude-plugin/README.md", "Claude plugin development notes\n")
     _write(
         root,
@@ -95,6 +97,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     assert skill_names == {
         *core_names,
         ".claude-plugin/marketplace.json",
+        ".claude-plugin/metadata.md",
     }
     assert ".claude-plugin/README.md" not in skill_names
 
@@ -185,6 +188,7 @@ def test_dev_builds_verifies_and_extracts_both_artifacts(
     assert (zip_tree / "skills/public.md").read_text(encoding="utf-8") == "content\n"
     assert not (zip_tree / ".claude-plugin").exists()
     assert (skill_tree / ".claude-plugin/marketplace.json").is_file()
+    assert (skill_tree / ".claude-plugin/metadata.md").is_file()
     assert not (skill_tree / ".claude-plugin/README.md").exists()
 
 
@@ -239,3 +243,30 @@ def test_cli_exposes_build_and_dev_commands(
     assert cli_tool.main(["build"]) == 0
     assert cli_tool.main(["dev"]) == 0
     assert calls == [("build", []), ("dev", [])]
+
+
+def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
+    tmp_path: Path,
+) -> None:
+    _create_source_tree(tmp_path)
+    _write(tmp_path, "SKILL.md", "# SoulMap\n\nPython must not ship.\n")
+
+    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+        build_tool.build_zip(tmp_path)
+
+    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+        build_tool.build_skill(tmp_path)
+
+
+def test_built_archives_contain_only_language_neutral_markdown(
+    tmp_path: Path,
+) -> None:
+    _create_source_tree(tmp_path)
+    archives = build_tool.build_all(tmp_path)
+
+    for archive_path in archives:
+        with zipfile.ZipFile(archive_path) as archive:
+            for member in archive.namelist():
+                if member.casefold().endswith(".md"):
+                    content = archive.read(member).decode("utf-8")
+                    assert audit_markdown(member, content) == []

@@ -3,35 +3,76 @@ from pathlib import Path
 from soulmap.devtools.checks.skills_boundary import audit
 
 
-def test_audit_accepts_domain_markdown_without_implementation_details(
+def _write(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def test_audit_accepts_implementation_neutral_shipped_markdown(
     tmp_path: Path,
 ) -> None:
-    skills = tmp_path / "skills" / "example"
-    skills.mkdir(parents=True)
-    (skills / "SKILL.md").write_text(
-        "---\nname: example\ndescription: Example\n---\n\n# Example\n\nReflective content.\n",
-        encoding="utf-8",
-    )
+    _write(tmp_path / "SKILL.md", "# SoulMap\n\nReflective content.\n")
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nStay grounded.\n")
+    _write(tmp_path / "skills/example/guide.md", "# Guide\n\nReflective content.\n")
 
     assert audit(tmp_path) == []
+
+
+def test_audit_checks_root_entrypoints_and_nested_skill_markdown(
+    tmp_path: Path,
+) -> None:
+    _write(tmp_path / "SKILL.md", "# Skill\n\nPython should not appear here.\n")
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nStay grounded.\n")
+    _write(tmp_path / "skills/example/guide.md", "# Guide\n\nReflective content.\n")
+
+    findings = audit(tmp_path)
+
+    assert any("SKILL.md" in finding and "Python" in finding for finding in findings)
+
+
+def test_audit_rejects_programming_language_names_in_shipped_content(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "SKILL.md",
+        (
+            "# Skill\n\nJavaScript, TypeScript, C++, C#, and SQL "
+            "are not product guidance.\n"
+        ),
+    )
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nStay grounded.\n")
+    _write(tmp_path / "skills/example/guide.md", "# Guide\n\nReflective content.\n")
+
+    findings = audit(tmp_path)
+
+    assert any("JavaScript" in finding for finding in findings)
+    assert any("TypeScript" in finding for finding in findings)
+    assert any("C++" in finding for finding in findings)
+    assert any("C#" in finding for finding in findings)
+    assert any("SQL" in finding for finding in findings)
 
 
 def test_audit_rejects_implementation_commands_and_executable_code(
     tmp_path: Path,
 ) -> None:
-    skills = tmp_path / "skills" / "example"
-    skills.mkdir(parents=True)
-    (skills / "SKILL.md").write_text(
-        "---\nname: example\ndescription: Example\n---\n\n# Example\n\n"
-        "Python is used in psychological research, but run uv run.\n\n"
-        + chr(96) * 3
-        + "python\nprint('x')\n"
-        + chr(96) * 3
-        + "\n",
-        encoding="utf-8",
+    _write(
+        tmp_path / "skills/example/SKILL.md",
+        "# Example\n\nUse uv run for this task.\n",
     )
+    _write(tmp_path / "skills/example/extra.md", "```bash\necho unsafe\n```\n")
 
     findings = audit(tmp_path)
 
     assert any("uv run" in finding for finding in findings)
     assert any("executable code fence" in finding for finding in findings)
+
+
+def test_audit_checks_soulmap_doctrine_entrypoint(tmp_path: Path) -> None:
+    _write(tmp_path / "SKILL.md", "# Skill\n")
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nJavaScript should not appear.\n")
+
+    findings = audit(tmp_path)
+
+    assert any(
+        "SOULMAP.md" in finding and "JavaScript" in finding for finding in findings
+    )
