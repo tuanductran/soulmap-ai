@@ -166,9 +166,7 @@ def audit_text(relative_path: str | Path, text: str) -> list[str]:
         start = lowered.find(reference.lower())
         if start >= 0:
             line_no = text.count("\n", 0, start) + 1
-            findings.append(
-                f"{rel}:{line_no}: implementation reference: {reference!r}"
-            )
+            findings.append(f"{rel}:{line_no}: implementation reference: {reference!r}")
 
     return findings
 
