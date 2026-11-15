@@ -240,7 +240,7 @@ def test_cli_exposes_build_and_dev_commands(
     assert cli_tool.main(["dev"]) == 0
     assert calls == [("build", []), ("dev", [])]
 
-    
+
 def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
     tmp_path: Path,
 ) -> None:
