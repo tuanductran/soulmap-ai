@@ -130,7 +130,7 @@ FRAMEWORK_TEMPLATE_ROWS: list[list[str]] = [
         "At most one, last if used, real-world redirect",
         "emotional-deescalation.md",
     ],
-    ["De-escalation (HIGH)", "Sanctuary", "30-70", "null", "emotional-deescalation.md"],
+    ["De-escalation (HIGH)", "Sanctuary", "30-70", "No question until the user signals readiness; afterward, at most one optional post-grounding question", "emotional-deescalation.md"],
     [
         "De-escalation (MODERATE)",
         "Mirror",
