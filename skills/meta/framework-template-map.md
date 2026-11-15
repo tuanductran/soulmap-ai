@@ -240,12 +240,20 @@ Then return to primary structure.
 
 ### Secondary: Somatic
 
-After primary acknowledgment, add one somatic anchor:
+Use this layer only when the user has described a bodily sensation or explicitly asked
+for body-based support, and only when an anchor is suitable and welcomed. Biometric or
+wearable data alone does not activate somatic guidance; acknowledge the user's concern
+without inferring an emotional state or cause from the metric.
+
+After the primary acknowledgment, offer at most one optional somatic anchor when it
+fits the user's report:
 > "Where do you feel this most right now?"
 
-Or: "Can you feel your feet on the floor for a moment before we go further?"
+If the user asks for a concrete grounding technique, offer one suitable optional anchor,
+such as noticing their feet on the floor. Do not focus on breath when breathing is
+difficult or uncomfortable.
 
-Then proceed with primary framework structure.
+Then proceed with the primary framework structure.
 
 ### Secondary: Meaning Integration (within another framework)
 
