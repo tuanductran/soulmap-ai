@@ -43,7 +43,7 @@ current words, readiness, and stated preference; a reflection or quiet close is 
 | Body/sensation questions          | When the user is in acute emotion, grounds them in physical experience          |
 | "When have you felt this before?" | When pattern recognition work is appropriate (Stages 2-3)                        |
 | "What part of you..."             | When helping the user see inner plurality without pathologizing                  |
-| "What do you already know?"       | When the user seems to hold the answer but hasn't voiced it yet                  |
+| "What, if anything, feels clear to you so far?" | When the user has expressed some clarity alongside uncertainty; do not assume an unspoken answer |
 | "What would it feel like to..."   | When inviting the user to imagine a different relationship with their experience |
 
 ## Sample question bank by emotional state
@@ -101,9 +101,9 @@ conversation and the user has not rejected the reflection.
 ### Emotional Avoidance
 
 - If the feeling you've been analyzing could speak, what would it say?
-- What do you think would happen if you let yourself feel this fully, even for a moment?
+- What happens for you when you give this feeling a little attention, if you want to explore that?
 - Does thinking about this feeling seem easier than experiencing it, or does that not fit?
-- What emotion is the hardest one for you to stay with?
+- Is there a feeling that is harder to stay with than others, or does that not fit?
 
 ### Self-Sabotage
 
@@ -114,26 +114,25 @@ conversation and the user has not rejected the reflection.
 
 ### Over-Responsibility
 
-- Where, if anywhere, did you get the idea that love means solving someone else's problems?
-- What would it cost you, or someone else, if you stopped carrying this?
-- What do you need right now that you haven't let yourself ask for?
-- What would it feel like to let this be someone else's to carry?
+- How did you come to understand care and responsibility in this situation, if you want to explore that?
+- What might change if you carried less of this, if that feels relevant?
+- Is there anything you would like to ask for right now, or would another kind of support feel more relevant?
+- Is any part of this something another person could reasonably share, or not?
 
 ### Fear of Rejection
 
-- What would it mean about you if the answer was no?
+- What, if anything, would a no mean to you?
 - Does this fear connect to an earlier experience, or does it seem specific to what is happening now?
 - What do you imagine asking for, if rejection wasn't part of the picture?
-- What has staying silent cost you, in things you never got to try?
+- What, if anything, has staying silent meant for you?
 
 ### Cross-Pattern (when combination detected)
 
 - If you look across these situations, what recurring response, if any, do you notice?
-- What is the thing all of these stories have in common that you haven't said out loud
-  yet?
+- Do you notice a common thread across these stories, or do they feel separate to you?
 - When you imagine a version of yourself without this pattern, what does that person
   feel, or do, differently?
-- What would have to change inside you for this cycle to stop?
+- What, if anything, seems to influence whether this cycle repeats or changes?
 
 ## Post-Grounding Questions
 
@@ -146,14 +145,14 @@ Offer at most one question only if grounding has landed and the user seems ready
 **After the flood begins to settle:**
 
 - "When you breathe into it, what's the feeling that's most present right now?"
-- "Underneath all of that, what's the one thing that hurts the most?"
-- "If the noise could quiet for a moment, what would you most want to say?"
-- "What's the feeling that's been there the longest, underneath everything else?"
+- "Which part of what you described feels most painful right now, if any?"
+- "Is there anything you would like to say right now, or would quiet be better?"
+- "Is there a feeling that has been present for a while, or is it hard to tell?"
 - "Is there one thing in all of that that you want me to understand most?"
 
 **When the user doesn't know what they feel:**
 
-- "What does your body know, even when your mind doesn't?"
+- "What sensations, if any, do you notice right now?"
 - "If you had to point to the feeling, where does it live right now, in your body?"
 - "You don't have to name it exactly. What does it feel like, heavy, tight, hollow,
   something else?"
