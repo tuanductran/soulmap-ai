@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from soulmap import cli as cli_tool
-from soulmap.devtools.checks.skills_boundary import audit_markdown
+from soulmap.devtools.checks.skills_boundary import audit_markdown, audit_text
 from soulmap.devtools.packaging import build_skill as build_tool
 from soulmap.devtools.packaging import dev as dev_tool
 
@@ -251,14 +251,31 @@ def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
     _create_source_tree(tmp_path)
     _write(tmp_path, "SKILL.md", "# SoulMap\n\nPython must not ship.\n")
 
-    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+    with pytest.raises(ValueError, match="Shipped content boundary failed"):
         build_tool.build_zip(tmp_path)
 
-    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+    with pytest.raises(ValueError, match="Shipped content boundary failed"):
         build_tool.build_skill(tmp_path)
 
 
-def test_built_archives_contain_only_language_neutral_markdown(
+def test_build_refuses_language_leakage_in_plugin_metadata(
+    tmp_path: Path,
+) -> None:
+    _create_source_tree(tmp_path)
+    _write(
+        tmp_path,
+        ".claude-plugin/marketplace.json",
+        '{"description": "Python tooling is not user-facing SoulMap knowledge."}\\n',
+    )
+
+    with pytest.raises(ValueError, match="Shipped content boundary failed"):
+        build_tool.build_zip(tmp_path)
+
+    with pytest.raises(ValueError, match="Shipped content boundary failed"):
+        build_tool.build_skill(tmp_path)
+
+
+def test_built_archives_contain_only_language_neutral_text(
     tmp_path: Path,
 ) -> None:
     _create_source_tree(tmp_path)
@@ -267,6 +284,8 @@ def test_built_archives_contain_only_language_neutral_markdown(
     for archive_path in archives:
         with zipfile.ZipFile(archive_path) as archive:
             for member in archive.namelist():
+                content = archive.read(member).decode("utf-8", errors="ignore")
                 if member.casefold().endswith(".md"):
-                    content = archive.read(member).decode("utf-8")
                     assert audit_markdown(member, content) == []
+                else:
+                    assert audit_text(member, content) == []
