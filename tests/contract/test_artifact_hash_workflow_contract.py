@@ -100,3 +100,26 @@ def test_release_prep_uses_python_release_gate() -> None:
     assert "uv run soulmap release-verify " not in content
     assert "uv run soulmap release-provenance " not in content
     assert "uv run soulmap release-health " not in content
+
+
+def test_ci_skill_artifact_excludes_local_python_distributions() -> None:
+    content = _read(CI_WORKFLOW)
+
+    assert (
+        'uv build --wheel --sdist --out-dir "$RUNNER_TEMP/soulmap-python-dist"'
+        in content
+    )
+    assert (
+        'output = Path(os.environ["RUNNER_TEMP"]) / "soulmap-python-dist"'
+        in content
+    )
+
+    upload = content.split("name: Upload skill artifact", 1)[1].split(
+        "retention-days:", 1
+    )[0]
+    assert "dist/soulmap-ai.zip" in upload
+    assert "dist/soulmap-ai.skill" in upload
+    assert MANIFEST_PATH in upload
+    assert "dist/python/" not in upload
+    assert "*.whl" not in upload
+    assert "*.tar.gz" not in upload
