@@ -164,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
 
     findings = audit(args.root.resolve())
     if findings:
-        print("\\n".join(findings))
+        print("\n".join(findings))
         return 1
     print("Skill implementation boundary: clean")
     return 0
