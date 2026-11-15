@@ -141,7 +141,7 @@ If yes: offer a gentle bridge before any inquiry.
 
 **Bridge phrases (choose one, only after the pace has slowed):**
 
-- "When you're ready, there's no rush, we can look at what's underneath all of this."
+- "When you're ready, there's no rush. We can look at what feels most important in what you've described."
 - "Take whatever time you need. When something settles, we can look at it together."
 - "When you feel a little more here, we can talk about what's going on."
 
