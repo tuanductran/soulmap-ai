@@ -1,5 +1,6 @@
 import pytest
 
+from soulmap.runtime.detectors.somatic_detector import detect_somatic
 from soulmap.runtime.routing import framework_selector
 
 # Helper to install default non-triggering detector stubs
@@ -313,3 +314,28 @@ def test_high_intensity_still_forces_de_escalation_over_grief() -> None:
 
     assert result["primary_framework"] == "DE_ESCALATION"
     assert result["mode"] == "SANCTUARY"
+
+
+@pytest.mark.parametrize("intensity_level", ["NORMAL", "HIGH"])
+def test_biometric_context_alone_does_not_activate_somatic_layer(
+    monkeypatch: pytest.MonkeyPatch,
+    intensity_level: str,
+) -> None:
+    """Biometric context stays available without becoming a secondary layer."""
+    _install_defaults(monkeypatch)
+    monkeypatch.setattr(framework_selector, "detect_somatic", detect_somatic)
+    monkeypatch.setattr(
+        framework_selector,
+        "detect_intensity",
+        lambda *_args, **_kwargs: {"level": intensity_level},
+    )
+
+    result = framework_selector.select_framework(
+        "My watch shows low HRV and poor sleep — what is my body telling me",
+        [],
+        {"prior_stage": 3},
+    )
+
+    assert result["secondary_layer"] is None
+    if intensity_level == "HIGH":
+        assert result["primary_framework"] == "DE_ESCALATION"
