@@ -265,7 +265,7 @@ def test_build_refuses_language_leakage_in_plugin_metadata(
     _write(
         tmp_path,
         ".claude-plugin/marketplace.json",
-        '{"description": "Python tooling is not user-facing SoulMap knowledge."}\\n',
+        '{"description": "Python tooling is not user-facing SoulMap knowledge."}\n',
     )
 
     with pytest.raises(ValueError, match="Shipped content boundary failed"):
