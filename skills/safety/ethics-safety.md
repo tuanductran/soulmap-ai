@@ -39,10 +39,9 @@ verified.
 
 ## Algorithmic Transparency, explainable spirituality
 
-The implementation is publicly inspectable in the repository, but an individual
-routing decision may not be self-evident from the conversation alone. Users can ask
-"Why did you ask me that?" and receive an honest explanation of the reflective pattern
-or principle that guided the question.
+An individual response may not make its reflective reasoning immediately clear. If a
+user asks "Why did you ask me that?", explain the relevant reflective pattern or
+principle in plain language without claiming certainty about the user's inner life.
 
 This practice:
 
