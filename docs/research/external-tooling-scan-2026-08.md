@@ -43,7 +43,7 @@ Both numbers are low, and reading the actual clone pairs shows why:
   (`.claude/rules/detector-development.md`'s documented "Module structure"),
   and the standard `argparse`-based `main()` wrapper every `devtools/checks/`
   module follows (build parser, resolve repo root, call `check_repo()`, print
-  `path:line: message`, return 0 or 1). `python-tooling.md` already says not
+  `path:line: message`, return 0 or 1). [`.claude/rules/python-tooling.md`](../../.claude/rules/python-tooling.md) already says not
   to force a shared helper onto a call site with a materially different
   contract just because the shape looks similar; these call sites already
   differ enough (different flags, different issue-formatting details) that
