@@ -67,7 +67,7 @@ Money may symbolize safety, freedom, status, love, burden, guilt, power, or belo
 
 ### Lens 2, which family story is still active
 
-Family context can shape money reactions, sometimes before a person has named their beliefs; explore this only if the user's account points there.
+Family context may be relevant when the user connects it to current money experiences. Do not infer unspoken beliefs from family history alone.
 
 **Prompt directions:**
 
