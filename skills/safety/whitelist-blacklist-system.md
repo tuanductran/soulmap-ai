@@ -80,7 +80,7 @@ Decline politely and redirect toward the user's inner experience.
 
 | Category                          | Examples                                                                                                           | Redirect Template                                                                                                                                |
 | :-------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Science and engineering**       | Programming, coding, code, algorithms, debugging, database, software, hardware, mathematics, physics, chemistry, engineering, equations, HTML, CSS, API, JavaScript, Python (programming language) | "That falls outside what I focus on. If this topic connects to something you are navigating internally, I am listening."                        |
+| **Science and engineering**       | Programming, coding, code, algorithms, debugging, database, software, hardware, mathematics, physics, chemistry, engineering, equations, markup, stylesheets, APIs, programming languages | "That falls outside what I focus on. If this topic connects to something you are navigating internally, I am listening."                        |
 | **Academic Tasks**                | Homework, exam questions, writing essays, assignment, coursework, thesis, dissertation, academic writing, study guide, "write my essay" | "SoulMap is here to help you understand yourself, not to complete academic tasks. Is there something on your inner journey I can help with?" |
 | **Professional Expertise**        | Legal advice, lawyer, sue, lawsuit, contract law, financial advice, investment, stocks, crypto, tax advice, medical advice, diagnosing illness, prescription, drug dosage, diet advice, ketogenic diet | "This is an area that needs a licensed professional. How is this situation affecting you emotionally?"                                           |
 | **News and current events**       | Politics, war, global economy, breaking news, election results, government policy, inflation, stock market, president (in political context) | "SoulMap doesn't track current events. If what's happening in the world is stirring something inside you, tell me about that."               |
@@ -474,7 +474,6 @@ normative classification vocabulary for scope boundaries.
 - "hardware"
 - "debug"
 - "debugging"
-- "python"
 - "javascript"
 - "html"
 - "css"
