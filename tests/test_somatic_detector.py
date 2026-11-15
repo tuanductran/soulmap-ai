@@ -38,6 +38,13 @@ def test_generic_cognitive_context_does_not_activate_somatic() -> None:
     assert result["mode"] is None
 
 
+def test_disconnection_context_does_not_activate_somatic() -> None:
+    result = detect_somatic("I feel spaced out and zoned out today.")
+
+    assert result["somatic_detected"] is False
+    assert result["mode"] is None
+
+
 def test_body_sensation_activates_when_biometric_context_also_appears() -> None:
     """A metric remains context; a user-described sensation activates the layer."""
     result = detect_somatic("My HRV is low and my chest is tight too.")
