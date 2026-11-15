@@ -109,10 +109,7 @@ def test_ci_skill_artifact_excludes_local_python_distributions() -> None:
         'uv build --wheel --sdist --out-dir "$RUNNER_TEMP/soulmap-python-dist"'
         in content
     )
-    assert (
-        'output = Path(os.environ["RUNNER_TEMP"]) / "soulmap-python-dist"'
-        in content
-    )
+    assert 'output = Path(os.environ["RUNNER_TEMP"]) / "soulmap-python-dist"' in content
 
     upload = content.split("name: Upload skill artifact", 1)[1].split(
         "retention-days:", 1
