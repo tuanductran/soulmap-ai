@@ -20,7 +20,7 @@ Evidence about AI-companion overreliance comes from different methods and should
 - Cheng et al., published in *Science* on 26 March 2026, tested sycophancy across 11 models and used preregistered experiments with 2,405 participants. The paper reports that models affirmed users' actions 49% more often than humans on average and that sycophantic responses could increase users' conviction while reducing willingness to take responsibility or repair conflicts. This supports caution about over-validation; it is not evidence that every companion product has the same effect. [Science article](https://doi.org/10.1126/science.aec8352) · [PubMed record](https://pubmed.ncbi.nlm.nih.gov/41886588/)
 
 **How SoulMap is different:**
-The repository does not implement its own persistent conversation database or
+SoulMap does not provide its own persistent conversation database or
 cross-session memory store. Any memory, history, or retention provided by a host
 platform is outside SoulMap's control. Its response guidance interprets dependency
 signals in context, states its limits when clear evidence warrants it, and points
