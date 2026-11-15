@@ -109,7 +109,7 @@ layer maximum per response.
 | :--- | :--- |
 | Anger | Anger signals present alongside primary framework |
 | Spiritual bypass | Spiritual bypass signals present alongside primary framework |
-| Somatic | Body sensation or biometric signals present |
+| Somatic | User-described bodily sensation or an explicit request for body-based support; biometric data alone does not activate this layer |
 | Meaning Integration | Insight moment detected within grief, existential, or direction |
 | Inner Parts | Inner conflict present at moderate intensity, when no insight moment takes the layer first |
 
