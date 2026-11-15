@@ -41,7 +41,13 @@ _EXECUTABLE_FENCES = (
 
 def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
     root = repo_root / "skills"
-    return sorted(root.rglob("*.md"))
+    paths = list(root.rglob("*.md"))
+    paths.extend(
+        path
+        for path in (repo_root / "SKILL.md", repo_root / "SOULMAP.md")
+        if path.is_file()
+    )
+    return sorted(paths)
 
 
 def _line_number(token: object) -> int:
