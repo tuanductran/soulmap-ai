@@ -1,10 +1,12 @@
-"""Audit shipped SoulMap skills for accidental implementation leakage."""
+"""Audit every shipped Markdown file for repository and implementation leakage."""
 
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
+from soulmap.devtools.packaging.members import source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 _FORBIDDEN_TEXT = (
@@ -23,6 +25,13 @@ _FORBIDDEN_TEXT = (
     "pytest",
     "python -m",
 )
+_FORBIDDEN_LANGUAGES = re.compile(
+    r"(?<![A-Za-z0-9_])"
+    r"(?:python|javascript|typescript|java|c\\+\\+|c#|ruby|php|swift|kotlin|"
+    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql)"
+    r"(?![A-Za-z0-9_])",
+    re.IGNORECASE,
+)
 _EXECUTABLE_FENCES = (
     "python",
     "py",
@@ -39,8 +48,13 @@ _EXECUTABLE_FENCES = (
 
 
 def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
-    root = repo_root / "skills"
-    return sorted(root.rglob("*.md"))
+    """Return Markdown files eligible for either build artifact."""
+    members = source_members(repo_root, include_plugin=True)
+    return sorted(
+        repo_root / member
+        for member in members
+        if Path(member).suffix.casefold() == ".md"
+    )
 
 
 def _line_number(token: object) -> int:
@@ -50,22 +64,24 @@ def _line_number(token: object) -> int:
 
 
 def _implementation_tokens(value: str) -> tuple[str, ...]:
-    """Return implementation references that are meaningful in Markdown syntax."""
+    """Return implementation references meaningful in Markdown syntax."""
     lowered = value.lower()
     return tuple(token for token in _FORBIDDEN_TEXT if token.lower() in lowered)
 
 
 def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
-    """Return implementation-leak findings using Markdown structure.
-
-    Plain prose is allowed to discuss generic concepts such as Python or class.
-    Implementation references are rejected when they point to repository/runtime
-    surfaces or appear inside executable code constructs.
-    """
+    """Return implementation-leak findings using Markdown structure."""
     from markdown_it import MarkdownIt
 
     rel = Path(relative_path)
     findings: list[str] = []
+
+    for match in _FORBIDDEN_LANGUAGES.finditer(text):
+        line_no = text.count("\\n", 0, match.start()) + 1
+        findings.append(
+            f"{rel}:{line_no}: implementation language reference: {match.group(0)!r}"
+        )
+
     parser = MarkdownIt("commonmark")
     tokens = parser.parse(text)
 
@@ -95,24 +111,20 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
             continue
 
         for child in token.children:
-            child_line = line_no
             if child.type == "code_inline":
                 for reference in _implementation_tokens(child.content):
                     findings.append(
-                        f"{rel}:{child_line}: implementation token in inline code: "
-                        f"{reference!r}"
+                        f"{rel}:{line_no}: implementation token in inline code: {reference!r}"
                     )
             elif child.type in {"link_open", "image"}:
                 href_value = child.attrGet("href") or child.attrGet("src")
                 href = href_value if isinstance(href_value, str) else ""
                 for reference in _implementation_tokens(href):
                     findings.append(
-                        f"{rel}:{child_line}: implementation reference in link target: "
-                        f"{reference!r}"
+                        f"{rel}:{line_no}: implementation reference in link target: {reference!r}"
                     )
 
-        plain = token.content
-        for reference in _implementation_tokens(plain):
+        for reference in _implementation_tokens(token.content):
             if reference in {"templates/", "library/"}:
                 findings.append(
                     f"{rel}:{line_no}: repository-only reference: {reference!r}"
@@ -146,7 +158,7 @@ def _audit_file(path: Path, repo_root: Path) -> list[str]:
 
 
 def audit(repo_root: Path) -> list[str]:
-    """Return every implementation-leak finding in shipped domain skills."""
+    """Return every implementation-leak finding in build-eligible Markdown."""
     findings: list[str] = []
     for path in _iter_shipped_markdown(repo_root):
         findings.extend(_audit_file(path, repo_root))
@@ -154,18 +166,18 @@ def audit(repo_root: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run the shipped-skill implementation boundary audit."""
+    """Run the shipped-Markdown implementation boundary audit."""
     parser = argparse.ArgumentParser(
-        description="Reject implementation leakage from shipped SoulMap skills."
+        description="Reject implementation leakage from shipped SoulMap Markdown."
     )
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
 
     findings = audit(args.root.resolve())
     if findings:
-        print("\n".join(findings))
+        print("\\n".join(findings))
         return 1
-    print("Skill implementation boundary: clean")
+    print("Shipped Markdown boundary: clean")
     return 0
 
 
