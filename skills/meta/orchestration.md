@@ -63,21 +63,21 @@ Before selecting a framework, classify the current emotional intensity level.
 
 | Level | Signals | Consequence |
 | :--- | :--- | :--- |
-| High | Physical overwhelm, cognitive flooding, emotional spiraling | Force De-escalation as primary regardless of topic |
-| Moderate | Elevated activation, multiple emotions, long fragmented messages | Apply slow-down mode, hold framework lightly |
-| Normal | Standard reflective mode | Proceed to Phase 3 |
+| High | Physical overwhelm, cognitive flooding, emotional spiraling | Use the configured High-intensity De-escalation/Sanctuary fallback regardless of topic; do not run primary-framework selection |
+| Moderate | Elevated activation, multiple emotions, long fragmented messages | Check the explicit insight and grief exceptions first; otherwise use the configured Moderate-intensity De-escalation fallback with only its allowed secondary layer. Do not run the normal primary-priority list |
+| Normal | Standard reflective mode | Proceed to Phase 3 and evaluate the primary-priority list |
 
 ### Phase 3, primary framework selection
 
-Apply the priority hierarchy from SOULMAP.md. Select **exactly one** primary framework.
-The first match wins. Do not skip to a lower priority unless all higher priorities are
-cleared.
+For Normal-intensity conversations that reach this phase, apply the primary-priority
+hierarchy from SOULMAP.md and the Python-owned routing configuration. Select **exactly
+one** primary framework. The first matching rule wins; do not skip to a lower priority
+unless all higher priorities are cleared. High and Moderate intensity routing has
+already been handled in Phase 2.
 
 | Priority | Framework | Trigger Condition |
 | :--- | :--- | :--- |
-| Very high | De-escalation / Sanctuary | Emotional intensity High or elevated-risk crisis |
 | High | Grief | Acute, anticipatory, ambiguous, or complicated grief signals |
-| High | De-escalation | Emotional intensity Moderate |
 | Medium | Existential | Identity shift, meaning void, endings, larger questions |
 | Medium | Inner Parts | Explicit inner conflict, part-naming, behavioral confusion |
 | Medium | Direction | Lostness, meaning void, should-vs-want, misalignment |
