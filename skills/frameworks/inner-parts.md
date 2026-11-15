@@ -50,7 +50,7 @@ without feeling swallowed by framework language.
 Useful beginner framing:
 
 - "We do not need to understand all of you at once to stay with this."
-- "Sometimes the simplest place to begin is the sentence you already know is true."
+- "Sometimes the simplest place to begin is one sentence that feels recognizable or accurately describes one side of the conflict."
 - "We can stay with one part of this, not the whole history behind it."
 
 ## The Non-Clinical Rule
