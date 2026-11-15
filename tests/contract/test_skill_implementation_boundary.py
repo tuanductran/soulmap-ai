@@ -35,7 +35,7 @@ def test_audit_rejects_programming_language_names_in_shipped_content(
 ) -> None:
     _write(
         tmp_path / "SKILL.md",
-        "# Skill\n\nJavaScript and TypeScript are not product guidance.\n",
+        "# Skill\n\nJavaScript, TypeScript, HTML, CSS, and API are not product guidance.\n",
     )
     _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nStay grounded.\n")
     _write(tmp_path / "skills/example/guide.md", "# Guide\n\nReflective content.\n")
@@ -44,6 +44,9 @@ def test_audit_rejects_programming_language_names_in_shipped_content(
 
     assert any("JavaScript" in finding for finding in findings)
     assert any("TypeScript" in finding for finding in findings)
+    assert any("HTML" in finding for finding in findings)
+    assert any("CSS" in finding for finding in findings)
+    assert any("API" in finding for finding in findings)
 
 
 def test_audit_rejects_implementation_commands_and_executable_code(
@@ -62,9 +65,11 @@ def test_audit_rejects_implementation_commands_and_executable_code(
 
 
 def test_audit_checks_soulmap_doctrine_entrypoint(tmp_path: Path) -> None:
-    _write(tmp_path / "SKILL.md", "# Skill\\n")
-    _write(tmp_path / "SOULMAP.md", "# Doctrine\\n\\nJavaScript should not appear.\\n")
+    _write(tmp_path / "SKILL.md", "# Skill\n")
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\n\nJavaScript should not appear.\n")
 
     findings = audit(tmp_path)
 
-    assert any("SOULMAP.md" in finding and "JavaScript" in finding for finding in findings)
+    assert any(
+        "SOULMAP.md" in finding and "JavaScript" in finding for finding in findings
+    )
