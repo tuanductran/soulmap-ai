@@ -36,7 +36,7 @@ def test_audit_rejects_programming_language_names_in_shipped_content(
     _write(
         tmp_path / "SKILL.md",
         (
-            "# Skill\n\nJavaScript and TypeScript "
+            "# Skill\n\nJavaScript, TypeScript, C++, C#, and SQL "
             "are not product guidance.\n"
         ),
     )
