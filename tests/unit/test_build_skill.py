@@ -257,6 +257,7 @@ def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
     with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
         build_tool.build_skill(tmp_path)
 
+
 def test_built_archives_contain_only_language_neutral_markdown(
     tmp_path: Path,
 ) -> None:
