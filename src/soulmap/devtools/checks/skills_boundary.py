@@ -28,7 +28,7 @@ _FORBIDDEN_TEXT = (
 _FORBIDDEN_LANGUAGES = re.compile(
     r"(?<![A-Za-z0-9_])"
     r"(?:python|javascript|typescript|java|c\+\+|c#|ruby|php|swift|kotlin|"
-    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql)"
+    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql|html|css|api|"\n    r"programming|coding)"
     r"(?![A-Za-z0-9_])",
     re.IGNORECASE,
 )
@@ -96,7 +96,8 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
                 )
             for reference in _implementation_tokens(token.content):
                 findings.append(
-                    f"{rel}:{line_no}: implementation token in code block: {reference!r}"
+                    f"{rel}:{line_no}: implementation token in code block: "
+                    f"{reference!r}"
                 )
             continue
 
@@ -114,14 +115,16 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
             if child.type == "code_inline":
                 for reference in _implementation_tokens(child.content):
                     findings.append(
-                        f"{rel}:{line_no}: implementation token in inline code: {reference!r}"
+                        f"{rel}:{line_no}: implementation token in inline code: "
+                        f"{reference!r}"
                     )
             elif child.type in {"link_open", "image"}:
                 href_value = child.attrGet("href") or child.attrGet("src")
                 href = href_value if isinstance(href_value, str) else ""
                 for reference in _implementation_tokens(href):
                     findings.append(
-                        f"{rel}:{line_no}: implementation reference in link target: {reference!r}"
+                        f"{rel}:{line_no}: implementation reference in link target: "
+                        f"{reference!r}"
                     )
 
         for reference in _implementation_tokens(token.content):
