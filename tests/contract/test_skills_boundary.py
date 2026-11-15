@@ -11,7 +11,9 @@ A class can describe a social category without referring to executable code.
 
 
 def test_generic_words_are_not_treated_as_implementation_leakage() -> None:
-    text = "A class can describe a social category without referring to executable code."
+    text = (
+        "A class can describe a social category without referring to executable code."
+    )
     assert audit_markdown("skills/example.md", text) == []
 
 
