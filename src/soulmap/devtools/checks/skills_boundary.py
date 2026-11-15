@@ -28,7 +28,7 @@ _FORBIDDEN_TEXT = (
 _FORBIDDEN_LANGUAGES = re.compile(
     r"(?<![A-Za-z0-9_])"
     r"(?:python|javascript|typescript|java|c#|ruby|php|swift|kotlin|"
-    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql)"
+    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql|html|css|api)"
     r"(?![A-Za-z0-9_])",
     re.IGNORECASE,
 )
