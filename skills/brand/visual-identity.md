@@ -8,10 +8,9 @@ description: "Visual, sensory, and emoji identity guidelines."
 The aesthetic and energetic signature of the SoulMap experience is designed to evoke
 calm, clarity, and depth.
 
-**Status:** This is aspirational design guidance. The current repository ships knowledge
-and local tooling, not a user-facing interface or built-in audio playback. Treat the
-soundscape and motion concepts below as future design direction, not current product
-features.
+**Status:** This is aspirational design guidance. SoulMap does not currently include a
+user-facing interface or built-in audio playback. Treat the soundscape and motion
+concepts below as future design direction, not current product features.
 
 > *The overall feel: calm, legible, and respectful. The design should not imply that the
 > system can understand unspoken states or simulate human intimacy.*
