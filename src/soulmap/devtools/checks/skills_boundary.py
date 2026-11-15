@@ -27,7 +27,7 @@ _FORBIDDEN_TEXT = (
 )
 _FORBIDDEN_LANGUAGES = re.compile(
     r"(?<![A-Za-z0-9_])"
-    r"(?:python|javascript|typescript|java|c\\+\\+|c#|ruby|php|swift|kotlin|"
+    r"(?:python|javascript|typescript|java|c\+\+|c#|ruby|php|swift|kotlin|"
     r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql)"
     r"(?![A-Za-z0-9_])",
     re.IGNORECASE,
@@ -77,7 +77,7 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
     findings: list[str] = []
 
     for match in _FORBIDDEN_LANGUAGES.finditer(text):
-        line_no = text.count("\\n", 0, match.start()) + 1
+        line_no = text.count("\n", 0, match.start()) + 1
         findings.append(
             f"{rel}:{line_no}: implementation language reference: {match.group(0)!r}"
         )
@@ -175,7 +175,7 @@ def main(argv: list[str] | None = None) -> int:
 
     findings = audit(args.root.resolve())
     if findings:
-        print("\\n".join(findings))
+        print("\n".join(findings))
         return 1
     print("Shipped Markdown boundary: clean")
     return 0
