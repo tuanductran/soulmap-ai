@@ -71,7 +71,7 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
-    _write(root, ".claude-plugin/metadata.md", "Package metadata only.\\n")
+    _write(root, ".claude-plugin/metadata.md", "Package metadata only.\n")
     _write(root, ".claude-plugin/README.md", "Claude plugin development notes\n")
     _write(
         root,
