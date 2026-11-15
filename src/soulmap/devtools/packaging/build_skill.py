@@ -10,10 +10,10 @@ import argparse
 import zipfile
 from pathlib import Path
 
+from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_markdown
 from soulmap.devtools.packaging.members import is_ignored as _is_ignored
 from soulmap.devtools.packaging.members import load_distignore as _load_distignore
 from soulmap.devtools.packaging.members import source_paths
-from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_markdown
 from soulmap.devtools.support.repo import REPO_ROOT
 
 
@@ -58,8 +58,8 @@ def _build_archive(
     findings = audit_shipped_markdown(repo_root)
     if findings:
         raise ValueError(
-            "Shipped Markdown boundary failed; refusing to build artifacts:\\n"
-            + "\\n".join(findings)
+            "Shipped Markdown boundary failed; refusing to build artifacts:\n"
+            + "\n".join(findings)
         )
 
     out_dir = repo_root / "dist"
