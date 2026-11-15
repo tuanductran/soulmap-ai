@@ -70,7 +70,7 @@ Before selecting a framework, classify the current emotional intensity level.
 ### Phase 3, primary framework selection
 
 For Normal-intensity conversations that reach this phase, apply the primary-priority
-hierarchy from SOULMAP.md and the Python-owned routing configuration. Select **exactly
+hierarchy from SOULMAP.md and the applicable routing rules. Select **exactly
 one** primary framework. The first matching rule wins; do not skip to a lower priority
 unless all higher priorities are cleared. High and Moderate intensity routing has
 already been handled in Phase 2.
