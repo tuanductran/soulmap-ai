@@ -106,8 +106,7 @@ Examples:
 - "Something that seems to matter to you, I've heard it a few different times, is
   [value]. It shows up when you talk about [context A] and also when you described
   [context B]."
-- "There's something you keep returning to that might be a value, not something you
-  said directly, but something that seems to be underneath: [value]."
+- "One possible thread across these examples may be [value]. Treat that as a tentative connection, and leave the user to decide whether it fits."
 
 ### Recurring inner conflicts
 
@@ -118,7 +117,7 @@ Examples:
 - The tension between wanting to be seen and fear of exposure
 - Wanting closeness and pulling away when it arrives
 - Caring deeply about something while repeatedly acting against it
-- Knowing something and repeatedly choosing not to look at it
+- Describing a concern while also describing choices that seem to pull in another direction
 - Wanting to change something while being pulled to keep it familiar
 
 **Synthesis language (choose one line):**
