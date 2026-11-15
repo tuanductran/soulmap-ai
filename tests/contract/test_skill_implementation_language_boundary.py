@@ -2,7 +2,6 @@ from pathlib import Path
 
 from soulmap.devtools.checks.skills_boundary import audit
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
