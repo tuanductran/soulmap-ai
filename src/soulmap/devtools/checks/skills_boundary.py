@@ -1,4 +1,4 @@
-"""Audit every shipped Markdown file for repository and implementation leakage."""
+"""Audit every shipped text file for repository and implementation leakage."""
 
 from __future__ import annotations
 
