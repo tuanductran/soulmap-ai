@@ -239,3 +239,16 @@ def test_cli_exposes_build_and_dev_commands(
     assert cli_tool.main(["build"]) == 0
     assert cli_tool.main(["dev"]) == 0
     assert calls == [("build", []), ("dev", [])]
+
+    
+def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
+    tmp_path: Path,
+) -> None:
+    _create_source_tree(tmp_path)
+    _write(tmp_path, "SKILL.md", "# SoulMap\\n\\nPython must not ship.\\n")
+
+    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+        build_tool.build_zip(tmp_path)
+
+    with pytest.raises(ValueError, match="Shipped Markdown boundary failed"):
+        build_tool.build_skill(tmp_path)
