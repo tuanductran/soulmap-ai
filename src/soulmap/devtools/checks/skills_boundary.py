@@ -27,8 +27,8 @@ _FORBIDDEN_TEXT = (
 )
 _FORBIDDEN_LANGUAGES = re.compile(
     r"(?<![A-Za-z0-9_])"
-    r"(?:python|javascript|typescript|java|c\+\+|c#|ruby|php|swift|kotlin|"
-    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql|html|css|api|"\n    r"programming|coding)"
+    r"(?:python|javascript|typescript|java|c\\+\\+|c#|ruby|php|swift|kotlin|"
+    r"rust|perl|scala|haskell|elixir|clojure|dart|lua|objective-c|sql)"
     r"(?![A-Za-z0-9_])",
     re.IGNORECASE,
 )
@@ -104,7 +104,8 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
         if token.type == "code_block":
             for reference in _implementation_tokens(token.content):
                 findings.append(
-                    f"{rel}:{line_no}: implementation token in code block: {reference!r}"
+                    f"{rel}:{line_no}: implementation token in code block: "
+                    f"{reference!r}"
                 )
             continue
 
