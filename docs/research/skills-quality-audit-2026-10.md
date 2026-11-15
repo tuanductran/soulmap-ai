@@ -197,7 +197,6 @@ This follow-up was performed against `main` at `cae45027d392e4bb71ca13164b538f90
 - No protected safety implementation file, crisis detector implementation, or crisis signal constant was changed.
 - The audit remains targeted. It does not certify every sentence in all 201 Markdown files or erase information from historical Git commits.
 
-
 ## Follow-up audit - 2026-11-15 (Frameworks and Meta cross-consistency)
 
 This follow-up screened the 26 files inventoried under `skills/frameworks/` and the 14 files under `skills/meta/` against the current doctrine, voice, session, and epistemic boundaries. The pass used targeted semantic cross-review and manual inspection of flagged excerpts. It is not a line-by-line certification of every sentence or every possible interaction.
