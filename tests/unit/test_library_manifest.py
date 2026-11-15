@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.devtools.checks.skills_boundary import audit_text
 from soulmap.devtools.packaging import library
 
 
@@ -50,7 +51,15 @@ def test_build_library_records_release_and_artifact_integrity(tmp_path: Path) ->
         payload["release_url"]
         == "https://github.com/tuanductran/soulmap-ai/releases/tag/v1.2.3"
     )
-    assert payload["generated_by"] == "uv run soulmap library-manifest"
+    assert "generated_by" not in payload
+    assert "project_version_source" not in payload
+    assert (
+        audit_text(
+            library.MANIFEST_NAME,
+            manifest_path.read_text(encoding="utf-8"),
+        )
+        == []
+    )
     assert payload["entries"][0]["path"] == "."
     assert [artifact["filename"] for artifact in payload["artifacts"]] == [
         "soulmap-ai.zip",
