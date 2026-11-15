@@ -1,4 +1,4 @@
-"""Audit every shipped Markdown file for repository and implementation leakage."""
+"""Audit every shipped text file for repository and implementation leakage."""
 
 from __future__ import annotations
 
@@ -47,14 +47,10 @@ _EXECUTABLE_FENCES = (
 )
 
 
-def _iter_shipped_markdown(repo_root: Path) -> list[Path]:
-    """Return Markdown files eligible for either build artifact."""
+def _iter_shipped_files(repo_root: Path) -> list[Path]:
+    """Return every file eligible for either build artifact."""
     members = source_members(repo_root, include_plugin=True)
-    return sorted(
-        repo_root / member
-        for member in members
-        if Path(member).suffix.casefold() == ".md"
-    )
+    return sorted(repo_root / member for member in members)
 
 
 def _line_number(token: object) -> int:
@@ -154,25 +150,48 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
     return findings
 
 
-def _audit_file(path: Path, repo_root: Path) -> list[str]:
-    return audit_markdown(
-        path.relative_to(repo_root),
-        path.read_text(encoding="utf-8"),
-    )
+def audit_text(relative_path: str | Path, text: str) -> list[str]:
+    """Reject implementation references in non-Markdown shipped text files."""
+    rel = Path(relative_path)
+    lowered = text.lower()
+    findings: list[str] = []
+
+    for match in _FORBIDDEN_LANGUAGES.finditer(text):
+        line_no = text.count("\n", 0, match.start()) + 1
+        findings.append(
+            f"{rel}:{line_no}: implementation language reference: {match.group(0)!r}"
+        )
+
+    for reference in _FORBIDDEN_TEXT:
+        start = lowered.find(reference.lower())
+        if start >= 0:
+            line_no = text.count("\n", 0, start) + 1
+            findings.append(f"{rel}:{line_no}: implementation reference: {reference!r}")
+
+    return findings
 
 
 def audit(repo_root: Path) -> list[str]:
-    """Return every implementation-leak finding in build-eligible Markdown."""
+    """Return implementation-leak findings across every build-eligible text file."""
     findings: list[str] = []
-    for path in _iter_shipped_markdown(repo_root):
-        findings.extend(_audit_file(path, repo_root))
+    for path in _iter_shipped_files(repo_root):
+        relative = path.relative_to(repo_root)
+        try:
+            content = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            content = path.read_bytes().decode("utf-8", errors="ignore")
+
+        if path.suffix.casefold() == ".md":
+            findings.extend(audit_markdown(relative, content))
+        else:
+            findings.extend(audit_text(relative, content))
     return findings
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run the shipped-Markdown implementation boundary audit."""
+    """Run the shipped-content implementation boundary audit."""
     parser = argparse.ArgumentParser(
-        description="Reject implementation leakage from shipped SoulMap Markdown."
+        description="Reject implementation leakage from all shipped SoulMap text files."
     )
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
@@ -181,7 +200,7 @@ def main(argv: list[str] | None = None) -> int:
     if findings:
         print("\n".join(findings))
         return 1
-    print("Shipped Markdown boundary: clean")
+    print("Shipped content boundary: clean")
     return 0
 
 

@@ -172,15 +172,16 @@ jobs:
       - name: Build Library distribution artifacts
         run: uv run soulmap library-manifest
       - name: Build Python wheel and source distribution
-        run: uv build --wheel --sdist --out-dir dist/python
+        run: uv build --wheel --sdist --out-dir "$RUNNER_TEMP/soulmap-python-dist"
       - name: Verify Python distribution contents
         run: |
           uv run python - <<'PY'
+          import os
           from pathlib import Path
           import tarfile
           import zipfile
 
-          output = Path("dist/python")
+          output = Path(os.environ["RUNNER_TEMP"]) / "soulmap-python-dist"
           wheels = list(output.glob("*.whl"))
           sdists = list(output.glob("*.tar.gz"))
           assert len(wheels) == 1, f"Expected one wheel, found {len(wheels)}"
@@ -215,7 +216,5 @@ jobs:
             dist/soulmap-ai.zip
             dist/soulmap-ai.skill
             dist/soulmap-ai-library.json
-            dist/python/*.whl
-            dist/python/*.tar.gz
           if-no-files-found: error
           retention-days: 30

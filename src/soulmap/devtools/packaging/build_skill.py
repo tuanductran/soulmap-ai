@@ -10,7 +10,7 @@ import argparse
 import zipfile
 from pathlib import Path
 
-from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_markdown
+from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_content
 from soulmap.devtools.packaging.members import is_ignored as _is_ignored
 from soulmap.devtools.packaging.members import load_distignore as _load_distignore
 from soulmap.devtools.packaging.members import source_paths
@@ -55,10 +55,10 @@ def _build_archive(
     include_claude_plugin: bool,
 ) -> Path:
     """Build an archive from the canonical shipped files."""
-    findings = audit_shipped_markdown(repo_root)
+    findings = audit_shipped_content(repo_root)
     if findings:
         raise ValueError(
-            "Shipped Markdown boundary failed; refusing to build artifacts:\n"
+            "Shipped content boundary failed; refusing to build artifacts:\n"
             + "\n".join(findings)
         )
 
