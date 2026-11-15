@@ -1,18 +1,18 @@
 # Claude Plugin Metadata
 
-This folder contains local Claude skill-package metadata preserved in
-`dist/soulmap-ai.skill`.
+This directory contains metadata used by the Claude plugin distribution.
 
-## Current role
+## Included metadata
 
-- `marketplace.json`, grouped marketplace-style skill metadata for the `.skill` package
+- `marketplace.json` provides marketplace metadata for the plugin package.
 
-## Important boundaries
+## Packaging boundaries
 
-- This folder is not part of the standard `dist/soulmap-ai.zip` archive.
-- Treat this folder as packaging metadata, not as shipped SoulMap doctrine.
-- Do not move product truth here. Keep doctrine and frameworks in the root package
-  files under `SOULMAP.md` and `skills/`. `templates/` is internal-only and is not
-  part of the shipped package.
-- When editing this folder, verify that `python -m tools.build_skill --skill` still
-  preserves it as-is.
+- `marketplace.json` is included in `dist/soulmap-ai.skill`.
+- This README is repository-only and excluded from both distribution archives.
+- The standard `dist/soulmap-ai.zip` archive does not include `.claude-plugin/`.
+- Keep product doctrine and user-facing frameworks in the root `SOULMAP.md` and
+  `skills/` files.
+- Do not add user-facing knowledge or implementation instructions to plugin metadata.
+- Validate packaging changes with the standard build and extracted-artifact
+  verification workflow.
