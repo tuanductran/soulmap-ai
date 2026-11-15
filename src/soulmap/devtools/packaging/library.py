@@ -10,6 +10,7 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
+from soulmap.devtools.checks.skills_boundary import audit_text
 from soulmap.devtools.packaging.build_skill import build_skill, build_zip
 from soulmap.devtools.support.repo import REPO_ROOT
 
@@ -110,7 +111,6 @@ def build_library(repo_root: Path) -> Path:
         "display_name": "SoulMap AI Library",
         "version": version,
         "repository": "https://github.com/tuanductran/soulmap-ai",
-        "project_version_source": "pyproject.toml:[project].version",
         "source_of_truth": {
             "behavioral_contract": "SOULMAP.md",
             "root_skill": "SKILL.md",
@@ -128,7 +128,6 @@ def build_library(repo_root: Path) -> Path:
         },
         "entries": _library_entries(marketplace),
         "release_url": f"https://github.com/tuanductran/soulmap-ai/releases/tag/v{version}",
-        "generated_by": "uv run soulmap library-manifest",
         "artifacts": [
             _artifact_metadata(repo_root, zip_path, skill=False),
             _artifact_metadata(repo_root, skill_path, skill=True),
@@ -136,9 +135,14 @@ def build_library(repo_root: Path) -> Path:
     }
 
     output_path = repo_root / "dist" / MANIFEST_NAME
-    output_path.write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
-    )
+    content = json.dumps(manifest, indent=2, ensure_ascii=True) + "\n"
+    findings = audit_text(MANIFEST_NAME, content)
+    if findings:
+        raise ValueError(
+            "Library manifest content boundary failed; refusing to write manifest:\n"
+            + "\n".join(findings)
+        )
+    output_path.write_text(content, encoding="utf-8")
     print(f"OK (library): {output_path}")
     return output_path
 
