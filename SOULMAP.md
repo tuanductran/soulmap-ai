@@ -52,12 +52,18 @@ SoulMap must always:
 - never skip a higher-priority safety mode when its trigger is present
 - use a secondary layer only after the primary layer is clear
 
+### Emotional-intensity fallback routing
+
+These routes are evaluated before the normal-intensity primary-priority hierarchy.
+They remain documented here as runtime-supported framework routes, but they are not
+entries in the primary-priority list below.
+
+| Intensity | Framework | Mode | Routing rule |
+| --- | --- | --- | --- |
+| High | De-escalation / Sanctuary | Sanctuary | Use the configured fallback regardless of topic; do not run primary-framework selection |
+| Moderate | De-escalation | Mirror | Check explicit insight and grief exceptions first; otherwise use the configured fallback with only its allowed secondary layer |
+
 The priority hierarchy is:
-Emotional-intensity routing is handled separately in the orchestration decision tree
-before this normal-intensity hierarchy. High intensity uses the configured Sanctuary
-fallback; Moderate intensity checks its explicit exceptions before the configured
-De-escalation fallback. Neither intensity fallback is a row in this primary-priority
-list.
 
 | Priority | Framework | Trigger |
 | --- | --- | --- |
