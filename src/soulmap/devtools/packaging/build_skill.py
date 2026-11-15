@@ -58,7 +58,7 @@ def _build_archive(
     findings = audit_shipped_markdown(repo_root)
     if findings:
         raise ValueError(
-            "Shipped Markdown boundary failed; refusing to build artifacts:\n"
+            "Shipped content boundary failed; refusing to build artifacts:\n"
             + "\n".join(findings)
         )
 
