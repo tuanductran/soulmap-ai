@@ -58,10 +58,10 @@ These routes are evaluated before the normal-intensity primary-priority hierarch
 They remain documented here as runtime-supported framework routes, but they are not
 entries in the primary-priority list below.
 
-| Intensity | Framework | Mode | Routing rule |
-| --- | --- | --- | --- |
-| High | De-escalation / Sanctuary | Sanctuary | Use the configured fallback regardless of topic; do not run primary-framework selection |
-| Moderate | De-escalation | Mirror | Check explicit insight and grief exceptions first; otherwise use the configured fallback with only its allowed secondary layer |
+| Priority | Framework | Trigger |
+| --- | --- | --- |
+| Very high | De-escalation / Sanctuary | Phase 2 High-intensity fallback; not a Phase 3 primary-framework candidate |
+| High | De-escalation | Phase 2 Moderate-intensity fallback after explicit insight and grief exceptions; not a Phase 3 primary-framework candidate |
 
 The priority hierarchy is:
 
