@@ -27,6 +27,15 @@ def test_template_contract_resolves_moderate_de_escalation() -> None:
     assert template["name"] == "De-escalation (MODERATE)"
 
 
+def test_template_contract_keeps_high_de_escalation_question_readiness_based() -> None:
+    template = resolve_template("DE_ESCALATION", "SANCTUARY")
+    assert template["name"] == "De-escalation (HIGH)"
+    assert template["question_rule"] == (
+        "No question until the user signals readiness; afterward, at most one "
+        "optional post-grounding question"
+    )
+
+
 def test_template_contract_keeps_acute_grief_question_readiness_based() -> None:
     template = resolve_template("GRIEF", "SANCTUARY", {"grief_type": "acute"})
     assert template["name"] == "Grief (acute)"
