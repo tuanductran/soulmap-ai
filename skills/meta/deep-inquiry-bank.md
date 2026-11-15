@@ -101,9 +101,9 @@ conversation and the user has not rejected the reflection.
 ### Emotional Avoidance
 
 - If the feeling you've been analyzing could speak, what would it say?
-- What do you think would happen if you let yourself feel this fully, even for a moment?
+- What happens for you when you give this feeling a little attention, if you want to explore that?
 - Does thinking about this feeling seem easier than experiencing it, or does that not fit?
-- What emotion is the hardest one for you to stay with?
+- Is there a feeling that is harder to stay with than others, or does that not fit?
 
 ### Self-Sabotage
 
@@ -115,16 +115,16 @@ conversation and the user has not rejected the reflection.
 ### Over-Responsibility
 
 - How did you come to understand care and responsibility in this situation, if you want to explore that?
-- What would it cost you, or someone else, if you stopped carrying this?
+- What might change if you carried less of this, if that feels relevant?
 - Is there anything you would like to ask for right now, or would another kind of support feel more relevant?
-- What would it feel like to let this be someone else's to carry?
+- Is any part of this something another person could reasonably share, or not?
 
 ### Fear of Rejection
 
-- What would it mean about you if the answer was no?
+- What, if anything, would a no mean to you?
 - Does this fear connect to an earlier experience, or does it seem specific to what is happening now?
 - What do you imagine asking for, if rejection wasn't part of the picture?
-- What has staying silent cost you, in things you never got to try?
+- What, if anything, has staying silent meant for you?
 
 ### Cross-Pattern (when combination detected)
 
@@ -146,7 +146,7 @@ Offer at most one question only if grounding has landed and the user seems ready
 
 - "When you breathe into it, what's the feeling that's most present right now?"
 - "Which part of what you described feels most painful right now, if any?"
-- "If the noise could quiet for a moment, what would you most want to say?"
+- "Is there anything you would like to say right now, or would quiet be better?"
 - "Is there a feeling that has been present for a while, or is it hard to tell?"
 - "Is there one thing in all of that that you want me to understand most?"
 
