@@ -157,7 +157,7 @@ def audit_text(relative_path: str | Path, text: str) -> list[str]:
     findings: list[str] = []
 
     for match in _FORBIDDEN_LANGUAGES.finditer(text):
-        line_no = text.count("\\n", 0, match.start()) + 1
+        line_no = text.count("\n", 0, match.start()) + 1
         findings.append(
             f"{rel}:{line_no}: implementation language reference: {match.group(0)!r}"
         )
@@ -165,7 +165,7 @@ def audit_text(relative_path: str | Path, text: str) -> list[str]:
     for reference in _FORBIDDEN_TEXT:
         start = lowered.find(reference.lower())
         if start >= 0:
-            line_no = text.count("\\n", 0, start) + 1
+            line_no = text.count("\n", 0, start) + 1
             findings.append(
                 f"{rel}:{line_no}: implementation reference: {reference!r}"
             )
@@ -191,9 +191,9 @@ def audit(repo_root: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run the shipped-Markdown implementation boundary audit."""
+    """Run the shipped-content implementation boundary audit."""
     parser = argparse.ArgumentParser(
-        description="Reject implementation leakage from shipped SoulMap Markdown."
+        description="Reject implementation leakage from all shipped SoulMap text files."
     )
     parser.add_argument("--root", type=Path, default=REPO_ROOT)
     args = parser.parse_args(argv)
@@ -202,7 +202,7 @@ def main(argv: list[str] | None = None) -> int:
     if findings:
         print("\n".join(findings))
         return 1
-    print("Shipped Markdown boundary: clean")
+    print("Shipped content boundary: clean")
     return 0
 
 
