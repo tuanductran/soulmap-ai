@@ -196,3 +196,23 @@ This follow-up was performed against `main` at `cae45027d392e4bb71ca13164b538f90
 - PR #933 was closed unmerged after #934 changed the same founder-brand file; #935 is its rebased replacement and passed checks on the updated base.
 - No protected safety implementation file, crisis detector implementation, or crisis signal constant was changed.
 - The audit remains targeted. It does not certify every sentence in all 201 Markdown files or erase information from historical Git commits.
+
+
+## Follow-up audit - 2026-11-15 (Frameworks and Meta cross-consistency)
+
+This follow-up screened the 26 files inventoried under `skills/frameworks/` and the 14 files under `skills/meta/` against the current doctrine, voice, session, and epistemic boundaries. The pass used targeted semantic cross-review and manual inspection of flagged excerpts. It is not a line-by-line certification of every sentence or every possible interaction.
+
+### Findings and remediation
+
+1. **Quick reference:** PR #937 removed hidden-need inference from Twin Flame / Starseed handling, required independent support before noting pattern overlap, replaced rigid pronoun rules with an AI-identity boundary, aligned early-session guidance with the session contract, and clarified source verification and spiritual-bypass handling.
+2. **Life direction:** PR #938 removed the premise that users already know their direction but are unwilling to say it. The framework now distinguishes values exploration from practical questions and genuine uncertainty, and offers the values lens only when it fits the user's stated concern and invitation.
+3. **Framework cross-consistency:** PR #941 made cross-story value synthesis explicitly tentative; removed an assumed knowledge/avoidance example; distinguished shadow and visibility concerns by the user's stated account rather than assumed protective functions; made overlap conditional on evidence for both; softened the inner-parts beginner example; and removed hidden-cause or unspoken-family-belief assumptions from de-escalation, existential, and money-related guidance.
+4. **Inquiry bank:** PR #943 replaced questions that presumed an unspoken answer, hidden common thread, internal cause, deeper pain, or unrequested support with neutral invitations. The one-question ceiling, timing, and readiness rules remain unchanged.
+5. **First-session contract:** PR #945 replaced the practical-question opener that presumed the user already knew the answer. `SOULMAP.md` and `skills/meta/session-contract.md` now use the same uncertainty-aware wording.
+
+### Verification and disposition
+
+- PRs #937, #938, #941, #943, and #945 were merged only after the final PR head passed CI, CodeQL Python, Python Compatibility, P-level safety governance, and autofix.ci; GitHub reported each PR mergeable, with no unresolved review threads.
+- PRs #939, #940, #942, and #944 were closed unmerged when their branches were superseded by branches based on the newer `main`. No changes from those stale-base PRs were merged.
+- The changes were documentation-only. No parser-consumed runtime headings, Python runtime implementation, safety implementation files, or crisis signal constants were modified.
+- The audit remains targeted. It does not certify every sentence in the repository or establish that all possible responses will behave correctly.
