@@ -771,9 +771,9 @@
       },
       {
         "t": "My watch shows low HRV and poor sleep — what is my body telling me",
-        "note": "Biometric reflection",
+        "note": "Biometric context alone; no Somatic secondary activation",
         "expect_primary_framework": "MIRROR",
-        "expect_secondary_layer": "somatic",
+        "expect_secondary_layer": null,
         "expect_mode": "MIRROR",
         "memory": {
           "prior_stage": 3
