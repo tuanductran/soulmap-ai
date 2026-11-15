@@ -31,56 +31,66 @@ BIOMETRIC = _SOMATIC_GROUPS["biometric context"]
 
 
 def detect_somatic(message: str) -> dict[str, object]:
-    """Score body-oriented signals in the current message.
+    """Recognize somatic activation cues separately from context-only signals.
 
-    Matches the phrase groups authored in
-    ``skills/frameworks/somatic-wellbeing.md``: biometric context, body
-    sensation language, and somatic invitation. Biometric context is checked
-    first and sets the mode, since it names an external reading rather than a
-    felt sense.
+    Biometric readings and general cognitive/disconnection phrases are useful
+    context, but they do not activate the Somatic secondary layer. Activation
+    requires user-described body sensation language or an explicit request for
+    body-awareness or grounding support.
 
     Args:
         message: The user's current message.
 
     Returns:
-        A dict with ``somatic_detected``, ``mode``, ``score``, ``signals``,
-        and ``recommendation``.
+        Detection state, context flags, matched signals, score, and guidance.
     """
     msg = mask_third_party_attribution(message)
     signals = []
     score = 0
+    biometric_detected = False
+    body_detected = False
+    invitation_detected = False
     mode = None
 
     for p in BIOMETRIC:
         if p in msg:
             score += int(_RULES["Biometric context weight"])
             signals.append(f"biometric:'{p}'")
-            mode = "BIOMETRIC"
+            biometric_detected = True
             break
 
     for p in BODY_SENSATION:
         if p in msg:
             score += int(_RULES["Body sensation weight"])
             signals.append(f"body:'{p}'")
-            if not mode:
-                mode = "BODY_SENSATION"
+            body_detected = True
+            mode = "BODY_SENSATION"
             break
 
     for p in SOMATIC_INVITATION:
         if p in msg:
             score += int(_RULES["Somatic invitation weight"])
             signals.append(f"invitation:'{p}'")
-            if not mode:
+            invitation_detected = True
+            if not body_detected:
                 mode = "SOMATIC_INVITATION"
             break
 
     if score < int(_RULES["Minimum detection score"]):
-        return {"somatic_detected": False, "mode": None}
+        return {
+            "somatic_detected": False,
+            "biometric_context_detected": False,
+            "mode": None,
+        }
+
+    if mode is None and biometric_detected:
+        mode = "BIOMETRIC"
 
     guidance = _GUIDANCE.get(mode or "", "")
 
     return {
-        "somatic_detected": True,
+        "somatic_detected": body_detected or invitation_detected,
+        "biometric_context_detected": biometric_detected,
         "mode": mode,
         "score": score,
         "signals": signals,
