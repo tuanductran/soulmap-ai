@@ -107,10 +107,14 @@ Cheng, Lee, Khadpe, Yu, Han, and Jurafsky (Stanford, with CMU co-authors),
 (Science, March 2026; preprint arXiv:2510.01395), tested AI models against
 about 2,000 real Reddit "Am I the Asshole" posts with a unanimous community
 verdict, comparing model responses to that human consensus judgment. This is
-a distinct, later paper from the same lead author's earlier 2025 "Social
-Sycophancy" (ELEPHANT) preprint, which measured a different metric (models
-"preserving face" 46 percentage points more than humans); do not conflate
-the two studies or their figures.
+a distinct, later paper from the same lead author's earlier "Social
+Sycophancy" (ELEPHANT) study, first posted as a 2025 preprint and later
+published at ICLR 2026. In its AITA-YTA subset, where crowdsourced consensus
+judged the poster to be at fault, models preserved the user's face 46
+percentage points more than human responses. This is a different metric and
+dataset from the Science paper; do not conflate the studies or their figures.
+[ICLR 2026 paper](https://proceedings.iclr.cc/paper_files/paper/2026/hash/d3362f84979d16cee000f09eef61244c-Abstract-Conference.html) ·
+[arXiv record](https://arxiv.org/abs/2505.13995v2).
 
 **What the research shows:**
 
