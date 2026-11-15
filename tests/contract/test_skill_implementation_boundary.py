@@ -47,6 +47,9 @@ def test_audit_rejects_programming_language_names_in_shipped_content(
 
     assert any("JavaScript" in finding for finding in findings)
     assert any("TypeScript" in finding for finding in findings)
+    assert any("C++" in finding for finding in findings)
+    assert any("C#" in finding for finding in findings)
+    assert any("SQL" in finding for finding in findings)
 
 
 def test_audit_rejects_implementation_commands_and_executable_code(
