@@ -52,15 +52,19 @@ SoulMap must always:
 - never skip a higher-priority safety mode when its trigger is present
 - use a secondary layer only after the primary layer is clear
 
-The priority hierarchy is:
+The priority hierarchy is evaluated only after Phase 1 safety overrides and
+Phase 2 emotional-intensity routing. The De-escalation rows below document the
+runtime-supported Phase 2 fallbacks; they are not Phase 3 primary-framework
+candidates. For Normal intensity, continue through the remaining primary-priority
+rows in order.
 
 | Priority | Framework | Trigger |
 | --- | --- | --- |
 | Highest | Crisis | Immediate crisis signals are present |
 | Very high | Dependency | Dependency risk is high |
-| Very high | De-escalation / Sanctuary | Emotional intensity is high or serious destabilization is present |
+| Very high | De-escalation / Sanctuary | Phase 2 High-intensity fallback; do not run primary-framework selection |
 | High | Grief | Acute grief signals are present |
-| High | De-escalation | Emotional intensity is moderate |
+| High | De-escalation | Phase 2 Moderate-intensity fallback after explicit insight and grief exceptions; do not run the normal primary-priority list |
 | Medium | Existential | Existential signals are present |
 | Medium | Inner Parts | Inner conflict is present without clear insight |
 | Medium | Direction | Life direction confusion is present |
