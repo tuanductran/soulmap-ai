@@ -9,29 +9,45 @@ def test_audit_accepts_domain_markdown_without_implementation_details(
     skills = tmp_path / "skills" / "example"
     skills.mkdir(parents=True)
     (skills / "SKILL.md").write_text(
-        "---\nname: example\ndescription: Example\n---\n\n# Example\n\nReflective content.\n",
+        "---\\nname: example\\ndescription: Example\\n---\\n\\n# Example\\n\\nReflective content.\\n",
         encoding="utf-8",
     )
 
     assert audit(tmp_path) == []
 
 
-def test_audit_rejects_implementation_commands_and_executable_code(
+def test_audit_rejects_implementation_language_commands_and_executable_code(
     tmp_path: Path,
 ) -> None:
     skills = tmp_path / "skills" / "example"
     skills.mkdir(parents=True)
     (skills / "SKILL.md").write_text(
-        "---\nname: example\ndescription: Example\n---\n\n# Example\n\n"
-        "Python is used in psychological research, but run uv run.\n\n"
+        "---\\nname: example\\ndescription: Example\\n---\\n\\n# Example\\n\\n"
+        "Python is used in psychological research, but run uv run.\\n\\n"
         + chr(96) * 3
-        + "python\nprint('x')\n"
+        + "python\\nprint('x')\\n"
         + chr(96) * 3
-        + "\n",
+        + "\\n",
         encoding="utf-8",
     )
 
     findings = audit(tmp_path)
 
+    assert any("implementation reference" in finding for finding in findings)
     assert any("uv run" in finding for finding in findings)
     assert any("executable code fence" in finding for finding in findings)
+
+
+def test_audit_includes_root_shipped_entrypoints(tmp_path: Path) -> None:
+    (tmp_path / "SKILL.md").write_text(
+        "# Entry point\\n\\nPython is an implementation detail.\\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "SOULMAP.md").write_text(
+        "# Doctrine\\n\\nKeep the user-facing contract clear.\\n",
+        encoding="utf-8",
+    )
+
+    findings = audit(tmp_path)
+
+    assert any(finding.startswith("SKILL.md:") for finding in findings)
