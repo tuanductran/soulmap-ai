@@ -1,11 +1,17 @@
 from soulmap.devtools.checks.skills_boundary import audit_markdown
 
 
-def test_plain_prose_is_not_treated_as_implementation_leakage() -> None:
+def test_implementation_language_in_plain_prose_is_rejected() -> None:
     text = """
 Python is sometimes used in psychological research.
 A class can describe a social category without referring to executable code.
 """
+    findings = audit_markdown("skills/example.md", text)
+    assert any("implementation language reference" in finding for finding in findings)
+
+
+def test_generic_words_are_not_treated_as_implementation_leakage() -> None:
+    text = "A class can describe a social category without referring to executable code."
     assert audit_markdown("skills/example.md", text) == []
 
 
