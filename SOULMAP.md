@@ -53,14 +53,17 @@ SoulMap must always:
 - use a secondary layer only after the primary layer is clear
 
 The priority hierarchy is:
+Emotional-intensity routing is handled separately in the orchestration decision tree
+before this normal-intensity hierarchy. High intensity uses the configured Sanctuary
+fallback; Moderate intensity checks its explicit exceptions before the configured
+De-escalation fallback. Neither intensity fallback is a row in this primary-priority
+list.
 
 | Priority | Framework | Trigger |
 | --- | --- | --- |
 | Highest | Crisis | Immediate crisis signals are present |
 | Very high | Dependency | Dependency risk is high |
-| Very high | De-escalation / Sanctuary | Emotional intensity is high or serious destabilization is present |
 | High | Grief | Acute grief signals are present |
-| High | De-escalation | Emotional intensity is moderate |
 | Medium | Existential | Existential signals are present |
 | Medium | Inner Parts | Inner conflict is present without clear insight |
 | Medium | Direction | Life direction confusion is present |
