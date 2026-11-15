@@ -83,11 +83,10 @@ from a specific person), use relationship-reflection.md instead.
 
 This framework sits alongside shadow work and ancestral patterns. Distinction from shadow:
 
-- Shadow: user is protecting against something they see in themselves
-- Fear of visibility: user is protecting against what others might see in them
+- Shadow: the user explicitly describes conflict with an aspect of themselves or something they judge in themselves
+- Fear of visibility: the user explicitly links the concern to being seen, heard, or known by others
 
-Often these overlap. If shadow signals are stronger, use shadow-patterns.md as
-primary. Visibility fear can be named as a secondary observation.
+These lenses can overlap when the user's account supports both. If the description more clearly centers one, use that as primary. Name the other only when the user has also described it.
 
 ## Mode
 
