@@ -8,6 +8,7 @@ from pathlib import Path
 from soulmap.devtools.support.repo import REPO_ROOT
 
 _FORBIDDEN_TEXT = (
+    "python",
     "src/soulmap/",
     ".py",
     ".claude/",
@@ -58,9 +59,8 @@ def _implementation_tokens(value: str) -> tuple[str, ...]:
 def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
     """Return implementation-leak findings using Markdown structure.
 
-    Plain prose is allowed to discuss generic concepts such as Python or class.
-    Implementation references are rejected when they point to repository/runtime
-    surfaces or appear inside executable code constructs.
+    Shipped skill prose must not name the implementation language or its
+    repository/runtime surfaces. Generic domain language remains permitted.
     """
     from markdown_it import MarkdownIt
 
@@ -118,6 +118,7 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
                     f"{rel}:{line_no}: repository-only reference: {reference!r}"
                 )
             elif reference in {
+                "python",
                 "src/soulmap/",
                 ".claude/",
                 ".github/",
@@ -163,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
 
     findings = audit(args.root.resolve())
     if findings:
-        print("\n".join(findings))
+        print("\\n".join(findings))
         return 1
     print("Skill implementation boundary: clean")
     return 0
