@@ -94,7 +94,8 @@ def _write_unvalidated_archives(root: Path) -> None:
         with zipfile.ZipFile(
             archive_path, "w", compression=zipfile.ZIP_DEFLATED
         ) as archive:
-            for member in sorted(source_members(root, include_plugin=include_plugin)):
+            members = source_members(root, include_plugin=include_plugin)
+            for member in sorted(members):
                 archive.write(root / member, arcname=member)
 
 
