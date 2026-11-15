@@ -59,3 +59,12 @@ def test_audit_rejects_implementation_commands_and_executable_code(
 
     assert any("uv run" in finding for finding in findings)
     assert any("executable code fence" in finding for finding in findings)
+
+
+def test_audit_checks_soulmap_doctrine_entrypoint(tmp_path: Path) -> None:
+    _write(tmp_path / "SKILL.md", "# Skill\\n")
+    _write(tmp_path / "SOULMAP.md", "# Doctrine\\n\\nJavaScript should not appear.\\n")
+
+    findings = audit(tmp_path)
+
+    assert any("SOULMAP.md" in finding and "JavaScript" in finding for finding in findings)
