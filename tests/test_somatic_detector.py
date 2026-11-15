@@ -16,30 +16,35 @@ def test_body_sensation_is_detected_and_typed_correctly() -> None:
     assert result["mode"] == "BODY_SENSATION"
 
 
-def test_biometric_context_is_detected_and_typed_correctly() -> None:
+def test_biometric_context_is_recorded_without_activating_somatic() -> None:
     result = detect_somatic("My HRV and sleep data have been low this week.")
 
-    assert result["somatic_detected"] is True
+    assert result["somatic_detected"] is False
+    assert result["biometric_context_detected"] is True
     assert result["mode"] == "BIOMETRIC"
 
 
-def test_somatic_invitation_is_detected_and_typed_correctly() -> None:
-    result = detect_somatic("I keep overthinking, I'm totally in my head today.")
+def test_explicit_somatic_invitation_is_detected() -> None:
+    result = detect_somatic("Can you guide me through a body scan?")
 
     assert result["somatic_detected"] is True
     assert result["mode"] == "SOMATIC_INVITATION"
 
 
-def test_biometric_takes_priority_over_body_sensation() -> None:
-    """Biometric must win when phrasing overlaps body sensation.
+def test_generic_cognitive_context_does_not_activate_somatic() -> None:
+    result = detect_somatic("I keep overthinking, I'm totally in my head today.")
 
-    Biometric context is checked first, so it sets the mode for a message
-    carrying both.
-    """
+    assert result["somatic_detected"] is False
+    assert result["mode"] is None
+
+
+def test_body_sensation_activates_when_biometric_context_also_appears() -> None:
+    """A metric remains context; a user-described sensation activates the layer."""
     result = detect_somatic("My HRV is low and my chest is tight too.")
 
     assert result["somatic_detected"] is True
-    assert result["mode"] == "BIOMETRIC"
+    assert result["biometric_context_detected"] is True
+    assert result["mode"] == "BODY_SENSATION"
 
 
 def test_neutral_message_is_not_misclassified() -> None:
@@ -56,10 +61,10 @@ def test_empty_message_does_not_crash_and_is_not_detected() -> None:
     assert result["mode"] is None
 
 
-def test_guidance_present_for_each_detected_mode() -> None:
+def test_guidance_is_available_for_recognized_signal_modes() -> None:
     body = detect_somatic("Heart racing, chest tightness right now.")
     biometric = detect_somatic("My resting heart rate has been off lately.")
-    invitation = detect_somatic("I feel spaced out and zoned out today.")
+    invitation = detect_somatic("Can you help me feel more present in my body?")
 
     assert body["guidance"]
     assert biometric["guidance"]
