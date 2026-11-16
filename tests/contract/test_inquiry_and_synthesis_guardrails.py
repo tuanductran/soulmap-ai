@@ -27,9 +27,9 @@ def test_cross_pattern_questions_preserve_uncertainty_and_user_authority() -> No
     section = content.split("### Cross-Pattern (when combination detected)", maxsplit=1)[1]
     section = section.split("\n## ", maxsplit=1)[0]
 
-    assert "what recurring response, if any, do you notice?" in section
-    assert "do they feel separate to you?" in section
-    assert "what, if anything" in section
+    assert "If you look across these situations, what recurring response, if any, do you notice?" in section
+    assert "Do you notice a common thread across these stories, or do they feel separate to you?" in section
+    assert "What, if anything, seems to influence whether this cycle repeats or changes?" in section
 
 
 def test_inquiry_is_single_question_and_does_not_assume_origin_or_motive() -> None:
