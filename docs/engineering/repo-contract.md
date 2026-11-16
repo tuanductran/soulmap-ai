@@ -22,12 +22,28 @@ Use it to answer four questions for every major repo surface:
 | `templates/` | Internal-only product and brand copy, not shipped | Local-only | Launch checklist, brand, marketing, onboarding, and FAQ copy | Manual stale-reference review; excluded from build packaging |
 | `src/soulmap/runtime/` | Canonical executable enforcement, selection, guards, and runtime support | Local runtime source of truth | Detectors, selectors, guards, I/O helpers, and synthesis | Unit tests, evals, compile/lint checks |
 | `src/soulmap/devtools/` | Canonical maintainer tooling package | Local tooling source of truth | CLI entry points, eval runners, packaging helpers, formatting, linting, and shared support helpers | Tooling tests, lint checks, and build smoke |
+| `tests/` | Automated verification suite for the repository and source distribution | Local verification surface; excluded from AI Skill artifacts and the Python wheel, retained in the source distribution | Unit tests grouped by source domain, contract tests grouped by repository contract, plus integration, regression, mutation, smoke, and eval-regression suites | `uv run soulmap test`, focused CI diagnostics, safety evals, and contract checks |
 | Python wheel/sdist | Local developer and test distribution | Local-only | `soulmap` CLI, runtime/tooling source, repository validation and source files needed for checkout workflows; not a standalone knowledge runtime | `uv build`, metadata inspection, lock checks, and local tooling tests |
 | `docs/` | Audience-facing explanation of how the system works and how to operate it | Published in the repository, not packaged in `dist/soulmap-ai.zip` or `dist/soulmap-ai.skill` | Contributor, tester, operator, user, architecture, and maintenance docs | Markdown contract checks, including integration doctrine/version metadata, repo-wide linting, and review against repo structure |
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap dev`, extraction checks, and release review |
 | `.soulmap/` | Local development inspection workspace | Generated, ignored output | Verified extracted trees in `zip/` and `skill/`; never a source or release input | `uv run soulmap dev` validates archive integrity and exact member sets before extraction |
 | `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Derived Library inventory, project version, compatibility metadata (`root_manifest`, `skills_root`), release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
+
+## Test organization
+
+Keep `tests/` at the repository root. Tests are repository verification code, not production
+modules, and must not be moved into `src/soulmap/` or included in the shipped Skill
+artifacts. Unit tests should follow the production package boundary beneath
+`tests/unit/` (for example, `runtime/detectors/`, `runtime/knowledge/`,
+`runtime/routing/`, `runtime/synthesis/`, and `devtools/audit/`). Contract tests
+should be grouped by the contract they verify rather than by individual file.
+Keep integration, regression, mutation, smoke, and eval-regression suites as separate
+top-level test categories. Do not create a directory solely to contain one test file.
+
+The CI focused-test command, `scripts/pytest_diagnostics.py`, test discovery, and any
+path-sensitive test fixtures must remain synchronized with this layout. File moves must
+preserve test semantics and package/distribution boundaries.
 
 ## Ownership Boundaries
 

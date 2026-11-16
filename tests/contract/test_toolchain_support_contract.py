@@ -95,7 +95,7 @@ def test_ci_and_release_use_the_same_pytest_diagnostics_helper() -> None:
     assert 'SOULMAP_PYTEST_COVERAGE: "1"' in ci_text
     assert "Coverage report (Ubuntu only)" not in ci_text
     assert (
-        "uv run pytest -q tests/test_*.py tests/mutation/test_safety_critical_mutations.py"
+        "uv run pytest -q tests/unit/runtime/detectors tests/unit/runtime/synthesis tests/unit/runtime/knowledge tests/unit/runtime/routing tests/unit/devtools/audit tests/unit/devtools/evals tests/mutation/test_safety_critical_mutations.py"
         in ci_text
     )
     assert "name: Knowledge consistency inventory" not in ci_text
