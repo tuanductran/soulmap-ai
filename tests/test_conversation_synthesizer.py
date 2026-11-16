@@ -108,6 +108,7 @@ def test_synthesis_rules_combine_python_config_and_semantic_markdown() -> None:
     assert rules.minimum_sessions_for_longitudinal == 3
     assert rules.max_memory_themes == 5
     assert "can you synthesize" in rules.explicit_requests
+    assert "compare this with our previous sessions" in rules.cross_session_requests
     assert "session_opening" in rules.response_guidance
     assert "recommendation" in rules.response_guidance
 
@@ -210,7 +211,7 @@ def test_synthesize_allows_explicit_request_with_short_longitudinal_history() ->
         ]
     )
     result = synthesizer.synthesize(
-        "Can you synthesize what keeps returning? I feel lonely and my own path matters.",
+        "Can you compare this with our previous sessions? I feel lonely and my own path matters.",
         history,
         {"recurring_themes": ["loneliness", "autonomy"], "session_count": 4},
     )
@@ -233,7 +234,7 @@ def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
     )
 
     result = synthesizer.synthesize(
-        "Can you reflect back what is recurring?",
+        "Can you synthesize across sessions? Can you reflect back what is recurring?",
         history,
         {
             "recurring_themes": ["loneliness", "autonomy", "unrelated"],
@@ -254,6 +255,32 @@ def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
     guidance = load_synthesis_rules().response_guidance
     assert guidance["value_theme_suffix"].startswith("-")
     assert guidance["conflict_theme_suffix"].startswith("-")
+
+
+def test_synthesize_does_not_use_prior_session_memory_without_explicit_cross_session_request() -> None:
+    history = _user_messages(
+        [
+            "I feel alone and my choice matters. I want connection but push away.",
+            "I feel lonely and need my own path. I want connection and pull back.",
+            "I am isolated. My choice matters. I want connection but push away.",
+            "I feel alone again and need my own path. I want connection then pull back.",
+            "I am lonely and want connection but push away. My choice matters.",
+            "I feel isolated and want connection, but I pull back. My own path matters.",
+        ]
+    )
+
+    result = synthesizer.synthesize(
+        "Can you reflect back what is recurring?",
+        history,
+        {"recurring_themes": ["loneliness", "autonomy"], "session_count": 4},
+    )
+
+    assert result["synthesis_ready"] is True
+    assert result["is_longitudinal"] is False
+    themes = cast(dict[str, object], result["themes"])
+    assert themes["longitudinal"] == []
+    assert str(result["synthesis_frame"]).startswith("Across what you've shared today")
+    assert "Longitudinal data available." not in str(result["recommendation"])
 
 
 def test_synthesize_uses_current_session_opening_without_longitudinal_memory() -> None:
