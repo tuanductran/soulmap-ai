@@ -502,3 +502,37 @@ def test_orchestration_contract_rejects_missing_sections() -> None:
     )
     with pytest.raises(ValueError, match="Primary framework priority"):
         _table_rows(body, "Primary framework priority")
+
+
+def test_framework_selector_routes_tier2_to_presence_first_sanctuary() -> None:
+    """Tier 2 distress uses the HIGH Sanctuary route, not Tier 1 CRISIS."""
+    payload = {
+        "message": "I feel empty inside and I'm trapped.",
+        "history": [],
+        "memory": {},
+    }
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "DE_ESCALATION"
+    assert data["mode"] == "SANCTUARY"
+    assert data["context"]["crisis"]["tier"] == 2
+    assert data["safety_status"] == "PASS"
+    assert data["template"]["name"] == "De-escalation (HIGH)"
+
+
+def test_framework_selector_keeps_dependency_ahead_of_tier2_distress() -> None:
+    """The established dependency-before-Tier-2 priority must remain stable."""
+    message = (
+        "I feel empty inside and I'm trapped. "
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    payload = {"message": message, "history": [], "memory": {}}
+
+    data = run_framework_selector(payload)
+
+    assert data["primary_framework"] == "DEPENDENCY"
+    assert data["mode"] == "MIRROR"
+    assert data["safety_status"] == "OVERRIDE"
+    assert data["safety_reason"] == "high_dependency"
