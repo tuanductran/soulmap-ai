@@ -166,9 +166,7 @@ def _phase_three_names() -> list[str]:
 
 def test_primary_priority_order_matches_doctrine_and_orchestration() -> None:
     """Keep both AI-facing hierarchies in the exact executable runtime order."""
-    expected = [
-        rule.framework for rule in load_orchestration_rules().primary_priority
-    ]
+    expected = [rule.framework for rule in load_orchestration_rules().primary_priority]
     primary_names = set(expected)
 
     doctrine_order = [
@@ -176,9 +174,7 @@ def test_primary_priority_order_matches_doctrine_and_orchestration() -> None:
         for _, name in _doctrine_rows()
         if _constant_for(name) in primary_names
     ]
-    orchestration_order = [
-        _constant_for(name) for name in _phase_three_names()
-    ]
+    orchestration_order = [_constant_for(name) for name in _phase_three_names()]
 
     assert doctrine_order == expected, (
         "SOULMAP.md primary framework order differs from Python runtime priority."
