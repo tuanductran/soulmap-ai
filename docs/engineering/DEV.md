@@ -215,8 +215,7 @@ description: "One short sentence describing the full file."
   filename stem in kebab-case. Example:
   [`../skills/brand/brand-doctrine.md`](../../skills/brand/brand-doctrine.md) must use
   `name: "brand-doctrine"`.
-- Use the repo tooling for Markdown changes. `uv run soulmap format` is the canonical
-  formatter, and `uv run soulmap format` is the canonical command on every platform.
+- Use `uv run soulmap format` as the canonical formatter on every platform.
 - Before landing Markdown-heavy changes, run the contract check plus the focused local
   link and case checkers so broken anchors or canonical term drift fail early.
 
