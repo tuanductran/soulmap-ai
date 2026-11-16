@@ -15,9 +15,9 @@ from soulmap.runtime.knowledge.orchestration_source import load_orchestration_ru
 from soulmap.runtime.routing.scope_classifier import (
     BLACKLIST_LAYER1,
     BLACKLIST_PROHIBITED,
-    classify_message,
     WHITELIST_TIER1,
     WHITELIST_TIER2,
+    classify_message,
 )
 
 _DEPENDENCY_LEVELS = {
