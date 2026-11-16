@@ -270,7 +270,6 @@ def test_safety_gate_blocks_spiritual_identity_confirmation() -> None:
     assert result["reason"] == "out_of_scope"
 
 
-
 def test_tier1_short_circuits_dependency_and_scope_failures(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
