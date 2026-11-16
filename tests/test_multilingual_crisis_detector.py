@@ -50,17 +50,6 @@ def test_tier2_crisis_detected_across_supported_languages(message: str) -> None:
 @pytest.mark.parametrize(
     "message",
     [
-        "I feel pretty happy and calm today.",
-        "Hôm nay tôi cảm thấy khá vui và bình yên.",
-        "Hoy me siento bastante feliz y tranquilo.",
-        "Aujourd'hui je me sens plutot heureux et calme.",
-        "我今天感觉很开心很平静。",
-    ],
-    ids=["en", "vi", "es", "fr", "zh"],
-)
-@pytest.mark.parametrize(
-    "message",
-    [
         "I don't want to die.",
         "Tôi không muốn tự tử.",
         "No quiero suicidarme.",
@@ -98,6 +87,17 @@ def test_negated_clause_does_not_mask_separate_affirmative_tier1_signal(
     assert result["signals"]
 
 
+@pytest.mark.parametrize(
+    "message",
+    [
+        "I feel pretty happy and calm today.",
+        "Hôm nay tôi cảm thấy khá vui và bình yên.",
+        "Hoy me siento bastante feliz y tranquilo.",
+        "Aujourd'hui je me sens plutot heureux et calme.",
+        "我今天感觉很开心很平静。",
+    ],
+    ids=["en", "vi", "es", "fr", "zh"],
+)
 def test_no_crisis_for_neutral_positive_messages_across_languages(
     message: str,
 ) -> None:
