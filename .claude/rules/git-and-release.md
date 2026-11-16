@@ -70,7 +70,7 @@ git commit -m "fix(safety): embed crisis hotlines in response_guidance"
 # 4. Push the branch (never main)
 git push origin fix/crisis-hotlines
 
-# 5. Open a PR on GitHub for review before merging
+# 5. Open a PR on GitHub for review. Do not merge until all required checks pass, review is complete with no unresolved threads, and the repository owner explicitly approves.
 ```
 
 ### Rules
