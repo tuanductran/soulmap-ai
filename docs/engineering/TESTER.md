@@ -36,7 +36,8 @@ This runs:
 - Markdown QA checks: the Markdown contract guard, local Markdown link checker, local
   Markdown case checker, and PyMarkdown.
 - API documentation drift check: verifies documented CLI module entrypoints against
-  Python modules and `primary_framework` values against the current selector and routing configuration.
+  Python modules, and `primary_framework` values against the current selector and
+  routing configuration.
 
 `uv run soulmap format` and `uv run soulmap lint` also coordinate through a shared
 repo lock, so starting them in parallel should wait cleanly instead of producing a false
