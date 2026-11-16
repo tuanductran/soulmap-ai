@@ -13,7 +13,7 @@ of SoulMap releases. The front matter declares the package compatibility and
 canonical doctrine source; platform-specific facts must be checked against
 current official documentation before each deployment.
 
-**Lifecycle review date:** 2026-11-14.
+**Lifecycle review date:** 2026-11-16.
 
 ## Build the distribution artifacts first
 
@@ -40,16 +40,24 @@ Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#cus
 
 **Legacy platform path.**
 
-As of 2026-11-14, new GPT creation and publishing are unavailable on personal
-ChatGPT accounts (Free, Go, Plus, and Pro). Existing GPTs remain usable and may
-be editable when the account, plan, and permissions allow it. New creation is
-also restricted in affected managed workspaces.
+As of 2026-11-16, personal ChatGPT accounts (Free, Go, Plus, and Pro) cannot
+create or publish new GPTs. Existing GPTs remain usable and may be edited when
+the account, plan, and permissions allow it.
 
-OpenAI has scheduled Custom GPT retirement for **2026-12-11**. A migrated GPT
-becomes read-only; its instructions and knowledge files transfer to the
-replacement plugin, but its selected model and custom actions do not transfer.
-Migration timing and access vary by account or workspace. Follow the in-product
-notice and test the replacement before relying on it.
+For affected Enterprise workspaces, new GPT creation ended on 2026-10-26.
+FedRAMP workspaces are excluded from that cutoff. Existing, unmigrated GPTs
+remain usable and editable until their applicable retirement date; after
+migration, the original GPT becomes read-only. Workspace-specific notices and
+approved deferrals may set a different retirement date, so verify the applicable
+workspace notice rather than assuming the standard schedule applies.
+
+OpenAI's standard Custom GPT retirement date is **2026-12-11**. For affected
+FedRAMP workspaces and workspaces with a qualifying, approved deferral, the
+scheduled date is **2027-02-11**. During migration, the GPT's instructions and
+knowledge files transfer to the replacement plugin, but its selected model and
+custom actions do not. Migration timing and access vary by account or workspace.
+Follow the in-product notice, rebuild any required integrations, and test the
+replacement before relying on it.
 
 Official references:
 
