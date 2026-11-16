@@ -46,6 +46,6 @@ Use this folder as the entry point for repo documentation.
 - [`engineering/library-vs-framework.md`](engineering/library-vs-framework.md): the reusable Library
   layer vs the swappable Framework layer in `src/soulmap/runtime/`, and the authoring rule for new
   frameworks
-- [`ROADMAP.md`](ROADMAP.md): development phases, what shipped, and open future work
+- [`ROADMAP.md`](ROADMAP.md): planned, conditional, and deferred work; completed phases are recorded in [`MILESTONES.md`](MILESTONES.md)
 - [`engineering/adr/`](engineering/adr/): permanent Architecture Decision Records, starting with
   [`0001-layered-crisis-detection.md`](engineering/adr/0001-layered-crisis-detection.md)
