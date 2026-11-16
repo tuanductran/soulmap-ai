@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.runtime.routing.framework_selector import _grief_question_allowed
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -143,15 +144,18 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
     assert data["mode"] == "SANCTUARY"
 
 
-def test_framework_selector_accepts_grief_specific_readiness_after_initial_period() -> (
+def test_grief_question_requires_grief_specific_readiness_not_general_insight() -> None:
+    assert _grief_question_allowed({"readiness_detected": False}) is False
+
+
+def test_grief_question_allows_explicit_grief_readiness() -> None:
+    assert _grief_question_allowed({"readiness_detected": True}) is True
+
+
+def test_framework_selector_accepts_grief_readiness_without_exchange_threshold() -> (
     None
 ):
-    history = [
-        {"role": "user", "content": "My mother died last week."},
-        {"role": "user", "content": "I miss her so much."},
-        {"role": "user", "content": "I still cannot believe she is gone."},
-        {"role": "user", "content": "I don't know how to do this without her."},
-    ]
+    history = [{"role": "user", "content": "My mother died last week."}]
     payload = {
         "message": "My mother died last week. I've been thinking about what she meant to me.",
         "history": history,
@@ -165,13 +169,13 @@ def test_framework_selector_accepts_grief_specific_readiness_after_initial_perio
     assert data["context"]["grief_readiness"] is True
 
 
-def test_framework_selector_keeps_initial_grief_window_question_free() -> None:
+def test_framework_selector_keeps_acute_grief_question_free_without_readiness() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
         {"role": "user", "content": "I miss her so much."},
     ]
     payload = {
-        "message": "My mother died last week. I've been thinking about what she meant to me.",
+        "message": "I miss her so much.",
         "history": history,
         "memory": {},
     }

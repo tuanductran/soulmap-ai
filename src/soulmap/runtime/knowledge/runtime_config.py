@@ -398,7 +398,6 @@ DETECTOR_CONFIG: dict[str, dict[str, int]] = {
         "Minimum detection score": 2,
     },
     "grief": {
-        "Initial acute exchange window": 3,
         "Acute grief weight": 3,
         "Anticipatory grief weight": 2,
         "Ambiguous loss weight": 2,
