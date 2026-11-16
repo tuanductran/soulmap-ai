@@ -282,9 +282,13 @@ def synthesize(
         themes = merge_memory_themes(themes, memory)
 
     session_count = themes.get("session_count", 1)
-    is_longitudinal = cross_session_request and bool(themes.get("longitudinal")) and (
-        isinstance(session_count, int)
-        and session_count >= rules.minimum_sessions_for_longitudinal
+    is_longitudinal = (
+        cross_session_request
+        and bool(themes.get("longitudinal"))
+        and (
+            isinstance(session_count, int)
+            and session_count >= rules.minimum_sessions_for_longitudinal
+        )
     )
     supported_request = explicit_request or is_longitudinal
 
