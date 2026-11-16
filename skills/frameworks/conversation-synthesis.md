@@ -286,7 +286,9 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 
 ### Explicit cross-session request signals
 
-Use prior-session context only when the user clearly asks to compare or synthesize across earlier conversations. General requests to reflect on the current conversation do not count.
+Use prior-session context only when the user clearly asks to compare or
+synthesize across earlier conversations. General requests to reflect on the
+current conversation do not count.
 
 - "compare this with our previous sessions"
 - "compare this with earlier conversations"
