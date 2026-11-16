@@ -1,14 +1,28 @@
 ---
 title: "SoulMap AI, ChatGPT Custom GPT Instructions"
-description: "Instructions and conversation starters for deploying SoulMap AI as a Custom GPT on ChatGPT."
+description: "Legacy instructions and conversation starters for an existing SoulMap AI Custom GPT."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.14.0"
 ---
 
-# ChatGPT Custom GPT, instructions
+# ChatGPT Custom GPT instructions (legacy)
 
-Paste the text below into the **Instructions** field
-when creating or editing the SoulMap AI Custom GPT at chatgpt.com/create.
+> **Legacy deployment material.** Personal ChatGPT accounts (Free, Go, Plus, and Pro)
+> cannot create or publish new GPTs. New GPT creation also ended for affected
+> Enterprise workspaces on 2026-10-26; FedRAMP workspaces are excluded from that cutoff.
+> Custom GPTs are scheduled for retirement on 2026-12-11, or 2027-02-11 for FedRAMP
+> workspaces and affected Enterprise workspaces with a qualifying, approved deferral.
+> Use this text only when maintaining an existing, unmigrated GPT that your account
+> or workspace is still permitted to edit. After migration, edit the replacement plugin,
+> not the read-only original. The migration does not carry over the selected model or
+> custom actions; rebuild and test required integrations separately.
+>
+> See the [platform lifecycle and upload guide](README.md) before using this legacy
+> configuration.
+
+## ChatGPT Custom GPT, instructions
+
+For an existing, unmigrated GPT that you are still permitted to edit, paste the text below into its **Instructions** field. This is not a guide for creating a new GPT.
 
 You are SoulMap AI, a reflective inner companion. Your only purpose is to help
 people hear themselves more clearly. You do not guide, advise, rescue, explain,

@@ -1,6 +1,6 @@
 # Upload SoulMap to AI tools
 
-**Platform lifecycle review:** 2026-11-14. Platform availability, upload limits,
+**Platform lifecycle review:** 2026-11-16. Platform availability, upload limits,
 and interface labels change independently of SoulMap releases. Recheck the
 official help pages linked below before each deployment.
 
@@ -73,21 +73,28 @@ Official reference:
 
 ### Custom GPT knowledge (legacy transition)
 
-Custom GPTs are scheduled for retirement on **2026-12-11** for standard workspaces.
-FedRAMP workspaces and qualifying Enterprise workspaces with an approved deferral may
-have a later date; follow the notice for the specific account or workspace. New GPT
-creation and publishing are unavailable on personal ChatGPT accounts (Free, Go, Plus,
-and Pro). Existing GPTs remain usable and may remain editable where account, plan, and
-workspace permissions allow it. Creation in managed workspaces follows workspace
-availability and permissions. Use this path only for an existing GPT or an eligible
-workspace that still permits the workflow.
+Personal ChatGPT accounts (Free, Go, Plus, and Pro) cannot create or publish
+new GPTs. For affected Enterprise workspaces, new GPT creation ended on **2026-10-26**;
+FedRAMP workspaces are excluded from that cutoff. Existing, unmigrated GPTs remain
+usable and editable until their applicable retirement date. After migration, the
+original GPT becomes read-only.
+
+The standard Custom GPT retirement date is **2026-12-11**. FedRAMP workspaces and
+affected Enterprise workspaces with a qualifying, approved deferral have a scheduled
+retirement date of **2027-02-11**. Follow the notice for the specific account or
+workspace; a deferral does not itself restore new-GPT creation eligibility.
+
+Migration uses the latest published GPT version; drafts and unpublished edits do not
+transfer. Instructions and knowledge files transfer to the replacement plugin, but the
+selected model does not. Custom actions do not transfer and must be rebuilt and tested
+before relying on the replacement. The original GPT becomes read-only after migration.
 
 ZIP files are not accepted as Custom GPT knowledge files. Extract the archive and upload
-individual Markdown or text files. OpenAI's current GPT documentation lists up to 20
-knowledge files per GPT. Because Custom GPTs are being retired and account/workspace
+individual Markdown or text files. OpenAI currently documents up to 20 knowledge files
+per GPT, with a maximum of 512 MB per file; text/document files are also subject to a
+2-million-token cap. Because Custom GPTs are being retired and account/workspace
 availability varies, verify the live builder and migration notice before relying on this
-legacy path. File-size, token, and account usage limits also apply. Do not start a new
-deployment on this path without checking the retirement and migration notice.
+legacy path. Do not start a new deployment on this path.
 
 Official reference:
 [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
