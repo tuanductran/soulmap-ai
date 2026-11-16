@@ -53,7 +53,11 @@ def test_detector_markdown_does_not_duplicate_numeric_policy_tables() -> None:
 
 def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> None:
     """Keep the acute-grief timing policy executable and qualitative in Markdown."""
-    rule = next(row for row in runtime_config.runtime_config.FRAMEWORK_TEMPLATE_ROWS if row[0] == "Grief (acute)")
+    rule = next(
+        row
+        for row in runtime_config.FRAMEWORK_TEMPLATE_ROWS
+        if row[0] == "Grief (acute)"
+    )
     assert "initial acute-grief period" in rule[3].lower()
     assert "readiness" in rule[3].lower()
 
@@ -101,7 +105,9 @@ def test_stage_and_orchestration_markdown_do_not_duplicate_numeric_thresholds() 
 def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
     """Keep machine-facing configuration names on the Python side of the boundary."""
     forbidden_by_source = {
-        "skills/meta/stage-classifier.md": tuple(runtime_config.STAGE_CLASSIFIER_CONFIG),
+        "skills/meta/stage-classifier.md": tuple(
+            runtime_config.STAGE_CLASSIFIER_CONFIG
+        ),
         "skills/meta/orchestration.md": (
             "ORCHESTRATION_CONFIG",
             *runtime_config.ORCHESTRATION_CONFIG,
@@ -128,11 +134,10 @@ def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
 
 
 
-
 def test_template_word_ranges_remain_python_owned() -> None:
     """Keep deterministic numeric word ranges out of qualitative template guidance."""
     content = _read_skill("skills/meta/framework-template-map.md")
-    for row in FRAMEWORK_TEMPLATE_ROWS:
+    for row in runtime_config.FRAMEWORK_TEMPLATE_ROWS:
         assert row[2] not in content, (
             "framework-template-map.md duplicates Python-owned word range "
             f"{row[2]!r} for {row[0]!r}"
