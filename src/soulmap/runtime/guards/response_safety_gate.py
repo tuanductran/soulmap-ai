@@ -21,7 +21,6 @@ from soulmap.runtime.routing.scope_classifier import (
 )
 
 
-
 _DEPENDENCY_LEVELS = {
     "NO_DATA",
     "LOW_DEPENDENCY",
