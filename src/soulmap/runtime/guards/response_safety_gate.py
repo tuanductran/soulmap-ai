@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_memory_selection_fields,
 )
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.routing.scope_classifier import classify_message
 
 
@@ -100,6 +101,31 @@ def apply_safety_gate(
             "reason": "out_of_scope",
             "flags": ["scope"],
             "selection": selection,
+        }
+
+    # Tier 2 is a mandatory presence-first fallback, not an immediate Tier 1
+    # crisis response. Preserve the established Phase 1 order above: dependency
+    # and scope overrides win before Tier 2 is allowed to replace a framework.
+    if crisis.get("tier") == 2:
+        rules = load_orchestration_rules()
+        fallback = next(
+            (rule for rule in rules.intensity_fallback if rule.level == "HIGH"),
+            None,
+        )
+        if fallback is None:
+            raise ValueError("HIGH intensity fallback is missing from orchestration contract.")
+        return {
+            "status": "OVERRIDE",
+            "reason": "tier2_crisis",
+            "flags": ["crisis_tier2"],
+            "selection": {
+                "primary_framework": fallback.framework,
+                "secondary_layer": None,
+                "mode": fallback.mode,
+                "context": {"crisis": crisis},
+                "instruction": rules.runtime_instructions["high_emotional_intensity"],
+                "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
+            },
         }
 
     return {
