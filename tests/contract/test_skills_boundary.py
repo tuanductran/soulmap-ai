@@ -47,8 +47,8 @@ def test_non_markdown_shipped_metadata_rejects_implementation_languages() -> Non
     assert any("Python" in finding for finding in findings)
     assert any("JavaScript" in finding for finding in findings)
 
-def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) -> None:
 
+def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) -> None:
     files = {
         "SKILL.md": "# Skill\\n\\nPython must not leak into shipped guidance.\\n",
         "SOULMAP.md": "# Doctrine\\n\\nJavaScript is an implementation detail.\\n",
