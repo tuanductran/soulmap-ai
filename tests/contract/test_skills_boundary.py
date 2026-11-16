@@ -1,4 +1,6 @@
-from soulmap.devtools.checks.skills_boundary import audit_markdown, audit_text
+from pathlib import Path
+
+from soulmap.devtools.checks.skills_boundary import audit, audit_markdown, audit_text
 
 
 def test_implementation_language_in_plain_prose_is_rejected() -> None:
@@ -45,10 +47,7 @@ def test_non_markdown_shipped_metadata_rejects_implementation_languages() -> Non
     assert any("Python" in finding for finding in findings)
     assert any("JavaScript" in finding for finding in findings)
 
-def test_audit_covers_all_build_members_and_respects_distignore(tmp_path) -> None:
-    from pathlib import Path
-
-    from soulmap.devtools.checks.skills_boundary import audit
+def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) -> None:
 
     files = {
         "SKILL.md": "# Skill\\n\\nPython must not leak into shipped guidance.\\n",
