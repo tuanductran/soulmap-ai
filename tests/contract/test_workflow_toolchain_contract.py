@@ -37,9 +37,9 @@ def test_setup_uv_is_sha_pinned_and_uses_one_consistent_version() -> None:
 
 def test_dependency_detector_baseline_workflow_is_read_only() -> None:
     """Keep the dependency baseline audit from acquiring unnecessary write access."""
-    content = (
-        WORKFLOW_ROOT / "dependency-detector-baseline.yml"
-    ).read_text(encoding="utf-8")
+    content = (WORKFLOW_ROOT / "dependency-detector-baseline.yml").read_text(
+        encoding="utf-8"
+    )
     match = re.search(
         r"^permissions:\n(?P<body>(?:[ \t]+[^\n]*\n)+)",
         content,
