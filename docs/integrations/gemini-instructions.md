@@ -1,6 +1,6 @@
 ---
 title: "SoulMap AI, Gemini Gem Instructions"
-description: "Instructions for deploying SoulMap AI as a Gemini Gem."
+description: "Legacy instructions for an existing SoulMap AI Gemini Gem before the Gems-to-Skills transition."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.14.0"
 ---
