@@ -359,9 +359,7 @@ def test_safety_gate_restores_tier2_sanctuary_when_selector_crisis_detector_fail
     elif failure_mode == "raises":
         monkeypatch.setattr(framework_selector, "detect_crisis", exploding_detector)
     else:
-        monkeypatch.setattr(
-            framework_selector, "detect_crisis", lambda *_a, **_k: None
-        )
+        monkeypatch.setattr(framework_selector, "detect_crisis", lambda *_a, **_k: None)
 
     result = framework_selector.select_framework(
         "I feel empty inside and I'm trapped.", [], {"prior_stage": 3}
