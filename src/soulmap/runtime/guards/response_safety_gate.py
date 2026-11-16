@@ -87,16 +87,16 @@ def apply_safety_gate(
 
     Args:
         message: The user's current message, unmodified.
-        history: Prior turns, each a dict with role and content.
+        history: Prior turns, each a dict with ``role`` and ``content``.
         memory: Prior-session context, currently unused by the gate and
             accepted only to keep one payload shape across the pipeline.
         selection: The framework selector's output, returned unchanged when no
             override fires.
 
     Returns:
-        A dict with status, reason, flags, and selection. On an override the
-        selection is replaced with the crisis or dependency route, not merged
-        with the original.
+        A dict with ``status`` (OVERRIDE or PASS), a ``reason`` code, a
+        ``flags`` list, and ``selection``. On an override the selection is
+        replaced with the crisis or dependency route, not merged with the original.
     """
     _ = memory
     # Independent of the selector's early check, re-derive crisis from the raw
