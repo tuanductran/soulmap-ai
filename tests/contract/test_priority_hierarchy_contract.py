@@ -142,3 +142,47 @@ def test_secondary_layers_stay_out_of_the_primary_table() -> None:
 
     assert "ANGER" not in emitted
     assert "SOMATIC" not in emitted
+
+
+def _phase_three_names() -> list[str]:
+    """Read the ordered primary-framework names from the shipped orchestration guide."""
+    text = (REPO_ROOT / "skills/meta/orchestration.md").read_text(encoding="utf-8")
+    section = text.split("### Phase 3, primary framework selection", 1)[1].split(
+        "### Phase 4", 1
+    )[0]
+    names: list[str] = []
+    for line in section.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|") or not stripped.endswith("|"):
+            continue
+        cells = [cell.strip() for cell in stripped[1:-1].split("|")]
+        if len(cells) != 3 or cells[0].lower() == "priority":
+            continue
+        if all(set(cell) <= {":", "-", " "} for cell in cells):
+            continue
+        names.append(cells[1].lower())
+    return names
+
+
+def test_primary_priority_order_matches_doctrine_and_orchestration() -> None:
+    """Keep both AI-facing hierarchies in the exact executable runtime order."""
+    expected = [rule.framework for rule in load_orchestration_rules().primary_priority]
+    primary_names = set(expected)
+
+    doctrine_order = [
+        _constant_for(name)
+        for _, name in _doctrine_rows()
+        if _constant_for(name) in primary_names
+    ]
+    orchestration_order = [
+        _constant_for(name)
+        for name in _phase_three_names()
+        if _constant_for(name) in primary_names
+    ]
+
+    assert doctrine_order == expected, (
+        "SOULMAP.md primary framework order differs from Python runtime priority."
+    )
+    assert orchestration_order == expected, (
+        "orchestration.md Phase 3 order differs from Python runtime priority."
+    )
