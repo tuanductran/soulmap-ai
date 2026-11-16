@@ -30,56 +30,44 @@ The canonical dependency knowledge source is:
 
 `skills/safety/dependency-detection.md`
 
-The Python runtime resolves that source through the Python-owned runtime source
-registry and loads the semantic knowledge from Markdown, including:
+The Python runtime now resolves that source through the Python-owned runtime source
+registry and loads the following knowledge directly from the Markdown source:
 
-- dependency signal groups and keywords;
+- dependency keywords;
 - decision-seeking phrases;
-- isolation and context-exclusion cues;
-- dependency regex expressions;
-- response and recommendation guidance.
+- isolation signals;
+- dependency regex patterns;
+- scoring weights and thresholds;
+- dependency guidance.
 
-Executable policy remains Python-owned in
-`src/soulmap/runtime/knowledge/runtime_config.py`, including:
+The runtime implementation is responsible for loading, parsing, normalizing, scoring,
+routing, and enforcing the knowledge. It must not duplicate the dependency signal
+lexicon, regex patterns, thresholds, or recommendation wording.
 
-- scoring weights and detection thresholds;
-- context-exclusion policy switches;
-- clause-boundary rules used by the detector.
+The migration is considered complete only because the runtime source, registry
+mapping, deterministic Markdown loaders, and dependency detector now operate through
+the canonical source. The protected legacy dependency knowledge surface in
+`src/soulmap/runtime/config/safety.py` is no longer the detector's source of truth.
 
-The runtime implementation is responsible for loading, parsing, normalizing,
-scoring, routing, validating, and enforcing this knowledge and policy. Markdown
-must not become a duplicate store for Python-owned numeric policy or machine-facing
-runtime configuration. Conversely, semantic phrases, regex expressions, context
-cues, and user-facing guidance must not be moved into Python merely because the
-runtime consumes them.
-
-The migration is considered complete because the runtime source, registry mapping,
-deterministic Markdown loaders, executable Python policy, and dependency detector
-operate through this explicit ownership boundary. The protected legacy dependency
-knowledge surface in `src/soulmap/runtime/config/safety.py` is no longer the
-detector's source of truth.
-
-Changes to dependency semantics must be made in the canonical Markdown source.
-Changes to scoring, thresholds, context-policy switches, or clause-boundary
-execution behavior must be made in the Python runtime configuration. Both kinds
-of changes require the corresponding runtime and regression tests.
+No new dependency-specific knowledge should be added to Python configuration.
+Changes to dependency semantics must be made in the canonical Markdown source and
+covered by the corresponding runtime/regression tests.
 
 ## Rationale
 
-Dependency handling is safety-sensitive. Moving semantic data or executable policy
-without a compatibility contract could silently change detection coverage,
-thresholds, or escalation behavior.
+Dependency handling is safety-sensitive. Moving the data without a compatibility
+contract could silently change detection coverage, thresholds, or escalation
+behavior.
 
 The completed migration follows the intended order:
 
-1. establish the canonical Markdown source for semantic dependency knowledge;
+1. establish the canonical Markdown source;
 2. define the runtime contract;
 3. register the source in the Python-owned runtime registry;
 4. load and parse the source deterministically;
-5. keep executable scoring and context policy in Python runtime configuration;
-6. validate dependency regression coverage;
-7. migrate the detector to the canonical source and remove the obsolete Python
-   semantic-knowledge dependency from the detector path.
+5. validate dependency regression coverage;
+6. migrate the detector to the canonical source;
+7. remove the obsolete Python knowledge dependency from the detector path.
 
 Issue #524 was the execution path for this migration.
 
@@ -103,16 +91,12 @@ one canonical source.
 
 ## Consequences
 
-- Dependency semantic knowledge has one canonical Markdown source.
-- Executable scoring weights, thresholds, context-policy switches, and
-  clause-boundary rules have one Python runtime configuration owner.
-- Runtime Python remains responsible for deterministic execution rather than
-  semantic authorship.
-- The dependency detector uses stable runtime loading and registry contracts
-  without maintaining a second semantic-knowledge copy.
+- Dependency detection knowledge now has one canonical Markdown source.
+- Runtime Python remains responsible for deterministic execution rather than semantic
+  authorship.
+- The dependency detector can continue to use stable runtime loading and registry
+  contracts without maintaining a second knowledge copy.
 - Future contributors should edit
-  `skills/safety/dependency-detection.md` for semantic signals, regex expressions,
-  context cues, and guidance; use
-  `src/soulmap/runtime/knowledge/runtime_config.py` for executable scoring and
-  context policy.
+  `skills/safety/dependency-detection.md` for dependency semantics and use Python
+  only for runtime behavior, parsing, validation, and enforcement.
 - The former protected-legacy exception described by this ADR no longer applies.
