@@ -3,15 +3,7 @@
 import re
 from pathlib import Path
 
-from soulmap.runtime.knowledge.runtime_config import (
-    CELEBRATION_SCORING,
-    DEPENDENCY_CLAUSE_BOUNDARIES,
-    DEPENDENCY_CONTEXT_POLICY,
-    DEPENDENCY_SCORING,
-    FRAMEWORK_TEMPLATE_ROWS,
-    ORCHESTRATION_CONFIG,
-    STAGE_CLASSIFIER_CONFIG,
-)
+import soulmap.runtime.knowledge.runtime_config as runtime_config
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -61,7 +53,7 @@ def test_detector_markdown_does_not_duplicate_numeric_policy_tables() -> None:
 
 def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> None:
     """Keep the acute-grief timing policy executable and qualitative in Markdown."""
-    rule = next(row for row in FRAMEWORK_TEMPLATE_ROWS if row[0] == "Grief (acute)")
+    rule = next(row for row in runtime_config.runtime_config.FRAMEWORK_TEMPLATE_ROWS if row[0] == "Grief (acute)")
     assert "initial acute-grief period" in rule[3].lower()
     assert "readiness" in rule[3].lower()
 
@@ -104,15 +96,15 @@ def test_stage_and_orchestration_markdown_do_not_duplicate_numeric_thresholds() 
                 f"{relative_path} duplicates Python-owned runtime policy: {pattern}"
             )
 
+
+
 def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
     """Keep machine-facing configuration names on the Python side of the boundary."""
     forbidden_by_source = {
-        "skills/meta/stage-classifier.md": tuple(STAGE_CLASSIFIER_CONFIG),
+        "skills/meta/stage-classifier.md": tuple(runtime_config.STAGE_CLASSIFIER_CONFIG),
         "skills/meta/orchestration.md": (
             "ORCHESTRATION_CONFIG",
-            "primary_priority",
-            "secondary_priority",
-            "intensity_fallback",
+            *runtime_config.ORCHESTRATION_CONFIG,
         ),
         "skills/safety/dependency-detection.md": (
             "DEPENDENCY_SCORING",
@@ -133,6 +125,8 @@ def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
             assert identifier not in content, (
                 f"{relative_path} exposes Python-owned identifier {identifier!r}"
             )
+
+
 
 
 def test_template_word_ranges_remain_python_owned() -> None:
