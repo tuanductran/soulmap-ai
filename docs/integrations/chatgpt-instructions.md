@@ -5,7 +5,7 @@ doctrine_source: "SOULMAP.md"
 soulmap_version: "0.14.0"
 ---
 
-# ChatGPT Custom GPT instructions — legacy
+# ChatGPT Custom GPT instructions (legacy)
 
 > **Legacy deployment material.** Personal ChatGPT accounts (Free, Go, Plus, and Pro)
 > cannot create or publish new GPTs. New GPT creation also ended for affected
