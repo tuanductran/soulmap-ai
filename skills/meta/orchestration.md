@@ -61,8 +61,9 @@ Only proceed to Phase 2 when no Phase 1 safety override applies.
 
 Before selecting a framework, classify the current emotional intensity level.
 
-| Level | Signals | Consequence |
+| Level / signal | Signals | Consequence |
 | :--- | :--- | :--- |
+| Tier 2 crisis | Crisis detector returns tier 2 / `PRESENCE_FIRST_MANDATORY` | Use the configured High-intensity De-escalation/Sanctuary fallback regardless of the intensity score or topic; do not run primary-framework selection or ask an inquiry question |
 | High | Physical overwhelm, cognitive flooding, emotional spiraling | Use the configured High-intensity De-escalation/Sanctuary fallback regardless of topic; do not run primary-framework selection |
 | Moderate | Elevated activation, multiple emotions, long fragmented messages | Check the explicit insight and grief exceptions first; otherwise use the configured Moderate-intensity De-escalation fallback with only its allowed secondary layer. Do not run the normal primary-priority list |
 | Normal | Standard reflective mode | Proceed to Phase 3 and evaluate the primary-priority list |

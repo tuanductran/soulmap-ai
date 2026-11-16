@@ -11,6 +11,7 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_memory_selection_fields,
 )
+from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
 from soulmap.runtime.routing.scope_classifier import classify_message
 
 
@@ -47,7 +48,14 @@ def apply_safety_gate(
     # message here so a selector-side miss cannot bypass the highest-priority
     # override. See ADR 0001 for the defense-in-depth rationale.
     crisis = detect_crisis(message)
-    if crisis.get("tier") == 1:
+    crisis_tier = crisis.get("tier") if isinstance(crisis, dict) else None
+    if (
+        isinstance(crisis_tier, bool)
+        or not isinstance(crisis_tier, int)
+        or crisis_tier not in {0, 1, 2}
+    ):
+        raise ValueError("Crisis detector returned an invalid tier.")
+    if crisis_tier == 1:
         return {
             "status": "OVERRIDE",
             "reason": "tier1_crisis",
@@ -100,6 +108,33 @@ def apply_safety_gate(
             "reason": "out_of_scope",
             "flags": ["scope"],
             "selection": selection,
+        }
+
+    # Tier 2 is a mandatory presence-first fallback, not an immediate Tier 1
+    # crisis response. Preserve the established Phase 1 order above: dependency
+    # and scope overrides win before Tier 2 is allowed to replace a framework.
+    if crisis_tier == 2:
+        rules = load_orchestration_rules()
+        fallback = next(
+            (rule for rule in rules.intensity_fallback if rule.level == "HIGH"),
+            None,
+        )
+        if fallback is None:
+            raise ValueError(
+                "HIGH intensity fallback is missing from orchestration contract."
+            )
+        return {
+            "status": "OVERRIDE",
+            "reason": "tier2_crisis",
+            "flags": ["crisis_tier2"],
+            "selection": {
+                "primary_framework": fallback.framework,
+                "secondary_layer": None,
+                "mode": fallback.mode,
+                "context": {"crisis": crisis},
+                "instruction": rules.runtime_instructions["high_emotional_intensity"],
+                "blocked": ["ALL_REFLECTIVE_FRAMEWORKS"],
+            },
         }
 
     return {

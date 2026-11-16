@@ -1,3 +1,5 @@
+from typing import cast
+
 import pytest
 
 from soulmap.runtime.detectors.somatic_detector import detect_somatic
@@ -339,3 +341,35 @@ def test_biometric_context_alone_does_not_activate_somatic_layer(
     assert result["secondary_layer"] is None
     if intensity_level == "HIGH":
         assert result["primary_framework"] == "DE_ESCALATION"
+
+
+@pytest.mark.parametrize("failure_mode", ["miss", "raises", "malformed"])
+def test_safety_gate_restores_tier2_sanctuary_when_selector_crisis_detector_fails(
+    monkeypatch: pytest.MonkeyPatch,
+    failure_mode: str,
+) -> None:
+    """The independent gate must preserve Tier 2 when selector detection degrades."""
+    _install_defaults(monkeypatch)
+
+    def exploding_detector(*_args: object, **_kwargs: object) -> dict[str, object]:
+        raise RuntimeError("crisis detector is down")
+
+    if failure_mode == "miss":
+        monkeypatch.setattr(
+            framework_selector, "detect_crisis", lambda *_a, **_k: {"tier": 0}
+        )
+    elif failure_mode == "raises":
+        monkeypatch.setattr(framework_selector, "detect_crisis", exploding_detector)
+    else:
+        monkeypatch.setattr(framework_selector, "detect_crisis", lambda *_a, **_k: None)
+
+    result = framework_selector.select_framework(
+        "I feel empty inside and I'm trapped.", [], {"prior_stage": 3}
+    )
+
+    assert result["primary_framework"] == "DE_ESCALATION"
+    assert result["mode"] == "SANCTUARY"
+    assert result["safety_status"] == "OVERRIDE"
+    assert result["safety_reason"] == "tier2_crisis"
+    template = cast(dict[str, str], result["template"])
+    assert template["name"] == "De-escalation (HIGH)"

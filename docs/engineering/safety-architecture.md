@@ -79,7 +79,7 @@ flowchart TD
     X ==> H
     W ==> H
     G ==> H
-    H ==> I{Safety gate\nre-checks crisis,\ndependency, scope}
+    H ==> I{Safety gate\nre-checks Tier 1,\ndependency, scope, Tier 2}
     I -- override or block ==> J[Final selection,\npossibly replaced]
     I -- pass ==> J
     J ==> K[Selector output:\nprimary_framework, mode,\nsafety_status, instruction]
@@ -164,8 +164,9 @@ Location:
 (`apply_safety_gate`).
 
 The gate is called at the end of every selector branch and re-derives crisis,
-dependency, and out-of-scope status from the raw message and host-supplied history, rather
-than trusting the `selection` it was handed. Concretely, in order:
+dependency, scope, and Tier 2 presence-first status from the raw message and
+host-supplied history, rather than trusting the `selection` it was handed.
+Concretely, in order:
 
 1. It calls `detect_crisis()` again. A tier-1 result unconditionally
    overwrites whatever selection it was given with `CRISIS`, regardless of
@@ -175,7 +176,11 @@ than trusting the `selection` it was handed. Concretely, in order:
 3. If neither override fires, it calls `classify_message()` (the scope
    classifier). A `BLACKLIST_*` tier produces a `BLOCK` status, distinguishing
    a `system_prompt_extraction` reason from a general `out_of_scope` reason.
-4. If nothing above fires, the gate returns `PASS` and leaves the selection
+4. If scope passes and the crisis detector returned tier 2, it replaces the
+   selection with the configured High-intensity `DE_ESCALATION`/`SANCTUARY`
+   fallback (`tier2_crisis`). This preserves presence-first behavior even
+   when selector-side detection degrades or a later framework branch wins.
+5. If nothing above fires, the gate returns `PASS` and leaves the selection
    unchanged.
 
 The gate is also a standalone CLI entrypoint

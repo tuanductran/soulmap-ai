@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-26
+- Amended: 2026-11-16 (Tier 2 presence-first fallback)
 - Deciders: SoulMap AI maintainers
 - Related: [Issue #134](https://github.com/tuanductran/soulmap-ai/issues/134)
   (review that produced this decision), [Issue #148](https://github.com/tuanductran/soulmap-ai/issues/148)
@@ -34,8 +35,10 @@ is called from two independent locations on every request:
    selection on a tier-1 result.
 2. `apply_safety_gate()`
    (`src/soulmap/runtime/guards/response_safety_gate.py`), which calls it
-   again, independently, on the raw message, and unconditionally overwrites
-   whatever selection it was handed with `CRISIS` on a tier-1 result.
+   again, independently, on the raw message. It unconditionally overwrites
+   the selection with `CRISIS` on tier 1; after dependency and scope checks,
+   it applies the configured high-intensity `DE_ESCALATION`/`SANCTUARY`
+   fallback on tier 2.
 
 Because every one of the selector's return branches calls the safety gate
 before returning, `detect_crisis()` runs exactly twice per request today, on
@@ -145,7 +148,7 @@ ownership boundary explicit as part of the decision record itself.
 | --- | --- | --- | --- |
 | Detector pipeline | [`runtime/detectors/crisis_detector.py`](../../../src/soulmap/runtime/detectors/crisis_detector.py) | Deterministic keyword/regex scan of a single message. Returns a tier (0/1/2) plus response guidance. The single source of truth both call sites depend on. | [`safety-architecture.md`, Layer 1](../safety-architecture.md#layer-1-detector-pipeline) |
 | Framework selector | [`runtime/routing/framework_selector.py`](../../../src/soulmap/runtime/routing/framework_selector.py) | Calls the crisis detector first, before any other detector; short-circuits to `CRISIS` on tier 1; hands its result to the safety gate on every return branch. | [`safety-architecture.md`, Layer 2](../safety-architecture.md#layer-2-framework-selector-routing) |
-| Safety Gate | [`runtime/guards/response_safety_gate.py`](../../../src/soulmap/runtime/guards/response_safety_gate.py) | Independently re-derives crisis, dependency, and scope status from the raw message; unconditionally overrides the selection on a tier-1 result regardless of what the selector decided. Also independently callable as a CLI. | [`safety-architecture.md`, Layer 3](../safety-architecture.md#layer-3-safety-gate) |
+| Safety Gate | [`runtime/guards/response_safety_gate.py`](../../../src/soulmap/runtime/guards/response_safety_gate.py) | Independently re-derives crisis, dependency, and scope status from the raw message; overrides tier 1 unconditionally, then preserves dependency and scope priority before applying the configured Tier 2 Sanctuary fallback. Also independently callable as a CLI. | [`safety-architecture.md`, Layer 3](../safety-architecture.md#layer-3-safety-gate) |
 | Response contract validation | [`runtime/guards/response_contract.py`](../../../src/soulmap/runtime/guards/response_contract.py) | Given a `primary_framework == CRISIS` label, enforces structural rules (no question) on the generated response. Does not re-derive the crisis label. | [`safety-architecture.md`, Layer 4](../safety-architecture.md#layer-4-response-contract-validation) |
 | Response-content validation | `src/soulmap/devtools/evals/eval_responses.py`, `evals/datasets/response_generation_cases.json` | Offline eval-harness check that CRISIS-labeled generated responses contain correct content. Not part of the live request path. | [`crisis-detection-layering-review.md`](../crisis-detection-layering-review.md#current-architecture) |
 
@@ -176,6 +179,11 @@ sequenceDiagram
         G->>G: overwrite selection = CRISIS (regardless of input selection)
     else
         G->>G: check dependency, then scope
+        alt tier == 2 and no earlier override
+            G->>G: overwrite selection = configured DE_ESCALATION / SANCTUARY
+        else
+            G->>G: preserve selection
+        end
     end
     G-->>S: final selection
     S-->>U: primary_framework, mode, safety_status, instruction
@@ -192,9 +200,10 @@ future change to the selector or gate:
 3. The gate's crisis check always runs before its dependency and scope
    checks, and always operates on the raw message rather than trusting the
    `selection` field.
-4. A tier-1 result from either call site takes unconditional priority over
-   any other selection; overrides replace the selection wholesale, they do
-   not merge with it.
+4. Tier 1 takes unconditional priority. Dependency and scope retain their
+   existing Phase 1 priority over Tier 2; when neither applies, Tier 2
+   replaces the ordinary selection with the configured Sanctuary fallback.
+   Overrides replace the selection wholesale, they do not merge with it.
 
 ## Why Removing Either Layer Weakens Safety
 
@@ -286,23 +295,21 @@ and what this ADR now makes permanent.
 
 ## Implementation Boundaries
 
-This ADR is a documentation-only decision. It does not authorize, and was
-not produced by, any of the following:
+This ADR was amended on 2026-11-16 after fault-injection testing exposed
+that the selector's degraded Tier 2 path could fall through to an ordinary
+framework because the independent gate only restored Tier 1. The existing
+layers remain unchanged in number; the gate now also re-derives Tier 2 and
+applies the already-configured High-intensity De-escalation/Sanctuary fallback
+after dependency and scope checks. The amendment does not change the
+Tier 1 > dependency > scope > Tier 2 priority order, introduce caching, or
+add a new safety layer.
 
-- Changing the behavior of `detect_crisis()`, `framework_selector.py`, or
-  `response_safety_gate.py`.
-- Changing routing or override priority order.
-- Adding a shared cache or memoization between the two call sites.
-- Introducing a new safety layer beyond the five described here.
-
-The regression gap inherited from the
-[#134 review's recommendation](../crisis-detection-layering-review.md#recommendation)
-is covered by `tests/regression/test_routing_safety_gate.py`. Its
-`test_safety_gate_overrides_tier1_crisis_when_selector_misses_it` scenario
-forces the selector's locally imported `detect_crisis()` to return Tier 0 for
-a real Tier 1 message. The gate retains its separate detector import, so the
-test proves it independently re-derives the raw message and overrides the
-selector result to `CRISIS` through the full pipeline.
+The Tier 1 selector-miss and selector-exception scenarios remain covered by
+`tests/regression/test_routing_safety_gate.py`. The 2026-11-16 amendment adds
+Tier 2 fault-injection cases for a selector detector miss, exception, and
+malformed return. Each proves that the gate independently re-derives the raw
+message and restores the configured Sanctuary fallback. Contract tests also
+pin the priority order: dependency and scope blocks remain ahead of Tier 2.
 
 ## Future Maintenance Guidance
 
