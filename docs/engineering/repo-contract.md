@@ -103,7 +103,7 @@ alone to delete material.
   and are therefore not part of those archives. Extracted shipped knowledge
   must not reference `docs/`, `tests/`, `.claude/`, `.github/`, `scripts/`,
   `src/soulmap/`, or any other repository-only path, whether or not it is a clickable link.
-  `tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
+  `tests/contract/safety/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
   enforces this; see `.claude/rules/markdown-portability.md`'s shipped-package
   boundary rule for the authoring-time guidance.
 

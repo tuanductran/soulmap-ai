@@ -13,7 +13,7 @@ Command = Sequence[str]
 Runner = Callable[..., subprocess.CompletedProcess[str]]
 
 CONTRACT_TESTS = (
-    "tests/contract/test_p_level_governance.py",
+    "tests/contract/safety/test_p_level_governance.py",
     "tests/contract/test_dependency_refresh_process_contract.py",
     "tests/contract/test_toolchain_support_contract.py",
 )

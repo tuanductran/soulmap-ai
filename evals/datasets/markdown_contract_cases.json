@@ -80,7 +80,7 @@
         ]
       },
       {
-        "path": "tests/contract/test_eval_response_examples.py",
+        "path": "tests/contract/evals/test_eval_response_examples.py",
         "must_include_all": [
           "test_crisis_example_acknowledges_risk_before_resources",
           "your immediate safety matters",

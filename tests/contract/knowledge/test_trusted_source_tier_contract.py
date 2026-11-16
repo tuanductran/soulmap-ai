@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 from urllib.parse import urlparse
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 DOCTRINE = REPO_ROOT / "skills" / "safety" / "whitelist-blacklist-system.md"
 
 _TIER_1_HEADING = "**Trusted sources, tier 1, citable as evidence:**"

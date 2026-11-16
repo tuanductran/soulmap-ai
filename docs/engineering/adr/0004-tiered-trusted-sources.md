@@ -106,7 +106,7 @@ recorded as the safety matrix's first `guidance-only` row rather than as a
 
 - The safety matrix gains its first `guidance-only` row. That status was
   defined in the legend from Phase 14 and had never been used.
-- `tests/contract/test_trusted_source_tier_contract.py` pins the structure: the
+- `tests/contract/knowledge/test_trusted_source_tier_contract.py` pins the structure: the
   tiers parse, self-reporting organizations stay out of tier 1 while remaining
   listed in tier 2, no tier 1 category names science it does not have, the
   three claim-level limits are stated, and crisis search still names a source

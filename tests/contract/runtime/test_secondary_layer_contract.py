@@ -16,7 +16,7 @@ from pathlib import Path
 
 from soulmap.runtime.knowledge.labels import SECONDARY_NAMES
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 ORCHESTRATION = REPO_ROOT / "skills" / "meta" / "orchestration.md"
 SELECTOR = (
     REPO_ROOT / "src" / "soulmap" / "runtime" / "routing" / "framework_selector.py"
