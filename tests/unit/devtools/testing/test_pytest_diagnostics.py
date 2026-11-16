@@ -8,7 +8,7 @@ from typing import cast
 
 import pytest
 
-SCRIPT = Path(__file__).resolve().parents[3] / "scripts" / "pytest_diagnostics.py"
+SCRIPT = Path(__file__).resolve().parents[4] / "scripts" / "pytest_diagnostics.py"
 
 
 @pytest.fixture
