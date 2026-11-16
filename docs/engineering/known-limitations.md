@@ -402,8 +402,8 @@ third archive. The content of each archive and the manifest contract are fixed
 by [`docs/engineering/repo-contract.md`](repo-contract.md) and
 [`docs/operations/LIBRARY.md`](../operations/LIBRARY.md).
 
-`templates/` is excluded from both artifacts. It is internal-only. The
-`.claude/` local workflow layer is excluded from both artifacts.
+`templates/` is excluded from both archives. It is internal-only. The
+`.claude/` local workflow layer is excluded from both archives.
 `.claude-plugin/` is included only in `dist/soulmap-ai.skill`, not in
 `dist/soulmap-ai.zip`.
 
@@ -436,7 +436,7 @@ environments.
 | --- | --- | --- |
 | `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `SOULMAP.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
 | `dist/soulmap-ai.skill` | zip contents plus `.claude-plugin/` | `templates/`, `.claude/` |
-| `dist/soulmap-ai-library.json` | Derived skill inventory, project version, compatibility metadata, release URL, archive sizes, and SHA-256 digests | Archive payloads and executable code; manifest only |
+| `dist/soulmap-ai-library.json` | Derived skill inventory, project version, compatibility metadata, release URL, archive sizes, and SHA-256 digests | No archive payloads; metadata only |
 
 ### Related documentation
 
