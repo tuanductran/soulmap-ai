@@ -231,11 +231,13 @@ def should_synthesize(message: str, history: list[Message]) -> dict[str, str | b
         1 for m in analysis_history if isinstance(m, dict) and m.get("role") == "user"
     )
 
-    for phrase in _rules().explicit_requests:
-        if phrase in msg_lower:
-            return {"should": True, "reason": "explicit_request"}
-
     rules = _rules()
+    if any(
+        phrase in msg_lower
+        for phrase in (*rules.explicit_requests, *rules.cross_session_requests)
+    ):
+        return {"should": True, "reason": "explicit_request"}
+
     extracted = extract_themes(analysis_history)
     recurring_theme_count = sum(
         len(extracted.get(domain, []))
@@ -266,16 +268,21 @@ def synthesize(
         if isinstance(item, dict) and item.get("role") == "user"
     )
     rules = _rules()
+    normalized_message = message.lower().strip()
     explicit_request = any(
-        phrase in message.lower().strip() for phrase in rules.explicit_requests
+        phrase in normalized_message
+        for phrase in (*rules.explicit_requests, *rules.cross_session_requests)
+    )
+    cross_session_request = any(
+        phrase in normalized_message for phrase in rules.cross_session_requests
     )
 
     themes: ExtractedThemes = extract_themes(analysis_history)
-    if memory:
+    if memory and cross_session_request:
         themes = merge_memory_themes(themes, memory)
 
     session_count = themes.get("session_count", 1)
-    is_longitudinal = bool(themes.get("longitudinal")) and (
+    is_longitudinal = cross_session_request and bool(themes.get("longitudinal")) and (
         isinstance(session_count, int)
         and session_count >= rules.minimum_sessions_for_longitudinal
     )
