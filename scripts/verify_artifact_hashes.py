@@ -1,4 +1,4 @@
-""""Verify Library manifest metadata against generated distribution artifacts."""
+"""Verify Library manifest metadata against generated distribution artifacts."""
 
 from __future__ import annotations
 
