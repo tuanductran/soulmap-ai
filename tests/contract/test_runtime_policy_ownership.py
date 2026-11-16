@@ -3,7 +3,15 @@
 import re
 from pathlib import Path
 
-from soulmap.runtime.knowledge.runtime_config import FRAMEWORK_TEMPLATE_ROWS
+from soulmap.runtime.knowledge.runtime_config import (
+    CELEBRATION_SCORING,
+    DEPENDENCY_CLAUSE_BOUNDARIES,
+    DEPENDENCY_CONTEXT_POLICY,
+    DEPENDENCY_SCORING,
+    FRAMEWORK_TEMPLATE_ROWS,
+    ORCHESTRATION_CONFIG,
+    STAGE_CLASSIFIER_CONFIG,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -39,6 +47,8 @@ def test_detector_markdown_does_not_duplicate_numeric_policy_tables() -> None:
         "skills/frameworks/spiritual-purpose.md",
         "skills/frameworks/life-direction.md",
         "skills/frameworks/conversation-synthesis.md",
+        "skills/safety/dependency-detection.md",
+        "skills/frameworks/integration-celebration.md",
     )
     numeric_policy_row = re.compile(r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE)
 
@@ -93,3 +103,43 @@ def test_stage_and_orchestration_markdown_do_not_duplicate_numeric_thresholds() 
             assert re.search(pattern, content, re.IGNORECASE) is None, (
                 f"{relative_path} duplicates Python-owned runtime policy: {pattern}"
             )
+
+def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
+    """Keep machine-facing configuration names on the Python side of the boundary."""
+    forbidden_by_source = {
+        "skills/meta/stage-classifier.md": tuple(STAGE_CLASSIFIER_CONFIG),
+        "skills/meta/orchestration.md": (
+            "ORCHESTRATION_CONFIG",
+            "primary_priority",
+            "secondary_priority",
+            "intensity_fallback",
+        ),
+        "skills/safety/dependency-detection.md": (
+            "DEPENDENCY_SCORING",
+            "DEPENDENCY_CONTEXT_POLICY",
+            "DEPENDENCY_CLAUSE_BOUNDARIES",
+        ),
+        "skills/frameworks/integration-celebration.md": (
+            "CELEBRATION_SCORING",
+        ),
+        "skills/meta/framework-template-map.md": (
+            "FRAMEWORK_TEMPLATE_ROWS",
+        ),
+    }
+
+    for relative_path, identifiers in forbidden_by_source.items():
+        content = _read_skill(relative_path)
+        for identifier in identifiers:
+            assert identifier not in content, (
+                f"{relative_path} exposes Python-owned identifier {identifier!r}"
+            )
+
+
+def test_template_word_ranges_remain_python_owned() -> None:
+    """Keep deterministic numeric word ranges out of qualitative template guidance."""
+    content = _read_skill("skills/meta/framework-template-map.md")
+    for row in FRAMEWORK_TEMPLATE_ROWS:
+        assert row[2] not in content, (
+            "framework-template-map.md duplicates Python-owned word range "
+            f"{row[2]!r} for {row[0]!r}"
+        )
