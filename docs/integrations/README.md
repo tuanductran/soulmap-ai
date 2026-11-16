@@ -53,9 +53,11 @@ workspace notice rather than assuming the standard schedule applies.
 
 OpenAI's standard Custom GPT retirement date is **2026-12-11**. For affected
 FedRAMP workspaces and workspaces with a qualifying, approved deferral, the
-scheduled date is **2027-02-11**. Migration timing and access vary by account
-or workspace. Follow the in-product notice and test the replacement before
-relying on it.
+scheduled date is **2027-02-11**. During migration, the GPT's instructions and
+knowledge files transfer to the replacement plugin, but its selected model and
+custom actions do not. Migration timing and access vary by account or workspace.
+Follow the in-product notice, rebuild any required integrations, and test the
+replacement before relying on it.
 
 Official references:
 
