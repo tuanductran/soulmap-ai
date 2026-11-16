@@ -225,3 +225,181 @@ def test_safety_gate_fails_closed_on_invalid_crisis_detector_result(
             {},
             {"primary_framework": "MIRROR", "mode": "MIRROR"},
         )
+
+
+@pytest.mark.parametrize(
+    "invalid_result",
+    [
+        None,
+        {},
+        {"level": "UNKNOWN", "score": 0, "signals": [], "recommendation": ""},
+        {"level": "LOW_DEPENDENCY", "score": True, "signals": [], "recommendation": ""},
+        {"level": "LOW_DEPENDENCY", "score": 0, "signals": "bad", "recommendation": ""},
+    ],
+    ids=[
+        "none",
+        "missing-fields",
+        "unknown-level",
+        "boolean-score",
+        "invalid-signals",
+    ],
+)
+def test_safety_gate_rejects_malformed_dependency_results(
+    monkeypatch: pytest.MonkeyPatch, invalid_result: object
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "analyze_dependency", lambda *_a, **_k: invalid_result
+    )
+    with pytest.raises(
+        ValueError, match="Dependency detector returned an invalid result"
+    ):
+        apply_safety_gate(
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
+        )
+
+
+def test_safety_gate_does_not_pass_when_dependency_detector_raises(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fail(*_args: object, **_kwargs: object) -> dict:
+        raise RuntimeError("dependency detector unavailable")
+
+    monkeypatch.setattr(response_safety_gate, "analyze_dependency", fail)
+    with pytest.raises(RuntimeError, match="dependency detector unavailable"):
+        apply_safety_gate(
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
+        )
+
+
+@pytest.mark.parametrize(
+    "invalid_result",
+    [
+        None,
+        {},
+        {
+            "tier": "UNKNOWN",
+            "category": "unknown",
+            "action": "EXPLORE_GENTLY",
+            "explanation": "x",
+        },
+        {
+            "tier": "BLACKLIST_LAYER1",
+            "category": "x",
+            "action": "RESPOND_FULLY",
+            "explanation": "x",
+        },
+        {
+            "tier": "AMBIGUOUS",
+            "category": "",
+            "action": "EXPLORE_GENTLY",
+            "explanation": "x",
+        },
+        {
+            "tier": "WHITELIST_TIER1",
+            "category": "made_up_category",
+            "action": "RESPOND_FULLY",
+            "explanation": "x",
+        },
+    ],
+    ids=[
+        "none",
+        "missing-fields",
+        "unknown-tier",
+        "mismatched-action",
+        "empty-category",
+        "unknown-category",
+    ],
+)
+def test_safety_gate_rejects_malformed_scope_results(
+    monkeypatch: pytest.MonkeyPatch, invalid_result: object
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "classify_message", lambda _message: invalid_result
+    )
+    with pytest.raises(ValueError, match="Scope classifier returned an invalid result"):
+        apply_safety_gate(
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
+        )
+
+
+def test_safety_gate_does_not_pass_when_scope_classifier_raises(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fail(_message: str) -> dict:
+        raise RuntimeError("scope classifier unavailable")
+
+    monkeypatch.setattr(response_safety_gate, "classify_message", fail)
+    with pytest.raises(RuntimeError, match="scope classifier unavailable"):
+        apply_safety_gate(
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
+        )
+
+
+def test_tier1_short_circuits_dependency_and_scope_failures(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "detect_crisis", lambda _message: {"tier": 1}
+    )
+
+    def unexpected(*_args: object, **_kwargs: object) -> dict:
+        raise AssertionError("lower-priority detector must not run")
+
+    monkeypatch.setattr(response_safety_gate, "analyze_dependency", unexpected)
+    monkeypatch.setattr(response_safety_gate, "classify_message", unexpected)
+
+    result = apply_safety_gate(
+        "I do not want to keep living.",
+        [],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    assert result["reason"] == "tier1_crisis"
+    selection = cast(dict[str, object], result["selection"])
+    assert selection["primary_framework"] == "CRISIS"
+
+
+def test_dependency_short_circuits_scope_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "detect_crisis", lambda _message: {"tier": 0}
+    )
+    monkeypatch.setattr(
+        response_safety_gate,
+        "analyze_dependency",
+        lambda *_args, **_kwargs: {
+            "level": "HIGH_DEPENDENCY",
+            "score": 10,
+            "signals": ["dependency_pattern"],
+            "recommendation": "Redirect toward real-world support.",
+        },
+    )
+
+    def unexpected(_message: str) -> dict:
+        raise AssertionError("scope must not run after high dependency")
+
+    monkeypatch.setattr(response_safety_gate, "classify_message", unexpected)
+    result = apply_safety_gate(
+        "A neutral message",
+        [],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    assert result["reason"] == "high_dependency"
+    selection = cast(dict[str, object], result["selection"])
+    assert selection["primary_framework"] == "DEPENDENCY"
