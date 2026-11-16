@@ -509,7 +509,7 @@ def test_framework_selector_routes_tier2_to_presence_first_sanctuary() -> None:
     payload = {
         "message": "I feel empty inside and I'm trapped.",
         "history": [],
-        "memory": {},
+        "memory": {"prior_stage": 3},
     }
 
     data = run_framework_selector(payload)
