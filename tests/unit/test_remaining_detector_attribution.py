@@ -20,7 +20,9 @@ from soulmap.runtime.detectors.shadow_pattern_detector import detect_shadow_patt
 from soulmap.runtime.detectors.soul_nourishment_detector import detect_soul_nourishment
 from soulmap.runtime.detectors.soulmate_longing_detector import detect_soulmate_longing
 from soulmap.runtime.detectors.spiritual_bypass_detector import detect_bypass
-from soulmap.runtime.detectors.spiritual_purpose_detector import detect_spiritual_purpose
+from soulmap.runtime.detectors.spiritual_purpose_detector import (
+    detect_spiritual_purpose,
+)
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 
@@ -114,7 +116,12 @@ def test_attributed_third_party_signals_do_not_trigger_remaining_detectors() -> 
         _assert_not_detected(detector(message), key)
 
     stage = detect_stage(
-        [{"role": "user", "content": "My friend said maybe I can be honest about this."}]
+        [
+            {
+                "role": "user",
+                "content": "My friend said maybe I can be honest about this.",
+            }
+        ]
     )
     assert stage["stage"] == 1
 
