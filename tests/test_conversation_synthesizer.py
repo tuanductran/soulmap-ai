@@ -211,7 +211,8 @@ def test_synthesize_allows_explicit_request_with_short_longitudinal_history() ->
         ]
     )
     result = synthesizer.synthesize(
-        "Can you compare this with our previous sessions? I feel lonely and my own path matters.",
+        "Can you compare this with our previous sessions? "
+        "I feel lonely and my own path matters.",
         history,
         {"recurring_themes": ["loneliness", "autonomy"], "session_count": 4},
     )
@@ -257,7 +258,7 @@ def test_synthesize_returns_grounded_longitudinal_theme_frame() -> None:
     assert guidance["conflict_theme_suffix"].startswith("-")
 
 
-def test_synthesize_does_not_use_prior_session_memory_without_explicit_cross_session_request() -> None:
+def test_synthesize_ignores_memory_without_cross_session_request() -> None:
     history = _user_messages(
         [
             "I feel alone and my choice matters. I want connection but push away.",
