@@ -8,11 +8,12 @@ same way: revert the fix, confirm the relevant test goes red, restore it.
 
 This module automates that method for the handful of modules where a silent
 regression would be worst: the phrase and pattern lists a crisis, dependency,
-or content-safety check reads from, plus the independent Safety Gate overrides. Each test disables exactly one such list
-with ``monkeypatch`` (which restores it automatically at teardown, so nothing
-here needs manual cleanup), then asserts that a known-dangerous input the
-module is documented to catch is no longer caught. That is what proves the
-list is load-bearing rather than decorative.
+or content-safety check reads from, plus the independent Safety Gate overrides.
+Each test disables exactly one list or gate dependency with ``monkeypatch``
+(which restores it automatically at teardown, so nothing here needs manual
+cleanup), then asserts that a known-dangerous input the module is documented
+to catch is no longer caught. That is what proves the check is load-bearing
+rather than decorative.
 
 This is deliberately a short, hand-picked list, not a general mutation-testing
 tool. Keep it focused on safety-critical checks whose failure would be easy to
