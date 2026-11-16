@@ -34,12 +34,15 @@ Use it to answer four questions for every major repo surface:
 
 Keep `tests/` at the repository root. Tests are repository verification code, not production
 modules, and must not be moved into `src/soulmap/` or included in the shipped Skill
-artifacts. Unit tests should follow the production package boundary beneath
-`tests/unit/` (for example, `runtime/detectors/`, `runtime/knowledge/`,
-`runtime/routing/`, `runtime/synthesis/`, and `devtools/audit/`). Contract tests
-should be grouped by the contract they verify rather than by individual file.
-Keep integration, regression, mutation, smoke, and eval-regression suites as separate
-top-level test categories. Do not create a directory solely to contain one test file.
+artifacts. Unit tests follow the production package boundaries beneath `tests/unit/`:
+`runtime/detectors/`, `runtime/guards/`, `runtime/io/`, `runtime/knowledge/`,
+`runtime/routing/`, and `runtime/synthesis/`; maintainer tooling is grouped under
+`devtools/` by audit, benchmarking, checks, CLI, evals, governance, packaging,
+quality, support, and testing; the separately deployable GitHub Action stays under
+`action/`. Contract tests should be grouped by the contract they verify rather than
+by individual file. Keep integration, regression, mutation, smoke, and eval-regression
+suites as separate top-level test categories. Do not create a directory solely to
+contain one test file.
 
 The CI focused-test command, `scripts/pytest_diagnostics.py`, test discovery, and any
 path-sensitive test fixtures must remain synchronized with this layout. File moves must
