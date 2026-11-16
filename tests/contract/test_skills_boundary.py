@@ -81,6 +81,7 @@ def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) 
     assert "skills/private/internal.md" not in found_paths
     assert "docs/internal.md" not in found_paths
 
+
 def test_python_style_runtime_identifiers_are_rejected() -> None:
     text = (
         "A severe crisis signal is present. "
