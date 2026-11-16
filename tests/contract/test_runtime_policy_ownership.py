@@ -101,7 +101,6 @@ def test_stage_and_orchestration_markdown_do_not_duplicate_numeric_thresholds() 
             )
 
 
-
 def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
     """Keep machine-facing configuration names on the Python side of the boundary."""
     forbidden_by_source = {
@@ -131,7 +130,6 @@ def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
             assert identifier not in content, (
                 f"{relative_path} exposes Python-owned identifier {identifier!r}"
             )
-
 
 
 def test_template_word_ranges_remain_python_owned() -> None:
