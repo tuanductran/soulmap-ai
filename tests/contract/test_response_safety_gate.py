@@ -5,10 +5,10 @@ from typing import cast
 import pytest
 
 from soulmap.runtime.guards import response_safety_gate
-
 from soulmap.runtime.guards.resource_sanitizer import check_banned_language
 from soulmap.runtime.guards.response_contract import grade_response_contract
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
+
 
 @pytest.mark.parametrize(
     "invalid_result",
@@ -19,7 +19,13 @@ from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
         {"level": "LOW_DEPENDENCY", "score": True, "signals": [], "recommendation": ""},
         {"level": "LOW_DEPENDENCY", "score": 0, "signals": "bad", "recommendation": ""},
     ],
-    ids=["none", "missing-fields", "unknown-level", "boolean-score", "invalid-signals"],
+    ids=[
+        "none",
+        "missing-fields",
+        "unknown-level",
+        "boolean-score",
+        "invalid-signals",
+    ],
 )
 def test_safety_gate_rejects_malformed_dependency_results(
     monkeypatch: pytest.MonkeyPatch, invalid_result: object
@@ -27,9 +33,14 @@ def test_safety_gate_rejects_malformed_dependency_results(
     monkeypatch.setattr(
         response_safety_gate, "analyze_dependency", lambda *_a, **_k: invalid_result
     )
-    with pytest.raises(ValueError, match="Dependency detector returned an invalid result"):
+    with pytest.raises(
+        ValueError, match="Dependency detector returned an invalid result"
+    ):
         apply_safety_gate(
-            "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
         )
 
 
@@ -51,16 +62,39 @@ def test_safety_gate_does_not_pass_when_dependency_detector_raises(
     [
         None,
         {},
-        {"tier": "UNKNOWN", "category": "unknown", "action": "EXPLORE_GENTLY", "explanation": "x"},
-        {"tier": "BLACKLIST_LAYER1", "category": "x", "action": "RESPOND_FULLY", "explanation": "x"},
-        {"tier": "AMBIGUOUS", "category": "", "action": "EXPLORE_GENTLY", "explanation": "x"},
+        {
+            "tier": "UNKNOWN",
+            "category": "unknown",
+            "action": "EXPLORE_GENTLY",
+            "explanation": "x",
+        },
+        {
+            "tier": "BLACKLIST_LAYER1",
+            "category": "x",
+            "action": "RESPOND_FULLY",
+            "explanation": "x",
+        },
+        {
+            "tier": "AMBIGUOUS",
+            "category": "",
+            "action": "EXPLORE_GENTLY",
+            "explanation": "x",
+        },
     ],
-    ids=["none", "missing-fields", "unknown-tier", "mismatched-action", "empty-category"],
+    ids=[
+        "none",
+        "missing-fields",
+        "unknown-tier",
+        "mismatched-action",
+        "empty-category",
+    ],
 )
 def test_safety_gate_rejects_malformed_scope_results(
     monkeypatch: pytest.MonkeyPatch, invalid_result: object
 ) -> None:
-    monkeypatch.setattr(response_safety_gate, "classify_message", lambda _message: invalid_result)
+    monkeypatch.setattr(
+        response_safety_gate, "classify_message", lambda _message: invalid_result
+    )
     with pytest.raises(ValueError, match="Scope classifier returned an invalid result"):
         apply_safety_gate(
             "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
