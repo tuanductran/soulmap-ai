@@ -25,7 +25,7 @@
 14. `skills/meta/epistemic-guardrails.md` (PR #644 merged): align symbolic-system consent with the current-session rule and make questions optional when readiness or safety calls for none.
 15. `skills/safety/whitelist-blacklist-system.md` (PR #645 merged): reorder the decision tree so safety/prohibited requests take priority, resolve the crisis-search contradiction, and separate evidence sources from perspective sources.
 16. A post-merge cross-surface sweep found residual mandatory-question wording inside six framework/response-template surfaces and public onboarding copy, despite their newer optional-question guidance elsewhere in the same files. This follow-up makes inquiry explicitly optional in `dark-night-of-soul.md`, `sacred-feminine-masculine.md`, `empath-boundary.md`, `creative-drought.md`, `ancestral-patterns.md`, `perfectionism-paralysis.md`, the celebration template, FAQ/onboarding copy, the framework-author skill, and the response calibrator. The `optional_question_ceiling` contract now guards these surfaces.
-17. A further consistency pass found an obsolete `resources first` directive in `emotional-deescalation.md`, pilot acceptance criteria that required resources before any reflection, a mandatory celebration question in the master prompt, a mandatory closing question in the numerology template, imperative question wording in the execution pipeline and inquiry bank, and a stale ordering claim in the response-contract comment. These now follow the canonical presence-first crisis policy and optional-question rule; contract coverage guards the Markdown surfaces. The protected crisis detector/resource metadata discrepancy remains tracked separately in issue #647.
+17. A further consistency pass found an obsolete `resources first` directive in `emotional-deescalation.md`, pilot acceptance criteria that required resources before any reflection, a mandatory celebration question in the master prompt, a mandatory closing question in the numerology template, imperative question wording in the execution pipeline and inquiry bank, and a stale ordering claim in the response-contract comment. These now follow the canonical presence-first crisis policy and optional-question rule; contract coverage guards the Markdown surfaces. The protected crisis detector/resource metadata discrepancy was resolved by PR #654 (merge commit 45a937a3b63338c109e9d054bf1f0e15deb1341c). The issue was closed after the Tier 1 response-ordering and unsupported HOPE availability claims were corrected. Crisis detection signals, tier constants, multilingual matching, and routing logic were preserved.
 
 ## External authoring references
 
@@ -215,3 +215,20 @@ This follow-up screened the 26 files inventoried under `skills/frameworks/` and 
 - PRs #939, #940, #942, and #944 were closed unmerged when their branches were superseded by branches based on the newer `main`. No changes from those stale-base PRs were merged.
 - The changes were documentation-only. No parser-consumed runtime headings, Python runtime implementation, safety implementation files, or crisis signal constants were modified.
 - The audit remains targeted. It does not certify every sentence in the repository or establish that all possible responses will behave correctly.
+
+## Follow-up audit - 2026-11-15 (Consumer-facing Skill boundary)
+
+This follow-up records the consumer-facing wording cleanup merged in PR #958 (merge commit 9d30c2c88a4228007dc9bbbeed1ecef10f60be67). It targeted four existing Skill files and did not change runtime behavior.
+
+### Findings and remediation
+
+1. `skills/safety/ethics-safety.md`: removed repository implementation-inspection language from the explanation of reflective reasoning. The user-facing guidance now explains how to answer questions about a response without claiming certainty about the user's inner life. The ethics-governance section now distinguishes recommended practice from a process that is actually operating.
+2. `skills/brand/visual-identity.md`: removed references to the repository and local tooling from the product-status note, while retaining the factual limitation that a user-facing interface and built-in audio playback are not currently included. Corrected the typography example and palette reference wording.
+3. `skills/brand/founder-personal-brand.md`: clarified that private founder reflections belong in an access-controlled workspace and must not enter public-facing content without explicit approval.
+4. `skills/brand/research-backing.md`: changed repository-specific implementation wording to a product-level statement about SoulMap not providing its own persistent conversation database or cross-session memory store.
+
+### Verification and disposition
+
+- PR #958 was merged by the repository owner after its final checks passed. The merge commit passed build, knowledge audit, Ubuntu/macOS/Windows lint, tests on Python 3.12/3.13/3.14, CodeQL, and Socket Security checks.
+- No protected safety implementation file, crisis detector, crisis signal constant, or routing logic was changed.
+- This is a targeted consumer-boundary follow-up, not a line-by-line certification of every Markdown file or a claim that historical Git content was rewritten.
