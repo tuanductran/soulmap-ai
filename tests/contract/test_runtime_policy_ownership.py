@@ -40,9 +40,7 @@ def test_detector_markdown_does_not_duplicate_numeric_policy_tables() -> None:
         "skills/frameworks/life-direction.md",
         "skills/frameworks/conversation-synthesis.md",
     )
-    numeric_policy_row = re.compile(
-        r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE
-    )
+    numeric_policy_row = re.compile(r"^\|\s*[^|]+\s*\|\s*\d+\s*\|\s*$", re.MULTILINE)
 
     for relative_path in detector_sources:
         content = _read_skill(relative_path)
