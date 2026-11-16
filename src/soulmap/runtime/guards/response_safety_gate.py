@@ -12,7 +12,78 @@ from soulmap.runtime.io.cli_payload import (
     require_message_history_memory_selection_fields,
 )
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
-from soulmap.runtime.routing.scope_classifier import classify_message
+from soulmap.runtime.routing.scope_classifier import (
+    BLACKLIST_LAYER1,
+    BLACKLIST_PROHIBITED,
+    WHITELIST_TIER1,
+    WHITELIST_TIER2,
+    classify_message,
+)
+
+
+
+_DEPENDENCY_LEVELS = {
+    "NO_DATA",
+    "LOW_DEPENDENCY",
+    "MODERATE_DEPENDENCY",
+    "HIGH_DEPENDENCY",
+}
+_SCOPE_ACTIONS = {
+    "BLACKLIST_PROHIBITED": "DECLINE_AND_REDIRECT",
+    "BLACKLIST_LAYER1": "DECLINE_WITH_CLEAN_EXIT",
+    "WHITELIST_TIER1": "RESPOND_FULLY",
+    "WHITELIST_TIER2": "ASK_INNER_CONNECTION",
+    "AMBIGUOUS": "EXPLORE_GENTLY",
+}
+_SCOPE_CATEGORIES = {
+    "BLACKLIST_PROHIBITED": frozenset(BLACKLIST_PROHIBITED),
+    "BLACKLIST_LAYER1": frozenset(BLACKLIST_LAYER1),
+    "WHITELIST_TIER1": frozenset(WHITELIST_TIER1),
+    "WHITELIST_TIER2": frozenset(WHITELIST_TIER2),
+    "AMBIGUOUS": frozenset({"unknown"}),
+}
+
+
+def _require_dependency_result(result: object) -> dict:
+    """Reject malformed dependency output rather than treating it as no signal."""
+    if not isinstance(result, dict):
+        raise ValueError("Dependency detector returned an invalid result.")
+    level = result.get("level")
+    score = result.get("score")
+    signals = result.get("signals")
+    recommendation = result.get("recommendation")
+    if (
+        not isinstance(level, str)
+        or level not in _DEPENDENCY_LEVELS
+        or type(score) is not int
+        or score < 0
+        or not isinstance(signals, list)
+        or any(not isinstance(signal, str) for signal in signals)
+        or not isinstance(recommendation, str)
+    ):
+        raise ValueError("Dependency detector returned an invalid result.")
+    return result
+
+
+def _require_scope_result(result: object) -> dict:
+    """Validate scope tier/action pairing before applying a routing decision."""
+    if not isinstance(result, dict):
+        raise ValueError("Scope classifier returned an invalid result.")
+    tier = result.get("tier")
+    category = result.get("category")
+    action = result.get("action")
+    explanation = result.get("explanation")
+    if (
+        not isinstance(tier, str)
+        or tier not in _SCOPE_ACTIONS
+        or action != _SCOPE_ACTIONS[tier]
+        or not isinstance(category, str)
+        or category not in _SCOPE_CATEGORIES[tier]
+        or not isinstance(explanation, str)
+        or not explanation.strip()
+    ):
+        raise ValueError("Scope classifier returned an invalid result.")
+    return result
 
 
 def apply_safety_gate(
@@ -74,8 +145,10 @@ def apply_safety_gate(
             },
         }
 
-    dependency = analyze_dependency(history, current_message=message)
-    if dependency.get("level") == "HIGH_DEPENDENCY":
+    dependency = _require_dependency_result(
+        analyze_dependency(history, current_message=message)
+    )
+    if dependency["level"] == "HIGH_DEPENDENCY":
         return {
             "status": "OVERRIDE",
             "reason": "high_dependency",
@@ -94,8 +167,8 @@ def apply_safety_gate(
             },
         }
 
-    scope = classify_message(message)
-    if str(scope.get("tier", "")).startswith("BLACKLIST"):
+    scope = _require_scope_result(classify_message(message))
+    if scope["tier"].startswith("BLACKLIST"):
         if scope.get("category") == "system_extraction":
             return {
                 "status": "BLOCK",
