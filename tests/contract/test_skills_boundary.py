@@ -50,22 +50,22 @@ def test_non_markdown_shipped_metadata_rejects_implementation_languages() -> Non
 
 def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) -> None:
     files = {
-        "SKILL.md": "# Skill\\n\\nPython must not leak into shipped guidance.\\n",
-        "SOULMAP.md": "# Doctrine\\n\\nJavaScript is an implementation detail.\\n",
-        "LICENSE": "Rust implementation details are not part of this package.\\n",
-        "skills/example/guide.md": "# Guide\\n\\nTypeScript must not appear here.\\n",
+        "SKILL.md": "# Skill\n\nPython must not leak into shipped guidance.\n",
+        "SOULMAP.md": "# Doctrine\n\nJavaScript is an implementation detail.\n",
+        "LICENSE": "Rust implementation details are not part of this package.\n",
+        "skills/example/guide.md": "# Guide\n\nTypeScript must not appear here.\n",
         ".claude-plugin/marketplace.json": (
             '{"description": "Ruby implementation details are forbidden"}'
         ),
-        "skills/private/internal.md": "# Private\\n\\nPython\\n",
-        "docs/internal.md": "# Internal\\n\\nPython\\n",
+        "skills/private/internal.md": "# Private\n\nPython\n",
+        "docs/internal.md": "# Internal\n\nPython\n",
     }
     for relative, content in files.items():
         path = tmp_path / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8")
     (tmp_path / ".distignore").write_text(
-        "skills/private/internal.md\\n", encoding="utf-8"
+        "skills/private/internal.md\n", encoding="utf-8"
     )
 
     findings = audit(Path(tmp_path))
@@ -80,4 +80,4 @@ def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) 
     } <= found_paths
     assert "skills/private/internal.md" not in found_paths
     assert "docs/internal.md" not in found_paths
-\n
+
