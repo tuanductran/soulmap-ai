@@ -12,7 +12,7 @@ from urllib.error import HTTPError, URLError
 
 import pytest
 
-ROOT = Path(__file__).parents[4]
+ROOT = Path(__file__).parents[3]
 ACTION_DIR = ROOT / "src" / "action"
 ACTION_PATH = ACTION_DIR / "__main__.py"
 sys.path.insert(0, str(ACTION_DIR))
