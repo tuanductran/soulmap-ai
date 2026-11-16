@@ -83,6 +83,12 @@ def test_safety_gate_does_not_pass_when_dependency_detector_raises(
             "action": "EXPLORE_GENTLY",
             "explanation": "x",
         },
+        {
+            "tier": "WHITELIST_TIER1",
+            "category": "made_up_category",
+            "action": "RESPOND_FULLY",
+            "explanation": "x",
+        },
     ],
     ids=[
         "none",
@@ -90,6 +96,7 @@ def test_safety_gate_does_not_pass_when_dependency_detector_raises(
         "unknown-tier",
         "mismatched-action",
         "empty-category",
+        "unknown-category",
     ],
 )
 def test_safety_gate_rejects_malformed_scope_results(
