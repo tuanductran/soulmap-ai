@@ -143,15 +143,10 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
     assert data["mode"] == "SANCTUARY"
 
 
-def test_framework_selector_accepts_grief_specific_readiness_after_initial_period() -> (
+def test_framework_selector_accepts_grief_readiness_without_exchange_threshold() -> (
     None
 ):
-    history = [
-        {"role": "user", "content": "My mother died last week."},
-        {"role": "user", "content": "I miss her so much."},
-        {"role": "user", "content": "I still cannot believe she is gone."},
-        {"role": "user", "content": "I don't know how to do this without her."},
-    ]
+    history = [{"role": "user", "content": "My mother died last week."}]
     payload = {
         "message": "My mother died last week. I've been thinking about what she meant to me.",
         "history": history,
@@ -165,13 +160,13 @@ def test_framework_selector_accepts_grief_specific_readiness_after_initial_perio
     assert data["context"]["grief_readiness"] is True
 
 
-def test_framework_selector_keeps_initial_grief_window_question_free() -> None:
+def test_framework_selector_keeps_acute_grief_question_free_without_readiness() -> None:
     history = [
         {"role": "user", "content": "My mother died last week."},
         {"role": "user", "content": "I miss her so much."},
     ]
     payload = {
-        "message": "My mother died last week. I've been thinking about what she meant to me.",
+        "message": "I miss her so much.",
         "history": history,
         "memory": {},
     }
