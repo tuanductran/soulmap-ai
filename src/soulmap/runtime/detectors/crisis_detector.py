@@ -41,16 +41,12 @@ _EXPLICIT_TIER1_DENIALS: tuple[re.Pattern[str], ...] = (
         r"\b(?:yo\s+)?no\s+quiero\s+"
         r"(?:morir|suicidarme|matarme|hacerme daño)\b"
     ),
-    re.compile(
-        r"\bno\s+estoy\s+pensando\s+en\s+(?:el\s+)?suicidio\b"
-    ),
+    re.compile(r"\bno\s+estoy\s+pensando\s+en\s+(?:el\s+)?suicidio\b"),
     re.compile(
         r"\bje\s+ne\s+veux\s+pas\s+"
         r"(?:mourir|me suicider|me faire du mal)\b"
     ),
-    re.compile(
-        r"\bje\s+ne\s+pense\s+pas\s+au\s+suicide\b"
-    ),
+    re.compile(r"\bje\s+ne\s+pense\s+pas\s+au\s+suicide\b"),
     re.compile(r"(?:我)?(?:不想|不愿意?)(?:去)?(?:死|自杀|伤害自己)"),
 )
 
