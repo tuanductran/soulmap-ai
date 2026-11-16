@@ -215,6 +215,7 @@ This follow-up screened the 26 files inventoried under `skills/frameworks/` and 
 - PRs #939, #940, #942, and #944 were closed unmerged when their branches were superseded by branches based on the newer `main`. No changes from those stale-base PRs were merged.
 - The changes were documentation-only. No parser-consumed runtime headings, Python runtime implementation, safety implementation files, or crisis signal constants were modified.
 - The audit remains targeted. It does not certify every sentence in the repository or establish that all possible responses will behave correctly.
+
 ## Follow-up audit - 2026-11-15 (Consumer-facing Skill boundary)
 
 This follow-up records the consumer-facing wording cleanup merged in PR #958 (merge commit 9d30c2c88a4228007dc9bbbeed1ecef10f60be67). It targeted four existing Skill files and did not change runtime behavior.
