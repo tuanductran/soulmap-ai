@@ -98,9 +98,7 @@ def test_safety_gate_rejects_malformed_scope_results(
     monkeypatch.setattr(
         response_safety_gate, "classify_message", lambda _message: invalid_result
     )
-    with pytest.raises(
-        ValueError, match="Scope classifier returned an invalid result"
-    ):
+    with pytest.raises(ValueError, match="Scope classifier returned an invalid result"):
         apply_safety_gate(
             "A neutral message",
             [],
