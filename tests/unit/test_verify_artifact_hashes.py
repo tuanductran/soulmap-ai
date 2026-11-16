@@ -60,6 +60,18 @@ def test_verifier_accepts_matching_artifact(tmp_path: Path) -> None:
     assert result.stderr == ""
 
 
+def test_verifier_accepts_uppercase_sha256_digest(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"][0]["sha256"] = manifest["artifacts"][0]["sha256"].upper()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 0
+    assert "PASS soulmap-ai.zip" in result.stdout
+
+
 def test_verifier_rejects_tampered_artifact(tmp_path: Path) -> None:
     manifest_path, artifact = _write_manifest(tmp_path)
     artifact.write_text("tampered\n", encoding="utf-8")
