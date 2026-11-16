@@ -2,14 +2,13 @@ from __future__ import annotations
 
 from typing import cast
 
-from soulmap.runtime.guards.resource_sanitizer import check_banned_language
-from soulmap.runtime.guards.response_contract import grade_response_contract
-from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
-
 import pytest
 
 from soulmap.runtime.guards import response_safety_gate
 
+from soulmap.runtime.guards.resource_sanitizer import check_banned_language
+from soulmap.runtime.guards.response_contract import grade_response_contract
+from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
 
 @pytest.mark.parametrize(
     "invalid_result",
