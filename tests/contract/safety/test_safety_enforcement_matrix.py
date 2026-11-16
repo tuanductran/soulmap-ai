@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 MATRIX = REPO_ROOT / "docs" / "engineering" / "safety-enforcement-matrix.md"
 KNOWN_LIMITATIONS = REPO_ROOT / "docs" / "engineering" / "known-limitations.md"
 

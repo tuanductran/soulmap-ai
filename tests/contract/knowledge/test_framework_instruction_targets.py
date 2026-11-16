@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 RUNTIME_ROOT = REPO_ROOT / "src" / "soulmap" / "runtime"
 ACTIVATE_TARGET = re.compile(r"\bActivate ([A-Za-z0-9_-]+\.md)\b")
 

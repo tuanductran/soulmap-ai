@@ -119,7 +119,7 @@ subsumes the other:
   redundant at all - it is the only crisis check that runs, because there
   is no selector in the loop.
 - **The test suite already treats the gate as not trusting its caller.**
-  `tests/contract/test_response_safety_gate.py::test_safety_gate_overrides_crisis`
+  `tests/contract/safety/test_response_safety_gate.py::test_safety_gate_overrides_crisis`
   calls `apply_safety_gate` directly with a selection that already claims a
   non-crisis framework, simulating a selector that failed to catch a
   tier-1 message, and asserts the gate still produces `CRISIS`. This is the

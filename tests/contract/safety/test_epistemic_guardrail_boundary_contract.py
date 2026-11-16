@@ -1,6 +1,6 @@
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 SKILLS_ROOT = REPO_ROOT / "skills"
 EPISTEMIC = SKILLS_ROOT / "meta" / "epistemic-guardrails.md"
 SYMBOLIC_REPORT = SKILLS_ROOT / "spiritual" / "symbolic-report-handling.md"

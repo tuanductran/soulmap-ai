@@ -13,7 +13,7 @@ from soulmap.devtools.checks.p_level_governance import (
     validate_pull_request,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 WORKFLOW = REPO_ROOT / ".github" / "workflows" / "p-level-governance.yml"
 POLICY = REPO_ROOT / "docs" / "operations" / "p-level-governance.md"
 PLAN = REPO_ROOT / "docs" / "operations" / "p1-dependency-advisory-refresh-plan.md"

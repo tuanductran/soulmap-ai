@@ -7,7 +7,7 @@ from soulmap.devtools.packaging.members import source_members
 
 
 def test_real_knowledge_ownership_has_no_errors() -> None:
-    findings = ownership.audit(Path(__file__).resolve().parents[2])
+    findings = ownership.audit(Path(__file__).resolve().parents[3])
     assert not findings
 
 

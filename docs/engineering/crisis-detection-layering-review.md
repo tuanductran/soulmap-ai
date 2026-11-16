@@ -23,7 +23,7 @@ and `docs/engineering/maintenance-boundary.md`, read `skills/meta/orchestration.
 for the doctrine-level pipeline, inspected git history for the files involved,
 and ran the existing regression suites that exercise this path
 (`tests/integration/test_framework_selector_priorities.py`,
-`tests/contract/test_response_safety_gate.py`, `tests/eval_regression/`,
+`tests/contract/safety/test_response_safety_gate.py`, `tests/eval_regression/`,
 `tests/unit/runtime/detectors/test_multilingual_crisis_detector.py`) to confirm current behavior.
 All of the above passed against the unmodified codebase.
 
@@ -71,7 +71,7 @@ evidence support this, not just code appearance:
   returned to users." This is not an inference from reading the code - it
   is the stated design intent.
 - **The gate is tested as if the selector might be wrong.**
-  `tests/contract/test_response_safety_gate.py::test_safety_gate_overrides_crisis`
+  `tests/contract/safety/test_response_safety_gate.py::test_safety_gate_overrides_crisis`
   calls `apply_safety_gate` directly with a `selection` that already claims
   `primary_framework: MIRROR` - i.e., simulating a selector that failed to
   catch a tier-1 crisis message - and asserts the gate still produces
@@ -173,7 +173,7 @@ both layers already share one detection implementation.
   `tests/integration/test_framework_selector_priorities.py` (which includes
   `test_framework_selector_prioritizes_crisis` and the goodbye/grief
   non-crisis regression added for #131's edge-case work) passed.
-- `tests/contract/test_response_safety_gate.py` passed, including the
+- `tests/contract/safety/test_response_safety_gate.py` passed, including the
   selector-independent override test discussed in the "Classification: intentional or accidental?" section.
 
 **Gap:** no existing test exercises the *specific* scenario of a

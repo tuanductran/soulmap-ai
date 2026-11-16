@@ -210,7 +210,7 @@ def test_orchestration_rejects_unknown_breakthrough_strength(
 def test_phase_one_safety_overrides_precede_framework_selection() -> None:
     """Keep immediate crisis and high dependency ahead of framework selection."""
     master_prompt = (
-        Path(__file__).resolve().parents[2] / "skills/meta/master-prompt.md"
+        Path(__file__).resolve().parents[3] / "skills/meta/master-prompt.md"
     ).read_text(encoding="utf-8")
     step_one = master_prompt.split("### Step 1", 1)[1].split("### Step 2", 1)[0]
     assert "immediate crisis" in step_one.lower()

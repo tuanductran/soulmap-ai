@@ -11,7 +11,7 @@ on:
       - "src/soulmap/runtime/knowledge/runtime_registry.py"
       - "skills/safety/dependency-detection.md"
       - "tests/unit/runtime/detectors/test_dependency_detector.py"
-      - "tests/contract/test_response_safety_gate.py"
+      - "tests/contract/safety/test_response_safety_gate.py"
       - "tests/integration/test_framework_selector_priorities.py"
 
 permissions:

@@ -40,7 +40,7 @@ Markdown link. Before adding a cross-reference inside shipped `skills/`, check w
 actually ships in the same archive. If it does not, state the underlying fact
 directly instead of pointing to the file, or link to another `skills/` file that
 already covers it.
-`tests/contract/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
+`tests/contract/safety/test_epistemic_guardrail_boundary_contract.py::test_shipped_skills_do_not_reference_repository_only_surfaces`
 enforces this at CI time, but treat it as a safety net, not a substitute for checking
 before you write the reference: its forbidden-path list is necessarily finite, and a
 past gap in that list (a narrower pattern than the one now in place) let one
