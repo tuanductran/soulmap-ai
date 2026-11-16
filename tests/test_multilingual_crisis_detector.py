@@ -50,6 +50,46 @@ def test_tier2_crisis_detected_across_supported_languages(message: str) -> None:
 @pytest.mark.parametrize(
     "message",
     [
+        "I don't want to die.",
+        "Tôi không muốn tự tử.",
+        "No quiero suicidarme.",
+        "Je ne veux pas me suicider.",
+        "我不想自杀。",
+    ],
+    ids=["en-negated", "vi-negated", "es-negated", "fr-negated", "zh-negated"],
+)
+def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> None:
+    result = detect_crisis(message)
+
+    assert result["level"] == "NO_CRISIS"
+    assert result["tier"] == 0
+    assert result["signals"] == []
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
+        "I don't want to die, but I am planning to kill myself.",
+        "Tôi không muốn tự tử, nhưng tôi đang nghĩ đến việc tự làm hại bản thân.",
+        "No quiero suicidarme, estoy pensando en suicidarme.",
+        "Je ne veux pas me suicider, je pense au suicide.",
+        "我不想自杀\uff0c但我想结束我的生命。",
+    ],
+    ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed"],
+)
+def test_negated_clause_does_not_mask_separate_affirmative_tier1_signal(
+    message: str,
+) -> None:
+    result = detect_crisis(message)
+
+    assert result["level"] == "CRISIS_TIER1"
+    assert result["tier"] == 1
+    assert result["signals"]
+
+
+@pytest.mark.parametrize(
+    "message",
+    [
         "I feel pretty happy and calm today.",
         "Hôm nay tôi cảm thấy khá vui và bình yên.",
         "Hoy me siento bastante feliz y tranquilo.",
