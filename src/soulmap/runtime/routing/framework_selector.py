@@ -51,7 +51,6 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.knowledge.framework_template_source import resolve_template
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
-from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
 from soulmap.runtime.routing.scope_classifier import classify_message
 from soulmap.runtime.routing.stage_detector import detect_stage
 from soulmap.runtime.synthesis.conversation_synthesizer import (
@@ -65,16 +64,9 @@ _LOGGER = logging.getLogger(__name__)
 def _grief_question_allowed(
     grief: dict[str, object], insight: dict[str, object]
 ) -> bool:
-    """Allow a post-readiness question only after the initial acute-grief exchanges."""
-    exchange_count = grief.get("acute_exchange_count")
-    exchange_window = DETECTOR_CONFIG["grief"]["Initial acute exchange window"]
-    return (
-        isinstance(exchange_count, int)
-        and exchange_count > exchange_window
-        and (
-            bool(grief.get("readiness_detected"))
-            or bool(insight.get("insight_detected"))
-        )
+    """Allow an optional grief inquiry when the user signals readiness."""
+    return bool(grief.get("readiness_detected")) or bool(
+        insight.get("insight_detected")
     )
 
 
