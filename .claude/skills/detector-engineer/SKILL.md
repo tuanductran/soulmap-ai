@@ -231,7 +231,7 @@ Preserve the existing safety short-circuits and selector phases.
 ### Unit Tests
 
 ```python
-# tests/unit/test_your_detector.py
+# tests/unit/runtime/detectors/test_your_detector.py
 from soulmap.runtime.detectors import your_detector
 
 def test_detects_signal():

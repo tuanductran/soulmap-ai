@@ -60,7 +60,7 @@ def test_dependency_keyword_list_is_load_bearing(
 ) -> None:
     """Emptying the dependency keyword list must break HIGH_DEPENDENCY scoring.
 
-    Fixture reused verbatim from tests/test_dependency_detector.py, which
+    Fixture reused verbatim from tests/unit/runtime/detectors/test_dependency_detector.py, which
     proves the pre-mutation behavior; this test proves the reverse.
     """
     monkeypatch.setattr(dependency_detector, "_DEPENDENCY_KEYWORDS", ())

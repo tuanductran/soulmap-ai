@@ -10,7 +10,7 @@ on:
       - "src/soulmap/runtime/knowledge/keyword_lists.py"
       - "src/soulmap/runtime/knowledge/runtime_registry.py"
       - "skills/safety/dependency-detection.md"
-      - "tests/test_dependency_detector.py"
+      - "tests/unit/runtime/detectors/test_dependency_detector.py"
       - "tests/contract/test_response_safety_gate.py"
       - "tests/integration/test_framework_selector_priorities.py"
 
