@@ -80,4 +80,3 @@ def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) 
     } <= found_paths
     assert "skills/private/internal.md" not in found_paths
     assert "docs/internal.md" not in found_paths
-
