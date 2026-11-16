@@ -102,7 +102,10 @@ def test_safety_gate_rejects_malformed_scope_results(
         ValueError, match="Scope classifier returned an invalid result"
     ):
         apply_safety_gate(
-            "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
         )
 
 
@@ -117,7 +120,6 @@ def test_safety_gate_does_not_pass_when_scope_classifier_raises(
         apply_safety_gate(
             "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
         )
-
 
 
 def test_safety_gate_overrides_crisis() -> None:
