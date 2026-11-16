@@ -13,7 +13,6 @@ from soulmap.runtime.io.cli_payload import (
 )
 from soulmap.runtime.routing.scope_classifier import classify_message
 
-
 _DEPENDENCY_LEVELS = {
     "NO_DATA",
     "LOW_DEPENDENCY",
