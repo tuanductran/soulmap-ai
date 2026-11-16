@@ -61,13 +61,9 @@ from soulmap.runtime.synthesis.conversation_synthesizer import (
 _LOGGER = logging.getLogger(__name__)
 
 
-def _grief_question_allowed(
-    grief: dict[str, object], insight: dict[str, object]
-) -> bool:
-    """Allow an optional grief inquiry when the user signals readiness."""
-    return bool(grief.get("readiness_detected")) or bool(
-        insight.get("insight_detected")
-    )
+def _grief_question_allowed(grief: dict[str, object]) -> bool:
+    """Allow an optional grief inquiry only on grief-specific user readiness."""
+    return bool(grief.get("readiness_detected"))
 
 
 def _analyze_synthesis(
@@ -593,9 +589,9 @@ async def select_framework_async(
                 "mode": grief_rule.mode,
                 "context": {
                     **grief,
-                    # Acute grief stays question-free for the first 2-3 user
-                    # exchanges. Readiness must also be present in the user's words.
-                    "grief_readiness": _grief_question_allowed(grief, insight),
+                    # Readiness is derived only from the user's own grief-specific
+                    # language, never from a general insight signal.
+                    "grief_readiness": _grief_question_allowed(grief),
                 },
                 "instruction": grief.get("recommendation", ""),
                 "blocked": list(grief_rule.blocked),
@@ -869,10 +865,9 @@ async def select_framework_async(
         )
         context = dict(result)
         if rule.framework == "GRIEF":
-            # Count only the current contiguous grief sequence. A question becomes
-            # eligible after the initial exchanges when grief-specific or general
-            # insight readiness appears in the user's own words.
-            context["grief_readiness"] = _grief_question_allowed(result, res["insight"])
+            # A question becomes eligible only when the grief detector finds
+            # affirmative, unquoted, grief-specific readiness in the user's words.
+            context["grief_readiness"] = _grief_question_allowed(result)
         selection = {
             "primary_framework": rule.framework,
             "secondary_layer": secondary,
