@@ -32,7 +32,7 @@ _FORBIDDEN_LANGUAGES = re.compile(
     r"(?![A-Za-z0-9_])",
     re.IGNORECASE,
 )
-_IMPLEMENTATION_IDENTIFIER = re.compile(r"\\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\\b")
+_IMPLEMENTATION_IDENTIFIER = re.compile(r"\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b")
 _EXECUTABLE_FENCES = (
     "python",
     "py",
@@ -74,7 +74,7 @@ def audit_markdown(relative_path: str | Path, text: str) -> list[str]:
     findings: list[str] = []
 
     for match in _IMPLEMENTATION_IDENTIFIER.finditer(text):
-        line_no = text.count("\\n", 0, match.start()) + 1
+        line_no = text.count("\n", 0, match.start()) + 1
         findings.append(
             f"{rel}:{line_no}: implementation identifier: {match.group(0)!r}"
         )
@@ -164,7 +164,7 @@ def audit_text(relative_path: str | Path, text: str) -> list[str]:
     findings: list[str] = []
 
     for match in _IMPLEMENTATION_IDENTIFIER.finditer(text):
-        line_no = text.count("\\n", 0, match.start()) + 1
+        line_no = text.count("\n", 0, match.start()) + 1
         findings.append(
             f"{rel}:{line_no}: implementation identifier: {match.group(0)!r}"
         )
