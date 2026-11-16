@@ -22,34 +22,34 @@ from soulmap.runtime.knowledge.crisis_language_packs import (
 # later in the same message must still be detected.
 _EXPLICIT_TIER1_DENIALS: tuple[re.Pattern[str], ...] = (
     re.compile(
-        r"\\bi\\s+(?:do not|don't|dont)\\s+want\\s+to\\s+"
-        r"(?:die|kill myself|end my life|hurt myself|harm myself)\\b"
+        r"\bi\s+(?:do not|don't|dont)\s+want\s+to\s+"
+        r"(?:die|kill myself|end my life|hurt myself|harm myself)\b"
     ),
     re.compile(
-        r"\\bi\\s+(?:am not|never)\\s+(?:thinking|thought)\\s+about\\s+"
-        r"(?:suicide|killing myself|ending my life|hurting myself)\\b"
+        r"\bi\s+(?:am not|never)\s+(?:thinking|thought)\s+about\s+"
+        r"(?:suicide|killing myself|ending my life|hurting myself)\b"
     ),
     re.compile(
-        r"\\b(?:tôi|em|mình)\\s+không\\s+muốn\\s+"
-        r"(?:chết|tự tử|tự sát|tự làm hại bản thân|tự làm đau bản thân)\\b"
+        r"\b(?:tôi|em|mình)\s+không\s+muốn\s+"
+        r"(?:chết|tự tử|tự sát|tự làm hại bản thân|tự làm đau bản thân)\b"
     ),
     re.compile(
-        r"\\b(?:tôi|em|mình)\\s+không\\s+(?:nghĩ|nghĩ đến|nghĩ về)\\s+"
-        r"(?:việc\\s+)?(?:tự tử|tự sát|tự làm hại bản thân)\\b"
+        r"\b(?:tôi|em|mình)\s+không\s+(?:nghĩ|nghĩ đến|nghĩ về)\s+"
+        r"(?:việc\s+)?(?:tự tử|tự sát|tự làm hại bản thân)\b"
     ),
     re.compile(
-        r"\\b(?:yo\\s+)?no\\s+quiero\\s+"
-        r"(?:morir|suicidarme|matarme|hacerme daño)\\b"
+        r"\b(?:yo\s+)?no\s+quiero\s+"
+        r"(?:morir|suicidarme|matarme|hacerme daño)\b"
     ),
     re.compile(
-        r"\\bno\\s+estoy\\s+pensando\\s+en\\s+(?:el\\s+)?suicidio\\b"
+        r"\bno\s+estoy\s+pensando\s+en\s+(?:el\s+)?suicidio\b"
     ),
     re.compile(
-        r"\\bje\\s+ne\\s+veux\\s+pas\\s+"
-        r"(?:mourir|me suicider|me faire du mal)\\b"
+        r"\bje\s+ne\s+veux\s+pas\s+"
+        r"(?:mourir|me suicider|me faire du mal)\b"
     ),
     re.compile(
-        r"\\bje\\s+ne\\s+pense\\s+pas\\s+au\\s+suicide\\b"
+        r"\bje\s+ne\s+pense\s+pas\s+au\s+suicide\b"
     ),
     re.compile(r"(?:我)?(?:不想|不愿意?)(?:去)?(?:死|自杀|伤害自己)"),
 )
