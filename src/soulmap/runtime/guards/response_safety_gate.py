@@ -11,7 +11,13 @@ from soulmap.runtime.io.cli_payload import (
     read_stdin_json,
     require_message_history_memory_selection_fields,
 )
-from soulmap.runtime.routing.scope_classifier import classify_message
+from soulmap.runtime.routing.scope_classifier import (
+    BLACKLIST_LAYER1,
+    BLACKLIST_PROHIBITED,
+    WHITELIST_TIER1,
+    WHITELIST_TIER2,
+    classify_message,
+)
 
 _DEPENDENCY_LEVELS = {
     "NO_DATA",
@@ -25,6 +31,13 @@ _SCOPE_ACTIONS = {
     "WHITELIST_TIER1": "RESPOND_FULLY",
     "WHITELIST_TIER2": "ASK_INNER_CONNECTION",
     "AMBIGUOUS": "EXPLORE_GENTLY",
+}
+_SCOPE_CATEGORIES = {
+    "BLACKLIST_PROHIBITED": frozenset(BLACKLIST_PROHIBITED),
+    "BLACKLIST_LAYER1": frozenset(BLACKLIST_LAYER1),
+    "WHITELIST_TIER1": frozenset(WHITELIST_TIER1),
+    "WHITELIST_TIER2": frozenset(WHITELIST_TIER2),
+    "AMBIGUOUS": frozenset({"unknown"}),
 }
 
 
@@ -62,7 +75,7 @@ def _require_scope_result(result: object) -> dict:
         or tier not in _SCOPE_ACTIONS
         or action != _SCOPE_ACTIONS[tier]
         or not isinstance(category, str)
-        or not category.strip()
+        or category not in _SCOPE_CATEGORIES[tier]
         or not isinstance(explanation, str)
         or not explanation.strip()
     ):
