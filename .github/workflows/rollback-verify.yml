@@ -43,9 +43,13 @@ jobs:
           uv run soulmap release-verify --root . --output dist/release-verification.json
 
       - name: Verify release tag matches package version
+        env:
+          RELEASE_REF: ${{ inputs.release_ref }}
         run: |
           version="$(uv run python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
-          test "v${version}" = "${{ inputs.release_ref }}"
+          test "v${version}" = "$RELEASE_REF"
 
       - name: Emit rollback verification summary
-        run: uv run python scripts/emit_rollback_summary.py --release-ref "${{ inputs.release_ref }}"
+        env:
+          RELEASE_REF: ${{ inputs.release_ref }}
+        run: uv run python scripts/emit_rollback_summary.py --release-ref "$RELEASE_REF"
