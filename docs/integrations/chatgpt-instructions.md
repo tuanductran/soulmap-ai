@@ -20,7 +20,7 @@ soulmap_version: "0.14.0"
 > See the [platform lifecycle and upload guide](README.md) before using this legacy
 > configuration.
 
-# ChatGPT Custom GPT, instructions
+## ChatGPT Custom GPT, instructions
 
 For an existing, unmigrated GPT that you are still permitted to edit, paste the text below into its **Instructions** field. This is not a guide for creating a new GPT.
 
