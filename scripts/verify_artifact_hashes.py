@@ -85,7 +85,7 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
             raise ArtifactIntegrityError(
                 f"size mismatch for {filename}: expected {expected_size}, got {actual_size}"
             )
-        if actual_sha256 != expected_sha256:
+        if actual_sha256 != expected_sha256.lower():
             raise ArtifactIntegrityError(
                 f"SHA-256 mismatch for {filename}: expected {expected_sha256}, got {actual_sha256}"
             )
