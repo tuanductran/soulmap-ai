@@ -17,7 +17,7 @@ soulmap_version: "0.14.0"
 > education accounts have a June 2027 transition. Follow the notice for the account
 > being used.
 
-# Gemini Gem, instructions
+## Gemini Gem, instructions
 
 This prompt is retained only as a reference for a Gem that has not yet transitioned. Do not use it to create a new Gem after the personal-account cutoff.
 
