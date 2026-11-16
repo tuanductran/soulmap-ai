@@ -143,6 +143,7 @@ def test_secondary_layers_stay_out_of_the_primary_table() -> None:
     assert "ANGER" not in emitted
     assert "SOMATIC" not in emitted
 
+
 def _phase_three_names() -> list[str]:
     """Read the ordered primary-framework names from the shipped orchestration guide."""
     text = (REPO_ROOT / "skills/meta/orchestration.md").read_text(encoding="utf-8")
