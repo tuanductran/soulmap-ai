@@ -133,6 +133,7 @@ and file compatibility.
 
 Official references:
 
+- [Create and manage Skills for Gemini Apps](https://support.google.com/gemini/answer/17094296)
 - [Use Gems in Gemini Apps](https://support.google.com/gemini/answer/15146780)
 - [About the transition from Gems to skills](https://support.google.com/gemini/answer/18560919)
 - [Upload and analyze files in Gemini Apps](https://support.google.com/gemini/answer/14903178)
@@ -141,22 +142,39 @@ Official references:
 
 For personal accounts aged 18 or older:
 
-1. Open [Gemini](https://gemini.google.com).
-2. Open **Customize**, then **Skills**. If the menu is hidden, open **More**.
-3. Select **Create**, then **Create manually**.
-4. Copy the SoulMap name, description, and instructions into the Skill.
-5. To include supporting files, follow Google's documented download-and-
-   replace workflow: download the Skill ZIP, place `SKILL.md` and supported
-   knowledge files in a folder named exactly like the Skill, then use
-   **Replace skill** to upload that folder.
+#### Direct import for a new SoulMap Skill
 
-Gemini Skills have a **100 MB total file limit**. Google currently lists
-GitHub files, audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`),
-and archive formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`)
-as unsupported **knowledge-file sources** during the Gems-to-Skills transition.
-This does not replace the separate Skill ZIP import workflow described above.
-Do not assume `dist/soulmap-ai.skill` is directly compatible with Gemini Skills;
-validate the artifact separately before recommending direct upload.
+1. Build the standard archive with `uv run soulmap build`.
+2. For file or folder upload, open Gemini for Mac or
+   [Gemini on the web](https://gemini.google.com). The Skills page is under
+   **Customize → Skills**; if **Customize** is hidden, open **More**. Skills
+   are also available in the Gemini mobile app, but Google does not currently
+   list mobile as a supported surface for this upload flow.
+3. Select **Create → Upload** and choose `dist/soulmap-ai.zip`.
+4. Google accepts a ZIP containing `SKILL.md` in its main folder. The
+   standard SoulMap archive places `SKILL.md` at the archive root, alongside
+   `SOULMAP.md` and `skills/`. Review the imported Skill, then create it.
+
+Google currently documents Skills availability on the Gemini mobile app, the
+Mac app, and the web app. Its file/folder upload instructions, however, are
+limited to the Mac app and web app.
+
+#### Manual migration of an existing Gem
+
+If you are recreating an existing Gem and need to preserve its knowledge files,
+follow Google's documented download-and-replace workflow: download each file
+from the Gem, create the Skill, download its Skill ZIP, place `SKILL.md` and
+the supported knowledge files in a folder named exactly like the Skill, then
+use **Replace skill** to upload that folder.
+
+Gemini Skills have a **100 MB total file limit**. Google lists GitHub files,
+audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`), and archive
+formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`) as unsupported
+knowledge-file sources during the Gems-to-Skills transition. This restriction
+on attached knowledge-file sources is distinct from the documented Skill ZIP
+import workflow above. Do not use the Claude-oriented
+`dist/soulmap-ai.skill` archive for this import; use the standard
+`dist/soulmap-ai.zip` and verify the live interface before deployment.
 
 ### Legacy Gem setup (only before the transition cutoff)
 
