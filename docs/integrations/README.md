@@ -141,22 +141,32 @@ Official references:
 
 For personal accounts aged 18 or older:
 
-1. Open [Gemini](https://gemini.google.com).
-2. Open **Customize**, then **Skills**. If the menu is hidden, open **More**.
-3. Select **Create**, then **Create manually**.
-4. Copy the SoulMap name, description, and instructions into the Skill.
-5. To include supporting files, follow Google's documented download-and-
-   replace workflow: download the Skill ZIP, place `SKILL.md` and supported
-   knowledge files in a folder named exactly like the Skill, then use
-   **Replace skill** to upload that folder.
+**Direct import for a new SoulMap Skill**
 
-Gemini Skills have a **100 MB total file limit**. Google currently lists
-GitHub files, audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`),
-and archive formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`)
-as unsupported **knowledge-file sources** during the Gems-to-Skills transition.
-This does not replace the separate Skill ZIP import workflow described above.
-Do not assume `dist/soulmap-ai.skill` is directly compatible with Gemini Skills;
-validate the artifact separately before recommending direct upload.
+1. Build the standard archive with `uv run soulmap build`.
+2. Open [Gemini](https://gemini.google.com), then **Customize → Skills**. If
+   **Customize** is hidden, open **More**.
+3. Select **Create → Upload** and choose `dist/soulmap-ai.zip`.
+4. Google accepts a ZIP containing `SKILL.md` in its main folder. The
+   standard SoulMap archive places `SKILL.md` at the archive root, alongside
+   `SOULMAP.md` and `skills/`. Review the imported Skill, then create it.
+
+**Manual migration of an existing Gem**
+
+If you are recreating an existing Gem and need to preserve its knowledge files,
+follow Google's documented download-and-replace workflow: download each file
+from the Gem, create the Skill, download its Skill ZIP, place `SKILL.md` and
+the supported knowledge files in a folder named exactly like the Skill, then
+use **Replace skill** to upload that folder.
+
+Gemini Skills have a **100 MB total file limit**. Google lists GitHub files,
+audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`), and archive
+formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`) as unsupported
+knowledge-file sources during the Gems-to-Skills transition. This restriction
+on attached knowledge-file sources is distinct from the documented Skill ZIP
+import workflow above. Do not use the Claude-oriented
+`dist/soulmap-ai.skill` archive for this import; use the standard
+`dist/soulmap-ai.zip` and verify the live interface before deployment.
 
 ### Legacy Gem setup (only before the transition cutoff)
 
