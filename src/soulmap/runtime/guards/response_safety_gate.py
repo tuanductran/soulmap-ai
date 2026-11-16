@@ -113,7 +113,9 @@ def apply_safety_gate(
             None,
         )
         if fallback is None:
-            raise ValueError("HIGH intensity fallback is missing from orchestration contract.")
+            raise ValueError(
+                "HIGH intensity fallback is missing from orchestration contract."
+            )
         return {
             "status": "OVERRIDE",
             "reason": "tier2_crisis",
