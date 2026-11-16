@@ -116,12 +116,8 @@ def test_python_runtime_configuration_identifiers_stay_out_of_skills() -> None:
             "DEPENDENCY_CONTEXT_POLICY",
             "DEPENDENCY_CLAUSE_BOUNDARIES",
         ),
-        "skills/frameworks/integration-celebration.md": (
-            "CELEBRATION_SCORING",
-        ),
-        "skills/meta/framework-template-map.md": (
-            "FRAMEWORK_TEMPLATE_ROWS",
-        ),
+        "skills/frameworks/integration-celebration.md": ("CELEBRATION_SCORING",),
+        "skills/meta/framework-template-map.md": ("FRAMEWORK_TEMPLATE_ROWS",),
     }
 
     for relative_path, identifiers in forbidden_by_source.items():
