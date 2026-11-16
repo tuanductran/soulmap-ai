@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from typing import cast
 
+import pytest
+
+from soulmap.runtime.guards import response_safety_gate
 from soulmap.runtime.guards.resource_sanitizer import check_banned_language
 from soulmap.runtime.guards.response_contract import grade_response_contract
 from soulmap.runtime.guards.response_safety_gate import apply_safety_gate
@@ -200,3 +203,25 @@ def test_safety_gate_keeps_scope_block_ahead_of_tier2_crisis() -> None:
 
     assert result["status"] == "BLOCK"
     assert result["reason"] == "system_prompt_extraction"
+
+
+@pytest.mark.parametrize(
+    "invalid_result",
+    [None, {"tier": "2"}, {"tier": True}, {"tier": 3}],
+    ids=["none", "string-tier", "boolean-tier", "unknown-tier"],
+)
+def test_safety_gate_fails_closed_on_invalid_crisis_detector_result(
+    monkeypatch: pytest.MonkeyPatch,
+    invalid_result: object,
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "detect_crisis", lambda _message: invalid_result
+    )
+
+    with pytest.raises(ValueError, match="Crisis detector returned an invalid tier"):
+        apply_safety_gate(
+            "I feel empty inside and I'm trapped.",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
+        )
