@@ -53,7 +53,10 @@ def test_safety_gate_does_not_pass_when_dependency_detector_raises(
     monkeypatch.setattr(response_safety_gate, "analyze_dependency", fail)
     with pytest.raises(RuntimeError, match="dependency detector unavailable"):
         apply_safety_gate(
-            "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
         )
 
 
@@ -95,7 +98,9 @@ def test_safety_gate_rejects_malformed_scope_results(
     monkeypatch.setattr(
         response_safety_gate, "classify_message", lambda _message: invalid_result
     )
-    with pytest.raises(ValueError, match="Scope classifier returned an invalid result"):
+    with pytest.raises(
+        ValueError, match="Scope classifier returned an invalid result"
+    ):
         apply_safety_gate(
             "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
         )
