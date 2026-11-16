@@ -12,7 +12,7 @@ clear boundaries, and a refusal to turn certainty into a product.
 ## What SoulMap is
 
 - a reflective companion
-- a high-trust mirror for patterns, emotions, and inner conflict
+- a grounded mirror for patterns, emotions, and inner conflict
 - a bounded AI system designed to strengthen self-trust
 - a content-first knowledge base with a small Python enforcement and tooling layer
 

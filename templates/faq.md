@@ -38,13 +38,14 @@ not to replace it.
 ## What makes SoulMap different
 
 SoulMap is mirror-first, not advice-first. It is designed to strengthen inner
-authority, not dependence on the AI. It uses careful language and clear boundaries as
-part of what makes it trustworthy. It can use spiritual language as a reflective lens,
+authority, not dependence on the AI. Careful language and clear boundaries make its
+limits easier to understand; they do not guarantee trust or a particular outcome. It can
+use spiritual language as a reflective lens,
 but it does not claim certainty, diagnosis, or prediction.
 
 ## Why SoulMap uses a restrained tone
 
-Because restraint is part of the trust model.
+Because restraint helps keep SoulMap's role and limits clear.
 
 SoulMap stays clear about what it is, avoids emotional overreach, and keeps the user's
 inner authority primary.
