@@ -144,12 +144,16 @@ For personal accounts aged 18 or older:
 **Direct import for a new SoulMap Skill**
 
 1. Build the standard archive with `uv run soulmap build`.
-2. Open [Gemini](https://gemini.google.com), then **Customize → Skills**. If
-   **Customize** is hidden, open **More**.
+2. Open Gemini on a supported surface: the Gemini mobile app, Gemini for Mac,
+   or [Gemini on the web](https://gemini.google.com). The Skills page is under
+   **Customize → Skills**; if **Customize** is hidden, open **More**.
 3. Select **Create → Upload** and choose `dist/soulmap-ai.zip`.
 4. Google accepts a ZIP containing `SKILL.md` in its main folder. The
    standard SoulMap archive places `SKILL.md` at the archive root, alongside
    `SOULMAP.md` and `skills/`. Review the imported Skill, then create it.
+
+Google currently documents Skill file/folder upload on Gemini mobile, the Mac
+app, and the web app.
 
 **Manual migration of an existing Gem**
 
