@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.runtime.routing.framework_selector import _grief_question_allowed
 from soulmap.runtime.routing.stage_detector import detect_stage
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -141,6 +142,16 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
 
     assert data["primary_framework"] == "GRIEF"
     assert data["mode"] == "SANCTUARY"
+
+
+def test_grief_question_requires_grief_specific_readiness_not_general_insight() -> None:
+    assert _grief_question_allowed(
+        {"readiness_detected": False}
+    ) is False
+
+
+def test_grief_question_allows_explicit_grief_readiness() -> None:
+    assert _grief_question_allowed({"readiness_detected": True}) is True
 
 
 def test_framework_selector_accepts_grief_readiness_without_exchange_threshold() -> (
