@@ -167,7 +167,9 @@ def test_attributed_history_does_not_supply_perfectionism_persistence() -> None:
     )
 
     assert result["perfectionism_paralysis_detected"] is False
-    assert "pattern_persistence_in_history" not in result["signals"]
+    signals = result["signals"]
+    assert isinstance(signals, list)
+    assert "pattern_persistence_in_history" not in signals
 
 
 def test_attributed_history_does_not_enable_sacred_polarity_frame() -> None:
