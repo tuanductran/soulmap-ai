@@ -38,7 +38,7 @@ whether a proposed change is consistent with the project's design.
 | Python owns executable configuration and enforcement | Intentional design | [Python runtime responsibilities](#python-runtime-responsibilities) |
 | Safety enforcement is deterministic only | Intentional design | [Safety enforcement boundaries](#safety-enforcement-boundaries) |
 | Exactly one primary framework per request | Intentional design | [Routing boundaries](#routing-boundaries) |
-| Only two shipping artifact formats | Implementation boundary | [Packaging boundaries](#packaging-boundaries) |
+| Two shipping archive formats plus a generated Library manifest | Implementation boundary | [Packaging boundaries](#packaging-boundaries) |
 | `SOULMAP.md` is the only doctrine source | Intentional design | [Documentation ownership](#documentation-ownership) |
 | Architecture decisions are recorded in ADRs | Intentional design | [Architecture ownership](#architecture-ownership) |
 | Crisis detection supports five languages only | Current limitation | [Language limitations](#language-limitations) |
@@ -395,9 +395,12 @@ to fall through to multiple frameworks simultaneously.
 
 ### What it is
 
-The SoulMap build system produces exactly two distribution artifacts:
-`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. The content of each is
-fixed by [`docs/engineering/repo-contract.md`](repo-contract.md).
+The SoulMap build system produces exactly two distribution archives:
+`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill`. The Library workflow also
+generates `dist/soulmap-ai-library.json`, a metadata manifest rather than a
+third archive. The content of each archive and the manifest contract are fixed
+by [`docs/engineering/repo-contract.md`](repo-contract.md) and
+[`docs/operations/LIBRARY.md`](../operations/LIBRARY.md).
 
 `templates/` is excluded from both artifacts. It is internal-only. The
 `.claude/` local workflow layer is excluded from both artifacts.
@@ -413,10 +416,12 @@ against.
 
 ### Why it is intentional
 
-The two-artifact model separates standard knowledge extraction (zip) from
-skill-package tooling (skill). A consumer using document-style AI tooling
-does not receive the `.claude-plugin/` metadata, which is relevant only to
-skill-oriented environments.
+The two-archive model separates standard knowledge extraction (zip) from
+skill-package tooling (skill). The generated Library manifest records the
+inventory and integrity metadata for those archives; it is not an installable
+archive. A consumer using document-style AI tooling does not receive the
+`.claude-plugin/` metadata, which is relevant only to skill-oriented
+environments.
 
 ### Benefits
 
@@ -431,6 +436,7 @@ skill-oriented environments.
 | --- | --- | --- |
 | `dist/soulmap-ai.zip` | `skills/`, `SKILL.md`, `SOULMAP.md`, `LICENSE` | `templates/`, `.claude/`, `.claude-plugin/` |
 | `dist/soulmap-ai.skill` | zip contents plus `.claude-plugin/` | `templates/`, `.claude/` |
+| `dist/soulmap-ai-library.json` | Derived skill inventory, project version, compatibility metadata, release URL, archive sizes, and SHA-256 digests | Archive payloads and executable code; manifest only |
 
 ### Related documentation
 
