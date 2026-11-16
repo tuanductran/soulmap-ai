@@ -155,11 +155,13 @@ Official reference:
 
 ## Gemini
 
-Gemini's Gems-to-Skills transition has separate migration steps, age eligibility,
-file-size limits, and unsupported archive formats. Do not assume the Claude-oriented
-`.skill` archive can be uploaded directly as a Gemini Skill. Follow the
-[Gemini Skills lifecycle and migration guide](../integrations/README.md#gemini-gems-transitioning-to-skills)
-for the current supported workflow and verify the live interface before deployment.
+For a new Gemini Skill, use `dist/soulmap-ai.zip`: Google's documented import
+accepts a ZIP with `SKILL.md` in its main folder, and the standard SoulMap
+archive places that file at its root. Do not substitute the Claude-oriented
+`dist/soulmap-ai.skill` archive. For an existing Gem migration, account age,
+supported knowledge-file types, and the 100 MB total limit still apply. Follow
+the [Gemini Skills lifecycle and migration guide](../integrations/README.md#gemini-gems-transitioning-to-skills)
+and verify the live interface before deployment.
 
 ## Any agent with Skills support
 
