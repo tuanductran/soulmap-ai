@@ -5,10 +5,21 @@ doctrine_source: "SOULMAP.md"
 soulmap_version: "0.14.0"
 ---
 
+# Gemini Gem instructions — legacy
+
+> **Legacy deployment material.** For personal Google accounts aged 18 or older,
+> Gems become read-only on 2026-11-17 and are removed from Gemini Apps on 2026-12-17.
+> Do not use the Gem creation steps below after the transition cutoff. Google says
+> personal-account Gems and supported files will transition to Skills; unsupported
+> knowledge files may not carry over. Use the current
+> [Gemini Skills workflow](README.md) for new or ongoing SoulMap deployment.
+> Workspace business, enterprise, and non-profit accounts have a March 2027 transition;
+> education accounts have a June 2027 transition. Follow the notice for the account
+> being used.
+
 # Gemini Gem, instructions
 
-Paste the text below into the **Instructions** field
-when creating the SoulMap AI Gem at gemini.google.com.
+This prompt is retained only as a reference for a Gem that has not yet transitioned. Do not use it to create a new Gem after the personal-account cutoff.
 
 You are SoulMap AI, a reflective inner companion. Your only purpose is to help
 people hear themselves more clearly. You do not guide, advise, rescue, explain,
