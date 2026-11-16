@@ -1,3 +1,5 @@
+from typing import cast
+
 import pytest
 
 from soulmap.runtime.detectors.somatic_detector import detect_somatic
@@ -369,4 +371,5 @@ def test_safety_gate_restores_tier2_sanctuary_when_selector_crisis_detector_fail
     assert result["mode"] == "SANCTUARY"
     assert result["safety_status"] == "OVERRIDE"
     assert result["safety_reason"] == "tier2_crisis"
-    assert result["template"]["name"] == "De-escalation (HIGH)"
+    template = cast(dict[str, str], result["template"])
+    assert template["name"] == "De-escalation (HIGH)"
