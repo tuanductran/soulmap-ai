@@ -1,4 +1,4 @@
-"""Verify Library manifest metadata against generated distribution artifacts."""
+""""Verify Library manifest metadata against generated distribution artifacts."""
 
 from __future__ import annotations
 
@@ -37,10 +37,21 @@ def _load_manifest(path: Path) -> dict[str, Any]:
     return payload
 
 
+def _resolve_artifact_path(repo_root: Path, relative_path: str) -> Path:
+    """Resolve an artifact path while keeping reads inside the repository."""
+    root = repo_root.resolve()
+    artifact_path = (root / relative_path).resolve()
+    if not artifact_path.is_relative_to(root):
+        raise ArtifactIntegrityError(
+            f"artifact path escapes repository root: {relative_path}"
+        )
+    return artifact_path
+
+
 def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
     """Verify every manifest artifact and return normalized verification results."""
     manifest = _load_manifest(manifest_path)
-    repo_root = manifest_path.parent.parent
+    repo_root = manifest_path.parent.parent.resolve()
     results: list[dict[str, Any]] = []
 
     for artifact in manifest["artifacts"]:
@@ -50,15 +61,22 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
         relative_path = artifact.get("path")
         expected_size = artifact.get("size_bytes")
         expected_sha256 = artifact.get("sha256")
-        if not all(
-            isinstance(value, str)
-            for value in (filename, relative_path, expected_sha256)
-        ) or not isinstance(expected_size, int):
+        if (
+            not all(
+                isinstance(value, str) and value.strip()
+                for value in (filename, relative_path, expected_sha256)
+            )
+            or type(expected_size) is not int
+            or expected_size < 0
+            or len(expected_sha256) != 64
+            or any(char not in "0123456789abcdef" for char in expected_sha256.lower())
+        ):
             raise ArtifactIntegrityError(
-                "each artifact must define filename, path, size_bytes, and sha256"
+                "each artifact must define a filename, repository-relative path, "
+                "non-negative integer size_bytes, and 64-character SHA-256 digest"
             )
 
-        artifact_path = repo_root / relative_path
+        artifact_path = _resolve_artifact_path(repo_root, relative_path)
         if not artifact_path.is_file():
             raise ArtifactIntegrityError(f"artifact not found: {artifact_path}")
         actual_size = artifact_path.stat().st_size
