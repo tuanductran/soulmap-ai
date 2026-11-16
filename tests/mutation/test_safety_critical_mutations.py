@@ -150,7 +150,6 @@ def test_response_safety_contract_diagnosis_patterns_are_load_bearing(
     assert result["status"] == "PASS"
 
 
-
 def test_safety_gate_tier1_override_is_load_bearing(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
