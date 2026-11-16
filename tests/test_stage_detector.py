@@ -8,7 +8,7 @@ from soulmap.runtime.knowledge.stage_classifier import (
     load_stage_classifier,
     parse_stage_classifier,
 )
-from soulmap.runtime.routing.stage_detector import detect_stage
+from soulmap.runtime.routing.stage_detector import _select_stage, detect_stage
 
 
 def _user(content: str) -> dict[str, str]:
@@ -104,6 +104,16 @@ def test_threshold_prevents_single_stage_three_signal_from_classifying() -> None
     )
 
     assert result["stage"] == 1
+
+
+def test_close_scores_consider_every_eligible_stage_within_delta() -> None:
+    rules = load_stage_classifier()
+    scores = {1: 0.0, 2: 4.0, 3: 6.0, 4: 10.5, 5: 11.0, 6: 12.5}
+
+    selected, score = _select_stage(scores, rules, minimum_stage=1)
+
+    assert selected == 4
+    assert score == 10.5
 
 
 def test_close_scores_choose_the_lower_stage() -> None:
