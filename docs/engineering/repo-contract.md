@@ -27,7 +27,7 @@ Use it to answer four questions for every major repo surface:
 | `dist/soulmap-ai.zip` | Standard archive for extraction and document-style AI tooling | Generated release artifact | Packaged `skills/`, root `SKILL.md`, `SOULMAP.md`, and `LICENSE`, excluding `.claude-plugin/` and `templates/` (internal-only) | `uv run soulmap build`, extraction checks, and release review |
 | `dist/soulmap-ai.skill` | Skill package for skill-oriented tooling | Generated release artifact | Packaged zip contents plus `.claude-plugin/` preserved as-is | `uv run soulmap dev`, extraction checks, and release review |
 | `.soulmap/` | Local development inspection workspace | Generated, ignored output | Verified extracted trees in `zip/` and `skill/`; never a source or release input | `uv run soulmap dev` validates archive integrity and exact member sets before extraction |
-| `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Derived Library inventory, project version, release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
+| `dist/soulmap-ai-library.json` | Versioned Library manifest | Generated release artifact | Derived Library inventory, project version, compatibility metadata (`root_manifest`, `skills_root`), release URL, artifact sizes, and SHA-256 digests | `uv run soulmap library-manifest`, Library unit/contract tests, and release review |
 
 ## Ownership Boundaries
 
