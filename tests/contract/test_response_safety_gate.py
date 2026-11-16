@@ -118,7 +118,10 @@ def test_safety_gate_does_not_pass_when_scope_classifier_raises(
     monkeypatch.setattr(response_safety_gate, "classify_message", fail)
     with pytest.raises(RuntimeError, match="scope classifier unavailable"):
         apply_safety_gate(
-            "A neutral message", [], {}, {"primary_framework": "MIRROR", "mode": "MIRROR"}
+            "A neutral message",
+            [],
+            {},
+            {"primary_framework": "MIRROR", "mode": "MIRROR"},
         )
 
 
