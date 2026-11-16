@@ -88,7 +88,7 @@ inspection; it does not start a server. See [docs/operations/UPLOAD.md](docs/ope
 - One branch per logical change, named by type: `feat/...`, `fix/...`,
   `chore/...`, `docs/...`, `test/...`, `ci/...`.
 - Conventional Commits: `<type>(<scope>): <summary>`.
-- Push the branch, open a PR, merge, then delete the branch.
+- Push the branch and open a PR. Merge only after all required checks pass, review is complete with no unresolved threads, and the repository owner explicitly approves; then delete the branch.
 
 Full rules: [.claude/rules/git-and-release.md](.claude/rules/git-and-release.md).
 
