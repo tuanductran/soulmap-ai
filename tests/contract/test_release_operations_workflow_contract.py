@@ -114,7 +114,7 @@ def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
     assert "release_ref:" in workflow
     assert "contents: read" in workflow
     assert "release-verify" in workflow
-    assert 'RELEASE_REF: ${{ inputs.release_ref }}' in workflow
+    assert "RELEASE_REF: ${{ inputs.release_ref }}" in workflow
     assert 'test "v${version}" = "$RELEASE_REF"' in workflow
     assert 'scripts/emit_rollback_summary.py --release-ref "$RELEASE_REF"' in workflow
     assert 'test "v${version}" = "${{ inputs.release_ref }}"' not in workflow
