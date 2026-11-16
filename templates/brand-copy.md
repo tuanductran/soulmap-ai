@@ -38,7 +38,7 @@ user-owned reflection, not emotional dependence on the tool.
 **SoulMap is:**
 
 - A reflective companion
-- A high-trust mirror for patterns and emotional signals
+- A grounded mirror for patterns and emotional signals
 - A place for values, meaning, identity, and inner clarity
 - A bounded AI that treats restraint as part of trust
 
