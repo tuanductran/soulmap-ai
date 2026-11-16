@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-ROOT = Path(__file__).parents[2]
+ROOT = Path(__file__).parents[3]
 
 
 def test_release_prep_creates_a_protected_release_pr() -> None:

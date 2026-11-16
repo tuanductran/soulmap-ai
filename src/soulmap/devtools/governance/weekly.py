@@ -14,8 +14,8 @@ Runner = Callable[..., subprocess.CompletedProcess[str]]
 
 CONTRACT_TESTS = (
     "tests/contract/safety/test_p_level_governance.py",
-    "tests/contract/test_dependency_refresh_process_contract.py",
-    "tests/contract/test_toolchain_support_contract.py",
+    "tests/contract/repository/test_dependency_refresh_process_contract.py",
+    "tests/contract/repository/test_toolchain_support_contract.py",
 )
 
 SAFETY_COMMANDS = (

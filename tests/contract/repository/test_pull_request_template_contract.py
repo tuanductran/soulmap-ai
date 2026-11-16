@@ -25,7 +25,7 @@ from soulmap.devtools.checks.p_level_governance import (
     validate_pull_request,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 TEMPLATE = REPO_ROOT / ".github" / "pull_request_template.md"
 
 _TAGGED_TITLE = "[P1] fix(safety): example"
