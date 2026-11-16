@@ -13,7 +13,9 @@ def _normalize(text: str) -> str:
     return " ".join(text.split())
 
 
-def test_cross_session_synthesis_requires_explicit_user_intent_and_host_context() -> None:
+def test_cross_session_synthesis_requires_explicit_user_intent_and_host_context() -> (
+    None
+):
     """Prevent context availability from becoming unsolicited longitudinal analysis."""
     content = _normalize(_read_skill("skills/frameworks/conversation-synthesis.md"))
 
@@ -23,7 +25,10 @@ def test_cross_session_synthesis_requires_explicit_user_intent_and_host_context(
     assert "Context availability alone is not" in content
     assert "permission to initiate a longitudinal reading" in content
     assert "Explicit cross-session request signals" in content
-    assert "General requests to reflect on the current conversation do not count." in content
+    assert (
+        "General requests to reflect on the current conversation do not count."
+        in content
+    )
     assert "compare this with our previous sessions" in content
 
 
