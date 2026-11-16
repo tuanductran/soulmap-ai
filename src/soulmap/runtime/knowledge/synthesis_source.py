@@ -41,6 +41,7 @@ class SynthesisRules:
     minimum_sessions_for_longitudinal: int
     max_memory_themes: int
     explicit_requests: tuple[str, ...]
+    cross_session_requests: tuple[str, ...]
     emotional_themes: dict[str, tuple[str, ...]]
     value_themes: dict[str, tuple[str, ...]]
     conflict_themes: dict[str, tuple[str, ...]]
@@ -130,6 +131,9 @@ def load_synthesis_rules() -> SynthesisRules:
         minimum_sessions_for_longitudinal=values["minimum_sessions_for_longitudinal"],
         max_memory_themes=values["max_memory_themes"],
         explicit_requests=_quoted_bullets(body, "Explicit request signals"),
+        cross_session_requests=_quoted_bullets(
+            body, "Explicit cross-session request signals"
+        ),
         emotional_themes=_theme_groups(body, "Recurring emotional theme"),
         value_themes=_theme_groups(body, "Recurring value"),
         conflict_themes=_theme_groups(body, "Recurring inner-conflict"),

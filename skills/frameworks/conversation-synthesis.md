@@ -284,6 +284,20 @@ The phrases and themes below are cues that a reflective synthesis may be useful.
 - "what has shifted"
 - "looking back across everything"
 
+### Explicit cross-session request signals
+
+Use prior-session context only when the user clearly asks to compare or
+synthesize across earlier conversations. General requests to reflect on the
+current conversation do not count.
+
+- "compare this with our previous sessions"
+- "compare this with earlier conversations"
+- "what has changed across our sessions"
+- "what themes have appeared across previous conversations"
+- "can you synthesize across sessions"
+- "looking back across our previous conversations"
+- "compare this with what I shared last time"
+
 ### Response guidance
 
 | Key | Guidance |
