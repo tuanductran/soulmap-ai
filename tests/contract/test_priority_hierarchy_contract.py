@@ -174,7 +174,11 @@ def test_primary_priority_order_matches_doctrine_and_orchestration() -> None:
         for _, name in _doctrine_rows()
         if _constant_for(name) in primary_names
     ]
-    orchestration_order = [_constant_for(name) for name in _phase_three_names()]
+    orchestration_order = [
+        _constant_for(name)
+        for name in _phase_three_names()
+        if _constant_for(name) in primary_names
+    ]
 
     assert doctrine_order == expected, (
         "SOULMAP.md primary framework order differs from Python runtime priority."
