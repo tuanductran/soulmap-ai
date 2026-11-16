@@ -80,3 +80,22 @@ def test_audit_covers_all_build_members_and_respects_distignore(tmp_path: Path) 
     } <= found_paths
     assert "skills/private/internal.md" not in found_paths
     assert "docs/internal.md" not in found_paths
+
+
+def test_python_style_runtime_identifiers_are_rejected() -> None:
+    text = (
+        "A severe crisis signal is present. "
+        "The internal action key PRESENCE_FIRST_MANDATORY is not user-facing."
+    )
+    findings = audit_markdown("skills/example.md", text)
+
+    assert any("implementation identifier" in finding for finding in findings)
+    assert any("PRESENCE_FIRST_MANDATORY" in finding for finding in findings)
+
+
+def test_ai_facing_placeholders_and_human_labels_remain_allowed() -> None:
+    text = (
+        "Use {theme} and {guidance} as reader-facing placeholders. "
+        "Stage 1 and High emotional intensity are human-readable labels."
+    )
+    assert audit_markdown("skills/example.md", text) == []
