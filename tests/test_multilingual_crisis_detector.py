@@ -84,7 +84,7 @@ def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> No
         "Tôi không muốn tự tử, nhưng tôi đang nghĩ đến việc tự làm hại bản thân.",
         "No quiero suicidarme, estoy pensando en suicidarme.",
         "Je ne veux pas me suicider, je pense au suicide.",
-        "我不想自杀，但我想结束我的生命。",
+        "我不想自杀\uFF0C但我想结束我的生命。",
     ],
     ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed"],
 )
