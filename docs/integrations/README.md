@@ -133,6 +133,7 @@ and file compatibility.
 
 Official references:
 
+- [Create and manage Skills for Gemini Apps](https://support.google.com/gemini/answer/17094296)
 - [Use Gems in Gemini Apps](https://support.google.com/gemini/answer/15146780)
 - [About the transition from Gems to skills](https://support.google.com/gemini/answer/18560919)
 - [Upload and analyze files in Gemini Apps](https://support.google.com/gemini/answer/14903178)
