@@ -40,7 +40,7 @@ Branch workflow rules (.claude/rules/git-and-release.md):
 - Run uv run soulmap test -n auto -q before pushing any src/ runtime change
 - Run uv run soulmap markdown-contract --root . before pushing skills/ or templates/ changes
 - Run uv run soulmap lint before pushing or tagging a release after editing CHANGELOG.md, root Markdown, or docs
-- Push branch -> open PR -> merge -> delete branch
+- Push branch -> open PR -> verify required checks and review -> obtain explicit repository-owner approval -> merge -> delete branch
 
 Pre-push checklist:
   uv run soulmap format
