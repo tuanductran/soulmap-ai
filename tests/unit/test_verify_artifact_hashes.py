@@ -10,7 +10,7 @@ SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "verify_artifact_hash
 
 
 def _write_manifest(
-    tmp_path: Path, *, artifact_content: str = "artifact\n"
+    tmp_path: Path, *, artifact_content: str = "artifact\\n"
 ) -> tuple[Path, Path]:
     dist = tmp_path / "dist"
     dist.mkdir()
@@ -44,6 +44,12 @@ def _run(manifest_path: Path) -> subprocess.CompletedProcess[str]:
     )
 
 
+def _replace_artifact_path(manifest_path: Path, path: str) -> None:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"][0]["path"] = path
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+
 def test_verifier_accepts_matching_artifact(tmp_path: Path) -> None:
     manifest_path, _ = _write_manifest(tmp_path)
 
@@ -56,7 +62,7 @@ def test_verifier_accepts_matching_artifact(tmp_path: Path) -> None:
 
 def test_verifier_rejects_tampered_artifact(tmp_path: Path) -> None:
     manifest_path, artifact = _write_manifest(tmp_path)
-    artifact.write_text("tampered\n", encoding="utf-8")
+    artifact.write_text("tampered\\n", encoding="utf-8")
 
     result = _run(manifest_path)
 
@@ -83,3 +89,53 @@ def test_verifier_rejects_invalid_manifest(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "manifest is not valid JSON" in result.stderr
+
+
+def test_verifier_rejects_parent_directory_traversal(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    outside = tmp_path.parent / f"{tmp_path.name}-outside.zip"
+    outside.write_text("outside\\n", encoding="utf-8")
+    _replace_artifact_path(manifest_path, f"../{outside.name}")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path escapes repository root" in result.stderr
+
+
+def test_verifier_rejects_absolute_artifact_path(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    outside = tmp_path.parent / f"{tmp_path.name}-absolute.zip"
+    outside.write_text("outside\\n", encoding="utf-8")
+    _replace_artifact_path(manifest_path, str(outside))
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path escapes repository root" in result.stderr
+
+
+def test_verifier_rejects_symlink_that_escapes_repository(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    outside = tmp_path.parent / f"{tmp_path.name}-symlink.zip"
+    outside.write_text("outside\\n", encoding="utf-8")
+    link = manifest_path.parent / "external.zip"
+    link.symlink_to(outside)
+    _replace_artifact_path(manifest_path, "dist/external.zip")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path escapes repository root" in result.stderr
+
+
+def test_verifier_rejects_invalid_artifact_metadata(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"][0]["size_bytes"] = True
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "non-negative integer size_bytes" in result.stderr
