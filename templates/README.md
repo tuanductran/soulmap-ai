@@ -37,6 +37,8 @@ for SOULMAP.md's "shipped knowledge base" definition.
 - [email-onboarding.md](email-onboarding.md)
 - [founder-copy.md](founder-copy.md)
 - [founder-posts.md](founder-posts.md)
+- [platform-writing-playbook.md](platform-writing-playbook.md)
+- [strategic-direction-2026.md](strategic-direction-2026.md)
 
 ## Notes for contributors
 
