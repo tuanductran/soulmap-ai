@@ -2,7 +2,7 @@
 paths:
   - src/soulmap/runtime/detectors/*_detector.py
   - src/soulmap/runtime/knowledge/runtime_config.py
-  - tests/unit/test_*_detector.py
+  - tests/unit/runtime/detectors/test_*_detector.py
 ---
 
 # Detector development rules
@@ -189,7 +189,7 @@ This works automatically if your module follows the `if __name__ == "__main__"` 
 
 ### Test integration
 
-Write unit tests in `tests/unit/test_YOUR_detector.py`:
+Write unit tests in `tests/unit/runtime/detectors/test_YOUR_detector.py`:
 
 ```python
 def test_analyzer_detects_signal():

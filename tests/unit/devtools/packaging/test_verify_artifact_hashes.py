@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "verify_artifact_hashes.py"
+SCRIPT = Path(__file__).resolve().parents[4] / "scripts" / "verify_artifact_hashes.py"
 
 
 def _write_manifest(

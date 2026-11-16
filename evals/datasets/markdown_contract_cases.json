@@ -91,7 +91,7 @@
         ]
       },
       {
-        "path": "tests/unit/test_eval_responses.py",
+        "path": "tests/unit/devtools/evals/test_eval_responses.py",
         "must_include_all": [
           "test_crisis_reference_response_is_presence_first",
           "your immediate safety matters",

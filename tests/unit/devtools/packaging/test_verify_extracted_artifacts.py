@@ -11,7 +11,7 @@ from soulmap.devtools.packaging import build_skill
 from soulmap.devtools.packaging.members import source_members
 
 SCRIPT = (
-    Path(__file__).resolve().parents[2] / "scripts" / "verify_extracted_artifacts.py"
+    Path(__file__).resolve().parents[4] / "scripts" / "verify_extracted_artifacts.py"
 )
 
 

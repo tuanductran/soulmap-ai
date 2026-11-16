@@ -24,7 +24,7 @@ for the doctrine-level pipeline, inspected git history for the files involved,
 and ran the existing regression suites that exercise this path
 (`tests/integration/test_framework_selector_priorities.py`,
 `tests/contract/test_response_safety_gate.py`, `tests/eval_regression/`,
-`tests/test_multilingual_crisis_detector.py`) to confirm current behavior.
+`tests/unit/runtime/detectors/test_multilingual_crisis_detector.py`) to confirm current behavior.
 All of the above passed against the unmodified codebase.
 
 ## Current architecture
@@ -169,7 +169,7 @@ both layers already share one detection implementation.
   cases verifying the multilingual packs from #130 don't over-trigger).
 - `tests/eval_regression/test_safety_evals.py` exercises `detect_crisis()`
   directly against that dataset and passed (46/46) at time of review.
-- `tests/test_multilingual_crisis_detector.py` and
+- `tests/unit/runtime/detectors/test_multilingual_crisis_detector.py` and
   `tests/integration/test_framework_selector_priorities.py` (which includes
   `test_framework_selector_prioritizes_crisis` and the goodbye/grief
   non-crisis regression added for #131's edge-case work) passed.
