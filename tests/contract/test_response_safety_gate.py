@@ -268,3 +268,62 @@ def test_safety_gate_blocks_spiritual_identity_confirmation() -> None:
     )
     assert result["status"] == "BLOCK"
     assert result["reason"] == "out_of_scope"
+
+
+
+def test_tier1_short_circuits_dependency_and_scope_failures(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "detect_crisis", lambda _message: {"tier": 1}
+    )
+
+    def unexpected(*_args: object, **_kwargs: object) -> dict:
+        raise AssertionError("lower-priority detector must not run")
+
+    monkeypatch.setattr(response_safety_gate, "analyze_dependency", unexpected)
+    monkeypatch.setattr(response_safety_gate, "classify_message", unexpected)
+
+    result = apply_safety_gate(
+        "I do not want to keep living.",
+        [],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    assert result["reason"] == "tier1_crisis"
+    selection = cast(dict[str, object], result["selection"])
+    assert selection["primary_framework"] == "CRISIS"
+
+
+def test_dependency_short_circuits_scope_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        response_safety_gate, "detect_crisis", lambda _message: {"tier": 0}
+    )
+    monkeypatch.setattr(
+        response_safety_gate,
+        "analyze_dependency",
+        lambda *_args, **_kwargs: {
+            "level": "HIGH_DEPENDENCY",
+            "score": 10,
+            "signals": ["dependency_pattern"],
+            "recommendation": "Redirect toward real-world support.",
+        },
+    )
+
+    def unexpected(_message: str) -> dict:
+        raise AssertionError("scope must not run after high dependency")
+
+    monkeypatch.setattr(response_safety_gate, "classify_message", unexpected)
+    result = apply_safety_gate(
+        "A neutral message",
+        [],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    assert result["reason"] == "high_dependency"
+    selection = cast(dict[str, object], result["selection"])
+    assert selection["primary_framework"] == "DEPENDENCY"
