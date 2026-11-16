@@ -145,9 +145,7 @@ def test_framework_selector_prioritizes_grief_before_direction() -> None:
 
 
 def test_grief_question_requires_grief_specific_readiness_not_general_insight() -> None:
-    assert _grief_question_allowed(
-        {"readiness_detected": False}
-    ) is False
+    assert _grief_question_allowed({"readiness_detected": False}) is False
 
 
 def test_grief_question_allows_explicit_grief_readiness() -> None:
