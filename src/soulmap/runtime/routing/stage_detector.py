@@ -79,14 +79,14 @@ def _select_stage(
     ]
     if not eligible:
         return minimum_stage, scores[minimum_stage]
-    ranked = sorted(eligible, key=lambda stage: (-scores[stage], stage))
-    best = ranked[0]
-    if (
-        len(ranked) > 1
-        and abs(scores[best] - scores[ranked[1]]) <= rules.close_score_delta
-    ):
-        best = min(best, ranked[1])
-    return best, scores[best]
+    best = max(eligible, key=lambda stage: (scores[stage], -stage))
+    close_scoring_stages = [
+        stage
+        for stage in eligible
+        if scores[best] - scores[stage] <= rules.close_score_delta
+    ]
+    selected = min(close_scoring_stages)
+    return selected, scores[selected]
 
 
 def _confidence(stage: int, score: float, rules: StageClassifierRules) -> str:
