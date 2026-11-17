@@ -414,3 +414,29 @@ def test_mirror_ceiling_counts_paragraphs_not_length() -> None:
     )
 
     assert result["ok"] is True
+
+
+def test_resource_sanitizer_ignores_question_mark_in_resource_url_query() -> None:
+    result = resource_sanitizer.check_banned_language(
+        "Please reach out now. findahelpline.com/?country=vn"
+    )
+
+    assert result == {"status": "PASS", "violations": []}
+
+
+def test_resource_sanitizer_still_counts_a_real_question_with_resource_url() -> None:
+    result = resource_sanitizer.check_banned_language(
+        "What feels true? Then visit findahelpline.com/?country=vn"
+    )
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert result["violations"] == ["question_not_last_sentence"]
+
+
+def test_resource_sanitizer_rewrite_guidance_allows_zero_questions() -> None:
+    result = resource_sanitizer.check_banned_language("This uses a goal.")
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    instruction = str(result["instruction"])
+    assert "at most one question" in instruction
+    assert "zero questions is valid" in instruction
