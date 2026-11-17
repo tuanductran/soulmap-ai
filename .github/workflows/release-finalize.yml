@@ -66,11 +66,12 @@ jobs:
             > "$RUNNER_TEMP/associated-pull-requests.json"
 
           if ! jq -e --arg merge_sha "$MERGE_SHA" '
-            any(.[]; 
+            any(.[];
               .merged_at != null and
               .merge_commit_sha == $merge_sha and
               .base.ref == "main" and
-              .head.ref | startswith("release/prep-")
+              (.head.ref | startswith("release/prep-")) and
+              .head.repo.full_name == .base.repo.full_name
             )
           ' "$RUNNER_TEMP/associated-pull-requests.json" > /dev/null; then
             echo "Refusing to publish: the supplied SHA is not the merge commit of a merged release/prep-* PR targeting main."
