@@ -43,6 +43,9 @@ notes, tests, and release records.
 | 27 | v0.14.0 Audit & Release Integrity | Added review-only Python/resource reachability inventories, stale-path and detector-knowledge drift checks, incomplete-scan reporting, relative-import resolution, and Docker Action workspace trust; verified release finalization, cross-platform CI, Python compatibility, and CodeQL. |
 | 28 | Audit False-Positive Reduction & Reference Repair | Reduced confirmed stale-path and Markdown-reference audit false positives; included CLI, Docker Action, and P-level governance entrypoints in reachability analysis; corrected stale maintainer rule paths and a deleted-module docstring reference. The follow-up inventory found no actionable source deletion; the docstring-only `safety.py` remains review-only and is retained. |
 | 29 | Skills Quick-Reference De-duplication | Merged PR #686 to remove duplicated master routing, response-structure, and response-quality checklists from `skills/meta/quick-reference.md`, while retaining situation-specific cues and required contract language. No runtime, safety implementation, or canonical knowledge source was changed. |
+| 30 | Knowledge Ownership & Shipped-Package Boundary | Consolidated the Markdown/Python ownership split for detector semantics and executable policy; added source-registry and Python-identifier leakage contracts; made shipped-content checks follow the package builder's actual member set. Evidence: ADR 0006, the October/November runtime-ownership audits, and PRs #730-#772, #952-#985, #998, and #1001. |
+| 31 | Detector Attribution & Safety-Gate Hardening | Added user-attribution protections across detectors and history scoring; preserved multilingual Tier 1/Tier 2 crisis behavior, explicit-denial near misses, Tier 2 Sanctuary fallback, fail-closed gate contracts, and session/inquiry guardrails. Evidence: PRs #784-#789, #979, #982, #984, #988, and #995, with the current safety-enforcement matrix and regression suites. |
+| 32 | Repository Governance, Release Integrity & Toolchain Synchronization | Reorganized tests by domain; strengthened shipped-artifact and release-provenance verification; clarified manual release-finalize trust boundaries; synchronized dependency-bot ownership, CI uv pins, compatibility research, and safety-architecture documentation. Evidence: PRs #1006-#1017 and the release operations contract. |
 
 ## Post-Merge Audit Verification
 
@@ -58,8 +61,7 @@ The audit artifacts are review evidence, not a deletion list. Reopen this workst
 
 ## Current Historical Baseline
 
-Phases 1-29 record the current architecture, audit work through the v0.14.0 release, and the focused Skills quick-reference de-duplication in PR #686
-and the follow-up false-positive/reference fixes. The canonical inventory verification is recorded above from CI run
+Phases 1-32 record the architecture, the v0.14.0 release and its follow-up, and the completed post-release work through PR #1017. Phases 30-32 summarize the major knowledge-ownership, safety, package-boundary, repository-governance, release-integrity, and toolchain work completed after PR #686; they are milestone summaries, not a substitute for the detailed ADRs, audits, tests, and PR evidence. The canonical inventory verification is recorded above from CI run
 [`38692440277`](https://github.com/tuanductran/soulmap-ai/actions/runs/38692440277),
 which ran on the documentation-only PR #679 branch against the merged runtime and audit
 implementation. No separate source-change work item remains from that audit; reopen this
