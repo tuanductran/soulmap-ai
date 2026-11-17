@@ -113,7 +113,7 @@ can be created or published.
 
 ## Gemini (Gems transitioning to Skills)
 
-**Transition effective 2026-11-17.**
+**Transition effective for personal-account users aged 18 or older on 2026-11-17.**
 
 Google's current transition schedule for personal Google accounts is:
 
@@ -128,8 +128,9 @@ Google's current transition schedule for personal Google accounts is:
 - Work and school accounts have later transition dates: March 2027 for
   business, enterprise, and non-profit accounts; June 2027 for education.
 
-If you still need to use a Gem on a personal account, save any knowledge files
-before 2026-12-17. For ongoing use, prefer Gemini Skills rather than creating
+If you still need to use a Gem on a personal account and are aged 18 or older,
+save any knowledge files before 2026-12-17. Google has not announced the
+corresponding removal date for personal-account users under 18. For ongoing use, prefer Gemini Skills rather than creating
 a new Gem. The Google transition guide describes the current migration steps
 and file compatibility.
 
