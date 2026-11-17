@@ -174,5 +174,5 @@ def test_read_marketplace_requires_skill_entrypoint_in_target_directory(
     payload["plugins"][0]["skills"] = ["./skills/example"]
     _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
 
-    with pytest.raises(ValueError, match="must contain SKILL.md"):
+    with pytest.raises(ValueError, match=r"must contain SKILL\\.md"):
         library._read_marketplace(tmp_path)
