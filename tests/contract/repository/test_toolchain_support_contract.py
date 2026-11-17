@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 PYPROJECT = REPO_ROOT / "pyproject.toml"
 LOCKFILE = REPO_ROOT / "uv.lock"
 RESEARCH = REPO_ROOT / "docs" / "engineering" / "package-compatibility-research.md"

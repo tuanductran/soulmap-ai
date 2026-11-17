@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = REPO_ROOT / "docs" / "operations" / "dependency-refresh.md"
 ROADMAP = REPO_ROOT / "docs" / "ROADMAP.md"
 COMPATIBILITY = REPO_ROOT / "docs" / "engineering" / "package-compatibility-research.md"

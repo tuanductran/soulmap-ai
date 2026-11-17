@@ -17,7 +17,7 @@ import re
 import tomllib
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 PYPROJECT = REPO_ROOT / "pyproject.toml"
 MARKETPLACE = REPO_ROOT / ".claude-plugin" / "marketplace.json"
 

@@ -7,7 +7,7 @@ from pathlib import Path
 
 from soulmap.devtools.packaging import build_skill
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 MARKETPLACE = REPO_ROOT / ".claude-plugin" / "marketplace.json"
 
 

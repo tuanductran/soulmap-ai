@@ -39,8 +39,12 @@ artifacts. Unit tests follow the production package boundaries beneath `tests/un
 `runtime/routing/`, and `runtime/synthesis/`; maintainer tooling is grouped under
 `devtools/` by audit, benchmarking, checks, CLI, evals, governance, packaging,
 quality, support, and testing; the separately deployable GitHub Action stays under
-`action/`. Contract tests should be grouped by the contract they verify rather than
-by individual file. Keep integration, regression, mutation, smoke, and eval-regression
+`action/`. Contract tests stay under `tests/contract/` and are grouped by stable ownership:
+`knowledge/`, `safety/`, `runtime/`, `evals/`, `packaging/`, and `repository/`.
+The packaging group verifies shipped artifacts, version metadata, and Python
+source-distribution boundaries; the repository group verifies workflows,
+maintainer processes, toolchain support, and repository governance. Do not create
+a directory solely to contain one test file. Keep integration, regression, mutation, smoke, and eval-regression
 suites as separate top-level test categories. Do not create a directory solely to
 contain one test file.
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 DEV_DOC = REPO_ROOT / "docs" / "engineering" / "DEV.md"
 TESTER_DOC = REPO_ROOT / "docs" / "engineering" / "TESTER.md"
 RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release.yml"

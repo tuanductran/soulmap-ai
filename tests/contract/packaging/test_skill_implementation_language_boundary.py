@@ -2,7 +2,7 @@ from pathlib import Path
 
 from soulmap.devtools.checks.skills_boundary import audit
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def test_shipped_knowledge_has_no_implementation_language_references() -> None:
