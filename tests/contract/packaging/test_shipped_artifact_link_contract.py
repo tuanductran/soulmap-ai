@@ -23,23 +23,21 @@ another file, that file is checked here automatically.
 
 from __future__ import annotations
 
-import posixpath
-import re
+from pathlib import Path
 
 from soulmap.devtools.packaging.build_skill import _iter_inputs
+from soulmap.devtools.support.markdown import (
+    is_external_markdown_target,
+    iter_markdown_references,
+    resolve_local_markdown_target,
+    split_markdown_link_target,
+)
 from soulmap.devtools.support.repo import REPO_ROOT
 
-# Inline links only. Reference-style definitions and bare autolinks are not
-# used in the shipped files today; if that changes, this pattern needs to grow
-# and the anti-vacuous test below is what will show it has not.
-_INLINE_LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 
-_EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "tel:")
-
-
-def _shipped_relative_paths() -> set[str]:
+def _shipped_relative_paths(repo_root: Path = REPO_ROOT) -> set[str]:
     """Return every shipped file as a POSIX path relative to the repo root."""
-    return {path.relative_to(REPO_ROOT).as_posix() for path in _iter_inputs(REPO_ROOT)}
+    return {path.relative_to(repo_root).as_posix() for path in _iter_inputs(repo_root)}
 
 
 def _shipped_directories(files: set[str]) -> set[str]:
@@ -57,25 +55,39 @@ def _shipped_directories(files: set[str]) -> set[str]:
     return directories
 
 
-def _broken_links() -> list[str]:
-    """Return a description of every shipped link that would not resolve."""
-    files = _shipped_relative_paths()
+def _broken_links(repo_root: Path = REPO_ROOT) -> list[str]:
+    """Return a description of every shipped Markdown link that would not resolve."""
+    files = _shipped_relative_paths(repo_root)
     directories = _shipped_directories(files)
     broken: list[str] = []
 
     for name in sorted(files):
         if not name.endswith(".md"):
             continue
-        text = (REPO_ROOT / name).read_text(encoding="utf-8")
-        for raw_target in _INLINE_LINK_RE.findall(text):
-            target = raw_target.split("#", 1)[0].strip()
-            if not target or target.startswith(_EXTERNAL_PREFIXES):
+        current_file = repo_root / name
+        lines = current_file.read_text(encoding="utf-8").splitlines(keepends=True)
+        for reference in iter_markdown_references(lines):
+            target_path, _fragment = split_markdown_link_target(reference.target)
+            if not target_path or is_external_markdown_target(target_path):
                 continue
-            resolved = posixpath.normpath(
-                posixpath.join(posixpath.dirname(name), target)
+            resolved = resolve_local_markdown_target(
+                repo_root=repo_root,
+                current_file=current_file,
+                target_path=target_path,
             )
-            if resolved not in files and resolved not in directories:
-                broken.append(f"{name}: [{raw_target}] does not resolve to {resolved}")
+            try:
+                relative = resolved.relative_to(repo_root.resolve()).as_posix()
+            except ValueError:
+                broken.append(
+                    f"{name}:{reference.line}: [{reference.label}] escapes the "
+                    f"shipped package: {reference.target}"
+                )
+                continue
+            if relative not in files and relative not in directories:
+                broken.append(
+                    f"{name}:{reference.line}: [{reference.label}] does not resolve "
+                    f"to {relative}"
+                )
     return broken
 
 
@@ -105,6 +117,46 @@ def test_no_shipped_file_links_to_something_that_does_not_ship() -> None:
     )
 
 
+def test_shipped_link_audit_parses_reference_links_and_nested_destinations(
+    tmp_path: Path,
+) -> None:
+    """Reference-style links and nested destinations must be checked as well as inline links."""
+    (tmp_path / "LICENSE").write_text("license\n", encoding="utf-8")
+    (tmp_path / "SOULMAP.md").write_text("# Doctrine\n", encoding="utf-8")
+    (tmp_path / "SKILL.md").write_text(
+        "# Skill\n\n"
+        "[Guide][guide]\n"
+        "[Missing][missing]\n"
+        "[Nested](skills/assets/logo_(dark).png)\n"
+        "![Absent](skills/assets/missing_(dark).png)\n\n"
+        "[guide]: skills/guide.md\n"
+        "[missing]: skills/not-present.md\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "skills" / "assets").mkdir(parents=True)
+    (tmp_path / "skills" / "guide.md").write_text("# Guide\n", encoding="utf-8")
+    (tmp_path / "skills" / "assets" / "logo_(dark).png").write_bytes(b"image")
+
+    findings = _broken_links(tmp_path)
+
+    assert len(findings) == 2
+    assert any("skills/not-present.md" in finding for finding in findings)
+    assert any("missing_(dark).png" in finding for finding in findings)
+
+
+def test_shipped_link_audit_rejects_targets_that_escape_package_root(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "LICENSE").write_text("license\n", encoding="utf-8")
+    (tmp_path / "SOULMAP.md").write_text("# Doctrine\n", encoding="utf-8")
+    (tmp_path / "SKILL.md").write_text("[Outside](../outside.md)\n", encoding="utf-8")
+
+    findings = _broken_links(tmp_path)
+
+    assert len(findings) == 1
+    assert "escapes the shipped package" in findings[0]
+
+
 def test_internal_only_directories_never_appear_as_a_link_target() -> None:
     """Naming an internal directory in prose is fine; linking to it is not.
 
@@ -128,10 +180,13 @@ def test_internal_only_directories_never_appear_as_a_link_target() -> None:
     for name in sorted(_shipped_relative_paths()):
         if not name.endswith(".md"):
             continue
-        text = (REPO_ROOT / name).read_text(encoding="utf-8")
-        for raw_target in _INLINE_LINK_RE.findall(text):
-            target = raw_target.split("#", 1)[0].strip().lstrip("./")
+        lines = (REPO_ROOT / name).read_text(encoding="utf-8").splitlines(keepends=True)
+        for reference in iter_markdown_references(lines):
+            target, _fragment = split_markdown_link_target(reference.target)
+            target = target.strip().lstrip("./")
             if target.startswith(internal_roots):
-                offenders.append(f"{name}: links to internal path {raw_target!r}")
+                offenders.append(
+                    f"{name}:{reference.line}: links to internal path {reference.target!r}"
+                )
 
     assert not offenders, "\n".join(offenders)
