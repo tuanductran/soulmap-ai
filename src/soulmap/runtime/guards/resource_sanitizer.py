@@ -84,7 +84,7 @@ def check_banned_language(response_text: str) -> dict[str, object]:
         "status": "FAIL_REWRITE_REQUIRED",
         "violations": violations,
         "instruction": (
-            "Output violated SOULMAP.md language rules. Rewrite without banned "
+            "Output violated SOULMAP.md language rules. Rewrite response without banned "
             "vocabulary or prescriptive advice. Use at most one question, last if "
             "used; zero questions is valid when safety, readiness, preference, or "
             "closure calls for none."
