@@ -14,7 +14,7 @@ The update bots have mutually exclusive ownership by ecosystem:
 
 Renovate intentionally does not enable the `pep621` or `pip_requirements` managers. The PEP 621 manager can update `pyproject.toml` and work with `uv.lock`, which would overlap Dependabot's `uv` ecosystem. There are no tracked requirements files requiring a separate pip manager. Dependabot intentionally does not enable `github-actions`; that surface belongs to Renovate.
 
-Both bots keep automatic merging disabled. Renovate retains Dependency Dashboard approval, a three-day minimum release age, and bounded PR/commit rates. This division prevents two bots from independently proposing updates to the same dependency surface while retaining one owner for each supported ecosystem.
+Renovate explicitly sets `automerge: false`; Dependabot has no auto-merge setting in its configuration. The repository-level GitHub auto-merge capability is enabled, but no workflow in this repository invokes it for dependency PRs. Renovate retains Dependency Dashboard approval, a three-day minimum release age, and bounded PR/commit rates. This division prevents two bots from independently proposing updates to the same dependency surface while retaining one owner for each supported ecosystem.
 
 Do not re-enable an overlapping manager without first changing this ownership table and its contract test in the same reviewed PR. Do not add a third update bot.
 
