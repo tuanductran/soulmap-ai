@@ -403,3 +403,21 @@ def test_dependency_short_circuits_scope_failure(
     assert result["reason"] == "high_dependency"
     selection = cast(dict[str, object], result["selection"])
     assert selection["primary_framework"] == "DEPENDENCY"
+
+
+def test_dependency_override_does_not_require_a_question() -> None:
+    message = (
+        "You're the only one who truly understands me. "
+        "I trust you more than anyone. Tell me what to do with my life."
+    )
+    result = apply_safety_gate(
+        message,
+        [],
+        {},
+        {"primary_framework": "MIRROR", "mode": "MIRROR"},
+    )
+
+    selection = cast(dict[str, object], result["selection"])
+    instruction = str(selection["instruction"])
+    assert "at most one question when appropriate" in instruction
+    assert "Zero questions is valid" in instruction
