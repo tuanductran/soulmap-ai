@@ -203,10 +203,9 @@ def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None
         for name, data in members:
             rebuilt.writestr(name, data)
         with pytest.warns(UserWarning, match="Duplicate name"):
-            rebuilt.writestr("SKILL.md", b"conflicting duplicate\\n")
+            rebuilt.writestr("SKILL.md", b"conflicting duplicate\n")
 
     result = _run(tmp_path)
 
     assert result.returncode == 1
     assert "duplicate archive member names" in result.stderr
-\n
