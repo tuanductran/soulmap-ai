@@ -435,7 +435,7 @@ def test_resource_sanitizer_still_counts_a_real_question_with_resource_url() -> 
 
 def test_resource_sanitizer_rewrite_guidance_allows_zero_questions() -> None:
     result = resource_sanitizer.check_banned_language("This uses a goal.")
-    
+
     assert result["status"] == "FAIL_REWRITE_REQUIRED"
     instruction = str(result["instruction"])
     assert "at most one question" in instruction
