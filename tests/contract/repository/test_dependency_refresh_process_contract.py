@@ -6,7 +6,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = REPO_ROOT / "docs" / "operations" / "dependency-refresh.md"
-UPSTREAM_NOTES = REPO_ROOT / "docs" / "research" / "dependency-refresh-upstream-notes.md"
+UPSTREAM_NOTES = (
+    REPO_ROOT / "docs" / "research" / "dependency-refresh-upstream-notes.md"
+)
 RENOVATE_CONFIG = REPO_ROOT / "renovate.json"
 DEPENDABOT_CONFIG = REPO_ROOT / ".github" / "dependabot.yml"
 ROADMAP = REPO_ROOT / "docs" / "ROADMAP.md"
