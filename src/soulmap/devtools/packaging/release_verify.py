@@ -157,7 +157,12 @@ def _verify_archive(
         )
     try:
         with zipfile.ZipFile(path) as archive:
-            actual = set(archive.namelist())
+            names = archive.namelist()
+            if len(names) != len(set(names)):
+                raise ReleaseVerificationError(
+                    f"{path.name}: duplicate archive member names"
+                )
+            actual = set(names)
             if any(name.startswith("/") or ".." in Path(name).parts for name in actual):
                 raise ReleaseVerificationError(
                     f"{path.name}: unsafe archive member path"

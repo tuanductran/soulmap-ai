@@ -83,7 +83,11 @@ def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
         raise ExtractedArtifactError(
             f"not a valid ZIP archive: {archive_path}"
         ) from exc
-    names = set(archive.namelist())
+    member_names = archive.namelist()
+    if len(member_names) != len(set(member_names)):
+        archive.close()
+        raise ExtractedArtifactError(f"duplicate archive member names: {archive_path}")
+    names = set(member_names)
     for name in names:
         parsed = PurePosixPath(name)
         if name.startswith("/") or ".." in parsed.parts:
