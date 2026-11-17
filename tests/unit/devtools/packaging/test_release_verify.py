@@ -1,6 +1,7 @@
 """Tests for release artifact and integration verification contracts."""
 
 from pathlib import Path
+import zipfile
 
 import pytest
 
@@ -8,6 +9,7 @@ from soulmap.devtools.packaging.release_verify import (
     INTEGRATION_GUIDES,
     ReleaseVerificationError,
     _source_members,
+    _verify_archive,
     _verify_integrations,
 )
 
@@ -89,3 +91,21 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
     assert ".claude-plugin/marketplace.json" in skill
     assert ".DS_Store" not in standard
     assert ".DS_Store" not in skill
+
+def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
+    for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/example.md"):
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("source content\\n", encoding="utf-8")
+
+    archive_path = tmp_path / "dist" / "soulmap-ai.zip"
+    archive_path.parent.mkdir()
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/example.md"):
+            archive.write(tmp_path / name, arcname=name)
+        with pytest.warns(UserWarning, match="Duplicate name"):
+            archive.writestr("SKILL.md", "conflicting duplicate\\n")
+
+    with pytest.raises(ReleaseVerificationError, match="duplicate archive member names"):
+        _verify_archive(tmp_path, archive_path, include_plugin=False)
+\n
