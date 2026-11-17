@@ -1,6 +1,6 @@
 # Upload SoulMap to AI tools
 
-**Platform lifecycle review:** 2026-11-16. Platform availability, upload limits,
+**Platform lifecycle review:** 2026-11-17. Platform availability, upload limits,
 and interface labels change independently of SoulMap releases. Recheck the
 official help pages linked below before each deployment.
 

@@ -8,7 +8,7 @@ soulmap_version: "0.14.0"
 # Gemini Gem instructions (legacy)
 
 > **Legacy deployment material.** For personal Google accounts aged 18 or older,
-> Gems become read-only on 2026-11-17 and are removed from Gemini Apps on 2026-12-17.
+> Gems became read-only on 2026-11-17 and are scheduled for removal from Gemini Apps on 2026-12-17.
 > Do not use the Gem creation steps below after the transition cutoff. Google says
 > personal-account Gems and supported files will transition to Skills; unsupported
 > knowledge files may not carry over. Use the current
