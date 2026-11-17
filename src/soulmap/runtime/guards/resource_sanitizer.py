@@ -8,6 +8,10 @@ import sys
 
 from soulmap.runtime.io.cli_payload import parse_json_object, require_str_field
 
+_URL_RE = re.compile(
+    r"\\b(?:https?://|www\\.)\\S+|\\b[\\w.-]+\\.[a-z]{2,}/\\S*", re.IGNORECASE
+)
+
 # Banned vocabulary defined in SOULMAP.md (language rules section)
 BANNED_WORDS = [
     r"\baction step[s]?\b",
@@ -78,7 +82,12 @@ def check_banned_language(response_text: str) -> dict[str, object]:
     return {
         "status": "FAIL_REWRITE_REQUIRED",
         "violations": violations,
-        "instruction": "Output violated SOULMAP.md language rules. Rewrite response without using banned vocabulary, maintaining exactly 1 question, and no prescriptive advice.",
+        "instruction": (
+            "Output violated SOULMAP.md language rules. Rewrite without banned "
+            "vocabulary or prescriptive advice. Use at most one question, last if "
+            "used; zero questions is valid when safety, readiness, preference, or "
+            "closure calls for none."
+        ),
     }
 
 
