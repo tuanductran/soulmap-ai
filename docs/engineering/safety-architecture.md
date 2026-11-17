@@ -64,25 +64,33 @@ on ordering and ownership rather than the wire format.
 
 ```mermaid
 flowchart TD
-    A[Request: message, host-supplied context] ==> B{Crisis detector\ntier == 1?}
-    B -- yes ==> Z[Selection: CRISIS]
-    B -- no ==> C{Dependency detector\nHIGH_DEPENDENCY?}
-    C -- yes ==> Y[Selection: DEPENDENCY]
-    C -- no ==> D{Emotional intensity\nHIGH, or crisis tier == 2?}
-    D -- yes ==> X[Selection: DE_ESCALATION\nmode SANCTUARY]
-    D -- no ==> E{Emotional intensity\nMODERATE?}
-    E -- yes ==> W[Selection: DE_ESCALATION\nmode MIRROR]
-    E -- no ==> F[Remaining detectors run\nin priority order:\ngrief, inner conflict, direction,\ncreative drought, perfectionism,\nshadow, ancestral, visibility fear,\nempath, celebration, insight,\nsynthesis, pattern]
-    F ==> G[First matching detector\nwins. Default: MIRROR]
-    Z ==> H[apply_safety_gate]
-    Y ==> H
-    X ==> H
-    W ==> H
-    G ==> H
-    H ==> I{Safety gate\nre-checks Tier 1,\ndependency, scope, Tier 2}
-    I -- override or block ==> J[Final selection,\npossibly replaced]
-    I -- pass ==> J
-    J ==> K[Selector output:\nprimary_framework, mode,\nsafety_status, instruction]
+    A[Request: message and host-supplied context] ==> B{Tier 1 crisis?}
+    B -- yes ==> Z[CRISIS selection]
+    B -- no ==> C{High dependency?}
+    C -- yes ==> Y[DEPENDENCY selection]
+    C -- no ==> D{Phase 1 scope blacklist?}
+    D -- yes ==> X[Safety redirect / block]
+    D -- no ==> E{Strong insight?}
+    E -- yes ==> M[MEANING_INTEGRATION]
+    E -- no ==> F[Classify intensity and journey stage]
+    F ==> G{Stage 1 first-contact override?}
+    G -- yes ==> N[MIRROR, no framework]
+    G -- no ==> H{High intensity or Tier 2?}
+    H -- yes ==> P[High-intensity Sanctuary fallback]
+    H -- no ==> I{Moderate intensity?}
+    I -- yes ==> Q[Grief exception, otherwise Moderate fallback]
+    I -- no ==> R[Evaluate primary-priority rules]
+    R ==> S[First matching framework, otherwise Mirror / Peer]
+    Z ==> T[apply_safety_gate]
+    Y ==> T
+    X ==> T
+    M ==> T
+    N ==> T
+    P ==> T
+    Q ==> T
+    S ==> T
+    T ==> U[Re-derive crisis, dependency, scope and Tier 2]
+    U ==> V[Final selection and response contract]
 ```
 
 Ordering notes, all confirmed against
@@ -91,18 +99,35 @@ Ordering notes, all confirmed against
 - The crisis check runs first, unconditionally, before any other detector is
   invoked. A tier-1 result short-circuits the rest of the pipeline entirely.
 - Dependency is checked next, also as a short-circuit.
-- Emotional intensity (HIGH, then MODERATE) is checked before any
-  topic-specific framework, which is what implements the "Sanctuary and
-  De-escalation outrank most topic frameworks" priority band from
-  `SOULMAP.md`.
-- The remaining topic detectors (grief, inner parts, direction, creative
-  drought, perfectionism paralysis, shadow, ancestral patterns, fear of
-  visibility, empath boundary, celebration, insight, synthesis, pattern) are
-  evaluated in the order they appear in the file, and the first one whose
-  condition is true wins. This order matches the priority table published in
-  `SOULMAP.md`'s "Framework selection" section and in
-  [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)'s
-  Phase 3 table.
+- After the Tier 1 crisis and dependency short-circuits, the selector
+  applies the Phase 1 scope check when enabled. A blacklisted request is
+  redirected before insight, intensity, stage, or topic-framework selection.
+- A strong insight is checked before intensity and stage routing. When the
+  configured minimum insight strength is met, the selector chooses
+  `MEANING_INTEGRATION` immediately.
+- The selector then evaluates journey stage and emotional intensity. A Stage 1
+  first-contact override applies only within the configured message limit,
+  when intensity is not HIGH, and when the early grief check does not match.
+  HIGH intensity (or Tier 2 crisis) uses the configured Sanctuary fallback.
+  MODERATE intensity checks the insight and grief exceptions, then uses the
+  configured Moderate fallback when neither exception matches.
+- Normal-intensity requests evaluate the configured
+  `ORCHESTRATION_CONFIG.primary_priority` rules in order. The authoritative
+  priority table is in `SOULMAP.md` and Phase 3 of
+  [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md).
+  The detector functions are gathered before the rule list is applied; their
+  declaration order in the Python file is not the framework priority order.
+  If no primary rule matches, the selector returns Mirror or Peer according
+  to the configured journey-stage threshold, with at most one eligible
+  secondary layer.
+- The primary-priority list includes Existential, Inner Parts, Direction,
+  Creative Drought, Perfectionism Paralysis, Shadow, Ancestral Patterns,
+  Fear of Visibility, Empath Boundary, Dark Night of the Soul, Soul
+  Nourishment, Divine Guidance, Sacred Polarity, Spiritual Purpose,
+  Soulmate Longing, Partnership Patterns, Meaning Integration,
+  Integration and Celebration, Synthesis, and Pattern. The table in
+  `SOULMAP.md` remains authoritative; this document intentionally does not
+  duplicate its trigger definitions.
 - Every return branch in the selector, all of them, calls the safety gate
   before returning. There is no branch that skips it. This "every branch
   reaches the gate" property is what the
