@@ -117,9 +117,6 @@ def test_no_shipped_file_links_to_something_that_does_not_ship() -> None:
     )
 
 
-
-
-
 def test_shipped_link_audit_parses_reference_links_and_nested_destinations(
     tmp_path: Path,
 ) -> None:
