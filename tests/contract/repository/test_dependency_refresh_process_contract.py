@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import json
+import re
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CHECKLIST = REPO_ROOT / "docs" / "operations" / "dependency-refresh.md"
+UPSTREAM_NOTES = (
+    REPO_ROOT / "docs" / "research" / "dependency-refresh-upstream-notes.md"
+)
+RENOVATE_CONFIG = REPO_ROOT / "renovate.json"
+DEPENDABOT_CONFIG = REPO_ROOT / ".github" / "dependabot.yml"
 ROADMAP = REPO_ROOT / "docs" / "ROADMAP.md"
 COMPATIBILITY = REPO_ROOT / "docs" / "engineering" / "package-compatibility-research.md"
 
@@ -40,12 +47,37 @@ def test_dependency_refresh_checklist_exists_and_covers_required_commands() -> N
         assert anchor in content
 
 
+def test_dependency_update_bots_have_exclusive_ecosystem_ownership() -> None:
+    renovate = json.loads(RENOVATE_CONFIG.read_text(encoding="utf-8"))
+    dependabot = DEPENDABOT_CONFIG.read_text(encoding="utf-8")
+    enabled_managers = set(renovate["enabledManagers"])
+    dependabot_ecosystems = re.findall(
+        r'^\s+- package-ecosystem:\s+"([^"]+)"',
+        dependabot,
+        flags=re.MULTILINE,
+    )
+
+    assert enabled_managers == {"github-actions", "dockerfile"}
+    assert dependabot_ecosystems == ["uv"]
+    assert "pep621" not in enabled_managers
+    assert "pip_requirements" not in enabled_managers
+    assert "github-actions" not in dependabot_ecosystems
+
+    checklist = CHECKLIST.read_text(encoding="utf-8")
+    assert "mutually exclusive ownership by ecosystem" in checklist
+    assert "Do not re-enable an overlapping manager" in checklist
+
+
 def test_dependency_refresh_checklist_preserves_upstream_references() -> None:
     content = CHECKLIST.read_text(encoding="utf-8")
+    research = UPSTREAM_NOTES.read_text(encoding="utf-8")
 
     assert "docs.astral.sh/uv/concepts/projects/sync" in content
     assert "docs.GitHub.com/en/code-security/concepts/supply-chain-security" in content
+    assert "docs.renovatebot.com/modules/manager/pep621" in content
     assert "package-compatibility-research.md" in content
+    assert "docs.astral.sh/uv/guides/integration/dependabot/" in research
+    assert "docs.renovatebot.com/modules/manager/pep621/" in research
 
 
 def test_phase12_points_to_dependency_refresh_process() -> None:
