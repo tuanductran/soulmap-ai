@@ -1,7 +1,7 @@
 """Tests for release artifact and integration verification contracts."""
 
-from pathlib import Path
 import zipfile
+from pathlib import Path
 
 import pytest
 
@@ -92,6 +92,7 @@ def test_source_members_match_package_boundary(tmp_path: Path) -> None:
     assert ".DS_Store" not in standard
     assert ".DS_Store" not in skill
 
+
 def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/example.md"):
         path = tmp_path / name
@@ -106,6 +107,8 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
         with pytest.warns(UserWarning, match="Duplicate name"):
             archive.writestr("SKILL.md", "conflicting duplicate\\n")
 
-    with pytest.raises(ReleaseVerificationError, match="duplicate archive member names"):
+    with pytest.raises(
+        ReleaseVerificationError, match="duplicate archive member names"
+    ):
         _verify_archive(tmp_path, archive_path, include_plugin=False)
 \n
