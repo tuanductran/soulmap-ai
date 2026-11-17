@@ -13,7 +13,7 @@ of SoulMap releases. The front matter declares the package compatibility and
 canonical doctrine source; platform-specific facts must be checked against
 current official documentation before each deployment.
 
-**Lifecycle review date:** 2026-11-16.
+**Lifecycle review date:** 2026-11-17.
 
 ## Build the distribution artifacts first
 
@@ -113,12 +113,12 @@ can be created or published.
 
 ## Gemini (Gems transitioning to Skills)
 
-**Transition begins 2026-11-17.**
+**Transition effective 2026-11-17.**
 
 Google's current transition schedule for personal Google accounts is:
 
-- **2026-11-17:** Gems become read-only; users can no longer use, edit, or
-  create them.
+- **As of 2026-11-17:** Gems on personal Google accounts for users aged 18 or
+  older are read-only. Users can no longer use, edit, or create them.
 - **2026-12-17:** Gems are removed from Gemini Apps.
 - Google says personal-account Gems and supported knowledge files will be
   automatically recreated as Skills. Personal-account Skills are available to
