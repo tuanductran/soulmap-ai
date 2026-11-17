@@ -164,7 +164,9 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
     with tempfile.TemporaryDirectory() as directory:
         response_path = Path(directory) / "associated-pull-requests.json"
 
-        def run_guard(pull_requests: list[dict[str, object]]) -> subprocess.CompletedProcess[str]:
+        def run_guard(
+            pull_requests: list[dict[str, object]],
+        ) -> subprocess.CompletedProcess[str]:
             response_path.write_text(json.dumps(pull_requests), encoding="utf-8")
             return subprocess.run(
                 [sys.executable, str(script), str(response_path), merge_sha],
