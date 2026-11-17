@@ -5,8 +5,6 @@
   ],
   "enabledManagers": [
     "github-actions",
-    "pep621",
-    "pip_requirements",
     "dockerfile"
   ],
   "dependencyDashboardApproval": true,

@@ -2,15 +2,21 @@
 
 This checklist is the operational boundary for Phase 12. It covers development-tool dependencies, the `uv.lock` baseline, CI/release pins and transitive package changes. It does not authorize a new runtime dependency, a Python-version expansion, a semantic safety classifier or a platform adapter. For the next bounded P1 cycle, use the implementation-ready [P1 dependency/advisory refresh plan](p1-dependency-advisory-refresh-plan.md) together with this checklist.
 
-## Automation tooling
+## Automation tooling and ownership
 
-Both dependency-update bots remain configured: `.github/dependabot.yml` (uv and
-github-actions ecosystems, weekly) and `renovate.json` (repo root, `config:recommended`).
-Renovate currently supplies the Dependency Dashboard, while Dependabot remains configured
-for the `uv` and `github-actions` ecosystems. The repository intentionally has no third
-update bot or automatic merge path. The two tools still do not have a formally exclusive
-division of labor, so routine refresh work must follow the concrete PR and dashboard
-evidence rather than assume one bot is authoritative.
+The update bots have mutually exclusive ownership by ecosystem:
+
+| Surface | Sole update owner | Configuration |
+| --- | --- | --- |
+| Python project dependencies and `uv.lock` | Dependabot (`uv`) | `.github/dependabot.yml` |
+| GitHub Actions references | Renovate (`github-actions`) | `renovate.json` |
+| Docker image references | Renovate (`dockerfile`) | `renovate.json` |
+
+Renovate intentionally does not enable the `pep621` or `pip_requirements` managers. The PEP 621 manager can update `pyproject.toml` and work with `uv.lock`, which would overlap Dependabot's `uv` ecosystem. There are no tracked requirements files requiring a separate pip manager. [3] [4] Dependabot intentionally does not enable `github-actions`; that surface belongs to Renovate.
+
+Renovate explicitly sets `automerge: false`; Dependabot has no auto-merge setting in its configuration. The repository-level GitHub auto-merge capability is enabled, but no workflow in this repository invokes it for dependency PRs. Renovate retains Dependency Dashboard approval, a three-day minimum release age, and bounded PR/commit rates. This division prevents two bots from independently proposing updates to the same dependency surface while retaining one owner for each supported ecosystem.
+
+Do not re-enable an overlapping manager without first changing this ownership table and its contract test in the same reviewed PR. Do not add a third update bot.
 
 ## Trigger policy
 
@@ -101,3 +107,5 @@ After merge, confirm the main-branch CI and CodeQL runs against the merge commit
 
 [1]: https://docs.astral.sh/uv/concepts/projects/sync/ "uv locking and syncing"
 [2]: https://docs.GitHub.com/en/code-security/concepts/supply-chain-security/dependabot-version-updates "GitHub Dependabot version updates"
+[3]: https://docs.renovatebot.com/modules/manager/pep621/ "Renovate PEP 621 manager"
+[4]: https://docs.astral.sh/uv/guides/integration/dependency-bots/ "Using uv with Renovate"
