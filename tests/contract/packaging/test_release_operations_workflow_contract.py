@@ -115,8 +115,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert "if: github.event_name == 'workflow_dispatch'" in workflow
     assert "commits/${MERGE_SHA}/pulls?per_page=100" in workflow
+    assert ".merged_at != null" in workflow
     assert ".merge_commit_sha == $merge_sha" in workflow
+    assert '.base.ref == "main"' in workflow
     assert '(.head.ref | startswith("release/prep-"))' in workflow
+    assert ".head.repo.full_name == .base.repo.full_name" in workflow
     assert workflow.index(
         "Verify manually supplied SHA belongs to a merged release preparation PR"
     ) < workflow.index("Install uv")
