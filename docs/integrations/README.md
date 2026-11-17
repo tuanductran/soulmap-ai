@@ -130,10 +130,11 @@ Google's current transition schedule for personal Google accounts is:
 
 If you still need to use a Gem on a personal account and are aged 18 or older,
 save any knowledge files before 2026-12-17. Google has not announced the
-corresponding removal date for personal-account users under 18. For ongoing use,
-prefer Gemini Skills rather than creating
-a new Gem. The Google transition guide describes the current migration steps
-and file compatibility.
+corresponding removal date for personal-account users under 18. Users aged 18
+or older can use Gemini Skills for ongoing work; users under 18 should follow
+Google's future transition notice rather than relying on Skills availability.
+The Google transition guide describes the current migration steps and file
+compatibility.
 
 Official references:
 
