@@ -13,7 +13,7 @@ of SoulMap releases. The front matter declares the package compatibility and
 canonical doctrine source; platform-specific facts must be checked against
 current official documentation before each deployment.
 
-**Lifecycle review date:** 2026-11-16.
+**Lifecycle review date:** 2026-11-17.
 
 ## Build the distribution artifacts first
 
@@ -117,12 +117,14 @@ can be created or published.
 
 Google's current transition schedule for personal Google accounts is:
 
-- **2026-11-17:** Gems become read-only; users can no longer use, edit, or
-  create them.
-- **2026-12-17:** Gems are removed from Gemini Apps.
-- Google says personal-account Gems and supported knowledge files will be
-  automatically recreated as Skills. Personal-account Skills are available to
-  users aged 18 or older.
+- **2026-11-17 (users aged 18 or older):** Gems become read-only; users can
+  still access them but can no longer use, edit, or create them.
+- **2026-12-17 (users aged 18 or older):** Gems are removed from Gemini Apps.
+- Google says eligible personal-account Gems and supported knowledge files
+  will be automatically recreated as Skills. Personal-account Skills are
+  currently available to users aged 18 or older.
+- Google has not yet announced a transition date for personal-account users
+  under 18.
 - Work and school accounts have later transition dates: March 2027 for
   business, enterprise, and non-profit accounts; June 2027 for education.
 
