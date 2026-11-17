@@ -194,10 +194,7 @@ def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None
     _build_valid_repo(tmp_path)
     archive_path = tmp_path / "dist" / "soulmap-ai.zip"
     with zipfile.ZipFile(archive_path) as original:
-        members = [
-            (info.filename, original.read(info))
-            for info in original.infolist()
-        ]
+        members = [(info.filename, original.read(info)) for info in original.infolist()]
     archive_path.unlink()
     with zipfile.ZipFile(archive_path, "w") as rebuilt:
         for name, data in members:
