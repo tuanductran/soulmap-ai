@@ -32,6 +32,9 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
     for plugin in plugins:
         if not isinstance(plugin, dict):
             raise ValueError("Marketplace plugins must be objects")
+        name = plugin.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Marketplace plugin names must be non-empty strings")
         skills = plugin.get("skills")
         if not isinstance(skills, list) or len(skills) != 1:
             raise ValueError(
