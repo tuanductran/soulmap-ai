@@ -105,9 +105,7 @@ def _source_tree_files(root: Path, repo_root: Path) -> list[Path]:
     for path in root.rglob("*"):
         if path.is_symlink():
             relative = path.relative_to(repo_root).as_posix()
-            raise ValueError(
-                f"Symlinked package source is not allowed: {relative}"
-            )
+            raise ValueError(f"Symlinked package source is not allowed: {relative}")
         if path.is_file() and not is_excluded_source(path, repo_root):
             paths.append(path)
     return paths
