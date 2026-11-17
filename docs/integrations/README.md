@@ -113,23 +113,28 @@ can be created or published.
 
 ## Gemini (Gems transitioning to Skills)
 
-**Transition effective 2026-11-17.**
+**Transition effective for personal-account users aged 18 or older on 2026-11-17.**
 
 Google's current transition schedule for personal Google accounts is:
 
-- **As of 2026-11-17:** Gems on personal Google accounts for users aged 18 or
-  older are read-only. Users can no longer use, edit, or create them.
-- **2026-12-17:** Gems are removed from Gemini Apps.
-- Google says personal-account Gems and supported knowledge files will be
-  automatically recreated as Skills. Personal-account Skills are available to
-  users aged 18 or older.
+- **2026-11-17 (users aged 18 or older):** Gems became read-only. Users can
+  still access them but can no longer use, edit, or create them.
+- **2026-12-17 (users aged 18 or older):** Gems are removed from Gemini Apps.
+- Google says eligible personal-account Gems and supported knowledge files will
+  be automatically recreated as Skills. Personal-account Skills are currently
+  available to users aged 18 or older.
+- Google has not yet announced a transition date for personal-account users
+  under 18.
 - Work and school accounts have later transition dates: March 2027 for
   business, enterprise, and non-profit accounts; June 2027 for education.
 
-If you still need to use a Gem on a personal account, save any knowledge files
-before 2026-12-17. For ongoing use, prefer Gemini Skills rather than creating
-a new Gem. The Google transition guide describes the current migration steps
-and file compatibility.
+If you still need to use a Gem on a personal account and are aged 18 or older,
+save any knowledge files before 2026-12-17. Google has not announced the
+corresponding removal date for personal-account users under 18. Users aged 18
+or older can use Gemini Skills for ongoing work; users under 18 should follow
+Google's future transition notice rather than relying on Skills availability.
+The Google transition guide describes the current migration steps and file
+compatibility.
 
 Official references:
 
@@ -176,9 +181,12 @@ import workflow above. Do not use the Claude-oriented
 `dist/soulmap-ai.skill` archive for this import; use the standard
 `dist/soulmap-ai.zip` and verify the live interface before deployment.
 
-### Legacy Gem setup (only before the transition cutoff)
+### Legacy Gem setup (only where Google still permits it)
 
-If the account still permits Gem creation before 2026-11-17:
+Use these steps only if Google still allows Gem creation for the specific
+account. The 2026-11-17 cutoff applies to personal-account users aged 18 or
+older; Google has not announced the transition date for users under 18. Do not
+use these steps for Gems that are already read-only or have transitioned.
 
 1. Open [Gemini](https://gemini.google.com), open the sidebar, and select
    **Gems**.
@@ -241,9 +249,11 @@ When a new SoulMap release ships:
 1. Run `uv run soulmap build` to rebuild artifacts.
 2. For ChatGPT, update only GPTs that remain editable; review migration
    requirements before the 2026-12-11 retirement date.
-3. For personal Google accounts aged 18 or older, Gems become read-only when the
-   transition begins on 2026-11-17 and are removed on 2026-12-17. Use Google's
-   migration workflow; work and school account transitions are scheduled for 2027.
+3. For personal Google accounts used by people aged 18 or older, Gems became
+   read-only on 2026-11-17 and are scheduled for removal on 2026-12-17. Google
+   has not announced the transition date for personal-account users under 18.
+   Use Google's migration workflow; Workspace business, enterprise, and
+   non-profit transitions are scheduled for March 2027, and education for June 2027.
 4. For Poe, update the system prompt and optional knowledge base.
 5. For Claude.ai Custom Skills, rebuild the named-folder ZIP from the standard archive
    and use lowercase `skill.md` in the staging copy; keep the repository's canonical
