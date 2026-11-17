@@ -153,3 +153,26 @@ def test_main_builds_the_manifest_for_the_repository(
 
     assert library.main([]) == 0
     assert called == [tmp_path]
+
+
+def test_read_marketplace_rejects_skill_path_traversal(tmp_path: Path) -> None:
+    outside = tmp_path.parent / "outside-skill"
+    outside.mkdir()
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./../outside-skill"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="stay inside the repository"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_requires_skill_entrypoint_in_target_directory(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "skills" / "example").mkdir(parents=True)
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./skills/example"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="must contain SKILL.md"):
+        library._read_marketplace(tmp_path)
