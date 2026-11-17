@@ -125,7 +125,7 @@ def test_no_shipped_file_links_to_something_that_does_not_ship() -> None:
 def test_shipped_link_audit_parses_reference_links_and_nested_destinations(
     tmp_path: Path,
 ) -> None:
-    """CommonMark links must be checked even when a simple inline regex misses them."""
+    """Reference-style links and nested destinations must be checked as well as inline links."""
     (tmp_path / "LICENSE").write_text("license\n", encoding="utf-8")
     (tmp_path / "SOULMAP.md").write_text("# Doctrine\n", encoding="utf-8")
     (tmp_path / "SKILL.md").write_text(
@@ -185,10 +185,13 @@ def test_internal_only_directories_never_appear_as_a_link_target() -> None:
     for name in sorted(_shipped_relative_paths()):
         if not name.endswith(".md"):
             continue
-        text = (REPO_ROOT / name).read_text(encoding="utf-8")
-        for raw_target in _INLINE_LINK_RE.findall(text):
-            target = raw_target.split("#", 1)[0].strip().lstrip("./")
+        lines = (REPO_ROOT / name).read_text(encoding="utf-8").splitlines(keepends=True)
+        for reference in iter_markdown_references(lines):
+            target, _fragment = split_markdown_link_target(reference.target)
+            target = target.strip().lstrip("./")
             if target.startswith(internal_roots):
-                offenders.append(f"{name}: links to internal path {raw_target!r}")
+                offenders.append(
+                    f"{name}:{reference.line}: links to internal path {reference.target!r}"
+                )
 
     assert not offenders, "\n".join(offenders)
