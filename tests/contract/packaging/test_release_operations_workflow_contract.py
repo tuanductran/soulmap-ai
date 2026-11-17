@@ -114,7 +114,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert "if: github.event_name == 'workflow_dispatch'" in workflow
-    assert 'commits/${MERGE_SHA}/pulls?per_page=100' in workflow
+    assert "commits/${MERGE_SHA}/pulls?per_page=100" in workflow
     assert ".merge_commit_sha == $merge_sha" in workflow
     assert '(.head.ref | startswith("release/prep-"))' in workflow
     assert workflow.index(
