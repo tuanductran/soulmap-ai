@@ -1,5 +1,9 @@
 """Contract tests for release operational workflows."""
 
+import json
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).parents[3]
@@ -60,6 +64,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-health" not in workflow
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
+    assert "pull-requests: read" in workflow
     assert "id-token: write" in workflow
     assert (
         "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
@@ -105,6 +110,77 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index(
         "Create immutable release tag through Python action"
     ) < workflow.index("Publish GitHub Release")
+
+    # Manual recovery must prove that the supplied SHA is the merge commit of
+    # a merged release/prep-* PR targeting this repository's main branch.
+    assert (
+        "Verify manually supplied SHA belongs to a merged release preparation PR"
+        in workflow
+    )
+    assert "if: github.event_name == 'workflow_dispatch'" in workflow
+    assert "commits/${MERGE_SHA}/pulls?per_page=100" in workflow
+    assert "python3 scripts/verify_release_finalize_provenance.py" in workflow
+    assert "associated-pull-requests.json" in workflow
+    assert workflow.index(
+        "Verify manually supplied SHA belongs to a merged release preparation PR"
+    ) < workflow.index("Install uv")
+
+
+def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
+    script = ROOT / "scripts" / "verify_release_finalize_provenance.py"
+    merge_sha = "a" * 40
+    valid_pull_request = {
+        "merged_at": "2026-11-17T00:00:00Z",
+        "merge_commit_sha": merge_sha,
+        "base": {
+            "ref": "main",
+            "repo": {"full_name": "tuanductran/soulmap-ai"},
+        },
+        "head": {
+            "ref": "release/prep-1.2.3",
+            "repo": {"full_name": "tuanductran/soulmap-ai"},
+        },
+    }
+    invalid_pull_requests = [
+        {**valid_pull_request, "merge_commit_sha": "b" * 40},
+        {**valid_pull_request, "merged_at": None},
+        {
+            **valid_pull_request,
+            "base": {**valid_pull_request["base"], "ref": "develop"},
+        },
+        {
+            **valid_pull_request,
+            "head": {**valid_pull_request["head"], "ref": "feature/not-a-release"},
+        },
+        {
+            **valid_pull_request,
+            "head": {
+                **valid_pull_request["head"],
+                "repo": {"full_name": "fork/soulmap-ai"},
+            },
+        },
+    ]
+
+    with tempfile.TemporaryDirectory() as directory:
+        response_path = Path(directory) / "associated-pull-requests.json"
+
+        def run_guard(
+            pull_requests: list[dict[str, object]],
+        ) -> subprocess.CompletedProcess[str]:
+            response_path.write_text(json.dumps(pull_requests), encoding="utf-8")
+            return subprocess.run(
+                [sys.executable, str(script), str(response_path), merge_sha],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+        valid_result = run_guard([valid_pull_request])
+        assert valid_result.returncode == 0, valid_result.stderr
+
+        for invalid_pull_request in invalid_pull_requests:
+            invalid_result = run_guard([invalid_pull_request])
+            assert invalid_result.returncode == 1
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
