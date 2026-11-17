@@ -188,3 +188,24 @@ def test_verifier_accepts_relative_and_root_style_markdown_references(
     result = _run(tmp_path)
 
     assert result.returncode == 0
+
+def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None:
+    _build_valid_repo(tmp_path)
+    archive_path = tmp_path / "dist" / "soulmap-ai.zip"
+    with zipfile.ZipFile(archive_path) as original:
+        members = [
+            (info.filename, original.read(info))
+            for info in original.infolist()
+        ]
+    archive_path.unlink()
+    with zipfile.ZipFile(archive_path, "w") as rebuilt:
+        for name, data in members:
+            rebuilt.writestr(name, data)
+        with pytest.warns(UserWarning, match="Duplicate name"):
+            rebuilt.writestr("SKILL.md", b"conflicting duplicate\\n")
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "duplicate archive member names" in result.stderr
+\n
