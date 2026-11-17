@@ -117,8 +117,8 @@ can be created or published.
 
 Google's current transition schedule for personal Google accounts is:
 
-- **As of 2026-11-17:** Gems on personal Google accounts for users aged 18 or
-  older are read-only. Users can no longer use, edit, or create them.
+- **2026-11-17 (users aged 18 or older):** Gems became read-only. Users can
+  still access them but can no longer use, edit, or create them.
 - **2026-12-17 (users aged 18 or older):** Gems are removed from Gemini Apps.
 - Google says eligible personal-account Gems and supported knowledge files will
   be automatically recreated as Skills. Personal-account Skills are currently
