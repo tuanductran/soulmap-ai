@@ -158,5 +158,5 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
-    assert "| uv | 0.12.19 (CI installer pin) |" in research_text
+    assert "| uv | 0.13.9 (CI installer pin, 2026-11-17) |" in research_text
     assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text
