@@ -197,3 +197,12 @@ def test_read_marketplace_rejects_skill_symlink_that_escapes_repository(
 
     with pytest.raises(ValueError, match="escapes the repository"):
         library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_missing_plugin_name(tmp_path: Path) -> None:
+    payload = json.loads(_marketplace())
+    payload["plugins"][0].pop("name")
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="plugin names must be non-empty"):
+        library._read_marketplace(tmp_path)
