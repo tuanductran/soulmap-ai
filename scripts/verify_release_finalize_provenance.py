@@ -52,9 +52,7 @@ def main() -> int:
     response_path = Path(sys.argv[1])
     merge_sha = sys.argv[2]
     try:
-        associated_pull_requests = json.loads(
-            response_path.read_text(encoding="utf-8")
-        )
+        associated_pull_requests = json.loads(response_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         print(
             "Refusing to publish: unable to read associated pull-request provenance.",
