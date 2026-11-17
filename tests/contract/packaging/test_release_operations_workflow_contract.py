@@ -60,6 +60,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "soulmap release-health" not in workflow
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
+    assert "pull-requests: read" in workflow
     assert "id-token: write" in workflow
     assert (
         "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
@@ -105,6 +106,20 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index(
         "Create immutable release tag through Python action"
     ) < workflow.index("Publish GitHub Release")
+
+    # Manual recovery must prove that the supplied SHA is the merge commit of
+    # a merged release/prep-* PR targeting this repository's main branch.
+    assert (
+        "Verify manually supplied SHA belongs to a merged release preparation PR"
+        in workflow
+    )
+    assert "if: github.event_name == 'workflow_dispatch'" in workflow
+    assert 'commits/${MERGE_SHA}/pulls?per_page=100' in workflow
+    assert ".merge_commit_sha == $merge_sha" in workflow
+    assert '(.head.ref | startswith("release/prep-"))' in workflow
+    assert workflow.index(
+        "Verify manually supplied SHA belongs to a merged release preparation PR"
+    ) < workflow.index("Install uv")
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
