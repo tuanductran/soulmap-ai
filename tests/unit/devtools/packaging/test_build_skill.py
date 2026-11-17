@@ -289,3 +289,41 @@ def test_built_archives_contain_only_language_neutral_text(
                     assert audit_markdown(member, content) == []
                 else:
                     assert audit_text(member, content) == []
+
+
+def test_build_rejects_symlinked_skill_file(tmp_path: Path) -> None:
+    outside = tmp_path / "outside.md"
+    _write(tmp_path, "outside.md", "private local content\n")
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    try:
+        (skills / "linked.md").symlink_to(outside)
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"symlink creation is unavailable: {error}")
+
+    with pytest.raises(ValueError, match="Symlinked package source"):
+        build_tool._iter_inputs(tmp_path)
+
+
+def test_build_rejects_symlinked_skills_root(tmp_path: Path) -> None:
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    _write(outside, "linked.md", "private local content\n")
+    try:
+        (tmp_path / "skills").symlink_to(outside, target_is_directory=True)
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"directory symlink creation is unavailable: {error}")
+
+    with pytest.raises(ValueError, match="Symlinked package source root"):
+        build_tool._iter_inputs(tmp_path)
+
+
+def test_build_rejects_symlinked_core_manifest(tmp_path: Path) -> None:
+    target = _write(tmp_path, "outside-skill.md", "# Private local content\n")
+    try:
+        (tmp_path / "SKILL.md").symlink_to(target)
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"symlink creation is unavailable: {error}")
+
+    with pytest.raises(ValueError, match="Symlinked package source"):
+        build_tool._iter_inputs(tmp_path)
