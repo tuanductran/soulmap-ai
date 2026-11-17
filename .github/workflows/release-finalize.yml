@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       merge_commit_sha:
-        description: "Existing merged release commit SHA to finalize without another version bump."
+        description: "Merge commit SHA from an already-merged release/prep-* PR; dispatch is recovery-only."
         required: true
         type: string
 
@@ -30,6 +30,7 @@ jobs:
     timeout-minutes: 60
     permissions:
       contents: read
+      pull-requests: read
     outputs:
       version: ${{ steps.version.outputs.version }}
       artifact_name: ${{ steps.artifact_name.outputs.artifact_name }}
@@ -51,6 +52,28 @@ jobs:
           git fetch --no-tags origin main
           if ! git merge-base --is-ancestor "$MERGE_SHA" origin/main; then
             echo "Refusing to publish from a commit that is not reachable from main."
+            exit 1
+          fi
+
+      - name: Verify manually supplied SHA belongs to a merged release preparation PR
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MERGE_SHA: ${{ inputs.merge_commit_sha }}
+        run: |
+          gh api --header "Accept: application/vnd.github+json" \
+            "repos/${GITHUB_REPOSITORY}/commits/${MERGE_SHA}/pulls?per_page=100" \
+            > "$RUNNER_TEMP/associated-pull-requests.json"
+
+          if ! jq -e --arg merge_sha "$MERGE_SHA" '
+            any(.[]; 
+              .merged_at != null and
+              .merge_commit_sha == $merge_sha and
+              .base.ref == "main" and
+              .head.ref | startswith("release/prep-")
+            )
+          ' "$RUNNER_TEMP/associated-pull-requests.json" > /dev/null; then
+            echo "Refusing to publish: the supplied SHA is not the merge commit of a merged release/prep-* PR targeting main."
             exit 1
           fi
 
