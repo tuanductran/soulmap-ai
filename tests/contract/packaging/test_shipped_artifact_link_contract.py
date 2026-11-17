@@ -37,9 +37,7 @@ from soulmap.devtools.support.repo import REPO_ROOT
 
 def _shipped_relative_paths(repo_root: Path = REPO_ROOT) -> set[str]:
     """Return every shipped file as a POSIX path relative to the repo root."""
-    return {
-        path.relative_to(repo_root).as_posix() for path in _iter_inputs(repo_root)
-    }
+    return {path.relative_to(repo_root).as_posix() for path in _iter_inputs(repo_root)}
 
 
 def _shipped_directories(files: set[str]) -> set[str]:
