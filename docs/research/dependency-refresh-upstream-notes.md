@@ -13,7 +13,7 @@ GitHub recommends disabling an existing dependency-management integration before
 ## References
 
 [1]: https://docs.astral.sh/uv/concepts/projects/sync/ "uv locking and syncing"
-[2]: https://docs.github.com/en/code-security/reference/supply-chain-security/supported-ecosystems-and-repositories "Dependabot supported ecosystems"
+[2]: https://docs.GitHub.com/en/code-security/reference/supply-chain-security/supported-ecosystems-and-repositories "Dependabot supported ecosystems"
 [3]: https://docs.astral.sh/uv/guides/integration/dependabot/ "Using uv with Dependabot"
 [4]: https://docs.renovatebot.com/modules/manager/pep621/ "Renovate PEP 621 manager"
 [5]: https://docs.astral.sh/uv/guides/integration/dependency-bots/ "Using uv with Renovate"
