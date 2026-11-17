@@ -102,7 +102,6 @@ def test_integration_readme_upload_references_ship_in_standard_archive() -> None
     assert package_references <= shipped
 
 
-
 def test_gemini_gem_transition_cutoff_is_age_qualified() -> None:
     """Google's Nov/Dec 2026 personal-account cutover applies to adults 18+."""
     guide = (REPO_ROOT / "docs" / "integrations" / "README.md").read_text(
