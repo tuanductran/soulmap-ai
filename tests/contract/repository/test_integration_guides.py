@@ -111,5 +111,6 @@ def test_gemini_gem_transition_cutoff_is_age_qualified() -> None:
     assert "**2026-12-17 (users aged 18 or older):**" in guide
     assert "has not yet announced a transition date for personal-account users" in guide
     assert "under 18" in guide
-    assert "Users aged 18" in guide and "can use Gemini Skills" in guide
+    assert "Users aged 18" in guide
+    assert "can use Gemini Skills" in guide
     assert "users under 18 should follow" in guide
