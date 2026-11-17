@@ -189,6 +189,7 @@ def test_verifier_accepts_relative_and_root_style_markdown_references(
 
     assert result.returncode == 0
 
+
 def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None:
     _build_valid_repo(tmp_path)
     archive_path = tmp_path / "dist" / "soulmap-ai.zip"
