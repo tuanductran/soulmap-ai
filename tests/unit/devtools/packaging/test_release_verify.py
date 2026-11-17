@@ -97,7 +97,7 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
     for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/example.md"):
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("source content\\n", encoding="utf-8")
+        path.write_text("source content\n", encoding="utf-8")
 
     archive_path = tmp_path / "dist" / "soulmap-ai.zip"
     archive_path.parent.mkdir()
@@ -105,10 +105,9 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
         for name in ("LICENSE", "SOULMAP.md", "SKILL.md", "skills/example.md"):
             archive.write(tmp_path / name, arcname=name)
         with pytest.warns(UserWarning, match="Duplicate name"):
-            archive.writestr("SKILL.md", "conflicting duplicate\\n")
+            archive.writestr("SKILL.md", "conflicting duplicate\n")
 
     with pytest.raises(
         ReleaseVerificationError, match="duplicate archive member names"
     ):
         _verify_archive(tmp_path, archive_path, include_plugin=False)
-\n
