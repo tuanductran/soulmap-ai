@@ -651,7 +651,7 @@ host-generated responses.
 The routing, framework selector, response validators, and response-quality
 rubric are evaluated locally without an LLM dependency. The quality rubric
 checks explicit, inspectable dimensions such as framework alignment,
-mirror-first posture, user ownership, response shape, tone, epistemic framing,
+advice-pattern avoidance, user ownership, response shape, tone, epistemic framing,
 and independence language.
 
 ### Why it is intentional
