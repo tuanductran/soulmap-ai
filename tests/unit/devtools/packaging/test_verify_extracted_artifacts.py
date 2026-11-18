@@ -208,7 +208,6 @@ def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None
     assert "duplicate archive member names" in result.stderr
 
 
-
 @pytest.mark.parametrize(
     "member_name",
     ["C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
