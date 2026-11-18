@@ -134,7 +134,6 @@ def test_runtime_contract_surface_contains_only_python() -> None:
     assert (runtime_root / "source_registry.py").is_file()
 
 
-
 def test_registry_heading_validation_ignores_fenced_code_examples() -> None:
     fake_heading = "```markdown\n## Detection policy\n```\n"
     assert not _has_heading(fake_heading, "Detection policy")
