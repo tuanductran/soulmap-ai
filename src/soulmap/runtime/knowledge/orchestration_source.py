@@ -6,6 +6,8 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
+
 from soulmap.runtime.knowledge.labels import (
     BLOCKED_FRAMEWORK_NAMES,
     FRAMEWORK_NAMES,
@@ -64,6 +66,7 @@ class OrchestrationRules:
 
 
 def _contract_body(text: str) -> str:
+    text = markdown_without_code_blocks(text)
     match = re.search(rf"^## {re.escape(_CONTRACT_HEADING)}\s*$", text, re.MULTILINE)
     if match is None:
         raise ValueError("Orchestration routing policy is missing.")
@@ -75,6 +78,7 @@ def _contract_body(text: str) -> str:
 
 def _table_rows(body: str, heading: str) -> list[list[str]]:
     """Extract rows from a named Markdown table section."""
+    body = markdown_without_code_blocks(body)
     match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
         raise ValueError(f"Orchestration section {heading!r} is missing.")
