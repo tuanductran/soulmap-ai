@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -176,3 +177,31 @@ def test_main_returns_one_and_prints_issues_when_drifted(
     # Windows), so compare against the same rendering rather than a
     # hardcoded forward-slash literal.
     assert str(_DOC_RELATIVE_PATH) in capsys.readouterr().out
+
+
+
+def test_orchestration_rules_are_loaded_from_requested_repository_root(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_selector(tmp_path, _MATCHING_SELECTOR_SOURCE)
+    _write_doc(tmp_path, "CRISIS|SHADOW")
+    contract_path = tmp_path / "skills" / "meta" / "orchestration.md"
+    contract_path.parent.mkdir(parents=True)
+    contract_path.write_text("# Orchestration\n", encoding="utf-8")
+    captured_roots: list[Path | None] = []
+
+    def fake_load_orchestration_rules(repo_root: Path | None = None) -> SimpleNamespace:
+        captured_roots.append(repo_root)
+        return SimpleNamespace(
+            primary_priority=(SimpleNamespace(framework="CONFIGURED_PRIMARY"),),
+            intensity_fallback=(SimpleNamespace(framework="CONFIGURED_FALLBACK"),),
+        )
+
+    monkeypatch.setattr(
+        check_api_docs, "load_orchestration_rules", fake_load_orchestration_rules
+    )
+
+    values = check_api_docs._source_primary_framework_values(tmp_path)
+
+    assert tmp_path in captured_roots
+    assert {"CONFIGURED_PRIMARY", "CONFIGURED_FALLBACK"} <= values
