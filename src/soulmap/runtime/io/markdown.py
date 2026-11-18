@@ -376,6 +376,7 @@ def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
             code_lines.update(range(int(token_map[0]) + 1, int(token_map[1]) + 1))
     return frozenset(code_lines)
 
+
 def iter_disallowed_markdown_references(
     lines: list[str],
 ) -> list[MarkdownReference]:
