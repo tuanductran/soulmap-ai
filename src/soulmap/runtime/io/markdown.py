@@ -99,7 +99,7 @@ class FenceTracker:
             fenced content and skip its other line checks. False only for a
             line outside any fence.
         """
-        line = raw.rstrip("\\r\\n")
+        line = raw.rstrip("\r\n")
         match = _FENCE_RE.match(line)
         if self._marker_char is None:
             if not match:
@@ -116,7 +116,7 @@ class FenceTracker:
             match
             and match.group(2)[0] == self._marker_char
             and len(match.group(2)) >= self._marker_len
-            and not match.group(3).strip(" \\t")
+            and not match.group(3).strip(" \t")
         ):
             self._marker_char = None
             self._marker_len = 0
