@@ -7,7 +7,7 @@ import hashlib
 import json
 import mimetypes
 import tomllib
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 from soulmap.devtools.checks.skills_boundary import audit_text
@@ -32,6 +32,9 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
     for plugin in plugins:
         if not isinstance(plugin, dict):
             raise ValueError("Marketplace plugins must be objects")
+        name = plugin.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Marketplace plugin names must be non-empty strings")
         skills = plugin.get("skills")
         if not isinstance(skills, list) or len(skills) != 1:
             raise ValueError(
@@ -41,13 +44,43 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
         if not isinstance(skill_path, str) or not skill_path.startswith("./"):
             raise ValueError("Marketplace skill paths must be repository-relative")
         path_value = skill_path[2:]
-        target = repo_root / path_value
+        relative_path = PurePosixPath(path_value)
+        windows_path = PureWindowsPath(path_value)
+        if (
+            "\\" in path_value
+            or relative_path.is_absolute()
+            or windows_path.drive
+            or windows_path.root
+            or ".." in relative_path.parts
+        ):
+            raise ValueError(
+                f"Marketplace skill path must stay inside the repository: {skill_path}"
+            )
+
+        root = repo_root.resolve()
+        target = (root / Path(*relative_path.parts)).resolve()
+        if not target.is_relative_to(root):
+            raise ValueError(
+                f"Marketplace skill path escapes the repository: {skill_path}"
+            )
         if not target.is_dir():
             raise ValueError(
                 f"Marketplace skill path is not a directory: {path_value or '.'}"
             )
-        if path_value == "" and not (repo_root / "SKILL.md").is_file():
-            raise ValueError("The root marketplace Skill requires SKILL.md")
+        entrypoint = target / "SKILL.md"
+        if entrypoint.is_symlink():
+            raise ValueError(
+                f"Marketplace Skill entrypoint must not be a symlink: {skill_path}"
+            )
+        resolved_entrypoint = entrypoint.resolve()
+        if (
+            not resolved_entrypoint.is_relative_to(root)
+            or not resolved_entrypoint.is_file()
+        ):
+            raise ValueError(
+                "Marketplace skill path must contain an in-repository "
+                f"SKILL.md: {path_value or '.'}"
+            )
     return payload
 
 
