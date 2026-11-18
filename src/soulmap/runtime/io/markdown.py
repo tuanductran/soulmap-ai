@@ -354,6 +354,23 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
+
+def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
+    """Return 1-indexed source lines inside CommonMark code blocks.
+
+    Parser token maps account for container-relative indentation in lists
+    and block quotes, unlike a line-only fence tracker.
+    """
+    source = _markdown_source(lines)
+    code_lines: set[int] = set()
+    for token in _MARKDOWN_PARSER.parse(source):
+        if getattr(token, "type", None) not in {"fence", "code_block"}:
+            continue
+        token_map = getattr(token, "map", None)
+        if token_map:
+            code_lines.update(range(int(token_map[0]) + 1, int(token_map[1]) + 1))
+    return frozenset(code_lines)
+
 def iter_disallowed_markdown_references(
     lines: list[str],
 ) -> list[MarkdownReference]:
