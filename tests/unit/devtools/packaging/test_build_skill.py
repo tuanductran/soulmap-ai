@@ -384,9 +384,7 @@ def test_build_skips_ignored_backslash_source_before_path_validation(
     _write(tmp_path, "SOULMAP.md")
     _write(tmp_path, "SKILL.md")
     _write(tmp_path, "skills/ignored\\name.md")
-    (tmp_path / ".distignore").write_text(
-        "skills/ignored\\name.md\n", encoding="utf-8"
-    )
+    (tmp_path / ".distignore").write_text("skills/ignored\\name.md\n", encoding="utf-8")
     monkeypatch.setattr(build_tool, "audit_shipped_content", lambda _root: [])
 
     archive_path = build_tool.build_zip(tmp_path)
