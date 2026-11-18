@@ -47,6 +47,52 @@ def test_markdown_contract_skips_invalid_markdown_inside_fenced_code(
     assert markdown_contract.check_markdown_file(source, tmp_path) == []
 
 
+def test_markdown_contract_ignores_duplicate_phrases_inside_fenced_examples(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "anger-companion.md"
+    source.write_text(
+        "# Anger\\n\\n"
+        "## Detection signals\\n\\n"
+        "Active anger:\\n\\n"
+        '- "real phrase"\\n'
+        "```markdown\\n"
+        "## Detection signals\\n"
+        "Active anger:\\n"
+        '- "fake phrase"\\n'
+        '- "fake phrase"\\n'
+        "```\\n"
+        '- "real phrase"\\n',
+        encoding="utf-8",
+    )
+
+    duplicates = [
+        issue
+        for issue in markdown_contract.check_markdown_file(source, tmp_path)
+        if "Duplicate detection phrase" in issue.message
+    ]
+
+    assert len(duplicates) == 1
+    assert "real phrase" in duplicates[0].message
+
+
+def test_markdown_contract_ignores_comments_inside_blockquote_fences(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "README.md"
+    source.write_text(
+        "# Title\\n\\n"
+        "> ```markdown\\n"
+        "> <!-- unclosed\\n"
+        "> ```\\n",
+        encoding="utf-8",
+    )
+
+    messages = _messages(markdown_contract.check_markdown_file(source, tmp_path))
+
+    assert not any("Unbalanced HTML comment markers" in message for message in messages)
+
+
 def test_markdown_contract_flags_unbalanced_comment_and_missing_image_alt_text(
     tmp_path: Path,
 ) -> None:
