@@ -36,7 +36,7 @@ def test_create_provenance_records_commit_and_artifact_hashes(
         lambda root, *args: "a" * 40,
     )
 
-    payload = create_provenance(tmp_path, {"version": "0.11.0"})
+    payload = create_provenance(tmp_path, {"status": "pass", "version": "0.11.0"})
 
     assert payload["source_commit"] == "a" * 40
     assert payload["version"] == "0.11.0"
@@ -53,7 +53,7 @@ def test_verify_provenance_accepts_matching_artifacts(
         "soulmap.devtools.packaging.release_ops._git",
         lambda root, *args: "b" * 40,
     )
-    provenance = create_provenance(tmp_path, {"version": "0.11.0"})
+    provenance = create_provenance(tmp_path, {"status": "pass", "version": "0.11.0"})
     path = tmp_path / "dist" / "release-provenance.json"
     path.write_text(json.dumps(provenance), encoding="utf-8")
 
@@ -96,10 +96,63 @@ def test_verify_provenance_rejects_artifact_hash_drift(
         "soulmap.devtools.packaging.release_ops._git",
         lambda root, *args: "e" * 40,
     )
-    provenance = create_provenance(tmp_path, {"version": "0.11.0"})
+    provenance = create_provenance(tmp_path, {"status": "pass", "version": "0.11.0"})
     provenance["artifacts"][0]["sha256"] = "0" * 64
     path = tmp_path / "dist" / "release-provenance.json"
     path.write_text(json.dumps(provenance), encoding="utf-8")
 
     with pytest.raises(ReleaseOperationsError, match="SHA-256 drift"):
+        verify_provenance(tmp_path, path)
+
+
+
+def test_create_provenance_rejects_failed_verification(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_project(tmp_path)
+    _write_artifacts(tmp_path)
+    monkeypatch.setattr(
+        "soulmap.devtools.packaging.release_ops._git",
+        lambda root, *args: "f" * 40,
+    )
+
+    with pytest.raises(ReleaseOperationsError, match="status must be pass"):
+        create_provenance(
+            tmp_path, {"status": "fail", "version": "0.11.0"}
+        )
+
+
+def test_create_provenance_rejects_version_drift(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_project(tmp_path)
+    _write_artifacts(tmp_path)
+    monkeypatch.setattr(
+        "soulmap.devtools.packaging.release_ops._git",
+        lambda root, *args: "f" * 40,
+    )
+
+    with pytest.raises(ReleaseOperationsError, match="must match pyproject.toml"):
+        create_provenance(
+            tmp_path, {"status": "pass", "version": "0.12.0"}
+        )
+
+
+def test_verify_provenance_rejects_duplicate_artifact_entries(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_project(tmp_path)
+    _write_artifacts(tmp_path)
+    monkeypatch.setattr(
+        "soulmap.devtools.packaging.release_ops._git",
+        lambda root, *args: "a" * 40,
+    )
+    provenance = create_provenance(
+        tmp_path, {"status": "pass", "version": "0.11.0"}
+    )
+    provenance["artifacts"].append(dict(provenance["artifacts"][0]))
+    path = tmp_path / "dist" / "release-provenance.json"
+    path.write_text(json.dumps(provenance), encoding="utf-8")
+
+    with pytest.raises(ReleaseOperationsError, match="artifact set is invalid"):
         verify_provenance(tmp_path, path)
