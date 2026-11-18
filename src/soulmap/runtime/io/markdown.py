@@ -421,9 +421,7 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
         opening = lines[opening_line].rstrip("\r\n")
         closing = lines[token.map[1] - 1].rstrip("\r\n")
         quote_depth, _ = _strip_blockquote_prefixes(opening, token.level)
-        closing_quote_depth, closing = _strip_blockquote_prefixes(
-            closing, token.level
-        )
+        closing_quote_depth, closing = _strip_blockquote_prefixes(closing, token.level)
         if closing_quote_depth != quote_depth:
             unclosed.append(opening_line + 1)
             continue
