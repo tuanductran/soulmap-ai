@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 from soulmap.runtime.io.markdown import markdown_without_code_blocks
-
 from soulmap.runtime.knowledge.keyword_lists import load_runtime_guidance
 from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
