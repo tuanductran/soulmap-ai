@@ -77,9 +77,106 @@ EXPECTED_FRAMEWORKS = {
 }
 
 
+def _quoted_span_containing(
+    response: str, start: int, end: int
+) -> tuple[int, int] | None:
+    """Return a supported quote span containing the complete matched phrase."""
+    quote_patterns = (
+        r'"[^"\n]*"',
+        r"\u201c[^\u201d\n]*\u201d",
+        # A curly apostrophe inside a word is not a closing single quote.
+        r"\u2018[^\n]*?\u2019(?=$|[\s.,!?;:)])",
+    )
+    for pattern in quote_patterns:
+        for match in re.finditer(pattern, response):
+            if match.start() <= start and end <= match.end():
+                return match.start(), match.end()
+    return None
+
+
+def _is_quoted_mention(response: str, start: int, end: int) -> bool:
+    """Ignore a quoted rubric phrase only when context marks it as mentioned/rejected."""
+    span = _quoted_span_containing(response, start, end)
+    if span is None:
+        return False
+
+    quote_start, quote_end = span
+    prefix = response[max(0, quote_start - 80) : quote_start]
+    suffix = response[quote_end:]
+    rejection_prefix = re.search(
+        r"\b(?:reject|criticize|criticise|disagree with|"
+        r"don't endorse|do not endorse|can't endorse|cannot endorse)\s*$",
+        prefix,
+        re.IGNORECASE,
+    )
+    critical_suffix = re.match(
+        r"\s*(?:(?:can|could|may|might|often|sometimes)\s+"
+        r"(?:feel|sound|seem|come across)|"
+        r"(?:is|was|can be|may be|might be)\s+"
+        r"(?:dismissive|hurtful|invalidating|unhelpful|harmful|"
+        r"insensitive|painful|offensive)\b)",
+        suffix,
+        re.IGNORECASE,
+    )
+    endorsement_context = re.search(
+        r"\b(?:i|we)\s+(?:believe|agree|think|know)\s+"
+        r"(?:that\s+)?(?:it|this|that|the phrase|those words|that idea)\s+"
+        r"(?:is|was|can be|may be|might be)\s+"
+        r"(?:true|accurate|correct|right|valid|comforting|reassuring)\b|"
+        r"\b(?:it|this|that|the phrase|those words|that idea)\s+"
+        r"(?:is|was|can be|may be|might be)\s+"
+        r"(?:true|accurate|correct|right|valid|comforting|reassuring)\b",
+        suffix,
+        re.IGNORECASE,
+    )
+    if endorsement_context:
+        return False
+    return bool(rejection_prefix or critical_suffix)
+
+
+def _has_negated_context(response: str, start: int, end: int) -> bool:
+    """Recognize narrow first-person negation without suppressing double negatives."""
+    prefix = response[:start]
+    clause = re.split(r"(?<=[.!?;])\s+", prefix)[-1]
+    negated_thought = re.search(
+        r"\b(?:i|we)\s+(?:don't|do not|cannot|can't)\s+"
+        r"(?:think|believe|feel)(?:\s+that)?\s*$",
+        clause,
+        re.IGNORECASE,
+    )
+    if negated_thought:
+        action = response[end:]
+        action = re.split(r"[.!?;]", action, maxsplit=1)[0]
+        # These constructions reverse or negate the embedded recommendation.
+        return not re.match(
+            r"\s*(?:not|never|avoid|stop|quit|ignore|skip|refuse|deny|without)\b",
+            action,
+            re.IGNORECASE,
+        )
+
+    return bool(
+        re.search(
+            r"\b(?:i|we)\s+(?:can't|cannot|can not|don't|do not)\s+"
+            r"(?:say|claim|state)(?:\s+that)?(?:\s+this)?\s*$",
+            clause,
+            re.IGNORECASE,
+        )
+    )
+
+
 def _matches_any(response: str, patterns: tuple[str, ...]) -> bool:
-    lowered = response.lower()
-    return any(re.search(pattern, lowered) for pattern in patterns)
+    """Match rubric phrases while accounting for explicit mentions and negation."""
+    context_sensitive = patterns in (ADVICE_PATTERNS, CERTAINTY_PATTERNS)
+    for pattern in patterns:
+        for match in re.finditer(pattern, response, re.IGNORECASE):
+            if _is_quoted_mention(response, match.start(), match.end()):
+                continue
+            if context_sensitive and _has_negated_context(
+                response, match.start(), match.end()
+            ):
+                continue
+            return True
+    return False
 
 
 def grade_response_quality(
