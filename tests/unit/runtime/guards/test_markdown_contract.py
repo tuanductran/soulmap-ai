@@ -52,17 +52,17 @@ def test_markdown_contract_ignores_duplicate_phrases_inside_fenced_examples(
 ) -> None:
     source = tmp_path / "anger-companion.md"
     source.write_text(
-        "# Anger\\n\\n"
-        "## Detection signals\\n\\n"
-        "Active anger:\\n\\n"
-        '- "real phrase"\\n'
-        "```markdown\\n"
-        "## Detection signals\\n"
-        "Active anger:\\n"
-        '- "fake phrase"\\n'
-        '- "fake phrase"\\n'
-        "```\\n"
-        '- "real phrase"\\n',
+        "# Anger\n\n"
+        "## Detection signals\n\n"
+        "Active anger:\n\n"
+        '- "real phrase"\n'
+        "```markdown\n"
+        "## Detection signals\n"
+        "Active anger:\n"
+        '- "fake phrase"\n'
+        '- "fake phrase"\n'
+        "```\n"
+        '- "real phrase"\n',
         encoding="utf-8",
     )
 
@@ -81,10 +81,10 @@ def test_markdown_contract_ignores_comments_inside_blockquote_fences(
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text(
-        "# Title\\n\\n"
-        "> ```markdown\\n"
-        "> <!-- unclosed\\n"
-        "> ```\\n",
+        "# Title\n\n"
+        "> ```markdown\n"
+        "> <!-- unclosed\n"
+        "> ```\n",
         encoding="utf-8",
     )
 
