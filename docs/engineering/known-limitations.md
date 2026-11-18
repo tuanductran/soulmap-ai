@@ -42,7 +42,7 @@ whether a proposed change is consistent with the project's design.
 | `SOULMAP.md` is the only doctrine source | Intentional design | [Documentation ownership](#documentation-ownership) |
 | Architecture decisions are recorded in ADRs | Intentional design | [Architecture ownership](#architecture-ownership) |
 | Crisis detection supports five languages only | Current limitation | [Language limitations](#language-limitations) |
-| Evals do not score LLM response quality | Intentional design | [Evaluation limitations](#evaluation-limitations) |
+| Response-quality evals are advisory and do not score live host output | Intentional design | [Evaluation limitations](#evaluation-limitations) |
 | Content changes belong in Markdown | Contributor expectation | [Contributor expectations](#contributor-expectations) |
 
 ---
@@ -639,41 +639,47 @@ calls the combined pack; it has no knowledge of which language matched.
 
 ### What it is
 
-The SoulMap evaluation suite (`soulmap eval-responses`, `soulmap eval-groups`,
-`soulmap eval-markdown-contracts`) tests routing correctness, framework
-grouping, response structure contracts, and Markdown contract sync. It does not
-score or evaluate the quality, tone, or emotional appropriateness of LLM
-response text.
+The SoulMap evaluation tooling has separate deterministic suites for routing,
+response contracts, Markdown synchronization, safety regressions, and advisory
+response quality. The response-quality evaluator (`soulmap eval-response-quality`)
+grades generated/reference text against a deterministic rubric; it does not use
+LLM inference or claim to measure the full emotional appropriateness of live
+host-generated responses.
 
 ### Why it exists
 
-The evaluation suite is designed to be runnable in CI without an LLM. It
-validates that the routing layer, framework selector, and response validators
-behave correctly given known inputs. Evaluating response quality would require
-LLM inference and a scoring rubric, both of which introduce inference cost,
-non-determinism, and subjective judgment into a CI pipeline.
+The routing, framework selector, response validators, and response-quality
+rubric are evaluated locally without an LLM dependency. The quality rubric
+checks explicit, inspectable dimensions such as framework alignment,
+advice-pattern avoidance, user ownership, response shape, tone, epistemic framing,
+and independence language.
 
 ### Why it is intentional
 
-Routing correctness is fully deterministic and fully testable. Response quality
-is not. Mixing the two in the same evaluation suite would obscure routing
-failures behind response-quality noise and make failures harder to diagnose.
+Routing and safety correctness remain deterministic regression concerns.
+Response quality is more subjective and the current pattern-based rubric is
+necessarily incomplete, so its result is advisory rather than release-blocking.
+The quality report is kept separate from deterministic safety enforcement:
+a quality pass cannot override a safety failure, and a quality failure alone
+is not a safety incident.
 
-The evaluation suite is designed as a regression gate, not a quality benchmark.
-Its purpose is to catch routing regressions, structural contract violations, and
-framework-grouping drift before they reach a release.
+The evaluation tooling is a regression aid, not a benchmark of live model
+quality. It does not establish that every host-generated answer is emotionally
+appropriate or that the fixture set represents every user situation.
 
 ### Benefits
 
-- The eval suite runs in CI without an LLM dependency.
-- Routing regressions are caught deterministically.
-- Evaluation failures have a clear, inspectable cause.
+- Core routing and safety regressions remain deterministic and independently enforced.
+- The advisory quality rubric provides repeatable checks without adding an LLM
+  dependency to CI.
+- Separate reports make routing, safety, and quality failures easier to diagnose.
 
 ### Current eval scope
 
 | Command | Tests | Does not test |
 | --- | --- | --- |
-| `soulmap eval-responses` | Response structure contracts, validator behavior | LLM response quality |
+| `soulmap eval-responses` | Reference response structure, validator behavior, and wording fixtures | Live host-generated response quality |
+| `soulmap eval-response-quality` | Advisory rubric checks over generated/reference fixtures and explicit quality/safety near misses | Full semantic or emotional appropriateness of live responses |
 | `soulmap eval-groups` | Framework grouping and routing correctness | Routing edge cases outside defined group fixtures |
 | `soulmap eval-markdown-contracts` | Markdown contract sync with runtime | Detection phrase completeness |
 | `tests/eval_regression/test_safety_evals.py` | Safety-critical routing scenarios | General response quality |
