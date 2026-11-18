@@ -33,8 +33,6 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
-
 _API_DOC_RELATIVE_PATH = Path("docs/engineering/API.md")
 _FRAMEWORK_SELECTOR_RELATIVE_PATH = Path(
     "src/soulmap/runtime/routing/framework_selector.py"
@@ -147,6 +145,41 @@ def _call_primary_framework_value(node: ast.Call) -> str | None:
     return None
 
 
+
+
+def _literal_assignment(
+    repo_root: Path, relative_path: Path, name: str
+) -> object | None:
+    """Read one top-level Python assignment without importing the target module."""
+    source_path = repo_root / relative_path
+    if not source_path.is_file():
+        return None
+
+    tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
+    for node in tree.body:
+        value: ast.expr | None = None
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == name
+            for target in node.targets
+        ):
+            value = node.value
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == name
+        ):
+            value = node.value
+
+        if value is not None:
+            try:
+                return ast.literal_eval(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"{relative_path} must define {name} as a literal."
+                ) from exc
+    return None
+
+
 def _source_primary_framework_values(repo_root: Path) -> set[str]:
     """Statically collect every ``primary_framework`` value the selector can emit.
 
@@ -171,13 +204,46 @@ def _source_primary_framework_values(repo_root: Path) -> set[str]:
         if value is not None:
             values.add(value)
 
-    # The central priority list is knowledge-authored, so its framework values
-    # are not literals in framework_selector.py and must be included separately.
+    # The central priority list is Python-configured, so read both the
+    # target checkout's config and its display-label mapping without importing
+    # modules from the active checkout.
     contract_path = repo_root / "skills" / "meta" / "orchestration.md"
     if contract_path.exists():
-        rules = load_orchestration_rules(repo_root)
-        values.update(rule.framework for rule in rules.primary_priority)
-        values.update(rule.framework for rule in rules.intensity_fallback)
+        config = _literal_assignment(
+            repo_root,
+            Path("src/soulmap/runtime/knowledge/runtime_config.py"),
+            "ORCHESTRATION_CONFIG",
+        )
+        framework_names = _literal_assignment(
+            repo_root,
+            Path("src/soulmap/runtime/knowledge/labels.py"),
+            "FRAMEWORK_NAMES",
+        )
+        if not isinstance(config, dict) or not isinstance(framework_names, dict):
+            raise ValueError(
+                "Target repository must define literal ORCHESTRATION_CONFIG "
+                "and FRAMEWORK_NAMES mappings."
+            )
+
+        for section in ("primary_priority", "intensity_fallback"):
+            rows = config.get(section)
+            if not isinstance(rows, list):
+                raise ValueError(
+                    f"Target ORCHESTRATION_CONFIG.{section} must be a list."
+                )
+            for row in rows:
+                if (
+                    not isinstance(row, list)
+                    or len(row) < 2
+                    or not isinstance(row[1], str)
+                    or row[1] not in framework_names
+                    or not isinstance(framework_names[row[1]], str)
+                ):
+                    raise ValueError(
+                        f"Target ORCHESTRATION_CONFIG.{section} contains an "
+                        "unknown framework label."
+                    )
+                values.add(framework_names[row[1]])
     return values
 
 
