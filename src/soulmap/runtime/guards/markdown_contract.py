@@ -506,9 +506,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     Issue(path, i, f"Broken cross-file anchor: {file_part}#{frag}")
                 )
 
-    issues.extend(
-        _duplicate_detection_phrases(path, lines, code_lines=code_lines)
-    )
+    issues.extend(_duplicate_detection_phrases(path, lines, code_lines=code_lines))
 
     return issues
 
