@@ -178,7 +178,6 @@ def test_main_returns_one_and_prints_issues_when_drifted(
     assert str(_DOC_RELATIVE_PATH) in capsys.readouterr().out
 
 
-
 def test_orchestration_framework_values_come_from_requested_repository_root(
     tmp_path: Path,
 ) -> None:
