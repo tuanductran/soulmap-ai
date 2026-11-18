@@ -145,8 +145,6 @@ def _call_primary_framework_value(node: ast.Call) -> str | None:
     return None
 
 
-
-
 def _literal_assignment(
     repo_root: Path, relative_path: Path, name: str
 ) -> object | None:
@@ -155,7 +153,9 @@ def _literal_assignment(
     if not source_path.is_file():
         return None
 
-    tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
+    tree = ast.parse(
+        source_path.read_text(encoding="utf-8"), filename=str(source_path)
+    )
     for node in tree.body:
         value: ast.expr | None = None
         if isinstance(node, ast.Assign) and any(
