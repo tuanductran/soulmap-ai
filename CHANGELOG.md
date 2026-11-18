@@ -5,6 +5,92 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.15.0 (2026-11-18)
+
+### Feat
+
+- **benchmark**: add Markdown read benchmark harness (#697)
+- **devtools**: build both artifacts and add local dev extraction
+
+### Fix
+
+- use CommonMark code blocks in Markdown contract guard (#1039)
+- ignore fenced code in runtime knowledge parsers (#1038)
+- exclude fenced examples from runtime registry validation (#1037)
+- enforce CommonMark fence indentation in Markdown audits (#1035)
+- prevent stale Markdown knowledge cache across platforms (#1034)
+- **packaging**: reject Windows-unsafe archive member paths (#1033)
+- **evals**: fail closed on empty evaluation selections (#1032)
+- **release**: fail closed on invalid provenance inputs (#1031)
+- **packaging**: constrain marketplace paths to shipped Skill roots (#1030)
+- **tooling**: preserve lock file inode between runs (#1029)
+- **audit**: resolve orchestration knowledge from target root (#1028)
+- **packaging**: bind artifact hashes to canonical files (#1027)
+- **packaging**: validate marketplace skill paths (#1026)
+- **packaging**: reject symlinked shipped sources (#1025)
+- **safety**: align response question guards with doctrine (#1024)
+- **packaging**: reject duplicate archive members (#1021)
+- **release**: validate manual finalize PR provenance (#1011)
+- align runtime priority with canonical knowledge (#1001)
+- close Python identifier leakage in shipped Skills (#998)
+- require explicit intent before cross-session synthesis (#976)
+- resolve stage ties across all close-scoring candidates (#977)
+- let explicit grief readiness override fixed exchange gate (#978)
+- avoid Tier 1 crisis triggers on explicit denials (#979)
+- validate safety gate detector contracts after Tier 2 (#984)
+- preserve Tier 2 Sanctuary through safety gate (#982)
+- **template**: preserve readiness-based questions in high de-escalation (#951)
+- **somatic**: keep biometric and cognitive context from activating layer (#950)
+- **eval**: keep AI identity example direct and non-inferential (#923)
+- **attribution**: cover attributed thoughts and beliefs (#789)
+- **attribution**: mask third-party speech in history scoring (#788)
+- **attribution**: cover remaining current-turn detectors (#787)
+- **attribution**: exclude third-party empath, somatic, and visibility signals (#786)
+- **pattern**: exclude attributed third-party speech from pattern detection (#785)
+- **detectors**: attribute inner conflict and direction signals to user (#784)
+- **attribution**: prevent third-party speech from triggering detectors
+- **audit**: enforce orphaned config usage guard
+- gate grief inquiry on explicit readiness and acute timing (#763)
+- require user-authored polarity framing for sacred polarity (#761)
+- **action**: constrain authenticated request URLs (#724)
+- **skills**: move runtime bindings out of Markdown
+- **release**: enforce trusted commit boundary before publication
+- **benchmark**: make Markdown read comparisons reliable
+- **audit**: reject invalid relative import levels (#691)
+- **ci**: avoid duplicate safety eval in focused tests
+- **skills**: correct maintainer rule paths (#678)
+- **audit**: reduce historical path false positives (#677)
+
+### Refactor
+
+- **tests**: group packaging and repository contract tests (#1009)
+- **tests**: group knowledge and safety contract tests (#1008)
+- **tests**: organize remaining unit tests by domain (#1007)
+- **tests**: organize root tests by source domain (#1006)
+- **runtime**: share Markdown section boundaries (#795)
+- **runtime**: reuse source registry validation (#792)
+- **runtime**: own shared Markdown primitives (#790)
+- isolate integration and celebration response policy (#770)
+- isolate inner reflection framework policy (#769)
+- isolate spiritual discernment framework policy (#768)
+- isolate relationship and soulmate framework policy (#767)
+- isolate creative drought and perfectionism policy (#766)
+- isolate emotional framework guidance and detector policy (#765)
+- isolate direction and pattern detector policy (#762)
+- isolate dependency detection runtime policy (#760)
+- isolate orchestration and response routing policy
+- isolate conversation synthesis runtime policy
+- isolate stage classification runtime policy
+- establish Python runtime configuration foundation
+- keep Python runtime identifiers out of Skills (#731)
+- **action**: deduplicate pagination and strengthen tests
+- **action**: split GitHub operations into modules
+- simplify Python tooling fallbacks and tests
+
+### Perf
+
+- **knowledge**: cache repeated Markdown reads
+
 ## v0.14.0 (2026-10-15)
 
 ### Feat

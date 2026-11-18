@@ -2,7 +2,7 @@
 title: "SoulMap AI, ChatGPT Custom GPT Instructions"
 description: "Legacy instructions and conversation starters for an existing SoulMap AI Custom GPT."
 doctrine_source: "SOULMAP.md"
-soulmap_version: "0.14.0"
+soulmap_version: "0.15.0"
 ---
 
 # ChatGPT Custom GPT instructions (legacy)
