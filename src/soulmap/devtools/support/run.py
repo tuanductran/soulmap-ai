@@ -191,12 +191,6 @@ def repo_tooling_lock(
                 msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)
             else:
                 fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
-    try:
-        lock_path.unlink()
-    except FileNotFoundError:
-        return
-    except OSError as exc:
-        print(
-            f"warning: failed to remove repo tooling lock {lock_path.name}: {exc}",
-            file=sys.stderr,
-        )
+    # Keep the lock file in place after releasing the OS lock. Unlinking it
+    # creates an inode race: a waiter may still hold the old inode while a
+    # later process creates and locks a new file at the same path.
