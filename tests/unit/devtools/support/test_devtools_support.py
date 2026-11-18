@@ -390,3 +390,24 @@ def test_indented_code_fence_does_not_hide_following_markdown_references() -> No
     assert markdown_support.iter_markdown_references(lines) == [
         markdown_support.MarkdownReference(3, "Visible", "guide.md")
     ]
+
+
+def test_fence_tracker_requires_valid_closing_fence_and_backtick_info_string() -> None:
+    tracker = markdown_support.FenceTracker()
+
+    assert tracker.consume("```python\n") is True
+    assert tracker.in_fence is True
+    # A closing marker followed by non-whitespace is code content.
+    assert tracker.consume("``` not-a-close\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("  ```  \t\n") is True
+    assert tracker.in_fence is False
+
+    # Backtick fences cannot carry backticks in their info string.
+    assert tracker.consume("```py`thon\n") is False
+    assert tracker.in_fence is False
+    # Tilde fences may carry tildes in their info string.
+    assert tracker.consume("~~~language ~~~\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("~~~\t\n") is True
+    assert tracker.in_fence is False
