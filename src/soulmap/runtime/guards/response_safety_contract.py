@@ -216,6 +216,35 @@ _CATEGORY_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
 )
 
 
+def _is_explicit_spiritual_identity_refusal(
+    response_text: str,
+    match: re.Match[str],
+) -> bool:
+    """Recognize only a complete, direct refusal of a spiritual identity claim.
+
+    The identity regex intentionally catches affirmative wording wherever it
+    appears. This exception is narrower: the matched assertion must be the
+    entire sentence payload after "I can't/cannot confirm that", with no
+    trailing qualification or endorsement. A later or appended affirmation
+    therefore remains detectable.
+    """
+    sentence_start = max(
+        response_text.rfind(mark, 0, match.start()) for mark in ".!?"
+    ) + 1
+    sentence_ends = [
+        position
+        for mark in ".!?"
+        if (position := response_text.find(mark, match.end())) != -1
+    ]
+    sentence_end = min(sentence_ends) if sentence_ends else len(response_text)
+    prefix = response_text[sentence_start : match.start()]
+    suffix = response_text[match.end() : sentence_end]
+    return bool(
+        re.fullmatch(r"\\s*i (?:can't|cannot) confirm that\\s+", prefix)
+        and not suffix.strip()
+    )
+
+
 def check_response_safety_contract(response_text: str) -> dict[str, object]:
     """Detect safety-contract violations in a generated response.
 
@@ -230,7 +259,17 @@ def check_response_safety_contract(response_text: str) -> dict[str, object]:
 
     for category, patterns in _CATEGORY_PATTERNS:
         for pattern in patterns:
-            if re.search(pattern, lowered):
+            matches = re.finditer(pattern, lowered)
+            if (
+                category == "spiritual_claim_as_fact"
+                and pattern == SPIRITUAL_CLAIM_AS_FACT_PATTERNS[0]
+            ):
+                matches = (
+                    match
+                    for match in matches
+                    if not _is_explicit_spiritual_identity_refusal(lowered, match)
+                )
+            if next(matches, None) is not None:
                 violations.append({"category": category, "pattern": pattern})
 
     if not violations:
