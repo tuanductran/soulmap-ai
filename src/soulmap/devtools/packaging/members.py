@@ -122,6 +122,7 @@ def is_safe_member_path(name: str) -> bool:
         and not windows_path.is_absolute()
         and not windows_path.drive
         and ".." not in posix_path.parts
+        and all(part == part.rstrip(" .") for part in windows_path.parts)
     )
 
 
@@ -140,18 +141,18 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
     if include_plugin:
         paths.extend(_source_tree_files(repo_root / ".claude-plugin", repo_root))
 
-    for path in paths:
-        relative = path.relative_to(repo_root).as_posix()
-        if not is_safe_member_path(relative):
-            raise ValueError(f"Unsafe package source path: {relative}")
     return sorted(set(paths))
 
 
 def source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
     """Return the canonical set of members allowed in a shipped artifact."""
     patterns = load_distignore(repo_root)
-    return {
-        path.relative_to(repo_root).as_posix()
-        for path in source_paths(repo_root, include_plugin=include_plugin)
-        if not is_ignored(path.relative_to(repo_root).as_posix(), patterns)
-    }
+    members: set[str] = set()
+    for path in source_paths(repo_root, include_plugin=include_plugin):
+        relative = path.relative_to(repo_root).as_posix()
+        if is_ignored(relative, patterns):
+            continue
+        if not is_safe_member_path(relative):
+            raise ValueError(f"Unsafe package source path: {relative}")
+        members.add(relative)
+    return members
