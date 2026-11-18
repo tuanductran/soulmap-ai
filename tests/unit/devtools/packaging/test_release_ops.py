@@ -9,6 +9,7 @@ from soulmap.devtools.packaging.release_ops import (
     ARTIFACT_NAMES,
     ReleaseOperationsError,
     create_provenance,
+    main,
     verify_provenance,
 )
 
@@ -185,3 +186,41 @@ def test_verify_provenance_rejects_unhashable_artifact_filename(
 
     with pytest.raises(ReleaseOperationsError, match="artifact set is invalid"):
         verify_provenance(tmp_path, path)
+
+
+
+def test_provenance_cli_rejects_stale_verification_document(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _write_project(tmp_path)
+    _write_artifacts(tmp_path)
+    verification_path = tmp_path / "dist" / "release-verification.json"
+    provenance_path = tmp_path / "dist" / "release-provenance.json"
+    verification_path.write_text(
+        json.dumps({"status": "pass", "version": "0.11.0"}),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        "soulmap.devtools.packaging.release_ops.verify_release",
+        lambda _root: {
+            "status": "pass",
+            "version": "0.11.0",
+            "verified_artifact_count": 3,
+        },
+    )
+
+    result = main(
+        [
+            "provenance",
+            "--root",
+            str(tmp_path),
+            "--verification",
+            str(verification_path),
+            "--provenance",
+            str(provenance_path),
+        ]
+    )
+
+    assert result == 1
+    assert not provenance_path.exists()
+    assert "does not match the current repository" in capsys.readouterr().err
