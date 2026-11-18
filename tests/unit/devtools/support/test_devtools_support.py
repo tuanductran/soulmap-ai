@@ -304,7 +304,6 @@ def test_repo_tooling_lock_uses_windows_venv_lock_and_keeps_file(
     assert (tmp_path / ".venv" / ".windows.lock").is_file()
 
 
-
 @pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
 def test_repo_tooling_lock_retries_before_waiting_notice(
     tmp_path: Path,
