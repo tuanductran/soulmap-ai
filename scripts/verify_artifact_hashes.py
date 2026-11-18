@@ -14,6 +14,9 @@ class ArtifactIntegrityError(ValueError):
     """Raised when a generated artifact disagrees with the Library manifest."""
 
 
+EXPECTED_ARTIFACT_FILENAMES = frozenset({"soulmap-ai.zip", "soulmap-ai.skill"})
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -53,6 +56,7 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
     manifest = _load_manifest(manifest_path)
     repo_root = manifest_path.parent.parent.resolve()
     results: list[dict[str, Any]] = []
+    seen_filenames: set[str] = set()
 
     for artifact in manifest["artifacts"]:
         if not isinstance(artifact, dict):
@@ -76,6 +80,18 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
                 "non-negative integer size_bytes, and 64-character SHA-256 digest"
             )
 
+        if filename not in EXPECTED_ARTIFACT_FILENAMES:
+            raise ArtifactIntegrityError(f"unexpected artifact filename: {filename}")
+        if filename in seen_filenames:
+            raise ArtifactIntegrityError(f"duplicate artifact filename: {filename}")
+        seen_filenames.add(filename)
+        expected_path = f"dist/{filename}"
+        if relative_path != expected_path:
+            raise ArtifactIntegrityError(
+                f"artifact path for {filename} must be {expected_path}, "
+                f"got {relative_path}"
+            )
+
         artifact_path = _resolve_artifact_path(repo_root, relative_path)
         if not artifact_path.is_file():
             raise ArtifactIntegrityError(f"artifact not found: {artifact_path}")
@@ -96,6 +112,11 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
                 "size_bytes": actual_size,
                 "sha256": actual_sha256,
             }
+        )
+    missing_filenames = EXPECTED_ARTIFACT_FILENAMES - seen_filenames
+    if missing_filenames:
+        raise ArtifactIntegrityError(
+            f"manifest is missing expected artifacts: {sorted(missing_filenames)}"
         )
     return results
 
