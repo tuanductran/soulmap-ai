@@ -94,30 +94,37 @@ def is_excluded_source(path: Path, repo_root: Path) -> bool:
     )
 
 
+def _source_tree_files(root: Path, repo_root: Path) -> list[Path]:
+    """Collect regular files from a shipped tree without following symlinks."""
+    if root.is_symlink():
+        raise ValueError(f"Symlinked package source root is not allowed: {root}")
+    if not root.is_dir():
+        return []
+
+    paths: list[Path] = []
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            relative = path.relative_to(repo_root).as_posix()
+            raise ValueError(f"Symlinked package source is not allowed: {relative}")
+        if path.is_file() and not is_excluded_source(path, repo_root):
+            paths.append(path)
+    return paths
+
+
 def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
     """Return exactly the files the package builder is allowed to ship."""
     paths: list[Path] = []
     for name in CORE_FILES:
         candidate = repo_root / name
+        if candidate.is_symlink():
+            raise ValueError(f"Symlinked package source is not allowed: {name}")
         if candidate.is_file():
             paths.append(candidate)
 
-    skills_root = repo_root / "skills"
-    if skills_root.is_dir():
-        paths.extend(
-            path
-            for path in skills_root.rglob("*")
-            if path.is_file() and not is_excluded_source(path, repo_root)
-        )
+    paths.extend(_source_tree_files(repo_root / "skills", repo_root))
 
     if include_plugin:
-        plugin_root = repo_root / ".claude-plugin"
-        if plugin_root.is_dir():
-            paths.extend(
-                path
-                for path in plugin_root.rglob("*")
-                if path.is_file() and not is_excluded_source(path, repo_root)
-            )
+        paths.extend(_source_tree_files(repo_root / ".claude-plugin", repo_root))
 
     return sorted(set(paths))
 
