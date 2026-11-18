@@ -404,20 +404,20 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
 
         quote_depth = 0
         remaining = opening
-        while prefix := re.match(r"^ {0,3}>[ \\t]?", remaining):
+        while prefix := re.match(r"^ {0,3}>[ \t]?", remaining):
             quote_depth += 1
             remaining = remaining[prefix.end() :]
 
         list_depth = max(0, (token.level - quote_depth) // 2)
         for _ in range(quote_depth):
-            prefix = re.match(r"^ {0,3}>[ \\t]?", closing)
+            prefix = re.match(r"^ {0,3}>[ \t]?", closing)
             if prefix is None:
                 break
             closing = closing[prefix.end() :]
 
         max_indent = 3 + (2 * list_depth)
         marker = re.escape(token.markup[0])
-        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \\t]*"
+        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \t]*"
         if re.fullmatch(closing_pattern, closing) is None:
             unclosed.append(token.map[0] + 1)
 
