@@ -15,6 +15,8 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
+
 
 @lru_cache(maxsize=128)
 def _read_markdown_text_cached(
@@ -51,6 +53,7 @@ def _heading_level(line: str) -> int | None:
 
 def _section_content(text: str, heading: str) -> tuple[str, ...]:
     """Return lines below an exact heading up to its next peer or parent."""
+    text = markdown_without_code_blocks(text)
     lines = text.splitlines()
     target_level: int | None = None
     start = None

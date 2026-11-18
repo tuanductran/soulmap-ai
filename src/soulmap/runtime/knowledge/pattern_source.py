@@ -13,6 +13,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
+
 _HEADING_RE = re.compile(r"^##\s+Pattern\s+\d+:\s*(?P<name>.+?)\s*$")
 _QUOTED_RE = re.compile(r'"([^"]+)"')
 
@@ -122,6 +124,8 @@ def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
         A mapping of slug to pattern. Empty when the text holds no pattern
         heading.
     """
+    text = markdown_without_code_blocks(text)
+
     lines = text.splitlines()
     heading_indices: list[tuple[int, str]] = []
     for idx, line in enumerate(lines):

@@ -6,6 +6,7 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from soulmap.runtime.knowledge.keyword_lists import load_runtime_guidance
 from soulmap.runtime.knowledge.labels import RUNTIME_GUIDANCE_NAMES
 from soulmap.runtime.knowledge.runtime_config import DETECTOR_CONFIG
@@ -49,6 +50,7 @@ class SynthesisRules:
 
 
 def _contract_body(text: str) -> str:
+    text = markdown_without_code_blocks(text)
     match = re.search(
         rf"^## {re.escape(_CONTRACT_HEADING)}\s*$",
         text,
@@ -63,6 +65,7 @@ def _contract_body(text: str) -> str:
 
 
 def _quoted_bullets(section: str, heading: str) -> tuple[str, ...]:
+    section = markdown_without_code_blocks(section)
     match = re.search(
         rf"^### {re.escape(heading)}\s*$(?P<body>.*?)(?=^### |\Z)",
         section,
@@ -79,6 +82,7 @@ def _quoted_bullets(section: str, heading: str) -> tuple[str, ...]:
 
 
 def _theme_groups(body: str, heading: str) -> dict[str, tuple[str, ...]]:
+    body = markdown_without_code_blocks(body)
     match = re.search(
         rf"^### {re.escape(heading)} signals\s*$(?P<body>.*?)(?=^### |\Z)",
         body,

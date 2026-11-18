@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from soulmap.runtime.knowledge.keyword_lists import (
     _read_markdown_text_cached,
     extract_keyword_section,
@@ -108,3 +109,63 @@ def test_section_extractors_share_heading_boundaries() -> None:
         "| Ignore | 3 |\n"
     )
     assert extract_table_rows(table, "Scoring") == (("Weight", "2"),)
+
+
+def test_extractors_ignore_headings_bullets_and_tables_in_fenced_examples() -> None:
+    text = (
+        "```markdown\n"
+        "## Detection signals\n"
+        '- "fake top-level phrase"\n'
+        "```\n"
+        "## Detection signals\n\n"
+        "```markdown\n"
+        "### Fake category\n"
+        '- "fake phrase"\n'
+        "```\n"
+        "Active anger:\n\n"
+        '- "real phrase"\n'
+    )
+
+    assert extract_keyword_section(text, "Detection signals") == ("real phrase",)
+    assert extract_labeled_groups(text, "Detection signals") == {
+        "active anger": ("real phrase",)
+    }
+
+    table = (
+        "## Contracts\n\n"
+        "### Scoring\n\n"
+        "```markdown\n"
+        "| Fake | 99 |\n"
+        "```\n"
+        "| Rule | Value |\n"
+        "| --- | --- |\n"
+        "| Weight | 2 |\n"
+    )
+    assert extract_table_rows(table, "Scoring") == (("Weight", "2"),)
+
+
+def test_markdown_without_code_blocks_preserves_lines_and_nested_content_boundaries() -> (
+    None
+):
+    source = (
+        "## Real heading\n"
+        "- item\n"
+        "  ```markdown\n"
+        "  ## Fake nested heading\n"
+        '  - "fake phrase"\n'
+        "  ```\n"
+        "After the example.\n"
+        "\n"
+        "    ## Fake indented heading\n"
+        '    - "fake indented phrase"\n'
+        "\n"
+        "Real trailing content.\n"
+    )
+
+    stripped = markdown_without_code_blocks(source)
+
+    assert len(stripped.splitlines()) == len(source.splitlines())
+    assert "## Real heading" in stripped
+    assert "After the example." in stripped
+    assert "Fake nested heading" not in stripped
+    assert "fake phrase" not in stripped
