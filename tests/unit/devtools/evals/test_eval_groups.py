@@ -201,5 +201,6 @@ def test_run_groups_eval_fails_when_dataset_is_empty(
     result = eval_groups.run_groups_eval()
 
     assert result["ok"] is False
-    assert result["summary"]["groups"] == 0
-    assert result["summary"]["failed_checks"] == 1
+    summary = cast(dict[str, object], result["summary"])
+    assert summary["groups"] == 0
+    assert summary["failed_checks"] == 1
