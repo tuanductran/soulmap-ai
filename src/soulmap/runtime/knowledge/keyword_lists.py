@@ -10,6 +10,7 @@ higher level.
 
 from __future__ import annotations
 
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -27,6 +28,12 @@ def _read_markdown_text_cached(
 def _read_markdown_text(markdown_path: Path) -> str:
     """Read a Markdown file with metadata-based cache invalidation."""
     resolved_path = markdown_path.resolve()
+    # Windows exposes st_ctime as creation time, not POSIX change time. It
+    # therefore cannot invalidate a cache after same-size edits with a
+    # restored mtime. Read directly there rather than risk stale knowledge.
+    if os.name == "nt":
+        return resolved_path.read_text(encoding="utf-8")
+
     stat = resolved_path.stat()
     return _read_markdown_text_cached(
         str(resolved_path), stat.st_mtime_ns, stat.st_ctime_ns, stat.st_size
@@ -234,8 +241,6 @@ def default_skill_path(relative_path: str) -> Path:
     Runtime modules ship and run standalone, so this does not import
     ``soulmap.devtools``.
     """
-    import os
-
     rel = Path(relative_path)
     env_root = os.environ.get("SOULMAP_REPO_ROOT")
     if env_root:
