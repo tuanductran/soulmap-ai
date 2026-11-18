@@ -206,3 +206,24 @@ def test_read_marketplace_rejects_missing_plugin_name(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="plugin names must be non-empty"):
         library._read_marketplace(tmp_path)
+
+
+
+def test_read_marketplace_rejects_skill_entrypoint_symlink_outside_repository(
+    tmp_path: Path,
+) -> None:
+    outside = tmp_path.parent / f"{tmp_path.name}-outside-entrypoint"
+    _write(outside, "SKILL.md", "# Outside skill\n")
+    skills = tmp_path / "skills" / "linked"
+    skills.mkdir(parents=True)
+    try:
+        (skills / "SKILL.md").symlink_to(outside / "SKILL.md")
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"file symlink creation is unavailable: {error}")
+
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./skills/linked"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="entrypoint must not be a symlink"):
+        library._read_marketplace(tmp_path)
