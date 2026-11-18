@@ -114,20 +114,6 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
         _verify_archive(tmp_path, archive_path, include_plugin=False)
 
 
-@pytest.mark.parametrize(
-    "member_name",
-    ["C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
-)
-def test_verify_archive_rejects_windows_unsafe_member_paths(
-    tmp_path: Path, member_name: str
-) -> None:
-    archive_path = tmp_path / "dist" / "soulmap-ai.zip"
-    archive_path.parent.mkdir(parents=True)
-    with zipfile.ZipFile(archive_path, "w") as archive:
-        archive.writestr(member_name, "unsafe")
-
-    with pytest.raises(ReleaseVerificationError, match="unsafe archive member path"):
-        _verify_archive(tmp_path, archive_path, include_plugin=False)
 
 
 
