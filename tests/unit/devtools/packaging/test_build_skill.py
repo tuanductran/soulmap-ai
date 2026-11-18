@@ -346,7 +346,13 @@ def test_archive_member_path_safety_is_cross_platform(member_name: str) -> None:
 
 @pytest.mark.parametrize(
     "member_name",
-    ["skills/parent . /file.md", "skills/parent. /file.md", "skills/name. /file.md"],
+    [
+        "skills/.. /file.md",
+        "skills/.. . /file.md",
+        "skills/parent . /file.md",
+        "skills/parent. /file.md",
+        "skills/name. /file.md",
+    ],
 )
 def test_archive_member_rejects_windows_trimmed_component_variants(
     member_name: str,
