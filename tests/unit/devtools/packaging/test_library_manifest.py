@@ -227,3 +227,12 @@ def test_read_marketplace_rejects_skill_entrypoint_symlink_outside_repository(
 
     with pytest.raises(ValueError, match="entrypoint must not be a symlink"):
         library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_windows_drive_skill_path(tmp_path: Path) -> None:
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./C:/outside-skill"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="must stay inside the repository"):
+        library._read_marketplace(tmp_path)
