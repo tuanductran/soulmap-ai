@@ -5,10 +5,10 @@ from __future__ import annotations
 import argparse
 import shutil
 import zipfile
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 from soulmap.devtools.packaging import build_skill
-from soulmap.devtools.packaging.members import source_members
+from soulmap.devtools.packaging.members import is_safe_member_path, source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 
@@ -23,9 +23,7 @@ def _verify_archive(
         unsafe = [
             name
             for name in names
-            if PurePosixPath(name).is_absolute()
-            or "\\" in name
-            or ".." in PurePosixPath(name).parts
+            if not is_safe_member_path(name)
         ]
         if unsafe:
             raise ValueError(
