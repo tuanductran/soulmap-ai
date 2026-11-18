@@ -244,4 +244,3 @@ def test_unrelated_truth_statement_is_not_an_endorsement() -> None:
     )
 
     assert quality["status"] == "PASS"
-
