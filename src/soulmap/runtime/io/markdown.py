@@ -385,6 +385,23 @@ def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
     return _code_block_lines_from_tokens(tokens)
 
 
+def markdown_without_code_blocks(text: str) -> str:
+    """Blank CommonMark code-block lines while preserving source line numbers.
+
+    Runtime knowledge parsers use regular expressions for semantic Markdown
+    structures. Removing code-block content first prevents examples from
+    masquerading as headings, bullets, groups, or tables.
+    """
+    lines = text.splitlines(keepends=True)
+    code_lines = markdown_code_block_lines(lines)
+    return "".join(
+        "".join(char for char in line if char in "\\r\\n")
+        if line_number in code_lines
+        else line
+        for line_number, line in enumerate(lines, start=1)
+    )
+
+
 def iter_disallowed_markdown_references(
     lines: list[str],
 ) -> list[MarkdownReference]:
