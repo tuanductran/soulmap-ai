@@ -13,6 +13,7 @@ from soulmap.runtime.source_registry import (
     _validate_registry,
     runtime_section,
     runtime_skill_path,
+    runtime_skill_path_for_root,
 )
 
 
@@ -152,6 +153,6 @@ def test_runtime_skill_path_uses_explicit_repository_root(
     }
     monkeypatch.setattr(source_registry, "_registry", lambda repo_root=None: entries)
 
-    path = runtime_skill_path("orchestration", tmp_path)
+    path = runtime_skill_path_for_root("orchestration", tmp_path)
 
     assert path == tmp_path.resolve() / "skills/meta/orchestration.md"
