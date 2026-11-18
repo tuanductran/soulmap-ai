@@ -8,7 +8,7 @@ import re
 from functools import cache
 from pathlib import Path
 
-from soulmap.runtime.io.markdown import FenceTracker
+from soulmap.runtime.io.markdown import markdown_code_block_lines
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 REGISTRY: dict[str, tuple[str, str, str, str]] = {
@@ -205,9 +205,10 @@ def _has_heading(text: str, expected: str) -> bool:
     else:
         pattern = re.compile(rf"^#{{2,3}}\s+{re.escape(expected)}\s*$")
 
-    fence = FenceTracker()
-    for raw in text.splitlines():
-        if fence.consume(raw):
+    lines = text.splitlines()
+    code_lines = markdown_code_block_lines(lines)
+    for line_no, raw in enumerate(lines, start=1):
+        if line_no in code_lines:
             continue
         if pattern.fullmatch(raw):
             return True
