@@ -57,9 +57,17 @@ def _version(repo_root: Path) -> str:
 
 def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str, Any]:
     """Create provenance linking release version, source commit, and hashes."""
+    if verification.get("status") != "pass":
+        raise ReleaseOperationsError("release verification status must be pass")
     version = verification.get("version")
     if not isinstance(version, str) or not version:
         raise ReleaseOperationsError("release verification has no version")
+    project_version = _version(repo_root)
+    if version != project_version:
+        raise ReleaseOperationsError(
+            "release verification version must match "
+            f"pyproject.toml ({project_version}), got {version}"
+        )
     commit = _git(repo_root, "rev-parse", "HEAD")
     timestamp = os.environ.get("RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat()
     artifacts: list[dict[str, Any]] = []
@@ -147,7 +155,7 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     if not isinstance(artifacts, list):
         raise ReleaseOperationsError("provenance artifacts must be a list")
     filenames = {item.get("filename") for item in artifacts if isinstance(item, dict)}
-    if filenames != set(ARTIFACT_NAMES):
+    if len(artifacts) != len(ARTIFACT_NAMES) or filenames != set(ARTIFACT_NAMES):
         raise ReleaseOperationsError("provenance artifact set is invalid")
     for item in artifacts:
         if not isinstance(item, dict):
