@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import fnmatch
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 CORE_FILES = ("LICENSE", "SOULMAP.md", "SKILL.md")
 PLUGIN_PREFIX = ".claude-plugin/"
@@ -111,6 +111,22 @@ def _source_tree_files(root: Path, repo_root: Path) -> list[Path]:
     return paths
 
 
+
+
+def is_safe_member_path(name: str) -> bool:
+    """Return whether an archive member is safe on both POSIX and Windows."""
+    if not name or "\\" in name:
+        return False
+    posix_path = PurePosixPath(name)
+    windows_path = PureWindowsPath(name)
+    return (
+        not posix_path.is_absolute()
+        and not windows_path.is_absolute()
+        and not windows_path.drive
+        and ".." not in posix_path.parts
+    )
+
+
 def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
     """Return exactly the files the package builder is allowed to ship."""
     paths: list[Path] = []
@@ -126,6 +142,10 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
     if include_plugin:
         paths.extend(_source_tree_files(repo_root / ".claude-plugin", repo_root))
 
+    for path in paths:
+        relative = path.relative_to(repo_root).as_posix()
+        if not is_safe_member_path(relative):
+            raise ValueError(f"Unsafe package source path: {relative}")
     return sorted(set(paths))
 
 
