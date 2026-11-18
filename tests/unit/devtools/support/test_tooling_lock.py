@@ -5,7 +5,6 @@ from multiprocessing import get_context
 from multiprocessing.queues import Queue
 from pathlib import Path
 
-
 from soulmap.devtools.support.run import repo_tooling_lock
 
 
