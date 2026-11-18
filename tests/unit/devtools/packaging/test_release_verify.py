@@ -141,9 +141,7 @@ def test_source_members_applies_distignore_before_member_path_validation(
     skills = tmp_path / "skills"
     skills.mkdir()
     (skills / "ignored\\name.md").write_text("ignored\n", encoding="utf-8")
-    (tmp_path / ".distignore").write_text(
-        "skills/ignored\\name.md\n", encoding="utf-8"
-    )
+    (tmp_path / ".distignore").write_text("skills/ignored\\name.md\n", encoding="utf-8")
 
     assert "skills/ignored\\name.md" not in _source_members(
         tmp_path, include_plugin=False
