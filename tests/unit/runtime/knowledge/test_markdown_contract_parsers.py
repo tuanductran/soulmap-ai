@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import pytest
 
 from soulmap.runtime.knowledge.celebration_source import (
@@ -31,7 +33,9 @@ from soulmap.runtime.knowledge.synthesis_source import (
         (celebration_contract_body, "Detection policy"),
     ],
 )
-def test_contract_boundaries_ignore_fenced_headings(parser, heading: str) -> None:
+def test_contract_boundaries_ignore_fenced_headings(
+    parser: Callable[[str], str], heading: str
+) -> None:
     source = (
         "```markdown\n"
         f"## {heading}\n"
