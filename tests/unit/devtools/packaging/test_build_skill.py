@@ -330,7 +330,6 @@ def test_build_rejects_symlinked_core_manifest(tmp_path: Path) -> None:
         build_tool._iter_inputs(tmp_path)
 
 
-
 @pytest.mark.parametrize(
     "member_name",
     [
@@ -342,6 +341,7 @@ def test_build_rejects_symlinked_core_manifest(tmp_path: Path) -> None:
 )
 def test_archive_member_path_safety_is_cross_platform(member_name: str) -> None:
     assert is_safe_member_path(member_name) is False
+
 
 @pytest.mark.parametrize(
     "member_name",
