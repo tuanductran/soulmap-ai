@@ -190,3 +190,31 @@ def test_verifier_rejects_duplicate_artifact_filename(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "duplicate artifact filename" in result.stderr
+
+
+
+def test_verifier_rejects_in_repository_artifact_symlink(tmp_path: Path) -> None:
+    manifest_path, artifact = _write_manifest(tmp_path)
+    target = artifact.with_name("copied-artifact.zip")
+    target.write_bytes(artifact.read_bytes())
+    artifact.unlink()
+    artifact.symlink_to(target)
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path contains symlink: dist/soulmap-ai.zip" in result.stderr
+
+
+def test_verifier_rejects_symlinked_dist_directory(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    dist = tmp_path / "dist"
+    target = tmp_path / "real-dist"
+    dist.rename(target)
+    dist.symlink_to(target, target_is_directory=True)
+    manifest_path = dist / "soulmap-ai-library.json"
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path contains symlink: dist/soulmap-ai.zip" in result.stderr
