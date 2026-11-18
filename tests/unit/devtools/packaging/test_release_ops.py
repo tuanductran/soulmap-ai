@@ -188,9 +188,10 @@ def test_verify_provenance_rejects_unhashable_artifact_filename(
         verify_provenance(tmp_path, path)
 
 
-
 def test_provenance_cli_rejects_stale_verification_document(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     _write_project(tmp_path)
     _write_artifacts(tmp_path)
