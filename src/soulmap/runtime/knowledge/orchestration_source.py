@@ -227,7 +227,9 @@ def _parse_secondary_priority(
 
 
 @lru_cache(maxsize=1)
-def load_orchestration_rules(repo_root: Path | None = None) -> OrchestrationRules:
+def load_orchestration_rules(
+    repo_root: Path | None = None,
+) -> OrchestrationRules:
     """Load natural-language guidance and Python-owned routing configuration.
 
     Args:
