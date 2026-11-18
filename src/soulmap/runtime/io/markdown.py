@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 from markdown_it import MarkdownIt
 
-_FENCE_RE = re.compile(r"^(\s*)(`{3,}|~{3,})")
+_FENCE_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 _MD_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
