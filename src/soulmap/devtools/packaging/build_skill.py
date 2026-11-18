@@ -11,12 +11,9 @@ import zipfile
 from pathlib import Path
 
 from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_content
-from soulmap.devtools.packaging.members import (
-    is_ignored as _is_ignored,
-    is_safe_member_path,
-    load_distignore as _load_distignore,
-    source_paths,
-)
+from soulmap.devtools.packaging.members import is_ignored as _is_ignored
+from soulmap.devtools.packaging.members import is_safe_member_path, source_paths
+from soulmap.devtools.packaging.members import load_distignore as _load_distignore
 from soulmap.devtools.support.repo import REPO_ROOT
 
 
