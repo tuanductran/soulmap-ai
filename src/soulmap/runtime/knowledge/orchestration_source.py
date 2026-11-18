@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from pathlib import Path
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.labels import (
@@ -16,10 +15,7 @@ from soulmap.runtime.knowledge.labels import (
     SECONDARY_NAMES,
     map_label,
 )
-from soulmap.runtime.knowledge.runtime_registry import (
-    runtime_skill_path,
-    runtime_skill_path_for_root,
-)
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
 _CONTRACT_HEADING = "Routing policy"
 
@@ -231,22 +227,11 @@ def _parse_secondary_priority(
 
 
 @lru_cache(maxsize=1)
-def load_orchestration_rules(
-    repo_root: Path | None = None,
-) -> OrchestrationRules:
-    """Load natural-language guidance and Python-owned routing configuration.
-
-    Args:
-        repo_root: Optional repository root for auditing another checkout.
-            When omitted, resolve the active runtime source as usual.
-    """
+def load_orchestration_rules() -> OrchestrationRules:
+    """Load natural-language guidance and Python-owned routing configuration."""
     from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 
-    path = (
-        runtime_skill_path_for_root("orchestration", repo_root)
-        if repo_root is not None
-        else runtime_skill_path("orchestration")
-    )
+    path = runtime_skill_path("orchestration")
     instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
