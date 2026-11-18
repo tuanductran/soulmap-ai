@@ -133,6 +133,23 @@ def run_groups_eval(
         source-marker checks. A run is clean when ``failed_checks`` is 0.
     """
     groups = _load_groups()
+    if not groups:
+        return {
+            "ok": False,
+            "summary": {
+                "groups": 0,
+                "items": 0,
+                "asserted_items": 0,
+                "unasserted_items": 0,
+                "assertion_checks": 0,
+                "failed_items": 0,
+                "source_checks": 0,
+                "source_marker_checks": 0,
+                "failed_source_checks": 0,
+                "failed_checks": 1,
+            },
+            "results": [],
+        }
     if category:
         groups = [group for group in groups if group["cat"] == category]
     if group_name:
