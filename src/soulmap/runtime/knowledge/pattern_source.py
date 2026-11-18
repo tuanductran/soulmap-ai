@@ -124,7 +124,6 @@ def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
         A mapping of slug to pattern. Empty when the text holds no pattern
         heading.
     """
-
     text = markdown_without_code_blocks(text)
 
     lines = text.splitlines()
