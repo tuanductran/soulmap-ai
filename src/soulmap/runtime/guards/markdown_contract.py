@@ -533,6 +533,7 @@ def _duplicate_detection_phrases(
     Args:
         path: File being checked, used for the issue location.
         lines: The file's lines, in order.
+        code_lines: 1-indexed CommonMark code-block lines, computed when omitted.
 
     Returns:
         One issue per repeated phrase, at the line of the repeat.
