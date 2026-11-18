@@ -227,11 +227,16 @@ def _parse_secondary_priority(
 
 
 @lru_cache(maxsize=1)
-def load_orchestration_rules() -> OrchestrationRules:
-    """Load natural-language guidance and Python-owned routing configuration."""
+def load_orchestration_rules(repo_root: Path | None = None) -> OrchestrationRules:
+    """Load natural-language guidance and Python-owned routing configuration.
+
+    Args:
+        repo_root: Optional repository root for auditing another checkout.
+            When omitted, resolve the active runtime source as usual.
+    """
     from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 
-    path = runtime_skill_path("orchestration")
+    path = runtime_skill_path("orchestration", repo_root)
     instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
