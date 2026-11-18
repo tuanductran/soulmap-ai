@@ -240,7 +240,7 @@ def _is_explicit_spiritual_identity_refusal(
     prefix = response_text[sentence_start : match.start()]
     suffix = response_text[match.end() : sentence_end]
     return bool(
-        re.fullmatch(r"\\s*i (?:can't|cannot) confirm that\\s+", prefix)
+        re.fullmatch(r"\s*i (?:can't|cannot) confirm that\s+", prefix)
         and not suffix.strip()
     )
 
