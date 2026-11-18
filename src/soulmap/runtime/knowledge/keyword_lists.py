@@ -26,7 +26,7 @@ def _read_markdown_text_cached(
 
 
 def _read_markdown_text(markdown_path: Path) -> str:
-    """Read a Markdown file with metadata-based cache invalidation."""
+    """Read Markdown with safe cache invalidation on the current platform."""
     resolved_path = markdown_path.resolve()
     # Windows exposes st_ctime as creation time, not POSIX change time. It
     # therefore cannot invalidate a cache after same-size edits with a
