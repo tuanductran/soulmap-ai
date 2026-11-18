@@ -99,6 +99,12 @@ def run_markdown_contract_eval(*, case_id: str | None = None) -> dict[str, objec
     cases = _load_cases()
     if case_id is not None:
         cases = [case for case in cases if case["id"] == case_id]
+    if not cases:
+        return {
+            "ok": False,
+            "summary": {"cases": 0, "rules": 0, "failed_checks": 1},
+            "results": [],
+        }
 
     results: list[dict[str, object]] = []
     failed_checks = 0
