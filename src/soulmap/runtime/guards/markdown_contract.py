@@ -12,13 +12,13 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from soulmap.runtime.io.markdown import (
-    FenceTracker,
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
     iter_markdown_files,
     iter_markdown_references,
     markdown_code_block_lines,
+    markdown_unclosed_fence_lines,
     parse_yaml_front_matter,
     split_markdown_link_target,
 )
@@ -372,10 +372,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             )
 
     # 2) Fenced code blocks must be balanced.
-    fence = FenceTracker()
-    for raw in lines:
-        fence.consume(raw)
-    if fence.in_fence:
+    if markdown_unclosed_fence_lines(lines):
         issues.append(Issue(path, len(lines) or 1, "Unclosed fenced code block"))
 
     # 2c) HTML comments must be balanced (skip inside CommonMark code blocks).
