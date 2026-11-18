@@ -57,9 +57,19 @@ def _version(repo_root: Path) -> str:
 
 def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str, Any]:
     """Create provenance linking release version, source commit, and hashes."""
+    if not isinstance(verification, dict):
+        raise ReleaseOperationsError("release verification must be a JSON object")
+    if verification.get("status") != "pass":
+        raise ReleaseOperationsError("release verification status must be pass")
     version = verification.get("version")
     if not isinstance(version, str) or not version:
         raise ReleaseOperationsError("release verification has no version")
+    project_version = _version(repo_root)
+    if version != project_version:
+        raise ReleaseOperationsError(
+            "release verification version must match "
+            f"pyproject.toml ({project_version}), got {version}"
+        )
     commit = _git(repo_root, "rev-parse", "HEAD")
     timestamp = os.environ.get("RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat()
     artifacts: list[dict[str, Any]] = []
@@ -129,6 +139,8 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ReleaseOperationsError(f"invalid provenance: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ReleaseOperationsError("provenance must be a JSON object")
     if payload.get("schema_version") != 1 or payload.get("status") != "pass":
         raise ReleaseOperationsError("provenance schema/status is invalid")
     version = _version(repo_root)
@@ -146,15 +158,17 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     artifacts = payload.get("artifacts")
     if not isinstance(artifacts, list):
         raise ReleaseOperationsError("provenance artifacts must be a list")
-    filenames = {item.get("filename") for item in artifacts if isinstance(item, dict)}
-    if filenames != set(ARTIFACT_NAMES):
+    if len(artifacts) != len(ARTIFACT_NAMES) or any(
+        not isinstance(item, dict) for item in artifacts
+    ):
+        raise ReleaseOperationsError("provenance artifact set is invalid")
+    filenames = [item.get("filename") for item in artifacts]
+    if any(not isinstance(filename, str) for filename in filenames) or set(
+        filenames
+    ) != set(ARTIFACT_NAMES):
         raise ReleaseOperationsError("provenance artifact set is invalid")
     for item in artifacts:
-        if not isinstance(item, dict):
-            raise ReleaseOperationsError("provenance artifact entry is invalid")
-        filename = item.get("filename")
-        if not isinstance(filename, str):
-            raise ReleaseOperationsError("provenance artifact filename is invalid")
+        filename = item["filename"]
         artifact = repo_root / "dist" / filename
         if not artifact.is_file():
             raise ReleaseOperationsError(f"artifact is missing: {artifact.name}")
@@ -183,7 +197,12 @@ def main(argv: list[str] | None = None) -> int:
         provenance_path = args.provenance or root / "dist" / "release-provenance.json"
         if args.action == "provenance":
             verification = json.loads(verification_path.read_text(encoding="utf-8"))
-            payload = create_provenance(root, verification)
+            fresh_verification = verify_release(root)
+            if verification != fresh_verification:
+                raise ReleaseOperationsError(
+                    "supplied release verification does not match the current repository"
+                )
+            payload = create_provenance(root, fresh_verification)
             _write_json(provenance_path, payload)
         elif args.action == "health":
             verification = verify_release(root)
