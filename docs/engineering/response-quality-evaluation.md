@@ -9,7 +9,7 @@ and deterministic safety enforcement.
 quality with deterministic rubric checks. It covers:
 
 - selected-framework adherence
-- mirror-first / non-advice posture
+- configured advice-pattern avoidance (not semantic mirror-quality assessment)
 - user ownership
 - response shape
 - tone and voice alignment
