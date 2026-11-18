@@ -69,13 +69,15 @@ class MarkdownHeadingAnchor:
 
 
 class FenceTracker:
-    """Track fenced-code-block state across lines using CommonMark fence rules.
+    """Track a top-level fenced-code-block state across lines.
 
     A fence only closes on a line whose marker uses the same character as the
     opening fence and a run length greater than or equal to it. A naive
     "any 3+ backtick or tilde run toggles the state" check would desync on a
     four-backtick fence wrapping a three-backtick example, so this tracks the
     opening marker's character and length instead of a bare boolean toggle.
+    Use :func:`markdown_code_block_lines` for complete documents with nested
+    list or block-quote containers.
     """
 
     def __init__(self) -> None:
