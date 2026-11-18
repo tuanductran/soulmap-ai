@@ -136,11 +136,7 @@ def test_runtime_contract_surface_contains_only_python() -> None:
 
 
 def test_registry_heading_validation_ignores_fenced_code_examples() -> None:
-    fake_heading = (
-        "```markdown\n"
-        "## Detection policy\n"
-        "```\n"
-    )
+    fake_heading = "```markdown\n## Detection policy\n```\n"
     assert not _has_heading(fake_heading, "Detection policy")
     assert _has_heading(
         fake_heading + "## Detection policy\n",
@@ -149,20 +145,10 @@ def test_registry_heading_validation_ignores_fenced_code_examples() -> None:
 
 
 def test_registry_heading_validation_ignores_tilde_fenced_examples() -> None:
-    text = (
-        "~~~markdown\n"
-        "### Guidance\n"
-        "~~~\n"
-    )
+    text = "~~~markdown\n### Guidance\n~~~\n"
     assert not _has_heading(text, "Guidance")
 
 
 def test_registry_heading_validation_ignores_list_nested_fences() -> None:
-    text = (
-        "- item\n"
-        "\n"
-        "    ```markdown\n"
-        "    ## Detection policy\n"
-        "    ```\n"
-    )
+    text = "- item\n\n    ```markdown\n    ## Detection policy\n    ```\n"
     assert not _has_heading(text, "Detection policy")
