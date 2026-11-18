@@ -5,10 +5,10 @@ from __future__ import annotations
 import argparse
 import shutil
 import zipfile
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 from soulmap.devtools.packaging import build_skill
-from soulmap.devtools.packaging.members import source_members
+from soulmap.devtools.packaging.members import is_safe_member_path, source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 
@@ -20,13 +20,7 @@ def _verify_archive(
         names = archive.namelist()
         if len(names) != len(set(names)):
             raise ValueError(f"Archive contains duplicate members: {archive_path}")
-        unsafe = [
-            name
-            for name in names
-            if PurePosixPath(name).is_absolute()
-            or "\\" in name
-            or ".." in PurePosixPath(name).parts
-        ]
+        unsafe = [name for name in names if not is_safe_member_path(name)]
         if unsafe:
             raise ValueError(
                 f"Archive contains unsafe member paths in {archive_path}: {unsafe[:5]}"

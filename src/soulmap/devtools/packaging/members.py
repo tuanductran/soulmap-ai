@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import fnmatch
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 CORE_FILES = ("LICENSE", "SOULMAP.md", "SKILL.md")
 PLUGIN_PREFIX = ".claude-plugin/"
@@ -111,6 +111,21 @@ def _source_tree_files(root: Path, repo_root: Path) -> list[Path]:
     return paths
 
 
+def is_safe_member_path(name: str) -> bool:
+    """Return whether an archive member is safe on both POSIX and Windows."""
+    if not name or "\\" in name:
+        return False
+    posix_path = PurePosixPath(name)
+    windows_path = PureWindowsPath(name)
+    return (
+        not posix_path.is_absolute()
+        and not windows_path.is_absolute()
+        and not windows_path.drive
+        and ".." not in posix_path.parts
+        and all(part == part.rstrip(" .") for part in windows_path.parts)
+    )
+
+
 def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
     """Return exactly the files the package builder is allowed to ship."""
     paths: list[Path] = []
@@ -132,8 +147,12 @@ def source_paths(repo_root: Path, *, include_plugin: bool) -> list[Path]:
 def source_members(repo_root: Path, *, include_plugin: bool) -> set[str]:
     """Return the canonical set of members allowed in a shipped artifact."""
     patterns = load_distignore(repo_root)
-    return {
-        path.relative_to(repo_root).as_posix()
-        for path in source_paths(repo_root, include_plugin=include_plugin)
-        if not is_ignored(path.relative_to(repo_root).as_posix(), patterns)
-    }
+    members: set[str] = set()
+    for path in source_paths(repo_root, include_plugin=include_plugin):
+        relative = path.relative_to(repo_root).as_posix()
+        if is_ignored(relative, patterns):
+            continue
+        if not is_safe_member_path(relative):
+            raise ValueError(f"Unsafe package source path: {relative}")
+        members.add(relative)
+    return members

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import zipfile
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from soulmap import cli as cli_tool
 from soulmap.devtools.checks.skills_boundary import audit_markdown, audit_text
 from soulmap.devtools.packaging import build_skill as build_tool
 from soulmap.devtools.packaging import dev as dev_tool
+from soulmap.devtools.packaging.members import is_safe_member_path
 
 
 def _write(root: Path, relative_path: str, content: str = "content\n") -> Path:
@@ -327,3 +329,49 @@ def test_build_rejects_symlinked_core_manifest(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="Symlinked package source"):
         build_tool._iter_inputs(tmp_path)
+
+
+@pytest.mark.parametrize(
+    "member_name",
+    [
+        "C:/outside.txt",
+        "C:outside.txt",
+        "skills/..\\outside.txt",
+        "skills/bad\\name.md",
+    ],
+)
+def test_archive_member_path_safety_is_cross_platform(member_name: str) -> None:
+    assert is_safe_member_path(member_name) is False
+
+
+@pytest.mark.parametrize(
+    "member_name",
+    [
+        "skills/.. /file.md",
+        "skills/.. . /file.md",
+        "skills/parent . /file.md",
+        "skills/parent. /file.md",
+        "skills/name. /file.md",
+    ],
+)
+def test_archive_member_rejects_windows_trimmed_component_variants(
+    member_name: str,
+) -> None:
+    assert is_safe_member_path(member_name) is False
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX permits backslashes in filenames")
+def test_build_skips_ignored_backslash_source_before_path_validation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path, "LICENSE")
+    _write(tmp_path, "SOULMAP.md")
+    _write(tmp_path, "SKILL.md")
+    _write(tmp_path, "skills/ignored\\name.md")
+    (tmp_path / ".distignore").write_text("skills/ignored\\name.md\n", encoding="utf-8")
+    monkeypatch.setattr(build_tool, "audit_shipped_content", lambda _root: [])
+
+    archive_path = build_tool.build_zip(tmp_path)
+
+    with zipfile.ZipFile(archive_path) as archive:
+        assert "skills/ignored\\name.md" not in archive.namelist()

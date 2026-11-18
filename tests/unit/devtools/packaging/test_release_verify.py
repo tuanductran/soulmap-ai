@@ -1,5 +1,6 @@
 """Tests for release artifact and integration verification contracts."""
 
+import os
 import zipfile
 from pathlib import Path
 
@@ -111,3 +112,20 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
         ReleaseVerificationError, match="duplicate archive member names"
     ):
         _verify_archive(tmp_path, archive_path, include_plugin=False)
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX permits backslashes in filenames")
+def test_source_members_applies_distignore_before_member_path_validation(
+    tmp_path: Path,
+) -> None:
+    for path in ("LICENSE", "SOULMAP.md", "SKILL.md"):
+        target = tmp_path / path
+        target.write_text("fixture\n", encoding="utf-8")
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    (skills / "ignored\\name.md").write_text("ignored\n", encoding="utf-8")
+    (tmp_path / ".distignore").write_text("skills/ignored\\name.md\n", encoding="utf-8")
+
+    assert "skills/ignored\\name.md" not in _source_members(
+        tmp_path, include_plugin=False
+    )

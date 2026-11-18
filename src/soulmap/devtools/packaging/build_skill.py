@@ -12,8 +12,8 @@ from pathlib import Path
 
 from soulmap.devtools.checks.skills_boundary import audit as audit_shipped_content
 from soulmap.devtools.packaging.members import is_ignored as _is_ignored
+from soulmap.devtools.packaging.members import is_safe_member_path, source_paths
 from soulmap.devtools.packaging.members import load_distignore as _load_distignore
-from soulmap.devtools.packaging.members import source_paths
 from soulmap.devtools.support.repo import REPO_ROOT
 
 
@@ -75,8 +75,11 @@ def _build_archive(
     with zipfile.ZipFile(out_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for path in inputs:
             relative = path.relative_to(repo_root).as_posix()
-            if not _is_ignored(relative, patterns):
-                archive.write(path, arcname=relative)
+            if _is_ignored(relative, patterns):
+                continue
+            if not is_safe_member_path(relative):
+                raise ValueError(f"Unsafe package source path: {relative}")
+            archive.write(path, arcname=relative)
 
     size_kb = out_path.stat().st_size // 1024
     print(f"OK ({label}): {out_path}  (~{size_kb}KB)")

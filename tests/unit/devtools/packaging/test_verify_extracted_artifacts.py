@@ -206,3 +206,22 @@ def test_verifier_rejects_duplicate_archive_member_names(tmp_path: Path) -> None
 
     assert result.returncode == 1
     assert "duplicate archive member names" in result.stderr
+
+
+@pytest.mark.parametrize(
+    "member_name",
+    ["C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
+)
+def test_extracted_artifact_verifier_rejects_windows_unsafe_members(
+    tmp_path: Path, member_name: str
+) -> None:
+    _build_valid_repo(tmp_path)
+    archive_path = tmp_path / "dist" / "soulmap-ai.zip"
+    archive_path.unlink()
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        archive.writestr(member_name, "unsafe")
+
+    result = _run(tmp_path)
+
+    assert result.returncode == 1
+    assert "unsafe archive member path" in result.stderr
