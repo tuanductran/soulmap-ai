@@ -4,33 +4,16 @@ from collections.abc import Callable
 
 import pytest
 
-from soulmap.runtime.knowledge.celebration_source import (
-    _contract_body as celebration_contract_body,
-    _knowledge_lists,
-)
-from soulmap.runtime.knowledge.orchestration_source import (
-    _contract_body as orchestration_contract_body,
-    _table_rows,
-)
-from soulmap.runtime.knowledge.pattern_source import parse_pattern_mapper
-from soulmap.runtime.knowledge.scope_source import (
-    _contract_body as scope_contract_body,
-    _literal_config,
-)
-from soulmap.runtime.knowledge.synthesis_source import (
-    _contract_body as synthesis_contract_body,
-    _quoted_bullets,
-    _theme_groups,
-)
+from soulmap.runtime.knowledge import (\n    celebration_source,\n    orchestration_source,\n    pattern_source,\n    scope_source,\n    synthesis_source,\n)
 
 
 @pytest.mark.parametrize(
     ("parser", "heading"),
     [
-        (orchestration_contract_body, "Routing policy"),
-        (scope_contract_body, "Scope policy"),
-        (synthesis_contract_body, "Detection policy"),
-        (celebration_contract_body, "Detection policy"),
+        (orchestration_source._contract_body, "Routing policy"),
+        (scope_source._contract_body, "Scope policy"),
+        (synthesis_source._contract_body, "Detection policy"),
+        (celebration_source._contract_body, "Detection policy"),
     ],
 )
 def test_contract_boundaries_ignore_fenced_headings(
@@ -71,7 +54,7 @@ def test_orchestration_table_parser_ignores_fenced_table_rows() -> None:
         "| 1 | GRIEF |\n"
     )
 
-    assert _table_rows(body, "Primary framework priority") == [["1", "GRIEF"]]
+    assert orchestration_source._table_rows(body, "Primary framework priority") == [["1", "GRIEF"]]
 
 
 def test_scope_parser_ignores_fenced_groups_and_phrases() -> None:
@@ -95,7 +78,7 @@ def test_scope_parser_ignores_fenced_groups_and_phrases() -> None:
         '- "jailbreak phrase"\n'
     )
 
-    values = _literal_config(body)
+    values = scope_source._literal_config(body)
 
     assert values["WHITELIST_TIER1"] == {"self_awareness": ["real phrase"]}
     assert "fake phrase" not in str(values)
@@ -119,8 +102,8 @@ def test_synthesis_parsers_ignore_fenced_bullets_and_theme_groups() -> None:
         '- "real signal"\n'
     )
 
-    assert _quoted_bullets(section, "Explicit request signals") == ("real request",)
-    assert _theme_groups(themes, "Recurring emotional theme") == {
+    assert synthesis_source._quoted_bullets(section, "Explicit request signals") == ("real request",)
+    assert synthesis_source._theme_groups(themes, "Recurring emotional theme") == {
         "loneliness": ("real signal",)
     }
 
@@ -138,7 +121,7 @@ def test_celebration_parser_ignores_fenced_signal_bullets() -> None:
         '- "real anchor"\n'
     )
 
-    assert _knowledge_lists(body) == {
+    assert celebration_source._knowledge_lists(body) == {
         "NEGATIVE_OVERRIDES": ("real negative",),
         "CONFIRMATION_SIGNALS": ("real confirmation",),
         "CONFIRMATION_ASSISTANT_ANCHORS": ("real anchor",),
@@ -162,7 +145,7 @@ def test_pattern_parser_ignores_fenced_pattern_headings_and_signals() -> None:
         '- "real cycle"\n'
     )
 
-    patterns = parse_pattern_mapper(source)
+    patterns = pattern_source.parse_pattern_mapper(source)
 
     assert set(patterns) == {"real_pattern"}
     assert patterns["real_pattern"].keywords == ("real signal",)
