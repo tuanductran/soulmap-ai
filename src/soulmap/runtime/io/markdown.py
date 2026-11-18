@@ -399,7 +399,12 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
         if token.type != "fence" or token.map is None:
             continue
 
-        opening = lines[token.map[0]].rstrip("\r\n")
+        opening_line = token.map[0]
+        if token.map[1] <= opening_line + 1:
+            unclosed.append(opening_line + 1)
+            continue
+
+        opening = lines[opening_line].rstrip("\r\n")
         closing = lines[token.map[1] - 1].rstrip("\r\n")
 
         quote_depth = 0
@@ -419,7 +424,7 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
         marker = re.escape(token.markup[0])
         closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \t]*"
         if re.fullmatch(closing_pattern, closing) is None:
-            unclosed.append(token.map[0] + 1)
+            unclosed.append(opening_line + 1)
 
     return tuple(unclosed)
 
