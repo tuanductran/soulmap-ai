@@ -11,7 +11,6 @@ from soulmap.runtime.source_registry import (
     _validate_registry,
     runtime_section,
     runtime_skill_path,
-    runtime_skill_path_for_root,
 )
 
 __all__ = [
@@ -21,5 +20,4 @@ __all__ = [
     "_validate_registry",
     "runtime_section",
     "runtime_skill_path",
-    "runtime_skill_path_for_root",
 ]
