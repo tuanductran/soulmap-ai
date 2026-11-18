@@ -16,7 +16,10 @@ from soulmap.runtime.knowledge.labels import (
     SECONDARY_NAMES,
     map_label,
 )
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path_for_root
+from soulmap.runtime.knowledge.runtime_registry import (
+    runtime_skill_path,
+    runtime_skill_path_for_root,
+)
 
 _CONTRACT_HEADING = "Routing policy"
 
@@ -242,7 +245,7 @@ def load_orchestration_rules(
     path = (
         runtime_skill_path_for_root("orchestration", repo_root)
         if repo_root is not None
-        else runtime_skill_path_for_root("orchestration", Path.cwd())
+        else runtime_skill_path("orchestration")
     )
     instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
     if not instruction_rows:
