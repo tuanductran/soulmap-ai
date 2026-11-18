@@ -17,7 +17,7 @@ def _write_manifest(
     artifact = dist / "soulmap-ai.zip"
     artifact.write_text(artifact_content, encoding="utf-8")
     skill = dist / "soulmap-ai.skill"
-    skill.write_text("skill artifact\\n", encoding="utf-8")
+    skill.write_text("skill artifact\n", encoding="utf-8")
     manifest = {
         "schema_version": "1.0",
         "library_id": "soulmap-ai",
