@@ -228,9 +228,9 @@ def _is_explicit_spiritual_identity_refusal(
     trailing qualification or endorsement. A later or appended affirmation
     therefore remains detectable.
     """
-    sentence_start = max(
-        response_text.rfind(mark, 0, match.start()) for mark in ".!?"
-    ) + 1
+    sentence_start = (
+        max(response_text.rfind(mark, 0, match.start()) for mark in ".!?") + 1
+    )
     sentence_ends = [
         position
         for mark in ".!?"
