@@ -346,6 +346,16 @@ def test_archive_member_path_safety_is_cross_platform(member_name: str) -> None:
 
 @pytest.mark.parametrize(
     "member_name",
+    ["skills/parent . /file.md", "skills/parent. /file.md", "skills/name. /file.md"],
+)
+def test_archive_member_rejects_windows_trimmed_component_variants(
+    member_name: str,
+) -> None:
+    assert is_safe_member_path(member_name) is False
+
+
+@pytest.mark.parametrize(
+    "member_name",
     ["../outside.txt", "C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
 )
 def test_dev_rejects_posix_and_windows_unsafe_archive_members(
