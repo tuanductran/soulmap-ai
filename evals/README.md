@@ -77,5 +77,5 @@ must stay synchronized across runtime examples, doctrine, and shipped knowledge 
 | New safety failure mode documented | `response_generation_cases.json` |
 | Cross-file wording drift between runtime and Markdown | `markdown_contract_cases.json` |
 
-Keep `response_generation_cases.json` additions minimal, each case runs the full
-Claude API pipeline and increases eval cost and run time.
+Keep `response_generation_cases.json` additions minimal. Each case runs the
+full local response-generation harness and increases evaluation run time.
