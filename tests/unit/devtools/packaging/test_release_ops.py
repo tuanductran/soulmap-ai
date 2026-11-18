@@ -156,3 +156,12 @@ def test_verify_provenance_rejects_duplicate_artifact_entries(
 
     with pytest.raises(ReleaseOperationsError, match="artifact set is invalid"):
         verify_provenance(tmp_path, path)
+
+
+
+def test_verify_provenance_rejects_non_object_json(tmp_path: Path) -> None:
+    path = tmp_path / "release-provenance.json"
+    path.write_text("[]", encoding="utf-8")
+
+    with pytest.raises(ReleaseOperationsError, match="provenance must be a JSON object"):
+        verify_provenance(tmp_path, path)
