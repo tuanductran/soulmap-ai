@@ -4,17 +4,12 @@ from collections.abc import Callable
 
 import pytest
 
-from soulmap.runtime.knowledge import (\n    celebration_source,\n    orchestration_source,\n    pattern_source,\n    scope_source,\n    synthesis_source,\n)
-
-
-@pytest.mark.parametrize(
-    ("parser", "heading"),
-    [
-        (orchestration_source._contract_body, "Routing policy"),
-        (scope_source._contract_body, "Scope policy"),
-        (synthesis_source._contract_body, "Detection policy"),
-        (celebration_source._contract_body, "Detection policy"),
-    ],
+from soulmap.runtime.knowledge import (
+    celebration_source,
+    orchestration_source,
+    pattern_source,
+    scope_source,
+    synthesis_source,
 )
 def test_contract_boundaries_ignore_fenced_headings(
     parser: Callable[[str], str], heading: str
