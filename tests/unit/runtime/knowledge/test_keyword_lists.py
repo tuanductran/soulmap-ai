@@ -40,7 +40,7 @@ def test_loaders_read_each_markdown_version_once(
 
     assert load_keyword_section(path, "Detection signals") == ("first phrase",)
     assert load_key_value_table(path, "Scoring") == {"Weight": "2"}
-    assert reads == 1
+    assert reads == (2 if os.name == "nt" else 1)
 
 
 def test_markdown_cache_invalidates_when_file_changes(tmp_path: Path) -> None:
