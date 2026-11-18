@@ -16,18 +16,20 @@ def _write_manifest(
     dist.mkdir()
     artifact = dist / "soulmap-ai.zip"
     artifact.write_text(artifact_content, encoding="utf-8")
-    raw = artifact.read_bytes()
+    skill = dist / "soulmap-ai.skill"
+    skill.write_text("skill artifact\n", encoding="utf-8")
     manifest = {
         "schema_version": "1.0",
         "library_id": "soulmap-ai",
         "version": "0.8.0",
         "artifacts": [
             {
-                "filename": artifact.name,
-                "path": "dist/soulmap-ai.zip",
-                "size_bytes": len(raw),
-                "sha256": hashlib.sha256(raw).hexdigest(),
+                "filename": path.name,
+                "path": f"dist/{path.name}",
+                "size_bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             }
+            for path in (artifact, skill)
         ],
     }
     manifest_path = dist / "soulmap-ai-library.json"
@@ -151,3 +153,67 @@ def test_verifier_rejects_invalid_artifact_metadata(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "non-negative integer size_bytes" in result.stderr
+
+
+def test_verifier_rejects_artifact_path_that_does_not_match_filename(
+    tmp_path: Path,
+) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    _replace_artifact_path(manifest_path, "dist/soulmap-ai.skill")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    expected_message = "artifact path for soulmap-ai.zip must be dist/soulmap-ai.zip"
+    assert expected_message in result.stderr
+
+
+def test_verifier_rejects_manifest_missing_expected_artifact(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"] = manifest["artifacts"][:1]
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "manifest is missing expected artifacts" in result.stderr
+
+
+def test_verifier_rejects_duplicate_artifact_filename(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"].append(manifest["artifacts"][0])
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "duplicate artifact filename" in result.stderr
+
+
+def test_verifier_rejects_in_repository_artifact_symlink(tmp_path: Path) -> None:
+    manifest_path, artifact = _write_manifest(tmp_path)
+    target = artifact.with_name("copied-artifact.zip")
+    target.write_bytes(artifact.read_bytes())
+    artifact.unlink()
+    artifact.symlink_to(target)
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path contains symlink: dist/soulmap-ai.zip" in result.stderr
+
+
+def test_verifier_rejects_symlinked_dist_directory(tmp_path: Path) -> None:
+    manifest_path, _ = _write_manifest(tmp_path)
+    dist = tmp_path / "dist"
+    target = tmp_path / "real-dist"
+    dist.rename(target)
+    dist.symlink_to(target, target_is_directory=True)
+    manifest_path = dist / "soulmap-ai-library.json"
+
+    result = _run(manifest_path)
+
+    assert result.returncode == 1
+    assert "artifact path contains symlink: dist/soulmap-ai.zip" in result.stderr
