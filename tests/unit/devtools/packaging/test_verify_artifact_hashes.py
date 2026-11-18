@@ -164,7 +164,10 @@ def test_verifier_rejects_artifact_path_that_does_not_match_filename(
     result = _run(manifest_path)
 
     assert result.returncode == 1
-    assert "artifact path for soulmap-ai.zip must be dist/soulmap-ai.zip" in result.stderr
+    assert (
+        "artifact path for soulmap-ai.zip must be dist/soulmap-ai.zip"
+        in result.stderr
+    )
 
 
 def test_verifier_rejects_manifest_missing_expected_artifact(tmp_path: Path) -> None:
