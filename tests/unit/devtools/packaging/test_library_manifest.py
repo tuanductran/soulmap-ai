@@ -153,3 +153,85 @@ def test_main_builds_the_manifest_for_the_repository(
 
     assert library.main([]) == 0
     assert called == [tmp_path]
+
+
+def test_read_marketplace_rejects_skill_path_traversal(tmp_path: Path) -> None:
+    outside = tmp_path.parent / "outside-skill"
+    outside.mkdir()
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./../outside-skill"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="stay inside the repository"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_requires_skill_entrypoint_in_target_directory(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "skills" / "example").mkdir(parents=True)
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./skills/example"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match=r"must contain an in-repository SKILL\.md"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_skill_symlink_that_escapes_repository(
+    tmp_path: Path,
+) -> None:
+    outside = tmp_path.parent / f"{tmp_path.name}-outside-skill"
+    outside.mkdir()
+    _write(outside, "SKILL.md", "# Outside skill\n")
+    skills = tmp_path / "skills"
+    skills.mkdir()
+    try:
+        (skills / "linked").symlink_to(outside, target_is_directory=True)
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"directory symlink creation is unavailable: {error}")
+
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./skills/linked"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="escapes the repository"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_missing_plugin_name(tmp_path: Path) -> None:
+    payload = json.loads(_marketplace())
+    payload["plugins"][0].pop("name")
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="plugin names must be non-empty"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_skill_entrypoint_symlink_outside_repository(
+    tmp_path: Path,
+) -> None:
+    outside = tmp_path.parent / f"{tmp_path.name}-outside-entrypoint"
+    _write(outside, "SKILL.md", "# Outside skill\n")
+    skills = tmp_path / "skills" / "linked"
+    skills.mkdir(parents=True)
+    try:
+        (skills / "SKILL.md").symlink_to(outside / "SKILL.md")
+    except (OSError, NotImplementedError) as error:
+        pytest.skip(f"file symlink creation is unavailable: {error}")
+
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./skills/linked"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="entrypoint must not be a symlink"):
+        library._read_marketplace(tmp_path)
+
+
+def test_read_marketplace_rejects_windows_drive_skill_path(tmp_path: Path) -> None:
+    payload = json.loads(_marketplace())
+    payload["plugins"][0]["skills"] = ["./C:/outside-skill"]
+    _write(tmp_path, ".claude-plugin/marketplace.json", json.dumps(payload))
+
+    with pytest.raises(ValueError, match="must stay inside the repository"):
+        library._read_marketplace(tmp_path)
