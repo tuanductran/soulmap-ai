@@ -131,7 +131,7 @@ def test_create_provenance_rejects_version_drift(
         lambda root, *args: "f" * 40,
     )
 
-    with pytest.raises(ReleaseOperationsError, match="must match pyproject.toml"):
+    with pytest.raises(ReleaseOperationsError, match=r"must match pyproject.toml"):
         create_provenance(
             tmp_path, {"status": "pass", "version": "0.12.0"}
         )
