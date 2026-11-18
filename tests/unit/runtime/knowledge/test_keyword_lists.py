@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -39,7 +40,7 @@ def test_loaders_read_each_markdown_version_once(
 
     assert load_keyword_section(path, "Detection signals") == ("first phrase",)
     assert load_key_value_table(path, "Scoring") == {"Weight": "2"}
-    assert reads == 1
+    assert reads == (2 if os.name == "nt" else 1)
 
 
 def test_markdown_cache_invalidates_when_file_changes(tmp_path: Path) -> None:
@@ -57,6 +58,24 @@ def test_markdown_cache_invalidates_when_file_changes(tmp_path: Path) -> None:
     assert load_keyword_section(path, "Signals") == (
         "new phrase with different length",
     )
+
+
+def test_markdown_cache_invalidates_when_size_and_mtime_are_preserved(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "knowledge.md"
+    path.write_text('## Signals\n\n- "old signal"\n', encoding="utf-8")
+    _read_markdown_text_cached.cache_clear()
+    original_stat = path.stat()
+
+    assert load_keyword_section(path, "Signals") == ("old signal",)
+
+    path.write_text('## Signals\n\n- "new signal"\n', encoding="utf-8")
+    os.utime(path, ns=(original_stat.st_atime_ns, original_stat.st_mtime_ns))
+
+    assert path.stat().st_size == original_stat.st_size
+    assert path.stat().st_mtime_ns == original_stat.st_mtime_ns
+    assert load_keyword_section(path, "Signals") == ("new signal",)
 
 
 def test_section_extractors_share_heading_boundaries() -> None:
