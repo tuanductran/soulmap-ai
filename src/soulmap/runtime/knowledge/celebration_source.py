@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
+
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from typing import cast
 
 from soulmap.runtime.knowledge.keyword_lists import (
@@ -35,6 +37,7 @@ class CelebrationRules:
 
 
 def _contract_body(text: str) -> str:
+    text = markdown_without_code_blocks(text)
     match = re.search(
         rf"^## {re.escape(_CONTRACT_HEADING)}\s*$",
         text,
@@ -49,6 +52,7 @@ def _contract_body(text: str) -> str:
 
 
 def _section_body(body: str, heading: str) -> str:
+    body = markdown_without_code_blocks(body)
     match = re.search(rf"^### {re.escape(heading)}\s*$", body, re.MULTILINE)
     if match is None:
         raise ValueError(f"Celebration section {heading!r} is missing.")
@@ -58,6 +62,7 @@ def _section_body(body: str, heading: str) -> str:
 
 
 def _quoted_bullets(body: str) -> tuple[str, ...]:
+    body = markdown_without_code_blocks(body)
     return tuple(dict.fromkeys(re.findall(r'^- "([^"]+)"\s*$', body, re.MULTILINE)))
 
 
