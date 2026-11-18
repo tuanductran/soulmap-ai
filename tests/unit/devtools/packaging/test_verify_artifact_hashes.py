@@ -192,7 +192,6 @@ def test_verifier_rejects_duplicate_artifact_filename(tmp_path: Path) -> None:
     assert "duplicate artifact filename" in result.stderr
 
 
-
 def test_verifier_rejects_in_repository_artifact_symlink(tmp_path: Path) -> None:
     manifest_path, artifact = _write_manifest(tmp_path)
     target = artifact.with_name("copied-artifact.zip")
