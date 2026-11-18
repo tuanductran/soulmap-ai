@@ -20,11 +20,7 @@ def _verify_archive(
         names = archive.namelist()
         if len(names) != len(set(names)):
             raise ValueError(f"Archive contains duplicate members: {archive_path}")
-        unsafe = [
-            name
-            for name in names
-            if not is_safe_member_path(name)
-        ]
+        unsafe = [name for name in names if not is_safe_member_path(name)]
         if unsafe:
             raise ValueError(
                 f"Archive contains unsafe member paths in {archive_path}: {unsafe[:5]}"
