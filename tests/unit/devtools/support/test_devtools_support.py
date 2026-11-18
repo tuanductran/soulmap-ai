@@ -359,3 +359,34 @@ def test_markdown_references_use_commonmark_tokens_for_edge_cases() -> None:
         markdown_support.MarkdownReference(1, "nested", "docs/(inner).md"),
         markdown_support.MarkdownReference(3, "Logo", "assets/logo.png", is_image=True),
     ]
+
+
+def test_fence_tracker_respects_commonmark_three_space_indent_limit() -> None:
+    tracker = markdown_support.FenceTracker()
+
+    assert tracker.consume("   ```\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("   ```\n") is True
+    assert tracker.in_fence is False
+
+    # Four leading spaces make this an indented code block, not a fence.
+    assert tracker.consume("    ```\n") is False
+    assert tracker.in_fence is False
+    # A tab is not one of CommonMark's permitted 0-3 leading spaces.
+    assert tracker.consume("\t```\n") is False
+    assert tracker.in_fence is False
+
+
+def test_indented_code_fence_does_not_hide_following_markdown_references() -> None:
+    lines = [
+        "    ```\n",
+        "## Visible heading\n",
+        "[Visible](guide.md)\n",
+    ]
+
+    assert markdown_support.extract_heading_anchors(lines) == [
+        markdown_support.MarkdownHeadingAnchor("visible-heading", "Visible heading", 2)
+    ]
+    assert markdown_support.iter_markdown_references(lines) == [
+        markdown_support.MarkdownReference(3, "Visible", "guide.md")
+    ]
