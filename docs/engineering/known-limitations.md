@@ -42,7 +42,7 @@ whether a proposed change is consistent with the project's design.
 | `SOULMAP.md` is the only doctrine source | Intentional design | [Documentation ownership](#documentation-ownership) |
 | Architecture decisions are recorded in ADRs | Intentional design | [Architecture ownership](#architecture-ownership) |
 | Crisis detection supports five languages only | Current limitation | [Language limitations](#language-limitations) |
-| Evals do not score LLM response quality | Intentional design | [Evaluation limitations](#evaluation-limitations) |
+| Response-quality evals are advisory and do not score live host output | Intentional design | [Evaluation limitations](#evaluation-limitations) |
 | Content changes belong in Markdown | Contributor expectation | [Contributor expectations](#contributor-expectations) |
 
 ---
