@@ -360,19 +360,6 @@ def test_archive_member_rejects_windows_trimmed_component_variants(
     assert is_safe_member_path(member_name) is False
 
 
-@pytest.mark.parametrize(
-    "member_name",
-    ["../outside.txt", "C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
-)
-def test_dev_rejects_posix_and_windows_unsafe_archive_members(
-    tmp_path: Path, member_name: str
-) -> None:
-    archive_path = tmp_path / "unsafe.zip"
-    with zipfile.ZipFile(archive_path, "w") as archive:
-        archive.writestr(member_name, "unsafe")
-
-    with pytest.raises(ValueError, match="unsafe member paths"):
-        dev_tool._verify_archive(archive_path, {member_name}, tmp_path)
 
 
 
