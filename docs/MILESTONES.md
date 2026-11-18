@@ -46,6 +46,7 @@ notes, tests, and release records.
 | 30 | Knowledge Ownership & Shipped-Package Boundary | Consolidated the Markdown/Python ownership split for detector semantics and executable policy; added source-registry and Python-identifier leakage contracts; made shipped-content checks follow the package builder's actual member set. Evidence: ADR 0006, the October/November runtime-ownership audits, and PRs #730-#772, #952-#985, #998, and #1001. |
 | 31 | Detector Attribution & Safety-Gate Hardening | Added user-attribution protections across detectors and history scoring; preserved multilingual Tier 1/Tier 2 crisis behavior, explicit-denial near misses, Tier 2 Sanctuary fallback, fail-closed gate contracts, and session/inquiry guardrails. Evidence: PRs #784-#789, #979, #982, #984, #988, and #995, with the current safety-enforcement matrix and regression suites. |
 | 32 | Repository Governance, Release Integrity & Toolchain Synchronization | Reorganized tests by domain; strengthened shipped-artifact and release-provenance verification; clarified manual release-finalize trust boundaries; synchronized dependency-bot ownership, CI uv pins, compatibility research, and safety-architecture documentation. Evidence: PRs #1006-#1017 and the release operations contract. |
+| 33 | v0.15.0 Release & Markdown/Packaging Hardening | Published v0.15.0 with CommonMark-aware contract validation, fenced-code exclusions across knowledge parsing and runtime registry checks, cross-platform Markdown cache fixes, safer archive/marketplace path handling, fail-closed eval/provenance validation, and a verified immutable release with SHA-256 provenance and artifact attestations. Evidence: PRs #1018-#1039, release PR #1040, tag `v0.15.0`, and Release Finalize run #44350784442. |
 
 ## Post-Merge Audit Verification
 
@@ -61,14 +62,15 @@ The audit artifacts are review evidence, not a deletion list. Reopen this workst
 
 ## Current Historical Baseline
 
-Phases 1-32 record the architecture, the v0.14.0 release and its follow-up, and the completed post-release work through PR #1017. Phases 30-32 summarize the major knowledge-ownership, safety, package-boundary, repository-governance, release-integrity, and toolchain work completed after PR #686; they are milestone summaries, not a substitute for the detailed ADRs, audits, tests, and PR evidence. The canonical inventory verification is recorded above from CI run
+Phases 1-33 record the architecture and completed project milestones through the v0.15.0 release. Phases 30-32 summarize the knowledge-ownership, safety, package-boundary, repository-governance, release-integrity, and toolchain work completed after PR #686 and before v0.15.0. Phase 33 records the v0.15.0 release and the Markdown/packaging hardening completed in the pre-release workstream (PRs #1018-#1039), followed by release PR #1040. These phases are milestone summaries, not a substitute for the detailed ADRs, audits, tests, and release evidence. The canonical inventory verification is recorded above from CI run
 [`38692440277`](https://github.com/tuanductran/soulmap-ai/actions/runs/38692440277),
 which ran on the documentation-only PR #679 branch against the merged runtime and audit
 implementation. No separate source-change work item remains from that audit; reopen this
 workstream only if a later source, entrypoint, packaging, or knowledge change produces
-new actionable findings. The v0.14.0 release adds stronger review-only repository
-inventories and makes incomplete audit scans visible without weakening the project's
-knowledge-first, deterministic-safety, and package-boundary rules. The project deliberately
+new actionable findings. The v0.14.0 release added stronger review-only repository inventories;
+v0.15.0 further strengthened release provenance, Markdown parsing, and package-boundary
+validation without weakening the project's knowledge-first and deterministic-safety rules.
+The project deliberately
 does not treat the following as completed or implicitly committed work:
 
 - third-party platform deployment claims without operator evidence;
