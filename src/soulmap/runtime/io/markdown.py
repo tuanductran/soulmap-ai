@@ -395,7 +395,7 @@ def markdown_without_code_blocks(text: str) -> str:
     lines = text.splitlines(keepends=True)
     code_lines = markdown_code_block_lines(lines)
     return "".join(
-        "".join(char for char in line if char in "\\r\\n")
+        "".join(char for char in line if char in "\r\n")
         if line_number in code_lines
         else line
         for line_number, line in enumerate(lines, start=1)
