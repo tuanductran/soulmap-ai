@@ -64,9 +64,15 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
             raise ValueError(
                 f"Marketplace skill path is not a directory: {path_value or '.'}"
             )
-        if not (target / "SKILL.md").is_file():
+        entrypoint = target / "SKILL.md"
+        if entrypoint.is_symlink():
             raise ValueError(
-                f"Marketplace skill path must contain SKILL.md: {path_value or '.'}"
+                f"Marketplace Skill entrypoint must not be a symlink: {skill_path}"
+            )
+        resolved_entrypoint = entrypoint.resolve()
+        if not resolved_entrypoint.is_relative_to(root) or not resolved_entrypoint.is_file():
+            raise ValueError(
+                f"Marketplace skill path must contain an in-repository SKILL.md: {path_value or '.'}"
             )
     return payload
 
