@@ -201,9 +201,9 @@ def _has_heading(text: str, expected: str) -> bool:
     Fenced code is skipped so examples cannot satisfy runtime source contracts.
     """
     if expected.startswith("Pattern "):
-        pattern = re.compile(rf"^##\\s+{re.escape(expected)}:\\s+.+$")
+        pattern = re.compile(rf"^##\s+{re.escape(expected)}:\s+.+$")
     else:
-        pattern = re.compile(rf"^#{{2,3}}\\s+{re.escape(expected)}\\s*$")
+        pattern = re.compile(rf"^#{{2,3}}\s+{re.escape(expected)}\s*$")
 
     fence = FenceTracker()
     for raw in text.splitlines():
