@@ -179,7 +179,6 @@ def test_main_returns_one_and_prints_issues_when_drifted(
     assert str(_DOC_RELATIVE_PATH) in capsys.readouterr().out
 
 
-
 def test_orchestration_rules_are_loaded_from_requested_repository_root(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -190,7 +189,9 @@ def test_orchestration_rules_are_loaded_from_requested_repository_root(
     contract_path.write_text("# Orchestration\n", encoding="utf-8")
     captured_roots: list[Path | None] = []
 
-    def fake_load_orchestration_rules(repo_root: Path | None = None) -> SimpleNamespace:
+    def fake_load_orchestration_rules(
+        repo_root: Path | None = None,
+    ) -> SimpleNamespace:
         captured_roots.append(repo_root)
         return SimpleNamespace(
             primary_priority=(SimpleNamespace(framework="CONFIGURED_PRIMARY"),),
