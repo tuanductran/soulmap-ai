@@ -385,6 +385,45 @@ def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
     return _code_block_lines_from_tokens(tokens)
 
 
+def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
+    """Return opening lines for fenced code blocks without a CommonMark close.
+
+    Token maps identify the complete container-relative block. The final mapped
+    line is a closing fence only when its marker matches the opener and its
+    indentation is valid for the list and block-quote containers.
+    """
+    tokens = _MARKDOWN_PARSER.parse(_markdown_source(lines))
+    unclosed: list[int] = []
+
+    for token in tokens:
+        if token.type != "fence" or token.map is None:
+            continue
+
+        opening = lines[token.map[0]].rstrip("\r\n")
+        closing = lines[token.map[1] - 1].rstrip("\r\n")
+
+        quote_depth = 0
+        remaining = opening
+        while prefix := re.match(r"^ {0,3}>[ \\t]?", remaining):
+            quote_depth += 1
+            remaining = remaining[prefix.end() :]
+
+        list_depth = max(0, (token.level - quote_depth) // 2)
+        for _ in range(quote_depth):
+            prefix = re.match(r"^ {0,3}>[ \\t]?", closing)
+            if prefix is None:
+                break
+            closing = closing[prefix.end() :]
+
+        max_indent = 3 + (2 * list_depth)
+        marker = re.escape(token.markup[0])
+        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \\t]*"
+        if re.fullmatch(closing_pattern, closing) is None:
+            unclosed.append(token.map[0] + 1)
+
+    return tuple(unclosed)
+
+
 def markdown_without_code_blocks(text: str) -> str:
     """Blank CommonMark code-block lines while preserving source line numbers.
 
