@@ -18,6 +18,7 @@ from soulmap.devtools.packaging.members import (
     CORE_FILES,
     PLUGIN_PREFIX,
     is_excluded_entrypoint_name,
+    is_safe_member_path,
     source_members,
 )
 
@@ -89,8 +90,7 @@ def _read_members(archive_path: Path) -> tuple[set[str], zipfile.ZipFile]:
         raise ExtractedArtifactError(f"duplicate archive member names: {archive_path}")
     names = set(member_names)
     for name in names:
-        parsed = PurePosixPath(name)
-        if name.startswith("/") or ".." in parsed.parts:
+        if not is_safe_member_path(name):
             archive.close()
             raise ExtractedArtifactError(f"unsafe archive member path: {name}")
     return names, archive
