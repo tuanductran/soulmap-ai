@@ -165,3 +165,24 @@ def test_verify_provenance_rejects_non_object_json(tmp_path: Path) -> None:
         ReleaseOperationsError, match="provenance must be a JSON object"
     ):
         verify_provenance(tmp_path, path)
+
+
+
+def test_verify_provenance_rejects_unhashable_artifact_filename(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write_project(tmp_path)
+    _write_artifacts(tmp_path)
+    monkeypatch.setattr(
+        "soulmap.devtools.packaging.release_ops._git",
+        lambda root, *args: "a" * 40,
+    )
+    provenance = create_provenance(
+        tmp_path, {"status": "pass", "version": "0.11.0"}
+    )
+    provenance["artifacts"][0]["filename"] = []
+    path = tmp_path / "dist" / "release-provenance.json"
+    path.write_text(json.dumps(provenance), encoding="utf-8")
+
+    with pytest.raises(ReleaseOperationsError, match="artifact set is invalid"):
+        verify_provenance(tmp_path, path)
