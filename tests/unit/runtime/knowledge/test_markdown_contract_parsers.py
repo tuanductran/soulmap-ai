@@ -11,6 +11,17 @@ from soulmap.runtime.knowledge import (
     scope_source,
     synthesis_source,
 )
+
+
+@pytest.mark.parametrize(
+    ("parser", "heading"),
+    [
+        (orchestration_source._contract_body, "Routing policy"),
+        (scope_source._contract_body, "Scope policy"),
+        (synthesis_source._contract_body, "Detection policy"),
+        (celebration_source._contract_body, "Detection policy"),
+    ],
+)
 def test_contract_boundaries_ignore_fenced_headings(
     parser: Callable[[str], str], heading: str
 ) -> None:
@@ -49,7 +60,9 @@ def test_orchestration_table_parser_ignores_fenced_table_rows() -> None:
         "| 1 | GRIEF |\n"
     )
 
-    assert orchestration_source._table_rows(body, "Primary framework priority") == [["1", "GRIEF"]]
+    assert orchestration_source._table_rows(body, "Primary framework priority") == [
+        ["1", "GRIEF"]
+    ]
 
 
 def test_scope_parser_ignores_fenced_groups_and_phrases() -> None:
@@ -97,7 +110,9 @@ def test_synthesis_parsers_ignore_fenced_bullets_and_theme_groups() -> None:
         '- "real signal"\n'
     )
 
-    assert synthesis_source._quoted_bullets(section, "Explicit request signals") == ("real request",)
+    assert synthesis_source._quoted_bullets(section, "Explicit request signals") == (
+        "real request",
+    )
     assert synthesis_source._theme_groups(themes, "Recurring emotional theme") == {
         "loneliness": ("real signal",)
     }
