@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import ast
+from pathlib import Path
+
+import pytest
 
 from soulmap.devtools.support.repo import REPO_ROOT
 from soulmap.runtime import source_registry
@@ -137,7 +140,7 @@ def test_runtime_contract_surface_contains_only_python() -> None:
 
 
 def test_runtime_skill_path_uses_explicit_repository_root(
-    tmp_path, monkeypatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     entries = {
         "orchestration": (
