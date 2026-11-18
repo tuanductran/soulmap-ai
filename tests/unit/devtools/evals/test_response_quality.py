@@ -210,10 +210,11 @@ def test_metalinguistic_quote_does_not_hide_a_later_endorsement() -> None:
         )
         assert quality["status"] == "FAIL"
 
-def test_metalinguistic_quote_does_not_hide_a_later_endorsement_beyond_80_chars() -> None:
+
+def test_long_distance_quoted_endorsement_is_detected() -> None:
     selection: dict[str, object] = {"primary_framework": "MIRROR", "mode": "MIRROR"}
     response = (
-        "The phrase \\u201ceverything happens for a reason\\u201d can feel dismissive. "
+        "The phrase \u201ceverything happens for a reason\u201d can feel dismissive. "
         "It is worth examining how the phrase lands in context, because the same "
         "words can carry different meanings depending on a person's history and "
         "the circumstances in which they hear them. I believe it is true. "
@@ -229,10 +230,10 @@ def test_metalinguistic_quote_does_not_hide_a_later_endorsement_beyond_80_chars(
     assert quality["status"] == "FAIL"
 
 
-def test_later_unrelated_truth_statement_does_not_endorse_quoted_tone_phrase() -> None:
+def test_unrelated_truth_statement_is_not_an_endorsement() -> None:
     selection: dict[str, object] = {"primary_framework": "MIRROR", "mode": "MIRROR"}
     response = (
-        "The phrase \\u201ceverything happens for a reason\\u201d can feel dismissive. "
+        "The phrase \u201ceverything happens for a reason\u201d can feel dismissive. "
         "Your own experience is real and true to you. What did that bring up for you?"
     )
 
