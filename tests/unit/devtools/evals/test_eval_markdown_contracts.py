@@ -26,9 +26,7 @@ def test_markdown_contract_eval_fails_when_case_filter_matches_nothing(
         lambda: [{"id": "known", "summary": "known case"}],
     )
 
-    result = eval_markdown_contracts.run_markdown_contract_eval(
-        case_id="misspelled"
-    )
+    result = eval_markdown_contracts.run_markdown_contract_eval(case_id="misspelled")
 
     assert result["ok"] is False
     assert result["summary"] == {"cases": 0, "rules": 0, "failed_checks": 1}
