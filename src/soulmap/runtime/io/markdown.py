@@ -391,7 +391,7 @@ def _strip_blockquote_prefixes(line: str, container_level: int) -> tuple[int, st
     while quote_depth < container_level:
         list_depth = max(0, (container_level - quote_depth) // 2)
         max_indent = 3 + (2 * list_depth)
-        prefix = re.match(rf"^ {{0,{max_indent}}}>[ \\t]?", line)
+        prefix = re.match(rf"^ {{0,{max_indent}}}>[ \t]?", line)
         if prefix is None:
             break
         quote_depth += 1
@@ -418,8 +418,8 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
             unclosed.append(opening_line + 1)
             continue
 
-        opening = lines[opening_line].rstrip("\\r\\n")
-        closing = lines[token.map[1] - 1].rstrip("\\r\\n")
+        opening = lines[opening_line].rstrip("\r\n")
+        closing = lines[token.map[1] - 1].rstrip("\r\n")
         quote_depth, _ = _strip_blockquote_prefixes(opening, token.level)
         closing_quote_depth, closing = _strip_blockquote_prefixes(
             closing, token.level
@@ -431,7 +431,7 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
         list_depth = max(0, (token.level - quote_depth) // 2)
         max_indent = 3 + (2 * list_depth)
         marker = re.escape(token.markup[0])
-        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \\t]*"
+        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \t]*"
         if re.fullmatch(closing_pattern, closing) is None:
             unclosed.append(opening_line + 1)
 
