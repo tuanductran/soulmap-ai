@@ -197,7 +197,12 @@ def main(argv: list[str] | None = None) -> int:
         provenance_path = args.provenance or root / "dist" / "release-provenance.json"
         if args.action == "provenance":
             verification = json.loads(verification_path.read_text(encoding="utf-8"))
-            payload = create_provenance(root, verification)
+            fresh_verification = verify_release(root)
+            if verification != fresh_verification:
+                raise ReleaseOperationsError(
+                    "supplied release verification does not match the current repository"
+                )
+            payload = create_provenance(root, fresh_verification)
             _write_json(provenance_path, payload)
         elif args.action == "health":
             verification = verify_release(root)
