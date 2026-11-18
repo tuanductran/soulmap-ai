@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import unquote
@@ -362,7 +363,7 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
-def _code_block_lines_from_tokens(tokens: list[object]) -> frozenset[int]:
+def _code_block_lines_from_tokens(tokens: Sequence[object]) -> frozenset[int]:
     """Return 1-indexed source lines covered by CommonMark code-block tokens."""
     code_lines: set[int] = set()
     for token in tokens:
