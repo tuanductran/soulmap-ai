@@ -29,9 +29,11 @@ The evaluator uses two fixture surfaces:
    near-miss responses, including cases where quality fails while safety passes
    and cases where safety fails while quality passes.
 
-The response-generation dataset covers every primary framework family:
-`DE_ESCALATION`, `MIRROR`, `CRISIS`, `DEPENDENCY`, `GRIEF`, `EXISTENTIAL`,
-`INNER_PARTS`, `DIRECTION`, `SHADOW`, `MEANING_INTEGRATION`, and `SYNTHESIS`.
+The response-generation dataset covers the 10 primary framework families
+currently represented in its fixtures: `MIRROR`, `CRISIS`, `DEPENDENCY`,
+`GRIEF`, `EXISTENTIAL`, `INNER_PARTS`, `DIRECTION`, `SHADOW`,
+`MEANING_INTEGRATION`, and `SYNTHESIS`. `DE_ESCALATION` is not a primary
+framework value in this dataset.
 
 ## Determinism
 
