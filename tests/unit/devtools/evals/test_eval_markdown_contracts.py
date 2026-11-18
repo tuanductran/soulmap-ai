@@ -8,7 +8,7 @@ from soulmap.devtools.evals import eval_markdown_contracts
 def test_markdown_contract_eval_fails_when_dataset_is_empty(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr(eval_markdown_contracts, "_load_cases", lambda: [])
+    monkeypatch.setattr(eval_markdown_contracts, "_load_cases", list)
 
     result = eval_markdown_contracts.run_markdown_contract_eval()
 
