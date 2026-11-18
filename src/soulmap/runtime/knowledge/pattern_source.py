@@ -13,6 +13,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
+
 _HEADING_RE = re.compile(r"^##\s+Pattern\s+\d+:\s*(?P<name>.+?)\s*$")
 _QUOTED_RE = re.compile(r'"([^"]+)"')
 
@@ -110,6 +112,7 @@ def _quoted_phrases(bullet_lines: list[str]) -> tuple[str, ...]:
 
 
 def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
+    text = markdown_without_code_blocks(text)
     """Parse the pattern-mapper knowledge file into structured signals.
 
     Each heading starts a pattern, and the bullet lists under it supply the
