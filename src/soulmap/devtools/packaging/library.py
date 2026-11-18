@@ -7,7 +7,7 @@ import hashlib
 import json
 import mimetypes
 import tomllib
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 from soulmap.devtools.checks.skills_boundary import audit_text
@@ -45,9 +45,12 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
             raise ValueError("Marketplace skill paths must be repository-relative")
         path_value = skill_path[2:]
         relative_path = PurePosixPath(path_value)
+        windows_path = PureWindowsPath(path_value)
         if (
             "\\" in path_value
             or relative_path.is_absolute()
+            or windows_path.drive
+            or windows_path.root
             or ".." in relative_path.parts
         ):
             raise ValueError(
