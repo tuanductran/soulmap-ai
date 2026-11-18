@@ -17,7 +17,7 @@ from soulmap.devtools.packaging.artifact_integrity import (
     verify_member_content,
 )
 from soulmap.devtools.packaging.library import build_library
-from soulmap.devtools.packaging.members import source_members
+from soulmap.devtools.packaging.members import is_safe_member_path, source_members
 from soulmap.devtools.support.repo import REPO_ROOT
 
 INTEGRATION_GUIDES = (
@@ -163,7 +163,7 @@ def _verify_archive(
                     f"{path.name}: duplicate archive member names"
                 )
             actual = set(names)
-            if any(name.startswith("/") or ".." in Path(name).parts for name in actual):
+            if any(not is_safe_member_path(name) for name in actual):
                 raise ReleaseVerificationError(
                     f"{path.name}: unsafe archive member path"
                 )
