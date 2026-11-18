@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 from soulmap.runtime.io.markdown import markdown_without_code_blocks
-
 from soulmap.runtime.knowledge.labels import (
     BLOCKED_FRAMEWORK_NAMES,
     FRAMEWORK_NAMES,
