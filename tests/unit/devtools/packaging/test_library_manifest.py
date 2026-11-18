@@ -208,7 +208,6 @@ def test_read_marketplace_rejects_missing_plugin_name(tmp_path: Path) -> None:
         library._read_marketplace(tmp_path)
 
 
-
 def test_read_marketplace_rejects_skill_entrypoint_symlink_outside_repository(
     tmp_path: Path,
 ) -> None:
