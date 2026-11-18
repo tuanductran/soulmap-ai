@@ -158,18 +158,17 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
     artifacts = payload.get("artifacts")
     if not isinstance(artifacts, list):
         raise ReleaseOperationsError("provenance artifacts must be a list")
-    filenames = {item.get("filename") for item in artifacts if isinstance(item, dict)}
-    if (
-        len(artifacts) != len(ARTIFACT_NAMES)
-        or filenames != set(ARTIFACT_NAMES)
+    if len(artifacts) != len(ARTIFACT_NAMES) or any(
+        not isinstance(item, dict) for item in artifacts
     ):
         raise ReleaseOperationsError("provenance artifact set is invalid")
+    filenames = [item.get("filename") for item in artifacts]
+    if any(not isinstance(filename, str) for filename in filenames) or set(
+        filenames
+    ) != set(ARTIFACT_NAMES):
+        raise ReleaseOperationsError("provenance artifact set is invalid")
     for item in artifacts:
-        if not isinstance(item, dict):
-            raise ReleaseOperationsError("provenance artifact entry is invalid")
-        filename = item.get("filename")
-        if not isinstance(filename, str):
-            raise ReleaseOperationsError("provenance artifact filename is invalid")
+        filename = item["filename"]
         artifact = repo_root / "dist" / filename
         if not artifact.is_file():
             raise ReleaseOperationsError(f"artifact is missing: {artifact.name}")
