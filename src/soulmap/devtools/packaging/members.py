@@ -111,7 +111,6 @@ def _source_tree_files(root: Path, repo_root: Path) -> list[Path]:
     return paths
 
 
-
 def is_safe_member_path(name: str) -> bool:
     """Return whether an archive member is safe on both POSIX and Windows."""
     if not name or "\\" in name:
