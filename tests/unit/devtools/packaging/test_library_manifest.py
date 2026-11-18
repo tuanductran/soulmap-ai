@@ -237,7 +237,6 @@ def test_read_marketplace_rejects_windows_drive_skill_path(tmp_path: Path) -> No
         library._read_marketplace(tmp_path)
 
 
-
 def test_read_marketplace_rejects_skill_path_outside_shipped_skill_tree(
     tmp_path: Path,
 ) -> None:
