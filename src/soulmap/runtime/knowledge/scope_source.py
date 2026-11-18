@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
+
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from typing import cast
 
 from soulmap.runtime.knowledge.labels import SCOPE_CATEGORY_NAMES, map_label
@@ -24,6 +26,7 @@ class ScopeRules:
 
 
 def _contract_body(text: str) -> str:
+    text = markdown_without_code_blocks(text)
     match = re.search(
         rf"^## {re.escape(_CONTRACT_HEADING)}\s*$",
         text,
@@ -43,6 +46,7 @@ _QUOTED_RE = re.compile(r'"([^"]+)"')
 
 
 def _literal_config(body: str) -> dict[str, object]:
+    body = markdown_without_code_blocks(body)
     packs = list(_PACK_RE.finditer(body))
     expected = {
         "Whitelist tier 1": "WHITELIST_TIER1",
