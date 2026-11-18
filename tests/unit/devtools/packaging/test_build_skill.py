@@ -359,6 +359,7 @@ def test_archive_member_rejects_windows_trimmed_component_variants(
 ) -> None:
     assert is_safe_member_path(member_name) is False
 
+
 @pytest.mark.skipif(os.name == "nt", reason="POSIX permits backslashes in filenames")
 def test_build_skips_ignored_backslash_source_before_path_validation(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
