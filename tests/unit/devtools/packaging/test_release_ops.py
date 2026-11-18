@@ -167,7 +167,6 @@ def test_verify_provenance_rejects_non_object_json(tmp_path: Path) -> None:
         verify_provenance(tmp_path, path)
 
 
-
 def test_verify_provenance_rejects_unhashable_artifact_filename(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
