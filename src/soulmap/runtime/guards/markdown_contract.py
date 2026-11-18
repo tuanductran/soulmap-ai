@@ -13,12 +13,12 @@ from pathlib import Path
 
 from soulmap.runtime.io.markdown import (
     FenceTracker,
-    markdown_code_block_lines,
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
     iter_markdown_files,
     iter_markdown_references,
+    markdown_code_block_lines,
     parse_yaml_front_matter,
     split_markdown_link_target,
 )
@@ -378,7 +378,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     if fence.in_fence:
         issues.append(Issue(path, len(lines) or 1, "Unclosed fenced code block"))
 
-    # 2c) HTML comments must be balanced (skip inside fenced code blocks).
+    # 2c) HTML comments must be balanced (skip inside CommonMark code blocks).
     opens = 0
     closes = 0
     for line_no, raw in enumerate(lines, start=1):
