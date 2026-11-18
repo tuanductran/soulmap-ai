@@ -105,7 +105,6 @@ def test_verify_provenance_rejects_artifact_hash_drift(
         verify_provenance(tmp_path, path)
 
 
-
 def test_create_provenance_rejects_failed_verification(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -158,10 +157,11 @@ def test_verify_provenance_rejects_duplicate_artifact_entries(
         verify_provenance(tmp_path, path)
 
 
-
 def test_verify_provenance_rejects_non_object_json(tmp_path: Path) -> None:
     path = tmp_path / "release-provenance.json"
     path.write_text("[]", encoding="utf-8")
 
-    with pytest.raises(ReleaseOperationsError, match="provenance must be a JSON object"):
+    with pytest.raises(
+        ReleaseOperationsError, match="provenance must be a JSON object"
+    ):
         verify_provenance(tmp_path, path)
