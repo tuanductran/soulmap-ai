@@ -248,7 +248,7 @@ def test_python_executable_warns_once_without_venv_or_ci(
 
 
 @pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
-def test_repo_tooling_lock_waits_then_cleans_root_lock(
+def test_repo_tooling_lock_waits_then_keeps_root_lock(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     fcntl = importlib.import_module("fcntl")
@@ -276,10 +276,10 @@ def test_repo_tooling_lock_waits_then_cleans_root_lock(
     assert attempts == 2
     assert sleep_calls == [0.02]
     assert "waiting for repo tooling lock .test.lock" in capsys.readouterr().err
-    assert not (tmp_path / ".test.lock").exists()
+    assert (tmp_path / ".test.lock").is_file()
 
 
-def test_repo_tooling_lock_uses_windows_venv_lock_and_unlocks(
+def test_repo_tooling_lock_uses_windows_venv_lock_and_keeps_file(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -301,34 +301,8 @@ def test_repo_tooling_lock_uses_windows_venv_lock_and_unlocks(
         assert (tmp_path / ".venv" / ".windows.lock").exists()
 
     assert lock_modes == [_Msvcrt.LK_NBLCK, _Msvcrt.LK_UNLCK]
-    assert not (tmp_path / ".venv" / ".windows.lock").exists()
+    assert (tmp_path / ".venv" / ".windows.lock").is_file()
 
-
-def test_repo_tooling_lock_tolerates_missing_or_unremovable_cleanup_file(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-    capsys: pytest.CaptureFixture[str],
-) -> None:
-    original_unlink = Path.unlink
-
-    def missing_unlink(path: Path, missing_ok: bool = False) -> None:
-        if path.name == ".missing.lock":
-            raise FileNotFoundError
-        if path.name == ".stuck.lock":
-            raise OSError("busy")
-        original_unlink(path, missing_ok=missing_ok)
-
-    monkeypatch.setattr(Path, "unlink", missing_unlink)
-
-    with run_support.repo_tooling_lock(tmp_path, name="missing"):
-        pass
-    with run_support.repo_tooling_lock(tmp_path, name="stuck"):
-        pass
-
-    assert (
-        "warning: failed to remove repo tooling lock .stuck.lock: busy"
-        in capsys.readouterr().err
-    )
 
 
 @pytest.mark.skipif(os.name == "nt", reason="exercise the POSIX flock branch")
