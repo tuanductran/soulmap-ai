@@ -360,20 +360,26 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
-def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
-    """Return 1-indexed source lines inside CommonMark code blocks.
-
-    Using parser token maps handles container-relative indentation in lists
-    and block quotes, which a line-only fence tracker cannot infer.
-    """
+def _code_block_lines_from_tokens(tokens: list[object]) -> frozenset[int]:
+    """Return 1-indexed source lines covered by CommonMark code-block tokens."""
     code_lines: set[int] = set()
-    for token in _MARKDOWN_PARSER.parse(_markdown_source(lines)):
+    for token in tokens:
         if getattr(token, "type", None) not in {"fence", "code_block"}:
             continue
         token_map = getattr(token, "map", None)
         if token_map:
             code_lines.update(range(int(token_map[0]) + 1, int(token_map[1]) + 1))
     return frozenset(code_lines)
+
+
+def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
+    """Return 1-indexed source lines inside CommonMark code blocks.
+
+    Parser token maps account for container-relative indentation in lists
+    and block quotes, unlike a line-only fence tracker.
+    """
+    tokens = _MARKDOWN_PARSER.parse(_markdown_source(lines))
+    return _code_block_lines_from_tokens(tokens)
 
 
 def iter_disallowed_markdown_references(
@@ -409,7 +415,10 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
     references: list[MarkdownReference] = []
     source = _markdown_source(lines)
 
-    for block_token in _MARKDOWN_PARSER.parse(source):
+    block_tokens = _MARKDOWN_PARSER.parse(source)
+    code_lines = _code_block_lines_from_tokens(block_tokens)
+
+    for block_token in block_tokens:
         if getattr(block_token, "type", None) != "inline":
             continue
         children = getattr(block_token, "children", None) or []
@@ -473,7 +482,6 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
                 open_link["label"] += _inline_token_label(token)
 
     known = {(ref.line, ref.label, ref.target, ref.is_image) for ref in references}
-    code_lines = markdown_code_block_lines(lines)
     for line_no, raw in enumerate(lines, start=1):
         if line_no in code_lines:
             continue
