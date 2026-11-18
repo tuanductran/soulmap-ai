@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import unquote
 
 from markdown_it import MarkdownIt
 
-_FENCE_RE = re.compile(r"^(\s*)(`{3,}|~{3,})")
+_FENCE_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 _MD_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
@@ -69,13 +70,15 @@ class MarkdownHeadingAnchor:
 
 
 class FenceTracker:
-    """Track fenced-code-block state across lines using CommonMark fence rules.
+    """Track a top-level fenced-code-block state across lines.
 
     A fence only closes on a line whose marker uses the same character as the
     opening fence and a run length greater than or equal to it. A naive
     "any 3+ backtick or tilde run toggles the state" check would desync on a
     four-backtick fence wrapping a three-backtick example, so this tracks the
     opening marker's character and length instead of a bare boolean toggle.
+    Use :func:`markdown_code_block_lines` for complete documents with nested
+    list or block-quote containers.
     """
 
     def __init__(self) -> None:
@@ -99,11 +102,16 @@ class FenceTracker:
             fenced content and skip its other line checks. False only for a
             line outside any fence.
         """
-        match = _FENCE_RE.match(raw)
+        line = raw.rstrip("\r\n")
+        match = _FENCE_RE.match(line)
         if self._marker_char is None:
             if not match:
                 return False
-            run = match.group(2)
+            run, info = match.group(2), match.group(3)
+            # CommonMark forbids backticks in the info string of a backtick
+            # fence. Such a line is not an opening fence at all.
+            if run[0] == "`" and "`" in info:
+                return False
             self._marker_char = run[0]
             self._marker_len = len(run)
             return True
@@ -111,6 +119,7 @@ class FenceTracker:
             match
             and match.group(2)[0] == self._marker_char
             and len(match.group(2)) >= self._marker_len
+            and not match.group(3).strip(" \t")
         ):
             self._marker_char = None
             self._marker_len = 0
@@ -243,10 +252,10 @@ def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
     """
     anchors: list[MarkdownHeadingAnchor] = []
     counts: dict[str, int] = {}
-    fence = FenceTracker()
+    code_lines = markdown_code_block_lines(lines)
 
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
 
         match = _ATX_HEADING_RE.match(raw)
@@ -354,15 +363,37 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
+def _code_block_lines_from_tokens(tokens: Sequence[object]) -> frozenset[int]:
+    """Return 1-indexed source lines covered by CommonMark code-block tokens."""
+    code_lines: set[int] = set()
+    for token in tokens:
+        if getattr(token, "type", None) not in {"fence", "code_block"}:
+            continue
+        token_map = getattr(token, "map", None)
+        if token_map:
+            code_lines.update(range(int(token_map[0]) + 1, int(token_map[1]) + 1))
+    return frozenset(code_lines)
+
+
+def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
+    """Return 1-indexed source lines inside CommonMark code blocks.
+
+    Parser token maps account for container-relative indentation in lists
+    and block quotes, unlike a line-only fence tracker.
+    """
+    tokens = _MARKDOWN_PARSER.parse(_markdown_source(lines))
+    return _code_block_lines_from_tokens(tokens)
+
+
 def iter_disallowed_markdown_references(
     lines: list[str],
 ) -> list[MarkdownReference]:
     """Find unsafe Markdown destinations that parsers intentionally discard."""
     references: list[MarkdownReference] = []
-    fence = FenceTracker()
+    code_lines = markdown_code_block_lines(lines)
 
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
         for label, target in _UNSAFE_MD_LINK_RE.findall(raw):
             references.append(
@@ -387,7 +418,10 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
     references: list[MarkdownReference] = []
     source = _markdown_source(lines)
 
-    for block_token in _MARKDOWN_PARSER.parse(source):
+    block_tokens = _MARKDOWN_PARSER.parse(source)
+    code_lines = _code_block_lines_from_tokens(block_tokens)
+
+    for block_token in block_tokens:
         if getattr(block_token, "type", None) != "inline":
             continue
         children = getattr(block_token, "children", None) or []
@@ -451,9 +485,8 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
                 open_link["label"] += _inline_token_label(token)
 
     known = {(ref.line, ref.label, ref.target, ref.is_image) for ref in references}
-    fence = FenceTracker()
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
         for label, target in _MD_IMAGE_RE.findall(raw):
             if label.strip():

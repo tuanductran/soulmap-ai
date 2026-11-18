@@ -359,3 +359,92 @@ def test_markdown_references_use_commonmark_tokens_for_edge_cases() -> None:
         markdown_support.MarkdownReference(1, "nested", "docs/(inner).md"),
         markdown_support.MarkdownReference(3, "Logo", "assets/logo.png", is_image=True),
     ]
+
+
+def test_fence_tracker_respects_commonmark_three_space_indent_limit() -> None:
+    tracker = markdown_support.FenceTracker()
+
+    assert tracker.consume("   ```\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("   ```\n") is True
+    assert tracker.in_fence is False
+
+    # Four leading spaces make this an indented code block, not a fence.
+    assert tracker.consume("    ```\n") is False
+    assert tracker.in_fence is False
+    # A tab is not one of CommonMark's permitted 0-3 leading spaces.
+    assert tracker.consume("\t```\n") is False
+    assert tracker.in_fence is False
+
+
+def test_indented_code_fence_does_not_hide_following_markdown_references() -> None:
+    lines = [
+        "    ```\n",
+        "## Visible heading\n",
+        "[Visible](guide.md)\n",
+    ]
+
+    assert markdown_support.extract_heading_anchors(lines) == [
+        markdown_support.MarkdownHeadingAnchor("visible-heading", "Visible heading", 2)
+    ]
+    assert markdown_support.iter_markdown_references(lines) == [
+        markdown_support.MarkdownReference(3, "Visible", "guide.md")
+    ]
+
+
+def test_fence_tracker_requires_valid_closing_fence_and_backtick_info_string() -> None:
+    tracker = markdown_support.FenceTracker()
+
+    assert tracker.consume("```python\n") is True
+    assert tracker.in_fence is True
+    # A closing marker followed by non-whitespace is code content.
+    assert tracker.consume("``` not-a-close\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("  ```  \t\n") is True
+    assert tracker.in_fence is False
+
+    # Backtick fences cannot carry backticks in their info string.
+    assert tracker.consume("```py`thon\n") is False
+    assert tracker.in_fence is False
+    # Tilde fences may carry tildes in their info string.
+    assert tracker.consume("~~~language ~~~\n") is True
+    assert tracker.in_fence is True
+    assert tracker.consume("~~~\t\n") is True
+    assert tracker.in_fence is False
+
+
+@pytest.mark.parametrize(
+    "lines",
+    [
+        [
+            "- item\n",
+            "\n",
+            "    ```markdown\n",
+            "    ## Hidden heading\n",
+            "    [Unsafe](javascript:alert(1))\n",
+            "    ![](javascript:alert(2))\n",
+            "    ```\n",
+            "\n",
+            "## Visible heading\n",
+        ],
+        [
+            "> ```markdown\n",
+            "> ## Hidden heading\n",
+            "> [Unsafe](javascript:alert(1))\n",
+            "> ![](javascript:alert(2))\n",
+            "> ```\n",
+            "\n",
+            "## Visible heading\n",
+        ],
+    ],
+)
+def test_nested_container_fences_are_excluded_from_markdown_audits(
+    lines: list[str],
+) -> None:
+    assert markdown_support.extract_heading_anchors(lines) == [
+        markdown_support.MarkdownHeadingAnchor(
+            "visible-heading", "Visible heading", len(lines)
+        )
+    ]
+    assert markdown_support.iter_disallowed_markdown_references(lines) == []
+    assert markdown_support.iter_markdown_references(lines) == []
