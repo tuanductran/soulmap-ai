@@ -411,3 +411,40 @@ def test_fence_tracker_requires_valid_closing_fence_and_backtick_info_string() -
     assert tracker.in_fence is True
     assert tracker.consume("~~~\t\n") is True
     assert tracker.in_fence is False
+
+
+@pytest.mark.parametrize(
+    "lines",
+    [
+        [
+            "- item\\n",
+            "\\n",
+            "    ```markdown\\n",
+            "    ## Hidden heading\\n",
+            "    [Unsafe](javascript:alert(1))\\n",
+            "    ![](javascript:alert(2))\\n",
+            "    ```\\n",
+            "\\n",
+            "## Visible heading\\n",
+        ],
+        [
+            "> ```markdown\\n",
+            "> ## Hidden heading\\n",
+            "> [Unsafe](javascript:alert(1))\\n",
+            "> ![](javascript:alert(2))\\n",
+            "> ```\\n",
+            "\\n",
+            "## Visible heading\\n",
+        ],
+    ],
+)
+def test_nested_container_fences_are_excluded_from_markdown_audits(
+    lines: list[str],
+) -> None:
+    assert markdown_support.extract_heading_anchors(lines) == [
+        markdown_support.MarkdownHeadingAnchor(
+            "visible-heading", "Visible heading", len(lines)
+        )
+    ]
+    assert markdown_support.iter_disallowed_markdown_references(lines) == []
+    assert markdown_support.iter_markdown_references(lines) == []
