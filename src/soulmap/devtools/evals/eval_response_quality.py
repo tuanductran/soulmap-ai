@@ -166,7 +166,10 @@ def _has_negated_context(response: str, start: int, end: int) -> bool:
 
 def _matches_any(response: str, patterns: tuple[str, ...]) -> bool:
     """Match rubric phrases while accounting for explicit mentions and negation."""
-    context_sensitive = patterns in (ADVICE_PATTERNS, CERTAINTY_PATTERNS)
+    # Epistemic negation can qualify certainty claims, but it does not turn
+    # an actionable recommendation ("I don't think you should...") into a
+    # non-prescriptive response.
+    context_sensitive = patterns == CERTAINTY_PATTERNS
     for pattern in patterns:
         for match in re.finditer(pattern, response, re.IGNORECASE):
             if _is_quoted_mention(response, match.start(), match.end()):

@@ -59,7 +59,7 @@ def test_quality_fixture_declares_all_primary_frameworks() -> None:
     assert frameworks == EXPECTED_FRAMEWORKS
 
 
-def test_negated_advice_is_not_scored_as_prescriptive() -> None:
+def test_negated_advice_is_still_scored_as_prescriptive() -> None:
     selection: dict[str, object] = {"primary_framework": "MIRROR", "mode": "MIRROR"}
     response = (
         "I don't think you should make that decision for someone else. "
@@ -72,7 +72,7 @@ def test_negated_advice_is_not_scored_as_prescriptive() -> None:
         expected_framework="MIRROR",
     )
 
-    assert quality["status"] == "PASS"
+    assert quality["status"] == "FAIL"
 
 
 def test_quoted_tone_phrase_is_not_scored_as_the_assistant_using_it() -> None:
