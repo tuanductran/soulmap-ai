@@ -57,6 +57,8 @@ def _version(repo_root: Path) -> str:
 
 def create_provenance(repo_root: Path, verification: dict[str, Any]) -> dict[str, Any]:
     """Create provenance linking release version, source commit, and hashes."""
+    if not isinstance(verification, dict):
+        raise ReleaseOperationsError("release verification must be a JSON object")
     if verification.get("status") != "pass":
         raise ReleaseOperationsError("release verification status must be pass")
     version = verification.get("version")
@@ -137,6 +139,8 @@ def verify_provenance(repo_root: Path, path: Path) -> dict[str, Any]:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ReleaseOperationsError(f"invalid provenance: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ReleaseOperationsError("provenance must be a JSON object")
     if payload.get("schema_version") != 1 or payload.get("status") != "pass":
         raise ReleaseOperationsError("provenance schema/status is invalid")
     version = _version(repo_root)
