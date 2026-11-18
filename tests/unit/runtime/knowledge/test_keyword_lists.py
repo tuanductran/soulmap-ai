@@ -153,6 +153,11 @@ def test_markdown_without_code_blocks_preserves_lines_and_nested_content_boundar
         '  - "fake phrase"\n'
         "  ```\n"
         "After the example.\n"
+        "\n"
+        "    ## Fake indented heading\n"
+        '    - "fake indented phrase"\n'
+        "\n"
+        "Real trailing content.\n"
     )
 
     stripped = markdown_without_code_blocks(source)
