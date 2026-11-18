@@ -43,11 +43,20 @@ def _load_manifest(path: Path) -> dict[str, Any]:
 def _resolve_artifact_path(repo_root: Path, relative_path: str) -> Path:
     """Resolve an artifact path while keeping reads inside the repository."""
     root = repo_root.resolve()
-    artifact_path = (root / relative_path).resolve()
+    candidate = root / relative_path
+    artifact_path = candidate.resolve()
     if not artifact_path.is_relative_to(root):
         raise ArtifactIntegrityError(
             f"artifact path escapes repository root: {relative_path}"
         )
+
+    current = candidate
+    while current != root:
+        if current.is_symlink():
+            raise ArtifactIntegrityError(
+                f"artifact path contains symlink: {relative_path}"
+            )
+        current = current.parent
     return artifact_path
 
 
