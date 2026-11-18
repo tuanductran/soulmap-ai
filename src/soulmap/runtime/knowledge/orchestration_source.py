@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from functools import lru_cache
 
 from soulmap.runtime.knowledge.labels import (
@@ -15,7 +16,7 @@ from soulmap.runtime.knowledge.labels import (
     SECONDARY_NAMES,
     map_label,
 )
-from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
+from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path_for_root
 
 _CONTRACT_HEADING = "Routing policy"
 
@@ -238,7 +239,11 @@ def load_orchestration_rules(
     """
     from soulmap.runtime.knowledge.runtime_config import ORCHESTRATION_CONFIG
 
-    path = runtime_skill_path("orchestration", repo_root)
+    path = (
+        runtime_skill_path_for_root("orchestration", repo_root)
+        if repo_root is not None
+        else runtime_skill_path_for_root("orchestration", Path.cwd())
+    )
     instruction_rows = _table_rows(path.read_text(encoding="utf-8"), "Mode guidance")
     if not instruction_rows:
         raise ValueError("Runtime instructions must be a non-empty table.")
