@@ -196,7 +196,7 @@ def test_groups_eval_cli_serializes_filtered_result(
 def test_run_groups_eval_fails_when_dataset_is_empty(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr(eval_groups, "_load_groups", lambda: [])
+    monkeypatch.setattr(eval_groups, "_load_groups", list)
 
     result = eval_groups.run_groups_eval()
 
