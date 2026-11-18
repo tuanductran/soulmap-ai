@@ -9,6 +9,7 @@ from soulmap import cli as cli_tool
 from soulmap.devtools.checks.skills_boundary import audit_markdown, audit_text
 from soulmap.devtools.packaging import build_skill as build_tool
 from soulmap.devtools.packaging import dev as dev_tool
+from soulmap.devtools.packaging.members import is_safe_member_path
 
 
 def _write(root: Path, relative_path: str, content: str = "content\n") -> Path:
@@ -327,3 +328,27 @@ def test_build_rejects_symlinked_core_manifest(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="Symlinked package source"):
         build_tool._iter_inputs(tmp_path)
+
+
+
+@pytest.mark.parametrize(
+    "member_name",
+    ["C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt", "skills/bad\\name.md"],
+)
+def test_archive_member_path_safety_is_cross_platform(member_name: str) -> None:
+    assert is_safe_member_path(member_name) is False
+
+
+@pytest.mark.parametrize(
+    "member_name",
+    ["../outside.txt", "C:/outside.txt", "C:outside.txt", "skills/..\\outside.txt"],
+)
+def test_dev_rejects_posix_and_windows_unsafe_archive_members(
+    tmp_path: Path, member_name: str
+) -> None:
+    archive_path = tmp_path / "unsafe.zip"
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        archive.writestr(member_name, "unsafe")
+
+    with pytest.raises(ValueError, match="unsafe member paths"):
+        dev_tool._verify_archive(archive_path, {member_name}, tmp_path)
