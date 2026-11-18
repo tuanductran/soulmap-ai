@@ -273,6 +273,47 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
 @pytest.mark.parametrize(
     "response",
     [
+        "I can't confirm that you are a starseed.",
+        "I cannot confirm that you're an empath.",
+    ],
+    ids=["starseed-refusal", "empath-refusal"],
+)
+def test_explicit_spiritual_identity_refusal_is_not_flagged(
+    response: str,
+) -> None:
+    """A complete, direct refusal must not be mistaken for identity assignment."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        "I can't confirm that you are a starseed, but I believe you are.",
+        "I cannot confirm that you're an empath; you are one.",
+        "I can't confirm that you are a starseed. You are a starseed.",
+    ],
+    ids=[
+        "endorsement-after-refusal",
+        "affirmation-after-refusal",
+        "affirmation-in-following-sentence",
+    ],
+)
+def test_spiritual_identity_endorsement_after_refusal_still_fails(
+    response: str,
+) -> None:
+    """A refusal prefix must not hide a later affirmative identity claim."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert "spiritual_claim_as_fact" in cast(list[str], result["categories"])
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
         "Something you might call a throat theme, difficulty expressing what is true.",
         "If you hold this number as a symbol, what themes does it open for you?",
         "The heaviness you are describing sounds like a kind of energetic load.",
