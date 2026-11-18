@@ -95,7 +95,7 @@ def test_markdown_contract_flags_unclosed_blockquote_fence(
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text(
-        "# Title\\n\\n> ```markdown\\n> <!-- unclosed\\n",
+        "# Title\n\n> ```markdown\n> <!-- unclosed\n",
         encoding="utf-8",
     )
 
