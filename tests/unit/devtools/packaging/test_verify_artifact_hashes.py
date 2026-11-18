@@ -155,12 +155,11 @@ def test_verifier_rejects_invalid_artifact_metadata(tmp_path: Path) -> None:
     assert "non-negative integer size_bytes" in result.stderr
 
 
-
 def test_verifier_rejects_artifact_path_that_does_not_match_filename(
     tmp_path: Path,
 ) -> None:
     manifest_path, _ = _write_manifest(tmp_path)
-    _replace_artifact_path(manifest_path, "pyproject.toml")
+    _replace_artifact_path(manifest_path, "dist/soulmap-ai.skill")
 
     result = _run(manifest_path)
 
