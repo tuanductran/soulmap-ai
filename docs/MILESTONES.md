@@ -67,9 +67,10 @@ Phases 1-33 record the architecture and completed project milestones through the
 which ran on the documentation-only PR #679 branch against the merged runtime and audit
 implementation. No separate source-change work item remains from that audit; reopen this
 workstream only if a later source, entrypoint, packaging, or knowledge change produces
-new actionable findings. The v0.14.0 and v0.15.0 releases strengthen review-only repository inventories,
-release provenance, Markdown parsing, and package-boundary validation without weakening
-the project's knowledge-first and deterministic-safety rules. The project deliberately
+new actionable findings. The v0.14.0 release added stronger review-only repository inventories;
+v0.15.0 further strengthened release provenance, Markdown parsing, and package-boundary
+validation without weakening the project's knowledge-first and deterministic-safety rules.
+The project deliberately
 does not treat the following as completed or implicitly committed work:
 
 - third-party platform deployment claims without operator evidence;
