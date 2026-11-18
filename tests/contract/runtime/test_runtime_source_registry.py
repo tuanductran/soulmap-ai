@@ -159,10 +159,10 @@ def test_registry_heading_validation_ignores_tilde_fenced_examples() -> None:
 
 def test_registry_heading_validation_ignores_list_nested_fences() -> None:
     text = (
-        "- item\\n"
-        "\\n"
-        "    ```markdown\\n"
-        "    ## Detection policy\\n"
-        "    ```\\n"
+        "- item\n"
+        "\n"
+        "    ```markdown\n"
+        "    ## Detection policy\n"
+        "    ```\n"
     )
     assert not _has_heading(text, "Detection policy")
