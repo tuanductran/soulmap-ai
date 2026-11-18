@@ -291,6 +291,49 @@ def test_explicit_spiritual_identity_refusal_is_not_flagged(
 @pytest.mark.parametrize(
     "response",
     [
+        "I can't confirm that you have clinical depression.",
+        "I cannot confirm that you are destined to guide others.",
+    ],
+    ids=["diagnosis-refusal", "destiny-refusal"],
+)
+def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
+    response: str,
+) -> None:
+    """A complete refusal of a diagnosis or destiny claim is not an assertion."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
+@pytest.mark.parametrize(
+    ("response", "category"),
+    [
+        (
+            "I can't confirm that you have clinical depression, but I believe you do.",
+            "diagnosis",
+        ),
+        (
+            "I cannot confirm that you are destined to guide others, but I believe you are.",
+            "spiritual_claim_as_fact",
+        ),
+    ],
+    ids=["diagnosis-endorsement-after-refusal", "destiny-endorsement-after-refusal"],
+)
+def test_diagnosis_and_destiny_endorsements_after_refusal_still_fail(
+    response: str,
+    category: str,
+) -> None:
+    """A refusal prefix must not hide an appended affirmative endorsement."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert category in cast(list[str], result["categories"])
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
         "I can't confirm that you are a starseed, but I believe you are.",
         "I cannot confirm that you're an empath; you are one.",
         "I can't confirm that you are a starseed. You are a starseed.",
