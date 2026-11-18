@@ -3,6 +3,7 @@ from __future__ import annotations
 import ast
 
 from soulmap.devtools.support.repo import REPO_ROOT
+from soulmap.runtime import source_registry
 from soulmap.runtime.source_registry import (
     _has_heading,
     _registry,
@@ -132,3 +133,22 @@ def test_runtime_contract_surface_contains_only_python() -> None:
     runtime_root = REPO_ROOT / "src/soulmap/runtime"
     assert not list(runtime_root.rglob("*.md"))
     assert (runtime_root / "source_registry.py").is_file()
+
+
+
+def test_runtime_skill_path_uses_explicit_repository_root(
+    tmp_path, monkeypatch
+) -> None:
+    entries = {
+        "orchestration": (
+            "skills/meta/orchestration.md",
+            "-",
+            "Routing policy",
+            "-",
+        )
+    }
+    monkeypatch.setattr(source_registry, "_registry", lambda repo_root=None: entries)
+
+    path = runtime_skill_path("orchestration", tmp_path)
+
+    assert path == tmp_path.resolve() / "skills/meta/orchestration.md"
