@@ -113,6 +113,7 @@ def test_verify_archive_rejects_duplicate_member_names(tmp_path: Path) -> None:
     ):
         _verify_archive(tmp_path, archive_path, include_plugin=False)
 
+
 @pytest.mark.skipif(os.name == "nt", reason="POSIX permits backslashes in filenames")
 def test_source_members_applies_distignore_before_member_path_validation(
     tmp_path: Path,
