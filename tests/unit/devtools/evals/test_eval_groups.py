@@ -190,3 +190,16 @@ def test_groups_eval_cli_serializes_filtered_result(
         "summary": {"failed_checks": 1},
         "results": [],
     }
+
+
+
+def test_run_groups_eval_fails_when_dataset_is_empty(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(eval_groups, "_load_groups", lambda: [])
+
+    result = eval_groups.run_groups_eval()
+
+    assert result["ok"] is False
+    assert result["summary"]["groups"] == 0
+    assert result["summary"]["failed_checks"] == 1
