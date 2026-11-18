@@ -81,10 +81,7 @@ def test_markdown_contract_ignores_comments_inside_blockquote_fences(
 ) -> None:
     source = tmp_path / "README.md"
     source.write_text(
-        "# Title\n\n"
-        "> ```markdown\n"
-        "> <!-- unclosed\n"
-        "> ```\n",
+        "# Title\n\n> ```markdown\n> <!-- unclosed\n> ```",
         encoding="utf-8",
     )
 
