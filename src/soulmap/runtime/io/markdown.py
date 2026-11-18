@@ -385,12 +385,26 @@ def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
     return _code_block_lines_from_tokens(tokens)
 
 
+def _strip_blockquote_prefixes(line: str, container_level: int) -> tuple[int, str]:
+    """Remove blockquote prefixes using the indentation of their containers."""
+    quote_depth = 0
+    while quote_depth < container_level:
+        list_depth = max(0, (container_level - quote_depth) // 2)
+        max_indent = 3 + (2 * list_depth)
+        prefix = re.match(rf"^ {{0,{max_indent}}}>[ \\t]?", line)
+        if prefix is None:
+            break
+        quote_depth += 1
+        line = line[prefix.end() :]
+    return quote_depth, line
+
+
 def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
     """Return opening lines for fenced code blocks without a CommonMark close.
 
     Token maps identify the complete container-relative block. The final mapped
-    line is a closing fence only when its marker matches the opener and its
-    indentation is valid for the list and block-quote containers.
+    line is a closing fence only when its marker and blockquote depth match the
+    opener and its indentation is valid for the surrounding list containers.
     """
     tokens = _MARKDOWN_PARSER.parse(_markdown_source(lines))
     unclosed: list[int] = []
@@ -404,25 +418,20 @@ def markdown_unclosed_fence_lines(lines: list[str]) -> tuple[int, ...]:
             unclosed.append(opening_line + 1)
             continue
 
-        opening = lines[opening_line].rstrip("\r\n")
-        closing = lines[token.map[1] - 1].rstrip("\r\n")
-
-        quote_depth = 0
-        remaining = opening
-        while prefix := re.match(r"^ {0,3}>[ \t]?", remaining):
-            quote_depth += 1
-            remaining = remaining[prefix.end() :]
+        opening = lines[opening_line].rstrip("\\r\\n")
+        closing = lines[token.map[1] - 1].rstrip("\\r\\n")
+        quote_depth, _ = _strip_blockquote_prefixes(opening, token.level)
+        closing_quote_depth, closing = _strip_blockquote_prefixes(
+            closing, token.level
+        )
+        if closing_quote_depth != quote_depth:
+            unclosed.append(opening_line + 1)
+            continue
 
         list_depth = max(0, (token.level - quote_depth) // 2)
-        for _ in range(quote_depth):
-            prefix = re.match(r"^ {0,3}>[ \t]?", closing)
-            if prefix is None:
-                break
-            closing = closing[prefix.end() :]
-
         max_indent = 3 + (2 * list_depth)
         marker = re.escape(token.markup[0])
-        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \t]*"
+        closing_pattern = rf" {{0,{max_indent}}}{marker}{{{len(token.markup)},}}[ \\t]*"
         if re.fullmatch(closing_pattern, closing) is None:
             unclosed.append(opening_line + 1)
 
