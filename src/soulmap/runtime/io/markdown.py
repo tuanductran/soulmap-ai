@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 from markdown_it import MarkdownIt
 
-_FENCE_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})")
+_FENCE_RE = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")
 _ATX_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 _MD_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
@@ -99,11 +99,16 @@ class FenceTracker:
             fenced content and skip its other line checks. False only for a
             line outside any fence.
         """
-        match = _FENCE_RE.match(raw)
+        line = raw.rstrip("\\r\\n")
+        match = _FENCE_RE.match(line)
         if self._marker_char is None:
             if not match:
                 return False
-            run = match.group(2)
+            run, info = match.group(2), match.group(3)
+            # CommonMark forbids backticks in the info string of a backtick
+            # fence. Such a line is not an opening fence at all.
+            if run[0] == "`" and "`" in info:
+                return False
             self._marker_char = run[0]
             self._marker_len = len(run)
             return True
@@ -111,6 +116,7 @@ class FenceTracker:
             match
             and match.group(2)[0] == self._marker_char
             and len(match.group(2)) >= self._marker_len
+            and not match.group(3).strip(" \\t")
         ):
             self._marker_char = None
             self._marker_len = 0
