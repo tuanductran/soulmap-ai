@@ -370,6 +370,7 @@ def test_markdown_references_use_commonmark_tokens_for_edge_cases() -> None:
         (["```", "```"], ()),
         (["> ```markdown", "> code"], (1,)),
         (["> ```markdown", "> code", "> ```"], ()),
+        (["> ```markdown", "> code", "```"], (1, 3)),
         (["> ```"], (1,)),
         (["> ```", "> ```"], ()),
         (["- item", "  ```markdown", "  code"], (2,)),
