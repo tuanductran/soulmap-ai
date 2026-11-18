@@ -239,9 +239,15 @@ def _is_explicit_claim_refusal(
     sentence_end = min(sentence_ends) if sentence_ends else len(response_text)
     prefix = response_text[sentence_start : match.start()]
     suffix = response_text[match.end() : sentence_end]
+    suffix_is_continuation = not re.search(
+        r"[,;:]|\b(?:but|however|yet|although|though|still|instead|actually)\b|"
+        r"\b(?:and|or)\s+(?:i|we|you|they)\s+"
+        r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\b",
+        suffix,
+    )
     return bool(
         re.fullmatch(r"\s*i (?:can't|cannot) confirm that\s+", prefix)
-        and not suffix.strip()
+        and suffix_is_continuation
     )
 
 
