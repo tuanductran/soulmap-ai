@@ -354,7 +354,6 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
-
 def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
     """Return 1-indexed source lines inside CommonMark code blocks.
 
