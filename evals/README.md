@@ -12,7 +12,7 @@ generation, contract check, and sanitizer, all in one pass.
 **Used by:** `src/soulmap/devtools/evals/eval_responses.py` (run as
 `uv run soulmap eval-responses`)
 
-These are the golden cases. All 17 must pass before a release.
+These are the golden cases. All 22 must pass before a release.
 
 ### `groups.json`
 
