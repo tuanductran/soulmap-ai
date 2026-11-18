@@ -6,9 +6,9 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from typing import cast
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from soulmap.runtime.knowledge.keyword_lists import (
     load_key_value_table,
     load_labeled_groups,
