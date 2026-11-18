@@ -153,7 +153,7 @@ def test_pattern_parser_ignores_fenced_pattern_headings_and_signals() -> None:
         "```markdown\n"
         "## Pattern 2: Fake nested pattern\n"
         '- "fake nested signal"\n'
-        "```\\n"
+        "```\n"
         "**Cycle phrases:**\n"
         '- "real cycle"\n'
     )
