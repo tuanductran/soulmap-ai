@@ -153,17 +153,16 @@ def _literal_assignment(
     if not source_path.is_file():
         return None
 
-    tree = ast.parse(
-        source_path.read_text(encoding="utf-8"), filename=str(source_path)
-    )
+    tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
     for node in tree.body:
         value: ast.expr | None = None
-        if isinstance(node, ast.Assign) and any(
-            isinstance(target, ast.Name) and target.id == name
-            for target in node.targets
-        ):
-            value = node.value
-        elif (
+        if (
+            isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == name
+                for target in node.targets
+            )
+        ) or (
             isinstance(node, ast.AnnAssign)
             and isinstance(node.target, ast.Name)
             and node.target.id == name
