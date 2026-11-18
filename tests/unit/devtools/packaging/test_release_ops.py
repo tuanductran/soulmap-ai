@@ -117,9 +117,7 @@ def test_create_provenance_rejects_failed_verification(
     )
 
     with pytest.raises(ReleaseOperationsError, match="status must be pass"):
-        create_provenance(
-            tmp_path, {"status": "fail", "version": "0.11.0"}
-        )
+        create_provenance(tmp_path, {"status": "fail", "version": "0.11.0"})
 
 
 def test_create_provenance_rejects_version_drift(
@@ -133,9 +131,7 @@ def test_create_provenance_rejects_version_drift(
     )
 
     with pytest.raises(ReleaseOperationsError, match=r"must match pyproject.toml"):
-        create_provenance(
-            tmp_path, {"status": "pass", "version": "0.12.0"}
-        )
+        create_provenance(tmp_path, {"status": "pass", "version": "0.12.0"})
 
 
 def test_verify_provenance_rejects_duplicate_artifact_entries(
@@ -147,9 +143,7 @@ def test_verify_provenance_rejects_duplicate_artifact_entries(
         "soulmap.devtools.packaging.release_ops._git",
         lambda root, *args: "a" * 40,
     )
-    provenance = create_provenance(
-        tmp_path, {"status": "pass", "version": "0.11.0"}
-    )
+    provenance = create_provenance(tmp_path, {"status": "pass", "version": "0.11.0"})
     provenance["artifacts"].append(dict(provenance["artifacts"][0]))
     path = tmp_path / "dist" / "release-provenance.json"
     path.write_text(json.dumps(provenance), encoding="utf-8")
@@ -177,9 +171,7 @@ def test_verify_provenance_rejects_unhashable_artifact_filename(
         "soulmap.devtools.packaging.release_ops._git",
         lambda root, *args: "a" * 40,
     )
-    provenance = create_provenance(
-        tmp_path, {"status": "pass", "version": "0.11.0"}
-    )
+    provenance = create_provenance(tmp_path, {"status": "pass", "version": "0.11.0"})
     provenance["artifacts"][0]["filename"] = []
     path = tmp_path / "dist" / "release-provenance.json"
     path.write_text(json.dumps(provenance), encoding="utf-8")
