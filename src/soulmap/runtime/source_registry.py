@@ -277,16 +277,6 @@ def _registry_for_root(repo_root: Path) -> dict[str, tuple[str, str, str, str]]:
     return _validated_registry(repo_root)
 
 
-def runtime_skill_path_for_root(source: str, repo_root: Path) -> Path:
-    """Resolve a stable source identifier inside an explicitly selected checkout."""
-    root = repo_root.resolve()
-    try:
-        relative_path = _registry(root)[source][0]
-    except KeyError as exc:
-        raise KeyError(f"Unknown runtime knowledge source: {source}") from exc
-    return root / relative_path
-
-
 def runtime_skill_path(source: str) -> Path:
     """Resolve one stable source identifier to its repository Markdown file."""
     try:
