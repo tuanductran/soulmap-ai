@@ -6,9 +6,9 @@ import re
 from dataclasses import dataclass
 from functools import lru_cache
 
-from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from typing import cast
 
+from soulmap.runtime.io.markdown import markdown_without_code_blocks
 from soulmap.runtime.knowledge.labels import SCOPE_CATEGORY_NAMES, map_label
 from soulmap.runtime.knowledge.runtime_registry import runtime_skill_path
 
