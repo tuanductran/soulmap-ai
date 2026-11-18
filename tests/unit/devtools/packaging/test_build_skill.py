@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import zipfile
 from pathlib import Path
 
@@ -356,3 +357,23 @@ def test_dev_rejects_posix_and_windows_unsafe_archive_members(
 
     with pytest.raises(ValueError, match="unsafe member paths"):
         dev_tool._verify_archive(archive_path, {member_name}, tmp_path)
+
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX permits backslashes in filenames")
+def test_build_skips_ignored_backslash_source_before_path_validation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path, "LICENSE")
+    _write(tmp_path, "SOULMAP.md")
+    _write(tmp_path, "SKILL.md")
+    _write(tmp_path, "skills/ignored\\name.md")
+    (tmp_path / ".distignore").write_text(
+        "skills/ignored\\name.md\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(build_tool, "audit_shipped_content", lambda _root: [])
+
+    archive_path = build_tool.build_zip(tmp_path)
+
+    with zipfile.ZipFile(archive_path) as archive:
+        assert "skills/ignored\\name.md" not in archive.namelist()
