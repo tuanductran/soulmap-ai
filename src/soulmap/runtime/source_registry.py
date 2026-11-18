@@ -8,6 +8,7 @@ import re
 from functools import cache
 from pathlib import Path
 
+from soulmap.runtime.io.markdown import markdown_code_block_lines
 from soulmap.runtime.knowledge.keyword_lists import default_skill_path
 
 REGISTRY: dict[str, tuple[str, str, str, str]] = {
@@ -195,22 +196,23 @@ REGISTRY: dict[str, tuple[str, str, str, str]] = {
 
 
 def _has_heading(text: str, expected: str) -> bool:
-    """Return whether Markdown contains the registered section heading."""
+    """Return whether Markdown contains the registered section heading.
+
+    Fenced code is skipped so examples cannot satisfy runtime source contracts.
+    """
     if expected.startswith("Pattern "):
-        return bool(
-            re.search(
-                rf"^##\s+{re.escape(expected)}:\s+.+$",
-                text,
-                re.MULTILINE,
-            )
-        )
-    return bool(
-        re.search(
-            rf"^#{{2,3}}\s+{re.escape(expected)}\s*$",
-            text,
-            re.MULTILINE,
-        )
-    )
+        pattern = re.compile(rf"^##\s+{re.escape(expected)}:\s+.+$")
+    else:
+        pattern = re.compile(rf"^#{{2,3}}\s+{re.escape(expected)}\s*$")
+
+    lines = text.splitlines()
+    code_lines = markdown_code_block_lines(lines)
+    for line_no, raw in enumerate(lines, start=1):
+        if line_no in code_lines:
+            continue
+        if pattern.fullmatch(raw):
+            return True
+    return False
 
 
 def _validate_registry(
