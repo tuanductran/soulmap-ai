@@ -63,6 +63,11 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
             raise ValueError(
                 f"Marketplace skill path escapes the repository: {skill_path}"
             )
+        if relative_path.parts and relative_path.parts[0] != "skills":
+            raise ValueError(
+                "Marketplace Skill paths must target the repository root or "
+                f"skills/: {skill_path}"
+            )
         if not target.is_dir():
             raise ValueError(
                 f"Marketplace skill path is not a directory: {path_value or '.'}"
