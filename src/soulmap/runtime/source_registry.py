@@ -284,7 +284,9 @@ def runtime_skill_path(source: str, repo_root: Path | None = None) -> Path:
         relative_path = _registry(root)[source][0]
     except KeyError as exc:
         raise KeyError(f"Unknown runtime knowledge source: {source}") from exc
-    return root / relative_path if root is not None else default_skill_path(relative_path)
+    if root is not None:
+        return root / relative_path
+    return default_skill_path(relative_path)
 
 
 def runtime_section(source: str, kind: str) -> str:
