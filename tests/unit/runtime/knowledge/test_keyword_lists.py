@@ -144,7 +144,9 @@ def test_extractors_ignore_headings_bullets_and_tables_in_fenced_examples() -> N
     assert extract_table_rows(table, "Scoring") == (("Weight", "2"),)
 
 
-def test_markdown_without_code_blocks_preserves_lines_and_nested_content_boundaries() -> (\n    None\n):
+def test_markdown_without_code_blocks_preserves_lines_and_nested_content_boundaries() -> (
+    None
+):
     source = (
         "## Real heading\n"
         "- item\n"
