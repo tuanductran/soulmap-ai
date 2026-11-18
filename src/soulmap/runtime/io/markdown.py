@@ -249,10 +249,10 @@ def extract_heading_anchors(lines: list[str]) -> list[MarkdownHeadingAnchor]:
     """
     anchors: list[MarkdownHeadingAnchor] = []
     counts: dict[str, int] = {}
-    fence = FenceTracker()
+    code_lines = markdown_code_block_lines(lines)
 
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
 
         match = _ATX_HEADING_RE.match(raw)
@@ -360,15 +360,31 @@ def _markdown_source(lines: list[str]) -> str:
     return "\n".join(lines)
 
 
+
+def markdown_code_block_lines(lines: list[str]) -> frozenset[int]:
+    """Return 1-indexed source lines inside CommonMark code blocks.
+
+    Using parser token maps handles container-relative indentation in lists
+    and block quotes, which a line-only fence tracker cannot infer.
+    """
+    code_lines: set[int] = set()
+    for token in _MARKDOWN_PARSER.parse(_markdown_source(lines)):
+        if getattr(token, "type", None) not in {"fence", "code_block"}:
+            continue
+        token_map = getattr(token, "map", None)
+        if token_map:
+            code_lines.update(range(int(token_map[0]) + 1, int(token_map[1]) + 1))
+    return frozenset(code_lines)
+
 def iter_disallowed_markdown_references(
     lines: list[str],
 ) -> list[MarkdownReference]:
     """Find unsafe Markdown destinations that parsers intentionally discard."""
     references: list[MarkdownReference] = []
-    fence = FenceTracker()
+    code_lines = markdown_code_block_lines(lines)
 
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
         for label, target in _UNSAFE_MD_LINK_RE.findall(raw):
             references.append(
@@ -457,9 +473,9 @@ def iter_markdown_references(lines: list[str]) -> list[MarkdownReference]:
                 open_link["label"] += _inline_token_label(token)
 
     known = {(ref.line, ref.label, ref.target, ref.is_image) for ref in references}
-    fence = FenceTracker()
+    code_lines = markdown_code_block_lines(lines)
     for line_no, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if line_no in code_lines:
             continue
         for label, target in _MD_IMAGE_RE.findall(raw):
             if label.strip():
