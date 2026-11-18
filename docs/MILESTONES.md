@@ -62,7 +62,7 @@ The audit artifacts are review evidence, not a deletion list. Reopen this workst
 
 ## Current Historical Baseline
 
-Phases 1-33 record the architecture, the v0.15.0 release and its follow-up, and the completed post-release work through PR #1039. Phase 33 records the v0.15.0 release and the Markdown/packaging hardening completed before it. Phases 30-33 summarize the major knowledge-ownership, safety, package-boundary, repository-governance, release-integrity, and toolchain work completed after PR #686; they are milestone summaries, not a substitute for the detailed ADRs, audits, tests, and PR evidence. The canonical inventory verification is recorded above from CI run
+Phases 1-33 record the architecture and completed project milestones through the v0.15.0 release. Phases 30-32 summarize the knowledge-ownership, safety, package-boundary, repository-governance, release-integrity, and toolchain work completed after PR #686 and before v0.15.0. Phase 33 records the v0.15.0 release and the Markdown/packaging hardening completed in the pre-release workstream (PRs #1018-#1039), followed by release PR #1040. These phases are milestone summaries, not a substitute for the detailed ADRs, audits, tests, and release evidence. The canonical inventory verification is recorded above from CI run
 [`38692440277`](https://github.com/tuanductran/soulmap-ai/actions/runs/38692440277),
 which ran on the documentation-only PR #679 branch against the merged runtime and audit
 implementation. No separate source-change work item remains from that audit; reopen this
