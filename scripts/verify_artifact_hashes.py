@@ -85,14 +85,13 @@ def verify_artifacts(manifest_path: Path) -> list[dict[str, Any]]:
         if filename in seen_filenames:
             raise ArtifactIntegrityError(f"duplicate artifact filename: {filename}")
         seen_filenames.add(filename)
+        artifact_path = _resolve_artifact_path(repo_root, relative_path)
         expected_path = f"dist/{filename}"
         if relative_path != expected_path:
             raise ArtifactIntegrityError(
                 f"artifact path for {filename} must be {expected_path}, "
                 f"got {relative_path}"
             )
-
-        artifact_path = _resolve_artifact_path(repo_root, relative_path)
         if not artifact_path.is_file():
             raise ArtifactIntegrityError(f"artifact not found: {artifact_path}")
         actual_size = artifact_path.stat().st_size
