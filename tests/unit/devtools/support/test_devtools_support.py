@@ -361,6 +361,50 @@ def test_markdown_references_use_commonmark_tokens_for_edge_cases() -> None:
     ]
 
 
+@pytest.mark.parametrize(
+    ("lines", "expected"),
+    [
+        (["```markdown", "code", "```"], ()),
+        (["```markdown", "code"], (1,)),
+        (["```"], (1,)),
+        (["```", "```"], ()),
+        (["> ```markdown", "> code"], (1,)),
+        (["> ```markdown", "> code", "> ```"], ()),
+        (["> ```markdown", "> code", "```"], (1, 3)),
+        (["> ```"], (1,)),
+        (["> ```", "> ```"], ()),
+        (["- item", "  ```markdown", "  code"], (2,)),
+        (["- item", "  ```markdown", "  code", "  ```"], ()),
+        (["- item", "  ```"], (2,)),
+        (["- item", "  ```", "  ```"], ()),
+        (
+            ["- outer", "  - inner", "    > ```markdown", "    > code", "    > ```"],
+            (),
+        ),
+        (
+            ["- outer", "  - inner", "    > ```markdown", "    > code"],
+            (3,),
+        ),
+        (
+            [
+                "> - outer",
+                ">   - inner",
+                ">     ```markdown",
+                ">     code",
+                ">     ```",
+            ],
+            (),
+        ),
+        (["```markdown", "    ```"], (1,)),
+        (["- item", "  ```markdown", "      ```"], (2,)),
+    ],
+)
+def test_markdown_unclosed_fence_lines_follow_commonmark_containers(
+    lines: list[str], expected: tuple[int, ...]
+) -> None:
+    assert markdown_support.markdown_unclosed_fence_lines(lines) == expected
+
+
 def test_fence_tracker_respects_commonmark_three_space_indent_limit() -> None:
     tracker = markdown_support.FenceTracker()
 

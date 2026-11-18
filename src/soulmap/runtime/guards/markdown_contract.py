@@ -12,12 +12,13 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from soulmap.runtime.io.markdown import (
-    FenceTracker,
     extract_heading_anchors,
     is_external_markdown_target,
     iter_disallowed_markdown_references,
     iter_markdown_files,
     iter_markdown_references,
+    markdown_code_block_lines,
+    markdown_unclosed_fence_lines,
     parse_yaml_front_matter,
     split_markdown_link_target,
 )
@@ -242,6 +243,7 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     issues: list[Issue] = []
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
+    code_lines = markdown_code_block_lines(lines)
 
     rel = path.resolve().relative_to(repo_root.resolve())
 
@@ -325,9 +327,8 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                 issues.append(Issue(path, i, f"Banned Unicode character: {desc}"))
 
     # 1) Heading correctness: require a space after ATX heading marker.
-    fence = FenceTracker()
     for i, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if i in code_lines:
             continue
         if _BAD_ATX_HEADING_RE.match(raw):
             issues.append(Issue(path, i, "ATX heading missing a space after '#'"))
@@ -335,9 +336,8 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     # 1a) Heading numbering: disallow numeric prefixes like `1)` / `1.` in headings.
     #     Guard against false positives inside fenced code blocks (e.g. bash comments
     #     like `# 1. do something` would otherwise be flagged as headings).
-    fence = FenceTracker()
     for i, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if i in code_lines:
             continue
         match = _ATX_HEADING_RE.match(raw)
         if not match:
@@ -353,9 +353,8 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             )
 
     # 1b) Heading spacing: require a blank line before/after headings (outside fences).
-    fence = FenceTracker()
     for idx, raw in enumerate(lines):
-        if fence.consume(raw):
+        if idx + 1 in code_lines:
             continue
         if not raw.startswith("#"):
             continue
@@ -373,18 +372,14 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
             )
 
     # 2) Fenced code blocks must be balanced.
-    fence = FenceTracker()
-    for raw in lines:
-        fence.consume(raw)
-    if fence.in_fence:
+    if markdown_unclosed_fence_lines(lines):
         issues.append(Issue(path, len(lines) or 1, "Unclosed fenced code block"))
 
-    # 2c) HTML comments must be balanced (skip inside fenced code blocks).
-    fence = FenceTracker()
+    # 2c) HTML comments must be balanced (skip inside CommonMark code blocks).
     opens = 0
     closes = 0
-    for raw in lines:
-        if fence.consume(raw):
+    for line_no, raw in enumerate(lines, start=1):
+        if line_no in code_lines:
             continue
         opens += raw.count("<!--")
         closes += raw.count("-->")
@@ -412,12 +407,11 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
     # and rendered Markdown stay aligned. Repeated `1.` markers are intentionally
     # rejected in this project.
     ordered_re = re.compile(r"^(\s*)(\d+)\.\s+\S")
-    fence = FenceTracker()
     prev_indent: str | None = None
     prev_num: int | None = None
     prev_line_was_item = False
     for i, raw in enumerate(lines, start=1):
-        if fence.consume(raw):
+        if i in code_lines:
             continue
 
         match = ordered_re.match(raw)
@@ -509,12 +503,17 @@ def check_markdown_file(path: Path, repo_root: Path) -> list[Issue]:
                     Issue(path, i, f"Broken cross-file anchor: {file_part}#{frag}")
                 )
 
-    issues.extend(_duplicate_detection_phrases(path, lines))
+    issues.extend(_duplicate_detection_phrases(path, lines, code_lines=code_lines))
 
     return issues
 
 
-def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
+def _duplicate_detection_phrases(
+    path: Path,
+    lines: list[str],
+    *,
+    code_lines: frozenset[int] | None = None,
+) -> list[Issue]:
     """Report a detection phrase listed twice inside the same labeled group.
 
     The knowledge loaders deduplicate, so a repeat changes nothing at runtime
@@ -529,6 +528,7 @@ def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
     Args:
         path: File being checked, used for the issue location.
         lines: The file's lines, in order.
+        code_lines: 1-indexed CommonMark code-block lines, computed when omitted.
 
     Returns:
         One issue per repeated phrase, at the line of the repeat.
@@ -536,8 +536,12 @@ def _duplicate_detection_phrases(path: Path, lines: list[str]) -> list[Issue]:
     issues: list[Issue] = []
     in_section = False
     seen: set[str] = set()
+    if code_lines is None:
+        code_lines = markdown_code_block_lines(lines)
 
     for line_no, raw in enumerate(lines, start=1):
+        if line_no in code_lines:
+            continue
         if raw.startswith("## "):
             in_section = raw.strip() == "## Detection signals"
             seen = set()
