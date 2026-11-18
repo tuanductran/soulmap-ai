@@ -112,7 +112,6 @@ def _quoted_phrases(bullet_lines: list[str]) -> tuple[str, ...]:
 
 
 def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
-    text = markdown_without_code_blocks(text)
     """Parse the pattern-mapper knowledge file into structured signals.
 
     Each heading starts a pattern, and the bullet lists under it supply the
@@ -125,6 +124,9 @@ def parse_pattern_mapper(text: str) -> dict[str, PatternSignal]:
         A mapping of slug to pattern. Empty when the text holds no pattern
         heading.
     """
+
+    text = markdown_without_code_blocks(text)
+
     lines = text.splitlines()
     heading_indices: list[tuple[int, str]] = []
     for idx, line in enumerate(lines):
