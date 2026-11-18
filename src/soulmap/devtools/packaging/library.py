@@ -70,9 +70,13 @@ def _read_marketplace(repo_root: Path) -> dict[str, Any]:
                 f"Marketplace Skill entrypoint must not be a symlink: {skill_path}"
             )
         resolved_entrypoint = entrypoint.resolve()
-        if not resolved_entrypoint.is_relative_to(root) or not resolved_entrypoint.is_file():
+        if (
+            not resolved_entrypoint.is_relative_to(root)
+            or not resolved_entrypoint.is_file()
+        ):
             raise ValueError(
-                f"Marketplace skill path must contain an in-repository SKILL.md: {path_value or '.'}"
+                "Marketplace skill path must contain an in-repository "
+                f"SKILL.md: {path_value or '.'}"
             )
     return payload
 
