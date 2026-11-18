@@ -154,5 +154,5 @@ def test_registry_heading_validation_ignores_list_nested_fences() -> None:
 
 
 def test_registry_heading_validation_ignores_fence_like_content_lines() -> None:
-    text = "~~~markdown\\n~~~python\\n## Detection policy\\n~~~\\n"
+    text = "~~~markdown\n~~~python\n## Detection policy\n~~~\n"
     assert not _has_heading(text, "Detection policy")
