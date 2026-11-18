@@ -90,6 +90,20 @@ def test_markdown_contract_ignores_comments_inside_blockquote_fences(
     assert not any("Unbalanced HTML comment markers" in message for message in messages)
 
 
+def test_markdown_contract_flags_unclosed_blockquote_fence(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "README.md"
+    source.write_text(
+        "# Title\\n\\n> ```markdown\\n> <!-- unclosed\\n",
+        encoding="utf-8",
+    )
+
+    issues = markdown_contract.check_markdown_file(source, tmp_path)
+
+    assert [issue.message for issue in issues] == ["Unclosed fenced code block"]
+
+
 def test_markdown_contract_flags_unbalanced_comment_and_missing_image_alt_text(
     tmp_path: Path,
 ) -> None:
