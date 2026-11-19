@@ -137,7 +137,7 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
     r"\byour (?:life path |destiny |soul )?number means\b",
     r"\byour (?:life path )?number (?:confirms|proves) your destiny\b",
     (
-        r"\byou(?:'re| are) (?:definitely|clearly|truly) meant for "
+        r"\byou(?:'re| are) meant for "
         r"(?:this|your) (?:path|purpose|mission)\b"
     ),
     r"\byou(?:'re| are) destined to\b",
@@ -273,7 +273,12 @@ def _is_explicit_claim_refusal(
         suffix,
     )
     return bool(
-        re.fullmatch(r"\s*i (?:can't|cannot) confirm (?:that\s+)?", prefix)
+        (
+            re.fullmatch(r"\s*i (?:can't|cannot) confirm (?:that\s+)?", prefix)
+            or re.fullmatch(
+                r"\s*i (?:can't|cannot) (?:tell you|say) whether\s+", prefix
+            )
+        )
         and suffix_is_continuation
     )
 
