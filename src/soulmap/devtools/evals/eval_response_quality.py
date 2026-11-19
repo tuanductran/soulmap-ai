@@ -236,9 +236,8 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
     )
     safety = check_response_safety_contract(response)
     expected_quality = str(case.get("expected_quality_status", "PASS"))
-    expected_safety = str(case.get("expected_safety_status", "PASS"))
-    expected_safety_status = (
-        "PASS" if expected_safety in {"PASS", "OVERRIDE"} else "FAIL_REWRITE_REQUIRED"
+    expected_safety_status = str(
+        case.get("expected_response_safety_status", "PASS")
     )
     passed = (
         quality["status"] == expected_quality
@@ -254,7 +253,7 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
         },
         "expected": {
             "quality_status": expected_quality,
-            "safety_status": expected_safety_status,
+            "response_safety_status": expected_safety_status,
         },
     }
 
@@ -289,7 +288,9 @@ def main(argv: list[str] | None = None) -> int:
         enriched = {
             **case,
             "expected_quality_status": "PASS",
-            "expected_safety_status": case["expected_safety_status"],
+            "expected_response_safety_status": case.get(
+                "expected_response_safety_status", "PASS"
+            ),
             "epistemic_required": bool(case.get("epistemic_required", False)),
         }
         results.append(_evaluate_case(enriched, response))
