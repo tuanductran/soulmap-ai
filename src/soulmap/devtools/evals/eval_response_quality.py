@@ -236,9 +236,7 @@ def _evaluate_case(case: dict[str, object], response: str) -> dict[str, object]:
     )
     safety = check_response_safety_contract(response)
     expected_quality = str(case.get("expected_quality_status", "PASS"))
-    expected_safety_status = str(
-        case.get("expected_response_safety_status", "PASS")
-    )
+    expected_safety_status = str(case.get("expected_response_safety_status", "PASS"))
     passed = (
         quality["status"] == expected_quality
         and safety["status"] == expected_safety_status
