@@ -210,6 +210,7 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "Your 11 means you are destined to guide others.",
         "Your number confirms your destiny.",
         "You are definitely meant for this path.",
+        "You are meant for this path.",
         "Your throat chakra is blocked, which is why you struggle to speak up.",
         "Your guides are clearly communicating with you.",
         "You are a starseed, and that explains a lot.",
@@ -238,6 +239,7 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
         "numerology-destiny",
         "number-confirms-destiny",
         "definitely-meant-for-path",
+        "unqualified-meant-for-path",
         "chakra-diagnosis",
         "guides-confirmed",
         "starseed-identity",
@@ -332,6 +334,7 @@ def test_explicit_refusal_with_agency_explanation_is_not_flagged(
     [
         "I can't confirm that you have clinical depression.",
         "I can't confirm that you have borderline personality disorder.",
+        "I can't tell you whether you have borderline personality disorder.",
         "I cannot confirm that you are destined to guide others.",
         "I can't confirm that you are a starseed because that isn't something I can verify.",
     ],
