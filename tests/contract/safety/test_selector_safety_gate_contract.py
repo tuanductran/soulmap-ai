@@ -8,7 +8,9 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[3]
-SELECTOR_PATH = ROOT / "src" / "soulmap" / "runtime" / "routing" / "framework_selector.py"
+SELECTOR_PATH = (
+    ROOT / "src" / "soulmap" / "runtime" / "routing" / "framework_selector.py"
+)
 
 
 def _find_function(
@@ -16,7 +18,10 @@ def _find_function(
 ) -> ast.FunctionDef | ast.AsyncFunctionDef:
     """Return a top-level function definition by name."""
     for node in module.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+        if (
+            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name == name
+        ):
             return node
     pytest.fail(f"Expected function {name!r} in {SELECTOR_PATH}")
 
