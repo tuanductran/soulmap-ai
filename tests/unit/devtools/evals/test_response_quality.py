@@ -247,7 +247,6 @@ def test_unrelated_truth_statement_is_not_an_endorsement() -> None:
     assert quality["status"] == "PASS"
 
 
-
 def test_blocked_input_can_have_a_safe_refusal_response() -> None:
     case: dict[str, object] = {
         "id": "diagnosis_refusal",
@@ -270,7 +269,9 @@ def test_blocked_input_can_have_a_safe_refusal_response() -> None:
 
 def test_quality_fixtures_declare_output_safety_expectations() -> None:
     dataset = json.loads(
-        Path("evals/datasets/response_quality_cases.json").read_text(encoding="utf-8")
+        Path("evals/datasets/response_quality_cases.json").read_text(
+            encoding="utf-8"
+        )
     )
 
     assert all(
