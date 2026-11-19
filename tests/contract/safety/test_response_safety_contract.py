@@ -363,6 +363,9 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         "diagnosis-causal-endorsement-after-refusal",
         "destiny-causal-endorsement-after-refusal",
         "identity-causal-endorsement-after-refusal",
+        "identity-anaphoric-obvious-endorsement-after-refusal",
+        "empath-anaphoric-clear-endorsement-after-refusal",
+        "identity-anaphoric-proof-endorsement-after-refusal",
     ],
 )
 def test_diagnosis_and_destiny_endorsements_after_refusal_still_fail(
