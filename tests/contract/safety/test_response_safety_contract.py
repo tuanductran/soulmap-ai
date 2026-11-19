@@ -341,6 +341,7 @@ def test_explicit_refusal_with_agency_explanation_is_not_flagged(
     ids=[
         "diagnosis-refusal",
         "borderline-personality-disorder-refusal",
+        "borderline-personality-disorder-hedged-refusal",
         "destiny-refusal",
         "identity-refusal-with-non-endorsement-explanation",
     ],
@@ -383,6 +384,10 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
                 "I can't confirm that you have borderline personality disorder "
                 "because you clearly do."
             ),
+            "diagnosis",
+        ),
+        (
+            "I can't tell you whether you have borderline personality disorder, but you do.",
             "diagnosis",
         ),
         (
@@ -453,6 +458,7 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         "destiny-affirmation-in-following-sentence",
         "diagnosis-causal-endorsement-after-refusal",
         "borderline-personality-disorder-causal-endorsement-after-refusal",
+        "borderline-personality-disorder-hedged-refusal-with-endorsement",
         "destiny-causal-endorsement-after-refusal",
         "identity-causal-endorsement-after-refusal",
         "identity-anaphoric-obvious-endorsement-after-refusal",
