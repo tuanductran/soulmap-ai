@@ -147,6 +147,7 @@ def test_dependency_reinforcement_reuses_resource_sanitizer_phrases() -> None:
     ("response", "expected_category"),
     [
         ("I would diagnose you with depression.", "diagnosis"),
+        ("You have borderline personality disorder.", "diagnosis"),
         ("Your future is already set.", "prediction_as_fact"),
         ("As your teacher, I know the truth.", "guru_positioning"),
         ("There can be no doubt about your path.", "excessive_certainty"),
@@ -155,6 +156,7 @@ def test_dependency_reinforcement_reuses_resource_sanitizer_phrases() -> None:
     ],
     ids=[
         "diagnosis",
+        "borderline-personality-disorder-diagnosis",
         "prediction",
         "guru",
         "certainty",
@@ -206,6 +208,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
     "response",
     [
         "Your 11 means you are destined to guide others.",
+        "Your number confirms your destiny.",
+        "You are definitely meant for this path.",
         "Your throat chakra is blocked, which is why you struggle to speak up.",
         "Your guides are clearly communicating with you.",
         "You are a starseed, and that explains a lot.",
@@ -232,6 +236,8 @@ def test_additional_safety_contract_patterns_preserve_near_miss_context(
     ],
     ids=[
         "numerology-destiny",
+        "number-confirms-destiny",
+        "definitely-meant-for-path",
         "chakra-diagnosis",
         "guides-confirmed",
         "starseed-identity",
@@ -325,11 +331,13 @@ def test_explicit_refusal_with_agency_explanation_is_not_flagged(
     "response",
     [
         "I can't confirm that you have clinical depression.",
+        "I can't confirm that you have borderline personality disorder.",
         "I cannot confirm that you are destined to guide others.",
         "I can't confirm that you are a starseed because that isn't something I can verify.",
     ],
     ids=[
         "diagnosis-refusal",
+        "borderline-personality-disorder-refusal",
         "destiny-refusal",
         "identity-refusal-with-non-endorsement-explanation",
     ],
@@ -365,6 +373,7 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         ),
         (
             "I can't confirm that you have clinical depression because you clearly do.",
+            "I can't confirm that you have borderline personality disorder because you clearly do.",
             "diagnosis",
         ),
         (
@@ -434,6 +443,7 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         "diagnosis-affirmation-in-following-sentence",
         "destiny-affirmation-in-following-sentence",
         "diagnosis-causal-endorsement-after-refusal",
+        "borderline-personality-disorder-causal-endorsement-after-refusal",
         "destiny-causal-endorsement-after-refusal",
         "identity-causal-endorsement-after-refusal",
         "identity-anaphoric-obvious-endorsement-after-refusal",
@@ -490,6 +500,8 @@ def test_spiritual_identity_endorsement_after_refusal_still_fails(
     [
         "Something you might call a throat theme, difficulty expressing what is true.",
         "If you hold this number as a symbol, what themes does it open for you?",
+        "Your number can be a symbolic lens for exploring what matters to you.",
+        "You may feel meant for this path, though that feeling is not proof.",
         "The heaviness you are describing sounds like a kind of energetic load.",
         "If you hold this as a pattern carrying weight, what does that open?",
         "What you are calling an awakening, what has it changed in how you see things?",
@@ -507,6 +519,8 @@ def test_spiritual_identity_endorsement_after_refusal_still_fails(
     ids=[
         "chakra-as-somatic-metaphor",
         "numerology-as-symbol",
+        "number-as-symbolic-lens",
+        "felt-meaning-not-installed-as-fact",
         "energy-as-felt-experience",
         "karma-as-reflective-frame",
         "awakening-as-lived-transition",
