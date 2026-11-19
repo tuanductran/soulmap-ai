@@ -12,25 +12,50 @@ HOOK = ROOT / ".claude" / "hooks" / "post-edit-evals.sh"
 
 
 @pytest.mark.parametrize(
-    ("dataset", "expected_command"),
+    ("dataset", "watched_path", "expected_command"),
     [
-        ("groups.json", "run soulmap eval-groups"),
-        ("markdown_contract_cases.json", "run soulmap eval-markdown-contracts"),
-        ("response_generation_cases.json", "run soulmap eval-responses"),
-        ("response_quality_cases.json", "run soulmap eval-response-quality"),
+        ("groups.json", "evals/datasets/groups.json", "run soulmap eval-groups"),
+        (
+            "markdown_contract_cases.json",
+            "evals/datasets/markdown_contract_cases.json",
+            "run soulmap eval-markdown-contracts",
+        ),
+        (
+            "response_generation_cases.json",
+            "evals/datasets/response_generation_cases.json",
+            "run soulmap eval-responses",
+        ),
+        (
+            "response_quality_cases.json",
+            "evals/datasets/response_quality_cases.json",
+            "run soulmap eval-response-quality",
+        ),
         (
             "safety_test_cases.json",
+            "evals/datasets/safety_test_cases.json",
+            "run python tests/eval_regression/test_safety_evals.py",
+        ),
+        (
+            "safety_test_cases.json",
+            "tests/eval_regression/test_safety_evals.py",
             "run python tests/eval_regression/test_safety_evals.py",
         ),
     ],
 )
 def test_post_edit_eval_hook_dispatches_each_dataset(
-    tmp_path: Path, dataset: str, expected_command: str
+    tmp_path: Path,
+    dataset: str,
+    watched_path: str,
+    expected_command: str,
 ) -> None:
     repo_root = tmp_path / "repo"
     dataset_path = repo_root / "evals" / "datasets" / dataset
     dataset_path.parent.mkdir(parents=True)
     dataset_path.write_text("[]\n", encoding="utf-8")
+
+    watched_file = repo_root / watched_path
+    watched_file.parent.mkdir(parents=True, exist_ok=True)
+    watched_file.touch(exist_ok=True)
 
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
@@ -50,7 +75,7 @@ def test_post_edit_eval_hook_dispatches_each_dataset(
             "PATH": f"{fake_bin}{os.pathsep}{env.get('PATH', '')}",
         }
     )
-    payload = {"tool_input": {"file_path": str(dataset_path)}}
+    payload = {"tool_input": {"file_path": str(watched_file)}}
 
     result = subprocess.run(
         ["bash", str(HOOK)],
