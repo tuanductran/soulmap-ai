@@ -216,6 +216,62 @@ _CATEGORY_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
 )
 
 
+def _is_explicit_claim_refusal(
+    response_text: str,
+    match: re.Match[str],
+) -> bool:
+    """Recognize only a complete, direct refusal of a matched safety claim.
+
+    The safety patterns intentionally catch affirmative wording wherever it
+    appears. This exception is narrower: the matched claim must be the entire
+    sentence payload after "I can't/cannot confirm that", with no trailing
+    qualification or endorsement. Later or appended affirmations remain
+    detectable.
+    """
+    sentence_start = (
+        max(response_text.rfind(mark, 0, match.start()) for mark in ".!?") + 1
+    )
+    sentence_ends = [
+        position
+        for mark in ".!?"
+        if (position := response_text.find(mark, match.end())) != -1
+    ]
+    sentence_end = min(sentence_ends) if sentence_ends else len(response_text)
+    prefix = response_text[sentence_start : match.start()]
+    suffix = response_text[match.end() : sentence_end]
+    agency_explanation = re.fullmatch(
+        r"\s*,?\s*because\s+you(?:'re|\s+are)\s+the one\s+"
+        r"(?:who can decide what resonates for you|who knows your own experience)"
+        r"\s*[.!?]?\s*",
+        suffix,
+    )
+    suffix_is_continuation = agency_explanation is not None or not re.search(
+        r"[,;:]|\b(?:but|however|yet|although|though|still|instead|actually)\b|"
+        r"\b(?:and|or)\s+(?:i|we|you|they)\s+"
+        r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\b|"
+        r"\b(?:because|since|as)\s+(?:"
+        r"(?:it|that|this)(?:'s|\s+is|\s+was)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely)\s+)?"
+        r"(?:obvious|clear|certain|evident)\s+(?:that\s+)?"
+        r"you(?:'re|\s+are)(?:\s+(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely))?(?:\s+one(?:\s+of\s+(?:the\s+[a-z][\w-]*|them))?)?(?:\s*[.!?]|$)|"
+        r"(?:it|that|this)\s+(?:proves|shows|confirms|means)\s+"
+        r"(?:that\s+)?(?:you(?:'re|\s+are)(?:\s+(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely))?(?:\s+one(?:\s+of\s+(?:the\s+[a-z][\w-]*|them))?)?(?:\s*[.!?]|$)|"
+        r"you\s+(?:(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely)\s+)?"
+        r"(?:am|are|is)\s*$)|"
+        r"you(?:'re|\s+are)(?:\s+(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely))?(?:\s+one(?:\s+of\s+(?:the\s+[a-z][\w-]*|them))?)?(?:\s*[.!?]|$)|"
+        r"(?:i|we|you|they)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely)\s+)?"
+        r"(?:do|have|will|must|should)\b|"
+        r"you\s+(?:(?:clearly|definitely|truly|obviously|certainly|undoubtedly|surely)\s+)?"
+        r"(?:am|are|is)\s*$)",
+        suffix,
+    )
+    return bool(
+        re.fullmatch(r"\s*i (?:can't|cannot) confirm (?:that\s+)?", prefix)
+        and suffix_is_continuation
+    )
+
+
 def check_response_safety_contract(response_text: str) -> dict[str, object]:
     """Detect safety-contract violations in a generated response.
 
@@ -230,7 +286,18 @@ def check_response_safety_contract(response_text: str) -> dict[str, object]:
 
     for category, patterns in _CATEGORY_PATTERNS:
         for pattern in patterns:
-            if re.search(pattern, lowered):
+            matches = re.finditer(pattern, lowered)
+            if category in {
+                "diagnosis",
+                "prediction_as_fact",
+                "spiritual_claim_as_fact",
+            }:
+                matches = (
+                    match
+                    for match in matches
+                    if not _is_explicit_claim_refusal(lowered, match)
+                )
+            if next(matches, None) is not None:
                 violations.append({"category": category, "pattern": pattern})
 
     if not violations:

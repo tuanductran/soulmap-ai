@@ -273,6 +273,221 @@ def test_spiritual_claims_presented_as_fact_are_detected(response: str) -> None:
 @pytest.mark.parametrize(
     "response",
     [
+        "I can't confirm that you are a starseed.",
+        "I cannot confirm that you're an empath.",
+        "I can't confirm you're an empath.",
+    ],
+    ids=["starseed-refusal", "empath-refusal", "empath-refusal-without-that"],
+)
+def test_explicit_spiritual_identity_refusal_is_not_flagged(
+    response: str,
+) -> None:
+    """A complete, direct refusal must not be mistaken for identity assignment."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        (
+            "I can't confirm that you are a starseed because you are the one "
+            "who can decide what resonates for you."
+        ),
+        (
+            "I cannot confirm that you are an empath because you are the one "
+            "who knows your own experience."
+        ),
+        (
+            "I can't confirm that you are a starseed, because you are the one "
+            "who can decide what resonates for you."
+        ),
+    ],
+    ids=[
+        "identity-refusal-with-agency-explanation",
+        "empath-refusal-with-self-knowledge-explanation",
+        "identity-refusal-with-comma-delimited-agency-explanation",
+    ],
+)
+def test_explicit_refusal_with_agency_explanation_is_not_flagged(
+    response: str,
+) -> None:
+    """An explanation that returns agency must not be mistaken for endorsement."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        "I can't confirm that you have clinical depression.",
+        "I cannot confirm that you are destined to guide others.",
+        "I can't confirm that you are a starseed because that isn't something I can verify.",
+    ],
+    ids=[
+        "diagnosis-refusal",
+        "destiny-refusal",
+        "identity-refusal-with-non-endorsement-explanation",
+    ],
+)
+def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
+    response: str,
+) -> None:
+    """A complete refusal of a diagnosis or destiny claim is not an assertion."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
+@pytest.mark.parametrize(
+    ("response", "category"),
+    [
+        (
+            "I can't confirm that you have clinical depression, but I believe you do.",
+            "diagnosis",
+        ),
+        (
+            "I cannot confirm that you are destined to guide others, but I believe you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you have clinical depression. You have clinical depression.",
+            "diagnosis",
+        ),
+        (
+            "I cannot confirm that you are destined to guide others. You are destined to guide others.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you have clinical depression because you clearly do.",
+            "diagnosis",
+        ),
+        (
+            "I cannot confirm that you are destined to guide others because you clearly are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you clearly are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because it is obvious that you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you are an empath because it's clear that you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because that proves you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because it's obvious you're one.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you are one of the starseeds.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you are an empath because it's obvious you're one of the empaths.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you are one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you are an empath because it's obvious you're one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you are obviously one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you're an empath because you're clearly one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you are certainly one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you're an empath because you're undoubtedly one of them.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because you are surely one of them.",
+            "spiritual_claim_as_fact",
+        ),
+    ],
+    ids=[
+        "diagnosis-endorsement-after-refusal",
+        "destiny-endorsement-after-refusal",
+        "diagnosis-affirmation-in-following-sentence",
+        "destiny-affirmation-in-following-sentence",
+        "diagnosis-causal-endorsement-after-refusal",
+        "destiny-causal-endorsement-after-refusal",
+        "identity-causal-endorsement-after-refusal",
+        "identity-anaphoric-obvious-endorsement-after-refusal",
+        "empath-anaphoric-clear-endorsement-after-refusal",
+        "identity-anaphoric-proof-endorsement-after-refusal",
+        "identity-contracted-anaphoric-endorsement-after-refusal",
+        "identity-anaphoric-group-endorsement-after-refusal",
+        "empath-contracted-group-endorsement-after-refusal",
+        "identity-generic-group-anaphora-after-refusal",
+        "empath-contracted-generic-group-anaphora-after-refusal",
+        "identity-adverbial-generic-group-anaphora-after-refusal",
+        "empath-contracted-adverbial-generic-group-anaphora-after-refusal",
+        "identity-certainly-generic-group-anaphora-after-refusal",
+        "empath-undoubtedly-generic-group-anaphora-after-refusal",
+        "identity-surely-generic-group-anaphora-after-refusal",
+    ],
+)
+def test_diagnosis_and_destiny_endorsements_after_refusal_still_fail(
+    response: str,
+    category: str,
+) -> None:
+    """A refusal prefix must not hide an appended affirmative endorsement."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert category in cast(list[str], result["categories"])
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
+        "I can't confirm that you are a starseed, but I believe you are.",
+        "I cannot confirm that you're an empath; you are one.",
+        "I can't confirm that you are a starseed. You are a starseed.",
+    ],
+    ids=[
+        "endorsement-after-refusal",
+        "affirmation-after-refusal",
+        "affirmation-in-following-sentence",
+    ],
+)
+def test_spiritual_identity_endorsement_after_refusal_still_fails(
+    response: str,
+) -> None:
+    """A refusal prefix must not hide a later affirmative identity claim."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "FAIL_REWRITE_REQUIRED"
+    assert "spiritual_claim_as_fact" in cast(list[str], result["categories"])
+
+
+@pytest.mark.parametrize(
+    "response",
+    [
         "Something you might call a throat theme, difficulty expressing what is true.",
         "If you hold this number as a symbol, what themes does it open for you?",
         "The heaviness you are describing sounds like a kind of energetic load.",
