@@ -177,7 +177,16 @@ both layers already share one detection implementation.
   15 are crisis-related: 6 `CRISIS` (English tier-1), 4
   `CRISIS_TIER2_MULTILINGUAL`, and 5 `NO_CRISIS_MULTILINGUAL` (negative
   cases verifying the multilingual packs from #130 don't over-trigger).
-- `tests/eval_regression/test_safety_evals.py` exerci**Follow-up status: resolved.** The original review recorded this as an
+- `tests/eval_regression/test_safety_evals.py` exercises `detect_crisis()`
+  directly against that dataset and passed (46/46) at time of review.
+- `tests/unit/runtime/detectors/test_multilingual_crisis_detector.py` and
+  `tests/integration/test_framework_selector_priorities.py` (which includes
+  `test_framework_selector_prioritizes_crisis` and the goodbye/grief
+  non-crisis regression added for #131's edge-case work) passed.
+- `tests/contract/safety/test_response_safety_gate.py` passed, including the
+  selector-independent override test discussed in the "Classification: intentional or accidental?" section.
+
+**Follow-up status: resolved.** The original review recorded this as an
 open test gap because the independent Safety Gate test alone did not exercise
 the full selector. The later regression suite now covers 24 routing outcomes,
 simulates a selector-side Tier 1 miss, and verifies that the gate still
