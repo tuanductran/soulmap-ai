@@ -399,14 +399,14 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         ),
         (
             "I cannot confirm that you are an empath because it's obvious you're one of them.",
+            "spiritual_claim_as_fact",
+        ),
         (
             "I can't confirm that you are a starseed because you are obviously one of them.",
             "spiritual_claim_as_fact",
         ),
         (
             "I cannot confirm that you're an empath because you're clearly one of them.",
-            "spiritual_claim_as_fact",
-        ),
             "spiritual_claim_as_fact",
         ),
     ],
