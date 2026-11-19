@@ -41,10 +41,23 @@ def _contains_call(node: ast.AST, name: str) -> bool:
     )
 
 
+def _assigns_result(statement: ast.stmt) -> bool:
+    """Return whether a direct statement reassigns the selector result."""
+    if isinstance(statement, ast.Assign):
+        targets = statement.targets
+    elif isinstance(statement, (ast.AnnAssign, ast.AugAssign)):
+        targets = [statement.target]
+    else:
+        return False
+    return any(
+        isinstance(target, ast.Name) and target.id == "result" for target in targets
+    )
+
+
 def _has_gated_assignment_in_return_branch(
     selector: ast.FunctionDef | ast.AsyncFunctionDef, return_node: ast.Return
 ) -> bool:
-    """Require the explicit gated result assignment in the same branch as its return."""
+    """Require the last direct result assignment in the return branch to be gated."""
     parents = {
         child: parent
         for parent in ast.walk(selector)
@@ -55,27 +68,21 @@ def _has_gated_assignment_in_return_branch(
         parent = parents[current]
         if isinstance(parent, ast.If):
             for block in (parent.body, parent.orelse):
-                contains_return = any(
-                    any(descendant is return_node for descendant in ast.walk(statement))
-                    for statement in block
+                if return_node not in block:
+                    continue
+                preceding = block[: block.index(return_node)]
+                assignments = [
+                    statement for statement in preceding if _assigns_result(statement)
+                ]
+                return bool(assignments) and _contains_call(
+                    assignments[-1], "_apply_safety_gate"
                 )
-                if contains_return:
-                    return any(
-                        isinstance(statement, ast.Assign)
-                        and any(
-                            isinstance(target, ast.Name) and target.id == "result"
-                            for target in statement.targets
-                        )
-                        and _contains_call(statement, "_apply_safety_gate")
-                        and statement.lineno < return_node.lineno
-                        for statement in block
-                    )
         current = parent
     return False
 
 
 def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
-    """Fail if a selector return path bypasses the shared Safety Gate helpers."""
+    """Fail if a selector return path does not delegate to the shared Safety Gate."""
     module = ast.parse(SELECTOR_PATH.read_text(encoding="utf-8"))
     selector = _find_function(module, "select_framework_async")
     finish = _find_function(module, "_finish")
