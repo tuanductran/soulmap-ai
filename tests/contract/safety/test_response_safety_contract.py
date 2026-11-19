@@ -342,6 +342,18 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
             "I can't confirm that you are a starseed because you clearly are.",
             "spiritual_claim_as_fact",
         ),
+        (
+            "I can't confirm that you are a starseed because it is obvious that you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I cannot confirm that you are an empath because it's clear that you are.",
+            "spiritual_claim_as_fact",
+        ),
+        (
+            "I can't confirm that you are a starseed because that proves you are.",
+            "spiritual_claim_as_fact",
+        ),
     ],
     ids=[
         "diagnosis-endorsement-after-refusal",
