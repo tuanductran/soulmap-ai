@@ -301,6 +301,33 @@ def test_explicit_spiritual_identity_refusal_is_not_flagged(
         "identity-refusal-with-non-endorsement-explanation",
     ],
 )
+@pytest.mark.parametrize(
+    "response",
+    [
+        (
+            "I can't confirm that you are a starseed because you are the one "
+            "who can decide what resonates for you."
+        ),
+        (
+            "I cannot confirm that you are an empath because you are the one "
+            "who knows your own experience."
+        ),
+    ],
+    ids=[
+        "identity-refusal-with-agency-explanation",
+        "empath-refusal-with-self-knowledge-explanation",
+    ],
+)
+def test_explicit_refusal_with_agency_explanation_is_not_flagged(
+    response: str,
+) -> None:
+    """An explanation that returns agency must not be mistaken for endorsement."""
+    result = check_response_safety_contract(response)
+
+    assert result["status"] == "PASS"
+    assert result["violations"] == []
+
+
 def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
     response: str,
 ) -> None:
@@ -354,6 +381,10 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
             "I can't confirm that you are a starseed because that proves you are.",
             "spiritual_claim_as_fact",
         ),
+        (
+            "I can't confirm that you are a starseed because it's obvious you're one.",
+            "spiritual_claim_as_fact",
+        ),
     ],
     ids=[
         "diagnosis-endorsement-after-refusal",
@@ -366,6 +397,7 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
         "identity-anaphoric-obvious-endorsement-after-refusal",
         "empath-anaphoric-clear-endorsement-after-refusal",
         "identity-anaphoric-proof-endorsement-after-refusal",
+        "identity-contracted-anaphoric-endorsement-after-refusal",
     ],
 )
 def test_diagnosis_and_destiny_endorsements_after_refusal_still_fail(
