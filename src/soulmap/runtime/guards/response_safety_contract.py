@@ -240,21 +240,24 @@ def _is_explicit_claim_refusal(
     prefix = response_text[sentence_start : match.start()]
     suffix = response_text[match.end() : sentence_end]
     suffix_is_continuation = not re.search(
-        r"[,;:]|\\b(?:but|however|yet|although|though|still|instead|actually)\\b|"
-        r"\\b(?:and|or)\\s+(?:i|we|you|they)\\s+"
-        r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\\b|"
-        r"\\b(?:because|since|as)\\s+(?:"
-        r"(?:it|that|this)(?:'s|\\s+is|\\s+was)\\s+"
-        r"(?:(?:clearly|definitely|truly|obviously)\\s+)?"
-        r"(?:obvious|clear|certain|evident)\\s+(?:that\\s+)?"
-        r"you(?:'re|\\s+are)\\s+one\\b|"
-        r"(?:it|that|this)\\s+(?:proves|shows|confirms|means)\\s+"
-        r"(?:that\\s+)?you(?:'re|\\s+are)\\s+one\\b|"
-        r"(?:i|we|you|they)\\s+"
-        r"(?:(?:clearly|definitely|truly|obviously)\\s+)?"
-        r"(?:do|have|will|must|should)\\b|"
-        r"you\\s+(?:(?:clearly|definitely|truly|obviously)\\s+)?"
-        r"(?:am|are|is)\\s*$)",
+        r"[,;:]|\b(?:but|however|yet|although|though|still|instead|actually)\b|"
+        r"\b(?:and|or)\s+(?:i|we|you|they)\s+"
+        r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\b|"
+        r"\b(?:because|since|as)\s+(?:"
+        r"(?:it|that|this)(?:'s|\s+is|\s+was)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:obvious|clear|certain|evident)\s+(?:that\s+)?"
+        r"you(?:'re|\s+are)\s+one\b|"
+        r"(?:it|that|this)\s+(?:proves|shows|confirms|means)\s+"
+        r"(?:that\s+)?(?:you(?:'re|\s+are)\s+one\b|"
+        r"you\s+(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:am|are|is)\s*$)|"
+        r"you(?:'re|\s+are)\s+one\b|"
+        r"(?:i|we|you|they)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:do|have|will|must|should)\b|"
+        r"you\s+(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:am|are|is)\s*$)",
         suffix,
     )
     return bool(
