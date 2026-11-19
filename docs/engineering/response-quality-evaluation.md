@@ -17,7 +17,9 @@ quality with deterministic rubric checks. It covers:
 - independence and non-dependency language
 
 The evaluator also reports the existing deterministic response-safety contract
-for the same cases, but the two results remain separate.
+for the same cases, but the two results remain separate. The input-side routing
+status and the output-side response-safety status are distinct contracts and
+must never share one expected-value field.
 
 ## Fixtures
 
@@ -28,6 +30,18 @@ The evaluator uses two fixture surfaces:
 2. `evals/datasets/response_quality_cases.json` supplies explicit negative and
    near-miss responses, including cases where quality fails while safety passes
    and cases where safety fails while quality passes.
+
+In `response_generation_cases.json`, `expected_safety_status` describes the
+input-side selector/scope result (`PASS`, `BLOCK`, or `OVERRIDE`). A blocked
+request can and should receive a safe refusal, so the generated response is
+expected to pass its output safety contract by default. Use
+`expected_response_safety_status` only when a generated reference response is
+intentionally expected to fail that contract.
+
+Every `response_quality_cases.json` fixture declares
+`expected_response_safety_status` directly as `PASS` or
+`FAIL_REWRITE_REQUIRED`; it is evaluated against the response text, not the
+user-message routing result.
 
 The response-generation dataset covers the 10 primary framework families
 currently represented in its fixtures: `MIRROR`, `CRISIS`, `DEPENDENCY`,
