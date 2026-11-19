@@ -53,9 +53,7 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
     assert _contains_call(finish, "_apply_safety_gate")
     assert _contains_call(gate_wrapper, "apply_safety_gate")
 
-    returns = [
-        node for node in ast.walk(selector) if isinstance(node, ast.Return)
-    ]
+    returns = [node for node in ast.walk(selector) if isinstance(node, ast.Return)]
     assert returns, "select_framework_async must expose at least one return path"
 
     gated_result_assignments = [
@@ -71,10 +69,7 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
 
     for return_node in returns:
         value = return_node.value
-        if (
-            isinstance(value, ast.Call)
-            and _call_name(value.func) == "_finish"
-        ):
+        if isinstance(value, ast.Call) and _call_name(value.func) == "_finish":
             continue
 
         if (
