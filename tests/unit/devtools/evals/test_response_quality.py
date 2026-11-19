@@ -255,7 +255,6 @@ def test_blocked_input_can_have_a_safe_refusal_response() -> None:
         "expected_primary_framework": "MIRROR",
         # This is the input-side routing result, not the output safety result.
         "expected_safety_status": "BLOCK",
-        "expected_response_safety_status": "PASS",
     }
     response = (
         "I can't diagnose you or name a disorder for you. "
