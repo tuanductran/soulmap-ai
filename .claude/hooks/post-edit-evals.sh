@@ -48,7 +48,7 @@ case "$FILE_PATH" in
     DATASET_FILE="response_quality_cases.json"
     VALIDATOR=(uv run soulmap eval-response-quality)
     ;;
-  */evals/datasets/safety_test_cases.json|evals/datasets/safety_test_cases.json)
+  */evals/datasets/safety_test_cases.json|evals/datasets/safety_test_cases.json|*/tests/eval_regression/test_safety_evals.py|tests/eval_regression/test_safety_evals.py)
     DATASET_FILE="safety_test_cases.json"
     VALIDATOR=(uv run python tests/eval_regression/test_safety_evals.py)
     ;;
