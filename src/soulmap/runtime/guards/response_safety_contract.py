@@ -239,12 +239,18 @@ def _is_explicit_claim_refusal(
     sentence_end = min(sentence_ends) if sentence_ends else len(response_text)
     prefix = response_text[sentence_start : match.start()]
     suffix = response_text[match.end() : sentence_end]
-    # A refusal is exempt only when the matched claim ends the sentence.
-    # Any continuation (including causal clauses such as "because you clearly
-    # do") makes the whole construction ineligible for the refusal exception.
+    suffix_is_continuation = not re.search(
+        r"[,;:]|\b(?:but|however|yet|although|though|still|instead|actually)\b|"
+        r"\b(?:and|or)\s+(?:i|we|you|they)\s+"
+        r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\b|"
+        r"\b(?:because|since|as)\s+(?:i|we|you|they)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:do|am|are|is|have|will|must|should)\b",
+        suffix,
+    )
     return bool(
         re.fullmatch(r"\s*i (?:can't|cannot) confirm that\s+", prefix)
-        and not suffix.strip()
+        and suffix_is_continuation
     )
 
 
