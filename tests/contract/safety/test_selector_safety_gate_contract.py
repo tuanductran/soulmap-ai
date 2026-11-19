@@ -42,7 +42,7 @@ def _contains_call(node: ast.AST, name: str) -> bool:
 
 
 def _has_gated_assignment_in_return_branch(
-    selector: ast.AsyncFunctionDef, return_node: ast.Return
+    selector: ast.FunctionDef | ast.AsyncFunctionDef, return_node: ast.Return
 ) -> bool:
     """Require the explicit gated result assignment in the same branch as its return."""
     parents = {
