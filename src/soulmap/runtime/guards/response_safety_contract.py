@@ -243,9 +243,19 @@ def _is_explicit_claim_refusal(
         r"[,;:]|\b(?:but|however|yet|although|though|still|instead|actually)\b|"
         r"\b(?:and|or)\s+(?:i|we|you|they)\s+"
         r"(?:believe|know|think|feel|agree|am|are|is|will|must|should|have)\b|"
-        r"\b(?:because|since|as)\s+(?:i|we|you|they)\s+"
+        r"\b(?:because|since|as)\s+(?:"
+        r"(?:it|that|this)(?:'s|\s+is|\s+was)\s+"
         r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
-        r"(?:do|am|are|is|have|will|must|should)\b",
+        r"(?:obvious|clear|certain|evident)\s+(?:that\s+)?"
+        r"(?:you|i|we|they)\s+(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:do|am|are|is|have|will|must|should)\b|"
+        r"(?:it|that|this)\s+(?:proves|shows|confirms|means)\s+"
+        r"(?:that\s+)?(?:you|i|we|they)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:do|am|are|is|have|will|must|should)\b|"
+        r"(?:i|we|you|they)\s+"
+        r"(?:(?:clearly|definitely|truly|obviously)\s+)?"
+        r"(?:do|am|are|is|have|will|must|should)\b)",
         suffix,
     )
     return bool(
