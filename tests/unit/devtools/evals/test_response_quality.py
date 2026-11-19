@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import cast
 
 from soulmap.devtools.evals.eval_response_quality import (
     EXPECTED_FRAMEWORKS,
@@ -263,8 +264,10 @@ def test_blocked_input_can_have_a_safe_refusal_response() -> None:
     result = _evaluate_case(case, response)
 
     assert result["ok"] is True
-    assert result["safety"]["status"] == "PASS"
-    assert result["expected"]["response_safety_status"] == "PASS"
+    safety = cast(dict[str, object], result["safety"])
+    expected = cast(dict[str, object], result["expected"])
+    assert safety["status"] == "PASS"
+    assert expected["response_safety_status"] == "PASS"
 
 
 def test_quality_fixtures_declare_output_safety_expectations() -> None:
