@@ -376,7 +376,8 @@ def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
             "diagnosis",
         ),
         (
-            "I can't confirm that you have borderline personality disorder because you clearly do.",
+            "I can't confirm that you have borderline personality disorder "
+            "because you clearly do.",
             "diagnosis",
         ),
         (
