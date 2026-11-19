@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Post-edit hook intent: validate eval datasets after edits.
-# Non-blocking. Emits feedback if schema or evals fail.
+# Post-edit hook intent: validate the eval dataset that was edited.
+# Non-blocking. Emits the corresponding runner output to the agent.
 
 set -euo pipefail
 
@@ -31,28 +31,42 @@ else:
     print("")
 ' 2>/dev/null || echo "")
 
-if [[ "$FILE_PATH" != *"evals/datasets/groups.json" ]] && [[ "$FILE_PATH" != *"evals/datasets/markdown_contract_cases.json" ]]; then
-  exit 0
-fi
+case "$FILE_PATH" in
+  */evals/datasets/groups.json|evals/datasets/groups.json)
+    DATASET_FILE="groups.json"
+    VALIDATOR=(uv run soulmap eval-groups)
+    ;;
+  */evals/datasets/markdown_contract_cases.json|evals/datasets/markdown_contract_cases.json)
+    DATASET_FILE="markdown_contract_cases.json"
+    VALIDATOR=(uv run soulmap eval-markdown-contracts)
+    ;;
+  */evals/datasets/response_generation_cases.json|evals/datasets/response_generation_cases.json)
+    DATASET_FILE="response_generation_cases.json"
+    VALIDATOR=(uv run soulmap eval-responses)
+    ;;
+  */evals/datasets/response_quality_cases.json|evals/datasets/response_quality_cases.json)
+    DATASET_FILE="response_quality_cases.json"
+    VALIDATOR=(uv run soulmap eval-response-quality)
+    ;;
+  */evals/datasets/safety_test_cases.json|evals/datasets/safety_test_cases.json)
+    DATASET_FILE="safety_test_cases.json"
+    VALIDATOR=(uv run python tests/eval_regression/test_safety_evals.py)
+    ;;
+  *)
+    exit 0
+    ;;
+esac
 
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
 cd "$REPO_ROOT"
 
-echo "[hook:post-edit-evals] Validating $FILE_PATH" >&2
+TARGET_FILE="$REPO_ROOT/evals/datasets/$DATASET_FILE"
+echo "[hook:post-edit-evals] Validating $TARGET_FILE" >&2
 
-TARGET_FILE="evals/datasets/groups.json"
-if [[ "$FILE_PATH" == *"evals/datasets/markdown_contract_cases.json" ]]; then
-  TARGET_FILE="evals/datasets/markdown_contract_cases.json"
-fi
-
-if ! python3 -c "import json; json.load(open('$TARGET_FILE'))" 2>/dev/null; then
+if ! python3 -c 'import json, sys; json.load(open(sys.argv[1], encoding="utf-8"))' "$TARGET_FILE" 2>/dev/null; then
   echo "[hook:post-edit-evals] JSON syntax error in $TARGET_FILE" >&2
-  echo "JSON syntax error in $TARGET_FILE. Check for:"
-  echo "  - Missing commas between items"
-  echo "  - Unclosed braces or brackets"
-  echo "  - Trailing commas after the last item"
-  echo "  - Duplicate field names"
+  echo "JSON syntax error in $TARGET_FILE. Check for missing commas, unclosed braces/brackets, trailing commas, and duplicate field names."
   exit 0
 fi
 
@@ -93,44 +107,23 @@ raise SystemExit(1)
 ' <<<"$output"
 }
 
-if [[ "$TARGET_FILE" == "evals/datasets/groups.json" ]] && ([[ -f "src/soulmap/devtools/evals/eval_groups.py" ]] || uv run python -c "import soulmap.devtools.evals.eval_groups" 2>/dev/null); then
-  if OUTPUT=$(run_eval_command uv run soulmap eval-groups); then
-    EXIT_CODE=0
-  else
-    EXIT_CODE=$?
-  fi
-
-  if [[ $EXIT_CODE -ne 0 ]] || echo "$OUTPUT" | grep -q "FAIL\|ERROR"; then
-    echo "[hook:post-edit-evals] Eval issues detected:" >&2
-    echo "$OUTPUT" >&2
-    echo "Eval validation issues detected in evals/datasets/groups.json:"
-    echo "$OUTPUT"
-  else
-    echo "[hook:post-edit-evals] All evals passed." >&2
-  fi
-fi
-
-if [[ "$TARGET_FILE" == "evals/datasets/markdown_contract_cases.json" ]] && ([[ -f "src/soulmap/devtools/evals/eval_markdown_contracts.py" ]] || uv run python -c "import soulmap.devtools.evals.eval_markdown_contracts" 2>/dev/null); then
-  if OUTPUT=$(run_eval_command uv run soulmap eval-markdown-contracts); then
-    EXIT_CODE=0
-  else
-    EXIT_CODE=$?
-  fi
-
-  if [[ $EXIT_CODE -ne 0 ]] || markdown_eval_has_failures "$OUTPUT"; then
-    echo "[hook:post-edit-evals] Markdown contract issues detected:" >&2
-    echo "$OUTPUT" >&2
-    echo "Markdown contract issues detected in evals/datasets/markdown_contract_cases.json:"
-    echo "$OUTPUT"
-  else
-    echo "[hook:post-edit-evals] Markdown contract eval passed." >&2
-  fi
-fi
-
-if uv run python tests/eval_regression/test_safety_evals.py >/dev/null 2>&1; then
-  echo "[hook:post-edit-evals] Safety eval script passed." >&2
+if OUTPUT=$(run_eval_command "${VALIDATOR[@]}"); then
+  EXIT_CODE=0
 else
-  echo "[hook:post-edit-evals] Safety eval script not available or failed." >&2
+  EXIT_CODE=$?
+fi
+
+if [[ "$DATASET_FILE" == "markdown_contract_cases.json" ]] && markdown_eval_has_failures "$OUTPUT"; then
+  EXIT_CODE=1
+fi
+
+if [[ $EXIT_CODE -ne 0 ]]; then
+  echo "[hook:post-edit-evals] Validation issues detected in $TARGET_FILE" >&2
+  echo "$OUTPUT" >&2
+  echo "Validation issues detected in $TARGET_FILE:"
+  echo "$OUTPUT"
+else
+  echo "[hook:post-edit-evals] Validation command completed for $DATASET_FILE." >&2
 fi
 
 exit 0
