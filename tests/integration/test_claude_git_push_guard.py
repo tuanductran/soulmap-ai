@@ -47,9 +47,7 @@ def _run_hook(command: str, repo: Path) -> subprocess.CompletedProcess[str]:
         "git push origin refs/heads/topic:refs/heads/main",
     ],
 )
-def test_hook_blocks_explicit_main_push_refspecs(
-    tmp_path: Path, command: str
-) -> None:
+def test_hook_blocks_explicit_main_push_refspecs(tmp_path: Path, command: str) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     _init_repo(repo, "feature")
