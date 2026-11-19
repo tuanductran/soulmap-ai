@@ -293,8 +293,13 @@ def test_explicit_spiritual_identity_refusal_is_not_flagged(
     [
         "I can't confirm that you have clinical depression.",
         "I cannot confirm that you are destined to guide others.",
+        "I can't confirm that you are a starseed because that isn't something I can verify.",
     ],
-    ids=["diagnosis-refusal", "destiny-refusal"],
+    ids=[
+        "diagnosis-refusal",
+        "destiny-refusal",
+        "identity-refusal-with-non-endorsement-explanation",
+    ],
 )
 def test_explicit_diagnosis_and_destiny_refusals_are_not_flagged(
     response: str,
