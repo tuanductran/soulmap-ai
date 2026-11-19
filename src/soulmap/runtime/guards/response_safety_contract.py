@@ -136,7 +136,10 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
     r"\byour \d+ means you\b",
     r"\byour (?:life path |destiny |soul )?number means\b",
     r"\byour (?:life path )?number (?:confirms|proves) your destiny\b",
-    r"\byou(?:'re| are) (?:definitely|clearly|truly) meant for (?:this|your) (?:path|purpose|mission)\b",
+    (
+        r"\byou(?:'re| are) (?:definitely|clearly|truly) meant for "
+        r"(?:this|your) (?:path|purpose|mission)\b"
+    ),
     r"\byou(?:'re| are) destined to\b",
     # Tarot as prediction, doctrine tarot-specific rule
     r"\bthe cards? (?:say|says|show|shows|reveals?) (?:that )?you will\b",
