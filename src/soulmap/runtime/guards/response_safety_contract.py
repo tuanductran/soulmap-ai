@@ -137,7 +137,7 @@ SPIRITUAL_CLAIM_AS_FACT_PATTERNS: tuple[str, ...] = (
     r"\byour (?:life path |destiny |soul )?number means\b",
     r"\byour (?:life path )?number (?:confirms|proves) your destiny\b",
     (
-        r"\byou(?:'re| are) meant for "
+        r"\byou(?:'re| are) (?:definitely |truly |clearly )?meant for "
         r"(?:this|your) (?:path|purpose|mission)\b"
     ),
     r"\byou(?:'re| are) destined to\b",
