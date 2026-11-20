@@ -160,10 +160,45 @@ def command_tokens(segment):
 def expand_repo_path(raw_path):
     expanded = os.path.expanduser(os.path.expandvars(raw_path))
     if "$" in expanded or chr(96) in expanded:
-        return project_root
+        return None
     if not os.path.isabs(expanded):
         expanded = os.path.join(project_root, expanded)
     return os.path.realpath(expanded)
+
+
+def has_executable_push_substitution(source):
+    """Detect git push inside command substitutions, not quoted literals."""
+    visible = []
+    quote = None
+    escaped = False
+    for char in source:
+        if escaped:
+            visible.append(" ")
+            escaped = False
+            continue
+        if char == "\\" and quote != "'":
+            visible.append(" ")
+            escaped = True
+            continue
+        if quote == "'":
+            visible.append(" ")
+            if char == "'":
+                quote = None
+            continue
+        if char in {"'", '"'}:
+            if quote is None:
+                quote = char
+            elif quote == char:
+                quote = None
+            visible.append(" ")
+            continue
+        visible.append(char)
+    unquoted = "".join(visible)
+    for match in re.finditer(r"\\$\\((.*?)\\)|`([^`]*)`", unquoted, re.DOTALL):
+        nested = match.group(1) or match.group(2) or ""
+        if re.search(r"(?<![A-Za-z0-9_./-])git\\s+push\\b", nested):
+            return True
+    return False
 
 
 def is_main_refspec(refspec):
@@ -215,6 +250,10 @@ def tokenize_shell(source):
     lexer.commenters = ""
     return list(lexer)
 
+
+if has_executable_push_substitution(command):
+    print("Blocked: git push inside a shell command substitution cannot be safely inspected.", file=sys.stderr)
+    raise SystemExit(2)
 
 try:
     tokens = tokenize_shell(command)
@@ -271,7 +310,11 @@ while pending_segments:
     while index < len(parts):
         token = parts[index]
         if token == "-C" and index + 1 < len(parts):
-            repo_path = expand_repo_path(parts[index + 1])
+            resolved_repo_path = expand_repo_path(parts[index + 1])
+            if resolved_repo_path is None:
+                repo_context_unknown = True
+            else:
+                repo_path = resolved_repo_path
             index += 2
         elif token in global_value_options and index + 1 < len(parts):
             if token in {"--git-dir", "--work-tree"}:
@@ -287,8 +330,33 @@ while pending_segments:
         else:
             break
 
-    if index >= len(parts) or parts[index] != "push":
+    if index >= len(parts):
         continue
+
+    subcommand = parts[index]
+    if subcommand != "push":
+        alias_result = subprocess.run(
+            ["git", "-C", repo_path, "config", "--get", f"alias.{subcommand}"],
+            capture_output=True, text=True, check=False,
+        )
+        alias_value = alias_result.stdout.strip() if alias_result.returncode == 0 else ""
+        if alias_value:
+            if alias_value.startswith("!") and re.search(r"\\bpush\\b", alias_value):
+                print("Blocked: shell Git alias may execute a protected push.", file=sys.stderr)
+                raise SystemExit(2)
+            try:
+                alias_tokens = shlex.split(alias_value)
+            except ValueError:
+                print("Blocked: unable to safely parse the invoked Git alias.", file=sys.stderr)
+                raise SystemExit(2)
+            if alias_tokens and alias_tokens[0] == "push":
+                parts = ["git", *alias_tokens, *parts[index + 1:]]
+                index = 1
+                subcommand = "push"
+            else:
+                continue
+        else:
+            continue
 
     positional, dangerous_modes = parse_push_arguments(parts[index + 1:])
     if dangerous_modes:
@@ -304,6 +372,23 @@ while pending_segments:
         print("Blocked: direct push to 'main' is not allowed.", file=sys.stderr)
         print("Create a feature branch and push that instead.", file=sys.stderr)
         raise SystemExit(2)
+
+    head_refspec = any(
+        refspec.lstrip("+") == "HEAD"
+        or refspec.lstrip("+").endswith(":HEAD")
+        for refspec in refspecs
+    )
+    if head_refspec:
+        if repo_context_unknown:
+            print("Blocked: cannot resolve HEAD against the target repository.", file=sys.stderr)
+            raise SystemExit(2)
+        current_branch = subprocess.run(
+            ["git", "-C", repo_path, "branch", "--show-current"],
+            capture_output=True, text=True, check=False,
+        ).stdout.strip()
+        if current_branch == "main":
+            print("Blocked: HEAD resolves to the protected 'main' branch.", file=sys.stderr)
+            raise SystemExit(2)
 
     if not refspecs:
         if repo_context_unknown:
