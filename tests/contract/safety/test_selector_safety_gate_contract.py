@@ -50,7 +50,9 @@ def _assigns_result(statement: ast.stmt) -> bool:
     else:
         return False
     return any(
-        isinstance(target, ast.Name) and target.id == "result" for target in targets
+        isinstance(name, ast.Name) and name.id == "result"
+        for target in targets
+        for name in ast.walk(target)
     )
 
 
@@ -72,10 +74,17 @@ def _has_gated_assignment_in_return_branch(
                     continue
                 preceding = block[: block.index(return_node)]
                 assignments = [
-                    statement for statement in preceding if _assigns_result(statement)
+                    node
+                    for statement in preceding
+                    for node in ast.walk(statement)
+                    if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign))
+                    and _assigns_result(node)
                 ]
-                return bool(assignments) and _contains_call(
-                    assignments[-1], "_apply_safety_gate"
+                # Every write on the path must be gated. Checking only the last
+                # direct statement misses nested branches that overwrite result.
+                return bool(assignments) and all(
+                    _contains_call(assignment, "_apply_safety_gate")
+                    for assignment in assignments
                 )
         current = parent
     return False
@@ -113,3 +122,44 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
             "select_framework_async has a return path that does not delegate "
             f"to the Safety Gate (line {return_node.lineno})"
         )
+
+
+
+def test_nested_result_overwrite_must_also_pass_through_the_safety_gate() -> None:
+    """A nested branch cannot replace a gated result with an ungated value."""
+    module = ast.parse(
+        """
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        if nested_condition:
+            result = value
+        return _maybe_attach_debug(result)
+"""
+    )
+    selector = _find_function(module, "selector")
+    return_node = next(
+        node for node in ast.walk(selector) if isinstance(node, ast.Return)
+    )
+
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_nested_gated_result_assignment_remains_valid() -> None:
+    """Nested result writes are accepted when each write applies the gate."""
+    module = ast.parse(
+        """
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        if nested_condition:
+            result = _apply_safety_gate(other_value)
+        return _maybe_attach_debug(result)
+"""
+    )
+    selector = _find_function(module, "selector")
+    return_node = next(
+        node for node in ast.walk(selector) if isinstance(node, ast.Return)
+    )
+
+    assert _has_gated_assignment_in_return_branch(selector, return_node)
