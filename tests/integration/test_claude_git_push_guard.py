@@ -109,6 +109,55 @@ def test_hook_blocks_all_branch_push_modes(tmp_path: Path, command: str) -> None
     assert "can publish the protected 'main' branch" in result.stderr
 
 
+@pytest.mark.parametrize(
+    "command",
+    [
+        "git push origin --prune",
+        "git push --prune origin",
+    ],
+)
+def test_hook_blocks_pruning_push_modes(tmp_path: Path, command: str) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(command, repo)
+
+    assert result.returncode == 2
+    assert "can publish or delete" in result.stderr
+
+
+def test_hook_blocks_remote_configured_main_refspec(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "remote.origin.push",
+         "refs/heads/feature:refs/heads/main"],
+        check=True,
+    )
+
+    result = _run_hook("git push origin", repo)
+
+    assert result.returncode == 2
+    assert "protected 'main' branch" in result.stderr
+
+
+def test_hook_blocks_remote_mirror_configuration(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "remote.origin.mirror", "true"],
+        check=True,
+    )
+
+    result = _run_hook("git push origin", repo)
+
+    assert result.returncode == 2
+    assert "protected 'main' branch" in result.stderr
+
+
 def test_hook_expands_environment_variable_in_git_c_path(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
