@@ -80,6 +80,18 @@ from soulmap.runtime.config.safety_zh import (
 from soulmap.runtime.config.safety_zh import (
     LANGUAGE_CODE as LANGUAGE_CODE_ZH,
 )
+from soulmap.runtime.config.safety_ko import (
+    CRISIS_TIER1 as CRISIS_TIER1_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    CRISIS_TIER2 as CRISIS_TIER2_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    GRANDIOSITY_SIGNALS as GRANDIOSITY_SIGNALS_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    LANGUAGE_CODE as LANGUAGE_CODE_KO,
+)
 
 SUPPORTED_LANGUAGES: tuple[str, ...] = (
     LANGUAGE_CODE_EN,
@@ -87,6 +99,7 @@ SUPPORTED_LANGUAGES: tuple[str, ...] = (
     LANGUAGE_CODE_ES,
     LANGUAGE_CODE_FR,
     LANGUAGE_CODE_ZH,
+    LANGUAGE_CODE_KO,
 )
 
 # Order does not affect detection (every signal is checked with substring
@@ -97,6 +110,7 @@ CRISIS_TIER1: tuple[str, ...] = (
     + CRISIS_TIER1_ES
     + CRISIS_TIER1_FR
     + CRISIS_TIER1_ZH
+    + CRISIS_TIER1_KO
 )
 CRISIS_TIER2: tuple[str, ...] = (
     CRISIS_TIER2_EN
@@ -104,6 +118,7 @@ CRISIS_TIER2: tuple[str, ...] = (
     + CRISIS_TIER2_ES
     + CRISIS_TIER2_FR
     + CRISIS_TIER2_ZH
+    + CRISIS_TIER2_KO
 )
 GRANDIOSITY_SIGNALS: tuple[str, ...] = (
     GRANDIOSITY_SIGNALS_EN
@@ -111,6 +126,7 @@ GRANDIOSITY_SIGNALS: tuple[str, ...] = (
     + GRANDIOSITY_SIGNALS_ES
     + GRANDIOSITY_SIGNALS_FR
     + GRANDIOSITY_SIGNALS_ZH
+    + GRANDIOSITY_SIGNALS_KO
 )
 
 __all__ = [
