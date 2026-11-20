@@ -149,7 +149,7 @@ def _gate_call_forwards_inputs(
     call = statement.value
     return (
         _is_direct_call(call, call_name)
-        and len(call.args) >= len(expected_names)
+        and len(call.args) == len(expected_names)
         and all(
             isinstance(argument, ast.Name) and argument.id == expected
             for argument, expected in zip(call.args, expected_names, strict=False)
@@ -227,7 +227,9 @@ def _finish_returns_gated_result(
         for node in finish.body
         if _is_direct_call_assignment(node, "result", "_apply_safety_gate")
         and _gate_call_forwards_inputs(
-            node, "_apply_safety_gate", ("message", "history", "memory", "selection")
+            node,
+            "_apply_safety_gate",
+            ("message", "history", "memory", "selection", "debug_events"),
         )
         and _request_inputs_are_not_rebound(
             finish, ("message", "history", "memory", "selection")
