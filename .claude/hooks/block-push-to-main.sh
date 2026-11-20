@@ -46,20 +46,72 @@ project_root = (
     or os.environ.get("CLAUDE_PROJECT_DIR")
     or os.getcwd()
 )
-separators = {";", "&&", "||", "|", "&", "(", ")"}
-shell_keywords = {"if", "then", "do", "else", "elif", "while", "until", "for", "case", "select", "!"}
+separators = {";", "&&", "||", "|", "&", "(", ")", "{", "}"}
+shell_keywords = {
+    "if", "then", "do", "else", "elif", "while", "until",
+    "for", "case", "select", "!",
+}
 wrappers = {"command", "builtin", "exec", "nohup", "time"}
 assignment = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 value_options = {
     "--receive-pack", "--exec", "--push-option", "-o",
-    "--recurse-submodules", "--signed",
+    "--recurse-submodules",
 }
-global_value_options = {"-C", "-c", "--git-dir", "--work-tree", "--namespace", "--exec-path"}
+global_value_options = {
+    "-C", "-c", "--git-dir", "--work-tree", "--namespace", "--exec-path",
+}
 
-def segments(tokens):
+
+def strip_shell_comments(source):
+    """Remove shell comments but preserve their terminating newlines."""
+    output = []
+    quote = None
+    escaped = False
+    at_word_start = True
+    index = 0
+    while index < len(source):
+        char = source[index]
+        if escaped:
+            output.append(char)
+            escaped = False
+            at_word_start = False
+            index += 1
+            continue
+        if char == "\\" and quote != "'":
+            output.append(char)
+            escaped = True
+            index += 1
+            continue
+        if quote:
+            output.append(char)
+            if char == quote:
+                quote = None
+            index += 1
+            continue
+        if char in {"'", '"'}:
+            quote = char
+            output.append(char)
+            at_word_start = False
+            index += 1
+            continue
+        if char == "#" and at_word_start:
+            while index < len(source) and source[index] != "\n":
+                index += 1
+            if index < len(source):
+                output.append("\n")
+                index += 1
+            at_word_start = True
+            continue
+        output.append(char)
+        at_word_start = char.isspace() or char in ";&|(){}"
+        index += 1
+    return "".join(output)
+
+
+def split_segments(tokens):
     current = []
     for token in tokens:
-        if token in separators or (token and set(token) <= {";", "&", "|"}):
+        if token in separators:
             if current:
                 yield current
                 current = []
@@ -68,14 +120,12 @@ def segments(tokens):
     if current:
         yield current
 
+
 def command_tokens(segment):
     index = 0
     while index < len(segment):
         token = segment[index]
-        if token in shell_keywords:
-            index += 1
-            continue
-        if assignment.match(token):
+        if token in shell_keywords or assignment.match(token):
             index += 1
             continue
         if token in wrappers:
@@ -84,30 +134,37 @@ def command_tokens(segment):
         if token == "sudo":
             index += 1
             while index < len(segment) and segment[index].startswith("-"):
-                if segment[index] in {"-u", "--user", "-g", "--group", "-h", "--host", "-p", "--prompt"}:
+                if segment[index] in {
+                    "-u", "--user", "-g", "--group",
+                    "-h", "--host", "-p", "--prompt",
+                }:
                     index += 2
                 else:
                     index += 1
             continue
         if token == "env":
             index += 1
-            while index < len(segment) and (
-                assignment.match(segment[index])
-                or segment[index] in {"-i", "--ignore-environment", "-0"}
-            ):
-                index += 1
+            while index < len(segment):
+                item = segment[index]
+                if assignment.match(item) or item in {"-i", "--ignore-environment", "-0"}:
+                    index += 1
+                elif item in {"-u", "--unset", "-C", "--chdir"}:
+                    index += 2
+                else:
+                    break
             continue
         break
     return segment[index:]
 
+
 def expand_repo_path(raw_path):
     expanded = os.path.expanduser(os.path.expandvars(raw_path))
-    # Do not pass unresolved shell variables or command substitutions to git.
-    if "$" in expanded or "`" in expanded:
+    if "$" in expanded or chr(96) in expanded:
         return project_root
     if not os.path.isabs(expanded):
         expanded = os.path.join(project_root, expanded)
     return os.path.realpath(expanded)
+
 
 def is_main_refspec(refspec):
     value = refspec.lstrip("+")
@@ -115,29 +172,62 @@ def is_main_refspec(refspec):
     destination = destination.lstrip("+")
     if destination in {"main", "refs/heads/main"}:
         return True
-    # A wildcard destination can include refs/heads/main; fail closed.
     return "*" in destination or "?" in destination
 
+
+def parse_push_arguments(args):
+    """Return positional arguments and dangerous push modes, respecting option values."""
+    positional = []
+    dangerous_modes = set()
+    index = 0
+    options_ended = False
+    while index < len(args):
+        arg = args[index]
+        if options_ended:
+            positional.append(arg)
+            index += 1
+            continue
+        if arg == "--":
+            options_ended = True
+            index += 1
+            continue
+        if arg in {"--all", "--branches", "--mirror", "--prune"}:
+            dangerous_modes.add(arg)
+            index += 1
+            continue
+        option_name = arg.split("=", 1)[0]
+        if option_name in value_options:
+            index += 2 if "=" not in arg else 1
+            continue
+        if arg.startswith("-"):
+            index += 1
+            continue
+        positional.append(arg)
+        index += 1
+    return positional, dangerous_modes
+
+
 try:
-    normalized_command = command.replace("\\\n", " ").replace("\n", " ; ")
-    lexer = shlex.shlex(normalized_command, posix=True, punctuation_chars=";&|()")
+    normalized = command.replace("\\\n", " ")
+    normalized = strip_shell_comments(normalized).replace("\n", " ; ")
+    lexer = shlex.shlex(normalized, posix=True, punctuation_chars=";&|(){}")
     lexer.whitespace_split = True
-    lexer.commenters = "#"
+    lexer.commenters = ""
     tokens = list(lexer)
 except ValueError:
-    # Malformed shell quoting: do not guess that a push is safe.
     if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", command):
         print("Blocked: unable to safely parse a possible git push command.", file=sys.stderr)
         raise SystemExit(2)
     raise SystemExit(0)
 
-for segment in segments(tokens):
+for segment in split_segments(tokens):
     parts = command_tokens(segment)
     if not parts or os.path.basename(parts[0]) != "git":
         continue
 
     index = 1
     repo_path = project_root
+    repo_context_unknown = False
     while index < len(parts):
         token = parts[index]
         if token == "-C" and index + 1 < len(parts):
@@ -145,11 +235,12 @@ for segment in segments(tokens):
             index += 2
         elif token in global_value_options and index + 1 < len(parts):
             if token in {"--git-dir", "--work-tree"}:
-                # Relative Git directory/worktree options are resolved by Git;
-                # branch checks below still use the selected project root.
-                pass
+                repo_context_unknown = True
             index += 2
-        elif token.startswith(("--git-dir=", "--work-tree=", "--namespace=", "--exec-path=")):
+        elif token.startswith(("--git-dir=", "--work-tree=")):
+            repo_context_unknown = True
+            index += 1
+        elif token.startswith(("--namespace=", "--exec-path=")):
             index += 1
         elif token.startswith("-"):
             index += 1
@@ -159,26 +250,15 @@ for segment in segments(tokens):
     if index >= len(parts) or parts[index] != "push":
         continue
 
-    args = parts[index + 1:]
-    if "--all" in args or "--mirror" in args or "--prune" in args:
-        print("Blocked: this push mode can publish or delete the protected 'main' branch.", file=sys.stderr)
+    positional, dangerous_modes = parse_push_arguments(parts[index + 1:])
+    if dangerous_modes:
+        modes = ", ".join(sorted(dangerous_modes))
+        print(
+            f"Blocked: push mode {modes} can publish or delete the protected 'main' branch.",
+            file=sys.stderr,
+        )
         raise SystemExit(2)
 
-    positional = []
-    skip_value = False
-    for arg in args:
-        if skip_value:
-            skip_value = False
-            continue
-        option_name = arg.split("=", 1)[0]
-        if option_name in value_options and "=" not in arg:
-            skip_value = True
-        elif arg.startswith("-"):
-            continue
-        else:
-            positional.append(arg)
-
-    # First positional token is the remote; remaining tokens are refspecs.
     refspecs = positional[1:] if positional else []
     if any(is_main_refspec(refspec) for refspec in refspecs):
         print("Blocked: direct push to 'main' is not allowed.", file=sys.stderr)
@@ -186,6 +266,13 @@ for segment in segments(tokens):
         raise SystemExit(2)
 
     if not refspecs:
+        if repo_context_unknown:
+            print(
+                "Blocked: cannot verify the target repository for an implicit push.",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
+
         def git_output(*git_args):
             return subprocess.run(
                 ["git", "-C", repo_path, *git_args],
@@ -225,7 +312,10 @@ for segment in segments(tokens):
             or any(is_main_refspec(spec) for spec in configured_push)
             or (push_default in {"matching", "mirror"} and local_main)
         ):
-            print("Blocked: this implicit push would publish from or target the protected 'main' branch.", file=sys.stderr)
+            print(
+                "Blocked: this implicit push would publish from or target the protected 'main' branch.",
+                file=sys.stderr,
+            )
             print("Switch to a feature branch and push that instead.", file=sys.stderr)
             raise SystemExit(2)
 
