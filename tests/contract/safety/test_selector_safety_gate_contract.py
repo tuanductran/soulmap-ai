@@ -69,18 +69,43 @@ def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) 
     )
 
 
+def _has_single_local_binding(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    name: str,
+    allowed_target: ast.Name,
+) -> bool:
+    """Reject rebinding a gate-derived local on any return path."""
+    writes = [
+        node
+        for node in ast.walk(function)
+        if isinstance(node, ast.Name)
+        and node.id == name
+        and isinstance(node.ctx, ast.Store)
+    ]
+    return len(writes) == 1 and writes[0] is allowed_target
+
+
 def _finish_returns_gated_result(
     finish: ast.FunctionDef | ast.AsyncFunctionDef,
 ) -> bool:
-    """Require every _finish return to wrap the value returned by the gate."""
-    if not any(
-        _is_direct_call_assignment(node, "result", "_apply_safety_gate")
+    """Require every _finish return to use its dominating, unrebound gate result."""
+    gates = [
+        node
         for node in finish.body
-    ):
-        return False
+        if _is_direct_call_assignment(node, "result", "_apply_safety_gate")
+    ]
     returns = [node for node in ast.walk(finish) if isinstance(node, ast.Return)]
-    return bool(returns) and all(
-        isinstance(node.value, ast.Call)
+    if len(gates) != 1 or not returns:
+        return False
+    gate = gates[0]
+    target = gate.targets[0]
+    if not isinstance(target, ast.Name):
+        return False
+    if not _has_single_local_binding(finish, "result", target):
+        return False
+    return all(
+        node.lineno > gate.lineno
+        and isinstance(node.value, ast.Call)
         and _is_direct_call(node.value, "_maybe_attach_debug")
         and bool(node.value.args)
         and isinstance(node.value.args[0], ast.Name)
@@ -92,55 +117,81 @@ def _finish_returns_gated_result(
 def _gate_wrapper_returns_gated_selection(
     gate_wrapper: ast.FunctionDef | ast.AsyncFunctionDef,
 ) -> bool:
-    """Require each gate-wrapper return to derive from the selection it gated."""
-    direct_gate = any(
-        _is_direct_call_assignment(node, "result", "apply_safety_gate")
+    """Require each gate-wrapper return to use its dominating gated selection."""
+    gates = [
+        node
         for node in gate_wrapper.body
-    )
-    selected_gated_value = any(
-        isinstance(node, ast.Assign)
-        and len(node.targets) == 1
-        and isinstance(node.targets[0], ast.Name)
-        and node.targets[0].id == "gated_selection"
-        and isinstance(node.value, ast.Call)
-        and isinstance(node.value.func, ast.Attribute)
-        and node.value.func.attr == "get"
-        and isinstance(node.value.func.value, ast.Name)
-        and node.value.func.value.id == "result"
-        and len(node.value.args) >= 2
-        and isinstance(node.value.args[0], ast.Constant)
-        and node.value.args[0].value == "selection"
-        and isinstance(node.value.args[1], ast.Name)
-        and node.value.args[1].id == "selection"
+        if _is_direct_call_assignment(node, "result", "apply_safety_gate")
+    ]
+    selected = [
+        node
         for node in gate_wrapper.body
-    )
-    copied_gated_value = any(
-        isinstance(node, ast.Assign)
-        and len(node.targets) == 1
-        and isinstance(node.targets[0], ast.Name)
-        and node.targets[0].id == "out"
-        and isinstance(node.value, ast.Call)
-        and isinstance(node.value.func, ast.Name)
-        and node.value.func.id == "dict"
-        and bool(node.value.args)
-        and isinstance(node.value.args[0], ast.Call)
-        and isinstance(node.value.args[0].func, ast.Name)
-        and node.value.args[0].func.id == "cast"
-        and len(node.value.args[0].args) >= 2
-        and isinstance(node.value.args[0].args[1], ast.Name)
-        and node.value.args[0].args[1].id == "gated_selection"
-        for node in gate_wrapper.body
-    )
-    returns = [node for node in ast.walk(gate_wrapper) if isinstance(node, ast.Return)]
-    return (
-        direct_gate
-        and selected_gated_value
-        and copied_gated_value
-        and bool(returns)
-        and all(
-            isinstance(node.value, ast.Name) and node.value.id == "out"
-            for node in returns
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and node.targets[0].id == "gated_selection"
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Attribute)
+            and node.value.func.attr == "get"
+            and isinstance(node.value.func.value, ast.Name)
+            and node.value.func.value.id == "result"
+            and len(node.value.args) >= 2
+            and isinstance(node.value.args[0], ast.Constant)
+            and node.value.args[0].value == "selection"
+            and isinstance(node.value.args[1], ast.Name)
+            and node.value.args[1].id == "selection"
         )
+    ]
+    copied = [
+        node
+        for node in gate_wrapper.body
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and node.targets[0].id == "out"
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Name)
+            and node.value.func.id == "dict"
+            and bool(node.value.args)
+            and isinstance(node.value.args[0], ast.Call)
+            and isinstance(node.value.args[0].func, ast.Name)
+            and node.value.args[0].func.id == "cast"
+            and len(node.value.args[0].args) >= 2
+            and isinstance(node.value.args[0].args[1], ast.Name)
+            and node.value.args[0].args[1].id == "gated_selection"
+        )
+    ]
+    returns = [
+        node for node in ast.walk(gate_wrapper) if isinstance(node, ast.Return)
+    ]
+    if len(gates) != 1 or len(selected) != 1 or len(copied) != 1 or not returns:
+        return False
+
+    gate, selection, output = gates[0], selected[0], copied[0]
+    gate_target = gate.targets[0]
+    selection_target = selected[0].targets[0]
+    output_target = output.targets[0]
+    if not all(
+        isinstance(target, ast.Name)
+        for target in (gate_target, selection_target, output_target)
+    ):
+        return False
+    if not (
+        gate.lineno < selection.lineno < output.lineno
+        and _has_single_local_binding(gate_wrapper, "result", gate_target)
+        and _has_single_local_binding(
+            gate_wrapper, "gated_selection", selection_target
+        )
+        and _has_single_local_binding(gate_wrapper, "out", output_target)
+    ):
+        return False
+    return all(
+        node.lineno > output.lineno
+        and isinstance(node.value, ast.Name)
+        and node.value.id == "out"
+        for node in returns
     )
 
 
@@ -358,6 +409,33 @@ def test_gate_wrapper_rejects_an_early_ungated_return() -> None:
 def _apply_safety_gate(selection):
     if early:
         return selection
+    result = apply_safety_gate(selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+def test_finish_rejects_return_of_rebound_result_before_gate() -> None:
+    module = ast.parse("""
+def _finish():
+    result = selection
+    if early:
+        return _maybe_attach_debug(result, debug_events)
+    result = _apply_safety_gate(selection)
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_return_of_rebound_output_before_gate() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(selection):
+    out = selection
+    if early:
+        return out
     result = apply_safety_gate(selection)
     gated_selection = result.get("selection", selection)
     out = dict(cast(dict, gated_selection))
