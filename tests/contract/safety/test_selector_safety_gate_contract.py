@@ -170,10 +170,11 @@ def _gate_wrapper_returns_gated_selection(
         return False
 
     gate, selection, output = gates[0], selected[0], copied[0]
-    if not all(
-        isinstance(statement, ast.Assign) and statement.targets
-        for statement in (gate, selection, output)
-    ):
+    if not isinstance(gate, ast.Assign) or not gate.targets:
+        return False
+    if not isinstance(selection, ast.Assign) or not selection.targets:
+        return False
+    if not isinstance(output, ast.Assign) or not output.targets:
         return False
     gate_target = gate.targets[0]
     selection_target = selection.targets[0]
