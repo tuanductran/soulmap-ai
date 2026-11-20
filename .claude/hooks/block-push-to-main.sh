@@ -167,7 +167,7 @@ def expand_repo_path(raw_path):
 
 
 def has_executable_push_substitution(source):
-    """Detect git push inside command substitutions, not quoted literals."""
+    """Detect Git push commands in executable substitutions, not literals."""
     visible = []
     quote = None
     escaped = False
@@ -198,7 +198,7 @@ def has_executable_push_substitution(source):
     shell_code = "".join(visible)
     for match in re.finditer(r"\$\((.*?)\)|`([^`]*)`", shell_code, re.DOTALL):
         nested = match.group(1) or match.group(2) or ""
-        if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", nested):
+        if contains_git_push(nested):
             return True
     return False
 
@@ -276,6 +276,82 @@ def tokenize_shell(source):
     lexer.whitespace_split = True
     lexer.commenters = ""
     return list(lexer)
+
+
+def contains_git_push(source):
+    """Parse a nested shell body and detect direct or aliased Git push commands."""
+    try:
+        nested_segments = split_segments(tokenize_shell(source))
+    except ValueError:
+        return bool(re.search(r"(?<![A-Za-z0-9_./-])git\\b.*\\bpush\\b", source, re.DOTALL))
+
+    for nested_segment in nested_segments:
+        nested_parts = command_tokens(nested_segment)
+        if not nested_parts:
+            continue
+        nested_executable = os.path.basename(nested_parts[0])
+        if nested_executable in {"bash", "sh", "dash", "zsh", "ksh"}:
+            for option_index, option in enumerate(nested_parts[1:], start=1):
+                if option == "-c" or (
+                    option.startswith("-") and not option.startswith("--") and "c" in option[1:]
+                ):
+                    if option_index + 1 < len(nested_parts) and contains_git_push(
+                        nested_parts[option_index + 1]
+                    ):
+                        return True
+                    break
+            continue
+        if nested_executable == "eval":
+            if contains_git_push(" ".join(nested_parts[1:])):
+                return True
+            continue
+        if nested_executable != "git":
+            continue
+
+        nested_index = 1
+        nested_repo = project_root
+        repo_unknown = False
+        while nested_index < len(nested_parts):
+            token = nested_parts[nested_index]
+            if token == "-C" and nested_index + 1 < len(nested_parts):
+                resolved = expand_repo_path(nested_parts[nested_index + 1])
+                if resolved is None:
+                    repo_unknown = True
+                else:
+                    nested_repo = resolved
+                nested_index += 2
+            elif token == "-c" and nested_index + 1 < len(nested_parts):
+                if nested_parts[nested_index + 1].startswith("alias."):
+                    return True
+                nested_index += 2
+            elif token in global_value_options and nested_index + 1 < len(nested_parts):
+                if token in {"--git-dir", "--work-tree"}:
+                    repo_unknown = True
+                nested_index += 2
+            elif token.startswith(("--git-dir=", "--work-tree=")):
+                repo_unknown = True
+                nested_index += 1
+            elif token.startswith("-"):
+                nested_index += 1
+            else:
+                break
+
+        if nested_index >= len(nested_parts):
+            continue
+        nested_subcommand = nested_parts[nested_index]
+        if nested_subcommand == "push":
+            return True
+        if repo_unknown and nested_subcommand not in {
+            "add", "am", "archive", "bisect", "branch", "bundle", "checkout",
+            "cherry-pick", "clean", "clone", "commit", "config", "diff", "fetch",
+            "grep", "init", "log", "ls-files", "merge", "mv", "pull", "push",
+            "rebase", "reset", "restore", "revert", "show", "status", "stash",
+            "tag", "worktree",
+        }:
+            return True
+        if alias_expands_to_push(nested_subcommand, nested_repo):
+            return True
+    return False
 
 
 if has_executable_push_substitution(command):
