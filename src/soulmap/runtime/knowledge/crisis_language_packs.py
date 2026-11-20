@@ -56,6 +56,18 @@ from soulmap.runtime.config.safety_fr import (
 from soulmap.runtime.config.safety_fr import (
     LANGUAGE_CODE as LANGUAGE_CODE_FR,
 )
+from soulmap.runtime.config.safety_ko import (
+    CRISIS_TIER1 as CRISIS_TIER1_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    CRISIS_TIER2 as CRISIS_TIER2_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    GRANDIOSITY_SIGNALS as GRANDIOSITY_SIGNALS_KO,
+)
+from soulmap.runtime.config.safety_ko import (
+    LANGUAGE_CODE as LANGUAGE_CODE_KO,
+)
 from soulmap.runtime.config.safety_vi import (
     CRISIS_TIER1 as CRISIS_TIER1_VI,
 )
@@ -79,18 +91,6 @@ from soulmap.runtime.config.safety_zh import (
 )
 from soulmap.runtime.config.safety_zh import (
     LANGUAGE_CODE as LANGUAGE_CODE_ZH,
-)
-from soulmap.runtime.config.safety_ko import (
-    CRISIS_TIER1 as CRISIS_TIER1_KO,
-)
-from soulmap.runtime.config.safety_ko import (
-    CRISIS_TIER2 as CRISIS_TIER2_KO,
-)
-from soulmap.runtime.config.safety_ko import (
-    GRANDIOSITY_SIGNALS as GRANDIOSITY_SIGNALS_KO,
-)
-from soulmap.runtime.config.safety_ko import (
-    LANGUAGE_CODE as LANGUAGE_CODE_KO,
 )
 
 SUPPORTED_LANGUAGES: tuple[str, ...] = (
