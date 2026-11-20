@@ -10,7 +10,6 @@ SELECTOR_PATH = (
     ROOT / "src" / "soulmap" / "runtime" / "routing" / "framework_selector.py"
 )
 
-
 def _find_function(
     module: ast.Module, name: str
 ) -> ast.FunctionDef | ast.AsyncFunctionDef:
@@ -23,7 +22,6 @@ def _find_function(
             return node
     raise AssertionError(f"Expected function {name!r} in {SELECTOR_PATH}")
 
-
 def _is_direct_call(node: ast.expr, name: str) -> bool:
     """Require a direct local function call, not an attribute with the same name."""
     return (
@@ -31,7 +29,6 @@ def _is_direct_call(node: ast.expr, name: str) -> bool:
         and isinstance(node.func, ast.Name)
         and node.func.id == name
     )
-
 
 def _is_gated_result_assignment(statement: ast.stmt) -> bool:
     """Accept only a direct result binding whose entire RHS is the local gate call."""
@@ -42,7 +39,6 @@ def _is_gated_result_assignment(statement: ast.stmt) -> bool:
         and statement.targets[0].id == "result"
         and _is_direct_call(statement.value, "_apply_safety_gate")
     )
-
 
 def _is_direct_call_assignment(
     statement: ast.stmt, target_name: str, call_name: str
@@ -56,7 +52,6 @@ def _is_direct_call_assignment(
         and _is_direct_call(statement.value, call_name)
     )
 
-
 def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) -> bool:
     """Require a simple local-name copy assignment."""
     return (
@@ -67,7 +62,6 @@ def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) 
         and isinstance(statement.value, ast.Name)
         and statement.value.id == value_name
     )
-
 
 def _has_single_local_binding(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
@@ -95,7 +89,6 @@ def _has_single_local_binding(
         )
     ]
     return len(writes) == 1 and writes[0] is allowed_target and not pattern_writes
-
 
 def _request_inputs_are_not_rebound(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
@@ -136,13 +129,11 @@ def _gate_call_forwards_inputs(
         )
     )
 
-
 def _root_name(node: ast.expr) -> str | None:
     """Return the root local name for a nested mapping or attribute expression."""
     while isinstance(node, (ast.Subscript, ast.Attribute)):
         node = node.value
     return node.id if isinstance(node, ast.Name) else None
-
 
 def _has_only_allowed_mapping_writes(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
@@ -197,7 +188,6 @@ def _has_only_allowed_mapping_writes(
                 return False
     return True
 
-
 def _finish_returns_gated_result(
     finish: ast.FunctionDef | ast.AsyncFunctionDef,
 ) -> bool:
@@ -235,7 +225,6 @@ def _finish_returns_gated_result(
         and node.value.args[0].id == "result"
         for node in returns
     )
-
 
 def _gate_wrapper_returns_gated_selection(
     gate_wrapper: ast.FunctionDef | ast.AsyncFunctionDef,
@@ -331,7 +320,6 @@ def _gate_wrapper_returns_gated_selection(
         for node in returns
     )
 
-
 def _is_allowed_scope_metadata_write(statement: ast.stmt) -> bool:
     """Allow only the exact, side-effect-free scope metadata assignment."""
     if not isinstance(statement, ast.Assign) or len(statement.targets) != 1:
@@ -346,7 +334,6 @@ def _is_allowed_scope_metadata_write(statement: ast.stmt) -> bool:
         and isinstance(statement.value, ast.Name)
         and statement.value.id == "scope"
     )
-
 
 def _has_gated_assignment_in_return_branch(
     selector: ast.FunctionDef | ast.AsyncFunctionDef, return_node: ast.Return
@@ -375,7 +362,6 @@ def _has_gated_assignment_in_return_branch(
                 return _is_gated_result_assignment(previous)
         current = parent
     return False
-
 
 def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
     """Fail if a selector return path does not delegate to the shared Safety Gate."""
@@ -408,7 +394,6 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
             f"to the Safety Gate (line {return_node.lineno})"
         )
 
-
 def _return_for(
     source: str,
 ) -> tuple[ast.FunctionDef | ast.AsyncFunctionDef, ast.Return]:
@@ -417,7 +402,6 @@ def _return_for(
     return selector, next(
         node for node in ast.walk(selector) if isinstance(node, ast.Return)
     )
-
 
 def test_nested_result_overwrite_is_not_accepted() -> None:
     selector, return_node = _return_for("""
@@ -430,7 +414,6 @@ async def selector():
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_destructuring_result_rebind_is_not_accepted() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -440,7 +423,6 @@ async def selector():
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
-
 
 def test_subscript_scope_metadata_write_is_allowed() -> None:
     selector, return_node = _return_for("""
@@ -452,7 +434,6 @@ async def selector():
 """)
     assert _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_nested_gate_assignment_does_not_cover_outer_return() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -463,7 +444,6 @@ async def selector():
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_conditional_rhs_with_ungated_arm_is_not_accepted() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -472,7 +452,6 @@ async def selector():
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
-
 
 def test_walrus_rebinding_before_return_is_not_accepted() -> None:
     selector, return_node = _return_for("""
@@ -485,7 +464,6 @@ async def selector():
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_post_gate_policy_field_mutation_is_not_accepted() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -495,7 +473,6 @@ async def selector():
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
-
 
 def test_scope_write_with_side_effects_is_not_allowed() -> None:
     selector, return_node = _return_for("""
@@ -507,7 +484,6 @@ async def selector():
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_scope_write_with_walrus_is_not_allowed() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -518,7 +494,6 @@ async def selector():
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
-
 def test_attribute_named_safety_gate_is_not_a_local_gate_call() -> None:
     selector, return_node = _return_for("""
 async def selector():
@@ -527,7 +502,6 @@ async def selector():
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
-
 
 def test_finish_rejects_an_early_ungated_return() -> None:
     module = ast.parse("""
@@ -539,7 +513,6 @@ def _finish():
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_an_early_ungated_return() -> None:
     module = ast.parse("""
@@ -554,7 +527,6 @@ def _apply_safety_gate(selection):
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
 
-
 def test_finish_rejects_return_of_rebound_result_before_gate() -> None:
     module = ast.parse("""
 def _finish():
@@ -566,7 +538,6 @@ def _finish():
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_return_of_rebound_output_before_gate() -> None:
     module = ast.parse("""
@@ -582,7 +553,6 @@ def _apply_safety_gate(selection):
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
 
-
 def test_finish_rejects_gate_call_with_stale_request_inputs() -> None:
     module = ast.parse("""
 def _finish(message, history, memory, selection):
@@ -591,7 +561,6 @@ def _finish(message, history, memory, selection):
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_gate_call_with_stale_request_inputs() -> None:
     module = ast.parse("""
@@ -604,7 +573,6 @@ def _apply_safety_gate(message, history, memory, selection):
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
 
-
 def test_finish_rejects_post_gate_policy_mutation() -> None:
     module = ast.parse("""
 def _finish(message, history, memory, selection):
@@ -614,7 +582,6 @@ def _finish(message, history, memory, selection):
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_post_gate_policy_mutation() -> None:
     module = ast.parse("""
@@ -628,8 +595,6 @@ def _apply_safety_gate(message, history, memory, selection):
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
 
-
-
 def test_finish_rejects_reassigned_request_message_before_gate() -> None:
     module = ast.parse("""
 def _finish(message, history, memory, selection):
@@ -639,7 +604,6 @@ def _finish(message, history, memory, selection):
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_reassigned_request_message_before_gate() -> None:
     module = ast.parse("""
@@ -653,7 +617,6 @@ def _apply_safety_gate(message, history, memory, selection):
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
 
-
 def test_finish_rejects_match_capture_rebinding() -> None:
     module = ast.parse("""
 def _finish(message, history, memory, selection):
@@ -665,7 +628,6 @@ def _finish(message, history, memory, selection):
 """)
     finish = _find_function(module, "_finish")
     assert not _finish_returns_gated_result(finish)
-
 
 def test_gate_wrapper_rejects_match_capture_rebinding() -> None:
     module = ast.parse("""
