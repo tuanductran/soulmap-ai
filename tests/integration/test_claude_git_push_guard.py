@@ -10,7 +10,6 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 HOOK = ROOT / ".claude" / "hooks" / "block-push-to-main.sh"
 
-
 def _init_repo(path: Path, branch: str) -> None:
     subprocess.run(
         ["git", "init", "--quiet", "--initial-branch", branch, str(path)],
@@ -18,7 +17,6 @@ def _init_repo(path: Path, branch: str) -> None:
         capture_output=True,
         text=True,
     )
-
 
 def _run_hook(command: str, repo: Path) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
@@ -56,7 +54,6 @@ def test_hook_blocks_explicit_main_push_refspecs(tmp_path: Path, command: str) -
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
-
 
 def test_hook_blocks_main_push_through_git_c(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
@@ -126,7 +123,6 @@ def test_hook_blocks_pruning_push_modes(tmp_path: Path, command: str) -> None:
     assert result.returncode == 2
     assert "can publish or delete" in result.stderr
 
-
 def test_hook_blocks_remote_configured_main_refspec(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -148,7 +144,6 @@ def test_hook_blocks_remote_configured_main_refspec(tmp_path: Path) -> None:
     assert result.returncode == 2
     assert "protected 'main' branch" in result.stderr
 
-
 def test_hook_blocks_remote_mirror_configuration(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -162,7 +157,6 @@ def test_hook_blocks_remote_mirror_configuration(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "protected 'main' branch" in result.stderr
-
 
 def test_hook_expands_environment_variable_in_git_c_path(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
@@ -216,7 +210,6 @@ def test_hook_detects_conditional_and_sudo_wrapped_pushes(
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
 
-
 def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -227,7 +220,6 @@ def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
 
-
 def test_hook_detects_push_after_a_comment_line(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -237,7 +229,6 @@ def test_hook_detects_push_after_a_comment_line(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
-
 
 def test_hook_blocks_git_c_implicit_push_from_main(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
@@ -290,7 +281,6 @@ def test_hook_detects_push_inside_grouped_shell_commands(
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
 
-
 def test_hook_blocks_branches_alias_for_all_branch_push(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -300,7 +290,6 @@ def test_hook_blocks_branches_alias_for_all_branch_push(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "can publish or delete" in result.stderr
-
 
 def test_hook_does_not_treat_push_option_value_as_push_mode(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
@@ -333,8 +322,6 @@ def test_hook_detects_main_refspec_after_optional_signed_option(
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
 
-
-
 def test_hook_blocks_head_refspec_when_current_branch_is_main(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -345,7 +332,6 @@ def test_hook_blocks_head_refspec_when_current_branch_is_main(tmp_path: Path) ->
     assert result.returncode == 2
     assert "HEAD resolves to the protected 'main' branch" in result.stderr
 
-
 def test_hook_allows_head_refspec_from_feature_branch(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -354,7 +340,6 @@ def test_hook_allows_head_refspec_from_feature_branch(tmp_path: Path) -> None:
     result = _run_hook("git push origin HEAD", repo)
 
     assert result.returncode == 0, result.stderr
-
 
 def test_hook_blocks_shell_local_git_c_path_for_implicit_push(tmp_path: Path) -> None:
     root = tmp_path / "root"
@@ -369,7 +354,6 @@ def test_hook_blocks_shell_local_git_c_path_for_implicit_push(tmp_path: Path) ->
     assert result.returncode == 2
     assert "cannot verify the target repository" in result.stderr
 
-
 def test_hook_blocks_push_inside_command_substitution(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -380,7 +364,6 @@ def test_hook_blocks_push_inside_command_substitution(tmp_path: Path) -> None:
     assert result.returncode == 2
     assert "command substitution" in result.stderr
 
-
 def test_hook_does_not_block_literal_push_text_in_single_quotes(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -389,7 +372,6 @@ def test_hook_does_not_block_literal_push_text_in_single_quotes(tmp_path: Path) 
     result = _run_hook("echo '$(git push origin main)'", repo)
 
     assert result.returncode == 0, result.stderr
-
 
 def test_hook_blocks_git_alias_that_pushes_main(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
@@ -405,7 +387,6 @@ def test_hook_blocks_git_alias_that_pushes_main(tmp_path: Path) -> None:
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
 
-
 def test_hook_blocks_shell_git_alias_that_may_push(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -419,7 +400,6 @@ def test_hook_blocks_shell_git_alias_that_may_push(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "shell Git alias" in result.stderr
-
 
 def test_hook_fails_closed_for_implicit_push_with_external_git_dir(
     tmp_path: Path,
