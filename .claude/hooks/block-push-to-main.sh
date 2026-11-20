@@ -207,22 +207,62 @@ def parse_push_arguments(args):
     return positional, dangerous_modes
 
 
-try:
-    normalized = command.replace("\\\n", " ")
+def tokenize_shell(source):
+    normalized = source.replace("\\\n", " ")
     normalized = strip_shell_comments(normalized).replace("\n", " ; ")
     lexer = shlex.shlex(normalized, posix=True, punctuation_chars=";&|(){}")
     lexer.whitespace_split = True
     lexer.commenters = ""
-    tokens = list(lexer)
+    return list(lexer)
+
+
+try:
+    tokens = tokenize_shell(command)
 except ValueError:
     if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", command):
         print("Blocked: unable to safely parse a possible git push command.", file=sys.stderr)
         raise SystemExit(2)
     raise SystemExit(0)
 
-for segment in split_segments(tokens):
+pending_segments = list(split_segments(tokens))
+while pending_segments:
+    segment = pending_segments.pop(0)
     parts = command_tokens(segment)
-    if not parts or os.path.basename(parts[0]) != "git":
+    if not parts:
+        continue
+
+    executable = os.path.basename(parts[0])
+    if executable in {"bash", "sh", "dash", "zsh", "ksh"}:
+        for option_index, option in enumerate(parts[1:], start=1):
+            if option == "-c" or (
+                option.startswith("-") and not option.startswith("--") and "c" in option[1:]
+            ):
+                if option_index + 1 < len(parts):
+                    nested_command = parts[option_index + 1]
+                    try:
+                        pending_segments[0:0] = list(
+                            split_segments(tokenize_shell(nested_command))
+                        )
+                    except ValueError:
+                        if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", nested_command):
+                            print("Blocked: unable to safely parse a nested shell command.", file=sys.stderr)
+                            raise SystemExit(2)
+                break
+        continue
+
+    if executable == "eval":
+        nested_command = " ".join(parts[1:])
+        try:
+            pending_segments[0:0] = list(
+                split_segments(tokenize_shell(nested_command))
+            )
+        except ValueError:
+            if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", nested_command):
+                print("Blocked: unable to safely parse an eval command.", file=sys.stderr)
+                raise SystemExit(2)
+        continue
+
+    if executable != "git":
         continue
 
     index = 1
