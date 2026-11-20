@@ -111,8 +111,10 @@ def is_main_refspec(refspec):
     return "*" in destination or "?" in destination
 
 try:
-    lexer = shlex.shlex(command, posix=True, punctuation_chars=";&|()")
+    normalized_command = command.replace("\\\n", " ").replace("\n", " ; ")
+    lexer = shlex.shlex(normalized_command, posix=True, punctuation_chars=";&|()")
     lexer.whitespace_split = True
+    lexer.commenters = "#"
     tokens = list(lexer)
 except ValueError:
     # Malformed shell quoting: do not guess that a push is safe.
