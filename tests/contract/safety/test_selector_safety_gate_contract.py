@@ -179,9 +179,7 @@ def _gate_wrapper_returns_gated_selection(
     if not (
         gate.lineno < selection.lineno < output.lineno
         and _has_single_local_binding(gate_wrapper, "result", gate_target)
-        and _has_single_local_binding(
-            gate_wrapper, "gated_selection", selection_target
-        )
+        and _has_single_local_binding(gate_wrapper, "gated_selection", selection_target)
         and _has_single_local_binding(gate_wrapper, "out", output_target)
     ):
         return False
