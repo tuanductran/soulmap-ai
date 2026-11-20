@@ -49,6 +49,7 @@ def _assigns_result(statement: ast.stmt) -> bool:
         targets = [statement.target]
     else:
         return False
+
     def rebinds_result(target: ast.expr) -> bool:
         if isinstance(target, ast.Name):
             return target.id == "result"
@@ -58,7 +59,9 @@ def _assigns_result(statement: ast.stmt) -> bool:
         # the result variable itself.
         return False
 
-    return any(rebinds_result(target) for target in targets)
+    return any(
+        rebinds_result(target) for target in targets
+    )
 
 
 def _has_gated_assignment_in_return_branch(
