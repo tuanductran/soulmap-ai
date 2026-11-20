@@ -196,9 +196,9 @@ def has_executable_push_substitution(source):
                 continue
         visible.append(char)
     shell_code = "".join(visible)
-    for match in re.finditer(r"\\$\\((.*?)\\)|`([^`]*)`", shell_code, re.DOTALL):
+    for match in re.finditer(r"\$\((.*?)\)|`([^`]*)`", shell_code, re.DOTALL):
         nested = match.group(1) or match.group(2) or ""
-        if re.search(r"(?<![A-Za-z0-9_./-])git\\s+push\\b", nested):
+        if re.search(r"(?<![A-Za-z0-9_./-])git\s+push\b", nested):
             return True
     return False
 
