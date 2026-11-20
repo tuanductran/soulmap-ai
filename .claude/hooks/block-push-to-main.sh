@@ -47,7 +47,7 @@ project_root = (
     or os.getcwd()
 )
 separators = {";", "&&", "||", "|", "&", "(", ")"}
-shell_keywords = {"then", "do", "else", "elif", "!"}
+shell_keywords = {"if", "then", "do", "else", "elif", "while", "until", "for", "case", "select", "!"}
 wrappers = {"command", "builtin", "exec", "nohup", "time"}
 assignment = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 value_options = {
@@ -80,6 +80,14 @@ def command_tokens(segment):
             continue
         if token in wrappers:
             index += 1
+            continue
+        if token == "sudo":
+            index += 1
+            while index < len(segment) and segment[index].startswith("-"):
+                if segment[index] in {"-u", "--user", "-g", "--group", "-h", "--host", "-p", "--prompt"}:
+                    index += 2
+                else:
+                    index += 1
             continue
         if token == "env":
             index += 1
@@ -189,7 +197,8 @@ for segment in segments(tokens):
             "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}"
         )
         remote = positional[0] if positional else (
-            git_output("config", "--get", "remote.pushDefault")
+            git_output("config", "--get", f"branch.{current}.pushRemote")
+            or git_output("config", "--get", "remote.pushDefault")
             or git_output("config", "--get", f"branch.{current}.remote")
         )
         remote_mirror = (
