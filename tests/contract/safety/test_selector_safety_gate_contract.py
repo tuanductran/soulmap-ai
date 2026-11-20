@@ -102,25 +102,21 @@ def _request_inputs_are_not_rebound(
     names: tuple[str, ...],
 ) -> bool:
     """Reject reassignment or pattern capture of request inputs before gating."""
-    for name in names:
-        if any(
-            isinstance(node, ast.Name)
-            and node.id == name
-            and isinstance(node.ctx, ast.Store)
-            for node in ast.walk(function)
-        ):
-            return False
-        if any(
-            (isinstance(pattern, ast.MatchAs) and pattern.name == name)
-            or (isinstance(pattern, ast.MatchStar) and pattern.name == name)
-            or (isinstance(pattern, ast.MatchMapping) and pattern.rest == name)
-            for case in ast.walk(function)
-            if isinstance(case, ast.match_case)
-            for pattern in ast.walk(case.pattern)
-        ):
-            return False
-    return True
-
+    writes = {
+        node.id
+        for node in ast.walk(function)
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store)
+    }
+    captures = set()
+    for case in ast.walk(function):
+        if not isinstance(case, ast.match_case):
+            continue
+        for pattern in ast.walk(case.pattern):
+            if isinstance(pattern, (ast.MatchAs, ast.MatchStar)) and pattern.name:
+                captures.add(pattern.name)
+            elif isinstance(pattern, ast.MatchMapping) and pattern.rest:
+                captures.add(pattern.rest)
+    return not set(names).intersection(writes | captures)
 
 def _gate_call_forwards_inputs(
     statement: ast.stmt, call_name: str, expected_names: tuple[str, ...]
