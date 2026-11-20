@@ -16,7 +16,7 @@ The Korean pack follows the existing language-pack contract:
 The phrases are literal, human-authored Korean. They are not translations of
 English substrings, and no runtime machine translation is involved. The pack is
 combined with the existing language packs by
-soulmap.runtime.knowledge.crisis_language_packs.
+SoulMap runtime knowledge language-pack aggregator.
 
 ## Detection limitations
 
@@ -62,4 +62,4 @@ Before enabling broader Korean coverage, add native-reviewed positive,
 negative, colloquial, spacing, quotation, and mixed-clause examples; verify
 Korean negation behavior; and confirm region-specific crisis-resource wording
 in a separate safety-reviewed change. Do not modify the legacy
-src/soulmap/runtime/config/safety.py stub to store these phrases.
+`src/soulmap/runtime/config/safety.py` stub to store these phrases.
