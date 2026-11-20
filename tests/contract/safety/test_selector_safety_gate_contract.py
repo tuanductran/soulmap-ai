@@ -33,14 +33,33 @@ def _is_direct_call(node: ast.expr, name: str) -> bool:
     )
 
 
+def _call_forwards_names(
+    call: ast.expr, call_name: str, expected_names: tuple[str, ...]
+) -> bool:
+    """Require a direct call with the expected positional request inputs."""
+    return (
+        isinstance(call, ast.Call)
+        and _is_direct_call(call, call_name)
+        and len(call.args) == len(expected_names)
+        and all(
+            isinstance(argument, ast.Name) and argument.id == expected
+            for argument, expected in zip(call.args, expected_names, strict=True)
+        )
+    )
+
+
 def _is_gated_result_assignment(statement: ast.stmt) -> bool:
-    """Accept only a direct result binding whose entire RHS is the local gate call."""
+    """Accept only a direct result binding with the exact request inputs."""
     return (
         isinstance(statement, ast.Assign)
         and len(statement.targets) == 1
         and isinstance(statement.targets[0], ast.Name)
         and statement.targets[0].id == "result"
-        and _is_direct_call(statement.value, "_apply_safety_gate")
+        and _call_forwards_names(
+            statement.value,
+            "_apply_safety_gate",
+            ("message", "history", "memory", "selection", "debug_events"),
+        )
     )
 
 
@@ -394,7 +413,11 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
     for return_node in returns:
         value = return_node.value
         if isinstance(value, ast.Call):
-            if _is_direct_call(value, "_finish"):
+            if _call_forwards_names(
+                value,
+                "_finish",
+                ("message", "history", "memory", "selection", "debug_events"),
+            ):
                 continue
             if (
                 _is_direct_call(value, "_maybe_attach_debug")
@@ -680,3 +703,27 @@ def _apply_safety_gate(message, history, memory, selection):
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+
+def test_selector_rejects_finish_call_with_wrong_forwarded_message() -> None:
+    selector, return_node = _return_for("""
+async def selector(message, history, memory, selection, debug_events):
+    return _finish("", history, memory, selection, debug_events)
+""")
+    value = return_node.value
+    assert isinstance(value, ast.Call)
+    assert not _call_forwards_names(
+        value,
+        "_finish",
+        ("message", "history", "memory", "selection", "debug_events"),
+    )
+
+
+def test_selector_rejects_gate_call_with_wrong_forwarded_message() -> None:
+    selector, return_node = _return_for("""
+async def selector(message, history, memory, selection, debug_events):
+    if condition:
+        result = _apply_safety_gate("", history, memory, selection, debug_events)
+        return _maybe_attach_debug(result)
+""")
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
