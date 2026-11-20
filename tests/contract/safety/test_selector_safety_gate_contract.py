@@ -98,6 +98,8 @@ def _finish_returns_gated_result(
     if len(gates) != 1 or not returns:
         return False
     gate = gates[0]
+    if not isinstance(gate, ast.Assign) or not gate.targets:
+        return False
     target = gate.targets[0]
     if not isinstance(target, ast.Name):
         return False
@@ -168,12 +170,18 @@ def _gate_wrapper_returns_gated_selection(
         return False
 
     gate, selection, output = gates[0], selected[0], copied[0]
-    gate_target = gate.targets[0]
-    selection_target = selected[0].targets[0]
-    output_target = output.targets[0]
     if not all(
-        isinstance(target, ast.Name)
-        for target in (gate_target, selection_target, output_target)
+        isinstance(statement, ast.Assign) and statement.targets
+        for statement in (gate, selection, output)
+    ):
+        return False
+    gate_target = gate.targets[0]
+    selection_target = selection.targets[0]
+    output_target = output.targets[0]
+    if not (
+        isinstance(gate_target, ast.Name)
+        and isinstance(selection_target, ast.Name)
+        and isinstance(output_target, ast.Name)
     ):
         return False
     if not (
