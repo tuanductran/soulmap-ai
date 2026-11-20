@@ -28,9 +28,9 @@ The Korean pack follows the existing language-pack contract:
 - GRANDIOSITY_SIGNALS: explicit grandiose identity or mission claims.
 
 The phrases are literal, human-authored Korean. They are not translations of
-English substrings, and no runtime machine translation is involved. The pack is
-combined with the existing language packs by
-SoulMap runtime knowledge language-pack aggregator.
+English substrings, and no runtime machine translation is involved. The draft
+inventory is isolated in `DRAFT_LANGUAGE_PACKS`; it is not combined with the
+active detector language packs.
 
 ## Detection limitations
 
