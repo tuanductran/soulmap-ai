@@ -42,7 +42,7 @@ def _contains_call(node: ast.AST, name: str) -> bool:
 
 
 def _assigns_result(statement: ast.stmt) -> bool:
-    """Return whether a direct statement reassigns the selector result."""
+    """Return whether a statement subtree writes to the selector result."""
     if isinstance(statement, ast.Assign):
         targets = statement.targets
     elif isinstance(statement, (ast.AnnAssign, ast.AugAssign)):
@@ -59,7 +59,7 @@ def _assigns_result(statement: ast.stmt) -> bool:
 def _has_gated_assignment_in_return_branch(
     selector: ast.FunctionDef | ast.AsyncFunctionDef, return_node: ast.Return
 ) -> bool:
-    """Require the last direct result assignment in the return branch to be gated."""
+    """Require every result write preceding this return to be gated."""
     parents = {
         child: parent
         for parent in ast.walk(selector)
