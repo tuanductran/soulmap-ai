@@ -341,6 +341,15 @@ while pending_segments:
             capture_output=True, text=True, check=False,
         )
         alias_value = alias_result.stdout.strip() if alias_result.returncode == 0 else ""
+        if repo_context_unknown and subcommand not in {
+            "add", "am", "archive", "bisect", "branch", "bundle", "checkout",
+            "cherry-pick", "clean", "clone", "commit", "config", "diff", "fetch",
+            "grep", "init", "log", "ls-files", "merge", "mv", "pull", "push",
+            "rebase", "reset", "restore", "revert", "show", "status", "stash",
+            "tag", "worktree",
+        }:
+            print("Blocked: cannot resolve a Git alias in the target repository.", file=sys.stderr)
+            raise SystemExit(2)
         if alias_value:
             if alias_value.startswith("!") and re.search(r"\\bpush\\b", alias_value):
                 print("Blocked: shell Git alias may execute a protected push.", file=sys.stderr)
