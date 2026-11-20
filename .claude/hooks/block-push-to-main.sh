@@ -243,6 +243,32 @@ def parse_push_arguments(args):
     return positional, dangerous_modes
 
 
+def alias_expands_to_push(alias_name, repo_path, seen=None):
+    """Fail closed when a Git alias chain can reach push or a shell command."""
+    seen = set() if seen is None else seen
+    if alias_name in seen or len(seen) >= 10:
+        return True
+    seen.add(alias_name)
+    result = subprocess.run(
+        ["git", "-C", repo_path, "config", "--get", f"alias.{alias_name}"],
+        capture_output=True, text=True, check=False,
+    )
+    value = result.stdout.strip() if result.returncode == 0 else ""
+    if not value:
+        return False
+    if value.startswith("!"):
+        return True
+    try:
+        tokens = shlex.split(value)
+    except ValueError:
+        return True
+    if not tokens:
+        return False
+    if tokens[0] == "push":
+        return True
+    return alias_expands_to_push(tokens[0], repo_path, seen)
+
+
 def tokenize_shell(source):
     normalized = source.replace("\\\n", " ")
     normalized = strip_shell_comments(normalized).replace("\n", " ; ")
@@ -317,6 +343,11 @@ while pending_segments:
             else:
                 repo_path = resolved_repo_path
             index += 2
+        elif token == "-c" and index + 1 < len(parts):
+            if parts[index + 1].startswith("alias."):
+                print("Blocked: command-scoped Git aliases cannot be safely verified.", file=sys.stderr)
+                raise SystemExit(2)
+            index += 2
         elif token in global_value_options and index + 1 < len(parts):
             if token in {"--git-dir", "--work-tree"}:
                 repo_context_unknown = True
@@ -350,23 +381,10 @@ while pending_segments:
         }:
             print("Blocked: cannot resolve a Git alias in the target repository.", file=sys.stderr)
             raise SystemExit(2)
-        if alias_value:
-            if alias_value.startswith("!") and re.search(r"\bpush\b", alias_value):
-                print("Blocked: shell Git alias may execute a protected push.", file=sys.stderr)
-                raise SystemExit(2)
-            try:
-                alias_tokens = shlex.split(alias_value)
-            except ValueError:
-                print("Blocked: unable to safely parse the invoked Git alias.", file=sys.stderr)
-                raise SystemExit(2)
-            if alias_tokens and alias_tokens[0] == "push":
-                parts = ["git", *alias_tokens, *parts[index + 1:]]
-                index = 1
-                subcommand = "push"
-            else:
-                continue
-        else:
-            continue
+        if alias_value and alias_expands_to_push(subcommand, repo_path):
+            print("Blocked: Git alias chain may execute a protected push.", file=sys.stderr)
+            raise SystemExit(2)
+        continue
 
     positional, dangerous_modes = parse_push_arguments(parts[index + 1:])
     if dangerous_modes:
