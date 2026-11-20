@@ -114,37 +114,50 @@ def _gate_call_forwards_inputs(
     )
 
 
+def _root_name(node: ast.expr) -> str | None:
+    """Return the root local name for a nested mapping or attribute expression."""
+    while isinstance(node, (ast.Subscript, ast.Attribute)):
+        node = node.value
+    return node.id if isinstance(node, ast.Name) else None
+
+
 def _has_only_allowed_mapping_writes(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
     name: str,
     allowed_keys: set[str],
 ) -> bool:
     """Reject writes that could replace gated policy fields after the gate."""
-    mutators = {"clear", "pop", "popitem", "setdefault", "__setitem__"}
+    mutators = {
+        "append", "clear", "discard", "extend", "insert", "pop", "popitem",
+        "remove", "reverse", "setdefault", "sort", "update", "__setitem__",
+    }
     for node in ast.walk(function):
         targets: list[ast.expr] = []
         if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
             raw_targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             targets.extend(raw_targets)
+        elif isinstance(node, ast.Delete):
+            targets.extend(node.targets)
         for target in targets:
-            if (
-                isinstance(target, ast.Subscript)
-                and isinstance(target.value, ast.Name)
-                and target.value.id == name
-            ):
+            if isinstance(target, ast.Subscript) and _root_name(target) == name:
                 key = target.slice
                 if not isinstance(key, ast.Constant) or key.value not in allowed_keys:
                     return False
+            elif isinstance(target, ast.Attribute) and _root_name(target) == name:
+                return False
         if (
             isinstance(node, ast.Call)
             and isinstance(node.func, ast.Attribute)
-            and isinstance(node.func.value, ast.Name)
-            and node.func.value.id == name
+            and _root_name(node.func.value) == name
+            and node.func.attr in mutators
         ):
             if node.func.attr == "update":
-                if node.args or any(keyword.arg is None or keyword.arg not in allowed_keys for keyword in node.keywords):
+                if node.args or any(
+                    keyword.arg is None or keyword.arg not in allowed_keys
+                    for keyword in node.keywords
+                ):
                     return False
-            elif node.func.attr in mutators:
+            else:
                 return False
     return True
 
@@ -264,6 +277,8 @@ def _gate_wrapper_returns_gated_selection(
         and _has_single_local_binding(gate_wrapper, "result", gate_target)
         and _has_single_local_binding(gate_wrapper, "gated_selection", selection_target)
         and _has_single_local_binding(gate_wrapper, "out", output_target)
+        and _has_only_allowed_mapping_writes(gate_wrapper, "result", set())
+        and _has_only_allowed_mapping_writes(gate_wrapper, "gated_selection", set())
         and _has_only_allowed_mapping_writes(
             gate_wrapper, "out", {"safety_status", "safety_reason", "safety_flags"}
         )
