@@ -140,6 +140,17 @@ def test_hook_does_not_match_git_push_text_in_arguments(
     assert result.returncode == 0, result.stderr
 
 
+def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("printf ready\\ngit push origin main", repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
 def test_hook_still_detects_git_push_after_shell_separator(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
