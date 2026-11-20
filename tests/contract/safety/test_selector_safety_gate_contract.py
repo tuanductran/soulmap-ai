@@ -53,6 +53,105 @@ def _is_gated_result_assignment(statement: ast.stmt) -> bool:
     )
 
 
+def _is_direct_call_assignment(
+    statement: ast.stmt, target_name: str, call_name: str
+) -> bool:
+    """Require a single-name assignment from one direct local function call."""
+    return (
+        isinstance(statement, ast.Assign)
+        and len(statement.targets) == 1
+        and isinstance(statement.targets[0], ast.Name)
+        and statement.targets[0].id == target_name
+        and _is_direct_call(statement.value, call_name)
+    )
+
+
+def _is_name_assignment(
+    statement: ast.stmt, target_name: str, value_name: str
+) -> bool:
+    """Require a simple local-name copy assignment."""
+    return (
+        isinstance(statement, ast.Assign)
+        and len(statement.targets) == 1
+        and isinstance(statement.targets[0], ast.Name)
+        and statement.targets[0].id == target_name
+        and isinstance(statement.value, ast.Name)
+        and statement.value.id == value_name
+    )
+
+
+def _finish_returns_gated_result(
+    finish: ast.FunctionDef | ast.AsyncFunctionDef,
+) -> bool:
+    """Require every _finish return to wrap the value returned by the gate."""
+    if not any(
+        _is_direct_call_assignment(node, "result", "_apply_safety_gate")
+        for node in finish.body
+    ):
+        return False
+    returns = [node for node in ast.walk(finish) if isinstance(node, ast.Return)]
+    return bool(returns) and all(
+        isinstance(node.value, ast.Call)
+        and _is_direct_call(node.value, "_maybe_attach_debug")
+        and bool(node.value.args)
+        and isinstance(node.value.args[0], ast.Name)
+        and node.value.args[0].id == "result"
+        for node in returns
+    )
+
+
+def _gate_wrapper_returns_gated_selection(
+    gate_wrapper: ast.FunctionDef | ast.AsyncFunctionDef,
+) -> bool:
+    """Require every gate-wrapper return to derive from apply_safety_gate's selection."""
+    direct_gate = any(
+        _is_direct_call_assignment(node, "result", "apply_safety_gate")
+        for node in gate_wrapper.body
+    )
+    selected_gated_value = any(
+        isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id == "gated_selection"
+        and isinstance(node.value, ast.Call)
+        and isinstance(node.value.func, ast.Attribute)
+        and node.value.func.attr == "get"
+        and isinstance(node.value.func.value, ast.Name)
+        and node.value.func.value.id == "result"
+        and len(node.value.args) >= 2
+        and isinstance(node.value.args[0], ast.Constant)
+        and node.value.args[0].value == "selection"
+        and isinstance(node.value.args[1], ast.Name)
+        and node.value.args[1].id == "selection"
+        for node in gate_wrapper.body
+    )
+    copied_gated_value = any(
+        isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id == "out"
+        and isinstance(node.value, ast.Call)
+        and isinstance(node.value.func, ast.Name)
+        and node.value.func.id == "dict"
+        and bool(node.value.args)
+        and isinstance(node.value.args[0], ast.Call)
+        and isinstance(node.value.args[0].func, ast.Name)
+        and node.value.args[0].func.id == "cast"
+        and len(node.value.args[0].args) >= 2
+        and isinstance(node.value.args[0].args[1], ast.Name)
+        and node.value.args[0].args[1].id == "gated_selection"
+        for node in gate_wrapper.body
+    )
+    returns = [node for node in ast.walk(gate_wrapper) if isinstance(node, ast.Return)]
+    return (
+        direct_gate
+        and selected_gated_value
+        and copied_gated_value
+        and bool(returns)
+        and all(isinstance(node.value, ast.Name) and node.value.id == "out" for node in returns)
+    )
+
+
 def _is_allowed_scope_metadata_write(statement: ast.stmt) -> bool:
     """Allow only the exact, side-effect-free scope metadata assignment."""
     if not isinstance(statement, ast.Assign) or len(statement.targets) != 1:
@@ -105,8 +204,8 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
     finish = _find_function(module, "_finish")
     gate_wrapper = _find_function(module, "_apply_safety_gate")
 
-    assert _contains_direct_call(finish, "_apply_safety_gate")
-    assert _contains_direct_call(gate_wrapper, "apply_safety_gate")
+    assert _finish_returns_gated_result(finish)
+    assert _gate_wrapper_returns_gated_selection(gate_wrapper)
 
     returns = [node for node in ast.walk(selector) if isinstance(node, ast.Return)]
     assert returns, "select_framework_async must expose at least one return path"
@@ -248,3 +347,30 @@ async def selector():
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_finish_rejects_an_early_ungated_return() -> None:
+    module = ast.parse("""
+def _finish():
+    if early:
+        return selection
+    result = _apply_safety_gate(selection)
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_an_early_ungated_return() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(selection):
+    if early:
+        return selection
+    result = apply_safety_gate(selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
