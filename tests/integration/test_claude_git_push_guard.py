@@ -200,6 +200,8 @@ def test_hook_does_not_match_git_push_text_in_arguments(
     [
         "if git push origin main; then echo pushed; fi",
         "sudo -u deploy git push origin main",
+        "bash -c 'git push origin main'",
+        'sh -c "git push origin main"',
     ],
 )
 def test_hook_detects_conditional_and_sudo_wrapped_pushes(
