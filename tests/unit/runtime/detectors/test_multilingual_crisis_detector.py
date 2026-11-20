@@ -96,7 +96,7 @@ def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> No
         "Je ne veux pas me suicider, je pense au suicide.",
         "我不想自杀\uff0c但我想结束我的生命。",
     ],
-    ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed", "ko-mixed"],
+    ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed"],
 )
 def test_negated_clause_does_not_mask_separate_affirmative_tier1_signal(
     message: str,
