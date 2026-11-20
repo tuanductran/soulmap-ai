@@ -50,9 +50,8 @@ def _assigns_result(statement: ast.stmt) -> bool:
     else:
         return False
     return any(
-        isinstance(name, ast.Name) and name.id == "result"
+        isinstance(target, ast.Name) and target.id == "result"
         for target in targets
-        for name in ast.walk(target)
     )
 
 
