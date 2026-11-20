@@ -16,7 +16,10 @@ def _find_function(
 ) -> ast.FunctionDef | ast.AsyncFunctionDef:
     """Return a top-level function definition by name."""
     for node in module.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+        if (
+            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name == name
+        ):
             return node
     raise AssertionError(f"Expected function {name!r} in {SELECTOR_PATH}")
 
