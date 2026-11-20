@@ -163,9 +163,7 @@ def _gate_wrapper_returns_gated_selection(
             and node.value.args[0].args[1].id == "gated_selection"
         )
     ]
-    returns = [
-        node for node in ast.walk(gate_wrapper) if isinstance(node, ast.Return)
-    ]
+    returns = [node for node in ast.walk(gate_wrapper) if isinstance(node, ast.Return)]
     if len(gates) != 1 or len(selected) != 1 or len(copied) != 1 or not returns:
         return False
 
@@ -416,6 +414,7 @@ def _apply_safety_gate(selection):
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
 
 def test_finish_rejects_return_of_rebound_result_before_gate() -> None:
     module = ast.parse("""
