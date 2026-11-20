@@ -402,7 +402,7 @@ def test_hook_blocks_git_alias_that_pushes_main(tmp_path: Path) -> None:
     result = _run_hook("git ship", repo)
 
     assert result.returncode == 2
-    assert "direct push to 'main' is not allowed" in result.stderr
+    assert "Git alias chain" in result.stderr
 
 
 def test_hook_blocks_shell_git_alias_that_may_push(tmp_path: Path) -> None:
