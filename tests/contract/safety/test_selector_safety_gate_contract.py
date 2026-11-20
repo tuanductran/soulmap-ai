@@ -57,9 +57,7 @@ def _is_direct_call_assignment(
     )
 
 
-def _is_name_assignment(
-    statement: ast.stmt, target_name: str, value_name: str
-) -> bool:
+def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) -> bool:
     """Require a simple local-name copy assignment."""
     return (
         isinstance(statement, ast.Assign)
