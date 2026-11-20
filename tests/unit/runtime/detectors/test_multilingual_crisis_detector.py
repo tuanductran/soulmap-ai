@@ -5,7 +5,7 @@ from soulmap.runtime.knowledge.crisis_language_packs import SUPPORTED_LANGUAGES
 
 
 def test_supported_languages_cover_issue_130_scope() -> None:
-    assert set(SUPPORTED_LANGUAGES) == {"en", "vi", "es", "fr", "zh"}
+    assert set(SUPPORTED_LANGUAGES) == {"en", "vi", "es", "fr", "zh", "ko"}
 
 
 @pytest.mark.parametrize(
@@ -16,8 +16,9 @@ def test_supported_languages_cover_issue_130_scope() -> None:
         "Quiero suicidarme, no quiero seguir viviendo.",
         "Je veux me suicider, je ne veux plus vivre.",
         "我想自杀不想活了。",
+        "죽고 싶어요. 더 이상 살고 싶지 않아요.",
     ],
-    ids=["en", "vi", "es", "fr", "zh"],
+    ids=["en", "vi", "es", "fr", "zh", "ko"],
 )
 def test_tier1_crisis_detected_across_supported_languages(message: str) -> None:
     result = detect_crisis(message)
@@ -36,8 +37,9 @@ def test_tier1_crisis_detected_across_supported_languages(message: str) -> None:
         "Me siento vacio, estoy atrapado.",
         "Je me sens vide, je me sens piege.",
         "我感觉很空虚我被困住了。",
+        "더 이상 버틸 수 없어요. 모든 게 무의미해요.",
     ],
-    ids=["en", "vi", "es", "fr", "zh"],
+    ids=["en", "vi", "es", "fr", "zh", "ko"],
 )
 def test_tier2_crisis_detected_across_supported_languages(message: str) -> None:
     result = detect_crisis(message)
@@ -55,8 +57,9 @@ def test_tier2_crisis_detected_across_supported_languages(message: str) -> None:
         "No quiero suicidarme.",
         "Je ne veux pas me suicider.",
         "我不想自杀。",
+        "저는 죽고 싶지 않아요.",
     ],
-    ids=["en-negated", "vi-negated", "es-negated", "fr-negated", "zh-negated"],
+    ids=["en-negated", "vi-negated", "es-negated", "fr-negated", "zh-negated", "ko-negated"],
 )
 def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> None:
     result = detect_crisis(message)
@@ -74,8 +77,9 @@ def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> No
         "No quiero suicidarme, estoy pensando en suicidarme.",
         "Je ne veux pas me suicider, je pense au suicide.",
         "我不想自杀\uff0c但我想结束我的生命。",
+        "죽고 싶지 않아요. 하지만 자살하고 싶다는 생각이 들어요.",
     ],
-    ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed"],
+    ids=["en-mixed", "vi-mixed", "es-mixed", "fr-mixed", "zh-mixed", "ko-mixed"],
 )
 def test_negated_clause_does_not_mask_separate_affirmative_tier1_signal(
     message: str,
@@ -95,8 +99,9 @@ def test_negated_clause_does_not_mask_separate_affirmative_tier1_signal(
         "Hoy me siento bastante feliz y tranquilo.",
         "Aujourd'hui je me sens plutot heureux et calme.",
         "我今天感觉很开心很平静。",
+        "오늘은 마음이 편안하고 기분이 좋아요.",
     ],
-    ids=["en", "vi", "es", "fr", "zh"],
+    ids=["en", "vi", "es", "fr", "zh", "ko"],
 )
 def test_no_crisis_for_neutral_positive_messages_across_languages(
     message: str,
@@ -121,9 +126,11 @@ def test_english_tier1_behavior_is_unchanged_by_multilingual_support() -> None:
 def test_grandiosity_detected_across_supported_languages() -> None:
     en = detect_crisis("I am the chosen one with a divine mission no one understands.")
     vi = detect_crisis("Tôi là người được chọn, tôi có sứ mệnh vũ trụ.")
+    ko = detect_crisis("나는 선택받은 사람이야. 나만이 세상을 구할 수 있어.")
 
     assert en["level"] == "GRANDIOSITY_SIGNAL"
     assert vi["level"] == "GRANDIOSITY_SIGNAL"
+    assert ko["level"] == "GRANDIOSITY_SIGNAL"
 
 
 @pytest.mark.parametrize(
@@ -134,8 +141,9 @@ def test_grandiosity_detected_across_supported_languages() -> None:
         "Ultimamente pienso en cortarme y no se por que sigo asi.",
         "Ces derniers temps je n'arrete pas de me couper et je ne sais pas pourquoi.",
         "最近我一直在割伤自己我也不知道为什么。",
+        "요즘 자해를 하고 있어요. 왜 그런지 모르겠어요.",
     ],
-    ids=["en", "vi", "es", "fr", "zh"],
+    ids=["en", "vi", "es", "fr", "zh", "ko"],
 )
 def test_tier1_self_harm_morphological_variants_across_languages(message: str) -> None:
     """Regression coverage for colloquial self-harm phrasing (Issue #130 follow-up).
