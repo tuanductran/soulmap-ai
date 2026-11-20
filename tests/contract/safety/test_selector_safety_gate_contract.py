@@ -101,7 +101,9 @@ def _gate_call_forwards_inputs(
     statement: ast.stmt, call_name: str, expected_names: tuple[str, ...]
 ) -> bool:
     """Require the gate call to receive the current request inputs positionally."""
-    if not isinstance(statement, ast.Assign) or not isinstance(statement.value, ast.Call):
+    if not isinstance(statement, ast.Assign) or not isinstance(
+        statement.value, ast.Call
+    ):
         return False
     call = statement.value
     return (
@@ -128,13 +130,26 @@ def _has_only_allowed_mapping_writes(
 ) -> bool:
     """Reject writes that could replace gated policy fields after the gate."""
     mutators = {
-        "append", "clear", "discard", "extend", "insert", "pop", "popitem",
-        "remove", "reverse", "setdefault", "sort", "update", "__setitem__",
+        "append",
+        "clear",
+        "discard",
+        "extend",
+        "insert",
+        "pop",
+        "popitem",
+        "remove",
+        "reverse",
+        "setdefault",
+        "sort",
+        "update",
+        "__setitem__",
     }
     for node in ast.walk(function):
         targets: list[ast.expr] = []
         if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
-            raw_targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            raw_targets = (
+                node.targets if isinstance(node, ast.Assign) else [node.target]
+            )
             targets.extend(raw_targets)
         elif isinstance(node, ast.Delete):
             targets.extend(node.targets)
@@ -185,9 +200,7 @@ def _finish_returns_gated_result(
         return False
     if not _has_single_local_binding(finish, "result", target):
         return False
-    if not _has_only_allowed_mapping_writes(
-        finish, "result", {"template"}
-    ):
+    if not _has_only_allowed_mapping_writes(finish, "result", {"template"}):
         return False
     return all(
         node.lineno > gate.lineno
@@ -541,6 +554,7 @@ def _apply_safety_gate(selection):
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
 
 def test_finish_rejects_gate_call_with_stale_request_inputs() -> None:
     module = ast.parse("""
