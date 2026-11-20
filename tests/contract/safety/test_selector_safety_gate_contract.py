@@ -722,7 +722,7 @@ async def selector(message, history, memory, selection, debug_events):
 
 
 def test_selector_rejects_gate_call_with_wrong_forwarded_message() -> None:
-    _, return_node = _return_for("""
+    selector, return_node = _return_for("""
 async def selector(message, history, memory, selection, debug_events):
     if condition:
         result = _apply_safety_gate("", history, memory, selection, debug_events)
