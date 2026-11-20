@@ -53,11 +53,21 @@ Only two call sites actually invoke `detect_crisis()`:
    request, unconditionally, regardless of what `select_framework_async`
    decided.
 
-Because `select_framework_async` calls `apply_safety_gate` at the end of
-*every* return branch (confirmed by reading all 19 return points in
-`framework_selector.py`), `detect_crisis()` runs exactly twice per request
-today, on the identical input, in-process, with no caching between the two
-calls.
+Every return path in `select_framework_async` reaches the gate:
+ordinary branches return through `_finish`, which calls
+`_apply_safety_gate`; the Phase 1 scope-block branch calls
+`_apply_safety_gate` explicitly before attaching debug metadata. The
+24-scenario matrix in
+`tests/regression/test_routing_safety_gate.py` exercises the current
+routing outcomes, including selector-side crisis misses and detector
+failures. The source-level contract in
+`tests/contract/safety/test_selector_safety_gate_contract.py` additionally
+requires every selector return to use one of those gated paths and verifies
+that both helpers delegate to `apply_safety_gate`. A future return branch
+that bypasses the gate therefore fails CI.
+
+As a result, `detect_crisis()` runs exactly twice per request today, on the
+identical input, in-process, with no caching between the two calls.
 
 ## Classification: intentional or accidental?
 
@@ -176,18 +186,18 @@ both layers already share one detection implementation.
 - `tests/contract/safety/test_response_safety_gate.py` passed, including the
   selector-independent override test discussed in the "Classification: intentional or accidental?" section.
 
-**Gap:** no existing test exercises the *specific* scenario of a
-selector-side regression (a hypothetical future branch that omits the
-tier-1 short-circuit) to demonstrate the gate actually catches it in the
-full `select_framework_async` pipeline, rather than only when
-`apply_safety_gate` is called directly in isolation (as the current
-contract test does). The contract test proves the gate's own logic is
-selector-independent; it does not prove, end-to-end through the selector,
-that every current and future return branch actually reaches the gate.
-That is closed today only by manual code reading (the "Every location where crisis detection (not just the CRISIS label) occurs" section, "all 19 return
-points"), not by a test that would fail if a future branch forgot to call
-`_apply_safety_gate`. This is a documentation/test gap, not an architecture
-defect - see the "Recommendation" section.
+**Follow-up status: resolved.** The original review recorded this as an
+open test gap because the independent Safety Gate test alone did not exercise
+the full selector. The later regression suite now covers 24 routing outcomes,
+simulates a selector-side Tier 1 miss, and verifies that the gate still
+re-derives crisis from the raw message. The additional source-level contract
+test checks every return statement in `select_framework_async`, including
+the explicit scope-block path, and verifies the helper delegation chain to
+`apply_safety_gate`. This supersedes the historical gap recorded in the
+original review. It proves the repository's selector-to-gate invariant; it
+does not prove that an external production host invokes every response
+validator, which remains a separate integration boundary documented in
+`known-limitations.md`.
 
 ## Architectural trade-offs
 
