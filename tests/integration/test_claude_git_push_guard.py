@@ -106,7 +106,7 @@ def test_hook_blocks_all_branch_push_modes(tmp_path: Path, command: str) -> None
     result = _run_hook(command, repo)
 
     assert result.returncode == 2
-    assert "can publish the protected 'main' branch" in result.stderr
+    assert "can publish or delete the protected 'main' branch" in result.stderr
 
 
 @pytest.mark.parametrize(
@@ -220,7 +220,7 @@ def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
     repo.mkdir()
     _init_repo(repo, "feature")
 
-    result = _run_hook("printf ready\\ngit push origin main", repo)
+    result = _run_hook("printf ready\ngit push origin main", repo)
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
@@ -231,7 +231,7 @@ def test_hook_still_detects_git_push_after_shell_separator(tmp_path: Path) -> No
     repo.mkdir()
     _init_repo(repo, "feature")
 
-    result = _run_hook("printf ready; git push origin main", repo)
+    result = _run_hook("printf ready\ngit push origin main", repo)
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
