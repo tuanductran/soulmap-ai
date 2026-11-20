@@ -226,12 +226,12 @@ def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
     assert "direct push to 'main' is not allowed" in result.stderr
 
 
-def test_hook_still_detects_git_push_after_shell_separator(tmp_path: Path) -> None:
+def test_hook_detects_push_after_a_comment_line(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     _init_repo(repo, "feature")
 
-    result = _run_hook("printf ready\ngit push origin main", repo)
+    result = _run_hook("echo ready # note\ngit push origin main", repo)
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
@@ -267,3 +267,71 @@ def test_hook_allows_pushes_that_do_not_target_main(
     result = _run_hook(command, repo)
 
     assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "{ git push origin main; }",
+        "( git push origin main )",
+    ],
+)
+def test_hook_detects_push_inside_grouped_shell_commands(
+    tmp_path: Path, command: str
+) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(command, repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
+def test_hook_blocks_branches_alias_for_all_branch_push(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("git push origin --branches", repo)
+
+    assert result.returncode == 2
+    assert "can publish or delete" in result.stderr
+
+
+def test_hook_does_not_treat_push_option_value_as_push_mode(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("git push origin -o --all", repo)
+
+    assert result.returncode == 0, result.stderr
+
+
+def test_hook_detects_main_refspec_after_signed_option(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("git push origin --signed main", repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
+def test_hook_fails_closed_for_implicit_push_with_external_git_dir(
+    tmp_path: Path,
+) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(
+        "git --git-dir=/tmp/other/.git --work-tree=/tmp/other push origin",
+        repo,
+    )
+
+    assert result.returncode == 2
+    assert "cannot verify the target repository" in result.stderr
