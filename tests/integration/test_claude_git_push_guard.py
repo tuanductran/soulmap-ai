@@ -312,12 +312,23 @@ def test_hook_does_not_treat_push_option_value_as_push_mode(tmp_path: Path) -> N
     assert result.returncode == 0, result.stderr
 
 
-def test_hook_detects_main_refspec_after_signed_option(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "command",
+    [
+        "git push origin --signed main",
+        "git push origin --signed=yes main",
+        "git push origin --signed=no main",
+        "git push origin --signed=if-asked main",
+    ],
+)
+def test_hook_detects_main_refspec_after_optional_signed_option(
+    tmp_path: Path, command: str
+) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     _init_repo(repo, "feature")
 
-    result = _run_hook("git push origin --signed main", repo)
+    result = _run_hook(command, repo)
 
     assert result.returncode == 2
     assert "direct push to 'main' is not allowed" in result.stderr
