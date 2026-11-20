@@ -69,19 +69,6 @@ def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) 
     )
 
 
-def _pattern_binding_names(pattern: ast.pattern) -> set[str]:
-    """Return names bound by structural pattern matching."""
-    names: set[str] = set()
-    for node in ast.walk(pattern):
-        if isinstance(node, ast.MatchAs) and node.name is not None:
-            names.add(node.name)
-        elif isinstance(node, ast.MatchStar) and node.name is not None:
-            names.add(node.name)
-        elif isinstance(node, ast.MatchMapping) and node.rest is not None:
-            names.add(node.rest)
-    return names
-
-
 def _has_single_local_binding(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
     name: str,
