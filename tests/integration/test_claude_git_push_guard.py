@@ -417,7 +417,7 @@ def test_hook_blocks_shell_git_alias_that_may_push(tmp_path: Path) -> None:
     result = _run_hook("git ship", repo)
 
     assert result.returncode == 2
-    assert "shell Git alias" in result.stderr
+    assert "Git alias chain" in result.stderr
 
 
 def test_hook_fails_closed_for_implicit_push_with_external_git_dir(
