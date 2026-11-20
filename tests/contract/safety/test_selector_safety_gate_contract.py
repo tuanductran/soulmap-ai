@@ -16,45 +16,42 @@ def _find_function(
 ) -> ast.FunctionDef | ast.AsyncFunctionDef:
     """Return a top-level function definition by name."""
     for node in module.body:
-        if (
-            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name == name
-        ):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
             return node
     raise AssertionError(f"Expected function {name!r} in {SELECTOR_PATH}")
 
 
-def _call_name(node: ast.expr) -> str | None:
-    """Return the simple name of a called function or method."""
-    if isinstance(node, ast.Name):
-        return node.id
-    if isinstance(node, ast.Attribute):
-        return node.attr
-    return None
+def _is_direct_call(node: ast.expr, name: str) -> bool:
+    """Require a direct local function call, not an attribute with the same name."""
+    return (
+        isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == name
+    )
 
 
-def _contains_call(node: ast.AST, name: str) -> bool:
-    """Check whether a syntax subtree contains a call to the named function."""
+def _contains_direct_call(node: ast.AST, name: str) -> bool:
+    """Check whether a syntax subtree contains a direct call to the named function."""
     return any(
-        isinstance(child, ast.Call) and _call_name(child.func) == name
+        _is_direct_call(child, name)
         for child in ast.walk(node)
+        if isinstance(child, ast.expr)
     )
 
 
 def _is_gated_result_assignment(statement: ast.stmt) -> bool:
-    """Accept only a direct result binding whose complete RHS is the gate call."""
+    """Accept only a direct result binding whose entire RHS is the local gate call."""
     return (
         isinstance(statement, ast.Assign)
         and len(statement.targets) == 1
         and isinstance(statement.targets[0], ast.Name)
         and statement.targets[0].id == "result"
-        and isinstance(statement.value, ast.Call)
-        and _call_name(statement.value.func) == "_apply_safety_gate"
+        and _is_direct_call(statement.value, "_apply_safety_gate")
     )
 
 
 def _is_allowed_scope_metadata_write(statement: ast.stmt) -> bool:
-    """Allow the selector's non-policy scope metadata to be attached after gating."""
+    """Allow only the exact, side-effect-free scope metadata assignment."""
     if not isinstance(statement, ast.Assign) or len(statement.targets) != 1:
         return False
     target = statement.targets[0]
@@ -64,13 +61,15 @@ def _is_allowed_scope_metadata_write(statement: ast.stmt) -> bool:
         and target.value.id == "result"
         and isinstance(target.slice, ast.Constant)
         and target.slice.value == "scope"
+        and isinstance(statement.value, ast.Name)
+        and statement.value.id == "scope"
     )
 
 
 def _has_gated_assignment_in_return_branch(
     selector: ast.FunctionDef | ast.AsyncFunctionDef, return_node: ast.Return
 ) -> bool:
-    """Require the result passed to debug attachment to be gated immediately before use."""
+    """Tie each debug return to its immediately preceding gate assignment."""
     parents = {
         child: parent
         for parent in ast.walk(selector)
@@ -103,36 +102,31 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
     finish = _find_function(module, "_finish")
     gate_wrapper = _find_function(module, "_apply_safety_gate")
 
-    assert _contains_call(finish, "_apply_safety_gate")
-    assert _contains_call(gate_wrapper, "apply_safety_gate")
+    assert _contains_direct_call(finish, "_apply_safety_gate")
+    assert _contains_direct_call(gate_wrapper, "apply_safety_gate")
 
     returns = [node for node in ast.walk(selector) if isinstance(node, ast.Return)]
     assert returns, "select_framework_async must expose at least one return path"
 
     for return_node in returns:
         value = return_node.value
-        if isinstance(value, ast.Call) and _call_name(value.func) == "_finish":
+        if _is_direct_call(value, "_finish"):
             continue
-
         if (
-            isinstance(value, ast.Call)
-            and _call_name(value.func) == "_maybe_attach_debug"
+            _is_direct_call(value, "_maybe_attach_debug")
             and value.args
             and isinstance(value.args[0], ast.Name)
             and value.args[0].id == "result"
             and _has_gated_assignment_in_return_branch(selector, return_node)
         ):
             continue
-
         raise AssertionError(
             "select_framework_async has a return path that does not delegate "
             f"to the Safety Gate (line {return_node.lineno})"
         )
 
 
-def _return_for(
-    source: str,
-) -> tuple[ast.FunctionDef | ast.AsyncFunctionDef, ast.Return]:
+def _return_for(source: str) -> tuple[ast.FunctionDef | ast.AsyncFunctionDef, ast.Return]:
     module = ast.parse(source)
     selector = _find_function(module, "selector")
     return selector, next(
@@ -140,100 +134,111 @@ def _return_for(
     )
 
 
-def test_nested_result_overwrite_must_also_pass_through_the_safety_gate() -> None:
-    """A nested branch cannot replace a gated result with an ungated value."""
-    selector, return_node = _return_for(
-        """
+def test_nested_result_overwrite_is_not_accepted() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = _apply_safety_gate(value)
         if nested_condition:
             result = value
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_destructuring_result_rebind_must_pass_through_the_safety_gate() -> None:
-    """Tuple/list unpacking cannot replace result with an ungated value."""
-    selector, return_node = _return_for(
-        """
+def test_destructuring_result_rebind_is_not_accepted() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = _apply_safety_gate(value)
         result, metadata = raw_pair
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_subscript_result_mutation_is_not_a_variable_rebind() -> None:
-    """The existing scope metadata write is allowed after gating."""
-    selector, return_node = _return_for(
-        """
+def test_subscript_scope_metadata_write_is_allowed() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = _apply_safety_gate(value)
         result["scope"] = scope
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_nested_gated_result_assignment_is_not_assumed_to_cover_outer_return() -> None:
-    """A gate call in a nested branch cannot prove the outer return is gated."""
-    selector, return_node = _return_for(
-        """
+def test_nested_gate_assignment_does_not_cover_outer_return() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         if nested_condition:
             result = _apply_safety_gate(value)
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_conditional_rhs_must_gate_every_result_value() -> None:
-    """A conditional expression with one raw arm is not a gated assignment."""
-    selector, return_node = _return_for(
-        """
+def test_conditional_rhs_with_ungated_arm_is_not_accepted() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = raw if unsafe else _apply_safety_gate(value)
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_walrus_rebinding_before_return_is_rejected() -> None:
-    """A walrus assignment cannot replace the previously gated result."""
-    selector, return_node = _return_for(
-        """
+def test_walrus_rebinding_before_return_is_not_accepted() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = _apply_safety_gate(value)
         if (result := raw):
             pass
         return _maybe_attach_debug(result)
-"""
-    )
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
 
 
-def test_post_gate_policy_field_mutation_is_rejected() -> None:
-    """Safety-relevant result fields cannot be overwritten after gating."""
-    selector, return_node = _return_for(
-        """
+def test_post_gate_policy_field_mutation_is_not_accepted() -> None:
+    selector, return_node = _return_for("""
 async def selector():
     if condition:
         result = _apply_safety_gate(value)
         result["primary_framework"] = raw["primary_framework"]
         return _maybe_attach_debug(result)
-"""
-    )
+""")
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_scope_write_with_side_effects_is_not_allowed() -> None:
+    selector, return_node = _return_for("""
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        result["scope"] = (result.update(primary_framework=raw), scope)[1]
+        return _maybe_attach_debug(result)
+""")
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_scope_write_with_walrus_is_not_allowed() -> None:
+    selector, return_node = _return_for("""
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        result["scope"] = (result := raw)
+        return _maybe_attach_debug(result)
+""")
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_attribute_named_safety_gate_is_not_a_local_gate_call() -> None:
+    selector, return_node = _return_for("""
+async def selector():
+    if condition:
+        result = helper._apply_safety_gate(value)
+        return _maybe_attach_debug(result)
+""")
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
