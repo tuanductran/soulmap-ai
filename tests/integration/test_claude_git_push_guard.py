@@ -132,8 +132,14 @@ def test_hook_blocks_remote_configured_main_refspec(tmp_path: Path) -> None:
     repo.mkdir()
     _init_repo(repo, "feature")
     subprocess.run(
-        ["git", "-C", str(repo), "config", "remote.origin.push",
-         "refs/heads/feature:refs/heads/main"],
+        [
+            "git",
+            "-C",
+            str(repo),
+            "config",
+            "remote.origin.push",
+            "refs/heads/feature:refs/heads/main",
+        ],
         check=True,
     )
 
