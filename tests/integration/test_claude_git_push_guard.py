@@ -464,3 +464,16 @@ def test_hook_blocks_command_scoped_git_alias_override(tmp_path: Path) -> None:
 
     assert result.returncode == 2
     assert "command-scoped Git aliases" in result.stderr
+
+
+def test_hook_blocks_git_push_with_options_inside_command_substitution(
+    tmp_path: Path,
+) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(f'echo "$(git -C {repo} push origin main)"', repo)
+
+    assert result.returncode == 2
+    assert "command substitution" in result.stderr
