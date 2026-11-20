@@ -97,6 +97,31 @@ def _has_single_local_binding(
     return len(writes) == 1 and writes[0] is allowed_target and not pattern_writes
 
 
+def _request_inputs_are_not_rebound(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    names: tuple[str, ...],
+) -> bool:
+    """Reject reassignment or pattern capture of request inputs before gating."""
+    for name in names:
+        if any(
+            isinstance(node, ast.Name)
+            and node.id == name
+            and isinstance(node.ctx, ast.Store)
+            for node in ast.walk(function)
+        ):
+            return False
+        if any(
+            (isinstance(pattern, ast.MatchAs) and pattern.name == name)
+            or (isinstance(pattern, ast.MatchStar) and pattern.name == name)
+            or (isinstance(pattern, ast.MatchMapping) and pattern.rest == name)
+            for case in ast.walk(function)
+            if isinstance(case, ast.match_case)
+            for pattern in ast.walk(case.pattern)
+        ):
+            return False
+    return True
+
+
 def _gate_call_forwards_inputs(
     statement: ast.stmt, call_name: str, expected_names: tuple[str, ...]
 ) -> bool:
@@ -188,6 +213,9 @@ def _finish_returns_gated_result(
         and _gate_call_forwards_inputs(
             node, "_apply_safety_gate", ("message", "history", "memory", "selection")
         )
+        and _request_inputs_are_not_rebound(
+            finish, ("message", "history", "memory", "selection")
+        )
     ]
     returns = [node for node in ast.walk(finish) if isinstance(node, ast.Return)]
     if len(gates) != 1 or not returns:
@@ -223,6 +251,9 @@ def _gate_wrapper_returns_gated_selection(
         if _is_direct_call_assignment(node, "result", "apply_safety_gate")
         and _gate_call_forwards_inputs(
             node, "apply_safety_gate", ("message", "history", "memory", "selection")
+        )
+        and _request_inputs_are_not_rebound(
+            gate_wrapper, ("message", "history", "memory", "selection")
         )
     ]
     selected = [
@@ -596,6 +627,31 @@ def _apply_safety_gate(message, history, memory, selection):
     gated_selection = result.get("selection", selection)
     out = dict(cast(dict, gated_selection))
     out["primary_framework"] = "MIRROR"
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+
+
+def test_finish_rejects_reassigned_request_message_before_gate() -> None:
+    module = ast.parse("""
+def _finish(message, history, memory, selection):
+    message = "benign"
+    result = _apply_safety_gate(message, history, memory, selection)
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_reassigned_request_message_before_gate() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(message, history, memory, selection):
+    message = "benign"
+    result = apply_safety_gate(message, history, memory, selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
     return out
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
