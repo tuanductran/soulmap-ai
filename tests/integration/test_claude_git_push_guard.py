@@ -443,3 +443,33 @@ def test_hook_fails_closed_for_implicit_push_with_external_git_dir(
 
     assert result.returncode == 2
     assert "cannot verify the target repository" in result.stderr
+
+
+def test_hook_blocks_chained_git_alias_that_pushes_main(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "alias.ship", "publish"],
+        check=True,
+    )
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "alias.publish", "push origin HEAD:main"],
+        check=True,
+    )
+
+    result = _run_hook("git ship", repo)
+
+    assert result.returncode == 2
+    assert "Git alias chain" in result.stderr
+
+
+def test_hook_blocks_command_scoped_git_alias_override(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("git -c alias.ship='push origin main' ship", repo)
+
+    assert result.returncode == 2
+    assert "command-scoped Git aliases" in result.stderr
