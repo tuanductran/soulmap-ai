@@ -69,12 +69,25 @@ def _is_name_assignment(statement: ast.stmt, target_name: str, value_name: str) 
     )
 
 
+def _pattern_binding_names(pattern: ast.pattern) -> set[str]:
+    """Return names bound by structural pattern matching."""
+    names: set[str] = set()
+    for node in ast.walk(pattern):
+        if isinstance(node, ast.MatchAs) and node.name is not None:
+            names.add(node.name)
+        elif isinstance(node, ast.MatchStar) and node.name is not None:
+            names.add(node.name)
+        elif isinstance(node, ast.MatchMapping) and node.rest is not None:
+            names.add(node.rest)
+    return names
+
+
 def _has_single_local_binding(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
     name: str,
     allowed_target: ast.Name,
 ) -> bool:
-    """Reject rebinding a gate-derived local on any return path."""
+    """Reject rebinding a gate-derived local, including match captures."""
     writes = [
         node
         for node in ast.walk(function)
@@ -82,7 +95,71 @@ def _has_single_local_binding(
         and node.id == name
         and isinstance(node.ctx, ast.Store)
     ]
-    return len(writes) == 1 and writes[0] is allowed_target
+    pattern_writes = [
+        pattern
+        for node in ast.walk(function)
+        if isinstance(node, ast.match_case)
+        for pattern in ast.walk(node.pattern)
+        if isinstance(pattern, (ast.MatchAs, ast.MatchStar, ast.MatchMapping))
+        and (
+            (isinstance(pattern, ast.MatchAs) and pattern.name == name)
+            or (isinstance(pattern, ast.MatchStar) and pattern.name == name)
+            or (isinstance(pattern, ast.MatchMapping) and pattern.rest == name)
+        )
+    ]
+    return len(writes) == 1 and writes[0] is allowed_target and not pattern_writes
+
+
+def _gate_call_forwards_inputs(
+    statement: ast.stmt, call_name: str, expected_names: tuple[str, ...]
+) -> bool:
+    """Require the gate call to receive the current request inputs positionally."""
+    if not isinstance(statement, ast.Assign) or not isinstance(statement.value, ast.Call):
+        return False
+    call = statement.value
+    return (
+        _is_direct_call(call, call_name)
+        and len(call.args) >= len(expected_names)
+        and all(
+            isinstance(argument, ast.Name) and argument.id == expected
+            for argument, expected in zip(call.args, expected_names, strict=False)
+        )
+    )
+
+
+def _has_only_allowed_mapping_writes(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    name: str,
+    allowed_keys: set[str],
+) -> bool:
+    """Reject writes that could replace gated policy fields after the gate."""
+    mutators = {"clear", "pop", "popitem", "setdefault", "__setitem__"}
+    for node in ast.walk(function):
+        targets: list[ast.expr] = []
+        if isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
+            raw_targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            targets.extend(raw_targets)
+        for target in targets:
+            if (
+                isinstance(target, ast.Subscript)
+                and isinstance(target.value, ast.Name)
+                and target.value.id == name
+            ):
+                key = target.slice
+                if not isinstance(key, ast.Constant) or key.value not in allowed_keys:
+                    return False
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and isinstance(node.func.value, ast.Name)
+            and node.func.value.id == name
+        ):
+            if node.func.attr == "update":
+                if node.args or any(keyword.arg is None or keyword.arg not in allowed_keys for keyword in node.keywords):
+                    return False
+            elif node.func.attr in mutators:
+                return False
+    return True
 
 
 def _finish_returns_gated_result(
@@ -93,6 +170,9 @@ def _finish_returns_gated_result(
         node
         for node in finish.body
         if _is_direct_call_assignment(node, "result", "_apply_safety_gate")
+        and _gate_call_forwards_inputs(
+            node, "_apply_safety_gate", ("message", "history", "memory", "selection")
+        )
     ]
     returns = [node for node in ast.walk(finish) if isinstance(node, ast.Return)]
     if len(gates) != 1 or not returns:
@@ -104,6 +184,10 @@ def _finish_returns_gated_result(
     if not isinstance(target, ast.Name):
         return False
     if not _has_single_local_binding(finish, "result", target):
+        return False
+    if not _has_only_allowed_mapping_writes(
+        finish, "result", {"template"}
+    ):
         return False
     return all(
         node.lineno > gate.lineno
@@ -124,6 +208,9 @@ def _gate_wrapper_returns_gated_selection(
         node
         for node in gate_wrapper.body
         if _is_direct_call_assignment(node, "result", "apply_safety_gate")
+        and _gate_call_forwards_inputs(
+            node, "apply_safety_gate", ("message", "history", "memory", "selection")
+        )
     ]
     selected = [
         node
@@ -190,6 +277,9 @@ def _gate_wrapper_returns_gated_selection(
         and _has_single_local_binding(gate_wrapper, "result", gate_target)
         and _has_single_local_binding(gate_wrapper, "gated_selection", selection_target)
         and _has_single_local_binding(gate_wrapper, "out", output_target)
+        and _has_only_allowed_mapping_writes(
+            gate_wrapper, "out", {"safety_status", "safety_reason", "safety_flags"}
+        )
     ):
         return False
     return all(
@@ -445,6 +535,79 @@ def _apply_safety_gate(selection):
     result = apply_safety_gate(selection)
     gated_selection = result.get("selection", selection)
     out = dict(cast(dict, gated_selection))
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+def test_finish_rejects_gate_call_with_stale_request_inputs() -> None:
+    module = ast.parse("""
+def _finish(message, history, memory, selection):
+    result = _apply_safety_gate("benign", history, memory, selection)
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_gate_call_with_stale_request_inputs() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(message, history, memory, selection):
+    result = apply_safety_gate("benign", history, memory, selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+
+def test_finish_rejects_post_gate_policy_mutation() -> None:
+    module = ast.parse("""
+def _finish(message, history, memory, selection):
+    result = _apply_safety_gate(message, history, memory, selection)
+    result["primary_framework"] = "MIRROR"
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_post_gate_policy_mutation() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(message, history, memory, selection):
+    result = apply_safety_gate(message, history, memory, selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
+    out["primary_framework"] = "MIRROR"
+    return out
+""")
+    gate_wrapper = _find_function(module, "_apply_safety_gate")
+    assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
+
+
+def test_finish_rejects_match_capture_rebinding() -> None:
+    module = ast.parse("""
+def _finish(message, history, memory, selection):
+    result = _apply_safety_gate(message, history, memory, selection)
+    match raw:
+        case {"selection": result}:
+            pass
+    return _maybe_attach_debug(result, debug_events)
+""")
+    finish = _find_function(module, "_finish")
+    assert not _finish_returns_gated_result(finish)
+
+
+def test_gate_wrapper_rejects_match_capture_rebinding() -> None:
+    module = ast.parse("""
+def _apply_safety_gate(message, history, memory, selection):
+    result = apply_safety_gate(message, history, memory, selection)
+    gated_selection = result.get("selection", selection)
+    out = dict(cast(dict, gated_selection))
+    match raw:
+        case {"selection": out}:
+            pass
     return out
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
