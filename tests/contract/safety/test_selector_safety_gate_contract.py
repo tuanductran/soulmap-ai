@@ -129,7 +129,9 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
         )
 
 
-def _return_for(source: str) -> tuple[ast.FunctionDef | ast.AsyncFunctionDef, ast.Return]:
+def _return_for(
+    source: str,
+) -> tuple[ast.FunctionDef | ast.AsyncFunctionDef, ast.Return]:
     module = ast.parse(source)
     selector = _find_function(module, "selector")
     return selector, next(
