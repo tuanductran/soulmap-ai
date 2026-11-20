@@ -33,15 +33,6 @@ def _is_direct_call(node: ast.expr, name: str) -> bool:
     )
 
 
-def _contains_direct_call(node: ast.AST, name: str) -> bool:
-    """Check whether a syntax subtree contains a direct call to the named function."""
-    return any(
-        _is_direct_call(child, name)
-        for child in ast.walk(node)
-        if isinstance(child, ast.expr)
-    )
-
-
 def _is_gated_result_assignment(statement: ast.stmt) -> bool:
     """Accept only a direct result binding whose entire RHS is the local gate call."""
     return (
@@ -103,7 +94,7 @@ def _finish_returns_gated_result(
 def _gate_wrapper_returns_gated_selection(
     gate_wrapper: ast.FunctionDef | ast.AsyncFunctionDef,
 ) -> bool:
-    """Require every gate-wrapper return to derive from apply_safety_gate's selection."""
+    """Require each gate-wrapper return to derive from the selection it gated."""
     direct_gate = any(
         _is_direct_call_assignment(node, "result", "apply_safety_gate")
         for node in gate_wrapper.body
@@ -148,7 +139,10 @@ def _gate_wrapper_returns_gated_selection(
         and selected_gated_value
         and copied_gated_value
         and bool(returns)
-        and all(isinstance(node.value, ast.Name) and node.value.id == "out" for node in returns)
+        and all(
+            isinstance(node.value, ast.Name) and node.value.id == "out"
+            for node in returns
+        )
     )
 
 
