@@ -44,7 +44,7 @@ fi
 # A push without an explicit refspec uses the current branch's configured push
 # destination. Resolve git -C so the check applies to the repository actually
 # targeted by the command, not merely the project that owns this hook.
-IMPLICIT_PUSH_PATTERN="git([[:space:]]+-C[[:space:]]+('[^']+'|\"[^\"]+\"|[^[:space:]]+))?[[:space:]]+push([[:space:]]+(-u|--set-upstream|--porcelain|--atomic|--dry-run|--no-verify|--force|--force-with-lease))*([[:space:]]+[^[:space:]]+)?[[:space:]]*$"
+IMPLICIT_PUSH_PATTERN="git([[:space:]]+-C[[:space:]]+('[^']+'|\"[^\"]+\"|[^[:space:]]+))?[[:space:]]+push([[:space:]]+(-u|--set-upstream|--porcelain|--atomic|--dry-run|--no-verify|--force|--force-with-lease))*([[:space:]]+[^[:space:]]+)?([[:space:]]+(-u|--set-upstream|--porcelain|--atomic|--dry-run|--no-verify|--force|--force-with-lease))*[[:space:]]*$"
 if echo "$COMMAND" | grep -qE "$IMPLICIT_PUSH_PATTERN"; then
   REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(pwd)}}"
   PUSH_REPO_ROOT=$(printf '%s' "$COMMAND" | python3 -c '
