@@ -113,16 +113,17 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
 
     for return_node in returns:
         value = return_node.value
-        if _is_direct_call(value, "_finish"):
-            continue
-        if (
-            _is_direct_call(value, "_maybe_attach_debug")
-            and value.args
-            and isinstance(value.args[0], ast.Name)
-            and value.args[0].id == "result"
-            and _has_gated_assignment_in_return_branch(selector, return_node)
-        ):
-            continue
+        if isinstance(value, ast.Call):
+            if _is_direct_call(value, "_finish"):
+                continue
+            if (
+                _is_direct_call(value, "_maybe_attach_debug")
+                and value.args
+                and isinstance(value.args[0], ast.Name)
+                and value.args[0].id == "result"
+                and _has_gated_assignment_in_return_branch(selector, return_node)
+            ):
+                continue
         raise AssertionError(
             "select_framework_async has a return path that does not delegate "
             f"to the Safety Gate (line {return_node.lineno})"
