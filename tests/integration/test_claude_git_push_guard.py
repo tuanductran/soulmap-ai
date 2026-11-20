@@ -69,7 +69,15 @@ def test_hook_blocks_main_push_through_git_c(tmp_path: Path) -> None:
     assert "direct push to 'main' is not allowed" in result.stderr
 
 
-@pytest.mark.parametrize("command", ["git push", "git push origin"])
+@pytest.mark.parametrize(
+    "command",
+    [
+        "git push",
+        "git push origin",
+        "git push origin --force",
+        "git push origin --dry-run --force",
+    ],
+)
 def test_hook_blocks_implicit_push_from_main(tmp_path: Path, command: str) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
