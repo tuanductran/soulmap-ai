@@ -152,8 +152,8 @@ for segment in segments(tokens):
         continue
 
     args = parts[index + 1:]
-    if "--all" in args or "--mirror" in args:
-        print("Blocked: git push --all/--mirror can publish the protected 'main' branch.", file=sys.stderr)
+    if "--all" in args or "--mirror" in args or "--prune" in args:
+        print("Blocked: this push mode can publish or delete the protected 'main' branch.", file=sys.stderr)
         raise SystemExit(2)
 
     positional = []
@@ -178,15 +178,44 @@ for segment in segments(tokens):
         raise SystemExit(2)
 
     if not refspecs:
-        current = subprocess.run(
-            ["git", "-C", repo_path, "branch", "--show-current"],
-            capture_output=True, text=True, check=False,
-        ).stdout.strip()
-        upstream = subprocess.run(
-            ["git", "-C", repo_path, "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}"],
-            capture_output=True, text=True, check=False,
-        ).stdout.strip()
-        if current == "main" or upstream in {"main", "refs/heads/main"} or upstream.endswith("/main"):
+        def git_output(*git_args):
+            return subprocess.run(
+                ["git", "-C", repo_path, *git_args],
+                capture_output=True, text=True, check=False,
+            ).stdout.strip()
+
+        current = git_output("branch", "--show-current")
+        upstream = git_output(
+            "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}"
+        )
+        remote = positional[0] if positional else (
+            git_output("config", "--get", "remote.pushDefault")
+            or git_output("config", "--get", f"branch.{current}.remote")
+        )
+        remote_mirror = (
+            git_output("config", "--bool", f"remote.{remote}.mirror")
+            if remote else ""
+        )
+        configured_push = (
+            subprocess.run(
+                ["git", "-C", repo_path, "config", "--get-all", f"remote.{remote}.push"],
+                capture_output=True, text=True, check=False,
+            ).stdout.splitlines()
+            if remote else []
+        )
+        push_default = git_output("config", "--get", "push.default")
+        local_main = subprocess.run(
+            ["git", "-C", repo_path, "show-ref", "--verify", "--quiet", "refs/heads/main"],
+            capture_output=True, check=False,
+        ).returncode == 0
+        if (
+            current == "main"
+            or upstream in {"main", "refs/heads/main"}
+            or upstream.endswith("/main")
+            or remote_mirror == "true"
+            or any(is_main_refspec(spec) for spec in configured_push)
+            or (push_default in {"matching", "mirror"} and local_main)
+        ):
             print("Blocked: this implicit push would publish from or target the protected 'main' branch.", file=sys.stderr)
             print("Switch to a feature branch and push that instead.", file=sys.stderr)
             raise SystemExit(2)
