@@ -1,8 +1,22 @@
 # Korean crisis language pack: initial coverage and limitations
 
-Status: initial deterministic phrase coverage; not a clinically validated Korean
-risk classifier. A fluent Korean reviewer with suicide-prevention expertise
-should review the wording and test cases before this pack is treated as complete.
+Status: draft-only phrase inventory; it is deliberately excluded from the active
+crisis detector aggregates. It is not a clinically validated Korean risk
+classifier. A fluent Korean reviewer with suicide-prevention expertise must
+review the wording and test cases before activation.
+
+## Activation boundary
+
+The Korean inventory is kept in `DRAFT_LANGUAGE_PACKS` and is not included in
+`SUPPORTED_LANGUAGES` or the active Tier 1, Tier 2, and grandiosity aggregates.
+This prevents unreviewed Korean substring matches from changing production
+routing. Do not activate it until the review gate below is satisfied.
+
+The current automated review identified three concrete gaps that require
+native-language review: a self-harm disclosure without an object particle can
+be missed; a denial such as `죽고 싶다는 생각은 안 해요` can contain a positive
+substring; and the everyday fatigue phrase `너무 지쳤어` can trigger Tier 2.
+These are documented as limitations, not treated as solved by this draft.
 
 ## Design
 
