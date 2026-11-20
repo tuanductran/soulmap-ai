@@ -59,9 +59,7 @@ def _assigns_result(statement: ast.stmt) -> bool:
         # the result variable itself.
         return False
 
-    return any(
-        rebinds_result(target) for target in targets
-    )
+    return any(rebinds_result(target) for target in targets)
 
 
 def _has_gated_assignment_in_return_branch(
@@ -132,7 +130,6 @@ def test_every_selector_return_path_delegates_to_the_safety_gate() -> None:
         )
 
 
-
 def test_nested_result_overwrite_must_also_pass_through_the_safety_gate() -> None:
     """A nested branch cannot replace a gated result with an ungated value."""
     module = ast.parse(
@@ -151,6 +148,45 @@ async def selector():
     )
 
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_destructuring_result_rebind_must_pass_through_the_safety_gate() -> None:
+    """Tuple/list unpacking cannot replace result with an ungated value."""
+    module = ast.parse(
+        """
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        if nested_condition:
+            result, metadata = raw_pair
+        return _maybe_attach_debug(result)
+"""
+    )
+    selector = _find_function(module, "selector")
+    return_node = next(
+        node for node in ast.walk(selector) if isinstance(node, ast.Return)
+    )
+
+    assert not _has_gated_assignment_in_return_branch(selector, return_node)
+
+
+def test_subscript_result_mutation_is_not_a_variable_rebind() -> None:
+    """Mutating a result field does not replace the gated result object."""
+    module = ast.parse(
+        """
+async def selector():
+    if condition:
+        result = _apply_safety_gate(value)
+        result["scope"] = scope
+        return _maybe_attach_debug(result)
+"""
+    )
+    selector = _find_function(module, "selector")
+    return_node = next(
+        node for node in ast.walk(selector) if isinstance(node, ast.Return)
+    )
+
+    assert _has_gated_assignment_in_return_branch(selector, return_node)
 
 
 def test_nested_gated_result_assignment_remains_valid() -> None:
