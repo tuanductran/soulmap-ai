@@ -198,7 +198,7 @@ def has_executable_push_substitution(source):
     shell_code = "".join(visible)
     for match in re.finditer(r"\$\((.*?)\)|`([^`]*)`", shell_code, re.DOTALL):
         nested = match.group(1) or match.group(2) or ""
-        if contains_git_push(nested):
+        if has_executable_push_substitution(nested) or contains_git_push(nested):
             return True
     return False
 
@@ -283,7 +283,7 @@ def contains_git_push(source):
     try:
         nested_segments = split_segments(tokenize_shell(source))
     except ValueError:
-        return bool(re.search(r"(?<![A-Za-z0-9_./-])git\\b.*\\bpush\\b", source, re.DOTALL))
+        return bool(re.search(r"(?<![A-Za-z0-9_./-])git\b.*\bpush\b", source, re.DOTALL))
 
     for nested_segment in nested_segments:
         nested_parts = command_tokens(nested_segment)
