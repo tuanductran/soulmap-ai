@@ -334,6 +334,93 @@ def test_hook_detects_main_refspec_after_optional_signed_option(
     assert "direct push to 'main' is not allowed" in result.stderr
 
 
+
+def test_hook_blocks_head_refspec_when_current_branch_is_main(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "main")
+
+    result = _run_hook("git push origin HEAD", repo)
+
+    assert result.returncode == 2
+    assert "HEAD resolves to the protected 'main' branch" in result.stderr
+
+
+def test_hook_allows_head_refspec_from_feature_branch(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("git push origin HEAD", repo)
+
+    assert result.returncode == 0, result.stderr
+
+
+def test_hook_blocks_shell_local_git_c_path_for_implicit_push(tmp_path: Path) -> None:
+    root = tmp_path / "root"
+    target = tmp_path / "main-checkout"
+    root.mkdir()
+    target.mkdir()
+    _init_repo(root, "feature")
+    _init_repo(target, "main")
+
+    result = _run_hook(f'P="{target}"; git -C "$P" push origin', root)
+
+    assert result.returncode == 2
+    assert "cannot verify the target repository" in result.stderr
+
+
+def test_hook_blocks_push_inside_command_substitution(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook('echo "$(git push origin main)"', repo)
+
+    assert result.returncode == 2
+    assert "command substitution" in result.stderr
+
+
+def test_hook_does_not_block_literal_push_text_in_single_quotes(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("echo '$(git push origin main)'", repo)
+
+    assert result.returncode == 0, result.stderr
+
+
+def test_hook_blocks_git_alias_that_pushes_main(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "alias.ship", "push origin HEAD:main"],
+        check=True,
+    )
+
+    result = _run_hook("git ship", repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
+def test_hook_blocks_shell_git_alias_that_may_push(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "alias.ship", "!git push origin main"],
+        check=True,
+    )
+
+    result = _run_hook("git ship", repo)
+
+    assert result.returncode == 2
+    assert "shell Git alias" in result.stderr
+
+
 def test_hook_fails_closed_for_implicit_push_with_external_git_dir(
     tmp_path: Path,
 ) -> None:
