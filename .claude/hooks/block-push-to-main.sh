@@ -351,7 +351,7 @@ while pending_segments:
             print("Blocked: cannot resolve a Git alias in the target repository.", file=sys.stderr)
             raise SystemExit(2)
         if alias_value:
-            if alias_value.startswith("!") and re.search(r"\\bpush\\b", alias_value):
+            if alias_value.startswith("!") and re.search(r"\bpush\b", alias_value):
                 print("Blocked: shell Git alias may execute a protected push.", file=sys.stderr)
                 raise SystemExit(2)
             try:
