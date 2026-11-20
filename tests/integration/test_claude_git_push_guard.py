@@ -38,7 +38,6 @@ def _run_hook(command: str, repo: Path) -> subprocess.CompletedProcess[str]:
     )
 
 
-
 @pytest.mark.parametrize(
     "command",
     [
@@ -70,7 +69,6 @@ def test_hook_blocks_main_push_through_git_c(tmp_path: Path) -> None:
     assert "direct push to 'main' is not allowed" in result.stderr
 
 
-
 @pytest.mark.parametrize(
     "command",
     [
@@ -91,7 +89,6 @@ def test_hook_blocks_implicit_push_from_main(tmp_path: Path, command: str) -> No
     assert "protected 'main' branch" in result.stderr
 
 
-
 @pytest.mark.parametrize(
     "command",
     [
@@ -110,7 +107,6 @@ def test_hook_blocks_all_branch_push_modes(tmp_path: Path, command: str) -> None
 
     assert result.returncode == 2
     assert "can publish or delete the protected 'main' branch" in result.stderr
-
 
 
 @pytest.mark.parametrize(
@@ -179,7 +175,6 @@ def test_hook_expands_environment_variable_in_git_c_path(tmp_path: Path) -> None
     assert "protected 'main' branch" in result.stderr
 
 
-
 @pytest.mark.parametrize(
     "command",
     [
@@ -198,7 +193,6 @@ def test_hook_does_not_match_git_push_text_in_arguments(
     result = _run_hook(command, repo)
 
     assert result.returncode == 0, result.stderr
-
 
 
 @pytest.mark.parametrize(
@@ -256,7 +250,6 @@ def test_hook_blocks_git_c_implicit_push_from_main(tmp_path: Path) -> None:
     assert "protected 'main' branch" in result.stderr
 
 
-
 @pytest.mark.parametrize(
     ("branch", "command"),
     [
@@ -276,7 +269,6 @@ def test_hook_allows_pushes_that_do_not_target_main(
     result = _run_hook(command, repo)
 
     assert result.returncode == 0, result.stderr
-
 
 
 @pytest.mark.parametrize(
@@ -318,7 +310,6 @@ def test_hook_does_not_treat_push_option_value_as_push_mode(tmp_path: Path) -> N
     result = _run_hook("git push origin -o --all", repo)
 
     assert result.returncode == 0, result.stderr
-
 
 
 @pytest.mark.parametrize(
