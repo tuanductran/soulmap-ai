@@ -447,9 +447,9 @@ def _return_for(
 
 def test_nested_result_overwrite_is_not_accepted() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         if nested_condition:
             result = value
         return _maybe_attach_debug(result)
@@ -459,9 +459,9 @@ async def selector():
 
 def test_destructuring_result_rebind_is_not_accepted() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         result, metadata = raw_pair
         return _maybe_attach_debug(result)
 """)
@@ -470,9 +470,9 @@ async def selector():
 
 def test_subscript_scope_metadata_write_is_allowed() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         result["scope"] = scope
         return _maybe_attach_debug(result)
 """)
@@ -481,10 +481,10 @@ async def selector():
 
 def test_nested_gate_assignment_does_not_cover_outer_return() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
         if nested_condition:
-            result = _apply_safety_gate(value)
+            result = _apply_safety_gate(message, history, memory, selection, debug_events)
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
@@ -492,9 +492,9 @@ async def selector():
 
 def test_conditional_rhs_with_ungated_arm_is_not_accepted() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = raw if unsafe else _apply_safety_gate(value)
+        result = raw if unsafe else _apply_safety_gate(message, history, memory, selection, debug_events)
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
@@ -502,9 +502,9 @@ async def selector():
 
 def test_walrus_rebinding_before_return_is_not_accepted() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         if (result := raw):
             pass
         return _maybe_attach_debug(result)
@@ -514,9 +514,9 @@ async def selector():
 
 def test_post_gate_policy_field_mutation_is_not_accepted() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         result["primary_framework"] = raw["primary_framework"]
         return _maybe_attach_debug(result)
 """)
@@ -525,9 +525,9 @@ async def selector():
 
 def test_scope_write_with_side_effects_is_not_allowed() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         result["scope"] = (result.update(primary_framework=raw), scope)[1]
         return _maybe_attach_debug(result)
 """)
@@ -536,9 +536,9 @@ async def selector():
 
 def test_scope_write_with_walrus_is_not_allowed() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = _apply_safety_gate(value)
+        result = _apply_safety_gate(message, history, memory, selection, debug_events)
         result["scope"] = (result := raw)
         return _maybe_attach_debug(result)
 """)
@@ -547,9 +547,9 @@ async def selector():
 
 def test_attribute_named_safety_gate_is_not_a_local_gate_call() -> None:
     selector, return_node = _return_for("""
-async def selector():
+async def selector(message, history, memory, selection, debug_events):
     if condition:
-        result = helper._apply_safety_gate(value)
+        result = helper._apply_safety_gate(message, history, memory, selection, debug_events)
         return _maybe_attach_debug(result)
 """)
     assert not _has_gated_assignment_in_return_branch(selector, return_node)
