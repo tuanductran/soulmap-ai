@@ -49,10 +49,16 @@ def _assigns_result(statement: ast.stmt) -> bool:
         targets = [statement.target]
     else:
         return False
-    return any(
-        isinstance(target, ast.Name) and target.id == "result"
-        for target in targets
-    )
+    def rebinds_result(target: ast.expr) -> bool:
+        if isinstance(target, ast.Name):
+            return target.id == "result"
+        if isinstance(target, (ast.Tuple, ast.List)):
+            return any(rebinds_result(element) for element in target.elts)
+        # A subscript write mutates the existing object; it does not rebind
+        # the result variable itself.
+        return False
+
+    return any(rebinds_result(target) for target in targets)
 
 
 def _has_gated_assignment_in_return_branch(
