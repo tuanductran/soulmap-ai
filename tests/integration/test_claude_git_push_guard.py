@@ -195,6 +195,26 @@ def test_hook_does_not_match_git_push_text_in_arguments(
     assert result.returncode == 0, result.stderr
 
 
+@pytest.mark.parametrize(
+    "command",
+    [
+        "if git push origin main; then echo pushed; fi",
+        "sudo -u deploy git push origin main",
+    ],
+)
+def test_hook_detects_conditional_and_sudo_wrapped_pushes(
+    tmp_path: Path, command: str
+) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(command, repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
 def test_hook_detects_git_push_on_a_later_shell_line(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
