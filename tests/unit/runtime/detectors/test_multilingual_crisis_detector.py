@@ -59,7 +59,14 @@ def test_tier2_crisis_detected_across_supported_languages(message: str) -> None:
         "我不想自杀。",
         "저는 죽고 싶지 않아요.",
     ],
-    ids=["en-negated", "vi-negated", "es-negated", "fr-negated", "zh-negated", "ko-negated"],
+    ids=[
+        "en-negated",
+        "vi-negated",
+        "es-negated",
+        "fr-negated",
+        "zh-negated",
+        "ko-negated",
+    ],
 )
 def test_explicit_first_person_denial_does_not_trigger_tier1(message: str) -> None:
     result = detect_crisis(message)
