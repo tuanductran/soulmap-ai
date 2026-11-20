@@ -46,15 +46,15 @@ the user's actual location.
 
 - Korea's Ministry of Health and Welfare describes its suicide-prevention
   response system and the 24-hour suicide-prevention counselling line 109:
-  https://www.mohw.go.kr/menu.es?mid=a10716040000
+  [Ministry of Health and Welfare](https://www.mohw.go.kr/menu.es?mid=a10716040000)
 - A 2026 Korean-language study analysed 1,984 online counselling posts
   containing the expression 죽고 싶다 and found multiple co-occurring
   psychosocial contexts, supporting context-aware, layered evaluation rather
   than reliance on one phrase:
-  https://doi.org/10.4306/jknpa.2026.65.3.234
+  [Korean-language study](https://doi.org/10.4306/jknpa.2026.65.3.234)
 - Research on cross-lingual suicidal-ideation detection notes the scarcity of
   validated Korean lexicons and the need for expert-created dictionaries:
-  https://www.suicideinfo.ca/resource/cross-lingual-suicidal-oriented-word-embedding-toward-suicide-prevention/
+  [Cross-lingual suicide-prevention research](https://www.suicideinfo.ca/resource/cross-lingual-suicidal-oriented-word-embedding-toward-suicide-prevention/)
 
 ## Release gate
 
