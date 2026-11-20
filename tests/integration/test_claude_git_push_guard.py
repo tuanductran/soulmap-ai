@@ -89,6 +89,68 @@ def test_hook_blocks_implicit_push_from_main(tmp_path: Path, command: str) -> No
     assert "protected 'main' branch" in result.stderr
 
 
+@pytest.mark.parametrize(
+    "command",
+    [
+        "git push origin --all",
+        "git push --all origin",
+        "git push origin --mirror",
+        "git push --mirror origin",
+    ],
+)
+def test_hook_blocks_all_branch_push_modes(tmp_path: Path, command: str) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook(command, repo)
+
+    assert result.returncode == 2
+    assert "can publish the protected 'main' branch" in result.stderr
+
+
+def test_hook_expands_environment_variable_in_git_c_path(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "main")
+
+    result = _run_hook('git -C "$CODEX_PROJECT_DIR" push origin', repo)
+
+    assert result.returncode == 2
+    assert "protected 'main' branch" in result.stderr
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "printf '%s\\n' git push origin",
+        "echo git push origin",
+        "printf 'git push origin main'",
+    ],
+)
+def test_hook_does_not_match_git_push_text_in_arguments(
+    tmp_path: Path, command: str
+) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "main")
+
+    result = _run_hook(command, repo)
+
+    assert result.returncode == 0, result.stderr
+
+
+def test_hook_still_detects_git_push_after_shell_separator(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _init_repo(repo, "feature")
+
+    result = _run_hook("printf ready; git push origin main", repo)
+
+    assert result.returncode == 2
+    assert "direct push to 'main' is not allowed" in result.stderr
+
+
 def test_hook_blocks_git_c_implicit_push_from_main(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
