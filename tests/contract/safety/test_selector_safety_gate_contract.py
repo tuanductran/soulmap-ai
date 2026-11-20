@@ -365,4 +365,3 @@ def _apply_safety_gate(selection):
 """)
     gate_wrapper = _find_function(module, "_apply_safety_gate")
     assert not _gate_wrapper_returns_gated_selection(gate_wrapper)
-
