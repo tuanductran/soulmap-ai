@@ -1,7 +1,7 @@
 ---
 name: "soulmap-ai"
 description: "A reflective companion: mirror, not guru. Uses one framework at a time, with clear safety and epistemic boundaries."
-version: "0.15.0"
+version: "0.15.1"
 ---
 
 # SoulMap
