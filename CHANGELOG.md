@@ -5,6 +5,17 @@ All notable changes to this repository will be documented in this file.
 This project is content-first (knowledge base + scripts). Versioning communicates
 stability and breaking changes in behavior.
 
+## v0.15.1 (2026-11-21)
+
+### Fix
+
+- **claude**: close direct-push refspec bypasses (#1050)
+- **claude**: validate every eval dataset after edits (#1049)
+- **safety**: retain intensified and unqualified destiny detection
+- **safety**: preserve hedged diagnosis refusals and catch direct destiny claims
+- **evals**: separate input routing from output safety status
+- **safety**: detect explicit diagnosis and destiny assertions
+
 ## v0.15.0 (2026-11-18)
 
 ### Feat
