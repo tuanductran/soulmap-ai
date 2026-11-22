@@ -48,7 +48,9 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
         'git -c "http.extraheader=AUTHORIZATION: basic $auth_header" push'
         not in content
     )
-    pinned_release_action = "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    pinned_release_action = (
+        "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    )
     assert content.count(f"uses: {pinned_release_action}") == 2
     assert "uses: ./src/action" not in content
     assert "operation: pull-request" in content
