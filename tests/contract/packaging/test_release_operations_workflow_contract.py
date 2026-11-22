@@ -66,7 +66,6 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert "secrets.SOULMAP_RELEASE_TOKEN" in workflow
-    assert "secrets.SOULMAP_RELEASE_TOKEN" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
     assert "operation: tag" in workflow
