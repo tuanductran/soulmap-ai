@@ -8,6 +8,7 @@ import subprocess
 import time
 from pathlib import Path
 from urllib.parse import quote, urlsplit
+
 from client import GitHubClient
 from constants import API_ROOT
 from errors import GitHubActionError, GitHubAPIError
