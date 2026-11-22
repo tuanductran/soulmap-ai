@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import subprocess
 import sys
 from email.message import Message
 from pathlib import Path
@@ -498,8 +499,10 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     )
 
 
-def _git_completed(stdout: str = "", stderr: str = ""):
-    return refs_module.subprocess.CompletedProcess(
+def _git_completed(
+    stdout: str = "", stderr: str = ""
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.CompletedProcess(
         args=["git"], returncode=0, stdout=stdout, stderr=stderr
     )
 
