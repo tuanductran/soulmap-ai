@@ -21,7 +21,8 @@ concurrency:
 jobs:
   verify:
     if: >-
-      (github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha != '') ||
+      (github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' && inputs.merge_commit_sha != '') ||
       (github.event.pull_request.merged == true &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.base.repo.full_name == github.repository &&
@@ -163,7 +164,8 @@ jobs:
   publish:
     needs: verify
     if: >-
-      (github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha != '' ||
+      (github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' && inputs.merge_commit_sha != '' ||
       github.event.pull_request.merged == true &&
       startsWith(github.event.pull_request.head.ref, 'release/prep-')) &&
       needs.verify.result == 'success'
