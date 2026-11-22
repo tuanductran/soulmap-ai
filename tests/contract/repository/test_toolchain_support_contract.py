@@ -129,7 +129,9 @@ def test_workflows_pin_third_party_actions_and_use_verified_uv_setup() -> None:
     release_finalize_text = (
         REPO_ROOT / ".github" / "workflows" / "release-finalize.yml"
     ).read_text(encoding="utf-8")
-    assert "uses: ./src/action" in release_finalize_text
+    pinned_release_action = "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    assert release_finalize_text.count(f"uses: {pinned_release_action}") == 2
+    assert "uses: ./src/action" not in release_finalize_text
     assert "operation: release" in release_finalize_text
     assert "operation: tag" in release_finalize_text
     assert "target-sha:" in release_finalize_text
