@@ -48,50 +48,38 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "inputs.merge_commit_sha" in workflow
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
-    assert (
-        "github.event.pull_request.head.repo.full_name == github.repository" in workflow
-    )
-    assert (
-        "github.event.pull_request.base.repo.full_name == github.repository" in workflow
-    )
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
     assert workflow.count('git merge-base --is-ancestor "$MERGE_SHA" origin/main') == 2
     assert "github.event.pull_request.merge_commit_sha" in workflow
     assert "Verify checkout is the merged release commit" in workflow
     assert "soulmap release-gate" in workflow
-    assert "soulmap release-verify" not in workflow
-    assert "soulmap release-provenance" not in workflow
-    assert "soulmap release-health" not in workflow
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
     assert "pull-requests: read" in workflow
     assert "id-token: write" in workflow
-    assert (
-        "SOULMAP_RELEASE_TOKEN must be configured for GitHub Release publication."
-        in workflow
-    )
-    assert 'if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then' in workflow
-    assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert "attestations: write" in workflow
+    assert "environment:\n      name: release-finalize" in workflow
+    assert "SOULMAP_FINALIZE_TOKEN must be configured in the protected release-finalize environment." in workflow
+    assert "secrets.SOULMAP_FINALIZE_TOKEN" in workflow
+    assert "secrets.SOULMAP_RELEASE_TOKEN" not in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
     assert "operation: tag" in workflow
-    assert "attestations: write" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
-    assert (
-        "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2" in workflow
-    )
+    assert "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2" in workflow
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
-    assert "Create immutable release tag through Python action" in workflow
     assert "target-sha:" in workflow
-    assert "uses: ./src/action" in workflow
+    pinned_action = "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    assert workflow.count(f"uses: {pinned_action}") == 2
+    assert "uses: ./src/action" not in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert 'generate-release-notes: "true"' in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
-    assert workflow.index(
-        "Verify checkout is the merged release commit"
-    ) < workflow.index("Verify merged release tree")
+    assert workflow.index("Verify checkout is the merged release commit") < workflow.index(
+        "Verify merged release tree"
+    )
     assert workflow.index("Verify merged release tree") < workflow.index(
         "Create immutable release tag"
     )
@@ -107,40 +95,52 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Verify release token is configured") < workflow.index(
         "Create immutable release tag through Python action"
     )
-    assert workflow.index(
-        "Create immutable release tag through Python action"
-    ) < workflow.index("Publish GitHub Release")
-
-    # Manual recovery must prove that the supplied SHA is the merge commit of
-    # a merged release/prep-* PR targeting this repository's main branch.
-    assert (
-        "Verify manually supplied SHA belongs to a merged release preparation PR"
-        in workflow
+    assert workflow.index("Create immutable release tag through Python action") < workflow.index(
+        "Publish GitHub Release"
     )
-    assert "if: github.event_name == 'workflow_dispatch'" in workflow
+
+    # Both automatic and recovery paths fetch and validate the same PR metadata
+    # and complete changed-file list before building release artifacts.
+    assert "Verify release preparation PR provenance and changed paths" in workflow
     assert "commits/${MERGE_SHA}/pulls?per_page=100" in workflow
+    assert "pulls/${pr_number}/files?per_page=100" in workflow
+    assert "gh api --paginate --slurp" in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" in workflow
-    assert "associated-pull-requests.json" in workflow
-    assert workflow.index(
-        "Verify manually supplied SHA belongs to a merged release preparation PR"
-    ) < workflow.index("Install uv")
+    assert "release-pr-files.json" in workflow
+    assert workflow.index("Verify release preparation PR provenance and changed paths") < workflow.index(
+        "Install uv"
+    )
 
 
 def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
     script = ROOT / "scripts" / "verify_release_finalize_provenance.py"
     merge_sha = "a" * 40
+    repository = "tuanductran/soulmap-ai"
     valid_pull_request = {
+        "number": 123,
         "merged_at": "2026-11-17T00:00:00Z",
         "merge_commit_sha": merge_sha,
         "base": {
             "ref": "main",
-            "repo": {"full_name": "tuanductran/soulmap-ai"},
+            "repo": {"full_name": repository},
         },
         "head": {
             "ref": "release/prep-1.2.3",
-            "repo": {"full_name": "tuanductran/soulmap-ai"},
+            "repo": {"full_name": repository},
         },
     }
+    expected_paths = [
+        ".claude-plugin/marketplace.json",
+        "CHANGELOG.md",
+        "SKILL.md",
+        "docs/integrations/README.md",
+        "docs/integrations/chatgpt-instructions.md",
+        "docs/integrations/gemini-instructions.md",
+        "docs/integrations/poe-system-prompt.md",
+        "pyproject.toml",
+        "uv.lock",
+    ]
+    valid_files = [{"filename": path, "status": "modified"} for path in expected_paths]
     invalid_pull_requests = [
         {**valid_pull_request, "merge_commit_sha": "b" * 40},
         {**valid_pull_request, "merged_at": None},
@@ -159,28 +159,63 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
                 "repo": {"full_name": "fork/soulmap-ai"},
             },
         },
+        {
+            **valid_pull_request,
+            "base": {
+                **valid_pull_request["base"],
+                "repo": {"full_name": "other/soulmap-ai"},
+            },
+        },
     ]
 
     with tempfile.TemporaryDirectory() as directory:
-        response_path = Path(directory) / "associated-pull-requests.json"
+        pull_requests_path = Path(directory) / "associated-pull-requests.json"
+        changed_files_path = Path(directory) / "release-pr-files.json"
 
         def run_guard(
             pull_requests: list[dict[str, object]],
+            changed_files: list[dict[str, str]],
         ) -> subprocess.CompletedProcess[str]:
-            response_path.write_text(json.dumps(pull_requests), encoding="utf-8")
+            pull_requests_path.write_text(json.dumps(pull_requests), encoding="utf-8")
+            changed_files_path.write_text(json.dumps(changed_files), encoding="utf-8")
             return subprocess.run(
-                [sys.executable, str(script), str(response_path), merge_sha],
+                [
+                    sys.executable,
+                    str(script),
+                    str(pull_requests_path),
+                    merge_sha,
+                    str(changed_files_path),
+                    repository,
+                ],
                 check=False,
                 capture_output=True,
                 text=True,
             )
 
-        valid_result = run_guard([valid_pull_request])
+        valid_result = run_guard([valid_pull_request], valid_files)
         assert valid_result.returncode == 0, valid_result.stderr
 
+        paginated_result = run_guard([[valid_pull_request]], [valid_files])
+        assert paginated_result.returncode == 0, paginated_result.stderr
+
         for invalid_pull_request in invalid_pull_requests:
-            invalid_result = run_guard([invalid_pull_request])
+            invalid_result = run_guard([invalid_pull_request], valid_files)
             assert invalid_result.returncode == 1
+
+        assert run_guard([valid_pull_request, valid_pull_request], valid_files).returncode == 1
+        assert run_guard([valid_pull_request], valid_files[:-1]).returncode == 1
+        assert run_guard(
+            [valid_pull_request],
+            [*valid_files, {"filename": "src/action/refs.py", "status": "modified"}],
+        ).returncode == 1
+        assert run_guard(
+            [valid_pull_request],
+            [{**valid_files[0], "status": "added"}, *valid_files[1:]],
+        ).returncode == 1
+        assert run_guard(
+            [valid_pull_request],
+            [*valid_files, valid_files[0]],
+        ).returncode == 1
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
