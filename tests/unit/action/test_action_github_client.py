@@ -498,80 +498,158 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     )
 
 
-def test_create_branch_publishes_ref_through_github_api_without_git() -> None:
+def _git_completed(stdout: str = "", stderr: str = ""):
+    return refs_module.subprocess.CompletedProcess(
+        args=["git"], returncode=0, stdout=stdout, stderr=stderr
+    )
+
+
+def test_create_branch_scopes_credentials_to_verified_github_remote(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     client = client_module.GitHubClient("secret-token")
     target_sha = "a" * 40
-    branch = "release/prep-1"
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
     not_found = errors_module.GitHubAPIError(
-        "GET",
-        "https://api.github.com/repos/owner/repo/git/ref/heads/release%2Fprep-1",
-        404,
-        "Not Found",
+        "GET", "https://api.github.com/ref", 404, "Not Found"
     )
-    created = {
-        "ref": f"refs/heads/{branch}",
-        "object": {"type": "commit", "sha": target_sha},
-    }
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
+        _git_completed(),
+    ]
 
     with (
         patch.object(client, "api", side_effect=not_found),
-        patch.object(client, "request", return_value=created) as request,
-        patch.object(refs_module, "subprocess", create=True) as git_module,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
     ):
-        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-1", target_sha
+        )
 
-    request.assert_called_once_with(
-        "POST",
-        "https://api.github.com/repos/owner/repo/git/refs",
-        payload={"ref": f"refs/heads/{branch}", "sha": target_sha},
-        retry_non_idempotent=True,
+    assert [call.args[0] for call in run.call_args_list] == [
+        ["git", "remote", "get-url", "--all", "origin"],
+        ["git", "remote", "get-url", "--push", "--all", "origin"],
+        ["git", "rev-parse", "HEAD"],
+        ["git", "push", "origin", "HEAD:refs/heads/release/prep-1"],
+    ]
+    push_env = run.call_args.kwargs["env"]
+    assert push_env["GIT_CONFIG_COUNT"] == "3"
+    assert push_env["GIT_CONFIG_KEY_0"] == "safe.directory"
+    assert push_env["GIT_CONFIG_VALUE_0"] == "/github/workspace"
+    assert (
+        push_env["GIT_CONFIG_KEY_1"]
+        == "http.https://github.com/owner/repo.git/.extraheader"
     )
-    git_module.run.assert_not_called()
+    assert push_env["GIT_CONFIG_VALUE_1"].startswith("AUTHORIZATION: basic ")
+    assert push_env["GIT_CONFIG_KEY_2"] == "http.followRedirects"
+    assert push_env["GIT_CONFIG_VALUE_2"] == "false"
 
 
-def test_create_branch_verifies_concurrent_ref_creation() -> None:
+@pytest.mark.parametrize(
+    ("fetch_url", "push_url"),
+    [
+        ("https://github.com/owner/repo.git", "https://evil.example/owner/repo.git"),
+        ("https://github.com/owner/repo.git", "https://github.com/other/repo.git"),
+        ("https://evil.example/owner/repo.git", "https://evil.example/owner/repo.git"),
+        ("git@github.com:owner/repo.git", "git@github.com:owner/repo.git"),
+        ("http://github.com/owner/repo.git", "http://github.com/owner/repo.git"),
+        (
+            "https://attacker@github.com/owner/repo.git",
+            "https://attacker@github.com/owner/repo.git",
+        ),
+    ],
+)
+def test_create_branch_rejects_untrusted_origin_before_authenticated_push(
+    fetch_url: str, push_url: str
+) -> None:
     client = client_module.GitHubClient("secret-token")
     target_sha = "b" * 40
-    branch = "release/prep-2"
     not_found = errors_module.GitHubAPIError(
         "GET", "https://api.github.com/ref", 404, "Not Found"
     )
-    conflict = errors_module.GitHubAPIError(
-        "POST", "https://api.github.com/git/refs", 422, "Reference already exists"
+    results = [
+        _git_completed(fetch_url + "\n"),
+        _git_completed(push_url + "\n"),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="Origin"),
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-2", target_sha
+        )
+
+    assert run.call_count == 2
+    assert all("GIT_CONFIG_KEY_1" not in call.kwargs["env"] for call in run.call_args_list)
+
+
+def test_create_branch_rejects_multiple_push_urls() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "c" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
     )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(
+            "https://github.com/owner/repo.git\nhttps://evil.example/repo.git\n"
+        ),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="exactly one"),
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-3", target_sha
+        )
+
+    assert run.call_count == 2
+
+
+def test_create_branch_rejects_wrong_local_head_before_push() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "d" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("e" * 40 + "\n"),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="does not match"),
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-4", target_sha
+        )
+
+    assert run.call_count == 3
+
+
+def test_create_branch_verifies_existing_ref_at_expected_sha() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "f" * 40
     existing = {
-        "ref": f"refs/heads/{branch}",
+        "ref": "refs/heads/release/prep-5",
         "object": {"type": "commit", "sha": target_sha},
     }
 
     with (
-        patch.object(client, "api", side_effect=[not_found, existing]) as api,
-        patch.object(client, "request", side_effect=conflict) as request,
+        patch.object(client, "api", return_value=existing),
+        patch.object(refs_module.subprocess, "run") as run,
     ):
-        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-5", target_sha
+        )
 
-    assert api.call_count == 2
-    request.assert_called_once()
-
-
-def test_create_branch_rejects_concurrent_ref_at_wrong_sha() -> None:
-    client = client_module.GitHubClient("secret-token")
-    target_sha = "c" * 40
-    branch = "release/prep-3"
-    not_found = errors_module.GitHubAPIError(
-        "GET", "https://api.github.com/ref", 404, "Not Found"
-    )
-    conflict = errors_module.GitHubAPIError(
-        "POST", "https://api.github.com/git/refs", 422, "Reference already exists"
-    )
-    existing = {
-        "ref": f"refs/heads/{branch}",
-        "object": {"type": "commit", "sha": "d" * 40},
-    }
-
-    with (
-        patch.object(client, "api", side_effect=[not_found, existing]),
-        patch.object(client, "request", side_effect=conflict),
-        pytest.raises(errors_module.GitHubActionError, match="does not point"),
-    ):
-        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
+    run.assert_not_called()
