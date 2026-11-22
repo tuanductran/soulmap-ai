@@ -72,15 +72,17 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
     assert "target-sha:" in workflow
-    pinned_action = "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    pinned_action = (
+        "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+    )
     assert workflow.count(f"uses: {pinned_action}") == 2
     assert "uses: ./src/action" not in workflow
     assert "tag: v${{ needs.verify.outputs.version }}" in workflow
     assert 'generate-release-notes: "true"' in workflow
     assert "GITHUB_TOKEN: ${{ github.token }}" not in workflow
-    assert workflow.index("Verify checkout is the merged release commit") < workflow.index(
-        "Verify merged release tree"
-    )
+    assert workflow.index(
+        "Verify checkout is the merged release commit"
+    ) < workflow.index("Verify merged release tree")
     assert workflow.index("Verify merged release tree") < workflow.index(
         "Create immutable release tag"
     )
@@ -96,9 +98,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert workflow.index("Verify release token is configured") < workflow.index(
         "Create immutable release tag through Python action"
     )
-    assert workflow.index("Create immutable release tag through Python action") < workflow.index(
-        "Publish GitHub Release"
-    )
+    assert workflow.index(
+        "Create immutable release tag through Python action"
+    ) < workflow.index("Publish GitHub Release")
 
     # Both automatic and recovery paths fetch and validate the same PR metadata
     # and complete changed-file list before building release artifacts.
@@ -108,9 +110,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "gh api --paginate --slurp" in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" in workflow
     assert "release-pr-files.json" in workflow
-    assert workflow.index("Verify release preparation PR provenance and changed paths") < workflow.index(
-        "Install uv"
-    )
+    assert workflow.index(
+        "Verify release preparation PR provenance and changed paths"
+    ) < workflow.index("Install uv")
 
 
 def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
@@ -203,20 +205,35 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
             invalid_result = run_guard([invalid_pull_request], valid_files)
             assert invalid_result.returncode == 1
 
-        assert run_guard([valid_pull_request, valid_pull_request], valid_files).returncode == 1
+        assert (
+            run_guard([valid_pull_request, valid_pull_request], valid_files).returncode
+            == 1
+        )
         assert run_guard([valid_pull_request], valid_files[:-1]).returncode == 1
-        assert run_guard(
-            [valid_pull_request],
-            [*valid_files, {"filename": "src/action/refs.py", "status": "modified"}],
-        ).returncode == 1
-        assert run_guard(
-            [valid_pull_request],
-            [{**valid_files[0], "status": "added"}, *valid_files[1:]],
-        ).returncode == 1
-        assert run_guard(
-            [valid_pull_request],
-            [*valid_files, valid_files[0]],
-        ).returncode == 1
+        assert (
+            run_guard(
+                [valid_pull_request],
+                [
+                    *valid_files,
+                    {"filename": "src/action/refs.py", "status": "modified"},
+                ],
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                [valid_pull_request],
+                [{**valid_files[0], "status": "added"}, *valid_files[1:]],
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                [valid_pull_request],
+                [*valid_files, valid_files[0]],
+            ).returncode
+            == 1
+        )
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
