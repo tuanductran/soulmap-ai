@@ -60,14 +60,20 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "id-token: write" in workflow
     assert "attestations: write" in workflow
     assert "environment:\n      name: release-finalize" in workflow
-    assert "SOULMAP_FINALIZE_TOKEN must be configured in the protected release-finalize environment." in workflow
+    assert (
+        "SOULMAP_FINALIZE_TOKEN must be configured in the protected release-finalize environment."
+        in workflow
+    )
     assert "secrets.SOULMAP_FINALIZE_TOKEN" in workflow
     assert "secrets.SOULMAP_RELEASE_TOKEN" not in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
     assert "operation: tag" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
-    assert "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2" in workflow
+    assert (
+        "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2"
+        in workflow
+    )
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
     assert "dist/soulmap-ai-library.json" in workflow
