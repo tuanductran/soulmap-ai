@@ -154,51 +154,45 @@ def create_branch(
         print(f"Release branch {branch} already exists at the expected commit.")
         return
 
-    # Docker actions run as root while the checked-out workspace is owned by
-    # the runner user. Explicitly trust only the mounted workspace so Git's
-    # dubious-ownership protection does not reject read-only and push commands.
-    workspace = os.environ.get("GITHUB_WORKSPACE", str(Path.cwd()))
-    environment = os.environ.copy()
-    environment["GIT_CONFIG_COUNT"] = "1"
-    environment["GIT_CONFIG_KEY_0"] = "safe.directory"
-    environment["GIT_CONFIG_VALUE_0"] = workspace
-
-    head = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        check=True,
-        capture_output=True,
-        text=True,
-        env=environment,
-    ).stdout.strip()
-    if head != target_sha:
-        raise GitHubActionError(
-            f"Local HEAD {head!r} does not match requested branch target {target_sha!r}."
-        )
-
-    encoded = base64.b64encode(f"x-access-token:{client.token}".encode()).decode(
-        "ascii"
-    )
-    environment["GIT_CONFIG_COUNT"] = "2"
-    environment["GIT_CONFIG_KEY_1"] = "http.extraheader"
-    environment["GIT_CONFIG_VALUE_1"] = f"AUTHORIZATION: basic {encoded}"
+    # Publish the ref through the authenticated GitHub API. Never attach the
+    # release token to a Git remote: workspace remotes are mutable and may point
+    # to an untrusted host or repository.
     try:
-        subprocess.run(
-            ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
-            check=True,
-            capture_output=True,
-            text=True,
-            env=environment,
+        created = client.request(
+            "POST",
+            f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/git/refs",
+            payload={"ref": f"refs/heads/{branch}", "sha": target_sha},
+            retry_non_idempotent=True,
         )
-    except (OSError, subprocess.CalledProcessError) as exc:
-        detail = (
-            exc.stderr.strip()
-            if isinstance(exc, subprocess.CalledProcessError)
-            else str(exc)
-        )
-        raise GitHubActionError(
-            f"Failed to publish release branch {branch!r}: {detail}"
-        ) from exc
+    except GitHubAPIError as exc:
+        if exc.status not in {409, 422}:
+            raise
+        try:
+            existing = client.api("GET", ref_path)
+        except GitHubAPIError as lookup_exc:
+            if lookup_exc.status == 404:
+                raise GitHubActionError(
+                    f"GitHub rejected creation of release branch {branch!r}."
+                ) from exc
+            raise
+        if not isinstance(existing, dict):
+            raise GitHubActionError(
+                "GitHub returned invalid branch metadata after concurrent creation."
+            ) from exc
+        resolved = existing.get("object")
+        if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
+            raise GitHubActionError(
+                f"Concurrent release branch {branch!r} does not point to {target_sha}."
+            ) from exc
+        return
 
+    if not isinstance(created, dict) or created.get("ref") != f"refs/heads/{branch}":
+        raise GitHubActionError("GitHub did not confirm creation of the release branch.")
+    resolved = created.get("object")
+    if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
+        raise GitHubActionError(
+            "GitHub created the release branch at an unexpected commit."
+        )
 
 def ensure_tag_exists(
     client: GitHubClient,
