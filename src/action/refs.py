@@ -6,9 +6,8 @@ import base64
 import os
 import subprocess
 import time
+from urllib.parse import quote, urlsplit
 from pathlib import Path
-from urllib.parse import quote
-
 from client import GitHubClient
 from constants import API_ROOT
 from errors import GitHubActionError, GitHubAPIError
@@ -154,45 +153,108 @@ def create_branch(
         print(f"Release branch {branch} already exists at the expected commit.")
         return
 
-    # Publish the ref through the authenticated GitHub API. Never attach the
-    # release token to a Git remote: workspace remotes are mutable and may point
-    # to an untrusted host or repository.
+    # Resolve both fetch and push URLs before credentials are added. A
+    # configured pushurl can differ from origin's fetch URL.
+    workspace = os.environ.get("GITHUB_WORKSPACE", str(Path.cwd()))
+    environment = os.environ.copy()
+    environment["GIT_CONFIG_COUNT"] = "1"
+    environment["GIT_CONFIG_KEY_0"] = "safe.directory"
+    environment["GIT_CONFIG_VALUE_0"] = workspace
     try:
-        created = client.request(
-            "POST",
-            f"{API_ROOT}/repos/{quote(owner)}/{quote(repo)}/git/refs",
-            payload={"ref": f"refs/heads/{branch}", "sha": target_sha},
-            retry_non_idempotent=True,
-        )
-    except GitHubAPIError as exc:
-        if exc.status not in {409, 422}:
-            raise
-        try:
-            existing = client.api("GET", ref_path)
-        except GitHubAPIError as lookup_exc:
-            if lookup_exc.status == 404:
-                raise GitHubActionError(
-                    f"GitHub rejected creation of release branch {branch!r}."
-                ) from exc
-            raise
-        if not isinstance(existing, dict):
-            raise GitHubActionError(
-                "GitHub returned invalid branch metadata after concurrent creation."
-            ) from exc
-        resolved = existing.get("object")
-        if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
-            raise GitHubActionError(
-                f"Concurrent release branch {branch!r} does not point to {target_sha}."
-            ) from exc
-        return
-
-    if not isinstance(created, dict) or created.get("ref") != f"refs/heads/{branch}":
-        raise GitHubActionError("GitHub did not confirm creation of the release branch.")
-    resolved = created.get("object")
-    if not isinstance(resolved, dict) or resolved.get("sha") != target_sha:
+        fetch_remote = subprocess.run(
+            ["git", "remote", "get-url", "--all", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        ).stdout.splitlines()
+        push_remote = subprocess.run(
+            ["git", "remote", "get-url", "--push", "--all", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        ).stdout.splitlines()
+    except (OSError, subprocess.CalledProcessError) as exc:
         raise GitHubActionError(
-            "GitHub created the release branch at an unexpected commit."
+            "Unable to verify the origin remote before publishing the release branch."
+        ) from exc
+
+    if len(fetch_remote) != 1 or len(push_remote) != 1:
+        raise GitHubActionError(
+            "Release branch publication requires exactly one origin fetch URL and one push URL."
         )
+    remote_url = fetch_remote[0].strip()
+    push_url = push_remote[0].strip()
+    if remote_url != push_url:
+        raise GitHubActionError(
+            "Origin fetch and push URLs must match before publishing a release branch."
+        )
+
+    expected_paths = {f"/{owner}/{repo}", f"/{owner}/{repo}.git"}
+    try:
+        parsed_remote = urlsplit(remote_url)
+        remote_port = parsed_remote.port
+    except ValueError as exc:
+        raise GitHubActionError("Origin remote URL is invalid.") from exc
+    if (
+        parsed_remote.scheme != "https"
+        or parsed_remote.netloc != "github.com"
+        or parsed_remote.hostname != "github.com"
+        or parsed_remote.username is not None
+        or parsed_remote.password is not None
+        or remote_port not in {None, 443}
+        or parsed_remote.path not in expected_paths
+        or parsed_remote.query
+        or parsed_remote.fragment
+    ):
+        raise GitHubActionError(
+            f"Origin remote must be the HTTPS URL for {owner}/{repo} on github.com."
+        )
+
+    head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+        env=environment,
+    ).stdout.strip()
+    if head != target_sha:
+        raise GitHubActionError(
+            f"Local HEAD {head!r} does not match requested branch target {target_sha!r}."
+        )
+
+    encoded = base64.b64encode(f"x-access-token:{client.token}".encode()).decode(
+        "ascii"
+    )
+    environment["GIT_CONFIG_COUNT"] = "3"
+    environment["GIT_CONFIG_KEY_1"] = (
+        f"http.https://github.com/{owner}/{repo}"
+        f"{'.git' if parsed_remote.path.endswith('.git') else ''}/.extraheader"
+    )
+    environment["GIT_CONFIG_VALUE_1"] = f"AUTHORIZATION: basic {encoded}"
+    environment["GIT_CONFIG_KEY_2"] = "http.followRedirects"
+    environment["GIT_CONFIG_VALUE_2"] = "false"
+    try:
+        subprocess.run(
+            ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        detail = (
+            exc.stderr.strip()
+            if isinstance(exc, subprocess.CalledProcessError)
+            else str(exc)
+        )
+        detail = detail.replace(client.token, "[REDACTED]").replace(
+            encoded, "[REDACTED]"
+        )
+        raise GitHubActionError(
+            f"Failed to publish release branch {branch!r}: {detail}"
+        ) from exc
 
 def ensure_tag_exists(
     client: GitHubClient,
