@@ -46,6 +46,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "workflow_dispatch:" in workflow
     assert "merge_commit_sha:" in workflow
     assert "inputs.merge_commit_sha" in workflow
+    assert "github.ref == 'refs/heads/main'" in workflow
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
