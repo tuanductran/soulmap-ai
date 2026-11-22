@@ -212,10 +212,10 @@ jobs:
 
       - name: Verify release token is configured
         env:
-          RELEASE_TOKEN: ${{ secrets.SOULMAP_FINALIZE_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then
-            echo "SOULMAP_FINALIZE_TOKEN must be configured in the protected release-finalize environment."
+            echo "SOULMAP_RELEASE_TOKEN must be configured in the protected release-finalize environment."
             exit 1
           fi
 
@@ -231,7 +231,7 @@ jobs:
         uses: tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0
         with:
           operation: tag
-          token: ${{ secrets.SOULMAP_FINALIZE_TOKEN }}
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           tag: v${{ needs.verify.outputs.version }}
           target-sha: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
 
@@ -239,7 +239,7 @@ jobs:
         uses: tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0
         with:
           operation: release
-          token: ${{ secrets.SOULMAP_FINALIZE_TOKEN }}
+          token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
           tag: v${{ needs.verify.outputs.version }}
           release-name: v${{ needs.verify.outputs.version }}
           generate-release-notes: "true"
