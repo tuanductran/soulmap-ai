@@ -3,7 +3,7 @@ name: Release Prep
 on:
   workflow_dispatch:
 
-# The workflow authenticates repository writes with SOULMAP_RELEASE_TOKEN.
+# The protected release-finalize environment supplies SOULMAP_RELEASE_TOKEN.
 # GITHUB_TOKEN therefore only needs read access; keeping it read-only prevents
 # an accidental step from gaining repository write privileges.
 permissions:
