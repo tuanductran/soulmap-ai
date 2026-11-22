@@ -257,7 +257,6 @@ def create_branch(
             f"Failed to publish release branch {branch!r}: {detail}"
         ) from exc
 
-
 def ensure_tag_exists(
     client: GitHubClient,
     owner: str,
