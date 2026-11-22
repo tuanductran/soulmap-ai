@@ -181,8 +181,8 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
         changed_files_path = Path(directory) / "release-pr-files.json"
 
         def run_guard(
-            pull_requests: list[dict[str, object]],
-            changed_files: list[dict[str, str]],
+            pull_requests: object,
+            changed_files: object,
         ) -> subprocess.CompletedProcess[str]:
             pull_requests_path.write_text(json.dumps(pull_requests), encoding="utf-8")
             changed_files_path.write_text(json.dumps(changed_files), encoding="utf-8")
