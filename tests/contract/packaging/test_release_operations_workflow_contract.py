@@ -71,8 +71,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "operation: tag" in workflow
     assert workflow.count("name: Generate release artifact attestations") == 1
     assert (
-        "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2"
-        in workflow
+        "actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2" in workflow
     )
     assert "dist/soulmap-ai.zip" in workflow
     assert "dist/soulmap-ai.skill" in workflow
