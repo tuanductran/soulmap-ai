@@ -498,48 +498,80 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     )
 
 
-def test_create_branch_marks_only_mounted_workspace_as_safe(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    client = client_module.GitHubClient("token")
+def test_create_branch_publishes_ref_through_github_api_without_git() -> None:
+    client = client_module.GitHubClient("secret-token")
     target_sha = "a" * 40
-    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+    branch = "release/prep-1"
     not_found = errors_module.GitHubAPIError(
         "GET",
-        "https://api.github.com/repos/owner/repo/git/ref/heads/release/prep-1",
+        "https://api.github.com/repos/owner/repo/git/ref/heads/release%2Fprep-1",
         404,
         "Not Found",
     )
-    completed = refs_module.subprocess.CompletedProcess(
-        args=["git"],
-        returncode=0,
-        stdout=f"{target_sha}\n",
-        stderr="",
-    )
+    created = {
+        "ref": f"refs/heads/{branch}",
+        "object": {"type": "commit", "sha": target_sha},
+    }
 
     with (
         patch.object(client, "api", side_effect=not_found),
-        patch.object(
-            refs_module.subprocess, "run", side_effect=[completed, completed]
-        ) as run,
+        patch.object(client, "request", return_value=created) as request,
+        patch.object(refs_module, "subprocess", create=True) as git_module,
     ):
-        refs_module.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
+        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
 
-    inspect_call, push_call = run.call_args_list
-    assert inspect_call.args[0] == ["git", "rev-parse", "HEAD"]
-    assert inspect_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
-    assert inspect_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
-    assert push_call.args[0] == [
-        "git",
-        "push",
-        "origin",
-        "HEAD:refs/heads/release/prep-1",
-    ]
-    assert push_call.kwargs["check"] is True
-    assert push_call.kwargs["env"]["GIT_CONFIG_COUNT"] == "2"
-    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
-    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
-    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_1"] == "http.extraheader"
-    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_1"].startswith(
-        "AUTHORIZATION: basic "
+    request.assert_called_once_with(
+        "POST",
+        "https://api.github.com/repos/owner/repo/git/refs",
+        payload={"ref": f"refs/heads/{branch}", "sha": target_sha},
+        retry_non_idempotent=True,
     )
+    git_module.run.assert_not_called()
+
+
+def test_create_branch_verifies_concurrent_ref_creation() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "b" * 40
+    branch = "release/prep-2"
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    conflict = errors_module.GitHubAPIError(
+        "POST", "https://api.github.com/git/refs", 422, "Reference already exists"
+    )
+    existing = {
+        "ref": f"refs/heads/{branch}",
+        "object": {"type": "commit", "sha": target_sha},
+    }
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, existing]) as api,
+        patch.object(client, "request", side_effect=conflict) as request,
+    ):
+        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
+
+    assert api.call_count == 2
+    request.assert_called_once()
+
+
+def test_create_branch_rejects_concurrent_ref_at_wrong_sha() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "c" * 40
+    branch = "release/prep-3"
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    conflict = errors_module.GitHubAPIError(
+        "POST", "https://api.github.com/git/refs", 422, "Reference already exists"
+    )
+    existing = {
+        "ref": f"refs/heads/{branch}",
+        "object": {"type": "commit", "sha": "d" * 40},
+    }
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, existing]),
+        patch.object(client, "request", side_effect=conflict),
+        pytest.raises(errors_module.GitHubActionError, match="does not point"),
+    ):
+        refs_module.create_branch(client, "owner", "repo", branch, target_sha)
