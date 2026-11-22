@@ -527,9 +527,7 @@ def test_create_branch_scopes_credentials_to_verified_github_remote(
         patch.object(client, "api", side_effect=not_found),
         patch.object(refs_module.subprocess, "run", side_effect=results) as run,
     ):
-        refs_module.create_branch(
-            client, "owner", "repo", "release/prep-1", target_sha
-        )
+        refs_module.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
 
     assert [call.args[0] for call in run.call_args_list] == [
         ["git", "remote", "get-url", "--all", "origin"],
@@ -582,12 +580,12 @@ def test_create_branch_rejects_untrusted_origin_before_authenticated_push(
         patch.object(refs_module.subprocess, "run", side_effect=results) as run,
         pytest.raises(errors_module.GitHubActionError, match="Origin"),
     ):
-        refs_module.create_branch(
-            client, "owner", "repo", "release/prep-2", target_sha
-        )
+        refs_module.create_branch(client, "owner", "repo", "release/prep-2", target_sha)
 
     assert run.call_count == 2
-    assert all("GIT_CONFIG_KEY_1" not in call.kwargs["env"] for call in run.call_args_list)
+    assert all(
+        "GIT_CONFIG_KEY_1" not in call.kwargs["env"] for call in run.call_args_list
+    )
 
 
 def test_create_branch_rejects_multiple_push_urls() -> None:
@@ -608,9 +606,7 @@ def test_create_branch_rejects_multiple_push_urls() -> None:
         patch.object(refs_module.subprocess, "run", side_effect=results) as run,
         pytest.raises(errors_module.GitHubActionError, match="exactly one"),
     ):
-        refs_module.create_branch(
-            client, "owner", "repo", "release/prep-3", target_sha
-        )
+        refs_module.create_branch(client, "owner", "repo", "release/prep-3", target_sha)
 
     assert run.call_count == 2
 
@@ -632,9 +628,7 @@ def test_create_branch_rejects_wrong_local_head_before_push() -> None:
         patch.object(refs_module.subprocess, "run", side_effect=results) as run,
         pytest.raises(errors_module.GitHubActionError, match="does not match"),
     ):
-        refs_module.create_branch(
-            client, "owner", "repo", "release/prep-4", target_sha
-        )
+        refs_module.create_branch(client, "owner", "repo", "release/prep-4", target_sha)
 
     assert run.call_count == 3
 
@@ -651,8 +645,6 @@ def test_create_branch_verifies_existing_ref_at_expected_sha() -> None:
         patch.object(client, "api", return_value=existing),
         patch.object(refs_module.subprocess, "run") as run,
     ):
-        refs_module.create_branch(
-            client, "owner", "repo", "release/prep-5", target_sha
-        )
+        refs_module.create_branch(client, "owner", "repo", "release/prep-5", target_sha)
 
     run.assert_not_called()
