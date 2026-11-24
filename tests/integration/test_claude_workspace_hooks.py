@@ -354,6 +354,7 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
         ("post-edit-python.sh", "src/module.py"),
         ("post-edit-markdown.sh", "docs/guide.md"),
         ("post-edit-tests.sh", "tests/unit/test_sample.py"),
+        ("post-edit-evals.sh", "evals/datasets/groups.json"),
     ],
 )
 def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
@@ -386,6 +387,8 @@ def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
     elif hook_name == "post-edit-python.sh":
         assert f"run ruff check --fix {target}" in calls
         assert f"run ruff format {target}" in calls
+    elif hook_name == "post-edit-evals.sh":
+        assert "run soulmap eval-groups" in calls
     else:
         assert f"run soulmap test {target} --tb=short" in calls
 
@@ -396,6 +399,7 @@ def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
         ("post-edit-python.sh", "src/deleted.py"),
         ("post-edit-markdown.sh", "docs/deleted.md"),
         ("post-edit-tests.sh", "tests/deleted.py"),
+        ("post-edit-evals.sh", "evals/datasets/deleted.json"),
     ],
 )
 def test_post_edit_hooks_ignore_malformed_payload_and_deleted_files(
