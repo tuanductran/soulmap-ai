@@ -37,17 +37,32 @@ fi
 
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
-case "$FILE_PATH" in
-  "$REPO_ROOT"/*) ;;
-  *.md) FILE_PATH="$REPO_ROOT/$FILE_PATH" ;;
-  *) exit 0 ;;
-esac
+TARGET_FILE=$(python3 - "$REPO_ROOT" "$FILE_PATH" <<'PY'
+from pathlib import Path
+import sys
 
-cd "$REPO_ROOT"
+try:
+    repo_root = Path(sys.argv[1]).resolve(strict=True)
+    candidate = Path(sys.argv[2])
+    if not candidate.is_absolute():
+        candidate = repo_root / candidate
+    target = candidate.resolve(strict=True)
+    relative = target.relative_to(repo_root)
+except (OSError, RuntimeError, ValueError):
+    raise SystemExit(0)
 
-if [[ ! -f "$FILE_PATH" ]]; then
+if not target.is_file() or target.suffix != ".md":
+    raise SystemExit(0)
+
+print(target)
+PY
+)
+
+if [[ -z "$TARGET_FILE" ]]; then
   exit 0
 fi
+
+cd "$REPO_ROOT"
 
 run_contract_command() {
   local output
@@ -69,9 +84,9 @@ else
 fi
 
 if [[ $EXIT_CODE -ne 0 ]]; then
-  echo "[hook:post-edit-markdown] Contract violations detected after editing $FILE_PATH" >&2
+  echo "[hook:post-edit-markdown] Contract violations detected after editing $TARGET_FILE" >&2
   echo "$OUTPUT" >&2
-  echo "Markdown contract violations detected after editing $FILE_PATH:"
+  echo "Markdown contract violations detected after editing $TARGET_FILE:"
   echo "$OUTPUT"
 fi
 
