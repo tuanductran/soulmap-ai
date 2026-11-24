@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import importlib.util
 import io
@@ -648,3 +649,112 @@ def test_create_branch_verifies_existing_ref_at_expected_sha() -> None:
         refs_module.create_branch(client, "owner", "repo", "release/prep-5", target_sha)
 
     run.assert_not_called()
+
+
+def test_create_branch_accepts_concurrent_creation_at_expected_sha(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "1" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    created = {
+        "ref": "refs/heads/release/prep-race",
+        "object": {"type": "commit", "sha": target_sha},
+    }
+    results = [
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed(f"{target_sha}\\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr="remote ref was created concurrently"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, created]) as api,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-race", target_sha
+        )
+
+    assert api.call_count == 2
+    assert run.call_count == 4
+    assert run.call_args.args[0] == [
+        "git",
+        "push",
+        "origin",
+        "HEAD:refs/heads/release/prep-race",
+    ]
+
+
+def test_create_branch_rejects_concurrent_creation_at_different_sha(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "2" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    conflicting = {
+        "ref": "refs/heads/release/prep-race",
+        "object": {"type": "commit", "sha": "3" * 40},
+    }
+    results = [
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed(f"{target_sha}\\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr="remote ref already exists"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, conflicting]) as api,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="Failed to publish"),
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-race", target_sha
+        )
+
+    assert api.call_count == 2
+    assert run.call_count == 4
+
+
+def test_create_branch_redacts_token_and_encoded_credential_after_push_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    token = "secret-token"
+    encoded = base64.b64encode(f"x-access-token:{token}".encode()).decode("ascii")
+    client = client_module.GitHubClient(token)
+    target_sha = "4" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed("https://github.com/owner/repo.git\\n"),
+        _git_completed(f"{target_sha}\\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr=f"push failed with {token} and {encoded}"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, not_found]),
+        patch.object(refs_module.subprocess, "run", side_effect=results),
+        pytest.raises(errors_module.GitHubActionError) as captured,
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-redact", target_sha
+        )
+
+    assert token not in str(captured.value)
+    assert encoded not in str(captured.value)
+    assert str(captured.value).count("[REDACTED]") == 2
