@@ -35,23 +35,41 @@ if [[ "$FILE_PATH" != *.py ]]; then
   exit 0
 fi
 
-case "$FILE_PATH" in
-  *"/src/"*|src/*.py|*"/tests/"*.py|tests/*.py|*"/scripts/"*.py|scripts/*.py) ;;
-  *) exit 0 ;;
-esac
-
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
-cd "$REPO_ROOT"
+# Resolve the edited path before invoking Ruff. A lexical prefix check is not
+# sufficient: absolute paths and ../ segments can otherwise escape the repo.
+TARGET_FILE=$(python3 - "$REPO_ROOT" "$FILE_PATH" <<'PY'
+from pathlib import Path
+import sys
 
-case "$FILE_PATH" in
-  "$REPO_ROOT"/*) TARGET_FILE="$FILE_PATH" ;;
-  *) TARGET_FILE="$REPO_ROOT/$FILE_PATH" ;;
-esac
+try:
+    repo_root = Path(sys.argv[1]).resolve(strict=True)
+    candidate = Path(sys.argv[2])
+    if not candidate.is_absolute():
+        candidate = repo_root / candidate
+    target = candidate.resolve(strict=True)
+    relative = target.relative_to(repo_root)
+except (OSError, RuntimeError, ValueError):
+    raise SystemExit(0)
 
-if [[ ! -f "$TARGET_FILE" ]]; then
+if (
+    not target.is_file()
+    or target.suffix != ".py"
+    or not relative.parts
+    or relative.parts[0] not in {"src", "tests", "scripts"}
+):
+    raise SystemExit(0)
+
+print(target)
+PY
+)
+
+if [[ -z "$TARGET_FILE" ]]; then
   exit 0
 fi
+
+cd "$REPO_ROOT"
 
 uv run ruff check --fix "$TARGET_FILE" 2>&1 || true
 uv run ruff format "$TARGET_FILE" 2>&1 || true
