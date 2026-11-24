@@ -5,6 +5,8 @@ import os
 import subprocess
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -138,7 +140,10 @@ def test_post_edit_python_rejects_symlink_that_escapes_repository(
     src = repo / "src"
     src.mkdir()
     link = src / "linked.py"
-    link.symlink_to(outside)
+    try:
+        link.symlink_to(outside)
+    except OSError as exc:
+        pytest.skip(f"symlink creation is unavailable: {exc}")
     fake_bin, call_log = _fake_uv(tmp_path)
 
     result = _run_hook(
