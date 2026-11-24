@@ -253,6 +253,33 @@ def create_branch(
         detail = detail.replace(client.token, "[REDACTED]").replace(
             encoded, "[REDACTED]"
         )
+
+        # Another workflow may have created the ref after the initial GET but
+        # before this push. Treat that race as idempotent only when GitHub now
+        # confirms the exact requested commit; never overwrite a different ref.
+        try:
+            concurrent_ref = client.api("GET", ref_path)
+        except GitHubAPIError as verify_exc:
+            if verify_exc.status != 404:
+                raise GitHubActionError(
+                    f"Failed to publish release branch {branch!r}: {detail}. "
+                    "Unable to verify the branch after the push failure."
+                ) from exc
+            concurrent_ref = None
+
+        concurrent_object = (
+            concurrent_ref.get("object") if isinstance(concurrent_ref, dict) else None
+        )
+        if (
+            isinstance(concurrent_object, dict)
+            and concurrent_object.get("type") == "commit"
+            and concurrent_object.get("sha") == target_sha
+        ):
+            print(
+                f"Release branch {branch} was created concurrently at the expected commit."
+            )
+            return
+
         raise GitHubActionError(
             f"Failed to publish release branch {branch!r}: {detail}"
         ) from exc
