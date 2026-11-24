@@ -324,6 +324,7 @@ def test_claude_settings_hook_contract_and_command_paths() -> None:
         ".claude/hooks/post-edit-evals.sh",
     }
 
+
 def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
     tmp_path: Path,
 ) -> None:
