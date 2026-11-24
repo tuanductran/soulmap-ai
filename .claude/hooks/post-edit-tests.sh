@@ -31,23 +31,43 @@ else:
     print("")
 ' 2>/dev/null || echo "")
 
-case "$FILE_PATH" in
-  *"/tests/"*.py|tests/*.py) ;;
-  *) exit 0 ;;
-esac
+if [[ "$FILE_PATH" != *.py ]]; then
+  exit 0
+fi
 
 REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
-cd "$REPO_ROOT"
+TARGET_FILE=$(python3 - "$REPO_ROOT" "$FILE_PATH" <<'PY'
+from pathlib import Path
+import sys
 
-case "$FILE_PATH" in
-  "$REPO_ROOT"/*) TARGET_FILE="$FILE_PATH" ;;
-  *) TARGET_FILE="$REPO_ROOT/$FILE_PATH" ;;
-esac
+try:
+    repo_root = Path(sys.argv[1]).resolve(strict=True)
+    candidate = Path(sys.argv[2])
+    if not candidate.is_absolute():
+        candidate = repo_root / candidate
+    target = candidate.resolve(strict=True)
+    relative = target.relative_to(repo_root)
+except (OSError, RuntimeError, ValueError):
+    raise SystemExit(0)
 
-if [[ ! -f "$TARGET_FILE" ]]; then
+if (
+    not target.is_file()
+    or target.suffix != ".py"
+    or not relative.parts
+    or relative.parts[0] != "tests"
+):
+    raise SystemExit(0)
+
+print(target)
+PY
+)
+
+if [[ -z "$TARGET_FILE" ]]; then
   exit 0
 fi
+
+cd "$REPO_ROOT"
 
 run_test_command() {
   local output
