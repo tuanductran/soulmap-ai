@@ -300,7 +300,7 @@ def test_claude_settings_hook_contract_and_command_paths() -> None:
     assert pre_tool["hooks"][0]["timeout"] == 10
 
     post_tool = hooks["PostToolUse"][0]
-    assert post_tool["matcher"] == "Write|Edit|MultiEdit"
+    assert post_tool["matcher"] == "Write|Edit"
     assert len(post_tool["hooks"]) == 4
 
     registered_paths: set[str] = set()
@@ -346,3 +346,140 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
     # protected-branch rules remain authoritative if hook input is malformed.
     assert result.returncode == 0
     assert "Traceback" not in result.stderr
+
+
+
+@pytest.mark.parametrize(
+    ("hook_name", "relative_path"),
+    [
+        ("post-edit-python.sh", "src/module.py"),
+        ("post-edit-markdown.sh", "docs/guide.md"),
+        ("post-edit-tests.sh", "tests/unit/test_sample.py"),
+    ],
+)
+def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
+    tmp_path: Path,
+    hook_name: str,
+    relative_path: str,
+) -> None:
+    repo = _make_repo(tmp_path)
+    target = repo / relative_path
+    target.parent.mkdir(parents=True)
+    target.write_text("# sample\n", encoding="utf-8")
+    fake_bin, call_log = _fake_uv(tmp_path)
+
+    result = _run_hook(
+        hook_name,
+        repo,
+        {
+            "toolName": "edit",
+            "toolArgs": json.dumps({"path": relative_path}),
+        },
+        fake_bin=fake_bin,
+        call_log=call_log,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert call_log.exists()
+    assert relative_path in call_log.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize(
+    "hook_name",
+    [
+        "post-edit-python.sh",
+        "post-edit-markdown.sh",
+        "post-edit-tests.sh",
+    ],
+)
+def test_post_edit_hooks_ignore_malformed_payload_and_deleted_files(
+    tmp_path: Path,
+    hook_name: str,
+) -> None:
+    repo = _make_repo(tmp_path)
+    deleted = repo / "tests" / "deleted.py"
+    fake_bin, call_log = _fake_uv(tmp_path)
+
+    malformed = subprocess.run(
+        ["bash", str(ROOT / ".claude" / "hooks" / hook_name)],
+        input="{malformed-json",
+        text=True,
+        capture_output=True,
+        env={
+            **os.environ,
+            "CODEX_PROJECT_DIR": str(repo),
+            "CLAUDE_PROJECT_DIR": str(repo),
+            "PATH": f"{fake_bin}{os.pathsep}{os.environ.get('PATH', '')}",
+            "HOOK_CALL_LOG": str(call_log),
+        },
+        check=False,
+    )
+    assert malformed.returncode == 0, malformed.stderr
+    assert not call_log.exists()
+
+    deleted_payload = {"tool_input": {"file_path": str(deleted)}}
+    missing = _run_hook(
+        hook_name,
+        repo,
+        deleted_payload,
+        fake_bin=fake_bin,
+        call_log=call_log,
+    )
+    assert missing.returncode == 0, missing.stderr
+    assert not call_log.exists()
+
+
+@pytest.mark.parametrize(
+    ("hook_name", "relative_path"),
+    [
+        ("post-edit-markdown.sh", "docs/guide.md"),
+        ("post-edit-tests.sh", "tests/unit/test_sample.py"),
+    ],
+)
+def test_post_edit_hooks_reject_relative_traversal(
+    tmp_path: Path,
+    hook_name: str,
+    relative_path: str,
+) -> None:
+    repo = _make_repo(tmp_path)
+    outside = tmp_path / relative_path
+    outside.parent.mkdir(parents=True)
+    outside.write_text("# outside\n", encoding="utf-8")
+    fake_bin, call_log = _fake_uv(tmp_path)
+
+    result = _run_hook(
+        hook_name,
+        repo,
+        {"tool_input": {"file_path": f"../{relative_path}"}},
+        fake_bin=fake_bin,
+        call_log=call_log,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert not call_log.exists()
+
+
+def test_post_edit_python_reports_ruff_failures_without_blocking(
+    tmp_path: Path,
+) -> None:
+    repo = _make_repo(tmp_path)
+    target = repo / "src" / "module.py"
+    target.parent.mkdir()
+    target.write_text("value=1\n", encoding="utf-8")
+    fake_bin, call_log = _fake_uv(tmp_path)
+
+    result = _run_hook(
+        "post-edit-python.sh",
+        repo,
+        {"tool_input": {"file_path": str(target)}},
+        fake_bin=fake_bin,
+        call_log=call_log,
+        hook_exit="1",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "stub diagnostic" in result.stdout
+    assert call_log.read_text(encoding="utf-8").splitlines() == [
+        f"run ruff check --fix {target}",
+        f"run ruff format {target}",
+    ]
