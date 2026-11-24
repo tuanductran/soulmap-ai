@@ -365,7 +365,7 @@ def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
     repo = _make_repo(tmp_path)
     target = repo / relative_path
     target.parent.mkdir(parents=True)
-    target.write_text("# sample\n", encoding="utf-8")
+    target.write_text("{}" if hook_name == "post-edit-evals.sh" else "# sample\\n", encoding="utf-8")
     fake_bin, call_log = _fake_uv(tmp_path)
 
     result = _run_hook(
