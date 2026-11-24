@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+from collections.abc import Mapping
 from pathlib import Path
 
 import pytest
@@ -13,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def _run_hook(
     hook_name: str,
     repo: Path,
-    payload: dict[str, object],
+    payload: Mapping[str, object],
     *,
     fake_bin: Path | None = None,
     call_log: Path | None = None,
