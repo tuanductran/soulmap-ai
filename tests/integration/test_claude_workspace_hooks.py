@@ -395,9 +395,10 @@ def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
 def test_post_edit_hooks_ignore_malformed_payload_and_deleted_files(
     tmp_path: Path,
     hook_name: str,
+    deleted_relative_path: str,
 ) -> None:
     repo = _make_repo(tmp_path)
-    deleted = repo / "tests" / "deleted.py"
+    deleted = repo / deleted_relative_path
     fake_bin, call_log = _fake_uv(tmp_path)
 
     malformed = subprocess.run(
