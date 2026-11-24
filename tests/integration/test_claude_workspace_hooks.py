@@ -253,6 +253,24 @@ def test_session_start_emits_repo_branch_and_workflow_context(
     tmp_path: Path,
 ) -> None:
     repo = _make_repo(tmp_path)
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "user.name", "Hook Test"],
+        check=True,
+    )
+    subprocess.run(
+        ["git", "-C", str(repo), "config", "user.email", "hook-test@example.invalid"],
+        check=True,
+    )
+    tracked = repo / "tracked.txt"
+    tracked.write_text("committed\\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(repo), "add", "tracked.txt"], check=True)
+    subprocess.run(
+        ["git", "-C", str(repo), "commit", "-m", "fixture commit"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    (repo / "untracked.txt").write_text("pending\\n", encoding="utf-8")
 
     result = _run_hook(
         "session-start.sh",
@@ -262,6 +280,9 @@ def test_session_start_emits_repo_branch_and_workflow_context(
 
     assert result.returncode == 0, result.stderr
     assert "Branch:        feature" in result.stdout
+    assert "Last commit:" in result.stdout
+    assert "fixture commit" in result.stdout
+    assert "Uncommitted:   1 file(s) changed" in result.stdout
     assert "SoulMap AI - Repo Context" in result.stdout
     assert "Never push directly to main" in result.stdout
 
@@ -494,3 +515,39 @@ def test_post_edit_python_reports_ruff_failures_without_blocking(
         f"run ruff check --fix {target}",
         f"run ruff format {target}",
     ]
+
+
+def test_session_start_prefers_event_cwd_over_project_environment(
+    tmp_path: Path,
+) -> None:
+    cwd_parent = tmp_path / "cwd"
+    cwd_parent.mkdir()
+    cwd_repo = _make_repo(cwd_parent)
+
+    fallback_parent = tmp_path / "fallback"
+    fallback_parent.mkdir()
+    fallback_repo = _make_repo(fallback_parent)
+    subprocess.run(
+        ["git", "-C", str(fallback_repo), "branch", "-m", "fallback"],
+        check=True,
+    )
+
+    env = os.environ.copy()
+    env.update(
+        {
+            "CODEX_PROJECT_DIR": str(fallback_repo),
+            "CLAUDE_PROJECT_DIR": str(fallback_repo),
+        }
+    )
+    result = subprocess.run(
+        ["bash", str(ROOT / ".claude" / "hooks" / "session-start.sh")],
+        input=json.dumps({"cwd": str(cwd_repo)}),
+        text=True,
+        capture_output=True,
+        env=env,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "Branch:        feature" in result.stdout
+    assert "Branch:        fallback" not in result.stdout
