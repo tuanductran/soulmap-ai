@@ -664,9 +664,9 @@ def test_create_branch_accepts_concurrent_creation_at_expected_sha(
         "object": {"type": "commit", "sha": target_sha},
     }
     results = [
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed(f"{target_sha}\\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
         subprocess.CalledProcessError(
             1, ["git", "push"], stderr="remote ref was created concurrently"
         ),
@@ -704,9 +704,9 @@ def test_create_branch_rejects_concurrent_creation_at_different_sha(
         "object": {"type": "commit", "sha": "3" * 40},
     }
     results = [
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed(f"{target_sha}\\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
         subprocess.CalledProcessError(
             1, ["git", "push"], stderr="remote ref already exists"
         ),
@@ -737,9 +737,9 @@ def test_create_branch_redacts_token_and_encoded_credential_after_push_failure(
         "GET", "https://api.github.com/ref", 404, "Not Found"
     )
     results = [
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed("https://github.com/owner/repo.git\\n"),
-        _git_completed(f"{target_sha}\\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
         subprocess.CalledProcessError(
             1, ["git", "push"], stderr=f"push failed with {token} and {encoded}"
         ),
