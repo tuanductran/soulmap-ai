@@ -323,3 +323,25 @@ def test_claude_settings_hook_contract_and_command_paths() -> None:
         ".claude/hooks/post-edit-tests.sh",
         ".claude/hooks/post-edit-evals.sh",
     }
+
+def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
+    tmp_path: Path,
+) -> None:
+    repo = _make_repo(tmp_path)
+    result = subprocess.run(
+        ["bash", str(ROOT / ".claude" / "hooks" / "block-push-to-main.sh")],
+        input="{malformed-json",
+        text=True,
+        capture_output=True,
+        env={
+            **os.environ,
+            "CODEX_PROJECT_DIR": str(repo),
+            "CLAUDE_PROJECT_DIR": str(repo),
+        },
+        check=False,
+    )
+
+    # The hook is defense in depth, not an authorization boundary. GitHub's
+    # protected-branch rules remain authoritative if hook input is malformed.
+    assert result.returncode == 0
+    assert "Traceback" not in result.stderr
