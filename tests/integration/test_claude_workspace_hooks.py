@@ -177,7 +177,7 @@ def test_post_edit_markdown_reports_contract_failure_without_blocking(
     )
 
     assert result.returncode == 0, result.stderr
-    assert "Contract violations detected" in result.stdout
+    assert "Markdown contract violations detected" in result.stdout
     assert "stub diagnostic" in result.stdout
     assert call_log.read_text(encoding="utf-8").splitlines() == [
         f"run soulmap markdown-contract --root {repo}"
@@ -223,7 +223,7 @@ def test_post_edit_tests_runs_only_repo_test_and_remains_non_blocking(
     )
 
     assert result.returncode == 0, result.stderr
-    assert "Tests failed" in result.stdout
+    assert "Test failures" in result.stdout
     assert "stub diagnostic" in result.stdout
     assert call_log.read_text(encoding="utf-8").splitlines() == [
         f"run soulmap test {target} --tb=short"
