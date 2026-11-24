@@ -348,7 +348,6 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
     assert "Traceback" not in result.stderr
 
 
-
 @pytest.mark.parametrize(
     ("hook_name", "relative_path"),
     [
@@ -381,15 +380,22 @@ def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
 
     assert result.returncode == 0, result.stderr
     assert call_log.exists()
-    assert relative_path in call_log.read_text(encoding="utf-8")
+    calls = call_log.read_text(encoding="utf-8")
+    if hook_name == "post-edit-markdown.sh":
+        assert f"run soulmap markdown-contract --root {repo}" in calls
+    elif hook_name == "post-edit-python.sh":
+        assert f"run ruff check --fix {target}" in calls
+        assert f"run ruff format {target}" in calls
+    else:
+        assert f"run soulmap test {target} --tb=short" in calls
 
 
 @pytest.mark.parametrize(
-    "hook_name",
+    ("hook_name", "deleted_relative_path"),
     [
-        "post-edit-python.sh",
-        "post-edit-markdown.sh",
-        "post-edit-tests.sh",
+        ("post-edit-python.sh", "src/deleted.py"),
+        ("post-edit-markdown.sh", "docs/deleted.md"),
+        ("post-edit-tests.sh", "tests/deleted.py"),
     ],
 )
 def test_post_edit_hooks_ignore_malformed_payload_and_deleted_files(
