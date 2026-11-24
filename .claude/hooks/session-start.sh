@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Session-start hook intent: inject repo context and branch workflow reminder.
-# Stdout is meant to be added to the session context by the Codex hook runner.
+# Stdout is added to the session context by Claude Code; Codex-compatible fallbacks remain supported.
 
 set -euo pipefail
 
