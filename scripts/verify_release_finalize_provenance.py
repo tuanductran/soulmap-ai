@@ -100,7 +100,8 @@ def has_valid_release_prep_provenance(
         workflow_run.get("id") != run_id
         or workflow_run.get("run_attempt") != run_attempt
         or workflow_run.get("event") != "workflow_dispatch"
-        or workflow_run.get("path") not in {
+        or workflow_run.get("path")
+        not in {
             ".github/workflows/release.yml",
             ".github/workflows/release.yml@main",
         }
