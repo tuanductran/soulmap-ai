@@ -54,7 +54,10 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
     assert "release/prep-" in content
     assert "gh pr create" not in content
     assert "softprops/action-gh-release" not in content
-    assert "actions/upload-artifact" not in content
+    assert content.count("actions/upload-artifact") == 1
+    assert "release-prep-provenance-${{ github.run_id }}-${{ github.run_attempt }}" in content
+    assert "dist/soulmap-ai.zip" not in content
+    assert "dist/soulmap-ai.skill" not in content
     assert "git push --follow-tags" not in content
 
 
