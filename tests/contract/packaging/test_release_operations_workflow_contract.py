@@ -1,6 +1,7 @@
 """Contract tests for release operational workflows."""
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -38,6 +39,12 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "softprops/action-gh-release" not in workflow
     assert "operation: pull-request" in workflow
     assert "base64" not in workflow
+    assert "Create run-bound release provenance manifest" in workflow
+    assert "scripts/create_release_prep_provenance.py" in workflow
+    assert "GITHUB_WORKFLOW_REF" in (ROOT / "scripts" / "create_release_prep_provenance.py").read_text()
+    assert "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9" in workflow
+    assert "release-prep-provenance-${{ github.run_id }}" in workflow
+    assert "retention-days: 90" in workflow
 
 
 def test_release_finalize_publishes_only_after_merged_main_verification() -> None:
@@ -58,6 +65,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/release-provenance.json" in workflow
     assert "contents: read" in workflow
     assert "pull-requests: read" in workflow
+    assert "actions: read" in workflow
     assert "id-token: write" in workflow
     assert "attestations: write" in workflow
     assert "environment:\n      name: release-finalize" in workflow
@@ -120,10 +128,84 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     ) < workflow.index("Install uv")
 
 
-def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
+def test_release_prep_provenance_manifest_binds_run_to_exact_commit() -> None:
+    script = ROOT / "scripts" / "create_release_prep_provenance.py"
+    repository = "tuanductran/soulmap-ai"
+    environment = {
+        **os.environ,
+        "GITHUB_REPOSITORY": repository,
+        "GITHUB_RUN_ID": "123",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_WORKFLOW_REF": (
+            "tuanductran/soulmap-ai/.github/workflows/release.yml@refs/heads/main"
+        ),
+        "GITHUB_WORKFLOW_SHA": "b" * 40,
+        "RELEASE_BRANCH": "release/prep-123",
+        "RELEASE_HEAD_SHA": "c" * 40,
+    }
+
+    with tempfile.TemporaryDirectory() as directory:
+        output = Path(directory) / "release-prep-provenance.json"
+        result = subprocess.run(
+            [sys.executable, str(script), str(output)],
+            check=False,
+            capture_output=True,
+            text=True,
+            env=environment,
+        )
+        assert result.returncode == 0, result.stderr
+        manifest = json.loads(output.read_text(encoding="utf-8"))
+        assert manifest == {
+            "repository": repository,
+            "run_id": 123,
+            "run_attempt": 1,
+            "workflow_ref": environment["GITHUB_WORKFLOW_REF"],
+            "workflow_sha": "b" * 40,
+            "release_branch": "release/prep-123",
+            "release_head_sha": "c" * 40,
+        }
+
+        invalid_environment = {
+            **environment,
+            "RELEASE_BRANCH": "release/prep-999",
+        }
+        invalid_result = subprocess.run(
+            [sys.executable, str(script), str(output)],
+            check=False,
+            capture_output=True,
+            text=True,
+            env=invalid_environment,
+        )
+        assert invalid_result.returncode != 0
+
+
+def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> None:
     script = ROOT / "scripts" / "verify_release_finalize_provenance.py"
     merge_sha = "a" * 40
+    workflow_sha = "b" * 40
+    release_head_sha = "c" * 40
     repository = "tuanductran/soulmap-ai"
+    manifest = {
+        "repository": repository,
+        "run_id": 123,
+        "run_attempt": 1,
+        "workflow_ref": (
+            "tuanductran/soulmap-ai/.github/workflows/release.yml@refs/heads/main"
+        ),
+        "workflow_sha": workflow_sha,
+        "release_branch": "release/prep-123",
+        "release_head_sha": release_head_sha,
+    }
+    workflow_run = {
+        "id": 123,
+        "run_attempt": 1,
+        "event": "workflow_dispatch",
+        "path": ".github/workflows/release.yml",
+        "head_branch": "main",
+        "head_sha": workflow_sha,
+        "conclusion": "success",
+        "repository": {"full_name": repository},
+    }
     valid_pull_request = {
         "number": 123,
         "merged_at": "2026-11-17T00:00:00Z",
@@ -133,7 +215,8 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
             "repo": {"full_name": repository},
         },
         "head": {
-            "ref": "release/prep-1.2.3",
+            "ref": "release/prep-123",
+            "sha": release_head_sha,
             "repo": {"full_name": repository},
         },
     }
@@ -149,43 +232,35 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
         "uv.lock",
     ]
     valid_files = [{"filename": path, "status": "modified"} for path in expected_paths]
-    invalid_pull_requests = [
-        {**valid_pull_request, "merge_commit_sha": "b" * 40},
-        {**valid_pull_request, "merged_at": None},
-        {
-            **valid_pull_request,
-            "base": {**valid_pull_request["base"], "ref": "develop"},
-        },
-        {
-            **valid_pull_request,
-            "head": {**valid_pull_request["head"], "ref": "feature/not-a-release"},
-        },
-        {
-            **valid_pull_request,
-            "head": {
-                **valid_pull_request["head"],
-                "repo": {"full_name": "fork/soulmap-ai"},
-            },
-        },
-        {
-            **valid_pull_request,
-            "base": {
-                **valid_pull_request["base"],
-                "repo": {"full_name": "other/soulmap-ai"},
-            },
-        },
-    ]
 
     with tempfile.TemporaryDirectory() as directory:
         pull_requests_path = Path(directory) / "associated-pull-requests.json"
         changed_files_path = Path(directory) / "release-pr-files.json"
+        manifest_path = Path(directory) / "release-prep-provenance.json"
+        workflow_run_path = Path(directory) / "workflow-run.json"
 
         def run_guard(
-            pull_requests: object,
-            changed_files: object,
+            pull_requests: object = None,
+            changed_files: object = None,
+            candidate_manifest: object = None,
+            candidate_run: object = None,
         ) -> subprocess.CompletedProcess[str]:
-            pull_requests_path.write_text(json.dumps(pull_requests), encoding="utf-8")
-            changed_files_path.write_text(json.dumps(changed_files), encoding="utf-8")
+            pull_requests_path.write_text(
+                json.dumps([valid_pull_request] if pull_requests is None else pull_requests),
+                encoding="utf-8",
+            )
+            changed_files_path.write_text(
+                json.dumps(valid_files if changed_files is None else changed_files),
+                encoding="utf-8",
+            )
+            manifest_path.write_text(
+                json.dumps(manifest if candidate_manifest is None else candidate_manifest),
+                encoding="utf-8",
+            )
+            workflow_run_path.write_text(
+                json.dumps(workflow_run if candidate_run is None else candidate_run),
+                encoding="utf-8",
+            )
             return subprocess.run(
                 [
                     sys.executable,
@@ -194,51 +269,70 @@ def test_manual_release_provenance_guard_checks_observable_outcomes() -> None:
                     merge_sha,
                     str(changed_files_path),
                     repository,
+                    str(manifest_path),
+                    str(workflow_run_path),
                 ],
                 check=False,
                 capture_output=True,
                 text=True,
             )
 
-        valid_result = run_guard([valid_pull_request], valid_files)
+        valid_result = run_guard()
         assert valid_result.returncode == 0, valid_result.stderr
-
-        paginated_result = run_guard([[valid_pull_request]], [valid_files])
+        paginated_result = run_guard(
+            pull_requests=[[valid_pull_request]],
+            changed_files=[valid_files],
+        )
         assert paginated_result.returncode == 0, paginated_result.stderr
 
-        for invalid_pull_request in invalid_pull_requests:
-            invalid_result = run_guard([invalid_pull_request], valid_files)
-            assert invalid_result.returncode == 1
+        invalid_run_cases = [
+            {**workflow_run, "event": "pull_request"},
+            {**workflow_run, "path": ".github/workflows/other.yml"},
+            {**workflow_run, "head_branch": "feature/untrusted"},
+            {**workflow_run, "head_sha": "d" * 40},
+            {**workflow_run, "conclusion": "failure"},
+            {**workflow_run, "run_attempt": 2},
+            {**workflow_run, "repository": {"full_name": "fork/soulmap-ai"}},
+        ]
+        for invalid_run in invalid_run_cases:
+            assert run_guard(candidate_run=invalid_run).returncode == 1
 
-        assert (
-            run_guard([valid_pull_request, valid_pull_request], valid_files).returncode
-            == 1
-        )
-        assert run_guard([valid_pull_request], valid_files[:-1]).returncode == 1
-        assert (
-            run_guard(
-                [valid_pull_request],
-                [
-                    *valid_files,
-                    {"filename": "src/action/refs.py", "status": "modified"},
-                ],
-            ).returncode
-            == 1
-        )
-        assert (
-            run_guard(
-                [valid_pull_request],
-                [{**valid_files[0], "status": "added"}, *valid_files[1:]],
-            ).returncode
-            == 1
-        )
-        assert (
-            run_guard(
-                [valid_pull_request],
-                [*valid_files, valid_files[0]],
-            ).returncode
-            == 1
-        )
+        assert run_guard(
+            candidate_manifest={**manifest, "release_head_sha": "d" * 40}
+        ).returncode == 1
+        assert run_guard(
+            candidate_manifest={**manifest, "workflow_ref": "fork/soulmap-ai/.github/workflows/release.yml@refs/heads/main"}
+        ).returncode == 1
+        assert run_guard(
+            pull_requests=[
+                {
+                    **valid_pull_request,
+                    "head": {**valid_pull_request["head"], "sha": "d" * 40},
+                }
+            ]
+        ).returncode == 1
+        assert run_guard(
+            pull_requests=[
+                {
+                    **valid_pull_request,
+                    "head": {**valid_pull_request["head"], "ref": "release/prep-999"},
+                }
+            ]
+        ).returncode == 1
+        assert run_guard(
+            pull_requests=[valid_pull_request, valid_pull_request]
+        ).returncode == 1
+        assert run_guard(changed_files=valid_files[:-1]).returncode == 1
+        assert run_guard(
+            changed_files=[
+                *valid_files,
+                {"filename": "src/action/refs.py", "status": "modified"},
+            ]
+        ).returncode == 1
+        assert run_guard(
+            changed_files=[{**valid_files[0], "status": "added"}, *valid_files[1:]]
+        ).returncode == 1
+        assert run_guard(changed_files=[*valid_files, valid_files[0]]).returncode == 1
 
 
 def test_rollback_workflow_is_read_only_and_checks_known_good_tag() -> None:
