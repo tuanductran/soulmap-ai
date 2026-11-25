@@ -31,24 +31,51 @@ else:
     print("")
 ' 2>/dev/null || echo "")
 
-case "$FILE_PATH" in
-  */evals/datasets/groups.json|evals/datasets/groups.json)
+HOOK_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+DEFAULT_REPO_ROOT=$(cd "$HOOK_DIR/../.." && pwd)
+REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$DEFAULT_REPO_ROOT}}"
+
+# Resolve the edited path before selecting a validator. Suffix matching alone
+# can accept an absolute path or traversal path from outside this repository.
+RELATIVE_PATH=$(python3 - "$REPO_ROOT" "$FILE_PATH" <<'PY'
+from pathlib import Path
+import sys
+
+try:
+    repo_root = Path(sys.argv[1]).resolve(strict=True)
+    candidate = Path(sys.argv[2])
+    if not candidate.is_absolute():
+        candidate = repo_root / candidate
+    target = candidate.resolve(strict=True)
+    relative = target.relative_to(repo_root)
+except (OSError, RuntimeError, ValueError):
+    raise SystemExit(0)
+
+if not target.is_file():
+    raise SystemExit(0)
+
+print(relative.as_posix())
+PY
+)
+
+case "$RELATIVE_PATH" in
+  evals/datasets/groups.json)
     DATASET_FILE="groups.json"
     VALIDATOR=(uv run soulmap eval-groups)
     ;;
-  */evals/datasets/markdown_contract_cases.json|evals/datasets/markdown_contract_cases.json)
+  evals/datasets/markdown_contract_cases.json)
     DATASET_FILE="markdown_contract_cases.json"
     VALIDATOR=(uv run soulmap eval-markdown-contracts)
     ;;
-  */evals/datasets/response_generation_cases.json|evals/datasets/response_generation_cases.json)
+  evals/datasets/response_generation_cases.json)
     DATASET_FILE="response_generation_cases.json"
     VALIDATOR=(uv run soulmap eval-responses)
     ;;
-  */evals/datasets/response_quality_cases.json|evals/datasets/response_quality_cases.json)
+  evals/datasets/response_quality_cases.json)
     DATASET_FILE="response_quality_cases.json"
     VALIDATOR=(uv run soulmap eval-response-quality)
     ;;
-  */evals/datasets/safety_test_cases.json|evals/datasets/safety_test_cases.json|*/tests/eval_regression/test_safety_evals.py|tests/eval_regression/test_safety_evals.py)
+  evals/datasets/safety_test_cases.json|tests/eval_regression/test_safety_evals.py)
     DATASET_FILE="safety_test_cases.json"
     VALIDATOR=(uv run python tests/eval_regression/test_safety_evals.py)
     ;;
@@ -56,8 +83,6 @@ case "$FILE_PATH" in
     exit 0
     ;;
 esac
-
-REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
 
 cd "$REPO_ROOT"
 

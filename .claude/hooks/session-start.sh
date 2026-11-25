@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Session-start hook intent: inject repo context and branch workflow reminder.
-# Stdout is meant to be added to the session context by the Codex hook runner.
+# Stdout is added to the session context by Claude Code; Codex-compatible fallbacks remain supported.
 
 set -euo pipefail
 
@@ -24,9 +24,15 @@ REPO_ROOT="${REPO_ROOT:-${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(pwd)}}}"
 
 cd "$REPO_ROOT" 2>/dev/null || exit 0
 
-CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
-UNCOMMITTED=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
-LAST_COMMIT=$(git log -1 --format="%h %s" 2>/dev/null || echo "none")
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
+  UNCOMMITTED=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+  LAST_COMMIT=$(git log -1 --format="%h %s" 2>/dev/null || echo "none")
+else
+  CURRENT_BRANCH="unknown"
+  UNCOMMITTED=0
+  LAST_COMMIT="none"
+fi
 
 cat <<EOF
 === SoulMap AI - Repo Context ===
