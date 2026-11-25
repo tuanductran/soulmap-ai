@@ -72,7 +72,7 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "uv run soulmap release-health " not in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
     pinned_release_action = (
-        "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+        "tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f"
     )
     assert content.count(f"uses: {pinned_release_action}") == 2
     assert "uses: ./src/action" not in content

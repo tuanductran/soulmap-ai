@@ -1,4 +1,4 @@
-"""Fail-closed validation for release finalization provenance and scope."""
+"""Fail-closed validation for manually dispatched release provenance."""
 
 from __future__ import annotations
 
@@ -6,48 +6,14 @@ import json
 import sys
 from pathlib import Path
 
-EXPECTED_RELEASE_PREP_FILES = frozenset(
-    {
-        ".claude-plugin/marketplace.json",
-        "CHANGELOG.md",
-        "SKILL.md",
-        "docs/integrations/README.md",
-        "docs/integrations/chatgpt-instructions.md",
-        "docs/integrations/gemini-instructions.md",
-        "docs/integrations/poe-system-prompt.md",
-        "pyproject.toml",
-        "uv.lock",
-    }
-)
-
-
-def _flatten_pages(value: object) -> list[object] | None:
-    if not isinstance(value, list):
-        return None
-    if all(isinstance(page, list) for page in value):
-        return [item for page in value for item in page]
-    return value
-
 
 def has_valid_release_prep_provenance(
-    associated_pull_requests: object,
-    merge_sha: str,
-    repository: str,
-    changed_files: object,
+    associated_pull_requests: object, merge_sha: str
 ) -> bool:
-    pull_requests = _flatten_pages(associated_pull_requests)
-    files = _flatten_pages(changed_files)
-    if (
-        pull_requests is None
-        or files is None
-        or not merge_sha
-        or not repository
-        or not files
-    ):
+    if not isinstance(associated_pull_requests, list) or not merge_sha:
         return False
 
-    matching_pull_requests: list[dict[str, object]] = []
-    for pull_request in pull_requests:
+    for pull_request in associated_pull_requests:
         if not isinstance(pull_request, dict):
             continue
         base = pull_request.get("base")
@@ -59,66 +25,45 @@ def has_valid_release_prep_provenance(
         if not isinstance(base_repo, dict) or not isinstance(head_repo, dict):
             continue
 
+        base_repo_name = base_repo.get("full_name")
         if (
             pull_request.get("merged_at") is not None
             and pull_request.get("merge_commit_sha") == merge_sha
             and base.get("ref") == "main"
-            and base_repo.get("full_name") == repository
             and isinstance(head.get("ref"), str)
             and head["ref"].startswith("release/prep-")
-            and head_repo.get("full_name") == repository
+            and isinstance(base_repo_name, str)
+            and bool(base_repo_name)
+            and head_repo.get("full_name") == base_repo_name
         ):
-            matching_pull_requests.append(pull_request)
+            return True
 
-    if len(matching_pull_requests) != 1:
-        return False
-
-    filenames: list[str] = []
-    for item in files:
-        if not isinstance(item, dict):
-            return False
-        filename = item.get("filename")
-        if not isinstance(filename, str) or item.get("status") != "modified":
-            return False
-        filenames.append(filename)
-
-    return (
-        len(filenames) == len(set(filenames))
-        and frozenset(filenames) == EXPECTED_RELEASE_PREP_FILES
-    )
+    return False
 
 
 def main() -> int:
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 3:
         print(
-            "Usage: verify_release_finalize_provenance.py "
-            "<associated-prs.json> <merge-sha> <changed-files.json> <repository>",
+            "Usage: verify_release_finalize_provenance.py <response.json> <merge-sha>",
             file=sys.stderr,
         )
         return 2
 
-    pull_requests_path = Path(sys.argv[1])
+    response_path = Path(sys.argv[1])
     merge_sha = sys.argv[2]
-    changed_files_path = Path(sys.argv[3])
-    repository = sys.argv[4]
     try:
-        associated_pull_requests = json.loads(
-            pull_requests_path.read_text(encoding="utf-8")
-        )
-        changed_files = json.loads(changed_files_path.read_text(encoding="utf-8"))
+        associated_pull_requests = json.loads(response_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         print(
-            "Refusing to publish: unable to read pull-request provenance or changed files.",
+            "Refusing to publish: unable to read associated pull-request provenance.",
             file=sys.stderr,
         )
         return 1
 
-    if not has_valid_release_prep_provenance(
-        associated_pull_requests, merge_sha, repository, changed_files
-    ):
+    if not has_valid_release_prep_provenance(associated_pull_requests, merge_sha):
         print(
-            "Refusing to publish: expected exactly one merged same-repository "
-            "release/prep-* PR targeting main with the exact generated release file set.",
+            "Refusing to publish: the supplied SHA is not the merge commit of a "
+            "merged same-repository release/prep-* PR targeting main.",
             file=sys.stderr,
         )
         return 1

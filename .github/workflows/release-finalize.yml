@@ -228,7 +228,7 @@ jobs:
             dist/soulmap-ai-library.json
 
       - name: Create immutable release tag through Python action
-        uses: tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0
+        uses: tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f
         with:
           operation: tag
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
@@ -236,7 +236,7 @@ jobs:
           target-sha: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
 
       - name: Publish GitHub Release
-        uses: tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0
+        uses: tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f
         with:
           operation: release
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}

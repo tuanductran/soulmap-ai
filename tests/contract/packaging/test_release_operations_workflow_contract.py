@@ -78,7 +78,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "dist/soulmap-ai-library.json" in workflow
     assert "target-sha:" in workflow
     pinned_action = (
-        "tuanductran/soulmap-ai/src/action@babb273ba7787d5c921d4b7a70acdc371feb1bf0"
+        "tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f"
     )
     assert workflow.count(f"uses: {pinned_action}") == 2
     assert "uses: ./src/action" not in workflow
