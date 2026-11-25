@@ -59,6 +59,7 @@ def _fake_uv(tmp_path: Path) -> tuple[Path, Path]:
 
 def _make_repo(tmp_path: Path) -> Path:
     repo = tmp_path / "repo"
+    repo.parent.mkdir(parents=True, exist_ok=True)
     repo.mkdir()
     subprocess.run(
         ["git", "init", "--quiet", "--initial-branch", "feature", str(repo)],
@@ -617,7 +618,7 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     assert len(calls) == len(expected_calls)
     for call, expected in zip(calls, expected_calls, strict=True):
         assert call.startswith(expected)
-    assert str(target) in " ".join(calls)
+    assert str(repo) in " ".join(calls)
 
 
 def test_post_edit_python_does_not_trust_external_git_repo_without_project_env(
