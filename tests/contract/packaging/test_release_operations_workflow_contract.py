@@ -126,7 +126,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "commits/${MERGE_SHA}/pulls?per_page=100" in workflow
     assert "pulls/${pr_number}/files?per_page=100" in workflow
     assert "gh api --paginate --slurp" in workflow
-    assert "python3 scripts/verify_release_finalize_provenance.py" in workflow
+    assert "TRUSTED_WORKFLOW_SHA: ${{ github.workflow_sha }}" in workflow
+    assert 'git show "${TRUSTED_WORKFLOW_SHA}:scripts/verify_release_finalize_provenance.py"' in workflow
+    assert "python3 \"$trusted_verifier\"" in workflow
+    assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
+    assert "Recovery is supported for 90 days" in workflow
     assert "release-pr-files.json" in workflow
     assert workflow.index(
         "Verify release preparation PR provenance and changed paths"
@@ -288,6 +292,10 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
 
         valid_result = run_guard()
         assert valid_result.returncode == 0, valid_result.stderr
+        api_shaped_path_result = run_guard(
+            candidate_run={**workflow_run, "path": ".github/workflows/release.yml@main"}
+        )
+        assert api_shaped_path_result.returncode == 0, api_shaped_path_result.stderr
         paginated_result = run_guard(
             pull_requests=[[valid_pull_request]],
             changed_files=[valid_files],
