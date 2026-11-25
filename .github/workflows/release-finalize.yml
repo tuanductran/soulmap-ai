@@ -60,6 +60,7 @@ jobs:
       - name: Verify release preparation PR provenance and changed paths
         env:
           GH_TOKEN: ${{ github.token }}
+          TRUSTED_WORKFLOW_SHA: ${{ github.workflow_sha }}
           MERGE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
         run: |
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
@@ -96,6 +97,9 @@ jobs:
             > "$RUNNER_TEMP/release-prep-workflow-run.json"
 
           run_attempt="$(jq -er '.run_attempt' "$RUNNER_TEMP/release-prep-workflow-run.json")"
+          # Recovery is supported for 90 days while the original run artifact is retained.
+          # After expiry, fail closed and start a new Release Prep cycle; never substitute
+          # provenance from a different run for the already-merged release PR.
           mkdir -p "$RUNNER_TEMP/release-prep-provenance"
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
             --name "release-prep-provenance-${run_id}-${run_attempt}" \
@@ -108,12 +112,20 @@ jobs:
             echo "Refusing to publish: Release Prep workflow source is not on main."
             exit 1
           fi
+          if ! git merge-base --is-ancestor "$TRUSTED_WORKFLOW_SHA" origin/main; then
+            echo "Refusing to publish: finalization workflow source is not on main."
+            exit 1
+          fi
+          trusted_verifier="$RUNNER_TEMP/verify_release_finalize_provenance.py"
+          git show "${TRUSTED_WORKFLOW_SHA}:scripts/verify_release_finalize_provenance.py" > "$trusted_verifier"
+          test -s "$trusted_verifier"
 
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
             "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/files?per_page=100" \
             > "$RUNNER_TEMP/release-pr-files.json"
 
-          python3 scripts/verify_release_finalize_provenance.py \
+          # Execute the verifier from the trusted workflow revision, never from the target checkout.
+          python3 "$trusted_verifier" \
             "$RUNNER_TEMP/associated-pull-requests.json" "$MERGE_SHA" \
             "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY" \
             "$manifest" "$RUNNER_TEMP/release-prep-workflow-run.json"
