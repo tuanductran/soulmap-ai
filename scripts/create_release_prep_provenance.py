@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 from pathlib import Path
 
@@ -59,7 +60,7 @@ def main() -> int:
 
     try:
         manifest = build_release_prep_provenance(
-            repository=__import__("os").environ["GITHUB_REPOSITORY"],
+            repository=os.environ["GITHUB_REPOSITORY"],
             run_id=__import__("os").environ["GITHUB_RUN_ID"],
             run_attempt=__import__("os").environ["GITHUB_RUN_ATTEMPT"],
             workflow_ref=__import__("os").environ["GITHUB_WORKFLOW_REF"],
