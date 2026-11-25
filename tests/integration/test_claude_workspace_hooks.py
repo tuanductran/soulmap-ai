@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 from collections.abc import Mapping
 from pathlib import Path
@@ -554,3 +555,102 @@ def test_session_start_prefers_event_cwd_over_project_environment(
     assert result.returncode == 0, result.stderr
     assert "Branch:        feature" in result.stdout
     assert "Branch:        fallback" not in result.stdout
+
+
+
+@pytest.mark.parametrize(
+    ("hook_name", "relative_path", "expected_calls"),
+    [
+        (
+            "post-edit-python.sh",
+            "src/module.py",
+            ("run ruff check --fix", "run ruff format"),
+        ),
+        (
+            "post-edit-markdown.sh",
+            "docs/guide.md",
+            ("run soulmap markdown-contract --root",),
+        ),
+        (
+            "post-edit-tests.sh",
+            "tests/test_sample.py",
+            ("run soulmap test",),
+        ),
+    ],
+)
+def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
+    tmp_path: Path,
+    hook_name: str,
+    relative_path: str,
+    expected_calls: tuple[str, ...],
+) -> None:
+    repo = _make_repo(tmp_path)
+    target = repo / relative_path
+    target.parent.mkdir(parents=True)
+    target.write_text("# sample\\n" if target.suffix == ".md" else "value = 1\\n", encoding="utf-8")
+
+    hook_copy = repo / ".claude" / "hooks" / hook_name
+    hook_copy.parent.mkdir(parents=True)
+    shutil.copy2(ROOT / ".claude" / "hooks" / hook_name, hook_copy)
+
+    fake_bin, call_log = _fake_uv(tmp_path)
+    env = os.environ.copy()
+    env.pop("CODEX_PROJECT_DIR", None)
+    env.pop("CLAUDE_PROJECT_DIR", None)
+    env.update(
+        {
+            "PATH": f"{fake_bin}{os.pathsep}{env.get('PATH', '')}",
+            "HOOK_CALL_LOG": str(call_log),
+        }
+    )
+    result = subprocess.run(
+        ["bash", str(hook_copy)],
+        input=json.dumps({"tool_input": {"file_path": str(target)}}),
+        text=True,
+        capture_output=True,
+        env=env,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    calls = call_log.read_text(encoding="utf-8").splitlines()
+    assert len(calls) == len(expected_calls)
+    for call, expected in zip(calls, expected_calls, strict=True):
+        assert call.startswith(expected)
+    assert str(target) in " ".join(calls)
+
+
+def test_post_edit_python_does_not_trust_external_git_repo_without_project_env(
+    tmp_path: Path,
+) -> None:
+    repo = _make_repo(tmp_path / "workspace")
+    hook_copy = repo / ".claude" / "hooks" / "post-edit-python.sh"
+    hook_copy.parent.mkdir(parents=True)
+    shutil.copy2(ROOT / ".claude" / "hooks" / "post-edit-python.sh", hook_copy)
+
+    external_repo = _make_repo(tmp_path / "external")
+    target = external_repo / "src" / "module.py"
+    target.parent.mkdir()
+    target.write_text("value = 1\\n", encoding="utf-8")
+
+    fake_bin, call_log = _fake_uv(tmp_path)
+    env = os.environ.copy()
+    env.pop("CODEX_PROJECT_DIR", None)
+    env.pop("CLAUDE_PROJECT_DIR", None)
+    env.update(
+        {
+            "PATH": f"{fake_bin}{os.pathsep}{env.get('PATH', '')}",
+            "HOOK_CALL_LOG": str(call_log),
+        }
+    )
+    result = subprocess.run(
+        ["bash", str(hook_copy)],
+        input=json.dumps({"tool_input": {"file_path": str(target)}}),
+        text=True,
+        capture_output=True,
+        env=env,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert not call_log.exists()
