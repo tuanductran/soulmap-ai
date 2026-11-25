@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import importlib.util
 import io
 import json
+import subprocess
 import sys
 from email.message import Message
 from pathlib import Path
@@ -498,48 +500,261 @@ def test_release_immutability_operation_checks_latest_when_tag_omitted(
     )
 
 
-def test_create_branch_marks_only_mounted_workspace_as_safe(
+def _git_completed(
+    stdout: str = "", stderr: str = ""
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.CompletedProcess(
+        args=["git"], returncode=0, stdout=stdout, stderr=stderr
+    )
+
+
+def test_create_branch_scopes_credentials_to_verified_github_remote(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    client = client_module.GitHubClient("token")
+    client = client_module.GitHubClient("secret-token")
     target_sha = "a" * 40
     monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
     not_found = errors_module.GitHubAPIError(
-        "GET",
-        "https://api.github.com/repos/owner/repo/git/ref/heads/release/prep-1",
-        404,
-        "Not Found",
+        "GET", "https://api.github.com/ref", 404, "Not Found"
     )
-    completed = refs_module.subprocess.CompletedProcess(
-        args=["git"],
-        returncode=0,
-        stdout=f"{target_sha}\n",
-        stderr="",
-    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
+        _git_completed(),
+    ]
 
     with (
         patch.object(client, "api", side_effect=not_found),
-        patch.object(
-            refs_module.subprocess, "run", side_effect=[completed, completed]
-        ) as run,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
     ):
         refs_module.create_branch(client, "owner", "repo", "release/prep-1", target_sha)
 
-    inspect_call, push_call = run.call_args_list
-    assert inspect_call.args[0] == ["git", "rev-parse", "HEAD"]
-    assert inspect_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
-    assert inspect_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
-    assert push_call.args[0] == [
+    assert [call.args[0] for call in run.call_args_list] == [
+        ["git", "remote", "get-url", "--all", "origin"],
+        ["git", "remote", "get-url", "--push", "--all", "origin"],
+        ["git", "rev-parse", "HEAD"],
+        ["git", "push", "origin", "HEAD:refs/heads/release/prep-1"],
+    ]
+    push_env = run.call_args.kwargs["env"]
+    assert push_env["GIT_CONFIG_COUNT"] == "3"
+    assert push_env["GIT_CONFIG_KEY_0"] == "safe.directory"
+    assert push_env["GIT_CONFIG_VALUE_0"] == "/github/workspace"
+    assert (
+        push_env["GIT_CONFIG_KEY_1"]
+        == "http.https://github.com/owner/repo.git/.extraheader"
+    )
+    assert push_env["GIT_CONFIG_VALUE_1"].startswith("AUTHORIZATION: basic ")
+    assert push_env["GIT_CONFIG_KEY_2"] == "http.followRedirects"
+    assert push_env["GIT_CONFIG_VALUE_2"] == "false"
+
+
+@pytest.mark.parametrize(
+    ("fetch_url", "push_url"),
+    [
+        ("https://github.com/owner/repo.git", "https://evil.example/owner/repo.git"),
+        ("https://github.com/owner/repo.git", "https://github.com/other/repo.git"),
+        ("https://evil.example/owner/repo.git", "https://evil.example/owner/repo.git"),
+        ("git@github.com:owner/repo.git", "git@github.com:owner/repo.git"),
+        ("http://github.com/owner/repo.git", "http://github.com/owner/repo.git"),
+        (
+            "https://attacker@github.com/owner/repo.git",
+            "https://attacker@github.com/owner/repo.git",
+        ),
+    ],
+)
+def test_create_branch_rejects_untrusted_origin_before_authenticated_push(
+    fetch_url: str, push_url: str
+) -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "b" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed(fetch_url + "\n"),
+        _git_completed(push_url + "\n"),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="Origin"),
+    ):
+        refs_module.create_branch(client, "owner", "repo", "release/prep-2", target_sha)
+
+    assert run.call_count == 2
+    assert all(
+        "GIT_CONFIG_KEY_1" not in call.kwargs["env"] for call in run.call_args_list
+    )
+
+
+def test_create_branch_rejects_multiple_push_urls() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "c" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(
+            "https://github.com/owner/repo.git\nhttps://evil.example/repo.git\n"
+        ),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="exactly one"),
+    ):
+        refs_module.create_branch(client, "owner", "repo", "release/prep-3", target_sha)
+
+    assert run.call_count == 2
+
+
+def test_create_branch_rejects_wrong_local_head_before_push() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "d" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("e" * 40 + "\n"),
+    ]
+
+    with (
+        patch.object(client, "api", side_effect=not_found),
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="does not match"),
+    ):
+        refs_module.create_branch(client, "owner", "repo", "release/prep-4", target_sha)
+
+    assert run.call_count == 3
+
+
+def test_create_branch_verifies_existing_ref_at_expected_sha() -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "f" * 40
+    existing = {
+        "ref": "refs/heads/release/prep-5",
+        "object": {"type": "commit", "sha": target_sha},
+    }
+
+    with (
+        patch.object(client, "api", return_value=existing),
+        patch.object(refs_module.subprocess, "run") as run,
+    ):
+        refs_module.create_branch(client, "owner", "repo", "release/prep-5", target_sha)
+
+    run.assert_not_called()
+
+
+def test_create_branch_accepts_concurrent_creation_at_expected_sha(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "1" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    created = {
+        "ref": "refs/heads/release/prep-race",
+        "object": {"type": "commit", "sha": target_sha},
+    }
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr="remote ref was created concurrently"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, created]) as api,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-race", target_sha
+        )
+
+    assert api.call_count == 2
+    assert run.call_count == 4
+    assert run.call_args.args[0] == [
         "git",
         "push",
         "origin",
-        "HEAD:refs/heads/release/prep-1",
+        "HEAD:refs/heads/release/prep-race",
     ]
-    assert push_call.kwargs["check"] is True
-    assert push_call.kwargs["env"]["GIT_CONFIG_COUNT"] == "2"
-    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_0"] == "safe.directory"
-    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_0"] == "/github/workspace"
-    assert push_call.kwargs["env"]["GIT_CONFIG_KEY_1"] == "http.extraheader"
-    assert push_call.kwargs["env"]["GIT_CONFIG_VALUE_1"].startswith(
-        "AUTHORIZATION: basic "
+
+
+def test_create_branch_rejects_concurrent_creation_at_different_sha(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client = client_module.GitHubClient("secret-token")
+    target_sha = "2" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
     )
+    conflicting = {
+        "ref": "refs/heads/release/prep-race",
+        "object": {"type": "commit", "sha": "3" * 40},
+    }
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr="remote ref already exists"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, conflicting]) as api,
+        patch.object(refs_module.subprocess, "run", side_effect=results) as run,
+        pytest.raises(errors_module.GitHubActionError, match="Failed to publish"),
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-race", target_sha
+        )
+
+    assert api.call_count == 2
+    assert run.call_count == 4
+
+
+def test_create_branch_redacts_token_and_encoded_credential_after_push_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    token = "secret-token"
+    encoded = base64.b64encode(f"x-access-token:{token}".encode()).decode("ascii")
+    client = client_module.GitHubClient(token)
+    target_sha = "4" * 40
+    not_found = errors_module.GitHubAPIError(
+        "GET", "https://api.github.com/ref", 404, "Not Found"
+    )
+    results = [
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed("https://github.com/owner/repo.git\n"),
+        _git_completed(f"{target_sha}\n"),
+        subprocess.CalledProcessError(
+            1, ["git", "push"], stderr=f"push failed with {token} and {encoded}"
+        ),
+    ]
+    monkeypatch.setenv("GITHUB_WORKSPACE", "/github/workspace")
+
+    with (
+        patch.object(client, "api", side_effect=[not_found, not_found]),
+        patch.object(refs_module.subprocess, "run", side_effect=results),
+        pytest.raises(errors_module.GitHubActionError) as captured,
+    ):
+        refs_module.create_branch(
+            client, "owner", "repo", "release/prep-redact", target_sha
+        )
+
+    assert token not in str(captured.value)
+    assert encoded not in str(captured.value)
+    assert str(captured.value).count("[REDACTED]") == 2

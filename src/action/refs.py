@@ -7,7 +7,7 @@ import os
 import subprocess
 import time
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 from client import GitHubClient
 from constants import API_ROOT
@@ -154,14 +154,64 @@ def create_branch(
         print(f"Release branch {branch} already exists at the expected commit.")
         return
 
-    # Docker actions run as root while the checked-out workspace is owned by
-    # the runner user. Explicitly trust only the mounted workspace so Git's
-    # dubious-ownership protection does not reject read-only and push commands.
+    # Resolve both fetch and push URLs before credentials are added. A
+    # configured pushurl can differ from origin's fetch URL.
     workspace = os.environ.get("GITHUB_WORKSPACE", str(Path.cwd()))
     environment = os.environ.copy()
     environment["GIT_CONFIG_COUNT"] = "1"
     environment["GIT_CONFIG_KEY_0"] = "safe.directory"
     environment["GIT_CONFIG_VALUE_0"] = workspace
+    try:
+        fetch_remote = subprocess.run(
+            ["git", "remote", "get-url", "--all", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        ).stdout.splitlines()
+        push_remote = subprocess.run(
+            ["git", "remote", "get-url", "--push", "--all", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=environment,
+        ).stdout.splitlines()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise GitHubActionError(
+            "Unable to verify the origin remote before publishing the release branch."
+        ) from exc
+
+    if len(fetch_remote) != 1 or len(push_remote) != 1:
+        raise GitHubActionError(
+            "Release branch publication requires exactly one origin fetch URL and one push URL."
+        )
+    remote_url = fetch_remote[0].strip()
+    push_url = push_remote[0].strip()
+    if remote_url != push_url:
+        raise GitHubActionError(
+            "Origin fetch and push URLs must match before publishing a release branch."
+        )
+
+    expected_paths = {f"/{owner}/{repo}", f"/{owner}/{repo}.git"}
+    try:
+        parsed_remote = urlsplit(remote_url)
+        remote_port = parsed_remote.port
+    except ValueError as exc:
+        raise GitHubActionError("Origin remote URL is invalid.") from exc
+    if (
+        parsed_remote.scheme != "https"
+        or parsed_remote.netloc != "github.com"
+        or parsed_remote.hostname != "github.com"
+        or parsed_remote.username is not None
+        or parsed_remote.password is not None
+        or remote_port not in {None, 443}
+        or parsed_remote.path not in expected_paths
+        or parsed_remote.query
+        or parsed_remote.fragment
+    ):
+        raise GitHubActionError(
+            f"Origin remote must be the HTTPS URL for {owner}/{repo} on github.com."
+        )
 
     head = subprocess.run(
         ["git", "rev-parse", "HEAD"],
@@ -178,9 +228,14 @@ def create_branch(
     encoded = base64.b64encode(f"x-access-token:{client.token}".encode()).decode(
         "ascii"
     )
-    environment["GIT_CONFIG_COUNT"] = "2"
-    environment["GIT_CONFIG_KEY_1"] = "http.extraheader"
+    environment["GIT_CONFIG_COUNT"] = "3"
+    environment["GIT_CONFIG_KEY_1"] = (
+        f"http.https://github.com/{owner}/{repo}"
+        f"{'.git' if parsed_remote.path.endswith('.git') else ''}/.extraheader"
+    )
     environment["GIT_CONFIG_VALUE_1"] = f"AUTHORIZATION: basic {encoded}"
+    environment["GIT_CONFIG_KEY_2"] = "http.followRedirects"
+    environment["GIT_CONFIG_VALUE_2"] = "false"
     try:
         subprocess.run(
             ["git", "push", "origin", f"HEAD:refs/heads/{branch}"],
@@ -195,6 +250,36 @@ def create_branch(
             if isinstance(exc, subprocess.CalledProcessError)
             else str(exc)
         )
+        detail = detail.replace(client.token, "[REDACTED]").replace(
+            encoded, "[REDACTED]"
+        )
+
+        # Another workflow may have created the ref after the initial GET but
+        # before this push. Treat that race as idempotent only when GitHub now
+        # confirms the exact requested commit; never overwrite a different ref.
+        try:
+            concurrent_ref = client.api("GET", ref_path)
+        except GitHubAPIError as verify_exc:
+            if verify_exc.status != 404:
+                raise GitHubActionError(
+                    f"Failed to publish release branch {branch!r}: {detail}. "
+                    "Unable to verify the branch after the push failure."
+                ) from exc
+            concurrent_ref = None
+
+        concurrent_object = (
+            concurrent_ref.get("object") if isinstance(concurrent_ref, dict) else None
+        )
+        if (
+            isinstance(concurrent_object, dict)
+            and concurrent_object.get("type") == "commit"
+            and concurrent_object.get("sha") == target_sha
+        ):
+            print(
+                f"Release branch {branch} was created concurrently at the expected commit."
+            )
+            return
+
         raise GitHubActionError(
             f"Failed to publish release branch {branch!r}: {detail}"
         ) from exc
