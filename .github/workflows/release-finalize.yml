@@ -95,9 +95,10 @@ jobs:
             "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}" \
             > "$RUNNER_TEMP/release-prep-workflow-run.json"
 
+          run_attempt="$(jq -er '.run_attempt' "$RUNNER_TEMP/release-prep-workflow-run.json")"
           mkdir -p "$RUNNER_TEMP/release-prep-provenance"
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
-            --name "release-prep-provenance-${run_id}" \
+            --name "release-prep-provenance-${run_id}-${run_attempt}" \
             --dir "$RUNNER_TEMP/release-prep-provenance"
           manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"
           test -f "$manifest"
