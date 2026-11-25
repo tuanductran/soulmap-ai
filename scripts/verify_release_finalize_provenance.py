@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -19,6 +20,7 @@ EXPECTED_RELEASE_PREP_FILES = frozenset(
         "uv.lock",
     }
 )
+_SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
 def _flatten_pages(value: object) -> list[object] | None:
@@ -29,12 +31,19 @@ def _flatten_pages(value: object) -> list[object] | None:
     return value
 
 
+def _is_sha(value: object) -> bool:
+    return isinstance(value, str) and _SHA_PATTERN.fullmatch(value) is not None
+
+
 def has_valid_release_prep_provenance(
     associated_pull_requests: object,
     merge_sha: str,
     repository: str,
     changed_files: object,
+    manifest: object,
+    workflow_run: object,
 ) -> bool:
+    """Require a successful main-branch Release Prep run for this exact PR head."""
     pull_requests = _flatten_pages(associated_pull_requests)
     files = _flatten_pages(changed_files)
     if (
@@ -43,6 +52,59 @@ def has_valid_release_prep_provenance(
         or not merge_sha
         or not repository
         or not files
+        or not isinstance(manifest, dict)
+        or not isinstance(workflow_run, dict)
+    ):
+        return False
+
+    required_manifest_keys = {
+        "repository",
+        "run_id",
+        "run_attempt",
+        "workflow_ref",
+        "workflow_sha",
+        "release_branch",
+        "release_head_sha",
+    }
+    if set(manifest) != required_manifest_keys:
+        return False
+
+    run_id = manifest.get("run_id")
+    run_attempt = manifest.get("run_attempt")
+    workflow_sha = manifest.get("workflow_sha")
+    release_branch = manifest.get("release_branch")
+    release_head_sha = manifest.get("release_head_sha")
+    expected_workflow_ref = (
+        f"{repository}/.github/workflows/release.yml@refs/heads/main"
+    )
+    if (
+        manifest.get("repository") != repository
+        or not isinstance(run_id, int)
+        or isinstance(run_id, bool)
+        or run_id <= 0
+        or not isinstance(run_attempt, int)
+        or isinstance(run_attempt, bool)
+        or run_attempt <= 0
+        or manifest.get("workflow_ref") != expected_workflow_ref
+        or not _is_sha(workflow_sha)
+        or not isinstance(release_branch, str)
+        or release_branch != f"release/prep-{run_id}"
+        or not _is_sha(release_head_sha)
+    ):
+        return False
+
+    run_repository = workflow_run.get("repository")
+    if not isinstance(run_repository, dict):
+        return False
+    if (
+        workflow_run.get("id") != run_id
+        or workflow_run.get("run_attempt") != run_attempt
+        or workflow_run.get("event") != "workflow_dispatch"
+        or workflow_run.get("path") != ".github/workflows/release.yml"
+        or workflow_run.get("head_branch") != "main"
+        or workflow_run.get("head_sha") != workflow_sha
+        or workflow_run.get("conclusion") != "success"
+        or run_repository.get("full_name") != repository
     ):
         return False
 
@@ -64,8 +126,8 @@ def has_valid_release_prep_provenance(
             and pull_request.get("merge_commit_sha") == merge_sha
             and base.get("ref") == "main"
             and base_repo.get("full_name") == repository
-            and isinstance(head.get("ref"), str)
-            and head["ref"].startswith("release/prep-")
+            and head.get("ref") == release_branch
+            and head.get("sha") == release_head_sha
             and head_repo.get("full_name") == repository
         ):
             matching_pull_requests.append(pull_request)
@@ -89,10 +151,11 @@ def has_valid_release_prep_provenance(
 
 
 def main() -> int:
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 7:
         print(
             "Usage: verify_release_finalize_provenance.py "
-            "<associated-prs.json> <merge-sha> <changed-files.json> <repository>",
+            "<associated-prs.json> <merge-sha> <changed-files.json> "
+            "<repository> <release-prep-manifest.json> <workflow-run.json>",
             file=sys.stderr,
         )
         return 2
@@ -101,24 +164,35 @@ def main() -> int:
     merge_sha = sys.argv[2]
     changed_files_path = Path(sys.argv[3])
     repository = sys.argv[4]
+    manifest_path = Path(sys.argv[5])
+    workflow_run_path = Path(sys.argv[6])
     try:
         associated_pull_requests = json.loads(
             pull_requests_path.read_text(encoding="utf-8")
         )
         changed_files = json.loads(changed_files_path.read_text(encoding="utf-8"))
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        workflow_run = json.loads(workflow_run_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         print(
-            "Refusing to publish: unable to read pull-request provenance or changed files.",
+            "Refusing to publish: unable to read pull-request provenance, "
+            "workflow-run metadata, or changed files.",
             file=sys.stderr,
         )
         return 1
 
     if not has_valid_release_prep_provenance(
-        associated_pull_requests, merge_sha, repository, changed_files
+        associated_pull_requests,
+        merge_sha,
+        repository,
+        changed_files,
+        manifest,
+        workflow_run,
     ):
         print(
-            "Refusing to publish: expected exactly one merged same-repository "
-            "release/prep-* PR targeting main with the exact generated release file set.",
+            "Refusing to publish: expected exactly one merged PR whose head "
+            "matches a successful workflow_dispatch run of the trusted "
+            "main-branch Release Prep workflow and the exact generated release file set.",
             file=sys.stderr,
         )
         return 1
