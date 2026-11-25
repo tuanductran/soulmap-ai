@@ -228,7 +228,7 @@ jobs:
             dist/soulmap-ai-library.json
 
       - name: Create immutable release tag through Python action
-        uses: tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f
+        uses: tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f # includes the verified remote credential scoping from #1060
         with:
           operation: tag
           token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
