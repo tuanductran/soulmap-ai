@@ -35,7 +35,9 @@ if [[ "$FILE_PATH" != *.md ]]; then
   exit 0
 fi
 
-REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$(git -C "$(dirname "$FILE_PATH")" rev-parse --show-toplevel 2>/dev/null || pwd)}}"
+HOOK_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+DEFAULT_REPO_ROOT=$(cd "$HOOK_DIR/../.." && pwd)
+REPO_ROOT="${CODEX_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$DEFAULT_REPO_ROOT}}"
 
 TARGET_FILE=$(python3 - "$REPO_ROOT" "$FILE_PATH" <<'PY'
 from pathlib import Path
