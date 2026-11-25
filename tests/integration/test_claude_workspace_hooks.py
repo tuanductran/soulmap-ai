@@ -577,6 +577,11 @@ def test_session_start_prefers_event_cwd_over_project_environment(
             "tests/test_sample.py",
             ("run soulmap test",),
         ),
+        (
+            "post-edit-evals.sh",
+            "evals/datasets/groups.json",
+            ("run soulmap eval-groups",),
+        ),
     ],
 )
 def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
@@ -588,7 +593,8 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     repo = _make_repo(tmp_path)
     target = repo / relative_path
     target.parent.mkdir(parents=True)
-    target.write_text("# sample\\n" if target.suffix == ".md" else "value = 1\\n", encoding="utf-8")
+    fixture = "# sample\\n" if target.suffix == ".md" else "{}\\n" if target.suffix == ".json" else "value = 1\\n"
+    target.write_text(fixture, encoding="utf-8")
 
     hook_copy = repo / ".claude" / "hooks" / hook_name
     hook_copy.parent.mkdir(parents=True)
@@ -621,18 +627,30 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     assert str(repo) in " ".join(calls)
 
 
-def test_post_edit_python_does_not_trust_external_git_repo_without_project_env(
+@pytest.mark.parametrize(
+    ("hook_name", "relative_path", "fixture"),
+    [
+        ("post-edit-python.sh", "src/module.py", "value = 1\\n"),
+        ("post-edit-markdown.sh", "docs/guide.md", "# external\\n"),
+        ("post-edit-tests.sh", "tests/test_external.py", "def test_external(): pass\\n"),
+        ("post-edit-evals.sh", "evals/datasets/groups.json", "{}\\n"),
+    ],
+)
+def test_post_edit_hooks_do_not_trust_external_git_repo_without_project_env(
     tmp_path: Path,
+    hook_name: str,
+    relative_path: str,
+    fixture: str,
 ) -> None:
     repo = _make_repo(tmp_path / "workspace")
-    hook_copy = repo / ".claude" / "hooks" / "post-edit-python.sh"
+    hook_copy = repo / ".claude" / "hooks" / hook_name
     hook_copy.parent.mkdir(parents=True)
-    shutil.copy2(ROOT / ".claude" / "hooks" / "post-edit-python.sh", hook_copy)
+    shutil.copy2(ROOT / ".claude" / "hooks" / hook_name, hook_copy)
 
     external_repo = _make_repo(tmp_path / "external")
-    target = external_repo / "src" / "module.py"
-    target.parent.mkdir()
-    target.write_text("value = 1\\n", encoding="utf-8")
+    target = external_repo / relative_path
+    target.parent.mkdir(parents=True)
+    target.write_text(fixture, encoding="utf-8")
 
     fake_bin, call_log = _fake_uv(tmp_path)
     env = os.environ.copy()
