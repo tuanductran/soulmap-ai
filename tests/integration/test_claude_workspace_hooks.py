@@ -327,26 +327,27 @@ def test_claude_settings_hook_contract_and_command_paths() -> None:
     assert post_tool["matcher"] == "Write|Edit"
     assert len(post_tool["hooks"]) == 4
 
+    expected_timeouts = {
+        ".claude/hooks/session-start.sh": 10,
+        ".claude/hooks/block-push-to-main.sh": 10,
+        ".claude/hooks/post-edit-python.sh": 30,
+        ".claude/hooks/post-edit-markdown.sh": 30,
+        ".claude/hooks/post-edit-tests.sh": 60,
+        ".claude/hooks/post-edit-evals.sh": 60,
+    }
     registered_paths: set[str] = set()
     for event_entries in hooks.values():
         for entry in event_entries:
             for hook in entry["hooks"]:
                 assert hook["type"] == "command"
-                assert hook["timeout"] > 0
                 command = hook["command"]
                 assert command.startswith('"$CLAUDE_PROJECT_DIR"/')
                 relative_path = command.split('"$CLAUDE_PROJECT_DIR"/', 1)[1]
                 registered_paths.add(relative_path)
+                assert hook["timeout"] == expected_timeouts[relative_path]
                 assert (ROOT / relative_path).is_file()
 
-    assert registered_paths == {
-        ".claude/hooks/session-start.sh",
-        ".claude/hooks/block-push-to-main.sh",
-        ".claude/hooks/post-edit-python.sh",
-        ".claude/hooks/post-edit-markdown.sh",
-        ".claude/hooks/post-edit-tests.sh",
-        ".claude/hooks/post-edit-evals.sh",
-    }
+    assert registered_paths == set(expected_timeouts)
 
 
 def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
