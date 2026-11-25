@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-26.04
     timeout-minutes: 60
     permissions:
+      actions: read
       contents: read
       pull-requests: read
     outputs:
@@ -65,7 +66,7 @@ jobs:
             "repos/${GITHUB_REPOSITORY}/commits/${MERGE_SHA}/pulls?per_page=100" \
             > "$RUNNER_TEMP/associated-pull-requests.json"
 
-          pr_number="$(jq -er --arg sha "$MERGE_SHA" --arg repository "$GITHUB_REPOSITORY" '
+          matching_pr="$(jq -cer --arg sha "$MERGE_SHA" --arg repository "$GITHUB_REPOSITORY" '
             add
             | [ .[] | select(
                 .merged_at != null
@@ -75,16 +76,46 @@ jobs:
                 and .head.repo.full_name == $repository
                 and (.head.ref | startswith("release/prep-"))
               ) ]
-            | if length == 1 then .[0].number else error("Expected exactly one matching merged release PR") end
+            | if length == 1 then .[0] else error("Expected exactly one matching merged release PR") end
           ' "$RUNNER_TEMP/associated-pull-requests.json")"
+          printf '%s\n' "$matching_pr" > "$RUNNER_TEMP/matching-release-pr.json"
+
+          pr_number="$(jq -er '.number' "$RUNNER_TEMP/matching-release-pr.json")"
+          head_ref="$(jq -er '.head.ref' "$RUNNER_TEMP/matching-release-pr.json")"
+          case "$head_ref" in
+            release/prep-[1-9][0-9]*) ;;
+            *) echo "Refusing to publish: release branch is not run-ID bound."; exit 1 ;;
+          esac
+          run_id="\${head_ref#release/prep-}"
+          case "$run_id" in
+            *[!0-9]*|'') echo "Refusing to publish: invalid release workflow run ID."; exit 1 ;;
+          esac
+
+          gh api --header "Accept: application/vnd.github+json" \
+            "repos/\${GITHUB_REPOSITORY}/actions/runs/\${run_id}" \
+            > "$RUNNER_TEMP/release-prep-workflow-run.json"
+
+          mkdir -p "$RUNNER_TEMP/release-prep-provenance"
+          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
+            --name "release-prep-provenance-\${run_id}" \
+            --dir "$RUNNER_TEMP/release-prep-provenance"
+          manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"
+          test -f "$manifest"
+
+          workflow_sha="$(jq -er '.workflow_sha' "$manifest")"
+          if ! git merge-base --is-ancestor "$workflow_sha" origin/main; then
+            echo "Refusing to publish: Release Prep workflow source is not on main."
+            exit 1
+          fi
 
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
-            "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/files?per_page=100" \
+            "repos/\${GITHUB_REPOSITORY}/pulls/\${pr_number}/files?per_page=100" \
             > "$RUNNER_TEMP/release-pr-files.json"
 
           python3 scripts/verify_release_finalize_provenance.py \
             "$RUNNER_TEMP/associated-pull-requests.json" "$MERGE_SHA" \
-            "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY"
+            "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY" \
+            "$manifest" "$RUNNER_TEMP/release-prep-workflow-run.json"
 
       - name: Install uv
         uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
