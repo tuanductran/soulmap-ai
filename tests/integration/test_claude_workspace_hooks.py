@@ -49,7 +49,9 @@ def _fake_uv(tmp_path: Path) -> tuple[Path, Path]:
     uv = fake_bin / "uv"
     uv.write_text(
         '#!/bin/sh\nprintf "%s\\n" "$*" >> "$HOOK_CALL_LOG"\n'
-        'if [ -n "${HOOK_CWD_LOG:-}" ]; then printf "%s\\n" "$PWD" >> "$HOOK_CWD_LOG"; fi\n'
+        'if [ -n "${HOOK_CWD_LOG:-}" ]; then\n'
+        '  printf "%s\\n" "$PWD" >> "$HOOK_CWD_LOG"\n'
+        'fi\n'
         'printf "stub diagnostic\\n"\n'
         'exit "${HOOK_EXIT:-0}"\n',
         encoding="utf-8",
