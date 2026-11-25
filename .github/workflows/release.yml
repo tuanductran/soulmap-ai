@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 # The protected release-finalize environment supplies SOULMAP_RELEASE_TOKEN.
+# This workflow prepares the release PR; final publication runs separately.
 # GITHUB_TOKEN therefore only needs read access; keeping it read-only prevents
 # an accidental step from gaining repository write privileges.
 permissions:
