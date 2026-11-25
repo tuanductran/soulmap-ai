@@ -382,7 +382,6 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
         ("post-edit-evals.sh", "evals/datasets/groups.json"),
     ],
 )
-
 def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
     tmp_path: Path,
     hook_name: str,
