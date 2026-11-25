@@ -635,7 +635,9 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     assert len(calls) == len(expected_calls)
     for call, expected in zip(calls, expected_calls, strict=True):
         assert call.startswith(expected)
-    assert cwd_log.read_text(encoding="utf-8").splitlines() == [str(repo)]
+    assert cwd_log.read_text(encoding="utf-8").splitlines() == [
+        str(repo)
+    ] * len(expected_calls)
 
 
 @pytest.mark.parametrize(
