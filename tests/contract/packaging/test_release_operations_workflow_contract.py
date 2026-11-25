@@ -131,7 +131,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         'git show "${TRUSTED_WORKFLOW_SHA}:scripts/verify_release_finalize_provenance.py"'
         in workflow
     )
-    assert "python3 \"$trusted_verifier\"" in workflow
+    assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert "Recovery is supported for 90 days" in workflow
     assert "release-pr-files.json" in workflow
