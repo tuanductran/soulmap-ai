@@ -41,8 +41,13 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "base64" not in workflow
     assert "Create run-bound release provenance manifest" in workflow
     assert "scripts/create_release_prep_provenance.py" in workflow
-    assert "GITHUB_WORKFLOW_REF" in (ROOT / "scripts" / "create_release_prep_provenance.py").read_text()
-    assert "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9" in workflow
+    assert (
+        "GITHUB_WORKFLOW_REF"
+        in (ROOT / "scripts" / "create_release_prep_provenance.py").read_text()
+    )
+    assert (
+        "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9" in workflow
+    )
     assert "release-prep-provenance-${{ github.run_id }}" in workflow
     assert "retention-days: 90" in workflow
 
@@ -246,7 +251,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             candidate_run: object = None,
         ) -> subprocess.CompletedProcess[str]:
             pull_requests_path.write_text(
-                json.dumps([valid_pull_request] if pull_requests is None else pull_requests),
+                json.dumps(
+                    [valid_pull_request] if pull_requests is None else pull_requests
+                ),
                 encoding="utf-8",
             )
             changed_files_path.write_text(
@@ -254,7 +261,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
                 encoding="utf-8",
             )
             manifest_path.write_text(
-                json.dumps(manifest if candidate_manifest is None else candidate_manifest),
+                json.dumps(
+                    manifest if candidate_manifest is None else candidate_manifest
+                ),
                 encoding="utf-8",
             )
             workflow_run_path.write_text(
@@ -297,41 +306,68 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         for invalid_run in invalid_run_cases:
             assert run_guard(candidate_run=invalid_run).returncode == 1
 
-        assert run_guard(
-            candidate_manifest={**manifest, "release_head_sha": "d" * 40}
-        ).returncode == 1
-        assert run_guard(
-            candidate_manifest={**manifest, "workflow_ref": "fork/soulmap-ai/.github/workflows/release.yml@refs/heads/main"}
-        ).returncode == 1
-        assert run_guard(
-            pull_requests=[
-                {
-                    **valid_pull_request,
-                    "head": {**valid_pull_request["head"], "sha": "d" * 40},
+        assert (
+            run_guard(
+                candidate_manifest={**manifest, "release_head_sha": "d" * 40}
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                candidate_manifest={
+                    **manifest,
+                    "workflow_ref": "fork/soulmap-ai/.github/workflows/release.yml@refs/heads/main",
                 }
-            ]
-        ).returncode == 1
-        assert run_guard(
-            pull_requests=[
-                {
-                    **valid_pull_request,
-                    "head": {**valid_pull_request["head"], "ref": "release/prep-999"},
-                }
-            ]
-        ).returncode == 1
-        assert run_guard(
-            pull_requests=[valid_pull_request, valid_pull_request]
-        ).returncode == 1
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                pull_requests=[
+                    {
+                        **valid_pull_request,
+                        "head": {**valid_pull_request["head"], "sha": "d" * 40},
+                    }
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                pull_requests=[
+                    {
+                        **valid_pull_request,
+                        "head": {
+                            **valid_pull_request["head"],
+                            "ref": "release/prep-999",
+                        },
+                    }
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                pull_requests=[valid_pull_request, valid_pull_request]
+            ).returncode
+            == 1
+        )
         assert run_guard(changed_files=valid_files[:-1]).returncode == 1
-        assert run_guard(
-            changed_files=[
-                *valid_files,
-                {"filename": "src/action/refs.py", "status": "modified"},
-            ]
-        ).returncode == 1
-        assert run_guard(
-            changed_files=[{**valid_files[0], "status": "added"}, *valid_files[1:]]
-        ).returncode == 1
+        assert (
+            run_guard(
+                changed_files=[
+                    *valid_files,
+                    {"filename": "src/action/refs.py", "status": "modified"},
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                changed_files=[{**valid_files[0], "status": "added"}, *valid_files[1:]]
+            ).returncode
+            == 1
+        )
         assert run_guard(changed_files=[*valid_files, valid_files[0]]).returncode == 1
 
 
