@@ -347,9 +347,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             == 1
         )
         assert (
-            run_guard(
-                pull_requests=[valid_pull_request, valid_pull_request]
-            ).returncode
+            run_guard(pull_requests=[valid_pull_request, valid_pull_request]).returncode
             == 1
         )
         assert run_guard(changed_files=valid_files[:-1]).returncode == 1
