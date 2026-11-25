@@ -86,18 +86,18 @@ jobs:
             release/prep-[1-9][0-9]*) ;;
             *) echo "Refusing to publish: release branch is not run-ID bound."; exit 1 ;;
           esac
-          run_id="\${head_ref#release/prep-}"
+          run_id="${head_ref#release/prep-}"
           case "$run_id" in
             *[!0-9]*|'') echo "Refusing to publish: invalid release workflow run ID."; exit 1 ;;
           esac
 
           gh api --header "Accept: application/vnd.github+json" \
-            "repos/\${GITHUB_REPOSITORY}/actions/runs/\${run_id}" \
+            "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}" \
             > "$RUNNER_TEMP/release-prep-workflow-run.json"
 
           mkdir -p "$RUNNER_TEMP/release-prep-provenance"
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
-            --name "release-prep-provenance-\${run_id}" \
+            --name "release-prep-provenance-${run_id}" \
             --dir "$RUNNER_TEMP/release-prep-provenance"
           manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"
           test -f "$manifest"
@@ -109,7 +109,7 @@ jobs:
           fi
 
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
-            "repos/\${GITHUB_REPOSITORY}/pulls/\${pr_number}/files?per_page=100" \
+            "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/files?per_page=100" \
             > "$RUNNER_TEMP/release-pr-files.json"
 
           python3 scripts/verify_release_finalize_provenance.py \
