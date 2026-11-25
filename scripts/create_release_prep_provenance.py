@@ -70,6 +70,7 @@ def main() -> int:
         )
     except (KeyError, ValueError) as error:
         parser.error(str(error))
+        return 2
 
     args.output.write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n",
