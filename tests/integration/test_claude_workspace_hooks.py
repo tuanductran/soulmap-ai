@@ -49,6 +49,7 @@ def _fake_uv(tmp_path: Path) -> tuple[Path, Path]:
     uv = fake_bin / "uv"
     uv.write_text(
         '#!/bin/sh\nprintf "%s\\n" "$*" >> "$HOOK_CALL_LOG"\n'
+        'if [ -n "${HOOK_CWD_LOG:-}" ]; then printf "%s\\n" "$PWD" >> "$HOOK_CWD_LOG"; fi\n'
         'printf "stub diagnostic\\n"\n'
         'exit "${HOOK_EXIT:-0}"\n',
         encoding="utf-8",
@@ -607,6 +608,7 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     shutil.copy2(ROOT / ".claude" / "hooks" / hook_name, hook_copy)
 
     fake_bin, call_log = _fake_uv(tmp_path)
+    cwd_log = tmp_path / "hook-cwd.txt"
     env = os.environ.copy()
     env.pop("CODEX_PROJECT_DIR", None)
     env.pop("CLAUDE_PROJECT_DIR", None)
@@ -614,6 +616,7 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
         {
             "PATH": f"{fake_bin}{os.pathsep}{env.get('PATH', '')}",
             "HOOK_CALL_LOG": str(call_log),
+            "HOOK_CWD_LOG": str(cwd_log),
         }
     )
     result = subprocess.run(
@@ -630,7 +633,7 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     assert len(calls) == len(expected_calls)
     for call, expected in zip(calls, expected_calls, strict=True):
         assert call.startswith(expected)
-    assert str(repo) in " ".join(calls)
+    assert cwd_log.read_text(encoding="utf-8").splitlines() == [str(repo)]
 
 
 @pytest.mark.parametrize(
