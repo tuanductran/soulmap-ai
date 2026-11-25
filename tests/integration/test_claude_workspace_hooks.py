@@ -376,15 +376,12 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
 @pytest.mark.parametrize(
     ("hook_name", "relative_path"),
     [
-        ("post-edit-python.sh", "src/module.py", "value = 1\n"),
-        ("post-edit-markdown.sh", "docs/guide.md", "# external\n"),
-        (
-            "post-edit-tests.sh",
-            "tests/test_external.py",
-            "def test_external(): pass\n",
-        ),
-        ("post-edit-evals.sh", "evals/datasets/groups.json", "{}\n"),
+        ("post-edit-python.sh", "src/module.py"),
+        ("post-edit-markdown.sh", "docs/guide.md"),
+        ("post-edit-tests.sh", "tests/unit/test_sample.py"),
+        ("post-edit-evals.sh", "evals/datasets/groups.json"),
     ],
+)
 )
 def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
     tmp_path: Path,
