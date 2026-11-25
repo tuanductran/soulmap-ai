@@ -127,7 +127,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "pulls/${pr_number}/files?per_page=100" in workflow
     assert "gh api --paginate --slurp" in workflow
     assert "TRUSTED_WORKFLOW_SHA: ${{ github.workflow_sha }}" in workflow
-    assert 'git show "${TRUSTED_WORKFLOW_SHA}:scripts/verify_release_finalize_provenance.py"' in workflow
+    assert (
+        'git show "${TRUSTED_WORKFLOW_SHA}:scripts/verify_release_finalize_provenance.py"'
+        in workflow
+    )
     assert "python3 \"$trusted_verifier\"" in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert "Recovery is supported for 90 days" in workflow
