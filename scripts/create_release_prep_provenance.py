@@ -61,12 +61,12 @@ def main() -> int:
     try:
         manifest = build_release_prep_provenance(
             repository=os.environ["GITHUB_REPOSITORY"],
-            run_id=__import__("os").environ["GITHUB_RUN_ID"],
-            run_attempt=__import__("os").environ["GITHUB_RUN_ATTEMPT"],
-            workflow_ref=__import__("os").environ["GITHUB_WORKFLOW_REF"],
-            workflow_sha=__import__("os").environ["GITHUB_WORKFLOW_SHA"],
-            release_branch=__import__("os").environ["RELEASE_BRANCH"],
-            release_head_sha=__import__("os").environ["RELEASE_HEAD_SHA"],
+            run_id=os.environ["GITHUB_RUN_ID"],
+            run_attempt=os.environ["GITHUB_RUN_ATTEMPT"],
+            workflow_ref=os.environ["GITHUB_WORKFLOW_REF"],
+            workflow_sha=os.environ["GITHUB_WORKFLOW_SHA"],
+            release_branch=os.environ["RELEASE_BRANCH"],
+            release_head_sha=os.environ["RELEASE_HEAD_SHA"],
         )
     except (KeyError, ValueError) as error:
         parser.error(str(error))
