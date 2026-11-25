@@ -86,6 +86,22 @@ jobs:
             echo "sha=$(git rev-parse HEAD)"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Create run-bound release provenance manifest
+        env:
+          RELEASE_BRANCH: \${{ steps.bump.outputs.branch }}
+          RELEASE_HEAD_SHA: \${{ steps.bump.outputs.sha }}
+        run: |
+          uv run python scripts/create_release_prep_provenance.py \
+            "$RUNNER_TEMP/release-prep-provenance.json"
+
+      - name: Upload run-bound release provenance
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-prep-provenance-\${{ github.run_id }}
+          path: \${{ runner.temp }}/release-prep-provenance.json
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Verify bumped release tree
         run: |
           uv run soulmap markdown-contract --root .
