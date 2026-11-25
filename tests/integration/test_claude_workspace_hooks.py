@@ -641,7 +641,11 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     [
         ("post-edit-python.sh", "src/module.py", "value = 1\\n"),
         ("post-edit-markdown.sh", "docs/guide.md", "# external\\n"),
-        ("post-edit-tests.sh", "tests/test_external.py", "def test_external(): pass\\n"),
+        (
+            "post-edit-tests.sh",
+            "tests/test_external.py",
+            "def test_external(): pass\n",
+        ),
         ("post-edit-evals.sh", "evals/datasets/groups.json", "{}\\n"),
     ],
 )
