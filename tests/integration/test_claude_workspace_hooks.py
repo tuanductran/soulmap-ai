@@ -375,10 +375,14 @@ def test_pre_tool_push_guard_treats_malformed_payload_as_non_authoritative(
 @pytest.mark.parametrize(
     ("hook_name", "relative_path"),
     [
-        ("post-edit-python.sh", "src/module.py"),
-        ("post-edit-markdown.sh", "docs/guide.md"),
-        ("post-edit-tests.sh", "tests/unit/test_sample.py"),
-        ("post-edit-evals.sh", "evals/datasets/groups.json"),
+        ("post-edit-python.sh", "src/module.py", "value = 1\n"),
+        ("post-edit-markdown.sh", "docs/guide.md", "# external\n"),
+        (
+            "post-edit-tests.sh",
+            "tests/test_external.py",
+            "def test_external(): pass\n",
+        ),
+        ("post-edit-evals.sh", "evals/datasets/groups.json", "{}\n"),
     ],
 )
 def test_post_edit_hooks_accept_legacy_codex_payload_when_configured(
@@ -558,7 +562,6 @@ def test_session_start_prefers_event_cwd_over_project_environment(
     assert "Branch:        fallback" not in result.stdout
 
 
-
 @pytest.mark.parametrize(
     ("hook_name", "relative_path", "expected_calls"),
     [
@@ -593,7 +596,13 @@ def test_post_edit_hooks_resolve_repo_from_hook_location_without_environment(
     repo = _make_repo(tmp_path)
     target = repo / relative_path
     target.parent.mkdir(parents=True)
-    fixture = "# sample\\n" if target.suffix == ".md" else "{}\\n" if target.suffix == ".json" else "value = 1\\n"
+    fixture = (
+        "# sample\n"
+        if target.suffix == ".md"
+        else "{}\n"
+        if target.suffix == ".json"
+        else "value = 1\n"
+    )
     target.write_text(fixture, encoding="utf-8")
 
     hook_copy = repo / ".claude" / "hooks" / hook_name
