@@ -125,3 +125,22 @@ jobs:
           branch: ${{ steps.bump.outputs.branch }}
           base: main
           tag: ${{ steps.bump.outputs.tag }}
+
+      - name: Record durable release provenance on pull request
+        env:
+          GH_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}
+          MANIFEST_PATH: ${{ runner.temp }}/release-prep-provenance.json
+          EXPECTED_TOKEN_ACTOR: tuanductran
+        run: |
+          token_actor="$(gh api user --jq .login)"
+          if [ "$token_actor" != "$EXPECTED_TOKEN_ACTOR" ]; then
+            echo "Refusing to record provenance: release token is not owned by the repository owner."
+            exit 1
+          fi
+          pr_number="$(gh pr view "$RELEASE_BRANCH" --repo "$GITHUB_REPOSITORY" --json number --jq .number)"
+          marker='<!-- soulmap-release-prep-provenance:v1 -->'
+          manifest="$(jq -cS . "$MANIFEST_PATH")"
+          body="$(printf '%s\\n%s' "$marker" "$manifest")"
+          gh api "repos/$GITHUB_REPOSITORY/issues/$pr_number/comments" \
+            --method POST --field body="$body" >/dev/null
