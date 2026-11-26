@@ -65,10 +65,9 @@ def _has_durable_owner_provenance_comment(
             return False
         if not isinstance(comment_manifest, dict):
             return False
-        if (
-            comment_manifest.get("run_id") == manifest.get("run_id")
-            and comment_manifest.get("run_attempt") == manifest.get("run_attempt")
-        ):
+        if comment_manifest.get("run_id") == manifest.get(
+            "run_id"
+        ) and comment_manifest.get("run_attempt") == manifest.get("run_attempt"):
             matching_manifests.append(comment_manifest)
 
     return len(matching_manifests) == 1 and matching_manifests[0] == manifest
