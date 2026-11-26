@@ -47,6 +47,9 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "gh api user --jq .login" in workflow
     assert "soulmap-release-prep-provenance:v1" in workflow
     assert "issues/$pr_number/comments" in workflow
+    assert workflow.index("gh api user --jq .login") < workflow.index(
+        "issues/$pr_number/comments"
+    )
     assert (
         "GITHUB_WORKFLOW_REF"
         in (ROOT / "scripts" / "create_release_prep_provenance.py").read_text()
@@ -140,7 +143,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert "The owner-authored PR comment is the durable provenance record." in workflow
-    assert "The 90-day workflow artifact is an audit copy, not a recovery dependency." in workflow
+    assert (
+        "The 90-day workflow artifact is an audit copy, not a recovery dependency."
+        in workflow
+    )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
     assert "release-pr-comments.json" in workflow
     assert "gh run download" not in workflow
@@ -298,14 +304,13 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
                 json.dumps(selected_manifest),
                 encoding="utf-8",
             )
-            provenance_comments_path.write_text(
-                json.dumps(
-                    valid_provenance_comments
-                    if candidate_comments is None
-                    else candidate_comments
-                )
+            selected_comments = (
+                candidate_comments
                 if candidate_comments is not None
-                else json.dumps([make_provenance_comment(selected_manifest)]),
+                else [make_provenance_comment(selected_manifest)]
+            )
+            provenance_comments_path.write_text(
+                json.dumps(selected_comments),
                 encoding="utf-8",
             )
             workflow_run_path.write_text(
