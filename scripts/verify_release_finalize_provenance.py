@@ -20,6 +20,7 @@ EXPECTED_RELEASE_PREP_FILES = frozenset(
         "uv.lock",
     }
 )
+PROVENANCE_COMMENT_MARKER = "<!-- soulmap-release-prep-provenance:v1 -->"
 _SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
@@ -35,25 +36,67 @@ def _is_sha(value: object) -> bool:
     return isinstance(value, str) and _SHA_PATTERN.fullmatch(value) is not None
 
 
+def _has_durable_owner_provenance_comment(
+    comments: list[object],
+    repository: str,
+    manifest: dict[str, object],
+) -> bool:
+    """Require one owner-authored durable comment for this exact run attempt."""
+    owner = repository.split("/", maxsplit=1)[0].casefold()
+    matching_manifests: list[dict[str, object]] = []
+    for item in comments:
+        if not isinstance(item, dict):
+            continue
+        user = item.get("user")
+        body = item.get("body")
+        if not isinstance(user, dict) or not isinstance(body, str):
+            continue
+        login = user.get("login")
+        if (
+            not isinstance(login, str)
+            or login.casefold() != owner
+            or item.get("author_association") != "OWNER"
+            or not body.startswith(f"{PROVENANCE_COMMENT_MARKER}\\n")
+        ):
+            continue
+        try:
+            comment_manifest = json.loads(body.split("\\n", maxsplit=1)[1])
+        except (IndexError, json.JSONDecodeError):
+            return False
+        if not isinstance(comment_manifest, dict):
+            return False
+        if (
+            comment_manifest.get("run_id") == manifest.get("run_id")
+            and comment_manifest.get("run_attempt") == manifest.get("run_attempt")
+        ):
+            matching_manifests.append(comment_manifest)
+
+    return len(matching_manifests) == 1 and matching_manifests[0] == manifest
+
+
 def has_valid_release_prep_provenance(
     associated_pull_requests: object,
     merge_sha: str,
     repository: str,
     changed_files: object,
     manifest: object,
+    provenance_comments: object,
     workflow_run: object,
 ) -> bool:
     """Require a successful main-branch Release Prep run for this exact PR head."""
     pull_requests = _flatten_pages(associated_pull_requests)
     files = _flatten_pages(changed_files)
+    comments = _flatten_pages(provenance_comments)
     if (
         pull_requests is None
         or files is None
+        or comments is None
         or not merge_sha
         or not repository
         or not files
         or not isinstance(manifest, dict)
         or not isinstance(workflow_run, dict)
+        or not _has_durable_owner_provenance_comment(comments, repository, manifest)
     ):
         return False
 
@@ -155,11 +198,12 @@ def has_valid_release_prep_provenance(
 
 
 def main() -> int:
-    if len(sys.argv) != 7:
+    if len(sys.argv) != 8:
         print(
             "Usage: verify_release_finalize_provenance.py "
             "<associated-prs.json> <merge-sha> <changed-files.json> "
-            "<repository> <release-prep-manifest.json> <workflow-run.json>",
+            "<repository> <release-prep-manifest.json> "
+            "<release-pr-comments.json> <workflow-run.json>",
             file=sys.stderr,
         )
         return 2
@@ -169,18 +213,22 @@ def main() -> int:
     changed_files_path = Path(sys.argv[3])
     repository = sys.argv[4]
     manifest_path = Path(sys.argv[5])
-    workflow_run_path = Path(sys.argv[6])
+    provenance_comments_path = Path(sys.argv[6])
+    workflow_run_path = Path(sys.argv[7])
     try:
         associated_pull_requests = json.loads(
             pull_requests_path.read_text(encoding="utf-8")
         )
         changed_files = json.loads(changed_files_path.read_text(encoding="utf-8"))
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        provenance_comments = json.loads(
+            provenance_comments_path.read_text(encoding="utf-8")
+        )
         workflow_run = json.loads(workflow_run_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         print(
             "Refusing to publish: unable to read pull-request provenance, "
-            "workflow-run metadata, or changed files.",
+            "durable owner comment, workflow-run metadata, or changed files.",
             file=sys.stderr,
         )
         return 1
@@ -191,12 +239,14 @@ def main() -> int:
         repository,
         changed_files,
         manifest,
+        provenance_comments,
         workflow_run,
     ):
         print(
             "Refusing to publish: expected exactly one merged PR whose head "
             "matches a successful workflow_dispatch run of the trusted "
-            "main-branch Release Prep workflow and the exact generated release file set.",
+            "main-branch Release Prep workflow, an owner-authored durable "
+            "provenance comment, and the exact generated release file set.",
             file=sys.stderr,
         )
         return 1
