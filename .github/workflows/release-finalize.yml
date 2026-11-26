@@ -114,9 +114,9 @@ jobs:
                   | select(
                       ((.user.login // "") | ascii_downcase) == ($owner | ascii_downcase)
                       and .author_association == "OWNER"
-                      and ((.body // "") | startswith($marker + "\\n"))
+                      and ((.body // "") | startswith($marker + "\n"))
                     )
-                  | (.body | sub("^[^\\n]*\\n"; "") | fromjson)
+                  | (.body | sub("^[^\n]*\n"; "") | fromjson)
                   | select(.run_id == $run_id and .run_attempt == $run_attempt)
                 ]
               | if length == 1 then .[0] else error("Expected exactly one durable provenance comment for this run attempt") end
