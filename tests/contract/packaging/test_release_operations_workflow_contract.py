@@ -41,6 +41,12 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "base64" not in workflow
     assert "Create run-bound release provenance manifest" in workflow
     assert "scripts/create_release_prep_provenance.py" in workflow
+    assert "Record durable release provenance on pull request" in workflow
+    assert "GH_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
+    assert "EXPECTED_TOKEN_ACTOR: tuanductran" in workflow
+    assert "gh api user --jq .login" in workflow
+    assert "soulmap-release-prep-provenance:v1" in workflow
+    assert "issues/$pr_number/comments" in workflow
     assert (
         "GITHUB_WORKFLOW_REF"
         in (ROOT / "scripts" / "create_release_prep_provenance.py").read_text()
@@ -133,7 +139,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
-    assert "Recovery is supported for 90 days" in workflow
+    assert "The owner-authored PR comment is the durable provenance record." in workflow
+    assert "The 90-day workflow artifact is an audit copy, not a recovery dependency." in workflow
+    assert "issues/\${pr_number}/comments?per_page=100" in workflow
+    assert "release-pr-comments.json" in workflow
+    assert "gh run download" not in workflow
     assert "release-pr-files.json" in workflow
     assert workflow.index(
         "Verify release preparation PR provenance and changed paths"
@@ -218,6 +228,17 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         "conclusion": "success",
         "repository": {"full_name": repository},
     }
+    def make_provenance_comment(candidate_manifest: object) -> dict[str, object]:
+        return {
+            "user": {"login": "tuanductran"},
+            "author_association": "OWNER",
+            "body": (
+                "<!-- soulmap-release-prep-provenance:v1 -->\\n"
+                + json.dumps(candidate_manifest, sort_keys=True)
+            ),
+        }
+
+    valid_provenance_comments = [make_provenance_comment(manifest)]
     valid_pull_request = {
         "number": 123,
         "merged_at": "2026-11-17T00:00:00Z",
@@ -250,12 +271,14 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         changed_files_path = Path(directory) / "release-pr-files.json"
         manifest_path = Path(directory) / "release-prep-provenance.json"
         workflow_run_path = Path(directory) / "workflow-run.json"
+        provenance_comments_path = Path(directory) / "release-pr-comments.json"
 
         def run_guard(
             pull_requests: object = None,
             changed_files: object = None,
             candidate_manifest: object = None,
             candidate_run: object = None,
+            candidate_comments: object = None,
         ) -> subprocess.CompletedProcess[str]:
             pull_requests_path.write_text(
                 json.dumps(
@@ -267,10 +290,21 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
                 json.dumps(valid_files if changed_files is None else changed_files),
                 encoding="utf-8",
             )
+            selected_manifest = (
+                manifest if candidate_manifest is None else candidate_manifest
+            )
             manifest_path.write_text(
+                json.dumps(selected_manifest),
+                encoding="utf-8",
+            )
+            provenance_comments_path.write_text(
                 json.dumps(
-                    manifest if candidate_manifest is None else candidate_manifest
-                ),
+                    valid_provenance_comments
+                    if candidate_comments is None
+                    else candidate_comments
+                )
+                if candidate_comments is not None
+                else json.dumps([make_provenance_comment(selected_manifest)]),
                 encoding="utf-8",
             )
             workflow_run_path.write_text(
@@ -286,6 +320,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
                     str(changed_files_path),
                     repository,
                     str(manifest_path),
+                    str(provenance_comments_path),
                     str(workflow_run_path),
                 ],
                 check=False,
@@ -302,8 +337,48 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         paginated_result = run_guard(
             pull_requests=[[valid_pull_request]],
             changed_files=[valid_files],
+            candidate_comments=[valid_provenance_comments],
         )
         assert paginated_result.returncode == 0, paginated_result.stderr
+
+        assert run_guard(candidate_comments=[]).returncode == 1
+        assert (
+            run_guard(
+                candidate_comments=[
+                    make_provenance_comment(manifest)
+                    | {"user": {"login": "untrusted-contributor"}}
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                candidate_comments=[
+                    make_provenance_comment(manifest)
+                    | {"author_association": "CONTRIBUTOR"}
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                candidate_comments=[
+                    make_provenance_comment(manifest),
+                    make_provenance_comment(manifest),
+                ]
+            ).returncode
+            == 1
+        )
+        assert (
+            run_guard(
+                candidate_comments=[
+                    make_provenance_comment(
+                        {**manifest, "release_head_sha": "d" * 40}
+                    )
+                ]
+            ).returncode
+            == 1
+        )
 
         invalid_run_cases = [
             {**workflow_run, "event": "pull_request"},
