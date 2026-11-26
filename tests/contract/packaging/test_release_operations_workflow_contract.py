@@ -141,7 +141,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert "The owner-authored PR comment is the durable provenance record." in workflow
     assert "The 90-day workflow artifact is an audit copy, not a recovery dependency." in workflow
-    assert "issues/\${pr_number}/comments?per_page=100" in workflow
+    assert "issues/${pr_number}/comments?per_page=100" in workflow
     assert "release-pr-comments.json" in workflow
     assert "gh run download" not in workflow
     assert "release-pr-files.json" in workflow
@@ -228,6 +228,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         "conclusion": "success",
         "repository": {"full_name": repository},
     }
+
     def make_provenance_comment(candidate_manifest: object) -> dict[str, object]:
         return {
             "user": {"login": "tuanductran"},
