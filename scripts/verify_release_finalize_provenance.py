@@ -56,11 +56,11 @@ def _has_durable_owner_provenance_comment(
             not isinstance(login, str)
             or login.casefold() != owner
             or item.get("author_association") != "OWNER"
-            or not body.startswith(f"{PROVENANCE_COMMENT_MARKER}\\n")
+            or not body.startswith(f"{PROVENANCE_COMMENT_MARKER}\n")
         ):
             continue
         try:
-            comment_manifest = json.loads(body.split("\\n", maxsplit=1)[1])
+            comment_manifest = json.loads(body.split("\n", maxsplit=1)[1])
         except (IndexError, json.JSONDecodeError):
             return False
         if not isinstance(comment_manifest, dict):
