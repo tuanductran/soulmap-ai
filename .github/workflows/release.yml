@@ -141,6 +141,6 @@ jobs:
           pr_number="$(gh pr view "$RELEASE_BRANCH" --repo "$GITHUB_REPOSITORY" --json number --jq .number)"
           marker='<!-- soulmap-release-prep-provenance:v1 -->'
           manifest="$(jq -cS . "$MANIFEST_PATH")"
-          body="$(printf '%s\\n%s' "$marker" "$manifest")"
+          body="$(printf '%s\n%s' "$marker" "$manifest")"
           gh api "repos/$GITHUB_REPOSITORY/issues/$pr_number/comments" \
             --method POST --field body="$body" >/dev/null
