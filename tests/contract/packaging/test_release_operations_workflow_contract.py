@@ -234,7 +234,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             "user": {"login": "tuanductran"},
             "author_association": "OWNER",
             "body": (
-                "<!-- soulmap-release-prep-provenance:v1 -->\\n"
+                "<!-- soulmap-release-prep-provenance:v1 -->\n"
                 + json.dumps(candidate_manifest, sort_keys=True)
             ),
         }
