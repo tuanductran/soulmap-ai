@@ -378,9 +378,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         assert (
             run_guard(
                 candidate_comments=[
-                    make_provenance_comment(
-                        {**manifest, "release_head_sha": "d" * 40}
-                    )
+                    make_provenance_comment({**manifest, "release_head_sha": "d" * 40})
                 ]
             ).returncode
             == 1
