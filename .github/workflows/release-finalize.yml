@@ -97,15 +97,33 @@ jobs:
             > "$RUNNER_TEMP/release-prep-workflow-run.json"
 
           run_attempt="$(jq -er '.run_attempt' "$RUNNER_TEMP/release-prep-workflow-run.json")"
-          # Recovery is supported for 90 days while the original run artifact is retained.
-          # After expiry, fail closed and start a new Release Prep cycle; never substitute
-          # provenance from a different run for the already-merged release PR.
-          mkdir -p "$RUNNER_TEMP/release-prep-provenance"
-          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
-            --name "release-prep-provenance-${run_id}-${run_attempt}" \
-            --dir "$RUNNER_TEMP/release-prep-provenance"
-          manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"
-          test -f "$manifest"
+          # The owner-authored PR comment is the durable provenance record.
+          # The 90-day workflow artifact is an audit copy, not a recovery dependency.
+          gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
+            "repos/${GITHUB_REPOSITORY}/issues/${pr_number}/comments?per_page=100" \
+            > "$RUNNER_TEMP/release-pr-comments.json"
+          marker='<!-- soulmap-release-prep-provenance:v1 -->'
+          jq -cer \
+            --arg owner "$GITHUB_REPOSITORY_OWNER" \
+            --arg marker "$marker" \
+            --argjson run_id "$run_id" \
+            --argjson run_attempt "$run_attempt" '
+              add
+              | [
+                  .[]
+                  | select(
+                      ((.user.login // "") | ascii_downcase) == ($owner | ascii_downcase)
+                      and .author_association == "OWNER"
+                      and ((.body // "") | startswith($marker + "\\n"))
+                    )
+                  | (.body | sub("^[^\\n]*\\n"; "") | fromjson)
+                  | select(.run_id == $run_id and .run_attempt == $run_attempt)
+                ]
+              | if length == 1 then .[0] else error("Expected exactly one durable provenance comment for this run attempt") end
+            ' "$RUNNER_TEMP/release-pr-comments.json" \
+            > "$RUNNER_TEMP/release-prep-provenance.json"
+          manifest="$RUNNER_TEMP/release-prep-provenance.json"
+          test -s "$manifest"
 
           workflow_sha="$(jq -er '.workflow_sha' "$manifest")"
           if ! git merge-base --is-ancestor "$workflow_sha" origin/main; then
@@ -128,7 +146,8 @@ jobs:
           python3 "$trusted_verifier" \
             "$RUNNER_TEMP/associated-pull-requests.json" "$MERGE_SHA" \
             "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY" \
-            "$manifest" "$RUNNER_TEMP/release-prep-workflow-run.json"
+            "$manifest" "$RUNNER_TEMP/release-pr-comments.json" \
+            "$RUNNER_TEMP/release-prep-workflow-run.json"
 
       - name: Install uv
         uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
