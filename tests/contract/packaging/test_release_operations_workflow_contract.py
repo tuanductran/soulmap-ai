@@ -148,14 +148,13 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
-    assert (
-        'manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"'
-        in workflow
-    )
+    assert 'candidate_manifest="$candidate_dir/release-prep-provenance.json"' in workflow
+    assert 'selected_manifest="$candidate_manifest"' in workflow
+    assert 'cp "$selected_manifest" "$manifest"' in workflow
     assert workflow.index('gh run download "$run_id"') < workflow.index(
         'python3 "$trusted_verifier"'
     )
-    assert workflow.index('test -s "$manifest"') < workflow.index(
+    assert workflow.index('test -s "$candidate_manifest"') < workflow.index(
         'python3 "$trusted_verifier"'
     )
     assert (
