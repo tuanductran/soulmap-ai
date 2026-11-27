@@ -115,3 +115,59 @@ uv run soulmap lint
 - `src/soulmap/runtime/guards/response_contract.py`: response-level contract checks
 - `tests/eval_regression/test_safety_evals.py`: detector and scope safety regression suite
 - `evals/datasets/safety_test_cases.json`: red-team cases used by the safety eval script
+
+## Release provenance recovery after artifact expiry
+
+This runbook is scoped to the artifact-backed Release Finalize implementation
+merged by [PR #1061](https://github.com/tuanductran/soulmap-ai/pull/1061) at
+commit `41a7d824cf3f68b6ce5706a6367d769bf7c49977`. Current `main` uses this
+implementation. The procedure applies only to Release Prep runs created by the
+trusted workflow after that merge. Release-prep PRs created by the earlier
+workflow do not have the original run-scoped provenance artifact; this design
+does not retroactively establish provenance for them. Do not use this runbook
+to authorize publication of a legacy release-prep PR. Keep finalization fail-closed
+and require a separately reviewed recovery design for any such case.
+
+The automated Release Finalize workflow accepts only the immutable provenance
+artifact created by the original Release Prep workflow run and attempt. GitHub
+Actions artifact retention is finite (currently configured as 90 days for the
+Release Prep provenance artifact). When that artifact is expired or unavailable,
+the automated workflow must fail closed. Do not substitute a later Release Prep
+run, reconstruct a manifest from a mutable pull-request comment, or weaken the
+provenance verifier.
+
+If a release tag was created but GitHub Release publication failed after the
+original provenance artifact expired, treat recovery as a release-operations
+exception requiring a separately reviewed, human-controlled procedure:
+
+1. Open an incident/operations issue referencing the original merged release PR,
+   merge commit SHA, release tag, original Release Prep run ID and attempt, and
+   the failed Release Finalize run. Do not place tokens, secret values, or private
+   user data in the issue.
+2. Preserve the original tag and inspect it read-only. Confirm that it is the
+   expected immutable annotated tag and resolves to the exact original release
+   commit. Never move, force-update, or recreate the tag to make recovery pass.
+3. Gather independent GitHub records for the original workflow run and attempt,
+   workflow path/ref/SHA, repository, successful conclusion, release-prep branch,
+   PR head SHA, merge SHA, and the exact nine-file generated release diff.
+   A PR comment is an index only and is not provenance evidence.
+4. Have a maintainer who did not author the recovery change independently review
+   the evidence and proposed recovery implementation. Record the reviewer, evidence
+   links, exact tag/commit, artifact hashes, and decision in the issue.
+5. Do not publish from this runbook alone. The repository does not provide
+   an approved standalone command that can restore an expired immutable Prep
+   artifact or re-establish the original verifier's complete trust decision.
+   Do not substitute a fresh build, invoke the release action manually, or use
+   `gh release create` as an undocumented bypass. If publication is required,
+   first propose a separate implementation that independently validates the
+   original run/attempt, workflow revision, PR head, merge SHA, exact changed-file
+   set, and artifact digests. Require independent maintainer review and its own
+   regression/CI evidence before using it.
+6. If the original artifact or any required evidence cannot be established,
+   or no separately approved recovery implementation exists, stop. Keep the
+   original tag intact and leave the GitHub Release unpublished.
+
+This is an evidence-preservation and escalation procedure, not a manual
+publication path or an alternate automated trust path. It does not authorize
+direct pushes to `main`, changes to branch rulesets,
+relaxation of release immutability, or bypass of repository permissions.
