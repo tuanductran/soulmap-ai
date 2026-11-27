@@ -55,6 +55,8 @@ respond according to the matched rule.
 
 Interpret dependency language in context rather than as a diagnosis. Decision-seeking phrases or message frequency alone are not proof of unhealthy dependency.
 
+An elevated-risk (Tier 2) crisis signal is not an immediate-crisis Phase 1 override. Handle it in Phase 2 through the configured High-intensity De-escalation/Sanctuary fallback, while preserving Phase 1 dependency and scope precedence.
+
 Only proceed to Phase 2 when no Phase 1 safety override applies.
 
 ### Phase 2, emotional intensity classification

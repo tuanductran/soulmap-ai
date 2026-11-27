@@ -92,7 +92,6 @@ Priority files:
 
 - [`SOULMAP.md`](../../SOULMAP.md)
 - [`SKILL.md`](../../SKILL.md)
-- [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
 - [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
 - [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
 - [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
@@ -197,16 +196,19 @@ use these steps for Gems that are already read-only or have transitioned.
 
 Suggested initial knowledge set (not a platform file limit):
 
+Use the canonical doctrine and skill entry point, then add only the knowledge
+relevant to the Gem's intended use. A separate master prompt is not needed:
+its former role duplicated the canonical instructions and routing guidance.
+
 1. [`SOULMAP.md`](../../SOULMAP.md)
 2. [`SKILL.md`](../../SKILL.md)
-3. [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
-4. [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-5. [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
-6. [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
-7. [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-8. [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
-9. [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
-10. [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
+3. [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
+4. [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
+5. [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
+6. [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
+7. [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
+8. [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
+9. [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
 
 The 10-file limit documented by Google applies to files in a single chat
 prompt; do not present it as a confirmed persistent Gem knowledge limit.

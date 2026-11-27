@@ -1,7 +1,5 @@
 """Verify Python-owned routing configuration and natural-language mode guidance."""
 
-from pathlib import Path
-
 import pytest
 
 from soulmap.runtime.knowledge.orchestration_source import load_orchestration_rules
@@ -209,16 +207,27 @@ def test_orchestration_rejects_unknown_breakthrough_strength(
 
 def test_phase_one_safety_overrides_precede_framework_selection() -> None:
     """Keep immediate crisis and high dependency ahead of framework selection."""
-    master_prompt = (
-        Path(__file__).resolve().parents[3] / "skills/meta/master-prompt.md"
-    ).read_text(encoding="utf-8")
-    step_one = master_prompt.split("### Step 1", 1)[1].split("### Step 2", 1)[0]
-    assert "immediate crisis" in step_one.lower()
-    assert "high-dependency evidence" in step_one.lower()
-    assert "bypass Steps" in step_one
-    assert "Elevated-risk crisis is not a Phase 1 override" in step_one
-
     orchestration = runtime_skill_path("orchestration").read_text(encoding="utf-8")
+    phase_one = orchestration.split(
+        "### Phase 1, safety override check (MANDATORY FIRST)", 1
+    )[1].split("### Phase 2, emotional intensity classification", 1)[0]
+    phase_two = orchestration.split(
+        "### Phase 2, emotional intensity classification", 1
+    )[1].split("### Phase 3, primary framework selection", 1)[0]
+
+    assert "Immediate crisis" in phase_one
+    assert "High Dependency" in phase_one
+    assert (
+        "Only proceed to Phase 2 when no Phase 1 safety override applies." in phase_one
+    )
+    assert (
+        "An elevated-risk (Tier 2) crisis signal is not an immediate-crisis "
+        "Phase 1 override." in phase_one
+    )
+    assert "configured High-intensity De-escalation/Sanctuary fallback" in phase_one
+    assert "Severe crisis signal" in phase_two
+    assert "do not run primary-framework selection" in phase_two
+
     sanctuary_row = next(
         line for line in orchestration.splitlines() if line.startswith("| Sanctuary |")
     )

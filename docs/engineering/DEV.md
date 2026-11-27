@@ -339,8 +339,6 @@ The shipped knowledge base now includes a central orchestration layer in
   metaphor vs reality enforcement
 - [`../skills/meta/observation-seed.md`](../../skills/meta/observation-seed.md), session
   closing seed library
-- [`../skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md), production-ready
-  system prompt
 
 When editing any of these files, re-run the full eval suite:
 

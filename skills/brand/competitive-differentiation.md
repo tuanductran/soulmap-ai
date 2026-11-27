@@ -93,14 +93,14 @@ SoulMap does not use the following in any public-facing surface:
 - "Come back anytime"
 - "Your bond with [product name]"
 
-See [master-prompt.md](../meta/master-prompt.md) for the complete forbidden phrases list.
+See [persona-voice.md](../voice/persona-voice.md) for current voice and avoid-language guidance, and [SOULMAP.md](../../SOULMAP.md) for non-negotiable language boundaries.
 
 ## Sources to check first
 
 - [SOULMAP.md](../../SOULMAP.md): the behavioral guidance that keeps SoulMap from encouraging dependency
 - [boundaries-safety.md](../safety/boundaries-safety.md): dependency hard rules and redirect protocol
 - [brand-doctrine.md](brand-doctrine.md): brand identity
-- [master-prompt.md](../meta/master-prompt.md): forbidden language list
+- [persona-voice.md](../voice/persona-voice.md): voice and avoid-language guidance
 - [brand-positioning.md](brand-positioning.md): official positioning statements
 - [research-backing.md](research-backing.md): peer-reviewed evidence supporting the approach
 - Apply the anti-dependency framing above consistently in welcome, onboarding, and other
