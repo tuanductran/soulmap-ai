@@ -142,14 +142,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
-    assert (
-        "The immutable run-scoped artifact is authoritative." in workflow
-    )
+    assert "The immutable run-scoped artifact is authoritative." in workflow
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
     assert (
-        'candidate_manifest="$candidate_dir/release-prep-provenance.json"'
-        in workflow
+        'candidate_manifest="$candidate_dir/release-prep-provenance.json"' in workflow
     )
     assert 'selected_manifest="$candidate_manifest"' in workflow
     assert 'cp "$selected_manifest" "$manifest"' in workflow
