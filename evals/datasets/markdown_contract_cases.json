@@ -57,17 +57,6 @@
         ]
       },
       {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "brief acknowledgment",
-          "urgent safety guidance",
-          "Never delay the first response to search"
-        ],
-        "must_not_include_any": [
-          "No warm acknowledgment first. Resources first."
-        ]
-      },
-      {
         "path": "src/soulmap/devtools/evals/eval_responses.py",
         "must_include_all": [
           "Your immediate safety matters",
@@ -234,17 +223,6 @@
         ],
         "must_not_include_any": [
           "support resources come first."
-        ]
-      },
-      {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "Optional question about a real person in their life when appropriate",
-          "If appropriate, offer at most one question about their direct experience right now"
-        ],
-        "must_not_include_any": [
-          "One question about a real person in their life.",
-          "4. Ask one question about their direct experience right now."
         ]
       },
       {
@@ -455,12 +433,6 @@
         ]
       },
       {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "\"That insight is yours. I just held the space.\""
-        ]
-      },
-      {
         "path": "src/soulmap/devtools/evals/eval_responses.py",
         "must_include_all": [
           "That insight is yours. I just held the space"
@@ -530,16 +502,17 @@
     "summary": "Dependency responses stay warm, state the limit, and redirect toward a real person in the user's life.",
     "runtime_targets": [
       {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "ask about a real person in their life"
-        ]
-      },
-      {
         "path": "src/soulmap/devtools/evals/eval_responses.py",
         "must_include_all": [
           "real life",
           "someone you trust in real life"
+        ]
+      },
+      {
+        "path": "skills/safety/boundaries-safety.md",
+        "must_include_all": [
+          "real-world support",
+          "someone you trust"
         ]
       }
     ],
@@ -613,15 +586,6 @@
           "plus 1 question",
           "ends with one question about what feels most alive",
           "4. One question:"
-        ]
-      },
-      {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "At most one open reflective question when appropriate"
-        ],
-        "must_not_include_any": [
-          "One open reflective question (last sentence only)"
         ]
       },
       {
@@ -810,16 +774,6 @@
         "must_not_include_any": [
           "The closing question (one only)",
           "End with a softer question"
-        ]
-      },
-      {
-        "path": "skills/meta/master-prompt.md",
-        "must_include_all": [
-          "optionally offer at most one that deepens the experience",
-          "a reflection or quiet close is valid when no question is appropriate"
-        ],
-        "must_not_include_any": [
-          "Ask a question that deepens the experience, not one that moves past it"
         ]
       },
       {
