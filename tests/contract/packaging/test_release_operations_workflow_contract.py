@@ -167,6 +167,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         "actions/runs/${run_id}/artifacts?per_page=100" in workflow
     )
     assert "actions/runs/${run_id}/attempts/${attempt}" in workflow
+    assert "selected_artifact_name" in workflow
     assert "run_attempt is the latest attempt" in workflow
     assert "selected_count -ne 1" in workflow
     assert "pr_head_sha" in workflow
@@ -313,6 +314,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             pull_requests: object = None,
             changed_files: object = None,
             candidate_manifest: object = None,
+            candidate_artifact_name: str | None = None,
             candidate_run: object = None,
             candidate_comments: object = None,
         ) -> subprocess.CompletedProcess[str]:
@@ -332,6 +334,10 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             manifest_path.write_text(
                 json.dumps(selected_manifest),
                 encoding="utf-8",
+            )
+            selected_artifact_name = candidate_artifact_name or (
+                "release-prep-provenance-"
+                f"{selected_manifest['run_id']}-{selected_manifest['run_attempt']}"
             )
             selected_comments = (
                 candidate_comments
@@ -354,6 +360,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
                     merge_sha,
                     str(changed_files_path),
                     repository,
+                    selected_artifact_name,
                     str(manifest_path),
                     str(provenance_comments_path),
                     str(workflow_run_path),
@@ -377,6 +384,13 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         assert paginated_result.returncode == 0, paginated_result.stderr
 
         assert run_guard(candidate_comments=[]).returncode == 1
+        assert (
+            run_guard(candidate_artifact_name="release-prep-provenance-123-2").returncode
+            == 1
+        )
+        assert (
+            run_guard(candidate_run={**workflow_run, "run_attempt": 2}).returncode == 1
+        )
         edited_but_matching_comment = make_provenance_comment(manifest) | {
             "updated_at": "2026-11-17T00:01:00Z"
         }
