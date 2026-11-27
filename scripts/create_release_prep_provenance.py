@@ -19,6 +19,7 @@ def build_release_prep_provenance(
     run_attempt: str,
     workflow_ref: str,
     workflow_sha: str,
+    run_head_sha: str,
     release_branch: str,
     release_head_sha: str,
 ) -> dict[str, str | int]:
@@ -31,6 +32,8 @@ def build_release_prep_provenance(
         raise ValueError("run_attempt must be a positive integer")
     if not _SHA_PATTERN.fullmatch(workflow_sha):
         raise ValueError("workflow_sha must be a full lowercase commit SHA")
+    if not _SHA_PATTERN.fullmatch(run_head_sha):
+        raise ValueError("run_head_sha must be a full lowercase commit SHA")
     if not _SHA_PATTERN.fullmatch(release_head_sha):
         raise ValueError("release_head_sha must be a full lowercase commit SHA")
 
@@ -48,6 +51,7 @@ def build_release_prep_provenance(
         "run_attempt": int(run_attempt),
         "workflow_ref": workflow_ref,
         "workflow_sha": workflow_sha,
+        "run_head_sha": run_head_sha,
         "release_branch": release_branch,
         "release_head_sha": release_head_sha,
     }
@@ -65,6 +69,7 @@ def main() -> int:
             run_attempt=os.environ["GITHUB_RUN_ATTEMPT"],
             workflow_ref=os.environ["GITHUB_WORKFLOW_REF"],
             workflow_sha=os.environ["GITHUB_WORKFLOW_SHA"],
+            run_head_sha=os.environ["GITHUB_SHA"],
             release_branch=os.environ["RELEASE_BRANCH"],
             release_head_sha=os.environ["RELEASE_HEAD_SHA"],
         )
