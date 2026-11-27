@@ -169,6 +169,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "selected_count -ne 1" in workflow
     assert "pr_head_sha" in workflow
     assert "release_head_sha == $release_head_sha" in workflow
+    assert ".head_sha == $manifest[0].run_head_sha" in workflow
+    assert 'git merge-base --is-ancestor "$workflow_sha" "$run_head_sha"' in workflow
+    assert 'git merge-base --is-ancestor "$run_head_sha" origin/main' in workflow
     assert "jq -er '.run_attempt'" not in workflow
     verifier = (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
     assert "_has_matching_owner_provenance_comment" in verifier
@@ -193,6 +196,7 @@ def test_release_prep_provenance_manifest_binds_run_to_exact_commit() -> None:
             "tuanductran/soulmap-ai/.github/workflows/release.yml@refs/heads/main"
         ),
         "GITHUB_WORKFLOW_SHA": "b" * 40,
+        "GITHUB_SHA": "d" * 40,
         "RELEASE_BRANCH": "release/prep-123",
         "RELEASE_HEAD_SHA": "c" * 40,
     }
@@ -214,6 +218,7 @@ def test_release_prep_provenance_manifest_binds_run_to_exact_commit() -> None:
             "run_attempt": 1,
             "workflow_ref": environment["GITHUB_WORKFLOW_REF"],
             "workflow_sha": "b" * 40,
+            "run_head_sha": "d" * 40,
             "release_branch": "release/prep-123",
             "release_head_sha": "c" * 40,
         }
@@ -230,12 +235,22 @@ def test_release_prep_provenance_manifest_binds_run_to_exact_commit() -> None:
             env=invalid_environment,
         )
         assert invalid_result.returncode != 0
+        invalid_sha_environment = {**environment, "GITHUB_SHA": "not-a-sha"}
+        invalid_sha_result = subprocess.run(
+            [sys.executable, str(script), str(output)],
+            check=False,
+            capture_output=True,
+            text=True,
+            env=invalid_sha_environment,
+        )
+        assert invalid_sha_result.returncode != 0
 
 
 def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> None:
     script = ROOT / "scripts" / "verify_release_finalize_provenance.py"
     merge_sha = "a" * 40
     workflow_sha = "b" * 40
+    run_head_sha = "d" * 40
     release_head_sha = "c" * 40
     repository = "tuanductran/soulmap-ai"
     manifest = {
@@ -246,6 +261,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             "tuanductran/soulmap-ai/.github/workflows/release.yml@refs/heads/main"
         ),
         "workflow_sha": workflow_sha,
+        "run_head_sha": run_head_sha,
         "release_branch": "release/prep-123",
         "release_head_sha": release_head_sha,
     }
@@ -255,7 +271,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         "event": "workflow_dispatch",
         "path": ".github/workflows/release.yml",
         "head_branch": "main",
-        "head_sha": workflow_sha,
+        "head_sha": run_head_sha,
         "conclusion": "success",
         "repository": {"full_name": repository},
     }
@@ -440,7 +456,7 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             {**workflow_run, "event": "pull_request"},
             {**workflow_run, "path": ".github/workflows/other.yml"},
             {**workflow_run, "head_branch": "feature/untrusted"},
-            {**workflow_run, "head_sha": "d" * 40},
+            {**workflow_run, "head_sha": "e" * 40},
             {**workflow_run, "conclusion": "failure"},
             {**workflow_run, "run_attempt": 2},
             {**workflow_run, "repository": {"full_name": "fork/soulmap-ai"}},
@@ -450,8 +466,12 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
 
         assert (
             run_guard(
-                candidate_manifest={**manifest, "release_head_sha": "d" * 40}
+                candidate_manifest={**manifest, "release_head_sha": "e" * 40}
             ).returncode
+            == 1
+        )
+        assert (
+            run_guard(candidate_manifest={**manifest, "run_head_sha": "e" * 40}).returncode
             == 1
         )
         assert (
