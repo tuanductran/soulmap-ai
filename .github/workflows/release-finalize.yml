@@ -311,8 +311,6 @@ jobs:
       needs.verify.result == 'success'
     runs-on: ubuntu-26.04
     timeout-minutes: 60
-    environment:
-      name: release-finalize
     permissions:
       contents: read
       id-token: write
@@ -355,7 +353,7 @@ jobs:
           RELEASE_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
         run: |
           if [ -z "${RELEASE_TOKEN//[[:space:]]/}" ]; then
-            echo "SOULMAP_RELEASE_TOKEN must be configured in the protected release-finalize environment."
+            echo "SOULMAP_RELEASE_TOKEN must be configured as a repository secret."
             exit 1
           fi
 
