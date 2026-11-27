@@ -250,8 +250,9 @@ def main() -> int:
         print(
             "Refusing to publish: expected exactly one merged PR whose head "
             "matches a successful workflow_dispatch run of the trusted "
-            "main-branch Release Prep workflow, an owner-authored consistency comment matching the immutable run artifact, "
-            "and the exact generated release file set.",
+            "main-branch Release Prep workflow, an owner-authored consistency "
+            "comment matching the immutable run artifact, and the exact "
+            "generated release file set.",
             file=sys.stderr,
         )
         return 1
