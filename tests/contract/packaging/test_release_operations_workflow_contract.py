@@ -239,6 +239,8 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         return {
             "user": {"login": "tuanductran"},
             "author_association": "OWNER",
+            "created_at": "2026-11-17T00:00:00Z",
+            "updated_at": "2026-11-17T00:00:00Z",
             "body": (
                 "<!-- soulmap-release-prep-provenance:v1 -->\n"
                 + json.dumps(candidate_manifest, sort_keys=True)
@@ -348,6 +350,10 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         assert paginated_result.returncode == 0, paginated_result.stderr
 
         assert run_guard(candidate_comments=[]).returncode == 1
+        edited_owner_comment = make_provenance_comment(manifest) | {
+            "updated_at": "2026-11-17T00:01:00Z"
+        }
+        assert run_guard(candidate_comments=[edited_owner_comment]).returncode == 1
         assert (
             run_guard(
                 candidate_comments=[
