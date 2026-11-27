@@ -142,13 +142,19 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
-    assert "The owner-authored PR comment is tamper-evident: any edit changes updated_at." in workflow
+    assert (
+        "The owner-authored PR comment is tamper-evident: any edit changes updated_at."
+        in workflow
+    )
     assert (
         "The 90-day workflow artifact is an audit copy, not a recovery dependency."
         in workflow
     )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
-    assert "created_at != updated_at" in (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
+    assert (
+        "created_at != updated_at"
+        in (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
+    )
     assert "release-pr-comments.json" in workflow
     assert "gh run download" not in workflow
     assert "release-pr-files.json" in workflow
