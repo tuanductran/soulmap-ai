@@ -371,7 +371,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         edited_but_matching_comment = make_provenance_comment(manifest) | {
             "updated_at": "2026-11-17T00:01:00Z"
         }
-        assert run_guard(candidate_comments=[edited_but_matching_comment]).returncode == 0
+        assert (
+            run_guard(candidate_comments=[edited_but_matching_comment]).returncode == 0
+        )
         edited_manifest_comment = make_provenance_comment(
             {**manifest, "release_head_sha": "d" * 40}
         ) | {"updated_at": "2026-11-17T00:01:00Z"}
