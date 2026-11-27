@@ -39,6 +39,14 @@ jobs:
     env:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     steps:
+      - name: Verify recovery dispatch ref exactly matches main
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "Refusing recovery dispatch outside the exact main ref."
+            exit 1
+          fi
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.merge_commit_sha || github.event.pull_request.merge_commit_sha }}
