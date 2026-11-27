@@ -3,7 +3,7 @@ name: Release Prep
 on:
   workflow_dispatch:
 
-# The protected release-finalize environment supplies SOULMAP_RELEASE_TOKEN.
+# SOULMAP_RELEASE_TOKEN is a repository secret used by trusted main-branch release workflows.
 # This workflow prepares the release PR; final publication runs separately.
 # GITHUB_TOKEN therefore only needs read access; keeping it read-only prevents
 # an accidental step from gaining repository write privileges.
@@ -21,8 +21,6 @@ jobs:
       SOULMAP_REPO_ROOT: ${{ github.workspace }}
     runs-on: ubuntu-26.04
     timeout-minutes: 30
-    environment:
-      name: release-finalize
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
