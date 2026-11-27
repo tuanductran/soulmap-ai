@@ -88,7 +88,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "id-token: write" in workflow
     assert "attestations: write" in workflow
     assert "environment:" not in workflow
-    assert "SOULMAP_RELEASE_TOKEN must be configured as a repository secret." in workflow
+    assert (
+        "SOULMAP_RELEASE_TOKEN must be configured as a repository secret." in workflow
+    )
     assert "secrets.SOULMAP_RELEASE_TOKEN" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
