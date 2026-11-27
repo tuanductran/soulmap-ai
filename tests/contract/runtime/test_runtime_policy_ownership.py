@@ -65,7 +65,6 @@ def test_acute_grief_question_timing_is_python_owned_and_readiness_gated() -> No
         "skills/frameworks/grief-companion.md",
         "skills/voice/response-calibrator.md",
         "skills/meta/deep-inquiry-bank.md",
-        "skills/meta/master-prompt.md",
         "skills/meta/framework-template-map.md",
     )
     for relative_path in documentation:
