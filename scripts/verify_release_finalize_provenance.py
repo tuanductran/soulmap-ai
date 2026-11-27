@@ -107,6 +107,7 @@ def has_valid_release_prep_provenance(
         "run_attempt",
         "workflow_ref",
         "workflow_sha",
+        "run_head_sha",
         "release_branch",
         "release_head_sha",
     }
@@ -116,6 +117,7 @@ def has_valid_release_prep_provenance(
     run_id = manifest.get("run_id")
     run_attempt = manifest.get("run_attempt")
     workflow_sha = manifest.get("workflow_sha")
+    run_head_sha = manifest.get("run_head_sha")
     release_branch = manifest.get("release_branch")
     release_head_sha = manifest.get("release_head_sha")
     expected_workflow_ref = (
@@ -131,6 +133,7 @@ def has_valid_release_prep_provenance(
         or run_attempt <= 0
         or manifest.get("workflow_ref") != expected_workflow_ref
         or not _is_sha(workflow_sha)
+        or not _is_sha(run_head_sha)
         or not isinstance(release_branch, str)
         or release_branch != f"release/prep-{run_id}"
         or not _is_sha(release_head_sha)
@@ -151,7 +154,7 @@ def has_valid_release_prep_provenance(
             ".github/workflows/release.yml@main",
         }
         or workflow_run.get("head_branch") != "main"
-        or workflow_run.get("head_sha") != workflow_sha
+        or workflow_run.get("head_sha") != run_head_sha
         or workflow_run.get("conclusion") != "success"
         or run_repository.get("full_name") != repository
     ):
