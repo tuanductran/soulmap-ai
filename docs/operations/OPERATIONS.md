@@ -151,7 +151,7 @@ exception requiring a separately reviewed, human-controlled procedure:
    PR head SHA, merge SHA, and the exact nine-file generated release diff.
    A PR comment is an index only and is not provenance evidence.
 4. Have a maintainer who did not author the recovery change independently review
-   the evidence and proposed publication operation. Record the reviewer, evidence
+   the evidence and proposed recovery implementation. Record the reviewer, evidence
    links, exact tag/commit, artifact hashes, and decision in the issue.
 5. Do not publish from this runbook alone. The repository does not provide
    an approved standalone command that can restore an expired immutable Prep
@@ -166,6 +166,7 @@ exception requiring a separately reviewed, human-controlled procedure:
    or no separately approved recovery implementation exists, stop. Keep the
    original tag intact and leave the GitHub Release unpublished.
 
-This procedure is a manual exception path, not an alternate automated trust
-path. It does not authorize direct pushes to `main`, changes to branch rulesets,
+This is an evidence-preservation and escalation procedure, not a manual
+publication path or an alternate automated trust path. It does not authorize
+direct pushes to `main`, changes to branch rulesets,
 relaxation of release immutability, or bypass of repository permissions.
