@@ -143,24 +143,22 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert (
-        "The owner-authored PR comment is tamper-evident: any edit changes updated_at."
-        in workflow
-    )
-    assert (
         "The immutable run-scoped artifact is the authoritative provenance source."
         in workflow
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
+    assert 'manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"' in workflow
+    assert workflow.index('gh run download "$run_id"') < workflow.index('python3 "$trusted_verifier"')
+    assert workflow.index('test -s "$manifest"') < workflow.index('python3 "$trusted_verifier"')
     assert (
         "Recovery intentionally fails closed after GitHub's 90-day artifact retention."
         in workflow
     )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
-    assert (
-        "created_at != updated_at"
-        in (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
-    )
+    verifier = (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
+    assert "_has_matching_owner_provenance_comment" in verifier
+    assert "created_at != updated_at" not in verifier
     assert "release-pr-comments.json" in workflow
     assert "gh run download" in workflow
     assert "release-pr-files.json" in workflow
@@ -363,10 +361,14 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         assert paginated_result.returncode == 0, paginated_result.stderr
 
         assert run_guard(candidate_comments=[]).returncode == 1
-        edited_owner_comment = make_provenance_comment(manifest) | {
+        edited_but_matching_comment = make_provenance_comment(manifest) | {
             "updated_at": "2026-11-17T00:01:00Z"
         }
-        assert run_guard(candidate_comments=[edited_owner_comment]).returncode == 1
+        assert run_guard(candidate_comments=[edited_but_matching_comment]).returncode == 0
+        edited_manifest_comment = make_provenance_comment(
+            {**manifest, "release_head_sha": "d" * 40}
+        ) | {"updated_at": "2026-11-17T00:01:00Z"}
+        assert run_guard(candidate_comments=[edited_manifest_comment]).returncode == 1
         assert (
             run_guard(
                 candidate_comments=[
