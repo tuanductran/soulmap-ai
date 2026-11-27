@@ -146,14 +146,18 @@ exception requiring a separately reviewed, human-controlled procedure:
 4. Have a maintainer who did not author the recovery change independently review
    the evidence and proposed publication operation. Record the reviewer, evidence
    links, exact tag/commit, artifact hashes, and decision in the issue.
-5. Publish only already-verified release artifacts for that exact commit. Re-run
-   artifact hash, extracted-package, release-gate, and attestation checks. Do not
-   build replacement artifacts from a different commit or claim the original
-   workflow provenance was revalidated if it was not.
-6. If the original artifact, exact attempt metadata, release PR evidence, or
-   required independent review cannot be established, stop. Keep the tag intact
-   and leave the GitHub Release unpublished pending a separately approved
-   recovery design.
+5. Do not publish from this runbook alone. The repository does not provide
+   an approved standalone command that can restore an expired immutable Prep
+   artifact or re-establish the original verifier's complete trust decision.
+   Do not substitute a fresh build, invoke the release action manually, or use
+   `gh release create` as an undocumented bypass. If publication is required,
+   first propose a separate implementation that independently validates the
+   original run/attempt, workflow revision, PR head, merge SHA, exact changed-file
+   set, and artifact digests. Require independent maintainer review and its own
+   regression/CI evidence before using it.
+6. If the original artifact or any required evidence cannot be established,
+   or no separately approved recovery implementation exists, stop. Keep the
+   original tag intact and leave the GitHub Release unpublished.
 
 This procedure is a manual exception path, not an alternate automated trust
 path. It does not authorize direct pushes to `main`, changes to branch rulesets,
