@@ -473,7 +473,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
             == 1
         )
         assert (
-            run_guard(candidate_manifest={**manifest, "run_head_sha": "e" * 40}).returncode
+            run_guard(
+                candidate_manifest={**manifest, "run_head_sha": "e" * 40}
+            ).returncode
             == 1
         )
         assert (
