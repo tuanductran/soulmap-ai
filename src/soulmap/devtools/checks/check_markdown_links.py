@@ -183,7 +183,7 @@ def _check_link_label(
     the destination and stays correct wherever it is quoted.
 
     Scoped to shipped content on purpose. Inside ``docs/`` a label like
-    ``skills/meta/master-prompt.md`` tells a maintainer where the file lives in
+    ``skills/meta/orchestration.md`` tells a maintainer where the file lives in
     the repository, which is useful and true. The same label inside ``skills/``
     describes a layout the reader of an extracted package does not have.
 
