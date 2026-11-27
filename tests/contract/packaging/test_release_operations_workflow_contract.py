@@ -148,7 +148,10 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
-    assert 'candidate_manifest="$candidate_dir/release-prep-provenance.json"' in workflow
+    assert (
+        'candidate_manifest="$candidate_dir/release-prep-provenance.json"'
+        in workflow
+    )
     assert 'selected_manifest="$candidate_manifest"' in workflow
     assert 'cp "$selected_manifest" "$manifest"' in workflow
     assert workflow.index('gh run download "$run_id"') < workflow.index(
@@ -162,9 +165,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
-    assert (
-        "actions/runs/${run_id}/artifacts?per_page=100" in workflow
-    )
+    assert "actions/runs/${run_id}/artifacts?per_page=100" in workflow
     assert "actions/runs/${run_id}/attempts/${attempt}" in workflow
     assert "selected_artifact_name" in workflow
     assert "run_attempt is the latest attempt" in workflow
@@ -384,7 +385,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
 
         assert run_guard(candidate_comments=[]).returncode == 1
         assert (
-            run_guard(candidate_artifact_name="release-prep-provenance-123-2").returncode
+            run_guard(
+                candidate_artifact_name="release-prep-provenance-123-2"
+            ).returncode
             == 1
         )
         assert (
