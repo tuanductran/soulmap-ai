@@ -157,7 +157,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         'python3 "$trusted_verifier"'
     )
     assert (
-        "Recovery intentionally fails closed after GitHub's 90-day artifact retention."
+        "Recovery intentionally fails closed after GitHub's 90-day retention."
         in workflow
     )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
