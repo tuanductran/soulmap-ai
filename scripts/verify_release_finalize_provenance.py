@@ -41,7 +41,7 @@ def _has_durable_owner_provenance_comment(
     repository: str,
     manifest: dict[str, object],
 ) -> bool:
-    """Require one owner-authored durable comment for this exact run attempt."""
+    """Require one unedited owner-authored comment for this exact run attempt."""
     owner = repository.split("/", maxsplit=1)[0].casefold()
     matching_manifests: list[dict[str, object]] = []
     for item in comments:
@@ -49,7 +49,15 @@ def _has_durable_owner_provenance_comment(
             continue
         user = item.get("user")
         body = item.get("body")
-        if not isinstance(user, dict) or not isinstance(body, str):
+        created_at = item.get("created_at")
+        updated_at = item.get("updated_at")
+        if (
+            not isinstance(user, dict)
+            or not isinstance(body, str)
+            or not isinstance(created_at, str)
+            or not isinstance(updated_at, str)
+            or created_at != updated_at
+        ):
             continue
         login = user.get("login")
         if (
@@ -245,7 +253,7 @@ def main() -> int:
             "Refusing to publish: expected exactly one merged PR whose head "
             "matches a successful workflow_dispatch run of the trusted "
             "main-branch Release Prep workflow, an owner-authored durable "
-            "provenance comment, and the exact generated release file set.",
+            "unedited provenance comment, and the exact generated release file set.",
             file=sys.stderr,
         )
         return 1
