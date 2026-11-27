@@ -159,7 +159,7 @@ jobs:
                 and .head_branch == "main"
                 and .conclusion == "success"
                 and .repository.full_name == $repository
-                and .head_sha == $manifest[0].workflow_sha
+                and .head_sha == $manifest[0].run_head_sha
                 and $manifest[0].repository == $repository
                 and $manifest[0].run_id == $run_id
                 and $manifest[0].run_attempt == $attempt
@@ -194,6 +194,15 @@ jobs:
             "repos/${GITHUB_REPOSITORY}/issues/${pr_number}/comments?per_page=100" \
             > "$RUNNER_TEMP/release-pr-comments.json"
           workflow_sha="$(jq -er '.workflow_sha' "$manifest")"
+          run_head_sha="$(jq -er '.run_head_sha' "$manifest")"
+          if ! git merge-base --is-ancestor "$workflow_sha" "$run_head_sha"; then
+            echo "Refusing to publish: workflow source was not in the dispatched main ref."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$run_head_sha" origin/main; then
+            echo "Refusing to publish: dispatched main ref is not on current main history."
+            exit 1
+          fi
           if ! git merge-base --is-ancestor "$workflow_sha" origin/main; then
             echo "Refusing to publish: Release Prep workflow source is not on main."
             exit 1
