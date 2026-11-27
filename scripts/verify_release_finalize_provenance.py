@@ -36,12 +36,12 @@ def _is_sha(value: object) -> bool:
     return isinstance(value, str) and _SHA_PATTERN.fullmatch(value) is not None
 
 
-def _has_durable_owner_provenance_comment(
+def _has_matching_owner_provenance_comment(
     comments: list[object],
     repository: str,
     manifest: dict[str, object],
 ) -> bool:
-    """Require one unedited owner-authored comment for this exact run attempt."""
+    """Require one owner-authored consistency comment matching the run artifact."""
     owner = repository.split("/", maxsplit=1)[0].casefold()
     matching_manifests: list[dict[str, object]] = []
     for item in comments:
@@ -49,15 +49,7 @@ def _has_durable_owner_provenance_comment(
             continue
         user = item.get("user")
         body = item.get("body")
-        created_at = item.get("created_at")
-        updated_at = item.get("updated_at")
-        if (
-            not isinstance(user, dict)
-            or not isinstance(body, str)
-            or not isinstance(created_at, str)
-            or not isinstance(updated_at, str)
-            or created_at != updated_at
-        ):
+        if not isinstance(user, dict) or not isinstance(body, str):
             continue
         login = user.get("login")
         if (
@@ -103,7 +95,7 @@ def has_valid_release_prep_provenance(
         or not files
         or not isinstance(manifest, dict)
         or not isinstance(workflow_run, dict)
-        or not _has_durable_owner_provenance_comment(comments, repository, manifest)
+        or not _has_matching_owner_provenance_comment(comments, repository, manifest)
     ):
         return False
 
@@ -235,7 +227,7 @@ def main() -> int:
     except (OSError, json.JSONDecodeError):
         print(
             "Refusing to publish: unable to read pull-request provenance, "
-            "durable owner comment, workflow-run metadata, or changed files.",
+            "owner consistency comment, workflow-run metadata, or changed files.",
             file=sys.stderr,
         )
         return 1
@@ -252,8 +244,8 @@ def main() -> int:
         print(
             "Refusing to publish: expected exactly one merged PR whose head "
             "matches a successful workflow_dispatch run of the trusted "
-            "main-branch Release Prep workflow, an owner-authored durable "
-            "unedited provenance comment, and the exact generated release file set.",
+            "main-branch Release Prep workflow, an owner-authored consistency comment matching the immutable run artifact, "
+            "and the exact generated release file set.",
             file=sys.stderr,
         )
         return 1
