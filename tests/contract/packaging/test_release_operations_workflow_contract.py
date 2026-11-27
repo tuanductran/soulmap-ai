@@ -69,6 +69,11 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "merge_commit_sha:" in workflow
     assert "inputs.merge_commit_sha" in workflow
     assert "github.ref == 'refs/heads/main'" in workflow
+    assert "Verify recovery dispatch ref exactly matches main" in workflow
+    assert 'if [ "$GITHUB_REF" != "refs/heads/main" ]; then' in workflow
+    assert workflow.index("Verify recovery dispatch ref exactly matches main") < workflow.index(
+        "actions/checkout@"
+    )
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
