@@ -92,19 +92,100 @@ jobs:
             *[!0-9]*|'') echo "Refusing to publish: invalid release workflow run ID."; exit 1 ;;
           esac
 
-          gh api --header "Accept: application/vnd.github+json" \
-            "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}" \
-            > "$RUNNER_TEMP/release-prep-workflow-run.json"
+          # Find retained artifacts from this exact run. The run-level API's
+          # run_attempt is the latest attempt, not necessarily the attempt that
+          # created the PR's manifest.
+          gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
+            "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/artifacts?per_page=100" \
+            > "$RUNNER_TEMP/release-prep-artifacts.json"
+          jq -r --argjson run_id "$run_id" '
+            [
+              .[].artifacts[]?
+              | select(
+                  .expired == false
+                  and .workflow_run.id == $run_id
+                  and (
+                    .name
+                    | test("^release-prep-provenance-" + ($run_id | tostring) + "-[1-9][0-9]*$")
+                  )
+                )
+              | .name
+            ]
+            | unique
+            | .[]
+          ' "$RUNNER_TEMP/release-prep-artifacts.json" \
+            > "$RUNNER_TEMP/release-prep-artifact-names.txt"
+          mapfile -t artifact_names < "$RUNNER_TEMP/release-prep-artifact-names.txt"
+          if [ "${#artifact_names[@]}" -eq 0 ]; then
+            echo "Refusing to publish: no retained run-scoped provenance artifact exists."
+            exit 1
+          fi
 
-          run_attempt="$(jq -er '.run_attempt' "$RUNNER_TEMP/release-prep-workflow-run.json")"
-          # The immutable run-scoped artifact is the authoritative provenance source.
-          # Recovery intentionally fails closed after GitHub's 90-day artifact retention.
-          artifact_name="release-prep-provenance-${run_id}-${run_attempt}"
-          mkdir -p "$RUNNER_TEMP/release-prep-provenance"
-          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
-            --name "$artifact_name" --dir "$RUNNER_TEMP/release-prep-provenance"
-          manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"
-          test -s "$manifest"
+          pr_head_sha="$(jq -er '.head.sha' "$RUNNER_TEMP/matching-release-pr.json")"
+          selected_count=0
+          selected_manifest=""
+          selected_workflow_run=""
+          for artifact_name in "${artifact_names[@]}"; do
+            attempt="${artifact_name##*-}"
+            case "$attempt" in
+              *[!0-9]*|'') echo "Refusing to publish: invalid artifact attempt suffix."; exit 1 ;;
+            esac
+            candidate_dir="$RUNNER_TEMP/release-prep-candidates/$attempt"
+            mkdir -p "$candidate_dir"
+            gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
+              --name "$artifact_name" --dir "$candidate_dir"
+            candidate_manifest="$candidate_dir/release-prep-provenance.json"
+            candidate_run="$candidate_dir/workflow-run.json"
+            test -s "$candidate_manifest"
+            gh api --header "Accept: application/vnd.github+json" \
+              "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/attempts/${attempt}" \
+              > "$candidate_run"
+
+            if jq -e \
+              --arg repository "$GITHUB_REPOSITORY" \
+              --arg release_branch "$head_ref" \
+              --arg release_head_sha "$pr_head_sha" \
+              --argjson run_id "$run_id" \
+              --argjson attempt "$attempt" \
+              --slurpfile manifest "$candidate_manifest" '
+                .id == $run_id
+                and .run_attempt == $attempt
+                and .event == "workflow_dispatch"
+                and (
+                  .path == ".github/workflows/release.yml"
+                  or .path == ".github/workflows/release.yml@main"
+                )
+                and .head_branch == "main"
+                and .conclusion == "success"
+                and .repository.full_name == $repository
+                and .head_sha == $manifest[0].workflow_sha
+                and $manifest[0].repository == $repository
+                and $manifest[0].run_id == $run_id
+                and $manifest[0].run_attempt == $attempt
+                and $manifest[0].workflow_ref == (
+                  $repository + "/.github/workflows/release.yml@refs/heads/main"
+                )
+                and $manifest[0].release_branch == $release_branch
+                and $manifest[0].release_head_sha == $release_head_sha
+              ' "$candidate_run" > /dev/null; then
+              selected_count=$((selected_count + 1))
+              selected_manifest="$candidate_manifest"
+              selected_workflow_run="$candidate_run"
+            fi
+          done
+
+          if [ "$selected_count" -ne 1 ]; then
+            echo "Refusing to publish: expected exactly one successful attempt artifact matching the merged PR head."
+            exit 1
+          fi
+
+          # The immutable run-scoped artifact is authoritative. The selected
+          # attempt is established by its artifact name, manifest, and attempt API.
+          # Recovery intentionally fails closed after GitHub's 90-day retention.
+          manifest="$RUNNER_TEMP/release-prep-provenance.json"
+          workflow_run="$RUNNER_TEMP/release-prep-workflow-run.json"
+          cp "$selected_manifest" "$manifest"
+          cp "$selected_workflow_run" "$workflow_run"
 
           # The owner-authored PR comment is only a consistency index, never the source of truth.
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
@@ -132,7 +213,7 @@ jobs:
             "$RUNNER_TEMP/associated-pull-requests.json" "$MERGE_SHA" \
             "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY" \
             "$manifest" "$RUNNER_TEMP/release-pr-comments.json" \
-            "$RUNNER_TEMP/release-prep-workflow-run.json"
+            "$workflow_run"
 
       - name: Install uv
         uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
