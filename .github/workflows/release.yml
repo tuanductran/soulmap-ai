@@ -3,7 +3,8 @@ name: Release Prep
 on:
   workflow_dispatch:
 
-# The workflow authenticates repository writes with SOULMAP_RELEASE_TOKEN.
+# SOULMAP_RELEASE_TOKEN is a repository secret used by trusted main-branch release workflows.
+# This workflow prepares the release PR; final publication runs separately.
 # GITHUB_TOKEN therefore only needs read access; keeping it read-only prevents
 # an accidental step from gaining repository write privileges.
 permissions:
@@ -83,6 +84,22 @@ jobs:
             echo "sha=$(git rev-parse HEAD)"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Create run-bound release provenance manifest
+        env:
+          RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}
+          RELEASE_HEAD_SHA: ${{ steps.bump.outputs.sha }}
+        run: |
+          uv run python scripts/create_release_prep_provenance.py \
+            "$RUNNER_TEMP/release-prep-provenance.json"
+
+      - name: Upload run-bound release provenance
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-prep-provenance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/release-prep-provenance.json
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Verify bumped release tree
         run: |
           uv run soulmap markdown-contract --root .
@@ -106,3 +123,22 @@ jobs:
           branch: ${{ steps.bump.outputs.branch }}
           base: main
           tag: ${{ steps.bump.outputs.tag }}
+
+      - name: Record durable release provenance on pull request
+        env:
+          GH_TOKEN: ${{ secrets.SOULMAP_RELEASE_TOKEN }}
+          RELEASE_BRANCH: ${{ steps.bump.outputs.branch }}
+          MANIFEST_PATH: ${{ runner.temp }}/release-prep-provenance.json
+          EXPECTED_TOKEN_ACTOR: tuanductran
+        run: |
+          token_actor="$(gh api user --jq .login)"
+          if [ "$token_actor" != "$EXPECTED_TOKEN_ACTOR" ]; then
+            echo "Refusing to record provenance: release token is not owned by the repository owner."
+            exit 1
+          fi
+          pr_number="$(gh pr view "$RELEASE_BRANCH" --repo "$GITHUB_REPOSITORY" --json number --jq .number)"
+          marker='<!-- soulmap-release-prep-provenance:v1 -->'
+          manifest="$(jq -cS . "$MANIFEST_PATH")"
+          body="$(printf '%s\n%s' "$marker" "$manifest")"
+          gh api "repos/$GITHUB_REPOSITORY/issues/$pr_number/comments" \
+            --method POST --field body="$body" >/dev/null

@@ -54,7 +54,13 @@ def test_release_prep_defers_publication_to_finalize_workflow() -> None:
     assert "release/prep-" in content
     assert "gh pr create" not in content
     assert "softprops/action-gh-release" not in content
-    assert "actions/upload-artifact" not in content
+    assert content.count("actions/upload-artifact") == 1
+    assert (
+        "release-prep-provenance-${{ github.run_id }}-${{ github.run_attempt }}"
+        in content
+    )
+    assert "dist/soulmap-ai.zip" not in content
+    assert "dist/soulmap-ai.skill" not in content
     assert "git push --follow-tags" not in content
 
 
@@ -71,7 +77,11 @@ def test_release_finalize_verifies_artifacts_before_publication() -> None:
     assert "uv run soulmap release-provenance " not in content
     assert "uv run soulmap release-health " not in content
     assert f"uses: actions/upload-artifact@{UPLOAD_ARTIFACT_SHA}" in content
-    assert "uses: ./src/action" in content
+    pinned_release_action = (
+        "tuanductran/soulmap-ai/src/action@dbc92c971f3ef2639000c1481c23bb62eaec720f"
+    )
+    assert content.count(f"uses: {pinned_release_action}") == 2
+    assert "uses: ./src/action" not in content
     assert "operation: release" in content
     assert "operation: tag" in content
     assert "target-sha:" in content
