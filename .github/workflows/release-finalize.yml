@@ -97,7 +97,7 @@ jobs:
             > "$RUNNER_TEMP/release-prep-workflow-run.json"
 
           run_attempt="$(jq -er '.run_attempt' "$RUNNER_TEMP/release-prep-workflow-run.json")"
-          # The owner-authored PR comment is the durable provenance record.
+          # The owner-authored PR comment is tamper-evident: any edit changes updated_at.
           # The 90-day workflow artifact is an audit copy, not a recovery dependency.
           gh api --paginate --slurp --header "Accept: application/vnd.github+json" \
             "repos/${GITHUB_REPOSITORY}/issues/${pr_number}/comments?per_page=100" \
