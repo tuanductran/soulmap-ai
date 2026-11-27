@@ -148,9 +148,16 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
-    assert 'manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"' in workflow
-    assert workflow.index('gh run download "$run_id"') < workflow.index('python3 "$trusted_verifier"')
-    assert workflow.index('test -s "$manifest"') < workflow.index('python3 "$trusted_verifier"')
+    assert (
+        'manifest="$RUNNER_TEMP/release-prep-provenance/release-prep-provenance.json"'
+        in workflow
+    )
+    assert workflow.index('gh run download "$run_id"') < workflow.index(
+        'python3 "$trusted_verifier"'
+    )
+    assert workflow.index('test -s "$manifest"') < workflow.index(
+        'python3 "$trusted_verifier"'
+    )
     assert (
         "Recovery intentionally fails closed after GitHub's 90-day artifact retention."
         in workflow
