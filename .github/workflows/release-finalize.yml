@@ -123,6 +123,7 @@ jobs:
 
           pr_head_sha="$(jq -er '.head.sha' "$RUNNER_TEMP/matching-release-pr.json")"
           selected_count=0
+          selected_artifact_name=""
           selected_manifest=""
           selected_workflow_run=""
           for artifact_name in "${artifact_names[@]}"; do
@@ -169,6 +170,7 @@ jobs:
                 and $manifest[0].release_head_sha == $release_head_sha
               ' "$candidate_run" > /dev/null; then
               selected_count=$((selected_count + 1))
+              selected_artifact_name="$artifact_name"
               selected_manifest="$candidate_manifest"
               selected_workflow_run="$candidate_run"
             fi
@@ -212,8 +214,8 @@ jobs:
           python3 "$trusted_verifier" \
             "$RUNNER_TEMP/associated-pull-requests.json" "$MERGE_SHA" \
             "$RUNNER_TEMP/release-pr-files.json" "$GITHUB_REPOSITORY" \
-            "$manifest" "$RUNNER_TEMP/release-pr-comments.json" \
-            "$workflow_run"
+            "$selected_artifact_name" "$manifest" \
+            "$RUNNER_TEMP/release-pr-comments.json" "$workflow_run"
 
       - name: Install uv
         uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
