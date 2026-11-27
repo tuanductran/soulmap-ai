@@ -115,3 +115,43 @@ uv run soulmap lint
 - `src/soulmap/runtime/guards/response_contract.py`: response-level contract checks
 - `tests/eval_regression/test_safety_evals.py`: detector and scope safety regression suite
 - `evals/datasets/safety_test_cases.json`: red-team cases used by the safety eval script
+## Release provenance recovery after artifact expiry
+
+The automated Release Finalize workflow accepts only the immutable provenance
+artifact created by the original Release Prep workflow run and attempt. GitHub
+Actions artifact retention is finite (currently configured as 90 days for the
+Release Prep provenance artifact). When that artifact is expired or unavailable,
+the automated workflow must fail closed. Do not substitute a later Release Prep
+run, reconstruct a manifest from a mutable pull-request comment, or weaken the
+provenance verifier.
+
+If a release tag was created but GitHub Release publication failed after the
+original provenance artifact expired, treat recovery as a release-operations
+exception requiring a separately reviewed, human-controlled procedure:
+
+1. Open an incident/operations issue referencing the original merged release PR,
+   merge commit SHA, release tag, original Release Prep run ID and attempt, and
+   the failed Release Finalize run. Do not place tokens, secret values, or private
+   user data in the issue.
+2. Preserve the original tag and inspect it read-only. Confirm that it is the
+   expected immutable annotated tag and resolves to the exact original release
+   commit. Never move, force-update, or recreate the tag to make recovery pass.
+3. Gather independent GitHub records for the original workflow run and attempt,
+   workflow path/ref/SHA, repository, successful conclusion, release-prep branch,
+   PR head SHA, merge SHA, and the exact nine-file generated release diff.
+   A PR comment is an index only and is not provenance evidence.
+4. Have a maintainer who did not author the recovery change independently review
+   the evidence and proposed publication operation. Record the reviewer, evidence
+   links, exact tag/commit, artifact hashes, and decision in the issue.
+5. Publish only already-verified release artifacts for that exact commit. Re-run
+   artifact hash, extracted-package, release-gate, and attestation checks. Do not
+   build replacement artifacts from a different commit or claim the original
+   workflow provenance was revalidated if it was not.
+6. If the original artifact, exact attempt metadata, release PR evidence, or
+   required independent review cannot be established, stop. Keep the tag intact
+   and leave the GitHub Release unpublished pending a separately approved
+   recovery design.
+
+This procedure is a manual exception path, not an alternate automated trust
+path. It does not authorize direct pushes to `main`, changes to branch rulesets,
+relaxation of release immutability, or bypass of repository permissions.
