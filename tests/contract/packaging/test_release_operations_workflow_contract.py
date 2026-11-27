@@ -143,8 +143,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert 'python3 "$trusted_verifier"' in workflow
     assert "python3 scripts/verify_release_finalize_provenance.py" not in workflow
     assert (
-        "The immutable run-scoped artifact is the authoritative provenance source."
-        in workflow
+        "The immutable run-scoped artifact is authoritative." in workflow
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
@@ -168,6 +167,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "actions/runs/${run_id}/artifacts?per_page=100" in workflow
     assert "actions/runs/${run_id}/attempts/${attempt}" in workflow
     assert "selected_artifact_name" in workflow
+    assert '"$selected_artifact_name"' in workflow
     assert "run_attempt is the latest attempt" in workflow
     assert "selected_count -ne 1" in workflow
     assert "pr_head_sha" in workflow
