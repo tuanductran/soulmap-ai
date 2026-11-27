@@ -20,7 +20,7 @@ def test_release_prep_creates_a_protected_release_pr() -> None:
     assert "contents: read" in workflow
     assert "contents: write" not in workflow
     assert "token: ${{ secrets.SOULMAP_RELEASE_TOKEN }}" in workflow
-    assert "environment:\n      name: release-finalize" in workflow
+    assert "environment:" not in workflow
     assert "pull-requests: write" not in workflow
     assert "SOULMAP_RELEASE_TOKEN" in workflow
     assert "persist-credentials: false" in workflow
@@ -84,7 +84,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "attestations: write" in workflow
     assert "environment:\n      name: release-finalize" in workflow
     assert (
-        "SOULMAP_RELEASE_TOKEN must be configured in the protected release-finalize environment."
+        "SOULMAP_RELEASE_TOKEN must be configured as a repository secret."
         in workflow
     )
     assert "secrets.SOULMAP_RELEASE_TOKEN" in workflow
