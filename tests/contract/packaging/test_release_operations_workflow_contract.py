@@ -71,9 +71,9 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "github.ref == 'refs/heads/main'" in workflow
     assert "Verify recovery dispatch ref exactly matches main" in workflow
     assert 'if [ "$GITHUB_REF" != "refs/heads/main" ]; then' in workflow
-    assert workflow.index("Verify recovery dispatch ref exactly matches main") < workflow.index(
-        "actions/checkout@"
-    )
+    assert workflow.index(
+        "Verify recovery dispatch ref exactly matches main"
+    ) < workflow.index("actions/checkout@")
     assert 'branches: ["main"]' in workflow
     assert "github.event.pull_request.merged == true" in workflow
     assert "startsWith(github.event.pull_request.head.ref, 'release/prep-')" in workflow
@@ -87,11 +87,8 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "actions: read" in workflow
     assert "id-token: write" in workflow
     assert "attestations: write" in workflow
-    assert "environment:\n      name: release-finalize" in workflow
-    assert (
-        "SOULMAP_RELEASE_TOKEN must be configured as a repository secret."
-        in workflow
-    )
+    assert "environment:" not in workflow
+    assert "SOULMAP_RELEASE_TOKEN must be configured as a repository secret." in workflow
     assert "secrets.SOULMAP_RELEASE_TOKEN" in workflow
     assert "token: ${{ github.token }}" not in workflow
     assert "persist-credentials: false" in workflow
