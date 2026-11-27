@@ -163,6 +163,15 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
+    assert (
+        "actions/runs/${run_id}/artifacts?per_page=100" in workflow
+    )
+    assert "actions/runs/${run_id}/attempts/${attempt}" in workflow
+    assert "run_attempt is the latest attempt" in workflow
+    assert "selected_count -ne 1" in workflow
+    assert "pr_head_sha" in workflow
+    assert "release_head_sha == $release_head_sha" in workflow
+    assert "jq -er '.run_attempt'" not in workflow
     verifier = (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
     assert "_has_matching_owner_provenance_comment" in verifier
     assert "created_at != updated_at" not in verifier
