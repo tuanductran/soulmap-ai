@@ -117,6 +117,8 @@ uv run soulmap lint
 - `evals/datasets/safety_test_cases.json`: red-team cases used by the safety eval script
 ## Release provenance recovery after artifact expiry
 
+This runbook is scoped to the artifact-backed Release Finalize implementation proposed in [PR #1061](https://github.com/tuanductran/soulmap-ai/pull/1061). It becomes operative only after that implementation is merged into `main`. The current `main` workflow has a different recovery path: it validates the supplied merged release-preparation SHA and rebuilds/verifies release artifacts in the Finalize run; it does not retrieve a 90-day provenance artifact from the original Prep run. Until PR #1061 is merged, operators must follow the workflow revision actually present on `main` and must not apply the artifact-expiry procedure below.
+
 The automated Release Finalize workflow accepts only the immutable provenance
 artifact created by the original Release Prep workflow run and attempt. GitHub
 Actions artifact retention is finite (currently configured as 90 days for the
