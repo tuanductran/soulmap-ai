@@ -328,9 +328,9 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
         def run_guard(
             pull_requests: object = None,
             changed_files: object = None,
-            candidate_manifest: object = None,
+            candidate_manifest: dict[str, object] | None = None,
             candidate_artifact_name: str | None = None,
-            candidate_run: object = None,
+            candidate_run: dict[str, object] | None = None,
             candidate_comments: object = None,
         ) -> subprocess.CompletedProcess[str]:
             pull_requests_path.write_text(
