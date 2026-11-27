@@ -152,14 +152,17 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     )
     assert 'gh run download "$run_id"' in workflow
     assert '--name "$artifact_name"' in workflow
-    assert "Recovery intentionally fails closed after GitHub's 90-day artifact retention." in workflow
+    assert (
+        "Recovery intentionally fails closed after GitHub's 90-day artifact retention."
+        in workflow
+    )
     assert "issues/${pr_number}/comments?per_page=100" in workflow
     assert (
         "created_at != updated_at"
         in (ROOT / "scripts" / "verify_release_finalize_provenance.py").read_text()
     )
     assert "release-pr-comments.json" in workflow
-    assert "gh run download" not in workflow
+    assert "gh run download" in workflow
     assert "release-pr-files.json" in workflow
     assert workflow.index(
         "Verify release preparation PR provenance and changed paths"
