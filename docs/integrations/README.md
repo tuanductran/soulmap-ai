@@ -92,7 +92,6 @@ Priority files:
 
 - [`SOULMAP.md`](../../SOULMAP.md)
 - [`SKILL.md`](../../SKILL.md)
-- [`skills/meta/master-prompt.md`](../../skills/meta/master-prompt.md)
 - [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
 - [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
 - [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
