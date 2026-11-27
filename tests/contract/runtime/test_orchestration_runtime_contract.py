@@ -217,7 +217,9 @@ def test_phase_one_safety_overrides_precede_framework_selection() -> None:
 
     assert "Immediate crisis" in phase_one
     assert "High Dependency" in phase_one
-    assert "Only proceed to Phase 2 when no Phase 1 safety override applies." in phase_one
+    assert (
+        "Only proceed to Phase 2 when no Phase 1 safety override applies." in phase_one
+    )
     assert (
         "An elevated-risk (Tier 2) crisis signal is not an immediate-crisis "
         "Phase 1 override." in phase_one
