@@ -147,9 +147,12 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
         in workflow
     )
     assert (
-        "The 90-day workflow artifact is an audit copy, not a recovery dependency."
+        "The immutable run-scoped artifact is the authoritative provenance source."
         in workflow
     )
+    assert 'gh run download "$run_id"' in workflow
+    assert '--name "$artifact_name"' in workflow
+    assert "Recovery intentionally fails closed after GitHub's 90-day artifact retention." in workflow
     assert "issues/${pr_number}/comments?per_page=100" in workflow
     assert (
         "created_at != updated_at"
