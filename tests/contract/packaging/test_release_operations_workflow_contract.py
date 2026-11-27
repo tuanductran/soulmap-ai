@@ -170,6 +170,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "pr_head_sha" in workflow
     assert "release_head_sha == $release_head_sha" in workflow
     assert ".head_sha == $manifest[0].run_head_sha" in workflow
+    assert ".head_sha == $manifest[0].workflow_sha" not in workflow
     assert 'git merge-base --is-ancestor "$workflow_sha" "$run_head_sha"' in workflow
     assert 'git merge-base --is-ancestor "$run_head_sha" origin/main' in workflow
     assert "jq -er '.run_attempt'" not in workflow
@@ -187,6 +188,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
 def test_release_prep_provenance_manifest_binds_run_to_exact_commit() -> None:
     script = ROOT / "scripts" / "create_release_prep_provenance.py"
     repository = "tuanductran/soulmap-ai"
+    assert 'run_head_sha=os.environ["GITHUB_SHA"]' in script.read_text()
     environment = {
         **os.environ,
         "GITHUB_REPOSITORY": repository,
