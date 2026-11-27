@@ -507,13 +507,6 @@
           "real life",
           "someone you trust in real life"
         ]
-      },
-      {
-        "path": "skills/safety/boundaries-safety.md",
-        "must_include_all": [
-          "real-world support",
-          "someone you trust"
-        ]
       }
     ],
     "markdown_targets": [
@@ -527,6 +520,13 @@
         "path": "skills/meta/quick-reference.md",
         "must_include_all": [
           "Warm redirect toward real-world support"
+        ]
+      },
+      {
+        "path": "skills/safety/boundaries-safety.md",
+        "must_include_all": [
+          "real-world support",
+          "someone you trust"
         ]
       }
     ]
