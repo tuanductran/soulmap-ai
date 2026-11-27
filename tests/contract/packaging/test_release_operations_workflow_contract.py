@@ -166,7 +166,7 @@ def test_release_finalize_publishes_only_after_merged_main_verification() -> Non
     assert "selected_artifact_name" in workflow
     assert '"$selected_artifact_name"' in workflow
     assert "run_attempt is the latest attempt" in workflow
-    assert "selected_count -ne 1" in workflow
+    assert '[ "$selected_count" -ne 1 ]' in workflow
     assert "pr_head_sha" in workflow
     assert "release_head_sha == $release_head_sha" in workflow
     assert ".head_sha == $manifest[0].run_head_sha" in workflow
