@@ -77,6 +77,7 @@ def has_valid_release_prep_provenance(
     associated_pull_requests: object,
     merge_sha: str,
     repository: str,
+    artifact_name: str,
     changed_files: object,
     manifest: object,
     provenance_comments: object,
@@ -92,6 +93,7 @@ def has_valid_release_prep_provenance(
         or comments is None
         or not merge_sha
         or not repository
+        or not artifact_name
         or not files
         or not isinstance(manifest, dict)
         or not isinstance(workflow_run, dict)
@@ -132,6 +134,7 @@ def has_valid_release_prep_provenance(
         or not isinstance(release_branch, str)
         or release_branch != f"release/prep-{run_id}"
         or not _is_sha(release_head_sha)
+        or artifact_name != f"release-prep-provenance-{run_id}-{run_attempt}"
     ):
         return False
 
@@ -197,12 +200,13 @@ def has_valid_release_prep_provenance(
 
 
 def main() -> int:
-    if len(sys.argv) != 8:
+    if len(sys.argv) != 9:
         print(
             "Usage: verify_release_finalize_provenance.py "
             "<associated-prs.json> <merge-sha> <changed-files.json> "
-            "<repository> <release-prep-manifest.json> "
-            "<release-pr-comments.json> <workflow-run.json>",
+            "<repository> <provenance-artifact-name> "
+            "<release-prep-manifest.json> <release-pr-comments.json> "
+            "<workflow-run.json>",
             file=sys.stderr,
         )
         return 2
@@ -211,9 +215,10 @@ def main() -> int:
     merge_sha = sys.argv[2]
     changed_files_path = Path(sys.argv[3])
     repository = sys.argv[4]
-    manifest_path = Path(sys.argv[5])
-    provenance_comments_path = Path(sys.argv[6])
-    workflow_run_path = Path(sys.argv[7])
+    artifact_name = sys.argv[5]
+    manifest_path = Path(sys.argv[6])
+    provenance_comments_path = Path(sys.argv[7])
+    workflow_run_path = Path(sys.argv[8])
     try:
         associated_pull_requests = json.loads(
             pull_requests_path.read_text(encoding="utf-8")
@@ -236,6 +241,7 @@ def main() -> int:
         associated_pull_requests,
         merge_sha,
         repository,
+        artifact_name,
         changed_files,
         manifest,
         provenance_comments,
