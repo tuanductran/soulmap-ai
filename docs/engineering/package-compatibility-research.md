@@ -1,7 +1,7 @@
 # Python 3.11 package compatibility research
 
 **Package research date:** 2026-08-19. **Package matrix last refreshed:** 2026-09-27.
-**Python patch status reviewed:** 2026-11-14.
+**Python patch status reviewed:** 2026-11-28.
 
 This note records official package evidence for the development toolchain used by SoulMap AI. The package-version table is a historical v0.9.0 snapshot, not the current dependency inventory. Current project metadata and locked dependency versions live in `pyproject.toml` and `uv.lock`. This note is a maintenance aid, not a promise to support every future package release or every Python patch release.
 
@@ -30,7 +30,7 @@ This note records official package evidence for the development toolchain used b
 
 The historical v0.9.0 baseline used Python `>=3.11`. The current repository still declares `requires-python = ">=3.11"` in `pyproject.toml`; the CI workflow uses Python 3.11 for its lint and validation environment. The package-version rows above remain tied to the v0.9.0 snapshot and must not be read as the current lockfile.
 
-At the September 2026 refresh, Python 3.11.16, released on 2026-08-12, was the latest official 3.11 release. It has since been superseded. [15] **As of 2026-11-14, the latest official Python 3.11 release is Python 3.11.18**, released on 2026-10-25. Python.org classifies it as a security release for the legacy 3.11 series; it is a source-only release with no installers. The 3.11 series remains in security-fixes-only support until October 2027. [16]
+At the September 2026 refresh, Python 3.11.16, released on 2026-08-12, was the latest official 3.11 release. It has since been superseded. [15] **As of 2026-11-28, the latest official Python 3.11 release remains Python 3.11.18**, released on 2026-10-25. Python.org classifies it as a security release for the legacy 3.11 series; it is a source-only release with no installers. The 3.11 series remains in security-fixes-only support until October 2027. [16]
 
 The Python 3.11.18 release addresses the eMudhra/emSign certificate incident and includes security fixes involving bundled Expat, Windows MIME configuration, tarfile extraction, email header folding, and cookie validation. Review the official release notes and the project's transitive package advisories when refreshing the CI interpreter or lockfile. The repository's support floor remains Python 3.11; this patch-status update does not itself change the supported interpreter range or dependency lock.
 
