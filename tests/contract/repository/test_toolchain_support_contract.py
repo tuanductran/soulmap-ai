@@ -284,6 +284,8 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
+    assert "As of 2026-11-28" in research_text
+    assert "python.org/downloads/release/python-31118" in research_text
 
     uv_versions = [
         version
