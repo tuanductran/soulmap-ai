@@ -51,7 +51,7 @@ For a local smoke test, start Claude Code with the repository as a plugin direct
 claude --plugin-dir .
 ~~~
 
-The Git marketplace catalog is retained for repository-based Claude Code compatibility. Anthropic is moving third-party plugin discovery toward its unified directory; check the [Claude plugins documentation](https://code.claude.com/docs/en/plugins) and [directory management page](https://claude.ai/directory/manage) for current publishing and discovery steps.
+The Git marketplace catalog supports repository-based Claude Code distribution. Public community submission is a separate review process; follow the [Claude Code plugin sharing and submission guide](https://code.claude.com/docs/en/plugins), with the [Claude.ai submission form](https://claude.ai/admin-settings/directory/submissions/plugins/new) for eligible Team/Enterprise organizations or the [Anthropic Console submission form](https://platform.claude.com/plugins/submit) for individual authors.
 
 ## Claude.ai Custom Skills workflow
 
