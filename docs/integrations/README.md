@@ -1,263 +1,117 @@
 ---
-title: "SoulMap AI, platform integration guide"
-description: "Platform deployment and migration guidance for SoulMap AI on Claude, ChatGPT, Gemini, and Poe."
+title: "SoulMap AI, Claude integration guide"
+description: "Claude Code plugin manifest, Claude.ai Custom Skills packaging, and Claude deployment guidance."
 doctrine_source: "SOULMAP.md"
 soulmap_version: "0.15.1"
 ---
 
-# SoulMap AI, platform integration guide
+# Claude integration guide
 
-This file documents how to deploy SoulMap on supported AI platforms.
-Platform availability, upload limits, and interface steps change independently
-of SoulMap releases. The front matter declares the package compatibility and
-canonical doctrine source; platform-specific facts must be checked against
-current official documentation before each deployment.
+Claude is the primary integration target for SoulMap. This guide covers the Claude Code plugin, Claude.ai Custom Skills, and the distinction between those packaging formats.
 
-**Lifecycle review date:** 2026-11-17.
+The behavioral source of truth remains **SOULMAP.md** and the supporting Markdown under **skills/**. Platform metadata describes how Claude discovers the Skill; it must not duplicate product doctrine.
 
-## Build the distribution artifacts first
+## Build the artifacts
 
-```bash
-uv run soulmap build           # both artifacts
-uv run soulmap dev              # verify and extract both
-```
+~~~bash
+uv run soulmap build
+uv run soulmap dev --once
+~~~
 
-## Claude (Skills)
+The build produces:
 
-**Already supported.** See [../operations/UPLOAD.md](../operations/UPLOAD.md).
+- **dist/soulmap-ai.skill** — Claude Code plugin-aware archive. It contains the canonical knowledge files plus **.claude-plugin/plugin.json** and the Git marketplace catalog.
+- **dist/soulmap-ai.zip** — portable knowledge archive. It contains **SKILL.md**, **SOULMAP.md**, **LICENSE**, and the supporting **skills/** directory, without Claude-specific plugin metadata.
 
-Claude's upload flow expects a ZIP containing a named Skill folder. The generated
-`dist/soulmap-ai.zip` and `dist/soulmap-ai.skill` both place files directly at archive
-root, so neither is a direct Custom Skills upload bundle. Extract the standard ZIP into
-a folder named `soulmap-ai/` (matching the `name` in `SKILL.md` frontmatter). In that
-Claude.ai staging copy only, rename `SKILL.md` to lowercase `skill.md`; keep the
-repository's canonical `SKILL.md` unchanged. Anthropic's Help Center specifies
-`skill.md` for Claude.ai Custom Skills, while the Claude API uses `SKILL.md` for its
-separate upload workflow. ZIP the folder as the single top-level entry and upload that ZIP through Claude's
-Skills interface. See [the detailed upload workflow](../operations/UPLOAD.md#custom-skills).
+## Claude Code plugin
 
-## ChatGPT (Custom GPT, legacy transition)
+### Plugin layout
 
-**Legacy platform path.**
+The Claude Code plugin root has this layout:
 
-As of 2026-11-16, personal ChatGPT accounts (Free, Go, Plus, and Pro) cannot
-create or publish new GPTs. Existing GPTs remain usable and may be edited when
-the account, plan, and permissions allow it.
+~~~text
+soulmap-ai/
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
+├── SKILL.md
+├── SOULMAP.md
+├── LICENSE
+└── skills/
+    ├── frameworks/
+    ├── meta/
+    ├── safety/
+    ├── voice/
+    └── ...
+~~~
 
-For affected Enterprise workspaces, new GPT creation ended on 2026-10-26.
-FedRAMP workspaces are excluded from that cutoff. Existing, unmigrated GPTs
-remain usable and editable until their applicable retirement date; after
-migration, the original GPT becomes read-only. Workspace-specific notices and
-approved deferrals may set a different retirement date, so verify the applicable
-workspace notice rather than assuming the standard schedule applies.
+Claude Code reads the plugin manifest from **.claude-plugin/plugin.json**. Other component directories belong beside **.claude-plugin/** at the plugin root, not inside it.
 
-OpenAI's standard Custom GPT retirement date is **2026-12-11**. For affected
-FedRAMP workspaces and workspaces with a qualifying, approved deferral, the
-scheduled date is **2027-02-11**. During migration, the GPT's instructions and
-knowledge files transfer to the replacement plugin, but its selected model and
-custom actions do not. Migration timing and access vary by account or workspace.
-Follow the in-product notice, rebuild any required integrations, and test the
-replacement before relying on it.
+### Manifest fields used by SoulMap
 
-Official references:
+The manifest follows Anthropic's [plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference).
 
-- [Creating and editing GPTs](https://help.openai.com/en/articles/8554397-creating-and-editing-gpts)
-- [Custom GPT retirement and migration FAQ](https://help.openai.com/en/articles/20001519-custom-gpt-retirement-and-migration-faq)
-
-### Configure an existing GPT or an eligible workspace GPT
-
-Use these steps only when the account or workspace still has permission to
-create or edit the GPT.
-
-1. Open [Explore GPTs](https://chatgpt.com/gpts).
-2. For an existing GPT, open **My GPTs** and select **Edit GPT**. For a
-   workspace where new creation is still enabled, select **Create**.
-3. Set the name to `SoulMap`.
-4. Set the description to: `A reflective companion that helps you hear
-   yourself more clearly. No prediction, no diagnosis, no dependence.`
-
-### Paste the instructions
-
-Copy the full text from [chatgpt-instructions.md](chatgpt-instructions.md)
-into the **Instructions** field.
-
-### Upload knowledge files
-
-Extract `dist/soulmap-ai.zip` first, then upload the selected Markdown files
-individually. OpenAI's current GPT documentation lists up to 20 knowledge files per
-GPT. Because Custom GPTs are being retired and account/workspace availability varies,
-verify the live builder and migration notice before relying on this legacy path.
-
-Priority files:
-
-- [`SOULMAP.md`](../../SOULMAP.md)
-- [`SKILL.md`](../../SKILL.md)
-- [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-- [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
-- [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
-
-Optional framework files:
-
-- [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-- [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
-- [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
-- [`skills/frameworks/emotional-deescalation.md`](../../skills/frameworks/emotional-deescalation.md)
-- [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
-
-### Test and share
-
-Use Preview to test representative prompts. Sharing and publishing options
-depend on account or workspace permissions. Do not assume a new personal GPT
-can be created or published.
-
-## Gemini (Gems transitioning to Skills)
-
-**Transition effective for personal-account users aged 18 or older on 2026-11-17.**
-
-Google's current transition schedule for personal Google accounts is:
-
-- **2026-11-17 (users aged 18 or older):** Gems became read-only. Users can
-  still access them but can no longer use, edit, or create them.
-- **2026-12-17 (users aged 18 or older):** Gems are removed from Gemini Apps.
-- Google says eligible personal-account Gems and supported knowledge files will
-  be automatically recreated as Skills. Personal-account Skills are currently
-  available to users aged 18 or older.
-- Google has not yet announced a transition date for personal-account users
-  under 18.
-- Work and school accounts have later transition dates: March 2027 for
-  business, enterprise, and non-profit accounts; June 2027 for education.
-
-If you still need to use a Gem on a personal account and are aged 18 or older,
-save any knowledge files before 2026-12-17. Google has not announced the
-corresponding removal date for personal-account users under 18. Users aged 18
-or older can use Gemini Skills for ongoing work; users under 18 should follow
-Google's future transition notice rather than relying on Skills availability.
-The Google transition guide describes the current migration steps and file
-compatibility.
-
-Official references:
-
-- [Create and manage Skills for Gemini Apps](https://support.google.com/gemini/answer/17094296)
-- [Use Gems in Gemini Apps](https://support.google.com/gemini/answer/15146780)
-- [About the transition from Gems to skills](https://support.google.com/gemini/answer/18560919)
-- [Upload and analyze files in Gemini Apps](https://support.google.com/gemini/answer/14903178)
-
-### Create or use a Gemini Skill
-
-For personal accounts aged 18 or older:
-
-#### Direct import for a new SoulMap Skill
-
-1. Build the standard archive with `uv run soulmap build`.
-2. For file or folder upload, open Gemini for Mac or
-   [Gemini on the web](https://gemini.google.com). The Skills page is under
-   **Customize → Skills**; if **Customize** is hidden, open **More**. Skills
-   are also available in the Gemini mobile app, but Google does not currently
-   list mobile as a supported surface for this upload flow.
-3. Select **Create → Upload** and choose `dist/soulmap-ai.zip`.
-4. Google accepts a ZIP containing `SKILL.md` in its main folder. The
-   standard SoulMap archive places `SKILL.md` at the archive root, alongside
-   `SOULMAP.md` and `skills/`. Review the imported Skill, then create it.
-
-Google currently documents Skills availability on the Gemini mobile app, the
-Mac app, and the web app. Its file/folder upload instructions, however, are
-limited to the Mac app and web app.
-
-#### Manual migration of an existing Gem
-
-If you are recreating an existing Gem and need to preserve its knowledge files,
-follow Google's documented download-and-replace workflow: download each file
-from the Gem, create the Skill, download its Skill ZIP, place `SKILL.md` and
-the supported knowledge files in a folder named exactly like the Skill, then
-use **Replace skill** to upload that folder.
-
-Gemini Skills have a **100 MB total file limit**. Google lists GitHub files,
-audio, video, legacy Office formats (`.doc`, `.xls`, `.ppt`), and archive
-formats (`.zip`, `.tar`, `.7z`, `.rar`, `.gz`, `.tgz`) as unsupported
-knowledge-file sources during the Gems-to-Skills transition. This restriction
-on attached knowledge-file sources is distinct from the documented Skill ZIP
-import workflow above. Do not use the Claude-oriented
-`dist/soulmap-ai.skill` archive for this import; use the standard
-`dist/soulmap-ai.zip` and verify the live interface before deployment.
-
-### Legacy Gem setup (only where Google still permits it)
-
-Use these steps only if Google still allows Gem creation for the specific
-account. The 2026-11-17 cutoff applies to personal-account users aged 18 or
-older; Google has not announced the transition date for users under 18. Do not
-use these steps for Gems that are already read-only or have transitioned.
-
-1. Open [Gemini](https://gemini.google.com), open the sidebar, and select
-   **Gems**.
-2. Select **New Gem** and name it `SoulMap`.
-3. Copy the text from [gemini-instructions.md](gemini-instructions.md) into
-   the instructions field.
-4. Under **Knowledge**, add the selected files below, then save.
-
-Suggested initial knowledge set (not a platform file limit):
-
-Use the canonical doctrine and skill entry point, then add only the knowledge
-relevant to the Gem's intended use. A separate master prompt is not needed:
-its former role duplicated the canonical instructions and routing guidance.
-
-1. [`SOULMAP.md`](../../SOULMAP.md)
-2. [`SKILL.md`](../../SKILL.md)
-3. [`skills/meta/orchestration.md`](../../skills/meta/orchestration.md)
-4. [`skills/safety/whitelist-blacklist-system.md`](../../skills/safety/whitelist-blacklist-system.md)
-5. [`skills/safety/boundaries-safety.md`](../../skills/safety/boundaries-safety.md)
-6. [`skills/frameworks/grief-companion.md`](../../skills/frameworks/grief-companion.md)
-7. [`skills/frameworks/life-direction.md`](../../skills/frameworks/life-direction.md)
-8. [`skills/frameworks/shadow-patterns.md`](../../skills/frameworks/shadow-patterns.md)
-9. [`skills/meta/deep-inquiry-bank.md`](../../skills/meta/deep-inquiry-bank.md)
-
-The 10-file limit documented by Google applies to files in a single chat
-prompt; do not present it as a confirmed persistent Gem knowledge limit.
-Availability and limits can vary by account and plan.
-
-## Poe (Prompt Bot)
-
-**Format:** System prompt, with an optional knowledge base.
-
-### Create the bot
-
-1. Open [Poe](https://poe.com) and select **Create bot**.
-2. Choose a bot name such as `SoulMap-AI`.
-3. Select a currently available base bot. Do not hard-code a model name in
-   this guide because Poe's available base bots change.
-4. Add the system prompt from [poe-system-prompt.md](poe-system-prompt.md).
-5. Optionally add a knowledge base from supported uploaded files or text.
-6. Test the bot, then choose the appropriate visibility setting.
-
-See Poe's official [Prompt Bot creation guide](https://creator.poe.com/docs/prompt-bots/how-to-create-a-prompt-bot).
-
-## Compatibility policy
-
-Treat `SOULMAP.md` as the canonical doctrine and `soulmap_version` front
-matter as the exact package compatibility marker. The Markdown contract checks
-both; this policy defines the required human review after that static check.
-
-| Change type | Required platform action |
+| Field | Purpose in this plugin |
 | --- | --- |
-| Editorial patch with no behavior, safety, upload-set, or platform-step change | Review the affected guide only; no platform redeploy is required. |
-| Doctrine, safety, framework-priority, routing, or response-boundary change | Review every guide, rebuild artifacts, update all active platform deployments, and complete the manual acceptance checklist. |
-| Knowledge upload-set or packaging-boundary change | Review each active platform's upload list, verify referenced files are in the standard archive, and re-upload changed knowledge to active deployments. |
-| Platform UI, lifecycle, limit, or supported-file-type change | Update the affected guide, record the operational verification date, and complete the manual acceptance checklist on that platform. |
-| Unsupported or behaviorally incompatible platform | Mark the deployment flow unsupported rather than weakening doctrine or claiming compatibility without evidence. |
+| **$schema** | Editor autocomplete and JSON validation using the published Claude Code plugin manifest schema. Claude Code ignores this field at runtime. |
+| **name** | Stable kebab-case identifier: **soulmap-ai**. |
+| **displayName** | Human-readable product name: **SoulMap AI**. |
+| **version** | Must match the repository release version. |
+| **description** | Short discovery description, not a replacement for the Skill instructions. |
+| **author** | Maintainer name and public contact/profile details. |
+| **homepage**, **repository** | Canonical documentation and source locations. |
+| **license** | SPDX license identifier: **MIT**. |
+| **keywords** | Search and discovery terms. |
+| **skills** | Explicitly includes the repository root with **["."]**, where the single canonical **SKILL.md** lives. |
 
-## Updating across platforms
+The root Skill points to the supporting Markdown in **skills/**. Those files are knowledge resources, not separate plugin Skills. Keep exactly one shipped Skill entrypoint.
 
-When a new SoulMap release ships:
+The manifest is optional in Claude Code generally, but SoulMap keeps it explicit so plugin identity, version, metadata, and root Skill discovery are machine-readable. Only **name** is required by the manifest schema; the additional fields above are intentional project metadata.
 
-1. Run `uv run soulmap build` to rebuild artifacts.
-2. For ChatGPT, update only GPTs that remain editable; review migration
-   requirements before the 2026-12-11 retirement date.
-3. For personal Google accounts used by people aged 18 or older, Gems became
-   read-only on 2026-11-17 and are scheduled for removal on 2026-12-17. Google
-   has not announced the transition date for personal-account users under 18.
-   Use Google's migration workflow; Workspace business, enterprise, and
-   non-profit transitions are scheduled for March 2027, and education for June 2027.
-4. For Poe, update the system prompt and optional knowledge base.
-5. For Claude.ai Custom Skills, rebuild the named-folder ZIP from the standard archive
-   and use lowercase `skill.md` in the staging copy; keep the repository's canonical
-   `SKILL.md` unchanged. Do not rename the root-level `.skill` archive and assume it
-   is directly uploadable. The Claude API uses the separate uppercase `SKILL.md` format.
+### Validate and test
+
+Run the authoritative Claude Code manifest validator:
+
+~~~bash
+claude plugin validate . --strict
+~~~
+
+Then load the repository as a local plugin for a smoke test:
+
+~~~bash
+claude --plugin-dir .
+~~~
+
+Test representative prompts and confirm the root Skill can load the linked doctrine and supporting knowledge. The CLI validator checks the manifest and component paths; it does not replace the repository's own tests, safety evaluations, packaging checks, or a live behavior review.
+
+### Marketplace and directory publishing
+
+The Git marketplace catalog remains available in **.claude-plugin/marketplace.json** for repository-based Claude Code workflows. Anthropic's current documentation says third-party plugin discovery is moving to the unified Claude directory. Treat publication in that directory as a separate release/distribution step and follow the [Claude plugins documentation](https://code.claude.com/docs/en/plugins) and [directory management page](https://claude.ai/directory/manage).
+
+## Claude.ai Custom Skills
+
+Claude.ai Custom Skills use a different upload wrapper from the Claude Code plugin archive. The custom Skill ZIP must contain a named folder at its root and a lowercase **skill.md** file inside that folder.
+
+1. Build the standard archive using **uv run soulmap build**.
+2. Extract **dist/soulmap-ai.zip** into a staging directory named **soulmap-ai/**.
+3. In that staging copy only, rename **SKILL.md** to **skill.md**. Do not rename the canonical repository file.
+4. ZIP the **soulmap-ai/** folder itself so it is the single top-level entry in the resulting archive.
+5. In Claude, open **Customize → Skills → + → Create skill → Upload a skill**, upload the ZIP, enable the Skill, and test it with representative prompts.
+
+Do not upload **dist/soulmap-ai.skill** as a Claude.ai Custom Skills ZIP. That archive preserves Claude Code plugin metadata and has files at its archive root; it is not the named-folder wrapper required by Claude.ai.
+
+Official references: [How to create custom skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills) and [Use Skills in Claude](https://support.claude.com/en/articles/12512180).
+
+## Claude API
+
+Claude API Skills are a separate integration surface from Claude.ai Custom Skills and Claude Code plugins. Follow the current [Claude API Skills guide](https://platform.claude.com/docs/en/build-with-claude/skills-guide) for its API upload contract; do not assume that a Claude.ai ZIP or a Claude Code plugin archive can be submitted unchanged.
+
+## Packaging and release rules
+
+- Keep **SKILL.md** as the canonical root entrypoint in the repository.
+- Keep all product doctrine and knowledge in Markdown. The Python layer builds, validates, and packages; it does not replace the knowledge source.
+- Keep plugin metadata under **.claude-plugin/** and plugin components at the plugin root.
+- Keep the version in **plugin.json**, **marketplace.json**, **SKILL.md**, **pyproject.toml**, and this guide synchronized.
+- Verify both archives, their exact member sets, extracted contents, and SHA-256 integrity before release.
+
+For the canonical repository packaging boundary and release workflow, see [UPLOAD.md](../operations/UPLOAD.md) and the [repository contract](../engineering/repo-contract.md).
