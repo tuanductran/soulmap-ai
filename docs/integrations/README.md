@@ -86,7 +86,7 @@ Test representative prompts and confirm the root Skill can load the linked doctr
 
 ### Marketplace and directory publishing
 
-The Git marketplace catalog remains available in **.claude-plugin/marketplace.json** for repository-based Claude Code workflows. Anthropic's current documentation says third-party plugin discovery is moving to the unified Claude directory. Treat publication in that directory as a separate release/distribution step and follow the [Claude plugins documentation](https://code.claude.com/docs/en/plugins) and [directory management page](https://claude.ai/directory/manage).
+The Git marketplace catalog remains available in **.claude-plugin/marketplace.json** for repository-based Claude Code distribution. Public community submission is a separate review process; follow the current [Claude Code plugin sharing and submission guide](https://code.claude.com/docs/en/plugins). Anthropic lists a [Claude.ai submission form](https://claude.ai/admin-settings/directory/submissions/plugins/new) for eligible Team/Enterprise organizations and an [Anthropic Console form](https://platform.claude.com/plugins/submit) for individual authors.
 
 ## Claude.ai Custom Skills
 
