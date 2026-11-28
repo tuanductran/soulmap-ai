@@ -262,7 +262,11 @@ def main(argv: list[str] | None = None) -> int:
         help="Skip Python and resource reachability reports.",
     )
     parser.add_argument(
-        "--interval", type=float, default=0.5,\n        help="Polling interval in seconds (default: 0.5).",\n    )\n    parser.add_argument(\n        "--debounce", type=float, default=0.8,
+        "--interval", type=float, default=0.5,
+        help="Polling interval in seconds (default: 0.5).",
+    )
+    parser.add_argument(
+        "--debounce", type=float, default=0.8,
         help="Quiet period after the last file change before rebuilding (default: 0.8s).",
     )
     args = parser.parse_args(argv)
