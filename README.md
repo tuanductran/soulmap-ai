@@ -89,6 +89,9 @@ uv run soulmap build
 uv run soulmap dev
 ```
 
+`uv run soulmap dev` runs a persistent watcher until you stop it with Ctrl+C. Use
+`uv run soulmap dev --once` for a one-shot build, verification, extraction, and audit.
+
 Outputs:
 
 - `dist/soulmap-ai.zip`, standard knowledge archive without `.claude-plugin/`
