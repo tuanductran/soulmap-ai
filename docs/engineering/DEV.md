@@ -336,3 +336,13 @@ uv run soulmap eval-groups
 uv run soulmap eval-responses
 uv run python tests/eval_regression/test_safety_evals.py
 ```
+
+
+### Library manifest and integrity steps
+
+The release package also includes a versioned Library manifest at
+`dist/soulmap-ai-library.json`. It records release metadata, artifact sizes, and
+SHA-256 digests for the generated distribution files. Generate it with
+`uv run soulmap library-manifest`, then verify the recorded sizes and hashes with
+`uv run python scripts/verify_artifact_hashes.py`. These steps complement the
+archive build and package verification; they do not replace release verification.

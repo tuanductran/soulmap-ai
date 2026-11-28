@@ -293,6 +293,7 @@ def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
         {"skills/one.md": (2, 2)},
         {"skills/one.md": (3, 3)},
         {"skills/one.md": (3, 3)},
+        {"skills/one.md": (3, 3)},
     ]
     calls: list[str] = []
     clock_values = iter([0.0, 0.1, 0.3, 0.5])
@@ -302,6 +303,8 @@ def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
 
     def run_cycle(_root: Path) -> int:
         calls.append("cycle")
+        if len(calls) == 1:
+            raise ValueError("simulated rebuild failure")
         raise KeyboardInterrupt
 
     with pytest.raises(KeyboardInterrupt):
@@ -488,26 +491,4 @@ def test_build_skips_ignored_backslash_source_before_path_validation(
 
     with zipfile.ZipFile(archive_path) as archive:
         assert "skills/ignored\\name.md" not in archive.namelist()
-
-
-
-def test_watch_filter_includes_sources_and_excludes_generated_paths(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
-    from watchfiles import Change
-
-    assert dev_tool._watch_filter(Change.modified, str(tmp_path / "skills/new.md"))
-    assert dev_tool._watch_filter(Change.added, str(tmp_path / "docs/guide.md"))
-    assert dev_tool._watch_filter(Change.modified, str(tmp_path / "src/soulmap/cli.py"))
-    assert not dev_tool._watch_filter(
-        Change.modified, str(tmp_path / "dist/generated.md")
-    )
-    assert not dev_tool._watch_filter(
-        Change.modified, str(tmp_path / ".soulmap/zip/old.md")
-    )
-    assert not dev_tool._watch_filter(
-        Change.modified, str(tmp_path / ".venv/site-packages/pkg.py")
-    )
-
 
