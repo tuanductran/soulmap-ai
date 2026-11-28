@@ -27,10 +27,13 @@ def test_marketplace_declares_one_root_skill() -> None:
     assert len(marketplace["plugins"]) == 1
 
     plugin = marketplace["plugins"][0]
-    assert plugin["name"] == "SoulMap AI"
+    manifest = _read_json(REPO_ROOT / ".claude-plugin" / "plugin.json")
+    assert plugin["name"] == "soulmap-ai"
     assert plugin["source"] == "./"
     assert plugin["version"] == marketplace["version"]
-    assert plugin["skills"] == ["./"]
+    assert manifest["name"] == plugin["name"]
+    assert manifest["skills"] == ["./"]
+    assert manifest["version"] == project_version
     assert (REPO_ROOT / "SKILL.md").is_file()
 
 
