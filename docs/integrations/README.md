@@ -11,6 +11,8 @@ Claude is the primary integration target for SoulMap. This guide covers the Clau
 
 The behavioral source of truth remains **SOULMAP.md** and the supporting Markdown under **skills/**. Platform metadata describes how Claude discovers the Skill; it must not duplicate product doctrine.
 
+Start with the canonical [Skill entrypoint](../../SKILL.md) and [SoulMap doctrine](../../SOULMAP.md). The Skill entrypoint identifies the supporting [orchestration guide](../../skills/meta/orchestration.md) and the other knowledge resources Claude should load only when relevant.
+
 ## Build the artifacts
 
 ~~~bash
