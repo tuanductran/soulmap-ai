@@ -351,7 +351,7 @@ def test_watcher_detects_changes_made_during_initial_build(tmp_path: Path) -> No
     def sleep(_seconds: float) -> None:
         nonlocal sleep_calls
         sleep_calls += 1
-        if sleep_calls == 2:
+        if sleep_calls == 3:
             raise KeyboardInterrupt
 
     def run_cycle(_root: Path) -> int:
