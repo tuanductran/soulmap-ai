@@ -155,7 +155,7 @@ def _workflow_action_versions(workflow_text: str, action_prefix: str) -> list[st
     lines = workflow_text.splitlines()
     versions: list[str | None] = []
     for index, line in enumerate(lines):
-        section = re.match(r"^(?P<indent> *)steps:\\s*(?:#.*)?$", line)
+        section = re.match(r"^(?P<indent> *)steps:\s*(?:#.*)?$", line)
         if section is None:
             continue
         section_indent = len(section.group("indent"))
@@ -166,7 +166,7 @@ def _workflow_action_versions(workflow_text: str, action_prefix: str) -> list[st
             current = lines[cursor]
             if current.strip() and len(current) - len(current.lstrip(" ")) <= section_indent:
                 break
-            step = re.match(rf"^ {{{step_indent}}}-\\s*(?P<first>.*)$", current)
+            step = re.match(rf"^ {{{step_indent}}}-\s*(?P<first>.*)$", current)
             if step is None:
                 cursor += 1
                 continue
@@ -178,13 +178,13 @@ def _workflow_action_versions(workflow_text: str, action_prefix: str) -> list[st
                     indent = len(candidate) - len(candidate.lstrip(" "))
                     if indent <= section_indent:
                         break
-                    if indent == step_indent and re.match(r"^-($|\\s)", candidate[step_indent:]):
+                    if indent == step_indent and re.match(r"^-($|\s)", candidate[step_indent:]):
                         break
                 step_lines.append(candidate)
                 cursor += 1
             properties = [(property_indent, step_lines[0])]
             properties.extend((len(value) - len(value.lstrip(" ")), value.lstrip(" ")) for value in step_lines[1:] if value.strip())
-            uses_action = any(indent == property_indent and re.match(rf"^uses:\\s*{re.escape(action_prefix)}(?:@|\\s|$)", value) for indent, value in properties)
+            uses_action = any(indent == property_indent and re.match(rf"^uses:\s*{re.escape(action_prefix)}(?:@|\s|$)", value) for indent, value in properties)
             if not uses_action:
                 continue
             with_indent = next((indent for indent, value in properties if indent == property_indent and value.strip() == "with:"), None)
@@ -200,7 +200,7 @@ def _workflow_action_versions(workflow_text: str, action_prefix: str) -> list[st
                         in_with = value.strip() == "with:"
                         continue
                     if in_with and indent == with_indent + 2:
-                        match = re.match(r'^version:\\s*["\\']?([0-9]+\\.[0-9]+\\.[0-9]+)["\\']?\\s*(?:#.*)?$', value)
+                        match = re.match(r'^version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)["\']?\s*(?:#.*)?$', value)
                         if match is not None:
                             version = match.group(1)
                             break
@@ -209,7 +209,7 @@ def _workflow_action_versions(workflow_text: str, action_prefix: str) -> list[st
 
 
 def test_workflow_action_version_parser_rejects_unpinned_or_misplaced_values() -> None:
-    workflow_text = "\\n".join([
+    workflow_text = "\n".join([
         "jobs:",
         "  test:",
         "    steps:",
@@ -246,5 +246,5 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     pinned_versions = {version for version in uv_versions if version is not None}
     assert len(pinned_versions) == 1
     uv_version = next(iter(pinned_versions))
-    assert re.search(rf"^\\| uv \\| {re.escape(uv_version)} \\(CI installer pin, \\d{{4}}-\\d{{2}}-\\d{{2}}\\) \\|", research_text, re.MULTILINE)
+    assert re.search(rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, \d{{4}}-\d{{2}}-\d{{2}}\) \|", research_text, re.MULTILINE)
     assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text
