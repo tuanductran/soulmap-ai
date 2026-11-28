@@ -25,4 +25,4 @@ The canonical manifest reference is the [Claude Code plugin manifest reference](
 - Do not move plugin components such as **skills/**, **commands/**, or **hooks/** inside **.claude-plugin/**. The directory is for plugin metadata; components live at the plugin root.
 - Validate the plugin with **claude plugin validate . --strict** from the repository root, then run the repository build and extracted-artifact verification workflow.
 
-Anthropic is moving third-party plugin discovery toward the [Claude plugins directory](https://claude.ai/directory/manage). Keep the Git marketplace catalog as a compatibility surface, not as the sole publishing or discovery strategy.
+The Git marketplace catalog supports repository-based Claude Code distribution. Public community submission is a separate review process; follow the current [Claude Code plugin submission guide](https://code.claude.com/docs/en/plugins) and use the [Claude.ai submission form](https://claude.ai/admin-settings/directory/submissions/plugins/new) or [Anthropic Console form](https://platform.claude.com/plugins/submit), as appropriate for the publishing account.
