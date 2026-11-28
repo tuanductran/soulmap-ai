@@ -4,8 +4,8 @@
 > **Maintainer:** Tuan Duc Tran
 > **License:** MIT
 > **Status:** Actively maintained
-> **Baseline reviewed:** v0.15.0, published 2026-11-18.
-> **Baseline commit:** `1e1293d376e8981d44948fc400ea341d090076f3`.
+> **Baseline reviewed:** v0.15.1, published 2026-11-21.
+> **Baseline commit:** `400b5bd8a9a40aa89b23656b45dec3223bc68b78`.
 
 This document is the **living roadmap** for SoulMap AI. It describes work that is still
 planned, conditional, or intentionally deferred. Completed phases and historical outcomes
