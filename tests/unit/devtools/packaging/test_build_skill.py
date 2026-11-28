@@ -292,8 +292,7 @@ def test_snapshot_prunes_ignored_directories(
     ) -> list[tuple[str, list[str], list[str]]]:
         entries = list(original_walk(root, topdown=topdown))
         visited.extend(
-            Path(current).relative_to(tmp_path).as_posix()
-            for current, _, _ in entries
+            Path(current).relative_to(tmp_path).as_posix() for current, _, _ in entries
         )
         return entries
 
@@ -387,16 +386,19 @@ def test_watcher_detects_changes_made_during_initial_build(tmp_path: Path) -> No
         calls.append("cycle")
         return 0
 
-    assert dev_tool._watch(
-        tmp_path,
-        interval=0.01,
-        debounce=0,
-        run_cycle=run_cycle,
-        snapshot=snapshot,
-        initial_snapshot=initial,
-        sleep=sleep,
-        monotonic=lambda: 1.0,
-    ) == 0
+    assert (
+        dev_tool._watch(
+            tmp_path,
+            interval=0.01,
+            debounce=0,
+            run_cycle=run_cycle,
+            snapshot=snapshot,
+            initial_snapshot=initial,
+            sleep=sleep,
+            monotonic=lambda: 1.0,
+        )
+        == 0
+    )
     assert calls == ["cycle"]
 
 
