@@ -43,8 +43,7 @@ def test_analyze_resolves_docker_action_container_root_imports(
     source.mkdir(parents=True)
     (source / "__init__.py").write_text("", encoding="utf-8")
     (source / "__main__.py").write_text(
-        "from client import Client\n"
-        "from operations import run\n",
+        "from client import Client\nfrom operations import run\n",
         encoding="utf-8",
     )
     (source / "client.py").write_text("class Client: ...\n", encoding="utf-8")
