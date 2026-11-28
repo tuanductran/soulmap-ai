@@ -18,7 +18,7 @@ def test_claude_plugin_manifest_declares_the_single_root_skill() -> None:
 
     assert manifest["name"] == "soulmap-ai"
     assert manifest["displayName"] == "SoulMap AI"
-    assert manifest["skills"] == ["."]
+    assert manifest["skills"] == ["./"]
     assert manifest["version"] == json.loads(
         (REPO_ROOT / ".claude-plugin" / "marketplace.json").read_text(
             encoding="utf-8"
