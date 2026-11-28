@@ -249,6 +249,10 @@ def test_cli_exposes_build_and_dev_commands(
 
 def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) -> None:
     _write(tmp_path, "skills/frameworks/example.md")
+    _write(tmp_path, "skills/assets/logo.svg")
+    _write(tmp_path, "skills/data/no-extension")
+    _write(tmp_path, ".claude-plugin/assets/icon.svg")
+    _write(tmp_path, "LICENSE")
     _write(tmp_path, "docs/engineering/dev.md")
     _write(tmp_path, "pyproject.toml")
     _write(tmp_path, ".soulmap/zip/stale.md")
@@ -262,6 +266,10 @@ def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) ->
 
     assert set(snapshot) == {
         "skills/frameworks/example.md",
+        "skills/assets/logo.svg",
+        "skills/data/no-extension",
+        ".claude-plugin/assets/icon.svg",
+        "LICENSE",
         "docs/engineering/dev.md",
         "pyproject.toml",
         "src/soulmap/runtime/loader.py",
@@ -330,6 +338,39 @@ def test_watcher_debounces_and_survives_a_failed_rebuild(
     assert calls == ["cycle", "cycle"]
 
 
+def test_watcher_detects_changes_made_during_initial_build(tmp_path: Path) -> None:
+    initial = {"skills/one.md": (1, 1)}
+    changed = {"skills/one.md": (2, 2)}
+    snapshots = iter([changed, changed, changed])
+    calls: list[str] = []
+    sleep_calls = 0
+
+    def snapshot(_root: Path) -> dict[str, tuple[int, int]]:
+        return next(snapshots)
+
+    def sleep(_seconds: float) -> None:
+        nonlocal sleep_calls
+        sleep_calls += 1
+        if sleep_calls == 2:
+            raise KeyboardInterrupt
+
+    def run_cycle(_root: Path) -> int:
+        calls.append("cycle")
+        return 0
+
+    assert dev_tool._watch(
+        tmp_path,
+        interval=0.01,
+        debounce=0,
+        run_cycle=run_cycle,
+        snapshot=snapshot,
+        initial_snapshot=initial,
+        sleep=sleep,
+        monotonic=lambda: 1.0,
+    ) == 0
+    assert calls == ["cycle"]
+
+
 def test_is_watched_excludes_generated_and_dependency_directories(
     tmp_path: Path,
 ) -> None:
@@ -339,6 +380,12 @@ def test_is_watched_excludes_generated_and_dependency_directories(
     _write(tmp_path, ".venv/lib/ignored.md")
 
     assert dev_tool._is_watched(tmp_path / "skills/example.md", tmp_path)
+    _write(tmp_path, "skills/assets/image.svg")
+    _write(tmp_path, ".claude-plugin/metadata")
+    _write(tmp_path, "LICENSE")
+    assert dev_tool._is_watched(tmp_path / "skills/assets/image.svg", tmp_path)
+    assert dev_tool._is_watched(tmp_path / ".claude-plugin/metadata", tmp_path)
+    assert dev_tool._is_watched(tmp_path / "LICENSE", tmp_path)
     assert not dev_tool._is_watched(tmp_path / "dist/generated.md", tmp_path)
     assert not dev_tool._is_watched(tmp_path / ".soulmap/zip/generated.md", tmp_path)
     assert not dev_tool._is_watched(tmp_path / ".venv/lib/ignored.md", tmp_path)
