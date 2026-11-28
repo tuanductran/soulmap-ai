@@ -73,6 +73,7 @@ def _create_source_tree(root: Path) -> set[str]:
     _write(root, "skills/nested/.vscode/settings.json", "{}\n")
     _write(root, "src/soulmap/runtime/source_registry.py", "REGISTRY = {}\n")
     _write(root, "templates/internal.md")
+    _write(root, ".claude-plugin/plugin.json", '{"name": "soulmap-ai"}\n')
     _write(root, ".claude-plugin/marketplace.json", "{}\n")
     _write(root, ".claude-plugin/metadata.md", "Package metadata only.\n")
     _write(root, ".claude-plugin/README.md", "Claude plugin development notes\n")
@@ -99,6 +100,7 @@ def test_build_archives_respect_shipped_and_skill_only_boundaries(
     skill_names = _archive_names(skill_path)
     assert skill_names == {
         *core_names,
+        ".claude-plugin/plugin.json",
         ".claude-plugin/marketplace.json",
         ".claude-plugin/metadata.md",
     }
@@ -136,7 +138,7 @@ def test_build_archives_exclude_agent_entrypoints_and_local_config(
             for name in names
         )
 
-    # The .skill artifact retains only its required plugin metadata.
+    # The .skill artifact retains Claude plugin and marketplace metadata.
     assert ".claude-plugin/marketplace.json" in _archive_names(skill_path)
     assert ".claude-plugin/marketplace.json" not in _archive_names(zip_path)
 

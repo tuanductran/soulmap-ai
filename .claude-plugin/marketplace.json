@@ -9,13 +9,10 @@
   },
   "plugins": [
     {
-      "name": "SoulMap AI",
+      "name": "soulmap-ai",
       "version": "0.15.1",
-      "description": "The single SoulMap AI Skill entrypoint with supporting reflective frameworks, safety guardrails, voice, spiritual, soulmate, writing, brand, and orchestration knowledge.",
-      "source": "./",
-      "skills": [
-        "./"
-      ]
+      "description": "A reflective companion Skill with grounded frameworks, safety boundaries, and a consistent voice.",
+      "source": "./"
     }
   ]
 }

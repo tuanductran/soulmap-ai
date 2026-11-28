@@ -10,12 +10,10 @@ from pathlib import Path
 EXPECTED_RELEASE_PREP_FILES = frozenset(
     {
         ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         "CHANGELOG.md",
         "SKILL.md",
         "docs/integrations/README.md",
-        "docs/integrations/chatgpt-instructions.md",
-        "docs/integrations/gemini-instructions.md",
-        "docs/integrations/poe-system-prompt.md",
         "pyproject.toml",
         "uv.lock",
     }
