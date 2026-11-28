@@ -315,15 +315,18 @@ def test_watcher_debounces_and_survives_a_failed_rebuild(
             raise ValueError("simulated rebuild failure")
         return 0
 
-    assert dev_tool._watch(
-        tmp_path,
-        interval=0.01,
-        debounce=0.1,
-        run_cycle=run_cycle,
-        snapshot=snapshot,
-        sleep=sleep,
-        monotonic=lambda: next(clock_values),
-    ) == 0
+    assert (
+        dev_tool._watch(
+            tmp_path,
+            interval=0.01,
+            debounce=0.1,
+            run_cycle=run_cycle,
+            snapshot=snapshot,
+            sleep=sleep,
+            monotonic=lambda: next(clock_values),
+        )
+        == 0
+    )
     assert calls == ["cycle", "cycle"]
 
 
