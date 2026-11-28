@@ -7,6 +7,7 @@ source files change. Pass ``--once`` for a single build-and-audit cycle.
 from __future__ import annotations
 
 import argparse
+import runpy
 import shutil
 import sys
 import time
@@ -218,13 +219,17 @@ def _build_and_refresh(repo_root: Path) -> int:
 
 def _run_audits(repo_root: Path) -> int:
     """Run existing Python and resource inventories as advisory reports."""
-    from scripts.audit_python_reachability import main as python_audit_main
-    from scripts.audit_resource_inventory import main as resource_audit_main
+    python_audit = runpy.run_path(
+        str(repo_root / "scripts/audit_python_reachability.py")
+    )
+    resource_audit = runpy.run_path(
+        str(repo_root / "scripts/audit_resource_inventory.py")
+    )
 
     print("\n=== Python module reachability (review candidates only) ===")
-    python_status = python_audit_main(["--root", str(repo_root)])
+    python_status = python_audit["main"](["--root", str(repo_root)])
     print("\n=== Knowledge and documentation resource inventory ===")
-    resource_status = resource_audit_main(["--root", str(repo_root)])
+    resource_status = resource_audit["main"](["--root", str(repo_root)])
     if python_status:
         print(f"NOTICE: Python reachability audit exited with status {python_status}")
     if resource_status:

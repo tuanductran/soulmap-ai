@@ -336,17 +336,21 @@ def test_dev_runs_python_and_resource_audits_when_enabled(
 ) -> None:
     calls: list[tuple[str, list[str]]] = []
 
-    import scripts.audit_python_reachability as python_audit
-    import scripts.audit_resource_inventory as resource_audit
+    audits = {
+        "scripts/audit_python_reachability.py": "python",
+        "scripts/audit_resource_inventory.py": "resources",
+    }
 
-    monkeypatch.setattr(
-        python_audit, "main",
-        lambda args: calls.append(("python", args)) or 0,
-    )
-    monkeypatch.setattr(
-        resource_audit, "main",
-        lambda args: calls.append(("resources", args)) or 0,
-    )
+    def fake_run_path(path: str) -> dict[str, object]:
+        name = Path(path).relative_to(tmp_path).as_posix()
+
+        def main(args: list[str]) -> int:
+            calls.append((audits[name], args))
+            return 0
+
+        return {"main": main}
+
+    monkeypatch.setattr(dev_tool.runpy, "run_path", fake_run_path)
 
     assert dev_tool._run_audits(tmp_path) == 0
     assert calls == [
