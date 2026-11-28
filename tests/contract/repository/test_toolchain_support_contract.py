@@ -233,8 +233,79 @@ def _workflow_action_versions(
                     if in_with and indent == with_indent + 2:
                         match = re.match(
                             r'^version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)'
-                            r'["\']?\s*(?:#.*)?$',
-                            r'["\']?\s*(?:#.*)?$',
+                            r'["\']?\s*(?:#.*)?
+                            value,
+                        )
+                        if match is not None:
+                            version = match.group(1)
+                            break
+            versions.append(version)
+
+    return versions
+
+
+def test_workflow_action_version_parser_rejects_unpinned_or_misplaced_values() -> None:
+    workflow_text = "\n".join(
+        [
+            "jobs:",
+            "  test:",
+            "    steps:",
+            "      - if: always()",
+            "        name: First setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        with:",
+            '          version: "0.13.10"',
+            "      - id: second-setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        env:",
+            '          version: "0.13.10"',
+            "      - name: Third setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        with:",
+            '          version: "0.13.10"',
+        ]
+    )
+    assert _workflow_action_versions(
+        workflow_text, "astral-sh/setup-uv"
+    ) == ["0.13.10", None, "0.13.10"]
+
+
+def test_package_research_covers_every_direct_dev_package() -> None:
+    research_text = RESEARCH.read_text(encoding="utf-8")
+
+    for package_name in DIRECT_DEV_PACKAGES:
+        assert f"| {RESEARCH_LABELS[package_name]} |" in research_text
+
+    assert "Hatchling" in research_text
+    assert "Python 3.11" in research_text
+    assert "pytest-randomly" in research_text
+    assert "pytest-xdist" in research_text
+    assert "Python 3.11.16" in research_text
+    assert "python.org/downloads/release/python-31116" in research_text
+
+    uv_versions = [
+        version
+        for workflow_path in CI_WORKFLOWS
+        for version in _workflow_action_versions(
+            workflow_path.read_text(encoding="utf-8"),
+            "astral-sh/setup-uv",
+        )
+    ]
+    assert uv_versions, "CI must contain at least one setup-uv invocation"
+    assert all(version is not None for version in uv_versions), (
+        "every setup-uv invocation must provide with.version"
+    )
+    pinned_versions = {version for version in uv_versions if version is not None}
+    assert len(pinned_versions) == 1
+    uv_version = next(iter(pinned_versions))
+    assert re.search(
+        rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, "
+        r"\d{4}-\d{2}-\d{2}\) \|",
+        research_text,
+        re.MULTILINE,
+    )
+    assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text
+,
                             value,
                         )
                         if match is not None:
