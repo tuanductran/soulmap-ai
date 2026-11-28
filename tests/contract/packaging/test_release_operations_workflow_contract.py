@@ -311,12 +311,10 @@ def test_release_finalize_rejects_pr_without_trusted_workflow_provenance() -> No
     }
     expected_paths = [
         ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         "CHANGELOG.md",
         "SKILL.md",
         "docs/integrations/README.md",
-        "docs/integrations/chatgpt-instructions.md",
-        "docs/integrations/gemini-instructions.md",
-        "docs/integrations/poe-system-prompt.md",
         "pyproject.toml",
         "uv.lock",
     ]
