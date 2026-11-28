@@ -158,7 +158,7 @@ def _workflow_action_versions(
     versions: list[str | None] = []
 
     for index, line in enumerate(lines):
-        section = re.match(r"^(?P<indent> *)steps:\\s*(?:#.*)?$", line)
+        section = re.match(r"^(?P<indent> *)steps:\s*(?:#.*)?$", line)
         if section is None:
             continue
 
@@ -174,7 +174,7 @@ def _workflow_action_versions(
                 break
 
             step = re.match(
-                rf"^ {{{step_indent}}}-\\s*(?P<first>.*)$", current
+                rf"^ {{{step_indent}}}-\s*(?P<first>.*)$", current
             )
             if step is None:
                 cursor += 1
@@ -187,7 +187,7 @@ def _workflow_action_versions(
                 if candidate.strip():
                     indent = len(candidate) - len(candidate.lstrip(" "))
                     is_next_step = indent == step_indent and re.match(
-                        r"^-($|\\s)", candidate[step_indent:]
+                        r"^-($|\s)", candidate[step_indent:]
                     )
                     if indent <= section_indent or is_next_step:
                         break
@@ -203,7 +203,7 @@ def _workflow_action_versions(
             uses_action = any(
                 indent == property_indent
                 and re.match(
-                    rf"^uses:\\s*{re.escape(action_prefix)}(?:@|\\s|$)",
+                    rf"^uses:\s*{re.escape(action_prefix)}(?:@|\s|$)",
                     value,
                 )
                 for indent, value in properties
@@ -232,8 +232,8 @@ def _workflow_action_versions(
                         continue
                     if in_with and indent == with_indent + 2:
                         match = re.match(
-                            r'^version:\\s*["\\']?([0-9]+\\.[0-9]+\\.[0-9]+)'
-                            r'["\\']?\\s*(?:#.*)?$',
+                            r'^version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)'
+                            r'["\']?\s*(?:#.*)?$',
                             value,
                         )
                         if match is not None:
@@ -245,7 +245,7 @@ def _workflow_action_versions(
 
 
 def test_workflow_action_version_parser_rejects_unpinned_or_misplaced_values() -> None:
-    workflow_text = "\\n".join(
+    workflow_text = "\n".join(
         [
             "jobs:",
             "  test:",
@@ -299,8 +299,8 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert len(pinned_versions) == 1
     uv_version = next(iter(pinned_versions))
     assert re.search(
-        rf"^\\| uv \\| {re.escape(uv_version)} \\(CI installer pin, "
-        r"\\d{4}-\\d{2}-\\d{2}\\) \\|",
+        rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, "
+        r"\d{4}-\d{2}-\d{2}\) \|",
         research_text,
         re.MULTILINE,
     )
