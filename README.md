@@ -106,11 +106,12 @@ The Python wheel and source distribution are local developer/test tooling surfac
 provide the `soulmap` CLI and repository validation code, but they are not standalone
 knowledge-base runtimes and do not replace the repository's `skills/` source tree.
 
-For use in AI tools, start with the standard `dist/soulmap-ai.zip` and follow the
-platform-specific workflow in [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
-The `.skill` artifact preserves `.claude-plugin/` metadata for consumers that explicitly
-expect it; it is not a universal direct-upload format. The Python distribution is not an
-AI Skill installer.
+For Claude Code, use the Claude plugin-aware `dist/soulmap-ai.skill` archive and its
+`.claude-plugin/plugin.json` manifest. For Claude.ai Custom Skills or another AI assistant
+that can read Markdown, use the standard `dist/soulmap-ai.zip` archive and follow the
+[Claude-first distribution guide](docs/operations/UPLOAD.md). The ZIP is portable knowledge,
+not a promise that another platform will execute it as a native Skill. The Python
+distribution is not an AI Skill installer.
 
 ## Where to start
 
@@ -124,13 +125,12 @@ AI Skill installer.
 - testing and eval workflow: [docs/engineering/TESTER.md](docs/engineering/TESTER.md)
 - privacy and operations: [docs/operations/PRIVACY.md](docs/operations/PRIVACY.md), [docs/operations/OPERATIONS.md](docs/operations/OPERATIONS.md)
 
-## For AI tools and local maintainer layers
+## For Claude Code and repository maintainers
 
-Use [AGENTS.md](AGENTS.md) first. It is the baseline contract for AI coding agents
-working in this repository, covering project shape, build and test commands, and
-workflow rules, and it points to [SOULMAP.md](SOULMAP.md) for SoulMap's own doctrine.
-`CLAUDE.md` is a symlink to `AGENTS.md`, so Claude Code reads the same file as any
-other coding agent.
+Use [AGENTS.md](AGENTS.md) as the repository contract when working in this checkout.
+It covers project shape, build and test commands, and workflow rules, and points to
+[SOULMAP.md](SOULMAP.md) for SoulMap's own doctrine. `CLAUDE.md` is a symlink to
+`AGENTS.md`, so Claude Code reads the same repository contract.
 
 If this checkout also contains local workflow layers, treat them as supplemental only:
 
