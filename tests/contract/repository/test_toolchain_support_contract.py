@@ -163,17 +163,32 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
 
-    uv_versions = {
-        version
-        for workflow_path in CI_WORKFLOWS
-        for version in re.findall(
-            r"^\s*version:\s*\"?([0-9]+\.[0-9]+\.[0-9]+)",
+    uv_versions: list[str] = []
+    setup_uv_steps = 0
+    for workflow_path in CI_WORKFLOWS:
+        step_blocks = re.split(
+            r"(?m)^\s*-\s+(?=(?:name:|uses:))",
             workflow_path.read_text(encoding="utf-8"),
-            re.MULTILINE,
         )
-    }
-    assert len(uv_versions) == 1
-    uv_version = next(iter(uv_versions))
+        for step_block in step_blocks:
+            if not re.search(
+                r"(?m)^\s*uses:\s*astral-sh/setup-uv@",
+                step_block,
+            ):
+                continue
+            setup_uv_steps += 1
+            version_match = re.search(
+                r"(?m)^\s*version:\s*\"?([0-9]+\.[0-9]+\.[0-9]+)",
+                step_block,
+            )
+            assert version_match is not None, (
+                f"{workflow_path}: every setup-uv step must pin a version"
+            )
+            uv_versions.append(version_match.group(1))
+
+    assert setup_uv_steps > 0
+    assert len(set(uv_versions)) == 1
+    uv_version = uv_versions[0]
     assert re.search(
         rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, "
         r"\d{4}-\d{2}-\d{2}\) \|",
