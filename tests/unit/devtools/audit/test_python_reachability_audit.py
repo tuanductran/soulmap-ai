@@ -43,14 +43,14 @@ def test_analyze_resolves_docker_action_container_root_imports(
     source.mkdir(parents=True)
     (source / "__init__.py").write_text("", encoding="utf-8")
     (source / "__main__.py").write_text(
-        "from client import Client\\n"
-        "from operations import run\\n",
+        "from client import Client\n"
+        "from operations import run\n",
         encoding="utf-8",
     )
-    (source / "client.py").write_text("class Client: ...\\n", encoding="utf-8")
-    (source / "operations.py").write_text("from refs import create\\n", encoding="utf-8")
-    (source / "refs.py").write_text("def create(): ...\\n", encoding="utf-8")
-    (source / "unused.py").write_text("VALUE = 1\\n", encoding="utf-8")
+    (source / "client.py").write_text("class Client: ...\n", encoding="utf-8")
+    (source / "operations.py").write_text("from refs import create\n", encoding="utf-8")
+    (source / "refs.py").write_text("def create(): ...\n", encoding="utf-8")
+    (source / "unused.py").write_text("VALUE = 1\n", encoding="utf-8")
 
     reachable, candidates, missing = analyze(tmp_path, ("action.__main__",))
 
@@ -74,11 +74,11 @@ def test_action_container_root_mapping_does_not_promote_other_packages(
     action.mkdir(parents=True)
     other.mkdir(parents=True)
     (action / "__init__.py").write_text("", encoding="utf-8")
-    (action / "__main__.py").write_text("VALUE = 1\\n", encoding="utf-8")
-    (action / "helper.py").write_text("VALUE = 2\\n", encoding="utf-8")
+    (action / "__main__.py").write_text("VALUE = 1\n", encoding="utf-8")
+    (action / "helper.py").write_text("VALUE = 2\n", encoding="utf-8")
     (other / "__init__.py").write_text("", encoding="utf-8")
-    (other / "cli.py").write_text("from helper import VALUE\\n", encoding="utf-8")
-    (other / "helper.py").write_text("VALUE = 3\\n", encoding="utf-8")
+    (other / "cli.py").write_text("from helper import VALUE\n", encoding="utf-8")
+    (other / "helper.py").write_text("VALUE = 3\n", encoding="utf-8")
 
     reachable, candidates, missing = analyze(tmp_path, ("action.__main__", "other.cli"))
 
