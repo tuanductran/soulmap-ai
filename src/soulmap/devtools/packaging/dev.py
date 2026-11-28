@@ -51,9 +51,19 @@ WATCH_ROOTS = (
 )
 WATCH_FILES = frozenset(
     {
-        "AGENTS.md", "SOULMAP.md", "SKILL.md", "README.md", "CONTRIBUTING.md",
-        "CHANGELOG.md", "pyproject.toml", "uv.lock", ".distignore", ".gitignore",
-        ".pymarkdown.json", "ruff.toml", "pytest.ini",
+        "AGENTS.md",
+        "SOULMAP.md",
+        "SKILL.md",
+        "README.md",
+        "CONTRIBUTING.md",
+        "CHANGELOG.md",
+        "pyproject.toml",
+        "uv.lock",
+        ".distignore",
+        ".gitignore",
+        ".pymarkdown.json",
+        "ruff.toml",
+        "pytest.ini",
     }
 )
 WATCH_SUFFIXES = frozenset(
