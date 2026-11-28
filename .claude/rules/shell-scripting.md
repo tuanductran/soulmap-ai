@@ -2,7 +2,6 @@
 paths:
   - scripts/**/*.sh
   - .claude/hooks/**/*.sh
-  - .github/hooks/**/*.sh
 ---
 
 # Shell scripting rules
