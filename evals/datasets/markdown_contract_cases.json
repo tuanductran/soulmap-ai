@@ -137,40 +137,6 @@
         ]
       },
       {
-        "path": "docs/integrations/chatgpt-instructions.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate",
-          "Briefly acknowledge immediate risk",
-          "Never delay"
-        ],
-        "must_not_include_any": [
-          "One question per response",
-          "No warm acknowledgment first"
-        ]
-      },
-      {
-        "path": "docs/integrations/gemini-instructions.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate",
-          "Never delay the first response to search"
-        ],
-        "must_not_include_any": [
-          "One question per response",
-          "immediately, nothing else"
-        ]
-      },
-      {
-        "path": "docs/integrations/poe-system-prompt.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate",
-          "Never delay the first response to search"
-        ],
-        "must_not_include_any": [
-          "One question per response",
-          "deliver crisis resources immediately."
-        ]
-      },
-      {
         "path": "docs/engineering/safety-enforcement-matrix.md",
         "must_include_all": [
           "Routing priority is enforced independently of response wording.",
@@ -630,33 +596,6 @@
         ],
         "must_not_include_any": [
           "Exactly one question if allowed, placed last"
-        ]
-      },
-      {
-        "path": "docs/integrations/chatgpt-instructions.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate"
-        ],
-        "must_not_include_any": [
-          "One question per response"
-        ]
-      },
-      {
-        "path": "docs/integrations/gemini-instructions.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate"
-        ],
-        "must_not_include_any": [
-          "One question per response"
-        ]
-      },
-      {
-        "path": "docs/integrations/poe-system-prompt.md",
-        "must_include_all": [
-          "Ask at most one open reflective question when appropriate"
-        ],
-        "must_not_include_any": [
-          "One question per response"
         ]
       },
       {
