@@ -234,6 +234,7 @@ def _workflow_action_versions(
                         match = re.match(
                             r'^version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)'
                             r'["\']?\s*(?:#.*)?$',
+                            r'["\']?\s*(?:#.*)?$',
                             value,
                         )
                         if match is not None:
