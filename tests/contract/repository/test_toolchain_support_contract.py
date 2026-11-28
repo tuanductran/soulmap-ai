@@ -153,7 +153,10 @@ def test_direct_dev_packages_are_locked() -> None:
 def _workflow_action_versions(
     workflow_text: str, action_prefix: str
 ) -> list[str | None]:
-    """Return each matching action step's direct ``with.version`` input."""
+    """Return each matching action step's direct ``with.version`` input.
+
+    Parse only the indentation-based YAML subset used by workflow steps.
+    """
     lines = workflow_text.splitlines()
     versions: list[str | None] = []
 
