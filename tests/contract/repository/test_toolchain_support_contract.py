@@ -232,8 +232,7 @@ def _workflow_action_versions(
                         continue
                     if in_with and indent == with_indent + 2:
                         match = re.match(
-                            r'^version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)'
-                            r'["\']?\s*(?:#.*)?
+                            r'^version:\s*"([0-9]+\.[0-9]+\.[0-9]+)"\s*(?:#.*)?$',
                             value,
                         )
                         if match is not None:
