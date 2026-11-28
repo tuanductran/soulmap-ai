@@ -109,10 +109,14 @@ def resolve_action_container_imports(
             for alias in node.names:
                 if "." not in alias.name and alias.name in action_modules:
                     found.add(f"action.{alias.name}")
-        elif isinstance(node, ast.ImportFrom):
-            if node.level == 0 and node.module and "." not in node.module:
-                if node.module in action_modules:
-                    found.add(f"action.{node.module}")
+        elif (
+            isinstance(node, ast.ImportFrom)
+            and node.level == 0
+            and node.module
+            and "." not in node.module
+            and node.module in action_modules
+        ):
+            found.add(f"action.{node.module}")
     return found
 
 
