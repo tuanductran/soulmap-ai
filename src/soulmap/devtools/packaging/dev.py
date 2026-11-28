@@ -21,9 +21,19 @@ from soulmap.devtools.support.repo import REPO_ROOT
 
 IGNORED_PARTS = frozenset(
     {
-        ".git", ".venv", ".pytest_cache", ".ruff_cache", ".mypy_cache",
-        ".hypothesis", "__pycache__", "dist", "build", ".soulmap",
-        "node_modules", ".uv-cache", ".cache",
+        ".git",
+        ".venv",
+        ".pytest_cache",
+        ".ruff_cache",
+        ".mypy_cache",
+        ".hypothesis",
+        "__pycache__",
+        "dist",
+        "build",
+        ".soulmap",
+        "node_modules",
+        ".uv-cache",
+        ".cache",
     }
 )
 WATCH_ROOTS = (
