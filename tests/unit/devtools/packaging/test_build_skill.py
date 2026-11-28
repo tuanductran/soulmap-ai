@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import zipfile
+from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
@@ -289,12 +290,12 @@ def test_snapshot_prunes_ignored_directories(
 
     def recording_walk(
         root: Path, topdown: bool = True
-    ) -> list[tuple[str, list[str], list[str]]]:
-        entries = list(original_walk(root, topdown=topdown))
-        visited.extend(
-            Path(current).relative_to(tmp_path).as_posix() for current, _, _ in entries
-        )
-        return entries
+    ) -> Iterator[tuple[str, list[str], list[str]]]:
+        for current, directories, filenames in original_walk(
+            root, topdown=topdown
+        ):
+            visited.append(Path(current).relative_to(tmp_path).as_posix())
+            yield current, directories, filenames
 
     monkeypatch.setattr(dev_tool.os, "walk", recording_walk)
 
