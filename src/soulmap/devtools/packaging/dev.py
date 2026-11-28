@@ -263,15 +263,20 @@ def main(argv: list[str] | None = None) -> int:
         help="Build, verify, extract, and audit once without starting a watcher.",
     )
     parser.add_argument(
-        "--no-audit", action="store_true",
+        "--no-audit",
+        action="store_true",
         help="Skip Python and resource reachability reports.",
     )
     parser.add_argument(
-        "--interval", type=float, default=0.5,
+        "--interval",
+        type=float,
+        default=0.5,
         help="Polling interval in seconds (default: 0.5).",
     )
     parser.add_argument(
-        "--debounce", type=float, default=0.8,
+        "--debounce",
+        type=float,
+        default=0.8,
         help="Quiet period after the last file change before rebuilding (default: 0.8s).",
     )
     args = parser.parse_args(argv)

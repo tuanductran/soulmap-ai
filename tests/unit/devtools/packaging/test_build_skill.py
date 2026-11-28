@@ -318,7 +318,9 @@ def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
     assert calls == ["cycle"]
 
 
-def test_is_watched_excludes_generated_and_dependency_directories(tmp_path: Path) -> None:
+def test_is_watched_excludes_generated_and_dependency_directories(
+    tmp_path: Path,
+) -> None:
     _write(tmp_path, "skills/example.md")
     _write(tmp_path, "dist/generated.md")
     _write(tmp_path, ".soulmap/zip/generated.md")
@@ -498,8 +500,14 @@ def test_watch_filter_includes_sources_and_excludes_generated_paths(
     assert dev_tool._watch_filter(Change.modified, str(tmp_path / "skills/new.md"))
     assert dev_tool._watch_filter(Change.added, str(tmp_path / "docs/guide.md"))
     assert dev_tool._watch_filter(Change.modified, str(tmp_path / "src/soulmap/cli.py"))
-    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / "dist/generated.md"))
-    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / ".soulmap/zip/old.md"))
-    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / ".venv/site-packages/pkg.py"))
+    assert not dev_tool._watch_filter(
+        Change.modified, str(tmp_path / "dist/generated.md")
+    )
+    assert not dev_tool._watch_filter(
+        Change.modified, str(tmp_path / ".soulmap/zip/old.md")
+    )
+    assert not dev_tool._watch_filter(
+        Change.modified, str(tmp_path / ".venv/site-packages/pkg.py")
+    )
 
 
