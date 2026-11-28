@@ -13,7 +13,7 @@ The canonical manifest reference is the [Claude Code plugin manifest reference](
 
 - The manifest lives at **.claude-plugin/plugin.json**.
 - The plugin identifier is **soulmap-ai**; **displayName** is the user-facing label.
-- The single shipped Skill entrypoint is the repository-root **SKILL.md**. The manifest explicitly declares **skills: ["."]** so Claude Code scans the plugin root for that entrypoint.
+- The single shipped Skill entrypoint is the repository-root **SKILL.md**. The manifest explicitly declares **skills: ["./"]** so Claude Code scans the plugin root for that entrypoint.
 - Supporting reflective knowledge remains in the root **skills/** directory. These Markdown files are resources referenced by the root Skill, not independent Skill entrypoints.
 - The manifest is metadata only. Product doctrine and behavioral guidance stay in **SOULMAP.md** and **skills/**.
 
