@@ -32,21 +32,21 @@ belong in [`MILESTONES.md`](MILESTONES.md), not here.
 
 **Status:** Conditional / blocked by external platform readiness.
 
-The repository has the foundation for Claude-first distribution plus documented ChatGPT,
-Gemini, and Poe integration surfaces. The remaining work should only become an active
-implementation track when there is a real deployment owner and a configured platform
-integration to validate.
+Claude is the primary supported integration surface. The repository maintains a Claude Code
+plugin manifest, Claude.ai Custom Skills packaging guidance, and a portable Markdown ZIP
+for assistants that can read the source knowledge. Other AI services are linked as optional
+destinations only; they are not first-class integration targets and have no platform-specific
+setup or acceptance claims.
 
 Potential work:
 
-- Add additional platform adapters where a concrete deployment requirement justifies them.
-- Run live integration acceptance tests for Claude, ChatGPT, Gemini, and Poe when the
-  corresponding deployment surfaces are active.
-- Record operator acceptance evidence without claiming that repository tests prove
-  third-party deployment behavior.
+- Keep the Claude Code plugin manifest, Skill entrypoint, and release metadata synchronized.
+- Validate plugin loading and Skill behavior against the current Claude interfaces.
+- Record live Claude acceptance evidence separately from repository tests; a successful
+  build does not prove that a third-party service has accepted or executed the Skill.
 
-This work remains intentionally outside the current package-only execution scope until the
-external prerequisites exist.
+Do not add other platform adapters unless a concrete deployment requirement and maintainer
+decision explicitly change this Claude-first scope.
 
 ---
 
