@@ -33,7 +33,7 @@ It intentionally excludes **.claude-plugin/**, developer tooling, tests, and int
 
 ### Python distribution
 
-The Python wheel and source distribution are local developer, test, and repository CLI tooling. They are not standalone knowledge runtimes and are not intended for import into an AI assistant.
+The Python wheel and source distribution are for local development, testing, and repository CLI tooling only. They are not standalone SoulMap knowledge runtimes and are not the artifacts to import into an AI tool.
 
 ## Claude Code plugin workflow
 
