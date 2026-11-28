@@ -289,8 +289,6 @@ def _run_cycle(repo_root: Path, *, audit: bool = True) -> int:
     return 0
 
 
-
-
 def main(argv: list[str] | None = None) -> int:
     """Run an initial build/audit cycle, then watch until interrupted by default."""
     parser = argparse.ArgumentParser(
