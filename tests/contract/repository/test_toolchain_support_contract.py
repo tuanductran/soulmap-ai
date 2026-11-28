@@ -150,6 +150,128 @@ def test_direct_dev_packages_are_locked() -> None:
         )
 
 
+def _workflow_action_versions(
+    workflow_text: str, action_prefix: str
+) -> list[str | None]:
+    """Return each matching action step's direct ``with.version`` input.
+
+    Parse only the indentation-based YAML subset used by workflow steps.
+    """
+    lines = workflow_text.splitlines()
+    versions: list[str | None] = []
+
+    for index, line in enumerate(lines):
+        section = re.match(r"^(?P<indent> *)steps:\s*(?:#.*)?$", line)
+        if section is None:
+            continue
+
+        section_indent = len(section.group("indent"))
+        step_indent = section_indent + 2
+        property_indent = step_indent + 2
+        cursor = index + 1
+
+        while cursor < len(lines):
+            current = lines[cursor]
+            current_indent = len(current) - len(current.lstrip(" "))
+            if current.strip() and current_indent <= section_indent:
+                break
+
+            step = re.match(rf"^ {{{step_indent}}}-\s*(?P<first>.*)$", current)
+            if step is None:
+                cursor += 1
+                continue
+
+            step_lines = [step.group("first")]
+            cursor += 1
+            while cursor < len(lines):
+                candidate = lines[cursor]
+                if candidate.strip():
+                    indent = len(candidate) - len(candidate.lstrip(" "))
+                    is_next_step = indent == step_indent and re.match(
+                        r"^-($|\s)", candidate[step_indent:]
+                    )
+                    if indent <= section_indent or is_next_step:
+                        break
+                step_lines.append(candidate)
+                cursor += 1
+
+            properties = [(property_indent, step_lines[0])]
+            properties.extend(
+                (len(value) - len(value.lstrip(" ")), value.lstrip(" "))
+                for value in step_lines[1:]
+                if value.strip()
+            )
+            uses_action = any(
+                indent == property_indent
+                and re.match(
+                    rf"^uses:\s*{re.escape(action_prefix)}(?:@|\s|$)",
+                    value,
+                )
+                for indent, value in properties
+            )
+            if not uses_action:
+                continue
+
+            with_indent = next(
+                (
+                    indent
+                    for indent, value in properties
+                    if indent == property_indent and value.strip() == "with:"
+                ),
+                None,
+            )
+            version: str | None = None
+            if with_indent is not None:
+                in_with = False
+                for raw_line in step_lines[1:]:
+                    if not raw_line.strip():
+                        continue
+                    indent = len(raw_line) - len(raw_line.lstrip(" "))
+                    value = raw_line.lstrip(" ")
+                    if indent == with_indent:
+                        in_with = value.strip() == "with:"
+                        continue
+                    if in_with and indent == with_indent + 2:
+                        match = re.match(
+                            r'^version:\s*"([0-9]+\.[0-9]+\.[0-9]+)"\s*(?:#.*)?$',
+                            value,
+                        )
+                        if match is not None:
+                            version = match.group(1)
+                            break
+            versions.append(version)
+
+    return versions
+
+
+def test_workflow_action_version_parser_rejects_unpinned_or_misplaced_values() -> None:
+    workflow_text = "\n".join(
+        [
+            "jobs:",
+            "  test:",
+            "    steps:",
+            "      - if: always()",
+            "        name: First setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        with:",
+            '          version: "0.13.10"',
+            "      - id: second-setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        env:",
+            '          version: "0.13.10"',
+            "      - name: Third setup",
+            "        uses: astral-sh/setup-uv@v1",
+            "        with:",
+            '          version: "0.13.10"',
+        ]
+    )
+    assert _workflow_action_versions(workflow_text, "astral-sh/setup-uv") == [
+        "0.13.10",
+        None,
+        "0.13.10",
+    ]
+
+
 def test_package_research_covers_every_direct_dev_package() -> None:
     research_text = RESEARCH.read_text(encoding="utf-8")
 
@@ -162,5 +284,26 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
-    assert "| uv | 0.13.9 (CI installer pin, 2026-11-17) |" in research_text
+
+    uv_versions = [
+        version
+        for workflow_path in CI_WORKFLOWS
+        for version in _workflow_action_versions(
+            workflow_path.read_text(encoding="utf-8"),
+            "astral-sh/setup-uv",
+        )
+    ]
+    assert uv_versions, "CI must contain at least one setup-uv invocation"
+    assert all(version is not None for version in uv_versions), (
+        "every setup-uv invocation must provide with.version"
+    )
+    pinned_versions = {version for version in uv_versions if version is not None}
+    assert len(pinned_versions) == 1
+    uv_version = next(iter(pinned_versions))
+    assert re.search(
+        rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, "
+        r"\d{4}-\d{2}-\d{2}\) \|",
+        research_text,
+        re.MULTILINE,
+    )
     assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text
