@@ -176,9 +176,7 @@ def _workflow_action_versions(
             if current.strip() and current_indent <= section_indent:
                 break
 
-            step = re.match(
-                rf"^ {{{step_indent}}}-\s*(?P<first>.*)$", current
-            )
+            step = re.match(rf"^ {{{step_indent}}}-\s*(?P<first>.*)$", current)
             if step is None:
                 cursor += 1
                 continue
@@ -267,9 +265,11 @@ def test_workflow_action_version_parser_rejects_unpinned_or_misplaced_values() -
             '          version: "0.13.10"',
         ]
     )
-    assert _workflow_action_versions(
-        workflow_text, "astral-sh/setup-uv"
-    ) == ["0.13.10", None, "0.13.10"]
+    assert _workflow_action_versions(workflow_text, "astral-sh/setup-uv") == [
+        "0.13.10",
+        None,
+        "0.13.10",
+    ]
 
 
 def test_package_research_covers_every_direct_dev_package() -> None:
