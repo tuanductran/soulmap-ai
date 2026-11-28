@@ -247,6 +247,114 @@ def test_cli_exposes_build_and_dev_commands(
     assert calls == [("build", []), ("dev", ["--once"])]
 
 
+
+def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) -> None:
+    _write(tmp_path, "skills/frameworks/example.md")
+    _write(tmp_path, "docs/engineering/dev.md")
+    _write(tmp_path, "pyproject.toml")
+    _write(tmp_path, ".soulmap/zip/stale.md")
+    _write(tmp_path, "dist/soulmap-ai.zip")
+    _write(tmp_path, ".venv/lib/site-packages/ignored.md")
+    _write(tmp_path, "node_modules/pkg/ignored.md")
+    _write(tmp_path, "src/soulmap/runtime/loader.py")
+    _write(tmp_path, "tests/unit/test_example.py")
+
+    snapshot = dev_tool._snapshot(tmp_path)
+
+    assert set(snapshot) == {
+        "skills/frameworks/example.md",
+        "docs/engineering/dev.md",
+        "pyproject.toml",
+        "src/soulmap/runtime/loader.py",
+        "tests/unit/test_example.py",
+    }
+
+
+def test_snapshot_detects_file_additions_deletions_and_modifications(
+    tmp_path: Path,
+) -> None:
+    changed_file = _write(tmp_path, "skills/new.md", "first\\n")
+    initial = dev_tool._snapshot(tmp_path)
+    changed_file.write_text("updated content\\n", encoding="utf-8")
+    modified = dev_tool._snapshot(tmp_path)
+    changed_file.unlink()
+    deleted = dev_tool._snapshot(tmp_path)
+
+    assert modified["skills/new.md"] != initial["skills/new.md"]
+    assert "skills/new.md" not in deleted
+    assert initial != modified
+    assert modified != deleted
+
+
+def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
+    tmp_path: Path,
+) -> None:
+    states = [
+        {"skills/one.md": (1, 1)},
+        {"skills/one.md": (2, 2)},
+        {"skills/one.md": (3, 3)},
+        {"skills/one.md": (3, 3)},
+    ]
+    calls: list[str] = []
+    clock_values = iter([0.0, 0.1, 0.3, 0.5])
+
+    def snapshot(_root: Path) -> dict[str, tuple[int, int]]:
+        return states.pop(0)
+
+    def run_cycle(_root: Path) -> int:
+        calls.append("cycle")
+        raise KeyboardInterrupt
+
+    with pytest.raises(KeyboardInterrupt):
+        dev_tool._watch(
+            tmp_path,
+            interval=0.01,
+            debounce=0.1,
+            run_cycle=run_cycle,
+            snapshot=snapshot,
+            sleep=lambda _seconds: None,
+            monotonic=lambda: next(clock_values),
+        )
+
+    assert calls == ["cycle"]
+
+
+def test_is_watched_excludes_generated_and_dependency_directories(tmp_path: Path) -> None:
+    _write(tmp_path, "skills/example.md")
+    _write(tmp_path, "dist/generated.md")
+    _write(tmp_path, ".soulmap/zip/generated.md")
+    _write(tmp_path, ".venv/lib/ignored.md")
+
+    assert dev_tool._is_watched(tmp_path / "skills/example.md", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / "dist/generated.md", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / ".soulmap/zip/generated.md", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / ".venv/lib/ignored.md", tmp_path)
+
+
+def test_dev_runs_python_and_resource_audits_when_enabled(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    calls: list[tuple[str, list[str]]] = []
+
+    import scripts.audit_python_reachability as python_audit
+    import scripts.audit_resource_inventory as resource_audit
+
+    monkeypatch.setattr(
+        python_audit, "main",
+        lambda args: calls.append(("python", args)) or 0,
+    )
+    monkeypatch.setattr(
+        resource_audit, "main",
+        lambda args: calls.append(("resources", args)) or 0,
+    )
+
+    assert dev_tool._run_audits(tmp_path) == 0
+    assert calls == [
+        ("python", ["--root", str(tmp_path)]),
+        ("resources", ["--root", str(tmp_path)]),
+    ]
+
+
 def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
     tmp_path: Path,
 ) -> None:

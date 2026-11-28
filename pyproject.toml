@@ -69,7 +69,6 @@ dev = [
   "commitizen>=4.17.0",
   "deptry>=0.25.1",
   "vulture>=2.16",
-  "watchfiles>=1.1.1",
   "pip-audit>=2.9.0",
 ]
 

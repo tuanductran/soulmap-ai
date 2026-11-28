@@ -9,11 +9,10 @@ from __future__ import annotations
 import argparse
 import shutil
 import sys
+import time
 import zipfile
 from collections.abc import Callable
 from pathlib import Path
-
-from watchfiles import Change, watch
 
 from soulmap.devtools.packaging import build_skill
 from soulmap.devtools.packaging.members import is_safe_member_path, source_members
@@ -63,19 +62,76 @@ def _is_watched(path: Path, root: Path) -> bool:
     )
 
 
-def _watch_filter(change: Change, path: str) -> bool:
-    """Filter watchfiles events to repository source paths, excluding generated trees."""
-    del change
-    candidate = Path(path)
+def _snapshot(root: Path) -> dict[str, tuple[int, int]]:
+    """Capture size and modification time for every watched source file."""
+    snapshot: dict[str, tuple[int, int]] = {}
+    for path in root.rglob("*"):
+        if path.is_symlink() or not _is_watched(path, root):
+            continue
+        try:
+            stat = path.stat()
+        except OSError:
+            # Editors may replace or delete a file during enumeration.
+            continue
+        snapshot[path.relative_to(root).as_posix()] = (
+            stat.st_mtime_ns,
+            stat.st_size,
+        )
+    return snapshot
+
+
+def _watch(
+    repo_root: Path,
+    *,
+    interval: float,
+    debounce: float,
+    run_cycle: Callable[[Path], int],
+    snapshot: Callable[[Path], dict[str, tuple[int, int]]] = _snapshot,
+    sleep: Callable[[float], None] = time.sleep,
+    monotonic: Callable[[], float] = time.monotonic,
+) -> int:
+    """Watch source snapshots and rebuild once an edit batch has settled."""
+    print("SoulMap dev watcher ready. Press Ctrl+C to stop.")
+    print(f"Watching repository sources under {repo_root}")
+    previous = snapshot(repo_root)
     try:
-        relative = candidate.resolve().relative_to(REPO_ROOT.resolve())
-    except ValueError:
-        return False
-    return not any(part in IGNORED_PARTS for part in relative.parts) and (
-        relative.as_posix() in WATCH_FILES
-        or (bool(relative.parts) and relative.parts[0] in WATCH_ROOTS)
-        or (len(relative.parts) == 1 and candidate.suffix.lower() in WATCH_SUFFIXES)
-    )
+        while True:
+            sleep(interval)
+            current = snapshot(repo_root)
+            if current == previous:
+                continue
+            quiet_since = monotonic()
+            while True:
+                sleep(interval)
+                latest = snapshot(repo_root)
+                if latest != current:
+                    current = latest
+                    quiet_since = monotonic()
+                if monotonic() - quiet_since >= debounce:
+                    break
+            changed = sorted(
+                path
+                for path in previous.keys() | current.keys()
+                if previous.get(path) != current.get(path)
+            )
+            print("\\n" + "-" * 72)
+            print("Detected source changes:")
+            for path in changed[:30]:
+                print(f"  - {path}")
+            if len(changed) > 30:
+                print(f"  ... and {len(changed) - 30} more")
+            try:
+                run_cycle(repo_root)
+            except Exception as exc:
+                print(
+                    f"ERROR (dev rebuild): {type(exc).__name__}: {exc}",
+                    file=sys.stderr,
+                )
+                print("Watcher remains active. Fix the source and save again.")
+            previous = current
+    except KeyboardInterrupt:
+        print("\\nSoulMap dev watcher stopped.")
+        return 0
 
 
 def _verify_archive(
@@ -185,50 +241,6 @@ def _run_cycle(repo_root: Path, *, audit: bool = True) -> int:
     return 0
 
 
-def _watch(repo_root: Path, *, debounce: float, run_cycle: Callable[[Path], int]) -> int:
-    """Watch repository source files and rebuild after a debounced event batch."""
-    watch_paths = [
-        str(repo_root / item)
-        for item in WATCH_ROOTS
-        if (repo_root / item).exists()
-    ]
-    watch_paths.extend(
-        str(repo_root / name)
-        for name in WATCH_FILES
-        if (repo_root / name).is_file()
-    )
-    print("SoulMap dev watcher ready. Press Ctrl+C to stop.")
-    print(f"Watching repository sources under {repo_root}")
-    try:
-        for changes in watch(
-            *watch_paths,
-            watch_filter=_watch_filter,
-            recursive=True,
-            debounce=max(1, int(debounce * 1000)),
-            step=100,
-            yield_on_timeout=False,
-        ):
-            changed = sorted(
-                {
-                    Path(item[1]).resolve().relative_to(repo_root).as_posix()
-                    for item in changes
-                }
-            )
-            print("\n" + "-" * 72)
-            print("Detected source changes:")
-            for path in changed[:30]:
-                print(f"  - {path}")
-            if len(changed) > 30:
-                print(f"  ... and {len(changed) - 30} more")
-            try:
-                run_cycle(repo_root)
-            except Exception as exc:
-                print(f"ERROR (dev rebuild): {type(exc).__name__}: {exc}", file=sys.stderr)
-                print("Watcher remains active. Fix the source and save again.")
-    except KeyboardInterrupt:
-        print("\nSoulMap dev watcher stopped.")
-        return 0
-    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -250,12 +262,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Skip Python and resource reachability reports.",
     )
     parser.add_argument(
-        "--debounce", type=float, default=0.8,
+        "--interval", type=float, default=0.5,\n        help="Polling interval in seconds (default: 0.5).",\n    )\n    parser.add_argument(\n        "--debounce", type=float, default=0.8,
         help="Quiet period after the last file change before rebuilding (default: 0.8s).",
     )
     args = parser.parse_args(argv)
-    if args.debounce < 0:
-        parser.error("--debounce cannot be negative")
+    if args.interval <= 0 or args.debounce < 0:
+        parser.error("--interval must be positive and --debounce cannot be negative")
 
     repo_root = REPO_ROOT
     _run_cycle(repo_root, audit=not args.no_audit)
@@ -263,6 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     return _watch(
         repo_root,
+        interval=args.interval,
         debounce=args.debounce,
         run_cycle=lambda root: _run_cycle(root, audit=not args.no_audit),
     )
