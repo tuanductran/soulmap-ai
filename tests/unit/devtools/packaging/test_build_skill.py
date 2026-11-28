@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import zipfile
+from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
@@ -177,7 +178,7 @@ def test_dev_builds_verifies_and_extracts_both_artifacts(
     _create_source_tree(tmp_path)
     monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
 
-    assert dev_tool.main([]) == 0
+    assert dev_tool.main(["--once", "--no-audit"]) == 0
 
     zip_tree = tmp_path / ".soulmap/zip"
     skill_tree = tmp_path / ".soulmap/skill"
@@ -243,8 +244,209 @@ def test_cli_exposes_build_and_dev_commands(
     )
 
     assert cli_tool.main(["build"]) == 0
-    assert cli_tool.main(["dev"]) == 0
-    assert calls == [("build", []), ("dev", [])]
+    assert cli_tool.main(["dev", "--once"]) == 0
+    assert calls == [("build", []), ("dev", ["--once"])]
+
+
+def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) -> None:
+    _write(tmp_path, "skills/frameworks/example.md")
+    _write(tmp_path, "skills/assets/logo.svg")
+    _write(tmp_path, "skills/data/no-extension")
+    _write(tmp_path, ".claude-plugin/assets/icon.svg")
+    _write(tmp_path, "LICENSE")
+    _write(tmp_path, "docs/engineering/dev.md")
+    _write(tmp_path, "pyproject.toml")
+    _write(tmp_path, ".soulmap/zip/stale.md")
+    _write(tmp_path, "dist/soulmap-ai.zip")
+    _write(tmp_path, ".venv/lib/site-packages/ignored.md")
+    _write(tmp_path, "node_modules/pkg/ignored.md")
+    _write(tmp_path, "src/soulmap/runtime/loader.py")
+    _write(tmp_path, "tests/unit/test_example.py")
+
+    snapshot = dev_tool._snapshot(tmp_path)
+
+    assert set(snapshot) == {
+        "skills/frameworks/example.md",
+        "skills/assets/logo.svg",
+        "skills/data/no-extension",
+        ".claude-plugin/assets/icon.svg",
+        "LICENSE",
+        "docs/engineering/dev.md",
+        "pyproject.toml",
+        "src/soulmap/runtime/loader.py",
+        "tests/unit/test_example.py",
+    }
+
+
+def test_snapshot_prunes_ignored_directories(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _write(tmp_path, ".venv/deep/ignored.md")
+    _write(tmp_path, "node_modules/pkg/ignored.md")
+    _write(tmp_path, "skills/example.md")
+
+    visited: list[str] = []
+    original_walk = dev_tool.os.walk
+
+    def recording_walk(
+        root: Path, topdown: bool = True
+    ) -> Iterator[tuple[str, list[str], list[str]]]:
+        for current, directories, filenames in original_walk(root, topdown=topdown):
+            visited.append(Path(current).relative_to(tmp_path).as_posix())
+            yield current, directories, filenames
+
+    monkeypatch.setattr(dev_tool.os, "walk", recording_walk)
+
+    snapshot = dev_tool._snapshot(tmp_path)
+
+    assert set(snapshot) == {"skills/example.md"}
+    assert ".venv" not in visited
+    assert "node_modules" not in visited
+
+
+def test_snapshot_detects_file_additions_deletions_and_modifications(
+    tmp_path: Path,
+) -> None:
+    changed_file = _write(tmp_path, "skills/new.md", "first\n")
+    initial = dev_tool._snapshot(tmp_path)
+    changed_file.write_text("updated content\n", encoding="utf-8")
+    modified = dev_tool._snapshot(tmp_path)
+    changed_file.unlink()
+    deleted = dev_tool._snapshot(tmp_path)
+
+    assert modified["skills/new.md"] != initial["skills/new.md"]
+    assert "skills/new.md" not in deleted
+    assert initial != modified
+    assert modified != deleted
+
+
+def test_watcher_debounces_and_survives_a_failed_rebuild(
+    tmp_path: Path,
+) -> None:
+    states = [
+        {"skills/one.md": (1, 1)},
+        {"skills/one.md": (2, 2)},
+        {"skills/one.md": (3, 3)},
+        {"skills/one.md": (3, 3)},
+        {"skills/one.md": (4, 4)},
+        {"skills/one.md": (4, 4)},
+    ]
+    calls: list[str] = []
+    clock_values = iter([0.0, 0.1, 0.3, 0.5, 0.7, 0.9])
+    sleep_calls = 0
+
+    def snapshot(_root: Path) -> dict[str, tuple[int, int]]:
+        return states.pop(0) if states else {"skills/one.md": (4, 4)}
+
+    def sleep(_seconds: float) -> None:
+        nonlocal sleep_calls
+        sleep_calls += 1
+        if sleep_calls == 7:
+            raise KeyboardInterrupt
+
+    def run_cycle(_root: Path) -> int:
+        calls.append("cycle")
+        if len(calls) == 1:
+            raise ValueError("simulated rebuild failure")
+        return 0
+
+    assert (
+        dev_tool._watch(
+            tmp_path,
+            interval=0.01,
+            debounce=0.1,
+            run_cycle=run_cycle,
+            snapshot=snapshot,
+            sleep=sleep,
+            monotonic=lambda: next(clock_values),
+        )
+        == 0
+    )
+    assert calls == ["cycle", "cycle"]
+
+
+def test_watcher_detects_changes_made_during_initial_build(tmp_path: Path) -> None:
+    initial = {"skills/one.md": (1, 1)}
+    changed = {"skills/one.md": (2, 2)}
+    snapshots = iter([changed, changed, changed])
+    calls: list[str] = []
+    sleep_calls = 0
+
+    def snapshot(_root: Path) -> dict[str, tuple[int, int]]:
+        return next(snapshots)
+
+    def sleep(_seconds: float) -> None:
+        nonlocal sleep_calls
+        sleep_calls += 1
+        if sleep_calls == 3:
+            raise KeyboardInterrupt
+
+    def run_cycle(_root: Path) -> int:
+        calls.append("cycle")
+        return 0
+
+    assert (
+        dev_tool._watch(
+            tmp_path,
+            interval=0.01,
+            debounce=0,
+            run_cycle=run_cycle,
+            snapshot=snapshot,
+            initial_snapshot=initial,
+            sleep=sleep,
+            monotonic=lambda: 1.0,
+        )
+        == 0
+    )
+    assert calls == ["cycle"]
+
+
+def test_is_watched_excludes_generated_and_dependency_directories(
+    tmp_path: Path,
+) -> None:
+    _write(tmp_path, "skills/example.md")
+    _write(tmp_path, "dist/generated.md")
+    _write(tmp_path, ".soulmap/zip/generated.md")
+    _write(tmp_path, ".venv/lib/ignored.md")
+
+    assert dev_tool._is_watched(tmp_path / "skills/example.md", tmp_path)
+    _write(tmp_path, "skills/assets/image.svg")
+    _write(tmp_path, ".claude-plugin/metadata")
+    _write(tmp_path, "LICENSE")
+    assert dev_tool._is_watched(tmp_path / "skills/assets/image.svg", tmp_path)
+    assert dev_tool._is_watched(tmp_path / ".claude-plugin/metadata", tmp_path)
+    assert dev_tool._is_watched(tmp_path / "LICENSE", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / "dist/generated.md", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / ".soulmap/zip/generated.md", tmp_path)
+    assert not dev_tool._is_watched(tmp_path / ".venv/lib/ignored.md", tmp_path)
+
+
+def test_dev_runs_python_and_resource_audits_when_enabled(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    calls: list[tuple[str, list[str]]] = []
+
+    audits = {
+        "scripts/audit_python_reachability.py": "python",
+        "scripts/audit_resource_inventory.py": "resources",
+    }
+
+    def fake_run_path(path: str) -> dict[str, object]:
+        name = Path(path).relative_to(tmp_path).as_posix()
+
+        def main(args: list[str]) -> int:
+            calls.append((audits[name], args))
+            return 0
+
+        return {"main": main}
+
+    monkeypatch.setattr(dev_tool.runpy, "run_path", fake_run_path)
+
+    assert dev_tool._run_audits(tmp_path) == 0
+    assert calls == [
+        ("python", ["--root", str(tmp_path)]),
+        ("resources", ["--root", str(tmp_path)]),
+    ]
 
 
 def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
