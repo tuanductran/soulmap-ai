@@ -114,7 +114,7 @@ def _watch(
                 for path in previous.keys() | current.keys()
                 if previous.get(path) != current.get(path)
             )
-            print("\\n" + "-" * 72)
+            print("\n" + "-" * 72)
             print("Detected source changes:")
             for path in changed[:30]:
                 print(f"  - {path}")
@@ -130,7 +130,7 @@ def _watch(
                 print("Watcher remains active. Fix the source and save again.")
             previous = current
     except KeyboardInterrupt:
-        print("\\nSoulMap dev watcher stopped.")
+        print("\nSoulMap dev watcher stopped.")
         return 0
 
 
