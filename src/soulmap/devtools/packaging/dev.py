@@ -37,8 +37,17 @@ IGNORED_PARTS = frozenset(
     }
 )
 WATCH_ROOTS = (
-    "skills", "templates", "src", "tests", "evals", "docs", "scripts",
-    ".claude", ".claude-plugin", ".github", "schemas",
+    "skills",
+    "templates",
+    "src",
+    "tests",
+    "evals",
+    "docs",
+    "scripts",
+    ".claude",
+    ".claude-plugin",
+    ".github",
+    "schemas",
 )
 WATCH_FILES = frozenset(
     {
@@ -49,8 +58,22 @@ WATCH_FILES = frozenset(
 )
 WATCH_SUFFIXES = frozenset(
     {
-        ".md", ".markdown", ".py", ".toml", ".json", ".json5", ".jsonl",
-        ".yaml", ".yml", ".txt", ".sh", ".bash", ".zsh", ".ini", ".cfg", ".lock",
+        ".md",
+        ".markdown",
+        ".py",
+        ".toml",
+        ".json",
+        ".json5",
+        ".jsonl",
+        ".yaml",
+        ".yml",
+        ".txt",
+        ".sh",
+        ".bash",
+        ".zsh",
+        ".ini",
+        ".cfg",
+        ".lock",
     }
 )
 
