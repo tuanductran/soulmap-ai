@@ -162,5 +162,23 @@ def test_package_research_covers_every_direct_dev_package() -> None:
     assert "pytest-xdist" in research_text
     assert "Python 3.11.16" in research_text
     assert "python.org/downloads/release/python-31116" in research_text
-    assert "| uv | 0.13.9 (CI installer pin, 2026-11-17) |" in research_text
+
+    uv_versions = {
+        version
+        for workflow_path in CI_WORKFLOWS
+        for version in re.findall(
+            r"^\s*version:\s*\"?([0-9]+\.[0-9]+\.[0-9]+)",
+            workflow_path.read_text(encoding="utf-8"),
+            re.MULTILINE,
+        )
+    }
+    assert len(uv_versions) == 1
+    uv_version = next(iter(uv_versions))
+    assert re.search(
+        rf"^\| uv \| {re.escape(uv_version)} \(CI installer pin, "
+        r"\d{4}-\d{2}-\d{2}\) \|",
+        research_text,
+        re.MULTILINE,
+    )
+
     assert "| actionlint | 1.7.12 (CI binary pin) |" in research_text
