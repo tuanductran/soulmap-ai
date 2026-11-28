@@ -26,8 +26,7 @@ Use this folder as the entry point for repo documentation.
 - [`engineering/TESTER.md`](engineering/TESTER.md): verification flow and QA checks
 - [`product/USER.md`](product/USER.md): what SoulMap is and how to use it
 - [`engineering/API.md`](engineering/API.md): local CLI contracts for selector and detectors
-- [`integrations/README.md`](integrations/README.md): platform-specific setup for Claude, ChatGPT,
-  Gemini, and Poe
+- [`integrations/README.md`](integrations/README.md): Claude Code plugin, Claude.ai Custom Skills, and Claude API setup
 - [`operations/OPERATIONS.md`](operations/OPERATIONS.md): privacy, safety, and incident guidance
 - [`operations/PRIVACY.md`](operations/PRIVACY.md): disclosure, reporting, and data-handling stance
 - [`operations/REGULATORY.md`](operations/REGULATORY.md): regulatory positioning and compliance boundary notes
