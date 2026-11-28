@@ -90,6 +90,36 @@ def resolve_imports(
     return found
 
 
+def resolve_action_container_imports(
+    tree: ast.Module, known_modules: set[str]
+) -> set[str]:
+    """Resolve Action Docker container-root imports to src/action modules.
+
+    Only single-segment absolute imports are mapped. Package imports and bare
+    imports in other source namespaces retain their normal resolution rules.
+    """
+    action_modules = {
+        name.rpartition(".")[2]
+        for name in known_modules
+        if name.startswith("action.") and name.count(".") == 1
+    }
+    found: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if "." not in alias.name and alias.name in action_modules:
+                    found.add(f"action.{alias.name}")
+        elif (
+            isinstance(node, ast.ImportFrom)
+            and node.level == 0
+            and node.module
+            and "." not in node.module
+            and node.module in action_modules
+        ):
+            found.add(f"action.{node.module}")
+    return found
+
+
 def analyze(
     root: Path, entries: tuple[str, ...]
 ) -> tuple[set[str], set[str], list[str]]:
@@ -112,6 +142,11 @@ def analyze(
         graph[name] = resolve_imports(
             tree, name, known, is_package=path.name == "__init__.py"
         )
+        # The Docker Action copies src/action/*.py to the container root and
+        # executes /__main__.py. Its bare imports resolve against this explicit
+        # container-root namespace, not the src-root module namespace.
+        if name == "action.__main__" or name.startswith("action."):
+            graph[name].update(resolve_action_container_imports(tree, known))
         parts = name.split(".")
         graph[name].update(
             ".".join(parts[:index])
