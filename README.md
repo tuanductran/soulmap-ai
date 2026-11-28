@@ -95,7 +95,7 @@ uv run soulmap dev
 Outputs:
 
 - `dist/soulmap-ai.zip`, standard knowledge archive without `.claude-plugin/`
-- `dist/soulmap-ai.skill`, skill package with `.claude-plugin/` preserved
+- `dist/soulmap-ai.skill`, Claude Code plugin-aware archive with `.claude-plugin/` preserved
 - `.soulmap/zip/` and `.soulmap/skill/`, verified extracted trees refreshed by `uv run soulmap dev` as watched sources change
 
 For packaging and upload details, see [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
