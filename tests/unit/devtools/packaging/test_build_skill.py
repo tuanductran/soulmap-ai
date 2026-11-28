@@ -277,7 +277,9 @@ def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) ->
     }
 
 
-def test_snapshot_prunes_ignored_directories(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_snapshot_prunes_ignored_directories(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     _write(tmp_path, ".venv/deep/ignored.md")
     _write(tmp_path, "node_modules/pkg/ignored.md")
     _write(tmp_path, "skills/example.md")
@@ -289,7 +291,10 @@ def test_snapshot_prunes_ignored_directories(tmp_path: Path, monkeypatch: pytest
         root: Path, topdown: bool = True
     ) -> list[tuple[str, list[str], list[str]]]:
         entries = list(original_walk(root, topdown=topdown))
-        visited.extend(Path(current).relative_to(tmp_path).as_posix() for current, _, _ in entries)
+        visited.extend(
+            Path(current).relative_to(tmp_path).as_posix()
+            for current, _, _ in entries
+        )
         return entries
 
     monkeypatch.setattr(dev_tool.os, "walk", recording_walk)
