@@ -177,7 +177,7 @@ def test_dev_builds_verifies_and_extracts_both_artifacts(
     _create_source_tree(tmp_path)
     monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
 
-    assert dev_tool.main([]) == 0
+    assert dev_tool.main(["--once", "--no-audit"]) == 0
 
     zip_tree = tmp_path / ".soulmap/zip"
     skill_tree = tmp_path / ".soulmap/skill"
@@ -243,8 +243,8 @@ def test_cli_exposes_build_and_dev_commands(
     )
 
     assert cli_tool.main(["build"]) == 0
-    assert cli_tool.main(["dev"]) == 0
-    assert calls == [("build", []), ("dev", [])]
+    assert cli_tool.main(["dev", "--once"]) == 0
+    assert calls == [("build", []), ("dev", ["--once"])]
 
 
 def test_build_refuses_artifacts_with_language_leakage_in_root_entrypoint(
@@ -375,3 +375,43 @@ def test_build_skips_ignored_backslash_source_before_path_validation(
 
     with zipfile.ZipFile(archive_path) as archive:
         assert "skills/ignored\\name.md" not in archive.namelist()
+
+
+
+def test_watch_filter_includes_sources_and_excludes_generated_paths(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
+    from watchfiles import Change
+
+    assert dev_tool._watch_filter(Change.modified, str(tmp_path / "skills/new.md"))
+    assert dev_tool._watch_filter(Change.added, str(tmp_path / "docs/guide.md"))
+    assert dev_tool._watch_filter(Change.modified, str(tmp_path / "src/soulmap/cli.py"))
+    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / "dist/generated.md"))
+    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / ".soulmap/zip/old.md"))
+    assert not dev_tool._watch_filter(Change.modified, str(tmp_path / ".venv/site-packages/pkg.py"))
+
+
+def test_dev_runs_python_and_resource_audits_when_enabled(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
+    calls: list[tuple[str, list[str]]] = []
+
+    import scripts.audit_python_reachability as python_audit
+    import scripts.audit_resource_inventory as resource_audit
+
+    monkeypatch.setattr(
+        python_audit, "main",
+        lambda args: calls.append(("python", args)) or 0,
+    )
+    monkeypatch.setattr(
+        resource_audit, "main",
+        lambda args: calls.append(("resources", args)) or 0,
+    )
+
+    assert dev_tool._run_audits(tmp_path) == 0
+    assert calls == [
+        ("python", ["--root", str(tmp_path)]),
+        ("resources", ["--root", str(tmp_path)]),
+    ]

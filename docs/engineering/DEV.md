@@ -67,6 +67,7 @@ uv run soulmap audit-knowledge
 uv run soulmap audit-knowledge-ownership
 uv run soulmap build
 uv run soulmap dev
+uv run soulmap dev --once
 uv run python tests/eval_regression/test_safety_evals.py
 ```
 
@@ -156,9 +157,13 @@ This repo also ships Claude plugin marketplace metadata:
 preserves `.claude-plugin/`; the standard ZIP excludes it.
 
 `uv run soulmap dev` builds both archives, checks archive integrity and exact member
-sets against the packaging contract, then refreshes `.soulmap/zip/` and
-`.soulmap/skill/` for local inspection. It is a build-and-extract command, not a server
-or file watcher. `.soulmap/` is generated output and is ignored by Git.
+sets against the packaging contract, refreshes `.soulmap/zip/` and `.soulmap/skill/`,
+and prints conservative Python/resource reachability reports. It then stays alive and
+watches repository sources; changes are debounced, rebuilt, verified, and extracted again.
+A failed rebuild is reported without terminating the watcher. Generated output is excluded.
+Use `uv run soulmap dev --once` for a single build/verify/extract/audit cycle, or
+`--no-audit` to skip inventories. Unreferenced resources remain review-only candidates:
+convention-based and dynamic consumers may exist, and no files are deleted.
 
 ## Git hooks (recommended)
 

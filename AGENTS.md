@@ -74,13 +74,16 @@ safety evals above. If a change touches `skills/` or `templates/`, also run
 
 ```bash
 uv run soulmap build          # both dist/soulmap-ai.zip and dist/soulmap-ai.skill
-uv run soulmap dev            # verify and extract both under .soulmap/
+uv run soulmap dev            # watch sources and refresh verified artifacts
+uv run soulmap dev --once     # one-shot build, verify, extract, and audit
 ```
 
-Run these after any change under `skills/` to confirm the new content packages
-correctly. `build` always creates both artifacts. `dev` verifies each archive against
-the package contract and refreshes `.soulmap/zip/` and `.soulmap/skill/` for local
-inspection; it does not start a server. See [docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
+Run `uv run soulmap dev` during content development. It watches source files, debounces
+save bursts, rebuilds both artifacts, verifies archive membership/content, refreshes the
+extracted trees, and prints review-only Python/resource reachability reports. It remains
+active until Ctrl+C. Use `uv run soulmap dev --once` in one-shot or automation workflows.
+`build` still creates both artifacts without starting the watcher. See
+[docs/operations/UPLOAD.md](docs/operations/UPLOAD.md).
 
 ## Git workflow
 
