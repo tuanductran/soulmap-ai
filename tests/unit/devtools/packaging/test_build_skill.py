@@ -285,7 +285,7 @@ def test_snapshot_detects_file_additions_deletions_and_modifications(
     assert modified != deleted
 
 
-def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
+def test_watcher_debounces_and_survives_a_failed_rebuild(
     tmp_path: Path,
 ) -> None:
     states = [
@@ -293,32 +293,38 @@ def test_watcher_debounces_and_runs_one_rebuild_for_a_change_batch(
         {"skills/one.md": (2, 2)},
         {"skills/one.md": (3, 3)},
         {"skills/one.md": (3, 3)},
-        {"skills/one.md": (3, 3)},
+        {"skills/one.md": (4, 4)},
+        {"skills/one.md": (4, 4)},
     ]
     calls: list[str] = []
-    clock_values = iter([0.0, 0.1, 0.3, 0.5])
+    clock_values = iter([0.0, 0.1, 0.3, 0.5, 0.7, 0.9])
+    sleep_calls = 0
 
     def snapshot(_root: Path) -> dict[str, tuple[int, int]]:
-        return states.pop(0)
+        return states.pop(0) if states else {"skills/one.md": (4, 4)}
+
+    def sleep(_seconds: float) -> None:
+        nonlocal sleep_calls
+        sleep_calls += 1
+        if sleep_calls == 7:
+            raise KeyboardInterrupt
 
     def run_cycle(_root: Path) -> int:
         calls.append("cycle")
         if len(calls) == 1:
             raise ValueError("simulated rebuild failure")
-        raise KeyboardInterrupt
+        return 0
 
-    with pytest.raises(KeyboardInterrupt):
-        dev_tool._watch(
-            tmp_path,
-            interval=0.01,
-            debounce=0.1,
-            run_cycle=run_cycle,
-            snapshot=snapshot,
-            sleep=lambda _seconds: None,
-            monotonic=lambda: next(clock_values),
-        )
-
-    assert calls == ["cycle"]
+    assert dev_tool._watch(
+        tmp_path,
+        interval=0.01,
+        debounce=0.1,
+        run_cycle=run_cycle,
+        snapshot=snapshot,
+        sleep=sleep,
+        monotonic=lambda: next(clock_values),
+    ) == 0
+    assert calls == ["cycle", "cycle"]
 
 
 def test_is_watched_excludes_generated_and_dependency_directories(
