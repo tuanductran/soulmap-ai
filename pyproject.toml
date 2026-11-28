@@ -155,10 +155,8 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 version_files = [
   "docs/integrations/README.md:soulmap_version",
-  "docs/integrations/chatgpt-instructions.md:soulmap_version",
-  "docs/integrations/gemini-instructions.md:soulmap_version",
-  "docs/integrations/poe-system-prompt.md:soulmap_version",
   "SKILL.md:version",
+  ".claude-plugin/plugin.json:version",
   ".claude-plugin/marketplace.json:version"
 ]
 
