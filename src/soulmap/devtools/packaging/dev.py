@@ -7,6 +7,7 @@ source files change. Pass ``--once`` for a single build-and-audit cycle.
 from __future__ import annotations
 
 import argparse
+import os
 import runpy
 import shutil
 import sys
@@ -52,6 +53,7 @@ WATCH_ROOTS = (
 WATCH_FILES = frozenset(
     {
         "AGENTS.md",
+        "LICENSE",
         "SOULMAP.md",
         "SKILL.md",
         "README.md",
@@ -99,6 +101,8 @@ def _is_watched(path: Path, root: Path) -> bool:
     relative_name = relative.as_posix()
     if relative_name in WATCH_FILES:
         return True
+    if relative.parts and relative.parts[0] in {"skills", ".claude-plugin"}:
+        return True
     if relative.parts and relative.parts[0] in WATCH_ROOTS:
         return path.suffix.lower() in WATCH_SUFFIXES or path.name in WATCH_FILES
     return len(relative.parts) == 1 and (
@@ -109,18 +113,26 @@ def _is_watched(path: Path, root: Path) -> bool:
 def _snapshot(root: Path) -> dict[str, tuple[int, int]]:
     """Capture size and modification time for every watched source file."""
     snapshot: dict[str, tuple[int, int]] = {}
-    for path in root.rglob("*"):
-        if path.is_symlink() or not _is_watched(path, root):
-            continue
-        try:
-            stat = path.stat()
-        except OSError:
-            # Editors may replace or delete a file during enumeration.
-            continue
-        snapshot[path.relative_to(root).as_posix()] = (
-            stat.st_mtime_ns,
-            stat.st_size,
-        )
+    for current_root, directories, filenames in os.walk(root, topdown=True):
+        directories[:] = [
+            name
+            for name in directories
+            if name not in IGNORED_PARTS
+            and not (Path(current_root) / name).is_symlink()
+        ]
+        for filename in filenames:
+            path = Path(current_root) / filename
+            if path.is_symlink() or not _is_watched(path, root):
+                continue
+            try:
+                stat = path.stat()
+            except OSError:
+                # Editors may replace or delete a file during enumeration.
+                continue
+            snapshot[path.relative_to(root).as_posix()] = (
+                stat.st_mtime_ns,
+                stat.st_size,
+            )
     return snapshot
 
 
@@ -131,13 +143,14 @@ def _watch(
     debounce: float,
     run_cycle: Callable[[Path], int],
     snapshot: Callable[[Path], dict[str, tuple[int, int]]] = _snapshot,
+    initial_snapshot: dict[str, tuple[int, int]] | None = None,
     sleep: Callable[[float], None] = time.sleep,
     monotonic: Callable[[], float] = time.monotonic,
 ) -> int:
     """Watch source snapshots and rebuild once an edit batch has settled."""
     print("SoulMap dev watcher ready. Press Ctrl+C to stop.")
     print(f"Watching repository sources under {repo_root}")
-    previous = snapshot(repo_root)
+    previous = initial_snapshot if initial_snapshot is not None else snapshot(repo_root)
     try:
         while True:
             sleep(interval)
@@ -325,6 +338,7 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--interval must be positive and --debounce cannot be negative")
 
     repo_root = REPO_ROOT
+    initial_snapshot = None if args.once else _snapshot(repo_root)
     _run_cycle(repo_root, audit=not args.no_audit)
     if args.once:
         return 0
@@ -333,6 +347,7 @@ def main(argv: list[str] | None = None) -> int:
         interval=args.interval,
         debounce=args.debounce,
         run_cycle=lambda root: _run_cycle(root, audit=not args.no_audit),
+        initial_snapshot=initial_snapshot,
     )
 
 
