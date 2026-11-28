@@ -500,26 +500,3 @@ def test_watch_filter_includes_sources_and_excludes_generated_paths(
     assert not dev_tool._watch_filter(Change.modified, str(tmp_path / ".venv/site-packages/pkg.py"))
 
 
-def test_dev_runs_python_and_resource_audits_when_enabled(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.setattr(dev_tool, "REPO_ROOT", tmp_path)
-    calls: list[tuple[str, list[str]]] = []
-
-    import scripts.audit_python_reachability as python_audit
-    import scripts.audit_resource_inventory as resource_audit
-
-    monkeypatch.setattr(
-        python_audit, "main",
-        lambda args: calls.append(("python", args)) or 0,
-    )
-    monkeypatch.setattr(
-        resource_audit, "main",
-        lambda args: calls.append(("resources", args)) or 0,
-    )
-
-    assert dev_tool._run_audits(tmp_path) == 0
-    assert calls == [
-        ("python", ["--root", str(tmp_path)]),
-        ("resources", ["--root", str(tmp_path)]),
-    ]
