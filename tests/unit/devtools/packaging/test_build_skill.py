@@ -273,9 +273,9 @@ def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) ->
 def test_snapshot_detects_file_additions_deletions_and_modifications(
     tmp_path: Path,
 ) -> None:
-    changed_file = _write(tmp_path, "skills/new.md", "first\\n")
+    changed_file = _write(tmp_path, "skills/new.md", "first\n")
     initial = dev_tool._snapshot(tmp_path)
-    changed_file.write_text("updated content\\n", encoding="utf-8")
+    changed_file.write_text("updated content\n", encoding="utf-8")
     modified = dev_tool._snapshot(tmp_path)
     changed_file.unlink()
     deleted = dev_tool._snapshot(tmp_path)
