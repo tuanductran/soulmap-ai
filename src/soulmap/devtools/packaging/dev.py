@@ -150,9 +150,7 @@ def _watch(
     """Watch source snapshots and rebuild once an edit batch has settled."""
     print("SoulMap dev watcher ready. Press Ctrl+C to stop.")
     print(f"Watching repository sources under {repo_root}")
-    previous = (
-        initial_snapshot if initial_snapshot is not None else snapshot(repo_root)
-    )
+    previous = initial_snapshot if initial_snapshot is not None else snapshot(repo_root)
     try:
         while True:
             sleep(interval)
