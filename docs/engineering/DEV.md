@@ -337,7 +337,6 @@ uv run soulmap eval-responses
 uv run python tests/eval_regression/test_safety_evals.py
 ```
 
-
 ### Library manifest and integrity steps
 
 The release package also includes a versioned Library manifest at

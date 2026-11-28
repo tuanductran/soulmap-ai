@@ -500,4 +500,3 @@ def test_build_skips_ignored_backslash_source_before_path_validation(
 
     with zipfile.ZipFile(archive_path) as archive:
         assert "skills/ignored\\name.md" not in archive.namelist()
-
