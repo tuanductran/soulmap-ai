@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "soulmap-ai",
+  "displayName": "SoulMap AI",
+  "version": "0.15.1",
+  "description": "A reflective companion Skill with grounded frameworks, safety boundaries, and a consistent voice.",
+  "author": {
+    "name": "Tuan Duc Tran",
+    "email": "tuanductran.dev@gmail.com",
+    "url": "https://github.com/tuanductran"
+  },
+  "homepage": "https://github.com/tuanductran/soulmap-ai",
+  "repository": "https://github.com/tuanductran/soulmap-ai",
+  "license": "MIT",
+  "keywords": [
+    "reflection",
+    "self-awareness",
+    "emotional-wellbeing",
+    "inner-work",
+    "soulmap"
+  ],
+  "skills": [
+    "."
+  ]
+}
