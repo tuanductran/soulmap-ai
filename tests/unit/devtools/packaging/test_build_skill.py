@@ -291,9 +291,7 @@ def test_snapshot_prunes_ignored_directories(
     def recording_walk(
         root: Path, topdown: bool = True
     ) -> Iterator[tuple[str, list[str], list[str]]]:
-        for current, directories, filenames in original_walk(
-            root, topdown=topdown
-        ):
+        for current, directories, filenames in original_walk(root, topdown=topdown):
             visited.append(Path(current).relative_to(tmp_path).as_posix())
             yield current, directories, filenames
 
