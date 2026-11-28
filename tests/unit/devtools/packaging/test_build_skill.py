@@ -247,7 +247,6 @@ def test_cli_exposes_build_and_dev_commands(
     assert calls == [("build", []), ("dev", ["--once"])]
 
 
-
 def test_snapshot_tracks_sources_and_ignores_generated_output(tmp_path: Path) -> None:
     _write(tmp_path, "skills/frameworks/example.md")
     _write(tmp_path, "docs/engineering/dev.md")
