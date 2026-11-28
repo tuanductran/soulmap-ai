@@ -62,7 +62,7 @@ The manifest follows Anthropic's [plugin manifest reference](https://code.claude
 | **homepage**, **repository** | Canonical documentation and source locations. |
 | **license** | SPDX license identifier: **MIT**. |
 | **keywords** | Search and discovery terms. |
-| **skills** | Explicitly includes the repository root with **["."]**, where the single canonical **SKILL.md** lives. |
+| **skills** | Explicitly includes the repository root with **["./"]**, where the single canonical **SKILL.md** lives. |
 
 The root Skill points to the supporting Markdown in **skills/**. Those files are knowledge resources, not separate plugin Skills. Keep exactly one shipped Skill entrypoint.
 
