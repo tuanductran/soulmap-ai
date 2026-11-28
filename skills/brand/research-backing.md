@@ -77,7 +77,9 @@ SoulMap's dependency guidance interprets signals in context rather than treating
 single phrase as proof. When clear dependency evidence warrants a protective
 response, it states the system's limits and points users toward real-world support.
 Its persona guidance discourages pseudo-intimacy and language that simulates a
-bond, while the master prompt bans dependency-building closings. These design
+bond, while the closing principle in [SOULMAP.md](../../SOULMAP.md) and the closing
+ritual in [session-rituals.md](../voice/session-rituals.md) rule out dependency-building
+closings. These design
 choices are relevant to the guilt-inducing and possessive dynamics documented
 above, but they do not establish that such dynamics are prevented in every
 interaction. The closing principle (return ownership, send attention back to life)
